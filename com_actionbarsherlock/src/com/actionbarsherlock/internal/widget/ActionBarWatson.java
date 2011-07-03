@@ -1,6 +1,6 @@
 package com.actionbarsherlock.internal.widget;
 
-import com.battlelancer.seriesguide.beta.R;
+import com.actionbarsherlock.R;
 
 import android.content.Context;
 import android.content.res.TypedArray;

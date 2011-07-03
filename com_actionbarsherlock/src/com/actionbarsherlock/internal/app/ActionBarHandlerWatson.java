@@ -17,11 +17,11 @@
 
 package com.actionbarsherlock.internal.app;
 
+import com.actionbarsherlock.R;
 import com.actionbarsherlock.internal.view.menu.MenuBuilder;
 import com.actionbarsherlock.internal.view.menu.MenuItemImpl;
 import com.actionbarsherlock.internal.view.menu.MenuView;
 import com.actionbarsherlock.internal.widget.ActionBarWatson;
-import com.battlelancer.seriesguide.beta.R;
 
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;

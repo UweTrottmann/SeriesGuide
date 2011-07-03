@@ -16,7 +16,7 @@
 
 package android.support.v4.app;
 
-import com.battlelancer.seriesguide.beta.R;
+import com.actionbarsherlock.R;
 
 import android.os.Build;
 import android.os.Parcel;
