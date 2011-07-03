@@ -245,6 +245,8 @@
     <string name="trakt_synctodevice">Sync to SeriesGuide</string>
     <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
     <string name="trakt_synctotrakt">Sync to trakt.tv</string>
+    <string name="trakt_syncunseen">Sync unseen episodes</string>
+    <string name="powered_by_thetvdb">powered by thetvdb.com</string>
     
     <!-- strings for BETA release -->
     <string name="download_stable">Download SeriesGuide</string>
@@ -379,7 +381,6 @@
 		<item>12</item>
 		<item>13</item>
 	</string-array>
-		<string name="trakt_syncunseen">Sync unseen episodes</string>
-		<string name="powered_by_thetvdb">powered by thetvdb.com</string>
+
 
 </resources>

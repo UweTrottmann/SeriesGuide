@@ -771,11 +771,9 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         // getPackageManager().getPackageInfo(getPackageName(),
         // PackageManager.GET_META_DATA).versionCode;
         // if (currentVersion > lastVersion) {
-
-        // BETA warning dialog switch
+        // // BETA warning dialog switch
         // showDialog(BETA_WARNING_DIALOG);
         // showDialog(WHATS_NEW_DIALOG);
-
         // // set this as lastVersion
         // prefs.edit().putInt(SeriesGuideData.KEY_VERSION,
         // currentVersion).commit();
