@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.battlelancer.seriesguide"
     android:installLocation="auto"
-    android:versionCode="120"
-    android:versionName="2.0dev">
+    android:versionName="2.1dev" android:versionCode="121">
     <application
         android:name="SeriesGuideApplication"
         android:icon="@drawable/icon"
