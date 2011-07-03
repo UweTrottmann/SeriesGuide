@@ -94,7 +94,7 @@ public class SeriesContract {
         String OVERVIEW = Episodes.OVERVIEW;
     }
 
-    public static final String CONTENT_AUTHORITY = "com.battlelancer.seriesguide";
+    public static final String CONTENT_AUTHORITY = "com.battlelancer.seriesguide.beta.provider";
 
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 

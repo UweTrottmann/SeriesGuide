@@ -38,7 +38,7 @@ import com.actionbarsherlock.internal.view.menu.MenuBuilder;
 import com.actionbarsherlock.internal.view.menu.MenuItemImpl;
 import com.actionbarsherlock.internal.view.menu.MenuView;
 import com.actionbarsherlock.internal.widget.ActionBarWatson;
-import com.actionbarsherlock.R;
+import com.battlelancer.seriesguide.beta.R;
 
 public final class ActionBarHandlerWatson extends ActionBar {
 	/** Maximum action bar items in portrait mode. */

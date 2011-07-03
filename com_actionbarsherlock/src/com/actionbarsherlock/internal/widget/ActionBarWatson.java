@@ -15,7 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
-import com.actionbarsherlock.R;
+import com.battlelancer.seriesguide.beta.R;
 
 public final class ActionBarWatson extends RelativeLayout {
 	/** Default display options if none are defined in the theme. */

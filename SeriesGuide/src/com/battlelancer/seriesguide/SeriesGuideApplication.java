@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide;
 
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.app.Application;

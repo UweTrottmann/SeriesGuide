@@ -252,7 +252,7 @@
     <string name="betawarning">WARNING: This is an unstable BETA release for testing purposes only. To download the stable end-user version click the download button below.\n\nIf you want to help test the beta go ahead. Please report every crash, try everything out and send feedback to seriesguide@battlelancer.com (see Settings).</string>
     
 	<!-- REMOVE before uploading to crowdin -->
-	<string name="app_name">SeriesGuide</string>
+	<string name="app_name">SeriesGuide beta</string>
 	<string name="whatsnew_content">- Redesign of UI and backend (try using it in landscape, or on Android 3.0+!).\n\n- New time offset setting.\n\n- Remove single episodes.\n\n- Long-clicking on Back takes you to the show list.\n\n- Dropped support for Android 1.6\n\n- Much more...</string>
 	<string name="helptranslate">Help translate SeriesGuide</string>
     <string name="thetvdb">TheTVDB.com</string>

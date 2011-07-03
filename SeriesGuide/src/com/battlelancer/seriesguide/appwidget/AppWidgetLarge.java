@@ -1,6 +1,6 @@
 package com.battlelancer.seriesguide.appwidget;
 
-import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.beta.R;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;

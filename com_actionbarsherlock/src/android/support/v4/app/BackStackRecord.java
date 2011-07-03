@@ -24,7 +24,7 @@ import android.util.Log;
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import com.actionbarsherlock.R;
+import com.battlelancer.seriesguide.beta.R;
 
 final class BackStackState implements Parcelable {
     final int[] mOps;

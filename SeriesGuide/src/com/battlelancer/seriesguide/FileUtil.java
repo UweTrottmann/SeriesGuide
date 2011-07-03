@@ -1,5 +1,6 @@
 package com.battlelancer.seriesguide;
 
+import com.battlelancer.seriesguide.beta.R;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
