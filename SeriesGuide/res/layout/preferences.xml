@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/pref_sorting">
+        <ListPreference
+            android:title="@string/pref_showsorting"
+            android:summary="@string/pref_showsortingsummary"
+            android:key="showSorting"
+            android:defaultValue="alphabetic"
+            android:entryValues="@array/shsortingData"
+            android:entries="@array/shsorting" />
+        <ListPreference
+            android:title="@string/pref_seasonsorting"
+            android:summary="@string/pref_sortingsummary"
+            android:key="seasonSorting"
+            android:defaultValue="latestfirst"
+            android:entryValues="@array/sesortingData"
+            android:entries="@array/sesorting" />
+        <ListPreference
+            android:title="@string/pref_episodesorting"
+            android:summary="@string/pref_epsortingsummary"
+            android:key="episodeSorting"
+            android:defaultValue="oldestfirst"
+            android:entryValues="@array/epsortingData"
+            android:entries="@array/epsorting" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_showlist">
+        <CheckBoxPreference
+            android:title="@string/pref_onlyfuture"
+            android:summary="@string/pref_onlyfuturesummary"
+            android:key="onlyFutureEpisodes"
+            android:defaultValue="False" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_content">
+        <Preference
+            android:title="@string/backup"
+            android:key="backup"
+            android:summary="@string/backup_summary" />
+        <ListPreference
+            android:title="@string/pref_language"
+            android:summary="@string/pref_languagesummary"
+            android:key="language"
+            android:defaultValue="en"
+            android:entryValues="@array/languageData"
+            android:entries="@array/languages" />
+        <ListPreference
+            android:title="@string/pref_number"
+            android:summary="@string/pref_numbersummary"
+            android:key="numberformat"
+            android:defaultValue="default"
+            android:entryValues="@array/numberData"
+            android:entries="@array/numbers" />
+        <CheckBoxPreference
+            android:title="@string/pref_usetz"
+            android:summary="@string/pref_usetzsummary"
+            android:key="com.battlelancer.seriesguide.usemytimezone"
+            android:defaultValue="False" />
+        <ListPreference
+            android:title="@string/pref_offset"
+            android:summary="@string/pref_offsetsummary"
+            android:key="com.battlelancer.seriesguide.timeoffset"
+            android:defaultValue="0"
+            android:entryValues="@array/offsetData"
+            android:entries="@array/offsets" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_sharing">
+        <Preference
+            android:title="@string/clearGetGlueCredentials"
+            android:summary="@string/clearGetGlueCredentialssummary"
+            android:key="clearGetGlueCredentials" />
+        <Preference
+            android:title="@string/pref_trakt"
+            android:summary="@string/pref_traktsummary"
+            android:key="com.battlelancer.seriesguide.traktcredentials" />
+        <CheckBoxPreference
+            android:title="@string/pref_traktintegrate"
+            android:summary="@string/pref_traktintegratesummary"
+            android:key="com.battlelancer.seriesguide.traktintegration"
+            android:defaultValue="False" />
+        <Preference
+            android:title="@string/pref_traktsync"
+            android:summary="@string/pref_traktsyncsummary"
+            android:key="com.battlelancer.seriesguide.traktsync" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_more">
+        <Preference
+            android:title="@string/help"
+            android:key="helpPref"
+            android:summary="@string/help_summary" />
+        <Preference
+            android:title="@string/feedback"
+            android:key="com.battlelancer.seriesguide.feedback" />
+        <Preference
+            android:title="@string/about"
+            android:key="aboutPref" />
+        <Preference
+            android:title="@string/changelog"
+            android:key="changelogPref"
+            android:summary="@string/changelog_summary" />
+        <Preference
+            android:title="@string/helptranslate"
+            android:key="com.battlelancer.seriesguide.helpTranslate" />
+        <Preference
+            android:title="@string/donate"
+            android:key="com.battlelancer.seriesguide.donate" />
+        <Preference
+            android:title="@string/thetvdb"
+            android:key="thetvdb"
+            android:summary="@string/thetvdb_summary" />
+        <Preference
+            android:title="@string/clear_cache"
+            android:key="clearCache"
+            android:summary="@string/clear_cache_summary" />
+        <CheckBoxPreference
+            android:title="@string/pref_ganalytics"
+            android:summary="@string/pref_ganalyticssummary"
+            android:key="enableGAnalytics"
+            android:defaultValue="True" />
+        <CheckBoxPreference
+            android:title="@string/pref_hideimages"
+            android:summary="@string/pref_hideimagessummary"
+            android:key="hideimages"
+            android:defaultValue="True" />
+    </PreferenceCategory>
+</PreferenceScreen>

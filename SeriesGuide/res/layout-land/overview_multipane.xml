@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/fragment_overview"
+            android:layout_weight="4"
+            android:layout_width="0px"
+            android:layout_height="fill_parent" />
+
+        <FrameLayout
+            android:id="@+id/background_seasons"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:layout_weight="3">
+            <!-- <ImageView android:layout_width="fill_parent" android:layout_height="fill_parent" android:src="@drawable/list_glow_left" 
+                android:scaleType="fitXY"></ImageView> -->
+            <FrameLayout
+                android:id="@+id/fragment_seasons"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:paddingLeft="1dp" />
+        </FrameLayout>
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/appwidget_bg">
+	<LinearLayout
+		android:id="@+id/LinearLayoutWidget"
+		android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_above="@+id/widgetShowlistButton"
+		android:background="@drawable/appwidget_button_center"
+		android:orientation="vertical"
+		android:clickable="true"
+        android:focusable="true"
+        android:paddingTop="10dp"
+		android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+	</LinearLayout>	
+    <ImageButton
+        android:id="@+id/ImageButtonWidget"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:padding="5dp"
+        android:src="@drawable/ic_action_refresh"
+        android:background="@drawable/appwidget_button_center"
+        android:scaleType="fitXY"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        />
+    <Button android:text="@string/showlist"
+	    android:id="@+id/widgetShowlistButton"
+	    android:background="@drawable/appwidget_button_center"
+	    android:textColor="#ffffffff"
+	    android:textSize="12sp"
+	    android:layout_toLeftOf="@+id/ImageButtonWidget"
+	    android:layout_height="wrap_content"
+	    android:layout_width="wrap_content"
+	    android:layout_alignTop="@+id/ImageButtonWidget"
+	    android:layout_alignBottom="@+id/ImageButtonWidget"
+	    android:layout_alignParentLeft="true"></Button>
+</RelativeLayout>

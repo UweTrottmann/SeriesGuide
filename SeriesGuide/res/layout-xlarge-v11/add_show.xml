@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:id="@+id/searchbar">
+        <EditText
+            android:id="@+id/EditTextSearchString"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_hint_add"
+            android:lines="1"
+            android:scrollHorizontally="true"
+            android:ellipsize="end"
+            android:layout_alignParentLeft="true"
+            android:layout_width="fill_parent"
+            android:layout_toLeftOf="@+id/ButtonSearch"
+            android:imeOptions="actionSearch" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/textView1"
+            android:layout_height="wrap_content"
+            android:text="@string/powered_by_thetvdb"
+            android:textSize="@dimen/text_size_small"
+            android:textColor="@color/text_faded"
+            android:layout_below="@+id/EditTextSearchString"
+            android:layout_alignRight="@+id/EditTextSearchString"></TextView>
+        <ImageButton
+            android:id="@+id/ButtonSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_default_holo_dark"
+            android:src="@drawable/ic_action_search"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/EditTextSearchString"
+            android:layout_alignBottom="@+id/EditTextSearchString" />
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/ListViewSearchResults"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+</LinearLayout>

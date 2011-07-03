@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="294dp"
+    android:minHeight="148dp"
+    android:updatePeriodMillis="1800000"
+    android:initialLayout="@layout/appwidget_big"
+    android:previewImage="@drawable/next_episodes__middle__ori_landscape">
+</appwidget-provider>

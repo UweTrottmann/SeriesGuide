@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingbar">
+        <TextView
+            android:id="@+id/description"
+            style="@style/SmallItems"
+            android:text="@string/rating" />
+        <RatingBar
+            android:id="@+id/bar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="10"
+            android:rating="0"
+            android:stepSize="0.1"
+            android:isIndicator="true"
+            android:layout_toRightOf="@id/description"
+            android:layout_alignTop="@id/description"
+            android:layout_marginTop="5dp">
+        </RatingBar>
+        <TextView
+            android:id="@+id/value"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/bar"
+            android:layout_alignBottom="@id/description"
+            android:text="@string/norating" />
+    </RelativeLayout>
+</merge>

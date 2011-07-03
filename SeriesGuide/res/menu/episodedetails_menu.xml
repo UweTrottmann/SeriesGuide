@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_togglemark"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/togglewatched"
+        android:icon="@drawable/ic_action_seen" />
+    <item
+        android:id="@+id/menu_shareepisode"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/share_episode"
+        android:icon="@drawable/ic_action_share" />
+    <item
+        android:icon="@drawable/ic_action_calendar"
+        android:id="@+id/menu_addevent"
+        android:title="@string/addtocalendar"
+        android:showAsAction="ifRoom|withText"></item>
+</menu>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/syncbuttons"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/trakt_experimental"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"></TextView>
+    <Button
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textView1"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:id="@+id/syncToDeviceButton"
+        android:text="@string/trakt_synctodevice"
+        android:layout_marginTop="10dp"></Button>
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/syncToDeviceButton"
+        android:id="@+id/syncToTraktButton"
+        android:layout_width="wrap_content"
+        android:layout_alignLeft="@+id/syncToDeviceButton"
+        android:layout_alignRight="@+id/syncToDeviceButton"
+        android:text="@string/trakt_synctotrakt"
+        android:layout_marginTop="10dp"></Button>
+    <CheckBox android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_below="@+id/syncToTraktButton" android:layout_alignLeft="@+id/syncToTraktButton" android:layout_alignRight="@+id/syncToTraktButton" android:text="@string/trakt_syncunseen" android:layout_marginTop="20dp" android:id="@+id/checkBoxSyncUnseen"></CheckBox>
+    <ProgressBar
+        android:id="@+id/progressBarToTraktSync"
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@+id/syncToTraktButton"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/syncToTraktButton"
+        android:layout_alignBottom="@+id/syncToTraktButton"
+        android:visibility="gone"></ProgressBar>
+    <ProgressBar
+        android:id="@+id/progressBarToDeviceSync"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@+id/syncToDeviceButton"
+        android:layout_alignTop="@+id/syncToDeviceButton"
+        android:layout_alignBottom="@+id/syncToDeviceButton"
+        android:visibility="gone"></ProgressBar>
+
+</RelativeLayout>

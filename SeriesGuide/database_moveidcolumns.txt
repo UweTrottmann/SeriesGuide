@@ -1,0 +1,111 @@
+//	private void upgradeToSeventeen(SQLiteDatabase db) {
+//	    // move shows
+//        db.execSQL("ALTER TABLE " + Tables.SHOWS + " RENAME TO old;");
+//        db.execSQL(CREATE_SHOWS_TABLE);
+//        db.execSQL("INSERT INTO " + Tables.SHOWS
+//                + "("
+//                + ShowsColumns.SHOW_ID + ","
+//                + ShowsColumns.TITLE + ","
+//                + ShowsColumns.OVERVIEW + ","
+//                + ShowsColumns.ACTORS + ","
+//                + ShowsColumns.AIRSDAYOFWEEK + ","
+//                + ShowsColumns.AIRSTIME + ","
+//                + ShowsColumns.FIRSTAIRED + ","
+//                + ShowsColumns.GENRES + ","
+//                + ShowsColumns.NETWORK + ","
+//                + ShowsColumns.RATING + ","
+//                + ShowsColumns.RUNTIME + ","
+//                + ShowsColumns.STATUS + ","
+//                + ShowsColumns.CONTENTRATING + ","
+//                + ShowsColumns.NEXTEPISODE + ","
+//                + ShowsColumns.POSTER + ","
+//                + ShowsColumns.NEXTAIRDATE + ","
+//                + ShowsColumns.NEXTTEXT + ","
+//                + ShowsColumns.IMDBID
+//                + ")"
+//                + " SELECT " 
+//                + BaseColumns._ID + ","
+//                + ShowsColumns.TITLE + ","
+//                + ShowsColumns.OVERVIEW + ","
+//                + ShowsColumns.ACTORS + ","
+//                + ShowsColumns.AIRSDAYOFWEEK + ","
+//                + ShowsColumns.AIRSTIME + ","
+//                + ShowsColumns.FIRSTAIRED + ","
+//                + ShowsColumns.GENRES + ","
+//                + ShowsColumns.NETWORK + ","
+//                + ShowsColumns.RATING + ","
+//                + ShowsColumns.RUNTIME + ","
+//                + ShowsColumns.STATUS + ","
+//                + ShowsColumns.CONTENTRATING + ","
+//                + ShowsColumns.NEXTEPISODE + ","
+//                + ShowsColumns.POSTER + ","
+//                + ShowsColumns.NEXTAIRDATE + ","
+//                + ShowsColumns.NEXTTEXT + ","
+//                + ShowsColumns.IMDBID
+//                + " FROM old;");
+//        db.execSQL("DROP TABLE old;"); 
+//	    
+//	    // move seasons
+//        db.execSQL("ALTER TABLE " + Tables.SEASONS + " RENAME TO old;");
+//        db.execSQL(CREATE_SEASONS_TABLE);
+//        db.execSQL("INSERT INTO " + Tables.SEASONS
+//                + "("
+//                + SeasonsColumns.SEASON_ID + ","
+//                + SeasonsColumns.COMBINED + ","
+//                + ShowsColumns.SHOW_ID + ","
+//                + SeasonsColumns.WATCHCOUNT + ","
+//                + SeasonsColumns.UNAIREDCOUNT + ","
+//                + SeasonsColumns.NOAIRDATECOUNT + ","
+//                + SeasonsColumns.POSTER
+//                + ")"
+//                + " SELECT " 
+//                + BaseColumns._ID + ","
+//                + SeasonsColumns.COMBINED + ","
+//                + ShowsColumns.SHOW_ID + ","
+//                + SeasonsColumns.WATCHCOUNT + ","
+//                + SeasonsColumns.UNAIREDCOUNT + ","
+//                + SeasonsColumns.NOAIRDATECOUNT + ","
+//                + SeasonsColumns.POSTER
+//                + " FROM old;");
+//        db.execSQL("DROP TABLE old;"); 
+//	    
+//	    // move episodes
+//        db.execSQL("ALTER TABLE " + Tables.EPISODES + " RENAME TO old;");
+//        db.execSQL(CREATE_EPISODES_TABLE);
+//        db.execSQL("INSERT INTO " + Tables.EPISODES
+//                + "("
+//                + EpisodesColumns.EPISODE_ID + ","
+//                + EpisodesColumns.TITLE + ","
+//                + EpisodesColumns.OVERVIEW + ","
+//                + EpisodesColumns.NUMBER + ","
+//                + EpisodesColumns.SEASON + ","
+//                + EpisodesColumns.DVDNUMBER + ","
+//                + EpisodesColumns.FIRSTAIRED + ","
+//                + SeasonsColumns.SEASON_ID + ","
+//                + ShowsColumns.SHOW_ID + ","
+//                + EpisodesColumns.WATCHED + ","
+//                + EpisodesColumns.DIRECTORS + ","
+//                + EpisodesColumns.GUESTSTARS + ","
+//                + EpisodesColumns.WRITERS + ","
+//                + EpisodesColumns.IMAGE + ","
+//                + EpisodesColumns.RATING
+//                + ")"
+//                + " SELECT "
+//                + BaseColumns._ID + ","
+//                + EpisodesColumns.TITLE + ","
+//                + EpisodesColumns.OVERVIEW + ","
+//                + EpisodesColumns.NUMBER + ","
+//                + EpisodesColumns.SEASON + ","
+//                + EpisodesColumns.DVDNUMBER + ","
+//                + EpisodesColumns.FIRSTAIRED + ","
+//                + SeasonsColumns.SEASON_ID + ","
+//                + ShowsColumns.SHOW_ID + ","
+//                + EpisodesColumns.WATCHED + ","
+//                + EpisodesColumns.DIRECTORS + ","
+//                + EpisodesColumns.GUESTSTARS + ","
+//                + EpisodesColumns.WRITERS + ","
+//                + EpisodesColumns.IMAGE + ","
+//                + EpisodesColumns.RATING
+//                + " FROM old;");
+//        db.execSQL("DROP TABLE old;"); 
+//    }

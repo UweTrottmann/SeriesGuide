@@ -1,0 +1,35 @@
+** NEW ENGLISH **
+
+Manage the progress of (re-)watching your favorite TV shows. Keep track which episodes you still have to watch or which ones are upcoming. As a plus you can get more information about a show and each episode (description, actors, episode image, ...) and share that you like a specific episode.
+
+All data is fetched from theTVDB.com, an open TV database. So if a new episode or some information is missing, you can go to thetvdb.com, sign up and add it yourself!
+
+- No sign-in.
+- Everything is available offline. (Internet connection required for adding/updating shows and downloading images)
+- Backup and restore your shows (see 'Backup/Restore' in Settings).
+- App widget displays upcoming episodes
+- GetGlue check-in support
+- trakt.tv mark as watched support
+- Share episodes via Android apps (Gmail, Facebook, Twitter, ...)
+
+NOTE: Airtimes and Network info are those in the United States due to limitations of thetvdb.com. However some shows episodes are released in English shortly after they aired in the US internationally.
+
+Visit the developers web page for more info and some hints.
+
+** NEW GERMAN **
+
+Verwalten Sie den Fortschritt, wenn Sie Ihre Lieblings-TV-Serien (erneut) ansehen. Behalten Sie so den Überblick welche Folgen Sie noch sehen müssen oder welche demnächst in den USA auf Sendung gehen. Zusätzlich können Sie mehr über eine Serie oder eine spezielle Folge erfahren (Beschreibung, Schauspieler, Bild aus der Folge, ...) und eine Folge weiterempfehlen, wenn Sie ihnen gefallen hat.
+
+Alle Daten stammen von theTVDB.com, einer freien TV Datenbank. Sollte also eine Folge fehlen oder Informationen unvollständig sein, melden Sie sich unter thetvdb.com an und fügen Sie diese selber hinzu!
+
+- Keine Anmeldung.
+- Alles offline verfügbar. (Internet-Verbindung zum Hinzufügen/Aktualisieren von Serien und zum Laden von Bildern erforderlich)
+- Sichern oder Wiederherstellen Ihrer Serien (siehe 'Sichern/Wiederherstellung' in den Einstellungen)
+- App-Widget zeigt künftige Folgen
+- GetGlue Check-In Unterstützung
+- trakt.tv Gesehen Markierung Unterstützung
+- Empfehlen Sie Folgen via Android Apps (Gmail, Facebook, Twitter, ...)
+
+HINWEIS: Ausstrahlungs- und Senderdaten sind die in den USA auf Grund von Limitierungen in thetvdb.com. Allerdings werden englische Folgen einiger Serien kurz nach Ausstrahlung in den USA international veröffentlicht.
+
+Besuchen Sie die Entwickler-Website um ein paar Tipps zu erfahren.

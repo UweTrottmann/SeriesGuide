@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView android:id="@+id/TextViewAddSearchResult" xmlns:android="http://schemas.android.com/apk/res/android"
+	android:textSize="28sp"
+    android:padding="5dp"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"/>
