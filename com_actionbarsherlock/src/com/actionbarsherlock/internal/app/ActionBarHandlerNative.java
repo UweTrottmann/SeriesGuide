@@ -16,7 +16,6 @@
 
 package com.actionbarsherlock.internal.app;
 
-import java.util.HashMap;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActionBar;
@@ -25,6 +24,8 @@ import android.support.v4.view.Menu;
 import android.support.v4.view.MenuInflater;
 import android.view.View;
 import android.widget.SpinnerAdapter;
+
+import java.util.HashMap;
 
 public final class ActionBarHandlerNative {
 	//No instances

@@ -17,8 +17,12 @@
 
 package com.actionbarsherlock.internal.app;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.actionbarsherlock.internal.view.menu.MenuBuilder;
+import com.actionbarsherlock.internal.view.menu.MenuItemImpl;
+import com.actionbarsherlock.internal.view.menu.MenuView;
+import com.actionbarsherlock.internal.widget.ActionBarWatson;
+import com.battlelancer.seriesguide.beta.R;
+
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -34,11 +38,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.SpinnerAdapter;
-import com.actionbarsherlock.internal.view.menu.MenuBuilder;
-import com.actionbarsherlock.internal.view.menu.MenuItemImpl;
-import com.actionbarsherlock.internal.view.menu.MenuView;
-import com.actionbarsherlock.internal.widget.ActionBarWatson;
-import com.battlelancer.seriesguide.beta.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class ActionBarHandlerWatson extends ActionBar {
 	/** Maximum action bar items in portrait mode. */

@@ -2,10 +2,10 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ShowInfo;
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;

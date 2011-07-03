@@ -17,7 +17,6 @@
 
 package com.actionbarsherlock.internal.view.menu;
 
-import java.lang.ref.WeakReference;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
@@ -25,9 +24,11 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.MenuItem;
 import android.util.Log;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
+
+import java.lang.ref.WeakReference;
 
 /**
  * An implementation of the {@link android.view.MenuItem} interface for use in

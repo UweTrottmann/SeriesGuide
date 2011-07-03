@@ -2,7 +2,6 @@ package com.battlelancer.seriesguide;
 
 import android.app.backup.BackupAgentHelper;
 import android.app.backup.SharedPreferencesBackupHelper;
-import com.battlelancer.seriesguide.beta.R;
 
 public class PrefBackupHelper extends BackupAgentHelper {
 	// The name of the SharedPreferences file

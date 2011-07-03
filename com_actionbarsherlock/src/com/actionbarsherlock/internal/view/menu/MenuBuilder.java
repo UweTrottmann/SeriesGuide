@@ -17,8 +17,6 @@
 
 package com.actionbarsherlock.internal.view.menu;
 
-import java.util.ArrayList;
-import java.util.List;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +25,9 @@ import android.content.pm.ResolveInfo;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
 import android.view.KeyEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An implementation of the {@link android.view.Menu} interface for use in

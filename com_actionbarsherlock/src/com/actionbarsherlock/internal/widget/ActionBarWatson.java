@@ -1,5 +1,7 @@
 package com.actionbarsherlock.internal.widget;
 
+import com.battlelancer.seriesguide.beta.R;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -15,7 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
-import com.battlelancer.seriesguide.beta.R;
 
 public final class ActionBarWatson extends RelativeLayout {
 	/** Default display options if none are defined in the theme. */

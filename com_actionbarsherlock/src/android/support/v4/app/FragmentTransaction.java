@@ -16,6 +16,8 @@
 
 package android.support.v4.app;
 
+import android.app.FragmentBreadCrumbs;
+
 /**
  * Static library support version of the framework's {@link android.app.FragmentTransaction}.
  * Used to write apps that run on platforms prior to Android 3.0.  When running

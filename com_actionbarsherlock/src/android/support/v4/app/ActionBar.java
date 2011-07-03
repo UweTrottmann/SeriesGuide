@@ -16,8 +16,12 @@
 
 package android.support.v4.app;
 
+import com.actionbarsherlock.internal.app.ActionBarHandlerWatson;
+import com.actionbarsherlock.internal.view.menu.MenuItemImpl;
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v4.view.ActionMode;
 import android.support.v4.view.Menu;
 import android.util.AttributeSet;
@@ -25,8 +29,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.SpinnerAdapter;
-import com.actionbarsherlock.internal.app.ActionBarHandlerWatson;
-import com.actionbarsherlock.internal.view.menu.MenuItemImpl;
 
 /**
  * This is the public interface to the contextual ActionBar. The ActionBar acts

@@ -1,7 +1,6 @@
 
 package com.battlelancer.seriesguide;
 
-import com.battlelancer.seriesguide.beta.R;
 
 public class Constants {
 
