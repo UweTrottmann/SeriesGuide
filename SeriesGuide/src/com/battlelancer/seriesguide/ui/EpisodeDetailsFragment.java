@@ -18,7 +18,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
@@ -280,6 +282,21 @@ public class EpisodeDetailsFragment extends ListFragment implements
                             }
                         }
                     });
+
+                    // Poster
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ECLAIR_MR1) {
+                        // using alpha seems not to work on eclair, so only set
+                        // a background on froyo+ then
+                        final ImageView background = (ImageView) getActivity().findViewById(
+                                R.id.episodedetails_background);
+                        Bitmap bg = imageCache.get(episode
+                                .getString(EpisodeDetailsQuery.SHOW_POSTER));
+                        if (bg != null) {
+                            BitmapDrawable drawable = new BitmapDrawable(getResources(), bg);
+                            drawable.setAlpha(50);
+                            background.setImageDrawable(drawable);
+                        }
+                    }
                     return true;
                 }
                 return false;
@@ -380,7 +397,8 @@ public class EpisodeDetailsFragment extends ListFragment implements
                 Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIRED,
                 Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
                 Tables.EPISODES + "." + Episodes.RATING, Episodes.IMAGE, Episodes.DVDNUMBER,
-                Episodes.TITLE, Shows.TITLE, Shows.AIRSTIME, Shows.IMDBID, Shows.RUNTIME
+                Episodes.TITLE, Shows.TITLE, Shows.AIRSTIME, Shows.IMDBID, Shows.RUNTIME,
+                Shows.POSTER
         };
 
         int _ID = 0;
@@ -418,6 +436,8 @@ public class EpisodeDetailsFragment extends ListFragment implements
         int SHOW_IMDBID = 16;
 
         int SHOW_RUNTIME = 17;
+
+        int SHOW_POSTER = 18;
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
