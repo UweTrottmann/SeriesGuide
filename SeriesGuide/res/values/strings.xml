@@ -207,7 +207,7 @@
 	<string name="oauthmessage">Authenticating SeriesGuide with GetGlue...</string>
 	<string name="addtocalendar">Add to calendar</string>
 	<string name="addtocalendar_failed">Sorry, there is not enough information to create a calendar event.</string>
-	<string name="pref_usetz">Use my time zone (non-US)</string>
+	<string name="pref_usetz">Use my time zone</string>
 	<string name="pref_usetzsummary">Air dates in your time zone (for users outside the USA)</string>
 	<string name="search_description">Episodes</string>
 	<string name="description_home">Home</string>
