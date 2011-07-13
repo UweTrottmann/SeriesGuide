@@ -22,6 +22,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -76,6 +77,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private static final int CONTEXT_SHOWINFO = 202;
 
     private static final int CONTEXT_MARKNEXT = 203;
+
+    private static final int CONTEXT_FAVORITE = 204;
 
     public static final int UPDATE_OFFLINE_DIALOG = 300;
 
@@ -406,10 +409,11 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, CONTEXT_SHOWINFO, 0, R.string.context_showinfo);
-        menu.add(0, CONTEXT_MARKNEXT, 1, R.string.context_marknext);
-        menu.add(0, CONTEXT_UPDATESHOW_ID, 2, R.string.context_updateshow);
-        menu.add(0, CONTEXT_DELETE_ID, 3, R.string.delete_show);
+        menu.add(0, CONTEXT_FAVORITE, 0, R.string.context_favorite);
+        menu.add(0, CONTEXT_SHOWINFO, 1, R.string.context_showinfo);
+        menu.add(0, CONTEXT_MARKNEXT, 2, R.string.context_marknext);
+        menu.add(0, CONTEXT_UPDATESHOW_ID, 3, R.string.context_updateshow);
+        menu.add(0, CONTEXT_DELETE_ID, 4, R.string.delete_show);
     }
 
     @Override
@@ -417,6 +421,13 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
+            case CONTEXT_FAVORITE: {
+                ContentValues values = new ContentValues();
+                values.put(Shows.FAVORITE, true);
+                getContentResolver().update(Shows.buildShowUri(String.valueOf(info.id)), values,
+                        null, null);
+                Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
+            }
             case CONTEXT_DELETE_ID:
                 fireTrackerEvent("Delete show");
 

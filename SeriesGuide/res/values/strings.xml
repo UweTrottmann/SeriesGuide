@@ -67,6 +67,7 @@
 	<string name="dontdelete_show">Don\'t remove</string>
 	<string name="no_nextepisode">no next episode found</string>
 	<string name="nextepisode">next:</string>
+    <string name="context_favorite">Add to favorites</string>
 
 	<!-- Show info -->
 	<string name="show_airs">airs</string>
