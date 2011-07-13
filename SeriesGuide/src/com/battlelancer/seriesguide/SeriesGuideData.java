@@ -95,7 +95,8 @@ public class SeriesGuideData {
 
     public static enum ShowSorting {
         ALPHABETIC(0, Shows.TITLE + " asc"), UPCOMING(1, Shows.NEXTAIRDATE + " asc,"
-                + Shows.AIRSTIME + " asc," + Shows.TITLE + " asc");
+                + Shows.AIRSTIME + " asc," + Shows.TITLE + " asc"), FAVORITES_FIRST(2,
+                Shows.FAVORITE + " desc," + Shows.TITLE + " asc");
 
         private final int index;
 
@@ -348,7 +349,7 @@ public class SeriesGuideData {
                 };
             } else {
                 // TODO: check for Central and subtract one hour
-                
+
                 // use unmodified data as it is in Pacific time already
                 return new String[] {
                         time, getDayShortcode(dayofweek)

@@ -427,6 +427,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 getContentResolver().update(Shows.buildShowUri(String.valueOf(info.id)), values,
                         null, null);
                 Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
+                return true;
             }
             case CONTEXT_DELETE_ID:
                 fireTrackerEvent("Delete show");
@@ -801,11 +802,15 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
      * @return Returns true if the value changed, false otherwise.
      */
     private boolean updateSorting(SharedPreferences prefs) {
-        ShowSorting oldSorting = sorting;
-        if (prefs.getString(SeriesGuideData.KEY_SHOWSSORTORDER, "alphabetic").equals("alphabetic")) {
-            sorting = SeriesGuideData.ShowSorting.ALPHABETIC;
-        } else {
-            sorting = SeriesGuideData.ShowSorting.UPCOMING;
+        final ShowSorting oldSorting = sorting;
+        final CharSequence[] items = getResources().getStringArray(R.array.shsortingData);
+        final String sortsetting = prefs.getString(SeriesGuideData.KEY_SHOWSSORTORDER, "alphabetic");
+        
+        for (int i = 0; i < items.length; i++) {
+            if (sortsetting.equals(items[i])) {
+                sorting = ShowSorting.values()[i];
+                break;
+            }
         }
 
         return oldSorting != sorting;
