@@ -31,7 +31,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "seriesdatabase";
 
-    public static final int DATABASE_VERSION = 16;
+    public static final int DATABASE_VERSION = 17;
 
     public interface Tables {
         String SHOWS = "series";
@@ -64,7 +64,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + " TEXT DEFAULT ''," + ShowsColumns.NEXTEPISODE + " TEXT DEFAULT '',"
             + ShowsColumns.POSTER + " TEXT DEFAULT ''," + ShowsColumns.NEXTAIRDATE
             + " TEXT DEFAULT '0'," + ShowsColumns.NEXTTEXT + " TEXT DEFAULT '',"
-            + ShowsColumns.IMDBID + " TEXT DEFAULT '');";
+            + ShowsColumns.IMDBID + " TEXT DEFAULT ''," + ShowsColumns.FAVORITE
+            + " INTEGER DEFAULT 0" + ");";
 
     private static final String CREATE_SEASONS_TABLE = "CREATE TABLE " + Tables.SEASONS + " ("
             + BaseColumns._ID + " INTEGER PRIMARY KEY," + SeasonsColumns.COMBINED + " INTEGER,"
@@ -138,6 +139,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 15:
                 upgradeToSixteen(db);
                 version = 16;
+            case 16:
+                upgradeToSeventeen(db);
+                version = 17;
         }
 
         // drop all tables if version is not right
@@ -152,6 +156,16 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             onCreate(db);
         }
+    }
+
+    /**
+     * In version 17 the series boolean column favorite was added.
+     * 
+     * @param db
+     */
+    private void upgradeToSeventeen(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.FAVORITE
+                + " INTEGER DEFAULT 0;");
     }
 
     /**

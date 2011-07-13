@@ -43,6 +43,8 @@ public class SeriesContract {
         String TITLE = "seriestitle";
 
         String IMDBID = "imdbid";
+        
+        String FAVORITE = "series_favorite";
     }
 
     interface SeasonsColumns {
