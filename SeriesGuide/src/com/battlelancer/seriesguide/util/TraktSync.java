@@ -12,7 +12,7 @@ import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragme
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.entities.TvShow;
-import com.jakewharton.trakt.entities.WatchedSeasons;
+import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.services.ShowService.EpisodeSeenBuilder;
 import com.jakewharton.trakt.services.ShowService.EpisodeUnseenBuilder;
 
@@ -135,8 +135,8 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
                     // go through watched seasons, try to match them with local
                     // season
-                    List<WatchedSeasons> seasons = tvShow.getSeasons();
-                    for (WatchedSeasons season : seasons) {
+                    List<TvShowSeason> seasons = tvShow.getSeasons();
+                    for (TvShowSeason season : seasons) {
                         Cursor seasonMatch = mContext.getContentResolver().query(
                                 Seasons.buildSeasonsOfShowUri(tvdbId), new String[] {
                                     Seasons._ID
@@ -150,7 +150,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
                             // build episodes update query to mark seen episodes
 
-                            for (Integer episode : season.getEpisodes()) {
+                            for (Integer episode : season.getEpisodes().getNumbers()) {
                                 batch.add(ContentProviderOperation
                                         .newUpdate(Episodes.buildEpisodesOfSeasonUri(seasonId))
                                         .withSelection(Episodes.NUMBER + "=?", new String[] {

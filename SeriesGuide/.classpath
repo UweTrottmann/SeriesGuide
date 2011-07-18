@@ -6,8 +6,7 @@
 	<classpathentry kind="lib" path="lib/libGoogleAnalytics.jar"/>
 	<classpathentry kind="lib" path="lib/signpost-commonshttp4-1.2.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/signpost-core-1.2.1.1.jar"/>
-	<classpathentry kind="lib" path="lib/gson-1.7.1.jar"/>
-	<classpathentry kind="lib" path="lib/apibuilder-1.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/trakt-java-1.1.0-jar-with-dependencies.jar"/>
 	<classpathentry kind="src" path="com_actionbarsherlock_src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

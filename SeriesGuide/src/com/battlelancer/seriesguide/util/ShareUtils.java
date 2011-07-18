@@ -510,8 +510,8 @@ public class ShareUtils {
                         final ServiceManager manager = new ServiceManager();
                         manager.setApiKey(Constants.TRAKT_API_KEY);
                         manager.setAuthentication(username, ShareUtils.toSHA1(password.getBytes()));
-                        final Response response = manager.userService()
-                                .createAccount(username, password, email).fire();
+                        final Response response = manager.accountService()
+                                .create(username, password, email).fire();
 
                         if (response.getStatus().equalsIgnoreCase("success")) {
                             Toast.makeText(context,
@@ -519,7 +519,7 @@ public class ShareUtils {
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(context,
-                                    response.getStatus() + ": " + response.getError(),
+                                    response.getStatus() + ": " + response.getMessage(),
                                     Toast.LENGTH_LONG).show();
                             editor.putString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
                             editor.putString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
