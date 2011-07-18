@@ -216,7 +216,8 @@ public class AddShow extends Activity {
 
     private void setSearchResults(List<SearchResult> searchResults) {
         ArrayAdapter<SearchResult> adapter = new ArrayAdapter<SearchResult>(
-                getApplicationContext(), R.layout.add_searchresult, searchResults);
+                getApplicationContext(), R.layout.add_searchresult, R.id.TextViewAddSearchResult,
+                searchResults);
         ((ListView) findViewById(R.id.ListViewSearchResults)).setAdapter(adapter);
     }
 
