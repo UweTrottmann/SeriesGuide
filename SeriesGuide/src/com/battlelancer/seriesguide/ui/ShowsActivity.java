@@ -80,6 +80,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final int CONTEXT_FAVORITE = 204;
 
+    private static final int CONTEXT_UNFAVORITE = 205;
+
     public static final int UPDATE_OFFLINE_DIALOG = 300;
 
     public static final int UPDATE_SAXERROR_DIALOG = 302;
@@ -409,7 +411,20 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, CONTEXT_FAVORITE, 0, R.string.context_favorite);
+        menuInfo.toString();
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+        final Cursor show = getContentResolver().query(Shows.buildShowUri(String.valueOf(info.id)),
+                new String[] {
+                    Shows.FAVORITE
+                }, null, null, null);
+        show.moveToFirst();
+        if (show.getInt(0) == 0) {
+            menu.add(0, CONTEXT_FAVORITE, 0, R.string.context_favorite);
+        } else {
+            menu.add(0, CONTEXT_UNFAVORITE, 0, R.string.context_unfavorite);
+        }
+        show.close();
+
         menu.add(0, CONTEXT_SHOWINFO, 1, R.string.context_showinfo);
         menu.add(0, CONTEXT_MARKNEXT, 2, R.string.context_marknext);
         menu.add(0, CONTEXT_UPDATESHOW_ID, 3, R.string.context_updateshow);
@@ -427,6 +442,14 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 getContentResolver().update(Shows.buildShowUri(String.valueOf(info.id)), values,
                         null, null);
                 Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            case CONTEXT_UNFAVORITE: {
+                ContentValues values = new ContentValues();
+                values.put(Shows.FAVORITE, false);
+                getContentResolver().update(Shows.buildShowUri(String.valueOf(info.id)), values,
+                        null, null);
+                Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show();
                 return true;
             }
             case CONTEXT_DELETE_ID:
@@ -804,8 +827,9 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private boolean updateSorting(SharedPreferences prefs) {
         final ShowSorting oldSorting = sorting;
         final CharSequence[] items = getResources().getStringArray(R.array.shsortingData);
-        final String sortsetting = prefs.getString(SeriesGuideData.KEY_SHOWSSORTORDER, "alphabetic");
-        
+        final String sortsetting = prefs
+                .getString(SeriesGuideData.KEY_SHOWSSORTORDER, "alphabetic");
+
         for (int i = 0; i < items.length; i++) {
             if (sortsetting.equals(items[i])) {
                 sorting = ShowSorting.values()[i];
