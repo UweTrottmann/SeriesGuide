@@ -239,7 +239,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                 while (unseenEpisodes.moveToNext()) {
                     int season = unseenEpisodes.getInt(0);
                     int episode = unseenEpisodes.getInt(1);
-                    builder.episode(season, episode);
+                    builderUnseen.episode(season, episode);
                 }
                 unseenEpisodes.close();
             }
