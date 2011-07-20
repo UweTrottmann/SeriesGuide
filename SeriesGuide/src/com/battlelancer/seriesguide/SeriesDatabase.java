@@ -169,11 +169,10 @@ public class SeriesDatabase {
     }
 
     /**
-     * Returns the first 20 upcoming episodes together with their shows title,
+     * Returns all upcoming episodes together with their shows title,
      * network, airtime and posterpath.
      * 
-     * @param limit
-     * @return Cursor including 20 upcoming episodes with show title, network,
+     * @return Cursor including all upcoming episodes with show title, network,
      *         airtime and posterpath.
      */
     public static Cursor getUpcomingEpisodes(Context context) {
