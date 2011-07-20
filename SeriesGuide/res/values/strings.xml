@@ -177,7 +177,10 @@
 	<string name="backup_no">Don\'t Backup</string>
 	<string name="import_question">Make sure the backup is on the SD card. All current shows will be overwritten.</string>
 	<string name="import_yes">Restore</string>
-	<string name="import_no">Don\'t Restore</string>
+	<string name="import_no">Don\'t Restore</string>
+    
+    <string name="pref_notifications">Enable notifications</string>
+    <string name="pref_notificationssummary">Show notifications for upcoming episodes</string>
 	<!-- Misc -->
 	<string name="smallwidget">Next episodes (small)</string>
 	<string name="bigwidget">Next episodes (middle)</string>
