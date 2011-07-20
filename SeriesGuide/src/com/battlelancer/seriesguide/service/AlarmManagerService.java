@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide.service;
 
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 
 import android.app.AlarmManager;
@@ -29,10 +30,12 @@ public class AlarmManagerService extends IntentService {
 
             AlarmManager mgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent i = new Intent(this, OnAlarmReceiver.class);
+            i.putExtra(Episodes._ID, 2545921);
             PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
 
-            mgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000,
-                    AlarmManager.INTERVAL_DAY * 7, pi);
+            mgr.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000, pi);
+//            mgr.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 20000,
+//                    AlarmManager.INTERVAL_DAY * 7, pi);
             break;
 
         }

@@ -16,8 +16,11 @@ public class OnAlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        int episodeId = 0;
-        
+        int episodeId = intent.getIntExtra(Episodes._ID, -1);
+        if (episodeId == -1) {
+            return;
+        }
+
         String ns = Context.NOTIFICATION_SERVICE;
         NotificationManager mNotificationManager = (NotificationManager) context
                 .getSystemService(ns);
