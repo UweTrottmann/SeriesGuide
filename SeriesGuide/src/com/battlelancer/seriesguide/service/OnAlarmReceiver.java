@@ -30,6 +30,9 @@ public class OnAlarmReceiver extends BroadcastReceiver {
         long when = System.currentTimeMillis();
 
         Notification notification = new Notification(icon, tickerText, when);
+        notification.defaults |= Notification.DEFAULT_LIGHTS;
+        notification.defaults |= Notification.DEFAULT_VIBRATE;
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
         CharSequence contentTitle = "Upcoming episode";
         CharSequence contentText = "Fringe: Olivia (8:00 PM on FOX)";
