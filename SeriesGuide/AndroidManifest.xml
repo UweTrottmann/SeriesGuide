@@ -152,6 +152,7 @@
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
         </activity>
+        <service android:name=".service.AlarmManagerService"></service>
     </application>
 
     <uses-sdk
