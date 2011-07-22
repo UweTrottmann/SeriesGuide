@@ -35,7 +35,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -77,7 +76,7 @@ public class ImageCache {
 
     private String mSecondLevelCacheDir;
 
-    private final Map<String, SoftReference<Bitmap>> mCache;
+    private final Map<String, Bitmap> mCache;
 
     private CompressFormat mCompressedImageFormat = CompressFormat.JPEG;
 
@@ -97,7 +96,7 @@ public class ImageCache {
 
     private ImageCache(Context ctx) {
         this.mCtx = ctx;
-        this.mCache = new HashMap<String, SoftReference<Bitmap>>();
+        this.mCache = new HashMap<String, Bitmap>(50);
         this.mSecondLevelCacheDir = Environment.getExternalStorageDirectory().getAbsolutePath()
                 + "/Android/data/com.battlelancer.seriesguide/files";
         mScale = mCtx.getResources().getDisplayMetrics().density;
@@ -189,14 +188,11 @@ public class ImageCache {
 
     public synchronized Bitmap getIfNotBusy(Object key, boolean isBusy) {
         String imageUrl = (String) key;
-        SoftReference<Bitmap> bitmapRef = mCache.get(imageUrl);
+        Bitmap bitmapRef = mCache.get(imageUrl);
 
         if (bitmapRef != null) {
             // 1st level cache hit (memory)
-            Bitmap bitmap = bitmapRef.get();
-            if (bitmap != null) {
-                return bitmap;
-            }
+            return bitmapRef;
         }
 
         // if the caller is busy doing other work, don't load from disk
@@ -213,8 +209,7 @@ public class ImageCache {
                 return null;
             }
 
-            bitmapRef = new SoftReference<Bitmap>(bitmap);
-            mCache.put(imageUrl, bitmapRef);
+            mCache.put(imageUrl, bitmap);
             return bitmap;
         }
 
@@ -275,7 +270,7 @@ public class ImageCache {
                 bitmap.compress(mCompressedImageFormat, mCachedImageQuality, ostream);
                 ostream.close();
 
-                mCache.put(imageUrl, new SoftReference<Bitmap>(bitmap));
+                mCache.put(imageUrl, bitmap);
 
                 return bitmap;
             } catch (FileNotFoundException e) {
