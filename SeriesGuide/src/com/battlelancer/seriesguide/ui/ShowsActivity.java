@@ -977,16 +977,17 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             final String path = mCursor.getString(ShowsQuery.POSTER);
             if (!mBusy) {
                 // load poster
-                setPosterBitmap(viewHolder.poster, path);
+                setPosterBitmap(viewHolder.poster, path, false);
 
                 // Null tag means the view has the correct data
                 viewHolder.poster.setTag(null);
             } else {
-                // set placeholder
-                viewHolder.poster.setImageResource(R.drawable.show_generic);
+                // only load in-memory poster
+                setPosterBitmap(viewHolder.poster, path, true);
 
-                // Non-null tag means the view still needs to load it's data
-                viewHolder.poster.setTag(path);
+                // // set placeholder
+                // viewHolder.poster.setImageResource(R.drawable.show_generic);
+
             }
 
             return convertView;
@@ -1024,7 +1025,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                     final ViewHolder holder = (ViewHolder) view.getChildAt(i).getTag();
                     final ImageView poster = holder.poster;
                     if (poster.getTag() != null) {
-                        setPosterBitmap(poster, (String) poster.getTag());
+                        setPosterBitmap(poster, (String) poster.getTag(), false);
                         poster.setTag(null);
                     }
                 }
@@ -1039,17 +1040,28 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         }
     }
 
-    private void setPosterBitmap(ImageView poster, String path) {
+    /**
+     * If {@code isBusy} is {@code true}, then the image is only loaded if it is
+     * in memory. In every other case a place-holder is shown.
+     * 
+     * @param poster
+     * @param path
+     * @param isBusy
+     */
+    private void setPosterBitmap(ImageView poster, String path, boolean isBusy) {
         Bitmap bitmap = null;
         if (path.length() != 0) {
-            bitmap = mImageCache.getThumb(path);
+            bitmap = mImageCache.getThumb(path, isBusy);
         }
 
         if (bitmap != null) {
             poster.setImageBitmap(bitmap);
+            poster.setTag(null);
         } else {
             // set placeholder
             poster.setImageResource(R.drawable.show_generic);
+            // Non-null tag means the view still needs to load it's data
+            poster.setTag(path);
         }
     }
 }

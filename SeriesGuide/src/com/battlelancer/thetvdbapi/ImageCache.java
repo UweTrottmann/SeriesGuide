@@ -112,7 +112,8 @@ public class ImageCache {
                     // remove or add .nomedia file
                     if (sharedPreferences.getBoolean(SeriesGuideData.KEY_HIDEIMAGES, true)) {
                         // track event
-                        AnalyticsUtils.getInstance(mCtx).trackEvent("Settings", "Hide images", "Enable", 0);
+                        AnalyticsUtils.getInstance(mCtx).trackEvent("Settings", "Hide images",
+                                "Enable", 0);
 
                         try {
                             new File(mSecondLevelCacheDir + "/.nomedia").createNewFile();
@@ -122,7 +123,8 @@ public class ImageCache {
                         Log.d(TAG, "Creating .nomedia file");
                     } else {
                         // track event
-                        AnalyticsUtils.getInstance(mCtx).trackEvent("Settings", "Hide images", "Disable", 0);
+                        AnalyticsUtils.getInstance(mCtx).trackEvent("Settings", "Hide images",
+                                "Disable", 0);
 
                         new File(mSecondLevelCacheDir + "/.nomedia").delete();
                         Log.d(TAG, "Deleting .nomedia file");
@@ -181,7 +183,11 @@ public class ImageCache {
         return mCachedImageQuality;
     }
 
-    public synchronized Bitmap get(Object key) {
+    public Bitmap get(Object key) {
+        return getIfNotBusy(key, false);
+    }
+
+    public synchronized Bitmap getIfNotBusy(Object key, boolean isBusy) {
         String imageUrl = (String) key;
         SoftReference<Bitmap> bitmapRef = mCache.get(imageUrl);
 
@@ -191,6 +197,11 @@ public class ImageCache {
             if (bitmap != null) {
                 return bitmap;
             }
+        }
+
+        // if the caller is busy doing other work, don't load from disk
+        if (isBusy) {
+            return null;
         }
 
         File imageFile = getImageFile(imageUrl);
@@ -218,14 +229,19 @@ public class ImageCache {
      * @param key
      * @return Bitmap containing the thumb version of this image
      */
-    public synchronized Bitmap getThumb(Object key) {
+    public synchronized Bitmap getThumb(Object key, boolean isBusy) {
         String imageUrl = (String) key;
         String imageThumbUrl = imageUrl + THUMB_SUFFIX;
 
         // see if thumbnail already exists
-        Bitmap thumbnail = get(imageThumbUrl);
+        Bitmap thumbnail = getIfNotBusy(imageThumbUrl, isBusy);
         if (thumbnail != null) {
             return thumbnail;
+        }
+
+        // if the caller is busy doing other work, don't load from disk
+        if (isBusy) {
+            return null;
         }
 
         return getThumbHelper(imageUrl);
