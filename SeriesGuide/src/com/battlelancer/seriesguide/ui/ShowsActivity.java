@@ -1028,7 +1028,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
                 break;
             case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
-                mBusy = true;
+                mBusy = false;
                 break;
             case OnScrollListener.SCROLL_STATE_FLING:
                 mBusy = true;
