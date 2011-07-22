@@ -984,10 +984,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             } else {
                 // only load in-memory poster
                 setPosterBitmap(viewHolder.poster, path, true);
-
-                // // set placeholder
-                // viewHolder.poster.setImageResource(R.drawable.show_generic);
-
             }
 
             return convertView;
@@ -1032,7 +1028,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
                 break;
             case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
-                mBusy = true;
+                mBusy = false;
                 break;
             case OnScrollListener.SCROLL_STATE_FLING:
                 mBusy = true;

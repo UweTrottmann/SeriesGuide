@@ -167,7 +167,7 @@ public class AppWidget extends AppWidgetProvider {
                                 .getColumnIndexOrThrow(SeriesDatabase.SERIES_POSTER));
                         poster = null;
                         if (value.length() != 0) {
-                            poster = imageCache.getThumb(value);
+                            poster = imageCache.getThumb(value, false);
 
                             if (poster != null) {
                                 item.setImageViewBitmap(R.id.widgetPoster, poster);
