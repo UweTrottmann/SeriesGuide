@@ -17,7 +17,7 @@
 -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
     <view
-    	class="com.actionbarsherlock.internal.widget.ActionBarWatson$HomeItem"
+        class="com.actionbarsherlock.internal.widget.ActionBarView$HomeItem"
         android:id="@+id/actionbarwatson_home"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
@@ -44,13 +44,25 @@
         android:layout_alignWithParentIfMissing="true"
         android:layout_centerVertical="true"
         >
+        <ProgressBar
+            android:id="@+id/actionbarwatson_iprogress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="5dip"
+            android:indeterminateOnly="true"
+            android:visibility="gone"
+            style="?abIndeterminateProgressStyle"
+            />
         <com.actionbarsherlock.internal.widget.ScrollingTextView
             android:id="@+id/actionbarwatson_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@id/actionbarwatson_iprogress"
+            android:layout_alignWithParentIfMissing="true"
             android:gravity="center_vertical"
             android:paddingLeft="5dip"
             android:paddingRight="5dip"
@@ -66,8 +78,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@id/actionbarwatson_iprogress"
             android:layout_below="@id/actionbarwatson_title"
+            android:layout_alignWithParentIfMissing="true"
             android:gravity="center_vertical"
             android:paddingLeft="5dip"
             android:paddingRight="5dip"
@@ -79,31 +92,34 @@
             android:visibility="gone"
             />
         <Spinner
-        	android:id="@+id/actionbarwatson_nav_list"
-        	android:layout_width="wrap_content"
-        	android:layout_height="fill_parent"
-        	android:layout_alignParentLeft="true"
-        	android:layout_alignParentRight="true"
-        	style="?attr/actionDropDownStyle"
-        	/>
+            android:id="@+id/actionbarwatson_nav_list"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@id/actionbarwatson_iprogress"
+            android:layout_alignWithParentIfMissing="true"
+            style="?actionDropDownStyle"
+            />
         <LinearLayout
             android:id="@+id/actionbarwatson_nav_tabs"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@id/actionbarwatson_iprogress"
+            android:layout_alignWithParentIfMissing="true"
             android:focusable="true"
             android:visibility="visible"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            style="?attr/actionBarTabBarStyle"
+            style="?actionBarTabBarStyle"
             />
         <FrameLayout
             android:id="@+id/actionbarwatson_custom"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@id/actionbarwatson_iprogress"
+            android:layout_alignWithParentIfMissing="true"
             android:visibility="gone"
             />
     </RelativeLayout>

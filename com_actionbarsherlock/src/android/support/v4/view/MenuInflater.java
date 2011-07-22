@@ -18,6 +18,7 @@
 package android.support.v4.view;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -43,7 +44,7 @@ import android.view.View;
  * <em>something</em> file.)
  */
 public final class MenuInflater extends android.view.MenuInflater {
-	//private static final Class<?>[] ACTION_VIEW_CONSTRUCTOR_SIGNATURE = new Class[] { Context.class };
+	private static final Class<?>[] ACTION_VIEW_CONSTRUCTOR_SIGNATURE = new Class[] { Context.class };
 	private static final Class<?>[] PARAM_TYPES = new Class[] { android.view.MenuItem.class };
 	
 	/** Android XML namespace. */
@@ -205,7 +206,7 @@ public final class MenuInflater extends android.view.MenuInflater {
 		private boolean itemAdded;
 		private int itemId;
 		private int itemCategoryOrder;
-		private int itemTitleId;
+		private String itemTitle;
 		private String itemTitleCondensed;
 		private int itemIconResId;
 		private char itemAlphabeticShortcut;
@@ -304,10 +305,20 @@ public final class MenuInflater extends android.view.MenuInflater {
 			itemCategoryOrder = (category & Menu__CATEGORY_MASK) | (order & Menu__USER_MASK);
 			
 			//itemTitle = a.getString(com.android.internal.R.styleable.MenuItem_title);
-			itemTitleId = attrs.getAttributeResourceValue(XML_NS, "title", 0);
+			final int itemTitleId = attrs.getAttributeResourceValue(XML_NS, "title", 0);
+			if (itemTitleId != 0) {
+				itemTitle = mContext.getString(itemTitleId);
+			} else {
+				itemTitle = attrs.getAttributeValue(XML_NS, "title");
+			}
 			
 			//itemTitleCondensed = a.getString(com.android.internal.R.styleable.MenuItem_titleCondensed);
-			itemTitleCondensed = attrs.getAttributeValue(XML_NS, "titleCondensed");
+			final int itemTitleCondensedId = attrs.getAttributeResourceValue(XML_NS, "titleCondensed", 0);
+			if (itemTitleCondensedId != 0) {
+				itemTitleCondensed = mContext.getString(itemTitleCondensedId);
+			} else {
+				itemTitleCondensed = attrs.getAttributeValue(XML_NS, "titleCondensed");
+			}
 			
 			//itemIconResId = a.getResourceId(com.android.internal.R.styleable.MenuItem_icon, 0);
 			itemIconResId = attrs.getAttributeResourceValue(XML_NS, "icon", defaultIconResId);
@@ -380,29 +391,29 @@ public final class MenuInflater extends android.view.MenuInflater {
 				item.setExclusiveCheckable(true);
 			}
 			if (itemActionViewClassName != null) {
-				//try {
-				//	Context context = MenuInflater.this.mContext;
-				//	ClassLoader loader = context.getClassLoader();
-				//	Class<?> actionViewClass = Class.forName(itemActionViewClassName, true, loader);
-				//	Constructor<?> constructor = actionViewClass.getConstructor(ACTION_VIEW_CONSTRUCTOR_SIGNATURE);
-				//	View actionView = (View)constructor.newInstance(new Object[] { context });
-				//	item.setActionView(actionView);
-				//} catch (Exception e) {
-				//	throw new InflateException(e);
-				//}
-			} else if (itemActionLayout >= 0) {
-				//item.setActionView(itemActionLayout);
+				try {
+					Context context = MenuInflater.this.mContext;
+					ClassLoader loader = context.getClassLoader();
+					Class<?> actionViewClass = Class.forName(itemActionViewClassName, true, loader);
+					Constructor<?> constructor = actionViewClass.getConstructor(ACTION_VIEW_CONSTRUCTOR_SIGNATURE);
+					View actionView = (View)constructor.newInstance(new Object[] { context });
+					item.setActionView(actionView);
+				} catch (Exception e) {
+					throw new InflateException(e);
+				}
+			} else if (itemActionLayout > 0) {
+				item.setActionView(itemActionLayout);
 			}
 		}
 		
 		public void addItem() {
 			itemAdded = true;
-			setItem(menu.add(groupId, itemId, itemCategoryOrder, itemTitleId));
+			setItem(menu.add(groupId, itemId, itemCategoryOrder, itemTitle));
 		}
 		
 		public SubMenuBuilder addSubMenuItem() {
 			itemAdded = true;
-			SubMenuBuilder subMenu = menu.addSubMenu(groupId, itemId, itemCategoryOrder, itemTitleId);
+			SubMenuBuilder subMenu = menu.addSubMenu(groupId, itemId, itemCategoryOrder, itemTitle);
 			setItem(subMenu.getItem());
 			return subMenu;
 		}

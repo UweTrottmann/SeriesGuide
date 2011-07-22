@@ -48,7 +48,8 @@ public abstract class Window extends android.view.Window {
 	 * Enable the pre-3.0 action bar implementation to honor the 'withText'
 	 * attribute on menu items regardless of display resolution and/or density.
 	 */
-	public static final long FEATURE_ENABLE_ACTION_BAR_WATSON_TEXT = 4 + 8 + 15 + 16 + 23 + 42;
+	//Hopefully the native Window.FEATURE_XXX numbering won't get this high anytime soon.
+	public static final long FEATURE_ACTION_BAR_ITEM_TEXT = 31;
 	
 	/**
 	 * Flag for requesting an Action Bar that overlays window content. Normally
@@ -68,6 +69,11 @@ public abstract class Window extends android.view.Window {
 	 * cover existing window content.
 	 */
 	public static final long FEATURE_ACTION_MODE_OVERLAY = android.view.Window.FEATURE_ACTION_MODE_OVERLAY;
+	
+	/**
+	 * Flag for indeterminate progress .
+	 */
+	public static final long FEATURE_INDETERMINATE_PROGRESS = android.view.Window.FEATURE_INDETERMINATE_PROGRESS;
 	
 	
 	

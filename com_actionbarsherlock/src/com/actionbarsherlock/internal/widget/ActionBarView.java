@@ -11,13 +11,14 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import com.actionbarsherlock.R;
 
-public final class ActionBarWatson extends RelativeLayout {
+public final class ActionBarView extends RelativeLayout {
 	/** Default display options if none are defined in the theme. */
 	private static final int DEFAULT_DISPLAY_OPTIONS = ActionBar.DISPLAY_SHOW_TITLE | ActionBar.DISPLAY_SHOW_HOME;
 	
@@ -35,11 +36,16 @@ public final class ActionBarWatson extends RelativeLayout {
 	/** Subtitle view. */
 	private final TextView mSubtitle;
 	
+	/** Indeterminate progress bar. */
+	private final ProgressBar mIndeterminateProgress;
+	
 	/** List view. */
 	private final Spinner mListView;
 	
 	/** Custom view parent. */
 	private final FrameLayout mCustomView;
+	
+	private final Drawable mDivider;
 	
 	/** Container for all action items. */
 	private final LinearLayout mActionsView;
@@ -70,22 +76,24 @@ public final class ActionBarWatson extends RelativeLayout {
 	/** Whether text is shown on action items regardless of display params. */
 	private boolean mIsActionItemTextEnabled = false;
 	
+	private boolean mIsConstructing;
+	
 	
 
-	public ActionBarWatson(Context context) {
+	public ActionBarView(Context context) {
 		this(context, null);
 	}
 	
-	public ActionBarWatson(Context context, AttributeSet attrs) {
-		this(context, attrs, R.attr.actionBarStyle);
+	public ActionBarView(Context context, AttributeSet attrs) {
+		this(context, attrs, 0);
 	}
 	
-	public ActionBarWatson(Context context, AttributeSet attrs, int defStyle) {
+	public ActionBarView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		LayoutInflater.from(context).inflate(R.layout.actionbarwatson, this, true);
+		LayoutInflater.from(context).inflate(R.layout.action_bar, this, true);
 		
-		final TypedArray attrsActionBar = context.obtainStyledAttributes(attrs, R.styleable.SherlockActionBar, defStyle, 0);
-		final TypedArray attrsTheme = context.obtainStyledAttributes(attrs, R.styleable.SherlockTheme, defStyle, 0);
+		final TypedArray attrsActionBar = context.obtainStyledAttributes(attrs, R.styleable.SherlockTheme, defStyle, 0);
+		mIsConstructing = true;
 		
 		
 		/// HOME ////
@@ -94,17 +102,17 @@ public final class ActionBarWatson extends RelativeLayout {
 		
 		
 		//Load the up indicator
-		final Drawable homeAsUpIndicator = attrsTheme.getDrawable(R.styleable.SherlockTheme_homeAsUpIndicator);
+		final Drawable homeAsUpIndicator = attrsActionBar.getDrawable(R.styleable.SherlockTheme_abHomeAsUpIndicator);
 		mHome.setUpIndicator(homeAsUpIndicator);
 
 		//Try to load the logo from the theme
-		final Drawable homeLogo = attrsActionBar.getDrawable(R.styleable.SherlockActionBar_logo);
+		final Drawable homeLogo = attrsActionBar.getDrawable(R.styleable.SherlockTheme_abLogo);
 		if (homeLogo != null) {
 			mHome.setLogo(homeLogo);
 		}
 		
 		//Try to load the icon from the theme
-		final Drawable homeIcon = attrsActionBar.getDrawable(R.styleable.SherlockActionBar_icon);
+		final Drawable homeIcon = attrsActionBar.getDrawable(R.styleable.SherlockTheme_abIcon);
 		mHome.setIcon(homeIcon);
 
 		
@@ -113,13 +121,13 @@ public final class ActionBarWatson extends RelativeLayout {
 		mTitle = (TextView)findViewById(R.id.actionbarwatson_title);
 		
 		//Try to load title style from the theme
-		final int titleTextStyle = attrsActionBar.getResourceId(R.styleable.SherlockActionBar_titleTextStyle, 0);
+		final int titleTextStyle = attrsActionBar.getResourceId(R.styleable.SherlockTheme_abTitleTextStyle, 0);
 		if (titleTextStyle != 0) {
 			mTitle.setTextAppearance(context, titleTextStyle);
 		}
 		
 		//Try to load title from the theme
-		final CharSequence title = attrsActionBar.getString(R.styleable.SherlockActionBar_title);
+		final CharSequence title = attrsActionBar.getString(R.styleable.SherlockTheme_abTitle);
 		if (title != null) {
 			setTitle(title);
 		}
@@ -130,13 +138,13 @@ public final class ActionBarWatson extends RelativeLayout {
 		mSubtitle = (TextView)findViewById(R.id.actionbarwatson_subtitle);
 		
 		//Try to load subtitle style from the theme
-		final int subtitleTextStyle = attrsActionBar.getResourceId(R.styleable.SherlockActionBar_subtitleTextStyle, 0);
+		final int subtitleTextStyle = attrsActionBar.getResourceId(R.styleable.SherlockTheme_abSubtitleTextStyle, 0);
 		if (subtitleTextStyle != 0) {
 			mSubtitle.setTextAppearance(context, subtitleTextStyle);
 		}
 		
 		//Try to load subtitle from theme
-		final CharSequence subtitle = attrsActionBar.getString(R.styleable.SherlockActionBar_subtitle);
+		final CharSequence subtitle = attrsActionBar.getString(R.styleable.SherlockTheme_abSubtitle);
 		if (subtitle != null) {
 			setSubtitle(subtitle);
 		}
@@ -154,27 +162,37 @@ public final class ActionBarWatson extends RelativeLayout {
 		
 		//Try to load a custom view from the theme. This will NOT automatically
 		//trigger the visibility of the custom layout, however.
-		final int customViewResourceId = attrsActionBar.getResourceId(R.styleable.SherlockActionBar_customNavigationLayout, 0);
+		final int customViewResourceId = attrsActionBar.getResourceId(R.styleable.SherlockTheme_abCustomNavigationLayout, 0);
 		if (customViewResourceId != 0) {
 			setCustomView(customViewResourceId);
 		}
 		
 		
-		mActionsView = (LinearLayout)findViewById(R.id.actionbarwatson_actions);
 		
+
+		mActionsView = (LinearLayout)findViewById(R.id.actionbarwatson_actions);
+		mDivider = attrsActionBar.getDrawable(R.styleable.SherlockTheme_abDivider);
+		
+		mIndeterminateProgress = (ProgressBar)findViewById(R.id.actionbarwatson_iprogress);
+		
+		Drawable background = attrsActionBar.getDrawable(R.styleable.SherlockTheme_abBackground);
+		if (background != null) {
+			setBackgroundDrawable(background);
+		}
 		
 		//Try to get the display options defined in the theme, or fall back to
 		//displaying the title and home icon
-		setDisplayOptions(attrsActionBar.getInteger(R.styleable.SherlockActionBar_displayOptions, DEFAULT_DISPLAY_OPTIONS));
+		setDisplayOptions(attrsActionBar.getInteger(R.styleable.SherlockTheme_abDisplayOptions, DEFAULT_DISPLAY_OPTIONS));
 		
 		//Try to get the navigation defined in the theme, or, fall back to
-		//use standard navigation by default (this will call reloadDisplay)
-		setNavigationMode(attrsActionBar.getInteger(R.styleable.SherlockActionBar_navigationMode, DEFAULT_NAVIGATION_MODE));
+		//use standard navigation by default
+		setNavigationMode(attrsActionBar.getInteger(R.styleable.SherlockTheme_abNavigationMode, DEFAULT_NAVIGATION_MODE));
 		
 		
 		//Reduce, Reuse, Recycle!
 		attrsActionBar.recycle();
-		attrsTheme.recycle();
+		mIsConstructing = false;
+		reloadDisplay();
 	}
 	
 	
@@ -197,6 +215,10 @@ public final class ActionBarWatson extends RelativeLayout {
 	 * Reload the current action bar display state.
 	 */
 	private void reloadDisplay() {
+		if (mIsConstructing) {
+			return; //Do not run if we are in the constructor
+		}
+		
 		final boolean isStandard = mNavigationMode == ActionBar.NAVIGATION_MODE_STANDARD;
 		final boolean isList = mNavigationMode == ActionBar.NAVIGATION_MODE_LIST;
 		final boolean isTab = mNavigationMode == ActionBar.NAVIGATION_MODE_TABS;
@@ -205,7 +227,7 @@ public final class ActionBarWatson extends RelativeLayout {
 		final boolean displayHomeAsUp = getDisplayOptionValue(ActionBar.DISPLAY_HOME_AS_UP);
 		final boolean displayTitle = getDisplayOptionValue(ActionBar.DISPLAY_SHOW_TITLE);
 		final boolean displayCustom = getDisplayOptionValue(ActionBar.DISPLAY_SHOW_CUSTOM);
-		final boolean displayLogo = getDisplayOptionValue(ActionBar.DISPLAY_USE_LOGO);
+		final boolean displayLogo = getDisplayOptionValue(ActionBar.DISPLAY_USE_LOGO) && (mHome.getLogo() != null);
 		
 		mHome.setVisibility(displayHome ? View.VISIBLE : View.GONE);
 		if (displayHome) {
@@ -427,6 +449,10 @@ public final class ActionBarWatson extends RelativeLayout {
 	public void setDisplayUseLogoEnabled(boolean useLogo) {
 		setDisplayOptions(useLogo ? ActionBar.DISPLAY_USE_LOGO : 0, ActionBar.DISPLAY_USE_LOGO);
 	}
+	
+	public void setProgressBarIndeterminateVisibility(boolean visible) {
+		mIndeterminateProgress.setVisibility(visible ? View.VISIBLE : View.GONE);
+	}
 
 	public void setListNavigationCallbacks(SpinnerAdapter adapter, final ActionBar.OnNavigationListener callback) {
 		mListView.setAdapter(adapter);
@@ -505,28 +531,35 @@ public final class ActionBarWatson extends RelativeLayout {
 	// ACTION ITEMS SUPPORT
 	// ------------------------------------------------------------------------
 	
-	public ActionBarWatson.Item getHomeItem() {
+	public ActionBarView.Item getHomeItem() {
 		return mHome;
 	}
 	
-	public ActionBarWatson.Item newItem() {
-		ActionItem item = (ActionItem)LayoutInflater.from(getContext()).inflate(R.layout.actionbarwatson_item, mActionsView, false);
+	public ActionBarView.Item newItem() {
+		ActionItem item = (ActionItem)LayoutInflater.from(getContext()).inflate(R.layout.action_bar_item_layout, mActionsView, false);
 		item.setActionBar(this);
 		return item;
 	}
 	
-	public void addItem(ActionBarWatson.Item item) {
+	public void addItem(ActionBarView.Item item) {
 		if (item instanceof HomeItem) {
 			throw new IllegalStateException("Cannot add home item as an action item.");
 		}
+		
+		if (mDivider != null) {
+			ImageView divider = new ImageView(getContext());
+			divider.setImageDrawable(mDivider);
+			divider.setScaleType(ImageView.ScaleType.FIT_XY);
+			
+			LinearLayout.LayoutParams dividerParams = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.WRAP_CONTENT,
+				LinearLayout.LayoutParams.FILL_PARENT
+			);
+			
+			mActionsView.addView(divider, dividerParams);
+		}
+		
 		mActionsView.addView(item);
-	}
-	
-	public void addItem(ActionBarWatson.Item item, int position) {
-		if (item instanceof HomeItem) {
-			throw new IllegalStateException("Cannot add home item as an action item.");
-		}
-		mActionsView.addView(item, position);
 	}
 	
 	public void removeAllItems() {
@@ -579,7 +612,7 @@ public final class ActionBarWatson extends RelativeLayout {
 	}
 	
 	public static final class ActionItem extends Item {
-		ActionBarWatson mActionBar;
+		ActionBarView mActionBar;
 		ImageView mIconView;
 		TextView mTextView;
 		FrameLayout mCustomView;
@@ -614,7 +647,7 @@ public final class ActionBarWatson extends RelativeLayout {
 			mCustomView.setVisibility(hasCustomView ? View.VISIBLE : View.GONE);
 		}
 		
-		void setActionBar(ActionBarWatson actionBar) {
+		void setActionBar(ActionBarView actionBar) {
 			mActionBar = actionBar;
 		}
 		
@@ -719,7 +752,7 @@ public final class ActionBarWatson extends RelativeLayout {
 		
 		public HomeItem(Context context, AttributeSet attrs, int defStyle) {
 			super(context, attrs, defStyle);
-			LayoutInflater.from(context).inflate(R.layout.actionbarwatson_item_home, this, true);
+			LayoutInflater.from(context).inflate(R.layout.action_bar_home, this, true);
 			
 			mLogo = (ImageView)findViewById(R.id.actionbarwatson_home_logo);
 			mIcon = (ImageView)findViewById(R.id.actionbarwatson_home_icon);
@@ -822,7 +855,7 @@ public final class ActionBarWatson extends RelativeLayout {
 			}
 		};
 		
-		final ActionBarWatson mActionBar;
+		final ActionBarView mActionBar;
 		final View mView;
 		final ImageView mIconView;
 		final TextView mTextView;
@@ -832,9 +865,9 @@ public final class ActionBarWatson extends RelativeLayout {
 		Object mTag;
 		
 		
-		TabImpl(ActionBarWatson actionBar) {
+		TabImpl(ActionBarView actionBar) {
 			mActionBar = actionBar;
-			mView = LayoutInflater.from(mActionBar.getContext()).inflate(R.layout.actionbarwatson_tab, actionBar.mTabsView, false);
+			mView = LayoutInflater.from(mActionBar.getContext()).inflate(R.layout.action_bar_tab_layout, actionBar.mTabsView, false);
 			mView.setTag(this);
 			mView.setOnClickListener(clickListener);
 			

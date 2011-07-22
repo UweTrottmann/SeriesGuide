@@ -20,23 +20,24 @@ import java.util.HashMap;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActionBar;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ActionMode;
-import android.support.v4.view.Menu;
 import android.support.v4.view.MenuInflater;
 import android.view.View;
 import android.widget.SpinnerAdapter;
 
-public final class ActionBarHandlerNative {
+public final class ActionBarNativeImpl {
 	//No instances
-	private ActionBarHandlerNative() {}
+	private ActionBarNativeImpl() {}
 	
 	/**
-	 * Simple static method abstraction to get a reference to our implementing class.
+	 * Abstraction to get an instance of our implementing class.
 	 * 
-	 * @return {@code ActionBarNative.Impl.class}
+	 * @param activity Parent activity.
+	 * @return {@code ActionBar} instance.
 	 */
-	public static Class<? extends ActionBar> get() {
-		return ActionBarHandlerNative.Impl.class;
+	public static ActionBar createFor(FragmentActivity activity) {
+		return new ActionBarNativeImpl.Impl(activity);
 	}
 
 	/**
@@ -46,6 +47,12 @@ public final class ActionBarHandlerNative {
 		/** Mapping between support listeners and native listeners. */
 		private final HashMap<OnMenuVisibilityListener, android.app.ActionBar.OnMenuVisibilityListener> mMenuListenerMap = new HashMap<OnMenuVisibilityListener, android.app.ActionBar.OnMenuVisibilityListener>();
 		
+		
+		private Impl(FragmentActivity activity) {
+			super(activity);
+		}
+		
+		
 		/**
 		 * Get the native {@link ActionBar} instance.
 		 * 
@@ -53,6 +60,11 @@ public final class ActionBarHandlerNative {
 		 */
 		private android.app.ActionBar getActionBar() {
 			return getActivity().getActionBar();
+		}
+
+		@Override
+		protected ActionBar getPublicInstance() {
+			return (getActionBar() != null) ? this : null;
 		}
 		
 		/**
@@ -93,45 +105,6 @@ public final class ActionBarHandlerNative {
 			if (listener != null) {
 				listener.onTabUnselected((ActionBar.Tab)tab.getTag(), null);
 			}
-		}
-		
-		// ---------------------------------------------------------------------
-		// ACTION BAR SHERLOCK SUPPORT
-		// ---------------------------------------------------------------------
-
-		@Override
-		protected void setContentView(int layoutResId) {
-			throw new IllegalStateException("This should have been passed to super from the Activity.");
-		}
-		
-		@Override
-		protected void setContentView(View view) {
-			throw new IllegalStateException("This should have been passed to super from the Activity.");
-		}
-
-		@Override
-		protected void setContentView(View view, android.view.ViewGroup.LayoutParams params) {
-			throw new IllegalStateException("This should have been passed to super from the Activity.");
-		}
-		
-		@Override
-		protected void onMenuVisibilityChanged(boolean isVisible) {
-			throw new IllegalStateException("This should never be utilized for the native ActionBar.");
-		}
-
-		@Override
-		protected void onMenuInflated(Menu menu) {
-			throw new IllegalStateException("This should never be utilized for the native ActionBar.");
-		}
-
-		@Override
-		protected boolean requestWindowFeature(int featureId) {
-			throw new IllegalStateException("This should have been passed to super from the Activity.");
-		}
-		
-		@Override
-		protected void performAttach() {
-			throw new IllegalStateException("This should never be utilized for the native ActionBar.");
 		}
 		
 		// ---------------------------------------------------------------------
@@ -247,7 +220,7 @@ public final class ActionBarHandlerNative {
 		// ---------------------------------------------------------------------
 		
 		private static class TabImpl implements ActionBar.Tab {
-			final ActionBarHandlerNative.Impl mActionBar;
+			final ActionBarNativeImpl.Impl mActionBar;
 			
 			View mCustomView;
 			Drawable mIcon;
@@ -255,7 +228,7 @@ public final class ActionBarHandlerNative {
 			Object mTag;
 			CharSequence mText;
 			
-			TabImpl(ActionBarHandlerNative.Impl actionBar) {
+			TabImpl(ActionBarNativeImpl.Impl actionBar) {
 				mActionBar = actionBar;
 			}
 

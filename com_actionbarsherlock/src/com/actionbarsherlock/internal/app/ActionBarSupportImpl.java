@@ -26,21 +26,19 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActionBar;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ActionMode;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
-import android.support.v4.view.Window;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.SpinnerAdapter;
+import com.actionbarsherlock.R;
 import com.actionbarsherlock.internal.view.menu.MenuBuilder;
 import com.actionbarsherlock.internal.view.menu.MenuItemImpl;
 import com.actionbarsherlock.internal.view.menu.MenuView;
-import com.actionbarsherlock.internal.widget.ActionBarWatson;
-import com.actionbarsherlock.R;
+import com.actionbarsherlock.internal.widget.ActionBarView;
 
-public final class ActionBarHandlerWatson extends ActionBar {
+public final class ActionBarSupportImpl extends ActionBar {
 	/** Maximum action bar items in portrait mode. */
 	private static final int MAX_ACTION_BAR_ITEMS_PORTRAIT = 3;
 	
@@ -50,33 +48,38 @@ public final class ActionBarHandlerWatson extends ActionBar {
 	
 	
 	/** Action bar view. */
-	private ActionBarWatson mActionBar;
-	
-	/** Activity content view. */
-	private FrameLayout mContentView;
+	private ActionBarView mActionBar;
 	
 	/** List of listeners to the menu visibility. */
 	private final List<OnMenuVisibilityListener> mMenuListeners = new ArrayList<OnMenuVisibilityListener>();
 	
-	/** Whether text will be enabled on action items. */
-	private boolean mIsActionItemTextEnabled = false;
+	/** Whether display of the indeterminate progress is allowed. */
+	private boolean mHasIndeterminateProgress = false;
 	
+	/** Whether to honor 'withText' flags for action items. */
+	private boolean mIsDisplayingActionItemText = false;
+	
+	
+	
+	public ActionBarSupportImpl(FragmentActivity activity) {
+		super(activity);
+	}
 	
 	
 	// ------------------------------------------------------------------------
 	// ACTION BAR SHERLOCK SUPPORT
 	// ------------------------------------------------------------------------
-
+	
 	@Override
-	protected void performAttach() {
-		getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setActivityContentView(R.layout.actionbarwatson_wrapper);
-		
-		mActionBar = (ActionBarWatson)getActivity().findViewById(R.id.actionbarwatson);
-		mContentView = (FrameLayout)getActivity().findViewById(R.id.actionbarsherlock_content);
+	protected ActionBar getPublicInstance() {
+		return (mActionBar != null) ? this : null;
+	}
+	
+	public void init() {
+		mActionBar = (ActionBarView)getActivity().findViewById(R.id.action_bar);
 		
 		final MenuItemImpl homeMenuItem = getHomeMenuItem();
-		final ActionBarWatson.Item homeItem = mActionBar.getHomeItem();
+		final ActionBarView.Item homeItem = mActionBar.getHomeItem();
 		final WatsonItemViewWrapper homeWrapper = new WatsonItemViewWrapper(homeItem);
 		homeWrapper.initialize(homeMenuItem, MenuBuilder.TYPE_WATSON);
 		homeMenuItem.setItemView(MenuBuilder.TYPE_WATSON, homeWrapper);
@@ -89,36 +92,35 @@ public final class ActionBarHandlerWatson extends ActionBar {
 		} catch (NameNotFoundException e) {}
 
 		
-		if ((actInfo != null) && (actInfo.labelRes != 0)) {
-			//Load label string resource from the activity entry
-			mActionBar.setTitle(actInfo.labelRes);
-		} else if (mActionBar.getTitle() == null) {
-			//No activity label string resource and none in theme
-			mActionBar.setTitle(actInfo.loadLabel(pm));
+		if (mActionBar.getTitle() == null) {
+			if ((actInfo != null) && (actInfo.labelRes != 0)) {
+				//Load label string resource from the activity entry
+				mActionBar.setTitle(actInfo.labelRes);
+			} else {
+				//No activity label string resource and none in theme
+				mActionBar.setTitle(actInfo.loadLabel(pm));
+			}
+		}
+		if (homeItem.getIcon() == null) {
+			if ((actInfo != null) && (actInfo.icon != 0)) {
+				//Load the icon from the activity entry
+				homeItem.setIcon(actInfo.icon);
+			} else {
+				//No activity icon and none in theme
+				homeItem.setIcon(pm.getApplicationIcon(appInfo));
+			}
 		}
 		
-		if ((actInfo != null) && (actInfo.icon != 0)) {
-			//Load the icon from the activity entry
-			homeItem.setIcon(actInfo.icon);
-		} else if (homeItem.getIcon() == null) {
-			//No activity icon and none in theme
-			homeItem.setIcon(pm.getApplicationIcon(appInfo));
-		}
-		
-		//XXX LOGO LOADING DOES NOT WORK
-		//XXX SEE: http://stackoverflow.com/questions/6105504/load-activity-and-or-application-logo-programmatically-from-manifest
-		//XXX SEE: https://groups.google.com/forum/#!topic/android-developers/UFR4l0ZwJWc
-		//if ((actInfo != null) && (actInfo.logo != 0)) {
-		//	//Load the logo from the activity entry
-		//	homeItem.setLogo(actInfo.logo);
-		//} else if ((homeItem.getLogo() == null) && (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD)) {
-		//	//No activity logo and none in theme
-		//	homeItem.setLogo(appInfo.logo);
-		//}
+		//LOGO LOADING DOES NOT WORK
+		//SEE: http://stackoverflow.com/questions/6105504/load-activity-and-or-application-logo-programmatically-from-manifest
+		//SEE: https://groups.google.com/forum/#!topic/android-developers/UFR4l0ZwJWc
 	}
-
-	@Override
-	protected void onMenuInflated(Menu menu) {
+	
+	public void onMenuInflated(Menu menu) {
+		if (mActionBar == null) {
+			return;
+		}
+		
 		int maxItems = MAX_ACTION_BAR_ITEMS_PORTRAIT;
 		if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			maxItems = MAX_ACTION_BAR_ITEMS_LANDSCAPE;
@@ -132,11 +134,11 @@ public final class ActionBarHandlerWatson extends ActionBar {
 		for (int i = 0; i < count; i++) {
 			MenuItemImpl item = (MenuItemImpl)menu.getItem(i);
 			
-			//Items without an icon or items without a title when the title
-			//is enabled are forced into the normal options menu
-			if (!mIsActionItemTextEnabled && (item.getIcon() == null)) {
+			//Items without an icon or custom view are forced into the overflow menu
+			if (!mIsDisplayingActionItemText && (item.getIcon() == null) && (item.getActionView() == null)) {
 				continue;
-			} else if (mIsActionItemTextEnabled && ((item.getTitle() == null) || item.getTitle().equals(""))) {
+			}
+			if (mIsDisplayingActionItemText && ((item.getTitle() == null) || "".equals(item.getTitle()))) {
 				continue;
 			}
 			
@@ -167,12 +169,12 @@ public final class ActionBarHandlerWatson extends ActionBar {
 		//Mark items that will be shown on the action bar as such so they do
 		//not show up on the activity options menu
 		mActionBar.removeAllItems();
-		mActionBar.setIsActionItemTextEnabled(mIsActionItemTextEnabled);
+		mActionBar.setIsActionItemTextEnabled(mIsDisplayingActionItemText);
 		for (MenuItemImpl item : keep) {
 			item.setIsShownOnActionBar(true);
 			
 			//Get a new item for this menu item
-			ActionBarWatson.Item watsonItem = mActionBar.newItem();
+			ActionBarView.Item watsonItem = mActionBar.newItem();
 			
 			//Create and initialize a watson itemview wrapper
 			WatsonItemViewWrapper watsonWrapper = new WatsonItemViewWrapper(watsonItem);
@@ -185,44 +187,25 @@ public final class ActionBarHandlerWatson extends ActionBar {
 			mActionBar.addItem(watsonItem);
 		}
 	}
-
-	@Override
-	protected void setContentView(int layoutResId) {
-		getActivity().getLayoutInflater().inflate(layoutResId, mContentView, true);
-	}
-
-	@Override
-	protected void setContentView(View view) {
-		mContentView.addView(view);
-	}
-
-	@Override
-	protected void setContentView(View view, ViewGroup.LayoutParams params) {
-		mContentView.addView(view, params);
-	}
-
-	@Override
-	protected boolean requestWindowFeature(int featureId) {
-		if (featureId == Window.FEATURE_ACTION_BAR_OVERLAY) {
-			// TODO Make action bar partially transparent
-			return true;
-		}
-		if (featureId == Window.FEATURE_ACTION_MODE_OVERLAY) {
-			// TODO Make action modes partially transparent
-			return true;
-		}
-		if (featureId == Window.FEATURE_ENABLE_ACTION_BAR_WATSON_TEXT) {
-			mIsActionItemTextEnabled = true;
-			return true;
-		}
-		return false;
-	}
 	
-	@Override
-	protected void onMenuVisibilityChanged(boolean isVisible) {
+	public void onMenuVisibilityChanged(boolean isVisible) {
 		//Marshal to all listeners
 		for (OnMenuVisibilityListener listener : mMenuListeners) {
 			listener.onMenuVisibilityChanged(isVisible);
+		}
+	}
+	
+	public void setWindowActionBarItemTextEnabled(boolean enabled) {
+		mIsDisplayingActionItemText = enabled;
+	}
+	
+	public void setWindowIndeterminateProgressEnabled(boolean enabled) {
+		mHasIndeterminateProgress = enabled;
+	}
+	
+	public void setProgressBarIndeterminateVisibility(boolean visible) {
+		if (mHasIndeterminateProgress) {
+			mActionBar.setProgressBarIndeterminateVisibility(visible);
 		}
 	}
 	
@@ -454,20 +437,18 @@ public final class ActionBarHandlerWatson extends ActionBar {
 	public void show() {
 		mActionBar.show();
 	}
-	
-	/////
-	
+
+	// ///
+
 	private static final class WatsonItemViewWrapper implements MenuView.ItemView, View.OnClickListener {
-		private final ActionBarWatson.Item mWatsonItem;
+		private final ActionBarView.Item mWatsonItem;
 		private MenuItemImpl mMenuItem;
-		
-		
-		public WatsonItemViewWrapper(ActionBarWatson.Item item) {
+
+		public WatsonItemViewWrapper(ActionBarView.Item item) {
 			mWatsonItem = item;
 			mWatsonItem.setOnClickListener(this);
 		}
-		
-		
+
 		@Override
 		public MenuItemImpl getItemData() {
 			return mMenuItem;
@@ -477,12 +458,15 @@ public final class ActionBarHandlerWatson extends ActionBar {
 		public void initialize(MenuItemImpl itemData, int menuType) {
 			mMenuItem = itemData;
 			
-			setIcon(itemData.getIcon());
-			setTitle(itemData.getTitle());
-			setEnabled(itemData.isEnabled());
-			setCheckable(itemData.isCheckable());
-			setChecked(itemData.isChecked());
-			setActionView(itemData.getActionView());
+			//Only load menu item data if we are not the HomeItem
+			if (!(mWatsonItem instanceof ActionBarView.HomeItem)) {
+				setIcon(itemData.getIcon());
+				setTitle(itemData.getTitle());
+				setEnabled(itemData.isEnabled());
+				setCheckable(itemData.isCheckable());
+				setChecked(itemData.isChecked());
+				setActionView(itemData.getActionView());
+			}
 		}
 
 		@Override
@@ -492,12 +476,12 @@ public final class ActionBarHandlerWatson extends ActionBar {
 
 		@Override
 		public void setCheckable(boolean checkable) {
-			//TODO mItem.setCheckable(checkable);
+		// TODO mItem.setCheckable(checkable);
 		}
 
 		@Override
 		public void setChecked(boolean checked) {
-			//TODO mItem.setChecked(checked);
+		// TODO mItem.setChecked(checked);
 		}
 
 		@Override
@@ -512,7 +496,7 @@ public final class ActionBarHandlerWatson extends ActionBar {
 
 		@Override
 		public void setShortcut(boolean showShortcut, char shortcutKey) {
-			//Not supported
+		// Not supported
 		}
 
 		@Override
