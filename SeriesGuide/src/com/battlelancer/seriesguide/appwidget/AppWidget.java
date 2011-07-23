@@ -16,10 +16,10 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
-import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.SeriesDatabase;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.SeriesGuideData;
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.thetvdbapi.ImageCache;

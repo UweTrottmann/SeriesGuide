@@ -1,10 +1,10 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.SeriesDatabase;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.SeriesGuideData;
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;

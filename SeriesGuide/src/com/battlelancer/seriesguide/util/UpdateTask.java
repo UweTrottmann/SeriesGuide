@@ -1,8 +1,8 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.SeriesGuideData;
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.thetvdbapi.TheTVDB;
