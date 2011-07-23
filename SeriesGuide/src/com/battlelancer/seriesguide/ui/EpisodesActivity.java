@@ -2,6 +2,9 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SeriesDatabase;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.thetvdbapi.Series;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,9 +23,22 @@ public class EpisodesActivity extends BaseActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
 
-        final String customTitle = getIntent().getStringExtra(Intent.EXTRA_TITLE);
-        actionBar.setTitle(customTitle != null ? customTitle : getTitle());
+        String customTitle = getIntent().getStringExtra(Intent.EXTRA_TITLE);
+        if (customTitle == null) {
+            customTitle = "";
+        }
 
+        final String seriesid = getIntent().getStringExtra(Shows.REF_SHOW_ID);
+        final Series show = SeriesDatabase.getShow(this, seriesid);
+        if (show != null) {
+            String showname = show.getSeriesName();
+            actionBar.setTitle(showname + " " + customTitle);
+            setTitle(showname + " " + customTitle);
+        } else {
+            actionBar.setTitle(getString(R.string.seasons));
+            setTitle(getString(R.string.seasons));
+        }
+        
         if (savedInstanceState == null) {
             mFragment = onCreatePane();
             mFragment.setArguments(intentToFragmentArguments(getIntent()));

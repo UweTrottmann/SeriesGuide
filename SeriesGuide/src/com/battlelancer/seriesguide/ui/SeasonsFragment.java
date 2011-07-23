@@ -255,7 +255,7 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
             season = getString(R.string.season) + " " + season;
         }
 
-        intent.putExtra(Intent.EXTRA_TITLE, getActivity().getTitle() + " " + season);
+        intent.putExtra(Intent.EXTRA_TITLE, season);
         startActivity(intent);
     }
 
