@@ -169,8 +169,8 @@ public class SeriesDatabase {
     }
 
     /**
-     * Returns all upcoming episodes together with their shows title,
-     * network, airtime and posterpath.
+     * Returns all upcoming episodes together with their shows title, network,
+     * airtime and posterpath.
      * 
      * @return Cursor including all upcoming episodes with show title, network,
      *         airtime and posterpath.
@@ -489,7 +489,7 @@ public class SeriesDatabase {
      * @param id
      */
     public static long updateLatestEpisode(Context context, String id) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final boolean onlyFutureEpisodes = prefs.getBoolean("onlyFutureEpisodes", false);
         final String[] projection = new String[] {
                 Episodes._ID, Episodes.FIRSTAIRED, Episodes.SEASON, Episodes.NUMBER, Episodes.TITLE
@@ -514,24 +514,28 @@ public class SeriesDatabase {
         // maybe there are no episodes due to errors, or airdates are just
         // unknown ("")
         long episodeid = 0;
-        ContentValues update = new ContentValues();
+        final ContentValues update = new ContentValues();
         if (unwatched.getCount() != 0) {
             unwatched.moveToFirst();
 
-            String season = unwatched.getString(unwatched.getColumnIndexOrThrow(Episodes.SEASON));
-            String number = unwatched.getString(unwatched.getColumnIndexOrThrow(Episodes.NUMBER));
-            String title = unwatched.getString(unwatched.getColumnIndexOrThrow(Episodes.TITLE));
+            // nexttext (0x12 Episode)
+            final String season = unwatched.getString(unwatched
+                    .getColumnIndexOrThrow(Episodes.SEASON));
+            final String number = unwatched.getString(unwatched
+                    .getColumnIndexOrThrow(Episodes.NUMBER));
+            final String title = unwatched.getString(unwatched
+                    .getColumnIndexOrThrow(Episodes.TITLE));
             String nextEpisodeString = SeriesGuideData.getNextEpisodeString(prefs, season, number,
                     title);
 
-            nextEpisodeString += SeriesGuideData.NEXTEPISODE_SPLIT;
-
-            String firstAired = unwatched.getString(unwatched
+            // nextairdatetext
+            String nextAirdateString = "";
+            final String firstAired = unwatched.getString(unwatched
                     .getColumnIndexOrThrow(Episodes.FIRSTAIRED));
             if (firstAired.length() != 0) {
                 final Series show = getShow(context, id);
                 if (show != null) {
-                    nextEpisodeString += SeriesGuideData.parseDateToLocalRelative(firstAired,
+                    nextAirdateString += SeriesGuideData.parseDateToLocalRelative(firstAired,
                             show.getAirsTime(), context);
                 }
             }
@@ -541,12 +545,14 @@ public class SeriesDatabase {
             update.put(Shows.NEXTAIRDATE,
                     unwatched.getString(unwatched.getColumnIndexOrThrow(Episodes.FIRSTAIRED)));
             update.put(Shows.NEXTTEXT, nextEpisodeString);
+            update.put(Shows.NEXTAIRDATETEXT, nextAirdateString);
         } else {
             update.put(Shows.NEXTEPISODE, "");
             // Write 9999 for unkown airdates/no next episodes, sorting then
             // assumes year 9999 and sorts these last
             update.put(Shows.NEXTAIRDATE, "9999");
             update.put(Shows.NEXTTEXT, "");
+            update.put(Shows.NEXTAIRDATETEXT, "");
         }
         unwatched.close();
 
