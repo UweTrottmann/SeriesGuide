@@ -447,7 +447,7 @@ public class TheTVDB {
      *         nothing was downloaded
      */
     public static boolean fetchArt(String fileName, boolean isPoster, Context context) {
-        if (fileName == null) {
+        if (fileName == null || context == null) {
             return true;
         }
 
