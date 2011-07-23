@@ -16,7 +16,7 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.beta.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;

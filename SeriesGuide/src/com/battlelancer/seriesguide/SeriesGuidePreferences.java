@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide;
 
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.AlarmManagerService;

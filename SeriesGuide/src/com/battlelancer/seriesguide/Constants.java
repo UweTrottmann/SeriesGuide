@@ -1,6 +1,8 @@
 
 package com.battlelancer.seriesguide;
 
+import com.battlelancer.seriesguide.beta.R;
+
 public class Constants {
 
     /** THESE ARE NOT INCLUDED IN THE OPEN SOURCE CODE FOR SECURITY REASONS **/

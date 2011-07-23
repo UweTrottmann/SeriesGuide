@@ -2,13 +2,13 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.AddShow;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesDatabase;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.SeriesGuideData.ShowSorting;
 import com.battlelancer.seriesguide.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ShowInfo;
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
@@ -28,6 +28,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -799,23 +801,21 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
         updateSorting(prefs);
 
-        // // display whats new dialog
-        // int lastVersion = prefs.getInt(SeriesGuideData.KEY_VERSION, -1);
-        // try {
-        // int currentVersion =
-        // getPackageManager().getPackageInfo(getPackageName(),
-        // PackageManager.GET_META_DATA).versionCode;
-        // if (currentVersion > lastVersion) {
-        // // BETA warning dialog switch
-        // showDialog(BETA_WARNING_DIALOG);
-        // showDialog(WHATS_NEW_DIALOG);
-        // // set this as lastVersion
-        // prefs.edit().putInt(SeriesGuideData.KEY_VERSION,
-        // currentVersion).commit();
-        // }
-        // } catch (NameNotFoundException e) {
-        // // this should never happen
-        // }
+        // display whats new dialog
+        int lastVersion = prefs.getInt(SeriesGuideData.KEY_VERSION, -1);
+        try {
+            int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
+                    PackageManager.GET_META_DATA).versionCode;
+            if (currentVersion > lastVersion) {
+                // BETA warning dialog switch
+                showDialog(BETA_WARNING_DIALOG);
+                // showDialog(WHATS_NEW_DIALOG);
+                // set this as lastVersion
+                prefs.edit().putInt(SeriesGuideData.KEY_VERSION, currentVersion).commit();
+            }
+        } catch (NameNotFoundException e) {
+            // this should never happen
+        }
     }
 
     /**
