@@ -45,8 +45,6 @@ public class SeriesGuideData {
 
     public static final String KEY_GETGLUE_IMDBID = "com.battlelancer.seriesguide.getglue.imdbid";
 
-    public static final String NEXTEPISODE_SPLIT = "<sg:split>";
-
     public static enum EpisodeSorting {
         LATEST_FIRST(0, Episodes.NUMBER + " desc"), OLDEST_FIRST(1, Episodes.NUMBER + " asc"), UNWATCHED_FIRST(
                 2, Episodes.WATCHED + " asc," + Episodes.NUMBER + " asc"), ALPHABETICAL_ASC(3,

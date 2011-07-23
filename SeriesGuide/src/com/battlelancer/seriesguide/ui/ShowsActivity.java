@@ -438,7 +438,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         switch (item.getItemId()) {
             case CONTEXT_FAVORITE: {
                 fireTrackerEvent("Favorite show");
-                
+
                 ContentValues values = new ContentValues();
                 values.put(Shows.FAVORITE, true);
                 getContentResolver().update(Shows.buildShowUri(String.valueOf(info.id)), values,
@@ -448,7 +448,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             }
             case CONTEXT_UNFAVORITE: {
                 fireTrackerEvent("Unfavorite show");
-                
+
                 ContentValues values = new ContentValues();
                 values.put(Shows.FAVORITE, false);
                 getContentResolver().update(Shows.buildShowUri(String.valueOf(info.id)), values,
@@ -872,10 +872,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private interface ShowsQuery {
         String[] PROJECTION = {
-                BaseColumns._ID, SeriesContract.Shows.TITLE, SeriesContract.Shows.NEXTTEXT,
-                SeriesContract.Shows.AIRSTIME, SeriesContract.Shows.NETWORK,
-                SeriesContract.Shows.POSTER, SeriesContract.Shows.AIRSDAYOFWEEK,
-                SeriesContract.Shows.STATUS
+                BaseColumns._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
+                Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT
         };
 
         // int _ID = 0;
@@ -893,6 +891,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         int AIRSDAYOFWEEK = 6;
 
         int STATUS = 7;
+
+        int NEXTAIRDATETEXT = 8;
     }
 
     private class SlowAdapter extends SimpleCursorAdapter {
@@ -959,16 +959,10 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 viewHolder.episode.setText("");
                 viewHolder.episodeTime.setText("");
             } else {
-                String[] splitted = fieldValue.split("\\" + SeriesGuideData.NEXTEPISODE_SPLIT);
                 viewHolder.next.setText(getString(R.string.nextepisode));
-                viewHolder.episode.setText(splitted[0]);
-
-                // backward compatibility fix
-                if (splitted.length == 2) {
-                    viewHolder.episodeTime.setText(splitted[1]);
-                } else {
-                    viewHolder.episodeTime.setText("");
-                }
+                viewHolder.episode.setText(fieldValue);
+                fieldValue = mCursor.getString(ShowsQuery.NEXTAIRDATETEXT);
+                viewHolder.episodeTime.setText(fieldValue);
             }
 
             // airday
