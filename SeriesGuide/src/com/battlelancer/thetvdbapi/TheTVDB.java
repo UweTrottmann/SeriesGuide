@@ -289,7 +289,14 @@ public class TheTVDB {
         });
         show.getChild("Status").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setStatus(body.trim());
+                final String status = body.trim();
+                if (status.length() == 10) {
+                    currentShow.setStatus("1");
+                } else if (status.length() == 5) {
+                    currentShow.setStatus("0");
+                } else {
+                    currentShow.setStatus("");
+                }
             }
         });
         show.getChild("ContentRating").setEndTextElementListener(new EndTextElementListener() {

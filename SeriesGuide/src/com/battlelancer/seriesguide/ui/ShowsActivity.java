@@ -950,10 +950,12 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             if (fieldValue.length() == 0) {
                 // show show status if there are currently no more
                 // episodes
-                fieldValue = mCursor.getString(ShowsQuery.STATUS);
-                if (fieldValue.equalsIgnoreCase("Continuing")) {
+                int status = mCursor.getInt(ShowsQuery.STATUS);
+
+                // Continuing == 1 and Ended == 0
+                if (status == 1) {
                     viewHolder.next.setText(getString(R.string.show_isalive));
-                } else if (fieldValue.equalsIgnoreCase("Ended")) {
+                } else if (status == 0) {
                     viewHolder.next.setText(getString(R.string.show_isnotalive));
                 }
                 viewHolder.episode.setText("");
