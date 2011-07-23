@@ -45,6 +45,8 @@ public class SeriesContract {
         String IMDBID = "imdbid";
         
         String FAVORITE = "series_favorite";
+        
+        String NEXTAIRDATETEXT = "series_nextairdatetext";
     }
 
     interface SeasonsColumns {

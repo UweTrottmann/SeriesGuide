@@ -31,7 +31,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "seriesdatabase";
 
-    public static final int DATABASE_VERSION = 17;
+    public static final int DBVER_FAVORITES = 17;
+
+    public static final int DBVER_NEXTAIRDATETEXT = 18;
+
+    public static final int DATABASE_VERSION = DBVER_NEXTAIRDATETEXT;
 
     public interface Tables {
         String SHOWS = "series";
@@ -65,7 +69,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + ShowsColumns.POSTER + " TEXT DEFAULT ''," + ShowsColumns.NEXTAIRDATE
             + " TEXT DEFAULT '0'," + ShowsColumns.NEXTTEXT + " TEXT DEFAULT '',"
             + ShowsColumns.IMDBID + " TEXT DEFAULT ''," + ShowsColumns.FAVORITE
-            + " INTEGER DEFAULT 0" + ");";
+            + " INTEGER DEFAULT 0," + ShowsColumns.NEXTAIRDATETEXT + " TEXT DEFAULT ''" + ");";
 
     private static final String CREATE_SEASONS_TABLE = "CREATE TABLE " + Tables.SEASONS + " ("
             + BaseColumns._ID + " INTEGER PRIMARY KEY," + SeasonsColumns.COMBINED + " INTEGER,"
@@ -142,6 +146,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 16:
                 upgradeToSeventeen(db);
                 version = 17;
+            case 17:
+                upgradeToEighteen(db);
+                version = 18;
         }
 
         // drop all tables if version is not right
@@ -156,6 +163,16 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             onCreate(db);
         }
+    }
+
+    /**
+     * In version 18 the series text column nextairdatetext was added.
+     * 
+     * @param db
+     */
+    private void upgradeToEighteen(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.NEXTAIRDATETEXT
+                + " TEXT DEFAULT '';");
     }
 
     /**
