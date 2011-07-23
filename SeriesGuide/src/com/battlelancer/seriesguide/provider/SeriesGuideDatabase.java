@@ -173,6 +173,37 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     private void upgradeToEighteen(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.NEXTAIRDATETEXT
                 + " TEXT DEFAULT '';");
+
+        // convert status text to 0/1 integer
+        final Cursor shows = db.query(Tables.SHOWS, new String[] {
+                Shows._ID, Shows.STATUS
+        }, null, null, null, null, null);
+        final ContentValues values = new ContentValues();
+        String status;
+
+        db.beginTransaction();
+        try {
+            while (shows.moveToNext()) {
+                status = shows.getString(1);
+                if (status.length() == 10) {
+                    status = "1";
+                } else if (status.length() == 5) {
+                    status = "0";
+                } else {
+                    status = "";
+                }
+                values.put(Shows.STATUS, status);
+                db.update(Tables.SHOWS, values, Shows._ID + "=?", new String[] {
+                    shows.getString(0)
+                });
+                values.clear();
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+
+        shows.close();
     }
 
     /**
