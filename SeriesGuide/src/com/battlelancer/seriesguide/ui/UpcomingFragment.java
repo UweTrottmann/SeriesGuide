@@ -13,7 +13,7 @@ import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -21,48 +21,50 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.Date;
 
-public class UpcomingFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class UpcomingFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int MARK_WATCHED_ID = 0;
 
     private static final int MARK_UNWATCHED_ID = 1;
 
-    protected static final int LOADER_ID = 0;
-
     private SimpleCursorAdapter mAdapter;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.upcoming, container, false);
+    static UpcomingFragment newInstance(String query, String sortOrder, String analyticsTag, int loaderId) {
+        UpcomingFragment f = new UpcomingFragment();
+        Bundle args = new Bundle();
+        args.putString("query", query);
+        args.putString("sortorder", sortOrder);
+        args.putString("analyticstag", analyticsTag);
+        args.putInt("loaderid", loaderId);
+        f.setArguments(args);
+        return f;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        setEmptyText(getString(R.string.no_episodes));
+
         setupAdapter();
 
-        getActivity().getSupportLoaderManager().initLoader(LOADER_ID, null, this);
+        getActivity().getSupportLoaderManager().initLoader(getArguments().getInt("loaderid"), null, this);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        onTrackPageView();
+        final String tag = getArguments().getString("analyticstag");
+        AnalyticsUtils.getInstance(getActivity()).trackPageView(tag);
     }
 
     @Override
@@ -88,11 +90,7 @@ public class UpcomingFragment extends Fragment implements LoaderManager.LoaderCa
         return super.onContextItemSelected(item);
     }
 
-    protected void onTrackPageView() {
-        AnalyticsUtils.getInstance(getActivity()).trackPageView("/Upcoming");
-    }
-
-    protected void setupAdapter() {
+    private void setupAdapter() {
 
         String[] from = new String[] {
                 Episodes.TITLE, Episodes.WATCHED, Episodes.NUMBER, Episodes.FIRSTAIRED,
@@ -175,40 +173,31 @@ public class UpcomingFragment extends Fragment implements LoaderManager.LoaderCa
             }
         });
 
-        AbsListView list = (AbsListView) getActivity().findViewById(android.R.id.list);
-        if (android.os.Build.VERSION.SDK_INT < 11) {
-            ((ListView) list).setAdapter(mAdapter);
-        } else {
-            // only possible since API level 11 (Honeycomb)
-            list.setAdapter(mAdapter);
-        }
+        setListAdapter(mAdapter);
 
+        final ListView list = getListView();
         list.setFastScrollEnabled(true);
-        list.setOnItemClickListener(onItemClickListener);
-        View emptyView = getActivity().findViewById(android.R.id.empty);
-        if (emptyView != null) {
-            list.setEmptyView(emptyView);
-        }
-
         registerForContextMenu(list);
     }
 
-    protected final OnItemClickListener onItemClickListener = new OnItemClickListener() {
-
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            Intent i = new Intent(getActivity(), EpisodeDetailsActivity.class);
-            i.putExtra(Episodes._ID, String.valueOf(id));
-            startActivity(i);
-        }
-    };
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        Intent i = new Intent(getActivity(), EpisodeDetailsActivity.class);
+        i.putExtra(Episodes._ID, String.valueOf(id));
+        startActivity(i);
+    }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Date date = new Date();
-        String today = SeriesGuideData.theTVDBDateFormat.format(date);
+        final Date date = new Date();
+        final String today = SeriesGuideData.theTVDBDateFormat.format(date);
+        final String query = getArguments().getString("query");
+        final String sortOrder = getArguments().getString("sortorder");
         return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
-                UpcomingQuery.PROJECTION, Episodes.FIRSTAIRED + ">=?", new String[] {
+                UpcomingQuery.PROJECTION, query, new String[] {
                     today
-                }, UpcomingQuery.sortOrder);
+                }, sortOrder);
+        // Episodes.FIRSTAIRED + ">=?"
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -226,8 +215,9 @@ public class UpcomingFragment extends Fragment implements LoaderManager.LoaderCa
                 Shows.NETWORK, Shows.POSTER
         };
 
-        String sortOrder = Episodes.FIRSTAIRED + " ASC," + Shows.AIRSTIME + " ASC," + Shows.TITLE
-                + " ASC";
+        // String sortOrder = Episodes.FIRSTAIRED + " ASC," + Shows.AIRSTIME +
+        // " ASC," + Shows.TITLE
+        // + " ASC";
 
         int _ID = 0;
 
