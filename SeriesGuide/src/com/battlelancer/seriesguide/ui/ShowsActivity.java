@@ -437,6 +437,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
         switch (item.getItemId()) {
             case CONTEXT_FAVORITE: {
+                fireTrackerEvent("Favorite show");
+                
                 ContentValues values = new ContentValues();
                 values.put(Shows.FAVORITE, true);
                 getContentResolver().update(Shows.buildShowUri(String.valueOf(info.id)), values,
@@ -445,6 +447,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 return true;
             }
             case CONTEXT_UNFAVORITE: {
+                fireTrackerEvent("Unfavorite show");
+                
                 ContentValues values = new ContentValues();
                 values.put(Shows.FAVORITE, false);
                 getContentResolver().update(Shows.buildShowUri(String.valueOf(info.id)), values,
