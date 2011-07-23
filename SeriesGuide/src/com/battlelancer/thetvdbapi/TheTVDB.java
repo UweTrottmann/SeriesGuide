@@ -291,11 +291,11 @@ public class TheTVDB {
             public void end(String body) {
                 final String status = body.trim();
                 if (status.length() == 10) {
-                    currentShow.setStatus("1");
+                    currentShow.setStatus(1);
                 } else if (status.length() == 5) {
-                    currentShow.setStatus("0");
+                    currentShow.setStatus(0);
                 } else {
-                    currentShow.setStatus("");
+                    currentShow.setStatus(-1);
                 }
             }
         });

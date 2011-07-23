@@ -957,6 +957,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                     viewHolder.next.setText(getString(R.string.show_isalive));
                 } else if (status == 0) {
                     viewHolder.next.setText(getString(R.string.show_isnotalive));
+                } else {
+                    viewHolder.next.setText("");
                 }
                 viewHolder.episode.setText("");
                 viewHolder.episodeTime.setText("");

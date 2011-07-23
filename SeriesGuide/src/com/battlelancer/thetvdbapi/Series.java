@@ -19,7 +19,7 @@ public class Series {
 	private String network;
 	private String rating;
 	private String runtime;
-	private String status;
+	private int status;
 	private String fanart;
 	private String lastUpdated;
 	private String poster;
@@ -161,11 +161,11 @@ public class Series {
 		this.runtime = runtime;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 

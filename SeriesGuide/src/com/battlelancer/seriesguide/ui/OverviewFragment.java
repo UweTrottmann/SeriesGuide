@@ -209,7 +209,7 @@ public class OverviewFragment extends Fragment {
 
     private void fillShowData() {
         show = SeriesDatabase.getShow(getActivity(), getShowId());
-        
+
         if (show == null) {
             return;
         }
@@ -223,10 +223,10 @@ public class OverviewFragment extends Fragment {
 
         // Running state
         TextView status = (TextView) getActivity().findViewById(R.id.showStatus);
-        if (show.getStatus().equalsIgnoreCase("Continuing")) {
+        if (show.getStatus() == 1) {
             status.setTextColor(Color.GREEN);
             status.setText(getString(R.string.show_isalive));
-        } else if (show.getStatus().equalsIgnoreCase("Ended")) {
+        } else if (show.getStatus() == 0) {
             status.setTextColor(Color.GRAY);
             status.setText(getString(R.string.show_isnotalive));
         }
@@ -272,7 +272,7 @@ public class OverviewFragment extends Fragment {
         if (context == null) {
             return;
         }
-        
+
         TextView nextheader = (TextView) context.findViewById(R.id.nextheader);
         TextView episodetitle = (TextView) context.findViewById(R.id.TextViewEpisodeTitle);
         TextView numbers = (TextView) context.findViewById(R.id.TextViewEpisodeNumbers);

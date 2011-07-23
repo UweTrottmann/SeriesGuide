@@ -98,10 +98,10 @@ public class ShowInfo extends BaseActivity {
         }
 
         // Running state
-        if (show.getStatus().equalsIgnoreCase("Continuing")) {
+        if (show.getStatus() == 1) {
             status.setTextColor(Color.GREEN);
             status.setText(getString(R.string.show_isalive));
-        } else if (show.getStatus().equalsIgnoreCase("Ended")) {
+        } else if (show.getStatus() == 0) {
             status.setTextColor(Color.GRAY);
             status.setText(getString(R.string.show_isnotalive));
         }
