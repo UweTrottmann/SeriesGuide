@@ -14,7 +14,7 @@
     <item
         android:id="@+id/menu_upcoming"
         android:title="@string/upcoming"
-        android:icon="@drawable/ic_action_calendar"
+        android:icon="@drawable/ic_action_upcoming"
         android:showAsAction="ifRoom|withText" />
     <item
         android:id="@+id/menu_new_show"
