@@ -75,7 +75,7 @@
 	<string name="show_network">on</string>
 	<string name="show_pleaseupdate">Try to update this show to display more information (in the overview, long-press on it, select Update). If this doesn\'t help, there is likely no additional information in TheTVDB. Go to their site (www.thetvdb.com) to learn how to add some.</string>
 	<string name="show_noairtime">No air times available</string>
-	<string name="showinimdb">Show in IMDB</string>
+	<string name="showinimdb">Show in IMDb</string>
 	<string name="noIMDBentry">No IMDB reference available. Update this show or go to thetvdb.com and add it.</string>
 
 	<!-- Season list -->

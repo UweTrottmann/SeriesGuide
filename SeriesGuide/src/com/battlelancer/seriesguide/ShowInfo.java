@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBar;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -65,7 +64,7 @@ public class ShowInfo extends BaseActivity {
         TextView runtime = (TextView) findViewById(R.id.TextViewShowInfoRuntime);
         TextView status = (TextView) findViewById(R.id.TextViewShowInfoStatus);
         ImageView showart = (ImageView) findViewById(R.id.ImageViewShowInfoPoster);
-        Button showInIMDB = (Button) findViewById(R.id.buttonShowInfoIMDB);
+        View showInIMDB = (View) findViewById(R.id.buttonShowInfoIMDB);
 
         final Series show = SeriesDatabase.getShow(this, seriesid);
         if (show == null) {
