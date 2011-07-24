@@ -86,7 +86,7 @@ public class ShowInfo extends BaseActivity {
             airstime.setText(getString(R.string.show_noairtime));
         } else {
             String[] values = SeriesGuideData.parseMillisecondsToTime(show.getAirsTime(),
-                    show.getAirsDayOfWeek(), true, getApplicationContext());
+                    show.getAirsDayOfWeek(), getApplicationContext());
             airstime.setText(getString(R.string.show_airs) + " " + values[1] + " " + values[0]);
         }
 

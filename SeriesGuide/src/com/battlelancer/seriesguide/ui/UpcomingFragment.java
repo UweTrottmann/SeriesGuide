@@ -38,7 +38,8 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
     private SimpleCursorAdapter mAdapter;
 
-    static UpcomingFragment newInstance(String query, String sortOrder, String analyticsTag, int loaderId) {
+    static UpcomingFragment newInstance(String query, String sortOrder, String analyticsTag,
+            int loaderId) {
         UpcomingFragment f = new UpcomingFragment();
         Bundle args = new Bundle();
         args.putString("query", query);
@@ -57,7 +58,8 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
         setupAdapter();
 
-        getActivity().getSupportLoaderManager().initLoader(getArguments().getInt("loaderid"), null, this);
+        getActivity().getSupportLoaderManager().initLoader(getArguments().getInt("loaderid"), null,
+                this);
     }
 
     @Override
@@ -155,7 +157,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
                     // add airtime
                     long airtime = cursor.getLong(UpcomingQuery.SHOW_AIRSTIME);
-                    String value = SeriesGuideData.parseMillisecondsToTime(airtime, null, false,
+                    String value = SeriesGuideData.parseMillisecondsToTime(airtime, null,
                             getActivity())[0];
                     if (value.length() != 0) {
                         fieldValue += value + " ";

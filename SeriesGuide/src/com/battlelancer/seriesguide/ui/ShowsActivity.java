@@ -972,7 +972,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             // airday
             String[] values = SeriesGuideData.parseMillisecondsToTime(
                     mCursor.getLong(ShowsQuery.AIRSTIME),
-                    mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), true, ShowsActivity.this);
+                    mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), ShowsActivity.this);
             viewHolder.airsTime.setText(values[1] + " " + values[0]);
 
             // set poster only when not busy scrolling

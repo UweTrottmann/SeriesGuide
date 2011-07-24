@@ -303,61 +303,58 @@ public class SeriesGuideData {
     }
 
     public static String[] parseMillisecondsToTime(long milliseconds, String dayofweek,
-            boolean calculateDay, Context context) {
-
-        if (milliseconds == -1) {
-            if (dayofweek != null) {
-                return new String[] {
-                        "", getDayShortcode(dayofweek)
-                };
-            } else {
-                return new String[] {
-                        "", ""
-                };
-            }
+            Context context) {
+        // return empty strings if time is missing (maybe return at least day?)
+        if (context == null || milliseconds == -1) {
+            return new String[] {
+                    "", ""
+            };
         }
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean useUserTimeZone = prefs.getBoolean(SeriesGuidePreferences.KEY_USE_MY_TIMEZONE,
-                false);
+        final TimeZone pacificTimeZone = TimeZone.getTimeZone("America/Los_Angeles");
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final boolean useUserTimeZone = prefs.getBoolean(
+                SeriesGuidePreferences.KEY_USE_MY_TIMEZONE, false);
 
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
+        // set calendar time and day (if available) on Pacific cal
+        final Calendar cal = Calendar.getInstance(pacificTimeZone);
         cal.setTimeInMillis(milliseconds);
+        if (dayofweek != null) {
+            cal.set(Calendar.DAY_OF_WEEK, getDayOfWeek(dayofweek));
+        }
 
         // add user-set hour offset
         int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
-        cal.add(Calendar.HOUR_OF_DAY, offset);
+        if (offset != 0) {
+            cal.add(Calendar.HOUR_OF_DAY, offset);
+        }
+        // check for US Central and automagically subtract one hour
+        if (TimeZone.getDefault().getRawOffset() == TimeZone.getTimeZone("US/Central")
+                .getRawOffset()) {
+            cal.add(Calendar.HOUR_OF_DAY, -1);
+        }
 
         // create time string
-        java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
-        if (!useUserTimeZone) {
-            timeFormat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
-        }
-        String time = timeFormat.format(cal.getTime());
+        final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
+        final SimpleDateFormat dayFormat = new SimpleDateFormat("E");
+        String day = "";
+        final Date date = cal.getTime();
 
-        if (dayofweek != null && calculateDay) {
-            if (useUserTimeZone) {
-                // calculate the new weekday
-                cal.set(Calendar.DAY_OF_WEEK, getDayOfWeek(dayofweek));
-                Calendar local = Calendar.getInstance();
-                local.setTimeInMillis(cal.getTimeInMillis());
-
-                return new String[] {
-                        time, getDayShortcode(local.get(Calendar.DAY_OF_WEEK))
-                };
-            } else {
-                // TODO: check for Central and subtract one hour
-
-                // use unmodified data as it is in Pacific time already
-                return new String[] {
-                        time, getDayShortcode(dayofweek)
-                };
-            }
+        if (useUserTimeZone) {
+            timeFormat.setTimeZone(TimeZone.getDefault());
+            dayFormat.setTimeZone(TimeZone.getDefault());
         } else {
-            return new String[] {
-                    time, ""
-            };
+            timeFormat.setTimeZone(pacificTimeZone);
+            dayFormat.setTimeZone(pacificTimeZone);
         }
+
+        if (dayofweek != null) {
+            day = dayFormat.format(date);
+        }
+
+        return new String[] {
+                timeFormat.format(date), day
+        };
     }
 
     public static boolean isNetworkAvailable(Context context) {

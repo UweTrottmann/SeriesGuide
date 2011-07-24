@@ -146,7 +146,7 @@ public class AppWidget extends AppWidgetProvider {
                     // add airtime and network (if any)
                     value = "";
                     if (airtime != -1) {
-                        value = SeriesGuideData.parseMillisecondsToTime(airtime, null, false,
+                        value = SeriesGuideData.parseMillisecondsToTime(airtime, null,
                                 getApplicationContext())[0];
                     }
                     String network = upcomingEpisodes.getString(upcomingEpisodes
