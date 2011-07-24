@@ -148,7 +148,7 @@ public class UpcomingEpisodes extends FragmentActivity implements
 
                     // add airtime
                     long airtime = cursor.getLong(UpcomingQuery.SHOW_AIRSTIME);
-                    String value = SeriesGuideData.parseMillisecondsToTime(airtime, null, false,
+                    String value = SeriesGuideData.parseMillisecondsToTime(airtime, null,
                             getApplicationContext())[0];
                     if (value.length() != 0) {
                         fieldValue += value + " ";

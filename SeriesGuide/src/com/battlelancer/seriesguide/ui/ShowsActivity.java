@@ -753,19 +753,21 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
         updateSorting(prefs);
 
-//        // display whats new dialog
-//        int lastVersion = prefs.getInt(SeriesGuideData.KEY_VERSION, -1);
-//        try {
-//            int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
-//                    PackageManager.GET_META_DATA).versionCode;
-//            if (currentVersion > lastVersion) {
-//                showDialog(WHATS_NEW_DIALOG);
-//                // set this as lastVersion
-//                prefs.edit().putInt(SeriesGuideData.KEY_VERSION, currentVersion).commit();
-//            }
-//        } catch (NameNotFoundException e) {
-//            // this should never happen
-//        }
+        // // display whats new dialog
+        // int lastVersion = prefs.getInt(SeriesGuideData.KEY_VERSION, -1);
+        // try {
+        // int currentVersion =
+        // getPackageManager().getPackageInfo(getPackageName(),
+        // PackageManager.GET_META_DATA).versionCode;
+        // if (currentVersion > lastVersion) {
+        // showDialog(WHATS_NEW_DIALOG);
+        // // set this as lastVersion
+        // prefs.edit().putInt(SeriesGuideData.KEY_VERSION,
+        // currentVersion).commit();
+        // }
+        // } catch (NameNotFoundException e) {
+        // // this should never happen
+        // }
     }
 
     /**
@@ -915,7 +917,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             // airday
             String[] values = SeriesGuideData.parseMillisecondsToTime(
                     mCursor.getLong(ShowsQuery.AIRSTIME),
-                    mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), true, ShowsActivity.this);
+                    mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), ShowsActivity.this);
             viewHolder.airsTime.setText(values[1] + " " + values[0]);
 
             // set poster only when not busy scrolling

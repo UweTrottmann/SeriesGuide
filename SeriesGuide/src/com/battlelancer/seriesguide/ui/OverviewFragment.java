@@ -160,8 +160,8 @@ public class OverviewFragment extends Fragment {
                 fireTrackerEvent("Add episode to calendar");
 
                 ShareUtils.onAddCalendarEvent(getActivity(), show.getSeriesName(),
-                        mShareData.getString(ShareItems.EPISODESTRING), airdate, show.getAirsTime(),
-                        show.getRuntime());
+                        mShareData.getString(ShareItems.EPISODESTRING), airdate,
+                        show.getAirsTime(), show.getRuntime());
                 break;
             default:
                 break;
@@ -264,7 +264,7 @@ public class OverviewFragment extends Fragment {
         String timeAndNetwork = "";
         if (show.getAirsDayOfWeek().length() != 0 && show.getAirsTime() != -1) {
             String[] values = SeriesGuideData.parseMillisecondsToTime(show.getAirsTime(),
-                    show.getAirsDayOfWeek(), true, getActivity());
+                    show.getAirsDayOfWeek(), getActivity());
             timeAndNetwork += values[1] + " " + values[0];
         }
         if (show.getNetwork().length() != 0) {
