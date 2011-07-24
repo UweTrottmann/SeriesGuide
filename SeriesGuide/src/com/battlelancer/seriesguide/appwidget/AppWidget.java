@@ -20,6 +20,8 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesDatabase;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.SeriesGuideData;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.thetvdbapi.ImageCache;
@@ -125,22 +127,21 @@ public class AppWidget extends AppWidgetProvider {
                     RemoteViews item = new RemoteViews(context.getPackageName(), itemLayout);
                     // upcoming episode
                     String season = upcomingEpisodes.getString(upcomingEpisodes
-                            .getColumnIndexOrThrow(SeriesDatabase.EPISODE_SEASON));
+                            .getColumnIndexOrThrow(Episodes.SEASON));
                     String number = upcomingEpisodes.getString(upcomingEpisodes
-                            .getColumnIndexOrThrow(SeriesDatabase.EPISODE_NUMBER));
+                            .getColumnIndexOrThrow(Episodes.NUMBER));
                     String title = upcomingEpisodes.getString(upcomingEpisodes
-                            .getColumnIndexOrThrow(SeriesDatabase.EPISODE_TITLE));
+                            .getColumnIndexOrThrow(Episodes.TITLE));
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     item.setTextViewText(R.id.textViewWidgetEpisode,
                             SeriesGuideData.getNextEpisodeString(prefs, season, number, title));
 
                     // add relative airdate
                     long airtime = upcomingEpisodes.getLong(upcomingEpisodes
-                            .getColumnIndexOrThrow(SeriesDatabase.SERIES_AIRSTIME));
-                    value = SeriesGuideData.parseDateToLocalRelative(upcomingEpisodes
-                            .getString(upcomingEpisodes
-                                    .getColumnIndexOrThrow(SeriesDatabase.EPISODE_FIRSTAIRED)),
-                            airtime, context);
+                            .getColumnIndexOrThrow(Shows.AIRSTIME));
+                    value = SeriesGuideData.parseDateToLocalRelative(
+                            upcomingEpisodes.getString(upcomingEpisodes
+                                    .getColumnIndexOrThrow(Episodes.FIRSTAIRED)), airtime, context);
                     item.setTextViewText(R.id.widgetAirtime, value);
 
                     // add airtime and network (if any)
@@ -150,7 +151,7 @@ public class AppWidget extends AppWidgetProvider {
                                 getApplicationContext())[0];
                     }
                     String network = upcomingEpisodes.getString(upcomingEpisodes
-                            .getColumnIndexOrThrow(SeriesDatabase.SERIES_NETWORK));
+                            .getColumnIndexOrThrow(Shows.NETWORK));
                     if (network.length() != 0) {
                         value += " " + getString(R.string.show_network) + " " + network;
                     }
@@ -158,13 +159,13 @@ public class AppWidget extends AppWidgetProvider {
 
                     // show name
                     value = upcomingEpisodes.getString(upcomingEpisodes
-                            .getColumnIndexOrThrow(SeriesDatabase.SERIES_NAME));
+                            .getColumnIndexOrThrow(Shows.TITLE));
                     item.setTextViewText(R.id.textViewWidgetShow, value);
 
                     if (layout != R.layout.appwidget) {
                         // show poster
                         value = upcomingEpisodes.getString(upcomingEpisodes
-                                .getColumnIndexOrThrow(SeriesDatabase.SERIES_POSTER));
+                                .getColumnIndexOrThrow(Shows.POSTER));
                         poster = null;
                         if (value.length() != 0) {
                             poster = imageCache.getThumb(value, false);
