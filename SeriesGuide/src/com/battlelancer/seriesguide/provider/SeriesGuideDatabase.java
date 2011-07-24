@@ -33,7 +33,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_NEXTAIRDATETEXT = 18;
 
-    public static final int DATABASE_VERSION = DBVER_NEXTAIRDATETEXT;
+    public static final int DBVER_SETOTALCOUNT = 19;
+
+    public static final int DATABASE_VERSION = DBVER_SETOTALCOUNT;
 
     public interface Tables {
         String SHOWS = "series";
@@ -74,7 +76,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + ShowsColumns.REF_SHOW_ID + " TEXT " + References.SHOW_ID + ","
             + SeasonsColumns.WATCHCOUNT + " INTEGER DEFAULT 0," + SeasonsColumns.UNAIREDCOUNT
             + " INTEGER DEFAULT 0," + SeasonsColumns.NOAIRDATECOUNT + " INTEGER DEFAULT 0,"
-            + SeasonsColumns.POSTER + " TEXT DEFAULT '');";
+            + SeasonsColumns.POSTER + " TEXT DEFAULT ''," + SeasonsColumns.TOTALCOUNT
+            + " INTEGER DEFAULT 0);";
 
     private static final String CREATE_EPISODES_TABLE = "CREATE TABLE " + Tables.EPISODES + " ("
             + BaseColumns._ID + " INTEGER PRIMARY KEY," + EpisodesColumns.TITLE + " TEXT NOT NULL,"
@@ -135,6 +138,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 17:
                 upgradeToEighteen(db);
                 version = 18;
+            case 18:
+                upgradeToNineteen(db);
+                version = 19;
         }
 
         // drop all tables if version is not right
@@ -149,6 +155,16 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             onCreate(db);
         }
+    }
+
+    /**
+     * In version 19 the season integer column totalcount was added.
+     * 
+     * @param db
+     */
+    private void upgradeToNineteen(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.SEASONS + " ADD COLUMN " + SeasonsColumns.TOTALCOUNT
+                + " INTEGER DEFAULT 0;");
     }
 
     /**

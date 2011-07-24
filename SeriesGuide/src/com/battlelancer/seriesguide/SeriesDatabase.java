@@ -41,6 +41,13 @@ public class SeriesDatabase {
         String today = SeriesGuideData.theTVDBDateFormat.format(date);
         Uri episodesOfSeasonUri = Episodes.buildEpisodesOfSeasonUri(seasonid);
 
+        // all a seasons episodes
+        Cursor total = resolver.query(episodesOfSeasonUri, new String[] {
+            Episodes._ID
+        }, null, null, null);
+        final int totalcount = total.getCount();
+        total.close();
+
         // unwatched, aired episodes
         String selection = Episodes.WATCHED + "=? AND " + Episodes.FIRSTAIRED + " like '%-%'"
                 + " AND " + Episodes.FIRSTAIRED + "<=?";
@@ -49,7 +56,7 @@ public class SeriesDatabase {
         }, selection, new String[] {
                 "0", today
         }, null);
-        int count = unwatched.getCount();
+        final int count = unwatched.getCount();
         unwatched.close();
 
         // unwatched, aired in the future episodes
@@ -59,7 +66,7 @@ public class SeriesDatabase {
         }, selection, new String[] {
                 "0", today
         }, null);
-        int unaired_count = unaired.getCount();
+        final int unaired_count = unaired.getCount();
         unaired.close();
 
         // unwatched, no airdate
@@ -70,13 +77,14 @@ public class SeriesDatabase {
                 "0", ""
         }, null);
 
-        int noairdate_count = noairdate.getCount();
+        final int noairdate_count = noairdate.getCount();
         noairdate.close();
 
         ContentValues update = new ContentValues();
         update.put(Seasons.WATCHCOUNT, count);
         update.put(Seasons.UNAIREDCOUNT, unaired_count);
         update.put(Seasons.NOAIRDATECOUNT, noairdate_count);
+        update.put(Seasons.TOTALCOUNT, totalcount);
         resolver.update(Seasons.buildSeasonUri(seasonid), update, null, null);
     }
 

@@ -6,17 +6,37 @@
     android:orientation="vertical">
     <TextView
         android:id="@+id/TextViewSeasonListTitle"
-        style="@style/ListTitle"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:paddingLeft="5dp"
         android:paddingTop="2dp"
         android:paddingRight="5dp"
         android:paddingBottom="0dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Some Series name" />
+        android:text="Special Episodes" />
+    <LinearLayout
+        android:id="@+id/seasonProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="5dp">
+        <ProgressBar
+            android:id="@+id/seasonProgressBar"
+            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_weight="1"></ProgressBar>
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/seasonProgressText"
+            android:text="x/n"
+            android:layout_marginLeft="5dp"></TextView>
+    </LinearLayout>
     <TextView
         android:id="@+id/TextViewSeasonListWatchCount"
-        style="@style/SmallFont"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_marginLeft="5dp"
         android:paddingTop="0dp"
         android:paddingRight="5dp"

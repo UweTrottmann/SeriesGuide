@@ -62,6 +62,8 @@ public class SeriesContract {
         String NOAIRDATECOUNT = "noairdatecount";
 
         String COMBINED = "combinednr";
+        
+        String TOTALCOUNT = "season_totalcount";
     }
 
     interface EpisodesColumns {
