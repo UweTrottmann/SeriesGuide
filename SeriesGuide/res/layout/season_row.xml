@@ -25,7 +25,8 @@
             android:layout_height="wrap_content"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="0dp"
-            android:layout_weight="1"></ProgressBar>
+            android:layout_weight="1"
+            android:progressDrawable="@drawable/progress_horizontal_holo_dark"></ProgressBar>
         <TextView
             android:layout_width="50dp"
             android:layout_height="wrap_content"
