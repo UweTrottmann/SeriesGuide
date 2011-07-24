@@ -591,6 +591,11 @@ public class TheTVDB {
                     }
                 }
             }
+        } catch (AssertionError ae) {
+            // looks like Xml.parse is throwing AssertionErrors instead of
+            // IOExceptions
+            throw new SAXException("Problem reading remote response for "
+                    + request.getRequestLine());
         } catch (IOException e) {
             throw new SAXException("Problem reading remote response for "
                     + request.getRequestLine(), e);
