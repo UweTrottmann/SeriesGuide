@@ -214,7 +214,7 @@
 	<string name="description_search">Search</string>
     <string name="description_overview">Overview</string>
 	<string name="pref_offset">Time Offset</string>
-    <string name="pref_offsetsummary">by a certain amount of hours (US Central users: set to -1)</string>
+    <string name="pref_offsetsummary">by a certain amount of hours</string>
     <string name="norating">n/a</string>
     <string name="loading">Loading...</string>
     <string name="eula_title">What you should know</string>
