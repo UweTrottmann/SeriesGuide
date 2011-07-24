@@ -333,8 +333,8 @@ public class OverviewFragment extends Fragment {
     protected void onLoadEpisode() {
         new Thread(new Runnable() {
             public void run() {
-                episodeid = SeriesDatabase.updateLatestEpisode(getActivity(), getShowId());
                 if (getActivity() != null) {
+                    episodeid = SeriesDatabase.updateLatestEpisode(getActivity(), getShowId());
                     getActivity().runOnUiThread(new Runnable() {
                         public void run() {
                             fillEpisodeData();
