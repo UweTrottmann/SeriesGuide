@@ -1,8 +1,7 @@
 package com.jakewharton.trakt.entities;
 
-import com.jakewharton.trakt.TraktEntity;
-
 import java.util.List;
+import com.jakewharton.trakt.TraktEntity;
 
 public abstract class MediaBase implements TraktEntity {
 	private static final long serialVersionUID = 753880113366868498L;

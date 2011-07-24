@@ -4,7 +4,7 @@
   	<LinearLayout
 		android:orientation="vertical"
 		android:id="@+id/timestamp"
-		android:layout_width="100dp"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:paddingRight="5dp"
 		android:layout_alignParentRight="true"
@@ -13,12 +13,9 @@
 			style="@style/Airdata"
 			android:paddingTop="5dp"
 			android:gravity="right"
-			android:lineSpacingExtra="2sp"
-            android:text="Mon 17:00 PM"/>
+			android:lineSpacingExtra="2sp"/>
 		<TextView android:id="@+id/TextViewShowListNetwork"
 			style="@style/Airdata"
-			android:paddingBottom="5dp"
-            android:gravity="right"
-            android:text="Very Long Network Name (VLNM)"/>
+			android:paddingBottom="5dp"/>
 	</LinearLayout>
 </merge>

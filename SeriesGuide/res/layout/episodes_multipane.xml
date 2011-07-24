@@ -4,6 +4,9 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
+    <include
+        layout="@layout/actionbar" />
+
     <FrameLayout
         android:id="@+id/fragment_episodes"
         android:layout_width="fill_parent"

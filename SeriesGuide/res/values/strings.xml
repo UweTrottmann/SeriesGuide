@@ -138,7 +138,7 @@
 	<string name="pref_hideimagessummary">Hide SeriesGuide images from your photo gallery (reboot required)</string>
 	<string name="pref_more">More</string>
 	<string name="about">About SeriesGuide</string>
-	<string name="about_message">http://battlelancer.com/seriesguide - developed by Uwe Trottmann.\n\nPlease see the CREDITS link below for all the people and resources that help drive this project.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
+	<string name="about_message">http://battlelancer.com/seriesguide - developed by Uwe Trottmann.\n\nThanks to\n\n - the Oxygen Icon Theme Team for the Application Icon (GPL, http://www.oxygen-icons.org),\n\n - Matthew Altman for creating javatvdbapi (http://code.google.com/p/javatvdbapi),\n\n - Charlie Collins for his Android examples (http://code.google.com/p/and-examples),\n\n - Matthias Käppler for Droid-Fu (http://github.com/kaeppler/droid-fu),\n\n - Webdesigner Depot for the Primo Icon Set (http://www.webdesignerdepot.com) for the video icon\n\n - www.androidicons.com and\n\n - Chris for testing the thing out. Also thanks to the many tutorial writers out there! \n\nTranslators on Crowdin:\n- Corwin (Polish)\n- ramiselin (Finnish)\n- hyper (Russian)\n- schwarzmx (Spanish)\n- sheeper (Turkish)\n- Zyntax (Danish, Norwegian, Swedish)</string>
 	
 	<string name="thetvdb_summary">Go there to edit shows and episodes</string>
 	<string name="changelog">Changelog</string>
@@ -192,10 +192,10 @@
 	<string name="pref_sharing">Sharing</string>
 	<string name="share">Share</string>
 	<string-array name="share_items">
-		<item>GetGlue Check In</item>
-        <item>Mark seen on trakt.tv</item>
+		<item>Check In (GetGlue)</item>
+        <item>Mark seen (trakt.tv)</item>
 		<item>Other services</item>
-        <item>Rate on trakt.tv</item>
+        <item>Rate (trakt.tv)</item>
 	</string-array>
 	<string name="done">Done</string>
 	<string name="checkin">Check In</string>
@@ -208,13 +208,13 @@
 	<string name="addtocalendar">Add to calendar</string>
 	<string name="addtocalendar_failed">Sorry, there is not enough information to create a calendar event.</string>
 	<string name="pref_usetz">Use my time zone</string>
-	<string name="pref_usetzsummary">Display dates and times in your time zone instead of Pacific (US)</string>
+	<string name="pref_usetzsummary">Air dates in your time zone (for users outside the USA)</string>
 	<string name="search_description">Episodes</string>
 	<string name="description_home">Home</string>
 	<string name="description_search">Search</string>
     <string name="description_overview">Overview</string>
 	<string name="pref_offset">Time Offset</string>
-    <string name="pref_offsetsummary">Offset times by a certain amount of hours</string>
+    <string name="pref_offsetsummary">by a certain amount of hours (US Central users: set to -1)</string>
     <string name="norating">n/a</string>
     <string name="loading">Loading...</string>
     <string name="eula_title">What you should know</string>
@@ -224,10 +224,8 @@
     <string name="username">Username</string>
     <string name="password">Password</string> 
     <string name="apikey">API key</string> 
-    <string name="pref_trakt">Disconnect trakt.tv</string> 
+    <string name="pref_trakt">trakt.tv credentials</string> 
     <string name="pref_traktsummary">Use the Share buttons to setup trakt.tv</string>
-    <string name="pref_traktsync">Sync with trakt.tv</string>
-    <string name="pref_traktsyncsummary">Experimental, manual syncing with trakt.tv</string>
     <string name="save">Save</string>
     <string name="dontsave">Don\'t save</string>
     <string name="trakt_success">Successfully marked on trakt.tv</string>
@@ -240,16 +238,6 @@
     <string name="feedback">Provide feedback</string>
 	<string name="love">Totally ninja!</string>
 	<string name="hate">Weak Sauce :(</string>
-	<string name="trakt_createaccount">Create new account</string>
-	<string name="email">Email</string>
-    <string name="trakt_synctodevice">Sync to SeriesGuide</string>
-    <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
-    <string name="trakt_synctotrakt">Sync to trakt.tv</string>
-    
-    <!-- strings for BETA release -->
-    <string name="download_stable">Download SeriesGuide</string>
-    <string name="gobreak">Go break things</string>
-    <string name="betawarning">WARNING: This is an unstable BETA release for testing purposes only. To download the stable end-user version click the download button below.\n\nIf you want to help test the beta go ahead. Please report every crash, try everything out and send feedback to seriesguide@battlelancer.com (see Settings).</string>
     
 	<!-- REMOVE before uploading to crowdin -->
 	<string name="app_name">SeriesGuide</string>
@@ -378,8 +366,4 @@
 		<item>11</item>
 		<item>12</item>
 		<item>13</item>
-	</string-array>
-		<string name="trakt_syncunseen">Sync unseen episodes</string>
-		<string name="powered_by_thetvdb">powered by thetvdb.com</string>
-
-</resources>
+	</string-array></resources>

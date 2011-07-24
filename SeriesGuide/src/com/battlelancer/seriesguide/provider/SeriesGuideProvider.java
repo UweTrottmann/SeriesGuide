@@ -32,7 +32,7 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final String TAG = "SeriesGuideProvider";
 
-    private static final boolean LOGV = false;
+    private static final boolean LOGV = Log.isLoggable(TAG, Log.VERBOSE);
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 

@@ -11,7 +11,6 @@ import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.enumerations.Rating;
 
 import android.app.Activity;
@@ -36,9 +35,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -362,7 +358,7 @@ public class ShareUtils {
             manager.setApiKey(Constants.TRAKT_API_KEY);
 
             if (isCancelled()) {
-                return "Cancelled";
+                return null;
             }
 
             final int season = mTraktData.getInt(ShareItems.SEASON);
@@ -388,7 +384,7 @@ public class ShareUtils {
                 }
                 return null;
             } catch (ApiException e) {
-                return "API error: " + e.getMessage();
+                return e.getMessage();
             }
         }
 
@@ -410,20 +406,25 @@ public class ShareUtils {
         }
     }
 
-    public static class TraktCredentialsDialogFragment extends DialogFragment {
+    // public static void onShareWithTrakt(FragmentManager manager, Context
+    // context, String imdbId,
+    // int season, int episode) {
+    // if (!ShareUtils.isTraktCredentialsValid(context)) {
+    // TraktCredentialsDialogFragment newFragment =
+    // TraktCredentialsDialogFragment
+    // .newInstance(imdbId, season, episode);
+    // FragmentTransaction ft = manager.beginTransaction();
+    // newFragment.show(ft, "traktdialog");
+    // } else {
+    // new TraktTask(context, imdbId, season, episode).execute();
+    // }
+    // }
 
-        private boolean isForwardingGivenTask;
+    public static class TraktCredentialsDialogFragment extends DialogFragment {
 
         public static TraktCredentialsDialogFragment newInstance(Bundle traktData) {
             TraktCredentialsDialogFragment f = new TraktCredentialsDialogFragment();
             f.setArguments(traktData);
-            f.isForwardingGivenTask = true;
-            return f;
-        }
-
-        public static TraktCredentialsDialogFragment newInstance() {
-            TraktCredentialsDialogFragment f = new TraktCredentialsDialogFragment();
-            f.isForwardingGivenTask = false;
             return f;
         }
 
@@ -449,34 +450,18 @@ public class ShareUtils {
 
             builder = new AlertDialog.Builder(context);
             builder.setView(layout);
-            builder.setTitle("trakt.tv");
+            builder.setTitle(R.string.pref_trakt);
             ((EditText) layout.findViewById(R.id.username)).setText(username);
             ((EditText) layout.findViewById(R.id.password)).setText(password);
-            final View mailviews = layout.findViewById(R.id.mailviews);
-            mailviews.setVisibility(View.GONE);
-            ((CheckBox) layout.findViewById(R.id.checkNewAccount))
-                    .setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            if (isChecked) {
-                                mailviews.setVisibility(View.VISIBLE);
-                            } else {
-                                mailviews.setVisibility(View.GONE);
-                            }
-                        }
-                    });
-
             builder.setPositiveButton(R.string.save, new OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
                             .getApplicationContext());
-                    final String username = ((EditText) layout.findViewById(R.id.username))
-                            .getText().toString();
+                    String username = ((EditText) layout.findViewById(R.id.username)).getText()
+                            .toString();
                     String password = ((EditText) layout.findViewById(R.id.password)).getText()
                             .toString();
-                    boolean isNewAccount = ((CheckBox) layout.findViewById(R.id.checkNewAccount))
-                            .isChecked();
 
                     try {
                         password = SimpleCrypto.encrypt(password, context);
@@ -490,47 +475,7 @@ public class ShareUtils {
                     editor.putString(SeriesGuidePreferences.PREF_TRAKTPWD, password);
                     editor.commit();
 
-                    if (isNewAccount) {
-                        final String email = ((EditText) layout.findViewById(R.id.email)).getText()
-                                .toString();
-
-                        // validate credentials and mail
-                        if (!isTraktCredentialsValid(context) || email.length() == 0) {
-                            Toast.makeText(context,
-                                    context.getString(R.string.trakt_credentials_invalid),
-                                    Toast.LENGTH_LONG).show();
-                            editor.putString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
-                            editor.putString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
-                            editor.commit();
-                            return;
-                        }
-
-                        // TODO: make asynchronous
-                        // create new account
-                        final ServiceManager manager = new ServiceManager();
-                        manager.setApiKey(Constants.TRAKT_API_KEY);
-                        manager.setAuthentication(username, ShareUtils.toSHA1(password.getBytes()));
-                        final Response response = manager.userService()
-                                .createAccount(username, password, email).fire();
-
-                        if (response.getStatus().equalsIgnoreCase("success")) {
-                            Toast.makeText(context,
-                                    response.getStatus() + ": " + response.getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(context,
-                                    response.getStatus() + ": " + response.getError(),
-                                    Toast.LENGTH_LONG).show();
-                            editor.putString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
-                            editor.putString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
-                            editor.commit();
-                            return;
-                        }
-                    }
-
-                    if (isForwardingGivenTask) {
-                        new TraktTask(context, getFragmentManager(), getArguments()).execute();
-                    }
+                    new TraktTask(context, getFragmentManager(), getArguments()).execute();
                 }
             });
             builder.setNegativeButton(R.string.dontsave, null);

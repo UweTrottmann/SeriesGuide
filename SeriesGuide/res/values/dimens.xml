@@ -14,6 +14,10 @@
   limitations under the License.
   -->
 <resources>
+
+    <!-- UI elements -->
+    <dimen name="actionbar_compat_height">45dp</dimen>
+
 	<!-- body content -->
     <dimen name="body_padding_medium">10dp</dimen>
     <dimen name="body_padding_large">10dp</dimen>

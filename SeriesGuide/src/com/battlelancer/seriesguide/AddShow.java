@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide;
 
+import com.battlelancer.seriesguide.util.ActivityHelper;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.thetvdbapi.SearchResult;
 import com.battlelancer.thetvdbapi.TheTVDB;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
@@ -54,6 +56,8 @@ public class AddShow extends Activity {
 
     private AddShowTask addTask;
 
+    private final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
+
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
     }
@@ -63,6 +67,7 @@ public class AddShow extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.add_show);
+        mActivityHelper.setupActionBar(getString(R.string.add_show));
 
         resultList = ((ListView) findViewById(R.id.ListViewSearchResults));
 
@@ -136,6 +141,15 @@ public class AddShow extends Activity {
         }
 
         return data;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mActivityHelper.onOptionsItemSelected(item)) {
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     private class MyDataObject {

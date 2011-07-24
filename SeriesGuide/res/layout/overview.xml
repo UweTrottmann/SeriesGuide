@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    <include
+        layout="@layout/actionbar" />
+    <RelativeLayout
+        android:id="@+id/showinfo"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_below="@id/actionbar_compat"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/actionbar_compat_button"
+        android:focusable="true">
+        <ImageView
+            android:id="@+id/showposter"
+            android:src="@drawable/show_generic"
+            android:layout_width="45dp"
+            android:adjustViewBounds="true"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="5dp"
+            android:paddingBottom="5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/seriesname"
+            style="@style/BigFont"
+            android:textColor="#ffffffff"
+            android:paddingTop="2dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="0dp"
+            android:lines="1"
+            android:scrollHorizontally="true"
+            android:ellipsize="marquee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sanctuary Edition"
+            android:layout_toRightOf="@id/showposter" />
+        <TextView
+            android:id="@+id/showmeta"
+            style="@style/SmallFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thu 10:00 on Showtime"
+            android:layout_toRightOf="@+id/showposter"
+            android:layout_below="@id/seriesname" />
+        <TextView
+            android:id="@+id/showStatus"
+            style="@style/SmallFont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="Continuing"
+            android:layout_toRightOf="@+id/showmeta"
+            android:layout_below="@id/seriesname" />
+    </RelativeLayout>
+    <ScrollView
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/showinfo"
+        android:layout_above="@+id/toolbarEpisodeDetails">
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/gotoshowinfo"
+                style="@style/HoloCompatButton.Small"
+                android:text="@string/context_showinfo"
+                android:layout_marginBottom="10dp"></Button>
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/nextheader"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/gotoshowinfo"
+                android:layout_alignLeft="@+id/TextViewEpisodeTitle"
+                android:text="Loading..."></TextView>
+            <TextView
+                android:id="@+id/TextViewEpisodeTitle"
+                style="@style/ListTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nextheader"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="Loading..." />
+            <TextView
+                android:id="@+id/TextViewEpisodeNumbers"
+                style="@style/SmallFont"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/TextViewEpisodeTitle"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:text="Loading..." />
+            <LinearLayout
+                android:id="@+id/episodemeta"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:baselineAligned="true"
+                android:layout_below="@id/TextViewEpisodeNumbers"
+                android:layout_above="@+id/toolbarEpisodeDetails">
+                <ImageView
+                    android:id="@+id/ImageViewEpisodeImage"
+                    android:layout_width="fill_parent"
+                    android:layout_height="200dp"
+                    android:src="@drawable/show_generic"
+                    android:scaleType="center" />
+                <include
+                    layout="@layout/overview_episode_meta"></include>
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+    <LinearLayout
+        android:id="@+id/toolbarEpisodeDetails"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp">
+        <Button
+            android:id="@+id/gotoseasons"
+            style="@style/HoloCompatButton"
+            android:text="@string/seasons"
+            android:layout_height="fill_parent"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"></Button>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:id="@+id/watchedButton"
+            android:src="@drawable/ic_menu_view"
+            android:layout_height="fill_parent"
+            android:scaleType="centerInside"
+            android:background="@drawable/btn_default_holo_dark"></ImageButton>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:id="@+id/shareButton"
+            android:src="@drawable/ic_menu_share"
+            android:layout_height="fill_parent"
+            android:scaleType="centerInside"
+            android:background="@drawable/btn_default_holo_dark"></ImageButton>
+    </LinearLayout>
+</RelativeLayout>

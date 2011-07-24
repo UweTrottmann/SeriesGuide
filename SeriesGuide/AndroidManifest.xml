@@ -3,25 +3,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.battlelancer.seriesguide"
     android:installLocation="auto"
-    android:versionCode="120"
-    android:versionName="2.0dev">
+    android:versionCode="123" android:versionName="2.0.5">
     <application
         android:name="SeriesGuideApplication"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Sherlock"
-        android:backupAgent="com.battlelancer.seriesguide.PrefBackupHelper"
+        android:theme="@style/Theme.SeriesGuide"
+        android:backupAgent="PrefBackupHelper"
         android:debuggable="false">
         <meta-data
             android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAIToXnISqkDzDlKt206D1VdujnhhoFa0mAEM8Veg" />
         <activity
             android:name=".AddShow"
-            android:label="@string/add_show"
-            android:windowSoftInputMode="stateVisible">
+            android:label="@string/add_show">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
+                android:value=".SearchSeriesGuide" />
         </activity>
         <activity
             android:name=".SeriesGuidePreferences"
@@ -33,7 +31,7 @@
             android:name=".ShowInfo">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
+                android:value=".SearchSeriesGuide" />
         </activity>
 
         <activity
@@ -91,6 +89,22 @@
             android:name=".appwidget.AppWidgetLarge$UpdateServiceLarge"></service>
 
         <activity
+            android:name=".UpcomingEpisodes">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchSeriesGuide" />
+        </activity>
+        <activity
+            android:name=".UpcomingRecent"
+            android:launchMode="singleTop"></activity>
+        <activity
+            android:name=".RecentEpisodes">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchSeriesGuide" />
+        </activity>
+
+        <activity
             android:name=".getglueapi.PrepareRequestTokenActivity"
             android:launchMode="singleTask">
             >
@@ -116,19 +130,19 @@
             </intent-filter>
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
+                android:value=".SearchSeriesGuide" />
         </activity>
         <activity
             android:name=".ui.SeasonsActivity">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
+                android:value=".SearchSeriesGuide" />
         </activity>
         <activity
             android:name=".ui.EpisodesActivity">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
+                android:value=".SearchSeriesGuide" />
         </activity>
         <provider
             android:name=".provider.SeriesGuideProvider"
@@ -137,27 +151,19 @@
             android:name=".ui.OverviewActivity">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
+                android:value=".SearchSeriesGuide" />
         </activity>
         <activity
             android:name=".ui.EpisodeDetailsActivity">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
-        </activity>
-        <activity
-            android:name=".ui.TraktSyncActivity"></activity>
-        <activity
-            android:name=".ui.UpcomingRecentActivity">
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
+                android:value=".SearchSeriesGuide" />
         </activity>
     </application>
 
     <uses-sdk
-        android:minSdkVersion="7"
-        android:targetSdkVersion="12" />
+        android:targetSdkVersion="11"
+        android:minSdkVersion="7" />
 
     <uses-permission
         android:name="android.permission.INTERNET" />

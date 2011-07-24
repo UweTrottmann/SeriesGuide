@@ -1,8 +1,7 @@
 package com.jakewharton.trakt.entities;
 
-import com.jakewharton.trakt.TraktEntity;
-
 import java.util.Date;
+import com.jakewharton.trakt.TraktEntity;
 
 public class Shout implements TraktEntity {
 	private static final long serialVersionUID = 4324069488018464744L;

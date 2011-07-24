@@ -3,6 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
+    <include
+        layout="@layout/actionbar" />
     <TextView
         android:id="@+id/title"
         style="@style/BigFont"
@@ -12,7 +14,7 @@
         android:layout_marginLeft="5sp"
         android:layout_marginRight="5sp"
         android:text="Show title"
-        android:layout_alignParentTop="true" />
+        android:layout_below="@id/actionbar_compat" />
     <include
         layout="@layout/show_info_meta"></include>
     <ScrollView

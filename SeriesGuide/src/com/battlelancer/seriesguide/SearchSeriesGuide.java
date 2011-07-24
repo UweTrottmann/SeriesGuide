@@ -5,6 +5,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
+import com.battlelancer.seriesguide.util.ActivityHelper;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 
 import android.app.ListActivity;
@@ -15,6 +16,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -25,19 +27,29 @@ public class SearchSeriesGuide extends ListActivity {
 
     private static final String TAG = "SearchSeriesGuide";
 
+    final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
+        mActivityHelper.setupActionBar(getString(R.string.search_title));
         handleIntent(getIntent());
-        
-        setTitle(getString(R.string.search_title));
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         setIntent(intent);
         handleIntent(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mActivityHelper.onOptionsItemSelected(item)) {
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     private void handleIntent(Intent intent) {

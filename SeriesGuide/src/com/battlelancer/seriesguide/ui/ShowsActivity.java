@@ -9,10 +9,12 @@ import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.SeriesGuideData.ShowSorting;
 import com.battlelancer.seriesguide.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ShowInfo;
+import com.battlelancer.seriesguide.UpcomingRecent;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.EulaHelper;
+import com.battlelancer.seriesguide.util.SimpleMenu;
 import com.battlelancer.seriesguide.util.UIUtils;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.thetvdbapi.ImageCache;
@@ -21,7 +23,6 @@ import com.battlelancer.thetvdbapi.TheTVDB;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -37,12 +38,13 @@ import android.provider.BaseColumns;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
@@ -81,13 +83,11 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     public static final int UPDATE_SAXERROR_DIALOG = 302;
 
-    private static final int CONFIRM_DELETE_DIALOG = 304;
+    public static final int CONFIRM_DELETE_DIALOG = 304;
 
-    private static final int WHATS_NEW_DIALOG = 305;
+    public static final int WHATS_NEW_DIALOG = 305;
 
-    private static final int SORT_DIALOG = 306;
-
-    private static final int BETA_WARNING_DIALOG = 307;
+    public static final int SORT_DIALOG = 306;
 
     private static final int LOADER_ID = 900;
 
@@ -140,8 +140,21 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
         final Context context = this;
 
+        getActivityHelper().setupActionBar(null);
+
         if (!EulaHelper.hasAcceptedEula(this)) {
             EulaHelper.showEula(false, this);
+        }
+
+        // populate the compatibility actionbar
+        if (android.os.Build.VERSION.SDK_INT < 11) {
+            SimpleMenu menu = new SimpleMenu(this);
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.home_actions, menu);
+            for (int i = 0; i < menu.size(); i++) {
+                MenuItem item = menu.getItem(i);
+                getActivityHelper().addActionButtonCompatFromMenuItem(item);
+            }
         }
 
         updatePreferences();
@@ -348,31 +361,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                                 startActivity(myIntent);
                             }
                         }).create();
-            case BETA_WARNING_DIALOG:
-                /* Used for unstable beta releases */
-                return new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.whatsnew_title))
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setMessage(getString(R.string.betawarning))
-                        .setPositiveButton(R.string.gobreak, null)
-                        .setNeutralButton(getString(R.string.download_stable),
-                                new OnClickListener() {
-
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        try {
-                                            Intent myIntent = new Intent(
-                                                    Intent.ACTION_VIEW,
-                                                    Uri.parse("market://details?id=com.battlelancer.seriesguide"));
-                                            startActivity(myIntent);
-                                        } catch (ActivityNotFoundException e) {
-                                            Intent myIntent = new Intent(
-                                                    Intent.ACTION_VIEW,
-                                                    Uri.parse("http://market.android.com/details?id=com.battlelancer.seriesguide"));
-                                            startActivity(myIntent);
-                                        }
-                                        finish();
-                                    }
-                                }).create();
             case SORT_DIALOG:
                 final CharSequence[] items = getResources().getStringArray(R.array.shsorting);
 
@@ -413,7 +401,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     }
 
     @Override
-    public boolean onContextItemSelected(android.view.MenuItem item) {
+    public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
@@ -457,8 +445,9 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.seriesguide_menu, menu);
-        return super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.seriesguide_menu, menu);
+        return true;
     }
 
     @Override
@@ -488,7 +477,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 }
                 return true;
             case R.id.menu_upcoming:
-                startActivity(new Intent(this, UpcomingRecentActivity.class));
+                startActivity(new Intent(this, UpcomingRecent.class));
                 return true;
             case R.id.menu_new_show:
                 startActivity(new Intent(this, AddShow.class));
@@ -764,25 +753,19 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
         updateSorting(prefs);
 
-        // // display whats new dialog
-        // int lastVersion = prefs.getInt(SeriesGuideData.KEY_VERSION, -1);
-        // try {
-        // int currentVersion =
-        // getPackageManager().getPackageInfo(getPackageName(),
-        // PackageManager.GET_META_DATA).versionCode;
-        // if (currentVersion > lastVersion) {
-
-        // BETA warning dialog switch
-        // showDialog(BETA_WARNING_DIALOG);
-        // showDialog(WHATS_NEW_DIALOG);
-
-        // // set this as lastVersion
-        // prefs.edit().putInt(SeriesGuideData.KEY_VERSION,
-        // currentVersion).commit();
-        // }
-        // } catch (NameNotFoundException e) {
-        // // this should never happen
-        // }
+//        // display whats new dialog
+//        int lastVersion = prefs.getInt(SeriesGuideData.KEY_VERSION, -1);
+//        try {
+//            int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
+//                    PackageManager.GET_META_DATA).versionCode;
+//            if (currentVersion > lastVersion) {
+//                showDialog(WHATS_NEW_DIALOG);
+//                // set this as lastVersion
+//                prefs.edit().putInt(SeriesGuideData.KEY_VERSION, currentVersion).commit();
+//            }
+//        } catch (NameNotFoundException e) {
+//            // this should never happen
+//        }
     }
 
     /**

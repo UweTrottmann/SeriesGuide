@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:title="@string/sort"
-        android:id="@+id/menu_sesortby"
-        android:icon="@drawable/ic_action_sort"
-        android:showAsAction="ifRoom|withText"></item>
-    <item
-        android:id="@+id/menu_markall"
-        android:title="@string/mark_all"
-        android:icon="@drawable/ic_action_mark" />
-    <item
-        android:id="@+id/menu_unmarkall"
-        android:title="@string/unmark_all"
-        android:icon="@drawable/ic_action_clear" />
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:title="@string/sort" android:id="@+id/menu_sesortby"
+		android:icon="@drawable/ic_menu_sort_by_size" android:showAsAction="ifRoom|withText"></item>
+	<item android:id="@+id/menu_markall" android:title="@string/mark_all"
+		android:icon="@drawable/ic_menu_agenda" android:showAsAction="ifRoom|withText" />
+	<item android:id="@+id/menu_unmarkall" android:title="@string/unmark_all"
+		android:icon="@drawable/ic_menu_clear_playlist" android:showAsAction="ifRoom|withText" />
 </menu>

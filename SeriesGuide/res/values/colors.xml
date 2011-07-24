@@ -14,6 +14,6 @@
   limitations under the License.
   -->
 <resources>
+    <color name="actionbar_text">#ffffffff</color>
     <color name="button_text">#ffffffff</color>
-    <color name="text_faded">#ff666666</color>
 </resources>

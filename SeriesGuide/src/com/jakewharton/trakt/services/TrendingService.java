@@ -1,12 +1,11 @@
 package com.jakewharton.trakt.services;
 
+import java.util.List;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.TvShow;
-
-import java.util.List;
 
 public class TrendingService extends TraktApiService {
 	/**

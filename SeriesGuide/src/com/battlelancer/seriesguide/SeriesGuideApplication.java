@@ -1,9 +1,9 @@
 
 package com.battlelancer.seriesguide;
 
-import com.battlelancer.thetvdbapi.ImageCache;
-
 import android.app.Application;
+
+import com.battlelancer.thetvdbapi.ImageCache;
 
 public class SeriesGuideApplication extends Application {
 

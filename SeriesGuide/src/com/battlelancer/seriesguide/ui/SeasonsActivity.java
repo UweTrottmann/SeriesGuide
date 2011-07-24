@@ -8,7 +8,6 @@ import com.battlelancer.thetvdbapi.Series;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBar;
 import android.support.v4.app.Fragment;
 
 public class SeasonsActivity extends BaseActivity {
@@ -27,18 +26,15 @@ public class SeasonsActivity extends BaseActivity {
             return;
         }
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
-
         Bundle extras = getIntent().getExtras();
         String seriesid = extras.getString(Shows._ID);
         final Series show = SeriesDatabase.getShow(this, seriesid);
         if (show != null) {
             String showname = show.getSeriesName();
-            actionBar.setTitle(showname);
+            getActivityHelper().setupActionBar(showname);
             setTitle(showname);
         } else {
-            actionBar.setTitle(getString(R.string.seasons));
+            getActivityHelper().setupActionBar(getString(R.string.seasons));
             setTitle(getString(R.string.seasons));
         }
 

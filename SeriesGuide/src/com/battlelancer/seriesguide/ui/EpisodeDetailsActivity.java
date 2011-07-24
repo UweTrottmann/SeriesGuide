@@ -4,7 +4,6 @@ package com.battlelancer.seriesguide.ui;
 import com.battlelancer.seriesguide.R;
 
 import android.os.Bundle;
-import android.support.v4.app.ActionBar;
 import android.support.v4.app.Fragment;
 
 public class EpisodeDetailsActivity extends BaseActivity {
@@ -17,9 +16,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singlepane_empty);
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.episode));
-        actionBar.setDisplayShowTitleEnabled(true);
+        getActivityHelper().setupActionBar(getString(R.string.episode));
 
         if (savedInstanceState == null) {
             mFragment = new EpisodeDetailsFragment();

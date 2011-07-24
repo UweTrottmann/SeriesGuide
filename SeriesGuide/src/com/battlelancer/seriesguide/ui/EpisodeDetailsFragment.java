@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.SimpleMenu;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
@@ -24,10 +25,12 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.Menu;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -91,6 +94,18 @@ public class EpisodeDetailsFragment extends ListFragment implements
 
         imageCache = ((SeriesGuideApplication) getActivity().getApplication()).getImageCache();
 
+        // populate the compatibility actionbar
+        if (android.os.Build.VERSION.SDK_INT < 11) {
+            SimpleMenu simpleMenu = new SimpleMenu(getActivity());
+            MenuInflater inflater = getActivity().getMenuInflater();
+            inflater.inflate(R.menu.episodedetails_actions, simpleMenu);
+            for (int i = 0; i < simpleMenu.size(); i++) {
+                MenuItem item = simpleMenu.getItem(i);
+                ((BaseActivity) getActivity()).getActivityHelper()
+                        .addActionButtonCompatFromMenuItem(item);
+            }
+        }
+
         setupAdapter();
 
         getLoaderManager().initLoader(EPISODE_LOADER, null, this);
@@ -108,13 +123,13 @@ public class EpisodeDetailsFragment extends ListFragment implements
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, android.view.MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.episodedetails_menu, menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_togglemark:
                 fireTrackerEvent("Toggle watched");
@@ -330,7 +345,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
 
         @Override
         protected void onPreExecute() {
-            mImageView.setImageResource(R.drawable.ic_action_refresh);
+            mImageView.setImageResource(R.drawable.ic_menu_refresh);
         }
 
         @Override

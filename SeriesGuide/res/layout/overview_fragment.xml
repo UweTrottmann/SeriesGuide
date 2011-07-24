@@ -15,7 +15,8 @@
         android:gravity="center_vertical">
         <ScrollView
             android:layout_height="fill_parent"
-            android:layout_width="fill_parent">
+            android:layout_width="fill_parent"
+            android:layout_above="@+id/toolbarEpisodeDetails">
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
@@ -26,11 +27,15 @@
                     android:layout_width="fill_parent"
                     android:layout_alignParentTop="true"
                     android:background="@drawable/list_item"
-                    android:focusable="true"
-                    android:paddingLeft="5dp">
-                    <!-- <ImageView android:id="@+id/showposter" android:src="@drawable/show_generic" 
-                        android:layout_width="45dp" android:adjustViewBounds="true" android:layout_marginRight="10dp" android:layout_alignParentLeft="true" 
-                        android:layout_height="wrap_content" /> android:ellipsize="marquee" -->
+                    android:focusable="true">
+                    <ImageView
+                        android:id="@+id/showposter"
+                        android:src="@drawable/show_generic"
+                        android:layout_width="45dp"
+                        android:adjustViewBounds="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_height="wrap_content" />
                     <TextView
                         android:id="@+id/seriesname"
                         style="@style/BigFont"
@@ -41,29 +46,25 @@
                         android:ellipsize="marquee"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/showposter"
                         android:text="Loading" />
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/showmeta"
+                        style="@style/SmallFont"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="2dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_below="@id/seriesname"
-                        android:layout_toLeftOf="@+id/show_arrow">
-                        <TextView
-                            android:id="@+id/showmeta"
-                            style="@style/SmallFont"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Thu 10:00 PM on Very Long Network Name (VLNM)"
-                            android:layout_weight="1" />
-                        <TextView
-                            android:id="@+id/showStatus"
-                            style="@style/SmallFont"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="5dp"
-                            android:text="Continuing" />
-                    </LinearLayout>
+                        android:text="Thu 10:00 on Showtime"
+                        android:layout_toRightOf="@+id/showposter"
+                        android:layout_below="@id/seriesname" />
+                    <TextView
+                        android:id="@+id/showStatus"
+                        style="@style/SmallFont"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:text="Continuing"
+                        android:layout_toRightOf="@+id/showmeta"
+                        android:layout_below="@id/seriesname" />
                     <ImageView
                         android:id="@+id/show_arrow"
                         android:src="@drawable/ic_action_arrow_right"

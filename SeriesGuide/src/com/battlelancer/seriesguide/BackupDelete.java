@@ -15,7 +15,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActionBar;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -64,9 +63,7 @@ public class BackupDelete extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.backup);
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.backup));
-        actionBar.setDisplayShowTitleEnabled(true);
+        getActivityHelper().setupActionBar(getString(R.string.backup));
 
         exportDbToSdButton = (Button) findViewById(R.id.ButtonExportDBtoSD);
         exportDbToSdButton.setOnClickListener(new OnClickListener() {

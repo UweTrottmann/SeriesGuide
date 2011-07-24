@@ -103,12 +103,10 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                         Cursor show = resolver.query(Shows.buildShowUri(id), new String[] {
                             Shows.TITLE
                         }, null, null, null);
-                        if (show.moveToFirst()) {
-                            String name = show.getString(0);
-                            addFailedShow(name);
-                        }
+                        show.moveToFirst(); // always move to first result
+                        String name = show.getString(0);
                         show.close();
-
+                        addFailedShow(name);
                     }
                 }
             }

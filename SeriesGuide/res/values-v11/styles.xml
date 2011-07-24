@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Start with the Holographic Light theme -->
+	<style name="Theme.SeriesGuide" parent="android:style/Theme.Holo">
+	</style>
+</resources>

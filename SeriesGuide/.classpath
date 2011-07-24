@@ -6,8 +6,12 @@
 	<classpathentry kind="lib" path="lib/libGoogleAnalytics.jar"/>
 	<classpathentry kind="lib" path="lib/signpost-commonshttp4-1.2.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/signpost-core-1.2.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/android-support-v4.jar" sourcepath="C:/android-sdk-windows/android-compatibility/v4/src">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/android-sdk/extras/android/compatibility/v4/docs/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="lib/gson-1.7.1.jar"/>
 	<classpathentry kind="lib" path="lib/apibuilder-1.1.0.jar"/>
-	<classpathentry kind="src" path="com_actionbarsherlock_src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

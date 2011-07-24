@@ -20,8 +20,8 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesDatabase;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.SeriesGuideData;
+import com.battlelancer.seriesguide.UpcomingRecent;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.app.IntentService;
@@ -101,6 +101,7 @@ public class AppWidget extends AppWidgetProvider {
             RemoteViews views = new RemoteViews(context.getPackageName(), layout);
 
             views.removeAllViews(R.id.LinearLayoutWidget);
+            
 
             // get upcoming shows (name and next episode text)
             Cursor upcomingEpisodes = SeriesDatabase.getUpcomingEpisodes(context);
@@ -121,7 +122,7 @@ public class AppWidget extends AppWidgetProvider {
                 int viewsToAdd = Integer.valueOf(limit);
                 while (upcomingEpisodes.moveToNext() && viewsToAdd != 0) {
                     viewsToAdd--;
-
+                    
                     RemoteViews item = new RemoteViews(context.getPackageName(), itemLayout);
                     // upcoming episode
                     String season = upcomingEpisodes.getString(upcomingEpisodes
@@ -174,7 +175,7 @@ public class AppWidget extends AppWidgetProvider {
                             }
                         }
                     }
-
+                    
                     views.addView(R.id.LinearLayoutWidget, item);
                 }
             }
@@ -182,7 +183,7 @@ public class AppWidget extends AppWidgetProvider {
             upcomingEpisodes.close();
 
             // Create an Intent to launch Upcoming
-            Intent intent = new Intent(context, UpcomingRecentActivity.class);
+            Intent intent = new Intent(context, UpcomingRecent.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
             views.setOnClickPendingIntent(R.id.LinearLayoutWidget, pendingIntent);

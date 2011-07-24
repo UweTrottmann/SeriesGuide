@@ -28,12 +28,13 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.Menu;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -190,7 +191,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
     }
 
     @Override
-    public boolean onContextItemSelected(android.view.MenuItem item) {
+    public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
@@ -226,7 +227,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
     }
 
     @Override
-    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.mark_all:
                 fireTrackerEvent("Mark all episodes");
@@ -273,7 +274,6 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
         new Thread(new Runnable() {
             public void run() {
                 SeriesDatabase.markSeasonEpisodes(getActivity(), getSeasonId(), state);
-                getActivity().getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
             }
         }).start();
     }

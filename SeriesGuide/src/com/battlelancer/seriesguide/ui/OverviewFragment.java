@@ -26,11 +26,11 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.SimpleMenu;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.Series;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -43,10 +43,10 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.Menu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -106,6 +106,18 @@ public class OverviewFragment extends Fragment {
 
         fillShowData();
 
+        // populate the compatibility actionbar
+        if (android.os.Build.VERSION.SDK_INT < 11) {
+            SimpleMenu simpleMenu = new SimpleMenu(getActivity());
+            MenuInflater inflater = getActivity().getMenuInflater();
+            inflater.inflate(R.menu.episodedetails_actions, simpleMenu);
+            for (int i = 0; i < simpleMenu.size(); i++) {
+                MenuItem item = simpleMenu.getItem(i);
+                ((BaseActivity) getActivity()).getActivityHelper()
+                        .addActionButtonCompatFromMenuItem(item);
+            }
+        }
+
         setHasOptionsMenu(true);
 
         // Check to see if we have a frame in which to embed the details
@@ -125,9 +137,9 @@ public class OverviewFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, android.view.MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.overview_menu, menu);
+        inflater.inflate(R.menu.episodedetails_menu, menu);
     }
 
     @Override
@@ -148,8 +160,8 @@ public class OverviewFragment extends Fragment {
                 fireTrackerEvent("Add episode to calendar");
 
                 ShareUtils.onAddCalendarEvent(getActivity(), show.getSeriesName(),
-                        mShareData.getString(ShareItems.EPISODESTRING), airdate,
-                        show.getAirsTime(), show.getRuntime());
+                        mShareData.getString(ShareItems.EPISODESTRING), airdate, show.getAirsTime(),
+                        show.getRuntime());
                 break;
             default:
                 break;
@@ -209,10 +221,6 @@ public class OverviewFragment extends Fragment {
 
     private void fillShowData() {
         show = SeriesDatabase.getShow(getActivity(), getShowId());
-        
-        if (show == null) {
-            return;
-        }
 
         // Save imdbId for GetGlue sharing
         mShareData.putString(ShareItems.IMDBID, show.getImdbId());
@@ -244,14 +252,13 @@ public class OverviewFragment extends Fragment {
             }
         }
 
-        // ImageView poster = (ImageView)
-        // getActivity().findViewById(R.id.showposter);
-        // Bitmap bitmap = imageCache.getThumb(show.getPoster());
-        // if (bitmap != null) {
-        // poster.setImageBitmap(bitmap);
-        // } else {
-        // poster.setImageResource(R.drawable.show_generic);
-        // }
+        ImageView poster = (ImageView) getActivity().findViewById(R.id.showposter);
+        Bitmap bitmap = imageCache.getThumb(show.getPoster());
+        if (bitmap != null) {
+            poster.setImageBitmap(bitmap);
+        } else {
+            poster.setImageResource(R.drawable.show_generic);
+        }
 
         // Airtime and Network
         String timeAndNetwork = "";
@@ -268,28 +275,23 @@ public class OverviewFragment extends Fragment {
     }
 
     private void fillEpisodeData() {
-        final FragmentActivity context = getActivity();
-        if (context == null) {
-            return;
-        }
-        
-        TextView nextheader = (TextView) context.findViewById(R.id.nextheader);
-        TextView episodetitle = (TextView) context.findViewById(R.id.TextViewEpisodeTitle);
-        TextView numbers = (TextView) context.findViewById(R.id.TextViewEpisodeNumbers);
+        TextView nextheader = (TextView) getActivity().findViewById(R.id.nextheader);
+        TextView episodetitle = (TextView) getActivity().findViewById(R.id.TextViewEpisodeTitle);
+        TextView numbers = (TextView) getActivity().findViewById(R.id.TextViewEpisodeNumbers);
 
         // // start share string
         String sharestring = getString(R.string.share_checkout);
         String episodestring = "";
-        sharestring += " \"" + ((TextView) context.findViewById(R.id.seriesname)).getText();
+        sharestring += " \"" + ((TextView) getActivity().findViewById(R.id.seriesname)).getText();
 
         if (episodeid != 0) {
             episodetitle.setVisibility(View.VISIBLE);
             numbers.setVisibility(View.VISIBLE);
-            LinearLayout episodemeta = (LinearLayout) context.findViewById(R.id.episodemeta);
+            LinearLayout episodemeta = (LinearLayout) getActivity().findViewById(R.id.episodemeta);
             episodemeta.setVisibility(View.VISIBLE);
 
             // final Bundle episode = mDbHelper.getEpisodeDetails(episodeid);
-            final Cursor episode = context.getContentResolver().query(
+            final Cursor episode = getActivity().getContentResolver().query(
                     Episodes.buildEpisodeUri(String.valueOf(episodeid)), EpisodeQuery.PROJECTION,
                     null, null, null);
             episode.moveToFirst();
@@ -298,14 +300,14 @@ public class OverviewFragment extends Fragment {
             airdate = episode.getString(EpisodeQuery.FIRSTAIRED);
             if (airdate.length() != 0) {
                 nextheader.setText(SeriesGuideData.parseDateToLocalRelative(airdate,
-                        show.getAirsTime(), context)
+                        show.getAirsTime(), getActivity())
                         + ":");
             }
 
             onLoadEpisodeDetails(episode);
 
             // create share string
-            episodestring = ShareUtils.onCreateShareString(context, episode);
+            episodestring = ShareUtils.onCreateShareString(getActivity(), episode);
 
             // Episode image
             String imagePath = episode.getString(EpisodeQuery.IMAGE);
@@ -318,7 +320,7 @@ public class OverviewFragment extends Fragment {
             nextheader.setText("  " + getString(R.string.no_nextepisode));
             episodetitle.setVisibility(View.GONE);
             numbers.setVisibility(View.GONE);
-            LinearLayout episodemeta = (LinearLayout) context.findViewById(R.id.episodemeta);
+            LinearLayout episodemeta = (LinearLayout) getActivity().findViewById(R.id.episodemeta);
             episodemeta.setVisibility(View.GONE);
         }
 
@@ -329,14 +331,9 @@ public class OverviewFragment extends Fragment {
     }
 
     protected void onLoadEpisode() {
-        final Context context = getActivity();
-        if (context == null) {
-            return;
-        }
-
         new Thread(new Runnable() {
             public void run() {
-                episodeid = SeriesDatabase.updateLatestEpisode(context, getShowId());
+                episodeid = SeriesDatabase.updateLatestEpisode(getActivity(), getShowId());
                 if (getActivity() != null) {
                     getActivity().runOnUiThread(new Runnable() {
                         public void run() {
@@ -470,7 +467,7 @@ public class OverviewFragment extends Fragment {
 
         @Override
         protected void onPreExecute() {
-            mImageView.setImageResource(R.drawable.ic_action_refresh);
+            mImageView.setImageResource(R.drawable.ic_menu_refresh);
         }
 
         @Override

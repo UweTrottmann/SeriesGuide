@@ -1,39 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge
-    xmlns:android="http://schemas.android.com/apk/res/android">
+  xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/showmeta"
-        android:layout_below="@id/title">
-        <TextView
-            android:id="@+id/TextViewShowInfoAirtime"
-            style="@style/SmallFont"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5sp"
-            android:layout_marginRight="2sp"
-            android:text="airs Tue 9:00 PM"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@+id/TextViewShowInfoStatus" />
-        <TextView
-            android:text="on Very Long Network Name (VLNM)"
-            style="@style/SmallFont"
-            android:layout_marginBottom="2sp"
-            android:layout_marginRight="2sp"
-            android:id="@+id/TextViewShowInfoNetwork"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_below="@+id/TextViewShowInfoAirtime"
-            android:layout_alignLeft="@+id/TextViewShowInfoAirtime"></TextView>
-        <TextView
-            android:text="Continuing"
-            style="@style/SmallFont"
-            android:layout_marginBottom="2sp"
-            android:layout_marginRight="2sp"
-            android:id="@+id/TextViewShowInfoStatus"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_alignParentRight="true"></TextView>
-    </RelativeLayout>
+        android:layout_width="fill_parent"
+    	android:layout_height="wrap_content"
+    	android:id="@+id/showmeta"
+    	android:layout_below="@id/title">
+   	    <TextView android:id="@+id/TextViewShowInfoAirtime"
+   	    	style="@style/SmallFont"
+	        android:layout_width="wrap_content"
+	       	android:layout_height="wrap_content"
+	       	android:layout_marginLeft="5sp"
+	       	android:layout_marginRight="2sp"
+	       	android:layout_marginBottom="2sp"
+	       	android:text="Airs Tue 9:00 PM" android:layout_alignParentLeft="true"/>
+	    <TextView android:id="@+id/TextViewShowInfoNetwork"
+	    	style="@style/SmallFont"
+	        android:layout_width="wrap_content"
+	       	android:layout_height="wrap_content"
+	       	android:layout_marginLeft="0sp"
+	       	android:layout_marginRight="2sp"
+	       	android:layout_marginBottom="2sp"
+	       	android:text="on FOX" android:layout_toRightOf="@+id/TextViewShowInfoAirtime"/>
+	    <TextView android:id="@+id/TextViewShowInfoStatus"
+	    	style="@style/SmallFont"
+	        android:layout_width="wrap_content"
+	       	android:layout_height="wrap_content"
+	       	android:layout_marginLeft="5sp"
+	       	android:layout_marginRight="2sp"
+	       	android:layout_marginBottom="2sp"
+	       	android:lines="1"
+	       	android:scrollHorizontally="true"
+	       	android:ellipsize="marquee"
+	       	android:text="Continuing" android:layout_toRightOf="@+id/TextViewShowInfoNetwork"/>
+   	</RelativeLayout>
 </merge>

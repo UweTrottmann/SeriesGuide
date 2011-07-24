@@ -81,10 +81,6 @@
             android:summary="@string/pref_traktintegratesummary"
             android:key="com.battlelancer.seriesguide.traktintegration"
             android:defaultValue="False" />
-        <Preference
-            android:title="@string/pref_traktsync"
-            android:summary="@string/pref_traktsyncsummary"
-            android:key="com.battlelancer.seriesguide.traktsync" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_more">

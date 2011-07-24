@@ -1,9 +1,8 @@
 package com.jakewharton.trakt.entities;
 
+import java.util.Date;
 import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.MediaType;
-
-import java.util.Date;
 
 public final class MediaEntity implements TraktEntity {
 	private static final long serialVersionUID = 4535846809492296227L;

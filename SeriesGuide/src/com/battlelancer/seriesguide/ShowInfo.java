@@ -13,7 +13,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActionBar;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -34,9 +33,7 @@ public class ShowInfo extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_info);
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.context_showinfo));
-        actionBar.setDisplayShowTitleEnabled(true);
+        getActivityHelper().setupActionBar(getString(R.string.context_showinfo));
 
         imageCache = ((SeriesGuideApplication) getApplication()).getImageCache();
 

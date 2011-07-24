@@ -3,9 +3,8 @@ package com.battlelancer.seriesguide;
 
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.ui.TraktSyncActivity;
+import com.battlelancer.seriesguide.util.ActivityHelper;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
-import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.SimpleCrypto;
 
 import android.app.AlertDialog;
@@ -26,6 +25,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ScrollView;
@@ -33,6 +33,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class SeriesGuidePreferences extends PreferenceActivity {
+
+    public static final String PREF_TRAKTAPIKEY = "com.battlelancer.seriesguide.traktapikey";
 
     public static final String PREF_TRAKTPWD = "com.battlelancer.seriesguide.traktpwd";
 
@@ -55,6 +57,8 @@ public class SeriesGuidePreferences extends PreferenceActivity {
     private static final String TAG = "SeriesGuidePreferences";
 
     public static final String KEY_DATABASEIMPORTED = "com.battlelancer.seriesguide.dbimported";
+
+    private final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
@@ -184,6 +188,8 @@ public class SeriesGuidePreferences extends PreferenceActivity {
 
                 GetGlue.clearCredentials(prefs);
                 preference.setEnabled(false);
+                Toast.makeText(getApplicationContext(), getString(R.string.done),
+                        Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -220,20 +226,14 @@ public class SeriesGuidePreferences extends PreferenceActivity {
             }
         });
 
-        Preference traktCred = findPreference("com.battlelancer.seriesguide.traktcredentials");
-        traktCred.setEnabled(ShareUtils.isTraktCredentialsValid(this));
-        traktCred.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        findPreference("com.battlelancer.seriesguide.traktcredentials")
+                .setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
-            public boolean onPreferenceClick(Preference preference) {
-                // as we can not access the fragment manager, just allow
-                // deletion of credentials (create new class that extends on
-                // FragmentActivity, then this extending it)
-                prefs.edit().putString(SeriesGuidePreferences.PREF_TRAKTUSER, "")
-                        .putString(SeriesGuidePreferences.PREF_TRAKTPWD, "").commit();
-                preference.setEnabled(false);
-                return true;
-            }
-        });
+                    public boolean onPreferenceClick(Preference preference) {
+                        showDialog(TRAKT_DIALOG);
+                        return true;
+                    }
+                });
 
         Preference feedback = (Preference) findPreference("com.battlelancer.seriesguide.feedback");
         feedback.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -270,22 +270,21 @@ public class SeriesGuidePreferences extends PreferenceActivity {
                         return true;
                     }
                 });
-        
-        findPreference("com.battlelancer.seriesguide.traktsync").setOnPreferenceClickListener(
-                new OnPreferenceClickListener() {
-
-                    public boolean onPreferenceClick(Preference preference) {
-                        startActivity(new Intent(SeriesGuidePreferences.this,
-                                TraktSyncActivity.class));
-                        return true;
-                    }
-                });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         AnalyticsUtils.getInstance(this).trackPageView("/Settings");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mActivityHelper.onOptionsItemSelected(item)) {
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

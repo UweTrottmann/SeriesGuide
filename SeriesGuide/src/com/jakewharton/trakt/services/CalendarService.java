@@ -1,12 +1,11 @@
 package com.jakewharton.trakt.services;
 
+import java.util.Date;
+import java.util.List;
 import com.google.gson.reflect.TypeToken;
 import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
 import com.jakewharton.trakt.entities.CalendarDate;
-
-import java.util.Date;
-import java.util.List;
 
 public class CalendarService extends TraktApiService {
 	/**

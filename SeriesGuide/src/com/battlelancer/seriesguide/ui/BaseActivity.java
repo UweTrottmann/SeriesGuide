@@ -24,8 +24,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.MenuItem;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 
 /**
  * A base activity that defers common functionality across app activities to an

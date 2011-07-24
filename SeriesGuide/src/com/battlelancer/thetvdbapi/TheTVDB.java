@@ -575,9 +575,6 @@ public class TheTVDB {
                     Xml.parse(zipin, Xml.Encoding.UTF_8, handler);
                 } catch (SAXException e) {
                     throw new SAXException("Malformed response for " + request.getRequestLine(), e);
-                } catch (IOException ioe) {
-                    throw new SAXException("Problem reading remote response for "
-                            + request.getRequestLine(), ioe);
                 } finally {
                     if (zipin != null) {
                         zipin.close();
@@ -588,9 +585,6 @@ public class TheTVDB {
                     Xml.parse(input, Xml.Encoding.UTF_8, handler);
                 } catch (SAXException e) {
                     throw new SAXException("Malformed response for " + request.getRequestLine(), e);
-                } catch (IOException ioe) {
-                    throw new SAXException("Problem reading remote response for "
-                            + request.getRequestLine(), ioe);
                 } finally {
                     if (input != null) {
                         input.close();

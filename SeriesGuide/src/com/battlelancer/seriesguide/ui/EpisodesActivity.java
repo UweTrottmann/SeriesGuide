@@ -5,7 +5,6 @@ import com.battlelancer.seriesguide.R;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActionBar;
 import android.support.v4.app.Fragment;
 
 public class EpisodesActivity extends BaseActivity {
@@ -17,11 +16,10 @@ public class EpisodesActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.episodes_multipane);
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(true);
+        getActivityHelper().setupActionBar(getTitle());
 
         final String customTitle = getIntent().getStringExtra(Intent.EXTRA_TITLE);
-        actionBar.setTitle(customTitle != null ? customTitle : getTitle());
+        getActivityHelper().setActionBarTitle(customTitle != null ? customTitle : getTitle());
 
         if (savedInstanceState == null) {
             mFragment = onCreatePane();

@@ -1,9 +1,8 @@
 package com.jakewharton.trakt.entities;
 
-import com.jakewharton.trakt.TraktEntity;
-
 import java.util.Date;
 import java.util.List;
+import com.jakewharton.trakt.TraktEntity;
 
 public final class UserProfile implements TraktEntity {
 	private static final long serialVersionUID = -4145012978937162733L;

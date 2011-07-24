@@ -19,7 +19,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActionBar;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -42,22 +41,20 @@ public class PrepareRequestTokenActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.oauthscreen);
-
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.oauthmessage));
-        actionBar.setDisplayShowTitleEnabled(true);
-
+        
+        getActivityHelper().setupActionBar(getString(R.string.oauthmessage));
+        
         try {
             this.consumer = new CommonsHttpOAuthConsumer(Constants.CONSUMER_KEY,
                     Constants.CONSUMER_SECRET);
             this.provider = new CommonsHttpOAuthProvider(GetGlue.REQUEST_URL, GetGlue.ACCESS_URL,
                     GetGlue.AUTHORIZE_URL);
-
-            Log.i(TAG, "Starting task to retrieve request token.");
-            new OAuthRequestTokenTask(this, consumer, provider).execute();
         } catch (Exception e) {
             Log.e(TAG, "Error creating consumer / provider", e);
         }
+
+        Log.i(TAG, "Starting task to retrieve request token.");
+        new OAuthRequestTokenTask(this, consumer, provider).execute();
     }
 
     /**

@@ -20,7 +20,7 @@
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:padding="5dp"
-        android:src="@drawable/ic_action_refresh"
+        android:src="@drawable/ic_menu_refresh"
         android:background="@drawable/appwidget_button_center"
         android:scaleType="fitXY"
         android:layout_alignParentBottom="true"

@@ -11,18 +11,11 @@
         android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/totallyninja"
-        android:drawableLeft="@drawable/trakt_love_large"
-        android:drawablePadding="5dp"></Button>
-    <FrameLayout
-        android:layout_height="match_parent"
-        android:layout_width="20dp"></FrameLayout>
+        android:id="@+id/totallyninja"></Button>
     <Button
         android:text="@string/hate"
         android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/weaksauce"
-        android:drawableLeft="@drawable/trakt_hate_large"
-        android:drawablePadding="5dp"></Button>
+        android:id="@+id/weaksauce"></Button>
 </LinearLayout>
