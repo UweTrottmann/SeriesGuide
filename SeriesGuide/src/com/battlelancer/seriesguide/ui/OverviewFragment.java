@@ -30,7 +30,7 @@ import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.Series;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -329,7 +329,7 @@ public class OverviewFragment extends Fragment {
     }
 
     protected void onLoadEpisode() {
-        final Context context = getActivity();
+        final Activity context = getActivity();
         if (context == null) {
             return;
         }
@@ -337,13 +337,11 @@ public class OverviewFragment extends Fragment {
         new Thread(new Runnable() {
             public void run() {
                 episodeid = SeriesDatabase.updateLatestEpisode(context, getShowId());
-                if (getActivity() != null) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        public void run() {
-                            fillEpisodeData();
-                        }
-                    });
-                }
+                context.runOnUiThread(new Runnable() {
+                    public void run() {
+                        fillEpisodeData();
+                    }
+                });
             }
         }).start();
     }
