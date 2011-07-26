@@ -29,94 +29,6 @@ public class SeriesDatabase {
 
     static final String TAG = "SeriesDatabase";
 
-    public static final String SERIES_TABLE = "series";
-
-    public static final String SEASONS_TABLE = "seasons";
-
-    public static final String EPISODE_TABLE = "episodes";
-
-    public static final String FTS_SEARCH_TABLE = "searchtable";
-
-    public static final String SEASON_POSTER = "seasonposter";
-
-    public static final String SEASON_UNAIREDCOUNT = "willaircount";
-
-    public static final String SEASON_WATCHCOUNT = "watchcount";
-
-    public static final String SEASON_NOAIRDATECOUNT = "noairdatecount";
-
-    public static final String SEASON_SERIES_ID = "series_id";
-
-    public static final String SEASON_COMBINED = "combinednr";
-
-    public static final String SEASON_ID = "_id";
-
-    public static final String EPISODE_SEASON = "season";
-
-    public static final String EPISODE_NUMBER = "episodenumber";
-
-    public static final String EPISODE_DVDNUMBER = "dvdnumber";
-
-    public static final String EPISODE_IMAGE = "episodeimage";
-
-    public static final String EPISODE_WRITERS = "writers";
-
-    public static final String EPISODE_GUESTSTARS = "gueststars";
-
-    public static final String EPISODE_DIRECTORS = "directors";
-
-    public static final String EPISODE_RATING = "rating";
-
-    public static final String EPISODE_FIRSTAIRED = "epfirstaired";
-
-    public static final String EPISODE_WATCHED = "watched";
-
-    public static final String EPISODE_SERIES_ID = "series_id";
-
-    public static final String EPISODE_SEASON_ID = "season_id";
-
-    public static final String EPISODE_OVERVIEW = "episodedescription";
-
-    public static final String EPISODE_TITLE = "episodetitle";
-
-    public static final String EPISODE_ID = "_id";
-
-    public static final String SERIES_NEXTEPISODE = "next";
-
-    public static final String SERIES_NEXTAIRDATE = "nextairdate";
-
-    public static final String SERIES_NEXTTEXT = "nexttext";
-
-    public static final String SERIES_POSTER = "poster";
-
-    public static final String SERIES_CONTENTRATING = "contentrating";
-
-    public static final String SERIES_STATUS = "status";
-
-    public static final String SERIES_RUNTIME = "runtime";
-
-    public static final String SERIES_RATING = "rating";
-
-    public static final String SERIES_NETWORK = "network";
-
-    public static final String SERIES_GENRES = "genres";
-
-    public static final String SERIES_FIRSTAIRED = "firstaired";
-
-    public static final String SERIES_AIRSTIME = "airstime";
-
-    public static final String SERIES_AIRSDAYOFWEEK = "airsdayofweek";
-
-    public static final String SERIES_ACTORS = "actors";
-
-    public static final String SERIES_OVERVIEW = "overview";
-
-    public static final String SERIES_NAME = "seriestitle";
-
-    public static final String SERIES_ID = "_id";
-
-    public static final String SERIES_IMDBID = "imdbid";
-
     /**
      * Looks up the episodes of a given season and stores the count of already
      * aired, but not watched ones in the seasons watchcount.
@@ -129,6 +41,13 @@ public class SeriesDatabase {
         String today = SeriesGuideData.theTVDBDateFormat.format(date);
         Uri episodesOfSeasonUri = Episodes.buildEpisodesOfSeasonUri(seasonid);
 
+        // all a seasons episodes
+        Cursor total = resolver.query(episodesOfSeasonUri, new String[] {
+            Episodes._ID
+        }, null, null, null);
+        final int totalcount = total.getCount();
+        total.close();
+
         // unwatched, aired episodes
         String selection = Episodes.WATCHED + "=? AND " + Episodes.FIRSTAIRED + " like '%-%'"
                 + " AND " + Episodes.FIRSTAIRED + "<=?";
@@ -137,7 +56,7 @@ public class SeriesDatabase {
         }, selection, new String[] {
                 "0", today
         }, null);
-        int count = unwatched.getCount();
+        final int count = unwatched.getCount();
         unwatched.close();
 
         // unwatched, aired in the future episodes
@@ -147,7 +66,7 @@ public class SeriesDatabase {
         }, selection, new String[] {
                 "0", today
         }, null);
-        int unaired_count = unaired.getCount();
+        final int unaired_count = unaired.getCount();
         unaired.close();
 
         // unwatched, no airdate
@@ -158,19 +77,20 @@ public class SeriesDatabase {
                 "0", ""
         }, null);
 
-        int noairdate_count = noairdate.getCount();
+        final int noairdate_count = noairdate.getCount();
         noairdate.close();
 
         ContentValues update = new ContentValues();
         update.put(Seasons.WATCHCOUNT, count);
         update.put(Seasons.UNAIREDCOUNT, unaired_count);
         update.put(Seasons.NOAIRDATECOUNT, noairdate_count);
+        update.put(Seasons.TOTALCOUNT, totalcount);
         resolver.update(Seasons.buildSeasonUri(seasonid), update, null, null);
     }
 
     /**
-     * Returns all upcoming episodes together with their shows title,
-     * network, airtime and posterpath.
+     * Returns all upcoming episodes together with their shows title, network,
+     * airtime and posterpath.
      * 
      * @return Cursor including all upcoming episodes with show title, network,
      *         airtime and posterpath.
@@ -291,7 +211,7 @@ public class SeriesDatabase {
             show.setRuntime(details.getString(details.getColumnIndexOrThrow(Shows.RUNTIME)));
             show.setSeriesId(details.getString(details.getColumnIndexOrThrow(Shows._ID)));
             show.setSeriesName(details.getString(details.getColumnIndexOrThrow(Shows.TITLE)));
-            show.setStatus(details.getString(details.getColumnIndexOrThrow(Shows.STATUS)));
+            show.setStatus(details.getInt(details.getColumnIndexOrThrow(Shows.STATUS)));
             show.setImdbId(details.getString(details.getColumnIndexOrThrow(Shows.IMDBID)));
             show.setNextEpisode(details.getLong(details.getColumnIndexOrThrow(Shows.NEXTEPISODE)));
         } else {
@@ -489,49 +409,58 @@ public class SeriesDatabase {
      * @param id
      */
     public static long updateLatestEpisode(Context context, String id) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        final boolean onlyFutureEpisodes = prefs.getBoolean("onlyFutureEpisodes", false);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final boolean onlyFutureEpisodes = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_FUTURE_EPISODES, false);
+        final boolean onlySeasonEpisodes = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES, false);
+        
         final String[] projection = new String[] {
                 Episodes._ID, Episodes.FIRSTAIRED, Episodes.SEASON, Episodes.NUMBER, Episodes.TITLE
         };
         final String sortBy = Episodes.FIRSTAIRED + " ASC";
-        final Cursor unwatched;
+        final StringBuilder selection = new StringBuilder();
+        String[] selectionArgs = null;
 
+        selection.append(Episodes.WATCHED).append("=0");
+        if (onlySeasonEpisodes) {
+            selection.append(" AND ").append(Episodes.SEASON).append("!=0");
+        }
         if (onlyFutureEpisodes) {
+            selection.append(" AND ").append(Episodes.FIRSTAIRED).append(">=?");
             Date date = new Date();
             String today = SeriesGuideData.theTVDBDateFormat.format(date);
-            unwatched = context.getContentResolver().query(Episodes.buildEpisodesOfShowUri(id),
-                    projection, Episodes.WATCHED + "=0 AND " + Episodes.FIRSTAIRED + ">=?",
-                    new String[] {
-                        today
-                    }, sortBy);
+            selectionArgs = new String[] { today };
         } else {
-            unwatched = context.getContentResolver().query(Episodes.buildEpisodesOfShowUri(id),
-                    projection, Episodes.WATCHED + "=0 AND " + Episodes.FIRSTAIRED + " like '%-%'",
-                    null, sortBy);
+            selection.append(" AND ").append(Episodes.FIRSTAIRED).append(" like '%-%'");
         }
+        
+        final Cursor unwatched = context.getContentResolver().query(Episodes.buildEpisodesOfShowUri(id),
+                projection, selection.toString(), selectionArgs, sortBy);
 
         // maybe there are no episodes due to errors, or airdates are just
         // unknown ("")
         long episodeid = 0;
-        ContentValues update = new ContentValues();
+        final ContentValues update = new ContentValues();
         if (unwatched.getCount() != 0) {
             unwatched.moveToFirst();
 
-            String season = unwatched.getString(unwatched.getColumnIndexOrThrow(Episodes.SEASON));
-            String number = unwatched.getString(unwatched.getColumnIndexOrThrow(Episodes.NUMBER));
-            String title = unwatched.getString(unwatched.getColumnIndexOrThrow(Episodes.TITLE));
+            // nexttext (0x12 Episode)
+            final String season = unwatched.getString(unwatched
+                    .getColumnIndexOrThrow(Episodes.SEASON));
+            final String number = unwatched.getString(unwatched
+                    .getColumnIndexOrThrow(Episodes.NUMBER));
+            final String title = unwatched.getString(unwatched
+                    .getColumnIndexOrThrow(Episodes.TITLE));
             String nextEpisodeString = SeriesGuideData.getNextEpisodeString(prefs, season, number,
                     title);
 
-            nextEpisodeString += SeriesGuideData.NEXTEPISODE_SPLIT;
-
-            String firstAired = unwatched.getString(unwatched
+            // nextairdatetext
+            String nextAirdateString = "";
+            final String firstAired = unwatched.getString(unwatched
                     .getColumnIndexOrThrow(Episodes.FIRSTAIRED));
             if (firstAired.length() != 0) {
                 final Series show = getShow(context, id);
                 if (show != null) {
-                    nextEpisodeString += SeriesGuideData.parseDateToLocalRelative(firstAired,
+                    nextAirdateString += SeriesGuideData.parseDateToLocalRelative(firstAired,
                             show.getAirsTime(), context);
                 }
             }
@@ -541,12 +470,14 @@ public class SeriesDatabase {
             update.put(Shows.NEXTAIRDATE,
                     unwatched.getString(unwatched.getColumnIndexOrThrow(Episodes.FIRSTAIRED)));
             update.put(Shows.NEXTTEXT, nextEpisodeString);
+            update.put(Shows.NEXTAIRDATETEXT, nextAirdateString);
         } else {
             update.put(Shows.NEXTEPISODE, "");
             // Write 9999 for unkown airdates/no next episodes, sorting then
             // assumes year 9999 and sorts these last
             update.put(Shows.NEXTAIRDATE, "9999");
             update.put(Shows.NEXTTEXT, "");
+            update.put(Shows.NEXTAIRDATETEXT, "");
         }
         unwatched.close();
 

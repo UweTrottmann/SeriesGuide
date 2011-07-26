@@ -38,6 +38,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class SeasonsFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -165,10 +166,11 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
 
     private void fillData() {
         String[] from = new String[] {
-                Seasons.COMBINED, Seasons.WATCHCOUNT
+                Seasons.COMBINED, Seasons.WATCHCOUNT, Seasons.TOTALCOUNT
         };
         int[] to = new int[] {
-                R.id.TextViewSeasonListTitle, R.id.TextViewSeasonListWatchCount
+                R.id.TextViewSeasonListTitle, R.id.TextViewSeasonListWatchCount,
+                R.id.seasonProgress
         };
 
         mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.season_row, null, from, to,
@@ -177,11 +179,11 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
 
             public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
                 if (columnIndex == SeasonsQuery.WATCHCOUNT) {
-                    TextView watchcount = (TextView) view;
+                    final TextView watchcount = (TextView) view;
                     String episodeCount = "";
-                    int count = cursor.getInt(SeasonsQuery.WATCHCOUNT);
-                    int unairedCount = cursor.getInt(SeasonsQuery.UNAIREDCOUNT);
-                    int noairdateCount = cursor.getInt(SeasonsQuery.NOAIRDATECOUNT);
+                    final int count = cursor.getInt(SeasonsQuery.WATCHCOUNT);
+                    final int unairedCount = cursor.getInt(SeasonsQuery.UNAIREDCOUNT);
+                    final int noairdateCount = cursor.getInt(SeasonsQuery.NOAIRDATECOUNT);
 
                     // add strings for unwatched episodes
                     if (count == 0) {
@@ -215,10 +217,23 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
 
                     return true;
                 }
+                if (columnIndex == SeasonsQuery.TOTALCOUNT) {
+                    final int count = cursor.getInt(SeasonsQuery.WATCHCOUNT);
+                    final int unairedCount = cursor.getInt(SeasonsQuery.UNAIREDCOUNT);
+                    final int noairdateCount = cursor.getInt(SeasonsQuery.NOAIRDATECOUNT);
+                    final int max = cursor.getInt(SeasonsQuery.TOTALCOUNT);
+                    final int progress = max - count - unairedCount - noairdateCount;
+                    final ProgressBar bar = (ProgressBar) view.findViewById(R.id.seasonProgressBar);
+                    final TextView text = (TextView) view.findViewById(R.id.seasonProgressText);
+                    bar.setMax(max);
+                    bar.setProgress(progress);
+                    text.setText(progress + "/" + max);
+                    return true;
+                }
                 if (columnIndex == SeasonsQuery.COMBINED) {
-                    TextView seasonNameTextView = (TextView) view;
-                    String seasonNumber = cursor.getString(SeasonsQuery.COMBINED);
-                    String seasonName;
+                    final TextView seasonNameTextView = (TextView) view;
+                    final String seasonNumber = cursor.getString(SeasonsQuery.COMBINED);
+                    final String seasonName;
                     if (seasonNumber.equals("0") || seasonNumber.length() == 0) {
                         seasonName = getString(R.string.specialseason);
                     } else {
@@ -379,7 +394,7 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
     private interface SeasonsQuery {
         String[] PROJECTION = {
                 BaseColumns._ID, Seasons.COMBINED, Seasons.WATCHCOUNT, Seasons.UNAIREDCOUNT,
-                Seasons.NOAIRDATECOUNT
+                Seasons.NOAIRDATECOUNT, Seasons.TOTALCOUNT
         };
 
         // int _ID = 0;
@@ -391,6 +406,8 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
         int UNAIREDCOUNT = 3;
 
         int NOAIRDATECOUNT = 4;
+
+        int TOTALCOUNT = 5;
     }
 
     public static class SortDialogFragment extends DialogFragment {

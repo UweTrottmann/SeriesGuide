@@ -30,7 +30,7 @@ import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.Series;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -209,7 +209,7 @@ public class OverviewFragment extends Fragment {
 
     private void fillShowData() {
         show = SeriesDatabase.getShow(getActivity(), getShowId());
-        
+
         if (show == null) {
             return;
         }
@@ -223,10 +223,10 @@ public class OverviewFragment extends Fragment {
 
         // Running state
         TextView status = (TextView) getActivity().findViewById(R.id.showStatus);
-        if (show.getStatus().equalsIgnoreCase("Continuing")) {
+        if (show.getStatus() == 1) {
             status.setTextColor(Color.GREEN);
             status.setText(getString(R.string.show_isalive));
-        } else if (show.getStatus().equalsIgnoreCase("Ended")) {
+        } else if (show.getStatus() == 0) {
             status.setTextColor(Color.GRAY);
             status.setText(getString(R.string.show_isnotalive));
         }
@@ -257,7 +257,7 @@ public class OverviewFragment extends Fragment {
         String timeAndNetwork = "";
         if (show.getAirsDayOfWeek().length() != 0 && show.getAirsTime() != -1) {
             String[] values = SeriesGuideData.parseMillisecondsToTime(show.getAirsTime(),
-                    show.getAirsDayOfWeek(), true, getActivity());
+                    show.getAirsDayOfWeek(), getActivity());
             timeAndNetwork += values[1] + " " + values[0];
         }
         if (show.getNetwork().length() != 0) {
@@ -272,7 +272,7 @@ public class OverviewFragment extends Fragment {
         if (context == null) {
             return;
         }
-        
+
         TextView nextheader = (TextView) context.findViewById(R.id.nextheader);
         TextView episodetitle = (TextView) context.findViewById(R.id.TextViewEpisodeTitle);
         TextView numbers = (TextView) context.findViewById(R.id.TextViewEpisodeNumbers);
@@ -329,7 +329,7 @@ public class OverviewFragment extends Fragment {
     }
 
     protected void onLoadEpisode() {
-        final Context context = getActivity();
+        final Activity context = getActivity();
         if (context == null) {
             return;
         }
@@ -337,13 +337,11 @@ public class OverviewFragment extends Fragment {
         new Thread(new Runnable() {
             public void run() {
                 episodeid = SeriesDatabase.updateLatestEpisode(context, getShowId());
-                if (getActivity() != null) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        public void run() {
-                            fillEpisodeData();
-                        }
-                    });
-                }
+                context.runOnUiThread(new Runnable() {
+                    public void run() {
+                        fillEpisodeData();
+                    }
+                });
             }
         }).start();
     }

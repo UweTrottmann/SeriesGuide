@@ -41,7 +41,9 @@ public class SeriesGuidePreferences extends PreferenceActivity {
 
     public static final String KEY_USE_MY_TIMEZONE = "com.battlelancer.seriesguide.usemytimezone";
 
-    private static final String KEY_ONLY_FUTURE_EPISODES = "onlyFutureEpisodes";
+    public static final String KEY_ONLY_FUTURE_EPISODES = "onlyFutureEpisodes";
+    
+    public static final String KEY_ONLY_SEASON_EPISODES = "onlySeasonEpisodes";
 
     protected static final int ABOUT_DIALOG = 0;
 
@@ -167,6 +169,23 @@ public class SeriesGuidePreferences extends PreferenceActivity {
                     // track event
                     AnalyticsUtils.getInstance(activity).trackEvent("Settings",
                             "OnlyFutureEpisodes", "Disable", 0);
+                }
+                return false;
+            }
+        });
+
+        Preference seasonEpisodes = (Preference) findPreference(KEY_ONLY_SEASON_EPISODES);
+        seasonEpisodes.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+            public boolean onPreferenceClick(Preference preference) {
+                if (((CheckBoxPreference) preference).isChecked()) {
+                    // track event
+                    AnalyticsUtils.getInstance(activity).trackEvent("Settings",
+                            "OnlySeasonEpisodes", "Enable", 0);
+                } else {
+                    // track event
+                    AnalyticsUtils.getInstance(activity).trackEvent("Settings",
+                            "OnlySeasonEpisodes", "Disable", 0);
                 }
                 return false;
             }

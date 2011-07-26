@@ -289,7 +289,14 @@ public class TheTVDB {
         });
         show.getChild("Status").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setStatus(body.trim());
+                final String status = body.trim();
+                if (status.length() == 10) {
+                    currentShow.setStatus(1);
+                } else if (status.length() == 5) {
+                    currentShow.setStatus(0);
+                } else {
+                    currentShow.setStatus(-1);
+                }
             }
         });
         show.getChild("ContentRating").setEndTextElementListener(new EndTextElementListener() {
@@ -447,7 +454,7 @@ public class TheTVDB {
      *         nothing was downloaded
      */
     public static boolean fetchArt(String fileName, boolean isPoster, Context context) {
-        if (fileName == null) {
+        if (fileName == null || context == null) {
             return true;
         }
 
@@ -597,6 +604,11 @@ public class TheTVDB {
                     }
                 }
             }
+        } catch (AssertionError ae) {
+            // looks like Xml.parse is throwing AssertionErrors instead of
+            // IOExceptions
+            throw new SAXException("Problem reading remote response for "
+                    + request.getRequestLine());
         } catch (IOException e) {
             throw new SAXException("Problem reading remote response for "
                     + request.getRequestLine(), e);

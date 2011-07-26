@@ -45,6 +45,8 @@ public class SeriesContract {
         String IMDBID = "imdbid";
         
         String FAVORITE = "series_favorite";
+        
+        String NEXTAIRDATETEXT = "series_nextairdatetext";
     }
 
     interface SeasonsColumns {
@@ -60,6 +62,8 @@ public class SeriesContract {
         String NOAIRDATECOUNT = "noairdatecount";
 
         String COMBINED = "combinednr";
+        
+        String TOTALCOUNT = "season_totalcount";
     }
 
     interface EpisodesColumns {

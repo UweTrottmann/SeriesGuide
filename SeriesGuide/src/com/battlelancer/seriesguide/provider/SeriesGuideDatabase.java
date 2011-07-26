@@ -2,8 +2,6 @@
 package com.battlelancer.seriesguide.provider;
 
 import com.battlelancer.seriesguide.FileUtil;
-import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearchColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodesColumns;
@@ -31,7 +29,13 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "seriesdatabase";
 
-    public static final int DATABASE_VERSION = 17;
+    public static final int DBVER_FAVORITES = 17;
+
+    public static final int DBVER_NEXTAIRDATETEXT = 18;
+
+    public static final int DBVER_SETOTALCOUNT = 19;
+
+    public static final int DATABASE_VERSION = DBVER_SETOTALCOUNT;
 
     public interface Tables {
         String SHOWS = "series";
@@ -65,14 +69,15 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + ShowsColumns.POSTER + " TEXT DEFAULT ''," + ShowsColumns.NEXTAIRDATE
             + " TEXT DEFAULT '0'," + ShowsColumns.NEXTTEXT + " TEXT DEFAULT '',"
             + ShowsColumns.IMDBID + " TEXT DEFAULT ''," + ShowsColumns.FAVORITE
-            + " INTEGER DEFAULT 0" + ");";
+            + " INTEGER DEFAULT 0," + ShowsColumns.NEXTAIRDATETEXT + " TEXT DEFAULT ''" + ");";
 
     private static final String CREATE_SEASONS_TABLE = "CREATE TABLE " + Tables.SEASONS + " ("
             + BaseColumns._ID + " INTEGER PRIMARY KEY," + SeasonsColumns.COMBINED + " INTEGER,"
             + ShowsColumns.REF_SHOW_ID + " TEXT " + References.SHOW_ID + ","
             + SeasonsColumns.WATCHCOUNT + " INTEGER DEFAULT 0," + SeasonsColumns.UNAIREDCOUNT
             + " INTEGER DEFAULT 0," + SeasonsColumns.NOAIRDATECOUNT + " INTEGER DEFAULT 0,"
-            + SeasonsColumns.POSTER + " TEXT DEFAULT '');";
+            + SeasonsColumns.POSTER + " TEXT DEFAULT ''," + SeasonsColumns.TOTALCOUNT
+            + " INTEGER DEFAULT 0);";
 
     private static final String CREATE_EPISODES_TABLE = "CREATE TABLE " + Tables.EPISODES + " ("
             + BaseColumns._ID + " INTEGER PRIMARY KEY," + EpisodesColumns.TITLE + " TEXT NOT NULL,"
@@ -127,21 +132,15 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         // run necessary upgrades
         int version = oldVersion;
         switch (version) {
-            case 12:
-                upgradeToThirteen(db);
-                version = 13;
-            case 13:
-                upgradeToFourteen(db);
-                version = 14;
-            case 14:
-                upgradeToFifteen(db);
-                version = 15;
-            case 15:
-                upgradeToSixteen(db);
-                version = 16;
             case 16:
                 upgradeToSeventeen(db);
                 version = 17;
+            case 17:
+                upgradeToEighteen(db);
+                version = 18;
+            case 18:
+                upgradeToNineteen(db);
+                version = 19;
         }
 
         // drop all tables if version is not right
@@ -159,82 +158,46 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
-     * In version 17 the series boolean column favorite was added.
+     * In version 19 the season integer column totalcount was added.
      * 
      * @param db
      */
-    private void upgradeToSeventeen(SQLiteDatabase db) {
-        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.FAVORITE
+    private void upgradeToNineteen(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.SEASONS + " ADD COLUMN " + SeasonsColumns.TOTALCOUNT
                 + " INTEGER DEFAULT 0;");
     }
 
     /**
-     * In version 13 the next episode field is just storing the id of the next
-     * episode. Clears out previous values to "".
+     * In version 18 the series text column nextairdatetext was added.
      * 
      * @param db
      */
-    private void upgradeToThirteen(SQLiteDatabase db) {
-        ContentValues values = new ContentValues();
-        values.put(SeriesDatabase.SERIES_NEXTEPISODE, "");
-        db.update(SeriesDatabase.SERIES_TABLE, values, null, null);
-        db.execSQL("ALTER TABLE " + SeriesDatabase.SERIES_TABLE + " ADD COLUMN "
-                + SeriesDatabase.SERIES_NEXTAIRDATE + " TEXT DEFAULT '0';");
-        db.execSQL("ALTER TABLE " + SeriesDatabase.SERIES_TABLE + " ADD COLUMN "
-                + SeriesDatabase.SERIES_NEXTTEXT + " TEXT DEFAULT '';");
-    }
+    private void upgradeToEighteen(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.NEXTAIRDATETEXT
+                + " TEXT DEFAULT '';");
 
-    /**
-     * In version 14 the imdb id for shows gets now parsed, too. A season now
-     * knows the number of all its episodes.
-     * 
-     * @param db
-     */
-    private void upgradeToFourteen(SQLiteDatabase db) {
-        db.execSQL("ALTER TABLE " + SeriesDatabase.SERIES_TABLE + " ADD COLUMN "
-                + SeriesDatabase.SERIES_IMDBID + " text default '';");
-        db.execSQL("ALTER TABLE " + SeriesDatabase.SEASONS_TABLE + " ADD COLUMN "
-                + SeriesDatabase.SEASON_NOAIRDATECOUNT + " integer default 0;");
-    }
-
-    /**
-     * In version 15 the DVD episode number is stored in the episodes table.
-     * 
-     * @param db
-     */
-    private void upgradeToFifteen(SQLiteDatabase db) {
-        db.execSQL("ALTER TABLE " + SeriesDatabase.EPISODE_TABLE + " ADD COLUMN "
-                + SeriesDatabase.EPISODE_DVDNUMBER + " real;");
-    }
-
-    /**
-     * In version 16 the shows airtime was converted to integer values.
-     * 
-     * @param db
-     */
-    private void upgradeToSixteen(SQLiteDatabase db) {
-        // convert airtime strings to ms-integers
-        Cursor shows = db.query(SeriesDatabase.SERIES_TABLE, new String[] {
-                SeriesDatabase.SERIES_ID, SeriesDatabase.SERIES_AIRSTIME
+        // convert status text to 0/1 integer
+        final Cursor shows = db.query(Tables.SHOWS, new String[] {
+                Shows._ID, Shows.STATUS
         }, null, null, null, null, null);
-
-        String id;
-        long airtime;
-        String airtimeText;
-        ContentValues values = new ContentValues();
+        final ContentValues values = new ContentValues();
+        String status;
 
         db.beginTransaction();
         try {
             while (shows.moveToNext()) {
-                id = shows.getString(shows.getColumnIndexOrThrow(SeriesDatabase.SERIES_ID));
-                airtimeText = shows.getString(shows
-                        .getColumnIndexOrThrow(SeriesDatabase.SERIES_AIRSTIME));
-                airtime = SeriesGuideData.parseTimeToMilliseconds(airtimeText);
-                values.put(SeriesDatabase.SERIES_AIRSTIME, airtime);
-                db.update(SeriesDatabase.SERIES_TABLE, values, SeriesDatabase.SERIES_ID + "=?",
-                        new String[] {
-                            id
-                        });
+                status = shows.getString(1);
+                if (status.length() == 10) {
+                    status = "1";
+                } else if (status.length() == 5) {
+                    status = "0";
+                } else {
+                    status = "";
+                }
+                values.put(Shows.STATUS, status);
+                db.update(Tables.SHOWS, values, Shows._ID + "=?", new String[] {
+                    shows.getString(0)
+                });
                 values.clear();
             }
             db.setTransactionSuccessful();
@@ -243,31 +206,16 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         }
 
         shows.close();
+    }
 
-        // rename old table, create new one with different schema, copy data,
-        // delete old one
-        db.execSQL("ALTER TABLE " + SeriesDatabase.SERIES_TABLE + " RENAME TO series_old;");
-        db.execSQL(CREATE_SHOWS_TABLE);
-        db.execSQL("INSERT INTO " + SeriesDatabase.SERIES_TABLE + "(" + SeriesDatabase.SERIES_ID
-                + "," + SeriesDatabase.SERIES_NAME + "," + SeriesDatabase.SERIES_OVERVIEW + ","
-                + SeriesDatabase.SERIES_ACTORS + "," + SeriesDatabase.SERIES_AIRSDAYOFWEEK + ","
-                + SeriesDatabase.SERIES_AIRSTIME + "," + SeriesDatabase.SERIES_FIRSTAIRED + ","
-                + SeriesDatabase.SERIES_GENRES + "," + SeriesDatabase.SERIES_NETWORK + ","
-                + SeriesDatabase.SERIES_RATING + "," + SeriesDatabase.SERIES_RUNTIME + ","
-                + SeriesDatabase.SERIES_STATUS + "," + SeriesDatabase.SERIES_CONTENTRATING + ","
-                + SeriesDatabase.SERIES_NEXTEPISODE + "," + SeriesDatabase.SERIES_POSTER + ","
-                + SeriesDatabase.SERIES_NEXTAIRDATE + "," + SeriesDatabase.SERIES_NEXTTEXT + ","
-                + SeriesDatabase.SERIES_IMDBID + ")" + " SELECT " + SeriesDatabase.SERIES_ID + ","
-                + SeriesDatabase.SERIES_NAME + "," + SeriesDatabase.SERIES_OVERVIEW + ","
-                + SeriesDatabase.SERIES_ACTORS + "," + SeriesDatabase.SERIES_AIRSDAYOFWEEK + ","
-                + SeriesDatabase.SERIES_AIRSTIME + "," + SeriesDatabase.SERIES_FIRSTAIRED + ","
-                + SeriesDatabase.SERIES_GENRES + "," + SeriesDatabase.SERIES_NETWORK + ","
-                + SeriesDatabase.SERIES_RATING + "," + SeriesDatabase.SERIES_RUNTIME + ","
-                + SeriesDatabase.SERIES_STATUS + "," + SeriesDatabase.SERIES_CONTENTRATING + ","
-                + SeriesDatabase.SERIES_NEXTEPISODE + "," + SeriesDatabase.SERIES_POSTER + ","
-                + SeriesDatabase.SERIES_NEXTAIRDATE + "," + SeriesDatabase.SERIES_NEXTTEXT + ","
-                + SeriesDatabase.SERIES_IMDBID + " FROM series_old;");
-        db.execSQL("DROP TABLE series_old;");
+    /**
+     * In version 17 the series boolean column favorite was added.
+     * 
+     * @param db
+     */
+    private void upgradeToSeventeen(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.FAVORITE
+                + " INTEGER DEFAULT 0;");
     }
 
     public static void onRenewFTSTable(SQLiteDatabase db) {

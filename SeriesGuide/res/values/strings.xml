@@ -108,11 +108,11 @@
 	<string name="preferences">Settings</string>
 	<string name="pref_sorting">Sorting</string>
 	<string name="pref_showsorting">Show Sorting</string>
-	<string name="pref_showsortingsummary">Sort the show list alphabetically or by unwatched episode</string>
+	<string name="pref_showsortingsummary">Sort shows alphabetically, by next episode or favorites first</string>
 	<string name="pref_seasonsorting">Season Sorting</string>
-	<string name="pref_sortingsummary">In which chronological order to sort the seasons</string>
+	<string name="pref_sortingsummary">In which chronological order to sort seasons</string>
 	<string name="pref_episodesorting">Episode Sorting</string>
-	<string name="pref_epsortingsummary">In which order to sort the episodes</string>
+	<string name="pref_epsortingsummary">In which order to sort episodes</string>
 	<string-array name="shsorting">
 		<item>A - Z</item>
 		<item>Next episode</item>
@@ -132,11 +132,13 @@
 		<item>Oldest first (DVD)</item>
 	</string-array>
 	<string name="pref_showlist">Show list</string>
-	<string name="pref_onlyfuture">Only future episodes</string>
-	<string name="pref_onlyfuturesummary">\"next:\" only shows unaired episodes</string>
+	<string name="pref_onlyfuture">No aired episodes</string>
+	<string name="pref_onlyfuturesummary">\"next:\" never shows already aired episodes</string>
+	<string name="pref_onlyseasoneps">No special episodes</string>
+	<string name="pref_onlyseasonepssummary">\"next:\" never shows special episodes</string>
 	<string name="pref_content">Content</string>
 	<string name="pref_language">TheTVDB Language</string>
-	<string name="pref_languagesummary">Local content not available for every show/episode, update your shows after changing this</string>
+	<string name="pref_languagesummary">Local content not available for every show, update afterwards</string>
 	<string name="pref_hideimages">Hide images</string>
 	<string name="pref_hideimagessummary">Hide SeriesGuide images from your photo gallery (reboot required)</string>
 	<string name="pref_more">More</string>
@@ -220,7 +222,7 @@
 	<string name="description_search">Search</string>
     <string name="description_overview">Overview</string>
 	<string name="pref_offset">Time Offset</string>
-    <string name="pref_offsetsummary">by a certain amount of hours (US Central users: set to -1)</string>
+    <string name="pref_offsetsummary">by a certain amount of hours</string>
     <string name="norating">n/a</string>
     <string name="loading">Loading...</string>
     <string name="eula_title">What you should know</string>

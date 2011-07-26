@@ -32,6 +32,11 @@
             android:summary="@string/pref_onlyfuturesummary"
             android:key="onlyFutureEpisodes"
             android:defaultValue="False" />
+        <CheckBoxPreference
+            android:title="@string/pref_onlyseasoneps"
+            android:summary="@string/pref_onlyseasonepssummary"
+            android:key="onlySeasonEpisodes"
+            android:defaultValue="False" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_content">
