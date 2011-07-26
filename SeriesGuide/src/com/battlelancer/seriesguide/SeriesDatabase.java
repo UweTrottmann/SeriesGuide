@@ -410,26 +410,31 @@ public class SeriesDatabase {
      */
     public static long updateLatestEpisode(Context context, String id) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        final boolean onlyFutureEpisodes = prefs.getBoolean("onlyFutureEpisodes", false);
+        final boolean onlyFutureEpisodes = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_FUTURE_EPISODES, false);
+        final boolean onlySeasonEpisodes = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES, false);
+        
         final String[] projection = new String[] {
                 Episodes._ID, Episodes.FIRSTAIRED, Episodes.SEASON, Episodes.NUMBER, Episodes.TITLE
         };
         final String sortBy = Episodes.FIRSTAIRED + " ASC";
-        final Cursor unwatched;
+        final StringBuilder selection = new StringBuilder();
+        String[] selectionArgs = null;
 
+        selection.append(Episodes.WATCHED).append("=0");
+        if (onlySeasonEpisodes) {
+            selection.append(" AND ").append(Episodes.SEASON).append("!=0");
+        }
         if (onlyFutureEpisodes) {
+            selection.append(" AND ").append(Episodes.FIRSTAIRED).append(">=?");
             Date date = new Date();
             String today = SeriesGuideData.theTVDBDateFormat.format(date);
-            unwatched = context.getContentResolver().query(Episodes.buildEpisodesOfShowUri(id),
-                    projection, Episodes.WATCHED + "=0 AND " + Episodes.FIRSTAIRED + ">=?",
-                    new String[] {
-                        today
-                    }, sortBy);
+            selectionArgs = new String[] { today };
         } else {
-            unwatched = context.getContentResolver().query(Episodes.buildEpisodesOfShowUri(id),
-                    projection, Episodes.WATCHED + "=0 AND " + Episodes.FIRSTAIRED + " like '%-%'",
-                    null, sortBy);
+            selection.append(" AND ").append(Episodes.FIRSTAIRED).append(" like '%-%'");
         }
+        
+        final Cursor unwatched = context.getContentResolver().query(Episodes.buildEpisodesOfShowUri(id),
+                projection, selection.toString(), selectionArgs, sortBy);
 
         // maybe there are no episodes due to errors, or airdates are just
         // unknown ("")

@@ -134,6 +134,8 @@
 	<string name="pref_showlist">Show list</string>
 	<string name="pref_onlyfuture">Only future episodes</string>
 	<string name="pref_onlyfuturesummary">\"next:\" only shows unaired episodes</string>
+	<string name="pref_onlyseasoneps">Only season episodes</string>
+	<string name="pref_onlyseasonepssummary">\"next:\" only shows episodes from seasons</string>
 	<string name="pref_content">Content</string>
 	<string name="pref_language">TheTVDB Language</string>
 	<string name="pref_languagesummary">Local content not available for every show/episode, update your shows after changing this</string>
