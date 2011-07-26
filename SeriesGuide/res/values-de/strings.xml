@@ -57,13 +57,13 @@
   <string name="dontdelete_show">Nicht löschen</string>
   <string name="no_nextepisode">keine weitere Folge gefunden</string>
   <string name="nextepisode">nächste:</string>
-  <string name="context_favorite">Add to favorites</string>
-  <string name="context_unfavorite">Remove from favorites</string>
+  <string name="context_favorite">Zu Favoriten hinzufügen</string>
+  <string name="context_unfavorite">Von Favoriten entfernen</string>
   <string name="show_airs">läuft</string>
   <string name="show_network">auf</string>
   <string name="show_pleaseupdate">Bitte aktualisiere diese Serie um mehr Information anzuzeigen (in der Übersicht lange auf den Namen drücken, Aktualisieren wählen). Sollte dies ohne Wirkung sein, kannst du auf www.thetvdb.com Informationen für diese Serie hinzufügen.</string>
   <string name="show_noairtime">Keine Sendezeit verfügbar</string>
-  <string name="showinimdb">Show in IMDb</string>
+  <string name="showinimdb">In IMDb anzeigen</string>
   <string name="noIMDBentry">Kein IMDB Verweis vorhanden. Aktualisieren Sie diese Serie oder fügen Sie auf thetvdb.com einen Verweis hinzu.</string>
   <string name="no_seasons">Ooops, für diese Serie existieren keine Staffeln. Versuchen Sie die Serie zu aktualisieren (in der Übersicht lange auf den Namen drücken, Aktualisieren wählen).</string>
   <string name="season_watchcount">ungesehene Folgen</string>
@@ -88,22 +88,24 @@
   <string name="preferences">Einstellungen</string>
   <string name="pref_sorting">Sortierung</string>
   <string name="pref_showsorting">Sortierung der Serien</string>
-  <string name="pref_showsortingsummary">Serien alphabetisch oder nach nächster Folge sortieren</string>
+  <string name="pref_showsortingsummary">Serien alphabetisch, nach nächster Folge oder Favoriten zuerst sortieren</string>
   <string name="pref_seasonsorting">Sortierung der Staffeln</string>
-  <string name="pref_sortingsummary">Staffeln nach aktuellster oder ältester zuerst sortieren</string>
+  <string name="pref_sortingsummary">In welcher Reihenfolge Staffeln sortiert werden</string>
   <string name="pref_episodesorting">Sortierung der Folgen</string>
-  <string name="pref_epsortingsummary">Folgen nach aktuellster, ältester oder alphabetisch sortieren</string>
+  <string name="pref_epsortingsummary">In welcher Reihenfolge Folgen sortiert werden</string>
   <string name="pref_showlist">Serienliste</string>
-  <string name="pref_onlyfuture">Nur zukünftige Folgen</string>
-  <string name="pref_onlyfuturesummary">\"nächste:\" zeigt nur noch nicht ausgestrahlte Folgen an</string>
+  <string name="pref_onlyfuture">Keine gesendeten Folgen</string>
+  <string name="pref_onlyfuturesummary">\"nächste:\" zeigt niemals bereits gesendete Folgen an</string>
+  <string name="pref_onlyseasoneps">Keine \"Special Episodes\"</string>
+  <string name="pref_onlyseasonepssummary">\"nächste:\" zeigt niemals \"Special Episodes\" an</string>
   <string name="pref_content">Inhalt</string>
   <string name="pref_language">TheTVDB Sprache</string>
-  <string name="pref_languagesummary">Lokale Inhalte nicht für jede Serie/Folge verfügbar, nach Änderung Update durchführen</string>
+  <string name="pref_languagesummary">Lokale Inhalte nicht für jede Serie, danach aktualisieren</string>
   <string name="pref_hideimages">Verstecke Bilder</string>
   <string name="pref_hideimagessummary">SeriesGuide Bilder nicht in Gallerie anzeigen (Neustart notwendig)</string>
   <string name="pref_more">Weiteres</string>
   <string name="about">Über SeriesGuide</string>
-  <string name="about_message">http://battlelancer.com/seriesguide - developed by Uwe Trottmann.\n\nPlease see the CREDITS link below for all the people and resources that help drive this project.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
+  <string name="about_message">http://battlelancer.com/seriesguide - entwickelt von Uwe Trottmann.\n\nKlicken Sie bitte auf den folgenden CREDITS-Link um eine Übersicht aller Personen und Ressourcen zu erhalten, die dieses Projekt am Laufen halten.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
   <string name="thetvdb_summary">Hier können Serien und Folgen bearbeitet werden</string>
   <string name="changelog">Changelog</string>
   <string name="changelog_summary">Zeige kürzliche Änderungen in SeriesGuide an</string>
@@ -136,8 +138,8 @@
   <string name="import_question">Stellen Sie sicher, dass sich die Backup-Datei auf der SD Karte befindet. Alle aktuellen Serien werden gelöscht.</string>
   <string name="import_yes">Wiederherstellen</string>
   <string name="import_no">Nicht wiederherstellen</string>
-  <string name="pref_notifications">Enable notifications</string>
-  <string name="pref_notificationssummary">Show notifications for upcoming episodes</string>
+  <string name="pref_notifications">Benachrichtigungen aktivieren</string>
+  <string name="pref_notificationssummary">Benachrichtigungen für bevorstehende Folgen anzeigen</string>
   <string name="smallwidget">Nächste Folgen (klein)</string>
   <string name="bigwidget">Nächste Folgen (mittel)</string>
   <string name="largewidget">Nächste Folgen (groß)</string>
@@ -150,7 +152,7 @@
   <string name="seasons">Staffeln</string>
   <string name="cancel">Abbrechen</string>
   <string name="clearGetGlueCredentials">Von GetGlue abmelden</string>
-  <string name="clearGetGlueCredentialssummary">Use the Share buttons to setup GetGlue</string>
+  <string name="clearGetGlueCredentialssummary">Verwenden Sie die Teilen-Tasten, um GetGlue einzurichten</string>
   <string name="pref_sharing">Empfehlen</string>
   <string name="share">Empfehlen</string>
   <string name="done">Erledigt</string>
@@ -163,14 +165,14 @@
   <string name="oauthmessage">Authentifizierung von SeriesGuide mit GetGlue...</string>
   <string name="addtocalendar">Zum Kalendar hinzufügen</string>
   <string name="addtocalendar_failed">Sorry, es gibt nicht genügend Informationen, um einen Kalendereintrag zu erstellen.</string>
-  <string name="pref_usetz">Use my time zone</string>
-  <string name="pref_usetzsummary">Air dates in your time zone (for users outside the USA)</string>
+  <string name="pref_usetz">Meine Zeitzone verwenden</string>
+  <string name="pref_usetzsummary">Sendetermine in Ihrer Zeitzone (für Nutzer außerhalb der USA)</string>
   <string name="search_description">Folgen</string>
   <string name="description_home">Start</string>
   <string name="description_search">Suche</string>
   <string name="description_overview">Übersicht</string>
   <string name="pref_offset">Zeitkorrektur</string>
-  <string name="pref_offsetsummary">by a certain amount of hours (US Central users: set to -1)</string>
+  <string name="pref_offsetsummary">um eine bestimmte Anzahl von Stunden</string>
   <string name="norating">n/a</string>
   <string name="loading">Wird geladen...</string>
   <string name="eula_title">Was Sie wissen sollten</string>
@@ -180,10 +182,10 @@
   <string name="username">Benutzername</string>
   <string name="password">Passwort</string>
   <string name="apikey">API key</string>
-  <string name="pref_trakt">Disconnect trakt.tv</string>
-  <string name="pref_traktsummary">Use the Share buttons to setup trakt.tv</string>
-  <string name="pref_traktsync">Sync with trakt.tv</string>
-  <string name="pref_traktsyncsummary">Experimental, manual syncing with trakt.tv</string>
+  <string name="pref_trakt">trakt.tv trennen</string>
+  <string name="pref_traktsummary">trakt.tv über die Teilen-Buttons einrichten.</string>
+  <string name="pref_traktsync">Synchronisieren mit trakt.tv</string>
+  <string name="pref_traktsyncsummary">Experimentelle, manuelle Synchronisierung mit trakt.tv</string>
   <string name="save">Speichern</string>
   <string name="dontsave">Nicht speichern</string>
   <string name="trakt_success">Erfolgreich auf trakt.tv markiert</string>
@@ -194,22 +196,22 @@
   <string name="pref_traktintegratesummary">Markieren als gesehen in der Übersicht wird an trakt.tv übermittelt</string>
   <string name="donate">Spenden (Paypal)</string>
   <string name="feedback">Geben Sie Feedback</string>
-  <string name="love">Totally ninja!</string>
-  <string name="hate">Weak Sauce :(</string>
-  <string name="trakt_createaccount">Create new account</string>
-  <string name="email">Email</string>
-  <string name="trakt_synctodevice">Sync to SeriesGuide</string>
-  <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
-  <string name="trakt_synctotrakt">Sync to trakt.tv</string>
-  <string name="trakt_syncunseen">Sync unseen episodes</string>
-  <string name="powered_by_thetvdb">powered by thetvdb.com</string>
-  <string name="download_stable">Download SeriesGuide</string>
+  <string name="love">Absolut top!</string>
+  <string name="hate">Totaler Flop!</string>
+  <string name="trakt_createaccount">Neues Konto einrichten</string>
+  <string name="email">E-Mail</string>
+  <string name="trakt_synctodevice">Sync nach SeriesGuide</string>
+  <string name="trakt_experimental"><b>Experimentelle</b> Synchronisierung mit trakt. Dies kann manchmal noch holprig sein. Nach SeriesGuide synct nur die Gesehen-Markierung, also entfernt nicht bestehende Gesehen-Markierungen in SeriesGuide. Nach trakt überträgt nur gesehene Folgen.</string>
+  <string name="trakt_synctotrakt">Sync nach trakt.tv</string>
+  <string name="trakt_syncunseen">Auch ungesehene Folgen syncen</string>
+  <string name="powered_by_thetvdb">ein Dienst von thetvdb.com</string>
+  <string name="download_stable">SeriesGuide downloaden</string>
   <string name="gobreak">Go break things</string>
-  <string name="betawarning">WARNING: This is an unstable BETA release for testing purposes only. To download the stable end-user version click the download button below.\n\nIf you want to help test the beta go ahead. Please report every crash, try everything out and send feedback to seriesguide@battlelancer.com (see Settings).</string>
+  <string name="betawarning">WARNUNG: Diese instabile BETA-Version ist nur zum Testen. Für die stabile Endbenutzer-Version klicken Sie auf den folgenden Download-Button.\n\nWenn Sie beim Beta-Test helfen möchten, dann nur zu. Melden Sie bitte jeden Absturz, probieren Sie alles aus und schicken Sie Ihr Feedback an seriesguide@battlelancer.com (siehe Einstellungen).</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Nächste Folge</item>
-    <item>Favorites first</item>
+    <item>Favoriten zuerst</item>
   </string-array>
   <string-array name="sesorting">
     <item>Aktuellste zuerst</item>
