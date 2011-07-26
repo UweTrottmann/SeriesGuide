@@ -54,7 +54,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        setEmptyText(getString(R.string.no_episodes));
+        setEmptyText(getString(R.string.noupcoming));
 
         setupAdapter();
 
