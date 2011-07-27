@@ -439,7 +439,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 values.put(Shows.FAVORITE, true);
                 getContentResolver().update(Shows.buildShowUri(String.valueOf(info.id)), values,
                         null, null);
-                Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.favorited), Toast.LENGTH_SHORT).show();
                 return true;
             }
             case CONTEXT_UNFAVORITE: {
@@ -449,7 +449,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 values.put(Shows.FAVORITE, false);
                 getContentResolver().update(Shows.buildShowUri(String.valueOf(info.id)), values,
                         null, null);
-                Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.unfavorited), Toast.LENGTH_SHORT).show();
                 return true;
             }
             case CONTEXT_DELETE_ID:
