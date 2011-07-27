@@ -69,6 +69,8 @@
 	<string name="nextepisode">next:</string>
     <string name="context_favorite">Add to favorites</string>
     <string name="context_unfavorite">Remove from favorites</string>
+    <string name="favorited">Added to favorites</string>
+    <string name="unfavorited">Removed from favorites</string>
 
 	<!-- Show info -->
 	<string name="show_airs">airs</string>
