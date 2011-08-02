@@ -45,7 +45,7 @@ public class SeriesGuidePreferences extends PreferenceActivity {
     
     public static final String KEY_ONLY_SEASON_EPISODES = "onlySeasonEpisodes";
 
-    public static final String KEY_ONLY_SHOWS_WITH_EPISODES = "onlyShowsWithEpisodes";
+    public static final String KEY_ONLY_UNWATCHED_SHOWS = "onlyUnwatchedShows";
 
     protected static final int ABOUT_DIALOG = 0;
 
@@ -193,18 +193,18 @@ public class SeriesGuidePreferences extends PreferenceActivity {
             }
         });
 
-        Preference showsWithEpisodes = (Preference) findPreference(KEY_ONLY_SHOWS_WITH_EPISODES);
+        Preference showsWithEpisodes = (Preference) findPreference(KEY_ONLY_UNWATCHED_SHOWS);
         showsWithEpisodes.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
                 if (((CheckBoxPreference) preference).isChecked()) {
                     // track event
                     AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                            "OnlyShowsWithEpisodes", "Enable", 0);
+                            "OnlyUnwatchedShows", "Enable", 0);
                 } else {
                     // track event
                     AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                            "OnlyShowsWithEpisodes", "Disable", 0);
+                            "OnlyUnwatchedShows", "Disable", 0);
                 }
                 return false;
             }

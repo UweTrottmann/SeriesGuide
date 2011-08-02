@@ -136,8 +136,8 @@
 	<string name="pref_onlyfuturesummary">\"next:\" never shows already aired episodes</string>
 	<string name="pref_onlyseasoneps">No special episodes</string>
 	<string name="pref_onlyseasonepssummary">\"next:\" never shows special episodes</string>
-	<string name="pref_onlyshowswitheps">Hide watched shows</string>
-	<string name="pref_onlyshowswithepssummary">Only display shows with unwatched episodes</string>
+	<string name="pref_onlyunwatched">Hide watched shows</string>
+	<string name="pref_onlyunwatchedsummary">Only display shows with unwatched episodes</string>
 	<string name="pref_content">Content</string>
 	<string name="pref_language">TheTVDB Language</string>
 	<string name="pref_languagesummary">Local content not available for every show, update afterwards</string>
