@@ -127,6 +127,7 @@ public class ShowInfo extends BaseActivity {
                 + getString(R.string.show_airtimeunit));
 
         // IMDB button
+        final String imdbid = show.getImdbId();
         showInIMDB.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
@@ -134,9 +135,7 @@ public class ShowInfo extends BaseActivity {
                 AnalyticsUtils.getInstance(ShowInfo.this).trackEvent("ShowInfo", "Click",
                         "Show in IMDB", 0);
 
-                String imdbid = show.getImdbId();
                 if (imdbid.length() != 0) {
-
                     Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("imdb:///title/"
                             + imdbid + "/"));
                     try {
