@@ -82,7 +82,7 @@ public class ShowInfo extends BaseActivity {
         }
 
         // Airtimes
-        if (show.getAirsDayOfWeek().length() == 0 && show.getAirsTime() == -1) {
+        if (show.getAirsDayOfWeek().length() == 0 || show.getAirsTime() == -1) {
             airstime.setText(getString(R.string.show_noairtime));
         } else {
             String[] values = SeriesGuideData.parseMillisecondsToTime(show.getAirsTime(),
