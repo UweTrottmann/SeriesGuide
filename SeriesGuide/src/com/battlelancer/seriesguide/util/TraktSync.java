@@ -199,10 +199,10 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
     }
 
     private Integer syncToTrakt(ServiceManager manager) {
-        // get show ids in local database
+        // get show ids in local database for which syncing is enabled
         Cursor showTvdbIds = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[] {
             Shows._ID
-        }, null, null, null);
+        }, Shows.SYNCENABLED + "=1", null, null);
 
         if (showTvdbIds.getCount() == 0) {
             return SUCCESS_NOWORK;
