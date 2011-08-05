@@ -128,11 +128,13 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private String mFailedShowsString;
 
-    private ShowSorting sorting;
+    private ShowSorting mSorting;
 
     private long toDeleteID;
 
     public boolean mBusy;
+
+    private boolean mOnlyUnwatchedShows;
 
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(this).trackEvent("Shows", "Click", label, 0);
@@ -202,7 +204,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     @Override
     protected void onResume() {
         super.onResume();
-        checkPreferences();
+        updatePreferences();
         updateLatestEpisode();
         if (mSavedState != null) {
             restoreLocalState(mSavedState);
@@ -383,12 +385,12 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
                 return new AlertDialog.Builder(this)
                         .setTitle(getString(R.string.pref_showsorting))
-                        .setSingleChoiceItems(items, sorting.index(),
+                        .setSingleChoiceItems(items, mSorting.index(),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int item) {
-                                        sorting = (SeriesGuideData.ShowSorting.values())[item];
+                                        mSorting = (SeriesGuideData.ShowSorting.values())[item];
                                         AnalyticsUtils.getInstance(ShowsActivity.this).trackEvent(
-                                                "Shows", "Sorting", sorting.name(), 0);
+                                                "Shows", "Sorting", mSorting.name(), 0);
 
                                         SharedPreferences.Editor prefEditor = PreferenceManager
                                                 .getDefaultSharedPreferences(
@@ -505,7 +507,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         if (android.os.Build.VERSION.SDK_INT >= 11) {
             final CharSequence[] items = getResources().getStringArray(R.array.shsorting);
             menu.findItem(R.id.menu_showsortby).setTitle(
-                    getString(R.string.sort) + ": " + items[sorting.index()]);
+                    getString(R.string.sort) + ": " + items[mSorting.index()]);
         }
         return super.onPrepareOptionsMenu(menu);
     }
@@ -791,17 +793,12 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
-    private void checkPreferences() {
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-        updateSorting(prefs);
-    }
-
     private void updatePreferences() {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
 
         updateSorting(prefs);
+        updateFilters(prefs);
 
         // // display whats new dialog
         // int lastVersion = prefs.getInt(SeriesGuideData.KEY_VERSION, -1);
@@ -822,6 +819,11 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         // }
     }
 
+    private void updateFilters(SharedPreferences prefs) {
+        mOnlyUnwatchedShows = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_UNWATCHED_SHOWS,
+                false);
+    }
+
     /**
      * Fetch the sorting preference and store it in this class.
      * 
@@ -829,24 +831,33 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
      * @return Returns true if the value changed, false otherwise.
      */
     private boolean updateSorting(SharedPreferences prefs) {
-        final ShowSorting oldSorting = sorting;
+        final ShowSorting oldSorting = mSorting;
         final CharSequence[] items = getResources().getStringArray(R.array.shsortingData);
         final String sortsetting = prefs
                 .getString(SeriesGuideData.KEY_SHOWSSORTORDER, "alphabetic");
 
         for (int i = 0; i < items.length; i++) {
             if (sortsetting.equals(items[i])) {
-                sorting = ShowSorting.values()[i];
+                mSorting = ShowSorting.values()[i];
                 break;
             }
         }
 
-        return oldSorting != sorting;
+        return oldSorting != mSorting;
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-        return new CursorLoader(this, Shows.CONTENT_URI, ShowsQuery.PROJECTION, null, null,
-                sorting.query());
+        String selection = null;
+        String[] selectionArgs = null;
+        if (mOnlyUnwatchedShows) {
+            selection = Shows.NEXTAIRDATE + "!=? AND julianday(" + Shows.NEXTAIRDATE
+                    + ") <= julianday('now')";
+            selectionArgs = new String[] {
+                SeriesDatabase.UNKNOWN_NEXT_AIR_DATE
+            };
+        }
+        return new CursorLoader(this, Shows.CONTENT_URI, ShowsQuery.PROJECTION, selection,
+                selectionArgs, mSorting.query());
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
