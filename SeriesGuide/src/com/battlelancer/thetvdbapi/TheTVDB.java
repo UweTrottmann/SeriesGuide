@@ -477,7 +477,7 @@ public class TheTVDB {
         final String url = xmlMirror + "Updates.php?time=" + previousUpdateTime;
         HttpUriRequest request = new HttpGet(url);
         HttpClient httpClient = getHttpClient(context);
-        execute(request, httpClient, root.getContentHandler(), true);
+        execute(request, httpClient, root.getContentHandler(), false);
 
         return updatableShowIds.toArray(new String[updatableShowIds.size()]);
     }
@@ -501,7 +501,7 @@ public class TheTVDB {
         final String url = xmlMirror + "Updates.php?type=none";
         HttpUriRequest request = new HttpGet(url);
         HttpClient httpClient = getHttpClient(context);
-        execute(request, httpClient, root.getContentHandler(), true);
+        execute(request, httpClient, root.getContentHandler(), false);
 
         return serverTime[0];
     }
