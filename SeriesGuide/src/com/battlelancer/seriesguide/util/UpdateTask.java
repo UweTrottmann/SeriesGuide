@@ -20,7 +20,6 @@ import android.view.ViewStub;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
@@ -75,13 +74,24 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
     @Override
     protected Integer doInBackground(Void... params) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext
+                .getApplicationContext());
         final ContentResolver resolver = mContext.getContentResolver();
         final AtomicInteger updateCount = mUpdateCount;
         final String[] showIds;
 
         if (mShows == null) {
+            final long currentServerTime;
+            try {
+                currentServerTime = TheTVDB.getServerTime(mContext);
+            } catch (SAXException e1) {
+                return UPDATE_SAXERROR;
+            }
+            final long previousUpdateTime = Long.valueOf(prefs.getString(
+                    SeriesGuidePreferences.KEY_LASTUPDATETIME, "0"));
+
             // new update task
-            if (isFullUpdateNeeded()) {
+            if (isFullUpdateNeeded(currentServerTime, previousUpdateTime)) {
                 final Cursor shows = resolver.query(Shows.CONTENT_URI, new String[] {
                     Shows._ID
                 }, null, null, null);
@@ -94,11 +104,14 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 shows.close();
             } else {
                 try {
-                    showIds = TheTVDB.deltaUpdateShows(mContext);
+                    showIds = TheTVDB.deltaUpdateShows(previousUpdateTime, mContext);
                 } catch (SAXException e) {
                     return UPDATE_SAXERROR;
                 }
             }
+
+            prefs.edit().putString(SeriesGuidePreferences.KEY_LASTUPDATETIME,
+                    String.valueOf(currentServerTime)).commit();
         } else {
             // resume updating
             showIds = mShows;
@@ -153,18 +166,10 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         return resultCode;
     }
 
-    private boolean isFullUpdateNeeded() {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext
-                .getApplicationContext());
-        final long previousUpdateTime = Long.valueOf(prefs.getString(
-                SeriesGuidePreferences.KEY_LASTUPDATETIME, "0"));
-
-        final Calendar cal = Calendar.getInstance();
-        final long currentUnixTime = cal.getTimeInMillis() / 1000;
-
+    private boolean isFullUpdateNeeded(long currentServerTime, long previousUpdateTime) {
         // check if more than 28 days have passed
         // we compare with local time to avoid an additional network call
-        if (currentUnixTime - previousUpdateTime > 3600 * 24 * 28) {
+        if (currentServerTime - previousUpdateTime > 3600 * 24 * 28) {
             return true;
         } else {
             return false;

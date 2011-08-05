@@ -5,7 +5,6 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SeriesDatabase;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.SeriesGuideData;
-import com.battlelancer.seriesguide.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -444,7 +443,17 @@ public class TheTVDB {
         return batch;
     }
 
-    public static String[] deltaUpdateShows(Context context) throws SAXException {
+    /**
+     * Return list of show ids which have been updated since
+     * {@code previousUpdateTime}. Time is UNIX time.
+     * 
+     * @param previousUpdateTime
+     * @param context
+     * @return
+     * @throws SAXException
+     */
+    public static String[] deltaUpdateShows(long previousUpdateTime, Context context)
+            throws SAXException {
         // get existing show ids
         final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI, new String[] {
             Shows._ID
@@ -454,26 +463,9 @@ public class TheTVDB {
             existingShowIds.add(shows.getInt(0));
         }
 
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                .getApplicationContext());
-        final String previousUpdateTime = prefs.getString(
-                SeriesGuidePreferences.KEY_LASTUPDATETIME, null);
-        if (previousUpdateTime == null) {
-            return new String[] {}; // should never happen, as we check
-                                    // updatetime before calling this
-        }
-
         // parse updatable show ids
         final ArrayList<String> updatableShowIds = new ArrayList<String>();
         final RootElement root = new RootElement("Items");
-        root.getChild("Time").setEndTextElementListener(new EndTextElementListener() {
-            @Override
-            public void end(String body) {
-                String updateTime = body;
-                prefs.edit().putString(SeriesGuidePreferences.KEY_LASTUPDATETIME, updateTime)
-                        .commit();
-            }
-        });
         root.getChild("Series").setEndTextElementListener(new EndTextElementListener() {
             @Override
             public void end(String body) {
@@ -488,6 +480,30 @@ public class TheTVDB {
         execute(request, httpClient, root.getContentHandler(), true);
 
         return updatableShowIds.toArray(new String[updatableShowIds.size()]);
+    }
+
+    /**
+     * Get current server UNIX time.
+     * 
+     * @param context
+     * @return
+     * @throws SAXException
+     */
+    public static long getServerTime(Context context) throws SAXException {
+        final long[] serverTime = new long[1];
+        final RootElement root = new RootElement("Items");
+        root.getChild("Time").setEndTextElementListener(new EndTextElementListener() {
+            @Override
+            public void end(String body) {
+                serverTime[0] = Long.valueOf(body);
+            }
+        });
+        final String url = xmlMirror + "Updates.php?type=none";
+        HttpUriRequest request = new HttpGet(url);
+        HttpClient httpClient = getHttpClient(context);
+        execute(request, httpClient, root.getContentHandler(), true);
+
+        return serverTime[0];
     }
 
     /**
