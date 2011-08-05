@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideData;
+import com.battlelancer.seriesguide.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.thetvdbapi.TheTVDB;
@@ -10,13 +11,16 @@ import com.battlelancer.thetvdbapi.TheTVDB;
 import org.xml.sax.SAXException;
 
 import android.content.ContentResolver;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
@@ -29,7 +33,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
     private static final int UPDATE_INCOMPLETE = 104;
 
-    public String[] mShows;
+    public String[] mShows = null;
 
     public String mFailedShows = "";
 
@@ -37,13 +41,13 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
     public final AtomicInteger mUpdateCount = new AtomicInteger();
 
-    public UpdateTask(String[] shows, ShowsActivity context) {
-        mShows = shows;
+    public UpdateTask(ShowsActivity context) {
         mContext = context;
     }
 
     public UpdateTask(String[] shows, int index, String failedShows, ShowsActivity context) {
-        this(shows, context);
+        this(context);
+        mShows = shows;
         mUpdateCount.set(index);
         mFailedShows = failedShows;
     }
@@ -71,14 +75,39 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
     @Override
     protected Integer doInBackground(Void... params) {
-        final String[] shows = mShows;
+        final ContentResolver resolver = mContext.getContentResolver();
         final AtomicInteger updateCount = mUpdateCount;
+        final String[] showIds;
 
-        ContentResolver resolver = mContext.getContentResolver();
+        if (mShows == null) {
+            // new update task
+            if (isFullUpdateNeeded()) {
+                final Cursor shows = resolver.query(Shows.CONTENT_URI, new String[] {
+                    Shows._ID
+                }, null, null, null);
+                showIds = new String[shows.getCount()];
+                int i = 0;
+                while (shows.moveToNext()) {
+                    showIds[i] = shows.getString(0);
+                    i++;
+                }
+                shows.close();
+            } else {
+                try {
+                    showIds = TheTVDB.deltaUpdateShows(mContext);
+                } catch (SAXException e) {
+                    return UPDATE_SAXERROR;
+                }
+            }
+        } else {
+            // resume updating
+            showIds = mShows;
+        }
+
         int resultCode = UPDATE_SUCCESS;
         String id;
 
-        for (int i = updateCount.get(); i < shows.length; i++) {
+        for (int i = updateCount.get(); i < showIds.length; i++) {
             // fail early if cancelled or network connection is lost
             if (isCancelled()) {
                 resultCode = UPDATE_INCOMPLETE;
@@ -89,9 +118,9 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 break;
             }
 
-            publishProgress(i, shows.length + 1);
+            publishProgress(i, showIds.length + 1);
 
-            id = shows[i];
+            id = showIds[i];
             for (int itry = 0; itry < 2; itry++) {
                 try {
                     TheTVDB.updateShow(id, mContext);
@@ -108,22 +137,38 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                             addFailedShow(name);
                         }
                         show.close();
-
                     }
                 }
             }
-
             updateCount.incrementAndGet();
         }
 
-        publishProgress(shows.length, shows.length + 1);
+        publishProgress(showIds.length, showIds.length + 1);
 
         // renew FTS3 table
         TheTVDB.onRenewFTSTable(mContext);
 
-        publishProgress(shows.length + 1, shows.length + 1);
+        publishProgress(showIds.length + 1, showIds.length + 1);
 
         return resultCode;
+    }
+
+    private boolean isFullUpdateNeeded() {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext
+                .getApplicationContext());
+        final long previousUpdateTime = Long.valueOf(prefs.getString(
+                SeriesGuidePreferences.KEY_LASTUPDATETIME, "0"));
+
+        final Calendar cal = Calendar.getInstance();
+        final long currentUnixTime = cal.getTimeInMillis() / 1000;
+
+        // check if more than 28 days have passed
+        // we compare with local time to avoid an additional network call
+        if (currentUnixTime - previousUpdateTime > 3600 * 24 * 28) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

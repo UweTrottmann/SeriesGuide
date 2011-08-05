@@ -455,22 +455,17 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case CONTEXT_DELETE_ID:
                 fireTrackerEvent("Delete show");
 
-                if (isUpdateTaskRunning()) {
-                    return true;
+                if (!isUpdateTaskRunning()) {
+                    toDeleteID = info.id;
+                    showDialog(CONFIRM_DELETE_DIALOG);
                 }
-                toDeleteID = info.id;
-                showDialog(CONFIRM_DELETE_DIALOG);
                 return true;
             case CONTEXT_UPDATESHOW_ID:
                 fireTrackerEvent("Update show");
 
-                if (isUpdateTaskRunning()) {
-                    return true;
+                if (!isUpdateTaskRunning()) {
+                    performUpdateTask(String.valueOf(info.id));
                 }
-                String[] showIDs = new String[] {
-                    String.valueOf(info.id)
-                };
-                createUpdateTask(showIDs);
                 return true;
             case CONTEXT_SHOWINFO:
                 fireTrackerEvent("Display show info");
@@ -519,7 +514,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 fireTrackerEvent("Update all shows");
 
                 if (!isUpdateTaskRunning() && !isArtTaskRunning()) {
-                    updateAllShows();
+                    performUpdateTask(null);
                 }
                 return true;
             case R.id.menu_upcoming:
@@ -603,25 +598,18 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         }
     }
 
-    private void updateAllShows() {
-        final Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[] {
-            Shows._ID
-        }, null, null, null);
-        final String[] showIDs = new String[shows.getCount()];
-        int i = 0;
-        while (shows.moveToNext()) {
-            showIDs[i] = shows.getString(0);
-            i++;
-        }
-        shows.close();
-
-        createUpdateTask(showIDs);
-    }
-
-    private void createUpdateTask(String[] showIds) {
+    private void performUpdateTask(String showId) {
         Toast.makeText(this, getString(R.string.update_inbackground), Toast.LENGTH_SHORT).show();
 
-        mUpdateTask = (UpdateTask) new UpdateTask(showIds, this).execute();
+        if (showId == null) {
+            // (delta) update all shows
+            mUpdateTask = (UpdateTask) new UpdateTask(this).execute();
+        } else {
+            // update a single show
+            mUpdateTask = (UpdateTask) new UpdateTask(new String[] {
+                showId
+            }, 0, "", this).execute();
+        }
     }
 
     /**
