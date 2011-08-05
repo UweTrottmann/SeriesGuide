@@ -35,7 +35,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_SETOTALCOUNT = 19;
 
-    public static final int DATABASE_VERSION = DBVER_SETOTALCOUNT;
+    public static final int DBVER_SYNC = 20;
+
+    public static final int DATABASE_VERSION = DBVER_SYNC;
 
     public interface Tables {
         String SHOWS = "series";
@@ -69,7 +71,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + ShowsColumns.POSTER + " TEXT DEFAULT ''," + ShowsColumns.NEXTAIRDATE
             + " TEXT DEFAULT '0'," + ShowsColumns.NEXTTEXT + " TEXT DEFAULT '',"
             + ShowsColumns.IMDBID + " TEXT DEFAULT ''," + ShowsColumns.FAVORITE
-            + " INTEGER DEFAULT 0," + ShowsColumns.NEXTAIRDATETEXT + " TEXT DEFAULT ''" + ");";
+            + " INTEGER DEFAULT 0," + ShowsColumns.NEXTAIRDATETEXT + " TEXT DEFAULT ''" + ","
+            + ShowsColumns.SYNCENABLED + " INTEGER DEFAULT 1" + ");";
 
     private static final String CREATE_SEASONS_TABLE = "CREATE TABLE " + Tables.SEASONS + " ("
             + BaseColumns._ID + " INTEGER PRIMARY KEY," + SeasonsColumns.COMBINED + " INTEGER,"
@@ -141,6 +144,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 18:
                 upgradeToNineteen(db);
                 version = 19;
+            case 19:
+                upgradeToTwenty(db);
+                version = 20;
         }
 
         // drop all tables if version is not right
@@ -155,6 +161,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             onCreate(db);
         }
+    }
+
+    private void upgradeToTwenty(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.SYNCENABLED
+                + " INTEGER DEFAULT 1;");
     }
 
     /**
