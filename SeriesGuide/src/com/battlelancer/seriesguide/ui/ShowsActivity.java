@@ -790,15 +790,20 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
 
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            boolean isAffectingChange = false;
             if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_ONLY_UNWATCHED_SHOWS)) {
                 updateFilters(sharedPreferences);
+                isAffectingChange = true;
             }
             if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_SHOWSSORTORDER)) {
                 updateSorting(sharedPreferences);
+                isAffectingChange = true;
             }
             // TODO: maybe don't requery every time a pref changes (possibly
             // problematic if you change a setting in the settings activity)
-            requery();
+            if (isAffectingChange) {
+                requery();
+            }
         }
     };
 
