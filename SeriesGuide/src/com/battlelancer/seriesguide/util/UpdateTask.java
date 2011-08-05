@@ -80,6 +80,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         final AtomicInteger updateCount = mUpdateCount;
         final String[] showIds;
 
+        // TODO: switch for manuall full update
+
         if (mShows == null) {
             final long currentServerTime;
             try {
@@ -110,8 +112,9 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 }
             }
 
-            prefs.edit().putString(SeriesGuidePreferences.KEY_LASTUPDATETIME,
-                    String.valueOf(currentServerTime)).commit();
+            prefs.edit()
+                    .putString(SeriesGuidePreferences.KEY_LASTUPDATETIME,
+                            String.valueOf(currentServerTime)).commit();
         } else {
             // resume updating
             showIds = mShows;
