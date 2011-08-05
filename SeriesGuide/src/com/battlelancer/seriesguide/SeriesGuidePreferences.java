@@ -61,6 +61,8 @@ public class SeriesGuidePreferences extends PreferenceActivity {
 
     public static final String KEY_DATABASEIMPORTED = "com.battlelancer.seriesguide.dbimported";
 
+    public static final String KEY_SHOWSSORTORDER = "showSorting";
+
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
     }

@@ -397,7 +397,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                                                         getApplicationContext()).edit();
                                         prefEditor
                                                 .putString(
-                                                        SeriesGuideData.KEY_SHOWSSORTORDER,
+                                                        SeriesGuidePreferences.KEY_SHOWSSORTORDER,
                                                         (getResources()
                                                                 .getStringArray(R.array.shsortingData))[item]);
                                         prefEditor.commit();
@@ -799,7 +799,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_ONLY_UNWATCHED_SHOWS)) {
                 updateFilters(sharedPreferences);
             }
-            if (key.equalsIgnoreCase(SeriesGuideData.KEY_SHOWSSORTORDER)) {
+            if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_SHOWSSORTORDER)) {
                 updateSorting(sharedPreferences);
             }
         }
@@ -852,7 +852,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         final ShowSorting oldSorting = mSorting;
         final CharSequence[] items = getResources().getStringArray(R.array.shsortingData);
         final String sortsetting = prefs
-                .getString(SeriesGuideData.KEY_SHOWSSORTORDER, "alphabetic");
+                .getString(SeriesGuidePreferences.KEY_SHOWSSORTORDER, "alphabetic");
 
         for (int i = 0; i < items.length; i++) {
             if (sortsetting.equals(items[i])) {
