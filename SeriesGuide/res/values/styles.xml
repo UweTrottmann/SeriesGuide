@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>        
     <style name="Theme.SeriesGuide" parent="Theme.Sherlock">
-        <item name="abDivider">@drawable/action_item_divider</item>
+        <item name="abDivider">@null</item>
     </style>
 	<!-- Headers in the list views -->
 	<style name="Title">
