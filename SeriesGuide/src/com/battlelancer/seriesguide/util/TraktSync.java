@@ -278,7 +278,10 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
         switch (result) {
             case SUCCESS_WORK:
-                message = "Finished syncing (" + mResult + ")";
+                message = "Finished syncing";
+                if (mResult != null) {
+                    message += "(" + mResult + ")";
+                }
                 break;
             case SUCCESS_NOWORK:
                 message = "There was nothing to sync.";
