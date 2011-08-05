@@ -37,6 +37,11 @@
             android:summary="@string/pref_onlyseasonepssummary"
             android:key="onlySeasonEpisodes"
             android:defaultValue="False" />
+        <CheckBoxPreference
+            android:title="@string/pref_onlyunwatched"
+            android:summary="@string/pref_onlyunwatchedsummary"
+            android:key="onlyUnwatchedShows"
+            android:defaultValue="False" />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_content">

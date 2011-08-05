@@ -47,6 +47,8 @@ public class SeriesContract {
         String FAVORITE = "series_favorite";
         
         String NEXTAIRDATETEXT = "series_nextairdatetext";
+        
+        String SYNCENABLED = "series_syncenabled";
     }
 
     interface SeasonsColumns {

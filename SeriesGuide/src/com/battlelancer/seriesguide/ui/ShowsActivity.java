@@ -26,6 +26,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -130,11 +131,13 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private String mFailedShowsString;
 
-    private ShowSorting sorting;
+    private ShowSorting mSorting;
 
     private long toDeleteID;
 
     public boolean mBusy;
+
+    private boolean mOnlyUnwatchedShows;
 
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(this).trackEvent("Shows", "Click", label, 0);
@@ -204,7 +207,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     @Override
     protected void onResume() {
         super.onResume();
-        checkPreferences();
         updateLatestEpisode();
         if (mSavedState != null) {
             restoreLocalState(mSavedState);
@@ -385,24 +387,18 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
                 return new AlertDialog.Builder(this)
                         .setTitle(getString(R.string.pref_showsorting))
-                        .setSingleChoiceItems(items, sorting.index(),
+                        .setSingleChoiceItems(items, mSorting.index(),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int item) {
-                                        sorting = (SeriesGuideData.ShowSorting.values())[item];
-                                        AnalyticsUtils.getInstance(ShowsActivity.this).trackEvent(
-                                                "Shows", "Sorting", sorting.name(), 0);
-
                                         SharedPreferences.Editor prefEditor = PreferenceManager
                                                 .getDefaultSharedPreferences(
                                                         getApplicationContext()).edit();
                                         prefEditor
                                                 .putString(
-                                                        SeriesGuideData.KEY_SHOWSSORTORDER,
+                                                        SeriesGuidePreferences.KEY_SHOWSSORTORDER,
                                                         (getResources()
                                                                 .getStringArray(R.array.shsortingData))[item]);
                                         prefEditor.commit();
-
-                                        requery();
                                         removeDialog(SORT_DIALOG);
                                     }
                                 }).create();
@@ -507,7 +503,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         if (android.os.Build.VERSION.SDK_INT >= 11) {
             final CharSequence[] items = getResources().getStringArray(R.array.shsorting);
             menu.findItem(R.id.menu_showsortby).setTitle(
-                    getString(R.string.sort) + ": " + items[sorting.index()]);
+                    getString(R.string.sort) + ": " + items[mSorting.index()]);
         }
         return super.onPrepareOptionsMenu(menu);
     }
@@ -793,17 +789,31 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
-    private void checkPreferences() {
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-        updateSorting(prefs);
-    }
+    final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
 
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_ONLY_UNWATCHED_SHOWS)) {
+                updateFilters(sharedPreferences);
+            }
+            if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_SHOWSSORTORDER)) {
+                updateSorting(sharedPreferences);
+            }
+            // TODO: maybe don't requery every time a pref changes (possibly
+            // problematic if you change a setting in the settings activity)
+            requery();
+        }
+    };
+
+    /**
+     * Called once on activity creation to load initial settings and display
+     * one-time information dialogs.
+     */
     private void updatePreferences() {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
 
         updateSorting(prefs);
+        updateFilters(prefs);
 
         // display whats new dialog
         int lastVersion = prefs.getInt(SeriesGuideData.KEY_VERSION, -1);
@@ -820,6 +830,13 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         } catch (NameNotFoundException e) {
             // this should never happen
         }
+
+        prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
+    }
+
+    private void updateFilters(SharedPreferences prefs) {
+        mOnlyUnwatchedShows = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_UNWATCHED_SHOWS,
+                false);
     }
 
     /**
@@ -829,24 +846,36 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
      * @return Returns true if the value changed, false otherwise.
      */
     private boolean updateSorting(SharedPreferences prefs) {
-        final ShowSorting oldSorting = sorting;
+        final ShowSorting oldSorting = mSorting;
         final CharSequence[] items = getResources().getStringArray(R.array.shsortingData);
-        final String sortsetting = prefs
-                .getString(SeriesGuideData.KEY_SHOWSSORTORDER, "alphabetic");
+        final String sortsetting = prefs.getString(SeriesGuidePreferences.KEY_SHOWSSORTORDER,
+                "alphabetic");
 
         for (int i = 0; i < items.length; i++) {
             if (sortsetting.equals(items[i])) {
-                sorting = ShowSorting.values()[i];
+                mSorting = ShowSorting.values()[i];
                 break;
             }
         }
 
-        return oldSorting != sorting;
+        AnalyticsUtils.getInstance(ShowsActivity.this).trackEvent("Shows", "Sorting",
+                mSorting.name(), 0);
+
+        return oldSorting != mSorting;
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-        return new CursorLoader(this, Shows.CONTENT_URI, ShowsQuery.PROJECTION, null, null,
-                sorting.query());
+        String selection = null;
+        String[] selectionArgs = null;
+        if (mOnlyUnwatchedShows) {
+            selection = Shows.NEXTAIRDATE + "!=? AND julianday(" + Shows.NEXTAIRDATE
+                    + ") <= julianday('now')";
+            selectionArgs = new String[] {
+                SeriesDatabase.UNKNOWN_NEXT_AIR_DATE
+            };
+        }
+        return new CursorLoader(this, Shows.CONTENT_URI, ShowsQuery.PROJECTION, selection,
+                selectionArgs, mSorting.query());
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {

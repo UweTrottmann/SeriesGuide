@@ -259,6 +259,8 @@ public class OverviewFragment extends Fragment {
             String[] values = SeriesGuideData.parseMillisecondsToTime(show.getAirsTime(),
                     show.getAirsDayOfWeek(), getActivity());
             timeAndNetwork += values[1] + " " + values[0];
+        } else {
+            timeAndNetwork += getString(R.string.show_noairtime);
         }
         if (show.getNetwork().length() != 0) {
             timeAndNetwork += " " + getString(R.string.show_network) + " " + show.getNetwork();

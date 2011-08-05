@@ -34,8 +34,6 @@ public class SeriesGuideData {
 
     public static final String KEY_HIDEIMAGES = "hideimages";
 
-    public static final String KEY_SHOWSSORTORDER = "showSorting";
-
     public static final String WEBPROPERTYID = "UA-3577058-7";
 
     public static final String KEY_GOOGLEANALYTICS = "enableGAnalytics";

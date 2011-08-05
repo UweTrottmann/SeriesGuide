@@ -138,6 +138,8 @@
 	<string name="pref_onlyfuturesummary">\"next:\" never shows already aired episodes</string>
 	<string name="pref_onlyseasoneps">No special episodes</string>
 	<string name="pref_onlyseasonepssummary">\"next:\" never shows special episodes</string>
+	<string name="pref_onlyunwatched">Hide watched shows</string>
+	<string name="pref_onlyunwatchedsummary">Only display shows with unwatched episodes</string>
 	<string name="pref_content">Content</string>
 	<string name="pref_language">TheTVDB Language</string>
 	<string name="pref_languagesummary">Local content not available for every show, update afterwards</string>
@@ -253,7 +255,7 @@
 	<string name="trakt_createaccount">Create new account</string>
 	<string name="email">Email</string>
     <string name="trakt_synctodevice">Sync to SeriesGuide</string>
-    <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
+    <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. Only shows added to SeriesGuide are synced. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
     <string name="trakt_synctotrakt">Sync to trakt.tv</string>
     <string name="trakt_syncunseen">Sync unseen episodes</string>
     <string name="powered_by_thetvdb">powered by thetvdb.com</string>
