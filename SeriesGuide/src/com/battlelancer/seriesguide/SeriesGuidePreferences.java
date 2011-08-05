@@ -45,6 +45,8 @@ public class SeriesGuidePreferences extends PreferenceActivity {
     public static final String KEY_ONLY_SEASON_EPISODES = "onlySeasonEpisodes";
 
     public static final String KEY_ONLY_UNWATCHED_SHOWS = "onlyUnwatchedShows";
+    
+    public static final String KEY_LASTUPDATETIME = "updatetime";
 
     protected static final int ABOUT_DIALOG = 0;
 

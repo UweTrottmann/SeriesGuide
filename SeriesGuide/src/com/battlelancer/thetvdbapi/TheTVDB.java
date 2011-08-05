@@ -5,6 +5,7 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SeriesDatabase;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.SeriesGuideData;
+import com.battlelancer.seriesguide.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -32,6 +33,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.RemoteException;
@@ -440,6 +442,52 @@ public class TheTVDB {
         execute(request, httpClient, root.getContentHandler(), true);
 
         return batch;
+    }
+
+    public static String[] deltaUpdateShows(Context context) throws SAXException {
+        // get existing show ids
+        final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI, new String[] {
+            Shows._ID
+        }, null, null, null);
+        final HashSet<Integer> existingShowIds = new HashSet<Integer>();
+        while (shows.moveToNext()) {
+            existingShowIds.add(shows.getInt(0));
+        }
+
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
+                .getApplicationContext());
+        final String previousUpdateTime = prefs.getString(
+                SeriesGuidePreferences.KEY_LASTUPDATETIME, null);
+        if (previousUpdateTime == null) {
+            return new String[] {}; // should never happen, as we check
+                                    // updatetime before calling this
+        }
+
+        // parse updatable show ids
+        final ArrayList<String> updatableShowIds = new ArrayList<String>();
+        final RootElement root = new RootElement("Items");
+        root.getChild("Time").setEndTextElementListener(new EndTextElementListener() {
+            @Override
+            public void end(String body) {
+                String updateTime = body;
+                prefs.edit().putString(SeriesGuidePreferences.KEY_LASTUPDATETIME, updateTime)
+                        .commit();
+            }
+        });
+        root.getChild("Series").setEndTextElementListener(new EndTextElementListener() {
+            @Override
+            public void end(String body) {
+                if (existingShowIds.contains(body)) {
+                    updatableShowIds.add(body);
+                }
+            }
+        });
+        final String url = xmlMirror + "Updates.php?time=" + previousUpdateTime;
+        HttpUriRequest request = new HttpGet(url);
+        HttpClient httpClient = getHttpClient(context);
+        execute(request, httpClient, root.getContentHandler(), true);
+
+        return updatableShowIds.toArray(new String[updatableShowIds.size()]);
     }
 
     /**
