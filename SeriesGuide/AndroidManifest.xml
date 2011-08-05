@@ -9,7 +9,7 @@
         android:name="SeriesGuideApplication"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Sherlock"
+        android:theme="@style/Theme.SeriesGuide"
         android:backupAgent="com.battlelancer.seriesguide.PrefBackupHelper"
         android:debuggable="false">
         <meta-data
