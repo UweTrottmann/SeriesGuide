@@ -57,13 +57,15 @@
   <string name="dontdelete_show">Älä poista</string>
   <string name="no_nextepisode">seuraavaa jaksoa ei löynyt</string>
   <string name="nextepisode">seuraava:</string>
-  <string name="context_favorite">Add to favorites</string>
-  <string name="context_unfavorite">Remove from favorites</string>
+  <string name="context_favorite">Lisää suosikkeihin</string>
+  <string name="context_unfavorite">Poista suosikeista</string>
+  <string name="favorited">Added to favorites</string>
+  <string name="unfavorited">Removed from favorites</string>
   <string name="show_airs">esitetään</string>
   <string name="show_network">kanavalla</string>
   <string name="show_pleaseupdate">Yritä päivittää tämä ohjelma nähdäksesi enemmän tietoja (päänäkymässä paina ohjelmaa pitkään ja valitse valikosta Päivitä) Jos tämä ei auta, TheTVDB:ssä ei luultavasti ole tarjolla enempää tietoja. Mene heidän sivustolleen (www.thetvdb.com) ja opi, kuinka voit itse lisätä tietoja.</string>
   <string name="show_noairtime">Ei esitysaikoja saatavilla</string>
-  <string name="showinimdb">Show in IMDb</string>
+  <string name="showinimdb">Näytä IMDb:ssä</string>
   <string name="noIMDBentry">IMDB-viitettä ei ole saatavilla. Päivitä tämä ohjelma tai mene osoitteeseen thetvdb.com ja lisää se.</string>
   <string name="no_seasons">Hupsis, tälle ohjelmalle ei löydy kausia. Yritä päivittää ohjelma(päänäkymässä paina ohjelmaa pitkään ja valitse valikosta Päivitä).</string>
   <string name="season_watchcount">katsomatonta jaksoa</string>
@@ -88,19 +90,21 @@
   <string name="preferences">Asetukset</string>
   <string name="pref_sorting">Lajittelu</string>
   <string name="pref_showsorting">Ohjelmien lajittelu</string>
-  <string name="pref_showsortingsummary">Sort shows alphabetically, by next episode or favorites first</string>
+  <string name="pref_showsortingsummary">Lajittele ohjelmat aakkosjärjestyksessä, seuraavan jakson perusteella tai suosikit ensin</string>
   <string name="pref_seasonsorting">Kausien lajittelu</string>
-  <string name="pref_sortingsummary">In which chronological order to sort seasons</string>
+  <string name="pref_sortingsummary">Kummalla kronologisella järjestyksellä kaudet lajitellaan</string>
   <string name="pref_episodesorting">Jaksojen lajittelu</string>
-  <string name="pref_epsortingsummary">In which order to sort episodes</string>
+  <string name="pref_epsortingsummary">Millä tavalla jaksot lajitellaan</string>
   <string name="pref_showlist">Ohjelmalista</string>
-  <string name="pref_onlyfuture">No aired episodes</string>
-  <string name="pref_onlyfuturesummary">\"next:\" never shows already aired episodes</string>
-  <string name="pref_onlyseasoneps">No special episodes</string>
-  <string name="pref_onlyseasonepssummary">\"next:\" never shows special episodes</string>
+  <string name="pref_onlyfuture">Ei esitettyjä jaksoja</string>
+  <string name="pref_onlyfuturesummary">\"seuraava:\" älä koskaan näytä jo esitettyjä jaksoja</string>
+  <string name="pref_onlyseasoneps">Ei erikoisjaksoja</string>
+  <string name="pref_onlyseasonepssummary">\"seuraava:\" älä koskaan näytä erikoisjaksoja</string>
+  <string name="pref_onlyunwatched">Hide watched shows</string>
+  <string name="pref_onlyunwatchedsummary">Only display shows with unwatched episodes</string>
   <string name="pref_content">Sisältö</string>
   <string name="pref_language">TheTVDB:n kieli</string>
-  <string name="pref_languagesummary">Local content not available for every show, update afterwards</string>
+  <string name="pref_languagesummary">Ohjelmatietoja ei ole jokaisella kielellä kaikille ohjelmille, päivitä jälkikäteen</string>
   <string name="pref_hideimages">Piilota kuvat</string>
   <string name="pref_hideimagessummary">Piilota SeriesGuiden kuvat kuvagalleriasta (vaatii uudelleenkäynnistyksen)</string>
   <string name="pref_more">Lisää</string>
@@ -136,8 +140,8 @@
   <string name="import_question">Varmista, että varmuuskopio on SD-kortilla. Kaikki nykyiset ohjelmat korvataan.</string>
   <string name="import_yes">Palauta</string>
   <string name="import_no">Älä palauta</string>
-  <string name="pref_notifications">Enable notifications</string>
-  <string name="pref_notificationssummary">Show notifications for upcoming episodes</string>
+  <string name="pref_notifications">Ota ilmoitukset käyttöön</string>
+  <string name="pref_notificationssummary">Näytä ilmoitukset tulevista jaksoista</string>
   <string name="smallwidget">Seuraavat jaksot (pieni)</string>
   <string name="bigwidget">Seuraavat jaksot (keskisuuri)</string>
   <string name="largewidget">Seuraavat jaksot (suuri)</string>
@@ -163,14 +167,14 @@
   <string name="oauthmessage">Vahvistetaan SeriesGuide GetGluen kanssa...</string>
   <string name="addtocalendar">Lisää kalenteriin</string>
   <string name="addtocalendar_failed">Tietoa ei ole riittävästi kalenteritaphtuman luomiseksi.</string>
-  <string name="pref_usetz">Use my time zone</string>
+  <string name="pref_usetz">Käytä aikavyöhykettäni</string>
   <string name="pref_usetzsummary">Esityspäivät aikavyöhykkeesi mukaan (USA:n ulkopuolisille käyttäjille)</string>
   <string name="search_description">Jaksot</string>
   <string name="description_home">Etusivu</string>
   <string name="description_search">Etsi</string>
   <string name="description_overview">Yleiskatsaus</string>
   <string name="pref_offset">Aikaviive</string>
-  <string name="pref_offsetsummary">by a certain amount of hours</string>
+  <string name="pref_offsetsummary">tietyllä tuntimäärällä</string>
   <string name="norating">puuttuu</string>
   <string name="loading">Ladataan...</string>
   <string name="eula_title">Mitä sinun tulisi tietää</string>
@@ -201,7 +205,7 @@
   <string name="trakt_createaccount">Luo uusi tili</string>
   <string name="email">Sähköposti</string>
   <string name="trakt_synctodevice">Synkronoi SeriesGuideen</string>
-  <string name="trakt_experimental"><b>Kokeellinen</b> synkkaus trakt:n kanssa. Tämä saattaa olla yhä ajottain epävakaa. Merkitsee SeriesGuideen jaksot katsotuiksi, mutta ei poista jo katsotuiksi merkittyjä jaksoja SeriesGuidesta. Lähettää trakt:iin vain katsotut jaksot.</string>
+  <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. Only shows added to SeriesGuide are synced. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
   <string name="trakt_synctotrakt">Synkronoi trakt.tv:en</string>
   <string name="trakt_syncunseen">Synkronoi ennennäkemättömät jaksot</string>
   <string name="powered_by_thetvdb">Pohjautuu thetvdb.com:iin</string>
@@ -211,7 +215,7 @@
   <string-array name="shsorting">
     <item>A - Ö</item>
     <item>Seuraava jakso</item>
-    <item>Favorites first</item>
+    <item>Suosikit ensin</item>
   </string-array>
   <string-array name="sesorting">
     <item>Uusin ensin</item>

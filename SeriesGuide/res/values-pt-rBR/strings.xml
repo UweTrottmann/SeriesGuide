@@ -59,6 +59,8 @@
   <string name="nextepisode">Próximo:</string>
   <string name="context_favorite">Add to favorites</string>
   <string name="context_unfavorite">Remove from favorites</string>
+  <string name="favorited">Added to favorites</string>
+  <string name="unfavorited">Removed from favorites</string>
   <string name="show_airs">estréia</string>
   <string name="show_network">sim</string>
   <string name="show_pleaseupdate">Tente atualizar esta série para mostrar mais informações (na visão geral, pressione longamente sobre ele e selecione Atualizar). Se isto não ajudar, talvez não haja mais informações no TheTVDB. Vá para o site (www.thetvdb.com) para aprender como adicionar alguma.</string>
@@ -98,6 +100,8 @@
   <string name="pref_onlyfuturesummary">\"next:\" never shows already aired episodes</string>
   <string name="pref_onlyseasoneps">No special episodes</string>
   <string name="pref_onlyseasonepssummary">\"next:\" never shows special episodes</string>
+  <string name="pref_onlyunwatched">Hide watched shows</string>
+  <string name="pref_onlyunwatchedsummary">Only display shows with unwatched episodes</string>
   <string name="pref_content">Conteúdo</string>
   <string name="pref_language">Linguagem TheTVDB</string>
   <string name="pref_languagesummary">Local content not available for every show, update afterwards</string>
@@ -199,7 +203,7 @@
   <string name="trakt_createaccount">Criar nova conta</string>
   <string name="email">Email</string>
   <string name="trakt_synctodevice">Sincronização com o SeriesGuide</string>
-  <string name="trakt_experimental"><b>Experimental</b> sincronização com trakt. Isso ainda pode ser instável às vezes. Para o SeriesGuide marcar apenas episódios assistidos, mas não remover marcas existentes em SeriesGuide. Trakt só transmite episódios vistos.</string>
+  <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. Only shows added to SeriesGuide are synced. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
   <string name="trakt_synctotrakt">Sincronizar com o trakt.tv</string>
   <string name="trakt_syncunseen">Sincronizar episódios não vistos</string>
   <string name="powered_by_thetvdb">Powered by thetvdb.com</string>

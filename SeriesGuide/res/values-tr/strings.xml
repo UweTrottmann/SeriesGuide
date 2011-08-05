@@ -59,6 +59,8 @@
   <string name="nextepisode">Yayın Tarihi:</string>
   <string name="context_favorite">Add to favorites</string>
   <string name="context_unfavorite">Remove from favorites</string>
+  <string name="favorited">Added to favorites</string>
+  <string name="unfavorited">Removed from favorites</string>
   <string name="show_airs">yayın:</string>
   <string name="show_network"> </string>
   <string name="show_pleaseupdate">Daha fazla bilgi için diziyi güncellemeyi deneyin (Genel bakışta dizi adına uzun basın, ardından Güncelle\'yi seçin) Yardımı olmazsa TheTVDB\'de ek bilgi mevcut değildir. Siteye (www.thetvdb.com) giderek nasıl ekleyebileceğinizi öğrenin.</string>
@@ -98,6 +100,8 @@
   <string name="pref_onlyfuturesummary">\"next:\" never shows already aired episodes</string>
   <string name="pref_onlyseasoneps">No special episodes</string>
   <string name="pref_onlyseasonepssummary">\"next:\" never shows special episodes</string>
+  <string name="pref_onlyunwatched">Hide watched shows</string>
+  <string name="pref_onlyunwatchedsummary">Only display shows with unwatched episodes</string>
   <string name="pref_content">İçerik</string>
   <string name="pref_language">TheTVDB Dili</string>
   <string name="pref_languagesummary">Local content not available for every show, update afterwards</string>
@@ -199,7 +203,7 @@
   <string name="trakt_createaccount">Create new account</string>
   <string name="email">E-posta</string>
   <string name="trakt_synctodevice">Sync to SeriesGuide</string>
-  <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
+  <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. Only shows added to SeriesGuide are synced. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
   <string name="trakt_synctotrakt">Sync to trakt.tv</string>
   <string name="trakt_syncunseen">Sync unseen episodes</string>
   <string name="powered_by_thetvdb">powered by thetvdb.com</string>

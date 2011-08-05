@@ -59,6 +59,8 @@
   <string name="nextepisode">nächste:</string>
   <string name="context_favorite">Zu Favoriten hinzufügen</string>
   <string name="context_unfavorite">Von Favoriten entfernen</string>
+  <string name="favorited">Added to favorites</string>
+  <string name="unfavorited">Removed from favorites</string>
   <string name="show_airs">läuft</string>
   <string name="show_network">auf</string>
   <string name="show_pleaseupdate">Bitte aktualisiere diese Serie um mehr Information anzuzeigen (in der Übersicht lange auf den Namen drücken, Aktualisieren wählen). Sollte dies ohne Wirkung sein, kannst du auf www.thetvdb.com Informationen für diese Serie hinzufügen.</string>
@@ -98,6 +100,8 @@
   <string name="pref_onlyfuturesummary">\"nächste:\" zeigt niemals bereits gesendete Folgen an</string>
   <string name="pref_onlyseasoneps">Keine \"Special Episodes\"</string>
   <string name="pref_onlyseasonepssummary">\"nächste:\" zeigt niemals \"Special Episodes\" an</string>
+  <string name="pref_onlyunwatched">Hide watched shows</string>
+  <string name="pref_onlyunwatchedsummary">Only display shows with unwatched episodes</string>
   <string name="pref_content">Inhalt</string>
   <string name="pref_language">TheTVDB Sprache</string>
   <string name="pref_languagesummary">Lokale Inhalte nicht für jede Serie, danach aktualisieren</string>
@@ -201,7 +205,7 @@
   <string name="trakt_createaccount">Neues Konto einrichten</string>
   <string name="email">E-Mail</string>
   <string name="trakt_synctodevice">Sync nach SeriesGuide</string>
-  <string name="trakt_experimental"><b>Experimentelle</b> Synchronisierung mit trakt. Dies kann manchmal noch holprig sein. Nach SeriesGuide synct nur die Gesehen-Markierung, also entfernt nicht bestehende Gesehen-Markierungen in SeriesGuide. Nach trakt überträgt nur gesehene Folgen.</string>
+  <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. Only shows added to SeriesGuide are synced. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
   <string name="trakt_synctotrakt">Sync nach trakt.tv</string>
   <string name="trakt_syncunseen">Auch ungesehene Folgen syncen</string>
   <string name="powered_by_thetvdb">ein Dienst von thetvdb.com</string>
