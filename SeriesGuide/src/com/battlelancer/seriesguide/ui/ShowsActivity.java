@@ -26,6 +26,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -204,7 +205,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     @Override
     protected void onResume() {
         super.onResume();
-        updatePreferences();
         updateLatestEpisode();
         if (mSavedState != null) {
             restoreLocalState(mSavedState);
@@ -793,6 +793,22 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
     }
 
+    final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
+
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_ONLY_UNWATCHED_SHOWS)) {
+                updateFilters(sharedPreferences);
+            }
+            if (key.equalsIgnoreCase(SeriesGuideData.KEY_SHOWSSORTORDER)) {
+                updateSorting(sharedPreferences);
+            }
+        }
+    };
+
+    /**
+     * Called once on activity creation to load initial settings and display
+     * one-time information dialogs.
+     */
     private void updatePreferences() {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
@@ -817,6 +833,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         // } catch (NameNotFoundException e) {
         // // this should never happen
         // }
+
+        prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
     }
 
     private void updateFilters(SharedPreferences prefs) {
