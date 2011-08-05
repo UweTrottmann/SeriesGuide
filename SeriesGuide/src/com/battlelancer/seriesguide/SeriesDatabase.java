@@ -30,6 +30,12 @@ public class SeriesDatabase {
     static final String TAG = "SeriesDatabase";
 
     /**
+     * Use 9999 for unkown airdates/no next episodes, sorting then assumes year
+     * 9999 and sorts these last.
+     */
+    public static final String UNKNOWN_NEXT_AIR_DATE = "9999";
+
+    /**
      * Looks up the episodes of a given season and stores the count of already
      * aired, but not watched ones in the seasons watchcount.
      * 
@@ -473,9 +479,7 @@ public class SeriesDatabase {
             update.put(Shows.NEXTAIRDATETEXT, nextAirdateString);
         } else {
             update.put(Shows.NEXTEPISODE, "");
-            // Write 9999 for unkown airdates/no next episodes, sorting then
-            // assumes year 9999 and sorts these last
-            update.put(Shows.NEXTAIRDATE, "9999");
+            update.put(Shows.NEXTAIRDATE, UNKNOWN_NEXT_AIR_DATE);
             update.put(Shows.NEXTTEXT, "");
             update.put(Shows.NEXTAIRDATETEXT, "");
         }

@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide.provider;
 
+import com.battlelancer.seriesguide.SeriesDatabase;
 import com.battlelancer.seriesguide.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -118,6 +119,8 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private SeriesGuideDatabase mOpenHelper;
 
+    private boolean mOnlyUnwatchedShows;
+
     @Override
     public boolean onCreate() {
         final Context context = getContext();
@@ -138,6 +141,9 @@ public class SeriesGuideProvider extends ContentProvider {
                             .putBoolean(SeriesGuidePreferences.KEY_DATABASEIMPORTED, false)
                             .commit();
                 }
+            } else if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_ONLY_UNWATCHED_SHOWS)) {
+                mOnlyUnwatchedShows = sharedPreferences
+                        .getBoolean(SeriesGuidePreferences.KEY_ONLY_UNWATCHED_SHOWS, false);
             }
         }
     };
@@ -347,6 +353,11 @@ public class SeriesGuideProvider extends ContentProvider {
         final SelectionBuilder builder = new SelectionBuilder();
         switch (match) {
             case SHOWS: {
+                if (mOnlyUnwatchedShows) {
+                    return builder.table(Tables.SHOWS)
+                                  .where(Shows.NEXTAIRDATE + "!=?", SeriesDatabase.UNKNOWN_NEXT_AIR_DATE)
+                                  .where("julianday(" + Shows.NEXTAIRDATE + ") <= julianday('now')");
+                }
                 return builder.table(Tables.SHOWS);
             }
             case SHOWS_ID: {
