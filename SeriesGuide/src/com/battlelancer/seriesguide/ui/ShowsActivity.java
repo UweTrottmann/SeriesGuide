@@ -388,10 +388,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                         .setSingleChoiceItems(items, mSorting.index(),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int item) {
-                                        mSorting = (SeriesGuideData.ShowSorting.values())[item];
-                                        AnalyticsUtils.getInstance(ShowsActivity.this).trackEvent(
-                                                "Shows", "Sorting", mSorting.name(), 0);
-
                                         SharedPreferences.Editor prefEditor = PreferenceManager
                                                 .getDefaultSharedPreferences(
                                                         getApplicationContext()).edit();
@@ -401,8 +397,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                                                         (getResources()
                                                                 .getStringArray(R.array.shsortingData))[item]);
                                         prefEditor.commit();
-
-                                        requery();
                                         removeDialog(SORT_DIALOG);
                                     }
                                 }).create();
@@ -802,6 +796,9 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_SHOWSSORTORDER)) {
                 updateSorting(sharedPreferences);
             }
+            // TODO: maybe don't requery every time a pref changes (possibly
+            // problematic if you change a setting in the settings activity)
+            requery();
         }
     };
 
@@ -851,8 +848,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private boolean updateSorting(SharedPreferences prefs) {
         final ShowSorting oldSorting = mSorting;
         final CharSequence[] items = getResources().getStringArray(R.array.shsortingData);
-        final String sortsetting = prefs
-                .getString(SeriesGuidePreferences.KEY_SHOWSSORTORDER, "alphabetic");
+        final String sortsetting = prefs.getString(SeriesGuidePreferences.KEY_SHOWSSORTORDER,
+                "alphabetic");
 
         for (int i = 0; i < items.length; i++) {
             if (sortsetting.equals(items[i])) {
@@ -860,6 +857,9 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 break;
             }
         }
+
+        AnalyticsUtils.getInstance(ShowsActivity.this).trackEvent("Shows", "Sorting",
+                mSorting.name(), 0);
 
         return oldSorting != mSorting;
     }
