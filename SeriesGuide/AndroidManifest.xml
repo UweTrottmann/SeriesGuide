@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.battlelancer.seriesguide"
     android:installLocation="auto"
-    android:versionName="2.0.8dev" android:versionCode="126">
-    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+    android:versionName="2.1" android:versionCode="125">
     <application
         android:name="SeriesGuideApplication"
         android:icon="@drawable/icon"
