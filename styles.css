@@ -1,4 +1,10 @@
-﻿a {
+﻿body {
+	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+	font-size: 14px;
+	color: #FFFFFF;
+	background-color: #333333;
+}
+a {
 	color: #FFFFFF;
 }
 a:visited {
@@ -30,5 +36,14 @@ h2 {
 
 .wrapper {
 	margin: 100px auto 0px auto;
-	width: 500px;
+	width: 800px;
+}
+
+.navlist-li {
+	display: inline;
+	margin-right:20px
+}
+.navlist {
+	padding: 0px;
+	margin: 0px;
 }

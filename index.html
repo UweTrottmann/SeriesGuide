@@ -1,26 +1,18 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-<meta content="de" http-equiv="Content-Language" />
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<title>SeriesGuide for Android</title>
-<link href="styles.css" rel="stylesheet" type="text/css" />
-</head>
-
-<body style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 14px; color: #FFFFFF; background-color: #333333;">
-
-<div class="wrapper">
+﻿  ---
+  layout: default
+  title: SeriesGuide for Android
+  ---
+  
+<div>
 	<img alt="SeriesGuide icon" height="72" src="images/icon.png" style="float: right" width="72" />
 	<h1>SeriesGuide for Android</h1>
 	<h3>manage (re)watching your tv shows</h3>
 	<p>
 	<a href="https://market.android.com/details?id=com.battlelancer.seriesguide">
 	Download from Android Market</a></p>
-	<table style="border-width: 0px; border-style: none; width: 58%; height: 51px">
+	<table style="border-width: 0px; border-style: none; width: 58%; height: 51px; border: 0px none; border-collapse: collapse;">
 		<tr>
-			<td style="width: 320px">
-			Release channels:</td>
+			<td style="width: 320px">Release channels:</td>
 			<td style="width: 160px">
 			<a href="https://market.android.com/details?id=com.battlelancer.seriesguide">
 			Stable</a></td>
@@ -33,38 +25,34 @@
 	<div id="twitter">
 		<script src="http://widgets.twimg.com/j/2/widget.js"></script>
 		<script>
-new TWTR.Widget({
-  version: 2,
-  type: 'profile',
-  rpp: 4,
-  interval: 6000,
-  width: 'auto',
-  height: 300,
-  theme: {
-    shell: {
-      background: '#000000',
-      color: '#ffffff'
-    },
-    tweets: {
-      background: '#1f1f1f',
-      color: '#ffffff',
-      links: '#b4c0d6'
-    }
-  },
-  features: {
-    scrollbar: false,
-    loop: false,
-    live: false,
-    hashtags: true,
-    timestamp: true,
-    avatars: false,
-    behavior: 'all'
-  }
-}).render().setUser('SeriesGuide').start();
-</script>
+			new TWTR.Widget({
+			  version: 2,
+			  type: 'profile',
+			  rpp: 4,
+			  interval: 6000,
+			  width: 'auto',
+			  height: 300,
+			  theme: {
+				shell: {
+				  background: '#000000',
+				  color: '#ffffff'
+				},
+				tweets: {
+				  background: '#1f1f1f',
+				  color: '#ffffff',
+				  links: '#b4c0d6'
+				}
+			  },
+			  features: {
+				scrollbar: false,
+				loop: false,
+				live: false,
+				hashtags: true,
+				timestamp: true,
+				avatars: false,
+				behavior: 'all'
+			  }
+			}).render().setUser('SeriesGuide').start();
+		</script>
 	</div>
 </div>
-
-</body>
-
-</html>
