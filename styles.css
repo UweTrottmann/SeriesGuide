@@ -2,4 +2,9 @@
 	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 	font-size: 32px;
 	font-weight: lighter;
+	vertical-align: top;
+}
+.wrapper {
+	margin: 100px auto 0px auto;
+	width: 500px;
 }
