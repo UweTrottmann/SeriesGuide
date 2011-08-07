@@ -435,6 +435,7 @@ public class OverviewFragment extends Fragment {
         final FrameLayout container = (FrameLayout) getActivity().findViewById(R.id.imageContainer);
 
         if (imagePath.length() != 0) {
+            container.setVisibility(View.VISIBLE);
             final ImageView imageView = (ImageView) container
                     .findViewById(R.id.ImageViewEpisodeImage);
             final Bitmap bitmap = imageCache.get(imagePath);
