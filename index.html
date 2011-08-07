@@ -5,37 +5,22 @@
 <meta content="de" http-equiv="Content-Language" />
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <title>SeriesGuide for Android</title>
-<style type="text/css">
-a {
-	color: #FFFFFF;
-}
-a:visited {
-	color: #EEEEEE;
-}
-a:active {
-	color: #EEEEEE;
-}
-a:hover {
-	color: #EEEEEE;
-}
-</style>
 <link href="styles.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; font-size: 14px; color: #FFFFFF; background-color: #333333;">
 
 <div class="wrapper">
-	<img alt="SeriesGuide icon" height="72" src="images/icon.png" style="float: right" width="72" /><h1>
-	SeriesGuide for Android</h1>
-	<p>manage (re)watching your tv shows</p>
+	<img alt="SeriesGuide icon" height="72" src="images/icon.png" style="float: right" width="72" />
+	<h1>SeriesGuide for Android</h1>
+	<h3>manage (re)watching your tv shows</h3>
 	<p>
 	<a href="https://market.android.com/details?id=com.battlelancer.seriesguide">
 	Download from Android Market</a></p>
-	<table style="border-width: 0px; border-style: none; width: 33%; height: 51px">
+	<table style="border-width: 0px; border-style: none; width: 58%; height: 51px">
 		<tr>
-			<td colspan="2" style="height: 30px">Release channels</td>
-		</tr>
-		<tr>
+			<td style="width: 320px">
+			Release channels:</td>
 			<td style="width: 160px">
 			<a href="https://market.android.com/details?id=com.battlelancer.seriesguide">
 			Stable</a></td>
@@ -44,22 +29,24 @@ a:hover {
 			Beta</a></td>
 		</tr>
 	</table>
-	<script src="http://widgets.twimg.com/j/2/widget.js"></script>
-	<script>
+	<p></p>
+	<div id="twitter">
+		<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+		<script>
 new TWTR.Widget({
   version: 2,
   type: 'profile',
   rpp: 4,
   interval: 6000,
-  width: 250,
+  width: 'auto',
   height: 300,
   theme: {
     shell: {
-      background: '#333333',
+      background: '#000000',
       color: '#ffffff'
     },
     tweets: {
-      background: '#000000',
+      background: '#1f1f1f',
       color: '#ffffff',
       links: '#b4c0d6'
     }
@@ -75,6 +62,7 @@ new TWTR.Widget({
   }
 }).render().setUser('SeriesGuide').start();
 </script>
+	</div>
 </div>
 
 </body>
