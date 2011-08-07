@@ -59,8 +59,8 @@
   <string name="nextepisode">nächste:</string>
   <string name="context_favorite">Zu Favoriten hinzufügen</string>
   <string name="context_unfavorite">Von Favoriten entfernen</string>
-  <string name="favorited">Added to favorites</string>
-  <string name="unfavorited">Removed from favorites</string>
+  <string name="favorited">Zu Favoriten hinzugefügt</string>
+  <string name="unfavorited">Von Favoriten entfernt</string>
   <string name="show_airs">läuft</string>
   <string name="show_network">auf</string>
   <string name="show_pleaseupdate">Bitte aktualisiere diese Serie um mehr Information anzuzeigen (in der Übersicht lange auf den Namen drücken, Aktualisieren wählen). Sollte dies ohne Wirkung sein, kannst du auf www.thetvdb.com Informationen für diese Serie hinzufügen.</string>
@@ -100,8 +100,8 @@
   <string name="pref_onlyfuturesummary">\"nächste:\" zeigt niemals bereits gesendete Folgen an</string>
   <string name="pref_onlyseasoneps">Keine \"Special Episodes\"</string>
   <string name="pref_onlyseasonepssummary">\"nächste:\" zeigt niemals \"Special Episodes\" an</string>
-  <string name="pref_onlyunwatched">Hide watched shows</string>
-  <string name="pref_onlyunwatchedsummary">Only display shows with unwatched episodes</string>
+  <string name="pref_onlyunwatched">Verstecke gesehene Serien</string>
+  <string name="pref_onlyunwatchedsummary">Nur Serien mit ungesehenen Folgen anzeigen</string>
   <string name="pref_content">Inhalt</string>
   <string name="pref_language">TheTVDB Sprache</string>
   <string name="pref_languagesummary">Lokale Inhalte nicht für jede Serie, danach aktualisieren</string>
