@@ -1,3 +1,20 @@
+2.1
+- Design updates (incl. usage of ActionBarSherlock)
+- Experimental syncing with trakt.tv
+- 'Hide watched shows' and 'No special episodes' options brought to you by Jake Wharton (big thanks!)
+- Progress bars in season list
+- New 'Favorites first' show sorting, ability to add shows to favorites
+- Many other small improvements
+- Thanks to all the beta channel users!
+
+- Erneuerung des Designs (u.a. Verwendung von ActionBarSherlock)
+- Experimentelle Synchronisierung mit trakt.tv
+- 'Keine "Special Episodes"' und 'Verstecke gesehene Serien' Optionen dank der Beiträge von Jake Wharton
+- Fortschrittsanzeigen in der Staffelansicht
+- Neue 'Favoriten zuerst' Sortierung der Serien, hinzufügen von Serien zu Favoriten
+- Viele andere kleine Verbesserungen
+- Besten Dank an alle Nutzer des Beta-Kanals!
+
 2.0
 - Redesign of UI and backend (try using it in landscape, or on Android 3.0+!).
 - New time offset setting (esp. for US Central users).

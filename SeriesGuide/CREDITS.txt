@@ -19,4 +19,6 @@ Chris and Craig for testing the thing out. Also thanks to the many tutorial writ
 
 all the translators on Crowdin
 
-Jake Wharton for his trakt.tv API (https://github.com/JakeWharton/trakt-java)
+Jake Wharton for his trakt.tv API (https://github.com/JakeWharton/trakt-java) and ActionBarSherlock (http://actionbarsherlock.com)
+
+the creators of trakt.tv
