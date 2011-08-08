@@ -127,6 +127,9 @@ public class EpisodeDetailsFragment extends ListFragment implements
                 fireTrackerEvent("Share episode");
 
                 final Cursor episode = (Cursor) getListAdapter().getItem(0);
+                if (episode == null) {
+                    break;
+                }
                 episode.moveToFirst();
                 Bundle shareData = new Bundle();
 
