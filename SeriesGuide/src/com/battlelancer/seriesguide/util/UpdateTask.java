@@ -40,12 +40,15 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
     public final AtomicInteger mUpdateCount = new AtomicInteger();
 
-    public UpdateTask(ShowsActivity context) {
+    private boolean mIsFullUpdate = false;
+
+    public UpdateTask(boolean isFullUpdate, ShowsActivity context) {
         mContext = context;
+        mIsFullUpdate = isFullUpdate;
     }
 
     public UpdateTask(String[] shows, int index, String failedShows, ShowsActivity context) {
-        this(context);
+        mContext = context;
         mShows = shows;
         mUpdateCount.set(index);
         mFailedShows = failedShows;
@@ -93,7 +96,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                     SeriesGuidePreferences.KEY_LASTUPDATETIME, "0"));
 
             // new update task
-            if (isFullUpdateNeeded(currentServerTime, previousUpdateTime)) {
+            if (mIsFullUpdate || isFullUpdateNeeded(currentServerTime, previousUpdateTime)) {
                 final Cursor shows = resolver.query(Shows.CONTENT_URI, new String[] {
                     Shows._ID
                 }, null, null, null);

@@ -39,6 +39,7 @@
 	<string name="sort">Sort by</string>
 	<string name="menu_updateart">Get Missing Posters</string>
 	<string name="updateall_yes">Update All</string>
+    <string name="fullupdate">Full Update</string>
 	<string name="context_updateshow">Update</string>
 	<string name="context_showinfo">Show Info</string>
 	<string name="context_marknext">Watched next episode</string>
