@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.SeriesGuide"
         android:backupAgent="com.battlelancer.seriesguide.PrefBackupHelper"
-        android:debuggable="false">
+        android:debuggable="false" android:hardwareAccelerated="true">
         <meta-data
             android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAIToXnISqkDzDlKt206D1VdujnhhoFa0mAEM8Veg" />

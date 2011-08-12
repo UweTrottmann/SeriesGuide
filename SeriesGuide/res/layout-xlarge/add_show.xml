@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" android:gravity="right">
     <RelativeLayout
         android:layout_width="400dp"
         android:layout_height="wrap_content"
@@ -43,6 +43,6 @@
     </RelativeLayout>
     <ListView
         android:id="@+id/ListViewSearchResults"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        android:layout_width="500dp" />
 </LinearLayout>

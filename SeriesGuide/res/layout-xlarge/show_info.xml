@@ -7,7 +7,7 @@
         android:id="@+id/showinfo_container"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true" android:layout_marginLeft="15dp">
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -44,11 +44,10 @@
                 <LinearLayout
                     android:id="@+id/buttonShowInfoIMDB"
                     android:layout_height="50dp"
-                    android:layout_width="fill_parent"
                     android:background="@drawable/list_item"
                     android:focusable="true"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal" android:layout_width="wrap_content">
                     <TextView
                         android:text="@string/showinimdb"
                         android:textSize="@dimen/text_size_medium"
@@ -64,12 +63,14 @@
                 </LinearLayout>
             </LinearLayout>
             <ImageView
-                android:layout_width="400dp"
+                android:layout_width="wrap_content"
                 android:id="@+id/ImageViewShowInfoPoster"
                 android:layout_height="wrap_content"
                 android:src="@drawable/fringe_test"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
+                android:paddingLeft="100dp"
+                android:paddingRight="100dp"
                 android:layout_gravity="top"></ImageView>
         </LinearLayout>
     </ScrollView>
