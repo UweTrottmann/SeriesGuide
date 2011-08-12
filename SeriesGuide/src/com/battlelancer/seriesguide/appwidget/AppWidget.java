@@ -137,8 +137,10 @@ public class AppWidget extends AppWidgetProvider {
                             SeriesGuideData.getNextEpisodeString(prefs, season, number, title));
 
                     // add relative airdate
-                    long airtime = upcomingEpisodes.getLong(upcomingEpisodes
+                    long airstime = upcomingEpisodes.getLong(upcomingEpisodes
                             .getColumnIndexOrThrow(Shows.AIRSTIME));
+                    String airtime = upcomingEpisodes.getString(upcomingEpisodes
+                            .getColumnIndexOrThrow(Shows.AIRTIME));
                     value = SeriesGuideData.parseDateToLocalRelative(
                             upcomingEpisodes.getString(upcomingEpisodes
                                     .getColumnIndexOrThrow(Episodes.FIRSTAIRED)), airtime, context);
@@ -146,8 +148,8 @@ public class AppWidget extends AppWidgetProvider {
 
                     // add airtime and network (if any)
                     value = "";
-                    if (airtime != -1) {
-                        value = SeriesGuideData.parseMillisecondsToTime(airtime, null,
+                    if (airstime != -1) {
+                        value = SeriesGuideData.parseMillisecondsToTime(airstime, null,
                                 getApplicationContext())[0];
                     }
                     String network = upcomingEpisodes.getString(upcomingEpisodes

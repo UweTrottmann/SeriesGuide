@@ -147,7 +147,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                     String fieldValue = cursor.getString(UpcomingQuery.FIRSTAIRED);
                     if (fieldValue.length() != 0) {
                         tv.setText(SeriesGuideData.parseDateToLocalRelative(fieldValue,
-                                cursor.getLong(UpcomingQuery.SHOW_AIRSTIME), getActivity()));
+                                cursor.getString(UpcomingQuery.SHOW_AIRTIME), getActivity()));
                     } else {
                         tv.setText("");
                     }
@@ -218,7 +218,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
                 Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIRED, Shows.TITLE, Shows.AIRSTIME,
-                Shows.NETWORK, Shows.POSTER
+                Shows.NETWORK, Shows.POSTER, Shows.AIRTIME
         };
 
         // String sortOrder = Episodes.FIRSTAIRED + " ASC," + Shows.AIRSTIME +
@@ -244,5 +244,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         int SHOW_NETWORK = 8;
 
         int SHOW_POSTER = 9;
+        
+        int SHOW_AIRTIME = 10;
     }
 }
