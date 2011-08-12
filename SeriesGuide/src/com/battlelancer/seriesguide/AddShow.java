@@ -472,6 +472,7 @@ public class AddShow extends Activity {
 
     private void getTrendingTraktShows() {
         ServiceManager manager = new ServiceManager();
+        manager.setApiKey(Constants.TRAKT_API_KEY);
         try {
             List<TvShow> trendingShows = manager.showService().trending().fire();
             List<SearchResult> showList = parseTvShowsToSearchResults(trendingShows);
