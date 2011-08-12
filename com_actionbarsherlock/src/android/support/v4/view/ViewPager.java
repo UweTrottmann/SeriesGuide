@@ -16,6 +16,7 @@
 
 package android.support.v4.view;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -591,7 +592,7 @@ public class ViewPager extends ViewGroup {
             final View child = getChildAt(i);
             if (child.getVisibility() != GONE) {
                 if (DEBUG) Log.v(TAG, "Measuring #" + i + " " + child
-		        + ": " + mChildWidthMeasureSpec);
+                + ": " + mChildWidthMeasureSpec);
                 child.measure(mChildWidthMeasureSpec, mChildHeightMeasureSpec);
             }
         }
@@ -626,8 +627,8 @@ public class ViewPager extends ViewGroup {
                 int childLeft = getPaddingLeft() + loff;
                 int childTop = getPaddingTop();
                 if (DEBUG) Log.v(TAG, "Positioning #" + i + " " + child + " f=" + ii.object
-		        + ":" + childLeft + "," + childTop + " " + child.getMeasuredWidth()
-		        + "x" + child.getMeasuredHeight());
+                + ":" + childLeft + "," + childTop + " " + child.getMeasuredWidth()
+                + "x" + child.getMeasuredHeight());
                 child.layout(childLeft, childTop,
                         childLeft + child.getMeasuredWidth(),
                         childTop + child.getMeasuredHeight());
@@ -742,7 +743,7 @@ public class ViewPager extends ViewGroup {
                 * of the down event.
                 */
                 final int activePointerId = mActivePointerId;
-                if (activePointerId == INVALID_POINTER) {
+                if (activePointerId == INVALID_POINTER && Build.VERSION.SDK_INT > Build.VERSION_CODES.DONUT) {
                     // If we don't have a valid id, the touch down wasn't on content.
                     break;
                 }
