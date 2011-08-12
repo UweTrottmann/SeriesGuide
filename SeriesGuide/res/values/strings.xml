@@ -230,7 +230,7 @@
     <string name="norating">n/a</string>
     <string name="loading">Loading...</string>
     <string name="eula_title">What you should know</string>
-    <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Google Code.</string>
+    <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Github (https://github.com/UweTrottmann/SeriesGuide).</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
     <string name="username">Username</string>
