@@ -3,8 +3,13 @@ package com.battlelancer.seriesguide;
 
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.SimpleCrypto;
 import com.battlelancer.thetvdbapi.SearchResult;
 import com.battlelancer.thetvdbapi.TheTVDB;
+import com.jakewharton.apibuilder.ApiException;
+import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.entities.TvShow;
 
 import org.xml.sax.SAXException;
 
@@ -13,10 +18,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,6 +39,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -80,6 +89,7 @@ public class AddShow extends Activity {
             }
         } else {
             data = new MyDataObject();
+            getTraktShows();
         }
 
         ImageButton searchButton = (ImageButton) findViewById(R.id.ButtonSearch);
@@ -435,4 +445,88 @@ public class AddShow extends Activity {
         ((EditText) findViewById(R.id.EditTextSearchString)).setText("");
     }
 
+    final Handler traktResultHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            @SuppressWarnings("unchecked")
+            List<SearchResult> searchResults = (List<SearchResult>) msg.obj;
+            setSearchResults(searchResults);
+        }
+    };
+
+    private void getTraktShows() {
+        final Context context = this;
+
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                if (!ShareUtils.isTraktCredentialsValid(context)) {
+                    getTrendingTraktShows();
+                } else {
+                    getUsersTraktShows();
+                }
+            }
+        }).start();
+    }
+
+    private void getTrendingTraktShows() {
+        ServiceManager manager = new ServiceManager();
+        try {
+            List<TvShow> trendingShows = manager.showService().trending().fire();
+            List<SearchResult> showList = parseTvShowsToSearchResults(trendingShows);
+            Message msg = traktResultHandler.obtainMessage();
+            msg.obj = showList;
+            traktResultHandler.sendMessage(msg);
+        } catch (ApiException e) {
+            return;
+        }
+    }
+
+    private void getUsersTraktShows() {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+        ServiceManager manager = new ServiceManager();
+        final String username = prefs.getString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
+        String password = prefs.getString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
+        try {
+            password = SimpleCrypto.decrypt(password, this);
+        } catch (Exception e1) {
+            // password could not be decrypted
+            getTrendingTraktShows();
+        }
+        manager.setAuthentication(username, ShareUtils.toSHA1(password.getBytes()));
+        manager.setApiKey(Constants.TRAKT_API_KEY);
+
+        try {
+            List<TvShow> usersShows = manager.userService().libraryShowsAll(username).fire();
+            List<SearchResult> showList = parseTvShowsToSearchResults(usersShows);
+            Message msg = traktResultHandler.obtainMessage();
+            msg.obj = showList;
+            traktResultHandler.sendMessage(msg);
+        } catch (ApiException e) {
+            return;
+        }
+    }
+
+    /**
+     * Parse a list of {@link TvShow} objects to a list of {@link SearchResult}
+     * objects.
+     * 
+     * @param trendingShows
+     * @return
+     */
+    private List<SearchResult> parseTvShowsToSearchResults(List<TvShow> trendingShows) {
+        List<SearchResult> showList = new ArrayList<SearchResult>();
+        Iterator<TvShow> trendingit = trendingShows.iterator();
+        while (trendingit.hasNext()) {
+            TvShow tvShow = (TvShow) trendingit.next();
+            SearchResult show = new SearchResult();
+            show.setId(Integer.valueOf(tvShow.getTvdbId()));
+            show.setSeriesName(tvShow.getTitle());
+            show.setOverview(tvShow.getOverview());
+            showList.add(show);
+        }
+        return showList;
+    }
 }
