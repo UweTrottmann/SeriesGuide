@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide;
 
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.service.AlarmManagerService;
 import com.battlelancer.seriesguide.ui.TraktSyncActivity;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
