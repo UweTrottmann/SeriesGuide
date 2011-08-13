@@ -35,6 +35,7 @@
   <string name="sort">Sortieren nach</string>
   <string name="menu_updateart">Fehlende Poster laden</string>
   <string name="updateall_yes">Alle aktualisieren</string>
+  <string name="fullupdate">Full Update</string>
   <string name="context_updateshow">Aktualisieren</string>
   <string name="context_showinfo">Serien Info</string>
   <string name="context_marknext">Nächste Folge gesehen</string>
@@ -87,6 +88,8 @@
   <string name="add_error_begin">Konnte \"</string>
   <string name="add_error_end">\" nicht hinzufügen.</string>
   <string name="add_already_exists">ist bereits vorhanden. Sie wurde stattdessen aktualisiert.</string>
+  <string name="loading_trending">Loading trending shows on trakt.tv</string>
+  <string name="loading_usershows">Loading your shows on trakt.tv</string>
   <string name="preferences">Einstellungen</string>
   <string name="pref_sorting">Sortierung</string>
   <string name="pref_showsorting">Sortierung der Serien</string>
@@ -180,7 +183,7 @@
   <string name="norating">n/a</string>
   <string name="loading">Wird geladen...</string>
   <string name="eula_title">Was Sie wissen sollten</string>
-  <string name="eula_text">Sie sollen mit dieser App keinen Schaden verursachen (Server überlasten, Reverse Engineering, ...).\n\nDiese App sammelt während der Benutzung bestimmte Informationen, auch über Google Analytics. Sie können in den Einstellungen Google Analytics deaktivieren.\n\nIch bin nicht verantwortlich für Schäden an Ihrem Gerät oder andere Schäden die durch die Benutzung enstehen.\n\nDer Source Code ist für jeden auf Google Code veröffentlicht.</string>
+  <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Github (https://github.com/UweTrottmann/SeriesGuide).</string>
   <string name="accept">Akzeptieren</string>
   <string name="decline">Ablehnen</string>
   <string name="username">Benutzername</string>

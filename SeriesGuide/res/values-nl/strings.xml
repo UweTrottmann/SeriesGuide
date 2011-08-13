@@ -35,6 +35,7 @@
   <string name="sort">Sorteren</string>
   <string name="menu_updateart">Ontbrekende posters ophalen</string>
   <string name="updateall_yes">Alles bijwerken</string>
+  <string name="fullupdate">Full Update</string>
   <string name="context_updateshow">Bijwerken</string>
   <string name="context_showinfo">Serie informatie</string>
   <string name="context_marknext">Volgende bekeken aflevering</string>
@@ -87,6 +88,8 @@
   <string name="add_error_begin">Niet toe te voegen \"</string>
   <string name="add_error_end">\".</string>
   <string name="add_already_exists">bestaat al. In plaats hiervan bijgewerkt.</string>
+  <string name="loading_trending">Loading trending shows on trakt.tv</string>
+  <string name="loading_usershows">Loading your shows on trakt.tv</string>
   <string name="preferences">Instellingen</string>
   <string name="pref_sorting">Sorteren</string>
   <string name="pref_showsorting">Series sorteren</string>
@@ -96,7 +99,7 @@
   <string name="pref_episodesorting">Sortering afleveringen</string>
   <string name="pref_epsortingsummary">Op welke volgorde afleveringen worden gesorteerd</string>
   <string name="pref_showlist">Lijst weergeven</string>
-  <string name="pref_onlyfuture">Niet uitgezonden afleveringen</string>
+  <string name="pref_onlyfuture">Geen uitgezonden afleveringen</string>
   <string name="pref_onlyfuturesummary">\"volgende:\" geeft nooit reeds uitgezonden afleveringen weer</string>
   <string name="pref_onlyseasoneps">Geen speciale afleveringen</string>
   <string name="pref_onlyseasonepssummary">\"volgende:\" geeft nooit speciale afleveringen weer</string>
@@ -178,7 +181,7 @@
   <string name="norating">n/a</string>
   <string name="loading">Laden...</string>
   <string name="eula_title">Wat u moet weten</string>
-  <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Google Code.</string>
+  <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Github (https://github.com/UweTrottmann/SeriesGuide).</string>
   <string name="accept">Accepteren</string>
   <string name="decline">Afwijzen</string>
   <string name="username">Gebruikersnaam</string>

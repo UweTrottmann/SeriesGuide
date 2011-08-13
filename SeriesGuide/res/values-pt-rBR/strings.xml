@@ -35,6 +35,7 @@
   <string name="sort">Ordenar por</string>
   <string name="menu_updateart">Obter Imagens ausentes</string>
   <string name="updateall_yes">Atualizar todos</string>
+  <string name="fullupdate">Full Update</string>
   <string name="context_updateshow">Atualizar</string>
   <string name="context_showinfo">Mostrar informações</string>
   <string name="context_marknext">Próximo episódio já assistido</string>
@@ -87,6 +88,8 @@
   <string name="add_error_begin">Não foi possível adicionar \"</string>
   <string name="add_error_end">\".</string>
   <string name="add_already_exists">Já existe. Ele foi atualizado em seu lugar.</string>
+  <string name="loading_trending">Loading trending shows on trakt.tv</string>
+  <string name="loading_usershows">Loading your shows on trakt.tv</string>
   <string name="preferences">Configurações</string>
   <string name="pref_sorting">Ordenação</string>
   <string name="pref_showsorting">Mostrar Classificação</string>
@@ -178,7 +181,7 @@
   <string name="norating">n/a</string>
   <string name="loading">Caregando...</string>
   <string name="eula_title">O que você deve saber</string>
-  <string name="eula_text">Você não pode fazer nenhum dano com este app (sobrecarregar os servidores, fazer engenharia reversa, ...).\n\nEste app coleta determinadas informações quando você usá-lo, inclusive através do Google Analytics. Você pode optar por sair do Google Analytics em Configurações.\n\nEu não sou responsável por quebrar seu aparelho ou qualquer coisa ruim que acontece enquanto você usá-lo.\n\nO código fonte está disponível para todos no Google Code.</string>
+  <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Github (https://github.com/UweTrottmann/SeriesGuide).</string>
   <string name="accept">Aceitar</string>
   <string name="decline">Recusar</string>
   <string name="username">Usuário</string>
