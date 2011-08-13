@@ -81,9 +81,6 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 .getApplicationContext());
         final ContentResolver resolver = mContext.getContentResolver();
         final AtomicInteger updateCount = mUpdateCount;
-        final String[] showIds;
-
-        // TODO: switch for manuall full update
 
         if (mShows == null) {
             final long currentServerTime;
@@ -100,16 +97,16 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 final Cursor shows = resolver.query(Shows.CONTENT_URI, new String[] {
                     Shows._ID
                 }, null, null, null);
-                showIds = new String[shows.getCount()];
+                mShows = new String[shows.getCount()];
                 int i = 0;
                 while (shows.moveToNext()) {
-                    showIds[i] = shows.getString(0);
+                    mShows[i] = shows.getString(0);
                     i++;
                 }
                 shows.close();
             } else {
                 try {
-                    showIds = TheTVDB.deltaUpdateShows(previousUpdateTime, mContext);
+                    mShows = TheTVDB.deltaUpdateShows(previousUpdateTime, mContext);
                 } catch (SAXException e) {
                     return UPDATE_SAXERROR;
                 }
@@ -118,15 +115,12 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             prefs.edit()
                     .putString(SeriesGuidePreferences.KEY_LASTUPDATETIME,
                             String.valueOf(currentServerTime)).commit();
-        } else {
-            // resume updating
-            showIds = mShows;
         }
 
         int resultCode = UPDATE_SUCCESS;
         String id;
 
-        for (int i = updateCount.get(); i < showIds.length; i++) {
+        for (int i = updateCount.get(); i < mShows.length; i++) {
             // fail early if cancelled or network connection is lost
             if (isCancelled()) {
                 resultCode = UPDATE_INCOMPLETE;
@@ -137,9 +131,9 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 break;
             }
 
-            publishProgress(i, showIds.length + 1);
+            publishProgress(i, mShows.length + 1);
 
-            id = showIds[i];
+            id = mShows[i];
             for (int itry = 0; itry < 2; itry++) {
                 try {
                     TheTVDB.updateShow(id, mContext);
@@ -162,12 +156,12 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             updateCount.incrementAndGet();
         }
 
-        publishProgress(showIds.length, showIds.length + 1);
+        publishProgress(mShows.length, mShows.length + 1);
 
         // renew FTS3 table
         TheTVDB.onRenewFTSTable(mContext);
 
-        publishProgress(showIds.length + 1, showIds.length + 1);
+        publishProgress(mShows.length + 1, mShows.length + 1);
 
         return resultCode;
     }
