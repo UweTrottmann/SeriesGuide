@@ -462,8 +462,10 @@ public class AddShow extends Activity {
             @Override
             public void run() {
                 if (!ShareUtils.isTraktCredentialsValid(context)) {
+                    Toast.makeText(context, R.string.loading_trending, Toast.LENGTH_SHORT).show();
                     getTrendingTraktShows();
                 } else {
+                    Toast.makeText(context, R.string.loading_usershows, Toast.LENGTH_SHORT).show();
                     getUsersTraktShows();
                 }
             }
