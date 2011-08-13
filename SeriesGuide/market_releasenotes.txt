@@ -1,17 +1,21 @@
 2.1
 - Design updates (incl. usage of ActionBarSherlock)
+- Delta-Updates (Full update option remains available)
 - Experimental syncing with trakt.tv
 - 'Hide watched shows' and 'No special episodes' options brought to you by Jake Wharton (big thanks!)
 - Progress bars in season list
 - New 'Favorites first' show sorting, ability to add shows to favorites
+- Show trending or your shows on trakt.tv when adding shows
 - Many other small improvements
 - Thanks to all the beta channel users!
 
 - Erneuerung des Designs (u.a. Verwendung von ActionBarSherlock)
+- Delta-Updates (Vollst. Aktualisierung bleibt möglich)
 - Experimentelle Synchronisierung mit trakt.tv
 - 'Keine "Special Episodes"' und 'Verstecke gesehene Serien' Optionen dank der Beiträge von Jake Wharton
 - Fortschrittsanzeigen in der Staffelansicht
 - Neue 'Favoriten zuerst' Sortierung der Serien, hinzufügen von Serien zu Favoriten
+- Zeige beim Serien hinzufügen angesagte oder eigene Serien von trakt.tv an
 - Viele andere kleine Verbesserungen
 - Besten Dank an alle Nutzer des Beta-Kanals!
 
