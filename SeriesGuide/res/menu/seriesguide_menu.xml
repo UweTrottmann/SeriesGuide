@@ -31,11 +31,11 @@
         android:title="@string/menu_updateart"
         android:icon="@drawable/ic_action_image" />
     <item
-        android:id="@+id/menu_preferences"
-        android:title="@string/preferences"
-        android:icon="@drawable/ic_action_preferences" />
-    <item
         android:id="@+id/menu_fullupdate"
         android:title="@string/fullupdate"
         android:icon="@drawable/ic_action_refresh" />
+    <item
+        android:id="@+id/menu_preferences"
+        android:title="@string/preferences"
+        android:icon="@drawable/ic_action_preferences" />
 </menu>
