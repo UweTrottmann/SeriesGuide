@@ -121,7 +121,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             for (TvShow tvShow : shows) {
                 if (tvdbId.equalsIgnoreCase(tvShow.getTvdbId())) {
                     if (mResult.length() != 0) {
-                        mResult += ",";
+                        mResult += ", ";
                     }
 
                     if (mIsSyncingUnseen) {
@@ -280,7 +280,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             case SUCCESS_WORK:
                 message = "Finished syncing";
                 if (mResult != null) {
-                    message += "(" + mResult + ")";
+                    message += " (" + mResult + ")";
                 }
                 break;
             case SUCCESS_NOWORK:
