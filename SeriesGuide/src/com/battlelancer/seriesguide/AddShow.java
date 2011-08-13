@@ -455,16 +455,20 @@ public class AddShow extends Activity {
 
     private void getTraktShows() {
         final Context context = this;
+        final boolean isValidCredentials = ShareUtils.isTraktCredentialsValid(context);
+
+        if (!isValidCredentials) {
+            Toast.makeText(context, R.string.loading_trending, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, R.string.loading_usershows, Toast.LENGTH_SHORT).show();
+        }
 
         new Thread(new Runnable() {
-
             @Override
             public void run() {
-                if (!ShareUtils.isTraktCredentialsValid(context)) {
-                    Toast.makeText(context, R.string.loading_trending, Toast.LENGTH_SHORT).show();
+                if (!isValidCredentials) {
                     getTrendingTraktShows();
                 } else {
-                    Toast.makeText(context, R.string.loading_usershows, Toast.LENGTH_SHORT).show();
                     getUsersTraktShows();
                 }
             }
