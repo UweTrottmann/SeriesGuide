@@ -419,7 +419,8 @@ public class OverviewFragment extends Fragment {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity()
                 .getApplicationContext());
         if (prefs.getBoolean("com.battlelancer.seriesguide.traktintegration", false)) {
-            new ShareUtils.TraktTask(getActivity(), getFragmentManager(), mShareData).execute();
+            //Pass in copy of bundle so its values aren't overwritten by the new episode loading below
+            new ShareUtils.TraktTask(getActivity(), getFragmentManager(), new Bundle(mShareData)).execute();
         }
 
         // load new episode, update seasons (if shown)
@@ -435,6 +436,7 @@ public class OverviewFragment extends Fragment {
         final FrameLayout container = (FrameLayout) getActivity().findViewById(R.id.imageContainer);
 
         if (imagePath.length() != 0) {
+            container.setVisibility(View.VISIBLE);
             final ImageView imageView = (ImageView) container
                     .findViewById(R.id.ImageViewEpisodeImage);
             final Bitmap bitmap = imageCache.get(imagePath);

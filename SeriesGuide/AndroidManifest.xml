@@ -3,8 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.battlelancer.seriesguide.beta"
     android:installLocation="auto"
-    android:versionName="2.0.11beta" android:versionCode="129">
-    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+    android:versionName="2.1beta"
+    android:versionCode="130">
+    <uses-permission
+        android:name="android.permission.VIBRATE"></uses-permission>
     <application
         android:name="com.battlelancer.seriesguide.SeriesGuideApplication"
         android:icon="@drawable/icon"
@@ -156,7 +158,8 @@
     </application>
 
     <uses-sdk
-        android:minSdkVersion="7" android:targetSdkVersion="13"/>
+        android:minSdkVersion="7"
+        android:targetSdkVersion="13" />
 
     <uses-permission
         android:name="android.permission.INTERNET" />

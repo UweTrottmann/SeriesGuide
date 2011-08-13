@@ -204,7 +204,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
                 getActivity().getContentResolver().delete(
                         Episodes.buildEpisodeUri(String.valueOf(info.id)), null, null);
                 getActivity().getContentResolver().notifyChange(
-                        Episodes.buildEpisodesOfSeasonUri(getSeasonId()), null);
+                        Episodes.buildEpisodesOfSeasonWithShowUri(getSeasonId()), null);
                 return true;
         }
         return super.onContextItemSelected(item);

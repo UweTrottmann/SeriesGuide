@@ -32,6 +32,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.RemoteException;
@@ -440,6 +441,69 @@ public class TheTVDB {
         execute(request, httpClient, root.getContentHandler(), true);
 
         return batch;
+    }
+
+    /**
+     * Return list of show ids which have been updated since
+     * {@code previousUpdateTime}. Time is UNIX time.
+     * 
+     * @param previousUpdateTime
+     * @param context
+     * @return
+     * @throws SAXException
+     */
+    public static String[] deltaUpdateShows(long previousUpdateTime, Context context)
+            throws SAXException {
+        // get existing show ids
+        final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI, new String[] {
+            Shows._ID
+        }, null, null, null);
+        final HashSet<Integer> existingShowIds = new HashSet<Integer>();
+        while (shows.moveToNext()) {
+            existingShowIds.add(shows.getInt(0));
+        }
+
+        // parse updatable show ids
+        final ArrayList<String> updatableShowIds = new ArrayList<String>();
+        final RootElement root = new RootElement("Items");
+        root.getChild("Series").setEndTextElementListener(new EndTextElementListener() {
+            @Override
+            public void end(String body) {
+                if (existingShowIds.contains(body)) {
+                    updatableShowIds.add(body);
+                }
+            }
+        });
+        final String url = xmlMirror + "Updates.php?time=" + previousUpdateTime;
+        HttpUriRequest request = new HttpGet(url);
+        HttpClient httpClient = getHttpClient(context);
+        execute(request, httpClient, root.getContentHandler(), false);
+
+        return updatableShowIds.toArray(new String[updatableShowIds.size()]);
+    }
+
+    /**
+     * Get current server UNIX time.
+     * 
+     * @param context
+     * @return
+     * @throws SAXException
+     */
+    public static long getServerTime(Context context) throws SAXException {
+        final long[] serverTime = new long[1];
+        final RootElement root = new RootElement("Items");
+        root.getChild("Time").setEndTextElementListener(new EndTextElementListener() {
+            @Override
+            public void end(String body) {
+                serverTime[0] = Long.valueOf(body);
+            }
+        });
+        final String url = xmlMirror + "Updates.php?type=none";
+        HttpUriRequest request = new HttpGet(url);
+        HttpClient httpClient = getHttpClient(context);
+        execute(request, httpClient, root.getContentHandler(), false);
+
+        return serverTime[0];
     }
 
     /**
