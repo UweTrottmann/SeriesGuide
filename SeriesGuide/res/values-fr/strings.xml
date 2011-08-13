@@ -35,6 +35,7 @@
   <string name="sort">Trié par</string>
   <string name="menu_updateart">Obtenez les affiches manquantes</string>
   <string name="updateall_yes">Tout mettre à jour</string>
+  <string name="fullupdate">Full Update</string>
   <string name="context_updateshow">Mise à jour</string>
   <string name="context_showinfo">Afficher les infos</string>
   <string name="context_marknext">Consulté prochain épisode</string>
@@ -87,6 +88,8 @@
   <string name="add_error_begin">Impossible d\'ajouter \ "</string>
   <string name="add_error_end">\ ".</string>
   <string name="add_already_exists">already exists. It was updated instead.</string>
+  <string name="loading_trending">Loading trending shows on trakt.tv</string>
+  <string name="loading_usershows">Loading your shows on trakt.tv</string>
   <string name="preferences">Paramètres</string>
   <string name="pref_sorting">Tri</string>
   <string name="pref_showsorting">Voir Tri</string>
@@ -178,7 +181,7 @@
   <string name="norating">n/a</string>
   <string name="loading">Chargement en cours ...</string>
   <string name="eula_title">What you should know</string>
-  <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Google Code.</string>
+  <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Github (https://github.com/UweTrottmann/SeriesGuide).</string>
   <string name="accept">Accepter</string>
   <string name="decline">Refuser</string>
   <string name="username">Nom d\'utilisateur</string>

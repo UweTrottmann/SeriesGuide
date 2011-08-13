@@ -35,6 +35,7 @@
   <string name="sort">Sorteren</string>
   <string name="menu_updateart">Ontbrekende posters ophalen</string>
   <string name="updateall_yes">Alles bijwerken</string>
+  <string name="fullupdate">Full Update</string>
   <string name="context_updateshow">Bijwerken</string>
   <string name="context_showinfo">Serie informatie</string>
   <string name="context_marknext">Volgende bekeken aflevering</string>
@@ -59,8 +60,8 @@
   <string name="nextepisode">volgende:</string>
   <string name="context_favorite">Aan favorieten toevoegen</string>
   <string name="context_unfavorite">Uit favorieten verwijderen</string>
-  <string name="favorited">Added to favorites</string>
-  <string name="unfavorited">Removed from favorites</string>
+  <string name="favorited">Toegevoegd aan favorieten</string>
+  <string name="unfavorited">Verwijderd uit favorieten</string>
   <string name="show_airs">uitzending</string>
   <string name="show_network">op</string>
   <string name="show_pleaseupdate">Try to update this show to display more information (in the overview, long-press on it, select Update). If this doesn\'t help, there is likely no additional information in TheTVDB. Go to their site (www.thetvdb.com) to learn how to add some.</string>
@@ -87,6 +88,8 @@
   <string name="add_error_begin">Niet toe te voegen \"</string>
   <string name="add_error_end">\".</string>
   <string name="add_already_exists">bestaat al. In plaats hiervan bijgewerkt.</string>
+  <string name="loading_trending">Loading trending shows on trakt.tv</string>
+  <string name="loading_usershows">Loading your shows on trakt.tv</string>
   <string name="preferences">Instellingen</string>
   <string name="pref_sorting">Sorteren</string>
   <string name="pref_showsorting">Series sorteren</string>
@@ -96,12 +99,12 @@
   <string name="pref_episodesorting">Sortering afleveringen</string>
   <string name="pref_epsortingsummary">Op welke volgorde afleveringen worden gesorteerd</string>
   <string name="pref_showlist">Lijst weergeven</string>
-  <string name="pref_onlyfuture">Niet uitgezonden afleveringen</string>
+  <string name="pref_onlyfuture">Geen uitgezonden afleveringen</string>
   <string name="pref_onlyfuturesummary">\"volgende:\" geeft nooit reeds uitgezonden afleveringen weer</string>
   <string name="pref_onlyseasoneps">Geen speciale afleveringen</string>
   <string name="pref_onlyseasonepssummary">\"volgende:\" geeft nooit speciale afleveringen weer</string>
-  <string name="pref_onlyunwatched">Hide watched shows</string>
-  <string name="pref_onlyunwatchedsummary">Only display shows with unwatched episodes</string>
+  <string name="pref_onlyunwatched">Bekeken series verbergen</string>
+  <string name="pref_onlyunwatchedsummary">Alleen series met niet bekeken afleveringen weergeven</string>
   <string name="pref_content">Inhoud</string>
   <string name="pref_language">TheTVDB taal</string>
   <string name="pref_languagesummary">Lokale inhoud niet beschikbaar voor elke serie, werk daarna bij</string>
@@ -178,7 +181,7 @@
   <string name="norating">n/a</string>
   <string name="loading">Laden...</string>
   <string name="eula_title">Wat u moet weten</string>
-  <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Google Code.</string>
+  <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Github (https://github.com/UweTrottmann/SeriesGuide).</string>
   <string name="accept">Accepteren</string>
   <string name="decline">Afwijzen</string>
   <string name="username">Gebruikersnaam</string>
@@ -203,7 +206,7 @@
   <string name="trakt_createaccount">Nieuw account aanmaken</string>
   <string name="email">E-mail</string>
   <string name="trakt_synctodevice">Met SeriesGuide synchroniseren</string>
-  <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. Only shows added to SeriesGuide are synced. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
+  <string name="trakt_experimental"><b>Experimentele</b> synchronisatie met trakt. Dit kan nog steeds een beetje rommelig zijn. Alleen aan SeriesGuide toegevoegde series worden gesynchroniseerd. In SeriesGuide worden alleen de afleveringen als bekeken gemarkeerd, maar bestaande markeringen worden niet verwijderd in SeriesGuide. In trakt worden alleen de bekeken afleveringen verzonden.</string>
   <string name="trakt_synctotrakt">Met trakt.tv synchroniseren</string>
   <string name="trakt_syncunseen">Niet bekeken afleveringen synchroniseren</string>
   <string name="powered_by_thetvdb">powered door thetvdb.com</string>

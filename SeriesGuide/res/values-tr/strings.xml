@@ -35,6 +35,7 @@
   <string name="sort">Sırala</string>
   <string name="menu_updateart">Eksik Posterleri Al</string>
   <string name="updateall_yes">Tümünü Güncelle</string>
+  <string name="fullupdate">Full Update</string>
   <string name="context_updateshow">Güncelle</string>
   <string name="context_showinfo">Bilgi Göster</string>
   <string name="context_marknext">Sonraki izlenen bölüm</string>
@@ -87,6 +88,8 @@
   <string name="add_error_begin">Eklenemedi \"</string>
   <string name="add_error_end">\ ".</string>
   <string name="add_already_exists">already exists. It was updated instead.</string>
+  <string name="loading_trending">Loading trending shows on trakt.tv</string>
+  <string name="loading_usershows">Loading your shows on trakt.tv</string>
   <string name="preferences">Ayarlar</string>
   <string name="pref_sorting">Sırala</string>
   <string name="pref_showsorting">Sıralamayı Göster</string>
@@ -178,7 +181,7 @@
   <string name="norating">n/a</string>
   <string name="loading">Yükleniyor...</string>
   <string name="eula_title">What you should know</string>
-  <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Google Code.</string>
+  <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Github (https://github.com/UweTrottmann/SeriesGuide).</string>
   <string name="accept">Accept</string>
   <string name="decline">Decline</string>
   <string name="username">kullanıcı adı</string>

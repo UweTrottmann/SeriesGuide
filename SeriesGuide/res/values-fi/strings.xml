@@ -35,6 +35,7 @@
   <string name="sort">Lajittele</string>
   <string name="menu_updateart">Nouda puuttuvat julisteet</string>
   <string name="updateall_yes">Päivitä kaikki</string>
+  <string name="fullupdate">Full Update</string>
   <string name="context_updateshow">Päivitä</string>
   <string name="context_showinfo">Näytä tiedot</string>
   <string name="context_marknext">Seuraava jakso katsottu</string>
@@ -59,8 +60,8 @@
   <string name="nextepisode">seuraava:</string>
   <string name="context_favorite">Lisää suosikkeihin</string>
   <string name="context_unfavorite">Poista suosikeista</string>
-  <string name="favorited">Added to favorites</string>
-  <string name="unfavorited">Removed from favorites</string>
+  <string name="favorited">Lisätty suosikkeihin</string>
+  <string name="unfavorited">Poistettu suosikeista</string>
   <string name="show_airs">esitetään</string>
   <string name="show_network">kanavalla</string>
   <string name="show_pleaseupdate">Yritä päivittää tämä ohjelma nähdäksesi enemmän tietoja (päänäkymässä paina ohjelmaa pitkään ja valitse valikosta Päivitä) Jos tämä ei auta, TheTVDB:ssä ei luultavasti ole tarjolla enempää tietoja. Mene heidän sivustolleen (www.thetvdb.com) ja opi, kuinka voit itse lisätä tietoja.</string>
@@ -87,6 +88,8 @@
   <string name="add_error_begin">Ei voi lisätä ohjelmaa \"</string>
   <string name="add_error_end">\".</string>
   <string name="add_already_exists">on jo olemassa. Lisäämisen sijasta se päivitettiin.</string>
+  <string name="loading_trending">Loading trending shows on trakt.tv</string>
+  <string name="loading_usershows">Loading your shows on trakt.tv</string>
   <string name="preferences">Asetukset</string>
   <string name="pref_sorting">Lajittelu</string>
   <string name="pref_showsorting">Ohjelmien lajittelu</string>
@@ -178,7 +181,7 @@
   <string name="norating">puuttuu</string>
   <string name="loading">Ladataan...</string>
   <string name="eula_title">Mitä sinun tulisi tietää</string>
-  <string name="eula_text">Et voi tehdä mitään haitallista tällä sovelluksella (ylikuormittaa palvelimia, muuttaa lähdekoodia, ... ).\n\nSovellus kerää käytettäessä tiettyjä tietoja Google Analyticsilla. Voit poistaa Google Analyticsin käytöstä asetuksista.\n\nEn ole vastuussa, jos laitteesi hajoaa tai sille käy muuten pahasti, kun käytät sitä.\n\nLähdekoodi on saatavilla kaikille Google Code -sivulta.</string>
+  <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Github (https://github.com/UweTrottmann/SeriesGuide).</string>
   <string name="accept">Hyväksy</string>
   <string name="decline">Älä hyväksy</string>
   <string name="username">Käyttäjänimi</string>
