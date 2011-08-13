@@ -106,6 +106,8 @@
 	<string name="add_error_begin">Could not add \"</string>
 	<string name="add_error_end">\".</string>
 	<string name="add_already_exists">already exists. It was updated instead.</string>
+    <string name="loading_trending">Loading trending shows on trakt.tv</string>
+    <string name="loading_usershows">Loading your shows on trakt.tv</string>
 
 	<!-- Settings -->
 	<string name="preferences">Settings</string>
