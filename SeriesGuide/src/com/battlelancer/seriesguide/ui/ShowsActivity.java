@@ -26,9 +26,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
@@ -466,7 +466,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 fireTrackerEvent("Update show");
 
                 if (!isUpdateTaskRunning()) {
-                    performUpdateTask(String.valueOf(info.id));
+                    performUpdateTask(false, String.valueOf(info.id));
                 }
                 return true;
             case CONTEXT_SHOWINFO:
@@ -516,7 +516,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 fireTrackerEvent("Update all shows");
 
                 if (!isUpdateTaskRunning() && !isArtTaskRunning()) {
-                    performUpdateTask(null);
+                    performUpdateTask(false, null);
                 }
                 return true;
             case R.id.menu_upcoming:
@@ -549,6 +549,13 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 return true;
             case R.id.menu_preferences:
                 startActivity(new Intent(this, SeriesGuidePreferences.class));
+                return true;
+            case R.id.menu_fullupdate:
+                fireTrackerEvent("Full Update");
+
+                if (!isUpdateTaskRunning() && !isArtTaskRunning()) {
+                    performUpdateTask(true, null);
+                }
                 return true;
             default: {
                 return super.onOptionsItemSelected(item);
@@ -600,17 +607,21 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         }
     }
 
-    private void performUpdateTask(String showId) {
+    private void performUpdateTask(boolean isFullUpdate, String showId) {
         Toast.makeText(this, getString(R.string.update_inbackground), Toast.LENGTH_SHORT).show();
 
-        if (showId == null) {
-            // (delta) update all shows
-            mUpdateTask = (UpdateTask) new UpdateTask(this).execute();
+        if (isFullUpdate) {
+            mUpdateTask = (UpdateTask) new UpdateTask(true, this).execute();
         } else {
-            // update a single show
-            mUpdateTask = (UpdateTask) new UpdateTask(new String[] {
-                showId
-            }, 0, "", this).execute();
+            if (showId == null) {
+                // (delta) update all shows
+                mUpdateTask = (UpdateTask) new UpdateTask(false, this).execute();
+            } else {
+                // update a single show
+                mUpdateTask = (UpdateTask) new UpdateTask(new String[] {
+                    showId
+                }, 0, "", this).execute();
+            }
         }
     }
 
