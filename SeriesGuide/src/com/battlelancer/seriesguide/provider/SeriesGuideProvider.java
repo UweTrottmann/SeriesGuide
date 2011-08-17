@@ -353,6 +353,9 @@ public class SeriesGuideProvider extends ContentProvider {
                 final String showId = Shows.getShowId(uri);
                 return builder.table(Tables.SHOWS).where(Shows._ID + "=?", showId);
             }
+            case EPISODES: {
+                return builder.table(Tables.EPISODES);
+            }
             case EPISODES_OFSHOW: {
                 final String showId = uri.getPathSegments().get(2);
                 return builder.table(Tables.EPISODES).where(Shows.REF_SHOW_ID + "=?", showId);
