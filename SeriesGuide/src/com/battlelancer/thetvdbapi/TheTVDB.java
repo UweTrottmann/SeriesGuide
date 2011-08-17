@@ -53,6 +53,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.zip.ZipInputStream;
@@ -464,7 +465,18 @@ public class TheTVDB {
             existingShowIds.add(shows.getInt(0));
         }
 
+        // get existing episode ids
+        final Cursor episodes = context.getContentResolver().query(Episodes.CONTENT_URI,
+                new String[] {
+                        Episodes._ID, Shows.REF_SHOW_ID
+                }, null, null, null);
+        final HashMap<String, String> episodeMap = new HashMap<String, String>();
+        while (episodes.moveToNext()) {
+            episodeMap.put(episodes.getString(0), episodes.getString(1));
+        }
+
         // parse updatable show ids
+        // TODO: look for better data structure (which allows insert=replace)
         final ArrayList<String> updatableShowIds = new ArrayList<String>();
         final RootElement root = new RootElement("Items");
         root.getChild("Series").setEndTextElementListener(new EndTextElementListener() {
@@ -472,6 +484,15 @@ public class TheTVDB {
             public void end(String body) {
                 if (existingShowIds.contains(body)) {
                     updatableShowIds.add(body);
+                }
+            }
+        });
+        root.getChild("Episode").setEndTextElementListener(new EndTextElementListener() {
+            @Override
+            public void end(String body) {
+                String showId = episodeMap.get(body);
+                if (showId != null && !updatableShowIds.contains(showId)) {
+                    updatableShowIds.add(showId);
                 }
             }
         });
