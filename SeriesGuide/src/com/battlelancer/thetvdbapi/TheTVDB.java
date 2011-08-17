@@ -496,7 +496,7 @@ public class TheTVDB {
                 }
             }
         });
-        final String url = xmlMirror + "Updates.php?time=" + previousUpdateTime;
+        final String url = xmlMirror + "Updates.php?type=all&time=" + previousUpdateTime;
         HttpUriRequest request = new HttpGet(url);
         HttpClient httpClient = getHttpClient(context);
         execute(request, httpClient, root.getContentHandler(), false);
