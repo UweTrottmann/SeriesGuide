@@ -33,6 +33,11 @@ h2 {
 	font-weight: lighter;
 }
 
+div.topbar-wrapper {
+position: relative;
+height: 40px;
+margin: 5px 0 15px;
+}
 
 .wrapper {
 	margin: 100px auto 0px auto;
