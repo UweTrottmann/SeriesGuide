@@ -5,23 +5,27 @@
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 	<title>{{ page.title }}</title>
 	<link href="static/styles.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.0.0.min.css">
 </head>
 
 <body>
 
-<div class="wrapper">
-	<div>
-		<ul class="navlist">
-			<li class="navlist-li"><a href="/index.html">Home</a></li>
-			<li class="navlist-li"><a href="/screenshots.html">Screenshots</a></li>
-			<li class="navlist-li"><a href="/help.html">Help</a></li>
-			<li class="navlist-li">
-			<a href="http://github.com/UweTrottmann/SeriesGuide">Source Code</a></li>
-		</ul>
-	</div>
-	<div>
-		{{ content }}
-	</div>
+<div class="topbar-wrapper" style="z-index: 5;">
+    <div class="topbar">
+      <div class="container fixed">
+        <h3><a class="logo" href="/index.html">SeriesGuide for Android</a></h3>
+        <ul>
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/screenshots.html">Screenshots</a></li>
+          <li><a href="/help.html">Help</a></li>
+          <li><a href="http://github.com/UweTrottmann/SeriesGuide">Source Code</a></li>
+        </ul>
+      </div>
+    </div>
+</div>
+
+ <div>
+	{{ content }}
 </div>
 
 </body>
