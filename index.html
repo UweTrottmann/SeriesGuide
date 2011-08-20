@@ -2,7 +2,55 @@
 layout: default
 title: SeriesGuide for Android
 ---
-  
+
+<div class="row">
+	<div class="span8 columns">
+		<h1>SeriesGuide Show Manager</h1>
+		<small>manage (re)watching your tv shows</small>
+	</div>
+	<div class="span2 columns">
+		<img alt="SeriesGuide icon" height="72" src="images/icon.png"width="72" />
+	</div>
+</div> <!-- row -->
+
+<div class="row">
+	<div class="span8 columns">
+		<div id="twitter">
+			<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+			<script>
+				new TWTR.Widget({
+				  version: 2,
+				  type: 'profile',
+				  rpp: 4,
+				  interval: 6000,
+				  width: 'auto',
+				  height: 300,
+				  theme: {
+					shell: {
+					  background: '#000000',
+					  color: '#ffffff'
+					},
+					tweets: {
+					  background: '#1f1f1f',
+					  color: '#ffffff',
+					  links: '#b4c0d6'
+					}
+				  },
+				  features: {
+					scrollbar: false,
+					loop: false,
+					live: false,
+					hashtags: true,
+					timestamp: true,
+					avatars: false,
+					behavior: 'all'
+				  }
+				}).render().setUser('SeriesGuide').start();
+			</script>
+		</div>
+	</div> <!-- span8 columns -->
+</div> <!-- row -->
+
 <div id="home">
 	<img alt="SeriesGuide icon" height="72" src="images/icon.png" style="float: right" width="72" />
 	<h1>SeriesGuide for Android</h1>
@@ -22,37 +70,5 @@ title: SeriesGuide for Android
 		</tr>
 	</table>
 	<p></p>
-	<div id="twitter">
-		<script src="http://widgets.twimg.com/j/2/widget.js"></script>
-		<script>
-			new TWTR.Widget({
-			  version: 2,
-			  type: 'profile',
-			  rpp: 4,
-			  interval: 6000,
-			  width: 'auto',
-			  height: 300,
-			  theme: {
-				shell: {
-				  background: '#000000',
-				  color: '#ffffff'
-				},
-				tweets: {
-				  background: '#1f1f1f',
-				  color: '#ffffff',
-				  links: '#b4c0d6'
-				}
-			  },
-			  features: {
-				scrollbar: false,
-				loop: false,
-				live: false,
-				hashtags: true,
-				timestamp: true,
-				avatars: false,
-				behavior: 'all'
-			  }
-			}).render().setUser('SeriesGuide').start();
-		</script>
-	</div>
+
 </div>
