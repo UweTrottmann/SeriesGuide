@@ -1,54 +1,5 @@
-﻿body {
-	font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-	font-size: 14px;
-	color: #FFFFFF;
-	background-color: #333333;
-}
-a {
-	color: #FFFFFF;
-}
-a:visited {
-	color: #EEEEEE;
-}
-a:active {
-	color: #EEEEEE;
-}
-a:hover {
-	color: #EEEEEE;
-}
-
-h1 {
-	padding: 0px;
-	margin: 0px;
-	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-	font-size: 32px;
-	font-weight: lighter;
-}
-
-h2 {
-	padding: 0px;
-	margin: 0px;
-	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-	font-size: 24px;
-	font-weight: lighter;
-}
-
-div.topbar-wrapper {
+﻿div.topbar-wrapper {
 position: relative;
 height: 40px;
 margin: 5px 0 15px;
-}
-
-.wrapper {
-	margin: 100px auto 0px auto;
-	width: 800px;
-}
-
-.navlist-li {
-	display: inline;
-	margin-right:20px
-}
-.navlist {
-	padding: 0px;
-	margin: 0px;
 }
