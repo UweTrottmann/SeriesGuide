@@ -3,3 +3,11 @@ position: relative;
 height: 40px;
 margin: 5px 0 15px;
 }
+
+#footer {
+margin-top: 80px;
+}
+
+p.right {
+float: right;
+}
