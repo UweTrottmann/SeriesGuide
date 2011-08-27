@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.battlelancer.seriesguide.beta"
     android:installLocation="auto"
-    android:versionName="2.1beta"
-    android:versionCode="130">
+    android:versionName="2.1.1beta" android:versionCode="131">
     <uses-permission
         android:name="android.permission.VIBRATE"></uses-permission>
     <application
