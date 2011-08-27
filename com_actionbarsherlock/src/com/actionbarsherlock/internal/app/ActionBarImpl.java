@@ -20,7 +20,6 @@ package com.actionbarsherlock.internal.app;
 import java.util.ArrayList;
 import java.util.List;
 import android.content.pm.ActivityInfo;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
@@ -28,17 +27,17 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.app.ActionBar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ActionMode;
-import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
 import android.view.View;
 import android.widget.SpinnerAdapter;
 import com.actionbarsherlock.R;
+import com.actionbarsherlock.internal.view.menu.ActionMenuItemView;
 import com.actionbarsherlock.internal.view.menu.MenuBuilder;
 import com.actionbarsherlock.internal.view.menu.MenuItemImpl;
-import com.actionbarsherlock.internal.view.menu.MenuView;
+import com.actionbarsherlock.internal.widget.ActionBarContainer;
 import com.actionbarsherlock.internal.widget.ActionBarView;
 
-public final class ActionBarSupportImpl extends ActionBar {
+public final class ActionBarImpl extends ActionBar {
     /** Maximum action bar items in portrait mode. */
     private static final int MAX_ACTION_BAR_ITEMS_PORTRAIT = 3;
 
@@ -47,21 +46,18 @@ public final class ActionBarSupportImpl extends ActionBar {
 
 
 
+    /** Action bar container. */
+    private ActionBarContainer mContainerView;
+
     /** Action bar view. */
     private ActionBarView mActionBar;
 
     /** List of listeners to the menu visibility. */
     private final List<OnMenuVisibilityListener> mMenuListeners = new ArrayList<OnMenuVisibilityListener>();
 
-    /** Whether display of the indeterminate progress is allowed. */
-    private boolean mHasIndeterminateProgress = false;
-
-    /** Whether to honor 'withText' flags for action items. */
-    private boolean mIsDisplayingActionItemText = false;
 
 
-
-    public ActionBarSupportImpl(FragmentActivity activity) {
+    public ActionBarImpl(FragmentActivity activity) {
         super(activity);
     }
 
@@ -76,20 +72,14 @@ public final class ActionBarSupportImpl extends ActionBar {
     }
 
     public void init() {
-        mActionBar = (ActionBarView)getActivity().findViewById(R.id.action_bar);
+        mContainerView = (ActionBarContainer)getActivity().findViewById(R.id.abs__action_bar_container);
+        mActionBar = (ActionBarView)getActivity().findViewById(R.id.abs__action_bar);
 
         if (mActionBar == null) {
             throw new IllegalStateException(getClass().getSimpleName() + " can only be used with a screen_*.xml layout");
         }
 
-        final MenuItemImpl homeMenuItem = getHomeMenuItem();
-        final ActionBarView.Item homeItem = mActionBar.getHomeItem();
-        final WatsonItemViewWrapper homeWrapper = new WatsonItemViewWrapper(homeItem);
-        homeWrapper.initialize(homeMenuItem, MenuBuilder.TYPE_WATSON);
-        homeMenuItem.setItemView(MenuBuilder.TYPE_WATSON, homeWrapper);
-
         final PackageManager pm = getActivity().getPackageManager();
-        final ApplicationInfo appInfo = getActivity().getApplicationInfo();
         ActivityInfo actInfo = null;
         try {
             actInfo = pm.getActivityInfo(getActivity().getComponentName(), PackageManager.GET_ACTIVITIES);
@@ -105,26 +95,9 @@ public final class ActionBarSupportImpl extends ActionBar {
                 mActionBar.setTitle(actInfo.loadLabel(pm));
             }
         }
-        if (homeItem.getIcon() == null) {
-            if ((actInfo != null) && (actInfo.icon != 0)) {
-                //Load the icon from the activity entry
-                homeItem.setIcon(actInfo.icon);
-            } else {
-                //No activity icon and none in theme
-                homeItem.setIcon(pm.getApplicationIcon(appInfo));
-            }
-        }
-
-        //LOGO LOADING DOES NOT WORK
-        //SEE: http://stackoverflow.com/questions/6105504/load-activity-and-or-application-logo-programmatically-from-manifest
-        //SEE: https://groups.google.com/forum/#!topic/android-developers/UFR4l0ZwJWc
-
-        if (mHasIndeterminateProgress) {
-            mActionBar.setProgressBarIndeterminateVisibility(true);
-        }
     }
 
-    public void onMenuInflated(Menu menu) {
+    public void onMenuInflated(MenuBuilder menu) {
         if (mActionBar == null) {
             return;
         }
@@ -138,15 +111,16 @@ public final class ActionBarSupportImpl extends ActionBar {
         //their showAsAction values
         int ifItems = 0;
         final int count = menu.size();
+        boolean showsActionItemText = menu.getShowsActionItemText();
         List<MenuItemImpl> keep = new ArrayList<MenuItemImpl>();
         for (int i = 0; i < count; i++) {
             MenuItemImpl item = (MenuItemImpl)menu.getItem(i);
 
             //Items without an icon or custom view are forced into the overflow menu
-            if (!mIsDisplayingActionItemText && (item.getIcon() == null) && (item.getActionView() == null)) {
+            if (!showsActionItemText && (item.getIcon() == null) && (item.getActionView() == null)) {
                 continue;
             }
-            if (mIsDisplayingActionItemText && ((item.getTitle() == null) || "".equals(item.getTitle()))) {
+            if (showsActionItemText && ((item.getTitle() == null) || "".equals(item.getTitle()))) {
                 continue;
             }
 
@@ -177,19 +151,15 @@ public final class ActionBarSupportImpl extends ActionBar {
         //Mark items that will be shown on the action bar as such so they do
         //not show up on the activity options menu
         mActionBar.removeAllItems();
-        mActionBar.setIsActionItemTextEnabled(mIsDisplayingActionItemText);
         for (MenuItemImpl item : keep) {
             item.setIsShownOnActionBar(true);
 
             //Get a new item for this menu item
-            ActionBarView.Item watsonItem = mActionBar.newItem();
-
-            //Create and initialize a watson itemview wrapper
-            WatsonItemViewWrapper watsonWrapper = new WatsonItemViewWrapper(watsonItem);
-            watsonWrapper.initialize(item, MenuBuilder.TYPE_WATSON);
+            ActionMenuItemView watsonItem = mActionBar.newItem();
+            watsonItem.initialize(item, MenuBuilder.TYPE_WATSON);
 
             //Associate the itemview with the item so changes will be reflected
-            item.setItemView(MenuBuilder.TYPE_WATSON, watsonWrapper);
+            item.setItemView(MenuBuilder.TYPE_WATSON, watsonItem);
 
             //Add to the action bar for display
             mActionBar.addItem(watsonItem);
@@ -203,18 +173,8 @@ public final class ActionBarSupportImpl extends ActionBar {
         }
     }
 
-    public void setWindowActionBarItemTextEnabled(boolean enabled) {
-        mIsDisplayingActionItemText = enabled;
-    }
-
-    public void setWindowIndeterminateProgressEnabled(boolean enabled) {
-        if (mActionBar == null) {
-            mHasIndeterminateProgress = enabled;
-        }
-    }
-
     public void setProgressBarIndeterminateVisibility(boolean visible) {
-        if (mHasIndeterminateProgress && (mActionBar != null)) {
+        if (mActionBar != null) {
             mActionBar.setProgressBarIndeterminateVisibility(visible);
         }
     }
@@ -316,12 +276,13 @@ public final class ActionBarSupportImpl extends ActionBar {
 
     @Override
     public void hide() {
-        mActionBar.hide();
+        //TODO: animate
+        mContainerView.setVisibility(View.GONE);
     }
 
     @Override
     public boolean isShowing() {
-        return mActionBar.isShowing();
+        return mContainerView.getVisibility() == View.VISIBLE;
     }
 
     @Override
@@ -351,7 +312,7 @@ public final class ActionBarSupportImpl extends ActionBar {
 
     @Override
     public void setBackgroundDrawable(Drawable d) {
-        mActionBar.setBackgroundDrawable(d);
+        mContainerView.setBackgroundDrawable(d);
     }
 
     @Override
@@ -445,90 +406,7 @@ public final class ActionBarSupportImpl extends ActionBar {
 
     @Override
     public void show() {
-        mActionBar.show();
-    }
-
-    // ///
-
-    private static final class WatsonItemViewWrapper implements MenuView.ItemView, View.OnClickListener {
-        private final ActionBarView.Item mWatsonItem;
-        private MenuItemImpl mMenuItem;
-
-        public WatsonItemViewWrapper(ActionBarView.Item item) {
-            mWatsonItem = item;
-            mWatsonItem.setOnClickListener(this);
-        }
-
-        @Override
-        public MenuItemImpl getItemData() {
-            return mMenuItem;
-        }
-
-        @Override
-        public void initialize(MenuItemImpl itemData, int menuType) {
-            mMenuItem = itemData;
-
-            //Only load menu item data if we are not the HomeItem
-            if (!(mWatsonItem instanceof ActionBarView.HomeItem)) {
-                setIcon(itemData.getIcon());
-                setTitle(itemData.getTitle());
-                setEnabled(itemData.isEnabled());
-                setCheckable(itemData.isCheckable());
-                setChecked(itemData.isChecked());
-                setActionView(itemData.getActionView());
-            }
-        }
-
-        @Override
-        public boolean prefersCondensedTitle() {
-            return true;
-        }
-
-        @Override
-        public void setCheckable(boolean checkable) {
-        // TODO mItem.setCheckable(checkable);
-        }
-
-        @Override
-        public void setChecked(boolean checked) {
-        // TODO mItem.setChecked(checked);
-        }
-
-        @Override
-        public void setEnabled(boolean enabled) {
-            mWatsonItem.setEnabled(enabled);
-        }
-
-        @Override
-        public void setIcon(Drawable icon) {
-            mWatsonItem.setIcon(icon);
-        }
-
-        @Override
-        public void setShortcut(boolean showShortcut, char shortcutKey) {
-        // Not supported
-        }
-
-        @Override
-        public void setTitle(CharSequence title) {
-            mWatsonItem.setTitle(title);
-        }
-
-        @Override
-        public boolean showsIcon() {
-            return true;
-        }
-
-        @Override
-        public void setActionView(View actionView) {
-            mWatsonItem.setCustomView(actionView);
-        }
-
-        @Override
-        public void onClick(View view) {
-            if (mMenuItem != null) {
-                mMenuItem.invoke();
-            }
-        }
+        //TODO: animate
+        mContainerView.setVisibility(View.VISIBLE);
     }
 }
