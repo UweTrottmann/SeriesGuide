@@ -159,7 +159,7 @@
 	<string name="clear_cache">Clear Image Caches</string>
 	<string name="clear_cache_summary">Remove all images from cache and SD card, updating shows will redownload them</string>
 	<string name="pref_ganalytics">Google Analytics</string>
-	<string name="pref_ganalyticssummary">Tracks the usage of SeriesGuide features to help improve SeriesGuide</string>
+	<string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
 
 	<!-- Backup and Restore -->
 	<string name="backup_description">Backup will store a copy of the SeriesGuide database in the folder \"seriesguidebackup\" on your SD card. If you reinstall SeriesGuide or install SeriesGuide on another Android device, just put this folder on the devices SD card. Hit Restore below and all your shows will be there again! (You can not import databases from newer versions into an older version, except it uses the same database version. See About in Settings.)</string>
