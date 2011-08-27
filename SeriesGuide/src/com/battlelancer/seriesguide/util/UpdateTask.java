@@ -81,9 +81,9 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 .getApplicationContext());
         final ContentResolver resolver = mContext.getContentResolver();
         final AtomicInteger updateCount = mUpdateCount;
-
+        long currentServerTime = 0;
         if (mShows == null) {
-            final long currentServerTime;
+            
             try {
                 currentServerTime = TheTVDB.getServerTime(mContext);
             } catch (SAXException e1) {
@@ -111,10 +111,6 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                     return UPDATE_SAXERROR;
                 }
             }
-
-            prefs.edit()
-                    .putString(SeriesGuidePreferences.KEY_LASTUPDATETIME,
-                            String.valueOf(currentServerTime)).commit();
         }
 
         int resultCode = UPDATE_SUCCESS;
@@ -162,6 +158,13 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         TheTVDB.onRenewFTSTable(mContext);
 
         publishProgress(mShows.length + 1, mShows.length + 1);
+        
+        // store time of update if it was successful
+        if (currentServerTime != 0 && resultCode == UPDATE_SUCCESS) {
+            prefs.edit()
+            .putString(SeriesGuidePreferences.KEY_LASTUPDATETIME,
+                    String.valueOf(currentServerTime)).commit();
+        }
 
         return resultCode;
     }
