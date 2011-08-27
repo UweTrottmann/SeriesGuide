@@ -41,8 +41,6 @@ public class SeriesGuidePreferences extends PreferenceActivity {
 
     private static final String TRANSLATIONS_URL = "http://crowdin.net/project/seriesguide-translations/invite";
 
-    private static final String THETVDB_URL = "http://www.thetvdb.com";
-
     private static final String HELP_URL = "http://seriesguide.uwetrottmann.com/help";
 
     public static final String PREF_TRAKTPWD = "com.battlelancer.seriesguide.traktpwd";
@@ -105,21 +103,6 @@ public class SeriesGuidePreferences extends PreferenceActivity {
             }
         });
 
-        // Changelog button
-        Preference changelogPref = (Preference) findPreference("changelogPref");
-        changelogPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference preference) {
-                // track event
-                fireTrackerEvent("Changelog");
-
-                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
-                        .parse(SeriesGuideData.CHANGELOG_URL));
-                startActivity(myIntent);
-                return true;
-            }
-        });
-
         // Help button
         Preference helpPref = (Preference) findPreference("helpPref");
         helpPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -155,20 +138,6 @@ public class SeriesGuidePreferences extends PreferenceActivity {
 
             public boolean onPreferenceClick(Preference preference) {
                 startActivity(new Intent(activity, BackupDelete.class));
-                return true;
-            }
-        });
-
-        Preference thetvdbCredit = (Preference) findPreference("thetvdb");
-        thetvdbCredit.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference preference) {
-                // track event
-                fireTrackerEvent("Go to thetvdb.com");
-
-                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
-                        .parse(THETVDB_URL));
-                startActivity(myIntent);
                 return true;
             }
         });

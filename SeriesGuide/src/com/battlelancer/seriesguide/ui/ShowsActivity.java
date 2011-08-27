@@ -347,14 +347,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                         .setIcon(android.R.drawable.ic_dialog_info)
                         .setMessage(getString(R.string.whatsnew_content))
                         .setPositiveButton(android.R.string.ok, null)
-                        .setNeutralButton(getString(R.string.changelog), new OnClickListener() {
-
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
-                                        .parse(SeriesGuideData.CHANGELOG_URL));
-                                startActivity(myIntent);
-                            }
-                        }).create();
+                        .create();
             case BETA_WARNING_DIALOG:
                 /* Used for unstable beta releases */
                 return new AlertDialog.Builder(this)
