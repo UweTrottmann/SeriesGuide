@@ -13,7 +13,6 @@
   <string name="ioerror">Tapahtui verkkovirhe. Sinulla sattaa olla rajoitettu pääsy kohteeseen TheTVDB.com yhteydelläsi tällä hetkellä. Yritä myöhemmin uudestaan.</string>
   <string name="saxerror">TheTVDB:n vastausta ei ymmärretty. Yritä myöhemmin uudestaan.</string>
   <string name="offline">Käytössä ei ole aktiivista yhteyttä internetiin. Tarkista yhteytesi internetiin ja yritä uudestaan.</string>
-  <string name="whatsnew_title">Mitä uutta</string>
   <string name="search_hint">Hae jaksoja</string>
   <string name="search_title">Löytyneet jaksot</string>
   <string name="share_episode">Jaa jakso</string>
@@ -35,7 +34,7 @@
   <string name="sort">Lajittele</string>
   <string name="menu_updateart">Nouda puuttuvat julisteet</string>
   <string name="updateall_yes">Päivitä kaikki</string>
-  <string name="fullupdate">Full Update</string>
+  <string name="fullupdate">Täysi päivitys</string>
   <string name="context_updateshow">Päivitä</string>
   <string name="context_showinfo">Näytä tiedot</string>
   <string name="context_marknext">Seuraava jakso katsottu</string>
@@ -88,8 +87,8 @@
   <string name="add_error_begin">Ei voi lisätä ohjelmaa \"</string>
   <string name="add_error_end">\".</string>
   <string name="add_already_exists">on jo olemassa. Lisäämisen sijasta se päivitettiin.</string>
-  <string name="loading_trending">Loading trending shows on trakt.tv</string>
-  <string name="loading_usershows">Loading your shows on trakt.tv</string>
+  <string name="loading_trending">Ladataan trakt.tv:ssä olevia suosittuja ohjelmia</string>
+  <string name="loading_usershows">Ladataan trakt.tv:ssä olevia ohjelmiasi</string>
   <string name="preferences">Asetukset</string>
   <string name="pref_sorting">Lajittelu</string>
   <string name="pref_showsorting">Ohjelmien lajittelu</string>
@@ -103,7 +102,7 @@
   <string name="pref_onlyfuturesummary">\"seuraava:\" älä koskaan näytä jo esitettyjä jaksoja</string>
   <string name="pref_onlyseasoneps">Ei erikoisjaksoja</string>
   <string name="pref_onlyseasonepssummary">\"seuraava:\" älä koskaan näytä erikoisjaksoja</string>
-  <string name="pref_onlyunwatched">Hide watched shows</string>
+  <string name="pref_onlyunwatched">Piilota katsotut ohjelmat</string>
   <string name="pref_onlyunwatchedsummary">Only display shows with unwatched episodes</string>
   <string name="pref_content">Sisältö</string>
   <string name="pref_language">TheTVDB:n kieli</string>
@@ -112,18 +111,16 @@
   <string name="pref_hideimagessummary">Piilota SeriesGuiden kuvat kuvagalleriasta (vaatii uudelleenkäynnistyksen)</string>
   <string name="pref_more">Lisää</string>
   <string name="about">Tietoja SeriesGuidesta</string>
-  <string name="about_message">http://battlelancer.com/seriesguide - kehittänyt Uwe Trottmann.\n\nAlla olevasta TEKIJÄT -linkistä näet kaikki ihmiset ja lähteet, jotka ovat auttaneet tässä projektissa.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
-  <string name="thetvdb_summary">Mene sinne muokkaamaan ohjelmia ja jaksoja</string>
-  <string name="changelog">Muutosloki</string>
-  <string name="changelog_summary">Näytä viimeisimmät SeriesGuideen tehdyt muutokset</string>
+  <string name="about_message">http://seriesguide.uwetrottmann.com - developed by Uwe Trottmann.\n\nPlease see the CREDITS link below for all the people and resources that help drive this project.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
   <string name="help">Hanki apua</string>
   <string name="help_summary">Mene apusivulle</string>
   <string name="backup">Varmuuskopioi/Palauta</string>
   <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
+  <string name="pref_advanced">Advanced</string>
   <string name="clear_cache">Tyhjennä kuvamuistit</string>
   <string name="clear_cache_summary">Poista kaikki kuvat välimuistista ja SD-kortilta. Ohjelmien päivittäminen lataa ne uudelleen.</string>
   <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_ganalyticssummary">Seuraa SeriesGuiden ominaisuuksien käyttöä, joka auttaa sovelluksen kehittämisessä</string>
+  <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
   <string name="backup_description">Varmuuskopiointi tallentaa kopion SeriesGuiden tietokannasta SD-kortille kansioon \"seriesguidebackup\". Jos asennat SeriesGuiden uudestaan tai asennat SeriesGuiden toiselle Android -laitteelle, pistä tämä kansio laitteen SD-kortille. Napsauta alempaa Palauta ja kaikki ohjelmasi ovat jälleen käytössäsi! (Et voi tuota tietokantoja uudemmista versioista vanhempiin versioihin, paitsi jos se käyttää samaa tietokantaversiota. Katso kohta Tietoja asetusvalikosta.)</string>
   <string name="backup_failed_nosd">Ei voi varmuuskopioida. Ulkoista muistia, kuten SD-korttia, ei ole saatavilla.</string>
   <string name="backup_inprogress">Varmuuskopioidaan tietokantaa...</string>
@@ -181,7 +178,7 @@
   <string name="norating">puuttuu</string>
   <string name="loading">Ladataan...</string>
   <string name="eula_title">Mitä sinun tulisi tietää</string>
-  <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Github (https://github.com/UweTrottmann/SeriesGuide).</string>
+  <string name="eula_text">Et voi tehdä mitään haitallista tällä sovelluksella (ylikuormittaa palvelimia, takaisinmallintaa, ...).\n\nTämä sovellus kerää tiettyja tietoja, kun käytät sitä, mukaan lukien Google Analutcsin kautta. Voit jättäytyä pois Google Analyticsistä asetuksista.\n\nEn ole vastuussa laitteesi rikkomisesta tai mistään muusta kun käytät sitä.\n\nLähdekoodi on kaikkien saatavilla Githubista (https://github.com/UweTrottmann/SeriesGuide).</string>
   <string name="accept">Hyväksy</string>
   <string name="decline">Älä hyväksy</string>
   <string name="username">Käyttäjänimi</string>
@@ -201,7 +198,7 @@
   <string name="trakt_credentials_invalid">valtuustiedot eivät kelpaa</string>
   <string name="pref_traktintegrate">Integroi trakt.tv</string>
   <string name="pref_traktintegratesummary">Yleiskatsauksessa katsotuksi merkitseminen jaetaan trakt.tv:ssä</string>
-  <string name="donate">Lahjoita (Paypal)</string>
+  <string name="donate">Buy me a drink (Paypal)</string>
   <string name="feedback">Anna palautetta</string>
   <string name="love">Maailman parasta!</string>
   <string name="hate">Ei sytyttänyt :(</string>
