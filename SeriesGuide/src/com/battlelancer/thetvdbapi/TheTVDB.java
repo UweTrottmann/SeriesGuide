@@ -464,6 +464,7 @@ public class TheTVDB {
         while (shows.moveToNext()) {
             existingShowIds.add(shows.getInt(0));
         }
+        shows.close();
 
         // get existing episode ids
         final Cursor episodes = context.getContentResolver().query(Episodes.CONTENT_URI,
@@ -474,6 +475,7 @@ public class TheTVDB {
         while (episodes.moveToNext()) {
             episodeMap.put(episodes.getString(0), episodes.getString(1));
         }
+        episodes.close();
 
         // parse updatable show ids
         // TODO: look for better data structure (which allows insert=replace)
