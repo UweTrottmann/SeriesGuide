@@ -14,36 +14,39 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<view xmlns:android="http://schemas.android.com/apk/res/android"
-    class="com.actionbarsherlock.internal.widget.ActionBarView$ActionItem"
+<com.actionbarsherlock.internal.view.menu.ActionMenuItemView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="fill_parent"
+    android:addStatesFromChildren="true"
+    android:background="?selectableItemBackground"
+    android:gravity="center"
+    android:minWidth="40dip"
     android:focusable="true"
     android:clickable="true"
     >
     <ImageView
-        android:id="@+id/actionbarwatson_item_icon"
+        android:id="@+id/abs__item_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:gravity="center_vertical"
         />
     <TextView
-        android:id="@+id/actionbarwatson_item_text"
+        android:id="@+id/abs__item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/actionbarwatson_item_icon"
+        android:layout_toRightOf="@id/abs__item_icon"
         android:gravity="center_vertical"
         android:visibility="gone"
         android:textColor="?attr/actionMenuTextColor"
         style="?attr/actionMenuTextAppearance"
         />
     <FrameLayout
-        android:id="@+id/actionbarwatson_item_custom"
+        android:id="@+id/abs__item_custom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:visibility="gone"
         />
-</view>
+</com.actionbarsherlock.internal.view.menu.ActionMenuItemView>
