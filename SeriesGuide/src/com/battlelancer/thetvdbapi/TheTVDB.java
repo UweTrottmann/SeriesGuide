@@ -478,8 +478,7 @@ public class TheTVDB {
         episodes.close();
 
         // parse updatable show ids
-        // TODO: look for better data structure (which allows insert=replace)
-        final ArrayList<String> updatableShowIds = new ArrayList<String>();
+        final HashSet<String> updatableShowIds = new HashSet<String>();
         final RootElement root = new RootElement("Items");
         root.getChild("Series").setEndTextElementListener(new EndTextElementListener() {
             @Override
@@ -493,7 +492,7 @@ public class TheTVDB {
             @Override
             public void end(String body) {
                 String showId = episodeMap.get(body);
-                if (showId != null && !updatableShowIds.contains(showId)) {
+                if (showId != null) {
                     updatableShowIds.add(showId);
                 }
             }
