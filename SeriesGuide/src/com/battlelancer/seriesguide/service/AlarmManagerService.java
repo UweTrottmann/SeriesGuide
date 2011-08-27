@@ -32,7 +32,7 @@ public class AlarmManagerService extends IntentService {
 
         final String[] projection = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.FIRSTAIRED,
-                Shows.TITLE, Shows.AIRSTIME, Shows.NETWORK
+                Shows.TITLE, Shows.AIRSTIME, Shows.NETWORK, Shows.AIRTIME
         };
         final String sortOrder = Episodes.FIRSTAIRED + " ASC," + Shows.AIRSTIME + " ASC,"
                 + Shows.TITLE + " ASC";
@@ -58,9 +58,9 @@ public class AlarmManagerService extends IntentService {
             i.putExtra(Episodes.TITLE, upcomingEpisodes.getString(1));
             i.putExtra(Shows.TITLE, upcomingEpisodes.getString(3));
             i.putExtra(Shows.NETWORK, upcomingEpisodes.getString(5));
-            long airtimeMilliseconds = upcomingEpisodes.getLong(4);
+            String airtimeNonConverted = upcomingEpisodes.getString(6);
             String airtime = SeriesGuideData.parseDateToLocalRelative(
-                    upcomingEpisodes.getString(2), airtimeMilliseconds, this);
+                    upcomingEpisodes.getString(2), airtimeNonConverted, this);
             i.putExtra(Shows.AIRSTIME, airtime);
 
             PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);

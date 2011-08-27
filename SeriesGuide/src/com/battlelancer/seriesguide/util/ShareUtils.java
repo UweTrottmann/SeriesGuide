@@ -362,7 +362,7 @@ public class ShareUtils {
             manager.setApiKey(Constants.TRAKT_API_KEY);
 
             if (isCancelled()) {
-                return "Cancelled";
+                return null;
             }
 
             final int season = mTraktData.getInt(ShareItems.SEASON);

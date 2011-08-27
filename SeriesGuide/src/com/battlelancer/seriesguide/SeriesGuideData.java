@@ -156,44 +156,97 @@ public class SeriesGuideData {
      * timestring and the day shortcode (in this order).
      * 
      * @param tvdbDateString
-     * @param airtime
+     * @param airtimeMs
      * @param ctx
      * @return String array holding timestring and shortcode.
      */
-    public static String parseDateToLocalRelative(String tvdbDateString, long airtime, Context ctx) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-        boolean useUserTimeZone = prefs.getBoolean(SeriesGuidePreferences.KEY_USE_MY_TIMEZONE,
-                false);
-        try {
-            Calendar cal = getLocalCalendar(tvdbDateString, airtime, useUserTimeZone, ctx);
-            Calendar now = Calendar.getInstance();
-            String day = "";
+    public static String parseDateToLocalRelative(String tvdbDateString, String airtime, Context ctx) {
+        Date date;
+        long now;
 
-            // Use midnight to compare if not airing today
-            if (!DateUtils.isToday(cal.getTimeInMillis())) {
-                int dayofweek = cal.get(Calendar.DAY_OF_WEEK);
-                DateFormatSymbols dfs = new DateFormatSymbols();
-                day = " (" + dfs.getShortWeekdays()[dayofweek] + ")";
+        // we have just a date
+        if (airtime.length() == 0) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            dateFormat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
+            Calendar midnight = Calendar.getInstance();
+            midnight.set(Calendar.HOUR_OF_DAY, 0);
+            midnight.set(Calendar.MINUTE, 0);
+            midnight.set(Calendar.SECOND, 0);
+            midnight.set(Calendar.MILLISECOND, 0);
+            now = midnight.getTimeInMillis();
 
-                cal.set(Calendar.HOUR_OF_DAY, 0);
-                cal.set(Calendar.MINUTE, 0);
-                cal.set(Calendar.SECOND, 0);
-                cal.set(Calendar.MILLISECOND, 0);
-                now.set(Calendar.HOUR_OF_DAY, 0);
-                now.set(Calendar.MINUTE, 0);
-                now.set(Calendar.SECOND, 0);
-                now.set(Calendar.MILLISECOND, 0);
+            try {
+                date = dateFormat.parse(tvdbDateString);
+            } catch (ParseException e) {
+                date = null;
             }
-
-            return DateUtils.getRelativeTimeSpanString(cal.getTimeInMillis(),
-                    now.getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL)
-                    .toString()
-                    + day;
-        } catch (ParseException e) {
-            // shouldn't happen, if so there are errors in theTVDB
-            e.printStackTrace();
         }
-        return "";
+        // we have time and date
+        else {
+            SimpleDateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd h:mm aa");
+            SimpleDateFormat datetimeFormat24 = new SimpleDateFormat("yyyy-MM-dd H:mm");
+            datetimeFormat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
+            datetimeFormat24.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
+            String datetime = tvdbDateString + " " + airtime;
+            now = new Date().getTime();
+
+            try {
+                date = datetimeFormat.parse(datetime);
+            } catch (ParseException e) {
+                try {
+                    date = datetimeFormat24.parse(datetime);
+                } catch (ParseException e1) {
+                    date = null;
+                }
+            }
+        }
+
+        if (date != null) {
+            long episodeDatetime = date.getTime();
+
+            return DateUtils.getRelativeTimeSpanString(episodeDatetime, now,
+                    DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
+        } else {
+            return "";
+        }
+
+        // SharedPreferences prefs =
+        // PreferenceManager.getDefaultSharedPreferences(ctx);
+        // boolean useUserTimeZone =
+        // prefs.getBoolean(SeriesGuidePreferences.KEY_USE_MY_TIMEZONE,
+        // false);
+        // try {
+        // Calendar cal = getLocalCalendar(tvdbDateString, airtime,
+        // useUserTimeZone, ctx);
+        // Calendar now = Calendar.getInstance();
+        // String day = "";
+        //
+        // // Use midnight to compare if not airing today
+        // if (!DateUtils.isToday(cal.getTimeInMillis())) {
+        // int dayofweek = cal.get(Calendar.DAY_OF_WEEK);
+        // DateFormatSymbols dfs = new DateFormatSymbols();
+        // day = " (" + dfs.getShortWeekdays()[dayofweek] + ")";
+        //
+        // cal.set(Calendar.HOUR_OF_DAY, 0);
+        // cal.set(Calendar.MINUTE, 0);
+        // cal.set(Calendar.SECOND, 0);
+        // cal.set(Calendar.MILLISECOND, 0);
+        // now.set(Calendar.HOUR_OF_DAY, 0);
+        // now.set(Calendar.MINUTE, 0);
+        // now.set(Calendar.SECOND, 0);
+        // now.set(Calendar.MILLISECOND, 0);
+        // }
+        //
+        // return DateUtils.getRelativeTimeSpanString(cal.getTimeInMillis(),
+        // now.getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS,
+        // DateUtils.FORMAT_ABBREV_ALL)
+        // .toString()
+        // + day;
+        // } catch (ParseException e) {
+        // // shouldn't happen, if so there are errors in theTVDB
+        // e.printStackTrace();
+        // }
+        // return "";
     }
 
     public static String parseDateToLocal(String tvdbDateString, long airtime, Context ctx) {
@@ -278,22 +331,22 @@ public class SeriesGuideData {
     public static final SimpleDateFormat thetvdbTimeFormatNormal = new SimpleDateFormat("H:mm",
             Locale.US);
 
+    /**
+     * Parse a tvdb timestring to milliseconds since since Jan. 1, 1970,
+     * midnight GMT.
+     * 
+     * @param tvdbTimeString
+     * @return
+     */
     public static long parseTimeToMilliseconds(String tvdbTimeString) {
         Date time;
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
         try {
             time = thetvdbTimeFormatAMPM.parse(tvdbTimeString);
-            cal.set(Calendar.HOUR_OF_DAY, time.getHours());
-            cal.set(Calendar.MINUTE, time.getMinutes());
-            cal.set(Calendar.SECOND, 0);
-            return cal.getTimeInMillis();
+            return time.getTime();
         } catch (ParseException e) {
             try {
                 time = thetvdbTimeFormatNormal.parse(tvdbTimeString);
-                cal.set(Calendar.HOUR_OF_DAY, time.getHours());
-                cal.set(Calendar.MINUTE, time.getMinutes());
-                cal.set(Calendar.SECOND, 0);
-                return cal.getTimeInMillis();
+                return time.getTime();
             } catch (ParseException e1) {
                 // string may be empty or wrongly formatted
             }

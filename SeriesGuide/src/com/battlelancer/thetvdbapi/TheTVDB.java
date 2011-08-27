@@ -53,6 +53,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.zip.ZipInputStream;
@@ -261,6 +262,7 @@ public class TheTVDB {
         show.getChild("Airs_Time").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 currentShow.setAirsTime(SeriesGuideData.parseTimeToMilliseconds(body.trim()));
+                currentShow.setAirTime(body.trim());
             }
         });
         show.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
@@ -462,9 +464,21 @@ public class TheTVDB {
         while (shows.moveToNext()) {
             existingShowIds.add(shows.getInt(0));
         }
+        shows.close();
+
+        // get existing episode ids
+        final Cursor episodes = context.getContentResolver().query(Episodes.CONTENT_URI,
+                new String[] {
+                        Episodes._ID, Shows.REF_SHOW_ID
+                }, null, null, null);
+        final HashMap<String, String> episodeMap = new HashMap<String, String>();
+        while (episodes.moveToNext()) {
+            episodeMap.put(episodes.getString(0), episodes.getString(1));
+        }
+        episodes.close();
 
         // parse updatable show ids
-        final ArrayList<String> updatableShowIds = new ArrayList<String>();
+        final HashSet<String> updatableShowIds = new HashSet<String>();
         final RootElement root = new RootElement("Items");
         root.getChild("Series").setEndTextElementListener(new EndTextElementListener() {
             @Override
@@ -474,7 +488,16 @@ public class TheTVDB {
                 }
             }
         });
-        final String url = xmlMirror + "Updates.php?time=" + previousUpdateTime;
+        root.getChild("Episode").setEndTextElementListener(new EndTextElementListener() {
+            @Override
+            public void end(String body) {
+                String showId = episodeMap.get(body);
+                if (showId != null) {
+                    updatableShowIds.add(showId);
+                }
+            }
+        });
+        final String url = xmlMirror + "Updates.php?type=all&time=" + previousUpdateTime;
         HttpUriRequest request = new HttpGet(url);
         HttpClient httpClient = getHttpClient(context);
         execute(request, httpClient, root.getContentHandler(), false);
