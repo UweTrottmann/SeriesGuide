@@ -54,8 +54,8 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -169,13 +169,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
         mAdapter = new SlowAdapter(this, layout, null, from, to, 0);
 
-        AbsListView list = (AbsListView) findViewById(android.R.id.list);
-        if (android.os.Build.VERSION.SDK_INT < 11) {
-            ((ListView) list).setAdapter(mAdapter);
-        } else {
-            // only possible since API level 11 (Honeycomb)
-            list.setAdapter(mAdapter);
-        }
+        GridView list = (GridView) findViewById(android.R.id.list);
+        list.setAdapter(mAdapter);
         list.setFastScrollEnabled(true);
         list.setOnItemClickListener(new OnItemClickListener() {
 
@@ -346,8 +341,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 return new AlertDialog.Builder(this).setTitle(getString(R.string.whatsnew_title))
                         .setIcon(android.R.drawable.ic_dialog_info)
                         .setMessage(getString(R.string.whatsnew_content))
-                        .setPositiveButton(android.R.string.ok, null)
-                        .create();
+                        .setPositiveButton(android.R.string.ok, null).create();
             case BETA_WARNING_DIALOG:
                 /* Used for unstable beta releases */
                 return new AlertDialog.Builder(this)
