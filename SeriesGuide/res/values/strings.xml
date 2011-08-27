@@ -150,7 +150,7 @@
 	<string name="pref_hideimagessummary">Hide SeriesGuide images from your photo gallery (reboot required)</string>
 	<string name="pref_more">More</string>
 	<string name="about">About SeriesGuide</string>
-	<string name="about_message">http://battlelancer.com/seriesguide - developed by Uwe Trottmann.\n\nPlease see the CREDITS link below for all the people and resources that help drive this project.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
+	<string name="about_message">http://seriesguide.uwetrottmann.com - developed by Uwe Trottmann.\n\nPlease see the CREDITS link below for all the people and resources that help drive this project.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
 	
 	<string name="thetvdb_summary">Go there to edit shows and episodes</string>
 	<string name="changelog">Changelog</string>

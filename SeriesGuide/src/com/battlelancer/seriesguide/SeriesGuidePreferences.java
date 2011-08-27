@@ -35,6 +35,16 @@ import android.widget.Toast;
 
 public class SeriesGuidePreferences extends PreferenceActivity {
 
+    private static final String PAYPAL_DONATE_URL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VVBLMQBSBU74L";
+
+    private static final String SUPPORT_MAIL = "seriesguide@battlelancer.com";
+
+    private static final String TRANSLATIONS_URL = "http://crowdin.net/project/seriesguide-translations/invite";
+
+    private static final String THETVDB_URL = "http://www.thetvdb.com";
+
+    private static final String HELP_URL = "http://seriesguide.uwetrottmann.com/help";
+
     public static final String PREF_TRAKTPWD = "com.battlelancer.seriesguide.traktpwd";
 
     public static final String PREF_TRAKTUSER = "com.battlelancer.seriesguide.traktuser";
@@ -119,7 +129,7 @@ public class SeriesGuidePreferences extends PreferenceActivity {
                 fireTrackerEvent("Help");
 
                 Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
-                        .parse("http://code.google.com/p/seriesguide/wiki/Help"));
+                        .parse(HELP_URL));
                 startActivity(myIntent);
                 return true;
             }
@@ -157,7 +167,7 @@ public class SeriesGuidePreferences extends PreferenceActivity {
                 fireTrackerEvent("Go to thetvdb.com");
 
                 Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
-                        .parse("http://www.thetvdb.com"));
+                        .parse(THETVDB_URL));
                 startActivity(myIntent);
                 return true;
             }
@@ -240,7 +250,7 @@ public class SeriesGuidePreferences extends PreferenceActivity {
                 fireTrackerEvent("Help translate");
 
                 Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
-                        .parse("http://crowdin.net/project/seriesguide-translations/invite"));
+                        .parse(TRANSLATIONS_URL));
                 startActivity(myIntent);
                 return true;
             }
@@ -287,7 +297,7 @@ public class SeriesGuidePreferences extends PreferenceActivity {
                 intent.setType("plain/text");
 
                 intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
-                    "seriesguide@battlelancer.com"
+                    SUPPORT_MAIL
                 });
 
                 intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "SeriesGuide Feedback");
@@ -308,7 +318,7 @@ public class SeriesGuidePreferences extends PreferenceActivity {
 
                         Intent myIntent = new Intent(
                                 Intent.ACTION_VIEW,
-                                Uri.parse("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VVBLMQBSBU74L"));
+                                Uri.parse(PAYPAL_DONATE_URL));
                         startActivity(myIntent);
                         return true;
                     }
