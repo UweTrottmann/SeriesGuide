@@ -5,6 +5,7 @@
     android:installLocation="auto"
     android:versionCode="126" android:versionName="2.2dev">
     <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
+    <uses-feature android:required="false" android:name="android.hardware.touchscreen"></uses-feature>
     <application
         android:name="SeriesGuideApplication"
         android:icon="@drawable/icon"
