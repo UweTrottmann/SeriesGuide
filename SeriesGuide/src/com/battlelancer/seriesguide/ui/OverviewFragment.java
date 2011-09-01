@@ -216,6 +216,7 @@ public class OverviewFragment extends Fragment {
 
         // Save imdbId for GetGlue sharing
         mShareData.putString(ShareItems.IMDBID, show.getImdbId());
+        mShareData.putInt(ShareItems.TVDBID, Integer.valueOf(show.getId()));
 
         // Show name
         TextView showname = (TextView) getActivity().findViewById(R.id.seriesname);

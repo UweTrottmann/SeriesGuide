@@ -365,6 +365,7 @@ public class ShareUtils {
                 return null;
             }
 
+            final int tvdbid = mTraktData.getInt(ShareItems.TVDBID);
             final int season = mTraktData.getInt(ShareItems.SEASON);
             final int episode = mTraktData.getInt(ShareItems.EPISODE);
             final TraktAction action = TraktAction.values()[mTraktData
@@ -373,15 +374,13 @@ public class ShareUtils {
             try {
                 switch (action) {
                     case SEEN_EPISODE: {
-                        final String imdbId = mTraktData.getString(ShareItems.IMDBID);
-                        manager.showService().episodeSeen(imdbId).episode(season, episode).fire();
+                        manager.showService().episodeSeen(tvdbid).episode(season, episode).fire();
                         break;
                     }
                     case RATE_EPISODE: {
-                        final int mTvdbId = mTraktData.getInt(ShareItems.TVDBID);
                         final Rating rating = Rating.fromValue(mTraktData
                                 .getString(ShareItems.RATING));
-                        manager.rateService().episode(mTvdbId).season(season).episode(episode)
+                        manager.rateService().episode(tvdbid).season(season).episode(episode)
                                 .rating(rating).fire();
                         break;
                     }
