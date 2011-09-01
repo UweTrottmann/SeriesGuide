@@ -4,6 +4,7 @@
     package="com.battlelancer.seriesguide"
     android:installLocation="auto"
     android:versionCode="126" android:versionName="2.1.1">
+    <uses-feature android:required="false" android:name="android.hardware.touchscreen"></uses-feature>
     <application
         android:name="SeriesGuideApplication"
         android:icon="@drawable/icon"
