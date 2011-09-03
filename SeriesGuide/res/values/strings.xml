@@ -55,14 +55,6 @@
 
 	<!-- SeriesGuide mainscreen -->
 	<string name="hello"><big>Welcome to SeriesGuide</big>\n\nLooks like you have no shows added, yet. Click <b>Add Show</b> in the menu to add some.\n\nOr if you want to <b>restore a backup</b>, open Settings in the menu and look for Backup/Restore.</string>
-	<string name="update_error">Could not update.</string>
-	<string name="update_incomplete1">Could not update</string>
-	<string name="update_incomplete2">.</string>
-	<string name="update_success">Update successfull.</string>
-	<string name="imagedownload_incomplete">Update successfull. Sadly some images did not download. Try again later.</string>
-	<string name="update_inbackground">Updating...</string>
-	<string name="update_inprogress">There is an update in progress. Wait for it to complete, then try again.</string>
-	<string name="update_nosdcard">Could not update. There is no external storage or SD card available.</string>
 	<string name="confirm_delete">Do you really want to remove that show?</string>
 	<string name="delete_show">Remove</string>
 	<string name="dontdelete_show">Don\'t remove</string>
@@ -72,6 +64,18 @@
     <string name="context_unfavorite">Remove from favorites</string>
     <string name="favorited">Added to favorites</string>
     <string name="unfavorited">Removed from favorites</string>
+    
+    <!-- Updating -->
+    <string name="update_delta">Looking for updated shows...</string>
+    <string name="update_full">Refreshing all shows...</string>
+    <string name="update_error">Could not update.</string>
+    <string name="update_incomplete1">Could not update</string>
+    <string name="update_incomplete2">.</string>
+    <string name="update_success">Update successfull.</string>
+    <string name="imagedownload_incomplete">Update successfull. Sadly some images did not download. Try again later.</string>
+    <string name="update_inbackground">Updating...</string>
+    <string name="update_inprogress">There is an update in progress. Wait for it to complete, then try again.</string>
+    <string name="update_nosdcard">Could not update. There is no external storage or SD card available.</string>
 
 	<!-- Show info -->
 	<string name="show_airs">airs</string>

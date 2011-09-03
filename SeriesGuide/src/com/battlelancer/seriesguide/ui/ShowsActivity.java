@@ -593,21 +593,24 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     }
 
     private void performUpdateTask(boolean isFullUpdate, String showId) {
-        Toast.makeText(this, getString(R.string.update_inbackground), Toast.LENGTH_SHORT).show();
-
+        int messageId;
         if (isFullUpdate) {
+            messageId = R.string.update_full;
             mUpdateTask = (UpdateTask) new UpdateTask(true, this).execute();
         } else {
             if (showId == null) {
                 // (delta) update all shows
+                messageId = R.string.update_delta;
                 mUpdateTask = (UpdateTask) new UpdateTask(false, this).execute();
             } else {
                 // update a single show
+                messageId = R.string.update_inbackground;
                 mUpdateTask = (UpdateTask) new UpdateTask(new String[] {
                     showId
                 }, 0, "", this).execute();
             }
         }
+        Toast.makeText(this, getString(messageId), Toast.LENGTH_SHORT).show();
     }
 
     /**

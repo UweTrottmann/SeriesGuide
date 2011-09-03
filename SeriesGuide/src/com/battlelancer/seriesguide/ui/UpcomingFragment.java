@@ -28,7 +28,9 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class UpcomingFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -191,8 +193,10 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        SimpleDateFormat pdtformat = SeriesGuideData.theTVDBDateFormat;
+        pdtformat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
         final Date date = new Date();
-        final String today = SeriesGuideData.theTVDBDateFormat.format(date);
+        final String today = pdtformat.format(date);
         final String query = getArguments().getString("query");
         final String sortOrder = getArguments().getString("sortorder");
         return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,

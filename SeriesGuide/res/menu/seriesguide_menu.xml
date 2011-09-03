@@ -32,7 +32,7 @@
         android:icon="@drawable/ic_action_image" />
     <item
         android:id="@+id/menu_fullupdate"
-        android:title="@string/fullupdate"
+        android:title="@string/updateall_yes"
         android:icon="@drawable/ic_action_refresh" />
     <item
         android:id="@+id/menu_preferences"

@@ -43,12 +43,17 @@ public class SeriesContract {
         String TITLE = "seriestitle";
 
         String IMDBID = "imdbid";
-        
+
         String FAVORITE = "series_favorite";
-        
+
         String NEXTAIRDATETEXT = "series_nextairdatetext";
-        
+
         String SYNCENABLED = "series_syncenabled";
+
+        /**
+         * Added in db version 21 to store the airtime in pure text.
+         */
+        String AIRTIME = "series_airtime";
     }
 
     interface SeasonsColumns {
@@ -64,7 +69,7 @@ public class SeriesContract {
         String NOAIRDATECOUNT = "noairdatecount";
 
         String COMBINED = "combinednr";
-        
+
         String TOTALCOUNT = "season_totalcount";
     }
 
