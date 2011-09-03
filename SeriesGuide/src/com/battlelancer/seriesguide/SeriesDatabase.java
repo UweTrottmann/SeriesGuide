@@ -21,11 +21,9 @@ import android.net.Uri;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.TimeZone;
 
 public class SeriesDatabase {
 
@@ -104,21 +102,37 @@ public class SeriesDatabase {
      *         airtime and posterpath.
      */
     public static Cursor getUpcomingEpisodes(Context context) {
-        SimpleDateFormat pdtformat = SeriesGuideData.theTVDBDateFormat;
-        pdtformat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
-        final Date date = new Date();
-        final String today = pdtformat.format(date);
+        Date date = new Date();
+        String today = SeriesGuideData.theTVDBDateFormat.format(date);
 
         String[] projection = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
                 Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIRED, Shows.TITLE, Shows.AIRSTIME,
-                Shows.AIRTIME, Shows.NETWORK, Shows.POSTER
+                Shows.NETWORK, Shows.POSTER
         };
         String sortOrder = Episodes.FIRSTAIRED + " ASC," + Shows.AIRSTIME + " ASC," + Shows.TITLE
                 + " ASC";
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW, projection,
                 Episodes.FIRSTAIRED + ">=?", new String[] {
+                    today
+                }, sortOrder);
+    }
+
+    public static Cursor getRecentEpisodes(Context context) {
+        Date date = new Date();
+        String today = SeriesGuideData.theTVDBDateFormat.format(date);
+
+        String[] projection = new String[] {
+                Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
+                Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIRED, Shows.TITLE, Shows.AIRSTIME,
+                Shows.NETWORK, Shows.POSTER
+        };
+        String sortOrder = Episodes.FIRSTAIRED + " DESC," + Shows.AIRSTIME + " ASC," + Shows.TITLE
+                + " ASC";
+
+        return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW, projection,
+                Episodes.FIRSTAIRED + "<?", new String[] {
                     today
                 }, sortOrder);
     }
@@ -191,7 +205,6 @@ public class SeriesDatabase {
             show.setAirsDayOfWeek(details.getString(details
                     .getColumnIndexOrThrow(Shows.AIRSDAYOFWEEK)));
             show.setAirsTime(details.getLong(details.getColumnIndexOrThrow(Shows.AIRSTIME)));
-            show.setAirTime(details.getString(details.getColumnIndexOrThrow(Shows.AIRTIME)));
             show.setContentRating(details.getString(details
                     .getColumnIndexOrThrow(Shows.CONTENTRATING)));
             show.setFirstAired(details.getString(details.getColumnIndexOrThrow(Shows.FIRSTAIRED)));
@@ -460,7 +473,7 @@ public class SeriesDatabase {
                 final Series show = getShow(context, id);
                 if (show != null) {
                     nextAirdateString += SeriesGuideData.parseDateToLocalRelative(firstAired,
-                            show.getAirTime(), context);
+                            show.getAirsTime(), context);
                 }
             }
 
