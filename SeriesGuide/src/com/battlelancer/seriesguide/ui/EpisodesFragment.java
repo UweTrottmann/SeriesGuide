@@ -129,7 +129,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
                     String fieldValue = cursor.getString(EpisodesQuery.FIRSTAIRED);
                     if (fieldValue.length() != 0) {
                         tv.setText(SeriesGuideData.parseDateToLocalRelative(fieldValue,
-                                cursor.getString(EpisodesQuery.SHOW_AIRTIME), getActivity()));
+                                cursor.getLong(EpisodesQuery.SHOW_AIRSTIME), getActivity()));
                     } else {
                         tv.setText(getString(R.string.episode_firstaired) + " "
                                 + getString(R.string.episode_unkownairdate));
@@ -319,8 +319,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
     interface EpisodesQuery {
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.WATCHED, Episodes.TITLE,
-                Episodes.NUMBER, Episodes.FIRSTAIRED, Episodes.DVDNUMBER, Shows.AIRSTIME,
-                Shows.AIRTIME
+                Episodes.NUMBER, Episodes.FIRSTAIRED, Episodes.DVDNUMBER, Shows.AIRSTIME
         };
 
         int _ID = 0;
@@ -336,8 +335,6 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
         int DVDNUMBER = 5;
 
         int SHOW_AIRSTIME = 6;
-
-        int SHOW_AIRTIME = 7;
     }
 
     public static class SortDialogFragment extends DialogFragment {
