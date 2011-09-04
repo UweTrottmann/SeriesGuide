@@ -4,7 +4,7 @@ Change Log
 Version 2.1.2beta *(in development)*
 --------------------------------
 
-* Revert some time calc code that accidentially slipped into the last beta
+* Please do an 'Update All' because of: Revert some time calc code that accidentially slipped into the last beta
 * Better user communication when doing delta and full update (now called 'Update All')
 * Use TVDB id instead of IMDb id to mark episodes as seen on trakt
 * Don't require a touchscreen to use SeriesGuide (upcoming Google TV support)
