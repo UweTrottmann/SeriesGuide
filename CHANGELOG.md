@@ -1,10 +1,22 @@
 ---
-layout: wikistyle
+layout: default
 title: Changelog
 ---
 
 Change Log (Stable channel)
 ===========================
+
+Version 2.1.1 (04.09.2011)
+------------------------
+
+* Better user communication when doing delta and full update (now called 'Update All')
+* Use TVDB id instead of IMDb id to mark episodes as seen on trakt
+* Don't require a touchscreen to use SeriesGuide (upcoming Google TV support)
+* Always use a GridLayout for the show list.
+* Tidy up settings.
+* Change URLs to new webiste.
+* Improvements for DeltaUpdate.
+* Latest translations.
 
 Version 2.1 (13.08.2011)
 ------------------------
