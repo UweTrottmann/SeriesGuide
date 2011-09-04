@@ -9,7 +9,7 @@ Version 2.1.1 (04.09.2011)
 * Don't require a touchscreen to use SeriesGuide (upcoming Google TV support)
 * Always use a GridLayout for the show list.
 * Tidy up settings.
-* Change URLs to new webiste.
+* Change URLs to new website.
 * Improvements for DeltaUpdate.
 * Latest translations.
 
