@@ -13,6 +13,7 @@
   <string name="ioerror">Houve um erro de rede. Você pode ter acesso limitado ao TheTVDB.com em sua conexão atual. Tente novamente mais tarde.</string>
   <string name="saxerror">A resposta do TheTVDB não foi entendida. Por favor, tente novamente mais tarde.</string>
   <string name="offline">Não foi encontrada nenhuma conexão ativa com a internet. Por favor, verifique se você está conectado e tente novamente.</string>
+  <string name="whatsnew_title">What\'s new</string>
   <string name="search_hint">Procurar episódios</string>
   <string name="search_title">Comparando episódios</string>
   <string name="share_episode">Compartilhar episódio</string>
@@ -34,7 +35,6 @@
   <string name="sort">Ordenar por</string>
   <string name="menu_updateart">Obter Imagens ausentes</string>
   <string name="updateall_yes">Atualizar todos</string>
-  <string name="fullupdate">Full Update</string>
   <string name="context_updateshow">Atualizar</string>
   <string name="context_showinfo">Mostrar informações</string>
   <string name="context_marknext">Próximo episódio já assistido</string>
@@ -44,14 +44,6 @@
   <string name="mark_all">Todos assistidos</string>
   <string name="unmark_all">Nenhum assistido</string>
   <string name="hello"><big>Bem-vindo ao SeriesGuide</big>\n\nLooks como você não acrescentou séries, ainda. Clique em <b>Adicionar Série</b> no menu para adicionar.\n\n Ou se você quiser <b>restaurar um backup,</b> abra as Configurações no menu e procurar Backup / Restore.</string>
-  <string name="update_error">Não foi possível atualizar.</string>
-  <string name="update_incomplete1">Não foi possível atualizar</string>
-  <string name="update_incomplete2">.</string>
-  <string name="update_success">Atualização bem sucedida.</string>
-  <string name="imagedownload_incomplete">Atualização bem sucedida. Infelizmente algumas imagens não puderam ser recebidas. Tente novamente mais tarde.</string>
-  <string name="update_inbackground">Atualizando ...</string>
-  <string name="update_inprogress">Existe uma atualização em andamento. Aguarde a conclusão para tentar novamente.</string>
-  <string name="update_nosdcard">Não foi possível atualizar. Não há nenhum armazenamento externo ou cartão SD disponíveis.</string>
   <string name="confirm_delete">Deseja realmente remover essa série?</string>
   <string name="delete_show">Remover</string>
   <string name="dontdelete_show">Não remover</string>
@@ -61,6 +53,16 @@
   <string name="context_unfavorite">Remove from favorites</string>
   <string name="favorited">Added to favorites</string>
   <string name="unfavorited">Removed from favorites</string>
+  <string name="update_delta">Looking for updated shows...</string>
+  <string name="update_full">Refreshing all shows...</string>
+  <string name="update_error">Não foi possível atualizar.</string>
+  <string name="update_incomplete1">Não foi possível atualizar</string>
+  <string name="update_incomplete2">.</string>
+  <string name="update_success">Atualização bem sucedida.</string>
+  <string name="imagedownload_incomplete">Atualização bem sucedida. Infelizmente algumas imagens não puderam ser recebidas. Tente novamente mais tarde.</string>
+  <string name="update_inbackground">Atualizando ...</string>
+  <string name="update_inprogress">Existe uma atualização em andamento. Aguarde a conclusão para tentar novamente.</string>
+  <string name="update_nosdcard">Não foi possível atualizar. Não há nenhum armazenamento externo ou cartão SD disponíveis.</string>
   <string name="show_airs">estréia</string>
   <string name="show_network">sim</string>
   <string name="show_pleaseupdate">Tente atualizar esta série para mostrar mais informações (na visão geral, pressione longamente sobre ele e selecione Atualizar). Se isto não ajudar, talvez não haja mais informações no TheTVDB. Vá para o site (www.thetvdb.com) para aprender como adicionar alguma.</string>

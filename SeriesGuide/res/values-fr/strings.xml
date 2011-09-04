@@ -13,6 +13,7 @@
   <string name="ioerror">Il y avait une erreur de réseau. Vous pouvez avoir un accès limité à TheTVDB.com à l\'heure actuelle. Veuillez réessayer plus tard.</string>
   <string name="saxerror">La réponse de TheTVDB n\'a pas été comprise. Veuillez réessayer plus tard.</string>
   <string name="offline">Il n\'y a pas de connexion active à Internet signalée. S\'il vous plaît assurez-vous que vous êtes connecté à Internet et essayez à nouveau.</string>
+  <string name="whatsnew_title">What\'s new</string>
   <string name="search_hint">Recherche d\'épisodes</string>
   <string name="search_title">Correspondance des épisodes</string>
   <string name="share_episode">Partager épisode</string>
@@ -34,7 +35,6 @@
   <string name="sort">Trié par</string>
   <string name="menu_updateart">Obtenez les affiches manquantes</string>
   <string name="updateall_yes">Tout mettre à jour</string>
-  <string name="fullupdate">Mise à jour complète</string>
   <string name="context_updateshow">Mise à jour</string>
   <string name="context_showinfo">Afficher les infos</string>
   <string name="context_marknext">Consulté prochain épisode</string>
@@ -44,14 +44,6 @@
   <string name="mark_all">Tous regardé</string>
   <string name="unmark_all">aucun de vu</string>
   <string name="hello"><big>Welcome to SeriesGuide</big>\n\nLooks like you have no shows added, yet. Click <b>Add Show</b> in the menu to add some.\n\nOr if you want to <b>restore a backup</b>, open Settings in the menu and look for Backup/Restore.</string>
-  <string name="update_error">Impossible de mettre à jour.</string>
-  <string name="update_incomplete1">Impossible de mettre à jour</string>
-  <string name="update_incomplete2">.</string>
-  <string name="update_success">Mise à jour réussie.</string>
-  <string name="imagedownload_incomplete">Mise à jour réussie. Malheureusement, certaines images n\'ont pas été téléchargées. Veuillez réessayer plus tard.</string>
-  <string name="update_inbackground">Mise à jour ...</string>
-  <string name="update_inprogress">Il ya une mise à jour en cours. Attendez qu\'elle soit terminée, puis essayez à nouveau.</string>
-  <string name="update_nosdcard">Impossible de mettre à jour. Il n\'y a pas de stockage externe ou votre carte SD disponible.</string>
   <string name="confirm_delete">Voulez-vous vraiment supprimer cette série?</string>
   <string name="delete_show">Supprimer</string>
   <string name="dontdelete_show">Ne pas supprimer</string>
@@ -61,6 +53,16 @@
   <string name="context_unfavorite">Supprimer des favoris</string>
   <string name="favorited">Ajouté aux favoris</string>
   <string name="unfavorited">Supprimé des favoris</string>
+  <string name="update_delta">Looking for updated shows...</string>
+  <string name="update_full">Refreshing all shows...</string>
+  <string name="update_error">Impossible de mettre à jour.</string>
+  <string name="update_incomplete1">Impossible de mettre à jour</string>
+  <string name="update_incomplete2">.</string>
+  <string name="update_success">Mise à jour réussie.</string>
+  <string name="imagedownload_incomplete">Mise à jour réussie. Malheureusement, certaines images n\'ont pas été téléchargées. Veuillez réessayer plus tard.</string>
+  <string name="update_inbackground">Mise à jour ...</string>
+  <string name="update_inprogress">Il ya une mise à jour en cours. Attendez qu\'elle soit terminée, puis essayez à nouveau.</string>
+  <string name="update_nosdcard">Impossible de mettre à jour. Il n\'y a pas de stockage externe ou votre carte SD disponible.</string>
   <string name="show_airs">Diffusions</string>
   <string name="show_network">sur</string>
   <string name="show_pleaseupdate">Essayez de mettre à jour cette série pour afficher plus d\'informations (dans l\'aperçu, pression longue sur la série, sélectionnez Mise à jour). Si ca ne vous aide pas, il n\'y a probablement pas plus d\'informations sur TheTVDB. Allez sur leur site (www.thetvdb.com) pour apprendre à ajouter des éléments.</string>

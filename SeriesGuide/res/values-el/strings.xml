@@ -13,6 +13,7 @@
   <string name="ioerror">Υπήρξε ένα σφάλμα δικτύου. Ενδεχομένως υπάρχει περιορισμένη πρόσβαση στο TheTVDB.com από τη σύνδεσή σας αυτή τη στιγμή. Προσπαθήστε ξανά αργότερα.</string>
   <string name="saxerror">Η απόκριση από το TheTVDB δεν είναι κατανοητή. Παρακαλώ δοκιμάστε αργότερα.</string>
   <string name="offline">Δεν υπάρχει ενεργή σύνδεση στο διαδίκτυο. Παρακαλώ βεβαιωθείτε ότι είστε συνδεδεμένοι στο διαδίκτυο και προσπαθήστε πάλι.</string>
+  <string name="whatsnew_title">What\'s new</string>
   <string name="search_hint">Αναζήτηση επεισοδίων</string>
   <string name="search_title">Επεισόδια που ταιριάζουν</string>
   <string name="share_episode">Κοινή χρήση επεισοδίου</string>
@@ -34,7 +35,6 @@
   <string name="sort">Ταξινόμηση κατά</string>
   <string name="menu_updateart">Κάνε λήψη των αφισών που λείπουν</string>
   <string name="updateall_yes">Επεισόδια που ταιριάζουν</string>
-  <string name="fullupdate">Full Update</string>
   <string name="context_updateshow">Ενημέρωση</string>
   <string name="context_showinfo">Εμφάνιση πληροφοριών</string>
   <string name="context_marknext">Το επόμενο επεισόδιο έχει παρακολουθηθεί</string>
@@ -44,14 +44,6 @@
   <string name="mark_all">Έχουν παρακολουθηθεί όλα</string>
   <string name="unmark_all">Δεν έχει παρακολουθηθεί κανένα</string>
   <string name="hello"><big>Welcome to SeriesGuide</big>\n\nLooks like you have no shows added, yet. Click <b>Add Show</b> in the menu to add some.\n\nOr if you want to <b>restore a backup</b>, open Settings in the menu and look for Backup/Restore.</string>
-  <string name="update_error">Δεν ήταν δυνατή η ενημέρωση.</string>
-  <string name="update_incomplete1">Δεν ήταν δυνατή η ενημέρωση</string>
-  <string name="update_incomplete2">.</string>
-  <string name="update_success">Επιτυχής ενημέρωση.</string>
-  <string name="imagedownload_incomplete">Ενημέρωση επιτυχής. Δυστυχώς κάποιες εικόνες δεν μεταφορτώθηκαν. Προσπαθήστε ξανά αργότερα.</string>
-  <string name="update_inbackground">Ενημέρωση ...</string>
-  <string name="update_inprogress">Υπάρχει μια ενημέρωση σε εξέλιξη. Περιμένετε να ολοκληρωθεί και στη συνέχεια προσπαθήστε ξανά.</string>
-  <string name="update_nosdcard">Δεν ήταν δυνατή η ενημέρωση. Δεν υπάρχει καμία εξωτερική συσκευή αποθήκευσης ή κάρτα SD διαθέσιμη.</string>
   <string name="confirm_delete">Θέλετε πραγματικά να καταργήσετε αυτήν τη σειρά;</string>
   <string name="delete_show">Αφαίρεση</string>
   <string name="dontdelete_show">Να μην αφαιρεθεί</string>
@@ -61,6 +53,16 @@
   <string name="context_unfavorite">Remove from favorites</string>
   <string name="favorited">Added to favorites</string>
   <string name="unfavorited">Removed from favorites</string>
+  <string name="update_delta">Looking for updated shows...</string>
+  <string name="update_full">Refreshing all shows...</string>
+  <string name="update_error">Δεν ήταν δυνατή η ενημέρωση.</string>
+  <string name="update_incomplete1">Δεν ήταν δυνατή η ενημέρωση</string>
+  <string name="update_incomplete2">.</string>
+  <string name="update_success">Επιτυχής ενημέρωση.</string>
+  <string name="imagedownload_incomplete">Ενημέρωση επιτυχής. Δυστυχώς κάποιες εικόνες δεν μεταφορτώθηκαν. Προσπαθήστε ξανά αργότερα.</string>
+  <string name="update_inbackground">Ενημέρωση ...</string>
+  <string name="update_inprogress">Υπάρχει μια ενημέρωση σε εξέλιξη. Περιμένετε να ολοκληρωθεί και στη συνέχεια προσπαθήστε ξανά.</string>
+  <string name="update_nosdcard">Δεν ήταν δυνατή η ενημέρωση. Δεν υπάρχει καμία εξωτερική συσκευή αποθήκευσης ή κάρτα SD διαθέσιμη.</string>
   <string name="show_airs">Προβάλλεται την</string>
   <string name="show_network">Στο</string>
   <string name="show_pleaseupdate">Προσπαθήστε να ενημερώσετε αυτήν την σειρά για να εμφανιστούν περισσότερες πληροφορίες (στην επισκόπηση, πατήστε και κρατήστε την, επιλέξτε Ενημέρωση). Εάν αυτό δεν βοηθήσει, είναι πιθανό να μην υπάρχουν πρόσθετες πληροφορίες στο TheTVDB. Πήγαινε στο site (www.thetvdb.com) για να μάθετε πώς μπορείτε να προσθέσετε μερικές.</string>

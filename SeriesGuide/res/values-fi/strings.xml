@@ -13,6 +13,7 @@
   <string name="ioerror">Tapahtui verkkovirhe. Sinulla sattaa olla rajoitettu pääsy kohteeseen TheTVDB.com yhteydelläsi tällä hetkellä. Yritä myöhemmin uudestaan.</string>
   <string name="saxerror">TheTVDB:n vastausta ei ymmärretty. Yritä myöhemmin uudestaan.</string>
   <string name="offline">Käytössä ei ole aktiivista yhteyttä internetiin. Tarkista yhteytesi internetiin ja yritä uudestaan.</string>
+  <string name="whatsnew_title">What\'s new</string>
   <string name="search_hint">Hae jaksoja</string>
   <string name="search_title">Löytyneet jaksot</string>
   <string name="share_episode">Jaa jakso</string>
@@ -34,7 +35,6 @@
   <string name="sort">Lajittele</string>
   <string name="menu_updateart">Nouda puuttuvat julisteet</string>
   <string name="updateall_yes">Päivitä kaikki</string>
-  <string name="fullupdate">Täysi päivitys</string>
   <string name="context_updateshow">Päivitä</string>
   <string name="context_showinfo">Näytä tiedot</string>
   <string name="context_marknext">Seuraava jakso katsottu</string>
@@ -44,14 +44,6 @@
   <string name="mark_all">Kaikki katsottu</string>
   <string name="unmark_all">Kaikki katsomattomia</string>
   <string name="hello"><big>Tervetuloa SeriesGuideen</big>\n\nEt ole näkjöään lisännyt yhtäkään ohjelmaa, vielä. Napsauta valikossa <b>Lisää ohjelma</b> lisätäksesi joitakin.\n\nTai jos haluat <b>palauttaa varmuuskopion</b>, avaa valikossa Asetukset ja etsi kohta Varmuuskopioi/Palauta.</string>
-  <string name="update_error">Ei voitu päivittää.</string>
-  <string name="update_incomplete1">Ei voitu päivittää</string>
-  <string name="update_incomplete2">.</string>
-  <string name="update_success">Päivitetty onnistuneesti.</string>
-  <string name="imagedownload_incomplete">Päivitetty onnistuneesti. Valitettavasti jotkut kuvat eivät lataantuneet. Yritä myöhemmin uudestaan.</string>
-  <string name="update_inbackground">Päivitetään...</string>
-  <string name="update_inprogress">Päivitys käynnissä. Odota sen päättymistä ja yritä sitten uudestaan.</string>
-  <string name="update_nosdcard">Ei voitu päivittää. Ulkoista muistia tai SD-korttia ei ole saatavilla.</string>
   <string name="confirm_delete">Haluatko varmasti poistää tämän ohjelman?</string>
   <string name="delete_show">Poista</string>
   <string name="dontdelete_show">Älä poista</string>
@@ -61,6 +53,16 @@
   <string name="context_unfavorite">Poista suosikeista</string>
   <string name="favorited">Lisätty suosikkeihin</string>
   <string name="unfavorited">Poistettu suosikeista</string>
+  <string name="update_delta">Looking for updated shows...</string>
+  <string name="update_full">Refreshing all shows...</string>
+  <string name="update_error">Ei voitu päivittää.</string>
+  <string name="update_incomplete1">Ei voitu päivittää</string>
+  <string name="update_incomplete2">.</string>
+  <string name="update_success">Päivitetty onnistuneesti.</string>
+  <string name="imagedownload_incomplete">Päivitetty onnistuneesti. Valitettavasti jotkut kuvat eivät lataantuneet. Yritä myöhemmin uudestaan.</string>
+  <string name="update_inbackground">Päivitetään...</string>
+  <string name="update_inprogress">Päivitys käynnissä. Odota sen päättymistä ja yritä sitten uudestaan.</string>
+  <string name="update_nosdcard">Ei voitu päivittää. Ulkoista muistia tai SD-korttia ei ole saatavilla.</string>
   <string name="show_airs">esitetään</string>
   <string name="show_network">kanavalla</string>
   <string name="show_pleaseupdate">Yritä päivittää tämä ohjelma nähdäksesi enemmän tietoja (päänäkymässä paina ohjelmaa pitkään ja valitse valikosta Päivitä) Jos tämä ei auta, TheTVDB:ssä ei luultavasti ole tarjolla enempää tietoja. Mene heidän sivustolleen (www.thetvdb.com) ja opi, kuinka voit itse lisätä tietoja.</string>
@@ -116,7 +118,7 @@
   <string name="help_summary">Mene apusivulle</string>
   <string name="backup">Varmuuskopioi/Palauta</string>
   <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
-  <string name="pref_advanced">Advanced</string>
+  <string name="pref_advanced">Lisäasetukset</string>
   <string name="clear_cache">Tyhjennä kuvamuistit</string>
   <string name="clear_cache_summary">Poista kaikki kuvat välimuistista ja SD-kortilta. Ohjelmien päivittäminen lataa ne uudelleen.</string>
   <string name="pref_ganalytics">Google Analytics</string>
@@ -198,7 +200,7 @@
   <string name="trakt_credentials_invalid">valtuustiedot eivät kelpaa</string>
   <string name="pref_traktintegrate">Integroi trakt.tv</string>
   <string name="pref_traktintegratesummary">Yleiskatsauksessa katsotuksi merkitseminen jaetaan trakt.tv:ssä</string>
-  <string name="donate">Buy me a drink (Paypal)</string>
+  <string name="donate">Osta minulle drinkki (Paypal)</string>
   <string name="feedback">Anna palautetta</string>
   <string name="love">Maailman parasta!</string>
   <string name="hate">Ei sytyttänyt :(</string>

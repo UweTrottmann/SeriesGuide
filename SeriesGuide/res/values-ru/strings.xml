@@ -13,6 +13,7 @@
   <string name="ioerror">Произошла ошибка сети. Вероятно ваш доступ к TheTVDB.com в настоящее время ограничен. Попробуйте позже.</string>
   <string name="saxerror">Ответ от TheTVDB не распознан. Пожалуйста, попробуйте еще раз позже.</string>
   <string name="offline">Отсутствует активное соединение с интернетом. Пожалуйста убедитесь что вы подключены к интернету и попробуйте еще раз.</string>
+  <string name="whatsnew_title">What\'s new</string>
   <string name="search_hint">Поиск эпизодов</string>
   <string name="search_title">Сопоставление эпизодов</string>
   <string name="share_episode">Поделиться эпизодом</string>
@@ -34,7 +35,6 @@
   <string name="sort">Сортировать по</string>
   <string name="menu_updateart">Получить отсутствующие серии</string>
   <string name="updateall_yes">Обновить все</string>
-  <string name="fullupdate">Full Update</string>
   <string name="context_updateshow">Обновить</string>
   <string name="context_showinfo">Показать информацию</string>
   <string name="context_marknext">См. следующий эпизод</string>
@@ -44,14 +44,6 @@
   <string name="mark_all">Видел всё</string>
   <string name="unmark_all">Не видел ни одного</string>
   <string name="hello"><big>Welcome to SeriesGuide</big>\n\nLooks like you have no shows added, yet. Click <b>Add Show</b> in the menu to add some.\n\nOr if you want to <b>restore a backup</b>, open Settings in the menu and look for Backup/Restore.</string>
-  <string name="update_error">Не удалось обновить.</string>
-  <string name="update_incomplete1">Не удалось обновить</string>
-  <string name="update_incomplete2">.</string>
-  <string name="update_success">Обновление успешно.</string>
-  <string name="imagedownload_incomplete">Обновление успешно. К сожалению некоторые изображения не были загружены. Попробуйте еще раз позже.</string>
-  <string name="update_inbackground">Обновление ...</string>
-  <string name="update_inprogress">Идет процесс обновления. Дождитесь его завершения, а затем повторите попытку.</string>
-  <string name="update_nosdcard">Не удалось обновить. Нет внешнего накопителя или SD-карты.</string>
   <string name="confirm_delete">Вы действительно хотите удалить это шоу?</string>
   <string name="delete_show">Удалить</string>
   <string name="dontdelete_show">Не удалять</string>
@@ -61,6 +53,16 @@
   <string name="context_unfavorite">Удалить из избранного</string>
   <string name="favorited">Added to favorites</string>
   <string name="unfavorited">Удалено из избранного</string>
+  <string name="update_delta">Looking for updated shows...</string>
+  <string name="update_full">Refreshing all shows...</string>
+  <string name="update_error">Не удалось обновить.</string>
+  <string name="update_incomplete1">Не удалось обновить</string>
+  <string name="update_incomplete2">.</string>
+  <string name="update_success">Обновление успешно.</string>
+  <string name="imagedownload_incomplete">Обновление успешно. К сожалению некоторые изображения не были загружены. Попробуйте еще раз позже.</string>
+  <string name="update_inbackground">Обновление ...</string>
+  <string name="update_inprogress">Идет процесс обновления. Дождитесь его завершения, а затем повторите попытку.</string>
+  <string name="update_nosdcard">Не удалось обновить. Нет внешнего накопителя или SD-карты.</string>
   <string name="show_airs">в эфире</string>
   <string name="show_network">включено</string>
   <string name="show_pleaseupdate">Попробуйте получить больше информации о сериале (Долгое нажатие по названию сериала в общем списке -> Обновить). Если это не помогает, значит информация отсутствует на сайте TheTVDB. Посетите сайт www.thetvdb.com и узнайте как добавить информацию.</string>

@@ -13,6 +13,7 @@
   <string name="ioerror">Ocurrió un error de conexión. Usted pudiera tener acceso limitado desde su conexión a TheTVDB.com. Intente más tarde.</string>
   <string name="saxerror">La respuesta de TheTVDB no se pudo procesar.</string>
   <string name="offline">No hay conexión a Internet reportada. Por favor asegurese de que esté conectado a Internet e de nuevo intente más tarde.</string>
+  <string name="whatsnew_title">What\'s new</string>
   <string name="search_hint">Buscar episodios</string>
   <string name="search_title">Episodios coincidentes</string>
   <string name="share_episode">Compartir episodio</string>
@@ -34,7 +35,6 @@
   <string name="sort">Ordenar por</string>
   <string name="menu_updateart">Get Missing Posters</string>
   <string name="updateall_yes">Actualizar todo</string>
-  <string name="fullupdate">Full Update</string>
   <string name="context_updateshow">Actualizar</string>
   <string name="context_showinfo">Mostrar información</string>
   <string name="context_marknext">Siguiente episodio visto</string>
@@ -44,14 +44,6 @@
   <string name="mark_all">Todos vistos</string>
   <string name="unmark_all">Ninguno visto</string>
   <string name="hello"><big>Bienvenido a SeriesGuide</big>\n\nNo ha añadido series todavía. Pulse <b>Añadir Serie</b> en el menú para añadirlas.\n\nO si quiere <b>restaurar una copia de seguridad</b>, abra Configuración en el menú y busque Respaldar/Restaurar.</string>
-  <string name="update_error">No se pudo actualizar.</string>
-  <string name="update_incomplete1">No se pudo actualizar</string>
-  <string name="update_incomplete2">.</string>
-  <string name="update_success">Actualización exitosa.</string>
-  <string name="imagedownload_incomplete">Actualización exitosa. Lamentablemente algunas imágenes no se pudieron descargar. Intente de nuevo más tarde.</string>
-  <string name="update_inbackground">Actualizando...</string>
-  <string name="update_inprogress">Hay una actualización en curso. Espere a que finalice y después vuelva a intentarlo.</string>
-  <string name="update_nosdcard">No se pudo actualizar. No hay almacenamiento externo o no hay espacio suficiente en la tarjeta SD.</string>
   <string name="confirm_delete">¿Estás seguro que quieres eliminar ese programa?</string>
   <string name="delete_show">Eliminar</string>
   <string name="dontdelete_show">No eliminar</string>
@@ -61,6 +53,16 @@
   <string name="context_unfavorite">Quitar de favoritos</string>
   <string name="favorited">Added to favorites</string>
   <string name="unfavorited">Removed from favorites</string>
+  <string name="update_delta">Looking for updated shows...</string>
+  <string name="update_full">Refreshing all shows...</string>
+  <string name="update_error">No se pudo actualizar.</string>
+  <string name="update_incomplete1">No se pudo actualizar</string>
+  <string name="update_incomplete2">.</string>
+  <string name="update_success">Actualización exitosa.</string>
+  <string name="imagedownload_incomplete">Actualización exitosa. Lamentablemente algunas imágenes no se pudieron descargar. Intente de nuevo más tarde.</string>
+  <string name="update_inbackground">Actualizando...</string>
+  <string name="update_inprogress">Hay una actualización en curso. Espere a que finalice y después vuelva a intentarlo.</string>
+  <string name="update_nosdcard">No se pudo actualizar. No hay almacenamiento externo o no hay espacio suficiente en la tarjeta SD.</string>
   <string name="show_airs">sale al aire</string>
   <string name="show_network">en</string>
   <string name="show_pleaseupdate">Intente actualizar este programa para desplegar más información (en la vista principal, presione unos segundos, seleccione Actualizar). Si esto no ayuda, es probable que no hay más información en TheTVDB. Vaya a su sitio (www.thetvdb) para aprender a añadir información.</string>

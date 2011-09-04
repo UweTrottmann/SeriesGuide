@@ -13,6 +13,7 @@
   <string name="ioerror">Bir ağ hatası oluştu. Bağlantınız tarafından TheTVDB.com için erişiminiz sınırlandırılmış olabilir. Daha sonra yeniden deneyin.</string>
   <string name="saxerror">TheTVDB\'den gelen yanıt anlaşılamadı. Daha sonra tekrar deneyiniz.</string>
   <string name="offline">Etkin bir internet bağlantısı bağlantısı yok. Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.</string>
+  <string name="whatsnew_title">What\'s new</string>
   <string name="search_hint">Bölüm ara</string>
   <string name="search_title">Eşleşen bölümler</string>
   <string name="share_episode">Bölümü paylaş</string>
@@ -34,7 +35,6 @@
   <string name="sort">Sırala</string>
   <string name="menu_updateart">Eksik Posterleri Al</string>
   <string name="updateall_yes">Tümünü Güncelle</string>
-  <string name="fullupdate">Full Update</string>
   <string name="context_updateshow">Güncelle</string>
   <string name="context_showinfo">Bilgi Göster</string>
   <string name="context_marknext">Sonraki izlenen bölüm</string>
@@ -44,14 +44,6 @@
   <string name="mark_all">Tümü izlendi</string>
   <string name="unmark_all">Hiçbiri izlenmedi</string>
   <string name="hello"><big>Welcome to SeriesGuide</big>\n\nLooks like you have no shows added, yet. Click <b>Add Show</b> in the menu to add some.\n\nOr if you want to <b>restore a backup</b>, open Settings in the menu and look for Backup/Restore.</string>
-  <string name="update_error">Güncellenemedi.</string>
-  <string name="update_incomplete1">Güncellenemedi</string>
-  <string name="update_incomplete2">.</string>
-  <string name="update_success">Güncelleme başarılı.</string>
-  <string name="imagedownload_incomplete">Güncelleştirme başarılı. Ne yazık ki bazı görseller yüklenemedi. Daha sonra yeniden deneyin.</string>
-  <string name="update_inbackground">Güncelleniyor...</string>
-  <string name="update_inprogress">Devam eden bir güncelleme var. Tamamlanmasını bekleyin, daha sonra yeniden deneyin</string>
-  <string name="update_nosdcard">Güncelleştirilemedi. Kullanılabilir hiçbir harici depolama birimi ya da SD kart yok.</string>
   <string name="confirm_delete">Bu diziyi kaldırmak istediğinizden emin misiniz?</string>
   <string name="delete_show">Kaldır</string>
   <string name="dontdelete_show">Kaldırma</string>
@@ -61,6 +53,16 @@
   <string name="context_unfavorite">Remove from favorites</string>
   <string name="favorited">Added to favorites</string>
   <string name="unfavorited">Removed from favorites</string>
+  <string name="update_delta">Looking for updated shows...</string>
+  <string name="update_full">Refreshing all shows...</string>
+  <string name="update_error">Güncellenemedi.</string>
+  <string name="update_incomplete1">Güncellenemedi</string>
+  <string name="update_incomplete2">.</string>
+  <string name="update_success">Güncelleme başarılı.</string>
+  <string name="imagedownload_incomplete">Güncelleştirme başarılı. Ne yazık ki bazı görseller yüklenemedi. Daha sonra yeniden deneyin.</string>
+  <string name="update_inbackground">Güncelleniyor...</string>
+  <string name="update_inprogress">Devam eden bir güncelleme var. Tamamlanmasını bekleyin, daha sonra yeniden deneyin</string>
+  <string name="update_nosdcard">Güncelleştirilemedi. Kullanılabilir hiçbir harici depolama birimi ya da SD kart yok.</string>
   <string name="show_airs">yayın:</string>
   <string name="show_network"> </string>
   <string name="show_pleaseupdate">Daha fazla bilgi için diziyi güncellemeyi deneyin (Genel bakışta dizi adına uzun basın, ardından Güncelle\'yi seçin) Yardımı olmazsa TheTVDB\'de ek bilgi mevcut değildir. Siteye (www.thetvdb.com) giderek nasıl ekleyebileceğinizi öğrenin.</string>
