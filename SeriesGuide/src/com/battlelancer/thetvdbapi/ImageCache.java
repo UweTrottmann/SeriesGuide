@@ -293,8 +293,12 @@ public class ImageCache {
      * @return
      */
     public void removeFromDisk(String imageUrl) {
-        getImageFile(imageUrl).delete();
-        getImageFile(imageUrl + THUMB_SUFFIX).delete();
+        try {
+            getImageFile(imageUrl).delete();
+            getImageFile(imageUrl + THUMB_SUFFIX).delete();
+        } catch (SecurityException se) {
+            // we don't care
+        }
     }
 
     public void clear() {
