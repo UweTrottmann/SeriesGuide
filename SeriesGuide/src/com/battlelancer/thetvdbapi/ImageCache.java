@@ -101,7 +101,7 @@ public class ImageCache {
         this.mSecondLevelCacheDir = Environment.getExternalStorageDirectory().getAbsolutePath()
                 + "/Android/data/" + packageName + "/files";
         mScale = mCtx.getResources().getDisplayMetrics().density;
-        createDirectories();       
+        createDirectories();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mCtx);
         listener = new OnSharedPreferenceChangeListener() {
@@ -283,6 +283,18 @@ public class ImageCache {
 
         // if all failes
         return null;
+    }
+
+    /**
+     * Remove the given image and a potentially existing thumbnail from the
+     * external storage cache.
+     * 
+     * @param imageUrl
+     * @return
+     */
+    public void removeFromDisk(String imageUrl) {
+        getImageFile(imageUrl).delete();
+        getImageFile(imageUrl + THUMB_SUFFIX).delete();
     }
 
     public void clear() {
