@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.Lists;
+import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.Series;
 
 import android.content.ContentProviderOperation;
@@ -287,19 +288,46 @@ public class SeriesDatabase {
     }
 
     /**
-     * Delete a show and manually delete its seasons and episodes as the Android
-     * Sqlite version does not enforce constraints :( Using a transaction.
+     * Delete a show and manually delete its seasons and episodes. Also cleans
+     * up the poster and images.
      * 
-     * @param id Seriesid
-     * @throws OperationApplicationException
-     * @throws RemoteException
+     * @param context
+     * @param id
      */
     public static void deleteShow(Context context, String id) {
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
         final String showId = String.valueOf(id);
+        final ImageCache imageCache = ImageCache.getInstance(context);
 
-        HashSet<Long> episodeIDs = getEpisodeIDsForShow(id, context);
-        for (Long episodeID : episodeIDs) {
+        // delete images...
+        // ...of show
+        final Cursor poster = context.getContentResolver().query(Shows.buildShowUri(showId),
+                new String[] {
+                    Shows.POSTER
+                }, null, null, null);
+        if (poster.moveToFirst()) {
+            final String posterPath = poster.getString(0);
+            imageCache.removeFromDisk(posterPath);
+        }
+        poster.close();
+
+        // ...of episodes
+        final Cursor episodes = context.getContentResolver().query(
+                Episodes.buildEpisodesOfShowUri(showId), new String[] {
+                        Episodes._ID, Episodes.IMAGE
+                }, null, null, null);
+        String[] episodeIDs = new String[episodes.getCount()];
+        episodes.moveToFirst();
+        int counter = 0;
+        while (!episodes.isAfterLast()) {
+            episodeIDs[counter++] = episodes.getString(0);
+            imageCache.removeFromDisk(episodes.getString(1));
+            episodes.moveToNext();
+        }
+        episodes.close();
+
+        // delete database entries
+        for (String episodeID : episodeIDs) {
             batch.add(ContentProviderOperation.newDelete(
                     EpisodeSearch.buildDocIdUri(String.valueOf(episodeID))).build());
         }
