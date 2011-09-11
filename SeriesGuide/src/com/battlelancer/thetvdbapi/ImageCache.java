@@ -97,10 +97,11 @@ public class ImageCache {
     private ImageCache(Context ctx) {
         this.mCtx = ctx;
         this.mCache = new HashMap<String, Bitmap>(50);
+        final String packageName = ctx.getApplicationInfo().packageName;
         this.mSecondLevelCacheDir = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + "/Android/data/com.battlelancer.seriesguide/files";
+                + "/Android/data/" + packageName + "/files";
         mScale = mCtx.getResources().getDisplayMetrics().density;
-        createDirectories();
+        createDirectories();       
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mCtx);
         listener = new OnSharedPreferenceChangeListener() {
