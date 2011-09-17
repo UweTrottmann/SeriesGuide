@@ -411,6 +411,10 @@ public class AddShow extends Activity {
             case ADD_DIALOG:
                 SearchResult itemAtPosition = (SearchResult) resultList
                         .getItemAtPosition(data.currentPosition);
+                // fix for market reported crash, cause still unknown
+                if (itemAtPosition == null) {
+                     break;
+                }
                 AlertDialog.Builder addDialogBuilder = new AlertDialog.Builder(this);
 
                 addDialogBuilder
