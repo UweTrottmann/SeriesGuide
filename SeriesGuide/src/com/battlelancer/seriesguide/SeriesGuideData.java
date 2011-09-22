@@ -92,7 +92,9 @@ public class SeriesGuideData {
     public static enum ShowSorting {
         ALPHABETIC(0, Shows.TITLE + " asc"), UPCOMING(1, Shows.NEXTAIRDATE + " asc,"
                 + Shows.AIRSTIME + " asc," + Shows.TITLE + " asc"), FAVORITES_FIRST(2,
-                Shows.FAVORITE + " desc," + Shows.TITLE + " asc");
+                Shows.FAVORITE + " desc," + Shows.TITLE + " asc"), FAVORITES_UPCOMING(3,
+                Shows.FAVORITE + " desc," + Shows.NEXTAIRDATE + " asc," + Shows.AIRSTIME + " asc,"
+                        + Shows.TITLE + " asc");
 
         private final int index;
 

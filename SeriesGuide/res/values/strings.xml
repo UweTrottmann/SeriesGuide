@@ -124,7 +124,8 @@
 	<string-array name="shsorting">
 		<item>A - Z</item>
 		<item>Next episode</item>
-        <item>Favorites first</item>
+        <item>Favorites (A - Z)</item>
+        <item>Favorites (Next ep.)</item>
 	</string-array>
 	<string-array name="sesorting">
 		<item>Latest first</item>
@@ -277,6 +278,7 @@
 		<item>alphabetic</item>
 		<item>upcoming</item>
         <item>favorites</item>
+        <item>favoritesupcoming</item>
 	</string-array>
 	<string-array name="sesortingData">
 		<item>latestfirst</item>
