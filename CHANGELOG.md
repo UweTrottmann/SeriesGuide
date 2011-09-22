@@ -6,6 +6,9 @@ Version 2.1.3beta *(2011-09-11)*
 
 * Use new trakt library release (better error handling)
 * New show sorting: favorites by next episode
+* Clean up images when deleting a show
+* Store images in correct folder for beta users (you have to redownload them, sorry)
+* Show first episode of season when using dual-pane layout
 * Bugfixes, Improvements
 
 
