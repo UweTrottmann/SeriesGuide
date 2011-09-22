@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.enumerations.Rating;
 
@@ -386,6 +387,8 @@ public class ShareUtils {
                     }
                 }
                 return null;
+            } catch (TraktException te) {
+                return "Trakt error: " + te.getMessage();
             } catch (ApiException e) {
                 return "API error: " + e.getMessage();
             }

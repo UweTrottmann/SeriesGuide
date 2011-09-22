@@ -9,6 +9,7 @@ import com.battlelancer.thetvdbapi.SearchResult;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.TvShow;
 
 import org.xml.sax.SAXException;
@@ -412,6 +413,10 @@ public class AddShow extends Activity {
             case ADD_DIALOG:
                 SearchResult itemAtPosition = (SearchResult) resultList
                         .getItemAtPosition(data.currentPosition);
+                // fix for market reported crash, cause still unknown
+                if (itemAtPosition == null) {
+                    break;
+                }
                 AlertDialog.Builder addDialogBuilder = new AlertDialog.Builder(this);
 
                 addDialogBuilder
@@ -450,7 +455,10 @@ public class AddShow extends Activity {
         public void handleMessage(Message msg) {
             @SuppressWarnings("unchecked")
             List<SearchResult> searchResults = (List<SearchResult>) msg.obj;
-            setSearchResults(searchResults);
+            // only show trakt shows if the user hasn't already searched
+            if (((ListView) findViewById(R.id.ListViewSearchResults)).getCount() == 0) {
+                setSearchResults(searchResults);
+            }
         }
     };
 
@@ -485,6 +493,8 @@ public class AddShow extends Activity {
             Message msg = traktResultHandler.obtainMessage();
             msg.obj = showList;
             traktResultHandler.sendMessage(msg);
+        } catch (TraktException te) {
+            return;
         } catch (ApiException e) {
             return;
         }
@@ -511,6 +521,8 @@ public class AddShow extends Activity {
             Message msg = traktResultHandler.obtainMessage();
             msg.obj = showList;
             traktResultHandler.sendMessage(msg);
+        } catch (TraktException te) {
+            return;
         } catch (ApiException e) {
             return;
         }
