@@ -1,7 +1,15 @@
 Change Log
 ==========
 
-Version 2.1.2beta *(in development)*
+Version 2.1.3beta *(2011-09-11)*
+--------------------------------
+
+* Use new trakt library release (better error handling)
+* New show sorting: favorites by next episode
+* Bugfixes, Improvements
+
+
+Version 2.1.2beta *(2011-09-04)*
 --------------------------------
 
 * Please do an 'Update All' because of: Revert some time calc code that accidentially slipped into the last beta
