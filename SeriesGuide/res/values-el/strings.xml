@@ -134,6 +134,7 @@
   <string name="import_failed_noread">Το αντίγραφο ασφαλείας δεν μπορεί να αναγνωσθεί ("/sdcard/seriesguidebackup/seriesdatabase"). Δεν είναι δυνατή η επαναφορά της βάσης δεδομένων.</string>
   <string name="import_success">Η βάση δεδομένων έχει επαναφερθεί επιτυχώς</string>
   <string name="import_failed">Η επαναφορά απέτυχε</string>
+  <string name="dbupgradefailed">Looks like your backup is too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
   <string name="backup_button">Δημιουργία αντιγράφου ασφαλείας σε κάρτα SD</string>
   <string name="import_button">Επαναφορά από την κάρτα SD</string>
   <string name="backup_question">Αυτό θα αντικαταστήσει οποιαδήποτε προηγούμενο αρχείο αντιγράφου ασφαλείας.</string>
@@ -215,7 +216,8 @@
   <string-array name="shsorting">
     <item>Α - Ω</item>
     <item>Επόμενο επεισόδιο</item>
-    <item>Favorites first</item>
+    <item>Favorites (A - Z)</item>
+    <item>Favorites (Next ep.)</item>
   </string-array>
   <string-array name="sesorting">
     <item>Η πιο πρόσφατη πρώτα</item>

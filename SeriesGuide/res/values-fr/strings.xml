@@ -43,7 +43,7 @@
   <string name="unmark_episode">Episode pas encore vu</string>
   <string name="mark_all">Tous regardé</string>
   <string name="unmark_all">aucun de vu</string>
-  <string name="hello"><big>Welcome to SeriesGuide</big>\n\nLooks like you have no shows added, yet. Click <b>Add Show</b> in the menu to add some.\n\nOr if you want to <b>restore a backup</b>, open Settings in the menu and look for Backup/Restore.</string>
+  <string name="hello"><big>Bienvenue sur SeriesGuide</big>\n\nIl semble que vous n\'avez pas encore ajoutées de séries. Cliquez sur <b>Ajouter Série</b> dans le menu pour en ajouter.\n\nOu si vous souhaitez <b>restaurer une sauvegarde</b>, ouvrez Paramètres dans le menu et rechercher sauvegarde/restauration.</string>
   <string name="confirm_delete">Voulez-vous vraiment supprimer cette série?</string>
   <string name="delete_show">Supprimer</string>
   <string name="dontdelete_show">Ne pas supprimer</string>
@@ -53,8 +53,8 @@
   <string name="context_unfavorite">Supprimer des favoris</string>
   <string name="favorited">Ajouté aux favoris</string>
   <string name="unfavorited">Supprimé des favoris</string>
-  <string name="update_delta">Looking for updated shows...</string>
-  <string name="update_full">Refreshing all shows...</string>
+  <string name="update_delta">Recherchez une mise à jour des séries ...</string>
+  <string name="update_full">Actualiser les séries</string>
   <string name="update_error">Impossible de mettre à jour.</string>
   <string name="update_incomplete1">Impossible de mettre à jour</string>
   <string name="update_incomplete2">.</string>
@@ -84,7 +84,7 @@
   <string name="add_show">Ajouter Série</string>
   <string name="dont_add_show">Ne pas ajouter</string>
   <string name="search_hint_add">Rechercher série</string>
-  <string name="add_started">will appear in your show list shortly.</string>
+  <string name="add_started">apparaîtra dans votre liste de séries rapidement.</string>
   <string name="add_success">Ajouté avec succès.</string>
   <string name="add_error_begin">Impossible d\'ajouter \ "</string>
   <string name="add_error_end">\ ".</string>
@@ -94,35 +94,35 @@
   <string name="preferences">Paramètres</string>
   <string name="pref_sorting">Tri</string>
   <string name="pref_showsorting">Voir Tri</string>
-  <string name="pref_showsortingsummary">Sort shows alphabetically, by next episode or favorites first</string>
+  <string name="pref_showsortingsummary">Trier par ordre alphabétique, par prochain épisode ou par favoris en premier</string>
   <string name="pref_seasonsorting">Tri par saison</string>
-  <string name="pref_sortingsummary">In which chronological order to sort seasons</string>
+  <string name="pref_sortingsummary">Tri des saisons dans l\'ordre chronologique</string>
   <string name="pref_episodesorting">tri par episodes</string>
-  <string name="pref_epsortingsummary">In which order to sort episodes</string>
+  <string name="pref_epsortingsummary">Ordre de tri des épisodes</string>
   <string name="pref_showlist">Afficher la liste</string>
   <string name="pref_onlyfuture">Aucun épisode diffusé</string>
   <string name="pref_onlyfuturesummary">\"next:\" never shows already aired episodes</string>
   <string name="pref_onlyseasoneps">Aucun épisodes spéciaux</string>
-  <string name="pref_onlyseasonepssummary">\"next:\" never shows special episodes</string>
+  <string name="pref_onlyseasonepssummary">\ "Suivant: \" ne jamais montrer les épisodes spéciaux</string>
   <string name="pref_onlyunwatched">Cacher les séries regardées</string>
-  <string name="pref_onlyunwatchedsummary">Only display shows with unwatched episodes</string>
+  <string name="pref_onlyunwatchedsummary">Afficher seulement les épisodes non vus</string>
   <string name="pref_content">Contenu</string>
   <string name="pref_language">Langue de TheTVDB</string>
-  <string name="pref_languagesummary">Local content not available for every show, update afterwards</string>
+  <string name="pref_languagesummary">Le contenu local n\'est pas disponible pour chaque séries, mise à jour à la suite</string>
   <string name="pref_hideimages">Cacher images</string>
   <string name="pref_hideimagessummary">Cacher les images SeriesGuide de votre galerie de photos (redémarrage nécessaire)</string>
   <string name="pref_more">Plus</string>
   <string name="about">A propos de SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - developed by Uwe Trottmann.\n\nPlease see the CREDITS link below for all the people and resources that help drive this project.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
+  <string name="about_message">http://seriesguide.uwetrottmann.com - développé par Uwe Trottmann.\n\nVeuillez consulter le lien ci-dessous pour les CRÉDITS de toutes les personnes et les ressources qui aident à conduire ce projet\n\nhttp://code.google.com/p/seriesguide/wiki/Crédits</string>
   <string name="help">Obtenir de l\'aide</string>
   <string name="help_summary">Aller à la page d\'aide</string>
   <string name="backup">Sauvegarde / Restauration</string>
   <string name="backup_summary">Sauvegarder ou restaurer vos séries</string>
-  <string name="pref_advanced">Advanced</string>
+  <string name="pref_advanced">Avancée</string>
   <string name="clear_cache">Cacher mes images du cache</string>
-  <string name="clear_cache_summary">Remove all images from cache and SD card, updating shows will redownload them</string>
+  <string name="clear_cache_summary">Supprimer toutes les images du cache et de la carte SD, la mise à jour les retéléchargera</string>
   <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Suivi de l\'utilisation des fonctionnalités pour aider à améliorer SeriesGuide</string>
   <string name="backup_description">La sauvegarde va copier de la base de données SeriesGuide dans le dossier \"seriesguidebackup\" sur votre carte SD. Si vous réinstallez SeriesGuide ou installez SeriesGuide sur un autre périphérique Android, juste mettre ce dossier sur la carte SD. Appuyer sur Restaurer ci-dessous et toutes vos séries seront disponibles ! (Vous ne pouvez pas importer de bases de données de versions plus récentes dans une version plus ancienne, sauf si elle utilise la même version de la base de données. Voir dans paramètres.)</string>
   <string name="backup_failed_nosd">Sauvegarde impossible. Il n\'y a pas de stockage externe, comme une carte SD, de disponible.</string>
   <string name="backup_inprogress">Sauvegarde de base de données ...</string>
@@ -134,6 +134,7 @@
   <string name="import_failed_noread">Le fichier de sauvegarde n\'est pas lisible (\ "/ sdcard / seriesguidebackup / seriesdatabase \"). Impossible de restaurer la base de données.</string>
   <string name="import_success">Base de données restaurée avec succès</string>
   <string name="import_failed">Restauration échouée</string>
+  <string name="dbupgradefailed">Looks like your backup is too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
   <string name="backup_button">Sauvegarde sur carte SD</string>
   <string name="import_button">Restauration à partir de la carte SD</string>
   <string name="backup_question">Cela va écraser tous les anciens fichiers de sauvegarde.</string>
@@ -177,10 +178,10 @@
   <string name="description_overview">Aperçu</string>
   <string name="pref_offset">Décalage horaire</string>
   <string name="pref_offsetsummary">par un certain nombre d\'heures</string>
-  <string name="norating">n/a</string>
+  <string name="norating">s/o</string>
   <string name="loading">Chargement en cours ...</string>
   <string name="eula_title">Ce que vous devriez savoir</string>
-  <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Github (https://github.com/UweTrottmann/SeriesGuide).</string>
+  <string name="eula_text">Vous ne pouvez pas faire de mal avec cette apli (surcharge de serveurs, ...). \n\n Cette appli recueille certaines informations pendant que vous l\'utilisez, y compris via Google Analytics. Vous pouvez desactiver Google Analytics dans les Paramètres. \n\nJe ne suis pas responsable de la dégradation de votre appareil ou toutes choses de mal qui peut arriver pendant que vous l\'utilisez.\n\nLe code source est disponible pour tout le monde sur Github (https://github. com/UweTrottmann/SeriesGuide).</string>
   <string name="accept">Accepter</string>
   <string name="decline">Refuser</string>
   <string name="username">Nom d\'utilisateur</string>
@@ -198,9 +199,9 @@
   <string name="trakt_credentials_invalid">références non valides</string>
   <string name="pref_traktintegrate">Intégrer à trakt.tv</string>
   <string name="pref_traktintegratesummary">Marquer comme vu dans l\'Aperçu partagé avec trakt.tv</string>
-  <string name="donate">Buy me a drink (Paypal)</string>
+  <string name="donate">Achetez-moi une boisson (Paypal)</string>
   <string name="feedback">Provide feedback</string>
-  <string name="love">Totally ninja!</string>
+  <string name="love">Totalement ninja!</string>
   <string name="hate">Weak Sauce :(</string>
   <string name="trakt_createaccount">Créer un nouveau compte</string>
   <string name="email">Email</string>
@@ -208,14 +209,15 @@
   <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. Only shows added to SeriesGuide are synced. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
   <string name="trakt_synctotrakt">Synchroniser avec trakt.tv</string>
   <string name="trakt_syncunseen">Synchronisez les épisodes non vus</string>
-  <string name="powered_by_thetvdb">powered by thetvdb.com</string>
+  <string name="powered_by_thetvdb">proposé par thetvdb.com</string>
   <string name="download_stable">Télécharger SeriesGuide</string>
   <string name="gobreak">Go break things</string>
-  <string name="betawarning">WARNING: This is an unstable BETA release for testing purposes only. To download the stable end-user version click the download button below.\n\nIf you want to help test the beta go ahead. Please report every crash, try everything out and send feedback to seriesguide@battlelancer.com (see Settings).</string>
+  <string name="betawarning">ATTENTION: Ceci est une version BETA instable à fin de test uniquement. Pour télécharger la version stable pour utilisateurs finaux, cliquer sur le bouton de téléchargement ci-dessous.\n\nSi vous voulez aider à tester la beta aller de l\'avant. S\'il vous plaît rapporter tous les crash, essayer toutes les fonctionnalités et envoyer des commentaires à seriesguide@battlelancer.com (voir Configuration).</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Episode suivant</item>
-    <item>Favoris en premier</item>
+    <item>Favorites (A - Z)</item>
+    <item>Favorites (Next ep.)</item>
   </string-array>
   <string-array name="sesorting">
     <item>Plus récents en premier</item>

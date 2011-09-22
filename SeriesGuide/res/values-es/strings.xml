@@ -134,6 +134,7 @@
   <string name="import_failed_noread">No se puede leer el archivo (\"/sdcard/seriesguidebackup/seriesdatabase\"). No se puede respaldar base de datos.</string>
   <string name="import_success">Base de datos restaurada exitosamente</string>
   <string name="import_failed">Error en la restauración</string>
+  <string name="dbupgradefailed">Looks like your backup is too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
   <string name="backup_button">Respaldar en tarjeta SD</string>
   <string name="import_button">Restaurar de tarjeta SD</string>
   <string name="backup_question">Esto sobreescribirá cualquier archivo de respaldo anterior.</string>
@@ -215,7 +216,8 @@
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Episodio siguiente</item>
-    <item>Primero mis favoritos</item>
+    <item>Favorites (A - Z)</item>
+    <item>Favorites (Next ep.)</item>
   </string-array>
   <string-array name="sesorting">
     <item>Más reciente primero</item>

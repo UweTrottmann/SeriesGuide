@@ -134,6 +134,7 @@
   <string name="import_failed_noread">O arquivo de backup não é legível (\ "/ sdcard / seriesguidebackup / seriesdatabase \"). Não é possível restaurar a base de dados.</string>
   <string name="import_success">Base de dados restaurada com sucesso</string>
   <string name="import_failed">Restauração falhou</string>
+  <string name="dbupgradefailed">Looks like your backup is too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
   <string name="backup_button">Backup para o cartão SD</string>
   <string name="import_button">Restaurar a partir do cartão SD</string>
   <string name="backup_question">Isso substituirá qualquer arquivo de backup anterior.</string>
@@ -215,7 +216,8 @@
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Próximo episódio</item>
-    <item>Favorites first</item>
+    <item>Favorites (A - Z)</item>
+    <item>Favorites (Next ep.)</item>
   </string-array>
   <string-array name="sesorting">
     <item>Mais recente primeiro</item>

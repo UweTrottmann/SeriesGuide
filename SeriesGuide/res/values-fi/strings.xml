@@ -53,8 +53,8 @@
   <string name="context_unfavorite">Poista suosikeista</string>
   <string name="favorited">Lisätty suosikkeihin</string>
   <string name="unfavorited">Poistettu suosikeista</string>
-  <string name="update_delta">Looking for updated shows...</string>
-  <string name="update_full">Refreshing all shows...</string>
+  <string name="update_delta">Etsitään päivitettäviä ohjelmia...</string>
+  <string name="update_full">Päivitetään kaikki ohjelmat...</string>
   <string name="update_error">Ei voitu päivittää.</string>
   <string name="update_incomplete1">Ei voitu päivittää</string>
   <string name="update_incomplete2">.</string>
@@ -134,6 +134,7 @@
   <string name="import_failed_noread">Varmuuskopiotiedosto ei ole luettava (\"/sdcard/seriesguidebackup/seriesdatabase\"). Ei voi palauttaa tietokantaa.</string>
   <string name="import_success">Tietokanta palautettu onnistuneesti</string>
   <string name="import_failed">Palautus epäonnistui</string>
+  <string name="dbupgradefailed">Looks like your backup is too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
   <string name="backup_button">Varmuuskopioi SD-kortille</string>
   <string name="import_button">Palauta SD-kortilta</string>
   <string name="backup_question">Tämä korvaa kaikki aiemmat varmuuskopiot.</string>
@@ -217,7 +218,8 @@
   <string-array name="shsorting">
     <item>A - Ö</item>
     <item>Seuraava jakso</item>
-    <item>Suosikit ensin</item>
+    <item>Favorites (A - Z)</item>
+    <item>Favorites (Next ep.)</item>
   </string-array>
   <string-array name="sesorting">
     <item>Uusin ensin</item>

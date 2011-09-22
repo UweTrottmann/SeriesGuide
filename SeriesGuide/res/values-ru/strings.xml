@@ -43,7 +43,7 @@
   <string name="unmark_episode">Пока не просмотренный эпизод</string>
   <string name="mark_all">Видел всё</string>
   <string name="unmark_all">Не видел ни одного</string>
-  <string name="hello"><big>Welcome to SeriesGuide</big>\n\nLooks like you have no shows added, yet. Click <b>Add Show</b> in the menu to add some.\n\nOr if you want to <b>restore a backup</b>, open Settings in the menu and look for Backup/Restore.</string>
+  <string name="hello"><big>Добро пожаловать в SeriesGuide</big>\n\n Похоже вы ещё не добавили ни одного сериала. Нажмите кнопку <b>Добавить сериал</b> в меню, чтобы добавить какой-нибудь.\n\n или, если вы хотите <b>восстановить резервную копию,</b> откройте Настройки в меню и ищите Резервное копирование / Восстановление.</string>
   <string name="confirm_delete">Вы действительно хотите удалить это шоу?</string>
   <string name="delete_show">Удалить</string>
   <string name="dontdelete_show">Не удалять</string>
@@ -51,10 +51,10 @@
   <string name="nextepisode">следующий:</string>
   <string name="context_favorite">Добавить в избранное</string>
   <string name="context_unfavorite">Удалить из избранного</string>
-  <string name="favorited">Added to favorites</string>
+  <string name="favorited">Добавлено в избранное</string>
   <string name="unfavorited">Удалено из избранного</string>
-  <string name="update_delta">Looking for updated shows...</string>
-  <string name="update_full">Refreshing all shows...</string>
+  <string name="update_delta">Поиск обновлений сериалов…</string>
+  <string name="update_full">Обновление всех сериалов ...</string>
   <string name="update_error">Не удалось обновить.</string>
   <string name="update_incomplete1">Не удалось обновить</string>
   <string name="update_incomplete2">.</string>
@@ -84,26 +84,26 @@
   <string name="add_show">Добавить сериал</string>
   <string name="dont_add_show">Не добавлять</string>
   <string name="search_hint_add">Найти сериал</string>
-  <string name="add_started">will appear in your show list shortly.</string>
+  <string name="add_started">скоро появится в списке ваших сериалов</string>
   <string name="add_success">успешно добавлено.</string>
   <string name="add_error_begin">Не удалось добавить \"</string>
   <string name="add_error_end">\".</string>
   <string name="add_already_exists">already exists. It was updated instead.</string>
   <string name="loading_trending">Loading trending shows on trakt.tv</string>
-  <string name="loading_usershows">Loading your shows on trakt.tv</string>
+  <string name="loading_usershows">Загрузка ваших сериалов на trakt.tv</string>
   <string name="preferences">Настройки</string>
   <string name="pref_sorting">Сортировка</string>
   <string name="pref_showsorting">Показать сортировку</string>
-  <string name="pref_showsortingsummary">Sort shows alphabetically, by next episode or favorites first</string>
+  <string name="pref_showsortingsummary">Сортировать сериалы в алфавитном порядке, по следующему эпизоду или сначала избранное</string>
   <string name="pref_seasonsorting">Сортировка сезонов</string>
   <string name="pref_sortingsummary">В каком хронологическом порядке сортировать сезоны</string>
   <string name="pref_episodesorting">Сортировка эпизодов</string>
-  <string name="pref_epsortingsummary">In which order to sort episodes</string>
+  <string name="pref_epsortingsummary">В каком порядке сортировать эпизоды</string>
   <string name="pref_showlist">Показать список</string>
-  <string name="pref_onlyfuture">No aired episodes</string>
-  <string name="pref_onlyfuturesummary">\"next:\" never shows already aired episodes</string>
-  <string name="pref_onlyseasoneps">No special episodes</string>
-  <string name="pref_onlyseasonepssummary">\"next:\" never shows special episodes</string>
+  <string name="pref_onlyfuture">Без показанных эпизодов</string>
+  <string name="pref_onlyfuturesummary">\"next:\" никогда не показывать уже прошедшие в эфире эпизоды</string>
+  <string name="pref_onlyseasoneps">Без особых эпизодов</string>
+  <string name="pref_onlyseasonepssummary">\"next:\" никогда не показывать особые эпизоды</string>
   <string name="pref_onlyunwatched">Скрывать просмотренные сериалы</string>
   <string name="pref_onlyunwatchedsummary">Показывать только недосмотренные сериалы</string>
   <string name="pref_content">Содержание</string>
@@ -113,14 +113,14 @@
   <string name="pref_hideimagessummary">Не отображать изображения SeriesGuide в вашей фото-галерее (нужна перезагрузка)</string>
   <string name="pref_more">Подробнее</string>
   <string name="about">О SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - developed by Uwe Trottmann.\n\nPlease see the CREDITS link below for all the people and resources that help drive this project.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
+  <string name="about_message">http://seriesguide.uwetrottmann.com - разработано Uwe Trottmann \n\n Пожалуйста просмотрите ссылку CREDITS ниже, это все те люди и ресурсы, которые помогают управлять этим проектом \n\n http://code.google.com/р/seriesguide/wiki/Credits</string>
   <string name="help">Получить помощь</string>
   <string name="help_summary">Перейти на страницу справки</string>
   <string name="backup">Резервное копирование/восстановление</string>
   <string name="backup_summary">Резервного копирования или восстановления ваших шоу</string>
   <string name="pref_advanced">Advanced</string>
   <string name="clear_cache">Очистить кэши изображений</string>
-  <string name="clear_cache_summary">Remove all images from cache and SD card, updating shows will redownload them</string>
+  <string name="clear_cache_summary">Удалить все изображения из кэша и SD-карты, при обновлении сериалов они будут снова скачаны</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
   <string name="backup_description">Резервная копия базы данных SeriesGuide будет сохранена в папке \"seriesguidebackup\" на вашей SD карте. Когда вы будете переустанавливать SeriesGuide или устанавливать его на другое Android-устройство, просто скопируйте эту папку на SD карту устройства. Нажмите Восстановить и все ваши сериалы отобразятся в программе! (Нельзя импортировать базы данных из более новых версий программы в более старые, кроме тех что используют одну и ту же версию базы данных. Смотрите О программе в Настройках.)</string>
@@ -134,6 +134,7 @@
   <string name="import_failed_noread">Не удалось прочитать резервную копию (\"/sdcard/seriesguidebackup/seriesdatabase\"). Невозможно восстановить базу данных.</string>
   <string name="import_success">База данных успешно восстановлена</string>
   <string name="import_failed">Восстановление не удалось</string>
+  <string name="dbupgradefailed">Looks like your backup is too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
   <string name="backup_button">Резервное копирование на SD карту</string>
   <string name="import_button">Восстановление из карты памяти SD</string>
   <string name="backup_question">Это перезапишет предидущую резервную копию.</string>
@@ -143,10 +144,10 @@
   <string name="import_yes">Восстановление</string>
   <string name="import_no">Не востановлять</string>
   <string name="pref_notifications">Включить уведомления</string>
-  <string name="pref_notificationssummary">Show notifications for upcoming episodes</string>
-  <string name="smallwidget">Next episodes (small)</string>
-  <string name="bigwidget">Next episodes (middle)</string>
-  <string name="largewidget">Next episodes (large)</string>
+  <string name="pref_notificationssummary">Показать уведомления о выходящих эпизодах</string>
+  <string name="smallwidget">Следующие эпизоды (маленький)</string>
+  <string name="bigwidget">Следующие эпизоды (средний)</string>
+  <string name="largewidget">Следующие эпизоды (большой)</string>
   <string name="upcoming">Следующий</string>
   <string name="recent">Недавние</string>
   <string name="noupcoming">Похоже что эпизодов нет. Попробуйте обновить ваши сериалы.</string>
@@ -163,48 +164,48 @@
   <string name="checkin">Войти</string>
   <string name="comment">Check In Comment</string>
   <string name="checkinsuccess">Вход выполнен успешно</string>
-  <string name="pref_number">Number format</string>
-  <string name="pref_numbersummary">Switch between 1x01 or S01E01 as number format</string>
+  <string name="pref_number">Формат номеров серий</string>
+  <string name="pref_numbersummary">Переключить формат номеров серий как 1x01 или S01E01</string>
   <string name="checkinfailed">Вход не выполнен</string>
   <string name="oauthmessage">Authenticating SeriesGuide with GetGlue...</string>
-  <string name="addtocalendar">Add to calendar</string>
-  <string name="addtocalendar_failed">Sorry, there is not enough information to create a calendar event.</string>
-  <string name="pref_usetz">Use my time zone</string>
-  <string name="pref_usetzsummary">Air dates in your time zone (for users outside the USA)</string>
-  <string name="search_description">Episodes</string>
+  <string name="addtocalendar">Добавить в календарь</string>
+  <string name="addtocalendar_failed">К сожалению, не хватает информации, чтобы создать событие в календаре.</string>
+  <string name="pref_usetz">Использовать мой часовой пояс</string>
+  <string name="pref_usetzsummary">Даты эфиров в вашем часовом поясе (для пользователей за пределами США)</string>
+  <string name="search_description">Эпизоды</string>
   <string name="description_home">На главную</string>
   <string name="description_search">Поиск</string>
-  <string name="description_overview">Overview</string>
-  <string name="pref_offset">Time Offset</string>
-  <string name="pref_offsetsummary">by a certain amount of hours</string>
+  <string name="description_overview">Обзор</string>
+  <string name="pref_offset">Временной сдвиг</string>
+  <string name="pref_offsetsummary">на определенное количество часов</string>
   <string name="norating">n/a</string>
   <string name="loading">Загрузка...</string>
-  <string name="eula_title">What you should know</string>
+  <string name="eula_title">Что вы должны знать</string>
   <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Github (https://github.com/UweTrottmann/SeriesGuide).</string>
-  <string name="accept">Accept</string>
-  <string name="decline">Decline</string>
+  <string name="accept">Принять</string>
+  <string name="decline">Отклонить</string>
   <string name="username">Имя пользователя</string>
-  <string name="password">Password</string>
-  <string name="apikey">API key</string>
+  <string name="password">Пароль</string>
+  <string name="apikey">API ключ</string>
   <string name="pref_trakt">Disconnect trakt.tv</string>
   <string name="pref_traktsummary">Use the Share buttons to setup trakt.tv</string>
   <string name="pref_traktsync">Синхронизировать с trakt.tv</string>
   <string name="pref_traktsyncsummary">Experimental, manual syncing with trakt.tv</string>
-  <string name="save">Save</string>
-  <string name="dontsave">Don\'t save</string>
-  <string name="trakt_success">Successfully marked on trakt.tv</string>
+  <string name="save">Сохранить</string>
+  <string name="dontsave">Не сохранять</string>
+  <string name="trakt_success">Успешно отмечено на trakt.tv</string>
   <string name="trakt_error">trakt.tv sharing failed</string>
   <string name="trakt_decryptfail">password could not be decrypted</string>
   <string name="trakt_credentials_invalid">credentials not valid</string>
   <string name="pref_traktintegrate">Integrate trakt.tv</string>
   <string name="pref_traktintegratesummary">Mark as seen in Overview is shared with trakt.tv</string>
-  <string name="donate">Buy me a drink (Paypal)</string>
+  <string name="donate">Купить мне выпивку (Paypal)</string>
   <string name="feedback">Обратная связь</string>
   <string name="love">Totally ninja!</string>
   <string name="hate">Weak Sauce :(</string>
   <string name="trakt_createaccount">Создать новую учетную запись</string>
-  <string name="email">Email</string>
-  <string name="trakt_synctodevice">Sync to SeriesGuide</string>
+  <string name="email">Электронная почта</string>
+  <string name="trakt_synctodevice">Синхронизация с SeriesGuide</string>
   <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. Only shows added to SeriesGuide are synced. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
   <string name="trakt_synctotrakt">Синхронизировать с trakt.tv</string>
   <string name="trakt_syncunseen">Синхронизировать не просмотренные эпизоды</string>
@@ -215,7 +216,8 @@
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Следующий эпизод</item>
-    <item>Избранные первыми</item>
+    <item>Favorites (A - Z)</item>
+    <item>Favorites (Next ep.)</item>
   </string-array>
   <string-array name="sesorting">
     <item>Сначала последний</item>
@@ -227,13 +229,13 @@
     <item>Сначала непросмотренные</item>
     <item>A - Z</item>
     <item>Z - A</item>
-    <item>Latest first (DVD)</item>
+    <item>Сначала последние (DVD)</item>
     <item>Более старые первыми (DVD)</item>
   </string-array>
   <string-array name="share_items">
     <item>GetGlue Check In</item>
-    <item>Mark seen on trakt.tv</item>
-    <item>Other services</item>
-    <item>Rate on trakt.tv</item>
+    <item>Отметить как просмотрено на trackt.tv</item>
+    <item>Другие сервисы</item>
+    <item>Оценить на trackt.tv</item>
   </string-array>
 </resources>
