@@ -7,7 +7,7 @@
             android:title="@string/pref_showsorting"
             android:summary="@string/pref_showsortingsummary"
             android:key="showSorting"
-            android:defaultValue="alphabetic"
+            android:defaultValue="favorites"
             android:entryValues="@array/shsortingData"
             android:entries="@array/shsorting" />
         <ListPreference
