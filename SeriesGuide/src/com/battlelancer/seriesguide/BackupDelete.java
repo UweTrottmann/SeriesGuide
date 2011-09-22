@@ -11,6 +11,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -204,6 +205,12 @@ public class BackupDelete extends BaseActivity {
                         .putBoolean(SeriesGuidePreferences.KEY_DATABASEIMPORTED, true).commit();
                 getContentResolver().notifyChange(Shows.CONTENT_URI, null);
 
+                // tell user something might have gone wrong if there are no shows in the database right now
+                final Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[] { Shows._ID }, null, null, null);
+                if (shows.getCount() == 0) {
+                    return getString(R.string.dbupgradefailed);
+                }
+                
                 return null;
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage(), e);
