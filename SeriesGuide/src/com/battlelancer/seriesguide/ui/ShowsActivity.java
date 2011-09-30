@@ -36,6 +36,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
+import android.support.v4.app.ActionBar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -54,6 +55,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -65,7 +67,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollListener,
-        LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor>, ActionBar.OnNavigationListener {
 
     private static final int UPDATE_SUCCESS = 100;
 
@@ -97,6 +99,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final int LOADER_ID = 900;
 
+    // Background Task States
     private static final String STATE_UPDATE_IN_PROGRESS = "seriesguide.update.inprogress";
 
     private static final String STATE_UPDATE_SHOWS = "seriesguide.update.shows";
@@ -110,6 +113,15 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private static final String STATE_ART_PATHS = "seriesguide.art.paths";
 
     private static final String STATE_ART_INDEX = "seriesguide.art.index";
+
+    // Show Filter Ids
+    private static final int SHOWFILTER_ALL = 0;
+
+    private static final int SHOWFILTER_FAVORITES = 1;
+
+    private static final int SHOWFILTER_UNSEENEPISODES = 2;
+
+    private static final String FILTER_ID = "filterid";
 
     private Bundle mSavedState;
 
@@ -135,8 +147,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     public boolean mBusy;
 
-    private boolean mOnlyUnwatchedShows;
-
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(this).trackEvent("Shows", "Click", label, 0);
     }
@@ -152,10 +162,19 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             EulaHelper.showEula(false, this);
         }
 
+        // setup action bar filter list (! use different layouts for ABS)
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(this,
+                R.array.showfilter_list, R.layout.abs__simple_spinner_item);
+        mActionBarList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        actionBar.setListNavigationCallbacks(mActionBarList, this);
+
         updatePreferences();
 
         mImageCache = ((SeriesGuideApplication) getApplication()).getImageCache();
 
+        // setup show adapter
         String[] from = new String[] {
                 SeriesContract.Shows.TITLE, SeriesContract.Shows.NEXTTEXT,
                 SeriesContract.Shows.AIRSTIME, SeriesContract.Shows.NETWORK,
@@ -181,13 +200,15 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             }
         });
         list.setOnScrollListener(this);
+        // TODO: make new empty view, move current to a welcome dialog
         View emptyView = findViewById(android.R.id.empty);
         if (emptyView != null) {
             list.setEmptyView(emptyView);
         }
 
-        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
-
+        // destroy any loader we created in a previous activity
+        getSupportLoaderManager().destroyLoader(LOADER_ID);
+        
         registerForContextMenu(list);
     }
 
@@ -773,17 +794,16 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     }
 
     private void requery() {
-        getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
+        int filterId = getSupportActionBar().getSelectedNavigationIndex();
+        Bundle args = new Bundle();
+        args.putInt(FILTER_ID, filterId);
+        getSupportLoaderManager().restartLoader(LOADER_ID, args, this);
     }
 
     final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
 
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             boolean isAffectingChange = false;
-            if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_ONLY_UNWATCHED_SHOWS)) {
-                updateFilters(sharedPreferences);
-                isAffectingChange = true;
-            }
             if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_SHOWSSORTORDER)) {
                 updateSorting(sharedPreferences);
                 isAffectingChange = true;
@@ -805,7 +825,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 .getDefaultSharedPreferences(getApplicationContext());
 
         updateSorting(prefs);
-        updateFilters(prefs);
 
         // // display whats new dialog
         // int lastVersion = prefs.getInt(SeriesGuideData.KEY_VERSION, -1);
@@ -826,11 +845,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         // }
 
         prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
-    }
-
-    private void updateFilters(SharedPreferences prefs) {
-        mOnlyUnwatchedShows = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_UNWATCHED_SHOWS,
-                false);
     }
 
     /**
@@ -858,16 +872,30 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         return oldSorting != mSorting;
     }
 
-    public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String selection = null;
         String[] selectionArgs = null;
-        if (mOnlyUnwatchedShows) {
-            selection = Shows.NEXTAIRDATE + "!=? AND julianday(" + Shows.NEXTAIRDATE
-                    + ") <= julianday('now')";
-            selectionArgs = new String[] {
-                SeriesDatabase.UNKNOWN_NEXT_AIR_DATE
-            };
+
+        int filterId = args.getInt(FILTER_ID);
+        switch (filterId) {
+            case SHOWFILTER_ALL:
+                // do nothing, leave selection null
+                break;
+            case SHOWFILTER_FAVORITES:
+                selection = Shows.FAVORITE + "=?";
+                selectionArgs = new String[] {
+                    "1"
+                };
+                break;
+            case SHOWFILTER_UNSEENEPISODES:
+                selection = Shows.NEXTAIRDATE + "!=? AND julianday(" + Shows.NEXTAIRDATE
+                        + ") <= julianday('now')";
+                selectionArgs = new String[] {
+                    SeriesDatabase.UNKNOWN_NEXT_AIR_DATE
+                };
+                break;
         }
+
         return new CursorLoader(this, Shows.CONTENT_URI, ShowsQuery.PROJECTION, selection,
                 selectionArgs, mSorting.query());
     }
@@ -883,6 +911,15 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         // above is about to be closed. We need to make sure we are no
         // longer using it.
         mAdapter.swapCursor(null);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+        // requery with the new filter
+        Bundle args = new Bundle();
+        args.putInt(FILTER_ID, itemPosition);
+        getSupportLoaderManager().restartLoader(LOADER_ID, args, this);
+        return true;
     }
 
     public void setFailedShowsString(String mFailedShowsString) {
