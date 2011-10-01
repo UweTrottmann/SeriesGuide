@@ -1,6 +1,15 @@
 Change Log (Stable channel)
 ===========================
 
+Version 2.1.2 *(2011-10-01)*
+--------------------------------
+
+* Use new trakt library release (better error handling)
+* New show sorting: favorites by next episode
+* Clean up images when deleting a show
+* Show first episode of season when using dual-pane layout
+* Bugfixes, Improvements
+
 Version 2.1.1 (04.09.2011)
 ------------------------
 
