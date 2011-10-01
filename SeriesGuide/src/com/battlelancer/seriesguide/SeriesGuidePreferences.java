@@ -84,15 +84,18 @@ public class SeriesGuidePreferences extends PreferenceActivity {
         final SeriesGuidePreferences activity = this;
         addPreferencesFromResource(R.layout.preferences);
 
-        Preference aboutPref = (Preference) findPreference("aboutPref");
+        String version;
         try {
-            aboutPref.setSummary("v"
-                    + getPackageManager().getPackageInfo(getPackageName(),
-                            PackageManager.GET_META_DATA).versionName + " (dbver "
-                    + SeriesGuideDatabase.DATABASE_VERSION + ")");
+            version = getPackageManager().getPackageInfo(getPackageName(),
+                    PackageManager.GET_META_DATA).versionName;
         } catch (NameNotFoundException e) {
-            aboutPref.setSummary("Unkown version");
+            version = "UnknownVersion";
         }
+        final String versionFinal = version;
+
+        Preference aboutPref = (Preference) findPreference("aboutPref");
+        aboutPref.setSummary("v" + versionFinal + " (dbver " + SeriesGuideDatabase.DATABASE_VERSION
+                + ")");
         aboutPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
@@ -250,7 +253,8 @@ public class SeriesGuidePreferences extends PreferenceActivity {
                     SUPPORT_MAIL
                 });
 
-                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "SeriesGuide Feedback");
+                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "SeriesGuide " + versionFinal
+                        + " Feedback");
 
                 intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
 
