@@ -843,7 +843,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         final ShowSorting oldSorting = mSorting;
         final CharSequence[] items = getResources().getStringArray(R.array.shsortingData);
         final String sortsetting = prefs.getString(SeriesGuidePreferences.KEY_SHOWSSORTORDER,
-                "alphabetic");
+                "favorites");
 
         for (int i = 0; i < items.length; i++) {
             if (sortsetting.equals(items[i])) {
