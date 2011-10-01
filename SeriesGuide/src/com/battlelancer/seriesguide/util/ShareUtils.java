@@ -512,21 +512,34 @@ public class ShareUtils {
                         final ServiceManager manager = new ServiceManager();
                         manager.setApiKey(Constants.TRAKT_API_KEY);
                         manager.setAuthentication(username, ShareUtils.toSHA1(password.getBytes()));
-                        final Response response = manager.accountService()
-                                .create(username, password, email).fire();
+                        Response response = null;
+                        try {
+                            response = manager.accountService().create(username, password, email)
+                                    .fire();
+                        } catch (TraktException te) {
+                            response = te.getResponse();
+                        } catch (ApiException ae) {
 
-                        if (response.getStatus().equalsIgnoreCase("success")) {
-                            Toast.makeText(context,
-                                    response.getStatus() + ": " + response.getMessage(),
-                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        if (response != null) {
+                            if (response.getStatus().equalsIgnoreCase("success")) {
+                                Toast.makeText(context,
+                                        response.getStatus() + ": " + response.getMessage(),
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(context,
+                                        response.getStatus() + ": " + response.getMessage(),
+                                        Toast.LENGTH_LONG).show();
+                                editor.putString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
+                                editor.putString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
+                                editor.commit();
+                                return;
+                            }
                         } else {
                             Toast.makeText(context,
-                                    response.getStatus() + ": " + response.getMessage(),
+                                    "Sorry, something went horribly wrong. Please try again.",
                                     Toast.LENGTH_LONG).show();
-                            editor.putString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
-                            editor.putString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
-                            editor.commit();
-                            return;
                         }
                     }
 
