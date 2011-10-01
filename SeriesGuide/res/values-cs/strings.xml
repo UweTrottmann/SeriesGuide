@@ -104,8 +104,6 @@
   <string name="pref_onlyfuturesummary">\"další:\" nezobrazovat již odvysílané epizody</string>
   <string name="pref_onlyseasoneps">Žádné speciální epizody</string>
   <string name="pref_onlyseasonepssummary">\"další:\" nezobrazovat speciální epizody</string>
-  <string name="pref_onlyunwatched">Skrýt zhlédnuté pořady</string>
-  <string name="pref_onlyunwatchedsummary">Zobrazit pouze pořady s nezhlédnutými epizodami</string>
   <string name="pref_content">Obsah</string>
   <string name="pref_language">Jazyk TheTVDB</string>
   <string name="pref_languagesummary">Místní obsah není k dispozici pro všechny pořady, aktualizujte</string>
@@ -237,5 +235,10 @@
     <item>Označit jako zhlédnuté na trakt.tv</item>
     <item>Ostatní služby</item>
     <item>Hodnotit na trakt.tv</item>
+  </string-array>
+  <string-array name="showfilter_list">
+    <item>All</item>
+    <item>Favorites</item>
+    <item>Unseen episodes</item>
   </string-array>
 </resources>

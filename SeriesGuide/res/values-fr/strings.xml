@@ -104,8 +104,6 @@
   <string name="pref_onlyfuturesummary">\"next:\" never shows already aired episodes</string>
   <string name="pref_onlyseasoneps">Aucun épisodes spéciaux</string>
   <string name="pref_onlyseasonepssummary">\ "Suivant: \" ne jamais montrer les épisodes spéciaux</string>
-  <string name="pref_onlyunwatched">Cacher les séries regardées</string>
-  <string name="pref_onlyunwatchedsummary">Afficher seulement les épisodes non vus</string>
   <string name="pref_content">Contenu</string>
   <string name="pref_language">Langue de TheTVDB</string>
   <string name="pref_languagesummary">Le contenu local n\'est pas disponible pour chaque séries, mise à jour à la suite</string>
@@ -237,5 +235,10 @@
     <item>Indiquer vu sur trakt.tv</item>
     <item>Autres services</item>
     <item>Noter sur trakt.tv</item>
+  </string-array>
+  <string-array name="showfilter_list">
+    <item>All</item>
+    <item>Favorites</item>
+    <item>Unseen episodes</item>
   </string-array>
 </resources>

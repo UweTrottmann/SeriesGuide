@@ -104,8 +104,6 @@
   <string name="pref_onlyfuturesummary">\ "Nästa: \" visar inte redan visade avsnitt</string>
   <string name="pref_onlyseasoneps">No special episodes</string>
   <string name="pref_onlyseasonepssummary">\ "Nästa: \" aldrig visar special avsnitt</string>
-  <string name="pref_onlyunwatched">Dölj sedda serier</string>
-  <string name="pref_onlyunwatchedsummary">Visa bara serier med ej sedda avsnitt</string>
   <string name="pref_content">Innehåll</string>
   <string name="pref_language">TheTVDB Språk</string>
   <string name="pref_languagesummary">Local content not available for every show, update afterwards</string>
@@ -237,5 +235,10 @@
     <item>Mark seen on trakt.tv</item>
     <item>Andra tjänster</item>
     <item>Rate on trakt.tv</item>
+  </string-array>
+  <string-array name="showfilter_list">
+    <item>All</item>
+    <item>Favorites</item>
+    <item>Unseen episodes</item>
   </string-array>
 </resources>

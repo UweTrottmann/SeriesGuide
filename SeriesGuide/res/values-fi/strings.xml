@@ -104,8 +104,6 @@
   <string name="pref_onlyfuturesummary">\"seuraava:\" älä koskaan näytä jo esitettyjä jaksoja</string>
   <string name="pref_onlyseasoneps">Ei erikoisjaksoja</string>
   <string name="pref_onlyseasonepssummary">\"seuraava:\" älä koskaan näytä erikoisjaksoja</string>
-  <string name="pref_onlyunwatched">Piilota katsotut ohjelmat</string>
-  <string name="pref_onlyunwatchedsummary">Only display shows with unwatched episodes</string>
   <string name="pref_content">Sisältö</string>
   <string name="pref_language">TheTVDB:n kieli</string>
   <string name="pref_languagesummary">Ohjelmatietoja ei ole jokaisella kielellä kaikille ohjelmille, päivitä jälkikäteen</string>
@@ -239,5 +237,10 @@
     <item>Merkitse katsotuksi trakt.tv:ssä</item>
     <item>Muut palvelut</item>
     <item>Arvioi trakt.tv:ssä</item>
+  </string-array>
+  <string-array name="showfilter_list">
+    <item>All</item>
+    <item>Favorites</item>
+    <item>Unseen episodes</item>
   </string-array>
 </resources>

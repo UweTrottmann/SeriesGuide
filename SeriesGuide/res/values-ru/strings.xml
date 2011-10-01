@@ -104,8 +104,6 @@
   <string name="pref_onlyfuturesummary">\"next:\" никогда не показывать уже прошедшие в эфире эпизоды</string>
   <string name="pref_onlyseasoneps">Без особых эпизодов</string>
   <string name="pref_onlyseasonepssummary">\"next:\" никогда не показывать особые эпизоды</string>
-  <string name="pref_onlyunwatched">Скрывать просмотренные сериалы</string>
-  <string name="pref_onlyunwatchedsummary">Показывать только недосмотренные сериалы</string>
   <string name="pref_content">Содержание</string>
   <string name="pref_language">Язык TheTVDB</string>
   <string name="pref_languagesummary">Local content not available for every show, update afterwards</string>
@@ -237,5 +235,10 @@
     <item>Отметить как просмотрено на trackt.tv</item>
     <item>Другие сервисы</item>
     <item>Оценить на trackt.tv</item>
+  </string-array>
+  <string-array name="showfilter_list">
+    <item>All</item>
+    <item>Favorites</item>
+    <item>Unseen episodes</item>
   </string-array>
 </resources>
