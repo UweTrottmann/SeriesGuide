@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+Version 2.1.4beta *(2011-10-01)*
+--------------------------------
+
+* Filter options for show list (replaces 'Hide watched shows' setting).
+* Rearranged show list menu items to make room for filter.
+* Latest translations from crowdin.
+* Bug fixes and improvements.
+
 Version 2.1.3beta *(2011-09-11)*
 --------------------------------
 
