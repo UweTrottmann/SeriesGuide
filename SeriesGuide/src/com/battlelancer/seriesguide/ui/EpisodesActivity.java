@@ -38,7 +38,7 @@ public class EpisodesActivity extends BaseActivity {
             actionBar.setTitle(getString(R.string.seasons));
             setTitle(getString(R.string.seasons));
         }
-        
+
         if (savedInstanceState == null) {
             mFragment = onCreatePane();
             mFragment.setArguments(intentToFragmentArguments(getIntent()));

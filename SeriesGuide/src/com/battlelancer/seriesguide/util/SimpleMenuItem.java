@@ -24,20 +24,27 @@ import android.view.SubMenu;
 import android.view.View;
 
 /**
- * A <em>really</em> dumb implementation of the {@link MenuItem} interface, that's only useful for
- * our old-actionbar purposes. See <code>com.android.internal.view.menu.MenuItemImpl</code> in
- * AOSP for a more complete implementation.
+ * A <em>really</em> dumb implementation of the {@link MenuItem} interface,
+ * that's only useful for our old-actionbar purposes. See
+ * <code>com.android.internal.view.menu.MenuItemImpl</code> in AOSP for a more
+ * complete implementation.
  */
 public class SimpleMenuItem implements MenuItem {
 
     private SimpleMenu mMenu;
 
     private final int mId;
+
     private final int mOrder;
+
     private CharSequence mTitle;
+
     private CharSequence mTitleCondensed;
+
     private Drawable mIconDrawable;
+
     private int mIconResId = 0;
+
     private boolean mEnabled = true;
 
     public SimpleMenuItem(SimpleMenu menu, int id, int order, CharSequence title) {
@@ -77,7 +84,7 @@ public class SimpleMenuItem implements MenuItem {
         return mTitleCondensed != null ? mTitleCondensed : mTitle;
     }
 
-   public MenuItem setIcon(Drawable icon) {
+    public MenuItem setIcon(Drawable icon) {
         mIconResId = 0;
         mIconDrawable = icon;
         return this;
@@ -187,8 +194,7 @@ public class SimpleMenuItem implements MenuItem {
         return null;
     }
 
-    public MenuItem setOnMenuItemClickListener(
-            OnMenuItemClickListener onMenuItemClickListener) {
+    public MenuItem setOnMenuItemClickListener(OnMenuItemClickListener onMenuItemClickListener) {
         // Noop
         return this;
     }

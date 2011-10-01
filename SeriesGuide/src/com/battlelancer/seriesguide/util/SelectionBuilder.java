@@ -39,11 +39,15 @@ import java.util.Map;
  */
 public class SelectionBuilder {
     private static final String TAG = "SelectionBuilder";
+
     private static final boolean LOGV = false;
 
     private String mTable = null;
+
     private Map<String, String> mProjectionMap = Maps.newHashMap();
+
     private StringBuilder mSelection = new StringBuilder();
+
     private ArrayList<String> mSelectionArgs = Lists.newArrayList();
 
     /**
@@ -108,7 +112,7 @@ public class SelectionBuilder {
 
     /**
      * Return selection string for current internal state.
-     *
+     * 
      * @see #getSelectionArgs()
      */
     public String getSelection() {
@@ -117,7 +121,7 @@ public class SelectionBuilder {
 
     /**
      * Return selection arguments for current internal state.
-     *
+     * 
      * @see #getSelection()
      */
     public String[] getSelectionArgs() {
@@ -149,11 +153,13 @@ public class SelectionBuilder {
     /**
      * Execute query using the current internal state as {@code WHERE} clause.
      */
-    public Cursor query(SQLiteDatabase db, String[] columns, String groupBy,
-            String having, String orderBy, String limit) {
+    public Cursor query(SQLiteDatabase db, String[] columns, String groupBy, String having,
+            String orderBy, String limit) {
         assertTable();
-        if (columns != null) mapColumns(columns);
-        if (LOGV) Log.v(TAG, "query(columns=" + Arrays.toString(columns) + ") " + this);
+        if (columns != null)
+            mapColumns(columns);
+        if (LOGV)
+            Log.v(TAG, "query(columns=" + Arrays.toString(columns) + ") " + this);
         return db.query(mTable, columns, getSelection(), getSelectionArgs(), groupBy, having,
                 orderBy, limit);
     }
@@ -163,7 +169,8 @@ public class SelectionBuilder {
      */
     public int update(SQLiteDatabase db, ContentValues values) {
         assertTable();
-        if (LOGV) Log.v(TAG, "update() " + this);
+        if (LOGV)
+            Log.v(TAG, "update() " + this);
         return db.update(mTable, values, getSelection(), getSelectionArgs());
     }
 
@@ -172,7 +179,8 @@ public class SelectionBuilder {
      */
     public int delete(SQLiteDatabase db) {
         assertTable();
-        if (LOGV) Log.v(TAG, "delete() " + this);
+        if (LOGV)
+            Log.v(TAG, "delete() " + this);
         return db.delete(mTable, getSelection(), getSelectionArgs());
     }
 }

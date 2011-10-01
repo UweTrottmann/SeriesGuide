@@ -25,16 +25,18 @@ import android.content.Intent;
 
 public class AppWidgetBig extends AppWidget {
     private static final String LIMIT = "4";
+
     private static final int LAYOUT = R.layout.appwidget_big;
+
     private static final int ITEMLAYOUT = R.layout.appwidget_big_item;
-    
+
     @Override
     public Intent createUpdateIntent(Context context) {
         Intent i = new Intent(context, UpdateServiceBig.class);
         return i;
     }
 
-    public static class UpdateServiceBig extends UpdateService {        
+    public static class UpdateServiceBig extends UpdateService {
 
         @Override
         public void onHandleIntent(Intent intent) {

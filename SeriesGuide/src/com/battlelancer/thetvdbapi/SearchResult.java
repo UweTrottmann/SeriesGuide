@@ -1,3 +1,4 @@
+
 package com.battlelancer.thetvdbapi;
 
 /**
@@ -5,9 +6,11 @@ package com.battlelancer.thetvdbapi;
  */
 public class SearchResult {
 
-	private int id;
+    private int id;
+
     private String seriesName;
-	private String overview;
+
+    private String overview;
 
     public int getId() {
         return id;
@@ -24,26 +27,26 @@ public class SearchResult {
     public void setSeriesName(String seriesName) {
         this.seriesName = seriesName;
     }
-    
-	public void setOverview(String overview){
-		this.overview = overview;
-	}
 
-	public String getOverview() {
-		return this.overview;
-	}
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
 
-	public SearchResult copy() {
-		SearchResult copy = new SearchResult();
-		copy.id = this.id;
-		copy.seriesName = this.seriesName;
-		copy.overview = this.overview;
-		return copy;
-	}
+    public String getOverview() {
+        return this.overview;
+    }
 
-	@Override
-	public String toString() {
-		return this.seriesName;
-	}   
-	
+    public SearchResult copy() {
+        SearchResult copy = new SearchResult();
+        copy.id = this.id;
+        copy.seriesName = this.seriesName;
+        copy.overview = this.overview;
+        return copy;
+    }
+
+    @Override
+    public String toString() {
+        return this.seriesName;
+    }
+
 }

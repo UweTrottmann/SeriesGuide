@@ -27,8 +27,8 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
 /**
- * A helper for showing EULAs and storing a {@link SharedPreferences} bit indicating whether the
- * user has accepted.
+ * A helper for showing EULAs and storing a {@link SharedPreferences} bit
+ * indicating whether the user has accepted.
  */
 public class EulaHelper {
     public static boolean hasAcceptedEula(final Context context) {
@@ -49,45 +49,41 @@ public class EulaHelper {
 
     /**
      * Show End User License Agreement.
-     *
-     * @param accepted True IFF user has accepted license already, which means it can be dismissed.
-     *                 If the user hasn't accepted, then the EULA must be accepted or the program
-     *                 exits.
+     * 
+     * @param accepted True IFF user has accepted license already, which means
+     *            it can be dismissed. If the user hasn't accepted, then the
+     *            EULA must be accepted or the program exits.
      * @param activity Activity started from.
      */
     public static void showEula(final boolean accepted, final Activity activity) {
-        AlertDialog.Builder eula = new AlertDialog.Builder(activity)
-                .setTitle(R.string.eula_title)
-                .setIcon(android.R.drawable.ic_dialog_info)
-                .setMessage(R.string.eula_text)
+        AlertDialog.Builder eula = new AlertDialog.Builder(activity).setTitle(R.string.eula_title)
+                .setIcon(android.R.drawable.ic_dialog_info).setMessage(R.string.eula_text)
                 .setCancelable(accepted);
 
         if (accepted) {
             // If they've accepted the EULA allow, show an OK to dismiss.
-            eula.setPositiveButton(android.R.string.ok,
-                    new DialogInterface.OnClickListener() {
+            eula.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+        } else {
+            // If they haven't accepted the EULA allow, show accept/decline
+            // buttons and exit on
+            // decline.
+            eula.setPositiveButton(R.string.accept,
+                    new android.content.DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
+                            setAcceptedEula(activity);
                             dialog.dismiss();
                         }
+                    }).setNegativeButton(R.string.decline,
+                    new android.content.DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            activity.finish();
+                        }
                     });
-        } else {
-            // If they haven't accepted the EULA allow, show accept/decline buttons and exit on
-            // decline.
-            eula
-                    .setPositiveButton(R.string.accept,
-                            new android.content.DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    setAcceptedEula(activity);
-                                    dialog.dismiss();
-                                }
-                            })
-                    .setNegativeButton(R.string.decline,
-                            new android.content.DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                    activity.finish();
-                                }
-                            });
         }
         eula.show();
     }

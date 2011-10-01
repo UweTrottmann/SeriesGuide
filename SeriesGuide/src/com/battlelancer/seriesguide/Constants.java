@@ -11,6 +11,6 @@ public class Constants {
     public static final String CONSUMER_KEY = "";
 
     public static final String CONSUMER_SECRET = "";
-    
+
     public static final String TRAKT_API_KEY = "";
 }

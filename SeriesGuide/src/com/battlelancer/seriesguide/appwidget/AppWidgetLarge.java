@@ -1,3 +1,4 @@
+
 package com.battlelancer.seriesguide.appwidget;
 
 import com.battlelancer.seriesguide.beta.R;
@@ -9,16 +10,18 @@ import android.content.Intent;
 
 public class AppWidgetLarge extends AppWidget {
     private static final String LIMIT = "9";
+
     private static final int LAYOUT = R.layout.appwidget_large;
+
     private static final int ITEMLAYOUT = R.layout.appwidget_big_item;
-    
+
     @Override
     public Intent createUpdateIntent(Context context) {
         Intent i = new Intent(context, UpdateServiceLarge.class);
         return i;
     }
 
-    public static class UpdateServiceLarge extends UpdateService {        
+    public static class UpdateServiceLarge extends UpdateService {
 
         @Override
         public void onHandleIntent(Intent intent) {
