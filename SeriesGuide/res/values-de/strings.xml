@@ -136,6 +136,7 @@
 		(\"/sdcard/seriesguidebackup/seriesdatabase\"). Konnte Datenbank nicht wiederherstellen.</string>
   <string name="import_success">Datenbank erfolgreich wiederhergestellt</string>
   <string name="import_failed">Wiederherstellen fehlgeschlagen</string>
+  <string name="dbupgradefailed">Sieht aus als ob die Sicherung zu alt oder leer ist. Hinweis: Vor-2.0-Sicherungen zuerst in eine 1.9.x-Version importieren.</string>
   <string name="backup_button">Backup auf SD Karte</string>
   <string name="import_button">Wiederherstellen von SD Karte</string>
   <string name="backup_question">Dies überschreibt eine vorhandene Backup-Datei.</string>
@@ -217,7 +218,8 @@
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Nächste Folge</item>
-    <item>Favoriten zuerst</item>
+    <item>Favoriten (A - Z)</item>
+    <item>Favoriten (nächste Fo.)</item>
   </string-array>
   <string-array name="sesorting">
     <item>Aktuellste zuerst</item>

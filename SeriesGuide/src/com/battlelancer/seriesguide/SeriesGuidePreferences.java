@@ -301,6 +301,19 @@ public class SeriesGuidePreferences extends PreferenceActivity {
                         return true;
                     }
                 });
+
+        // experimental: start alarm service to set sample alarms when clicking this pref
+        // findPreference("com.battlelancer.seriesguide.notifications").setOnPreferenceClickListener(
+        // new OnPreferenceClickListener() {
+        //
+        // @Override
+        // public boolean onPreferenceClick(Preference preference) {
+        // Intent i = new Intent(SeriesGuidePreferences.this,
+        // AlarmManagerService.class);
+        // startService(i);
+        // return true;
+        // }
+        // });
     }
 
     @Override

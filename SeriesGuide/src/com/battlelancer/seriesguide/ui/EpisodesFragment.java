@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
@@ -80,6 +81,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
 
         if (mDualPane) {
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            loadFirstEpisode();
         }
 
         String[] from = new String[] {
@@ -149,8 +151,62 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
         setHasOptionsMenu(true);
     }
 
+    /**
+     * Load the first episode manually while the CursorLoader is still getting
+     * its data.
+     */
+    private void loadFirstEpisode() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // Make sure no fragment is already shown
+                EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
+                        .findFragmentById(R.id.fragment_details);
+                if (detailsFragment == null) {
+                    final FragmentActivity context = getActivity();
+                    if (context != null) {
+                        // get episodes
+                        final Cursor episodes = context.getContentResolver().query(
+                                Episodes.buildEpisodesOfSeasonWithShowUri(getSeasonId()),
+                                new String[] {
+                                    Episodes._ID
+                                }, null, null, sorting.query());
+                        // show the first one, if there are any
+                        if (episodes.getCount() > 0) {
+                            episodes.moveToFirst();
+                            final String episodeId = episodes.getString(0);
+                            context.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showDetails(episodeId);
+                                }
+                            });
+                        }
+                        episodes.close();
+                    }
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * Convenience method for showDetails(episodeId) which looks up the episode
+     * id in the list view at the given position.
+     * 
+     * @param position
+     */
     private void showDetails(int position) {
         String episodeId = String.valueOf(getListView().getItemIdAtPosition(position));
+        showDetails(episodeId);
+    }
+
+    /**
+     * If not already shown, display a new fragment containing the given
+     * episodes information.
+     * 
+     * @param episodeId
+     */
+    private void showDetails(String episodeId) {
         if (mDualPane) {
             // Check if fragment is shown, create new if needed.
             EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()

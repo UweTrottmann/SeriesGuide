@@ -7,7 +7,7 @@
             android:title="@string/pref_showsorting"
             android:summary="@string/pref_showsortingsummary"
             android:key="showSorting"
-            android:defaultValue="alphabetic"
+            android:defaultValue="favorites"
             android:entryValues="@array/shsortingData"
             android:entries="@array/shsorting" />
         <ListPreference
@@ -45,6 +45,10 @@
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_content">
+        <!-- <Preference -->
+        <!-- android:title="@string/pref_notifications" -->
+        <!-- android:key="com.battlelancer.seriesguide.notifications" -->
+        <!-- android:summary="@string/pref_notificationssummary" /> -->
         <Preference
             android:title="@string/backup"
             android:key="backup"

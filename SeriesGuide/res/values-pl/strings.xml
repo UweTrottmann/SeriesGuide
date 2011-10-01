@@ -134,6 +134,7 @@
   <string name="import_failed_noread">Pliku bazy danych jest uszkodzony / nie można go odczytać (w /sdcard/seriesguidebackup/seriesdatabase). Nie można przywrócić danych.</string>
   <string name="import_success">Baza danych przywrócona</string>
   <string name="import_failed">Przywracanie nie powiodło się</string>
+  <string name="dbupgradefailed">Looks like your backup is too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
   <string name="backup_button">Stworzenie kopii zapasowej na karcie SD</string>
   <string name="import_button">Przywracanie kopii zapasowej z karty SD</string>
   <string name="backup_question">Ta operacja nadpisze poprzednie kopie. Kontynuować?</string>
@@ -215,7 +216,8 @@
   <string-array name="shsorting">
     <item>Od A do Z</item>
     <item>Następny odcinek</item>
-    <item>Favorites first</item>
+    <item>Favorites (A - Z)</item>
+    <item>Favorites (Next ep.)</item>
   </string-array>
   <string-array name="sesorting">
     <item>Najpierw najnowsze</item>

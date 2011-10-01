@@ -816,7 +816,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         // if (currentVersion > lastVersion) {
         // // BETA warning dialog switch
         // showDialog(BETA_WARNING_DIALOG);
-        // showDialog(WHATS_NEW_DIALOG);
+        // // showDialog(WHATS_NEW_DIALOG);
         // // set this as lastVersion
         // prefs.edit().putInt(SeriesGuideData.KEY_VERSION,
         // currentVersion).commit();

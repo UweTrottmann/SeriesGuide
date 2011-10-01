@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.services.ShowService.EpisodeSeenBuilder;
@@ -106,6 +107,8 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
         try {
             // get watched episodes from trakt
             shows = manager.userService().libraryShowsWatched(username).fire();
+        } catch (TraktException te) {
+            return FAILED_API;
         } catch (ApiException e) {
             return FAILED_API;
         }
@@ -256,6 +259,8 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                 if (mIsSyncingUnseen) {
                     builderUnseen.fire();
                 }
+            } catch (TraktException te) {
+                return FAILED_API;
             } catch (ApiException e) {
                 return FAILED_API;
             }

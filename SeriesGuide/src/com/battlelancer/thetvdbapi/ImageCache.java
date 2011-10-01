@@ -97,8 +97,9 @@ public class ImageCache {
     private ImageCache(Context ctx) {
         this.mCtx = ctx;
         this.mCache = new HashMap<String, Bitmap>(50);
+        final String packageName = ctx.getApplicationInfo().packageName;
         this.mSecondLevelCacheDir = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + "/Android/data/com.battlelancer.seriesguide/files";
+                + "/Android/data/" + packageName + "/files";
         mScale = mCtx.getResources().getDisplayMetrics().density;
         createDirectories();
 
@@ -282,6 +283,22 @@ public class ImageCache {
 
         // if all failes
         return null;
+    }
+
+    /**
+     * Remove the given image and a potentially existing thumbnail from the
+     * external storage cache.
+     * 
+     * @param imageUrl
+     * @return
+     */
+    public void removeFromDisk(String imageUrl) {
+        try {
+            getImageFile(imageUrl).delete();
+            getImageFile(imageUrl + THUMB_SUFFIX).delete();
+        } catch (SecurityException se) {
+            // we don't care
+        }
     }
 
     public void clear() {
