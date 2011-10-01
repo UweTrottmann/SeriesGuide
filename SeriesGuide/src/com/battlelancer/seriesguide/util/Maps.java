@@ -25,7 +25,7 @@ import java.util.LinkedHashMap;
 public class Maps {
     /**
      * Creates a {@code HashMap} instance.
-     *
+     * 
      * @return a newly-created, initially-empty {@code HashMap}
      */
     public static <K, V> HashMap<K, V> newHashMap() {
@@ -34,7 +34,7 @@ public class Maps {
 
     /**
      * Creates a {@code LinkedHashMap} instance.
-     *
+     * 
      * @return a newly-created, initially-empty {@code HashMap}
      */
     public static <K, V> LinkedHashMap<K, V> newLinkedHashMap() {

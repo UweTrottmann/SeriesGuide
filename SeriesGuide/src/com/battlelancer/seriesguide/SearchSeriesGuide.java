@@ -30,7 +30,7 @@ public class SearchSeriesGuide extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
         handleIntent(getIntent());
-        
+
         setTitle(getString(R.string.search_title));
     }
 

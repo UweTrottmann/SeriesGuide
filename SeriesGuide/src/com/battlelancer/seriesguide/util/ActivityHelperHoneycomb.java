@@ -27,28 +27,28 @@ public class ActivityHelperHoneycomb extends ActivityHelper {
         super(activity);
     }
 
-//    @Override
-//    public void onPostCreate(Bundle savedInstanceState) {
-//        // Do nothing in onPostCreate. ActivityHelper creates the old action
-//        // bar, we don't
-//        // need to for Honeycomb.
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case android.R.id.home:
-//                // Handle the HOME / UP affordance.
-//                goHome();
-//                return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    /**
-//     * No-op on Honeycomb. The action bar title always remains the same.
-//     */
-//    @Override
-//    public void setActionBarTitle(CharSequence title) {
-//    }
+    // @Override
+    // public void onPostCreate(Bundle savedInstanceState) {
+    // // Do nothing in onPostCreate. ActivityHelper creates the old action
+    // // bar, we don't
+    // // need to for Honeycomb.
+    // }
+    //
+    // @Override
+    // public boolean onOptionsItemSelected(MenuItem item) {
+    // switch (item.getItemId()) {
+    // case android.R.id.home:
+    // // Handle the HOME / UP affordance.
+    // goHome();
+    // return true;
+    // }
+    // return super.onOptionsItemSelected(item);
+    // }
+    //
+    // /**
+    // * No-op on Honeycomb. The action bar title always remains the same.
+    // */
+    // @Override
+    // public void setActionBarTitle(CharSequence title) {
+    // }
 }

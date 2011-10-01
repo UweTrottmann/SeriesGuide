@@ -36,10 +36,10 @@ public abstract class BaseActivity extends FragmentActivity {
 
     @Override
     public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-        return mActivityHelper.onKeyLongPress(keyCode, event) ||
-                super.onKeyLongPress(keyCode, event);
+        return mActivityHelper.onKeyLongPress(keyCode, event)
+                || super.onKeyLongPress(keyCode, event);
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (getActivityHelper().onOptionsItemSelected(item)) {
@@ -56,7 +56,8 @@ public abstract class BaseActivity extends FragmentActivity {
     }
 
     /**
-     * Converts an intent into a {@link Bundle} suitable for use as fragment arguments.
+     * Converts an intent into a {@link Bundle} suitable for use as fragment
+     * arguments.
      */
     public static Bundle intentToFragmentArguments(Intent intent) {
         Bundle arguments = new Bundle();

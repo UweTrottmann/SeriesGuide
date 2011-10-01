@@ -420,8 +420,10 @@ public class OverviewFragment extends Fragment {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity()
                 .getApplicationContext());
         if (prefs.getBoolean("com.battlelancer.seriesguide.traktintegration", false)) {
-            //Pass in copy of bundle so its values aren't overwritten by the new episode loading below
-            new ShareUtils.TraktTask(getActivity(), getFragmentManager(), new Bundle(mShareData)).execute();
+            // Pass in copy of bundle so its values aren't overwritten by the
+            // new episode loading below
+            new ShareUtils.TraktTask(getActivity(), getFragmentManager(), new Bundle(mShareData))
+                    .execute();
         }
 
         // load new episode, update seasons (if shown)

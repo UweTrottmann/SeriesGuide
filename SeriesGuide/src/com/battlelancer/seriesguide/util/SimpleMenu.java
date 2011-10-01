@@ -28,13 +28,15 @@ import android.view.SubMenu;
 import java.util.ArrayList;
 
 /**
- * A <em>really</em> dumb implementation of the {@link Menu} interface, that's only useful for our
- * old-actionbar purposes. See <code>com.android.internal.view.menu.MenuBuilder</code> in AOSP for
- * a more complete implementation.
+ * A <em>really</em> dumb implementation of the {@link Menu} interface, that's
+ * only useful for our old-actionbar purposes. See
+ * <code>com.android.internal.view.menu.MenuBuilder</code> in AOSP for a more
+ * complete implementation.
  */
 public class SimpleMenu implements Menu {
 
     private Context mContext;
+
     private Resources mResources;
 
     private ArrayList<SimpleMenuItem> mItems;
@@ -70,7 +72,7 @@ public class SimpleMenu implements Menu {
     }
 
     /**
-     * Adds an item to the menu.  The other add methods funnel to this.
+     * Adds an item to the menu. The other add methods funnel to this.
      */
     private MenuItem addInternal(int itemId, int order, CharSequence title) {
         final SimpleMenuItem item = new SimpleMenuItem(this, itemId, order, title);
