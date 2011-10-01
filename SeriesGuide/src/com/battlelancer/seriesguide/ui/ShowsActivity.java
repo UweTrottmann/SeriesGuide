@@ -129,12 +129,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private FetchArtTask mArtTask;
 
-    public View mProgressOverlay;
-
-    public ProgressBar mUpdateProgress;
-
-    public View mCancelButton;
-
     private SlowAdapter mAdapter;
 
     private String mFailedShowsString;
@@ -661,6 +655,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
         ArrayList<String> mPaths;
 
+        private View mProgressOverlay;
+
         protected FetchArtTask() {
         }
 
@@ -671,24 +667,28 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
         @Override
         protected void onPreExecute() {
+            // see if we already inflated the progress overlay
+            mProgressOverlay = findViewById(R.id.overlay_update);
             if (mProgressOverlay == null) {
                 mProgressOverlay = ((ViewStub) findViewById(R.id.stub_update)).inflate();
-                mUpdateProgress = (ProgressBar) findViewById(R.id.ProgressBarShowListDet);
-
-                mCancelButton = mProgressOverlay.findViewById(R.id.overlayCancel);
-                mCancelButton.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        onCancelTasks();
-                    }
-                });
             }
-
-            mUpdateProgress.setIndeterminate(true);
             showOverlay(mProgressOverlay);
         }
 
         @Override
         protected Integer doInBackground(Void... params) {
+            // setup the progress overlay
+            ProgressBar updateProgress = (ProgressBar) mProgressOverlay
+                    .findViewById(R.id.ProgressBarShowListDet);
+            updateProgress.setIndeterminate(true);
+
+            View cancelButton = mProgressOverlay.findViewById(R.id.overlayCancel);
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    onCancelTasks();
+                }
+            });
+
             // fetch all available poster paths
             if (mPaths == null) {
                 Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[] {
@@ -790,12 +790,14 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     }
 
     public void showOverlay(View overlay) {
-        overlay.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+        overlay.startAnimation(AnimationUtils
+                .loadAnimation(getApplicationContext(), R.anim.fade_in));
         overlay.setVisibility(View.VISIBLE);
     }
 
     public void hideOverlay(View overlay) {
-        overlay.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_out));
+        overlay.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.fade_out));
         overlay.setVisibility(View.GONE);
     }
 
