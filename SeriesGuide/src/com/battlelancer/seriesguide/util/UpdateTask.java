@@ -72,8 +72,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
     protected Integer doInBackground(Void... params) {
         // setup the progress overlay
         mUpdateProgress = (ProgressBar) mProgressOverlay.findViewById(R.id.ProgressBarShowListDet);
-        mUpdateProgress.setIndeterminate(false);
-        mUpdateProgress.setProgress(0);
+        mUpdateProgress.setIndeterminate(true);
 
         final View cancelButton = mProgressOverlay.findViewById(R.id.overlayCancel);
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +119,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
         int resultCode = UPDATE_SUCCESS;
         String id;
+        mUpdateProgress.setIndeterminate(false);
 
         for (int i = updateCount.get(); i < mShows.length; i++) {
             // fail early if cancelled or network connection is lost
