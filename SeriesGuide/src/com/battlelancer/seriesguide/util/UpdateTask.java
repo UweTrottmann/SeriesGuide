@@ -36,19 +36,23 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
     public String mFailedShows = "";
 
-    private final ShowsActivity mContext;
+    private final ShowsActivity mShowsActivity;
 
     public final AtomicInteger mUpdateCount = new AtomicInteger();
 
     private boolean mIsFullUpdate = false;
 
+    private View mProgressOverlay;
+
+    private ProgressBar mUpdateProgress;
+
     public UpdateTask(boolean isFullUpdate, ShowsActivity context) {
-        mContext = context;
+        mShowsActivity = context;
         mIsFullUpdate = isFullUpdate;
     }
 
     public UpdateTask(String[] shows, int index, String failedShows, ShowsActivity context) {
-        mContext = context;
+        mShowsActivity = context;
         mShows = shows;
         mUpdateCount.set(index);
         mFailedShows = failedShows;
@@ -56,36 +60,36 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
     @Override
     protected void onPreExecute() {
-        if (mContext.mProgressOverlay == null) {
-            mContext.mProgressOverlay = ((ViewStub) mContext.findViewById(R.id.stub_update))
-                    .inflate();
-            mContext.mUpdateProgress = (ProgressBar) mContext
-                    .findViewById(R.id.ProgressBarShowListDet);
-
-            final View cancelButton = mContext.mProgressOverlay.findViewById(R.id.overlayCancel);
-            cancelButton.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    mContext.onCancelTasks();
-                }
-            });
+        // see if we already inflated the progress overlay
+        mProgressOverlay = mShowsActivity.findViewById(R.id.overlay_update);
+        if (mProgressOverlay == null) {
+            mProgressOverlay = ((ViewStub) mShowsActivity.findViewById(R.id.stub_update)).inflate();
         }
-
-        mContext.mUpdateProgress.setIndeterminate(false);
-        mContext.mUpdateProgress.setProgress(0);
-        mContext.showOverlay(mContext.mProgressOverlay);
+        mShowsActivity.showOverlay(mProgressOverlay);
     }
 
     @Override
     protected Integer doInBackground(Void... params) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext
-                .getApplicationContext());
-        final ContentResolver resolver = mContext.getContentResolver();
+        // setup the progress overlay
+        mUpdateProgress = (ProgressBar) mProgressOverlay.findViewById(R.id.ProgressBarShowListDet);
+        mUpdateProgress.setIndeterminate(true);
+
+        final View cancelButton = mProgressOverlay.findViewById(R.id.overlayCancel);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mShowsActivity.onCancelTasks();
+            }
+        });
+
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(mShowsActivity.getApplicationContext());
+        final ContentResolver resolver = mShowsActivity.getContentResolver();
         final AtomicInteger updateCount = mUpdateCount;
         long currentServerTime = 0;
         if (mShows == null) {
-            
+
             try {
-                currentServerTime = TheTVDB.getServerTime(mContext);
+                currentServerTime = TheTVDB.getServerTime(mShowsActivity);
             } catch (SAXException e1) {
                 return UPDATE_SAXERROR;
             }
@@ -106,7 +110,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 shows.close();
             } else {
                 try {
-                    mShows = TheTVDB.deltaUpdateShows(previousUpdateTime, mContext);
+                    mShows = TheTVDB.deltaUpdateShows(previousUpdateTime, mShowsActivity);
                 } catch (SAXException e) {
                     return UPDATE_SAXERROR;
                 }
@@ -115,6 +119,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
         int resultCode = UPDATE_SUCCESS;
         String id;
+        mUpdateProgress.setIndeterminate(false);
 
         for (int i = updateCount.get(); i < mShows.length; i++) {
             // fail early if cancelled or network connection is lost
@@ -122,7 +127,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 resultCode = UPDATE_INCOMPLETE;
                 break;
             }
-            if (!SeriesGuideData.isNetworkAvailable(mContext)) {
+            if (!SeriesGuideData.isNetworkAvailable(mShowsActivity)) {
                 resultCode = UPDATE_OFFLINE;
                 break;
             }
@@ -132,7 +137,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             id = mShows[i];
             for (int itry = 0; itry < 2; itry++) {
                 try {
-                    TheTVDB.updateShow(id, mContext);
+                    TheTVDB.updateShow(id, mShowsActivity);
                     break;
                 } catch (SAXException saxe) {
                     // failed twice
@@ -155,15 +160,15 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         publishProgress(mShows.length, mShows.length + 1);
 
         // renew FTS3 table
-        TheTVDB.onRenewFTSTable(mContext);
+        TheTVDB.onRenewFTSTable(mShowsActivity);
 
         publishProgress(mShows.length + 1, mShows.length + 1);
-        
+
         // store time of update if it was successful
         if (currentServerTime != 0 && resultCode == UPDATE_SUCCESS) {
             prefs.edit()
-            .putString(SeriesGuidePreferences.KEY_LASTUPDATETIME,
-                    String.valueOf(currentServerTime)).commit();
+                    .putString(SeriesGuidePreferences.KEY_LASTUPDATETIME,
+                            String.valueOf(currentServerTime)).commit();
         }
 
         return resultCode;
@@ -181,44 +186,43 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
     @Override
     protected void onPostExecute(Integer result) {
-        mContext.setFailedShowsString(mFailedShows);
+        mShowsActivity.setFailedShowsString(mFailedShows);
 
         switch (result) {
             case UPDATE_SUCCESS:
-                AnalyticsUtils.getInstance(mContext).trackEvent("Shows", "Update Task", "Success",
-                        0);
+                AnalyticsUtils.getInstance(mShowsActivity).trackEvent("Shows", "Update Task",
+                        "Success", 0);
 
-                Toast.makeText(mContext, mContext.getString(R.string.update_success),
+                Toast.makeText(mShowsActivity, mShowsActivity.getString(R.string.update_success),
                         Toast.LENGTH_SHORT).show();
                 break;
             case UPDATE_SAXERROR:
-                AnalyticsUtils.getInstance(mContext).trackEvent("Shows", "Update Task",
+                AnalyticsUtils.getInstance(mShowsActivity).trackEvent("Shows", "Update Task",
                         "SAX error", 0);
 
-                mContext.showDialog(ShowsActivity.UPDATE_SAXERROR_DIALOG);
+                mShowsActivity.showDialog(ShowsActivity.UPDATE_SAXERROR_DIALOG);
                 break;
             case UPDATE_OFFLINE:
-                AnalyticsUtils.getInstance(mContext).trackEvent("Shows", "Update Task", "Offline",
-                        0);
+                AnalyticsUtils.getInstance(mShowsActivity).trackEvent("Shows", "Update Task",
+                        "Offline", 0);
 
-                mContext.showDialog(ShowsActivity.UPDATE_OFFLINE_DIALOG);
+                mShowsActivity.showDialog(ShowsActivity.UPDATE_OFFLINE_DIALOG);
                 break;
         }
 
-        mContext.updateLatestEpisode();
-        mContext.hideOverlay(mContext.mProgressOverlay);
+        mShowsActivity.updateLatestEpisode();
+        mShowsActivity.hideOverlay(mProgressOverlay);
     }
 
     @Override
     protected void onCancelled() {
-        mContext.hideOverlay(mContext.mProgressOverlay);
+        mShowsActivity.hideOverlay(mProgressOverlay);
     }
 
     @Override
     protected void onProgressUpdate(Integer... values) {
-        final ProgressBar progress = mContext.mUpdateProgress;
-        progress.setMax(values[1]);
-        progress.setProgress(values[0]);
+        mUpdateProgress.setMax(values[1]);
+        mUpdateProgress.setProgress(values[0]);
     }
 
     private void addFailedShow(String seriesName) {

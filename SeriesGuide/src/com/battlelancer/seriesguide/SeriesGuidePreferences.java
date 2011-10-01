@@ -50,11 +50,9 @@ public class SeriesGuidePreferences extends PreferenceActivity {
     public static final String KEY_USE_MY_TIMEZONE = "com.battlelancer.seriesguide.usemytimezone";
 
     public static final String KEY_ONLY_FUTURE_EPISODES = "onlyFutureEpisodes";
-    
+
     public static final String KEY_ONLY_SEASON_EPISODES = "onlySeasonEpisodes";
 
-    public static final String KEY_ONLY_UNWATCHED_SHOWS = "onlyUnwatchedShows";
-    
     public static final String KEY_LASTUPDATETIME = "updatetime";
 
     protected static final int ABOUT_DIALOG = 0;
@@ -73,6 +71,8 @@ public class SeriesGuidePreferences extends PreferenceActivity {
 
     public static final String KEY_SHOWSSORTORDER = "showSorting";
 
+    public static final String KEY_SHOWFILTER = "com.battlelancer.seriesguide.showfilter";
+
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
     }
@@ -84,15 +84,18 @@ public class SeriesGuidePreferences extends PreferenceActivity {
         final SeriesGuidePreferences activity = this;
         addPreferencesFromResource(R.layout.preferences);
 
-        Preference aboutPref = (Preference) findPreference("aboutPref");
+        String version;
         try {
-            aboutPref.setSummary("v"
-                    + getPackageManager().getPackageInfo(getPackageName(),
-                            PackageManager.GET_META_DATA).versionName + " (dbver "
-                    + SeriesGuideDatabase.DATABASE_VERSION + ")");
+            version = getPackageManager().getPackageInfo(getPackageName(),
+                    PackageManager.GET_META_DATA).versionName;
         } catch (NameNotFoundException e) {
-            aboutPref.setSummary("Unkown version");
+            version = "UnknownVersion";
         }
+        final String versionFinal = version;
+
+        Preference aboutPref = (Preference) findPreference("aboutPref");
+        aboutPref.setSummary("v" + versionFinal + " (dbver " + SeriesGuideDatabase.DATABASE_VERSION
+                + ")");
         aboutPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
@@ -111,8 +114,7 @@ public class SeriesGuidePreferences extends PreferenceActivity {
                 // track event
                 fireTrackerEvent("Help");
 
-                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
-                        .parse(HELP_URL));
+                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(HELP_URL));
                 startActivity(myIntent);
                 return true;
             }
@@ -176,23 +178,6 @@ public class SeriesGuidePreferences extends PreferenceActivity {
             }
         });
 
-        Preference showsWithEpisodes = (Preference) findPreference(KEY_ONLY_UNWATCHED_SHOWS);
-        showsWithEpisodes.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference preference) {
-                if (((CheckBoxPreference) preference).isChecked()) {
-                    // track event
-                    AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                            "OnlyUnwatchedShows", "Enable", 0);
-                } else {
-                    // track event
-                    AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                            "OnlyUnwatchedShows", "Disable", 0);
-                }
-                return false;
-            }
-        });
-
         // Disconnect GetGlue
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
@@ -218,8 +203,7 @@ public class SeriesGuidePreferences extends PreferenceActivity {
                 // track event
                 fireTrackerEvent("Help translate");
 
-                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
-                        .parse(TRANSLATIONS_URL));
+                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(TRANSLATIONS_URL));
                 startActivity(myIntent);
                 return true;
             }
@@ -269,7 +253,8 @@ public class SeriesGuidePreferences extends PreferenceActivity {
                     SUPPORT_MAIL
                 });
 
-                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "SeriesGuide Feedback");
+                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "SeriesGuide " + versionFinal
+                        + " Feedback");
 
                 intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
 
@@ -285,9 +270,8 @@ public class SeriesGuidePreferences extends PreferenceActivity {
                         // track event
                         fireTrackerEvent("Donate");
 
-                        Intent myIntent = new Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse(PAYPAL_DONATE_URL));
+                        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
+                                .parse(PAYPAL_DONATE_URL));
                         startActivity(myIntent);
                         return true;
                     }
@@ -302,19 +286,6 @@ public class SeriesGuidePreferences extends PreferenceActivity {
                         return true;
                     }
                 });
-
-        // experimental: start alarm service to set sample alarms when clicking this pref
-        // findPreference("com.battlelancer.seriesguide.notifications").setOnPreferenceClickListener(
-        // new OnPreferenceClickListener() {
-        //
-        // @Override
-        // public boolean onPreferenceClick(Preference preference) {
-        // Intent i = new Intent(SeriesGuidePreferences.this,
-        // AlarmManagerService.class);
-        // startService(i);
-        // return true;
-        // }
-        // });
     }
 
     @Override

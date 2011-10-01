@@ -145,8 +145,6 @@
 	<string name="pref_onlyfuturesummary">\"next:\" never shows already aired episodes</string>
 	<string name="pref_onlyseasoneps">No special episodes</string>
 	<string name="pref_onlyseasonepssummary">\"next:\" never shows special episodes</string>
-	<string name="pref_onlyunwatched">Hide watched shows</string>
-	<string name="pref_onlyunwatchedsummary">Only display shows with unwatched episodes</string>
 	<string name="pref_content">Content</string>
 	<string name="pref_language">TheTVDB Language</string>
 	<string name="pref_languagesummary">Local content not available for every show, update afterwards</string>
@@ -264,6 +262,11 @@
     <string name="trakt_synctotrakt">Sync to trakt.tv</string>
     <string name="trakt_syncunseen">Sync unseen episodes</string>
     <string name="powered_by_thetvdb">powered by thetvdb.com</string>
+    <string-array name="showfilter_list">
+        <item>All</item>
+        <item>Favorites</item>
+        <item>Unseen episodes</item>
+    </string-array>
     
     <!-- strings for BETA release -->
     <string name="download_stable">Download SeriesGuide</string>
