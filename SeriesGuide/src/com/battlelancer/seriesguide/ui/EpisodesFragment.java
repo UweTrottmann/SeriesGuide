@@ -156,37 +156,39 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
      * its data.
      */
     private void loadFirstEpisode() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // Make sure no fragment is already shown
-                EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
-                        .findFragmentById(R.id.fragment_details);
-                if (detailsFragment == null) {
-                    final FragmentActivity context = getActivity();
-                    if (context != null) {
-                        // get episodes
-                        final Cursor episodes = context.getContentResolver().query(
-                                Episodes.buildEpisodesOfSeasonWithShowUri(getSeasonId()),
-                                new String[] {
-                                    Episodes._ID
-                                }, null, null, sorting.query());
-                        // show the first one, if there are any
-                        if (episodes.getCount() > 0) {
-                            episodes.moveToFirst();
-                            final String episodeId = episodes.getString(0);
-                            context.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    showDetails(episodeId);
-                                }
-                            });
+        final FragmentActivity context = getActivity();
+        if (context != null) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    // Make sure no fragment is already shown
+                    EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
+                            .findFragmentById(R.id.fragment_details);
+                    if (detailsFragment == null) {
+                        if (context != null) {
+                            // get episodes
+                            final Cursor episodes = context.getContentResolver().query(
+                                    Episodes.buildEpisodesOfSeasonWithShowUri(getSeasonId()),
+                                    new String[] {
+                                        Episodes._ID
+                                    }, null, null, sorting.query());
+                            // show the first one, if there are any
+                            if (episodes.getCount() > 0) {
+                                episodes.moveToFirst();
+                                final String episodeId = episodes.getString(0);
+                                context.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        showDetails(episodeId);
+                                    }
+                                });
+                            }
+                            episodes.close();
                         }
-                        episodes.close();
                     }
                 }
-            }
-        }).start();
+            }).start();
+        }
     }
 
     /**
@@ -319,20 +321,26 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
     }
 
     private void markEpisode(final String episodeId, final boolean state) {
-        new Thread(new Runnable() {
-            public void run() {
-                SeriesDatabase.markEpisode(getActivity(), episodeId, state);
-            }
-        }).start();
+        final FragmentActivity activity = getActivity();
+        if (activity != null) {
+            new Thread(new Runnable() {
+                public void run() {
+                    SeriesDatabase.markEpisode(activity, episodeId, state);
+                }
+            }).start();
+        }
     }
 
     private void markAllEpisodes(final boolean state) {
-        new Thread(new Runnable() {
-            public void run() {
-                SeriesDatabase.markSeasonEpisodes(getActivity(), getSeasonId(), state);
-                getActivity().getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
-            }
-        }).start();
+        final FragmentActivity activity = getActivity();
+        if (activity != null) {
+            new Thread(new Runnable() {
+                public void run() {
+                    SeriesDatabase.markSeasonEpisodes(activity, getSeasonId(), state);
+                    activity.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
+                }
+            }).start();
+        }
     }
 
     private void updatePreferences() {
