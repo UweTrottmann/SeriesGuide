@@ -15,7 +15,6 @@ import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.EulaHelper;
 import com.battlelancer.seriesguide.util.UIUtils;
 import com.battlelancer.seriesguide.util.UpdateTask;
-import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
 import android.app.AlertDialog;
@@ -28,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -137,8 +137,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private SlowAdapter mAdapter;
 
-    private ImageCache mImageCache;
-
     private String mFailedShowsString;
 
     private ShowSorting mSorting;
@@ -147,6 +145,11 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     public boolean mBusy;
 
+    /**
+     * Google Analytics helper method for easy event tracking.
+     * 
+     * @param label
+     */
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(this).trackEvent("Shows", "Click", label, 0);
     }
@@ -156,11 +159,12 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shows);
 
-        final Context context = this;
-
         if (!EulaHelper.hasAcceptedEula(this)) {
             EulaHelper.showEula(false, this);
         }
+
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
 
         // setup action bar filter list (! use different layouts for ABS)
         ActionBar actionBar = getSupportActionBar();
@@ -170,9 +174,11 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         mActionBarList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         actionBar.setListNavigationCallbacks(mActionBarList, this);
 
-        updatePreferences();
+        // try to restore previously set show filter
+        int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
+        actionBar.setSelectedNavigationItem(showfilter);
 
-        mImageCache = ((SeriesGuideApplication) getApplication()).getImageCache();
+        updatePreferences(prefs);
 
         // setup show adapter
         String[] from = new String[] {
@@ -194,7 +200,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         list.setOnItemClickListener(new OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Intent i = new Intent(context, OverviewActivity.class);
+                Intent i = new Intent(ShowsActivity.this, OverviewActivity.class);
                 i.putExtra(Shows._ID, String.valueOf(id));
                 startActivity(i);
             }
@@ -208,7 +214,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
         // destroy any loader we created in a previous activity
         getSupportLoaderManager().destroyLoader(LOADER_ID);
-        
+
         registerForContextMenu(list);
     }
 
@@ -820,10 +826,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
      * Called once on activity creation to load initial settings and display
      * one-time information dialogs.
      */
-    private void updatePreferences() {
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-
+    private void updatePreferences(SharedPreferences prefs) {
         updateSorting(prefs);
 
         // // display whats new dialog
@@ -919,6 +922,12 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         Bundle args = new Bundle();
         args.putInt(FILTER_ID, itemPosition);
         getSupportLoaderManager().restartLoader(LOADER_ID, args, this);
+
+        // save the selected filter back to settings
+        Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                .edit();
+        editor.putInt(SeriesGuidePreferences.KEY_SHOWFILTER, itemPosition);
+        editor.commit();
         return true;
     }
 
@@ -1109,7 +1118,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private void setPosterBitmap(ImageView poster, String path, boolean isBusy) {
         Bitmap bitmap = null;
         if (path.length() != 0) {
-            bitmap = mImageCache.getThumb(path, isBusy);
+            bitmap = ((SeriesGuideApplication) getApplication()).getImageCache().getThumb(path,
+                    isBusy);
         }
 
         if (bitmap != null) {

@@ -50,9 +50,9 @@ public class SeriesGuidePreferences extends PreferenceActivity {
     public static final String KEY_USE_MY_TIMEZONE = "com.battlelancer.seriesguide.usemytimezone";
 
     public static final String KEY_ONLY_FUTURE_EPISODES = "onlyFutureEpisodes";
-    
+
     public static final String KEY_ONLY_SEASON_EPISODES = "onlySeasonEpisodes";
-    
+
     public static final String KEY_LASTUPDATETIME = "updatetime";
 
     protected static final int ABOUT_DIALOG = 0;
@@ -70,6 +70,8 @@ public class SeriesGuidePreferences extends PreferenceActivity {
     public static final String KEY_DATABASEIMPORTED = "com.battlelancer.seriesguide.dbimported";
 
     public static final String KEY_SHOWSSORTORDER = "showSorting";
+
+    public static final String KEY_SHOWFILTER = "com.battlelancer.seriesguide.showfilter";
 
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
@@ -109,8 +111,7 @@ public class SeriesGuidePreferences extends PreferenceActivity {
                 // track event
                 fireTrackerEvent("Help");
 
-                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
-                        .parse(HELP_URL));
+                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(HELP_URL));
                 startActivity(myIntent);
                 return true;
             }
@@ -199,8 +200,7 @@ public class SeriesGuidePreferences extends PreferenceActivity {
                 // track event
                 fireTrackerEvent("Help translate");
 
-                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
-                        .parse(TRANSLATIONS_URL));
+                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(TRANSLATIONS_URL));
                 startActivity(myIntent);
                 return true;
             }
@@ -266,9 +266,8 @@ public class SeriesGuidePreferences extends PreferenceActivity {
                         // track event
                         fireTrackerEvent("Donate");
 
-                        Intent myIntent = new Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse(PAYPAL_DONATE_URL));
+                        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
+                                .parse(PAYPAL_DONATE_URL));
                         startActivity(myIntent);
                         return true;
                     }
@@ -284,7 +283,8 @@ public class SeriesGuidePreferences extends PreferenceActivity {
                     }
                 });
 
-        // experimental: start alarm service to set sample alarms when clicking this pref
+        // experimental: start alarm service to set sample alarms when clicking
+        // this pref
         findPreference("com.battlelancer.seriesguide.notifications").setOnPreferenceClickListener(
                 new OnPreferenceClickListener() {
 
