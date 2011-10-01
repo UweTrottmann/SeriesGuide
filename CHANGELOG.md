@@ -1,3 +1,8 @@
+----
+layout: default
+title: Changelog
+----
+
 Change Log (Stable channel)
 ===========================
 
