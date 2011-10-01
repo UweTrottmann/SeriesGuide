@@ -95,19 +95,20 @@ public class AppWidget extends AppWidgetProvider {
 
         protected RemoteViews buildUpdate(Context context, String limit, int layout,
                 int itemLayout, Intent updateIntent) {
-            ImageCache imageCache = ((SeriesGuideApplication) getApplication()).getImageCache();
+            final ImageCache imageCache = ((SeriesGuideApplication) getApplication())
+                    .getImageCache();
 
             // Get the layout for the App Widget, remove existing views
             // RemoteViews views = new RemoteViews(context.getPackageName(),
             // layout);
-            RemoteViews views = new RemoteViews(context.getPackageName(), layout);
+            final RemoteViews views = new RemoteViews(context.getPackageName(), layout);
 
             views.removeAllViews(R.id.LinearLayoutWidget);
 
             // get upcoming shows (name and next episode text)
-            Cursor upcomingEpisodes = SeriesDatabase.getUpcomingEpisodes(context);
+            final Cursor upcomingEpisodes = SeriesDatabase.getUpcomingEpisodes(context);
 
-            if (upcomingEpisodes.getCount() == 0) {
+            if (upcomingEpisodes == null || upcomingEpisodes.getCount() == 0) {
                 // no next episodes exist
                 RemoteViews item = new RemoteViews(context.getPackageName(), itemLayout);
                 item.setTextViewText(R.id.textViewWidgetShow,
@@ -180,7 +181,9 @@ public class AppWidget extends AppWidgetProvider {
                 }
             }
 
-            upcomingEpisodes.close();
+            if (upcomingEpisodes != null) {
+                upcomingEpisodes.close();
+            }
 
             // Create an Intent to launch Upcoming
             Intent intent = new Intent(context, UpcomingRecentActivity.class);
