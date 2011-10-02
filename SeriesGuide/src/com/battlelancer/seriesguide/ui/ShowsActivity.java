@@ -71,6 +71,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollListener,
         LoaderManager.LoaderCallbacks<Cursor>, ActionBar.OnNavigationListener {
 
+    private boolean mBusy;
+
     private static final int UPDATE_SUCCESS = 100;
 
     private static final int UPDATE_INCOMPLETE = 104;
@@ -137,9 +139,9 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private ShowSorting mSorting;
 
-    private long toDeleteID;
+    private long mToDeleteId;
 
-    public boolean mBusy;
+    private boolean mIsPreventLoaderRestart;
 
     /**
      * Google Analytics helper method for easy event tracking.
@@ -173,6 +175,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         // try to restore previously set show filter
         int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
         actionBar.setSelectedNavigationItem(showfilter);
+        // prevent the onNavigationItemSelected listener from reacting
+        mIsPreventLoaderRestart = true;
 
         updatePreferences(prefs);
 
@@ -208,8 +212,10 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             list.setEmptyView(emptyView);
         }
 
-        // destroy any loader we created in a previous activity
-        getSupportLoaderManager().destroyLoader(LOADER_ID);
+        // start loading data
+        Bundle args = new Bundle();
+        args.putInt(FILTER_ID, showfilter);
+        getSupportLoaderManager().initLoader(LOADER_ID, args, this);
 
         registerForContextMenu(list);
     }
@@ -352,7 +358,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                                 new Thread(new Runnable() {
                                     public void run() {
                                         SeriesDatabase.deleteShow(getApplicationContext(),
-                                                String.valueOf(toDeleteID));
+                                                String.valueOf(mToDeleteId));
                                         if (progress.isShowing()) {
                                             progress.dismiss();
                                         }
@@ -466,7 +472,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 fireTrackerEvent("Delete show");
 
                 if (!isUpdateTaskRunning()) {
-                    toDeleteID = info.id;
+                    mToDeleteId = info.id;
                     showDialog(CONFIRM_DELETE_DIALOG);
                 }
                 return true;
@@ -805,9 +811,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private void requery() {
         int filterId = getSupportActionBar().getSelectedNavigationIndex();
-        Bundle args = new Bundle();
-        args.putInt(FILTER_ID, filterId);
-        getSupportLoaderManager().restartLoader(LOADER_ID, args, this);
+        // just reuse the onNavigationItemSelected callback method
+        onNavigationItemSelected(filterId, filterId);
     }
 
     final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
@@ -920,16 +925,21 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-        // requery with the new filter
-        Bundle args = new Bundle();
-        args.putInt(FILTER_ID, itemPosition);
-        getSupportLoaderManager().restartLoader(LOADER_ID, args, this);
+        // only handle events after the event caused when creating the activity
+        if (mIsPreventLoaderRestart) {
+            mIsPreventLoaderRestart = false;
+        } else {
+            // requery with the new filter
+            Bundle args = new Bundle();
+            args.putInt(FILTER_ID, itemPosition);
+            getSupportLoaderManager().restartLoader(LOADER_ID, args, this);
 
-        // save the selected filter back to settings
-        Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
-                .edit();
-        editor.putInt(SeriesGuidePreferences.KEY_SHOWFILTER, itemPosition);
-        editor.commit();
+            // save the selected filter back to settings
+            Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                    .edit();
+            editor.putInt(SeriesGuidePreferences.KEY_SHOWFILTER, itemPosition);
+            editor.commit();
+        }
         return true;
     }
 
