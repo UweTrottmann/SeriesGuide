@@ -271,6 +271,11 @@ public class AddShow extends Activity {
 
         clearSearchField();
 
+        // notify user here already
+        Toast.makeText(this, "\"" + show.getSeriesName() + "\" " + getString(R.string.add_started),
+                Toast.LENGTH_SHORT).show();
+
+        // add the show to a running add task or create a new one
         if (addTask == null || addTask.getStatus() == AsyncTask.Status.FINISHED) {
             addTask = (AddShowTask) new AddShowTask(this, show).execute();
         } else {
@@ -289,8 +294,6 @@ public class AddShow extends Activity {
         private static final int ADD_SUCCESS = 1;
 
         private static final int ADD_SAXERROR = 2;
-
-        public static final int ADD_STARTED = 3;
 
         final private Context mContext;
 
@@ -342,8 +345,6 @@ public class AddShow extends Activity {
 
                 SearchResult nextShow = mAddQueue.removeFirst();
                 final int id = nextShow.getId();
-                nextShow.setId(ADD_STARTED);
-                publishProgress(nextShow);
 
                 try {
                     if (TheTVDB.addShow(String.valueOf(id), mContext.getApplicationContext())) {
@@ -376,12 +377,6 @@ public class AddShow extends Activity {
             String showname = values[0].getSeriesName();
 
             switch (values[0].getId()) {
-                case ADD_STARTED: {
-                    Toast.makeText(mContext.getApplicationContext(),
-                            "\"" + showname + "\" " + mContext.getString(R.string.add_started),
-                            Toast.LENGTH_SHORT).show();
-                    break;
-                }
                 case ADD_SUCCESS:
                     Toast.makeText(mContext.getApplicationContext(),
                             "\"" + showname + "\" " + mContext.getString(R.string.add_success),
