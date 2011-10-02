@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 2.1.5beta *(2011-10-02)*
+--------------------------------
+
+* Don't reload the show list on config changes (e.g. orientation changes): scrolling state is remembered again
+* Image loader now checks faster for existing images and only downloads images up to 100KB in size (most are around 30K)
+
 Version 2.1.4beta *(2011-10-01)*
 --------------------------------
 
