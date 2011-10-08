@@ -268,7 +268,7 @@
     <string-array name="showfilter_list">
         <item>All</item>
         <item>Favorites</item>
-        <item>Unseen episodes</item>
+        <item>Unseen/Upcoming</item>
     </string-array>
     
     <!-- strings for BETA release -->
