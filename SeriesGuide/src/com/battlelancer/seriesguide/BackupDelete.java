@@ -205,6 +205,13 @@ public class BackupDelete extends BaseActivity {
                         .putBoolean(SeriesGuidePreferences.KEY_DATABASEIMPORTED, true).commit();
                 getContentResolver().notifyChange(Shows.CONTENT_URI, null);
 
+                // wait a little for the new db to settle in
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                
                 // tell user something might have gone wrong if there are no
                 // shows in the database right now
                 final Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[] {
