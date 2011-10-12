@@ -20,7 +20,7 @@
             android:id="@id/android:list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:columnWidth="330dp"
+            android:columnWidth="310dp"
             android:numColumns="auto_fit"
             android:verticalSpacing="20dp"
             android:horizontalSpacing="20dp"
