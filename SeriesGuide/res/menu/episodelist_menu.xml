@@ -8,8 +8,7 @@
         android:showAsAction="ifRoom|withText" />
     <item
         android:id="@+id/mark_all"
-        android:title="@string/mark_all"
-        android:icon="@drawable/ic_action_calendar" />
+        android:title="@string/mark_all" android:icon="@drawable/ic_action_mark"/>
     <item
         android:id="@+id/unmark_all"
         android:title="@string/unmark_all"
