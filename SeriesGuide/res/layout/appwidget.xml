@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:orientation="horizontal"
     android:background="@drawable/appwidget_bg">
-	<LinearLayout
-		android:id="@+id/LinearLayoutWidget"
-		android:layout_width="fill_parent"
+    <LinearLayout
+        android:id="@+id/LinearLayoutWidget"
+        android:layout_width="0dp"
         android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/ImageButtonWidget"
-		android:background="@drawable/appwidget_button_center"
-		android:orientation="vertical"
-		android:gravity="center_vertical"
-		android:clickable="true"
+        android:layout_weight="1"
+        android:background="@drawable/appwidget_button_center"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:clickable="true"
         android:focusable="true"
-		android:paddingLeft="10dp"
+        android:paddingLeft="10dp"
         android:paddingRight="5dp">
-	</LinearLayout>
-        
+    </LinearLayout>
     <ImageButton
         android:id="@+id/ImageButtonWidget"
         android:layout_width="30dp"
@@ -26,7 +26,5 @@
         android:src="@drawable/ic_action_refresh"
         android:background="@drawable/appwidget_button_center"
         android:scaleType="fitXY"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        />
-</RelativeLayout>
+        android:layout_gravity="bottom" />
+</LinearLayout>

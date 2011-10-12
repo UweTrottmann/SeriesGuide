@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:id="@+id/layout_buttons"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:id="@+id/widgetShowlistButton"
+        android:background="@drawable/appwidget_button_center"
+        android:focusable="true">
+        <TextView
+            android:text="@string/showlist"
+            android:id="@+id/textViewGoToShowlist"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:paddingLeft="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical" />
+        <ImageView
+            android:id="@+id/arrowImage"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_action_arrow_right"
+            android:layout_gravity="center_vertical"></ImageView>
+    </LinearLayout>
+    <ImageButton
+        android:id="@+id/ImageButtonWidget"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:padding="5dp"
+        android:src="@drawable/ic_action_refresh"
+        android:background="@drawable/appwidget_button_center"
+        android:scaleType="fitXY"
+        android:layout_gravity="bottom" />
+</LinearLayout>
+

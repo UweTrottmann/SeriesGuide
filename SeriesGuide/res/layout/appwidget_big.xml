@@ -1,40 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:orientation="vertical"
     android:background="@drawable/appwidget_bg">
-	<LinearLayout
-		android:id="@+id/LinearLayoutWidget"
-		android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-		android:background="@drawable/appwidget_button_center"
-		android:orientation="vertical"
-		android:clickable="true"
-        android:focusable="true"
-		android:paddingLeft="10dp"
-        android:paddingRight="10dp">
-	</LinearLayout>	
-    <ImageButton
-        android:id="@+id/ImageButtonWidget"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:padding="5dp"
-        android:src="@drawable/ic_action_refresh"
+    <LinearLayout
+        android:id="@+id/LinearLayoutWidget"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@drawable/appwidget_button_center"
-        android:scaleType="fitXY"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        />
-    <Button android:text="@string/showlist"
-	    android:id="@+id/widgetShowlistButton"
-	    android:background="@drawable/appwidget_button_center"
-	    android:textColor="#ffffffff"
-	    android:textSize="12sp"
-	    android:layout_toLeftOf="@+id/ImageButtonWidget"
-	    android:layout_height="wrap_content"
-	    android:layout_width="wrap_content"
-	    android:layout_alignTop="@+id/ImageButtonWidget"
-	    android:layout_alignBottom="@+id/ImageButtonWidget"
-	    android:layout_alignParentLeft="true"></Button>
-</RelativeLayout>
+        android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+    </LinearLayout>
+    <include
+        layout="@layout/appwidget_buttonbar"
+        android:id="@+id/layout_buttons_ref"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
