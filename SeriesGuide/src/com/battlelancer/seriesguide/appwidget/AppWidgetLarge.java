@@ -9,7 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 
 public class AppWidgetLarge extends AppWidget {
-    private static final String LIMIT = "9";
+    private static final String LIMIT = "8";
 
     private static final int LAYOUT = R.layout.appwidget_large;
 
