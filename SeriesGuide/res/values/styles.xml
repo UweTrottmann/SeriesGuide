@@ -2,6 +2,7 @@
 <resources>        
     <style name="Theme.SeriesGuide" parent="Theme.Sherlock">
         <item name="abDivider">@null</item>
+        <item name="selectableItemBackground">@drawable/list_selector_holo_dark</item>
     </style>
 	<!-- Headers in the list views -->
 	<style name="Title">
