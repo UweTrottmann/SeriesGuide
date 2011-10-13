@@ -3,23 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="@drawable/appwidget_bg">
+    android:background="@drawable/appwidget_bg"
+    android:orientation="horizontal">
     <LinearLayout
         android:id="@+id/LinearLayoutWidget"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="@drawable/appwidget_button_center"
         android:orientation="vertical"
-        android:clickable="true"
         android:focusable="true"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingLeft="@dimen/widget_paddingLeft"
+        android:paddingTop="@dimen/widget_paddingTop"
+        android:paddingRight="@dimen/widget_paddingRight"
+        android:paddingBottom="@dimen/widget_paddingBottom">
     </LinearLayout>
     <include
         layout="@layout/appwidget_buttonbar"
         android:id="@+id/layout_buttons_ref"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
 </LinearLayout>
