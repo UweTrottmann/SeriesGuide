@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:id="@+id/gotoseasons"
         android:layout_height="50dp"
         android:layout_width="fill_parent"
-        android:background="@drawable/list_item"
+        android:background="@drawable/list_selector_holo_dark"
         android:focusable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -23,7 +22,6 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"></ImageView>
     </LinearLayout>
-    <include
-        layout="@layout/holodivider" />
+    <include layout="@layout/holodivider" />
 </merge>
 

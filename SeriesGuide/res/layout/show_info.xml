@@ -22,8 +22,7 @@
                 android:layout_marginLeft="5sp"
                 android:layout_marginRight="5sp"
                 android:text="Show title" />
-            <include
-                layout="@layout/show_info_meta"></include>
+            <include layout="@layout/show_info_meta"></include>
             <ImageView
                 android:id="@+id/ImageViewShowInfoPoster"
                 android:src="@drawable/fringe_test"
@@ -31,8 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp" />
-            <include
-                layout="@layout/show_info_metamore"></include>
+            <include layout="@layout/show_info_metamore"></include>
         </LinearLayout>
     </ScrollView>
     <include
@@ -45,7 +43,7 @@
         android:id="@+id/buttonShowInfoIMDB"
         android:layout_height="50dp"
         android:layout_width="fill_parent"
-        android:background="@drawable/list_item"
+        android:background="@drawable/list_selector_holo_dark"
         android:focusable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"

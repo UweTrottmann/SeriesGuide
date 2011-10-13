@@ -79,6 +79,8 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        getListView().setSelector(R.drawable.list_selector_holo_dark);
+        
         updatePreferences();
 
         // populate list

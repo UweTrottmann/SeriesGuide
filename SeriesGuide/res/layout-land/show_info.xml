@@ -28,10 +28,8 @@
                     android:layout_marginLeft="5sp"
                     android:layout_marginRight="5sp"
                     android:text="Show title" />
-                <include
-                    layout="@layout/show_info_meta"></include>
-                <include
-                    layout="@layout/show_info_metamore"></include>
+                <include layout="@layout/show_info_meta"></include>
+                <include layout="@layout/show_info_metamore"></include>
             </LinearLayout>
             <ImageView
                 android:layout_width="0dp"
@@ -54,7 +52,7 @@
         android:id="@+id/buttonShowInfoIMDB"
         android:layout_height="50dp"
         android:layout_width="fill_parent"
-        android:background="@drawable/list_item"
+        android:background="@drawable/list_selector_holo_dark"
         android:focusable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
