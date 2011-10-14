@@ -7,15 +7,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp" />
-    <TextView
-        android:id="@+id/TextViewShowInfoActors"
-        style="@style/SmallItems"
-        android:text="@string/show_actors" />
+    <include layout="@layout/ratingbar"></include>
     <TextView
         android:id="@+id/TextViewShowInfoGenres"
         style="@style/SmallItems"
         android:text="@string/show_genres" />
-    <include layout="@layout/ratingbar"></include>
+    <TextView
+        android:id="@+id/TextViewShowInfoActors"
+        style="@style/SmallItems"
+        android:text="@string/show_actors" />
     <TextView
         android:id="@+id/TextViewShowInfoContentRating"
         style="@style/SmallItems"

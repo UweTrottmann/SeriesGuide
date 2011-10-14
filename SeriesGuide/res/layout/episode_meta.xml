@@ -7,20 +7,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="8dp" />
+    <include layout="@layout/ratingbar"></include>
     <TextView
-        android:id="@+id/TextViewEpisodeFirstAirdate"
-        style="@style/SmallItems" />
-    <TextView
-        android:id="@+id/textViewEpisodeDVDnumber"
+        android:id="@+id/TextViewEpisodeGuestStars"
         style="@style/SmallItems" />
     <TextView
         android:id="@+id/TextViewEpisodeDirectors"
         style="@style/SmallItems" />
     <TextView
-        android:id="@+id/TextViewEpisodeGuestStars"
-        style="@style/SmallItems" />
-    <TextView
         android:id="@+id/TextViewEpisodeWriters"
         style="@style/SmallItems" />
-    <include layout="@layout/ratingbar"></include>
+    <TextView
+        android:id="@+id/textViewEpisodeDVDnumber"
+        style="@style/SmallItems" />
+    <TextView
+        android:id="@+id/TextViewEpisodeFirstAirdate"
+        style="@style/SmallItems" />
 </merge>
