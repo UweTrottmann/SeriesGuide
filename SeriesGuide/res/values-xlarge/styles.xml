@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Used for longer passages of text -->
+    <style name="DescriptionFont">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+</resources>

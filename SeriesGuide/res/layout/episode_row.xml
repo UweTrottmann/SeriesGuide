@@ -15,14 +15,13 @@
         android:layout_alignParentTop="true" />
     <TextView
         android:id="@+id/TextViewEpisodeListTitle"
-        style="@style/ListTitle"
+        style="@style/ListHeader"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/CustomCheckBoxWatched"
         android:text="Really long Episode Title, You Know!?" />
     <TextView
         android:id="@+id/TextViewEpisodeListNumber"
-        style="@style/SmallFont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/TextViewEpisodeListTitle"
@@ -30,7 +29,6 @@
         android:text="Episode X" />
     <TextView
         android:id="@+id/TextViewEpisodeListAirdate"
-        style="@style/SmallFont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"

@@ -6,6 +6,7 @@
     android:layout_height="fill_parent">
     <TextView
         android:id="@+id/oathmessage"
+        android:textSize="@dimen/text_size_medium"
         android:layout_gravity="center"
         android:gravity="center"
         android:layout_width="wrap_content"

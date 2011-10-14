@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
-  xmlns:android="http://schemas.android.com/apk/res/android">
-  	<LinearLayout
-		android:orientation="vertical"
-		android:id="@+id/timestamp"
-		android:layout_width="100dp"
-		android:layout_height="wrap_content"
-		android:paddingRight="5dp"
-		android:layout_alignParentRight="true"
-		android:gravity="right">
-		<TextView android:id="@+id/TextViewShowListAirtime"
-			style="@style/Airdata"
-			android:paddingTop="5dp"
-			android:gravity="right"
-			android:lineSpacingExtra="2sp"
-            android:text="Mon 17:00 PM"/>
-		<TextView android:id="@+id/TextViewShowListNetwork"
-			style="@style/Airdata"
-			android:paddingBottom="5dp"
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/timestamp"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:paddingRight="5dp"
+        android:layout_alignParentRight="true"
+        android:gravity="right">
+        <TextView
+            android:id="@+id/TextViewShowListAirtime"
+            style="@style/Airdata"
+            android:paddingTop="5dp"
             android:gravity="right"
-            android:text="Very Long Network Name (VLNM)"/>
-	</LinearLayout>
+            android:lineSpacingExtra="2sp"
+            android:text="Mon 17:00 PM" />
+        <TextView
+            android:id="@+id/TextViewShowListNetwork"
+            style="@style/Airdata"
+            android:paddingBottom="5dp"
+            android:gravity="right"
+            android:text="Very Long Network Name (VLNM)" />
+    </LinearLayout>
 </merge>

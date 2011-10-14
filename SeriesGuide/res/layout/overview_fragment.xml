@@ -31,7 +31,7 @@
                     android:paddingBottom="2dp">
                     <TextView
                         android:id="@+id/seriesname"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        style="@style/Header"
                         android:paddingTop="2dp"
                         android:paddingRight="5dp"
                         android:paddingBottom="0dp"
@@ -48,14 +48,12 @@
                         android:layout_toLeftOf="@+id/show_arrow">
                         <TextView
                             android:id="@+id/showmeta"
-                            style="@style/SmallFont"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Thu 10:00 PM on Very Long Network Name (VLNM)"
                             android:layout_weight="1" />
                         <TextView
                             android:id="@+id/showStatus"
-                            style="@style/SmallFont"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="5dp"
@@ -70,11 +68,9 @@
                         android:layout_centerVertical="true"></ImageView>
                 </RelativeLayout>
 
-                <include
-                    layout="@layout/holodivider" />
+                <include layout="@layout/holodivider" />
 
-                <include
-                    layout="@layout/gotoseasons" />
+                <include layout="@layout/gotoseasons" />
 
                 <RelativeLayout
                     android:layout_width="fill_parent"
@@ -89,7 +85,7 @@
                         android:text="Loading..."></TextView>
                     <TextView
                         android:id="@+id/TextViewEpisodeTitle"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        style="@style/ListHeader"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/nextheader"
@@ -98,7 +94,6 @@
                         android:text="Loading..." />
                     <TextView
                         android:id="@+id/TextViewEpisodeNumbers"
-                        style="@style/SmallFont"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/TextViewEpisodeTitle"
@@ -117,8 +112,7 @@
                             layout="@layout/imagecontainer"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content" />
-                        <include
-                            layout="@layout/overview_episode_meta"></include>
+                        <include layout="@layout/overview_episode_meta"></include>
                     </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>

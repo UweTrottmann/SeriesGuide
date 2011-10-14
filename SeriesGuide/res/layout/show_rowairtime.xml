@@ -13,8 +13,7 @@
         android:layout_alignParentLeft="true" />
     <TextView
         android:id="@+id/seriesname"
-        style="@style/ListTitle"
-        android:textSize="18sp"
+        style="@style/ListHeader"
         android:paddingTop="2dp"
         android:paddingRight="5dp"
         android:paddingBottom="0dp"
@@ -33,7 +32,6 @@
         android:layout_toLeftOf="@id/timestamp" />
     <TextView
         android:id="@+id/TextViewShowListNextEpisode"
-        style="@style/SmallFont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingRight="5dp"

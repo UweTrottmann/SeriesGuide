@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ratingbar">
+        android:id="@+id/ratingbar"
+        android:layout_marginBottom="5dp">
         <TextView
             android:id="@+id/description"
-            style="@style/SmallItems"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_xmedium"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:text="@string/rating" />
         <RatingBar
             android:id="@+id/bar"
             style="?android:attr/ratingBarStyleSmall"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_size_xmedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:numStars="10"
@@ -25,7 +29,7 @@
         </RatingBar>
         <TextView
             android:id="@+id/value"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_size_xmedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"

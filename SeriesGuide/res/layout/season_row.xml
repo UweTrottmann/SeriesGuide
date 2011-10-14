@@ -6,7 +6,7 @@
     android:orientation="vertical">
     <TextView
         android:id="@+id/TextViewSeasonListTitle"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        style="@style/ListHeader"
         android:paddingLeft="5dp"
         android:paddingTop="2dp"
         android:paddingRight="5dp"
@@ -29,14 +29,13 @@
             android:progressDrawable="@drawable/progress_horizontal_holo_dark"></ProgressBar>
         <TextView
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:id="@+id/seasonProgressText"
             android:text="x/n"
-            android:layout_marginLeft="5dp" android:layout_width="60dp"></TextView>
+            android:layout_marginLeft="5dp"
+            android:layout_width="60dp"></TextView>
     </LinearLayout>
     <TextView
         android:id="@+id/TextViewSeasonListWatchCount"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_marginLeft="5dp"
         android:paddingTop="0dp"
         android:paddingRight="5dp"

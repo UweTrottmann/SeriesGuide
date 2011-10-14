@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
     <TextView
         android:id="@+id/TextViewShowInfoOverview"
-        style="@style/SmallItems"
-        android:text="@string/description_overview" />
+        style="@style/DescriptionFont"
+        android:text="@string/description_overview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="10dp" />
     <TextView
         android:id="@+id/TextViewShowInfoActors"
         style="@style/SmallItems"
@@ -13,8 +17,7 @@
         android:id="@+id/TextViewShowInfoGenres"
         style="@style/SmallItems"
         android:text="@string/show_genres" />
-    <include
-        layout="@layout/ratingbar"></include>
+    <include layout="@layout/ratingbar"></include>
     <TextView
         android:id="@+id/TextViewShowInfoContentRating"
         style="@style/SmallItems"

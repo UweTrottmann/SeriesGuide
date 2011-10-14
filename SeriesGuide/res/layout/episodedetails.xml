@@ -6,7 +6,7 @@
     android:orientation="vertical">
     <TextView
         android:id="@+id/TextViewEpisodeTitle"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        style="@style/Header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -28,13 +28,11 @@
         android:layout_marginLeft="5dp">
         <TextView
             android:id="@+id/TextViewEpisodeNumbers"
-            style="@style/SmallFont"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewEpisodeDetailsShowName" />
         <TextView
             android:id="@+id/TextViewEpisodeWatchedState"
-            android:textSize="@dimen/text_size_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
@@ -47,6 +45,5 @@
         layout="@layout/imagecontainer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
-    <include
-        layout="@layout/episode_meta"></include>
+    <include layout="@layout/episode_meta"></include>
 </LinearLayout>
