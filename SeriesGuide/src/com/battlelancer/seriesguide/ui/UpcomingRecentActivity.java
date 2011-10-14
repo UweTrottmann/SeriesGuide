@@ -25,7 +25,7 @@ public class UpcomingRecentActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.upcomingrecent);
+        setContentView(R.layout.upcoming_multipane);
         getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         ActionBar.Tab upcomingTab = getSupportActionBar().newTab().setText(R.string.upcoming);
