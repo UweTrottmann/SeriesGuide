@@ -14,7 +14,7 @@ public class OverviewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.overview_multipane);
+        setContentView(R.layout.overview);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.description_overview));
