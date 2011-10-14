@@ -85,8 +85,15 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, MARK_WATCHED_ID, 0, R.string.mark_episode);
-        menu.add(0, MARK_UNWATCHED_ID, 1, R.string.unmark_episode);
+
+        // only display the action appropiate for the items current state
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+        WatchedBox watchedBox = (WatchedBox) info.targetView.findViewById(R.id.watchedBoxUpcoming);
+        if (watchedBox.isChecked()) {
+            menu.add(0, MARK_UNWATCHED_ID, 1, R.string.unmark_episode);
+        } else {
+            menu.add(0, MARK_WATCHED_ID, 0, R.string.mark_episode);
+        }
     }
 
     @Override

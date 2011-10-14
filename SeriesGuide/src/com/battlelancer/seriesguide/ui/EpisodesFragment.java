@@ -65,16 +65,16 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         AnalyticsUtils.getInstance(getActivity()).trackPageView("/Episodes");
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        
+
         getListView().setSelector(R.drawable.list_selector_holo_dark);
-        
+
         updatePreferences();
 
         // Check to see if we have a frame in which to embed the details
@@ -247,8 +247,16 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, MARK_WATCHED_ID, 0, R.string.mark_episode);
-        menu.add(0, MARK_UNWATCHED_ID, 1, R.string.unmark_episode);
+
+        // only display the action appropiate for the items current state
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+        WatchedBox watchedBox = (WatchedBox) info.targetView
+                .findViewById(R.id.CustomCheckBoxWatched);
+        if (watchedBox.isChecked()) {
+            menu.add(0, MARK_UNWATCHED_ID, 1, R.string.unmark_episode);
+        } else {
+            menu.add(0, MARK_WATCHED_ID, 0, R.string.mark_episode);
+        }
         menu.add(0, DELETE_EPISODE_ID, 2, R.string.delete_show);
     }
 
