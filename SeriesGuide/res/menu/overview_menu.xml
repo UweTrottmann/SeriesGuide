@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_togglemark"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/togglewatched"
-        android:icon="@drawable/ic_action_seen" />
+        android:icon="@drawable/ic_action_seen"
+        android:title="@string/mark_episode" />
     <item
         android:id="@+id/menu_shareepisode"
         android:title="@string/share_episode"
-        android:icon="@drawable/ic_action_share" android:showAsAction="ifRoom|withText"/>
+        android:icon="@drawable/ic_action_share"
+        android:showAsAction="ifRoom|withText" />
     <item
         android:icon="@drawable/ic_action_calendar"
         android:id="@+id/menu_addevent"
