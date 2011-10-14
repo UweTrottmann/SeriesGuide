@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="lib" path="lib/libGoogleAnalytics.jar"/>
 	<classpathentry kind="lib" path="lib/signpost-commonshttp4-1.2.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/signpost-core-1.2.1.1.jar"/>
