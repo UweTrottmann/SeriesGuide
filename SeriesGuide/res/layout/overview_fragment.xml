@@ -27,8 +27,7 @@
                     android:layout_alignParentTop="true"
                     android:background="@drawable/list_selector_holo_dark"
                     android:focusable="true"
-                    android:paddingLeft="5dp"
-                    android:paddingBottom="2dp">
+                    android:padding="@dimen/body_padding">
                     <TextView
                         android:id="@+id/seriesname"
                         style="@style/Header"
@@ -42,7 +41,6 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="2dp"
                         android:layout_alignParentLeft="true"
                         android:layout_below="@id/seriesname"
                         android:layout_toLeftOf="@+id/show_arrow">
@@ -76,7 +74,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/showinfo"
-                    android:paddingTop="5dp">
+                    android:padding="@dimen/body_padding">
                     <TextView
                         android:layout_width="wrap_content"
                         android:id="@+id/nextheader"
@@ -89,8 +87,6 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/nextheader"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
                         android:text="Loading..." />
                     <TextView
                         android:id="@+id/TextViewEpisodeNumbers"
@@ -98,7 +94,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/TextViewEpisodeTitle"
                         android:layout_marginBottom="5dp"
-                        android:layout_marginLeft="5dp"
                         android:text="Loading..." />
                     <LinearLayout
                         android:id="@+id/episodemeta"
