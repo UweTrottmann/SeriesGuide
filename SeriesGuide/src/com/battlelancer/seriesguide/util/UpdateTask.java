@@ -18,6 +18,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -46,6 +47,10 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
     private ProgressBar mUpdateProgress;
 
+    private String mCurrentShowName;
+
+    private TextView mUpdateStatus;
+
     public UpdateTask(boolean isFullUpdate, ShowsActivity context) {
         mShowsActivity = context;
         mIsFullUpdate = isFullUpdate;
@@ -73,6 +78,9 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         // setup the progress overlay
         mUpdateProgress = (ProgressBar) mProgressOverlay.findViewById(R.id.ProgressBarShowListDet);
         mUpdateProgress.setIndeterminate(true);
+
+        mUpdateStatus = (TextView) mProgressOverlay.findViewById(R.id.textViewUpdateStatus);
+        mUpdateStatus.setText("");
 
         final View cancelButton = mProgressOverlay.findViewById(R.id.overlayCancel);
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -132,9 +140,18 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 break;
             }
 
+            id = mShows[i];
+
+            Cursor show = resolver.query(Shows.buildShowUri(id), new String[] {
+                Shows.TITLE
+            }, null, null, null);
+            if (show.moveToFirst()) {
+                mCurrentShowName = show.getString(0);
+            }
+            show.close();
+
             publishProgress(i, mShows.length + 1);
 
-            id = mShows[i];
             for (int itry = 0; itry < 2; itry++) {
                 try {
                     TheTVDB.updateShow(id, mShowsActivity);
@@ -143,14 +160,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                     // failed twice
                     if (itry == 1) {
                         resultCode = UPDATE_SAXERROR;
-                        Cursor show = resolver.query(Shows.buildShowUri(id), new String[] {
-                            Shows.TITLE
-                        }, null, null, null);
-                        if (show.moveToFirst()) {
-                            String name = show.getString(0);
-                            addFailedShow(name);
-                        }
-                        show.close();
+                        addFailedShow(mCurrentShowName);
                     }
                 }
             }
@@ -223,6 +233,15 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
     protected void onProgressUpdate(Integer... values) {
         mUpdateProgress.setMax(values[1]);
         mUpdateProgress.setProgress(values[0]);
+        if (values[0] == values[1]) {
+            // clear the text field if we are finishing up
+            mUpdateStatus.setText("");
+        } else if (values[0] + 1 == values[1]) {
+            // if we're one before completion, we're rebuilding the search index
+            mUpdateStatus.setText(mShowsActivity.getString(R.string.update_rebuildsearch) + "...");
+        } else {
+            mUpdateStatus.setText(mCurrentShowName + "...");
+        }
     }
 
     private void addFailedShow(String seriesName) {
