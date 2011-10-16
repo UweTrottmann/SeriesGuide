@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.battlelancer.seriesguide.beta"
     android:installLocation="auto"
-    android:versionCode="135" android:versionName="2.1.5beta">
+    android:versionCode="136" android:versionName="2.2beta">
     <uses-feature android:required="false" android:name="android.hardware.touchscreen"></uses-feature>
     <application
         android:name="com.battlelancer.seriesguide.SeriesGuideApplication"
