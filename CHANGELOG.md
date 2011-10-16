@@ -1,6 +1,17 @@
 Change Log
 ==========
 
+Version 2.2beta *(2011-10-16)*
+--------------------------------
+
+* Tell which show is currently getting updated
+* Dual pane layout for Upcoming on large+ devices
+* New number format brought to you by dqdb via GitHub
+* Small tweaks everywhere
+* Layout improvements all over the app (spot the differences!), esp. on tablet/Google TV (large+) devices
+* Display correct time stamps for US Central users
+* Latest translations from crowdin (Danish now in again)
+
 Version 2.1.5beta *(2011-10-02)*
 --------------------------------
 
