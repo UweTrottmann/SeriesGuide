@@ -25,7 +25,6 @@
             android:id="@+id/textView1"
             android:layout_height="wrap_content"
             android:text="@string/powered_by_thetvdb"
-            android:textSize="@dimen/text_size_small"
             android:textColor="@color/text_faded"
             android:layout_below="@+id/EditTextSearchString"
             android:layout_alignRight="@+id/EditTextSearchString"></TextView>

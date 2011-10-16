@@ -13,6 +13,8 @@ import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.BaseColumns;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -40,6 +42,8 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
     private SimpleCursorAdapter mAdapter;
 
+    private boolean mDualPane;
+
     static UpcomingFragment newInstance(String query, String sortOrder, String analyticsTag,
             int loaderId) {
         UpcomingFragment f = new UpcomingFragment();
@@ -56,7 +60,14 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        getListView().setSelector(R.drawable.list_selector_holo_dark);
+
         setEmptyText(getString(R.string.noupcoming));
+
+        // Check to see if we have a frame in which to embed the details
+        // fragment directly in the containing UI.
+        View detailsFragment = getActivity().findViewById(R.id.fragment_details);
+        mDualPane = detailsFragment != null && detailsFragment.getVisibility() == View.VISIBLE;
 
         setupAdapter();
 
@@ -74,8 +85,15 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, MARK_WATCHED_ID, 0, R.string.mark_episode);
-        menu.add(0, MARK_UNWATCHED_ID, 1, R.string.unmark_episode);
+
+        // only display the action appropiate for the items current state
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+        WatchedBox watchedBox = (WatchedBox) info.targetView.findViewById(R.id.watchedBoxUpcoming);
+        if (watchedBox.isChecked()) {
+            menu.add(0, MARK_UNWATCHED_ID, 1, R.string.unmark_episode);
+        } else {
+            menu.add(0, MARK_WATCHED_ID, 0, R.string.mark_episode);
+        }
     }
 
     @Override
@@ -186,10 +204,33 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-        Intent i = new Intent(getActivity(), EpisodeDetailsActivity.class);
-        i.putExtra(Episodes._ID, String.valueOf(id));
-        startActivity(i);
+        showDetails(String.valueOf(id));
+    }
+
+    private void showDetails(String episodeId) {
+        if (mDualPane) {
+            // Check if fragment is shown, create new if needed.
+            EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
+                    .findFragmentById(R.id.fragment_details);
+            if (detailsFragment == null
+                    || !detailsFragment.getEpisodeId().equalsIgnoreCase(episodeId)) {
+                // Make new fragment to show this selection.
+                detailsFragment = EpisodeDetailsFragment.newInstance(episodeId);
+
+                // Execute a transaction, replacing any existing
+                // fragment with this one inside the frame.
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_details, detailsFragment, "fragmentDetails");
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.commit();
+            }
+
+        } else {
+            Intent intent = new Intent();
+            intent.setClass(getActivity(), EpisodeDetailsActivity.class);
+            intent.putExtra(BaseColumns._ID, episodeId);
+            startActivity(intent);
+        }
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {

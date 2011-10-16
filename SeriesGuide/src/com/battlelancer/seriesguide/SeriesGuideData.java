@@ -241,9 +241,6 @@ public class SeriesGuideData {
             // use local calendar, e.g. for US based users where airtime is the
             // same across time zones
             cal = Calendar.getInstance();
-
-            // TODO: check for Central and subtract one hour, update
-            // UseMyTimeZone description that US users do not need to use it
         }
 
         // set airday
@@ -263,6 +260,12 @@ public class SeriesGuideData {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
         cal.add(Calendar.HOUR_OF_DAY, offset);
+
+        // check for US Central and automagically subtract one hour
+        if (TimeZone.getDefault().getRawOffset() == TimeZone.getTimeZone("US/Central")
+                .getRawOffset()) {
+            cal.add(Calendar.HOUR_OF_DAY, -1);
+        }
 
         if (useUserTimeZone) {
             // convert to local timezone
@@ -374,9 +377,9 @@ public class SeriesGuideData {
      */
     public static String getNextEpisodeString(SharedPreferences prefs, String season,
             String episode, String title) {
-        if (prefs.getString(SeriesGuidePreferences.KEY_NUMBERFORMAT,
-                SeriesGuidePreferences.NUMBERFORMAT_DEFAULT).equals(
-                SeriesGuidePreferences.NUMBERFORMAT_DEFAULT)) {
+        String format = prefs.getString(SeriesGuidePreferences.KEY_NUMBERFORMAT,
+                SeriesGuidePreferences.NUMBERFORMAT_DEFAULT);
+        if (format.equals(SeriesGuidePreferences.NUMBERFORMAT_DEFAULT)) {
             // 1x01 format
             season += "x";
         } else {
@@ -385,7 +388,10 @@ public class SeriesGuideData {
             if (season.length() == 1) {
                 season = "0" + season;
             }
-            season = "S" + season + "E";
+            if (format.equals(SeriesGuidePreferences.NUMBERFORMAT_ENGLISHLOWER))
+                season = "s" + season + "e";
+            else
+                season = "S" + season + "E";
         }
 
         // make episode number always two chars long

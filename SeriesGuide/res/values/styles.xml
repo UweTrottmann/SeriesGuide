@@ -1,71 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>        
-    <style name="Theme.SeriesGuide" parent="Theme.Sherlock">
+<resources>
+    <style
+        name="Theme.SeriesGuide"
+        parent="Theme.Sherlock">
         <item name="abDivider">@null</item>
+        <item name="selectableItemBackground">@drawable/list_selector_holo_dark</item>
     </style>
-	<!-- Headers in the list views -->
-	<style name="Title">
-		<item name="android:textSize">30sp</item>
-		<item name="android:layout_margin">5dp</item>
-    	<item name="android:layout_marginBottom">10dp</item>
-    	<item name="android:textColor">#bebebe</item>
-	</style>
+
+    <style name="Header">
+        <item name="android:textSize">@dimen/text_size_xlarge</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <style name="ListHeader">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <style name="Airdata">
+        <item name="android:textSize">@dimen/text_size_xsmall</item>
+        <item name="android:textColor">@color/text_dim</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <!-- Used for metadata in detail views. -->
-	<style name="SmallItems">
-		<item name="android:textSize">16sp</item>
-		<item name="android:layout_width">wrap_content</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:layout_marginLeft">5dp</item>
-		<item name="android:layout_marginRight">5dp</item>
-		<item name="android:layout_marginBottom">2dp</item>
-	</style>
-	<!-- Titles in detail views -->
-	<style name="BigFont">
-		<item name="android:textSize">28sp</item>
-	</style>
-	<!-- Titles in lists -->
-	<style name="ListTitle">
-		<item name="android:textSize">22sp</item>
-		<item name="android:textColor">#fff</item>
-	</style>
-	<style name="DescriptionFont">
-		<item name="android:textSize">16sp</item>
-	</style>
-	<!-- List metadata and detail view state info -->
-	<style name="SmallFont">
-		<item name="android:textSize">14sp</item>
-	</style>
-	
-	<!--  show list -->
-	<style name="Airdata">
-		<item name="android:textSize">12sp</item>
-		<item name="android:layout_width">wrap_content</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:textColor">#ff888888</item>
-	</style>
-	
-	<!-- Widget items -->
-	<style name="WidgetTextView">
-		<item name="android:layout_width">wrap_content</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:scrollHorizontally">true</item>
-		<item name="android:lines">1</item>		
-		<item name="android:textSize">11sp</item>
-		<item name="android:ellipsize">end</item>
-	</style>
-	<style name="WidgetTextView.Show">
-		<item name="android:textStyle">bold</item>
-	</style>
-	<style name="WidgetTextView.Episode">
-	</style>
-    
+    <style name="SmallItems">
+        <item name="android:textSize">@dimen/text_size_xmedium</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+
+    <!-- Used for longer passages of text -->
+    <style name="DescriptionFont">
+        <item name="android:textSize">@dimen/text_size_xmedium</item>
+    </style>
+
+    <!-- custom button style -->
     <style name="HoloCompatButton">
         <item name="android:background">@drawable/btn_default_holo_dark</item>
         <item name="android:textColor">@color/button_text</item>
     </style>
-	<style name="HoloCompatButton.Small">
-        <item name="android:textSize">@dimen/text_size_small</item>
+    <style name="HoloCompatButton.Small">
         <item name="android:layout_height">30dp</item>
-        <item name="android:layout_width">wrap_content</item>                
+        <item name="android:layout_width">wrap_content</item>
     </style>
+
+    <!-- Widget items -->
+    <style name="WidgetTextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:lines">1</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+    <style name="WidgetTextView.Show">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="WidgetTextView.Episode">
+    </style>
+
 </resources>

@@ -7,7 +7,8 @@
     <FrameLayout
         android:id="@+id/fragment_shows"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:padding="@dimen/showgrid_padding">
         <TextView
             android:id="@id/android:empty"
             android:layout_width="250dp"
@@ -19,12 +20,13 @@
             android:id="@id/android:list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:columnWidth="300dp"
+            android:columnWidth="@dimen/showgrid_columnWidth"
             android:numColumns="auto_fit"
-            android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp"
+            android:verticalSpacing="@dimen/showgrid_spacing"
+            android:horizontalSpacing="@dimen/showgrid_spacing"
             android:stretchMode="columnWidth"
-            android:gravity="center"></GridView>
+            android:gravity="center"
+            android:listSelector="@drawable/list_selector_holo_dark"></GridView>
         <ViewStub
             android:id="@+id/stub_update"
             android:inflatedId="@+id/overlay_update"

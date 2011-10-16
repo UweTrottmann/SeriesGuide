@@ -3,10 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/body_padding">
     <TextView
         android:id="@+id/TextViewSeasonListTitle"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        style="@style/ListHeader"
         android:paddingLeft="5dp"
         android:paddingTop="2dp"
         android:paddingRight="5dp"
@@ -18,8 +19,7 @@
         android:id="@+id/seasonProgress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="3dp"
-        android:layout_marginRight="5dp">
+        android:layout_marginLeft="3dp">
         <ProgressBar
             android:id="@+id/seasonProgressBar"
             android:layout_height="wrap_content"
@@ -29,14 +29,13 @@
             android:progressDrawable="@drawable/progress_horizontal_holo_dark"></ProgressBar>
         <TextView
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:id="@+id/seasonProgressText"
             android:text="x/n"
-            android:layout_marginLeft="5dp" android:layout_width="60dp"></TextView>
+            android:layout_marginLeft="5dp"
+            android:layout_width="60dp"></TextView>
     </LinearLayout>
     <TextView
         android:id="@+id/TextViewSeasonListWatchCount"
-        android:textAppearance="?android:attr/textAppearanceSmall"
         android:layout_marginLeft="5dp"
         android:paddingTop="0dp"
         android:paddingRight="5dp"

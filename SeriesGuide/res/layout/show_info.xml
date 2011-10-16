@@ -8,22 +8,19 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout_above="@+id/divider"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:padding="@dimen/body_padding">
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/title"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                style="@style/Header"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
-                android:layout_marginLeft="5sp"
-                android:layout_marginRight="5sp"
                 android:text="Show title" />
-            <include
-                layout="@layout/show_info_meta"></include>
+            <include layout="@layout/show_info_meta"></include>
             <ImageView
                 android:id="@+id/ImageViewShowInfoPoster"
                 android:src="@drawable/fringe_test"
@@ -31,8 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp" />
-            <include
-                layout="@layout/show_info_metamore"></include>
+            <include layout="@layout/show_info_metamore"></include>
         </LinearLayout>
     </ScrollView>
     <include
@@ -45,17 +41,17 @@
         android:id="@+id/buttonShowInfoIMDB"
         android:layout_height="50dp"
         android:layout_width="fill_parent"
-        android:background="@drawable/list_item"
+        android:background="@drawable/list_selector_holo_dark"
         android:focusable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/body_padding">
         <TextView
             android:text="@string/showinimdb"
             android:textSize="@dimen/text_size_medium"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:paddingLeft="5dp"
             android:layout_weight="1"></TextView>
         <ImageView
             android:id="@+id/seasonIndicator"

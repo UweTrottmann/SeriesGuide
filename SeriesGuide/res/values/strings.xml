@@ -38,7 +38,8 @@
 	<!-- Menu options -->
 	<string name="sort">Sort by</string>
 	<string name="menu_updateart">Get Missing Posters</string>
-	<string name="updateall_yes">Update All</string>
+	<string name="updateall_yes">Update (all)</string>
+    <string name="menu_update_delta">Update (modified only)</string>
 	<string name="context_updateshow">Update</string>
 	<string name="context_showinfo">Show Info</string>
 	<string name="context_marknext">Watched next episode</string>
@@ -70,8 +71,8 @@
     <string name="update_error">Could not update.</string>
     <string name="update_incomplete1">Could not update</string>
     <string name="update_incomplete2">.</string>
-    <string name="update_success">Update successfull.</string>
-    <string name="imagedownload_incomplete">Update successfull. Sadly some images did not download. Try again later.</string>
+    <string name="update_success">Update successful.</string>
+    <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
     <string name="update_inbackground">Updating...</string>
     <string name="update_inprogress">There is an update in progress. Wait for it to complete, then try again.</string>
     <string name="update_nosdcard">Could not update. There is no external storage or SD card available.</string>
@@ -211,7 +212,6 @@
 	<string name="recent">Recent</string>
 	<string name="noupcoming">Look\'s like there are no episodes. Maybe try updating your shows.</string>
 	<string name="togglewatched">Toggle Watched</string>
-	<string name="showlist">Show list</string>
 	<string name="seasons">Seasons</string>
 	<string name="cancel">Cancel</string>
 	<string name="share">Share</string>
@@ -225,6 +225,8 @@
 	<string name="checkin">Check In</string>
 	<string name="comment">Check In Comment</string>
 	<string name="checkinsuccess">Check In successful</string>
+	<string name="pref_number">Number format</string>
+	<string name="pref_numbersummary">Switch between 1x01, S01E01 or s01e01 as number format</string>
 	<string name="checkinfailed">Check-In failed</string>
 	<string name="oauthmessage">Authenticating SeriesGuide with GetGlue...</string>
 	<string name="addtocalendar">Add to calendar</string>
@@ -268,7 +270,7 @@
     <string-array name="showfilter_list">
         <item>All</item>
         <item>Favorites</item>
-        <item>Unseen episodes</item>
+        <item>Unseen/Upcoming</item>
     </string-array>
     
     <!-- strings for BETA release -->
@@ -344,10 +346,12 @@
 	<string-array name="numberData">
 		<item>default</item>
 		<item>english</item>
+		<item>englishlower</item>
 	</string-array>
 	<string-array name="numbers">
 		<item>1x01</item>
 		<item>S01E01</item>
+		<item>s01e01</item>
 	</string-array>
 	<string-array name="offsets">
 		<item>-12</item>

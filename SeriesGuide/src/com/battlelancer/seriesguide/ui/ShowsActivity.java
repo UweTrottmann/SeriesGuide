@@ -685,6 +685,10 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
         @Override
         protected Integer doInBackground(Void... params) {
+            TextView mUpdateStatus = (TextView) mProgressOverlay
+                    .findViewById(R.id.textViewUpdateStatus);
+            mUpdateStatus.setText("");
+
             // setup the progress overlay
             ProgressBar updateProgress = (ProgressBar) mProgressOverlay
                     .findViewById(R.id.ProgressBarShowListDet);
