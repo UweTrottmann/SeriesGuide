@@ -34,7 +34,8 @@
   <string name="show_isnotalive">Gestopt</string>
   <string name="sort">Sorteren</string>
   <string name="menu_updateart">Ontbrekende afbeeldingen ophalen</string>
-  <string name="updateall_yes">Alles bijwerken</string>
+  <string name="updateall_yes">Update (all)</string>
+  <string name="menu_update_delta">Update (modified only)</string>
   <string name="context_updateshow">Bijwerken</string>
   <string name="context_showinfo">Serie informatie</string>
   <string name="context_marknext">Deze afl. is bekeken</string>
@@ -58,11 +59,12 @@
   <string name="update_error">Bijwerken mislukt.</string>
   <string name="update_incomplete1">Bijwerken mislukt</string>
   <string name="update_incomplete2">.</string>
-  <string name="update_success">Bijwerken succesvol.</string>
-  <string name="imagedownload_incomplete">Bijwerken voltooid. Niet alle afbeeldingen zijn gedownload. Probeer het later opnieuw.</string>
+  <string name="update_success">Update successful.</string>
+  <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
   <string name="update_inbackground">Bijwerken...</string>
   <string name="update_inprogress">Bezig met bijwerken. Wacht tot het voltooid is en probeer daarna nog eens.</string>
   <string name="update_nosdcard">Kan niet bijwerken, geen externe opslag of SD-kaart beschikbaar.</string>
+  <string name="update_rebuildsearch">Building episode search index</string>
   <string name="show_airs">datum</string>
   <string name="show_network">op</string>
   <string name="show_pleaseupdate">Probeer deze show te updaten voor meer informatie (in het overzicht, lang drukken op de show, \'update\').
@@ -117,11 +119,22 @@ Mocht dit niet lukken, kan er op www.thetvdb.com informatie worden toegevoegd.</
   <string name="help_summary">Ga naar de Help-pagina</string>
   <string name="backup">Back-up maken/herstellen</string>
   <string name="backup_summary">Back-up maken/herstellen van series</string>
+  <string name="pref_sharing">Delen</string>
+  <string name="clearGetGlueCredentials">GetGlue verbinding verbreken</string>
+  <string name="clearGetGlueCredentialssummary">Gebruik de Delen-knoppen om GetGlue in te stellen</string>
+  <string name="pref_number">Nummering instellen</string>
+  <string name="pref_numbersummary">Wissel tussen 1x01 of S01E01 als nummering</string>
   <string name="pref_advanced">Geavanceerd</string>
   <string name="clear_cache">Wis afbeeldingenbuffer</string>
   <string name="clear_cache_summary">Alle afbeeldingen uit buffergeheugen en SD-kaart verwijderen. Pas met bijwerken van series worden deze herladen.</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Het gebruik van SeriesGuide volgen om het te helpen te verbeteren</string>
+  <string name="pref_notifications">Meldingen inschakelen</string>
+  <string name="pref_notificationssummary">Meldingen voor aankomende afleveringen weergeven</string>
+  <string name="pref_usetz">Huidige tijdzone gebruiken</string>
+  <string name="pref_usetzsummary">Uitzenddatum in eigen tijdzone (voor buitenlandse series)</string>
+  <string name="pref_offset">Tijdsverschil</string>
+  <string name="pref_offsetsummary">pas tijdsverschil aan</string>
   <string name="backup_description">De back-up zal een kopie van het SeriesGuide gegevensbestand opslaan in de map \"seriesguidebackup\" op de SD-kaart. Indien SeriesGuide wordt geherinstalleerd of op een ander Android-apparaat wordt geïnstalleerd, plaats alleen deze map op de SD-kaart van het apparaat. Druk dan hieronder op Herstellen en alle afleveringen zullen weer beschikbaar zijn. (Er kunnen geen gegevensbestanden van een nieuwere in een oudere versie worden geïmporteerd, behalve als ze dezelfde gegevensbestand-versie gebruiken. Zie ook het Over-gedeelte in de Instellingen.)</string>
   <string name="backup_failed_nosd">Kan geen back-up maken. Er is geen externe opslag beschikbaar, zoals een SD-kaart.</string>
   <string name="backup_inprogress">Database wordt geback-upt...</string>
@@ -142,8 +155,6 @@ Mocht dit niet lukken, kan er op www.thetvdb.com informatie worden toegevoegd.</
   <string name="import_question">Zorg ervoor dat de back-up aanwezig is op de SD-kaart. Alle huidige afleveringen zullen worden overschreven.</string>
   <string name="import_yes">Herstellen</string>
   <string name="import_no">Annuleren</string>
-  <string name="pref_notifications">Meldingen inschakelen</string>
-  <string name="pref_notificationssummary">Meldingen voor aankomende afleveringen weergeven</string>
   <string name="smallwidget">Volgende afleveringen (klein)</string>
   <string name="bigwidget">Volgende afleveringen (gemiddeld)</string>
   <string name="largewidget">Volgende afleveringen (groot)</string>
@@ -151,13 +162,8 @@ Mocht dit niet lukken, kan er op www.thetvdb.com informatie worden toegevoegd.</
   <string name="recent">Recent</string>
   <string name="noupcoming">Er zijn blijkbaar geen afleveringen. Probeer de series bij te werken.</string>
   <string name="togglewatched">Bekeken aan/uit</string>
-  <string name="optimizing">Zoeken optimaliseren</string>
-  <string name="showlist">Lijst weergeven</string>
   <string name="seasons">Seizoenen</string>
   <string name="cancel">Annuleren</string>
-  <string name="clearGetGlueCredentials">GetGlue verbinding verbreken</string>
-  <string name="clearGetGlueCredentialssummary">Gebruik de Delen-knoppen om GetGlue in te stellen</string>
-  <string name="pref_sharing">Delen</string>
   <string name="share">Delen</string>
   <string name="done">Gereed</string>
   <string name="checkin">Aanmelden</string>
@@ -169,14 +175,10 @@ Mocht dit niet lukken, kan er op www.thetvdb.com informatie worden toegevoegd.</
   <string name="oauthmessage">SeriesGuide verifiëren met GetGlue...</string>
   <string name="addtocalendar">Aan agenda toevoegen</string>
   <string name="addtocalendar_failed">Helaas, er is niet voldoende informatie om een agenda-item aan te maken</string>
-  <string name="pref_usetz">Huidige tijdzone gebruiken</string>
-  <string name="pref_usetzsummary">Uitzenddatum in eigen tijdzone (voor buitenlandse series)</string>
   <string name="search_description">Afleveringen</string>
   <string name="description_home">Home</string>
   <string name="description_search">Zoeken</string>
   <string name="description_overview">Overzicht</string>
-  <string name="pref_offset">Tijdsverschil</string>
-  <string name="pref_offsetsummary">pas tijdsverschil aan</string>
   <string name="norating">niet beschikbaar</string>
   <string name="loading">Laden...</string>
   <string name="eula_title">Wat u moet weten</string>
@@ -240,6 +242,6 @@ Mocht dit niet lukken, kan er op www.thetvdb.com informatie worden toegevoegd.</
   <string-array name="showfilter_list">
     <item>Alle</item>
     <item>Favorieten</item>
-    <item>Onbekeken afleveringen</item>
+    <item>Unseen/Upcoming</item>
   </string-array>
 </resources>

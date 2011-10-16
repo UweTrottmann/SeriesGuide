@@ -34,7 +34,8 @@
   <string name="show_isnotalive">Σταμάτησε</string>
   <string name="sort">Ταξινόμηση κατά</string>
   <string name="menu_updateart">Κάνε λήψη των αφισών που λείπουν</string>
-  <string name="updateall_yes">Επεισόδια που ταιριάζουν</string>
+  <string name="updateall_yes">Update (all)</string>
+  <string name="menu_update_delta">Update (modified only)</string>
   <string name="context_updateshow">Ενημέρωση</string>
   <string name="context_showinfo">Εμφάνιση πληροφοριών</string>
   <string name="context_marknext">Το επόμενο επεισόδιο έχει παρακολουθηθεί</string>
@@ -58,11 +59,12 @@
   <string name="update_error">Δεν ήταν δυνατή η ενημέρωση.</string>
   <string name="update_incomplete1">Δεν ήταν δυνατή η ενημέρωση</string>
   <string name="update_incomplete2">.</string>
-  <string name="update_success">Επιτυχής ενημέρωση.</string>
-  <string name="imagedownload_incomplete">Ενημέρωση επιτυχής. Δυστυχώς κάποιες εικόνες δεν μεταφορτώθηκαν. Προσπαθήστε ξανά αργότερα.</string>
+  <string name="update_success">Update successful.</string>
+  <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
   <string name="update_inbackground">Ενημέρωση ...</string>
   <string name="update_inprogress">Υπάρχει μια ενημέρωση σε εξέλιξη. Περιμένετε να ολοκληρωθεί και στη συνέχεια προσπαθήστε ξανά.</string>
   <string name="update_nosdcard">Δεν ήταν δυνατή η ενημέρωση. Δεν υπάρχει καμία εξωτερική συσκευή αποθήκευσης ή κάρτα SD διαθέσιμη.</string>
+  <string name="update_rebuildsearch">Building episode search index</string>
   <string name="show_airs">Προβάλλεται την</string>
   <string name="show_network">Στο</string>
   <string name="show_pleaseupdate">Προσπαθήστε να ενημερώσετε αυτήν την σειρά για να εμφανιστούν περισσότερες πληροφορίες (στην επισκόπηση, πατήστε και κρατήστε την, επιλέξτε Ενημέρωση). Εάν αυτό δεν βοηθήσει, είναι πιθανό να μην υπάρχουν πρόσθετες πληροφορίες στο TheTVDB. Πήγαινε στο site (www.thetvdb.com) για να μάθετε πώς μπορείτε να προσθέσετε μερικές.</string>
@@ -116,11 +118,22 @@
   <string name="help_summary">Μετάβαση στη σελίδα Βοήθειας</string>
   <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>
   <string name="backup_summary">Δημιουργία αντιγράφου ασφαλείας ή επαναφορά των σειρών</string>
+  <string name="pref_sharing">Κοινή χρήση</string>
+  <string name="clearGetGlueCredentials">Αποσύνδεση GetGlue</string>
+  <string name="clearGetGlueCredentialssummary">Use the Share buttons to setup GetGlue</string>
+  <string name="pref_number">Μορφή των αριθμών</string>
+  <string name="pref_numbersummary">Εναλλαγή μεταξύ 1x01 ή S01E01 ως μορφή αριθμού</string>
   <string name="pref_advanced">Advanced</string>
   <string name="clear_cache">Καθαρισμός μνημών cache εικόνας</string>
   <string name="clear_cache_summary">Remove all images from cache and SD card, updating shows will redownload them</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
+  <string name="pref_notifications">Enable notifications</string>
+  <string name="pref_notificationssummary">Show notifications for upcoming episodes</string>
+  <string name="pref_usetz">Use my time zone</string>
+  <string name="pref_usetzsummary">Air dates in your time zone (for users outside the USA)</string>
+  <string name="pref_offset">Διαφορά ώρας</string>
+  <string name="pref_offsetsummary">by a certain amount of hours</string>
   <string name="backup_description">Η δημιουργία του αντιγράφου ασφαλείας θα αποθηκεύσει ένα αντίγραφο της βάσης δεδομένων SeriesGuide στον φάκελο \"seriesguidebackup\" στην κάρτα SD. Εάν επανεγκαταστήσετε το SeriesGuide ή εγκαταστήστε το SeriesGuide σε κάποια άλλη συσκευή με Android, απλά τοποθετείστε αυτόν το φάκελο στην κάρτα SD. Επιλέξτε την Επαναφορά που υπάρχει παρακάτω και όλες οι σειρές θα εμφανίζονται και πάλι! (Δεν μπορείτε να  εισάγετε βάσεις δεδομένων από νεότερες εκδόσεις σε μια παλαιότερη έκδοση, εκτός αν αυτή χρησιμοποιεί την ίδια έκδοση της βάσης δεδομένων. Ανατρέξτε στην ενότητα "Σχετικά με" στις ρυθμίσεις.)</string>
   <string name="backup_failed_nosd">Δεν είναι δυνατή η δημιουργία αντιγράφου ασφαλείας. Δεν υπάρχει καμία εξωτερική συσκευή αποθήκευσης, όπως κάρτα SD, διαθέσιμη.</string>
   <string name="backup_inprogress">Πραγματοποιείται η δημιουργία αντιγράφου ασφαλείας της βάσης δεδομένων...</string>
@@ -141,8 +154,6 @@
   <string name="import_question">Βεβαιωθείτε ότι το αντίγραφο ασφαλείας βρίσκεται στην κάρτα SD. Όλες οι τρέχουσες σειρές θα αντικατασταθούν.</string>
   <string name="import_yes">Επαναφορά</string>
   <string name="import_no">Να μην γίνει Επαναφορά</string>
-  <string name="pref_notifications">Enable notifications</string>
-  <string name="pref_notificationssummary">Show notifications for upcoming episodes</string>
   <string name="smallwidget">Επόμενο επεισόδιο (μικρό)</string>
   <string name="bigwidget">Επόμενα επεισόδια (μεσαίο)</string>
   <string name="largewidget">Επόμενο επεισόδιο (μεγάλο)</string>
@@ -150,13 +161,8 @@
   <string name="recent">Πρόσφατο</string>
   <string name="noupcoming">Φαίνεται πως δεν υπάρχουν επεισόδια. Μπορείτε να δοκιμάσετε την ενημέρωση των σειρών σας.</string>
   <string name="togglewatched">Εναλλαγή Παρακολουθημένων</string>
-  <string name="optimizing">Βελτιστοποίηση αναζήτησης</string>
-  <string name="showlist">Λίστα σειρών</string>
   <string name="seasons">Σεζόν</string>
   <string name="cancel">Άκυρο</string>
-  <string name="clearGetGlueCredentials">Αποσύνδεση GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Use the Share buttons to setup GetGlue</string>
-  <string name="pref_sharing">Κοινή χρήση</string>
   <string name="share">Κοινή χρήση</string>
   <string name="done">Ολοκληρώθηκε</string>
   <string name="checkin">Check In</string>
@@ -168,14 +174,10 @@
   <string name="oauthmessage">Έλεγχος ταυτότητας SeriesGuide με GetGlue...</string>
   <string name="addtocalendar">Προσθήκη στο ημερολόγιο</string>
   <string name="addtocalendar_failed">Συγνώμη, δεν υπάρχουν αρκετές πληροφορίες για τη δημιουργία ενός συμβάντος ημερολογίου.</string>
-  <string name="pref_usetz">Use my time zone</string>
-  <string name="pref_usetzsummary">Air dates in your time zone (for users outside the USA)</string>
   <string name="search_description">Επεισόδια</string>
   <string name="description_home">Home</string>
   <string name="description_search">Search</string>
   <string name="description_overview">Overview</string>
-  <string name="pref_offset">Διαφορά ώρας</string>
-  <string name="pref_offsetsummary">by a certain amount of hours</string>
   <string name="norating">n/a</string>
   <string name="loading">Loading...</string>
   <string name="eula_title">What you should know</string>
@@ -239,6 +241,6 @@
   <string-array name="showfilter_list">
     <item>All</item>
     <item>Favorites</item>
-    <item>Unseen episodes</item>
+    <item>Unseen/Upcoming</item>
   </string-array>
 </resources>

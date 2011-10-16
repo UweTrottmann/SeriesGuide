@@ -34,7 +34,8 @@
   <string name="show_isnotalive">Endete</string>
   <string name="sort">Sortieren nach</string>
   <string name="menu_updateart">Fehlende Poster laden</string>
-  <string name="updateall_yes">Alle aktualisieren</string>
+  <string name="updateall_yes">Aktualisieren (alle)</string>
+  <string name="menu_update_delta">Aktualisieren (nur veränderte)</string>
   <string name="context_updateshow">Aktualisieren</string>
   <string name="context_showinfo">Serien Info</string>
   <string name="context_marknext">Nächste Folge gesehen</string>
@@ -58,11 +59,12 @@
   <string name="update_error">Konnte kein Update durchführen</string>
   <string name="update_incomplete1">Konnte</string>
   <string name="update_incomplete2">nicht aktualisieren.</string>
-  <string name="update_success">Update erfolgreich.</string>
-  <string name="imagedownload_incomplete">Update erfolgreich. Leider konnten einige Bilder nicht geladen werden. Versuche Sie es später erneut.</string>
+  <string name="update_success">Aktualisierung erfolgreich.</string>
+  <string name="imagedownload_incomplete">Aktualisierung erfolgreich. Leider konnten einige Bilder nicht heruntergeladen werden. Versuchen Sie es später erneut.</string>
   <string name="update_inbackground">Führe Update aus...</string>
   <string name="update_inprogress">Es wird gerade ein Update ausgeführt. Warten Sie das Ende des Updates ab und versuchen Sie es erneut.</string>
   <string name="update_nosdcard">Konnte kein Update ausführen. Es ist kein externer Speicher oder eine SD Karte verfügbar.</string>
+  <string name="update_rebuildsearch">Baue Suchindex für Folgen</string>
   <string name="show_airs">läuft</string>
   <string name="show_network">auf</string>
   <string name="show_pleaseupdate">Bitte aktualisiere diese Serie um mehr Information anzuzeigen (in der Übersicht lange auf den Namen drücken, Aktualisieren wählen). Sollte dies ohne Wirkung sein, kannst du auf www.thetvdb.com Informationen für diese Serie hinzufügen.</string>
@@ -116,11 +118,22 @@
   <string name="help_summary">Zeige Hilfe-Seite an</string>
   <string name="backup">Sichern/Wiederherstellen</string>
   <string name="backup_summary">Sicherung aller Serien erstellen oder Sicherung wiederherstellen</string>
+  <string name="pref_sharing">Empfehlen</string>
+  <string name="clearGetGlueCredentials">Von GetGlue abmelden</string>
+  <string name="clearGetGlueCredentialssummary">Verwenden Sie die Teilen-Tasten, um GetGlue einzurichten</string>
+  <string name="pref_number">Zahlenformat</string>
+  <string name="pref_numbersummary">Wechseln Sie zwischen 1x01 oder S01E01 als Zahlenformat</string>
   <string name="pref_advanced">Fortgeschritten</string>
   <string name="clear_cache">Bilder-Caches leeren</string>
   <string name="clear_cache_summary">Entfernen Sie alle Bilder aus dem Cache und SD-Karte, bei Aktualisierung der Shows werden sie erneut geladen</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Verfolgt die Verwendung von Funktionen zur Verbesserung von SeriesGuide</string>
+  <string name="pref_notifications">Benachrichtigungen aktivieren</string>
+  <string name="pref_notificationssummary">Benachrichtigungen für bevorstehende Folgen anzeigen</string>
+  <string name="pref_usetz">Meine Zeitzone verwenden</string>
+  <string name="pref_usetzsummary">Sendetermine in Ihrer Zeitzone (für Nutzer außerhalb der USA)</string>
+  <string name="pref_offset">Zeitkorrektur</string>
+  <string name="pref_offsetsummary">um eine bestimmte Anzahl von Stunden</string>
   <string name="backup_description">Backup speichert eine Kopie der Datenbank von SeriesGuide im Ordner \"seriesguidebackup\" auf Ihrer SD Karte. Falls Sie SeriesGuide neu installieren oder SeriesGuide auf einem anderen Android-Gerät installieren, müssen Sie nur diesen Ordner auf die SD Karte des Geräts kopieren. Ein Klick auf Wiederherstellen und all Ihre Serien sind wieder zurück! (Backups neuerer SeriesGuide-Versionen können nicht in alten Versionen wiederhergestellt werden, außer sie verwenden die gleiche Datenbankversion. Siehe Über SeriesGuide in den Einstellungen.)</string>
   <string name="backup_failed_nosd">Konnte kein Backup erstellen. Es ist kein externer Speicher, z.B. eine SD Karte, verfügbar.</string>
   <string name="backup_inprogress">Erstelle Datenbank Backup...</string>
@@ -143,8 +156,6 @@
   <string name="import_question">Stellen Sie sicher, dass sich die Backup-Datei auf der SD Karte befindet. Alle aktuellen Serien werden gelöscht.</string>
   <string name="import_yes">Wiederherstellen</string>
   <string name="import_no">Nicht wiederherstellen</string>
-  <string name="pref_notifications">Benachrichtigungen aktivieren</string>
-  <string name="pref_notificationssummary">Benachrichtigungen für bevorstehende Folgen anzeigen</string>
   <string name="smallwidget">Nächste Folgen (klein)</string>
   <string name="bigwidget">Nächste Folgen (mittel)</string>
   <string name="largewidget">Nächste Folgen (groß)</string>
@@ -152,13 +163,8 @@
   <string name="recent">Vor kurzem</string>
   <string name="noupcoming">Anscheinend wurden keine Folgen gefunden. Versuchen Sie Ihre Serien zu aktualisieren.</string>
   <string name="togglewatched">Gesehen ändern</string>
-  <string name="optimizing">Optimiere Suche</string>
-  <string name="showlist">Serienliste</string>
   <string name="seasons">Staffeln</string>
   <string name="cancel">Abbrechen</string>
-  <string name="clearGetGlueCredentials">Von GetGlue abmelden</string>
-  <string name="clearGetGlueCredentialssummary">Verwenden Sie die Teilen-Tasten, um GetGlue einzurichten</string>
-  <string name="pref_sharing">Empfehlen</string>
   <string name="share">Empfehlen</string>
   <string name="done">Erledigt</string>
   <string name="checkin">Check In</string>
@@ -170,14 +176,10 @@
   <string name="oauthmessage">Authentifizierung von SeriesGuide mit GetGlue...</string>
   <string name="addtocalendar">Zum Kalendar hinzufügen</string>
   <string name="addtocalendar_failed">Sorry, es gibt nicht genügend Informationen, um einen Kalendereintrag zu erstellen.</string>
-  <string name="pref_usetz">Meine Zeitzone verwenden</string>
-  <string name="pref_usetzsummary">Sendetermine in Ihrer Zeitzone (für Nutzer außerhalb der USA)</string>
   <string name="search_description">Folgen</string>
   <string name="description_home">Start</string>
   <string name="description_search">Suche</string>
   <string name="description_overview">Übersicht</string>
-  <string name="pref_offset">Zeitkorrektur</string>
-  <string name="pref_offsetsummary">um eine bestimmte Anzahl von Stunden</string>
   <string name="norating">n/a</string>
   <string name="loading">Wird geladen...</string>
   <string name="eula_title">Was Sie wissen sollten</string>
@@ -241,6 +243,6 @@
   <string-array name="showfilter_list">
     <item>Alle</item>
     <item>Favoriten</item>
-    <item>Ungesehene Folgen</item>
+    <item>Ungesehene/Zukünftige</item>
   </string-array>
 </resources>

@@ -34,7 +34,8 @@
   <string name="show_isnotalive">Skončil</string>
   <string name="sort">Zoradiť podľa</string>
   <string name="menu_updateart">Získať chýbajúce plagáty</string>
-  <string name="updateall_yes">Aktualizovať všetko</string>
+  <string name="updateall_yes">Update (all)</string>
+  <string name="menu_update_delta">Update (modified only)</string>
   <string name="context_updateshow">Aktualizovať</string>
   <string name="context_showinfo">Zobraziť Info</string>
   <string name="context_marknext">Dalšia pozretá epizóda</string>
@@ -58,11 +59,12 @@
   <string name="update_error">Nebolo možné aktualizovať.</string>
   <string name="update_incomplete1">Nemožno aktualizovať</string>
   <string name="update_incomplete2">.</string>
-  <string name="update_success">Aktualizácia úspešná.</string>
-  <string name="imagedownload_incomplete">Aktualizovať úspešné. Bohužiaľ niektoré obrázky neboli prevzaté. Skúste to znova neskôr.</string>
+  <string name="update_success">Update successful.</string>
+  <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
   <string name="update_inbackground">Aktualizuje sa...</string>
   <string name="update_inprogress">Práve prebieha aktualizácia. Počkajte na dokončenie, potom skúste znova.</string>
   <string name="update_nosdcard">Nebolo možné aktualizovať. Neexistuje žiadne externé úložisko alebo SD karta k dispozícii.</string>
+  <string name="update_rebuildsearch">Building episode search index</string>
   <string name="show_airs">vysiela sa</string>
   <string name="show_network">na</string>
   <string name="show_pleaseupdate">Pokúste sa aktualizovať túto reláciu, aby ste zobrazili viac informácií (v prehľade ju dlho stlačte a zvolte Aktualizovať). Ak to nepomôže, je pravdepodobné, že nie sú žiadne ďalšie informácie na TheTVDB. Prejdite na svoje stránky (www.thetvdb.com) na získanie informacií ako ich pridať.</string>
@@ -116,11 +118,22 @@
   <string name="help_summary">Prejsť na stránku pomocníka.</string>
   <string name="backup">Zálohovanie / obnovenie</string>
   <string name="backup_summary">Zálohovanie alebo obnovenie vašich relácií</string>
+  <string name="pref_sharing">Zdieľanie</string>
+  <string name="clearGetGlueCredentials">Odpojiť GetGlue</string>
+  <string name="clearGetGlueCredentialssummary">Použite tlačidlá Zdiaľania pre nastavenie GetGlue</string>
+  <string name="pref_number">Formát čísla</string>
+  <string name="pref_numbersummary">Prepínanie medzi 1x01 alebo S01E01 ako formát čísla</string>
   <string name="pref_advanced">Pokročilé</string>
   <string name="clear_cache">Vymazať vyrovnávaciu pamäť obrázkov</string>
   <string name="clear_cache_summary">Odstrániť všetky obrázky z vyrovnávacej pamäte a SD karty, aktualizácia relácií ich znova stiahne</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Sledovanie využívania funkcií pre zlepšenie SeriesGuide</string>
+  <string name="pref_notifications">Povoliť notifikácie</string>
+  <string name="pref_notificationssummary">Zobraziť upozornenia pre nadchádzajúce epizódy</string>
+  <string name="pref_usetz">Používať moje časové pásmo</string>
+  <string name="pref_usetzsummary">Dátumy vysielania vo vašom časovom pásme (pre používateľov mimo USA)</string>
+  <string name="pref_offset">Časový posun</string>
+  <string name="pref_offsetsummary">od určitého množstva hodín</string>
   <string name="backup_description">Tlačidlo Zálohovanie uloží kópiu databázy SeriesGuide v priečinku \"seriesguidebackup\" na vašej SD karte. Ak preinštalujete SeriesGuide alebo nainštalovať SeriesGuide na inom Android zariadení, uložte tento priečinok na SD kartu v danom zariadení. Stlačte tlačidlo Obnovenie a všetky vaše relácie tam budú zase! (Nie je nožné importovať relácie z novších verzií do starších, s výnimkou ak používate rovnakú verziu databázy. Pozrite sa na O SeriesGuide v nastaveniach.)</string>
   <string name="backup_failed_nosd">Nemožno zálohovať. Neexistuje žiadny externé úložisko, ako SD karta, k dispozícii.</string>
   <string name="backup_inprogress">Zálohuje sa databáza ...</string>
@@ -141,8 +154,6 @@
   <string name="import_question">Uistite sa, že záloha je na SD karte. Všetky aktuálne relácie budú prepísané.</string>
   <string name="import_yes">Obnoviť</string>
   <string name="import_no">Neobnoviť</string>
-  <string name="pref_notifications">Povoliť notifikácie</string>
-  <string name="pref_notificationssummary">Zobraziť upozornenia pre nadchádzajúce epizódy</string>
   <string name="smallwidget">Ďalšie epizódy (malé)</string>
   <string name="bigwidget">Ďalšie epizódy (stredné)</string>
   <string name="largewidget">Ďalšie epizódy (veľké)</string>
@@ -150,13 +161,8 @@
   <string name="recent">Nedávne</string>
   <string name="noupcoming">Look\'s like there are no episodes. Maybe try updating your shows.</string>
   <string name="togglewatched">Toggle Watched</string>
-  <string name="optimizing">Optimalizácia vyhľadávania</string>
-  <string name="showlist">Zoznam relácií</string>
   <string name="seasons">Série</string>
   <string name="cancel">Zrušiť</string>
-  <string name="clearGetGlueCredentials">Odpojiť GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Použite tlačidlá Zdiaľania pre nastavenie GetGlue</string>
-  <string name="pref_sharing">Zdieľanie</string>
   <string name="share">Zdieľať</string>
   <string name="done">Hotovo</string>
   <string name="checkin">Check In</string>
@@ -168,14 +174,10 @@
   <string name="oauthmessage">Autentifikácia SeriesGuide s GetGlue ...</string>
   <string name="addtocalendar">Pridať do kalendára</string>
   <string name="addtocalendar_failed">Ospravedlňujeme sa, ale nie je dostatok informácií na vytvorenie udalosti kalendára.</string>
-  <string name="pref_usetz">Používať moje časové pásmo</string>
-  <string name="pref_usetzsummary">Dátumy vysielania vo vašom časovom pásme (pre používateľov mimo USA)</string>
   <string name="search_description">Epizódy</string>
   <string name="description_home">Domov</string>
   <string name="description_search">Hľadať</string>
   <string name="description_overview">Prehľad</string>
-  <string name="pref_offset">Časový posun</string>
-  <string name="pref_offsetsummary">od určitého množstva hodín</string>
   <string name="norating">nedostupné</string>
   <string name="loading">Nahrávanie...</string>
   <string name="eula_title">Čo by ste mali vedieť</string>
@@ -239,6 +241,6 @@
   <string-array name="showfilter_list">
     <item>All</item>
     <item>Favorites</item>
-    <item>Unseen episodes</item>
+    <item>Unseen/Upcoming</item>
   </string-array>
 </resources>

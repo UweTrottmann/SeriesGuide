@@ -34,7 +34,8 @@
   <string name="show_isnotalive">Finalizada</string>
   <string name="sort">Ordenar por</string>
   <string name="menu_updateart">Obter Imagens ausentes</string>
-  <string name="updateall_yes">Atualizar todos</string>
+  <string name="updateall_yes">Update (all)</string>
+  <string name="menu_update_delta">Update (modified only)</string>
   <string name="context_updateshow">Atualizar</string>
   <string name="context_showinfo">Mostrar informações</string>
   <string name="context_marknext">Próximo episódio já assistido</string>
@@ -58,11 +59,12 @@
   <string name="update_error">Não foi possível atualizar.</string>
   <string name="update_incomplete1">Não foi possível atualizar</string>
   <string name="update_incomplete2">.</string>
-  <string name="update_success">Atualização bem sucedida.</string>
-  <string name="imagedownload_incomplete">Atualização bem sucedida. Infelizmente algumas imagens não puderam ser recebidas. Tente novamente mais tarde.</string>
+  <string name="update_success">Update successful.</string>
+  <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
   <string name="update_inbackground">Atualizando ...</string>
   <string name="update_inprogress">Existe uma atualização em andamento. Aguarde a conclusão para tentar novamente.</string>
   <string name="update_nosdcard">Não foi possível atualizar. Não há nenhum armazenamento externo ou cartão SD disponíveis.</string>
+  <string name="update_rebuildsearch">Building episode search index</string>
   <string name="show_airs">estréia</string>
   <string name="show_network">sim</string>
   <string name="show_pleaseupdate">Tente atualizar esta série para mostrar mais informações (na visão geral, pressione longamente sobre ele e selecione Atualizar). Se isto não ajudar, talvez não haja mais informações no TheTVDB. Vá para o site (www.thetvdb.com) para aprender como adicionar alguma.</string>
@@ -116,11 +118,22 @@
   <string name="help_summary">Ir para a página de ajuda</string>
   <string name="backup">Backup/Restauração</string>
   <string name="backup_summary">Fazer backup ou restaurar as suas séries</string>
+  <string name="pref_sharing">Compartilhar</string>
+  <string name="clearGetGlueCredentials">Desconectar GetGlue</string>
+  <string name="clearGetGlueCredentialssummary">Use os botões de ações para configurar GetGlue</string>
+  <string name="pref_number">Formato de número</string>
+  <string name="pref_numbersummary">Alternar entre 1x01 ou S01E01 como formato de número</string>
   <string name="pref_advanced">Avançado</string>
   <string name="clear_cache">Limpar Caches de imagem</string>
   <string name="clear_cache_summary">Remover todas as imagens do cache e cartão SD, atualização das séries serão baixadas novamente.</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Rastreia o uso de recursos para ajudar a melhorar SeriesGuide</string>
+  <string name="pref_notifications">Habilitar notificações</string>
+  <string name="pref_notificationssummary">Mostrar notificações de próximos episódios</string>
+  <string name="pref_usetz">Usar meu fuso horário</string>
+  <string name="pref_usetzsummary">Datas de ar no seu fuso horário (para usuários fora dos EUA)</string>
+  <string name="pref_offset">Deslocamento de tempo</string>
+  <string name="pref_offsetsummary">por uma certa quantidade de horas</string>
   <string name="backup_description">Backup irá armazenar uma cópia do banco de dados SeriesGuide na pasta \"seriesguidebackup\" no seu cartão SD. Se você reinstalar ou instalar SeriesGuide em outro dispositivo Android, basta copiar esta pasta para seu cartão SD. Pressione Restaurar abaixo e todas as suas séries vão estar lá de novo! (Não é possível importar dados de versões mais recentes em uma versão mais antiga, só as que usam a mesma versão do banco de dados. Consulte Sobre em Configurações.)</string>
   <string name="backup_failed_nosd">Não é possível fazer backup. Não existe armazenamento externo, como um cartão SD, disponível.</string>
   <string name="backup_inprogress">Efetuando backup...</string>
@@ -132,7 +145,7 @@
   <string name="import_failed_noread">Não é possível ler o arquivo de backup (\"/sdcard/seriesguidebackup/seriesdatabase\"). Não foi possível restaurar o banco de dados.</string>
   <string name="import_success">Banco de dados restaurado com sucesso</string>
   <string name="import_failed">Restauração falhou</string>
-  <string name="dbupgradefailed">Looks like your backup is too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
+  <string name="dbupgradefailed">Parece que o backup é muito antigo ou vazio. Nota: Antes importe pre-2.0 backups em uma versão 1.9.x</string>
   <string name="backup_button">Backup para o cartão SD</string>
   <string name="import_button">Restaurar do cartão SD</string>
   <string name="backup_question">Isso substituirá qualquer arquivo de backup anterior.</string>
@@ -141,8 +154,6 @@
   <string name="import_question">Certifique-se que o backup está no cartão SD. Todas as séries atuais serão substituídas.</string>
   <string name="import_yes">Restaurar</string>
   <string name="import_no">Não Restaurar</string>
-  <string name="pref_notifications">Habilitar notificações</string>
-  <string name="pref_notificationssummary">Mostrar notificações de próximos episódios</string>
   <string name="smallwidget">Próximos episódios (pequeno)</string>
   <string name="bigwidget">Próximos episódios (médio)</string>
   <string name="largewidget">Próximos episódios (grande)</string>
@@ -150,13 +161,8 @@
   <string name="recent">Recente</string>
   <string name="noupcoming">Parece que não existem episódios. Tente atualizar suas séries.</string>
   <string name="togglewatched">Alternar assistido</string>
-  <string name="optimizing">Otimizando pesquisa</string>
-  <string name="showlist">Lista de Séries</string>
   <string name="seasons">Temporadas</string>
   <string name="cancel">Cancelar</string>
-  <string name="clearGetGlueCredentials">Desconectar GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Use os botões de ações para configurar GetGlue</string>
-  <string name="pref_sharing">Compartilhar</string>
   <string name="share">Compartilhar</string>
   <string name="done">Feito</string>
   <string name="checkin">Check-in</string>
@@ -168,14 +174,10 @@
   <string name="oauthmessage">Autenticando SeriesGuide com GetGlue...</string>
   <string name="addtocalendar">Adicionar ao calendário</string>
   <string name="addtocalendar_failed">Desculpe, não existe informação suficiente para criar um evento no calendário.</string>
-  <string name="pref_usetz">Usar meu fuso horário</string>
-  <string name="pref_usetzsummary">Datas de ar no seu fuso horário (para usuários fora dos EUA)</string>
   <string name="search_description">Episódios</string>
   <string name="description_home">Início</string>
   <string name="description_search">Buscar</string>
   <string name="description_overview">Geral</string>
-  <string name="pref_offset">Deslocamento de tempo</string>
-  <string name="pref_offsetsummary">por uma certa quantidade de horas</string>
   <string name="norating">n/a</string>
   <string name="loading">Caregando...</string>
   <string name="eula_title">O que você deve saber</string>
@@ -214,8 +216,8 @@
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Próximo episódio</item>
-    <item>Favorites (A - Z)</item>
-    <item>Favorites (Next ep.)</item>
+    <item>Favoritos (A - Z)</item>
+    <item>Favoritos (Prox.)</item>
   </string-array>
   <string-array name="sesorting">
     <item>Mais recentes primeiro</item>
@@ -237,8 +239,8 @@
     <item>Avaliar no trakt.tv</item>
   </string-array>
   <string-array name="showfilter_list">
-    <item>All</item>
-    <item>Favorites</item>
-    <item>Unseen episodes</item>
+    <item>Todos</item>
+    <item>Favoritos</item>
+    <item>Unseen/Upcoming</item>
   </string-array>
 </resources>

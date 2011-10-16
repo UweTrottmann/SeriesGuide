@@ -34,7 +34,8 @@
   <string name="show_isnotalive">Zakończony</string>
   <string name="sort">Sortuj wg</string>
   <string name="menu_updateart">Pobierz brakujące plakaty</string>
-  <string name="updateall_yes">Aktualizuj wszystko</string>
+  <string name="updateall_yes">Update (all)</string>
+  <string name="menu_update_delta">Update (modified only)</string>
   <string name="context_updateshow">Aktualizuj</string>
   <string name="context_showinfo">Pokaż informacje</string>
   <string name="context_marknext">Oznacz odcinek jako obejrzany</string>
@@ -58,11 +59,12 @@
   <string name="update_error">Nie można zaktualizować.</string>
   <string name="update_incomplete1">Nie można zaktualizować</string>
   <string name="update_incomplete2">.</string>
-  <string name="update_success">Aktualizacja udana.</string>
-  <string name="imagedownload_incomplete">Aktualizacja wykonana pomyślnie. Niestety niektóre obrazki nie zostały pobrane. Spróbuj ponownie później.</string>
+  <string name="update_success">Update successful.</string>
+  <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
   <string name="update_inbackground">Aktualizacja...</string>
   <string name="update_inprogress">Aktualizacja jest w toku. Poczekaj na zakończenie, a następnie spróbuj ponownie.</string>
   <string name="update_nosdcard">Nie można zaktualizować. Brak pamięci zewnętrznej lub karty SD.</string>
+  <string name="update_rebuildsearch">Building episode search index</string>
   <string name="show_airs">emisja</string>
   <string name="show_network">w</string>
   <string name="show_pleaseupdate">Spróbuj zaktualizować serial, żeby zobaczyć więcej informacji (na liście przytrzymaj palec na nazwie i kliknij Aktualizuj). Jeśli to nie pomoże, oznacza to, że nie ma więcej informacji w bazie TheTVDB. Jesli chcesz to przejdź na ich stronę (www.thetvdb.com), aby dodać coś od siebie.</string>
@@ -116,11 +118,22 @@
   <string name="help_summary">Przejdz do strony z pomocą</string>
   <string name="backup">Opcje kopii zapasowej</string>
   <string name="backup_summary">Zrób lub przywróć kopię bazy danych seriali</string>
+  <string name="pref_sharing">Udostępnianie</string>
+  <string name="clearGetGlueCredentials">Rozłącz z GetGlue</string>
+  <string name="clearGetGlueCredentialssummary">Use the Share buttons to setup GetGlue</string>
+  <string name="pref_number">Typ numerowania</string>
+  <string name="pref_numbersummary">Możesz używać 1x01 lub S01E01 jako numery odcinków</string>
   <string name="pref_advanced">Zaawansowane</string>
   <string name="clear_cache">Wyczyść pamięć podręczną obrazów</string>
   <string name="clear_cache_summary">Usuwa wszystkie obrazki z pamięci cache oraz karty SD. Zostaną one ponownie pobrane podczas aktualizacji listy seriali.</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
+  <string name="pref_notifications">Włącz powiadomienia</string>
+  <string name="pref_notificationssummary">Pokaż powiadomienia o nadchodzących odcinkach</string>
+  <string name="pref_usetz">Użyj mojej strefy czasowej</string>
+  <string name="pref_usetzsummary">Air dates in your time zone (for users outside the USA)</string>
+  <string name="pref_offset">Różnica w czasie</string>
+  <string name="pref_offsetsummary">by a certain amount of hours</string>
   <string name="backup_description">Kopia zapasowa zapisuje całą twoją bazę seriali w folderze /seriesguidebackup/ na karcie SD. Jeśli przeinstalujesz SeriesGuide lub zainstalujesz na innym urządzeniu z Androidem, wystarczy, że przeniesiesz ten folder na kartę pamięci w tamtym urządzeniu. Następnie wystarczy kliknąć przycisk Przywróć i cała twoja baza zostanie przywrócona ;) (nie można importować bazy danych z nowszej wersji do starszej wersji!)</string>
   <string name="backup_failed_nosd">Nie można zrobić kopii. Karta pamięci jest niedostępna.</string>
   <string name="backup_inprogress">Tworzenie kopii zapasowej...</string>
@@ -141,8 +154,6 @@
   <string name="import_question">Upewnij się, że posiadasz kopię bezpieczeństwa na karcie SD. Cała aktualna baza zostanie nadpisana. Kontynuować?</string>
   <string name="import_yes">Tak</string>
   <string name="import_no">Nie</string>
-  <string name="pref_notifications">Włącz powiadomienia</string>
-  <string name="pref_notificationssummary">Pokaż powiadomienia o nadchodzących odcinkach</string>
   <string name="smallwidget">Przyszłe odcinki (mały - 4x1)</string>
   <string name="bigwidget">Przyszłe odcinki (średni - 4x2)</string>
   <string name="largewidget">Przyszłe odcinki (duży - 4x4)</string>
@@ -150,13 +161,8 @@
   <string name="recent">Ostatnie</string>
   <string name="noupcoming">Wygląda na to, że nie ma żadnych odcinków. Spróbuj zaktualizować serial.</string>
   <string name="togglewatched">Odwróć zaznaczenie</string>
-  <string name="optimizing">Zoptymalizowane wyszukiwanie</string>
-  <string name="showlist">Lista seriali</string>
   <string name="seasons">Lista sezonów</string>
   <string name="cancel">Anuluj</string>
-  <string name="clearGetGlueCredentials">Rozłącz z GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Use the Share buttons to setup GetGlue</string>
-  <string name="pref_sharing">Udostępnianie</string>
   <string name="share">Udostępnij</string>
   <string name="done">Zrobione</string>
   <string name="checkin">Zatwierdź</string>
@@ -168,14 +174,10 @@
   <string name="oauthmessage">Uwierzytelnianie SeriesGuide z GetGlue...</string>
   <string name="addtocalendar">Dodaj do kalendarza</string>
   <string name="addtocalendar_failed">Niestety nie ma wystarczającej ilości informacji, żeby stworzyć wydarzenie w kalendarzu.</string>
-  <string name="pref_usetz">Użyj mojej strefy czasowej</string>
-  <string name="pref_usetzsummary">Air dates in your time zone (for users outside the USA)</string>
   <string name="search_description">Odcinki</string>
   <string name="description_home">Domek</string>
   <string name="description_search">Szukaj</string>
   <string name="description_overview">Opis</string>
-  <string name="pref_offset">Różnica w czasie</string>
-  <string name="pref_offsetsummary">by a certain amount of hours</string>
   <string name="norating">brak danych</string>
   <string name="loading">Wczytywanie...</string>
   <string name="eula_title">Co powinieneś wiedzieć</string>
@@ -239,6 +241,6 @@
   <string-array name="showfilter_list">
     <item>All</item>
     <item>Favorites</item>
-    <item>Unseen episodes</item>
+    <item>Unseen/Upcoming</item>
   </string-array>
 </resources>

@@ -34,7 +34,8 @@
   <string name="show_isnotalive">Sona erdi</string>
   <string name="sort">Sırala</string>
   <string name="menu_updateart">Eksik Posterleri Al</string>
-  <string name="updateall_yes">Tümünü Güncelle</string>
+  <string name="updateall_yes">Update (all)</string>
+  <string name="menu_update_delta">Update (modified only)</string>
   <string name="context_updateshow">Güncelle</string>
   <string name="context_showinfo">Bilgi Göster</string>
   <string name="context_marknext">Sonraki izlenen bölüm</string>
@@ -58,11 +59,12 @@
   <string name="update_error">Güncellenemedi.</string>
   <string name="update_incomplete1">Güncellenemedi</string>
   <string name="update_incomplete2">.</string>
-  <string name="update_success">Güncelleme başarılı.</string>
-  <string name="imagedownload_incomplete">Güncelleştirme başarılı. Ne yazık ki bazı görseller yüklenemedi. Daha sonra yeniden deneyin.</string>
+  <string name="update_success">Update successful.</string>
+  <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
   <string name="update_inbackground">Güncelleniyor...</string>
   <string name="update_inprogress">Devam eden bir güncelleme var. Tamamlanmasını bekleyin, daha sonra yeniden deneyin</string>
   <string name="update_nosdcard">Güncelleştirilemedi. Kullanılabilir hiçbir harici depolama birimi ya da SD kart yok.</string>
+  <string name="update_rebuildsearch">Building episode search index</string>
   <string name="show_airs">yayın:</string>
   <string name="show_network"> </string>
   <string name="show_pleaseupdate">Daha fazla bilgi için diziyi güncellemeyi deneyin (Genel bakışta dizi adına uzun basın, ardından Güncelle\'yi seçin) Yardımı olmazsa TheTVDB\'de ek bilgi mevcut değildir. Siteye (www.thetvdb.com) giderek nasıl ekleyebileceğinizi öğrenin.</string>
@@ -116,11 +118,22 @@
   <string name="help_summary">Yardım sayfasına git</string>
   <string name="backup">Yedekle/Geri Yükle</string>
   <string name="backup_summary">Dizilerinizi yedekleyin veya geri yükleyin</string>
+  <string name="pref_sharing">Paylaşım</string>
+  <string name="clearGetGlueCredentials">GetGlue Bağlantısını Kes</string>
+  <string name="clearGetGlueCredentialssummary">Use the Share buttons to setup GetGlue</string>
+  <string name="pref_number">Sayı biçimi</string>
+  <string name="pref_numbersummary">Bölüm biçimini 1x01 ya da S01E01 olarak değiştir</string>
   <string name="pref_advanced">Advanced</string>
   <string name="clear_cache">Görsel Önbelleklerini Temizle</string>
   <string name="clear_cache_summary">Remove all images from cache and SD card, updating shows will redownload them</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
+  <string name="pref_notifications">Enable notifications</string>
+  <string name="pref_notificationssummary">Show notifications for upcoming episodes</string>
+  <string name="pref_usetz">Use my time zone</string>
+  <string name="pref_usetzsummary">Air dates in your time zone (for users outside the USA)</string>
+  <string name="pref_offset">Saat Farkı</string>
+  <string name="pref_offsetsummary">by a certain amount of hours</string>
   <string name="backup_description">Backup will store a copy of the SeriesGuide database in the folder \"seriesguidebackup\" on your SD card. If you reinstall SeriesGuide or install SeriesGuide on another Android device, just put this folder on the devices SD card. Hit Restore below and all your shows will be there again! (You can not import databases from newer versions into an older version, except it uses the same database version. See About in Settings.)</string>
   <string name="backup_failed_nosd">Yedeklenemiyor. harici depolama aygıtı veya SD kart bulunamadı.</string>
   <string name="backup_inprogress">Veritabanı yedekleniyor...</string>
@@ -141,8 +154,6 @@
   <string name="import_question">SD kartında yedek olduğundan emin olun. Tüm geçerli dizilerin üzerine yazılacak.</string>
   <string name="import_yes">Geri yükle</string>
   <string name="import_no">Geri Yükleme</string>
-  <string name="pref_notifications">Enable notifications</string>
-  <string name="pref_notificationssummary">Show notifications for upcoming episodes</string>
   <string name="smallwidget">Sonraki bölümler (küçük)</string>
   <string name="bigwidget">Sonraki bölümler (orta)</string>
   <string name="largewidget">Sonraki bölümler (büyük)</string>
@@ -150,13 +161,8 @@
   <string name="recent">Yakında</string>
   <string name="noupcoming">Görünüşe göre hiç bölüm yok. Dizilerinizi güncellemeyi deneyebilirsiniz.</string>
   <string name="togglewatched">İzlenenlere geçiş yap</string>
-  <string name="optimizing">Arama optimizasyonu</string>
-  <string name="showlist">Dizi listesi</string>
   <string name="seasons">Sezon</string>
   <string name="cancel">Vazgeç</string>
-  <string name="clearGetGlueCredentials">GetGlue Bağlantısını Kes</string>
-  <string name="clearGetGlueCredentialssummary">Use the Share buttons to setup GetGlue</string>
-  <string name="pref_sharing">Paylaşım</string>
   <string name="share">Paylaş</string>
   <string name="done">Tamamlandı</string>
   <string name="checkin">Check In yapın</string>
@@ -168,14 +174,10 @@
   <string name="oauthmessage">SeriesGuide GetGlue ile yetkilendiriliyor...</string>
   <string name="addtocalendar">Takvime ekle</string>
   <string name="addtocalendar_failed">Üzgünüm, takvim etkinliği oluşturmak için yeterli bilgi yok.</string>
-  <string name="pref_usetz">Use my time zone</string>
-  <string name="pref_usetzsummary">Air dates in your time zone (for users outside the USA)</string>
   <string name="search_description">Bölümler</string>
   <string name="description_home">Anasayfa</string>
   <string name="description_search">Arama</string>
   <string name="description_overview">Overview</string>
-  <string name="pref_offset">Saat Farkı</string>
-  <string name="pref_offsetsummary">by a certain amount of hours</string>
   <string name="norating">n/a</string>
   <string name="loading">Yükleniyor...</string>
   <string name="eula_title">What you should know</string>
@@ -239,6 +241,6 @@
   <string-array name="showfilter_list">
     <item>All</item>
     <item>Favorites</item>
-    <item>Unseen episodes</item>
+    <item>Unseen/Upcoming</item>
   </string-array>
 </resources>
