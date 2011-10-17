@@ -4,15 +4,14 @@
     android:layout_width="fill_parent"
     android:layout_height="@dimen/widget_item_height"
     android:orientation="vertical"
-    android:paddingBottom="1dp">
+    android:layout_marginBottom="2dp">
     <ImageView
         android:id="@+id/widgetPoster"
         android:src="@drawable/show_generic"
         android:layout_height="wrap_content"
         android:layout_width="25dp"
         android:layout_marginRight="5dp"
-        android:layout_alignTop="@+id/widgetAirtime"
-        android:layout_alignBottom="@+id/textViewWidgetEpisode"></ImageView>
+        android:layout_alignTop="@+id/widgetAirtime"></ImageView>
     <TextView
         android:id="@+id/textViewWidgetShow"
         style="@style/WidgetTextView"
