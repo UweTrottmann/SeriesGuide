@@ -4,21 +4,21 @@
   <string name="episode">Aflevering</string>
   <string name="season">Seizoen</string>
   <string name="episode_unkownairdate">onbekend</string>
-  <string name="episode_iswatched">Al bekeken</string>
-  <string name="episode_notwatched">Nog niet bekeken</string>
+  <string name="episode_iswatched">Bekeken</string>
+  <string name="episode_notwatched">Onbekeken</string>
   <string name="specialseason">Speciale afleveringen</string>
   <string name="ioerror_title">Netwerkfout</string>
   <string name="saxerror_title">Ontleedfout</string>
   <string name="offline_title">Geen verbinding</string>
-  <string name="ioerror">Nertwerkfout opgetreden. Er zijn mogelijk onvoldoende rechten op TVDB.com vanuit de huidige verbinding. Probeer het later opnieuw.</string>
-  <string name="saxerror">De reactie van TheTVDB werd niet begrepen. Probeer het later opnieuw.</string>
-  <string name="offline">Er is geen actieve verbinding met het internet gemeld. Zorg ervoor dat er een internetverbinding is en probeer het opnieuw.</string>
+  <string name="ioerror">Er is een nertwerkfout opgetreden. Er zijn mogelijk onvoldoende rechten op TVDB.com met de huidige verbinding. Probeer het later opnieuw.</string>
+  <string name="saxerror">TheTVDB-reactie niet begrepen. Probeer het later opnieuw.</string>
+  <string name="offline">Er is geen actieve verbinding met het internet beschikbaar. Zorg ervoor dat er een internetverbinding is en probeer het opnieuw.</string>
   <string name="whatsnew_title">What\'s new</string>
   <string name="search_hint">Afleveringen zoeken</string>
-  <string name="search_title">Overeenkomende afleveringen</string>
+  <string name="search_title">Gevonden afleveringen</string>
   <string name="share_episode">Aflevering delen</string>
   <string name="share_checkout">Afmelden</string>
-  <string name="episode_firstaired">Uitgezonden:</string>
+  <string name="episode_firstaired">Uitzenddatum:</string>
   <string name="episode_dvdnumber">DVD aflevering</string>
   <string name="show_actors">Acteurs:</string>
   <string name="show_firstaired">Eerste uitzending:</string>
@@ -30,124 +30,125 @@
   <string name="episode_gueststars">Gastacteurs:</string>
   <string name="episode_writers">Schrijvers:</string>
   <string name="show_airtimeunit">min</string>
-  <string name="show_isalive">Voortzetting</string>
-  <string name="show_isnotalive">Afgelopen</string>
+  <string name="show_isalive">Lopende serie</string>
+  <string name="show_isnotalive">Gestopt</string>
   <string name="sort">Sorteren</string>
-  <string name="menu_updateart">Ontbrekende posters ophalen</string>
+  <string name="menu_updateart">Ontbrekende afbeeldingen ophalen</string>
   <string name="updateall_yes">Alles bijwerken</string>
   <string name="context_updateshow">Bijwerken</string>
   <string name="context_showinfo">Serie informatie</string>
-  <string name="context_marknext">Volgende bekeken aflevering</string>
+  <string name="context_marknext">Deze afl. is bekeken</string>
   <string name="today">vandaag</string>
   <string name="mark_episode">Bekeken aflevering</string>
-  <string name="unmark_episode">Nog niet bekeken aflevering</string>
+  <string name="unmark_episode">Onbekeken aflevering</string>
   <string name="mark_all">Alles bekeken</string>
   <string name="unmark_all">Niets bekeken</string>
   <string name="hello"><big>Welkom bij SeriesGuide</big>\n\nEr zijn momenteel nog geen series toegevoegd. Klik <b>Serie toevoegen</b> in het menu om deze toe te voegen.\n\nOf <b>Herstel back-up</b>, via Instellingen in het menu en zoek naar Back-up/Herstellen.</string>
-  <string name="confirm_delete">Dit programma werkelijk verwijderen?</string>
+  <string name="confirm_delete">Programma verwijderen?</string>
   <string name="delete_show">Verwijderen</string>
-  <string name="dontdelete_show">Niet verwijderen</string>
+  <string name="dontdelete_show">Annuleren</string>
   <string name="no_nextepisode">Geen volgende aflevering gevonden.</string>
   <string name="nextepisode">volgende:</string>
-  <string name="context_favorite">Aan favorieten toevoegen</string>
-  <string name="context_unfavorite">Uit favorieten verwijderen</string>
+  <string name="context_favorite">Toevoegen aan favorieten</string>
+  <string name="context_unfavorite">Verwijderen uit favorieten</string>
   <string name="favorited">Toegevoegd aan favorieten</string>
   <string name="unfavorited">Verwijderd uit favorieten</string>
-  <string name="update_delta">Naar bijgewerkte series zoeken...</string>
+  <string name="update_delta">Zoeken naar bijgewerkte series...</string>
   <string name="update_full">Alle series vernieuwen</string>
   <string name="update_error">Bijwerken mislukt.</string>
   <string name="update_incomplete1">Bijwerken mislukt</string>
   <string name="update_incomplete2">.</string>
   <string name="update_success">Bijwerken succesvol.</string>
-  <string name="imagedownload_incomplete">Bijwerken succesvol. Helaas werden enkele afbeeldingen niet gedownload. Probeer het later opnieuw.</string>
+  <string name="imagedownload_incomplete">Bijwerken voltooid. Niet alle afbeeldingen zijn gedownload. Probeer het later opnieuw.</string>
   <string name="update_inbackground">Bijwerken...</string>
   <string name="update_inprogress">Bezig met bijwerken. Wacht tot het voltooid is en probeer daarna nog eens.</string>
   <string name="update_nosdcard">Kan niet bijwerken, geen externe opslag of SD-kaart beschikbaar.</string>
-  <string name="show_airs">uitzending</string>
+  <string name="show_airs">datum</string>
   <string name="show_network">op</string>
-  <string name="show_pleaseupdate">Try to update this show to display more information (in the overview, long-press on it, select Update). If this doesn\'t help, there is likely no additional information in TheTVDB. Go to their site (www.thetvdb.com) to learn how to add some.</string>
+  <string name="show_pleaseupdate">Probeer deze show te updaten voor meer informatie (in het overzicht, lang drukken op de show, \'update\').
+Mocht dit niet lukken, kan er op www.thetvdb.com informatie worden toegevoegd.</string>
   <string name="show_noairtime">Geen uitzendtijden beschikbaar</string>
-  <string name="showinimdb">In IMDb weergeven</string>
+  <string name="showinimdb">Bekijk via IMDb</string>
   <string name="noIMDBentry">Geen IMDB referentie beschikbaar. Werk deze serie bij of ga naar thetvdb.com en voeg deze toe.</string>
-  <string name="no_seasons">Helaas, er zijn geen seizoenen voor deze serie. Probeer de serie bij te werken (in het overzicht lang-drukken, selecteer dan Bijwerken).</string>
-  <string name="season_watchcount">Niet bekeken afleveringen</string>
+  <string name="no_seasons">Helaas, er zijn geen seizoenen voor deze serie. Probeer de serie bij te werken.</string>
+  <string name="season_watchcount">Onbekeken afleveringen</string>
   <string name="season_allwatched">Alle afleveringen bekeken</string>
-  <string name="season_onenotwatched">Niet bekeken aflevering</string>
+  <string name="season_onenotwatched">Onbekeken aflevering</string>
   <string name="season_unaired">Niet uitgezonden</string>
   <string name="oneotherepisode">andere aflevering</string>
   <string name="otherepisodes">andere afleveringen</string>
-  <string name="no_episodes">Helaas, er zijn geen afleveringen voor dit seizoen. Probeer de serie bij te werken (in het overzicht lang-drukken, selecteer dan Bijwerken).</string>
+  <string name="no_episodes">Helaas, er zijn geen afleveringen voor dit seizoen. Probeer de serie bij te werken in het overzicht.</string>
   <string name="search_button">Zoeken</string>
   <string name="no_results">Niets gevonden. Probeer hele woorden.</string>
   <string name="search_error">Geen verbinding met TheTVDB. Controleer de netwerkverbinding of probeer het later nog eens.</string>
   <string name="search_noinput">Voer een zoekterm in.</string>
   <string name="add_show">Serie toevoegen</string>
-  <string name="dont_add_show">Niet toevoegen</string>
+  <string name="dont_add_show">Annuleren</string>
   <string name="search_hint_add">Serie zoeken</string>
-  <string name="add_started">zal binnenkort in de series lijst worden weergegeven.</string>
+  <string name="add_started">wordt binnenkort weergegeven in het overzicht.</string>
   <string name="add_success">succesvol toegevoegd.</string>
-  <string name="add_error_begin">Niet toe te voegen \"</string>
+  <string name="add_error_begin">Kon \" niet toevoegen</string>
   <string name="add_error_end">\".</string>
-  <string name="add_already_exists">bestaat al. In plaats hiervan bijgewerkt.</string>
-  <string name="loading_trending">Laden populaire series van trakt.tv</string>
-  <string name="loading_usershows">Laden eigen series van trakt.tv</string>
+  <string name="add_already_exists">bestaat al en is daarom bijgewerkt.</string>
+  <string name="loading_trending">Laadt populaire series van trakt.tv</string>
+  <string name="loading_usershows">Laadt eigen series van trakt.tv</string>
   <string name="preferences">Instellingen</string>
   <string name="pref_sorting">Sorteren</string>
   <string name="pref_showsorting">Series sorteren</string>
-  <string name="pref_showsortingsummary">Series sorteren op alfabet, eerstvolgende aflevering of favoriet</string>
-  <string name="pref_seasonsorting">Sortering seizoen</string>
-  <string name="pref_sortingsummary">Op welke chronologische volgorde series worden gesorteerd</string>
-  <string name="pref_episodesorting">Sortering afleveringen</string>
-  <string name="pref_epsortingsummary">Op welke volgorde afleveringen worden gesorteerd</string>
+  <string name="pref_showsortingsummary">Series sorteren op alfabet, volgorde of favoriet</string>
+  <string name="pref_seasonsorting">Seizoen sorteren</string>
+  <string name="pref_sortingsummary">In welke volgorde worden series gesorteerd</string>
+  <string name="pref_episodesorting">Afleveringen sorteren</string>
+  <string name="pref_epsortingsummary">In welke volgorde afleveringen worden gesorteerd</string>
   <string name="pref_showlist">Lijst weergeven</string>
   <string name="pref_onlyfuture">Geen uitgezonden afleveringen</string>
-  <string name="pref_onlyfuturesummary">\"volgende:\" geeft nooit reeds uitgezonden afleveringen weer</string>
+  <string name="pref_onlyfuturesummary">\"volgende:\" geeft nooit uitgezonden afleveringen weer</string>
   <string name="pref_onlyseasoneps">Geen speciale afleveringen</string>
   <string name="pref_onlyseasonepssummary">\"volgende:\" geeft nooit speciale afleveringen weer</string>
   <string name="pref_content">Inhoud</string>
   <string name="pref_language">TheTVDB taal</string>
-  <string name="pref_languagesummary">Lokale inhoud niet beschikbaar voor elke serie, werk daarna bij</string>
+  <string name="pref_languagesummary">Lokale inhoud niet beschikbaar voor elke serie, werk achteraf bij</string>
   <string name="pref_hideimages">Afbeeldingen verbergen</string>
   <string name="pref_hideimagessummary">SeriesGuide afbeeldingen in de fotogalerij verbergen (herstarten vereist)</string>
   <string name="pref_more">Meer</string>
   <string name="about">Over SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - developed by Uwe Trottmann.\n\nPlease see the CREDITS link below for all the people and resources that help drive this project.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
+  <string name="about_message">http://seriesguide.uwetrottmann.com - ontwikkeld door Uwe Trottmann.\n\nBekijk s.v.p. de CREDITS link voor alle mensen en bronnen die dit project mogelijk hebben gemaakt.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
   <string name="help">Help</string>
-  <string name="help_summary">Naar Help pagina</string>
+  <string name="help_summary">Ga naar de Help-pagina</string>
   <string name="backup">Back-up maken/herstellen</string>
-  <string name="backup_summary">Van series back-up maken/herstellen</string>
+  <string name="backup_summary">Back-up maken/herstellen van series</string>
   <string name="pref_advanced">Geavanceerd</string>
-  <string name="clear_cache">Buffergeheugen afbeeldingen wissen</string>
-  <string name="clear_cache_summary">Alle afbeeldingen uit buffergeheugen en van SD-kaart verwijderen, door het bijwerken van series worden deze herladen</string>
+  <string name="clear_cache">Wis afbeeldingenbuffer</string>
+  <string name="clear_cache_summary">Alle afbeeldingen uit buffergeheugen en SD-kaart verwijderen. Pas met bijwerken van series worden deze herladen.</string>
   <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_ganalyticssummary">Het gebruik van functies volgen om SeriesGuide te helpen te verbeteren</string>
+  <string name="pref_ganalyticssummary">Het gebruik van SeriesGuide volgen om het te helpen te verbeteren</string>
   <string name="backup_description">De back-up zal een kopie van het SeriesGuide gegevensbestand opslaan in de map \"seriesguidebackup\" op de SD-kaart. Indien SeriesGuide wordt geherinstalleerd of op een ander Android-apparaat wordt geïnstalleerd, plaats alleen deze map op de SD-kaart van het apparaat. Druk dan hieronder op Herstellen en alle afleveringen zullen weer beschikbaar zijn. (Er kunnen geen gegevensbestanden van een nieuwere in een oudere versie worden geïmporteerd, behalve als ze dezelfde gegevensbestand-versie gebruiken. Zie ook het Over-gedeelte in de Instellingen.)</string>
-  <string name="backup_failed_nosd">Kan geen back-up maken. Er is geen externe opslag, zoals een SD-kaart beschikbaar.</string>
-  <string name="backup_inprogress">Van gegevensbestand wordt back-up gemaakt...</string>
+  <string name="backup_failed_nosd">Kan geen back-up maken. Er is geen externe opslag beschikbaar, zoals een SD-kaart.</string>
+  <string name="backup_inprogress">Database wordt geback-upt...</string>
   <string name="backup_success">Back-up voltooid</string>
   <string name="backup_failed">back-up mislukt</string>
-  <string name="import_inprogress">Gegevensbestand herstellen...</string>
-  <string name="import_failed_nosd">Kan back-up niet terugzetten. Er is geen externe opslag, zoals een SD-kaart beschikbaar.</string>
-  <string name="import_failed_nofile">Er is geen back-up bestand aanwezig (\"/sdcard/seriesguidebackup/seriesdatabase\"). Kan gegevensbestand niet herstellen.</string>
-  <string name="import_failed_noread">Back-up bestand is onleesbaar (\"/sdcard/seriesguidebackup/seriesdatabase\"). Kan gegevensbestand niet herstellen.</string>
-  <string name="import_success">Gegevensbestand succesvol hersteld</string>
-  <string name="import_failed">Herstellen mislukt</string>
-  <string name="dbupgradefailed">Het lijkt erop dat de back-up te oud of leeg is. Let op: Importeer pre-2.0 back-ups eerst in een 1.9.x versie.</string>
-  <string name="backup_button">Back-up maken naar SD-kaart</string>
-  <string name="import_button">Herstellen vanaf SD-kaart</string>
+  <string name="import_inprogress">Database herstellen...</string>
+  <string name="import_failed_nosd">Kan back-up niet herstellen. Er is geen externe opslag, zoals een SD-kaart beschikbaar.</string>
+  <string name="import_failed_nofile">Er is geen back-up bestand aanwezig (\"/sdcard/seriesguidebackup/seriesdatabase\"). Kan database niet herstellen.</string>
+  <string name="import_failed_noread">Back-up bestand is onleesbaar (\"/sdcard/seriesguidebackup/seriesdatabase\"). Kan database niet herstellen.</string>
+  <string name="import_success">Herstellen database voltooid</string>
+  <string name="import_failed">Herstellen database mislukt</string>
+  <string name="dbupgradefailed">Het lijkt erop dat de back-up te oud of leeg is.\nLET OP: Importeer pre-2.0 back-ups eerst in een 1.9.x versie.</string>
+  <string name="backup_button">Database back-up maken naar SD-kaart</string>
+  <string name="import_button">Database herstellen vanaf SD-kaart</string>
   <string name="backup_question">Hierdoor zal elke voorgaand back-up bestand worden overschreven.</string>
   <string name="backup_yes">Back-up</string>
-  <string name="backup_no">Geen back-up maken</string>
+  <string name="backup_no">Annuleren</string>
   <string name="import_question">Zorg ervoor dat de back-up aanwezig is op de SD-kaart. Alle huidige afleveringen zullen worden overschreven.</string>
   <string name="import_yes">Herstellen</string>
-  <string name="import_no">Niet herstellen</string>
-  <string name="pref_notifications">Waarschuwingen inschakelen</string>
-  <string name="pref_notificationssummary">Waarschuwingen voor komende afleveringen weergeven</string>
+  <string name="import_no">Annuleren</string>
+  <string name="pref_notifications">Meldingen inschakelen</string>
+  <string name="pref_notificationssummary">Meldingen voor aankomende afleveringen weergeven</string>
   <string name="smallwidget">Volgende afleveringen (klein)</string>
   <string name="bigwidget">Volgende afleveringen (gemiddeld)</string>
   <string name="largewidget">Volgende afleveringen (groot)</string>
-  <string name="upcoming">Eerstvolgende</string>
-  <string name="recent">Recente</string>
+  <string name="upcoming">Aankomende</string>
+  <string name="recent">Recent</string>
   <string name="noupcoming">Er zijn blijkbaar geen afleveringen. Probeer de series bij te werken.</string>
   <string name="togglewatched">Bekeken aan/uit</string>
   <string name="optimizing">Zoeken optimaliseren</string>
@@ -162,67 +163,67 @@
   <string name="checkin">Aanmelden</string>
   <string name="comment">Aanmelden commentaar</string>
   <string name="checkinsuccess">Aanmelden succesvol</string>
-  <string name="pref_number">Nummer opmaak</string>
-  <string name="pref_numbersummary">Wisselen tussen 1x01 en S01E01 als nummer opmaak</string>
+  <string name="pref_number">Nummering instellen</string>
+  <string name="pref_numbersummary">Wissel tussen 1x01 of S01E01 als nummering</string>
   <string name="checkinfailed">Aanmelden mislukt</string>
   <string name="oauthmessage">SeriesGuide verifiëren met GetGlue...</string>
   <string name="addtocalendar">Aan agenda toevoegen</string>
   <string name="addtocalendar_failed">Helaas, er is niet voldoende informatie om een agenda-item aan te maken</string>
   <string name="pref_usetz">Huidige tijdzone gebruiken</string>
-  <string name="pref_usetzsummary">Uitzenddatums in eigen tijdzone (voor gebruikers buiten de VS)</string>
+  <string name="pref_usetzsummary">Uitzenddatum in eigen tijdzone (voor buitenlandse series)</string>
   <string name="search_description">Afleveringen</string>
-  <string name="description_home">Start</string>
+  <string name="description_home">Home</string>
   <string name="description_search">Zoeken</string>
   <string name="description_overview">Overzicht</string>
   <string name="pref_offset">Tijdsverschil</string>
-  <string name="pref_offsetsummary">op een bepaald aantal uren</string>
-  <string name="norating">n/a</string>
+  <string name="pref_offsetsummary">pas tijdsverschil aan</string>
+  <string name="norating">niet beschikbaar</string>
   <string name="loading">Laden...</string>
   <string name="eula_title">Wat u moet weten</string>
-  <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Github (https://github.com/UweTrottmann/SeriesGuide).</string>
+  <string name="eula_text">Met deze app mag geen schade worden berokkend (servers overbelasten, etc...).\n\nDeze app verzamelt bepaalde informatie tijdens het gebruik, inclusief Google Analytics. Google Analytics kan worden uitgeschakeld in de instellingen.\n\nIk ben niet verantwoordelijk voor schade aan jouw apparaat of andere slechte dingen die gebeuren tijdens het gebruik van de app.\n\nDe broncode is beschikbaar voor iedereen op Github (https://github.com/UweTrottmann/SeriesGuide).</string>
   <string name="accept">Accepteren</string>
-  <string name="decline">Afwijzen</string>
+  <string name="decline">Weigeren</string>
   <string name="username">Gebruikersnaam</string>
   <string name="password">Wachtwoord</string>
   <string name="apikey">API-sleutel</string>
-  <string name="pref_trakt">trakt.tv verbinding verbroken</string>
+  <string name="pref_trakt">verbinding met trakt.tv verbroken</string>
   <string name="pref_traktsummary">Gebruik de Delen-knoppen om trakt.tv in te stellen</string>
-  <string name="pref_traktsync">Met trakt.tv synchroniseren</string>
-  <string name="pref_traktsyncsummary">Handmatig met trakt.tv synchroniseren (experimenteel)</string>
+  <string name="pref_traktsync">Synchroniseren met trakt.tv</string>
+  <string name="pref_traktsyncsummary">Handmatig synchroniseren met trakt.tv (experimenteel)</string>
   <string name="save">Opslaan</string>
-  <string name="dontsave">Niet opslaan</string>
+  <string name="dontsave">Annuleren</string>
   <string name="trakt_success">Succesvol gemarkeerd op trakt.tv</string>
-  <string name="trakt_error">trakt.tv delen mislukt</string>
+  <string name="trakt_error">delen met trakt.tv mislukt</string>
   <string name="trakt_decryptfail">wachtwoord kon niet worden gedecodeerd</string>
-  <string name="trakt_credentials_invalid">referenties niet geldig</string>
-  <string name="pref_traktintegrate">trakt.tv integreren</string>
-  <string name="pref_traktintegratesummary">Als bekeken gemarkeerd in Overzicht is gedeeld met trakt.tv</string>
-  <string name="donate">Doneren (PayPal)</string>
+  <string name="trakt_credentials_invalid">informatie niet geldig</string>
+  <string name="pref_traktintegrate">Integreer trakt.tv</string>
+  <string name="pref_traktintegratesummary">Bekeken afleveringen delen met trakt.tv</string>
+  <string name="donate">Doneer via PayPal</string>
   <string name="feedback">Feedback geven</string>
   <string name="love">Zeer goed!</string>
   <string name="hate">Zwak</string>
   <string name="trakt_createaccount">Nieuw account aanmaken</string>
   <string name="email">E-mail</string>
-  <string name="trakt_synctodevice">Met SeriesGuide synchroniseren</string>
+  <string name="trakt_synctodevice">Synchroniseren met SeriesGuide</string>
   <string name="trakt_experimental"><b>Experimentele</b> synchronisatie met trakt. Dit kan nog steeds een beetje rommelig zijn. Alleen aan SeriesGuide toegevoegde series worden gesynchroniseerd. In SeriesGuide worden alleen de afleveringen als bekeken gemarkeerd, maar bestaande markeringen worden niet verwijderd in SeriesGuide. In trakt worden alleen de bekeken afleveringen verzonden.</string>
-  <string name="trakt_synctotrakt">Met trakt.tv synchroniseren</string>
-  <string name="trakt_syncunseen">Niet bekeken afleveringen synchroniseren</string>
-  <string name="powered_by_thetvdb">powered door thetvdb.com</string>
+  <string name="trakt_synctotrakt">Synchroniseren met trakt.tv</string>
+  <string name="trakt_syncunseen">Synchroniseren onbekeken afleveringen</string>
+  <string name="powered_by_thetvdb">mede mogelijk gemaakt door thetvdb.com</string>
   <string name="download_stable">SeriesGuide downloaden</string>
   <string name="gobreak">Pauzeren</string>
-  <string name="betawarning">WARNING: This is an unstable BETA release for testing purposes only. To download the stable end-user version click the download button below.\n\nIf you want to help test the beta go ahead. Please report every crash, try everything out and send feedback to seriesguide@battlelancer.com (see Settings).</string>
+  <string name="betawarning">WAARSCHUWING: Dit is een onstabiele BETA uitgave, alleen te gebruiken voor tests. Voor de stabiele versie gebruik je de knop hieronder.\n\nWil je helpen met testen, ga je gang. Meldt s.v.p. elk probleem, probeer alles uit en stuur feedback naar seriesguide@battlelancer.com (zie Instellingen).</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Volgende aflevering</item>
     <item>Favorieten (A - Z)</item>
-    <item>Favorieten (volgende afl.)</item>
+    <item>Favorieten (chronologisch)</item>
   </string-array>
   <string-array name="sesorting">
-    <item>Laatste eerst</item>
+    <item>Nieuwste eerst</item>
     <item>Oudste eerst</item>
   </string-array>
   <string-array name="epsorting">
-    <item>Laatste eerst</item>
+    <item>Nieuwste eerst</item>
     <item>Oudste eerst</item>
     <item>Onbekeken eerst</item>
     <item>A - Z</item>
@@ -232,13 +233,13 @@
   </string-array>
   <string-array name="share_items">
     <item>Aanmelden bij GetGlue</item>
-    <item>Als bekeken gemarkeerd op trakt.tv</item>
-    <item>Overige services</item>
-    <item>Gewaardeerd op trakt.tv</item>
+    <item>Markeren als bekeken op trakt.tv</item>
+    <item>Deel via ...</item>
+    <item>Waarderen op trakt.tv</item>
   </string-array>
   <string-array name="showfilter_list">
-    <item>All</item>
-    <item>Favorites</item>
-    <item>Unseen episodes</item>
+    <item>Alle</item>
+    <item>Favorieten</item>
+    <item>Onbekeken afleveringen</item>
   </string-array>
 </resources>
