@@ -1,6 +1,18 @@
 Change Log (Stable channel)
 ===========================
 
+Version 2.2 *(2011-10-18)*
+--------------------------------
+
+* Desire HD Nutzer: bitte versuchen Sie Ihr Gerät auf die neueste Firmware zu aktualisieren
+* Filter für Serienliste
+* Weitreichende Verbesserungen am Layout, v.a. auf Tablet/Google TV (large+) Geräten
+* Zwei-Spalten-Ansicht für 'Demnächst' auf large+ Geräten
+* Zeige gerade aktualisierte Serie an
+* Neues Nummernformat realisiert von dqdb via GitHub
+* Diverse Fehlerbehebungen und Bugfixes
+* Dank an alle die Fehlerberichte und Vorschläge eingesendet haben oder bei der Übersetzung helfen!
+
 Version 2.1.2 *(2011-10-01)*
 --------------------------------
 
