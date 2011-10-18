@@ -76,6 +76,7 @@
     <string name="update_inbackground">Updating...</string>
     <string name="update_inprogress">There is an update in progress. Wait for it to complete, then try again.</string>
     <string name="update_nosdcard">Could not update. There is no external storage or SD card available.</string>
+    <string name="update_rebuildsearch">Building episode search index</string>
 
 	<!-- Show info -->
 	<string name="show_airs">airs</string>
@@ -158,11 +159,26 @@
 	<string name="help_summary">Go to the Help page</string>
 	<string name="backup">Backup/Restore</string>
 	<string name="backup_summary">Backup or restore your shows</string>
+    <string name="pref_sharing">Sharing</string>
+    <string name="clearGetGlueCredentials">Disconnect GetGlue</string>
+    <string name="clearGetGlueCredentialssummary">Use the Share buttons to setup GetGlue</string>
+    <string name="pref_number">Number format</string>
+    <string name="pref_numbersummary">Switch between 1x01 or S01E01 as number format</string>
+
     <string name="pref_advanced">Advanced</string>
 	<string name="clear_cache">Clear Image Caches</string>
 	<string name="clear_cache_summary">Remove all images from cache and SD card, updating shows will redownload them</string>
 	<string name="pref_ganalytics">Google Analytics</string>
 	<string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
+    
+    <string name="pref_notifications">Enable notifications</string>
+    <string name="pref_notificationssummary">Show notifications for upcoming episodes</string>
+    
+    <string name="pref_usetz">Use my time zone</string>
+    <string name="pref_usetzsummary">Air dates in your time zone (for users outside the USA)</string>
+    
+    <string name="pref_offset">Time Offset</string>
+    <string name="pref_offsetsummary">by a certain amount of hours</string>
 
 	<!-- Backup and Restore -->
 	<string name="backup_description">Backup will store a copy of the SeriesGuide database in the folder \"seriesguidebackup\" on your SD card. If you reinstall SeriesGuide or install SeriesGuide on another Android device, just put this folder on the devices SD card. Hit Restore below and all your shows will be there again! (You can not import databases from newer versions into an older version, except it uses the same database version. See About in Settings.)</string>
@@ -187,10 +203,7 @@
 	<string name="backup_no">Don\'t Backup</string>
 	<string name="import_question">Make sure the backup is on the SD card. All current shows will be overwritten.</string>
 	<string name="import_yes">Restore</string>
-	<string name="import_no">Don\'t Restore</string>
-    
-    <string name="pref_notifications">Enable notifications</string>
-    <string name="pref_notificationssummary">Show notifications for upcoming episodes</string>
+	<string name="import_no">Don\'t Restore</string>
 	<!-- Misc -->
 	<string name="smallwidget">Next episodes (small)</string>
 	<string name="bigwidget">Next episodes (middle)</string>
@@ -199,13 +212,9 @@
 	<string name="recent">Recent</string>
 	<string name="noupcoming">Look\'s like there are no episodes. Maybe try updating your shows.</string>
 	<string name="togglewatched">Toggle Watched</string>
-	<string name="optimizing">Optimizing search</string>
 	<string name="showlist">Show list</string>
 	<string name="seasons">Seasons</string>
 	<string name="cancel">Cancel</string>
-	<string name="clearGetGlueCredentials">Disconnect GetGlue</string>
-    <string name="clearGetGlueCredentialssummary">Use the Share buttons to setup GetGlue</string>
-	<string name="pref_sharing">Sharing</string>
 	<string name="share">Share</string>
 	<string-array name="share_items">
 		<item>GetGlue Check In</item>
@@ -217,20 +226,14 @@
 	<string name="checkin">Check In</string>
 	<string name="comment">Check In Comment</string>
 	<string name="checkinsuccess">Check In successful</string>
-	<string name="pref_number">Number format</string>
-	<string name="pref_numbersummary">Switch between 1x01 or S01E01 as number format</string>
 	<string name="checkinfailed">Check-In failed</string>
 	<string name="oauthmessage">Authenticating SeriesGuide with GetGlue...</string>
 	<string name="addtocalendar">Add to calendar</string>
 	<string name="addtocalendar_failed">Sorry, there is not enough information to create a calendar event.</string>
-	<string name="pref_usetz">Use my time zone</string>
-	<string name="pref_usetzsummary">Air dates in your time zone (for users outside the USA)</string>
 	<string name="search_description">Episodes</string>
 	<string name="description_home">Home</string>
 	<string name="description_search">Search</string>
     <string name="description_overview">Overview</string>
-	<string name="pref_offset">Time Offset</string>
-    <string name="pref_offsetsummary">by a certain amount of hours</string>
     <string name="norating">n/a</string>
     <string name="loading">Loading...</string>
     <string name="eula_title">What you should know</string>
