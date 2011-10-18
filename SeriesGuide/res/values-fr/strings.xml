@@ -34,7 +34,8 @@
   <string name="show_isnotalive">Terminé</string>
   <string name="sort">Trié par</string>
   <string name="menu_updateart">Obtenez les affiches manquantes</string>
-  <string name="updateall_yes">Tout mettre à jour</string>
+  <string name="updateall_yes">Update (all)</string>
+  <string name="menu_update_delta">Update (modified only)</string>
   <string name="context_updateshow">Mise à jour</string>
   <string name="context_showinfo">Afficher les infos</string>
   <string name="context_marknext">Consulté prochain épisode</string>
@@ -58,11 +59,12 @@
   <string name="update_error">Impossible de mettre à jour.</string>
   <string name="update_incomplete1">Impossible de mettre à jour</string>
   <string name="update_incomplete2">.</string>
-  <string name="update_success">Mise à jour réussie.</string>
-  <string name="imagedownload_incomplete">Mise à jour réussie. Malheureusement, certaines images n\'ont pas été téléchargées. Veuillez réessayer plus tard.</string>
+  <string name="update_success">Update successful.</string>
+  <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
   <string name="update_inbackground">Mise à jour ...</string>
   <string name="update_inprogress">Il ya une mise à jour en cours. Attendez qu\'elle soit terminée, puis essayez à nouveau.</string>
   <string name="update_nosdcard">Impossible de mettre à jour. Il n\'y a pas de stockage externe ou votre carte SD disponible.</string>
+  <string name="update_rebuildsearch">Building episode search index</string>
   <string name="show_airs">Diffusions</string>
   <string name="show_network">sur</string>
   <string name="show_pleaseupdate">Essayez de mettre à jour cette série pour afficher plus d\'informations (dans l\'aperçu, pression longue sur la série, sélectionnez Mise à jour). Si ca ne vous aide pas, il n\'y a probablement pas plus d\'informations sur TheTVDB. Allez sur leur site (www.thetvdb.com) pour apprendre à ajouter des éléments.</string>
@@ -89,7 +91,7 @@
   <string name="add_error_begin">Impossible d\'ajouter \ "</string>
   <string name="add_error_end">\ ".</string>
   <string name="add_already_exists">existe déjà. Mis à jour à la place.</string>
-  <string name="loading_trending">Loading trending shows on trakt.tv</string>
+  <string name="loading_trending">Charger les tendances sur trakt.tv</string>
   <string name="loading_usershows">Charger vos séries sur trakt.tv</string>
   <string name="preferences">Paramètres</string>
   <string name="pref_sorting">Tri</string>
@@ -116,11 +118,22 @@
   <string name="help_summary">Aller à la page d\'aide</string>
   <string name="backup">Sauvegarde / Restauration</string>
   <string name="backup_summary">Sauvegarder ou restaurer vos séries</string>
+  <string name="pref_sharing">Partage</string>
+  <string name="clearGetGlueCredentials">Déconnectez GetGlue</string>
+  <string name="clearGetGlueCredentialssummary">Utilisez les boutons Partager pour configurer GetGlue</string>
+  <string name="pref_number">Format de nombre</string>
+  <string name="pref_numbersummary">Changer le format de numérotation entre 1x01 ou S01E01</string>
   <string name="pref_advanced">Avancée</string>
   <string name="clear_cache">Cacher mes images du cache</string>
   <string name="clear_cache_summary">Supprimer toutes les images du cache et de la carte SD, la mise à jour les retéléchargera</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Suivi de l\'utilisation des fonctionnalités pour aider à améliorer SeriesGuide</string>
+  <string name="pref_notifications">Activer les notifications</string>
+  <string name="pref_notificationssummary">Afficher les notifications pour les prochains épisodes</string>
+  <string name="pref_usetz">Utiliser mon fuseau horaire</string>
+  <string name="pref_usetzsummary">Dates de diffusion dans votre fuseau horaire (pour les utilisateurs en dehors des Etats-Unis)</string>
+  <string name="pref_offset">Décalage horaire</string>
+  <string name="pref_offsetsummary">par un certain nombre d\'heures</string>
   <string name="backup_description">La sauvegarde va copier de la base de données SeriesGuide dans le dossier \"seriesguidebackup\" sur votre carte SD. Si vous réinstallez SeriesGuide ou installez SeriesGuide sur un autre périphérique Android, juste mettre ce dossier sur la carte SD. Appuyer sur Restaurer ci-dessous et toutes vos séries seront disponibles ! (Vous ne pouvez pas importer de bases de données de versions plus récentes dans une version plus ancienne, sauf si elle utilise la même version de la base de données. Voir dans paramètres.)</string>
   <string name="backup_failed_nosd">Sauvegarde impossible. Il n\'y a pas de stockage externe, comme une carte SD, de disponible.</string>
   <string name="backup_inprogress">Sauvegarde de base de données ...</string>
@@ -141,8 +154,6 @@
   <string name="import_question">Assurez-vous que la sauvegarde se trouve sur la carte SD. Toutes les séries actuelles seront remplacées.</string>
   <string name="import_yes">Restaurer</string>
   <string name="import_no">Ne pas restaurer</string>
-  <string name="pref_notifications">Activer les notifications</string>
-  <string name="pref_notificationssummary">Afficher les notifications pour les prochains épisodes</string>
   <string name="smallwidget">prochains épisodes (petit)</string>
   <string name="bigwidget">prochains épisodes (au milieu)</string>
   <string name="largewidget">prochains épisodes (grande)</string>
@@ -150,13 +161,8 @@
   <string name="recent">Dernierement</string>
   <string name="noupcoming">Il semble ne plus y avoir d\'épisodes. Essayez peut-être de mettre à jour vos séries.</string>
   <string name="togglewatched">Toggle visionnées</string>
-  <string name="optimizing">Optimisation de recherche</string>
-  <string name="showlist">Voir la liste</string>
   <string name="seasons">Saisons</string>
   <string name="cancel">Annuler</string>
-  <string name="clearGetGlueCredentials">Déconnectez GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Utilisez les boutons Partager pour configurer GetGlue</string>
-  <string name="pref_sharing">Partage</string>
   <string name="share">Partagez</string>
   <string name="done">acceptez</string>
   <string name="checkin">Enregistrement</string>
@@ -168,14 +174,10 @@
   <string name="oauthmessage">Authentification de SerieGuide avec GetBlue...</string>
   <string name="addtocalendar">Ajouter au calendrier</string>
   <string name="addtocalendar_failed">Désolé, il n\'y a pas suffisamment d\'informations pour créer un événement sur le calendrier.</string>
-  <string name="pref_usetz">Utiliser mon fuseau horaire</string>
-  <string name="pref_usetzsummary">Air dates in your time zone (for users outside the USA)</string>
   <string name="search_description">Episodes</string>
   <string name="description_home">Accueil</string>
   <string name="description_search">Rechercher</string>
   <string name="description_overview">Aperçu</string>
-  <string name="pref_offset">Décalage horaire</string>
-  <string name="pref_offsetsummary">par un certain nombre d\'heures</string>
   <string name="norating">s/o</string>
   <string name="loading">Chargement en cours ...</string>
   <string name="eula_title">Ce que vous devriez savoir</string>
@@ -214,8 +216,8 @@
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Episode suivant</item>
-    <item>Favorites (A - Z)</item>
-    <item>Favorites (Next ep.)</item>
+    <item>Favoris (A - Z)</item>
+    <item>Favoris (prochain ep.)</item>
   </string-array>
   <string-array name="sesorting">
     <item>Plus récents en premier</item>
@@ -237,8 +239,8 @@
     <item>Noter sur trakt.tv</item>
   </string-array>
   <string-array name="showfilter_list">
-    <item>All</item>
-    <item>Favorites</item>
-    <item>Unseen episodes</item>
+    <item>tout</item>
+    <item>Favoris</item>
+    <item>Unseen/Upcoming</item>
   </string-array>
 </resources>

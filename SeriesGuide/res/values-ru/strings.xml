@@ -34,7 +34,8 @@
   <string name="show_isnotalive">Закончился</string>
   <string name="sort">Сортировать по</string>
   <string name="menu_updateart">Получить отсутствующие серии</string>
-  <string name="updateall_yes">Обновить все</string>
+  <string name="updateall_yes">Update (all)</string>
+  <string name="menu_update_delta">Update (modified only)</string>
   <string name="context_updateshow">Обновить</string>
   <string name="context_showinfo">Показать информацию</string>
   <string name="context_marknext">См. следующий эпизод</string>
@@ -58,11 +59,12 @@
   <string name="update_error">Не удалось обновить.</string>
   <string name="update_incomplete1">Не удалось обновить</string>
   <string name="update_incomplete2">.</string>
-  <string name="update_success">Обновление успешно.</string>
-  <string name="imagedownload_incomplete">Обновление успешно. К сожалению некоторые изображения не были загружены. Попробуйте еще раз позже.</string>
+  <string name="update_success">Update successful.</string>
+  <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
   <string name="update_inbackground">Обновление ...</string>
   <string name="update_inprogress">Идет процесс обновления. Дождитесь его завершения, а затем повторите попытку.</string>
   <string name="update_nosdcard">Не удалось обновить. Нет внешнего накопителя или SD-карты.</string>
+  <string name="update_rebuildsearch">Building episode search index</string>
   <string name="show_airs">в эфире</string>
   <string name="show_network">включено</string>
   <string name="show_pleaseupdate">Попробуйте получить больше информации о сериале (Долгое нажатие по названию сериала в общем списке -> Обновить). Если это не помогает, значит информация отсутствует на сайте TheTVDB. Посетите сайт www.thetvdb.com и узнайте как добавить информацию.</string>
@@ -116,11 +118,22 @@
   <string name="help_summary">Перейти на страницу справки</string>
   <string name="backup">Резервное копирование/восстановление</string>
   <string name="backup_summary">Резервного копирования или восстановления ваших шоу</string>
+  <string name="pref_sharing">Поделиться</string>
+  <string name="clearGetGlueCredentials">Disconnect GetGlue</string>
+  <string name="clearGetGlueCredentialssummary">Use the Share buttons to setup GetGlue</string>
+  <string name="pref_number">Формат номеров серий</string>
+  <string name="pref_numbersummary">Переключить формат номеров серий как 1x01 или S01E01</string>
   <string name="pref_advanced">Advanced</string>
   <string name="clear_cache">Очистить кэши изображений</string>
   <string name="clear_cache_summary">Удалить все изображения из кэша и SD-карты, при обновлении сериалов они будут снова скачаны</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
+  <string name="pref_notifications">Включить уведомления</string>
+  <string name="pref_notificationssummary">Показать уведомления о выходящих эпизодах</string>
+  <string name="pref_usetz">Использовать мой часовой пояс</string>
+  <string name="pref_usetzsummary">Даты эфиров в вашем часовом поясе (для пользователей за пределами США)</string>
+  <string name="pref_offset">Временной сдвиг</string>
+  <string name="pref_offsetsummary">на определенное количество часов</string>
   <string name="backup_description">Резервная копия базы данных SeriesGuide будет сохранена в папке \"seriesguidebackup\" на вашей SD карте. Когда вы будете переустанавливать SeriesGuide или устанавливать его на другое Android-устройство, просто скопируйте эту папку на SD карту устройства. Нажмите Восстановить и все ваши сериалы отобразятся в программе! (Нельзя импортировать базы данных из более новых версий программы в более старые, кроме тех что используют одну и ту же версию базы данных. Смотрите О программе в Настройках.)</string>
   <string name="backup_failed_nosd">Резервное копирование не возможно. Нет никакого внешнего хранилища, на пример SD карты.</string>
   <string name="backup_inprogress">Резервное копирование базы данных...</string>
@@ -141,8 +154,6 @@
   <string name="import_question">Убедитесь, что резервная копия находится на SD-карте. Все текущие шоу будут перезаписаны.</string>
   <string name="import_yes">Восстановление</string>
   <string name="import_no">Не востановлять</string>
-  <string name="pref_notifications">Включить уведомления</string>
-  <string name="pref_notificationssummary">Показать уведомления о выходящих эпизодах</string>
   <string name="smallwidget">Следующие эпизоды (маленький)</string>
   <string name="bigwidget">Следующие эпизоды (средний)</string>
   <string name="largewidget">Следующие эпизоды (большой)</string>
@@ -150,13 +161,8 @@
   <string name="recent">Недавние</string>
   <string name="noupcoming">Похоже что эпизодов нет. Попробуйте обновить ваши сериалы.</string>
   <string name="togglewatched">Toggle Watched</string>
-  <string name="optimizing">Оптимизация поиска</string>
-  <string name="showlist">Список сериалов</string>
   <string name="seasons">Сезоны</string>
   <string name="cancel">Отмена</string>
-  <string name="clearGetGlueCredentials">Disconnect GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Use the Share buttons to setup GetGlue</string>
-  <string name="pref_sharing">Поделиться</string>
   <string name="share">Поделиться</string>
   <string name="done">Выполнено</string>
   <string name="checkin">Войти</string>
@@ -168,14 +174,10 @@
   <string name="oauthmessage">Authenticating SeriesGuide with GetGlue...</string>
   <string name="addtocalendar">Добавить в календарь</string>
   <string name="addtocalendar_failed">К сожалению, не хватает информации, чтобы создать событие в календаре.</string>
-  <string name="pref_usetz">Использовать мой часовой пояс</string>
-  <string name="pref_usetzsummary">Даты эфиров в вашем часовом поясе (для пользователей за пределами США)</string>
   <string name="search_description">Эпизоды</string>
   <string name="description_home">На главную</string>
   <string name="description_search">Поиск</string>
   <string name="description_overview">Обзор</string>
-  <string name="pref_offset">Временной сдвиг</string>
-  <string name="pref_offsetsummary">на определенное количество часов</string>
   <string name="norating">n/a</string>
   <string name="loading">Загрузка...</string>
   <string name="eula_title">Что вы должны знать</string>
@@ -239,6 +241,6 @@
   <string-array name="showfilter_list">
     <item>All</item>
     <item>Favorites</item>
-    <item>Unseen episodes</item>
+    <item>Unseen/Upcoming</item>
   </string-array>
 </resources>

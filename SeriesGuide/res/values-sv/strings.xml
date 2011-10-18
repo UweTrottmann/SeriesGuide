@@ -34,7 +34,8 @@
   <string name="show_isnotalive">Avslutad</string>
   <string name="sort">Sortera efter</string>
   <string name="menu_updateart">Get Missing Posters</string>
-  <string name="updateall_yes">Uppdatera alla</string>
+  <string name="updateall_yes">Update (all)</string>
+  <string name="menu_update_delta">Update (modified only)</string>
   <string name="context_updateshow">Uppdatera</string>
   <string name="context_showinfo">Visa Info</string>
   <string name="context_marknext">Såg nästa episod</string>
@@ -58,11 +59,12 @@
   <string name="update_error">Kunde inte uppdatera.</string>
   <string name="update_incomplete1">Det gick inte att uppdatera</string>
   <string name="update_incomplete2">.</string>
-  <string name="update_success">Uppdateringen klar.</string>
-  <string name="imagedownload_incomplete">Uppdatering färdig. Tyvärr gick det ej att ladda ner en del bilder. Vänligen försök igen senare.</string>
+  <string name="update_success">Update successful.</string>
+  <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
   <string name="update_inbackground">Uppdaterar ...</string>
   <string name="update_inprogress">Det finns en uppdatering pågår. Vänta tills den är klar och försök sedan igen.</string>
   <string name="update_nosdcard">Kunde inte uppdatera. Det finns inget SD-kort eller extern lagring tillgänglig.</string>
+  <string name="update_rebuildsearch">Building episode search index</string>
   <string name="show_airs">sänds</string>
   <string name="show_network">på</string>
   <string name="show_pleaseupdate">Try to update this show to display more information (in the overview, long-press on it, select Update). If this doesn\'t help, there is likely no additional information in TheTVDB. Go to their site (www.thetvdb.com) to learn how to add some.</string>
@@ -116,11 +118,22 @@
   <string name="help_summary">Gå till hjälpsidan</string>
   <string name="backup">Säkerhetskopiering/återställning</string>
   <string name="backup_summary">Säkerhetskopiera eller återställ dina shower</string>
+  <string name="pref_sharing">Sharing</string>
+  <string name="clearGetGlueCredentials">Koppla från GetGlue</string>
+  <string name="clearGetGlueCredentialssummary">Use the Share buttons to setup GetGlue</string>
+  <string name="pref_number">Number format</string>
+  <string name="pref_numbersummary">Switch between 1x01 or S01E01 as number format</string>
   <string name="pref_advanced">Avancerade</string>
   <string name="clear_cache">Clear Image Caches</string>
   <string name="clear_cache_summary">Ta bort alla bilder från cache och SD-kort, de kommer att laddas ner igen vid uppdatering av serierna.</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
+  <string name="pref_notifications">Aktivera meddelanden</string>
+  <string name="pref_notificationssummary">Visa meddelanden för kommande avsnitt</string>
+  <string name="pref_usetz">Använd min tidszon</string>
+  <string name="pref_usetzsummary">Air dates in your time zone (for users outside the USA)</string>
+  <string name="pref_offset">Time Offset</string>
+  <string name="pref_offsetsummary">med ett visst antal timmar</string>
   <string name="backup_description">Säkerhetskopiering kommer lagra en kopia av SeriesGuide-databasen i mappen \"seriesguidebackup\" på ditt SD-kort. Om du ominstallerar SeriesGuide eller installerar SeriesGuide på en annan Androidenhet, lägg då mappen på enhetens SD-kort. Tryck Återställ nedan och alla dina shower återhämtas! (Du kan ej importera databaser från nyare versioner till en äldre version, såvida det inte är samma databasversion. Se Om i Inställningar.)</string>
   <string name="backup_failed_nosd">Can\'t backup. There is no external storage, such as a SD card, available.</string>
   <string name="backup_inprogress">Säkerhetskopiera databasen ...</string>
@@ -141,8 +154,6 @@
   <string name="import_question">Kontrollera att säkerhetskopian finns på SD-kortet. Alla aktuella episodar kommer att skrivas över.</string>
   <string name="import_yes">Återställa</string>
   <string name="import_no">Återställ inte</string>
-  <string name="pref_notifications">Aktivera meddelanden</string>
-  <string name="pref_notificationssummary">Visa meddelanden för kommande avsnitt</string>
   <string name="smallwidget">Nästa avsnitt (small)</string>
   <string name="bigwidget">Nästa avsnitt (middle)</string>
   <string name="largewidget">Nästa avsnitt (large)</string>
@@ -150,13 +161,8 @@
   <string name="recent">De senaste</string>
   <string name="noupcoming">Look\'s like there are no episodes. Maybe try updating your shows.</string>
   <string name="togglewatched">Toggle Watched</string>
-  <string name="optimizing">Optimerar sökning</string>
-  <string name="showlist">Visa serielista</string>
   <string name="seasons">Säsonger</string>
   <string name="cancel">Avbryt</string>
-  <string name="clearGetGlueCredentials">Koppla från GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Use the Share buttons to setup GetGlue</string>
-  <string name="pref_sharing">Sharing</string>
   <string name="share">Dela</string>
   <string name="done">Klar</string>
   <string name="checkin">Check In</string>
@@ -168,14 +174,10 @@
   <string name="oauthmessage">Authenticating SeriesGuide with GetGlue...</string>
   <string name="addtocalendar">Lägg till i kalender</string>
   <string name="addtocalendar_failed">Tyvärr finns det inte tillräckligt med information för att skapa en kalenderhändelse.</string>
-  <string name="pref_usetz">Använd min tidszon</string>
-  <string name="pref_usetzsummary">Air dates in your time zone (for users outside the USA)</string>
   <string name="search_description">Avsnitt</string>
   <string name="description_home">Hem</string>
   <string name="description_search">Sök</string>
   <string name="description_overview">Översikt</string>
-  <string name="pref_offset">Time Offset</string>
-  <string name="pref_offsetsummary">med ett visst antal timmar</string>
   <string name="norating">saknas</string>
   <string name="loading">Laddar...</string>
   <string name="eula_title">Vad du bör veta</string>
@@ -239,6 +241,6 @@
   <string-array name="showfilter_list">
     <item>All</item>
     <item>Favorites</item>
-    <item>Unseen episodes</item>
+    <item>Unseen/Upcoming</item>
   </string-array>
 </resources>

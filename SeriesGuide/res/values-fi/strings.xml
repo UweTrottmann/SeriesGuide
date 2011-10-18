@@ -13,7 +13,7 @@
   <string name="ioerror">Tapahtui verkkovirhe. Sinulla sattaa olla rajoitettu pääsy kohteeseen TheTVDB.com yhteydelläsi tällä hetkellä. Yritä myöhemmin uudestaan.</string>
   <string name="saxerror">TheTVDB:n vastausta ei ymmärretty. Yritä myöhemmin uudestaan.</string>
   <string name="offline">Käytössä ei ole aktiivista yhteyttä internetiin. Tarkista yhteytesi internetiin ja yritä uudestaan.</string>
-  <string name="whatsnew_title">What\'s new</string>
+  <string name="whatsnew_title">Mitä uutta</string>
   <string name="search_hint">Hae jaksoja</string>
   <string name="search_title">Löytyneet jaksot</string>
   <string name="share_episode">Jaa jakso</string>
@@ -34,7 +34,8 @@
   <string name="show_isnotalive">Päättynyt</string>
   <string name="sort">Lajittele</string>
   <string name="menu_updateart">Nouda puuttuvat julisteet</string>
-  <string name="updateall_yes">Päivitä kaikki</string>
+  <string name="updateall_yes">Update (all)</string>
+  <string name="menu_update_delta">Update (modified only)</string>
   <string name="context_updateshow">Päivitä</string>
   <string name="context_showinfo">Näytä tiedot</string>
   <string name="context_marknext">Seuraava jakso katsottu</string>
@@ -58,11 +59,12 @@
   <string name="update_error">Ei voitu päivittää.</string>
   <string name="update_incomplete1">Ei voitu päivittää</string>
   <string name="update_incomplete2">.</string>
-  <string name="update_success">Päivitetty onnistuneesti.</string>
-  <string name="imagedownload_incomplete">Päivitetty onnistuneesti. Valitettavasti jotkut kuvat eivät lataantuneet. Yritä myöhemmin uudestaan.</string>
+  <string name="update_success">Update successful.</string>
+  <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
   <string name="update_inbackground">Päivitetään...</string>
   <string name="update_inprogress">Päivitys käynnissä. Odota sen päättymistä ja yritä sitten uudestaan.</string>
   <string name="update_nosdcard">Ei voitu päivittää. Ulkoista muistia tai SD-korttia ei ole saatavilla.</string>
+  <string name="update_rebuildsearch">Building episode search index</string>
   <string name="show_airs">esitetään</string>
   <string name="show_network">kanavalla</string>
   <string name="show_pleaseupdate">Yritä päivittää tämä ohjelma nähdäksesi enemmän tietoja (päänäkymässä paina ohjelmaa pitkään ja valitse valikosta Päivitä) Jos tämä ei auta, TheTVDB:ssä ei luultavasti ole tarjolla enempää tietoja. Mene heidän sivustolleen (www.thetvdb.com) ja opi, kuinka voit itse lisätä tietoja.</string>
@@ -111,16 +113,27 @@
   <string name="pref_hideimagessummary">Piilota SeriesGuiden kuvat kuvagalleriasta (vaatii uudelleenkäynnistyksen)</string>
   <string name="pref_more">Lisää</string>
   <string name="about">Tietoja SeriesGuidesta</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - developed by Uwe Trottmann.\n\nPlease see the CREDITS link below for all the people and resources that help drive this project.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
+  <string name="about_message">http://seriesguide.uwetrottmann.com - kehittänyt Uwe Trottmann.\n\nKatso alhaalla olevaa CREDITS -linkkiä nähdäksesi kaikki ihmiset ja lähteet, jotka ovat auttaneet tätä projektia.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
   <string name="help">Hanki apua</string>
   <string name="help_summary">Mene apusivulle</string>
   <string name="backup">Varmuuskopioi/Palauta</string>
   <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
+  <string name="pref_sharing">Jakaminen</string>
+  <string name="clearGetGlueCredentials">Irrottaudu GetGluesta</string>
+  <string name="clearGetGlueCredentialssummary">Käytä Jaa-painiketta säätäksesi GetGlueta</string>
+  <string name="pref_number">Lukumuoto</string>
+  <string name="pref_numbersummary">Vaihda lukumuotojen 1x01 ja S01E01 välillä</string>
   <string name="pref_advanced">Lisäasetukset</string>
   <string name="clear_cache">Tyhjennä kuvamuistit</string>
   <string name="clear_cache_summary">Poista kaikki kuvat välimuistista ja SD-kortilta. Ohjelmien päivittäminen lataa ne uudelleen.</string>
   <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Seuraa ominaisuuksien käyttöä, jonka avulla parannetaan SeriesGuidea</string>
+  <string name="pref_notifications">Ota ilmoitukset käyttöön</string>
+  <string name="pref_notificationssummary">Näytä ilmoitukset tulevista jaksoista</string>
+  <string name="pref_usetz">Käytä aikavyöhykettäni</string>
+  <string name="pref_usetzsummary">Esityspäivät aikavyöhykkeesi mukaan (USA:n ulkopuolisille käyttäjille)</string>
+  <string name="pref_offset">Aikaviive</string>
+  <string name="pref_offsetsummary">tietyllä tuntimäärällä</string>
   <string name="backup_description">Varmuuskopiointi tallentaa kopion SeriesGuiden tietokannasta SD-kortille kansioon \"seriesguidebackup\". Jos asennat SeriesGuiden uudestaan tai asennat SeriesGuiden toiselle Android -laitteelle, pistä tämä kansio laitteen SD-kortille. Napsauta alempaa Palauta ja kaikki ohjelmasi ovat jälleen käytössäsi! (Et voi tuota tietokantoja uudemmista versioista vanhempiin versioihin, paitsi jos se käyttää samaa tietokantaversiota. Katso kohta Tietoja asetusvalikosta.)</string>
   <string name="backup_failed_nosd">Ei voi varmuuskopioida. Ulkoista muistia, kuten SD-korttia, ei ole saatavilla.</string>
   <string name="backup_inprogress">Varmuuskopioidaan tietokantaa...</string>
@@ -132,7 +145,7 @@
   <string name="import_failed_noread">Varmuuskopiotiedosto ei ole luettava (\"/sdcard/seriesguidebackup/seriesdatabase\"). Ei voi palauttaa tietokantaa.</string>
   <string name="import_success">Tietokanta palautettu onnistuneesti</string>
   <string name="import_failed">Palautus epäonnistui</string>
-  <string name="dbupgradefailed">Looks like your backup is too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
+  <string name="dbupgradefailed">Näyttää varmuuskopio on liian vanha tai tyhjä. Huom: Tuo pre-2.0 varmuuskopiot 1.9.x version ensin.</string>
   <string name="backup_button">Varmuuskopioi SD-kortille</string>
   <string name="import_button">Palauta SD-kortilta</string>
   <string name="backup_question">Tämä korvaa kaikki aiemmat varmuuskopiot.</string>
@@ -141,8 +154,6 @@
   <string name="import_question">Varmista, että varmuuskopio on SD-kortilla. Kaikki nykyiset ohjelmat korvataan.</string>
   <string name="import_yes">Palauta</string>
   <string name="import_no">Älä palauta</string>
-  <string name="pref_notifications">Ota ilmoitukset käyttöön</string>
-  <string name="pref_notificationssummary">Näytä ilmoitukset tulevista jaksoista</string>
   <string name="smallwidget">Seuraavat jaksot (pieni)</string>
   <string name="bigwidget">Seuraavat jaksot (keskisuuri)</string>
   <string name="largewidget">Seuraavat jaksot (suuri)</string>
@@ -150,13 +161,8 @@
   <string name="recent">Viimeisimmät</string>
   <string name="noupcoming">Jaksoja ei löydy. Yritä päivittää ohjelmasi.</string>
   <string name="togglewatched">Vaihda katsotut</string>
-  <string name="optimizing">Optimoidaan hakua</string>
-  <string name="showlist">Ohjelmalista</string>
   <string name="seasons">Kaudet</string>
   <string name="cancel">Peruuta</string>
-  <string name="clearGetGlueCredentials">Irrottaudu GetGluesta</string>
-  <string name="clearGetGlueCredentialssummary">Käytä Jaa-painiketta säätäksesi GetGlueta</string>
-  <string name="pref_sharing">Jakaminen</string>
   <string name="share">Jaa</string>
   <string name="done">Valmis</string>
   <string name="checkin">Kirjaa</string>
@@ -168,14 +174,10 @@
   <string name="oauthmessage">Vahvistetaan SeriesGuide GetGluen kanssa...</string>
   <string name="addtocalendar">Lisää kalenteriin</string>
   <string name="addtocalendar_failed">Tietoa ei ole riittävästi kalenteritaphtuman luomiseksi.</string>
-  <string name="pref_usetz">Käytä aikavyöhykettäni</string>
-  <string name="pref_usetzsummary">Esityspäivät aikavyöhykkeesi mukaan (USA:n ulkopuolisille käyttäjille)</string>
   <string name="search_description">Jaksot</string>
   <string name="description_home">Etusivu</string>
   <string name="description_search">Etsi</string>
   <string name="description_overview">Yleiskatsaus</string>
-  <string name="pref_offset">Aikaviive</string>
-  <string name="pref_offsetsummary">tietyllä tuntimäärällä</string>
   <string name="norating">puuttuu</string>
   <string name="loading">Ladataan...</string>
   <string name="eula_title">Mitä sinun tulisi tietää</string>
@@ -206,7 +208,7 @@
   <string name="trakt_createaccount">Luo uusi tili</string>
   <string name="email">Sähköposti</string>
   <string name="trakt_synctodevice">Synkronoi SeriesGuideen</string>
-  <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. Only shows added to SeriesGuide are synced. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
+  <string name="trakt_experimental"><b>Kokeellinen</b> synkkaus traktiin. Tämä voi olla ajoittain kuoppaista. Vain SeriesGuideen lisätyt ohjelmat synkataan. SeriesGuideen merkataan vain katsotut jaksot, mutta aiemmin katsotuksi merkittyjä ei poisteta SeriesGuidesta. Lähetetään traktiin vain tiedot katsotuista jaksoista.</string>
   <string name="trakt_synctotrakt">Synkronoi trakt.tv:en</string>
   <string name="trakt_syncunseen">Synkronoi ennennäkemättömät jaksot</string>
   <string name="powered_by_thetvdb">Pohjautuu thetvdb.com:iin</string>
@@ -216,8 +218,8 @@
   <string-array name="shsorting">
     <item>A - Ö</item>
     <item>Seuraava jakso</item>
-    <item>Favorites (A - Z)</item>
-    <item>Favorites (Next ep.)</item>
+    <item>Suosikit (A - Ö)</item>
+    <item>Suosikit (Seuraava jakso)</item>
   </string-array>
   <string-array name="sesorting">
     <item>Uusin ensin</item>
@@ -239,8 +241,8 @@
     <item>Arvioi trakt.tv:ssä</item>
   </string-array>
   <string-array name="showfilter_list">
-    <item>All</item>
-    <item>Favorites</item>
-    <item>Unseen episodes</item>
+    <item>Kaikki</item>
+    <item>Suosikit</item>
+    <item>Unseen/Upcoming</item>
   </string-array>
 </resources>

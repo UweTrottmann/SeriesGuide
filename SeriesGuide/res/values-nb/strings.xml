@@ -34,7 +34,8 @@
   <string name="show_isnotalive">Avsluttet</string>
   <string name="sort">Sorter etter</string>
   <string name="menu_updateart">Hent manglende bilder</string>
-  <string name="updateall_yes">Oppdater alle</string>
+  <string name="updateall_yes">Update (all)</string>
+  <string name="menu_update_delta">Update (modified only)</string>
   <string name="context_updateshow">Oppdater</string>
   <string name="context_showinfo">Vis info</string>
   <string name="context_marknext">Sett neste episode</string>
@@ -58,11 +59,12 @@
   <string name="update_error">Kunne ikke oppdatere.</string>
   <string name="update_incomplete1">Kunne ikke oppdatere</string>
   <string name="update_incomplete2">.</string>
-  <string name="update_success">Oppdatering vellykket.</string>
-  <string name="imagedownload_incomplete">Oppdatering vellykket. Dessverre så ble ikke alle bilder lastet ned. Prøv igjen senere.</string>
+  <string name="update_success">Update successful.</string>
+  <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
   <string name="update_inbackground">Oppdaterer ...</string>
   <string name="update_inprogress">Det er en oppdatering underveis. Vent til den er ferdig, og prøv igjen.</string>
   <string name="update_nosdcard">Kunne ikke oppdatere. Det er ingen ekstern lagring eller SD-kort tilgjengelig.</string>
+  <string name="update_rebuildsearch">Building episode search index</string>
   <string name="show_airs">sendes</string>
   <string name="show_network">på</string>
   <string name="show_pleaseupdate">Prøv å oppdatere denne Vis for å vise mer informasjon (i oversikten, lang trykk på den, velg Oppdater). Om dette ikke hjelper, er det sannsynligvis ingen tilleggsinformasjon i TheTVDB. Gå til deres webområde (www.thetvdb.com) for å lære hvordan du legger til.</string>
@@ -111,16 +113,27 @@
   <string name="pref_hideimagessummary">Skjul SeriesGuide bilder fra fotogalleriet (omstart kreves)</string>
   <string name="pref_more">Mer</string>
   <string name="about">Om SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - developed by Uwe Trottmann.\n\nPlease see the CREDITS link below for all the people and resources that help drive this project.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
+  <string name="about_message">http://seriesguide.uwetrottmann.com - uviklet av Uwe Trottmann.\n\nVennligst se CREDITS linken under for alle personene og ressursene som bidrar til å holde dette prosjektet i gang.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
   <string name="help">Få hjelp</string>
   <string name="help_summary">Gå til Hjelp siden</string>
   <string name="backup">Sikkerhetskopiering/gjenoppretting</string>
   <string name="backup_summary">Sikkerhetskopiere eller gjenopprette dine serier</string>
+  <string name="pref_sharing">Deling</string>
+  <string name="clearGetGlueCredentials">Koble fra GetGlue</string>
+  <string name="clearGetGlueCredentialssummary">Bruk Del knappen for å sette opp GetGlue</string>
+  <string name="pref_number">Nummerering</string>
+  <string name="pref_numbersummary">Velg mellom 1x01 og S01E01 som episode nummerering</string>
   <string name="pref_advanced">Avansert</string>
   <string name="clear_cache">Tøm hurtigbuffere for bilde</string>
   <string name="clear_cache_summary">Fjern alle bilder fra hurtigbuffer og SD-kort. Oppdatering av seriene vil laste dem ned på nytt</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Overvåk bruken av funksjoner for å forbedre SeriesGuide</string>
+  <string name="pref_notifications">Aktiver varsler</string>
+  <string name="pref_notificationssummary">Vis varsler for kommende episoder</string>
+  <string name="pref_usetz">Bruk min tidssone</string>
+  <string name="pref_usetzsummary">Visningsdatoer i din tidssone (for brukere utenfor USA)</string>
+  <string name="pref_offset">Tidsforskjell</string>
+  <string name="pref_offsetsummary">med et visst antall timer</string>
   <string name="backup_description">Sikkerhetskopiering vil lagre en kopi av databasen SeriesGuide i mappen \"seriesguidebackup\" på SD-kortet. Hvis du installerer SeriesGuide på nytt eller installerer SeriesGuide på en annen Android-enhet, er det bare å sette denne mappen på enhetens SD-kort. Trykk gjenoppretting nedenfor og alle dine serier vil være der igjen! (Du kan ikke importere databaser fra nyere versjoner til en eldre versjon, bortsett fra at den bruker samme databaseversjonen. Se Om i innstillingene.)</string>
   <string name="backup_failed_nosd">Kan ikke utføre sikkerhetskopien Det finnes ingen ekstern lagring, for eksempel et SD-kort.</string>
   <string name="backup_inprogress">Sikkerhetskopierer database...</string>
@@ -141,8 +154,6 @@
   <string name="import_question">Kontroller at sikkerhetskopien er på SD-kortet. Alle gjeldende serier vil bli overskrevet.</string>
   <string name="import_yes">Gjenopprett</string>
   <string name="import_no">Ikke Gjenopprett</string>
-  <string name="pref_notifications">Aktiver varsler</string>
-  <string name="pref_notificationssummary">Vis varsler for kommende episoder</string>
   <string name="smallwidget">Neste episode (liten)</string>
   <string name="bigwidget">Neste episode (middels)</string>
   <string name="largewidget">Neste episode (stor)</string>
@@ -150,13 +161,8 @@
   <string name="recent">De siste</string>
   <string name="noupcoming">Ser ikke ut som det er noen episoder. Prøv å oppdater.</string>
   <string name="togglewatched">Slå Av/På Sette</string>
-  <string name="optimizing">Optimaliserer søk</string>
-  <string name="showlist">Vis liste</string>
   <string name="seasons">Sesonger</string>
   <string name="cancel">Avbryt</string>
-  <string name="clearGetGlueCredentials">Koble fra GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Use the Share buttons to setup GetGlue</string>
-  <string name="pref_sharing">Deling</string>
   <string name="share">Del</string>
   <string name="done">Ferdig</string>
   <string name="checkin">Sjekk inn</string>
@@ -168,25 +174,21 @@
   <string name="oauthmessage">Autentiserer SeriesGuide med GetGlue...</string>
   <string name="addtocalendar">Legg til i kalender</string>
   <string name="addtocalendar_failed">Beklager, det finnes ikke nok informasjon til å opprette en kalenderhendelse.</string>
-  <string name="pref_usetz">Bruk min tidssone</string>
-  <string name="pref_usetzsummary">Visningsdatoer i din tidssone (for brukere utenfor USA)</string>
   <string name="search_description">Episoder</string>
   <string name="description_home">Hjem</string>
   <string name="description_search">Søk</string>
   <string name="description_overview">Oversikt</string>
-  <string name="pref_offset">Tidsforskjell</string>
-  <string name="pref_offsetsummary">med et visst antall timer</string>
   <string name="norating">n/a</string>
   <string name="loading">Laster...</string>
   <string name="eula_title">Dette bør du vite</string>
-  <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Github (https://github.com/UweTrottmann/SeriesGuide).</string>
+  <string name="eula_text">Du må ikke gjøre noe skade med denne appen (f.eks overbelaste servere, dekompilere koden, ...).\n\nDenne appen samler inn informasjon mens du bruker den, inkludert via Google Analytics. Du kan melde deg av Google Analytics i innstillingene.\n\nJeg er ikke ansvarlig for om din enhet bli ødelagt eller om noe annet dårlig skjer mens du bruker appen.\n\nKildekoden er tilgjengelig for alle på Github (https://github.com/UweTrottmann/SeriesGuide).</string>
   <string name="accept">Godta</string>
   <string name="decline">Avslå</string>
   <string name="username">Brukernavn</string>
   <string name="password">Passord</string>
   <string name="apikey">API nøkkel</string>
   <string name="pref_trakt">Koble fra trakt.tv</string>
-  <string name="pref_traktsummary">Use the Share buttons to setup trakt.tv</string>
+  <string name="pref_traktsummary">Bruk Del knappen for å sette opp trakt.tv</string>
   <string name="pref_traktsync">Synkroniser med trakt.tv</string>
   <string name="pref_traktsyncsummary">Eksperimentell, manuell synkronisering med trakt.tv</string>
   <string name="save">Lagre</string>
@@ -199,18 +201,18 @@
   <string name="pref_traktintegratesummary">Markert som sett i Oversikt blir delt med trakt.tv</string>
   <string name="donate">Spander en øl (Paypal)</string>
   <string name="feedback">Gi tilbakemelding</string>
-  <string name="love">Totally ninja!</string>
-  <string name="hate">Weak Sauce :(</string>
+  <string name="love">Helt ninja!</string>
+  <string name="hate">Svak saus :(</string>
   <string name="trakt_createaccount">Opprett ny konto</string>
   <string name="email">E-post</string>
   <string name="trakt_synctodevice">Synkroniser til SeriesGuide</string>
   <string name="trakt_experimental"><b>Eksperimentell</b> synkronisering med trakt. Dette kan være ustabilt til tider. Kun serier som er lagt til i SeriesGuide blir synkronisert. Til SeriesGuide blir kun episoder som er sett markert. Episoder som allerede er sett blir ikke berørt. Til trakt synkroniseres bare episoder som er sett.</string>
   <string name="trakt_synctotrakt">Synkroniser med trakt.tv</string>
   <string name="trakt_syncunseen">Synkroniser usette episoder</string>
-  <string name="powered_by_thetvdb">powered by thetvdb.com</string>
+  <string name="powered_by_thetvdb">drevet av thetvdb.com</string>
   <string name="download_stable">Last ned SeriesGuide</string>
-  <string name="gobreak">Go break things</string>
-  <string name="betawarning">WARNING: This is an unstable BETA release for testing purposes only. To download the stable end-user version click the download button below.\n\nIf you want to help test the beta go ahead. Please report every crash, try everything out and send feedback to seriesguide@battlelancer.com (see Settings).</string>
+  <string name="gobreak">Gå å ødelegg noe</string>
+  <string name="betawarning">ADVARSEL: Dette er en ustabil BETA versjon som kun er ment for testing. For å laste ned en stabil brukerversjon klikk på nedlastningsknappen nedenfor.\n\nHvis du ønsker å teste betaversjonen er det bare til å gjøre det. Vennligst rapporter hvert krasj, prøv alt ut og send tilbakemelding til seriesguide@battlelancer.com (se Innstillinger).</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Neste episode</item>
@@ -237,8 +239,8 @@
     <item>Vurder på trakt.tv</item>
   </string-array>
   <string-array name="showfilter_list">
-    <item>All</item>
-    <item>Favorites</item>
-    <item>Unseen episodes</item>
+    <item>Alle</item>
+    <item>Favoritter</item>
+    <item>Unseen/Upcoming</item>
   </string-array>
 </resources>
