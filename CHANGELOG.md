@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+Version 2.2.1beta *(2011-10-18)*
+--------------------------------
+
+* Relayout widget as suggested by Allen
+* Some bug fixes
+
+
 Version 2.2beta *(2011-10-16)*
 --------------------------------
 
