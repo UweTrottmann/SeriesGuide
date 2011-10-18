@@ -6,6 +6,19 @@ title: Changelog
 Change Log (Stable channel)
 ===========================
 
+Version 2.2 *(2011-10-18)*
+--------------------------------
+
+* Desire HD users: please try updating your phone to the latest firmware
+* Filter options for show list (replaces 'Hide watched shows' setting)
+* Layout improvements all over the app (spot the differences!), esp. on tablet/Google TV (large+) devices
+* Dual pane layout for Upcoming on large+ devices
+* Display which show is currently getting updated
+* New number format brought to you by dqdb via GitHub
+* Latest translations from crowdin
+* Many bug fixes, optimizations
+* Thanks to everyone who sent in bug reports, suggested improvements or helps translate!
+
 Version 2.1.2 *(2011-10-01)*
 --------------------------------
 
