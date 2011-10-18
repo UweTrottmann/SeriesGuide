@@ -38,8 +38,8 @@
 	<!-- Menu options -->
 	<string name="sort">Sort by</string>
 	<string name="menu_updateart">Get Missing Posters</string>
-	<string name="updateall_yes">Update All</string>
-    <string name="fullupdate">Full Update</string>
+	<string name="updateall_yes">Update (all)</string>
+    <string name="menu_update_delta">Update (modified only)</string>
 	<string name="context_updateshow">Update</string>
 	<string name="context_showinfo">Show Info</string>
 	<string name="context_marknext">Watched next episode</string>
@@ -269,7 +269,7 @@
     <string-array name="showfilter_list">
         <item>All</item>
         <item>Favorites</item>
-        <item>Unseen episodes</item>
+        <item>Unseen/Upcoming</item>
     </string-array>
     
     <!-- strings for BETA release -->

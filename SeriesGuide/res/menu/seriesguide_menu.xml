@@ -7,7 +7,7 @@
         android:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_update"
-        android:title="@string/updateall_yes"
+        android:title="@string/menu_update_delta"
         android:icon="@drawable/ic_action_refresh"
         android:showAsAction="ifRoom" />
     <item
