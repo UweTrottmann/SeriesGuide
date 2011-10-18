@@ -71,8 +71,8 @@
     <string name="update_error">Could not update.</string>
     <string name="update_incomplete1">Could not update</string>
     <string name="update_incomplete2">.</string>
-    <string name="update_success">Update successfull.</string>
-    <string name="imagedownload_incomplete">Update successfull. Sadly some images did not download. Try again later.</string>
+    <string name="update_success">Update successful.</string>
+    <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
     <string name="update_inbackground">Updating...</string>
     <string name="update_inprogress">There is an update in progress. Wait for it to complete, then try again.</string>
     <string name="update_nosdcard">Could not update. There is no external storage or SD card available.</string>
