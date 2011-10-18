@@ -183,6 +183,21 @@ public class ImageCache {
         return mCachedImageQuality;
     }
 
+    /**
+     * Returns wether this image exists in the cache or on disk already.
+     * 
+     * @param imageUrl
+     * @return
+     */
+    public boolean contains(String imageUrl) {
+        if (mCache.containsKey(imageUrl)) {
+            return true;
+        } else {
+            File imageFile = getImageFile(imageUrl);
+            return imageFile.exists();
+        }
+    }
+
     public Bitmap get(Object key) {
         return getIfNotBusy(key, false);
     }

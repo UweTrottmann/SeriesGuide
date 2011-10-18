@@ -15,7 +15,6 @@ import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.EulaHelper;
 import com.battlelancer.seriesguide.util.UIUtils;
 import com.battlelancer.seriesguide.util.UpdateTask;
-import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
 import android.app.AlertDialog;
@@ -28,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -36,6 +36,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
+import android.support.v4.app.ActionBar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -54,6 +55,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -65,7 +67,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollListener,
-        LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor>, ActionBar.OnNavigationListener {
+
+    private boolean mBusy;
 
     private static final int UPDATE_SUCCESS = 100;
 
@@ -97,6 +101,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final int LOADER_ID = 900;
 
+    // Background Task States
     private static final String STATE_UPDATE_IN_PROGRESS = "seriesguide.update.inprogress";
 
     private static final String STATE_UPDATE_SHOWS = "seriesguide.update.shows";
@@ -111,32 +116,36 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final String STATE_ART_INDEX = "seriesguide.art.index";
 
+    // Show Filter Ids
+    private static final int SHOWFILTER_ALL = 0;
+
+    private static final int SHOWFILTER_FAVORITES = 1;
+
+    private static final int SHOWFILTER_UNSEENEPISODES = 2;
+
+    private static final String FILTER_ID = "filterid";
+
     private Bundle mSavedState;
 
     private UpdateTask mUpdateTask;
 
     private FetchArtTask mArtTask;
 
-    public View mProgressOverlay;
-
-    public ProgressBar mUpdateProgress;
-
-    public View mCancelButton;
-
     private SlowAdapter mAdapter;
-
-    private ImageCache mImageCache;
 
     private String mFailedShowsString;
 
     private ShowSorting mSorting;
 
-    private long toDeleteID;
+    private long mToDeleteId;
 
-    public boolean mBusy;
+    private boolean mIsPreventLoaderRestart;
 
-    private boolean mOnlyUnwatchedShows;
-
+    /**
+     * Google Analytics helper method for easy event tracking.
+     * 
+     * @param label
+     */
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(this).trackEvent("Shows", "Click", label, 0);
     }
@@ -146,16 +155,30 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shows);
 
-        final Context context = this;
-
         if (!EulaHelper.hasAcceptedEula(this)) {
             EulaHelper.showEula(false, this);
         }
 
-        updatePreferences();
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
 
-        mImageCache = ((SeriesGuideApplication) getApplication()).getImageCache();
+        // setup action bar filter list (! use different layouts for ABS)
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(this,
+                R.array.showfilter_list, R.layout.abs__simple_spinner_item);
+        mActionBarList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        actionBar.setListNavigationCallbacks(mActionBarList, this);
 
+        // try to restore previously set show filter
+        int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
+        actionBar.setSelectedNavigationItem(showfilter);
+        // prevent the onNavigationItemSelected listener from reacting
+        mIsPreventLoaderRestart = true;
+
+        updatePreferences(prefs);
+
+        // setup show adapter
         String[] from = new String[] {
                 SeriesContract.Shows.TITLE, SeriesContract.Shows.NEXTTEXT,
                 SeriesContract.Shows.AIRSTIME, SeriesContract.Shows.NETWORK,
@@ -175,18 +198,22 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         list.setOnItemClickListener(new OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Intent i = new Intent(context, OverviewActivity.class);
+                Intent i = new Intent(ShowsActivity.this, OverviewActivity.class);
                 i.putExtra(Shows._ID, String.valueOf(id));
                 startActivity(i);
             }
         });
         list.setOnScrollListener(this);
+        // TODO: make new empty view, move current to a welcome dialog
         View emptyView = findViewById(android.R.id.empty);
         if (emptyView != null) {
             list.setEmptyView(emptyView);
         }
 
-        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
+        // start loading data
+        Bundle args = new Bundle();
+        args.putInt(FILTER_ID, showfilter);
+        getSupportLoaderManager().initLoader(LOADER_ID, args, this);
 
         registerForContextMenu(list);
     }
@@ -329,7 +356,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                                 new Thread(new Runnable() {
                                     public void run() {
                                         SeriesDatabase.deleteShow(getApplicationContext(),
-                                                String.valueOf(toDeleteID));
+                                                String.valueOf(mToDeleteId));
                                         if (progress.isShowing()) {
                                             progress.dismiss();
                                         }
@@ -443,7 +470,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 fireTrackerEvent("Delete show");
 
                 if (!isUpdateTaskRunning()) {
-                    toDeleteID = info.id;
+                    mToDeleteId = info.id;
                     showDialog(CONFIRM_DELETE_DIALOG);
                 }
                 return true;
@@ -634,6 +661,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
         ArrayList<String> mPaths;
 
+        private View mProgressOverlay;
+
         protected FetchArtTask() {
         }
 
@@ -644,24 +673,28 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
         @Override
         protected void onPreExecute() {
+            // see if we already inflated the progress overlay
+            mProgressOverlay = findViewById(R.id.overlay_update);
             if (mProgressOverlay == null) {
                 mProgressOverlay = ((ViewStub) findViewById(R.id.stub_update)).inflate();
-                mUpdateProgress = (ProgressBar) findViewById(R.id.ProgressBarShowListDet);
-
-                mCancelButton = mProgressOverlay.findViewById(R.id.overlayCancel);
-                mCancelButton.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        onCancelTasks();
-                    }
-                });
             }
-
-            mUpdateProgress.setIndeterminate(true);
             showOverlay(mProgressOverlay);
         }
 
         @Override
         protected Integer doInBackground(Void... params) {
+            // setup the progress overlay
+            ProgressBar updateProgress = (ProgressBar) mProgressOverlay
+                    .findViewById(R.id.ProgressBarShowListDet);
+            updateProgress.setIndeterminate(true);
+
+            View cancelButton = mProgressOverlay.findViewById(R.id.overlayCancel);
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    onCancelTasks();
+                }
+            });
+
             // fetch all available poster paths
             if (mPaths == null) {
                 Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[] {
@@ -763,27 +796,27 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     }
 
     public void showOverlay(View overlay) {
-        overlay.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+        overlay.startAnimation(AnimationUtils
+                .loadAnimation(getApplicationContext(), R.anim.fade_in));
         overlay.setVisibility(View.VISIBLE);
     }
 
     public void hideOverlay(View overlay) {
-        overlay.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_out));
+        overlay.startAnimation(AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.fade_out));
         overlay.setVisibility(View.GONE);
     }
 
     private void requery() {
-        getSupportLoaderManager().restartLoader(LOADER_ID, null, this);
+        int filterId = getSupportActionBar().getSelectedNavigationIndex();
+        // just reuse the onNavigationItemSelected callback method
+        onNavigationItemSelected(filterId, filterId);
     }
 
     final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
 
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             boolean isAffectingChange = false;
-            if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_ONLY_UNWATCHED_SHOWS)) {
-                updateFilters(sharedPreferences);
-                isAffectingChange = true;
-            }
             if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_SHOWSSORTORDER)) {
                 updateSorting(sharedPreferences);
                 isAffectingChange = true;
@@ -800,12 +833,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
      * Called once on activity creation to load initial settings and display
      * one-time information dialogs.
      */
-    private void updatePreferences() {
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-
+    private void updatePreferences(SharedPreferences prefs) {
         updateSorting(prefs);
-        updateFilters(prefs);
 
         // // display whats new dialog
         // int lastVersion = prefs.getInt(SeriesGuideData.KEY_VERSION, -1);
@@ -826,11 +855,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         // }
 
         prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
-    }
-
-    private void updateFilters(SharedPreferences prefs) {
-        mOnlyUnwatchedShows = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_UNWATCHED_SHOWS,
-                false);
     }
 
     /**
@@ -858,16 +882,30 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         return oldSorting != mSorting;
     }
 
-    public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String selection = null;
         String[] selectionArgs = null;
-        if (mOnlyUnwatchedShows) {
-            selection = Shows.NEXTAIRDATE + "!=? AND julianday(" + Shows.NEXTAIRDATE
-                    + ") <= julianday('now')";
-            selectionArgs = new String[] {
-                SeriesDatabase.UNKNOWN_NEXT_AIR_DATE
-            };
+
+        int filterId = args.getInt(FILTER_ID);
+        switch (filterId) {
+            case SHOWFILTER_ALL:
+                // do nothing, leave selection null
+                break;
+            case SHOWFILTER_FAVORITES:
+                selection = Shows.FAVORITE + "=?";
+                selectionArgs = new String[] {
+                    "1"
+                };
+                break;
+            case SHOWFILTER_UNSEENEPISODES:
+                selection = Shows.NEXTAIRDATE + "!=? AND julianday(" + Shows.NEXTAIRDATE
+                        + ") <= julianday('now')";
+                selectionArgs = new String[] {
+                    SeriesDatabase.UNKNOWN_NEXT_AIR_DATE
+                };
+                break;
         }
+
         return new CursorLoader(this, Shows.CONTENT_URI, ShowsQuery.PROJECTION, selection,
                 selectionArgs, mSorting.query());
     }
@@ -883,6 +921,26 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         // above is about to be closed. We need to make sure we are no
         // longer using it.
         mAdapter.swapCursor(null);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+        // only handle events after the event caused when creating the activity
+        if (mIsPreventLoaderRestart) {
+            mIsPreventLoaderRestart = false;
+        } else {
+            // requery with the new filter
+            Bundle args = new Bundle();
+            args.putInt(FILTER_ID, itemPosition);
+            getSupportLoaderManager().restartLoader(LOADER_ID, args, this);
+
+            // save the selected filter back to settings
+            Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                    .edit();
+            editor.putInt(SeriesGuidePreferences.KEY_SHOWFILTER, itemPosition);
+            editor.commit();
+        }
+        return true;
     }
 
     public void setFailedShowsString(String mFailedShowsString) {
@@ -1072,7 +1130,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private void setPosterBitmap(ImageView poster, String path, boolean isBusy) {
         Bitmap bitmap = null;
         if (path.length() != 0) {
-            bitmap = mImageCache.getThumb(path, isBusy);
+            bitmap = ((SeriesGuideApplication) getApplication()).getImageCache().getThumb(path,
+                    isBusy);
         }
 
         if (bitmap != null) {

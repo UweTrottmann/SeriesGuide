@@ -550,7 +550,7 @@ public class TheTVDB {
                 .getImageCache();
         boolean resultCode = true;
 
-        if (fileName.length() != 0 && imageCache.get(fileName) == null) {
+        if (fileName.length() != 0 && !imageCache.contains(fileName)) {
             try {
                 String imageUrl;
                 if (isPoster) {
@@ -595,8 +595,16 @@ public class TheTVDB {
             if (entity != null) {
                 InputStream inputStream = null;
                 try {
-                    inputStream = entity.getContent();
-                    return BitmapFactory.decodeStream(inputStream);
+                    long imageSize = entity.getContentLength();
+                    // allow images up to 100K (although size is always around
+                    // 30K)
+                    if (imageSize > 100000) {
+                        return null;
+                    } else {
+                        inputStream = entity.getContent();
+                        return BitmapFactory.decodeStream(inputStream);
+                    }
+
                 } finally {
                     if (inputStream != null) {
                         inputStream.close();

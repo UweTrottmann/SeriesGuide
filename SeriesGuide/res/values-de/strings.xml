@@ -104,8 +104,6 @@
   <string name="pref_onlyfuturesummary">\"nächste:\" zeigt niemals bereits gesendete Folgen an</string>
   <string name="pref_onlyseasoneps">Keine \"Special Episodes\"</string>
   <string name="pref_onlyseasonepssummary">\"nächste:\" zeigt niemals \"Special Episodes\" an</string>
-  <string name="pref_onlyunwatched">Verstecke gesehene Serien</string>
-  <string name="pref_onlyunwatchedsummary">Nur Serien mit ungesehenen Folgen anzeigen</string>
   <string name="pref_content">Inhalt</string>
   <string name="pref_language">TheTVDB Sprache</string>
   <string name="pref_languagesummary">Lokale Inhalte nicht für jede Serie, danach aktualisieren</string>
@@ -239,5 +237,10 @@
     <item>Gesehen mark. (trakt.tv)</item>
     <item>Andere Dienste</item>
     <item>Bewerten (trakt.tv)</item>
+  </string-array>
+  <string-array name="showfilter_list">
+    <item>Alle</item>
+    <item>Favoriten</item>
+    <item>Ungesehene Folgen</item>
   </string-array>
 </resources>

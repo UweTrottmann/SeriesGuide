@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_search"
-        android:title="@string/search_hint"
-        android:icon="@drawable/ic_action_search"
-        android:showAsAction="ifRoom|withText" />
+        android:id="@+id/menu_new_show"
+        android:title="@string/add_show"
+        android:icon="@drawable/ic_action_add"
+        android:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_update"
         android:title="@string/updateall_yes"
@@ -17,15 +16,14 @@
         android:icon="@drawable/ic_action_upcoming"
         android:showAsAction="ifRoom|withText" />
     <item
-        android:id="@+id/menu_new_show"
-        android:title="@string/add_show"
-        android:icon="@drawable/ic_action_add"
-        android:showAsAction="ifRoom|withText" />
+        android:id="@+id/menu_search"
+        android:title="@string/search_hint"
+        android:icon="@drawable/ic_action_search"
+        android:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_showsortby"
         android:title="@string/sort"
         android:icon="@drawable/ic_action_sort" />
-
     <item
         android:id="@+id/menu_updateart"
         android:title="@string/menu_updateart"
