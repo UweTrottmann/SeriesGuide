@@ -21,4 +21,9 @@
     <dimen name="text_size_medium">18sp</dimen>
     <dimen name="text_size_large">18sp</dimen>
     <dimen name="text_size_xlarge">18sp</dimen>
+    <dimen name="widget_item_height">37dp</dimen>
+    <dimen name="widget_paddingTop">8dp</dimen>
+    <dimen name="widget_paddingRight">3dp</dimen>
+    <dimen name="widget_paddingBottom">8dp</dimen>
+    <dimen name="widget_paddingLeft">8dp</dimen>
 </resources>

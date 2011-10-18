@@ -20,12 +20,13 @@
             android:id="@id/android:list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:columnWidth="330dp"
+            android:columnWidth="310dp"
             android:numColumns="auto_fit"
             android:verticalSpacing="20dp"
             android:horizontalSpacing="20dp"
             android:stretchMode="columnWidth"
-            android:gravity="center"></GridView>
+            android:gravity="center"
+            android:listSelector="@drawable/list_selector_holo_dark"></GridView>
         <ViewStub
             android:id="@+id/stub_update"
             android:inflatedId="@+id/overlay_update"

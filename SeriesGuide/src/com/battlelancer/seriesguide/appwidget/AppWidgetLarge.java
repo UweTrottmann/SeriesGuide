@@ -11,7 +11,7 @@ import android.content.Intent;
 public class AppWidgetLarge extends AppWidget {
     private static final String LIMIT = "9";
 
-    private static final int LAYOUT = R.layout.appwidget_large;
+    private static final int LAYOUT = R.layout.appwidget_big;
 
     private static final int ITEMLAYOUT = R.layout.appwidget_big_item;
 

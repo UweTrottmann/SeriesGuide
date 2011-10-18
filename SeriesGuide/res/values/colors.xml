@@ -16,4 +16,6 @@
 <resources>
     <color name="button_text">#ffffffff</color>
     <color name="text_faded">#ff666666</color>
+    <color name="transparent">#00000000</color>
+    <color name="text_primary">#fff3f3f3</color>
 </resources>

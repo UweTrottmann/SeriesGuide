@@ -56,6 +56,8 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        getListView().setSelector(R.drawable.list_selector_holo_dark);
+        
         setEmptyText(getString(R.string.noupcoming));
 
         setupAdapter();

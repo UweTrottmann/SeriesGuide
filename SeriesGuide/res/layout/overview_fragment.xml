@@ -25,7 +25,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
                     android:layout_alignParentTop="true"
-                    android:background="@drawable/list_item"
+                    android:background="@drawable/list_selector_holo_dark"
                     android:focusable="true"
                     android:paddingLeft="5dp"
                     android:paddingBottom="2dp">
