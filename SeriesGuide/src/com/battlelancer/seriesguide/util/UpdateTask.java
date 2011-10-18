@@ -71,10 +71,6 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             mProgressOverlay = ((ViewStub) mShowsActivity.findViewById(R.id.stub_update)).inflate();
         }
         mShowsActivity.showOverlay(mProgressOverlay);
-    }
-
-    @Override
-    protected Integer doInBackground(Void... params) {
         // setup the progress overlay
         mUpdateProgress = (ProgressBar) mProgressOverlay.findViewById(R.id.ProgressBarShowListDet);
         mUpdateProgress.setIndeterminate(true);
@@ -88,7 +84,10 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 mShowsActivity.onCancelTasks();
             }
         });
+    }
 
+    @Override
+    protected Integer doInBackground(Void... params) {
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(mShowsActivity.getApplicationContext());
         final ContentResolver resolver = mShowsActivity.getContentResolver();

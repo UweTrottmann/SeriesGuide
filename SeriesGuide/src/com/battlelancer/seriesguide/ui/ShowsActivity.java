@@ -681,15 +681,11 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 mProgressOverlay = ((ViewStub) findViewById(R.id.stub_update)).inflate();
             }
             showOverlay(mProgressOverlay);
-        }
-
-        @Override
-        protected Integer doInBackground(Void... params) {
+            // setup the progress overlay
             TextView mUpdateStatus = (TextView) mProgressOverlay
                     .findViewById(R.id.textViewUpdateStatus);
             mUpdateStatus.setText("");
 
-            // setup the progress overlay
             ProgressBar updateProgress = (ProgressBar) mProgressOverlay
                     .findViewById(R.id.ProgressBarShowListDet);
             updateProgress.setIndeterminate(true);
@@ -700,7 +696,10 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                     onCancelTasks();
                 }
             });
+        }
 
+        @Override
+        protected Integer doInBackground(Void... params) {
             // fetch all available poster paths
             if (mPaths == null) {
                 Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[] {

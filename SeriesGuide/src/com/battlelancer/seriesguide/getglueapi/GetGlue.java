@@ -21,7 +21,7 @@ public class GetGlue {
 
     private static final String GETGLUE_APIPATH_V2 = "http://api.getglue.com/v2/";
 
-    private static final String GETGLUE_SOURCE = "&source=http://battlelancer.com/seriesguide/&app=SeriesGuide";
+    private static final String GETGLUE_SOURCE = "&source=http://seriesguide.uwetrottmann.com/&app=SeriesGuide";
 
     public static final String REQUEST_URL = "http://api.getglue.com/oauth/request_token";
 

@@ -222,10 +222,14 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                     }, Episodes.WATCHED + "=?", new String[] {
                         "1"
                     }, null);
-            while (seenEpisodes.moveToNext()) {
-                int season = seenEpisodes.getInt(0);
-                int episode = seenEpisodes.getInt(1);
-                builder.episode(season, episode);
+            if (seenEpisodes.getCount() == 0) {
+                builder = null;
+            } else {
+                while (seenEpisodes.moveToNext()) {
+                    int season = seenEpisodes.getInt(0);
+                    int episode = seenEpisodes.getInt(1);
+                    builder.episode(season, episode);
+                }
             }
             seenEpisodes.close();
 
@@ -239,10 +243,14 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                         }, Episodes.WATCHED + "=?", new String[] {
                             "0"
                         }, null);
-                while (unseenEpisodes.moveToNext()) {
-                    int season = unseenEpisodes.getInt(0);
-                    int episode = unseenEpisodes.getInt(1);
-                    builderUnseen.episode(season, episode);
+                if (unseenEpisodes.getCount() == 0) {
+                    builderUnseen = null;
+                } else {
+                    while (unseenEpisodes.moveToNext()) {
+                        int season = unseenEpisodes.getInt(0);
+                        int episode = unseenEpisodes.getInt(1);
+                        builderUnseen.episode(season, episode);
+                    }
                 }
                 unseenEpisodes.close();
             }
@@ -255,8 +263,10 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
             try {
                 // mark episodes of show
-                builder.fire();
-                if (mIsSyncingUnseen) {
+                if (builder != null) {
+                    builder.fire();
+                }
+                if (mIsSyncingUnseen && builderUnseen != null) {
                     builderUnseen.fire();
                 }
             } catch (TraktException te) {
