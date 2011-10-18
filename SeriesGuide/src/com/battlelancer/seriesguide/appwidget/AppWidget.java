@@ -154,7 +154,7 @@ public class AppWidget extends AppWidgetProvider {
                     String network = upcomingEpisodes.getString(upcomingEpisodes
                             .getColumnIndexOrThrow(Shows.NETWORK));
                     if (network.length() != 0) {
-                        value += " " + getString(R.string.show_network) + " " + network;
+                        value += " " + network;
                     }
                     item.setTextViewText(R.id.widgetNetwork, value);
 
