@@ -23,8 +23,6 @@
             android:layout_height="10dp" />
         <TextView
             android:id="@+id/textViewUpdateStatus"
-            android:text="A very long name so you can see ellipsis is working perfectly"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="text"

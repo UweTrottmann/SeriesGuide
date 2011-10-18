@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" android:gravity="right">
+    android:orientation="vertical"
+    android:gravity="right">
     <RelativeLayout
         android:layout_width="400dp"
         android:layout_height="wrap_content"
@@ -27,7 +28,6 @@
             android:id="@+id/textView1"
             android:layout_height="wrap_content"
             android:text="@string/powered_by_thetvdb"
-            android:textSize="@dimen/text_size_small"
             android:textColor="@color/text_faded"
             android:layout_below="@+id/EditTextSearchString"
             android:layout_alignRight="@+id/EditTextSearchString"></TextView>

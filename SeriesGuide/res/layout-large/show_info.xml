@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="15dp">
+        android:padding="@dimen/body_padding_large">
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -21,14 +21,11 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/title"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    style="@style/Header"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5sp"
-                    android:layout_marginLeft="5sp"
-                    android:layout_marginRight="5sp"
                     android:text="Show title"
-                    android:focusable="true" />
+                    android:focusable="true" /> <!-- focusable fixes auto-scroll to imdb button -->
                 <include layout="@layout/show_info_meta"></include>
                 <View
                     android:id="@+id/spacer"

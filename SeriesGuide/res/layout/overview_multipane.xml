@@ -3,9 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="horizontal">
     <FrameLayout
         android:id="@+id/fragment_overview"
-        android:layout_width="fill_parent"
+        android:layout_weight="4"
+        android:layout_width="0px"
         android:layout_height="fill_parent" />
+    <FrameLayout
+        android:id="@+id/background_seasons"
+        android:layout_width="0px"
+        android:layout_height="fill_parent"
+        android:layout_weight="3">
+        <FrameLayout
+            android:id="@+id/fragment_seasons"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:paddingLeft="1dp" />
+    </FrameLayout>
 </LinearLayout>

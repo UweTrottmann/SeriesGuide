@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:padding="5dp">
+    android:padding="@dimen/body_padding">
     <com.battlelancer.seriesguide.WatchedBox
         android:id="@+id/watchedBoxUpcoming"
         android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
     </LinearLayout>
     <TextView
         android:id="@+id/textViewUpcomingShow"
-        style="@style/ListTitle"
+        style="@style/ListHeader"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/upcomingmeta"
@@ -44,7 +44,6 @@
         android:text="Show Title" />
     <TextView
         android:id="@+id/textViewUpcomingNumber"
-        style="@style/SmallFont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewUpcomingShow"
@@ -52,7 +51,6 @@
         android:text="4x12" />
     <TextView
         android:id="@+id/textViewUpcomingEpisode"
-        style="@style/SmallFont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
