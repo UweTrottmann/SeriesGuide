@@ -34,8 +34,8 @@
   <string name="show_isnotalive">Avsluttet</string>
   <string name="sort">Sorter etter</string>
   <string name="menu_updateart">Hent manglende bilder</string>
-  <string name="updateall_yes">Update (all)</string>
-  <string name="menu_update_delta">Update (modified only)</string>
+  <string name="updateall_yes">Oppdater (alle)</string>
+  <string name="menu_update_delta">Oppdater (kun endrede)</string>
   <string name="context_updateshow">Oppdater</string>
   <string name="context_showinfo">Vis info</string>
   <string name="context_marknext">Sett neste episode</string>
@@ -59,12 +59,12 @@
   <string name="update_error">Kunne ikke oppdatere.</string>
   <string name="update_incomplete1">Kunne ikke oppdatere</string>
   <string name="update_incomplete2">.</string>
-  <string name="update_success">Update successful.</string>
-  <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
+  <string name="update_success">Oppdatering vellykket.</string>
+  <string name="imagedownload_incomplete">Oppdatering vellykket. Dessverre ble ikke enkelte bilder lastet ned. Prøv på nytt senere.</string>
   <string name="update_inbackground">Oppdaterer ...</string>
   <string name="update_inprogress">Det er en oppdatering underveis. Vent til den er ferdig, og prøv igjen.</string>
   <string name="update_nosdcard">Kunne ikke oppdatere. Det er ingen ekstern lagring eller SD-kort tilgjengelig.</string>
-  <string name="update_rebuildsearch">Building episode search index</string>
+  <string name="update_rebuildsearch">Bygger episodesøkeindeksen</string>
   <string name="show_airs">sendes</string>
   <string name="show_network">på</string>
   <string name="show_pleaseupdate">Prøv å oppdatere denne Vis for å vise mer informasjon (i oversikten, lang trykk på den, velg Oppdater). Om dette ikke hjelper, er det sannsynligvis ingen tilleggsinformasjon i TheTVDB. Gå til deres webområde (www.thetvdb.com) for å lære hvordan du legger til.</string>
@@ -241,6 +241,6 @@
   <string-array name="showfilter_list">
     <item>Alle</item>
     <item>Favoritter</item>
-    <item>Unseen/Upcoming</item>
+    <item>Usett/Kommende</item>
   </string-array>
 </resources>
