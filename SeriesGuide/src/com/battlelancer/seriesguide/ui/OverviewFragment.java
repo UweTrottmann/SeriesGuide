@@ -43,7 +43,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
@@ -271,7 +270,7 @@ public class OverviewFragment extends Fragment {
     }
 
     private void fillEpisodeData() {
-        final FragmentActivity context = getActivity();
+        final Activity context = getActivity();
         if (context == null) {
             return;
         }

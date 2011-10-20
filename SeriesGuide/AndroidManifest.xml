@@ -1,170 +1,184 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.battlelancer.seriesguide"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="auto"
-    android:versionCode="130" android:versionName="2.2dev">
-    <uses-permission android:name="android.permission.VIBRATE"></uses-permission>
-    <uses-feature android:required="false" android:name="android.hardware.touchscreen"></uses-feature>
+    package="com.battlelancer.seriesguide"
+    android:versionCode="130"
+    android:versionName="2.2dev" >
+
+    <uses-permission android:name="android.permission.VIBRATE" >
+    </uses-permission>
+
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" >
+    </uses-feature>
+
     <application
-        android:name="SeriesGuideApplication"
+        android:backupAgent="com.battlelancer.seriesguide.PrefBackupHelper"
+        android:debuggable="false"
+        android:hardwareAccelerated="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:theme="@style/Theme.SeriesGuide"
-        android:backupAgent="com.battlelancer.seriesguide.PrefBackupHelper"
-        android:debuggable="false" android:hardwareAccelerated="true">
+        android:name="SeriesGuideApplication"
+        android:theme="@style/Theme.SeriesGuide" >
         <meta-data
             android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAIToXnISqkDzDlKt206D1VdujnhhoFa0mAEM8Veg" />
-        <activity
-            android:name=".AddShow"
-            android:label="@string/add_show"
-            android:windowSoftInputMode="stateVisible">
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
-        </activity>
-        <activity
-            android:name=".SeriesGuidePreferences"
-            android:label="@string/preferences"></activity>
-        <activity
-            android:name=".BackupDelete"
-            android:label="@string/backup"></activity>
-        <activity
-            android:name=".ShowInfo">
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
-        </activity>
 
         <activity
-            android:name=".SearchSeriesGuide"
-            android:launchMode="singleTop">
-            <intent-filter>
-                <action
-                    android:name="android.intent.action.SEARCH" />
+            android:label="@string/add_show"
+            android:name=".AddShow"
+            android:windowSoftInputMode="stateVisible" >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
+        </activity>
+        <activity
+            android:label="@string/preferences"
+            android:name=".SeriesGuidePreferences" >
+        </activity>
+        <activity
+            android:label="@string/backup"
+            android:name=".BackupDelete" >
+        </activity>
+        <activity android:name=".ShowInfo" >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
+        </activity>
+        <activity
+            android:launchMode="singleTop"
+            android:name=".SearchSeriesGuide" >
+            <intent-filter >
+                <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
 
         <receiver
-            android:name=".appwidget.AppWidget"
-            android:label="@string/smallwidget">
-            <intent-filter>
-                <action
-                    android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            android:label="@string/smallwidget"
+            android:name=".appwidget.AppWidget" >
+            <intent-filter >
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/appwidget_info" />
         </receiver>
-        <service
-            android:name=".appwidget.AppWidget$UpdateService"></service>
+
+        <service android:name=".appwidget.AppWidget$UpdateService" >
+        </service>
 
         <receiver
-            android:name=".appwidget.AppWidgetBig"
-            android:label="@string/bigwidget">
-            <intent-filter>
-                <action
-                    android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            android:label="@string/bigwidget"
+            android:name=".appwidget.AppWidgetBig" >
+            <intent-filter >
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/appwidget_big_info" />
         </receiver>
-        <service
-            android:name=".appwidget.AppWidgetBig$UpdateServiceBig"></service>
+
+        <service android:name=".appwidget.AppWidgetBig$UpdateServiceBig" >
+        </service>
 
         <receiver
-            android:name=".appwidget.AppWidgetLarge"
-            android:label="@string/largewidget">
-            <intent-filter>
-                <action
-                    android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            android:label="@string/largewidget"
+            android:name=".appwidget.AppWidgetLarge" >
+            <intent-filter >
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/appwidget_large_info" />
         </receiver>
-        <service
-            android:name=".appwidget.AppWidgetLarge$UpdateServiceLarge"></service>
+
+        <service android:name=".appwidget.AppWidgetLarge$UpdateServiceLarge" >
+        </service>
 
         <activity
-            android:name=".getglueapi.PrepareRequestTokenActivity"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:name=".getglueapi.PrepareRequestTokenActivity" >
+
             >
-            <intent-filter>
-                <action
-                    android:name="android.intent.action.VIEW" />
-                <category
-                    android:name="android.intent.category.DEFAULT" />
-                <category
-                    android:name="android.intent.category.BROWSABLE" />
+            
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
-                    android:scheme="seriesguide-oauth-getglue"
-                    android:host="callback" />
+                    android:host="callback"
+                    android:scheme="seriesguide-oauth-getglue" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.ShowsActivity">
-            <intent-filter>
-                <action
-                    android:name="android.intent.action.MAIN" />
-                <category
-                    android:name="android.intent.category.LAUNCHER" />
+        <activity android:name=".ui.ShowsActivity" >
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
         </activity>
-        <activity
-            android:name=".ui.SeasonsActivity">
+        <activity android:name=".ui.SeasonsActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
         </activity>
-        <activity
-            android:name=".ui.EpisodesActivity">
+        <activity android:name=".ui.EpisodesActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
         </activity>
+
         <provider
-            android:name=".provider.SeriesGuideProvider"
-            android:authorities="com.battlelancer.seriesguide"></provider>
-        <activity
-            android:name=".ui.OverviewActivity">
+            android:authorities="com.battlelancer.seriesguide"
+            android:name=".provider.SeriesGuideProvider" >
+        </provider>
+
+        <activity android:name=".ui.OverviewActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
         </activity>
-        <activity
-            android:name=".ui.EpisodeDetailsActivity">
+        <activity android:name=".ui.EpisodeDetailsActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
         </activity>
-        <activity
-            android:name=".ui.TraktSyncActivity"></activity>
-        <activity
-            android:name=".ui.UpcomingRecentActivity">
+        <activity android:name=".ui.TraktSyncActivity" >
+        </activity>
+        <activity android:name=".ui.UpcomingRecentActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
         </activity>
-        <service android:name=".service.AlarmManagerService"></service>
-        <receiver android:name=".service.OnAlarmReceiver"></receiver>
+
+        <service android:name=".service.AlarmManagerService" >
+        </service>
+
+        <receiver android:name=".service.OnAlarmReceiver" >
+        </receiver>
     </application>
 
     <uses-sdk
-        android:minSdkVersion="7" android:targetSdkVersion="13"/>
+        android:minSdkVersion="7"
+        android:targetSdkVersion="13" />
 
-    <uses-permission
-        android:name="android.permission.INTERNET" />
-    <uses-permission
-        android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-</manifest> 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
+
+</manifest>

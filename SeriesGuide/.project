@@ -30,13 +30,6 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>com_actionbarsherlock_src</name>
-			<type>2</type>
-			<locationURI>_android_com_actionbarsherlock_22abb7cc/src</locationURI>
-		</link>
-	</linkedResources>
 	<filteredResources>
 		<filter>
 			<id>1299003079591</id>

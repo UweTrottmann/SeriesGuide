@@ -162,8 +162,6 @@
     <string name="pref_sharing">Sharing</string>
     <string name="clearGetGlueCredentials">Disconnect GetGlue</string>
     <string name="clearGetGlueCredentialssummary">Use the Share buttons to setup GetGlue</string>
-    <string name="pref_number">Number format</string>
-    <string name="pref_numbersummary">Switch between 1x01 or S01E01 as number format</string>
 
     <string name="pref_advanced">Advanced</string>
 	<string name="clear_cache">Clear Image Caches</string>
