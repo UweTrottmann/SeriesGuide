@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent" android:orientation="vertical">
-    <Spinner android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/onclickaction"></Spinner>
-    <Spinner android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/updatetime"></Spinner>
-    <Button android:text="@android:string/ok" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_gravity="right" android:id="@+id/save_button"></Button>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Spinner
+        android:id="@+id/onclickaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </Spinner>
+
+    <Spinner
+        android:id="@+id/updatetime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </Spinner>
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="@android:string/ok" >
+    </Button>
+
 </LinearLayout>

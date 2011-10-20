@@ -1,75 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent" >
+
     <ScrollView
         android:id="@+id/showinfo_container"
-        android:layout_height="wrap_content"
         android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:padding="@dimen/body_padding_large">
+        android:padding="@dimen/body_padding_large" >
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="true">
+            android:baselineAligned="true"
+            android:orientation="horizontal" >
+
             <LinearLayout
-                android:orientation="vertical"
-                android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
                 <TextView
                     android:id="@+id/title"
                     style="@style/Header"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Show title"
-                    android:focusable="true" /> <!-- focusable fixes auto-scroll to imdb button -->
-                <include layout="@layout/show_info_meta"></include>
+                    android:focusable="true"
+                    android:text="Show title" /> <!-- focusable fixes auto-scroll to imdb button -->
+
+                <include layout="@layout/show_info_meta" >
+                </include>
+
                 <View
                     android:id="@+id/spacer"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"></View>
-                <include layout="@layout/show_info_metamore"></include>
+                    android:layout_height="20dp" >
+                </View>
+
+                <include layout="@layout/show_info_metamore" >
+                </include>
+
                 <include
-                    layout="@layout/holodivider"
+                    android:id="@+id/divider"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/divider"
-                    android:layout_marginTop="10dp"></include>
+                    android:layout_marginTop="10dp"
+                    layout="@layout/holodivider" >
+                </include>
+
                 <LinearLayout
                     android:id="@+id/buttonShowInfoIMDB"
+                    android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:background="@drawable/list_selector_holo_dark"
                     android:focusable="true"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:layout_width="wrap_content">
+                    android:orientation="horizontal" >
+
                     <TextView
-                        android:text="@string/showinimdb"
-                        android:textSize="@dimen/text_size_medium"
-                        android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:paddingLeft="5dp"
-                        android:layout_weight="1"></TextView>
+                        android:text="@string/showinimdb"
+                        android:textSize="@dimen/text_size_medium" >
+                    </TextView>
+
                     <ImageView
                         android:id="@+id/seasonIndicator"
-                        android:src="@drawable/ic_action_arrow_right"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"></ImageView>
+                        android:src="@drawable/ic_action_arrow_right" >
+                    </ImageView>
                 </LinearLayout>
             </LinearLayout>
+
             <ImageView
-                android:layout_width="wrap_content"
                 android:id="@+id/ImageViewShowInfoPoster"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/fringe_test"
-                android:layout_marginTop="10dp"
+                android:layout_gravity="top"
                 android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
                 android:paddingLeft="100dp"
                 android:paddingRight="100dp"
-                android:layout_gravity="top"></ImageView>
+                android:src="@drawable/fringe_test" >
+            </ImageView>
         </LinearLayout>
     </ScrollView>
+
 </RelativeLayout>

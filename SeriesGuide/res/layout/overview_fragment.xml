@@ -1,55 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_root"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent" >
+
     <ImageView
         android:id="@+id/background"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:scaleType="centerCrop"></ImageView>
+        android:scaleType="centerCrop" >
+    </ImageView>
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical" >
+
         <ScrollView
-            android:layout_height="fill_parent"
-            android:layout_width="fill_parent">
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
                 <RelativeLayout
                     android:id="@+id/showinfo"
-                    android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:background="@drawable/list_selector_holo_dark"
                     android:focusable="true"
-                    android:padding="@dimen/body_padding">
+                    android:padding="@dimen/body_padding" >
+
                     <TextView
                         android:id="@+id/seriesname"
                         style="@style/Header"
-                        android:paddingTop="2dp"
-                        android:paddingRight="5dp"
-                        android:paddingBottom="0dp"
-                        android:ellipsize="marquee"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:ellipsize="marquee"
+                        android:paddingBottom="0dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="2dp"
                         android:text="Loading" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_below="@id/seriesname"
-                        android:layout_toLeftOf="@+id/show_arrow">
+                        android:layout_toLeftOf="@+id/show_arrow" >
+
                         <TextView
                             android:id="@+id/showmeta"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Thu 10:00 PM on Very Long Network Name (VLNM)"
-                            android:layout_weight="1" />
+                            android:layout_weight="1"
+                            android:text="Thu 10:00 PM on Very Long Network Name (VLNM)" />
+
                         <TextView
                             android:id="@+id/showStatus"
                             android:layout_width="wrap_content"
@@ -57,13 +66,15 @@
                             android:paddingLeft="5dp"
                             android:text="Continuing" />
                     </LinearLayout>
+
                     <ImageView
                         android:id="@+id/show_arrow"
-                        android:src="@drawable/ic_action_arrow_right"
-                        android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"></ImageView>
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_action_arrow_right" >
+                    </ImageView>
                 </RelativeLayout>
 
                 <include layout="@layout/holodivider" />
@@ -74,13 +85,16 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/showinfo"
-                    android:padding="@dimen/body_padding">
+                    android:padding="@dimen/body_padding" >
+
                     <TextView
-                        android:layout_width="wrap_content"
                         android:id="@+id/nextheader"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/TextViewEpisodeTitle"
-                        android:text="Loading..."></TextView>
+                        android:text="Loading..." >
+                    </TextView>
+
                     <TextView
                         android:id="@+id/TextViewEpisodeTitle"
                         style="@style/ListHeader"
@@ -88,6 +102,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/nextheader"
                         android:text="Loading..." />
+
                     <TextView
                         android:id="@+id/TextViewEpisodeNumbers"
                         android:layout_width="wrap_content"
@@ -95,22 +110,27 @@
                         android:layout_below="@id/TextViewEpisodeTitle"
                         android:layout_marginBottom="5dp"
                         android:text="Loading..." />
+
                     <LinearLayout
                         android:id="@+id/episodemeta"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:baselineAligned="true"
+                        android:layout_above="@+id/toolbarEpisodeDetails"
                         android:layout_below="@id/TextViewEpisodeNumbers"
-                        android:layout_above="@+id/toolbarEpisodeDetails">
+                        android:baselineAligned="true"
+                        android:orientation="vertical" >
+
                         <include
-                            layout="@layout/imagecontainer"
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content" />
-                        <include layout="@layout/overview_episode_meta"></include>
+                            android:layout_height="wrap_content"
+                            layout="@layout/imagecontainer" />
+
+                        <include layout="@layout/overview_episode_meta" >
+                        </include>
                     </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>
+
 </FrameLayout>

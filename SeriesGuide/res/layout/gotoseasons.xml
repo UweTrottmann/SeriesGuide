@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
     <LinearLayout
         android:id="@+id/gotoseasons"
-        android:layout_height="50dp"
         android:layout_width="fill_parent"
+        android:layout_height="50dp"
         android:background="@drawable/list_selector_holo_dark"
         android:focusable="true"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
+
         <TextView
             android:id="@+id/gotoseasonsText"
-            android:text="@string/seasons"
-            android:textSize="@dimen/text_size_medium"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:paddingLeft="5dp"
-            android:layout_weight="1"></TextView>
+            android:text="@string/seasons"
+            android:textSize="@dimen/text_size_medium" >
+        </TextView>
+
         <ImageView
             android:id="@+id/seasonIndicator"
-            android:src="@drawable/ic_action_arrow_right"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"></ImageView>
+            android:src="@drawable/ic_action_arrow_right" >
+        </ImageView>
     </LinearLayout>
-    <include layout="@layout/holodivider" />
-</merge>
 
+    <include layout="@layout/holodivider" />
+
+</merge>
