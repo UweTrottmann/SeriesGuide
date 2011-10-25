@@ -250,6 +250,7 @@
     <string name="trakt_error">trakt.tv sharing failed</string>
     <string name="trakt_decryptfail">password could not be decrypted</string>
     <string name="trakt_credentials_invalid">credentials not valid</string>
+    <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
     <string name="pref_traktintegrate">Integrate trakt.tv</string>
     <string name="pref_traktintegratesummary">Mark as seen in Overview is shared with trakt.tv</string>
     <string name="donate">Buy me a drink (Paypal)</string>

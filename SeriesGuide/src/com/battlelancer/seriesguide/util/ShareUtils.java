@@ -480,70 +480,69 @@ public class ShareUtils {
                     boolean isNewAccount = ((CheckBox) layout.findViewById(R.id.checkNewAccount))
                             .isChecked();
 
-                    try {
-                        password = SimpleCrypto.encrypt(password, context);
-                    } catch (Exception e) {
-                        // password could not be encrypted, store a blank one
-                        password = "";
-                    }
-
-                    Editor editor = prefs.edit();
-                    editor.putString(SeriesGuidePreferences.PREF_TRAKTUSER, username);
-                    editor.putString(SeriesGuidePreferences.PREF_TRAKTPWD, password);
-                    editor.commit();
-
+                    // TODO: make asynchronous
+                    final ServiceManager manager = new ServiceManager();
+                    manager.setApiKey(Constants.TRAKT_API_KEY);
+                    manager.setAuthentication(username, ShareUtils.toSHA1(password.getBytes()));
+                    Response response = null;
                     if (isNewAccount) {
+                        // create new account
                         final String email = ((EditText) layout.findViewById(R.id.email)).getText()
                                 .toString();
 
-                        // validate credentials and mail
-                        if (!isTraktCredentialsValid(context) || email.length() == 0) {
-                            Toast.makeText(context,
-                                    context.getString(R.string.trakt_credentials_invalid),
-                                    Toast.LENGTH_LONG).show();
-                            editor.putString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
-                            editor.putString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
-                            editor.commit();
-                            return;
-                        }
-
-                        // TODO: make asynchronous
-                        // create new account
-                        final ServiceManager manager = new ServiceManager();
-                        manager.setApiKey(Constants.TRAKT_API_KEY);
-                        manager.setAuthentication(username, ShareUtils.toSHA1(password.getBytes()));
-                        Response response = null;
                         try {
-                            response = manager.accountService().create(username, password, email)
+                            response = manager
+                                    .accountService()
+                                    .create(username, ShareUtils.toSHA1(password.getBytes()), email)
                                     .fire();
                         } catch (TraktException te) {
                             response = te.getResponse();
                         } catch (ApiException ae) {
-
+                            response = null;
                         }
-
-                        if (response != null) {
-                            if (response.getStatus().equalsIgnoreCase("success")) {
-                                Toast.makeText(context,
-                                        response.getStatus() + ": " + response.getMessage(),
-                                        Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(context,
-                                        response.getStatus() + ": " + response.getMessage(),
-                                        Toast.LENGTH_LONG).show();
-                                editor.putString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
-                                editor.putString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
-                                editor.commit();
-                                return;
-                            }
-                        } else {
-                            Toast.makeText(context,
-                                    "Sorry, something went horribly wrong. Please try again.",
-                                    Toast.LENGTH_LONG).show();
+                    } else {
+                        // validate existing account
+                        try {
+                            response = manager.accountService().test().fire();
+                        } catch (TraktException te) {
+                            response = te.getResponse();
+                        } catch (ApiException ae) {
+                            response = null;
                         }
                     }
 
+                    if (response != null) {
+                        // try to encrypt the password before storing it
+                        try {
+                            password = SimpleCrypto.encrypt(password, context);
+                        } catch (Exception e) {
+                            password = "";
+                        }
+
+                        // prepare writing credentials to settings
+                        Editor editor = prefs.edit();
+                        editor.putString(SeriesGuidePreferences.PREF_TRAKTUSER, username);
+                        editor.putString(SeriesGuidePreferences.PREF_TRAKTPWD, password);
+
+                        if (response.getStatus().equalsIgnoreCase("success")
+                                && password.length() != 0 && editor.commit()) {
+                            // all went through
+                            Toast.makeText(context,
+                                    response.getStatus() + ": " + response.getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context,
+                                    response.getStatus() + ": " + response.getError(),
+                                    Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                    } else {
+                        Toast.makeText(context, getString(R.string.trakt_generalerror),
+                                Toast.LENGTH_LONG).show();
+                    }
+
                     if (isForwardingGivenTask) {
+                        // relaunch the trakt task which called us
                         new TraktTask(context, getFragmentManager(), getArguments()).execute();
                     }
                 }
