@@ -4,7 +4,7 @@
     <PreferenceCategory android:title="@string/pref_sorting" >
 
         <ListPreference
-            android:defaultValue="favorites"
+            android:defaultValue="alphabetic"
             android:entries="@array/shsorting"
             android:entryValues="@array/shsortingData"
             android:key="showSorting"
