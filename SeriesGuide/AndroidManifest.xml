@@ -25,6 +25,17 @@
             android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAIToXnISqkDzDlKt206D1VdujnhhoFa0mAEM8Veg" />
 
+        <activity android:name=".ui.ShowsActivity" >
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
+        </activity>
         <activity
             android:label="@string/add_show"
             android:name=".AddShow"
@@ -106,9 +117,6 @@
         <activity
             android:launchMode="singleTask"
             android:name=".getglueapi.PrepareRequestTokenActivity" >
-
-            >
-            
             <intent-filter >
                 <action android:name="android.intent.action.VIEW" />
 
@@ -119,17 +127,6 @@
                     android:host="callback"
                     android:scheme="seriesguide-oauth-getglue" />
             </intent-filter>
-        </activity>
-        <activity android:name=".ui.ShowsActivity" >
-            <intent-filter >
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
         </activity>
         <activity android:name=".ui.SeasonsActivity" >
             <meta-data

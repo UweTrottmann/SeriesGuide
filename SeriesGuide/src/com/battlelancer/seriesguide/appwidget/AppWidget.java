@@ -187,14 +187,14 @@ public class AppWidget extends AppWidgetProvider {
 
             // Create an Intent to launch Upcoming
             Intent intent = new Intent(context, UpcomingRecentActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
             views.setOnClickPendingIntent(R.id.LinearLayoutWidget, pendingIntent);
 
             if (layout != R.layout.appwidget) {
                 // Create an Intent to launch SeriesGuide
                 Intent i = new Intent(context, ShowsActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 pendingIntent = PendingIntent.getActivity(context, 0, i, 0);
                 views.setOnClickPendingIntent(R.id.widgetShowlistButton, pendingIntent);
             }
