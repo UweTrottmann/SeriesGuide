@@ -29,6 +29,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -124,6 +126,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private static final int SHOWFILTER_UNSEENEPISODES = 2;
 
     private static final String FILTER_ID = "filterid";
+
+    private static final int VER_TRAKT_SEC_CHANGES = 130;
 
     private Bundle mSavedState;
 
@@ -839,23 +843,27 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private void updatePreferences(SharedPreferences prefs) {
         updateSorting(prefs);
 
-        // // display whats new dialog
-        // int lastVersion = prefs.getInt(SeriesGuideData.KEY_VERSION, -1);
-        // try {
-        // int currentVersion =
-        // getPackageManager().getPackageInfo(getPackageName(),
-        // PackageManager.GET_META_DATA).versionCode;
-        // if (currentVersion > lastVersion) {
-        // // BETA warning dialog switch
-        // showDialog(BETA_WARNING_DIALOG);
-        // showDialog(WHATS_NEW_DIALOG);
-        // // set this as lastVersion
-        // prefs.edit().putInt(SeriesGuideData.KEY_VERSION,
-        // currentVersion).commit();
-        // }
-        // } catch (NameNotFoundException e) {
-        // // this should never happen
-        // }
+        // between-version upgrade code
+        int lastVersion = prefs.getInt(SeriesGuideData.KEY_VERSION, -1);
+        try {
+            int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
+                    PackageManager.GET_META_DATA).versionCode;
+            if (currentVersion > lastVersion) {
+                switch (currentVersion) {
+                    case VER_TRAKT_SEC_CHANGES:
+                        prefs.edit().putString(SeriesGuidePreferences.PREF_TRAKTPWD, "").commit();
+                }
+
+                // // BETA warning dialog switch
+                // showDialog(BETA_WARNING_DIALOG);
+                // showDialog(WHATS_NEW_DIALOG);
+
+                // set this as lastVersion
+                prefs.edit().putInt(SeriesGuideData.KEY_VERSION, currentVersion).commit();
+            }
+        } catch (NameNotFoundException e) {
+            // this should never happen
+        }
 
         prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
     }

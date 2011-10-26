@@ -90,7 +90,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             // password could not be decrypted
             return FAILED_CREDENTIALS;
         }
-        manager.setAuthentication(username, ShareUtils.toSHA1(password.getBytes()));
+        manager.setAuthentication(username, password);
         manager.setApiKey(Constants.TRAKT_API_KEY);
 
         if (mIsSyncToTrakt) {
