@@ -127,7 +127,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final String FILTER_ID = "filterid";
 
-    private static final int VER_TRAKT_SEC_CHANGES = 130;
+    private static final int VER_TRAKT_SEC_CHANGES = 138;
 
     private Bundle mSavedState;
 
