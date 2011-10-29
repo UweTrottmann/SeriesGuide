@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="fill_parent"
-    android:layout_width="fill_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="500dp"
-        android:layout_height="fill_parent" android:layout_gravity="center">
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical" >
 
         <TextView
-            android:text="@string/backup_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp" />
+            android:padding="5dp"
+            android:text="@string/backup_description" />
 
         <Button
             android:id="@+id/ButtonExportDBtoSD"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
             android:text="@string/backup_button" />
 
         <Button
             android:id="@+id/ButtonImportDBfromSD"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
             android:text="@string/import_button" />
     </LinearLayout>
+
 </ScrollView>

@@ -121,8 +121,6 @@
   <string name="pref_sharing">Sharing</string>
   <string name="clearGetGlueCredentials">Koppla från GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Use the Share buttons to setup GetGlue</string>
-  <string name="pref_number">Number format</string>
-  <string name="pref_numbersummary">Switch between 1x01 or S01E01 as number format</string>
   <string name="pref_advanced">Avancerade</string>
   <string name="clear_cache">Clear Image Caches</string>
   <string name="clear_cache_summary">Ta bort alla bilder från cache och SD-kort, de kommer att laddas ner igen vid uppdatering av serierna.</string>
@@ -169,7 +167,7 @@
   <string name="comment">Check In Comment</string>
   <string name="checkinsuccess">Check In successful</string>
   <string name="pref_number">Number format</string>
-  <string name="pref_numbersummary">Switch between 1x01 or S01E01 as number format</string>
+  <string name="pref_numbersummary">Switch between 1x01, S01E01 or s01e01 as number format</string>
   <string name="checkinfailed">Check-In failed</string>
   <string name="oauthmessage">Authenticating SeriesGuide with GetGlue...</string>
   <string name="addtocalendar">Lägg till i kalender</string>
@@ -197,6 +195,7 @@
   <string name="trakt_error">trakt.tv sharing failed</string>
   <string name="trakt_decryptfail">password could not be decrypted</string>
   <string name="trakt_credentials_invalid">credentials not valid</string>
+  <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
   <string name="pref_traktintegrate">Integrate trakt.tv</string>
   <string name="pref_traktintegratesummary">Mark as seen in Overview is shared with trakt.tv</string>
   <string name="donate">Köp mig en drink (Paypal)</string>
@@ -210,9 +209,6 @@
   <string name="trakt_synctotrakt">Synkronisera med trakt.tv</string>
   <string name="trakt_syncunseen">Synkronisera ej sedda avsnitt</string>
   <string name="powered_by_thetvdb">powered by thetvdb.com</string>
-  <string name="download_stable">Ladda ner SeriesGuide</string>
-  <string name="gobreak">Go break things</string>
-  <string name="betawarning">WARNING: This is an unstable BETA release for testing purposes only. To download the stable end-user version click the download button below.\n\nIf you want to help test the beta go ahead. Please report every crash, try everything out and send feedback to seriesguide@battlelancer.com (see Settings).</string>
   <string-array name="shsorting">
     <item>A - Ö</item>
     <item>Nästa episod</item>

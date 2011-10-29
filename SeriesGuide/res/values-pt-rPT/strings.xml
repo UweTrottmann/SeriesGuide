@@ -122,8 +122,6 @@
   <string name="pref_sharing">Partilhar</string>
   <string name="clearGetGlueCredentials">Desligar GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Use the Share buttons to setup GetGlue</string>
-  <string name="pref_number">Formato do número</string>
-  <string name="pref_numbersummary">Alternar entre o formato 1x01 ou S01E01 </string>
   <string name="pref_advanced">Avançado</string>
   <string name="clear_cache">Limpar a Cache de Imagens</string>
   <string name="clear_cache_summary">Remover todas as imagens da cache e do cartão SD, ao actualizar as séries estas irão ser armazenadas</string>
@@ -170,7 +168,7 @@
   <string name="comment">Check Inn Comentário</string>
   <string name="checkinsuccess">Check In bem-sucedido</string>
   <string name="pref_number">Formato do número</string>
-  <string name="pref_numbersummary">Alternar entre o formato 1x01 ou S01E01 </string>
+  <string name="pref_numbersummary">Switch between 1x01, S01E01 or s01e01 as number format</string>
   <string name="checkinfailed">Check In falhou</string>
   <string name="oauthmessage">A autenticar SeriesGuide com GetGlue ...</string>
   <string name="addtocalendar">Adicionar ao calendário</string>
@@ -194,10 +192,11 @@
   <string name="pref_traktsyncsummary">Experimental, manual syncing with trakt.tv</string>
   <string name="save">Guardar</string>
   <string name="dontsave">Não guardar</string>
-  <string name="trakt_success">Successfully marked on trakt.tv</string>
+  <string name="trakt_success">Marcado com êxito em trakt.tv</string>
   <string name="trakt_error">Falha na partilha em trakt.tv</string>
-  <string name="trakt_decryptfail">password could not be decrypted</string>
+  <string name="trakt_decryptfail">a password não pode ser descodificada</string>
   <string name="trakt_credentials_invalid">credenciais inválidas</string>
+  <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
   <string name="pref_traktintegrate">Integrar trakt.tv</string>
   <string name="pref_traktintegratesummary">Mark as seen in Overview is shared with trakt.tv</string>
   <string name="donate">Pague-me um copo (Paypal)</string>
@@ -207,13 +206,10 @@
   <string name="trakt_createaccount">Criar nova conta</string>
   <string name="email">E-mail</string>
   <string name="trakt_synctodevice">Sincronizar com SeriesGuide</string>
-  <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. Only shows added to SeriesGuide are synced. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
+  <string name="trakt_experimental">Sincronização <b>experimental</b> com trakt. Somente series adiconadas em SeriesGuide são sincronizadas.Na SeriesGuide só marca episódios vistos, mas não remove marcas de visto existentes na SeriesGuide. No trakt é somente transmitido os episódios assistidos. </string>
   <string name="trakt_synctotrakt">Sincronizar com trakt.tv</string>
   <string name="trakt_syncunseen">Sincronizar os episódios por assistir</string>
   <string name="powered_by_thetvdb">Powered by thetvdb.com</string>
-  <string name="download_stable">Descarregue SeriesGuide</string>
-  <string name="gobreak">Go break things</string>
-  <string name="betawarning">AVISO: Esta é uma versão BETA instável para fins de teste. Para descarregar a versão estável do usuário final clique no botão de download.\n\nSe quiser ajudar a testar a versão beta vá em frente. Por favor, reporte cada incidente, experimente tudo e envie um feedback ao seriesguide@battlelancer.com (consulte Definições).</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Próximo episódio</item>
@@ -235,7 +231,7 @@
   </string-array>
   <string-array name="share_items">
     <item>GetGlue Check In</item>
-    <item>Mark seen on trakt.tv</item>
+    <item>Marcar como visto em trakt.tv</item>
     <item>Outros serviços</item>
     <item>Classifique em trakt.tv</item>
   </string-array>

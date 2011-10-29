@@ -121,8 +121,6 @@
   <string name="pref_sharing">Partage</string>
   <string name="clearGetGlueCredentials">Déconnectez GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Utilisez les boutons Partager pour configurer GetGlue</string>
-  <string name="pref_number">Format de nombre</string>
-  <string name="pref_numbersummary">Changer le format de numérotation entre 1x01 ou S01E01</string>
   <string name="pref_advanced">Avancée</string>
   <string name="clear_cache">Cacher mes images du cache</string>
   <string name="clear_cache_summary">Supprimer toutes les images du cache et de la carte SD, la mise à jour les retéléchargera</string>
@@ -169,7 +167,7 @@
   <string name="comment">Enregistrement Commentaire</string>
   <string name="checkinsuccess">Enregistrement reusssi</string>
   <string name="pref_number">Format de nombre</string>
-  <string name="pref_numbersummary">Changer le format de numérotation entre 1x01 ou S01E01</string>
+  <string name="pref_numbersummary">Switch between 1x01, S01E01 or s01e01 as number format</string>
   <string name="checkinfailed">Enregistrement échoué</string>
   <string name="oauthmessage">Authentification de SerieGuide avec GetBlue...</string>
   <string name="addtocalendar">Ajouter au calendrier</string>
@@ -197,6 +195,7 @@
   <string name="trakt_error">partage avec Trakt.TV a échoué</string>
   <string name="trakt_decryptfail">Mot de passe n\'a pas pu être décrypté</string>
   <string name="trakt_credentials_invalid">références non valides</string>
+  <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
   <string name="pref_traktintegrate">Intégrer à trakt.tv</string>
   <string name="pref_traktintegratesummary">Marquer comme vu dans l\'Aperçu partagé avec trakt.tv</string>
   <string name="donate">Achetez-moi une boisson (Paypal)</string>
@@ -210,9 +209,6 @@
   <string name="trakt_synctotrakt">Synchroniser avec trakt.tv</string>
   <string name="trakt_syncunseen">Synchronisez les épisodes non vus</string>
   <string name="powered_by_thetvdb">proposé par thetvdb.com</string>
-  <string name="download_stable">Télécharger SeriesGuide</string>
-  <string name="gobreak">Go break things</string>
-  <string name="betawarning">ATTENTION: Ceci est une version BETA instable à fin de test uniquement. Pour télécharger la version stable pour utilisateurs finaux, cliquer sur le bouton de téléchargement ci-dessous.\n\nSi vous voulez aider à tester la beta aller de l\'avant. S\'il vous plaît rapporter tous les crash, essayer toutes les fonctionnalités et envoyer des commentaires à seriesguide@battlelancer.com (voir Configuration).</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Episode suivant</item>

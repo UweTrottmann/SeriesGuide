@@ -121,8 +121,6 @@
   <string name="pref_sharing">Sdílení</string>
   <string name="clearGetGlueCredentials">Odpojení GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Použijte tlačítka Sdílet pro nastavení GetGlue</string>
-  <string name="pref_number">Formát číslování</string>
-  <string name="pref_numbersummary">Přepínání mezi 1x01 nebo S01E01 jako formát číslování</string>
   <string name="pref_advanced">Pokročilé</string>
   <string name="clear_cache">Vymazat mezipaměť obrázků</string>
   <string name="clear_cache_summary">Odstranit všechny obrázky z cache a SD karty, aktualizace pořadů je znovu stáhne</string>
@@ -169,7 +167,7 @@
   <string name="comment">Check In Comment</string>
   <string name="checkinsuccess">Check In successful</string>
   <string name="pref_number">Formát číslování</string>
-  <string name="pref_numbersummary">Přepínání mezi 1x01 nebo S01E01 jako formát číslování</string>
+  <string name="pref_numbersummary">Switch between 1x01, S01E01 or s01e01 as number format</string>
   <string name="checkinfailed">Check-In failed</string>
   <string name="oauthmessage">Ověřování SeriesGuide s GetGlue...</string>
   <string name="addtocalendar">Přidat do kalendáře</string>
@@ -197,6 +195,7 @@
   <string name="trakt_error">trakt.tv sdílení selhalo</string>
   <string name="trakt_decryptfail">Heslo nelze dešifrovat.</string>
   <string name="trakt_credentials_invalid">credentials not valid</string>
+  <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
   <string name="pref_traktintegrate">Integrace trakt.tv</string>
   <string name="pref_traktintegratesummary">Mark as seen in Overview is shared with trakt.tv</string>
   <string name="donate">Kup mi drink (Paypal)</string>
@@ -210,9 +209,6 @@
   <string name="trakt_synctotrakt">Synchronizace na trakt.tv</string>
   <string name="trakt_syncunseen">Synchronizovat nezhlédnuté epizody</string>
   <string name="powered_by_thetvdb">powered by thetvdb.com</string>
-  <string name="download_stable">Stáhnout SeriesGuide</string>
-  <string name="gobreak">Go break things</string>
-  <string name="betawarning">VAROVÁNÍ: Toto je nestabilní BETA release pro testovací účely. Pro stažení stabilní verze pro uživatele klikněte na tlačítko níže.\n\nPokud chcete pomoci testovat beta verzi, pokračujte. Prosím hlaště každý pád, zkoušejte vše a posílejte zpětnou vazbu na seriesguide@battlelancer.com (více v Nastavení).</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Další epizoda</item>

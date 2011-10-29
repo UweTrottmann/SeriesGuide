@@ -121,8 +121,6 @@
   <string name="pref_sharing">Empfehlen</string>
   <string name="clearGetGlueCredentials">Von GetGlue abmelden</string>
   <string name="clearGetGlueCredentialssummary">Verwenden Sie die Teilen-Tasten, um GetGlue einzurichten</string>
-  <string name="pref_number">Zahlenformat</string>
-  <string name="pref_numbersummary">Wechseln Sie zwischen 1x01 oder S01E01 als Zahlenformat</string>
   <string name="pref_advanced">Fortgeschritten</string>
   <string name="clear_cache">Bilder-Caches leeren</string>
   <string name="clear_cache_summary">Entfernen Sie alle Bilder aus dem Cache und SD-Karte, bei Aktualisierung der Shows werden sie erneut geladen</string>
@@ -171,7 +169,7 @@
   <string name="comment">Check In Kommentar</string>
   <string name="checkinsuccess">Check In erfolgreich</string>
   <string name="pref_number">Zahlenformat</string>
-  <string name="pref_numbersummary">Wechseln Sie zwischen 1x01 oder S01E01 als Zahlenformat</string>
+  <string name="pref_numbersummary">Wechseln Sie zwischen 1x01, S01E01 oder s01e01 als Zahlenformat</string>
   <string name="checkinfailed">Check-In fehlgeschlagen</string>
   <string name="oauthmessage">Authentifizierung von SeriesGuide mit GetGlue...</string>
   <string name="addtocalendar">Zum Kalendar hinzufügen</string>
@@ -199,6 +197,7 @@
   <string name="trakt_error">trakt.tv Markierung gescheitert</string>
   <string name="trakt_decryptfail">Kennwort konnte nicht entschlüsselt werden</string>
   <string name="trakt_credentials_invalid">Anmeldeinformationen ungültig</string>
+  <string name="trakt_generalerror">Etwas ist schief gelaufen. Bitte überprüfen Sie Ihre Anmeldeinformationen, und versuchen Sie es erneut.</string>
   <string name="pref_traktintegrate">trakt.tv integrieren</string>
   <string name="pref_traktintegratesummary">Markieren als gesehen in der Übersicht wird an trakt.tv übermittelt</string>
   <string name="donate">Spendieren Sie ein Bier (Paypal)</string>
@@ -212,9 +211,6 @@
   <string name="trakt_synctotrakt">Sync nach trakt.tv</string>
   <string name="trakt_syncunseen">Auch ungesehene Folgen syncen</string>
   <string name="powered_by_thetvdb">ein Dienst von thetvdb.com</string>
-  <string name="download_stable">SeriesGuide downloaden</string>
-  <string name="gobreak">Go break things</string>
-  <string name="betawarning">WARNUNG: Diese instabile BETA-Version ist nur zum Testen. Für die stabile Endbenutzer-Version klicken Sie auf den folgenden Download-Button.\n\nWenn Sie beim Beta-Test helfen möchten, dann nur zu. Melden Sie bitte jeden Absturz, probieren Sie alles aus und schicken Sie Ihr Feedback an seriesguide@battlelancer.com (siehe Einstellungen).</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Nächste Folge</item>

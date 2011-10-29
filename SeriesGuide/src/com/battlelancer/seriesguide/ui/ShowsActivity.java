@@ -125,6 +125,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final String FILTER_ID = "filterid";
 
+    private static final int VER_TRAKT_SEC_CHANGES = 138;
+
     private Bundle mSavedState;
 
     private UpdateTask mUpdateTask;
@@ -839,23 +841,27 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private void updatePreferences(SharedPreferences prefs) {
         updateSorting(prefs);
 
-        // // display whats new dialog
-        // int lastVersion = prefs.getInt(SeriesGuideData.KEY_VERSION, -1);
-        // try {
-        // int currentVersion =
-        // getPackageManager().getPackageInfo(getPackageName(),
-        // PackageManager.GET_META_DATA).versionCode;
-        // if (currentVersion > lastVersion) {
-        // // BETA warning dialog switch
-        // showDialog(BETA_WARNING_DIALOG);
-        // // showDialog(WHATS_NEW_DIALOG);
-        // // set this as lastVersion
-        // prefs.edit().putInt(SeriesGuideData.KEY_VERSION,
-        // currentVersion).commit();
-        // }
-        // } catch (NameNotFoundException e) {
-        // // this should never happen
-        // }
+        // between-version upgrade code
+        int lastVersion = prefs.getInt(SeriesGuideData.KEY_VERSION, -1);
+        try {
+            int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
+                    PackageManager.GET_META_DATA).versionCode;
+            if (currentVersion > lastVersion) {
+                switch (currentVersion) {
+                    case VER_TRAKT_SEC_CHANGES:
+                        prefs.edit().putString(SeriesGuidePreferences.PREF_TRAKTPWD, "").commit();
+                }
+
+                // BETA warning dialog switch
+                // showDialog(BETA_WARNING_DIALOG);
+                // showDialog(WHATS_NEW_DIALOG);
+
+                // set this as lastVersion
+                prefs.edit().putInt(SeriesGuideData.KEY_VERSION, currentVersion).commit();
+            }
+        } catch (NameNotFoundException e) {
+            // this should never happen
+        }
 
         prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
     }

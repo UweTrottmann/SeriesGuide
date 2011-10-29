@@ -1,49 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" >
+
     <TextView
         android:id="@+id/TextViewSearchSeriesName"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
-        android:text="Really, Really, Really, Really, Really Long Series Name"></TextView>
+        android:text="Really, Really, Really, Really, Really Long Series Name" >
+    </TextView>
+
     <TextView
         android:id="@+id/TextViewSearchRow"
         style="@style/ListHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:text="This is it! Really, really, really long title"></TextView>
+        android:text="This is it! Really, really, really long title" >
+    </TextView>
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp">
+        android:layout_marginBottom="5dp" >
+
         <TextView
             android:id="@+id/TextViewSearchEpNumbers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="Episode X Season X" />
+
         <TextView
             android:id="@+id/TextViewSearchEpWatchedState"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="watchedstate"
-            android:layout_toRightOf="@+id/TextViewSearchEpNumbers" />
+            android:layout_toRightOf="@+id/TextViewSearchEpNumbers"
+            android:text="watchedstate" />
     </RelativeLayout>
+
     <TextView
         android:id="@+id/TextViewSearchSnippet"
-        android:paddingLeft="5dp"
-        android:paddingTop="2dp"
-        android:paddingRight="5dp"
-        android:paddingBottom="15dp"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="...some bla..."></TextView>
+        android:layout_height="wrap_content"
+        android:paddingBottom="15dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="2dp"
+        android:text="...some bla..." >
+    </TextView>
+
 </LinearLayout>

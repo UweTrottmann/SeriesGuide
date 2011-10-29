@@ -1,39 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+
     <RelativeLayout
+        android:id="@+id/ratingbar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ratingbar"
-        android:layout_marginBottom="5dp">
+        android:layout_marginBottom="5dp" >
+
         <TextView
             android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_xmedium"
             android:layout_marginRight="5dp"
-            android:text="@string/rating" />
+            android:text="@string/rating"
+            android:textSize="@dimen/text_size_xmedium" />
+
         <RatingBar
             android:id="@+id/bar"
             style="?android:attr/ratingBarStyleSmall"
-            android:textSize="@dimen/text_size_xmedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@id/description"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/description"
+            android:isIndicator="true"
             android:numStars="10"
             android:rating="0"
             android:stepSize="0.1"
-            android:isIndicator="true"
-            android:layout_toRightOf="@id/description"
-            android:layout_alignTop="@id/description"
-            android:layout_marginTop="5dp">
+            android:textSize="@dimen/text_size_xmedium" >
         </RatingBar>
+
         <TextView
             android:id="@+id/value"
-            android:textSize="@dimen/text_size_xmedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/description"
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@id/bar"
-            android:layout_alignBottom="@id/description"
-            android:text="@string/norating" />
+            android:text="@string/norating"
+            android:textSize="@dimen/text_size_xmedium" />
     </RelativeLayout>
+
 </merge>

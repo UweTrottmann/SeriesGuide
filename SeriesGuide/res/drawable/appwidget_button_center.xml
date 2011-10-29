@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2009 The Android Open Source Project
+<!--
+     Copyright (C) 2009 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -16,13 +17,8 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_pressed="true"
-        android:drawable="@drawable/list_focused_holo" />
+    <item android:drawable="@drawable/list_focused_holo" android:state_pressed="true"/>
+    <item android:drawable="@drawable/list_focused_holo" android:state_enabled="true" android:state_focused="true" android:state_window_focused="true"/>
+    <item android:drawable="@android:color/transparent"/>
 
-    <item android:state_focused="true" android:state_enabled="true"
-        android:state_window_focused="true"
-        android:drawable="@drawable/list_focused_holo" />
-
-    <item
-         android:drawable="@android:color/transparent" />
 </selector>

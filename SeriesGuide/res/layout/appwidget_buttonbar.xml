@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_buttons"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" >
+
     <ImageView
         android:id="@+id/widgetShowlistButton"
         android:layout_width="30dp"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:src="@drawable/icon"
         android:background="@drawable/appwidget_button_center"
-        android:padding="5dp"
+        android:clickable="true"
         android:focusable="true"
-        android:clickable="true" />
+        android:padding="5dp"
+        android:src="@drawable/icon" />
+
     <ImageButton
         android:id="@+id/ImageButtonWidget"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:padding="5dp"
-        android:src="@drawable/ic_action_refresh"
         android:background="@drawable/appwidget_button_center"
-        android:scaleType="fitXY" />
-</LinearLayout>
+        android:padding="5dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_action_refresh" />
 
+</LinearLayout>

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical" >
+
     <FrameLayout
         android:id="@+id/fragment_shows"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:padding="@dimen/showgrid_padding">
+        android:padding="@dimen/showgrid_padding" >
+
         <TextView
             android:id="@id/android:empty"
             android:layout_width="250dp"
@@ -16,22 +17,26 @@
             android:padding="10dp"
             android:text="@string/hello"
             android:visibility="gone" />
+
         <GridView
             android:id="@id/android:list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:columnWidth="@dimen/showgrid_columnWidth"
-            android:numColumns="auto_fit"
-            android:verticalSpacing="@dimen/showgrid_spacing"
-            android:horizontalSpacing="@dimen/showgrid_spacing"
-            android:stretchMode="columnWidth"
             android:gravity="center"
-            android:listSelector="@drawable/list_selector_holo_dark"></GridView>
+            android:horizontalSpacing="@dimen/showgrid_spacing"
+            android:listSelector="@drawable/list_selector_holo_dark"
+            android:numColumns="auto_fit"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="@dimen/showgrid_spacing" >
+        </GridView>
+
         <ViewStub
             android:id="@+id/stub_update"
-            android:inflatedId="@+id/overlay_update"
-            android:layout="@layout/progress_overlay"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_width="fill_parent" />
+            android:inflatedId="@+id/overlay_update"
+            android:layout="@layout/progress_overlay" />
     </FrameLayout>
+
 </LinearLayout>

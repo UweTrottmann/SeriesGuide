@@ -23,10 +23,10 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.SupportActivity;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.Menu;
@@ -80,7 +80,7 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
         super.onActivityCreated(savedInstanceState);
 
         getListView().setSelector(R.drawable.list_selector_holo_dark);
-        
+
         updatePreferences();
 
         // populate list
@@ -333,14 +333,14 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
         }
 
         public void run() {
-            final FragmentActivity context = getActivity();
+            final SupportActivity context = getSupportActivity();
             if (context == null) {
                 return;
             }
 
             if (mSeasonId != null) {
                 // update one season
-                SeriesDatabase.updateUnwatchedCount(context, mSeasonId);
+                SeriesDatabase.updateUnwatchedCount(context.asActivity(), mSeasonId);
             } else {
                 // update all seasons of this show
                 final Cursor seasons = context.getContentResolver().query(
@@ -349,7 +349,7 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
                         }, null, null, null);
                 while (seasons.moveToNext()) {
                     String seasonId = seasons.getString(0);
-                    SeriesDatabase.updateUnwatchedCount(context, seasonId);
+                    SeriesDatabase.updateUnwatchedCount(context.asActivity(), seasonId);
                 }
                 seasons.close();
             }

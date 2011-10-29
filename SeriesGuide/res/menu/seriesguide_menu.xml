@@ -1,39 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
     <item
         android:id="@+id/menu_new_show"
-        android:title="@string/add_show"
         android:icon="@drawable/ic_action_add"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        android:title="@string/add_show"/>
+
     <item
         android:id="@+id/menu_update"
-        android:title="@string/menu_update_delta"
         android:icon="@drawable/ic_action_refresh"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_update_delta"/>
+
     <item
         android:id="@+id/menu_upcoming"
-        android:title="@string/upcoming"
         android:icon="@drawable/ic_action_upcoming"
-        android:showAsAction="ifRoom|withText" />
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/upcoming"/>
+
     <item
         android:id="@+id/menu_search"
-        android:title="@string/search_hint"
         android:icon="@drawable/ic_action_search"
-        android:showAsAction="ifRoom" />
+        android:showAsAction="ifRoom"
+        android:title="@string/search_hint"/>
+
     <item
         android:id="@+id/menu_showsortby"
-        android:title="@string/sort"
-        android:icon="@drawable/ic_action_sort" />
+        android:icon="@drawable/ic_action_sort"
+        android:title="@string/sort"/>
+
     <item
         android:id="@+id/menu_updateart"
-        android:title="@string/menu_updateart"
-        android:icon="@drawable/ic_action_image" />
+        android:icon="@drawable/ic_action_image"
+        android:title="@string/menu_updateart"/>
+
     <item
         android:id="@+id/menu_fullupdate"
-        android:title="@string/updateall_yes"
-        android:icon="@drawable/ic_action_refresh" />
+        android:icon="@drawable/ic_action_refresh"
+        android:title="@string/updateall_yes"/>
+
     <item
         android:id="@+id/menu_preferences"
-        android:title="@string/preferences"
-        android:icon="@drawable/ic_action_preferences" />
+        android:icon="@drawable/ic_action_preferences"
+        android:title="@string/preferences"/>
+
 </menu>
