@@ -1,6 +1,14 @@
 Change Log (Stable channel)
 ===========================
 
+Version 2.2.1 *(in development)*
+--------------------------------
+
+* Fix layouts on small tablet (large) devices
+* Validate trakt.tv credentials
+* Secure the trakt.tv password even better (you will have to reenter it again, sorry)
+* Don't rebuild the search table if nothing was updated
+
 Version 2.2 *(2011-10-18)*
 --------------------------------
 
