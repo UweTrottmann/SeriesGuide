@@ -359,7 +359,7 @@ public class ShareUtils {
                 return mContext.getString(R.string.trakt_decryptfail);
             }
 
-            manager.setAuthentication(username, ShareUtils.toSHA1(password.getBytes()));
+            manager.setAuthentication(username, password);
             manager.setApiKey(Constants.TRAKT_API_KEY);
 
             if (isCancelled()) {
@@ -431,31 +431,25 @@ public class ShareUtils {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final Context context = getActivity();
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                    .getApplicationContext());
-            String username = prefs.getString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
-            String password = prefs.getString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
-            try {
-                password = SimpleCrypto.decrypt(password, context);
-            } catch (Exception e) {
-                // failed to decrypt password, user should enter it again
-                password = "";
-            }
-
-            AlertDialog.Builder builder;
-
-            LayoutInflater inflater = (LayoutInflater) context
+            final Context context = getActivity().getApplicationContext();
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            final LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final View layout = inflater.inflate(R.layout.trakt_credentials_dialog, null);
+            final FragmentManager fm = getFragmentManager();
+            final Bundle args = getArguments();
 
-            builder = new AlertDialog.Builder(context);
+            // restore the username from settings
+            final String username = prefs.getString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
+            ((EditText) layout.findViewById(R.id.username)).setText(username);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setView(layout);
             builder.setTitle("trakt.tv");
-            ((EditText) layout.findViewById(R.id.username)).setText(username);
-            ((EditText) layout.findViewById(R.id.password)).setText(password);
+
             final View mailviews = layout.findViewById(R.id.mailviews);
             mailviews.setVisibility(View.GONE);
+
             ((CheckBox) layout.findViewById(R.id.checkNewAccount))
                     .setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
@@ -471,81 +465,84 @@ public class ShareUtils {
             builder.setPositiveButton(R.string.save, new OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                            .getApplicationContext());
                     final String username = ((EditText) layout.findViewById(R.id.username))
                             .getText().toString();
-                    String password = ((EditText) layout.findViewById(R.id.password)).getText()
+                    final String passwordHash = ShareUtils.toSHA1(((EditText) layout
+                            .findViewById(R.id.password)).getText().toString().getBytes());
+                    final String email = ((EditText) layout.findViewById(R.id.email)).getText()
                             .toString();
-                    boolean isNewAccount = ((CheckBox) layout.findViewById(R.id.checkNewAccount))
-                            .isChecked();
+                    final boolean isNewAccount = ((CheckBox) layout
+                            .findViewById(R.id.checkNewAccount)).isChecked();
 
-                    try {
-                        password = SimpleCrypto.encrypt(password, context);
-                    } catch (Exception e) {
-                        // password could not be encrypted, store a blank one
-                        password = "";
-                    }
+                    AsyncTask<String, Void, Response> accountValidatorTask = new AsyncTask<String, Void, Response>() {
 
-                    Editor editor = prefs.edit();
-                    editor.putString(SeriesGuidePreferences.PREF_TRAKTUSER, username);
-                    editor.putString(SeriesGuidePreferences.PREF_TRAKTPWD, password);
-                    editor.commit();
+                        @Override
+                        protected Response doInBackground(String... params) {
+                            final ServiceManager manager = new ServiceManager();
+                            manager.setApiKey(Constants.TRAKT_API_KEY);
+                            manager.setAuthentication(username, passwordHash);
+                            Response response = null;
 
-                    if (isNewAccount) {
-                        final String email = ((EditText) layout.findViewById(R.id.email)).getText()
-                                .toString();
+                            try {
+                                if (isNewAccount) {
+                                    // create new account
+                                    response = manager.accountService()
+                                            .create(username, passwordHash, email).fire();
+                                } else {
+                                    // validate existing account
+                                    response = manager.accountService().test().fire();
+                                }
+                            } catch (TraktException te) {
+                                response = te.getResponse();
+                            } catch (ApiException ae) {
+                                response = null;
+                            }
 
-                        // validate credentials and mail
-                        if (!isTraktCredentialsValid(context) || email.length() == 0) {
-                            Toast.makeText(context,
-                                    context.getString(R.string.trakt_credentials_invalid),
-                                    Toast.LENGTH_LONG).show();
-                            editor.putString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
-                            editor.putString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
-                            editor.commit();
-                            return;
+                            return response;
                         }
 
-                        // TODO: make asynchronous
-                        // create new account
-                        final ServiceManager manager = new ServiceManager();
-                        manager.setApiKey(Constants.TRAKT_API_KEY);
-                        manager.setAuthentication(username, ShareUtils.toSHA1(password.getBytes()));
-                        Response response = null;
-                        try {
-                            response = manager.accountService().create(username, password, email)
-                                    .fire();
-                        } catch (TraktException te) {
-                            response = te.getResponse();
-                        } catch (ApiException ae) {
+                        @Override
+                        protected void onPostExecute(Response response) {
+                            if (response != null) {
+                                String passwordEncr;
+                                // try to encrypt the password before storing it
+                                try {
+                                    passwordEncr = SimpleCrypto.encrypt(passwordHash, context);
+                                } catch (Exception e) {
+                                    passwordEncr = "";
+                                }
 
-                        }
+                                // prepare writing credentials to settings
+                                Editor editor = prefs.edit();
+                                editor.putString(SeriesGuidePreferences.PREF_TRAKTUSER, username)
+                                        .putString(SeriesGuidePreferences.PREF_TRAKTPWD,
+                                                passwordEncr);
 
-                        if (response != null) {
-                            if (response.getStatus().equalsIgnoreCase("success")) {
-                                Toast.makeText(context,
-                                        response.getStatus() + ": " + response.getMessage(),
-                                        Toast.LENGTH_SHORT).show();
+                                if (response.getStatus().equalsIgnoreCase("success")
+                                        && passwordEncr.length() != 0 && editor.commit()) {
+                                    // all went through
+                                    Toast.makeText(context,
+                                            response.getStatus() + ": " + response.getMessage(),
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(context,
+                                            response.getStatus() + ": " + response.getError(),
+                                            Toast.LENGTH_LONG).show();
+                                }
                             } else {
                                 Toast.makeText(context,
-                                        response.getStatus() + ": " + response.getMessage(),
+                                        context.getString(R.string.trakt_generalerror),
                                         Toast.LENGTH_LONG).show();
-                                editor.putString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
-                                editor.putString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
-                                editor.commit();
-                                return;
                             }
-                        } else {
-                            Toast.makeText(context,
-                                    "Sorry, something went horribly wrong. Please try again.",
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    }
 
-                    if (isForwardingGivenTask) {
-                        new TraktTask(context, getFragmentManager(), getArguments()).execute();
-                    }
+                            if (isForwardingGivenTask) {
+                                // relaunch the trakt task which called us
+                                new TraktTask(context, fm, args).execute();
+                            }
+                        }
+                    };
+
+                    accountValidatorTask.execute();
                 }
             });
             builder.setNegativeButton(R.string.dontsave, null);

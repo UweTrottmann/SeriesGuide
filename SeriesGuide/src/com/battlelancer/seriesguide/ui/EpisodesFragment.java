@@ -12,6 +12,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -23,7 +24,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
@@ -159,7 +159,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
      * its data.
      */
     private void loadFirstEpisode() {
-        final FragmentActivity context = getActivity();
+        final Activity context = getActivity();
         if (context != null) {
             new Thread(new Runnable() {
                 @Override
@@ -333,7 +333,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
     }
 
     private void markEpisode(final String episodeId, final boolean state) {
-        final FragmentActivity activity = getActivity();
+        final Activity activity = getActivity();
         if (activity != null) {
             new Thread(new Runnable() {
                 public void run() {
@@ -344,7 +344,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
     }
 
     private void markAllEpisodes(final boolean state) {
-        final FragmentActivity activity = getActivity();
+        final Activity activity = getActivity();
         if (activity != null) {
             new Thread(new Runnable() {
                 public void run() {

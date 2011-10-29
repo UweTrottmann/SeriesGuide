@@ -1,30 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="5dp">
+    android:paddingBottom="5dp" >
+
     <TextView
-        style="@style/WidgetTextView.Episode"
         android:id="@+id/widgetAirtime"
-        android:text="In X days, Mon"></TextView>
-    <TextView
         style="@style/WidgetTextView.Episode"
+        android:text="In X days, Mon" >
+    </TextView>
+
+    <TextView
         android:id="@+id/widgetNetwork"
-        android:text="20:00 PM on Showtime"
-        android:layout_alignParentRight="true"></TextView>
-    <TextView
-        style="@style/WidgetTextView.Show"
-        android:textColor="#f1f1f1ff"
-        android:id="@+id/textViewWidgetShow"
-        android:text="Test Text"
-        android:layout_below="@id/widgetAirtime"></TextView>
-    <TextView
         style="@style/WidgetTextView.Episode"
-        android:id="@+id/textViewWidgetEpisode"
+        android:layout_alignParentRight="true"
+        android:text="20:00 PM on Showtime" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/textViewWidgetShow"
+        style="@style/WidgetTextView.Show"
+        android:layout_below="@id/widgetAirtime"
         android:text="Test Text"
+        android:textColor="#f1f1f1ff" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/textViewWidgetEpisode"
+        style="@style/WidgetTextView.Episode"
         android:layout_below="@id/widgetAirtime"
         android:layout_toRightOf="@id/textViewWidgetShow"
-        android:paddingLeft="3dp"></TextView>
+        android:paddingLeft="3dp"
+        android:text="Test Text" >
+    </TextView>
+
 </RelativeLayout>

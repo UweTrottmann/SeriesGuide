@@ -12,11 +12,14 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
-  -->
+-->
 
 <set xmlns:android="http://schemas.android.com/apk/res/android"
-    android:interpolator="@android:anim/decelerate_interpolator">
-    <translate android:fromXDelta="0%"
-        android:toXDelta="100%"
-        android:duration="@android:integer/config_shortAnimTime" />
+    android:interpolator="@android:anim/decelerate_interpolator" >
+
+    <translate
+        android:duration="@android:integer/config_shortAnimTime"
+        android:fromXDelta="0%"
+        android:toXDelta="100%" />
+
 </set>

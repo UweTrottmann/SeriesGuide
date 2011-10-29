@@ -1,45 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="@dimen/widget_item_height"
-    android:orientation="vertical"
-    android:layout_marginBottom="1dp">
+    android:layout_marginBottom="1dp"
+    android:orientation="vertical" >
+
     <ImageView
         android:id="@+id/widgetPoster"
-        android:src="@drawable/show_generic"
-        android:layout_height="wrap_content"
         android:layout_width="25dp"
-        android:layout_marginRight="5dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewWidgetEpisode"
         android:layout_alignTop="@+id/widgetAirtime"
-        android:layout_alignBottom="@+id/textViewWidgetEpisode"></ImageView>
+        android:layout_marginRight="5dp"
+        android:src="@drawable/show_generic" >
+    </ImageView>
+
     <TextView
         android:id="@+id/textViewWidgetShow"
         style="@style/WidgetTextView"
-        android:text="Very Long Show Name Of Lovely Show"
-        android:textSize="13sp"
-        android:textColor="@color/text_primary"
         android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/widgetAirtime"
         android:layout_toRightOf="@+id/widgetPoster"
-        android:layout_toLeftOf="@+id/widgetAirtime"></TextView>
+        android:text="Very Long Show Name Of Lovely Show"
+        android:textColor="@color/text_primary"
+        android:textSize="13sp" >
+    </TextView>
+
     <TextView
         android:id="@+id/textViewWidgetEpisode"
         style="@style/WidgetTextView"
-        android:text="0x00 Very Long Episode Name Of Lovely Show"
-        android:textSize="12sp"
-        android:layout_below="@+id/textViewWidgetShow"
         android:layout_alignLeft="@+id/textViewWidgetShow"
-        android:layout_toLeftOf="@+id/widgetNetwork"></TextView>
+        android:layout_below="@+id/textViewWidgetShow"
+        android:layout_toLeftOf="@+id/widgetNetwork"
+        android:text="0x00 Very Long Episode Name Of Lovely Show"
+        android:textSize="12sp" >
+    </TextView>
+
     <TextView
         android:id="@+id/widgetAirtime"
         style="@style/WidgetTextView"
-        android:text="In X days, Mon"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"></TextView>
+        android:text="In X days, Mon" >
+    </TextView>
+
     <TextView
         android:id="@+id/widgetNetwork"
         style="@style/WidgetTextView"
-        android:text="20:00 PM Syfy"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/widgetAirtime"
-        android:layout_alignParentRight="true"></TextView>
+        android:text="20:00 PM Syfy" >
+    </TextView>
+
 </RelativeLayout>

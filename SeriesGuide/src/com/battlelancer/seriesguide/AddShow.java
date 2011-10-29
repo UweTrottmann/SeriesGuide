@@ -507,7 +507,7 @@ public class AddShow extends Activity {
             // password could not be decrypted
             getTrendingTraktShows();
         }
-        manager.setAuthentication(username, ShareUtils.toSHA1(password.getBytes()));
+        manager.setAuthentication(username, password);
         manager.setApiKey(Constants.TRAKT_API_KEY);
 
         try {

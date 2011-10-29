@@ -1,39 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="#bf000000"
+    android:orientation="horizontal"
+    android:paddingBottom="10px"
     android:paddingLeft="5px"
     android:paddingRight="5px"
-    android:paddingTop="10px"
-    android:paddingBottom="10px"
-    android:orientation="horizontal">
+    android:paddingTop="10px" >
+
     <LinearLayout
         android:layout_width="0dip"
         android:layout_height="fill_parent"
-        android:layout_weight="1.0"
         android:layout_marginRight="10dip"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:layout_weight="1.0"
+        android:gravity="center_vertical"
+        android:orientation="vertical" >
+
         <ProgressBar
             android:id="@+id/ProgressBarShowListDet"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="fill_parent"
             android:layout_height="10dp" />
+
         <TextView
             android:id="@+id/textViewUpdateStatus"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:ellipsize="middle"></TextView>
+            android:ellipsize="middle"
+            android:inputType="text" >
+        </TextView>
     </LinearLayout>
+
     <Button
         android:id="@+id/overlayCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_default_holo_dark"
-        android:textColor="#ffffffff"
         android:minWidth="100dip"
-        android:text="@string/cancel" />
+        android:text="@string/cancel"
+        android:textColor="#ffffffff" />
+
 </LinearLayout>

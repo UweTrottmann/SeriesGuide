@@ -71,8 +71,8 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
         setupAdapter();
 
-        getActivity().getSupportLoaderManager().initLoader(getArguments().getInt("loaderid"), null,
-                this);
+        getSupportActivity().getSupportLoaderManager().initLoader(
+                getArguments().getInt("loaderid"), null, this);
     }
 
     @Override

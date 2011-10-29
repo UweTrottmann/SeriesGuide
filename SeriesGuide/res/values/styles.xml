@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style
-        name="Theme.SeriesGuide"
-        parent="Theme.Sherlock">
+
+    <style name="Theme.SeriesGuide" parent="Theme.Sherlock">
         <item name="abDivider">@null</item>
         <item name="selectableItemBackground">@drawable/list_selector_holo_dark</item>
     </style>
@@ -42,6 +41,7 @@
         <item name="android:background">@drawable/btn_default_holo_dark</item>
         <item name="android:textColor">@color/button_text</item>
     </style>
+
     <style name="HoloCompatButton.Small">
         <item name="android:layout_height">30dp</item>
         <item name="android:layout_width">wrap_content</item>
@@ -56,10 +56,11 @@
         <item name="android:textSize">11sp</item>
         <item name="android:ellipsize">end</item>
     </style>
+
     <style name="WidgetTextView.Show">
         <item name="android:textStyle">bold</item>
     </style>
-    <style name="WidgetTextView.Episode">
-    </style>
+
+    <style name="WidgetTextView.Episode"></style>
 
 </resources>

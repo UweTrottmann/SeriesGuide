@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/LinearLayout1"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:padding="20dp">
+    android:padding="20dp" >
+
     <Button
-        android:text="@string/love"
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/totallyninja"
-        android:drawableLeft="@drawable/trakt_love_large"
-        android:drawablePadding="5dp"></Button>
-    <FrameLayout
-        android:layout_height="match_parent"
-        android:layout_width="20dp"></FrameLayout>
-    <Button
-        android:text="@string/hate"
-        android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableLeft="@drawable/trakt_love_large"
+        android:drawablePadding="5dp"
+        android:text="@string/love" >
+    </Button>
+
+    <FrameLayout
+        android:layout_width="20dp"
+        android:layout_height="match_parent" >
+    </FrameLayout>
+
+    <Button
         android:id="@+id/weaksauce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:drawableLeft="@drawable/trakt_hate_large"
-        android:drawablePadding="5dp"></Button>
+        android:drawablePadding="5dp"
+        android:text="@string/hate" >
+    </Button>
+
 </LinearLayout>

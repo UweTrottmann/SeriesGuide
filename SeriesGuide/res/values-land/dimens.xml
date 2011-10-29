@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <dimen name="widget_paddingTop">2dp</dimen>
     <dimen name="widget_paddingRight">3dp</dimen>
     <dimen name="widget_paddingBottom">2dp</dimen>
     <dimen name="widget_paddingLeft">5dp</dimen>
+
 </resources>

@@ -3,36 +3,48 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="2dp">
-	<ImageView android:src="@drawable/show_generic"
-		android:id="@+id/widgetPoster"
-		android:layout_height="wrap_content"
-		android:layout_width="25dp"
-		android:layout_marginRight="5dp"
-		android:layout_alignTop="@+id/widgetAirtime"
-		android:layout_alignBottom="@+id/textViewWidgetShow"></ImageView>
+    android:paddingBottom="2dp" >
+
+    <ImageView
+        android:id="@+id/widgetPoster"
+        android:layout_width="25dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewWidgetShow"
+        android:layout_alignTop="@+id/widgetAirtime"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/show_generic" >
+    </ImageView>
+
     <TextView
-		style="@style/WidgetTextView"
-		android:id="@+id/widgetAirtime"
-		android:text="In X days, Mon"
-		android:layout_toRightOf="@+id/widgetPoster"></TextView>
-	<TextView
-		style="@style/WidgetTextView.Episode"
-		android:id="@+id/widgetNetwork"
-		android:text="20:00 PM"
-		android:layout_alignParentRight="true"></TextView>
-	<TextView
-		style="@style/WidgetTextView.Show"
-		android:textColor="#ffffffff"
-		android:id="@+id/textViewWidgetShow"
-		android:text="Test Text"
-		android:layout_toRightOf="@+id/widgetPoster"
-		android:layout_below="@id/widgetAirtime"></TextView>
-	<TextView
-		style="@style/WidgetTextView.Episode"
-		android:id="@+id/textViewWidgetEpisode"
-		android:text="Test Text"
-		android:layout_toRightOf="@id/textViewWidgetShow"
-		android:layout_alignBottom="@id/textViewWidgetShow"
-		android:paddingLeft="3dp"></TextView>
+        android:id="@+id/widgetAirtime"
+        style="@style/WidgetTextView"
+        android:layout_toRightOf="@+id/widgetPoster"
+        android:text="In X days, Mon" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/widgetNetwork"
+        style="@style/WidgetTextView.Episode"
+        android:layout_alignParentRight="true"
+        android:text="20:00 PM" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/textViewWidgetShow"
+        style="@style/WidgetTextView.Show"
+        android:layout_below="@id/widgetAirtime"
+        android:layout_toRightOf="@+id/widgetPoster"
+        android:text="Test Text"
+        android:textColor="#ffffffff" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/textViewWidgetEpisode"
+        style="@style/WidgetTextView.Episode"
+        android:layout_alignBottom="@id/textViewWidgetShow"
+        android:layout_toRightOf="@id/textViewWidgetShow"
+        android:paddingLeft="3dp"
+        android:text="Test Text" >
+    </TextView>
+
 </RelativeLayout>
