@@ -4,21 +4,21 @@ Change Log (Stable channel)
 Version 2.2 *(2011-10-18)*
 --------------------------------
 
-* Desire HD Nutzer: bitte versuchen Sie Ihr Gerät auf die neueste Firmware zu aktualisieren
-* Filter für Serienliste
-* Weitreichende Verbesserungen am Layout, v.a. auf Tablet/Google TV (large+) Geräten
-* Zwei-Spalten-Ansicht für 'Demnächst' auf large+ Geräten
+* Desire HD Nutzer: bitte versuchen Sie Ihr GerÃ¤t auf die neueste Firmware zu aktualisieren
+* Filter fÃ¼r Serienliste
+* Weitreichende Verbesserungen am Layout, v.a. auf Tablet/Google TV (large+) GerÃ¤ten
+* Zwei-Spalten-Ansicht fÃ¼r 'DemnÃ¤chst' auf large+ GerÃ¤ten
 * Zeige gerade aktualisierte Serie an
 * Neues Nummernformat realisiert von dqdb via GitHub
 * Diverse Fehlerbehebungen und Bugfixes
-* Dank an alle die Fehlerberichte und Vorschläge eingesendet haben oder bei der Übersetzung helfen!
+* Dank an alle die Fehlerberichte und VorschlÃ¤ge eingesendet haben oder bei der Ãœbersetzung helfen!
 
 Version 2.1.2 *(2011-10-01)*
 --------------------------------
 
 * Bessere Fehlerbehandlung in trakt API
-* Neue Serien-Sortierung: Favoriten, dann nach nächster Folge
-* Beim Löschen von Serien werden deren Bilder entfernt
+* Neue Serien-Sortierung: Favoriten, dann nach nÃ¤chster Folge
+* Beim LÃ¶schen von Serien werden deren Bilder entfernt
 * Zeige erste Folge in Staffel-Doppelspaltenansicht automatisch
 * Bugfixes, Verbesserungen
 
@@ -27,12 +27,12 @@ Version 2.1.1 (04.09.2011)
 
 * Bessere Benachrichtigungen wenn delta oder komplette Aktualisierung ('Alle aktualisieren') verwendet wird
 * Verwendung der TVDB id anstatt der IMDb id um Serien auf trakt gesehen zu markieren
-* Setze keinen Touchscreen mehr voraus (für neues Google TV)
-* Benutze immer ein GridLayout für die Serien-Liste.
-* Einstellungen aufgeräumt.
+* Setze keinen Touchscreen mehr voraus (fÃ¼r neues Google TV)
+* Benutze immer ein GridLayout fÃ¼r die Serien-Liste.
+* Einstellungen aufgerÃ¤umt.
 * URLs zeigen zur neuen Website.
 * Verbesserungen am DeltaUpdate.
-* Aktuelle Übersetzungen.
+* Aktuelle Ãœbersetzungen.
 
 Version 2.1 (13.08.2011)
 ------------------------
