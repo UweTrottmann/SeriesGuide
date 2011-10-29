@@ -29,6 +29,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -125,7 +127,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final String FILTER_ID = "filterid";
 
-    private static final int VER_TRAKT_SEC_CHANGES = 138;
+    private static final int VER_TRAKT_SEC_CHANGES = 129;
 
     private Bundle mSavedState;
 
