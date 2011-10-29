@@ -113,7 +113,7 @@
   <string name="pref_hideimagessummary">Skjul SeriesGuide billeder fra dit billedegalleri (genstart nødvendig)</string>
   <string name="pref_more">Mere</string>
   <string name="about">Om SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - udviklet af Uwe Trottmann.\n\nSe venligste CREDITS link nedenunder for at se alle de mennesker og ressourcer der hjælper med at holde dette projekt kørende.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
+  <string name="about_message">http://seriesguide.uwetrottmann.com - udviklet af Uwe Trottmann.\n\nSe venligst CREDITS link nedenunder for at se alle de mennesker og ressourcer der hjælper med at holde dette projekt kørende.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
   <string name="help">Få hjælp</string>
   <string name="help_summary">Gå til hjælpesiden</string>
   <string name="backup">Sikkerhedskopier/Gendan</string>
@@ -121,8 +121,6 @@
   <string name="pref_sharing">Deling</string>
   <string name="clearGetGlueCredentials">Afbryd GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Anvend "del" knapperne for at opsætte GetGlue</string>
-  <string name="pref_number">Talformat</string>
-  <string name="pref_numbersummary">Skift mellem 1x01 og S01E01 som talformat</string>
   <string name="pref_advanced">Avanceret</string>
   <string name="clear_cache">Ryd billedecache</string>
   <string name="clear_cache_summary">Fjern alle billeder fra cache og SD-kort. Opdatering af tv-serier vil downloade dem igen</string>
@@ -169,7 +167,7 @@
   <string name="comment">Check In kommentar</string>
   <string name="checkinsuccess">Check In lykkedes</string>
   <string name="pref_number">Talformat</string>
-  <string name="pref_numbersummary">Skift mellem 1x01 og S01E01 som talformat</string>
+  <string name="pref_numbersummary">Switch between 1x01, S01E01 or s01e01 as number format</string>
   <string name="checkinfailed">Check-in mislykkedes</string>
   <string name="oauthmessage">Autoriserer SeriesGuide med GetGlue</string>
   <string name="addtocalendar">Tilføj til kalender</string>
@@ -198,6 +196,7 @@
   <string name="trakt_error">trakt.tv deling mislykkedes</string>
   <string name="trakt_decryptfail">Adgangskoden kunne ikke dekrypteres</string>
   <string name="trakt_credentials_invalid">Legitimationsoplysningerne er ugyldige</string>
+  <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
   <string name="pref_traktintegrate">Integrer trakt.tv</string>
   <string name="pref_traktintegratesummary">Markeret som set i oversigten bliver delt med traktv.tv</string>
   <string name="donate">Køb mig en drink (Paypal)</string>
@@ -211,9 +210,6 @@
   <string name="trakt_synctotrakt">Synkroniser til trakt.tv</string>
   <string name="trakt_syncunseen">Synkroniser usete episoder</string>
   <string name="powered_by_thetvdb">powered by thetvdb.com</string>
-  <string name="download_stable">Download SeriesGuide</string>
-  <string name="gobreak">Smadr noget</string>
-  <string name="betawarning">ADVARSEL: Dette er en ustabil BETA udgave kun til testbrug. Tryk på downloadknappen nedenunder for at hente den stabile udgave.\n\nFortsæt bare hvis du gerne vil hjælpe med at teste betaudgaven. Vær venlig at indrapportere alle evt nedbrud. Prøv alle funktioner og send feedback til seriesguide@battlelancer.com (se indstilllinger).</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Næste episode</item>

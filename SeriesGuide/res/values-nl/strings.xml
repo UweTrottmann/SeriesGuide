@@ -34,8 +34,8 @@
   <string name="show_isnotalive">Gestopt</string>
   <string name="sort">Sorteren</string>
   <string name="menu_updateart">Ontbrekende afbeeldingen ophalen</string>
-  <string name="updateall_yes">Update (all)</string>
-  <string name="menu_update_delta">Update (modified only)</string>
+  <string name="updateall_yes">Bijwerken (alles)</string>
+  <string name="menu_update_delta">Bijwerken (alleen gewijzigde)</string>
   <string name="context_updateshow">Bijwerken</string>
   <string name="context_showinfo">Serie informatie</string>
   <string name="context_marknext">Deze afl. is bekeken</string>
@@ -59,12 +59,12 @@
   <string name="update_error">Bijwerken mislukt.</string>
   <string name="update_incomplete1">Bijwerken mislukt</string>
   <string name="update_incomplete2">.</string>
-  <string name="update_success">Update successful.</string>
-  <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
+  <string name="update_success">Bijwerken succesvol voltooid.</string>
+  <string name="imagedownload_incomplete">Bijwerken succesvol voltooid. Helaas werden enkele afbeeldingen niet gedownload. Probeer het later nogmaals.</string>
   <string name="update_inbackground">Bijwerken...</string>
   <string name="update_inprogress">Bezig met bijwerken. Wacht tot het voltooid is en probeer daarna nog eens.</string>
   <string name="update_nosdcard">Kan niet bijwerken, geen externe opslag of SD-kaart beschikbaar.</string>
-  <string name="update_rebuildsearch">Building episode search index</string>
+  <string name="update_rebuildsearch">Bezig zoekindex afleveringen op te bouwen</string>
   <string name="show_airs">datum</string>
   <string name="show_network">op</string>
   <string name="show_pleaseupdate">Probeer deze show te updaten voor meer informatie (in het overzicht, lang drukken op de show, \'update\').
@@ -122,8 +122,6 @@ Mocht dit niet lukken, kan er op www.thetvdb.com informatie worden toegevoegd.</
   <string name="pref_sharing">Delen</string>
   <string name="clearGetGlueCredentials">GetGlue verbinding verbreken</string>
   <string name="clearGetGlueCredentialssummary">Gebruik de Delen-knoppen om GetGlue in te stellen</string>
-  <string name="pref_number">Nummering instellen</string>
-  <string name="pref_numbersummary">Wissel tussen 1x01 of S01E01 als nummering</string>
   <string name="pref_advanced">Geavanceerd</string>
   <string name="clear_cache">Wis afbeeldingenbuffer</string>
   <string name="clear_cache_summary">Alle afbeeldingen uit buffergeheugen en SD-kaart verwijderen. Pas met bijwerken van series worden deze herladen.</string>
@@ -170,7 +168,7 @@ Mocht dit niet lukken, kan er op www.thetvdb.com informatie worden toegevoegd.</
   <string name="comment">Aanmelden commentaar</string>
   <string name="checkinsuccess">Aanmelden succesvol</string>
   <string name="pref_number">Nummering instellen</string>
-  <string name="pref_numbersummary">Wissel tussen 1x01 of S01E01 als nummering</string>
+  <string name="pref_numbersummary">Schakelen tussen 1x01, S01E01 of s01e01 als getalnotatie</string>
   <string name="checkinfailed">Aanmelden mislukt</string>
   <string name="oauthmessage">SeriesGuide verifiëren met GetGlue...</string>
   <string name="addtocalendar">Aan agenda toevoegen</string>
@@ -198,6 +196,7 @@ Mocht dit niet lukken, kan er op www.thetvdb.com informatie worden toegevoegd.</
   <string name="trakt_error">delen met trakt.tv mislukt</string>
   <string name="trakt_decryptfail">wachtwoord kon niet worden gedecodeerd</string>
   <string name="trakt_credentials_invalid">informatie niet geldig</string>
+  <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
   <string name="pref_traktintegrate">Integreer trakt.tv</string>
   <string name="pref_traktintegratesummary">Bekeken afleveringen delen met trakt.tv</string>
   <string name="donate">Doneer via PayPal</string>
@@ -211,9 +210,6 @@ Mocht dit niet lukken, kan er op www.thetvdb.com informatie worden toegevoegd.</
   <string name="trakt_synctotrakt">Synchroniseren met trakt.tv</string>
   <string name="trakt_syncunseen">Synchroniseren onbekeken afleveringen</string>
   <string name="powered_by_thetvdb">mede mogelijk gemaakt door thetvdb.com</string>
-  <string name="download_stable">SeriesGuide downloaden</string>
-  <string name="gobreak">Pauzeren</string>
-  <string name="betawarning">WAARSCHUWING: Dit is een onstabiele BETA uitgave, alleen te gebruiken voor tests. Voor de stabiele versie gebruik je de knop hieronder.\n\nWil je helpen met testen, ga je gang. Meldt s.v.p. elk probleem, probeer alles uit en stuur feedback naar seriesguide@battlelancer.com (zie Instellingen).</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Volgende aflevering</item>
@@ -242,6 +238,6 @@ Mocht dit niet lukken, kan er op www.thetvdb.com informatie worden toegevoegd.</
   <string-array name="showfilter_list">
     <item>Alle</item>
     <item>Favorieten</item>
-    <item>Unseen/Upcoming</item>
+    <item>Niet bekeken/Aankomende</item>
   </string-array>
 </resources>

@@ -121,8 +121,6 @@
   <string name="pref_sharing">Deling</string>
   <string name="clearGetGlueCredentials">Koble fra GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Bruk Del knappen for å sette opp GetGlue</string>
-  <string name="pref_number">Nummerering</string>
-  <string name="pref_numbersummary">Velg mellom 1x01 og S01E01 som episode nummerering</string>
   <string name="pref_advanced">Avansert</string>
   <string name="clear_cache">Tøm hurtigbuffere for bilde</string>
   <string name="clear_cache_summary">Fjern alle bilder fra hurtigbuffer og SD-kort. Oppdatering av seriene vil laste dem ned på nytt</string>
@@ -169,7 +167,7 @@
   <string name="comment">Sjekk inn Kommentar</string>
   <string name="checkinsuccess">Sjekk inn vellykket</string>
   <string name="pref_number">Nummerering</string>
-  <string name="pref_numbersummary">Velg mellom 1x01 og S01E01 som episode nummerering</string>
+  <string name="pref_numbersummary">Bytt mellom 1x01, S01E01 eller s01e01 som nummerering</string>
   <string name="checkinfailed">Sjekk inn mislyktes</string>
   <string name="oauthmessage">Autentiserer SeriesGuide med GetGlue...</string>
   <string name="addtocalendar">Legg til i kalender</string>
@@ -197,6 +195,7 @@
   <string name="trakt_error">deling med trakt.tv mislyktes</string>
   <string name="trakt_decryptfail">passordet kunne ikke dekrypteres</string>
   <string name="trakt_credentials_invalid">påloggingsinformasjon ikke gyldig</string>
+  <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
   <string name="pref_traktintegrate">Integrer med trakt.tv</string>
   <string name="pref_traktintegratesummary">Markert som sett i Oversikt blir delt med trakt.tv</string>
   <string name="donate">Spander en øl (Paypal)</string>
@@ -210,9 +209,6 @@
   <string name="trakt_synctotrakt">Synkroniser med trakt.tv</string>
   <string name="trakt_syncunseen">Synkroniser usette episoder</string>
   <string name="powered_by_thetvdb">drevet av thetvdb.com</string>
-  <string name="download_stable">Last ned SeriesGuide</string>
-  <string name="gobreak">Gå å ødelegg noe</string>
-  <string name="betawarning">ADVARSEL: Dette er en ustabil BETA versjon som kun er ment for testing. For å laste ned en stabil brukerversjon klikk på nedlastningsknappen nedenfor.\n\nHvis du ønsker å teste betaversjonen er det bare til å gjøre det. Vennligst rapporter hvert krasj, prøv alt ut og send tilbakemelding til seriesguide@battlelancer.com (se Innstillinger).</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Neste episode</item>

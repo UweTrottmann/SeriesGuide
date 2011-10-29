@@ -121,8 +121,6 @@
   <string name="pref_sharing">Jakaminen</string>
   <string name="clearGetGlueCredentials">Irrottaudu GetGluesta</string>
   <string name="clearGetGlueCredentialssummary">Käytä Jaa-painiketta säätäksesi GetGlueta</string>
-  <string name="pref_number">Lukumuoto</string>
-  <string name="pref_numbersummary">Vaihda lukumuotojen 1x01 ja S01E01 välillä</string>
   <string name="pref_advanced">Lisäasetukset</string>
   <string name="clear_cache">Tyhjennä kuvamuistit</string>
   <string name="clear_cache_summary">Poista kaikki kuvat välimuistista ja SD-kortilta. Ohjelmien päivittäminen lataa ne uudelleen.</string>
@@ -169,7 +167,7 @@
   <string name="comment">Kirjauskommentti</string>
   <string name="checkinsuccess">Kirjattu onnistuneesti</string>
   <string name="pref_number">Lukumuoto</string>
-  <string name="pref_numbersummary">Vaihda lukumuotojen 1x01 ja S01E01 välillä</string>
+  <string name="pref_numbersummary">Switch between 1x01, S01E01 or s01e01 as number format</string>
   <string name="checkinfailed">Kirjautuminen epäonnistui</string>
   <string name="oauthmessage">Vahvistetaan SeriesGuide GetGluen kanssa...</string>
   <string name="addtocalendar">Lisää kalenteriin</string>
@@ -199,6 +197,7 @@
   <string name="trakt_error">trakt.tv:ssä jakaminen epäonnistui</string>
   <string name="trakt_decryptfail">Salasanaa ei voitu purkaa</string>
   <string name="trakt_credentials_invalid">valtuustiedot eivät kelpaa</string>
+  <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
   <string name="pref_traktintegrate">Integroi trakt.tv</string>
   <string name="pref_traktintegratesummary">Yleiskatsauksessa katsotuksi merkitseminen jaetaan trakt.tv:ssä</string>
   <string name="donate">Osta minulle drinkki (Paypal)</string>
@@ -212,9 +211,6 @@
   <string name="trakt_synctotrakt">Synkronoi trakt.tv:en</string>
   <string name="trakt_syncunseen">Synkronoi ennennäkemättömät jaksot</string>
   <string name="powered_by_thetvdb">Pohjautuu thetvdb.com:iin</string>
-  <string name="download_stable">Lataa SeriesGuide</string>
-  <string name="gobreak">Mene rikkomaan paikat</string>
-  <string name="betawarning">VAROITUS: tämä on epävakaa BETA-julkaisu vain testaustarkoituksiin. Ladataksesi vakaan loppukäyttäjille tarkoitetun version klikkaa alla olevaa latauspainiketta.\n\nJos haluat auttaa betan testauksessa, niin siitä vaan. Ole ystävällinen ja raportoi kaikista kaatumisista, kokeile kaikkea ja lähetä palautetta (englanniksi) osoitteeseen seriesguide@battlelancer.com (katso asetukset).</string>
   <string-array name="shsorting">
     <item>A - Ö</item>
     <item>Seuraava jakso</item>
