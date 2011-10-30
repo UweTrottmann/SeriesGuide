@@ -44,14 +44,18 @@ public class SimpleCrypto {
         KeyGenerator kgen = KeyGenerator.getInstance("AES");
         SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
+                .getApplicationContext());
         String seed = prefs.getString(KEY_SECURE, null);
+        byte[] seedBytes;
         if (seed == null) {
-            seed = toHex(sr.generateSeed(128));
+            seedBytes = sr.generateSeed(16);
+            seed = toHex(seedBytes);
             prefs.edit().putString(KEY_SECURE, seed).commit();
         } else {
-            sr.setSeed(toByte(seed));
+            seedBytes = toByte(seed);
         }
+        sr.setSeed(seedBytes);
 
         kgen.init(128, sr); // 192 and 256 bits may not be available
         SecretKey skey = kgen.generateKey();
