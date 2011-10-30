@@ -851,7 +851,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             if (currentVersion > lastVersion) {
                 switch (currentVersion) {
                     case VER_TRAKT_SEC_CHANGES:
-                        prefs.edit().putString(SeriesGuidePreferences.PREF_TRAKTPWD, "").commit();
+                        prefs.edit().putString(SeriesGuidePreferences.PREF_TRAKTPWD, null).commit();
+                        prefs.edit().putString(SeriesGuidePreferences.KEY_SECURE, null).commit();
                 }
 
                 // BETA warning dialog switch
