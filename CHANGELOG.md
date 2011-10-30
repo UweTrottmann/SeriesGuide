@@ -1,7 +1,12 @@
 Change Log
 ==========
 
-Version 2.2.2beta *(2011-10-29)*
+Version 2.2.3beta *(2011-10-30)*
+--------------------------------
+
+* Clear old trakt credentials correctly
+
+Version 2.2.2beta *(2011-10-30)*
 --------------------------------
 
 * Fix layouts on small tablet (large) devices
