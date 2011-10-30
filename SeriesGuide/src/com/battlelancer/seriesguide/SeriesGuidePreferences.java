@@ -77,6 +77,8 @@ public class SeriesGuidePreferences extends PreferenceActivity {
 
     public static final String KEY_SHOWFILTER = "com.battlelancer.seriesguide.showfilter";
 
+    public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
+
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
     }

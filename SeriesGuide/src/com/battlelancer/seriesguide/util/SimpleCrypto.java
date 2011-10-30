@@ -1,6 +1,8 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.SeriesGuidePreferences;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -25,8 +27,6 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class SimpleCrypto {
 
-    private static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
-
     public static String encrypt(String cleartext, Context context) throws Exception {
         byte[] rawKey = getRawKey(context);
         byte[] result = encrypt(rawKey, cleartext.getBytes());
@@ -46,12 +46,12 @@ public class SimpleCrypto {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
                 .getApplicationContext());
-        String seed = prefs.getString(KEY_SECURE, null);
+        String seed = prefs.getString(SeriesGuidePreferences.KEY_SECURE, null);
         byte[] seedBytes;
         if (seed == null) {
             seedBytes = sr.generateSeed(16);
             seed = toHex(seedBytes);
-            prefs.edit().putString(KEY_SECURE, seed).commit();
+            prefs.edit().putString(SeriesGuidePreferences.KEY_SECURE, seed).commit();
         } else {
             seedBytes = toByte(seed);
         }
