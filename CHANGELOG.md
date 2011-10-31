@@ -6,13 +6,14 @@ title: Changelog
 Change Log (Stable channel)
 ===========================
 
-Version 2.2.1 *(in development)*
+Version 2.2.1 *(2011-10-31)*
 --------------------------------
 
-* Fix layouts on small tablet (large) devices
+* Fix layouts on small tablet (large screen) devices
 * Validate trakt.tv credentials
 * Secure the trakt.tv password even better (you will have to reenter it again, sorry)
 * Don't rebuild the search table if nothing was updated
+* Latest translations from crowdin. Now with Hungarian thanks to devilinside and uw11!
 
 Version 2.2 *(2011-10-18)*
 --------------------------------
