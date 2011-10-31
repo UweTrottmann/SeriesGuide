@@ -8,6 +8,7 @@ Version 2.2.1 *(in development)*
 * Validierung von trakt.tv Zugangsdaten
 * Noch besserer Schutz des trakt.tv Passwortes (muss daher leider erneut eingegeben werden)
 * Suchindex wird nur bei Änderungen neu erstellt
+* Aktuelle Übersetzungen. Neu in Ungarisch dank devilinside und uw11!
 
 Version 2.2 *(2011-10-18)*
 --------------------------------
