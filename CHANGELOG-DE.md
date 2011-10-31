@@ -1,6 +1,14 @@
 Change Log (Stable channel)
 ===========================
 
+Version 2.2.1 *(in development)*
+--------------------------------
+
+* Layout-Fixes für kleine Tablets (large screens)
+* Validierung von trakt.tv Zugangsdaten
+* Noch besserer Schutz des trakt.tv Passwortes (muss daher leider erneut eingegeben werden)
+* Suchindex wird nur bei Änderungen neu erstellt
+
 Version 2.2 *(2011-10-18)*
 --------------------------------
 
