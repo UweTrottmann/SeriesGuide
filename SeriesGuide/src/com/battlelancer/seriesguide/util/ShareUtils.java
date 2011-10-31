@@ -478,6 +478,10 @@ public class ShareUtils {
 
                         @Override
                         protected Response doInBackground(String... params) {
+                            if (username.length() == 0 || passwordHash.length() == 0) {
+                                return null;
+                            }
+
                             final ServiceManager manager = new ServiceManager();
                             manager.setApiKey(Constants.TRAKT_API_KEY);
                             manager.setAuthentication(username, passwordHash);
