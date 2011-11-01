@@ -91,13 +91,13 @@ public class AnalyticsUtils {
         mTracker = GoogleAnalyticsTracker.getInstance();
 
         // Unfortunately this needs to be synchronous.
-        mTracker.start(UACODE, 300, mApplicationContext);
+        mTracker.startNewSession(UACODE, 300, mApplicationContext);
+        mTracker.setAnonymizeIp(true);
 
         Log.d(TAG, "Initializing Analytics");
 
         // Since visitor CV's should only be declared the first time an app
-        // runs, check if
-        // it's run before. Add as necessary.
+        // runs, check if it's run before. Add as necessary.
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(mApplicationContext);
         final boolean firstRun = prefs.getBoolean(FIRST_RUN_KEY, true);

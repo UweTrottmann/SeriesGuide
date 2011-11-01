@@ -21,7 +21,8 @@
             android:id="@+id/ProgressBarShowListDet"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="fill_parent"
-            android:layout_height="10dp" />
+            android:layout_height="10dp"
+            android:progressDrawable="@drawable/progress_horizontal_holo_dark" />
 
         <TextView
             android:id="@+id/textViewUpdateStatus"
