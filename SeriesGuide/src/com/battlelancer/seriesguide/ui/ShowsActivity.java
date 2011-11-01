@@ -849,8 +849,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
                     PackageManager.GET_META_DATA).versionCode;
             if (currentVersion > lastVersion) {
-                switch (currentVersion) {
-                    case VER_TRAKT_SEC_CHANGES:
+                if (lastVersion < VER_TRAKT_SEC_CHANGES) {
                         prefs.edit().putString(SeriesGuidePreferences.PREF_TRAKTPWD, null).commit();
                         prefs.edit().putString(SeriesGuidePreferences.KEY_SECURE, null).commit();
                 }
