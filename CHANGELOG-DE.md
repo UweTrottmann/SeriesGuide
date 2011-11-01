@@ -1,7 +1,12 @@
 Change Log (Stable channel)
 ===========================
 
-Version 2.2.1 *(in development)*
+Version 2.2.2 *(2011-11-01)*
+--------------------------------
+
+* Behebe Crash bei Hinzufügen von Serien auf einzelnen HTC Geräten (Desire HD, Mytouch 4G, ...)
+
+Version 2.2.1 *(2011-10-31)*
 --------------------------------
 
 * Layout-Fixes für kleine Tablets (large screens)

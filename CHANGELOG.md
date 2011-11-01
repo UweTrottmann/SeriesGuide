@@ -1,7 +1,12 @@
 Change Log (Stable channel)
 ===========================
 
-Version 2.2.1 *(in development)*
+Version 2.2.2 *(2011-11-01)*
+--------------------------------
+
+* Fix crash when adding shows on certain HTC devices (Desire HD, Mytouch 4G, ...)
+
+Version 2.2.1 *(2011-10-31)*
 --------------------------------
 
 * Fix layouts on small tablet (large screen) devices
