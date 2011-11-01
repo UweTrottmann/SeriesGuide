@@ -7,6 +7,7 @@
 	<classpathentry kind="lib" path="lib/signpost-commonshttp4-1.2.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/signpost-core-1.2.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/trakt-java-1.2.1-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="lib/actionbarsherlock-plugin-preference-3.4.0.jar"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
