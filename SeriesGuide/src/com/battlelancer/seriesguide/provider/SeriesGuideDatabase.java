@@ -41,7 +41,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_PERSHOWUPDATEDATE = 22;
 
-    public static final int DATABASE_VERSION = DBVER_AIRTIMECOLUMN;
+    public static final int DATABASE_VERSION = DBVER_PERSHOWUPDATEDATE;
 
     public interface Tables {
         String SHOWS = "series";
