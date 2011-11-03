@@ -23,8 +23,8 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.support.v4.app.SherlockPreferenceActivity;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +33,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SeriesGuidePreferences extends PreferenceActivity {
+public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     private static final String PAYPAL_DONATE_URL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VVBLMQBSBU74L";
 
