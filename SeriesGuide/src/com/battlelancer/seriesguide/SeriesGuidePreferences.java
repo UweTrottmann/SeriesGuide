@@ -79,6 +79,8 @@ public class SeriesGuidePreferences extends PreferenceActivity {
 
     public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
 
+    public static final String KEY_UPDATEATLEASTEVERY = "com.battlelancer.seriesguide.updateatleastevery";
+
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
     }

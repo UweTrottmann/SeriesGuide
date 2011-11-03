@@ -102,6 +102,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             }
             final long previousUpdateTime = Long.valueOf(prefs.getString(
                     SeriesGuidePreferences.KEY_LASTUPDATETIME, "0"));
+            final int updateAtLeastEvery = prefs.getInt(
+                    SeriesGuidePreferences.KEY_UPDATEATLEASTEVERY, 7);
 
             // new update task
             if (mIsFullUpdate || isFullUpdateNeeded(currentServerTime, previousUpdateTime)) {
@@ -117,7 +119,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 shows.close();
             } else {
                 try {
-                    mShows = TheTVDB.deltaUpdateShows(previousUpdateTime, mShowsActivity);
+                    mShows = TheTVDB.deltaUpdateShows(previousUpdateTime, updateAtLeastEvery,
+                            mShowsActivity);
                 } catch (SAXException e) {
                     return UPDATE_SAXERROR;
                 }
