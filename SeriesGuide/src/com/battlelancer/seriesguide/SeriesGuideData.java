@@ -376,6 +376,16 @@ public class SeriesGuideData {
      */
     public static String getNextEpisodeString(SharedPreferences prefs, String season,
             String episode, String title) {
+        season = getEpisodeNumber(prefs, season, episode);
+        season += " " + title;
+        return season;
+    }
+
+    /**
+     * Returns the episode number formatted according to the users preference
+     * (e.g. '1x01', 'S01E01', ...).
+     */
+    public static String getEpisodeNumber(SharedPreferences prefs, String season, String episode) {
         String format = prefs.getString(SeriesGuidePreferences.KEY_NUMBERFORMAT,
                 SeriesGuidePreferences.NUMBERFORMAT_DEFAULT);
         if (format.equals(SeriesGuidePreferences.NUMBERFORMAT_DEFAULT)) {
@@ -399,7 +409,6 @@ public class SeriesGuideData {
         }
 
         season += episode;
-        season += " " + title;
         return season;
     }
 
