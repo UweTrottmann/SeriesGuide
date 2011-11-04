@@ -106,7 +106,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                     SeriesGuidePreferences.KEY_UPDATEATLEASTEVERY, 7);
 
             // new update task
-            if (mIsFullUpdate || isFullUpdateNeeded(currentServerTime, previousUpdateTime)) {
+            if (mIsFullUpdate) {
                 final Cursor shows = resolver.query(Shows.CONTENT_URI, new String[] {
                     Shows._ID
                 }, null, null, null);
@@ -186,16 +186,6 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         return resultCode;
-    }
-
-    private boolean isFullUpdateNeeded(long currentServerTime, long previousUpdateTime) {
-        // check if more than 28 days have passed
-        // we compare with local time to avoid an additional network call
-        if (currentServerTime - previousUpdateTime > 3600 * 24 * 28) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     @Override
