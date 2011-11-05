@@ -34,8 +34,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
         setContentView(R.layout.episode_pager);
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.episode));
-        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
 
         List<Episode> episodes = new ArrayList<Episode>();
         String episodeId = getIntent().getExtras().getString(Episodes._ID);
