@@ -169,10 +169,9 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             updateCount.incrementAndGet();
         }
 
-        publishProgress(mShows.length, mShows.length + 1);
-
         // renew FTS3 table (only if we updated shows)
         if (mShows.length != 0) {
+            publishProgress(mShows.length, mShows.length + 1);
             TheTVDB.onRenewFTSTable(mShowsActivity);
         }
 
