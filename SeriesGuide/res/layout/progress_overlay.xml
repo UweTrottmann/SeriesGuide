@@ -21,6 +21,7 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:indeterminateDrawable="@drawable/progress_indeterminate_horizontal_holo"
             android:progressDrawable="@drawable/progress_horizontal_holo_dark" />
 
         <TextView
