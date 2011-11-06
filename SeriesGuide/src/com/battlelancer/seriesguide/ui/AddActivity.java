@@ -1,7 +1,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.thetvdbapi.SearchResult;
 import com.battlelancer.thetvdbapi.TheTVDB;
