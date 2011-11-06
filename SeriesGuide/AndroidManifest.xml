@@ -37,14 +37,6 @@
                 android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
         </activity>
         <activity
-            android:label="@string/add_show"
-            android:name="com.battlelancer.seriesguide.AddShow"
-            android:windowSoftInputMode="stateVisible" >
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
-        </activity>
-        <activity
             android:label="@string/preferences"
             android:name="com.battlelancer.seriesguide.SeriesGuidePreferences" >
         </activity>
@@ -167,6 +159,7 @@
 
         <receiver android:name=".service.OnAlarmReceiver" >
         </receiver>
+        <activity android:name=".ui.AddActivity" android:label="@string/add_show"></activity>
     </application>
 
     <uses-sdk

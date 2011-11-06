@@ -187,7 +187,7 @@ public class TheTVDB {
         });
         item.getChild("id").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setId(Integer.valueOf(body));
+                currentShow.setId(body);
             }
         });
         item.getChild("SeriesName").setEndTextElementListener(new EndTextElementListener() {
