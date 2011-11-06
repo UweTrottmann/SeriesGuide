@@ -261,7 +261,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
     }
 
     @Override
-    public boolean onContextItemSelected(android.view.MenuItem item) {
+    public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
@@ -356,26 +356,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
     }
 
     private void updatePreferences() {
-        String[] epsortingData = getResources().getStringArray(R.array.epsortingData);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity()
-                .getApplicationContext());
-        String currentPref = prefs.getString("episodeSorting", epsortingData[1]);
-
-        if (currentPref.equals(epsortingData[0])) {
-            sorting = SeriesGuideData.EpisodeSorting.LATEST_FIRST;
-        } else if (currentPref.equals(epsortingData[1])) {
-            sorting = SeriesGuideData.EpisodeSorting.OLDEST_FIRST;
-        } else if (currentPref.equals(epsortingData[2])) {
-            sorting = SeriesGuideData.EpisodeSorting.UNWATCHED_FIRST;
-        } else if (currentPref.equals(epsortingData[3])) {
-            sorting = SeriesGuideData.EpisodeSorting.ALPHABETICAL_ASC;
-        } else if (currentPref.equals(epsortingData[4])) {
-            sorting = SeriesGuideData.EpisodeSorting.ALPHABETICAL_DESC;
-        } else if (currentPref.equals(epsortingData[5])) {
-            sorting = SeriesGuideData.EpisodeSorting.DVDLATEST_FIRST;
-        } else {
-            sorting = SeriesGuideData.EpisodeSorting.DVDOLDEST_FIRST;
-        }
+        sorting = SeriesGuideData.getEpisodeSorting(getActivity());
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {

@@ -284,6 +284,7 @@ public class SeriesDatabase {
         values.put(Shows.CONTENTRATING, show.getContentRating());
         values.put(Shows.POSTER, show.getPoster());
         values.put(Shows.IMDBID, show.getImdbId());
+        values.put(Shows.LASTUPDATED, new Date().getTime());
         return values;
     }
 

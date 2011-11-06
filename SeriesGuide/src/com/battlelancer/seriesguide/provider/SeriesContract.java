@@ -54,6 +54,11 @@ public class SeriesContract {
          * Added in db version 21 to store the airtime in pure text.
          */
         String AIRTIME = "series_airtime";
+        
+        /**
+         * Added in db version 22 to store the last time a show was updated.
+         */
+        String LASTUPDATED = "series_lastupdate";
     }
 
     interface SeasonsColumns {

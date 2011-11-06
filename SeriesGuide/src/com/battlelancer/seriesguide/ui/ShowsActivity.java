@@ -1,7 +1,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.AddShow;
 import com.battlelancer.seriesguide.SeriesDatabase;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.SeriesGuideData;
@@ -539,7 +538,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 startActivity(new Intent(this, UpcomingRecentActivity.class));
                 return true;
             case R.id.menu_new_show:
-                startActivity(new Intent(this, AddShow.class));
+                startActivity(new Intent(this, AddActivity.class));
                 return true;
             case R.id.menu_showsortby:
                 fireTrackerEvent("Sort shows");
@@ -849,8 +848,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
                     PackageManager.GET_META_DATA).versionCode;
             if (currentVersion > lastVersion) {
-                switch (currentVersion) {
-                    case VER_TRAKT_SEC_CHANGES:
+                if (lastVersion < VER_TRAKT_SEC_CHANGES) {
                         prefs.edit().putString(SeriesGuidePreferences.PREF_TRAKTPWD, null).commit();
                         prefs.edit().putString(SeriesGuidePreferences.KEY_SECURE, null).commit();
                 }

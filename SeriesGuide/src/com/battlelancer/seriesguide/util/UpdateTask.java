@@ -102,9 +102,11 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             }
             final long previousUpdateTime = Long.valueOf(prefs.getString(
                     SeriesGuidePreferences.KEY_LASTUPDATETIME, "0"));
+            final int updateAtLeastEvery = prefs.getInt(
+                    SeriesGuidePreferences.KEY_UPDATEATLEASTEVERY, 7);
 
             // new update task
-            if (mIsFullUpdate || isFullUpdateNeeded(currentServerTime, previousUpdateTime)) {
+            if (mIsFullUpdate) {
                 final Cursor shows = resolver.query(Shows.CONTENT_URI, new String[] {
                     Shows._ID
                 }, null, null, null);
@@ -117,7 +119,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 shows.close();
             } else {
                 try {
-                    mShows = TheTVDB.deltaUpdateShows(previousUpdateTime, mShowsActivity);
+                    mShows = TheTVDB.deltaUpdateShows(previousUpdateTime, updateAtLeastEvery,
+                            mShowsActivity);
                 } catch (SAXException e) {
                     return UPDATE_SAXERROR;
                 }
@@ -166,10 +169,9 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             updateCount.incrementAndGet();
         }
 
-        publishProgress(mShows.length, mShows.length + 1);
-
         // renew FTS3 table (only if we updated shows)
         if (mShows.length != 0) {
+            publishProgress(mShows.length, mShows.length + 1);
             TheTVDB.onRenewFTSTable(mShowsActivity);
         }
 
@@ -183,16 +185,6 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         return resultCode;
-    }
-
-    private boolean isFullUpdateNeeded(long currentServerTime, long previousUpdateTime) {
-        // check if more than 28 days have passed
-        // we compare with local time to avoid an additional network call
-        if (currentServerTime - previousUpdateTime > 3600 * 24 * 28) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     @Override

@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="auto"
     package="com.battlelancer.seriesguide.beta"
-    android:versionCode="139"
-    android:versionName="2.2.3beta" >
+    android:versionCode="140"
+    android:versionName="2.3beta" >
 
     <uses-permission android:name="android.permission.VIBRATE" >
     </uses-permission>
@@ -32,14 +32,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
-        </activity>
-        <activity
-            android:label="@string/add_show"
-            android:name="com.battlelancer.seriesguide.AddShow"
-            android:windowSoftInputMode="stateVisible" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
@@ -161,6 +153,13 @@
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
         </activity>
+
+        <service android:name=".service.AlarmManagerService" >
+        </service>
+
+        <receiver android:name=".service.OnAlarmReceiver" >
+        </receiver>
+        <activity android:name=".ui.AddActivity" android:label="@string/add_show"></activity>
     </application>
 
     <uses-sdk

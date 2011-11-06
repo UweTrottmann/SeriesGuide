@@ -53,6 +53,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -186,7 +187,7 @@ public class TheTVDB {
         });
         item.getChild("id").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setId(Integer.valueOf(body));
+                currentShow.setId(body);
             }
         });
         item.getChild("SeriesName").setEndTextElementListener(new EndTextElementListener() {
@@ -447,60 +448,78 @@ public class TheTVDB {
 
     /**
      * Return list of show ids which have been updated since
-     * {@code previousUpdateTime}. Time is UNIX time.
+     * {@code previousUpdateTime} by asking TheTVDB. Time is UNIX/epoch time.
+     * However any show hitting a x-day limit will be returned, too.
      * 
      * @param previousUpdateTime
+     * @param updateAtLeastEvery
      * @param context
      * @return
      * @throws SAXException
      */
-    public static String[] deltaUpdateShows(long previousUpdateTime, Context context)
-            throws SAXException {
+    public static String[] deltaUpdateShows(long previousUpdateTime, int updateAtLeastEvery,
+            Context context) throws SAXException {
+        final HashSet<Integer> existingShowIds = new HashSet<Integer>();
+        final HashSet<String> updatableShowIds = new HashSet<String>();
+
         // get existing show ids
         final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI, new String[] {
-            Shows._ID
+                Shows._ID, Shows.LASTUPDATED
         }, null, null, null);
-        final HashSet<Integer> existingShowIds = new HashSet<Integer>();
+
+        long currentTime = new Date().getTime();
         while (shows.moveToNext()) {
-            existingShowIds.add(shows.getInt(0));
+            long lastUpdatedTime = shows.getLong(1);
+            if (currentTime - lastUpdatedTime > DateUtils.DAY_IN_MILLIS * updateAtLeastEvery) {
+                // add shows that are due for updating
+                updatableShowIds.add(shows.getString(0));
+            } else {
+                // add remaining ones to check-list for tvdb update function
+                existingShowIds.add(shows.getInt(0));
+            }
         }
+
         shows.close();
 
-        // get existing episode ids
-        final Cursor episodes = context.getContentResolver().query(Episodes.CONTENT_URI,
-                new String[] {
-                        Episodes._ID, Shows.REF_SHOW_ID
-                }, null, null, null);
-        final HashMap<String, String> episodeMap = new HashMap<String, String>();
-        while (episodes.moveToNext()) {
-            episodeMap.put(episodes.getString(0), episodes.getString(1));
-        }
-        episodes.close();
+        if (previousUpdateTime != 0) {
+            // get existing episode ids
+            final Cursor episodes = context.getContentResolver().query(Episodes.CONTENT_URI,
+                    new String[] {
+                            Episodes._ID, Shows.REF_SHOW_ID
+                    }, null, null, null);
 
-        // parse updatable show ids
-        final HashSet<String> updatableShowIds = new HashSet<String>();
-        final RootElement root = new RootElement("Items");
-        root.getChild("Series").setEndTextElementListener(new EndTextElementListener() {
-            @Override
-            public void end(String body) {
-                if (existingShowIds.contains(body)) {
-                    updatableShowIds.add(body);
-                }
+            final HashMap<String, String> episodeMap = new HashMap<String, String>();
+            while (episodes.moveToNext()) {
+                episodeMap.put(episodes.getString(0), episodes.getString(1));
             }
-        });
-        root.getChild("Episode").setEndTextElementListener(new EndTextElementListener() {
-            @Override
-            public void end(String body) {
-                String showId = episodeMap.get(body);
-                if (showId != null) {
-                    updatableShowIds.add(showId);
+
+            episodes.close();
+
+            // parse updatable show ids
+            final RootElement root = new RootElement("Items");
+            root.getChild("Series").setEndTextElementListener(new EndTextElementListener() {
+                @Override
+                public void end(String body) {
+                    if (existingShowIds.contains(body)) {
+                        updatableShowIds.add(body);
+                    }
                 }
-            }
-        });
-        final String url = xmlMirror + "Updates.php?type=all&time=" + previousUpdateTime;
-        HttpUriRequest request = new HttpGet(url);
-        HttpClient httpClient = getHttpClient(context);
-        execute(request, httpClient, root.getContentHandler(), false);
+            });
+            root.getChild("Episode").setEndTextElementListener(new EndTextElementListener() {
+                @Override
+                public void end(String body) {
+                    String showId = episodeMap.get(body);
+                    if (showId != null) {
+                        updatableShowIds.add(showId);
+                    }
+                }
+            });
+
+            final String url = xmlMirror + "Updates.php?type=all&time=" + previousUpdateTime;
+            HttpUriRequest request = new HttpGet(url);
+            HttpClient httpClient = getHttpClient(context);
+            execute(request, httpClient, root.getContentHandler(), false);
+        }
 
         return updatableShowIds.toArray(new String[updatableShowIds.size()]);
     }
