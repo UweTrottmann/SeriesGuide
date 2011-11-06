@@ -5,9 +5,6 @@
     android:versionCode="140"
     android:versionName="2.3beta" >
 
-    <uses-permission android:name="android.permission.VIBRATE" >
-    </uses-permission>
-
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" >
