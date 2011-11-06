@@ -66,7 +66,7 @@ public class SeriesGuidePreferences extends PreferenceActivity {
     public static final String NUMBERFORMAT_ENGLISH = "english";
 
     public static final String NUMBERFORMAT_ENGLISHLOWER = "englishlower";
-    
+
     public static final String KEY_OFFSET = "com.battlelancer.seriesguide.timeoffset";
 
     private static final String TAG = "SeriesGuidePreferences";

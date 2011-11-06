@@ -154,11 +154,6 @@
                 android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
         </activity>
 
-        <service android:name=".service.AlarmManagerService" >
-        </service>
-
-        <receiver android:name=".service.OnAlarmReceiver" >
-        </receiver>
         <activity android:name=".ui.AddActivity" android:label="@string/add_show"></activity>
     </application>
 

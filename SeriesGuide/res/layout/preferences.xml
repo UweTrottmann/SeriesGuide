@@ -45,11 +45,6 @@
 
     <PreferenceCategory android:title="@string/pref_content" >
 
-		<!-- <Preference
-            android:key="com.battlelancer.seriesguide.notifications"
-            android:summary="@string/pref_notificationssummary"
-            android:title="@string/pref_notifications" /> -->
-
         <Preference
             android:key="backup"
             android:summary="@string/backup_summary"
