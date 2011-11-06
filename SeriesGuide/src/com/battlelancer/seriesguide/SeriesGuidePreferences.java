@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide;
 
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.service.AlarmManagerService;
 import com.battlelancer.seriesguide.ui.TraktSyncActivity;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
@@ -66,7 +65,7 @@ public class SeriesGuidePreferences extends PreferenceActivity {
     public static final String NUMBERFORMAT_ENGLISH = "english";
 
     public static final String NUMBERFORMAT_ENGLISHLOWER = "englishlower";
-    
+
     public static final String KEY_OFFSET = "com.battlelancer.seriesguide.timeoffset";
 
     private static final String TAG = "SeriesGuidePreferences";
@@ -291,20 +290,6 @@ public class SeriesGuidePreferences extends PreferenceActivity {
                     public boolean onPreferenceClick(Preference preference) {
                         startActivity(new Intent(SeriesGuidePreferences.this,
                                 TraktSyncActivity.class));
-                        return true;
-                    }
-                });
-
-        // experimental: start alarm service to set sample alarms when clicking
-        // this pref
-        findPreference("com.battlelancer.seriesguide.notifications").setOnPreferenceClickListener(
-                new OnPreferenceClickListener() {
-
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        Intent i = new Intent(SeriesGuidePreferences.this,
-                                AlarmManagerService.class);
-                        startService(i);
                         return true;
                     }
                 });

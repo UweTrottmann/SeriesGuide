@@ -5,9 +5,6 @@
     android:versionCode="131"
     android:versionName="2.2dev" >
 
-    <uses-permission android:name="android.permission.VIBRATE" >
-    </uses-permission>
-
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" >
@@ -154,11 +151,6 @@
                 android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
         </activity>
 
-        <service android:name=".service.AlarmManagerService" >
-        </service>
-
-        <receiver android:name=".service.OnAlarmReceiver" >
-        </receiver>
         <activity android:name=".ui.AddActivity" android:label="@string/add_show"></activity>
     </application>
 
