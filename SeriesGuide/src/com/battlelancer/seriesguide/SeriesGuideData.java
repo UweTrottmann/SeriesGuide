@@ -431,4 +431,36 @@ public class SeriesGuideData {
         return tvdbstring;
     }
 
+    /**
+     * Get the currently set episode sorting from settings.
+     * 
+     * @param context
+     * @return a EpisodeSorting enum set to the current sorting
+     */
+    public static EpisodeSorting getEpisodeSorting(Context context) {
+        String[] epsortingData = context.getResources().getStringArray(R.array.epsortingData);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
+                .getApplicationContext());
+        String currentPref = prefs.getString("episodeSorting", epsortingData[1]);
+
+        EpisodeSorting sorting;
+        if (currentPref.equals(epsortingData[0])) {
+            sorting = EpisodeSorting.LATEST_FIRST;
+        } else if (currentPref.equals(epsortingData[1])) {
+            sorting = EpisodeSorting.OLDEST_FIRST;
+        } else if (currentPref.equals(epsortingData[2])) {
+            sorting = EpisodeSorting.UNWATCHED_FIRST;
+        } else if (currentPref.equals(epsortingData[3])) {
+            sorting = EpisodeSorting.ALPHABETICAL_ASC;
+        } else if (currentPref.equals(epsortingData[4])) {
+            sorting = EpisodeSorting.ALPHABETICAL_DESC;
+        } else if (currentPref.equals(epsortingData[5])) {
+            sorting = EpisodeSorting.DVDLATEST_FIRST;
+        } else {
+            sorting = EpisodeSorting.DVDOLDEST_FIRST;
+        }
+
+        return sorting;
+    }
+
 }

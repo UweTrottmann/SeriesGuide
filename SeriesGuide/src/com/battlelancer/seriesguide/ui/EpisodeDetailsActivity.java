@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideData;
+import com.battlelancer.seriesguide.SeriesGuideData.EpisodeSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.viewpagerindicator.TitlePageIndicator;
@@ -49,11 +50,14 @@ public class EpisodeDetailsActivity extends BaseActivity {
         if (episode != null && episode.moveToFirst()) {
             String seasonId = episode.getString(0);
 
+            // get episode sorting
+            EpisodeSorting sorting = SeriesGuideData.getEpisodeSorting(this);
+
             // lookup episodes of season
             Cursor episodeCursor = getContentResolver().query(
                     Episodes.buildEpisodesOfSeasonUri(seasonId), new String[] {
                             Episodes._ID, Episodes.NUMBER, Episodes.SEASON
-                    }, null, null, null);
+                    }, null, null, sorting.query());
 
             if (episodeCursor != null) {
                 int i = 0;
