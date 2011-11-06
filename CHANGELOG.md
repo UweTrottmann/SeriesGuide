@@ -1,6 +1,16 @@
 Change Log
 ==========
 
+Version 2.3beta *(2011-11-06)*
+--------------------------------
+
+* You might need to clear your trakt.tv credentials if you encounter problems
+* Revamped adding of shows (better trakt.tv integration, recommended and library only for logged in trakt users)
+* Episode details shown in swipeable pager (only in non-dual-pane layout, yes, the background is broken)
+* Shows will get updated by the incremental updater after at least every 7 days
+* Fix crash when adding shows on certain HTC devices (Desire HD, Mytouch 4G, ...)
+* Layout/Design fixes
+
 Version 2.2.3beta *(2011-10-30)*
 --------------------------------
 
