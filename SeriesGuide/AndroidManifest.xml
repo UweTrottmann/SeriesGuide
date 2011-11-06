@@ -154,7 +154,7 @@
                 android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
         </activity>
 
-        <activity android:name=".ui.AddActivity" android:label="@string/add_show"></activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.AddActivity" android:label="@string/add_show"></activity>
     </application>
 
     <uses-sdk
