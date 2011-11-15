@@ -279,30 +279,40 @@ public class SeriesGuideData {
     public static final SimpleDateFormat thetvdbTimeFormatAMPM = new SimpleDateFormat("h:mm aa",
             Locale.US);
 
+    public static final SimpleDateFormat thetvdbTimeFormatAMPMalt = new SimpleDateFormat("h:mmaa",
+            Locale.US);
+
     public static final SimpleDateFormat thetvdbTimeFormatNormal = new SimpleDateFormat("H:mm",
             Locale.US);
 
     public static long parseTimeToMilliseconds(String tvdbTimeString) {
-        Date time;
+        Date time = null;
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
+
+        // try parsing with three different formats, most of the time the first
+        // should match
         try {
             time = thetvdbTimeFormatAMPM.parse(tvdbTimeString);
+        } catch (ParseException e) {
+            try {
+                time = thetvdbTimeFormatAMPMalt.parse(tvdbTimeString);
+            } catch (ParseException e1) {
+                try {
+                    time = thetvdbTimeFormatNormal.parse(tvdbTimeString);
+                } catch (ParseException e2) {
+                    // string may be empty or wrongly formatted
+                }
+            }
+        }
+
+        if (time != null) {
             cal.set(Calendar.HOUR_OF_DAY, time.getHours());
             cal.set(Calendar.MINUTE, time.getMinutes());
             cal.set(Calendar.SECOND, 0);
             return cal.getTimeInMillis();
-        } catch (ParseException e) {
-            try {
-                time = thetvdbTimeFormatNormal.parse(tvdbTimeString);
-                cal.set(Calendar.HOUR_OF_DAY, time.getHours());
-                cal.set(Calendar.MINUTE, time.getMinutes());
-                cal.set(Calendar.SECOND, 0);
-                return cal.getTimeInMillis();
-            } catch (ParseException e1) {
-                // string may be empty or wrongly formatted
-            }
+        } else {
+            return -1;
         }
-        return -1;
     }
 
     public static String[] parseMillisecondsToTime(long milliseconds, String dayofweek,
