@@ -165,7 +165,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
                 @Override
                 public void run() {
                     // Make sure no fragment is already shown
-                    EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
+                    EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getSupportFragmentManager()
                             .findFragmentById(R.id.fragment_details);
                     if (detailsFragment == null) {
                         if (context != null) {
