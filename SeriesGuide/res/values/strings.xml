@@ -240,8 +240,8 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="apikey">API key</string>
-    <string name="pref_trakt">Disconnect trakt.tv</string>
-    <string name="pref_traktsummary">Use the Share buttons to setup trakt.tv</string>
+    <string name="pref_trakt">trakt.tv credentials</string>
+    <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
     <string name="pref_traktsync">Sync with trakt.tv</string>
     <string name="pref_traktsyncsummary">Experimental, manual syncing with trakt.tv</string>
     <string name="save">Save</string>

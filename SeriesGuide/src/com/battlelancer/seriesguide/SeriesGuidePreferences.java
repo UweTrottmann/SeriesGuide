@@ -5,7 +5,7 @@ import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.ui.TraktSyncActivity;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
-import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
 import com.battlelancer.seriesguide.util.SimpleCrypto;
 
 import android.app.AlertDialog;
@@ -23,6 +23,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.SherlockPreferenceActivity;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
@@ -234,16 +235,14 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
         });
 
         Preference traktCred = findPreference("com.battlelancer.seriesguide.traktcredentials");
-        traktCred.setEnabled(ShareUtils.isTraktCredentialsValid(this));
         traktCred.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
-                // as we can not access the fragment manager, just allow
-                // deletion of credentials (create new class that extends on
-                // FragmentActivity, then this extending it)
-                prefs.edit().putString(SeriesGuidePreferences.PREF_TRAKTUSER, "")
-                        .putString(SeriesGuidePreferences.PREF_TRAKTPWD, "").commit();
-                preference.setEnabled(false);
+                // show the trakt credentials dialog
+                TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
+                        .newInstance();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                newFragment.show(ft, "traktcredentialsdialog");
                 return true;
             }
         });
