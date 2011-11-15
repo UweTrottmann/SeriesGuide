@@ -282,6 +282,9 @@ public class SeriesGuideData {
     public static final SimpleDateFormat thetvdbTimeFormatAMPMalt = new SimpleDateFormat("h:mmaa",
             Locale.US);
 
+    public static final SimpleDateFormat thetvdbTimeFormatAMPMshort = new SimpleDateFormat("h aa",
+            Locale.US);
+
     public static final SimpleDateFormat thetvdbTimeFormatNormal = new SimpleDateFormat("H:mm",
             Locale.US);
 
@@ -291,16 +294,23 @@ public class SeriesGuideData {
 
         // try parsing with three different formats, most of the time the first
         // should match
-        try {
-            time = thetvdbTimeFormatAMPM.parse(tvdbTimeString);
-        } catch (ParseException e) {
+        if (tvdbTimeString.length() != 0) {
             try {
-                time = thetvdbTimeFormatAMPMalt.parse(tvdbTimeString);
-            } catch (ParseException e1) {
+                time = thetvdbTimeFormatAMPM.parse(tvdbTimeString);
+            } catch (ParseException e) {
                 try {
-                    time = thetvdbTimeFormatNormal.parse(tvdbTimeString);
-                } catch (ParseException e2) {
-                    // string may be empty or wrongly formatted
+                    time = thetvdbTimeFormatAMPMalt.parse(tvdbTimeString);
+                } catch (ParseException e1) {
+                    try {
+                        time = thetvdbTimeFormatAMPMshort.parse(tvdbTimeString);
+                    } catch (ParseException e2) {
+                        try {
+                            time = thetvdbTimeFormatNormal.parse(tvdbTimeString);
+                        } catch (ParseException e3) {
+                            // string may be wrongly formatted
+                            time = null;
+                        }
+                    }
                 }
             }
         }
