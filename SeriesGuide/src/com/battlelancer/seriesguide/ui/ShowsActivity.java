@@ -843,13 +843,13 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         updateSorting(prefs);
 
         // between-version upgrade code
-        int lastVersion = prefs.getInt(SeriesGuideData.KEY_VERSION, -1);
+        int lastVersion = prefs.getInt(SeriesGuidePreferences.KEY_VERSION, -1);
         try {
             int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
                     PackageManager.GET_META_DATA).versionCode;
             if (currentVersion > lastVersion) {
                 if (lastVersion < VER_TRAKT_SEC_CHANGES) {
-                        prefs.edit().putString(SeriesGuidePreferences.PREF_TRAKTPWD, null).commit();
+                        prefs.edit().putString(SeriesGuidePreferences.KEY_TRAKTPWD, null).commit();
                         prefs.edit().putString(SeriesGuidePreferences.KEY_SECURE, null).commit();
                 }
 
@@ -858,7 +858,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 // showDialog(WHATS_NEW_DIALOG);
 
                 // set this as lastVersion
-                prefs.edit().putInt(SeriesGuideData.KEY_VERSION, currentVersion).commit();
+                prefs.edit().putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion).commit();
             }
         } catch (NameNotFoundException e) {
             // this should never happen

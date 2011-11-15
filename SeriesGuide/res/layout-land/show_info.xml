@@ -54,35 +54,14 @@
         android:id="@+id/divider"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonShowInfoIMDB"
-        layout="@layout/holodivider" >
-    </include>
+        android:layout_above="@+id/buttonbar_ref"
+        layout="@layout/holodivider" />
 
-    <LinearLayout
-        android:id="@+id/buttonShowInfoIMDB"
+    <include
+        android:id="@+id/buttonbar_ref"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/list_selector_holo_dark"
-        android:focusable="true"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/body_padding" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/showinimdb"
-            android:textSize="@dimen/text_size_medium" >
-        </TextView>
-
-        <ImageView
-            android:id="@+id/seasonIndicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_arrow_right" >
-        </ImageView>
-    </LinearLayout>
+        layout="@layout/show_info_buttonbar" />
 
 </RelativeLayout>

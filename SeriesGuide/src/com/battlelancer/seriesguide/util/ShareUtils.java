@@ -49,6 +49,10 @@ import java.util.Calendar;
 
 public class ShareUtils {
 
+    public static final String KEY_GETGLUE_COMMENT = "com.battlelancer.seriesguide.getglue.comment";
+
+    public static final String KEY_GETGLUE_IMDBID = "com.battlelancer.seriesguide.getglue.imdbid";
+
     protected static final String TAG = "ShareUtils";
 
     /**
@@ -220,8 +224,8 @@ public class ShareUtils {
             }).start();
         } else {
             Intent i = new Intent(activity, PrepareRequestTokenActivity.class);
-            i.putExtra(SeriesGuideData.KEY_GETGLUE_IMDBID, imdbId);
-            i.putExtra(SeriesGuideData.KEY_GETGLUE_COMMENT, comment);
+            i.putExtra(ShareUtils.KEY_GETGLUE_IMDBID, imdbId);
+            i.putExtra(ShareUtils.KEY_GETGLUE_COMMENT, comment);
             activity.startActivity(i);
         }
     }
@@ -349,8 +353,8 @@ public class ShareUtils {
                     .getApplicationContext());
 
             ServiceManager manager = new ServiceManager();
-            final String username = prefs.getString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
-            String password = prefs.getString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
+            final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+            String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
 
             try {
                 password = SimpleCrypto.decrypt(password, mContext);
@@ -440,7 +444,7 @@ public class ShareUtils {
             final Bundle args = getArguments();
 
             // restore the username from settings
-            final String username = prefs.getString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
+            final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
             ((EditText) layout.findViewById(R.id.username)).setText(username);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -519,8 +523,8 @@ public class ShareUtils {
 
                                 // prepare writing credentials to settings
                                 Editor editor = prefs.edit();
-                                editor.putString(SeriesGuidePreferences.PREF_TRAKTUSER, username)
-                                        .putString(SeriesGuidePreferences.PREF_TRAKTPWD,
+                                editor.putString(SeriesGuidePreferences.KEY_TRAKTUSER, username)
+                                        .putString(SeriesGuidePreferences.KEY_TRAKTPWD,
                                                 passwordEncr);
 
                                 if (response.getStatus().equalsIgnoreCase("success")
@@ -607,8 +611,8 @@ public class ShareUtils {
     public static boolean isTraktCredentialsValid(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
                 .getApplicationContext());
-        String username = prefs.getString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
-        String password = prefs.getString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
+        String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+        String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
 
         return (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase(""));
     }

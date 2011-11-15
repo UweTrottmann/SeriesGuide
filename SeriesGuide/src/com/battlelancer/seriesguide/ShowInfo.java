@@ -24,9 +24,20 @@ import android.widget.Toast;
 public class ShowInfo extends BaseActivity {
     public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
 
+    private static final String TVDB_SHOW_URL = "http://thetvdb.com/?tab=series&id=";
+
     private ImageCache imageCache;
 
     private String seriesid;
+
+    /**
+     * Google Analytics helper method for easy event tracking.
+     * 
+     * @param label
+     */
+    public void fireTrackerEvent(String label) {
+        AnalyticsUtils.getInstance(this).trackEvent("ShowInfo", "Click", label, 0);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +75,8 @@ public class ShowInfo extends BaseActivity {
         TextView runtime = (TextView) findViewById(R.id.TextViewShowInfoRuntime);
         TextView status = (TextView) findViewById(R.id.TextViewShowInfoStatus);
         ImageView showart = (ImageView) findViewById(R.id.ImageViewShowInfoPoster);
-        View showInIMDB = (View) findViewById(R.id.buttonShowInfoIMDB);
+        View imdbButton = (View) findViewById(R.id.buttonShowInfoIMDB);
+        View tvdbButton = (View) findViewById(R.id.buttonTVDB);
 
         final Series show = SeriesDatabase.getShow(this, seriesid);
         if (show == null) {
@@ -126,31 +138,42 @@ public class ShowInfo extends BaseActivity {
         runtime.setText(getString(R.string.show_runtime) + " " + show.getRuntime() + " "
                 + getString(R.string.show_airtimeunit));
 
-        // IMDB button
+        // IMDb button
         final String imdbid = show.getImdbId();
-        showInIMDB.setOnClickListener(new OnClickListener() {
+        if (imdbButton != null) {
+            imdbButton.setOnClickListener(new OnClickListener() {
+                public void onClick(View v) {
+                    fireTrackerEvent("IMDb");
 
-            public void onClick(View v) {
-                // track event
-                AnalyticsUtils.getInstance(ShowInfo.this).trackEvent("ShowInfo", "Click",
-                        "Show in IMDB", 0);
-
-                if (imdbid.length() != 0) {
-                    Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("imdb:///title/"
-                            + imdbid + "/"));
-                    try {
-                        startActivity(myIntent);
-                    } catch (ActivityNotFoundException e) {
-                        myIntent = new Intent(Intent.ACTION_VIEW, Uri
-                                .parse(IMDB_TITLE_URL + imdbid));
-                        startActivity(myIntent);
+                    if (imdbid.length() != 0) {
+                        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("imdb:///title/"
+                                + imdbid + "/"));
+                        try {
+                            startActivity(myIntent);
+                        } catch (ActivityNotFoundException e) {
+                            myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_TITLE_URL
+                                    + imdbid));
+                            startActivity(myIntent);
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), getString(R.string.noIMDBentry),
+                                Toast.LENGTH_LONG).show();
                     }
-                } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.noIMDBentry),
-                            Toast.LENGTH_LONG).show();
                 }
-            }
-        });
+            });
+        }
+
+        // TVDb button
+        final String tvdbId = show.getId();
+        if (tvdbButton != null) {
+            tvdbButton.setOnClickListener(new OnClickListener() {
+                public void onClick(View v) {
+                    fireTrackerEvent("TVDb");
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(TVDB_SHOW_URL + tvdbId));
+                    startActivity(i);
+                }
+            });
+        }
 
         // Poster
         Bitmap bitmap = imageCache.get(show.getPoster());

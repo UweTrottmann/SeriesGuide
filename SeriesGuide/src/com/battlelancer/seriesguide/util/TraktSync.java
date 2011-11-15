@@ -82,8 +82,8 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext
                 .getApplicationContext());
         ServiceManager manager = new ServiceManager();
-        final String username = prefs.getString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
-        String password = prefs.getString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
+        final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+        String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
         try {
             password = SimpleCrypto.decrypt(password, mContext);
         } catch (Exception e1) {

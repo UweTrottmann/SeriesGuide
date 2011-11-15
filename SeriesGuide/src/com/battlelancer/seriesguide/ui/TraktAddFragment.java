@@ -96,8 +96,8 @@ public class TraktAddFragment extends AddFragment {
             } else {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext
                         .getApplicationContext());
-                final String username = prefs.getString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
-                String password = prefs.getString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
+                final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+                String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
                 try {
                     password = SimpleCrypto.decrypt(password, mContext);
                     manager.setAuthentication(username, password);

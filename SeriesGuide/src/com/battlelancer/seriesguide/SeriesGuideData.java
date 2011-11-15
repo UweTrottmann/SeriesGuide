@@ -25,24 +25,6 @@ public class SeriesGuideData {
 
     public static final SimpleDateFormat theTVDBDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    public static final String CHANGELOG_URL = "http://code.google.com/p/seriesguide/wiki/ChangeLog";
-
-    public static final String KEY_VERSION = "oldversioncode";
-
-    public static final String KEY_SHOWUPDATEDIALOG = "showupdatealldialog";
-
-    public static final String KEY_HIDEIMAGES = "hideimages";
-
-    public static final String WEBPROPERTYID = "UA-3577058-7";
-
-    public static final String KEY_GOOGLEANALYTICS = "enableGAnalytics";
-
-    public static final String KEY_LOCKLIST = "locklist";
-
-    public static final String KEY_GETGLUE_COMMENT = "com.battlelancer.seriesguide.getglue.comment";
-
-    public static final String KEY_GETGLUE_IMDBID = "com.battlelancer.seriesguide.getglue.imdbid";
-
     public static enum EpisodeSorting {
         LATEST_FIRST(0, Episodes.NUMBER + " desc"), OLDEST_FIRST(1, Episodes.NUMBER + " asc"), UNWATCHED_FIRST(
                 2, Episodes.WATCHED + " asc," + Episodes.NUMBER + " asc"), ALPHABETICAL_ASC(3,

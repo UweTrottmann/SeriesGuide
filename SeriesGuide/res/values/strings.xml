@@ -86,7 +86,9 @@
     <string name="show_noairtime">No air times available</string>
     <string name="showinimdb">Show in IMDb</string>
     <string name="noIMDBentry">No IMDB reference available. Update this show or go to thetvdb.com and add it.</string>
-
+    <string name="imdb">IMDb</string>
+    <string name="tvdb">TVDb</string>
+        
     <!-- Season list -->
     <string name="no_seasons">Ooops, there are no seasons for this show. Try updating the show (in the overview, long-press on it, select Update).</string>
     <string name="season_watchcount">episodes not watched</string>

@@ -4,17 +4,14 @@ package com.battlelancer.seriesguide;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.ui.TraktSyncActivity;
+import com.battlelancer.seriesguide.util.ActivityHelper;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
-import com.battlelancer.seriesguide.util.SimpleCrypto;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
@@ -25,27 +22,18 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.SherlockPreferenceActivity;
+import android.support.v4.view.MenuItem;
 import android.text.util.Linkify;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.EditText;
+import android.view.KeyEvent;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
-    private static final String PAYPAL_DONATE_URL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VVBLMQBSBU74L";
+    public static final String KEY_TRAKTPWD = "com.battlelancer.seriesguide.traktpwd";
 
-    private static final String SUPPORT_MAIL = "seriesguide@battlelancer.com";
-
-    private static final String TRANSLATIONS_URL = "http://crowdin.net/project/seriesguide-translations/invite";
-
-    private static final String HELP_URL = "http://seriesguide.uwetrottmann.com/help";
-
-    public static final String PREF_TRAKTPWD = "com.battlelancer.seriesguide.traktpwd";
-
-    public static final String PREF_TRAKTUSER = "com.battlelancer.seriesguide.traktuser";
+    public static final String KEY_TRAKTUSER = "com.battlelancer.seriesguide.traktuser";
 
     public static final String KEY_USE_MY_TIMEZONE = "com.battlelancer.seriesguide.usemytimezone";
 
@@ -54,10 +42,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
     public static final String KEY_ONLY_SEASON_EPISODES = "onlySeasonEpisodes";
 
     public static final String KEY_LASTUPDATETIME = "updatetime";
-
-    protected static final int ABOUT_DIALOG = 0;
-
-    private static final int TRAKT_DIALOG = 1;
 
     public static final String KEY_NUMBERFORMAT = "numberformat";
 
@@ -69,8 +53,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_OFFSET = "com.battlelancer.seriesguide.timeoffset";
 
-    private static final String TAG = "SeriesGuidePreferences";
-
     public static final String KEY_DATABASEIMPORTED = "com.battlelancer.seriesguide.dbimported";
 
     public static final String KEY_SHOWSSORTORDER = "showSorting";
@@ -80,6 +62,26 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
     public static final String KEY_SECURE = "com.battlelancer.seriesguide.secure";
 
     public static final String KEY_UPDATEATLEASTEVERY = "com.battlelancer.seriesguide.updateatleastevery";
+
+    public static final String KEY_VERSION = "oldversioncode";
+
+    public static final String KEY_HIDEIMAGES = "hideimages";
+
+    public static final String KEY_GOOGLEANALYTICS = "enableGAnalytics";
+
+    protected static final int ABOUT_DIALOG = 0;
+
+    private static final String TRANSLATIONS_URL = "http://crowdin.net/project/seriesguide-translations/invite";
+
+    private static final String HELP_URL = "http://seriesguide.uwetrottmann.com/help";
+
+    private static final String PAYPAL_DONATE_URL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VVBLMQBSBU74L";
+
+    private static final String SUPPORT_MAIL = "seriesguide@battlelancer.com";
+
+    private final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
+
+    private static final String TAG = "SeriesGuidePreferences";
 
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
@@ -92,6 +94,9 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
         final SeriesGuidePreferences activity = this;
         addPreferencesFromResource(R.layout.preferences);
 
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+
         String version;
         try {
             version = getPackageManager().getPackageInfo(getPackageName(),
@@ -101,6 +106,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
         }
         final String versionFinal = version;
 
+        // About
         Preference aboutPref = (Preference) findPreference("aboutPref");
         aboutPref.setSummary("v" + versionFinal + " (dbver " + SeriesGuideDatabase.DATABASE_VERSION
                 + ")");
@@ -114,12 +120,11 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             }
         });
 
-        // Help button
+        // Help
         Preference helpPref = (Preference) findPreference("helpPref");
         helpPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
-                // track event
                 fireTrackerEvent("Help");
 
                 Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(HELP_URL));
@@ -128,11 +133,11 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             }
         });
 
+        // Clear image cache
         Preference clearCachePref = (Preference) findPreference("clearCache");
         clearCachePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
-                // track event
                 fireTrackerEvent("Clear Image Cache");
 
                 ((SeriesGuideApplication) getApplication()).getImageCache().clear();
@@ -143,6 +148,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             }
         });
 
+        // Backup & Restore
         Preference backupPref = (Preference) findPreference("backup");
         backupPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
@@ -152,16 +158,15 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             }
         });
 
+        // No aired episodes
         Preference futureepisodes = (Preference) findPreference(KEY_ONLY_FUTURE_EPISODES);
         futureepisodes.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
                 if (((CheckBoxPreference) preference).isChecked()) {
-                    // track event
                     AnalyticsUtils.getInstance(activity).trackEvent("Settings",
                             "OnlyFutureEpisodes", "Enable", 0);
                 } else {
-                    // track event
                     AnalyticsUtils.getInstance(activity).trackEvent("Settings",
                             "OnlyFutureEpisodes", "Disable", 0);
                 }
@@ -169,16 +174,15 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             }
         });
 
+        // No special episodes
         Preference seasonEpisodes = (Preference) findPreference(KEY_ONLY_SEASON_EPISODES);
         seasonEpisodes.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
                 if (((CheckBoxPreference) preference).isChecked()) {
-                    // track event
                     AnalyticsUtils.getInstance(activity).trackEvent("Settings",
                             "OnlySeasonEpisodes", "Enable", 0);
                 } else {
-                    // track event
                     AnalyticsUtils.getInstance(activity).trackEvent("Settings",
                             "OnlySeasonEpisodes", "Disable", 0);
                 }
@@ -186,47 +190,15 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             }
         });
 
-        // Disconnect GetGlue
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-
-        Preference getgluePref = (Preference) findPreference("clearGetGlueCredentials");
-        getgluePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference preference) {
-                // track event
-                fireTrackerEvent("Disonnect GetGlue");
-
-                GetGlue.clearCredentials(prefs);
-                preference.setEnabled(false);
-                return true;
-            }
-        });
-        getgluePref.setEnabled(GetGlue.isAuthenticated(prefs));
-
-        Preference helpTranslate = (Preference) findPreference("com.battlelancer.seriesguide.helpTranslate");
-        helpTranslate.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference preference) {
-                // track event
-                fireTrackerEvent("Help translate");
-
-                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(TRANSLATIONS_URL));
-                startActivity(myIntent);
-                return true;
-            }
-        });
-
+        // Use my timezone
         CheckBoxPreference useMyTimezone = (CheckBoxPreference) findPreference("com.battlelancer.seriesguide.usemytimezone");
         useMyTimezone.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
                 if (((CheckBoxPreference) preference).isChecked()) {
-                    // track event
                     AnalyticsUtils.getInstance(activity).trackEvent("Settings", "Use my time zone",
                             "Enable", 0);
                 } else {
-                    // track event
                     AnalyticsUtils.getInstance(activity).trackEvent("Settings", "Use my time zone",
                             "Disable", 0);
                 }
@@ -234,6 +206,21 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             }
         });
 
+        // Disconnect GetGlue
+        Preference getgluePref = (Preference) findPreference("clearGetGlueCredentials");
+        getgluePref.setEnabled(GetGlue.isAuthenticated(prefs));
+        getgluePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+            public boolean onPreferenceClick(Preference preference) {
+                fireTrackerEvent("Disonnect GetGlue");
+
+                GetGlue.clearCredentials(prefs);
+                preference.setEnabled(false);
+                return true;
+            }
+        });
+
+        // Trakt.tv credentials
         Preference traktCred = findPreference("com.battlelancer.seriesguide.traktcredentials");
         traktCred.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
@@ -247,6 +234,31 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             }
         });
 
+        // Trakt.tv experimental sync
+        findPreference("com.battlelancer.seriesguide.traktsync").setOnPreferenceClickListener(
+                new OnPreferenceClickListener() {
+
+                    public boolean onPreferenceClick(Preference preference) {
+                        startActivity(new Intent(SeriesGuidePreferences.this,
+                                TraktSyncActivity.class));
+                        return true;
+                    }
+                });
+
+        // Help translate
+        Preference helpTranslate = (Preference) findPreference("com.battlelancer.seriesguide.helpTranslate");
+        helpTranslate.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+            public boolean onPreferenceClick(Preference preference) {
+                fireTrackerEvent("Help translate");
+
+                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(TRANSLATIONS_URL));
+                startActivity(myIntent);
+                return true;
+            }
+        });
+
+        // Sending feedback
         Preference feedback = (Preference) findPreference("com.battlelancer.seriesguide.feedback");
         feedback.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
@@ -269,6 +281,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             }
         });
 
+        // Donate
         findPreference("com.battlelancer.seriesguide.donate").setOnPreferenceClickListener(
                 new OnPreferenceClickListener() {
 
@@ -279,16 +292,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                         Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
                                 .parse(PAYPAL_DONATE_URL));
                         startActivity(myIntent);
-                        return true;
-                    }
-                });
-
-        findPreference("com.battlelancer.seriesguide.traktsync").setOnPreferenceClickListener(
-                new OnPreferenceClickListener() {
-
-                    public boolean onPreferenceClick(Preference preference) {
-                        startActivity(new Intent(SeriesGuidePreferences.this,
-                                TraktSyncActivity.class));
                         return true;
                     }
                 });
@@ -316,71 +319,21 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                         .setPositiveButton(getString(android.R.string.ok), null)
                         .setView(aboutScroll).create();
             }
-            case TRAKT_DIALOG: {
-                AlertDialog.Builder builder;
-
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-                final View layout = inflater.inflate(R.layout.trakt_credentials_dialog, null);
-
-                builder = new AlertDialog.Builder(this);
-                builder.setView(layout);
-                builder.setTitle(R.string.pref_trakt);
-
-                SharedPreferences prefs = PreferenceManager
-                        .getDefaultSharedPreferences(getApplicationContext());
-                String username = prefs.getString(PREF_TRAKTUSER, "");
-                String password = prefs.getString(PREF_TRAKTPWD, "");
-
-                try {
-                    password = SimpleCrypto.decrypt(password, this);
-                } catch (Exception e) {
-                    // could not decrypt password
-                    password = "";
-                }
-
-                ((EditText) layout.findViewById(R.id.username)).setText(username);
-                ((EditText) layout.findViewById(R.id.password)).setText(password);
-
-                builder.setPositiveButton(R.string.save, new OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreferences prefs = PreferenceManager
-                                .getDefaultSharedPreferences(getApplicationContext());
-                        String username = ((EditText) layout.findViewById(R.id.username)).getText()
-                                .toString();
-                        String password = ((EditText) layout.findViewById(R.id.password)).getText()
-                                .toString();
-
-                        try {
-                            password = SimpleCrypto.encrypt(password, SeriesGuidePreferences.this);
-                        } catch (Exception e) {
-                            // could not encrypt password
-                            password = "";
-                        }
-
-                        Editor editor = prefs.edit();
-                        editor.putString(PREF_TRAKTUSER, username);
-                        editor.putString(PREF_TRAKTPWD, password);
-                        editor.commit();
-
-                        // force reloading so unsaved changes get purged
-                        removeDialog(TRAKT_DIALOG);
-                    }
-                });
-
-                builder.setNegativeButton(R.string.dontsave, new OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        // force reloading so unsaved changes get purged
-                        removeDialog(TRAKT_DIALOG);
-                    }
-                });
-
-                return builder.create();
-            }
-
         }
         return null;
+    }
+
+    @Override
+    public boolean onKeyLongPress(int keyCode, KeyEvent event) {
+        return mActivityHelper.onKeyLongPress(keyCode, event);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mActivityHelper.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
