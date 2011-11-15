@@ -478,7 +478,8 @@ public class ShareUtils {
 
                         @Override
                         protected Response doInBackground(String... params) {
-                            if (username.length() == 0 || passwordHash.length() == 0) {
+                            // SHA of any password is always non-empty
+                            if (username.length() == 0) {
                                 return null;
                             }
 
