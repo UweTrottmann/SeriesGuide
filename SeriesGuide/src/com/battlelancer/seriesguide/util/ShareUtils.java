@@ -3,11 +3,11 @@ package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.ShowInfo;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.ui.ShowInfoActivity;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -107,7 +107,7 @@ public class ShareUtils {
                                     // Android apps
                                     String text = sharestring;
                                     if (imdbId.length() != 0) {
-                                        text += " " + ShowInfo.IMDB_TITLE_URL + imdbId;
+                                        text += " " + ShowInfoActivity.IMDB_TITLE_URL + imdbId;
                                     }
 
                                     Intent i = new Intent(Intent.ACTION_SEND);

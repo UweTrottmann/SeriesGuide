@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.ShowInfo;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
@@ -515,7 +514,7 @@ public class OverviewFragment extends Fragment {
      * Launch show info activity.
      */
     private void onShowShowInfo() {
-        Intent i = new Intent(getActivity(), ShowInfo.class);
+        Intent i = new Intent(getActivity(), ShowInfoActivity.class);
         i.putExtra(Shows._ID, getShowId());
         startActivity(i);
     }

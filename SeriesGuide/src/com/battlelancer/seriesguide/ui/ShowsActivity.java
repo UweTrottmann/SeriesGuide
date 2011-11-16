@@ -4,7 +4,6 @@ package com.battlelancer.seriesguide.ui;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.ShowInfo;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
@@ -485,7 +484,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case CONTEXT_SHOWINFO:
                 fireTrackerEvent("Display show info");
 
-                Intent i = new Intent(this, ShowInfo.class);
+                Intent i = new Intent(this, ShowInfoActivity.class);
                 i.putExtra(Shows._ID, String.valueOf(info.id));
                 startActivity(i);
                 return true;

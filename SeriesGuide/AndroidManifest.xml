@@ -41,7 +41,7 @@
             android:label="@string/backup"
             android:name="com.battlelancer.seriesguide.BackupDelete" >
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.ShowInfo" >
+        <activity android:name="com.battlelancer.seriesguide.ui.ShowInfoActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />

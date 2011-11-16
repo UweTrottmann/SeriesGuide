@@ -1,8 +1,9 @@
 
-package com.battlelancer.seriesguide;
+package com.battlelancer.seriesguide.ui;
 
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.SeriesDatabase;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
@@ -22,7 +23,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ShowInfo extends BaseActivity {
+public class ShowInfoActivity extends BaseActivity {
     public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
 
     private static final String TVDB_SHOW_URL = "http://thetvdb.com/?tab=series&id=";
