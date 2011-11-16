@@ -1,7 +1,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.BackupDelete;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
@@ -155,7 +154,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
         backupPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
-                startActivity(new Intent(activity, BackupDelete.class));
+                startActivity(new Intent(activity, BackupDeleteActivity.class));
                 return true;
             }
         });

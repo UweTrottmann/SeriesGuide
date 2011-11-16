@@ -39,7 +39,7 @@
         </activity>
         <activity
             android:label="@string/backup"
-            android:name="com.battlelancer.seriesguide.BackupDelete" >
+            android:name="com.battlelancer.seriesguide.ui.BackupDeleteActivity" >
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.ShowInfoActivity" >
             <meta-data
