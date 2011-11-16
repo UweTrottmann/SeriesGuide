@@ -3,12 +3,12 @@ package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesDatabase;
 import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 
 import android.content.Intent;
@@ -103,11 +103,11 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
         switch (item.getItemId()) {
             case MARK_WATCHED_ID:
-                SeriesDatabase.markEpisode(getActivity(), String.valueOf(info.id), true);
+                DBUtils.markEpisode(getActivity(), String.valueOf(info.id), true);
                 return true;
 
             case MARK_UNWATCHED_ID:
-                SeriesDatabase.markEpisode(getActivity(), String.valueOf(info.id), false);
+                DBUtils.markEpisode(getActivity(), String.valueOf(info.id), false);
                 return true;
         }
         return super.onContextItemSelected(item);
@@ -140,7 +140,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
                         public void onClick(View v) {
                             ((WatchedBox) v).toggle();
-                            SeriesDatabase.markEpisode(getActivity(), rowid,
+                            DBUtils.markEpisode(getActivity(), rowid,
                                     ((WatchedBox) v).isChecked());
                         }
                     });

@@ -17,11 +17,11 @@
 package com.battlelancer.seriesguide.appwidget;
 
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesDatabase;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
@@ -104,7 +104,7 @@ public class AppWidget extends AppWidgetProvider {
             views.removeAllViews(R.id.LinearLayoutWidget);
 
             // get upcoming shows (name and next episode text)
-            final Cursor upcomingEpisodes = SeriesDatabase.getUpcomingEpisodes(context);
+            final Cursor upcomingEpisodes = DBUtils.getUpcomingEpisodes(context);
 
             if (upcomingEpisodes == null || upcomingEpisodes.getCount() == 0) {
                 // no next episodes exist

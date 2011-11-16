@@ -1,6 +1,7 @@
 
-package com.battlelancer.seriesguide;
+package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -8,8 +9,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.Lists;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.Series;
 
@@ -28,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
-public class SeriesDatabase {
+public class DBUtils {
 
     static final String TAG = "SeriesDatabase";
 

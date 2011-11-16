@@ -3,10 +3,10 @@ package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesDatabase;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EulaHelper;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
@@ -355,7 +355,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
                                 new Thread(new Runnable() {
                                     public void run() {
-                                        SeriesDatabase.deleteShow(getApplicationContext(),
+                                        DBUtils.deleteShow(getApplicationContext(),
                                                 String.valueOf(mToDeleteId));
                                         if (progress.isShowing()) {
                                             progress.dismiss();
@@ -491,7 +491,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case CONTEXT_MARKNEXT:
                 fireTrackerEvent("Mark next episode");
 
-                SeriesDatabase.markNextEpisode(this, info.id);
+                DBUtils.markNextEpisode(this, info.id);
                 Thread t = new UpdateLatestEpisodeThread(this, String.valueOf(info.id));
                 t.start();
                 return true;
@@ -601,7 +601,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         public void run() {
             if (mShowId != null) {
                 // update single show
-                SeriesDatabase.updateLatestEpisode(mContext, mShowId);
+                DBUtils.updateLatestEpisode(mContext, mShowId);
             } else {
                 // update all shows
                 final Cursor shows = mContext.getContentResolver().query(Shows.CONTENT_URI,
@@ -610,7 +610,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                         }, null, null, null);
                 while (shows.moveToNext()) {
                     String id = shows.getString(0);
-                    SeriesDatabase.updateLatestEpisode(mContext, id);
+                    DBUtils.updateLatestEpisode(mContext, id);
                 }
                 shows.close();
             }
@@ -908,7 +908,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 selection = Shows.NEXTAIRDATE + "!=? AND julianday(" + Shows.NEXTAIRDATE
                         + ") <= julianday('now')";
                 selectionArgs = new String[] {
-                    SeriesDatabase.UNKNOWN_NEXT_AIR_DATE
+                    DBUtils.UNKNOWN_NEXT_AIR_DATE
                 };
                 break;
         }

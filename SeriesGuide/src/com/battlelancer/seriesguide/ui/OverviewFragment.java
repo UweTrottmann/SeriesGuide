@@ -17,10 +17,10 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesDatabase;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
@@ -205,7 +205,7 @@ public class OverviewFragment extends Fragment {
     }
 
     private void fillShowData() {
-        show = SeriesDatabase.getShow(getActivity(), getShowId());
+        show = DBUtils.getShow(getActivity(), getShowId());
 
         if (show == null) {
             return;
@@ -336,7 +336,7 @@ public class OverviewFragment extends Fragment {
 
         new Thread(new Runnable() {
             public void run() {
-                episodeid = SeriesDatabase.updateLatestEpisode(context, getShowId());
+                episodeid = DBUtils.updateLatestEpisode(context, getShowId());
                 context.runOnUiThread(new Runnable() {
                     public void run() {
                         fillEpisodeData();
@@ -409,7 +409,7 @@ public class OverviewFragment extends Fragment {
     }
 
     private void onMarkWatched() {
-        SeriesDatabase.markEpisode(getActivity(), String.valueOf(episodeid), true);
+        DBUtils.markEpisode(getActivity(), String.valueOf(episodeid), true);
 
         Toast.makeText(getActivity(), getString(R.string.mark_episode), Toast.LENGTH_SHORT).show();
 

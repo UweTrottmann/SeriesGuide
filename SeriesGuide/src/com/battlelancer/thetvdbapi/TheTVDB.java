@@ -2,12 +2,12 @@
 package com.battlelancer.thetvdbapi;
 
 import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.SeriesDatabase;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Lists;
 import com.battlelancer.seriesguide.util.Utils;
 
@@ -87,10 +87,10 @@ public class TheTVDB {
         String language = getTheTVDBLanguage(context);
         Series show = fetchShow(showId, language, context);
 
-        boolean isShowExists = SeriesDatabase.isShowExists(showId, context);
+        boolean isShowExists = DBUtils.isShowExists(showId, context);
 
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
-        batch.add(SeriesDatabase.buildShowOp(show, context, !isShowExists));
+        batch.add(DBUtils.buildShowOp(show, context, !isShowExists));
         batch.addAll(importShowEpisodes(showId, language, context));
 
         try {
@@ -103,7 +103,7 @@ public class TheTVDB {
             throw new RuntimeException("Problem applying batch operation", e);
         }
 
-        SeriesDatabase.updateLatestEpisode(context, showId);
+        DBUtils.updateLatestEpisode(context, showId);
 
         return !isShowExists;
     }
@@ -120,7 +120,7 @@ public class TheTVDB {
         Series show = fetchShow(showId, language, context);
 
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
-        batch.add(SeriesDatabase.buildShowOp(show, context, false));
+        batch.add(DBUtils.buildShowOp(show, context, false));
         batch.addAll(importShowEpisodes(showId, language, context));
 
         try {
@@ -342,8 +342,8 @@ public class TheTVDB {
         RootElement root = new RootElement("Data");
         Element episode = root.getChild("Episode");
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
-        final HashSet<Long> episodeIDs = SeriesDatabase.getEpisodeIDsForShow(seriesid, context);
-        final HashSet<Long> existingSeasonIDs = SeriesDatabase.getSeasonIDsForShow(seriesid,
+        final HashSet<Long> episodeIDs = DBUtils.getEpisodeIDsForShow(seriesid, context);
+        final HashSet<Long> existingSeasonIDs = DBUtils.getSeasonIDsForShow(seriesid,
                 context);
         final HashSet<Long> updatedSeasonIDs = new HashSet<Long>();
         final ContentValues values = new ContentValues();
@@ -352,13 +352,13 @@ public class TheTVDB {
         episode.setEndElementListener(new EndElementListener() {
             public void end() {
                 // add insert/update op for episode
-                batch.add(SeriesDatabase.buildEpisodeOp(values,
+                batch.add(DBUtils.buildEpisodeOp(values,
                         !episodeIDs.contains(values.getAsLong(Episodes._ID))));
 
                 long seasonid = values.getAsLong(Seasons.REF_SEASON_ID);
                 if (!updatedSeasonIDs.contains(seasonid)) {
                     // add insert/update op for season
-                    batch.add(SeriesDatabase.buildSeasonOp(values,
+                    batch.add(DBUtils.buildSeasonOp(values,
                             !existingSeasonIDs.contains(seasonid)));
                     updatedSeasonIDs.add(values.getAsLong(Seasons.REF_SEASON_ID));
                 }

@@ -2,11 +2,11 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesDatabase;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
@@ -388,7 +388,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
     }
 
     private void onToggleWatchState() {
-        SeriesDatabase.markEpisode(getActivity(), getEpisodeId(), !isWatched);
+        DBUtils.markEpisode(getActivity(), getEpisodeId(), !isWatched);
         isWatched = !isWatched;
         getLoaderManager().restartLoader(EPISODE_LOADER, null, this);
     }

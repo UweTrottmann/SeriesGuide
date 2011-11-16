@@ -2,9 +2,9 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesDatabase;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.Series;
@@ -76,7 +76,7 @@ public class ShowInfoActivity extends BaseActivity {
         View imdbButton = (View) findViewById(R.id.buttonShowInfoIMDB);
         View tvdbButton = (View) findViewById(R.id.buttonTVDB);
 
-        final Series show = SeriesDatabase.getShow(this, seriesid);
+        final Series show = DBUtils.getShow(this, seriesid);
         if (show == null) {
             finish();
         }
