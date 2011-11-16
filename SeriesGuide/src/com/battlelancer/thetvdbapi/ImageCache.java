@@ -17,7 +17,7 @@
 
 package com.battlelancer.thetvdbapi;
 
-import com.battlelancer.seriesguide.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.Utils;
 

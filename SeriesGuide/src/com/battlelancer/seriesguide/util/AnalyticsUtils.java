@@ -18,7 +18,7 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 
 import android.content.Context;

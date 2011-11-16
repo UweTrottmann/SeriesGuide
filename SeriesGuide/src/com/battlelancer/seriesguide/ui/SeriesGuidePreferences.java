@@ -1,9 +1,10 @@
 
-package com.battlelancer.seriesguide;
+package com.battlelancer.seriesguide.ui;
 
+import com.battlelancer.seriesguide.BackupDelete;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.ui.TraktSyncActivity;
 import com.battlelancer.seriesguide.util.ActivityHelper;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
