@@ -1,15 +1,17 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
@@ -18,6 +20,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -171,7 +174,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
         String[] from = new String[] {
                 Episodes.TITLE, Episodes.OVERVIEW, Episodes.NUMBER, Episodes.DVDNUMBER,
                 Episodes.FIRSTAIRED, Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
-                Episodes.RATING, Episodes.IMAGE, Shows.TITLE, Episodes.WATCHED
+                Episodes.RATING, Episodes.IMAGE, Shows.TITLE, Episodes.WATCHED, Shows.REF_SHOW_ID
 
         };
         int[] to = new int[] {
@@ -180,7 +183,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
                 R.id.TextViewEpisodeFirstAirdate, R.id.TextViewEpisodeDirectors,
                 R.id.TextViewEpisodeGuestStars, R.id.TextViewEpisodeWriters, R.id.ratingbar,
                 R.id.imageContainer, R.id.textViewEpisodeDetailsShowName,
-                R.id.TextViewEpisodeWatchedState
+                R.id.TextViewEpisodeWatchedState, R.id.buttonbar_ref
         };
 
         mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.episodedetails, null, from, to,
@@ -301,6 +304,24 @@ public class EpisodeDetailsFragment extends ListFragment implements
                     }
                     return true;
                 }
+                if (columnIndex == EpisodeDetailsQuery.REF_SHOW_ID) {
+                    final String showId = episode.getString(EpisodeDetailsQuery.REF_SHOW_ID);
+                    final String seasonId = episode.getString(EpisodeDetailsQuery.REF_SEASON_ID);
+
+                    view.findViewById(R.id.buttonShowInfoIMDB).setVisibility(View.GONE);
+                    view.findViewById(R.id.buttonTVDB).setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent(Intent.ACTION_VIEW, Uri
+                                    .parse(Constants.TVDB_EPISODE_URL_1 + showId
+                                            + Constants.TVDB_EPISODE_URL_2 + seasonId
+                                            + Constants.TVDB_EPISODE_URL_3 + getEpisodeId()));
+                            startActivity(i);
+                        }
+                    });
+
+                    return true;
+                }
                 return false;
             }
         });
@@ -394,13 +415,14 @@ public class EpisodeDetailsFragment extends ListFragment implements
     }
 
     interface EpisodeDetailsQuery {
+
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Shows.REF_SHOW_ID, Episodes.OVERVIEW,
                 Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIRED,
                 Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
                 Tables.EPISODES + "." + Episodes.RATING, Episodes.IMAGE, Episodes.DVDNUMBER,
                 Episodes.TITLE, Shows.TITLE, Shows.AIRSTIME, Shows.IMDBID, Shows.RUNTIME,
-                Shows.POSTER
+                Shows.POSTER, Seasons.REF_SEASON_ID
         };
 
         int _ID = 0;
@@ -440,6 +462,8 @@ public class EpisodeDetailsFragment extends ListFragment implements
         int SHOW_RUNTIME = 17;
 
         int SHOW_POSTER = 18;
+
+        int REF_SEASON_ID = 19;
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {

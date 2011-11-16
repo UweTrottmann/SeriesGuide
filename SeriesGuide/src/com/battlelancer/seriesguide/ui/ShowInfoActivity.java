@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
@@ -25,8 +26,6 @@ import android.widget.Toast;
 
 public class ShowInfoActivity extends BaseActivity {
     public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
-
-    private static final String TVDB_SHOW_URL = "http://thetvdb.com/?tab=series&id=";
 
     private String seriesid;
 
@@ -167,7 +166,7 @@ public class ShowInfoActivity extends BaseActivity {
             tvdbButton.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
                     fireTrackerEvent("TVDb");
-                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(TVDB_SHOW_URL + tvdbId));
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TVDB_SHOW_URL + tvdbId));
                     startActivity(i);
                 }
             });
