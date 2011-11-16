@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ShowInfo;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
@@ -253,7 +252,7 @@ public class ShareUtils {
         String number = episode.getString(episode.getColumnIndexOrThrow(Episodes.NUMBER));
         String title = episode.getString(episode.getColumnIndexOrThrow(Episodes.TITLE));
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return SeriesGuideData.getNextEpisodeString(prefs, season, number, title);
+        return Utils.getNextEpisodeString(prefs, season, number, title);
     }
 
     public static void onAddCalendarEvent(Context context, String title, String description,
@@ -269,7 +268,7 @@ public class ShareUtils {
             boolean useUserTimeZone = prefs.getBoolean(SeriesGuidePreferences.KEY_USE_MY_TIMEZONE,
                     false);
 
-            Calendar cal = SeriesGuideData.getLocalCalendar(airdate, airtime, useUserTimeZone,
+            Calendar cal = Utils.getLocalCalendar(airdate, airtime, useUserTimeZone,
                     context);
 
             long startTime = cal.getTimeInMillis();

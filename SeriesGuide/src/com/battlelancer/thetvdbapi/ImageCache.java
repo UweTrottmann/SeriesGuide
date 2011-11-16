@@ -19,7 +19,7 @@ package com.battlelancer.thetvdbapi;
 
 import com.battlelancer.seriesguide.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
-import com.battlelancer.seriesguide.util.UIUtils;
+import com.battlelancer.seriesguide.util.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -274,7 +274,7 @@ public class ImageCache {
     }
 
     public Bitmap put(String imageUrl, Bitmap bitmap) {
-        if (UIUtils.isExtStorageAvailable()) {
+        if (Utils.isExtStorageAvailable()) {
             // make sure directories exist
             createDirectories();
             File imageFile = getImageFile(imageUrl);

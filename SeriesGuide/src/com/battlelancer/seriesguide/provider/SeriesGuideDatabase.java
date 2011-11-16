@@ -8,7 +8,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.EpisodesColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesContract.ShowsColumns;
-import com.battlelancer.seriesguide.util.UIUtils;
+import com.battlelancer.seriesguide.util.Utils;
 
 import android.app.SearchManager;
 import android.content.ContentValues;
@@ -122,7 +122,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         Log.d(TAG, "onUpgrade() from " + oldVersion + " to " + newVersion);
 
         // make a backup of the database file
-        if (UIUtils.isExtStorageAvailable()) {
+        if (Utils.isExtStorageAvailable()) {
             File dbFile = new File(db.getPath());
             File exportDir = new File(Environment.getExternalStorageDirectory(),
                     "seriesguidebackup");

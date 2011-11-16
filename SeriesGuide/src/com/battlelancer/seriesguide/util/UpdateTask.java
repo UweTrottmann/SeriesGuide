@@ -2,7 +2,6 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
@@ -137,7 +136,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 resultCode = UPDATE_INCOMPLETE;
                 break;
             }
-            if (!SeriesGuideData.isNetworkAvailable(mShowsActivity)) {
+            if (!Utils.isNetworkAvailable(mShowsActivity)) {
                 resultCode = UPDATE_OFFLINE;
                 break;
             }

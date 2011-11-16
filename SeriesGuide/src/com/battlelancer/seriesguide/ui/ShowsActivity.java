@@ -1,18 +1,17 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideData;
-import com.battlelancer.seriesguide.SeriesGuideData.ShowSorting;
 import com.battlelancer.seriesguide.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ShowInfo;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.EulaHelper;
-import com.battlelancer.seriesguide.util.UIUtils;
 import com.battlelancer.seriesguide.util.UpdateTask;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
@@ -138,7 +137,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private String mFailedShowsString;
 
-    private ShowSorting mSorting;
+    private Constants.ShowSorting mSorting;
 
     private long mToDeleteId;
 
@@ -553,7 +552,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 }
 
                 // already fail if there is no external storage
-                if (!UIUtils.isExtStorageAvailable()) {
+                if (!Utils.isExtStorageAvailable()) {
                     Toast.makeText(this, getString(R.string.update_nosdcard), Toast.LENGTH_LONG)
                             .show();
                 } else {
@@ -874,14 +873,14 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
      * @return Returns true if the value changed, false otherwise.
      */
     private boolean updateSorting(SharedPreferences prefs) {
-        final ShowSorting oldSorting = mSorting;
+        final Constants.ShowSorting oldSorting = mSorting;
         final CharSequence[] items = getResources().getStringArray(R.array.shsortingData);
         final String sortsetting = prefs.getString(SeriesGuidePreferences.KEY_SHOWSSORTORDER,
                 "alphabetic");
 
         for (int i = 0; i < items.length; i++) {
             if (sortsetting.equals(items[i])) {
-                mSorting = ShowSorting.values()[i];
+                mSorting = Constants.ShowSorting.values()[i];
                 break;
             }
         }
@@ -1061,7 +1060,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             }
 
             // airday
-            String[] values = SeriesGuideData.parseMillisecondsToTime(
+            String[] values = Utils.parseMillisecondsToTime(
                     mCursor.getLong(ShowsQuery.AIRSTIME),
                     mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), ShowsActivity.this);
             viewHolder.airsTime.setText(values[1] + " " + values[0]);

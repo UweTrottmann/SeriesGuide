@@ -1,14 +1,15 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.Utils;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -164,7 +165,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                     // set airdate
                     String fieldValue = cursor.getString(UpcomingQuery.FIRSTAIRED);
                     if (fieldValue.length() != 0) {
-                        tv.setText(SeriesGuideData.parseDateToLocalRelative(fieldValue,
+                        tv.setText(Utils.parseDateToLocalRelative(fieldValue,
                                 cursor.getLong(UpcomingQuery.SHOW_AIRSTIME), getActivity()));
                     } else {
                         tv.setText("");
@@ -177,7 +178,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
                     // add airtime
                     long airtime = cursor.getLong(UpcomingQuery.SHOW_AIRSTIME);
-                    String value = SeriesGuideData.parseMillisecondsToTime(airtime, null,
+                    String value = Utils.parseMillisecondsToTime(airtime, null,
                             getActivity())[0];
                     if (value.length() != 0) {
                         fieldValue += value + " ";
@@ -234,7 +235,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        SimpleDateFormat pdtformat = SeriesGuideData.theTVDBDateFormat;
+        SimpleDateFormat pdtformat = Constants.theTVDBDateFormat;
         pdtformat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
         final Date date = new Date();
         final String today = pdtformat.format(date);

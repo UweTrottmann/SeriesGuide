@@ -3,13 +3,13 @@ package com.battlelancer.thetvdbapi;
 
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.Lists;
+import com.battlelancer.seriesguide.util.Utils;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -261,7 +261,7 @@ public class TheTVDB {
         });
         show.getChild("Airs_Time").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setAirsTime(SeriesGuideData.parseTimeToMilliseconds(body.trim()));
+                currentShow.setAirsTime(Utils.parseTimeToMilliseconds(body.trim()));
                 currentShow.setAirTime(body.trim());
             }
         });

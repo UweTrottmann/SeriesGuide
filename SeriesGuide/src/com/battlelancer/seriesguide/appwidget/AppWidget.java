@@ -18,11 +18,11 @@ package com.battlelancer.seriesguide.appwidget;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.app.IntentService;
@@ -133,12 +133,12 @@ public class AppWidget extends AppWidgetProvider {
                             .getColumnIndexOrThrow(Episodes.TITLE));
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     item.setTextViewText(R.id.textViewWidgetEpisode,
-                            SeriesGuideData.getNextEpisodeString(prefs, season, number, title));
+                            Utils.getNextEpisodeString(prefs, season, number, title));
 
                     // add relative airdate
                     long airtime = upcomingEpisodes.getLong(upcomingEpisodes
                             .getColumnIndexOrThrow(Shows.AIRSTIME));
-                    value = SeriesGuideData.parseDateToLocalRelative(
+                    value = Utils.parseDateToLocalRelative(
                             upcomingEpisodes.getString(upcomingEpisodes
                                     .getColumnIndexOrThrow(Episodes.FIRSTAIRED)), airtime, context);
                     item.setTextViewText(R.id.widgetAirtime, value);
@@ -146,7 +146,7 @@ public class AppWidget extends AppWidgetProvider {
                     // add airtime and network (if any)
                     value = "";
                     if (airtime != -1) {
-                        value = SeriesGuideData.parseMillisecondsToTime(airtime, null,
+                        value = Utils.parseMillisecondsToTime(airtime, null,
                                 getApplicationContext())[0];
                     }
                     String network = upcomingEpisodes.getString(upcomingEpisodes

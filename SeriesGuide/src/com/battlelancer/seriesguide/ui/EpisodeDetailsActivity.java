@@ -1,12 +1,12 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesGuideData;
-import com.battlelancer.seriesguide.SeriesGuideData.EpisodeSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.viewpagerindicator.TitlePageIndicator;
 import com.viewpagerindicator.TitleProvider;
@@ -70,7 +70,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
             }
 
             // get episode sorting
-            EpisodeSorting sorting = SeriesGuideData.getEpisodeSorting(this);
+            Constants.EpisodeSorting sorting = Utils.getEpisodeSorting(this);
 
             // lookup episodes of season
             String seasonId = episode.getString(0);
@@ -139,7 +139,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
         @Override
         public String getTitle(int position) {
             Episode episode = mEpisodes.get(position);
-            return SeriesGuideData.getEpisodeNumber(mPrefs, episode.getSeason(),
+            return Utils.getEpisodeNumber(mPrefs, episode.getSeason(),
                     episode.getNumber());
         }
 

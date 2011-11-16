@@ -4,6 +4,7 @@ package com.battlelancer.seriesguide;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.Series;
 
@@ -93,7 +94,7 @@ public class ShowInfo extends BaseActivity {
         if (show.getAirsDayOfWeek().length() == 0 || show.getAirsTime() == -1) {
             airstime.setText(getString(R.string.show_noairtime));
         } else {
-            String[] values = SeriesGuideData.parseMillisecondsToTime(show.getAirsTime(),
+            String[] values = Utils.parseMillisecondsToTime(show.getAirsTime(),
                     show.getAirsDayOfWeek(), getApplicationContext());
             airstime.setText(getString(R.string.show_airs) + " " + values[1] + " " + values[0]);
         }
@@ -116,15 +117,15 @@ public class ShowInfo extends BaseActivity {
 
         // Others
         actors.setText(getString(R.string.show_actors) + " "
-                + SeriesGuideData.splitAndKitTVDBStrings(show.getActors()));
+                + Utils.splitAndKitTVDBStrings(show.getActors()));
         contentrating.setText(getString(R.string.show_contentrating) + " "
                 + show.getContentRating());
         firstaired.setText(getString(R.string.show_firstaired)
                 + " "
-                + SeriesGuideData.parseDateToLocal(show.getFirstAired(), show.getAirsTime(),
+                + Utils.parseDateToLocal(show.getFirstAired(), show.getAirsTime(),
                         getApplicationContext()));
         genres.setText(getString(R.string.show_genres) + " "
-                + SeriesGuideData.splitAndKitTVDBStrings(show.getGenres()));
+                + Utils.splitAndKitTVDBStrings(show.getGenres()));
         String ratingText = show.getRating();
         if (ratingText != null && ratingText.length() != 0) {
             RatingBar ratingBar = (RatingBar) findViewById(R.id.bar);

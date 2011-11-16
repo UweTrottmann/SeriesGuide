@@ -1,10 +1,9 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideData;
-import com.battlelancer.seriesguide.SeriesGuideData.SeasonSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -50,7 +49,7 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
 
     private static final int LOADER_ID = 1;
 
-    private SeasonSorting sorting;
+    private Constants.SeasonSorting sorting;
 
     private SimpleCursorAdapter mAdapter;
 
@@ -370,9 +369,9 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity()
                 .getApplicationContext());
         if (prefs.getString("seasonSorting", "latestfirst").equals("latestfirst")) {
-            sorting = SeriesGuideData.SeasonSorting.LATEST_FIRST;
+            sorting = Constants.SeasonSorting.LATEST_FIRST;
         } else {
-            sorting = SeriesGuideData.SeasonSorting.OLDEST_FIRST;
+            sorting = Constants.SeasonSorting.OLDEST_FIRST;
         }
     }
 
@@ -456,7 +455,7 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
     }
 
     private void updateSorting(int item) {
-        sorting = (SeriesGuideData.SeasonSorting.values())[item];
+        sorting = (Constants.SeasonSorting.values())[item];
         AnalyticsUtils.getInstance(getActivity()).trackEvent("Seasons", "Sorting", sorting.name(),
                 0);
 

@@ -3,12 +3,12 @@ package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.TheTVDB;
@@ -211,7 +211,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
                     if (firstAired.length() != 0) {
                         airdate.setText(getString(R.string.episode_firstaired)
                                 + " "
-                                + SeriesGuideData.parseDateToLocal(firstAired,
+                                + Utils.parseDateToLocal(firstAired,
                                         episode.getLong(EpisodeDetailsQuery.SHOW_AIRSTIME),
                                         getActivity()));
                     } else {
@@ -229,7 +229,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
                 if (columnIndex == EpisodeDetailsQuery.DIRECTORS) {
                     // Directors
                     TextView directors = (TextView) view;
-                    String directorsAll = SeriesGuideData.splitAndKitTVDBStrings(episode
+                    String directorsAll = Utils.splitAndKitTVDBStrings(episode
                             .getString(EpisodeDetailsQuery.DIRECTORS));
                     directors.setText(getString(R.string.episode_directors) + " " + directorsAll);
                     return true;
@@ -239,7 +239,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
                     TextView gueststars = (TextView) view;
                     gueststars.setText(getString(R.string.episode_gueststars)
                             + " "
-                            + SeriesGuideData.splitAndKitTVDBStrings(episode
+                            + Utils.splitAndKitTVDBStrings(episode
                                     .getString(EpisodeDetailsQuery.GUESTSTARS)));
                     return true;
                 }
@@ -248,7 +248,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
                     TextView writers = (TextView) view;
                     writers.setText(getString(R.string.episode_writers)
                             + " "
-                            + SeriesGuideData.splitAndKitTVDBStrings(episode
+                            + Utils.splitAndKitTVDBStrings(episode
                                     .getString(EpisodeDetailsQuery.WRITERS)));
                     return true;
                 }

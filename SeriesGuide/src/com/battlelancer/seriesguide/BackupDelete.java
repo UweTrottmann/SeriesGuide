@@ -5,7 +5,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
-import com.battlelancer.seriesguide.util.UIUtils;
+import com.battlelancer.seriesguide.util.Utils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -262,7 +262,7 @@ public class BackupDelete extends BaseActivity {
                         .setPositiveButton(getString(R.string.backup_yes),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface arg0, int arg1) {
-                                        if (UIUtils.isExtStorageAvailable()) {
+                                        if (Utils.isExtStorageAvailable()) {
                                             // track event
                                             fireTrackerEvent("Do Backup");
 
@@ -284,7 +284,7 @@ public class BackupDelete extends BaseActivity {
                         .setPositiveButton(getString(R.string.import_yes),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface arg0, int arg1) {
-                                        if (UIUtils.isExtStorageAvailable()) {
+                                        if (Utils.isExtStorageAvailable()) {
                                             // track event
                                             fireTrackerEvent("Do Import");
 

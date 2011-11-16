@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.Lists;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.Series;
 
@@ -45,7 +46,7 @@ public class SeriesDatabase {
     public static void updateUnwatchedCount(Context context, String seasonid) {
         ContentResolver resolver = context.getContentResolver();
         Date date = new Date();
-        String today = SeriesGuideData.theTVDBDateFormat.format(date);
+        String today = Constants.theTVDBDateFormat.format(date);
         Uri episodesOfSeasonUri = Episodes.buildEpisodesOfSeasonUri(seasonid);
 
         // all a seasons episodes
@@ -104,7 +105,7 @@ public class SeriesDatabase {
      */
     public static Cursor getUpcomingEpisodes(Context context) {
         Date date = new Date();
-        String today = SeriesGuideData.theTVDBDateFormat.format(date);
+        String today = Constants.theTVDBDateFormat.format(date);
 
         String[] projection = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
@@ -122,7 +123,7 @@ public class SeriesDatabase {
 
     public static Cursor getRecentEpisodes(Context context) {
         Date date = new Date();
-        String today = SeriesGuideData.theTVDBDateFormat.format(date);
+        String today = Constants.theTVDBDateFormat.format(date);
 
         String[] projection = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
@@ -465,7 +466,7 @@ public class SeriesDatabase {
         if (onlyFutureEpisodes) {
             selection.append(" AND ").append(Episodes.FIRSTAIRED).append(">=?");
             Date date = new Date();
-            String today = SeriesGuideData.theTVDBDateFormat.format(date);
+            String today = Constants.theTVDBDateFormat.format(date);
             selectionArgs = new String[] {
                 today
             };
@@ -491,7 +492,7 @@ public class SeriesDatabase {
                     .getColumnIndexOrThrow(Episodes.NUMBER));
             final String title = unwatched.getString(unwatched
                     .getColumnIndexOrThrow(Episodes.TITLE));
-            String nextEpisodeString = SeriesGuideData.getNextEpisodeString(prefs, season, number,
+            String nextEpisodeString = Utils.getNextEpisodeString(prefs, season, number,
                     title);
 
             // nextairdatetext
@@ -501,7 +502,7 @@ public class SeriesDatabase {
             if (firstAired.length() != 0) {
                 final Series show = getShow(context, id);
                 if (show != null) {
-                    nextAirdateString += SeriesGuideData.parseDateToLocalRelative(firstAired,
+                    nextAirdateString += Utils.parseDateToLocalRelative(firstAired,
                             show.getAirsTime(), context);
                 }
             }
