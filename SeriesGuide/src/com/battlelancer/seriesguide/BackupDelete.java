@@ -135,7 +135,7 @@ public class BackupDelete extends BaseActivity {
             String errorMsg = null;
             try {
                 file.createNewFile();
-                FileUtil.copyFile(dbFile, file);
+                Utils.copyFile(dbFile, file);
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage(), e);
                 errorMsg = e.getMessage();
@@ -200,7 +200,7 @@ public class BackupDelete extends BaseActivity {
 
             try {
                 dbFile.createNewFile();
-                FileUtil.copyFile(dbBackupFile, dbFile);
+                Utils.copyFile(dbBackupFile, dbFile);
 
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
                         .putBoolean(SeriesGuidePreferences.KEY_DATABASEIMPORTED, true).commit();

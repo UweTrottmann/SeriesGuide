@@ -1,7 +1,6 @@
 
 package com.battlelancer.seriesguide.provider;
 
-import com.battlelancer.seriesguide.FileUtil;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearchColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodesColumns;
@@ -131,7 +130,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             try {
                 file.createNewFile();
-                FileUtil.copyFile(dbFile, file);
+                Utils.copyFile(dbFile, file);
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage(), e);
             }
