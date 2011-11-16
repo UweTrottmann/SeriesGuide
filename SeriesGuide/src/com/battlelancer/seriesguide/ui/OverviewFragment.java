@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.ShowInfo;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -101,7 +100,7 @@ public class OverviewFragment extends Fragment {
             getActivity().finish();
         }
 
-        imageCache = ((SeriesGuideApplication) getActivity().getApplication()).getImageCache();
+        imageCache = ImageCache.getInstance(getActivity());
 
         fillShowData();
 

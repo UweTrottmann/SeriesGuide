@@ -3,7 +3,6 @@ package com.battlelancer.thetvdbapi;
 
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
@@ -565,8 +564,7 @@ public class TheTVDB {
         }
 
         Bitmap bitmap = null;
-        ImageCache imageCache = ((SeriesGuideApplication) context.getApplicationContext())
-                .getImageCache();
+        ImageCache imageCache = ImageCache.getInstance(context);
         boolean resultCode = true;
 
         if (fileName.length() != 0 && !imageCache.contains(fileName)) {

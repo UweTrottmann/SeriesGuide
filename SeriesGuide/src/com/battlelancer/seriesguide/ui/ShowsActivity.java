@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.SeriesGuideData.ShowSorting;
 import com.battlelancer.seriesguide.SeriesGuidePreferences;
@@ -14,6 +13,7 @@ import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.EulaHelper;
 import com.battlelancer.seriesguide.util.UIUtils;
 import com.battlelancer.seriesguide.util.UpdateTask;
+import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
 import android.app.AlertDialog;
@@ -849,8 +849,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                     PackageManager.GET_META_DATA).versionCode;
             if (currentVersion > lastVersion) {
                 if (lastVersion < VER_TRAKT_SEC_CHANGES) {
-                        prefs.edit().putString(SeriesGuidePreferences.KEY_TRAKTPWD, null).commit();
-                        prefs.edit().putString(SeriesGuidePreferences.KEY_SECURE, null).commit();
+                    prefs.edit().putString(SeriesGuidePreferences.KEY_TRAKTPWD, null).commit();
+                    prefs.edit().putString(SeriesGuidePreferences.KEY_SECURE, null).commit();
                 }
 
                 // // BETA warning dialog switch
@@ -1140,8 +1140,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private void setPosterBitmap(ImageView poster, String path, boolean isBusy) {
         Bitmap bitmap = null;
         if (path.length() != 0) {
-            bitmap = ((SeriesGuideApplication) getApplication()).getImageCache().getThumb(path,
-                    isBusy);
+            bitmap = ImageCache.getInstance(this).getThumb(path, isBusy);
         }
 
         if (bitmap != null) {

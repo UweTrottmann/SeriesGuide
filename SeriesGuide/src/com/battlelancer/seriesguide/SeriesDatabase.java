@@ -298,8 +298,7 @@ public class SeriesDatabase {
     public static void deleteShow(Context context, String id) {
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
         final String showId = String.valueOf(id);
-        final ImageCache imageCache = ((SeriesGuideApplication) context.getApplicationContext())
-                .getImageCache();
+        final ImageCache imageCache = ImageCache.getInstance(context);
 
         // delete images...
         // ...of show

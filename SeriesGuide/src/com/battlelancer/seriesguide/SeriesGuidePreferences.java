@@ -7,6 +7,7 @@ import com.battlelancer.seriesguide.ui.TraktSyncActivity;
 import com.battlelancer.seriesguide.util.ActivityHelper;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
+import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -140,8 +141,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             public boolean onPreferenceClick(Preference preference) {
                 fireTrackerEvent("Clear Image Cache");
 
-                ((SeriesGuideApplication) getApplication()).getImageCache().clear();
-                ((SeriesGuideApplication) getApplication()).getImageCache().clearExternal();
+                ImageCache.getInstance(activity).clear();
+                ImageCache.getInstance(activity).clearExternal();
                 Toast.makeText(getApplicationContext(), getString(R.string.done),
                         Toast.LENGTH_SHORT).show();
                 return true;

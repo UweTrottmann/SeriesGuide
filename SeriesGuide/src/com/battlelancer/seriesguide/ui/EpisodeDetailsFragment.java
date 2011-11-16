@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -47,7 +46,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
 
     private static final String TAG = "EpisodeDetails";
 
-    private ImageCache imageCache;
+    private ImageCache mImageCache;
 
     private FetchArtTask mArtTask;
 
@@ -55,12 +54,13 @@ public class EpisodeDetailsFragment extends ListFragment implements
 
     protected boolean isWatched;
 
-    public static EpisodeDetailsFragment newInstance(String episodeId) {
+    public static EpisodeDetailsFragment newInstance(String episodeId, boolean isShowingPoster) {
         EpisodeDetailsFragment f = new EpisodeDetailsFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
         args.putString(Episodes._ID, episodeId);
+        args.putBoolean("showposter", isShowingPoster);
         f.setArguments(args);
 
         return f;
@@ -92,7 +92,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        imageCache = ((SeriesGuideApplication) getActivity().getApplication()).getImageCache();
+        mImageCache = ImageCache.getInstance(getActivity());
 
         setupAdapter();
 
@@ -285,12 +285,13 @@ public class EpisodeDetailsFragment extends ListFragment implements
                     });
 
                     // Poster
-                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ECLAIR_MR1) {
+                    if (getArguments().getBoolean("showposter")
+                            && Build.VERSION.SDK_INT > Build.VERSION_CODES.ECLAIR_MR1) {
                         // using alpha seems not to work on eclair, so only set
                         // a background on froyo+ then
                         final ImageView background = (ImageView) getActivity().findViewById(
                                 R.id.episodedetails_background);
-                        Bitmap bg = imageCache.get(episode
+                        Bitmap bg = mImageCache.get(episode
                                 .getString(EpisodeDetailsQuery.SHOW_POSTER));
                         if (bg != null) {
                             BitmapDrawable drawable = new BitmapDrawable(getResources(), bg);
@@ -313,7 +314,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
 
     protected void onLoadImage(String imagePath, FrameLayout container) {
         if (imagePath.length() != 0) {
-            final Bitmap bitmap = imageCache.get(imagePath);
+            final Bitmap bitmap = mImageCache.get(imagePath);
             final ImageView imageView = (ImageView) container
                     .findViewById(R.id.ImageViewEpisodeImage);
             if (bitmap != null) {
@@ -372,7 +373,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
         protected void onPostExecute(Integer resultCode) {
             switch (resultCode) {
                 case SUCCESS:
-                    Bitmap bitmap = imageCache.get(mPath);
+                    Bitmap bitmap = mImageCache.get(mPath);
                     if (bitmap != null) {
                         mImageView.setImageBitmap(bitmap);
                         return;

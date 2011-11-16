@@ -26,8 +26,6 @@ public class ShowInfo extends BaseActivity {
 
     private static final String TVDB_SHOW_URL = "http://thetvdb.com/?tab=series&id=";
 
-    private ImageCache imageCache;
-
     private String seriesid;
 
     /**
@@ -47,8 +45,6 @@ public class ShowInfo extends BaseActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.context_showinfo));
         actionBar.setDisplayShowTitleEnabled(true);
-
-        imageCache = ((SeriesGuideApplication) getApplication()).getImageCache();
 
         Bundle extras = getIntent().getExtras();
         seriesid = extras.getString(Shows._ID);
@@ -176,7 +172,7 @@ public class ShowInfo extends BaseActivity {
         }
 
         // Poster
-        Bitmap bitmap = imageCache.get(show.getPoster());
+        Bitmap bitmap = ImageCache.getInstance(this).get(show.getPoster());
         if (bitmap != null) {
             showart.setImageBitmap(bitmap);
         } else {

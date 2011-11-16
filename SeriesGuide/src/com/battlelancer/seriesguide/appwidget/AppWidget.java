@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.appwidget;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -95,8 +94,7 @@ public class AppWidget extends AppWidgetProvider {
 
         protected RemoteViews buildUpdate(Context context, String limit, int layout,
                 int itemLayout, Intent updateIntent) {
-            final ImageCache imageCache = ((SeriesGuideApplication) getApplication())
-                    .getImageCache();
+            final ImageCache imageCache = ImageCache.getInstance(context);
 
             // Get the layout for the App Widget, remove existing views
             // RemoteViews views = new RemoteViews(context.getPackageName(),

@@ -137,7 +137,7 @@ public class ImageCache {
 
     public static synchronized ImageCache getInstance(Context ctx) {
         if (_instance == null) {
-            _instance = new ImageCache(ctx);
+            _instance = new ImageCache(ctx.getApplicationContext());
         }
         return _instance;
     }
