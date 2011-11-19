@@ -13,7 +13,6 @@
   <string name="ioerror">Det var en nettverksfeil. Du kan ha begrenset tilgang til TheTVDB.com fra tilkoblingen din akkurat nå. Prøv igjen senere.</string>
   <string name="saxerror">Svaret fra TheTVDB ble ikke forstått. Vennligst prøv igjen senere.</string>
   <string name="offline">Det er ingen aktiv tilkobling til internett rapportert. Kontroller at du er koblet til Internett, og prøv igjen.</string>
-  <string name="whatsnew_title">What\'s new</string>
   <string name="search_hint">Søk episoder</string>
   <string name="search_title">Samsvarende episoder</string>
   <string name="share_episode">Del episode</string>
@@ -69,7 +68,6 @@
   <string name="show_network">på</string>
   <string name="show_pleaseupdate">Prøv å oppdatere denne Vis for å vise mer informasjon (i oversikten, lang trykk på den, velg Oppdater). Om dette ikke hjelper, er det sannsynligvis ingen tilleggsinformasjon i TheTVDB. Gå til deres webområde (www.thetvdb.com) for å lære hvordan du legger til.</string>
   <string name="show_noairtime">Ingen sendetid tilgjengelig</string>
-  <string name="showinimdb">Vis i IMDb</string>
   <string name="noIMDBentry">Ingen IMDB referanse tilgjengelig. Oppdater denne serien eller gå til TheTVDB.com og legge den til.</string>
   <string name="no_seasons">Ooops, det er ingen sesonger for denne serien. Prøv å oppdatere serien (hold fingen over serien, og velg Oppdater).</string>
   <string name="season_watchcount">episoder ikke sett</string>
@@ -185,8 +183,6 @@
   <string name="username">Brukernavn</string>
   <string name="password">Passord</string>
   <string name="apikey">API nøkkel</string>
-  <string name="pref_trakt">Koble fra trakt.tv</string>
-  <string name="pref_traktsummary">Bruk Del knappen for å sette opp trakt.tv</string>
   <string name="pref_traktsync">Synkroniser med trakt.tv</string>
   <string name="pref_traktsyncsummary">Eksperimentell, manuell synkronisering med trakt.tv</string>
   <string name="save">Lagre</string>
@@ -195,7 +191,6 @@
   <string name="trakt_error">deling med trakt.tv mislyktes</string>
   <string name="trakt_decryptfail">passordet kunne ikke dekrypteres</string>
   <string name="trakt_credentials_invalid">påloggingsinformasjon ikke gyldig</string>
-  <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
   <string name="pref_traktintegrate">Integrer med trakt.tv</string>
   <string name="pref_traktintegratesummary">Markert som sett i Oversikt blir delt med trakt.tv</string>
   <string name="donate">Spander en øl (Paypal)</string>

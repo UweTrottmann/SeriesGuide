@@ -34,8 +34,8 @@
   <string name="show_isnotalive">Päättynyt</string>
   <string name="sort">Lajittele</string>
   <string name="menu_updateart">Nouda puuttuvat julisteet</string>
-  <string name="updateall_yes">Update (all)</string>
-  <string name="menu_update_delta">Update (modified only)</string>
+  <string name="updateall_yes">Päivitä (kaikki)</string>
+  <string name="menu_update_delta">Päivitä (vain muokatut)</string>
   <string name="context_updateshow">Päivitä</string>
   <string name="context_showinfo">Näytä tiedot</string>
   <string name="context_marknext">Seuraava jakso katsottu</string>
@@ -59,17 +59,16 @@
   <string name="update_error">Ei voitu päivittää.</string>
   <string name="update_incomplete1">Ei voitu päivittää</string>
   <string name="update_incomplete2">.</string>
-  <string name="update_success">Update successful.</string>
-  <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
+  <string name="update_success">Päivitys onnistui.</string>
+  <string name="imagedownload_incomplete">Päivitys onnistui. Valitettavasti jotkut kuvat eivät lataantuneet. Yritä myöhemmin uudestaan.</string>
   <string name="update_inbackground">Päivitetään...</string>
   <string name="update_inprogress">Päivitys käynnissä. Odota sen päättymistä ja yritä sitten uudestaan.</string>
   <string name="update_nosdcard">Ei voitu päivittää. Ulkoista muistia tai SD-korttia ei ole saatavilla.</string>
-  <string name="update_rebuildsearch">Building episode search index</string>
+  <string name="update_rebuildsearch">Rakennetaan jaksojen hakuindeksiä.</string>
   <string name="show_airs">esitetään</string>
   <string name="show_network">kanavalla</string>
   <string name="show_pleaseupdate">Yritä päivittää tämä ohjelma nähdäksesi enemmän tietoja (päänäkymässä paina ohjelmaa pitkään ja valitse valikosta Päivitä) Jos tämä ei auta, TheTVDB:ssä ei luultavasti ole tarjolla enempää tietoja. Mene heidän sivustolleen (www.thetvdb.com) ja opi, kuinka voit itse lisätä tietoja.</string>
   <string name="show_noairtime">Ei esitysaikoja saatavilla</string>
-  <string name="showinimdb">Näytä IMDb:ssä</string>
   <string name="noIMDBentry">IMDB-viitettä ei ole saatavilla. Päivitä tämä ohjelma tai mene osoitteeseen thetvdb.com ja lisää se.</string>
   <string name="no_seasons">Hupsis, tälle ohjelmalle ei löydy kausia. Yritä päivittää ohjelma(päänäkymässä paina ohjelmaa pitkään ja valitse valikosta Päivitä).</string>
   <string name="season_watchcount">katsomatonta jaksoa</string>
@@ -167,7 +166,7 @@
   <string name="comment">Kirjauskommentti</string>
   <string name="checkinsuccess">Kirjattu onnistuneesti</string>
   <string name="pref_number">Lukumuoto</string>
-  <string name="pref_numbersummary">Switch between 1x01, S01E01 or s01e01 as number format</string>
+  <string name="pref_numbersummary">Vaihda 1x01, S01E01 ja s01e01 lukumuotojen välillä.</string>
   <string name="checkinfailed">Kirjautuminen epäonnistui</string>
   <string name="oauthmessage">Vahvistetaan SeriesGuide GetGluen kanssa...</string>
   <string name="addtocalendar">Lisää kalenteriin</string>
@@ -185,10 +184,6 @@
   <string name="username">Käyttäjänimi</string>
   <string name="password">Salasana</string>
   <string name="apikey">API-avain</string>
-  <string name="pref_trakt">Irrottaudu trakt.tv:sta</string>
-  <string name="pref_traktsummary">Käytä Jaa-painiketta säätäksesi trakt.tv:tä
-
-</string>
   <string name="pref_traktsync">Synkronoi trakt.tv:ssä</string>
   <string name="pref_traktsyncsummary">Kokeellinen, manuaalinen synkronointi trakt.tv:ssä</string>
   <string name="save">Tallenna</string>
@@ -197,7 +192,7 @@
   <string name="trakt_error">trakt.tv:ssä jakaminen epäonnistui</string>
   <string name="trakt_decryptfail">Salasanaa ei voitu purkaa</string>
   <string name="trakt_credentials_invalid">valtuustiedot eivät kelpaa</string>
-  <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
+  <string name="trakt_generalerror">Jokin meni pieleen. Tarkista käyttäjätietosi ja yritä uudelleen.</string>
   <string name="pref_traktintegrate">Integroi trakt.tv</string>
   <string name="pref_traktintegratesummary">Yleiskatsauksessa katsotuksi merkitseminen jaetaan trakt.tv:ssä</string>
   <string name="donate">Osta minulle drinkki (Paypal)</string>
@@ -239,6 +234,6 @@
   <string-array name="showfilter_list">
     <item>Kaikki</item>
     <item>Suosikit</item>
-    <item>Unseen/Upcoming</item>
+    <item>Katsomattomat/Tulevat</item>
   </string-array>
 </resources>
