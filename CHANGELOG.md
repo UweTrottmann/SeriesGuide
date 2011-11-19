@@ -1,6 +1,16 @@
 Change Log
 ==========
 
+Version 2.3.1beta *(2011-11-19)*
+--------------------------------
+
+* Two more air time parsing schemas (e.g. '9:00PM' and '9PM' instead of quasi-standard '9:00 PM'), let me know if there are errors!
+* Major cleanup, report any issues/broken features!
+* Latest translations from crowdin.net. Now with Bulgarian thanks to Martin. Italian and Slovenian included for now despite low translation level.
+* TVDb buttons on show info and episode page
+* Editing of trakt credentials in settings
+* Fixed broken background in episode pager
+
 Version 2.3beta *(2011-11-06)*
 --------------------------------
 
