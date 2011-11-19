@@ -16,14 +16,13 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
-import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
-import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.app.IntentService;
@@ -95,8 +94,7 @@ public class AppWidget extends AppWidgetProvider {
 
         protected RemoteViews buildUpdate(Context context, String limit, int layout,
                 int itemLayout, Intent updateIntent) {
-            final ImageCache imageCache = ((SeriesGuideApplication) getApplication())
-                    .getImageCache();
+            final ImageCache imageCache = ImageCache.getInstance(context);
 
             // Get the layout for the App Widget, remove existing views
             // RemoteViews views = new RemoteViews(context.getPackageName(),
@@ -106,7 +104,7 @@ public class AppWidget extends AppWidgetProvider {
             views.removeAllViews(R.id.LinearLayoutWidget);
 
             // get upcoming shows (name and next episode text)
-            final Cursor upcomingEpisodes = SeriesDatabase.getUpcomingEpisodes(context);
+            final Cursor upcomingEpisodes = DBUtils.getUpcomingEpisodes(context);
 
             if (upcomingEpisodes == null || upcomingEpisodes.getCount() == 0) {
                 // no next episodes exist
@@ -135,12 +133,12 @@ public class AppWidget extends AppWidgetProvider {
                             .getColumnIndexOrThrow(Episodes.TITLE));
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     item.setTextViewText(R.id.textViewWidgetEpisode,
-                            SeriesGuideData.getNextEpisodeString(prefs, season, number, title));
+                            Utils.getNextEpisodeString(prefs, season, number, title));
 
                     // add relative airdate
                     long airtime = upcomingEpisodes.getLong(upcomingEpisodes
                             .getColumnIndexOrThrow(Shows.AIRSTIME));
-                    value = SeriesGuideData.parseDateToLocalRelative(
+                    value = Utils.parseDateToLocalRelative(
                             upcomingEpisodes.getString(upcomingEpisodes
                                     .getColumnIndexOrThrow(Episodes.FIRSTAIRED)), airtime, context);
                     item.setTextViewText(R.id.widgetAirtime, value);
@@ -148,7 +146,7 @@ public class AppWidget extends AppWidgetProvider {
                     // add airtime and network (if any)
                     value = "";
                     if (airtime != -1) {
-                        value = SeriesGuideData.parseMillisecondsToTime(airtime, null,
+                        value = Utils.parseMillisecondsToTime(airtime, null,
                                 getApplicationContext())[0];
                     }
                     String network = upcomingEpisodes.getString(upcomingEpisodes

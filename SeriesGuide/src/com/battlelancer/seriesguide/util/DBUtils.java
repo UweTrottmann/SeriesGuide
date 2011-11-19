@@ -1,13 +1,14 @@
 
-package com.battlelancer.seriesguide;
+package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.util.Lists;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.Series;
 
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 
-public class SeriesDatabase {
+public class DBUtils {
 
     static final String TAG = "SeriesDatabase";
 
@@ -45,7 +46,7 @@ public class SeriesDatabase {
     public static void updateUnwatchedCount(Context context, String seasonid) {
         ContentResolver resolver = context.getContentResolver();
         Date date = new Date();
-        String today = SeriesGuideData.theTVDBDateFormat.format(date);
+        String today = Constants.theTVDBDateFormat.format(date);
         Uri episodesOfSeasonUri = Episodes.buildEpisodesOfSeasonUri(seasonid);
 
         // all a seasons episodes
@@ -104,7 +105,7 @@ public class SeriesDatabase {
      */
     public static Cursor getUpcomingEpisodes(Context context) {
         Date date = new Date();
-        String today = SeriesGuideData.theTVDBDateFormat.format(date);
+        String today = Constants.theTVDBDateFormat.format(date);
 
         String[] projection = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
@@ -122,7 +123,7 @@ public class SeriesDatabase {
 
     public static Cursor getRecentEpisodes(Context context) {
         Date date = new Date();
-        String today = SeriesGuideData.theTVDBDateFormat.format(date);
+        String today = Constants.theTVDBDateFormat.format(date);
 
         String[] projection = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
@@ -298,8 +299,7 @@ public class SeriesDatabase {
     public static void deleteShow(Context context, String id) {
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
         final String showId = String.valueOf(id);
-        final ImageCache imageCache = ((SeriesGuideApplication) context.getApplicationContext())
-                .getImageCache();
+        final ImageCache imageCache = ImageCache.getInstance(context);
 
         // delete images...
         // ...of show
@@ -466,7 +466,7 @@ public class SeriesDatabase {
         if (onlyFutureEpisodes) {
             selection.append(" AND ").append(Episodes.FIRSTAIRED).append(">=?");
             Date date = new Date();
-            String today = SeriesGuideData.theTVDBDateFormat.format(date);
+            String today = Constants.theTVDBDateFormat.format(date);
             selectionArgs = new String[] {
                 today
             };
@@ -492,7 +492,7 @@ public class SeriesDatabase {
                     .getColumnIndexOrThrow(Episodes.NUMBER));
             final String title = unwatched.getString(unwatched
                     .getColumnIndexOrThrow(Episodes.TITLE));
-            String nextEpisodeString = SeriesGuideData.getNextEpisodeString(prefs, season, number,
+            String nextEpisodeString = Utils.getNextEpisodeString(prefs, season, number,
                     title);
 
             // nextairdatetext
@@ -502,7 +502,7 @@ public class SeriesDatabase {
             if (firstAired.length() != 0) {
                 final Series show = getShow(context, id);
                 if (show != null) {
-                    nextAirdateString += SeriesGuideData.parseDateToLocalRelative(firstAired,
+                    nextAirdateString += Utils.parseDateToLocalRelative(firstAired,
                             show.getAirsTime(), context);
                 }
             }

@@ -1,16 +1,17 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
-import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
@@ -19,6 +20,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -47,7 +49,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
 
     private static final String TAG = "EpisodeDetails";
 
-    private ImageCache imageCache;
+    private ImageCache mImageCache;
 
     private FetchArtTask mArtTask;
 
@@ -55,12 +57,13 @@ public class EpisodeDetailsFragment extends ListFragment implements
 
     protected boolean isWatched;
 
-    public static EpisodeDetailsFragment newInstance(String episodeId) {
+    public static EpisodeDetailsFragment newInstance(String episodeId, boolean isShowingPoster) {
         EpisodeDetailsFragment f = new EpisodeDetailsFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
         args.putString(Episodes._ID, episodeId);
+        args.putBoolean("showposter", isShowingPoster);
         f.setArguments(args);
 
         return f;
@@ -92,7 +95,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        imageCache = ((SeriesGuideApplication) getActivity().getApplication()).getImageCache();
+        mImageCache = ImageCache.getInstance(getActivity());
 
         setupAdapter();
 
@@ -171,7 +174,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
         String[] from = new String[] {
                 Episodes.TITLE, Episodes.OVERVIEW, Episodes.NUMBER, Episodes.DVDNUMBER,
                 Episodes.FIRSTAIRED, Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
-                Episodes.RATING, Episodes.IMAGE, Shows.TITLE, Episodes.WATCHED
+                Episodes.RATING, Episodes.IMAGE, Shows.TITLE, Episodes.WATCHED, Shows.REF_SHOW_ID
 
         };
         int[] to = new int[] {
@@ -180,7 +183,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
                 R.id.TextViewEpisodeFirstAirdate, R.id.TextViewEpisodeDirectors,
                 R.id.TextViewEpisodeGuestStars, R.id.TextViewEpisodeWriters, R.id.ratingbar,
                 R.id.imageContainer, R.id.textViewEpisodeDetailsShowName,
-                R.id.TextViewEpisodeWatchedState
+                R.id.TextViewEpisodeWatchedState, R.id.buttonbar_ref
         };
 
         mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.episodedetails, null, from, to,
@@ -211,7 +214,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
                     if (firstAired.length() != 0) {
                         airdate.setText(getString(R.string.episode_firstaired)
                                 + " "
-                                + SeriesGuideData.parseDateToLocal(firstAired,
+                                + Utils.parseDateToLocal(firstAired,
                                         episode.getLong(EpisodeDetailsQuery.SHOW_AIRSTIME),
                                         getActivity()));
                     } else {
@@ -229,7 +232,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
                 if (columnIndex == EpisodeDetailsQuery.DIRECTORS) {
                     // Directors
                     TextView directors = (TextView) view;
-                    String directorsAll = SeriesGuideData.splitAndKitTVDBStrings(episode
+                    String directorsAll = Utils.splitAndKitTVDBStrings(episode
                             .getString(EpisodeDetailsQuery.DIRECTORS));
                     directors.setText(getString(R.string.episode_directors) + " " + directorsAll);
                     return true;
@@ -239,7 +242,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
                     TextView gueststars = (TextView) view;
                     gueststars.setText(getString(R.string.episode_gueststars)
                             + " "
-                            + SeriesGuideData.splitAndKitTVDBStrings(episode
+                            + Utils.splitAndKitTVDBStrings(episode
                                     .getString(EpisodeDetailsQuery.GUESTSTARS)));
                     return true;
                 }
@@ -248,7 +251,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
                     TextView writers = (TextView) view;
                     writers.setText(getString(R.string.episode_writers)
                             + " "
-                            + SeriesGuideData.splitAndKitTVDBStrings(episode
+                            + Utils.splitAndKitTVDBStrings(episode
                                     .getString(EpisodeDetailsQuery.WRITERS)));
                     return true;
                 }
@@ -285,12 +288,13 @@ public class EpisodeDetailsFragment extends ListFragment implements
                     });
 
                     // Poster
-                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ECLAIR_MR1) {
+                    if (getArguments().getBoolean("showposter")
+                            && Build.VERSION.SDK_INT > Build.VERSION_CODES.ECLAIR_MR1) {
                         // using alpha seems not to work on eclair, so only set
                         // a background on froyo+ then
                         final ImageView background = (ImageView) getActivity().findViewById(
                                 R.id.episodedetails_background);
-                        Bitmap bg = imageCache.get(episode
+                        Bitmap bg = mImageCache.get(episode
                                 .getString(EpisodeDetailsQuery.SHOW_POSTER));
                         if (bg != null) {
                             BitmapDrawable drawable = new BitmapDrawable(getResources(), bg);
@@ -298,6 +302,24 @@ public class EpisodeDetailsFragment extends ListFragment implements
                             background.setImageDrawable(drawable);
                         }
                     }
+                    return true;
+                }
+                if (columnIndex == EpisodeDetailsQuery.REF_SHOW_ID) {
+                    final String showId = episode.getString(EpisodeDetailsQuery.REF_SHOW_ID);
+                    final String seasonId = episode.getString(EpisodeDetailsQuery.REF_SEASON_ID);
+
+                    view.findViewById(R.id.buttonShowInfoIMDB).setVisibility(View.GONE);
+                    view.findViewById(R.id.buttonTVDB).setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent(Intent.ACTION_VIEW, Uri
+                                    .parse(Constants.TVDB_EPISODE_URL_1 + showId
+                                            + Constants.TVDB_EPISODE_URL_2 + seasonId
+                                            + Constants.TVDB_EPISODE_URL_3 + getEpisodeId()));
+                            startActivity(i);
+                        }
+                    });
+
                     return true;
                 }
                 return false;
@@ -313,7 +335,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
 
     protected void onLoadImage(String imagePath, FrameLayout container) {
         if (imagePath.length() != 0) {
-            final Bitmap bitmap = imageCache.get(imagePath);
+            final Bitmap bitmap = mImageCache.get(imagePath);
             final ImageView imageView = (ImageView) container
                     .findViewById(R.id.ImageViewEpisodeImage);
             if (bitmap != null) {
@@ -372,7 +394,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
         protected void onPostExecute(Integer resultCode) {
             switch (resultCode) {
                 case SUCCESS:
-                    Bitmap bitmap = imageCache.get(mPath);
+                    Bitmap bitmap = mImageCache.get(mPath);
                     if (bitmap != null) {
                         mImageView.setImageBitmap(bitmap);
                         return;
@@ -387,19 +409,20 @@ public class EpisodeDetailsFragment extends ListFragment implements
     }
 
     private void onToggleWatchState() {
-        SeriesDatabase.markEpisode(getActivity(), getEpisodeId(), !isWatched);
+        DBUtils.markEpisode(getActivity(), getEpisodeId(), !isWatched);
         isWatched = !isWatched;
         getLoaderManager().restartLoader(EPISODE_LOADER, null, this);
     }
 
     interface EpisodeDetailsQuery {
+
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Shows.REF_SHOW_ID, Episodes.OVERVIEW,
                 Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIRED,
                 Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
                 Tables.EPISODES + "." + Episodes.RATING, Episodes.IMAGE, Episodes.DVDNUMBER,
                 Episodes.TITLE, Shows.TITLE, Shows.AIRSTIME, Shows.IMDBID, Shows.RUNTIME,
-                Shows.POSTER
+                Shows.POSTER, Seasons.REF_SEASON_ID
         };
 
         int _ID = 0;
@@ -439,6 +462,8 @@ public class EpisodeDetailsFragment extends ListFragment implements
         int SHOW_RUNTIME = 17;
 
         int SHOW_POSTER = 18;
+
+        int REF_SEASON_ID = 19;
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {

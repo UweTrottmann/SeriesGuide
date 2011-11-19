@@ -1,10 +1,12 @@
 
-package com.battlelancer.seriesguide;
+package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.Series;
 
@@ -22,12 +24,19 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ShowInfo extends BaseActivity {
+public class ShowInfoActivity extends BaseActivity {
     public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
 
-    private ImageCache imageCache;
-
     private String seriesid;
+
+    /**
+     * Google Analytics helper method for easy event tracking.
+     * 
+     * @param label
+     */
+    public void fireTrackerEvent(String label) {
+        AnalyticsUtils.getInstance(this).trackEvent("ShowInfo", "Click", label, 0);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +46,6 @@ public class ShowInfo extends BaseActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.context_showinfo));
         actionBar.setDisplayShowTitleEnabled(true);
-
-        imageCache = ((SeriesGuideApplication) getApplication()).getImageCache();
 
         Bundle extras = getIntent().getExtras();
         seriesid = extras.getString(Shows._ID);
@@ -65,9 +72,10 @@ public class ShowInfo extends BaseActivity {
         TextView runtime = (TextView) findViewById(R.id.TextViewShowInfoRuntime);
         TextView status = (TextView) findViewById(R.id.TextViewShowInfoStatus);
         ImageView showart = (ImageView) findViewById(R.id.ImageViewShowInfoPoster);
-        View showInIMDB = (View) findViewById(R.id.buttonShowInfoIMDB);
+        View imdbButton = (View) findViewById(R.id.buttonShowInfoIMDB);
+        View tvdbButton = (View) findViewById(R.id.buttonTVDB);
 
-        final Series show = SeriesDatabase.getShow(this, seriesid);
+        final Series show = DBUtils.getShow(this, seriesid);
         if (show == null) {
             finish();
         }
@@ -86,7 +94,7 @@ public class ShowInfo extends BaseActivity {
         if (show.getAirsDayOfWeek().length() == 0 || show.getAirsTime() == -1) {
             airstime.setText(getString(R.string.show_noairtime));
         } else {
-            String[] values = SeriesGuideData.parseMillisecondsToTime(show.getAirsTime(),
+            String[] values = Utils.parseMillisecondsToTime(show.getAirsTime(),
                     show.getAirsDayOfWeek(), getApplicationContext());
             airstime.setText(getString(R.string.show_airs) + " " + values[1] + " " + values[0]);
         }
@@ -109,15 +117,15 @@ public class ShowInfo extends BaseActivity {
 
         // Others
         actors.setText(getString(R.string.show_actors) + " "
-                + SeriesGuideData.splitAndKitTVDBStrings(show.getActors()));
+                + Utils.splitAndKitTVDBStrings(show.getActors()));
         contentrating.setText(getString(R.string.show_contentrating) + " "
                 + show.getContentRating());
         firstaired.setText(getString(R.string.show_firstaired)
                 + " "
-                + SeriesGuideData.parseDateToLocal(show.getFirstAired(), show.getAirsTime(),
+                + Utils.parseDateToLocal(show.getFirstAired(), show.getAirsTime(),
                         getApplicationContext()));
         genres.setText(getString(R.string.show_genres) + " "
-                + SeriesGuideData.splitAndKitTVDBStrings(show.getGenres()));
+                + Utils.splitAndKitTVDBStrings(show.getGenres()));
         String ratingText = show.getRating();
         if (ratingText != null && ratingText.length() != 0) {
             RatingBar ratingBar = (RatingBar) findViewById(R.id.bar);
@@ -127,34 +135,45 @@ public class ShowInfo extends BaseActivity {
         runtime.setText(getString(R.string.show_runtime) + " " + show.getRuntime() + " "
                 + getString(R.string.show_airtimeunit));
 
-        // IMDB button
+        // IMDb button
         final String imdbid = show.getImdbId();
-        showInIMDB.setOnClickListener(new OnClickListener() {
+        if (imdbButton != null) {
+            imdbButton.setOnClickListener(new OnClickListener() {
+                public void onClick(View v) {
+                    fireTrackerEvent("IMDb");
 
-            public void onClick(View v) {
-                // track event
-                AnalyticsUtils.getInstance(ShowInfo.this).trackEvent("ShowInfo", "Click",
-                        "Show in IMDB", 0);
-
-                if (imdbid.length() != 0) {
-                    Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("imdb:///title/"
-                            + imdbid + "/"));
-                    try {
-                        startActivity(myIntent);
-                    } catch (ActivityNotFoundException e) {
-                        myIntent = new Intent(Intent.ACTION_VIEW, Uri
-                                .parse(IMDB_TITLE_URL + imdbid));
-                        startActivity(myIntent);
+                    if (imdbid.length() != 0) {
+                        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("imdb:///title/"
+                                + imdbid + "/"));
+                        try {
+                            startActivity(myIntent);
+                        } catch (ActivityNotFoundException e) {
+                            myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_TITLE_URL
+                                    + imdbid));
+                            startActivity(myIntent);
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), getString(R.string.noIMDBentry),
+                                Toast.LENGTH_LONG).show();
                     }
-                } else {
-                    Toast.makeText(getApplicationContext(), getString(R.string.noIMDBentry),
-                            Toast.LENGTH_LONG).show();
                 }
-            }
-        });
+            });
+        }
+
+        // TVDb button
+        final String tvdbId = show.getId();
+        if (tvdbButton != null) {
+            tvdbButton.setOnClickListener(new OnClickListener() {
+                public void onClick(View v) {
+                    fireTrackerEvent("TVDb");
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TVDB_SHOW_URL + tvdbId));
+                    startActivity(i);
+                }
+            });
+        }
 
         // Poster
-        Bitmap bitmap = imageCache.get(show.getPoster());
+        Bitmap bitmap = ImageCache.getInstance(this).get(show.getPoster());
         if (bitmap != null) {
             showart.setImageBitmap(bitmap);
         } else {

@@ -1,12 +1,11 @@
 
-package com.battlelancer.seriesguide;
+package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
-import com.battlelancer.seriesguide.util.UIUtils;
+import com.battlelancer.seriesguide.util.Utils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -33,7 +32,7 @@ import java.io.IOException;
  * @author ccollins
  * @author trottmann.uwe
  */
-public class BackupDelete extends BaseActivity {
+public class BackupDeleteActivity extends BaseActivity {
 
     private Button exportDbToSdButton;
 
@@ -135,7 +134,7 @@ public class BackupDelete extends BaseActivity {
             String errorMsg = null;
             try {
                 file.createNewFile();
-                FileUtil.copyFile(dbFile, file);
+                Utils.copyFile(dbFile, file);
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage(), e);
                 errorMsg = e.getMessage();
@@ -151,17 +150,17 @@ public class BackupDelete extends BaseActivity {
             }
             if (errorMsg == null) {
                 // track event
-                AnalyticsUtils.getInstance(BackupDelete.this).trackEvent(TAG, "Backup", "Success",
+                AnalyticsUtils.getInstance(BackupDeleteActivity.this).trackEvent(TAG, "Backup", "Success",
                         0);
 
-                Toast.makeText(BackupDelete.this, getString(R.string.backup_success),
+                Toast.makeText(BackupDeleteActivity.this, getString(R.string.backup_success),
                         Toast.LENGTH_SHORT).show();
             } else {
                 // track event
-                AnalyticsUtils.getInstance(BackupDelete.this)
+                AnalyticsUtils.getInstance(BackupDeleteActivity.this)
                         .trackEvent(TAG, "Backup", errorMsg, 0);
 
-                Toast.makeText(BackupDelete.this,
+                Toast.makeText(BackupDeleteActivity.this,
                         getString(R.string.backup_failed) + " - " + errorMsg, Toast.LENGTH_LONG)
                         .show();
             }
@@ -200,7 +199,7 @@ public class BackupDelete extends BaseActivity {
 
             try {
                 dbFile.createNewFile();
-                FileUtil.copyFile(dbBackupFile, dbFile);
+                Utils.copyFile(dbBackupFile, dbFile);
 
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
                         .putBoolean(SeriesGuidePreferences.KEY_DATABASEIMPORTED, true).commit();
@@ -236,16 +235,16 @@ public class BackupDelete extends BaseActivity {
             }
             if (errMsg == null) {
                 // track event
-                AnalyticsUtils.getInstance(BackupDelete.this).trackEvent(TAG, "Import", "Success",
+                AnalyticsUtils.getInstance(BackupDeleteActivity.this).trackEvent(TAG, "Import", "Success",
                         0);
 
-                Toast.makeText(BackupDelete.this, getString(R.string.import_success),
+                Toast.makeText(BackupDeleteActivity.this, getString(R.string.import_success),
                         Toast.LENGTH_SHORT).show();
             } else {
                 // track event
-                AnalyticsUtils.getInstance(BackupDelete.this).trackEvent(TAG, "Import", errMsg, 0);
+                AnalyticsUtils.getInstance(BackupDeleteActivity.this).trackEvent(TAG, "Import", errMsg, 0);
 
-                Toast.makeText(BackupDelete.this,
+                Toast.makeText(BackupDeleteActivity.this,
                         getString(R.string.import_failed) + " - " + errMsg, Toast.LENGTH_LONG)
                         .show();
             }
@@ -258,12 +257,12 @@ public class BackupDelete extends BaseActivity {
     protected Dialog onCreateDialog(int id) {
         switch (id) {
             case EXPORT_DIALOG:
-                return new AlertDialog.Builder(BackupDelete.this)
+                return new AlertDialog.Builder(BackupDeleteActivity.this)
                         .setMessage(getString(R.string.backup_question))
                         .setPositiveButton(getString(R.string.backup_yes),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface arg0, int arg1) {
-                                        if (UIUtils.isExtStorageAvailable()) {
+                                        if (Utils.isExtStorageAvailable()) {
                                             // track event
                                             fireTrackerEvent("Do Backup");
 
@@ -273,19 +272,19 @@ public class BackupDelete extends BaseActivity {
                                             // track event
                                             fireTrackerEvent("Don't Backup");
 
-                                            Toast.makeText(BackupDelete.this,
+                                            Toast.makeText(BackupDeleteActivity.this,
                                                     getString(R.string.backup_failed_nosd),
                                                     Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 }).setNegativeButton(getString(R.string.backup_no), null).create();
             case IMPORT_DIALOG:
-                return new AlertDialog.Builder(BackupDelete.this)
+                return new AlertDialog.Builder(BackupDeleteActivity.this)
                         .setMessage(getString(R.string.import_question))
                         .setPositiveButton(getString(R.string.import_yes),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface arg0, int arg1) {
-                                        if (UIUtils.isExtStorageAvailable()) {
+                                        if (Utils.isExtStorageAvailable()) {
                                             // track event
                                             fireTrackerEvent("Do Import");
 
@@ -295,18 +294,18 @@ public class BackupDelete extends BaseActivity {
                                             // track event
                                             fireTrackerEvent("Don't Import");
 
-                                            Toast.makeText(BackupDelete.this,
+                                            Toast.makeText(BackupDeleteActivity.this,
                                                     getString(R.string.import_failed_nosd),
                                                     Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 }).setNegativeButton(getString(R.string.import_no), null).create();
             case EXPORT_PROGRESS:
-                exportProgress = new ProgressDialog(BackupDelete.this);
+                exportProgress = new ProgressDialog(BackupDeleteActivity.this);
                 exportProgress.setMessage(getString(R.string.backup_inprogress));
                 return exportProgress;
             case IMPORT_PROGRESS:
-                importProgress = new ProgressDialog(BackupDelete.this);
+                importProgress = new ProgressDialog(BackupDeleteActivity.this);
                 importProgress.setMessage(getString(R.string.import_inprogress));
                 return importProgress;
         }

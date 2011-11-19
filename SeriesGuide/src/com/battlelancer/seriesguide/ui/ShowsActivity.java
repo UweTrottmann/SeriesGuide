@@ -1,19 +1,16 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
-import com.battlelancer.seriesguide.SeriesGuideData;
-import com.battlelancer.seriesguide.SeriesGuideData.ShowSorting;
-import com.battlelancer.seriesguide.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.ShowInfo;
 import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EulaHelper;
-import com.battlelancer.seriesguide.util.UIUtils;
 import com.battlelancer.seriesguide.util.UpdateTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
 import android.app.AlertDialog;
@@ -138,7 +135,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private String mFailedShowsString;
 
-    private ShowSorting mSorting;
+    private Constants.ShowSorting mSorting;
 
     private long mToDeleteId;
 
@@ -358,7 +355,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
                                 new Thread(new Runnable() {
                                     public void run() {
-                                        SeriesDatabase.deleteShow(getApplicationContext(),
+                                        DBUtils.deleteShow(getApplicationContext(),
                                                 String.valueOf(mToDeleteId));
                                         if (progress.isShowing()) {
                                             progress.dismiss();
@@ -487,14 +484,14 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case CONTEXT_SHOWINFO:
                 fireTrackerEvent("Display show info");
 
-                Intent i = new Intent(this, ShowInfo.class);
+                Intent i = new Intent(this, ShowInfoActivity.class);
                 i.putExtra(Shows._ID, String.valueOf(info.id));
                 startActivity(i);
                 return true;
             case CONTEXT_MARKNEXT:
                 fireTrackerEvent("Mark next episode");
 
-                SeriesDatabase.markNextEpisode(this, info.id);
+                DBUtils.markNextEpisode(this, info.id);
                 Thread t = new UpdateLatestEpisodeThread(this, String.valueOf(info.id));
                 t.start();
                 return true;
@@ -553,7 +550,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 }
 
                 // already fail if there is no external storage
-                if (!UIUtils.isExtStorageAvailable()) {
+                if (!Utils.isExtStorageAvailable()) {
                     Toast.makeText(this, getString(R.string.update_nosdcard), Toast.LENGTH_LONG)
                             .show();
                 } else {
@@ -604,7 +601,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         public void run() {
             if (mShowId != null) {
                 // update single show
-                SeriesDatabase.updateLatestEpisode(mContext, mShowId);
+                DBUtils.updateLatestEpisode(mContext, mShowId);
             } else {
                 // update all shows
                 final Cursor shows = mContext.getContentResolver().query(Shows.CONTENT_URI,
@@ -613,7 +610,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                         }, null, null, null);
                 while (shows.moveToNext()) {
                     String id = shows.getString(0);
-                    SeriesDatabase.updateLatestEpisode(mContext, id);
+                    DBUtils.updateLatestEpisode(mContext, id);
                 }
                 shows.close();
             }
@@ -843,14 +840,14 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         updateSorting(prefs);
 
         // between-version upgrade code
-        int lastVersion = prefs.getInt(SeriesGuideData.KEY_VERSION, -1);
+        int lastVersion = prefs.getInt(SeriesGuidePreferences.KEY_VERSION, -1);
         try {
             int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
                     PackageManager.GET_META_DATA).versionCode;
             if (currentVersion > lastVersion) {
                 if (lastVersion < VER_TRAKT_SEC_CHANGES) {
-                        prefs.edit().putString(SeriesGuidePreferences.PREF_TRAKTPWD, null).commit();
-                        prefs.edit().putString(SeriesGuidePreferences.KEY_SECURE, null).commit();
+                    prefs.edit().putString(SeriesGuidePreferences.KEY_TRAKTPWD, null).commit();
+                    prefs.edit().putString(SeriesGuidePreferences.KEY_SECURE, null).commit();
                 }
 
                 // BETA warning dialog switch
@@ -858,7 +855,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 // showDialog(WHATS_NEW_DIALOG);
 
                 // set this as lastVersion
-                prefs.edit().putInt(SeriesGuideData.KEY_VERSION, currentVersion).commit();
+                prefs.edit().putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion).commit();
             }
         } catch (NameNotFoundException e) {
             // this should never happen
@@ -874,14 +871,14 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
      * @return Returns true if the value changed, false otherwise.
      */
     private boolean updateSorting(SharedPreferences prefs) {
-        final ShowSorting oldSorting = mSorting;
+        final Constants.ShowSorting oldSorting = mSorting;
         final CharSequence[] items = getResources().getStringArray(R.array.shsortingData);
         final String sortsetting = prefs.getString(SeriesGuidePreferences.KEY_SHOWSSORTORDER,
                 "alphabetic");
 
         for (int i = 0; i < items.length; i++) {
             if (sortsetting.equals(items[i])) {
-                mSorting = ShowSorting.values()[i];
+                mSorting = Constants.ShowSorting.values()[i];
                 break;
             }
         }
@@ -911,7 +908,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 selection = Shows.NEXTAIRDATE + "!=? AND julianday(" + Shows.NEXTAIRDATE
                         + ") <= julianday('now')";
                 selectionArgs = new String[] {
-                    SeriesDatabase.UNKNOWN_NEXT_AIR_DATE
+                    DBUtils.UNKNOWN_NEXT_AIR_DATE
                 };
                 break;
         }
@@ -1061,7 +1058,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             }
 
             // airday
-            String[] values = SeriesGuideData.parseMillisecondsToTime(
+            String[] values = Utils.parseMillisecondsToTime(
                     mCursor.getLong(ShowsQuery.AIRSTIME),
                     mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), ShowsActivity.this);
             viewHolder.airsTime.setText(values[1] + " " + values[0]);
@@ -1140,8 +1137,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private void setPosterBitmap(ImageView poster, String path, boolean isBusy) {
         Bitmap bitmap = null;
         if (path.length() != 0) {
-            bitmap = ((SeriesGuideApplication) getApplication()).getImageCache().getThumb(path,
-                    isBusy);
+            bitmap = ImageCache.getInstance(this).getThumb(path, isBusy);
         }
 
         if (bitmap != null) {

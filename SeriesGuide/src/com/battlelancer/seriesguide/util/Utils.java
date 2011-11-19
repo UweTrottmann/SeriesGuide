@@ -1,19 +1,25 @@
 
-package com.battlelancer.seriesguide;
+package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,98 +28,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class SeriesGuideData {
-
-    public static final SimpleDateFormat theTVDBDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-    public static final String CHANGELOG_URL = "http://code.google.com/p/seriesguide/wiki/ChangeLog";
-
-    public static final String KEY_VERSION = "oldversioncode";
-
-    public static final String KEY_SHOWUPDATEDIALOG = "showupdatealldialog";
-
-    public static final String KEY_HIDEIMAGES = "hideimages";
-
-    public static final String WEBPROPERTYID = "UA-3577058-7";
-
-    public static final String KEY_GOOGLEANALYTICS = "enableGAnalytics";
-
-    public static final String KEY_LOCKLIST = "locklist";
-
-    public static final String KEY_GETGLUE_COMMENT = "com.battlelancer.seriesguide.getglue.comment";
-
-    public static final String KEY_GETGLUE_IMDBID = "com.battlelancer.seriesguide.getglue.imdbid";
-
-    public static enum EpisodeSorting {
-        LATEST_FIRST(0, Episodes.NUMBER + " desc"), OLDEST_FIRST(1, Episodes.NUMBER + " asc"), UNWATCHED_FIRST(
-                2, Episodes.WATCHED + " asc," + Episodes.NUMBER + " asc"), ALPHABETICAL_ASC(3,
-                Episodes.TITLE + " asc"), ALPHABETICAL_DESC(4, Episodes.TITLE + " desc"), DVDLATEST_FIRST(
-                5, Episodes.DVDNUMBER + " desc," + Episodes.NUMBER + " desc"), DVDOLDEST_FIRST(6,
-                Episodes.DVDNUMBER + " asc," + Episodes.NUMBER + " asc");
-
-        private final int index;
-
-        private final String query;
-
-        EpisodeSorting(int index, String query) {
-            this.index = index;
-            this.query = query;
-        }
-
-        public int index() {
-            return index;
-        }
-
-        public String query() {
-            return query;
-        }
-    }
-
-    public static enum SeasonSorting {
-        LATEST_FIRST(0, Seasons.COMBINED + " desc"), OLDEST_FIRST(1, Seasons.COMBINED + " asc");
-
-        private final int index;
-
-        private final String query;
-
-        SeasonSorting(int index, String query) {
-            this.index = index;
-            this.query = query;
-        }
-
-        public int index() {
-            return index;
-        }
-
-        public String query() {
-            return query;
-        }
-    }
-
-    public static enum ShowSorting {
-        ALPHABETIC(0, Shows.TITLE + " asc"), UPCOMING(1, Shows.NEXTAIRDATE + " asc,"
-                + Shows.AIRSTIME + " asc," + Shows.TITLE + " asc"), FAVORITES_FIRST(2,
-                Shows.FAVORITE + " desc," + Shows.TITLE + " asc"), FAVORITES_UPCOMING(3,
-                Shows.FAVORITE + " desc," + Shows.NEXTAIRDATE + " asc," + Shows.AIRSTIME + " asc,"
-                        + Shows.TITLE + " asc");
-
-        private final int index;
-
-        private final String query;
-
-        ShowSorting(int index, String query) {
-            this.index = index;
-            this.query = query;
-        }
-
-        public int index() {
-            return index;
-        }
-
-        public String query() {
-            return query;
-        }
-    }
+public class Utils {
 
     /**
      * Returns the Calendar constant (e.g. <code>Calendar.SUNDAY</code>) for a
@@ -244,7 +159,7 @@ public class SeriesGuideData {
         }
 
         // set airday
-        Date date = theTVDBDateFormat.parse(tvdbDateString);
+        Date date = Constants.theTVDBDateFormat.parse(tvdbDateString);
         cal.set(Calendar.DATE, date.getDate());
         cal.set(Calendar.MONTH, date.getMonth());
         cal.set(Calendar.YEAR, date.getYear() + 1900);
@@ -280,30 +195,50 @@ public class SeriesGuideData {
     public static final SimpleDateFormat thetvdbTimeFormatAMPM = new SimpleDateFormat("h:mm aa",
             Locale.US);
 
+    public static final SimpleDateFormat thetvdbTimeFormatAMPMalt = new SimpleDateFormat("h:mmaa",
+            Locale.US);
+
+    public static final SimpleDateFormat thetvdbTimeFormatAMPMshort = new SimpleDateFormat("h aa",
+            Locale.US);
+
     public static final SimpleDateFormat thetvdbTimeFormatNormal = new SimpleDateFormat("H:mm",
             Locale.US);
 
     public static long parseTimeToMilliseconds(String tvdbTimeString) {
-        Date time;
+        Date time = null;
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
-        try {
-            time = thetvdbTimeFormatAMPM.parse(tvdbTimeString);
+
+        // try parsing with three different formats, most of the time the first
+        // should match
+        if (tvdbTimeString.length() != 0) {
+            try {
+                time = thetvdbTimeFormatAMPM.parse(tvdbTimeString);
+            } catch (ParseException e) {
+                try {
+                    time = thetvdbTimeFormatAMPMalt.parse(tvdbTimeString);
+                } catch (ParseException e1) {
+                    try {
+                        time = thetvdbTimeFormatAMPMshort.parse(tvdbTimeString);
+                    } catch (ParseException e2) {
+                        try {
+                            time = thetvdbTimeFormatNormal.parse(tvdbTimeString);
+                        } catch (ParseException e3) {
+                            // string may be wrongly formatted
+                            time = null;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (time != null) {
             cal.set(Calendar.HOUR_OF_DAY, time.getHours());
             cal.set(Calendar.MINUTE, time.getMinutes());
             cal.set(Calendar.SECOND, 0);
             return cal.getTimeInMillis();
-        } catch (ParseException e) {
-            try {
-                time = thetvdbTimeFormatNormal.parse(tvdbTimeString);
-                cal.set(Calendar.HOUR_OF_DAY, time.getHours());
-                cal.set(Calendar.MINUTE, time.getMinutes());
-                cal.set(Calendar.SECOND, 0);
-                return cal.getTimeInMillis();
-            } catch (ParseException e1) {
-                // string may be empty or wrongly formatted
-            }
+        } else {
+            return -1;
         }
-        return -1;
     }
 
     public static String[] parseMillisecondsToTime(long milliseconds, String dayofweek,
@@ -359,16 +294,6 @@ public class SeriesGuideData {
         return new String[] {
                 timeFormat.format(date), day
         };
-    }
-
-    public static boolean isNetworkAvailable(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        if (activeNetworkInfo != null) {
-            return activeNetworkInfo.isConnected();
-        }
-        return false;
     }
 
     /**
@@ -438,30 +363,67 @@ public class SeriesGuideData {
      * @param context
      * @return a EpisodeSorting enum set to the current sorting
      */
-    public static EpisodeSorting getEpisodeSorting(Context context) {
+    public static Constants.EpisodeSorting getEpisodeSorting(Context context) {
         String[] epsortingData = context.getResources().getStringArray(R.array.epsortingData);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
                 .getApplicationContext());
         String currentPref = prefs.getString("episodeSorting", epsortingData[1]);
 
-        EpisodeSorting sorting;
+        Constants.EpisodeSorting sorting;
         if (currentPref.equals(epsortingData[0])) {
-            sorting = EpisodeSorting.LATEST_FIRST;
+            sorting = Constants.EpisodeSorting.LATEST_FIRST;
         } else if (currentPref.equals(epsortingData[1])) {
-            sorting = EpisodeSorting.OLDEST_FIRST;
+            sorting = Constants.EpisodeSorting.OLDEST_FIRST;
         } else if (currentPref.equals(epsortingData[2])) {
-            sorting = EpisodeSorting.UNWATCHED_FIRST;
+            sorting = Constants.EpisodeSorting.UNWATCHED_FIRST;
         } else if (currentPref.equals(epsortingData[3])) {
-            sorting = EpisodeSorting.ALPHABETICAL_ASC;
+            sorting = Constants.EpisodeSorting.ALPHABETICAL_ASC;
         } else if (currentPref.equals(epsortingData[4])) {
-            sorting = EpisodeSorting.ALPHABETICAL_DESC;
+            sorting = Constants.EpisodeSorting.ALPHABETICAL_DESC;
         } else if (currentPref.equals(epsortingData[5])) {
-            sorting = EpisodeSorting.DVDLATEST_FIRST;
+            sorting = Constants.EpisodeSorting.DVDLATEST_FIRST;
         } else {
-            sorting = EpisodeSorting.DVDOLDEST_FIRST;
+            sorting = Constants.EpisodeSorting.DVDOLDEST_FIRST;
         }
 
         return sorting;
+    }
+
+    public static boolean isHoneycomb() {
+        // Can use static final constants like HONEYCOMB, declared in later
+        // versions
+        // of the OS since they are inlined at compile time. This is guaranteed
+        // behavior.
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+    }
+
+    public static boolean isExtStorageAvailable() {
+        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetworkInfo != null) {
+            return activeNetworkInfo.isConnected();
+        }
+        return false;
+    }
+
+    public static void copyFile(File src, File dst) throws IOException {
+        FileChannel inChannel = new FileInputStream(src).getChannel();
+        FileChannel outChannel = new FileOutputStream(dst).getChannel();
+        try {
+            inChannel.transferTo(0, inChannel.size(), outChannel);
+        } finally {
+            if (inChannel != null) {
+                inChannel.close();
+            }
+            if (outChannel != null) {
+                outChannel.close();
+            }
+        }
     }
 
 }

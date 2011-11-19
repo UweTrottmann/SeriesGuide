@@ -2,15 +2,20 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.SeriesGuideData;
-import com.battlelancer.seriesguide.SeriesGuideData.EpisodeSorting;
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.thetvdbapi.ImageCache;
 import com.viewpagerindicator.TitlePageIndicator;
 import com.viewpagerindicator.TitleProvider;
 
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBar;
@@ -18,6 +23,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,19 +47,33 @@ public class EpisodeDetailsActivity extends BaseActivity {
         String episodeId = getIntent().getExtras().getString(Episodes._ID);
         int startPosition = 0;
 
-        // Lookup season of episode
-        Cursor episode = getContentResolver().query(Episodes.buildEpisodeUri(episodeId),
+        // Lookup show poster and season of episode
+        Cursor episode = getContentResolver().query(Episodes.buildEpisodeWithShowUri(episodeId),
                 new String[] {
-                    Seasons.REF_SEASON_ID
+                        Seasons.REF_SEASON_ID, Shows.POSTER
                 }, null, null, null);
 
         if (episode != null && episode.moveToFirst()) {
-            String seasonId = episode.getString(0);
+
+            // set show poster as background
+            String posterPath = episode.getString(1);
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ECLAIR_MR1) {
+                // using alpha seems not to work on eclair, so only set
+                // a background on froyo+ then
+                final ImageView background = (ImageView) findViewById(R.id.background);
+                Bitmap bg = ImageCache.getInstance(this).get(posterPath);
+                if (bg != null) {
+                    BitmapDrawable drawable = new BitmapDrawable(getResources(), bg);
+                    drawable.setAlpha(50);
+                    background.setImageDrawable(drawable);
+                }
+            }
 
             // get episode sorting
-            EpisodeSorting sorting = SeriesGuideData.getEpisodeSorting(this);
+            Constants.EpisodeSorting sorting = Utils.getEpisodeSorting(this);
 
             // lookup episodes of season
+            String seasonId = episode.getString(0);
             Cursor episodeCursor = getContentResolver().query(
                     Episodes.buildEpisodesOfSeasonUri(seasonId), new String[] {
                             Episodes._ID, Episodes.NUMBER, Episodes.SEASON
@@ -75,6 +95,9 @@ public class EpisodeDetailsActivity extends BaseActivity {
                     i++;
                 }
             }
+
+            episodeCursor.close();
+            episode.close();
         }
 
         SharedPreferences prefs = PreferenceManager
@@ -105,7 +128,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return EpisodeDetailsFragment.newInstance(mEpisodes.get(position).getId());
+            return EpisodeDetailsFragment.newInstance(mEpisodes.get(position).getId(), false);
         }
 
         @Override
@@ -116,7 +139,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
         @Override
         public String getTitle(int position) {
             Episode episode = mEpisodes.get(position);
-            return SeriesGuideData.getEpisodeNumber(mPrefs, episode.getSeason(),
+            return Utils.getEpisodeNumber(mPrefs, episode.getSeason(),
                     episode.getNumber());
         }
 

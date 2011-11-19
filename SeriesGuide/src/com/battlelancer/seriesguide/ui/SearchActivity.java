@@ -1,11 +1,10 @@
 
-package com.battlelancer.seriesguide;
+package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 
 import android.app.ListActivity;
@@ -22,7 +21,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 
-public class SearchSeriesGuide extends ListActivity {
+public class SearchActivity extends ListActivity {
 
     private static final String TAG = "SearchSeriesGuide";
 

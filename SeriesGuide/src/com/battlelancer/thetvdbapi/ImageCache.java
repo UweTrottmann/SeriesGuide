@@ -17,9 +17,9 @@
 
 package com.battlelancer.thetvdbapi;
 
-import com.battlelancer.seriesguide.SeriesGuideData;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
-import com.battlelancer.seriesguide.util.UIUtils;
+import com.battlelancer.seriesguide.util.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -107,10 +107,10 @@ public class ImageCache {
         listener = new OnSharedPreferenceChangeListener() {
 
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                if (key.equalsIgnoreCase(SeriesGuideData.KEY_HIDEIMAGES)) {
+                if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_HIDEIMAGES)) {
 
                     // remove or add .nomedia file
-                    if (sharedPreferences.getBoolean(SeriesGuideData.KEY_HIDEIMAGES, true)) {
+                    if (sharedPreferences.getBoolean(SeriesGuidePreferences.KEY_HIDEIMAGES, true)) {
                         // track event
                         AnalyticsUtils.getInstance(mCtx).trackEvent("Settings", "Hide images",
                                 "Enable", 0);
@@ -137,7 +137,7 @@ public class ImageCache {
 
     public static synchronized ImageCache getInstance(Context ctx) {
         if (_instance == null) {
-            _instance = new ImageCache(ctx);
+            _instance = new ImageCache(ctx.getApplicationContext());
         }
         return _instance;
     }
@@ -146,7 +146,7 @@ public class ImageCache {
         new File(mSecondLevelCacheDir).mkdirs();
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mCtx);
-        if (sharedPreferences.getBoolean(SeriesGuideData.KEY_HIDEIMAGES, true)) {
+        if (sharedPreferences.getBoolean(SeriesGuidePreferences.KEY_HIDEIMAGES, true)) {
             try {
                 new File(mSecondLevelCacheDir + "/.nomedia").createNewFile();
             } catch (IOException e) {
@@ -274,7 +274,7 @@ public class ImageCache {
     }
 
     public Bitmap put(String imageUrl, Bitmap bitmap) {
-        if (UIUtils.isExtStorageAvailable()) {
+        if (Utils.isExtStorageAvailable()) {
             // make sure directories exist
             createDirectories();
             File imageFile = getImageFile(imageUrl);

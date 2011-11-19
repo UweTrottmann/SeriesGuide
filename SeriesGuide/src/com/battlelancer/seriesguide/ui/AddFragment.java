@@ -1,7 +1,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.util.UIUtils;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.SearchResult;
 
 import android.os.Bundle;
@@ -32,7 +32,7 @@ public class AddFragment extends ListFragment {
 
     protected void setSearchResults(List<SearchResult> searchResults) {
         mAdapter.clear();
-        if (UIUtils.isHoneycomb()) {
+        if (Utils.isHoneycomb()) {
             mAdapter.addAll(searchResults);
         } else {
             for (SearchResult searchResult : searchResults) {

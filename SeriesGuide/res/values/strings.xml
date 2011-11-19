@@ -84,9 +84,8 @@
     <string name="show_network">on</string>
     <string name="show_pleaseupdate">Try to update this show to display more information (in the overview, long-press on it, select Update). If this doesn\'t help, there is likely no additional information in TheTVDB. Go to their site (www.thetvdb.com) to learn how to add some.</string>
     <string name="show_noairtime">No air times available</string>
-    <string name="showinimdb">Show in IMDb</string>
     <string name="noIMDBentry">No IMDB reference available. Update this show or go to thetvdb.com and add it.</string>
-
+        
     <!-- Season list -->
     <string name="no_seasons">Ooops, there are no seasons for this show. Try updating the show (in the overview, long-press on it, select Update).</string>
     <string name="season_watchcount">episodes not watched</string>
@@ -240,8 +239,8 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="apikey">API key</string>
-    <string name="pref_trakt">Disconnect trakt.tv</string>
-    <string name="pref_traktsummary">Use the Share buttons to setup trakt.tv</string>
+    <string name="pref_trakt">trakt.tv credentials</string>
+    <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
     <string name="pref_traktsync">Sync with trakt.tv</string>
     <string name="pref_traktsyncsummary">Experimental, manual syncing with trakt.tv</string>
     <string name="save">Save</string>
@@ -280,6 +279,8 @@
     <string name="app_name">SeriesGuide</string>
     <string name="whatsnew_content">- Redesign of UI and backend (try using it in landscape, or on Android 3.0+!).\n\n- New time offset setting.\n\n- Remove single episodes.\n\n- Long-clicking on Back takes you to the show list.\n\n- Dropped support for Android 1.6\n\n- Much more...</string>
     <string name="helptranslate">Help translate SeriesGuide</string>
+    <string name="imdb">IMDb</string>
+    <string name="tvdb">TVDb</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>

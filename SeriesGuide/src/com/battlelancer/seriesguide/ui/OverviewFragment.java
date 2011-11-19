@@ -16,15 +16,13 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
-import com.battlelancer.seriesguide.SeriesGuideData;
-import com.battlelancer.seriesguide.ShowInfo;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.Series;
@@ -101,7 +99,7 @@ public class OverviewFragment extends Fragment {
             getActivity().finish();
         }
 
-        imageCache = ((SeriesGuideApplication) getActivity().getApplication()).getImageCache();
+        imageCache = ImageCache.getInstance(getActivity());
 
         fillShowData();
 
@@ -207,7 +205,7 @@ public class OverviewFragment extends Fragment {
     }
 
     private void fillShowData() {
-        show = SeriesDatabase.getShow(getActivity(), getShowId());
+        show = DBUtils.getShow(getActivity(), getShowId());
 
         if (show == null) {
             return;
@@ -256,7 +254,7 @@ public class OverviewFragment extends Fragment {
         // Airtime and Network
         String timeAndNetwork = "";
         if (show.getAirsDayOfWeek().length() != 0 && show.getAirsTime() != -1) {
-            String[] values = SeriesGuideData.parseMillisecondsToTime(show.getAirsTime(),
+            String[] values = Utils.parseMillisecondsToTime(show.getAirsTime(),
                     show.getAirsDayOfWeek(), getActivity());
             timeAndNetwork += values[1] + " " + values[0];
         } else {
@@ -299,7 +297,7 @@ public class OverviewFragment extends Fragment {
             // Airdate
             airdate = episode.getString(EpisodeQuery.FIRSTAIRED);
             if (airdate.length() != 0) {
-                nextheader.setText(SeriesGuideData.parseDateToLocalRelative(airdate,
+                nextheader.setText(Utils.parseDateToLocalRelative(airdate,
                         show.getAirsTime(), context)
                         + ":");
             }
@@ -338,7 +336,7 @@ public class OverviewFragment extends Fragment {
 
         new Thread(new Runnable() {
             public void run() {
-                episodeid = SeriesDatabase.updateLatestEpisode(context, getShowId());
+                episodeid = DBUtils.updateLatestEpisode(context, getShowId());
                 context.runOnUiThread(new Runnable() {
                     public void run() {
                         fillEpisodeData();
@@ -383,7 +381,7 @@ public class OverviewFragment extends Fragment {
 
         // Directors
         TextView directors = (TextView) getActivity().findViewById(R.id.TextViewEpisodeDirectors);
-        String directorsAll = SeriesGuideData.splitAndKitTVDBStrings(episode
+        String directorsAll = Utils.splitAndKitTVDBStrings(episode
                 .getString(EpisodeQuery.DIRECTORS));
         directors.setText(getString(R.string.episode_directors) + " " + directorsAll);
 
@@ -392,13 +390,13 @@ public class OverviewFragment extends Fragment {
         gueststars
                 .setText(getString(R.string.episode_gueststars)
                         + " "
-                        + SeriesGuideData.splitAndKitTVDBStrings(episode
+                        + Utils.splitAndKitTVDBStrings(episode
                                 .getString(EpisodeQuery.GUESTSTARS)));
 
         // Writers
         TextView writers = (TextView) getActivity().findViewById(R.id.TextViewEpisodeWriters);
         writers.setText(getString(R.string.episode_writers) + " "
-                + SeriesGuideData.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.WRITERS)));
+                + Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.WRITERS)));
 
         // Rating
         TextView rating = (TextView) getActivity().findViewById(R.id.value);
@@ -411,7 +409,7 @@ public class OverviewFragment extends Fragment {
     }
 
     private void onMarkWatched() {
-        SeriesDatabase.markEpisode(getActivity(), String.valueOf(episodeid), true);
+        DBUtils.markEpisode(getActivity(), String.valueOf(episodeid), true);
 
         Toast.makeText(getActivity(), getString(R.string.mark_episode), Toast.LENGTH_SHORT).show();
 
@@ -516,7 +514,7 @@ public class OverviewFragment extends Fragment {
      * Launch show info activity.
      */
     private void onShowShowInfo() {
-        Intent i = new Intent(getActivity(), ShowInfo.class);
+        Intent i = new Intent(getActivity(), ShowInfoActivity.class);
         i.putExtra(Shows._ID, getShowId());
         startActivity(i);
     }

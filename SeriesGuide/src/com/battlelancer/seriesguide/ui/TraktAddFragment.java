@@ -2,7 +2,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.util.SimpleCrypto;
 import com.battlelancer.thetvdbapi.SearchResult;
@@ -96,8 +95,8 @@ public class TraktAddFragment extends AddFragment {
             } else {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext
                         .getApplicationContext());
-                final String username = prefs.getString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
-                String password = prefs.getString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
+                final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+                String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
                 try {
                     password = SimpleCrypto.decrypt(password, mContext);
                     manager.setAuthentication(username, password);

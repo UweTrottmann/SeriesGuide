@@ -2,12 +2,12 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
@@ -82,8 +82,8 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext
                 .getApplicationContext());
         ServiceManager manager = new ServiceManager();
-        final String username = prefs.getString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
-        String password = prefs.getString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
+        final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+        String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
         try {
             password = SimpleCrypto.decrypt(password, mContext);
         } catch (Exception e1) {
