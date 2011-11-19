@@ -35,7 +35,7 @@
         </activity>
         <activity
             android:label="@string/preferences"
-            android:name=".ui.SeriesGuidePreferences" >
+            android:name="com.battlelancer.seriesguide.ui.SeriesGuidePreferences" >
         </activity>
         <activity
             android:label="@string/backup"
