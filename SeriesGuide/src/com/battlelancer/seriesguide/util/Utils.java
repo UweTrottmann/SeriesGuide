@@ -1,7 +1,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
@@ -408,6 +407,17 @@ public class Utils {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         if (activeNetworkInfo != null) {
             return activeNetworkInfo.isConnected();
+        }
+        return false;
+    }
+
+    public static boolean isWifiAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiNetworkInfo = connectivityManager
+                .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (wifiNetworkInfo != null) {
+            return wifiNetworkInfo.isConnected();
         }
         return false;
     }

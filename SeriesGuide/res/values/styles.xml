@@ -63,4 +63,9 @@
 
     <style name="WidgetTextView.Episode"></style>
 
+    <!-- Notification -->
+    <style name="NotificationText">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
 </resources>

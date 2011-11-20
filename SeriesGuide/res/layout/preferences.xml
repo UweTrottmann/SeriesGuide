@@ -79,6 +79,17 @@
             android:key="com.battlelancer.seriesguide.timeoffset"
             android:summary="@string/pref_offsetsummary"
             android:title="@string/pref_offset" />
+
+        <CheckBoxPreference
+            android:defaultValue="False"
+            android:key="com.battlelancer.seriesguide.autoupdate"
+            android:summary="@string/pref_autoupdatesummary"
+            android:title="@string/pref_autoupdate" />
+
+        <CheckBoxPreference
+            android:defaultValue="True"
+            android:key="com.battlelancer.seriesguide.autoupdatewlanonly"
+            android:title="@string/pref_updatewifionly" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_sharing" >

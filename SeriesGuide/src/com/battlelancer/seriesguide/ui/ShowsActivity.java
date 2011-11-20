@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EulaHelper;
+import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
@@ -41,6 +42,7 @@ import android.support.v4.content.Loader;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.text.format.DateUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -100,14 +102,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private static final int LOADER_ID = 900;
 
     // Background Task States
-    private static final String STATE_UPDATE_IN_PROGRESS = "seriesguide.update.inprogress";
-
-    private static final String STATE_UPDATE_SHOWS = "seriesguide.update.shows";
-
-    private static final String STATE_UPDATE_INDEX = "seriesguide.update.index";
-
-    private static final String STATE_UPDATE_FAILEDSHOWS = "seriesguide.update.failedshows";
-
     private static final String STATE_ART_IN_PROGRESS = "seriesguide.art.inprogress";
 
     private static final String STATE_ART_PATHS = "seriesguide.art.paths";
@@ -126,8 +120,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private static final int VER_TRAKT_SEC_CHANGES = 131;
 
     private Bundle mSavedState;
-
-    private UpdateTask mUpdateTask;
 
     private FetchArtTask mArtTask;
 
@@ -222,6 +214,38 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     protected void onStart() {
         super.onStart();
         AnalyticsUtils.getInstance(this).trackPageView("/Shows");
+
+        // auto-update
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+        final boolean isAutoUpdateEnabled = prefs.getBoolean(SeriesGuidePreferences.KEY_AUTOUPDATE,
+                false);
+        if (isAutoUpdateEnabled) {
+            // allow auto-update if 11 hours have passed
+            // TODO: store local last update time instead of tvdb server time
+            final long previousUpdateTime = Long.valueOf(prefs.getString(
+                    SeriesGuidePreferences.KEY_LASTUPDATETIME, "0"));
+            long currentTime = System.currentTimeMillis();
+            final boolean isTime = currentTime - (previousUpdateTime * 1000) > DateUtils.DAY_IN_MILLIS
+                    - DateUtils.HOUR_IN_MILLIS;
+
+            if (isTime) {
+                // allow auto-update only on allowed connection
+                final boolean isAutoUpdateWlanOnly = prefs.getBoolean(
+                        SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
+                boolean isOnAllowedConnection = true;
+                if (isAutoUpdateWlanOnly) {
+                    // abort if we are not on WiFi
+                    if (!Utils.isWifiAvailable(this)) {
+                        isOnAllowedConnection = false;
+                    }
+                }
+
+                if (isOnAllowedConnection) {
+                    performUpdateTask(false, null);
+                }
+            }
+        }
     }
 
     @Override
@@ -249,13 +273,11 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        saveUpdateTask(outState);
         saveArtTask(outState);
         mSavedState = outState;
     }
 
     private void restoreLocalState(Bundle savedInstanceState) {
-        restoreUpdateTask(savedInstanceState);
         restoreArtTask(savedInstanceState);
     }
 
@@ -285,38 +307,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
             AnalyticsUtils.getInstance(this).trackEvent("Shows", "Task Lifecycle",
                     "Art Task Saved", 0);
-        }
-    }
-
-    private void restoreUpdateTask(Bundle savedInstanceState) {
-        if (savedInstanceState.getBoolean(STATE_UPDATE_IN_PROGRESS)) {
-            String[] shows = savedInstanceState.getStringArray(STATE_UPDATE_SHOWS);
-            int index = savedInstanceState.getInt(STATE_UPDATE_INDEX);
-            String failedShows = savedInstanceState.getString(STATE_UPDATE_FAILEDSHOWS);
-
-            if (shows != null) {
-                mUpdateTask = (UpdateTask) new UpdateTask(shows, index, failedShows, this)
-                        .execute();
-                AnalyticsUtils.getInstance(this).trackEvent("Shows", "Task Lifecycle",
-                        "Update Task Restored", 0);
-            }
-        }
-    }
-
-    private void saveUpdateTask(Bundle outState) {
-        final UpdateTask task = mUpdateTask;
-        if (task != null && task.getStatus() != AsyncTask.Status.FINISHED) {
-            task.cancel(true);
-
-            outState.putBoolean(STATE_UPDATE_IN_PROGRESS, true);
-            outState.putStringArray(STATE_UPDATE_SHOWS, task.mShows);
-            outState.putInt(STATE_UPDATE_INDEX, task.mUpdateCount.get());
-            outState.putString(STATE_UPDATE_FAILEDSHOWS, task.mFailedShows);
-
-            mUpdateTask = null;
-
-            AnalyticsUtils.getInstance(this).trackEvent("Shows", "Task Lifecycle",
-                    "Update Task Saved", 0);
         }
     }
 
@@ -469,7 +459,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case CONTEXT_DELETE_ID:
                 fireTrackerEvent("Delete show");
 
-                if (!isUpdateTaskRunning()) {
+                if (!TaskManager.getInstance(this).isUpdateTaskRunning()) {
                     mToDeleteId = info.id;
                     showDialog(CONFIRM_DELETE_DIALOG);
                 }
@@ -477,9 +467,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case CONTEXT_UPDATESHOW_ID:
                 fireTrackerEvent("Update show");
 
-                if (!isUpdateTaskRunning()) {
-                    performUpdateTask(false, String.valueOf(info.id));
-                }
+                performUpdateTask(false, String.valueOf(info.id));
                 return true;
             case CONTEXT_SHOWINFO:
                 fireTrackerEvent("Display show info");
@@ -527,9 +515,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case R.id.menu_update:
                 fireTrackerEvent("Update all shows");
 
-                if (!isUpdateTaskRunning() && !isArtTaskRunning()) {
-                    performUpdateTask(false, null);
-                }
+                performUpdateTask(false, null);
                 return true;
             case R.id.menu_upcoming:
                 startActivity(new Intent(this, UpcomingRecentActivity.class));
@@ -545,7 +531,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case R.id.menu_updateart:
                 fireTrackerEvent("Fetch missing posters");
 
-                if (isArtTaskRunning() || isUpdateTaskRunning()) {
+                if (isArtTaskRunning()) {
                     return true;
                 }
 
@@ -565,9 +551,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case R.id.menu_fullupdate:
                 fireTrackerEvent("Full Update");
 
-                if (!isUpdateTaskRunning() && !isArtTaskRunning()) {
-                    performUpdateTask(true, null);
-                }
+                performUpdateTask(true, null);
                 return true;
             default: {
                 return super.onOptionsItemSelected(item);
@@ -621,39 +605,24 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private void performUpdateTask(boolean isFullUpdate, String showId) {
         int messageId;
+        UpdateTask task;
         if (isFullUpdate) {
             messageId = R.string.update_full;
-            mUpdateTask = (UpdateTask) new UpdateTask(true, this).execute();
+            task = (UpdateTask) new UpdateTask(true, this);
         } else {
             if (showId == null) {
                 // (delta) update all shows
                 messageId = R.string.update_delta;
-                mUpdateTask = (UpdateTask) new UpdateTask(false, this).execute();
+                task = (UpdateTask) new UpdateTask(false, this);
             } else {
                 // update a single show
                 messageId = R.string.update_inbackground;
-                mUpdateTask = (UpdateTask) new UpdateTask(new String[] {
+                task = (UpdateTask) new UpdateTask(new String[] {
                     showId
-                }, 0, "", this).execute();
+                }, 0, "", this);
             }
         }
-        Toast.makeText(this, getString(messageId), Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * If the updateThread is already running, shows a toast telling the user to
-     * wait.
-     * 
-     * @return true if an update is in progress and toast was shown, false
-     *         otherwise
-     */
-    private boolean isUpdateTaskRunning() {
-        if (mUpdateTask != null && mUpdateTask.getStatus() != AsyncTask.Status.FINISHED) {
-            Toast.makeText(this, getString(R.string.update_inprogress), Toast.LENGTH_LONG).show();
-            return true;
-        } else {
-            return false;
-        }
+        TaskManager.getInstance(this).tryUpdateTask(task, messageId);
     }
 
     private class FetchArtTask extends AsyncTask<Void, Void, Integer> {
@@ -782,13 +751,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     }
 
     public void onCancelTasks() {
-        if (mUpdateTask != null && mUpdateTask.getStatus() == AsyncTask.Status.RUNNING) {
-            mUpdateTask.cancel(true);
-            mUpdateTask = null;
-
-            AnalyticsUtils.getInstance(this).trackEvent("Shows", "Task Lifecycle",
-                    "Update Task Canceled", 0);
-        }
         if (mArtTask != null && mArtTask.getStatus() == AsyncTask.Status.RUNNING) {
             mArtTask.cancel(true);
             mArtTask = null;
@@ -1058,8 +1020,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             }
 
             // airday
-            String[] values = Utils.parseMillisecondsToTime(
-                    mCursor.getLong(ShowsQuery.AIRSTIME),
+            String[] values = Utils.parseMillisecondsToTime(mCursor.getLong(ShowsQuery.AIRSTIME),
                     mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), ShowsActivity.this);
             viewHolder.airsTime.setText(values[1] + " " + values[0]);
 

@@ -70,6 +70,10 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_GOOGLEANALYTICS = "enableGAnalytics";
 
+    public static final String KEY_AUTOUPDATE = "com.battlelancer.seriesguide.autoupdate";
+
+    public static final String KEY_AUTOUPDATEWLANONLY = "com.battlelancer.seriesguide.autoupdatewlanonly";
+
     protected static final int ABOUT_DIALOG = 0;
 
     private static final String TRANSLATIONS_URL = "http://crowdin.net/project/seriesguide-translations/invite";
