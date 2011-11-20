@@ -95,16 +95,10 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mAppContext);
         final ContentResolver resolver = mAppContext.getContentResolver();
         final AtomicInteger updateCount = mUpdateCount;
-        long currentServerTime = 0;
+        long currentTime = 0;
         if (mShows == null) {
 
-            try {
-                currentServerTime = TheTVDB.getServerTime(mAppContext);
-            } catch (SAXException e1) {
-                return UPDATE_SAXERROR;
-            }
-            final long previousUpdateTime = Long.valueOf(prefs.getString(
-                    SeriesGuidePreferences.KEY_LASTUPDATETIME, "0"));
+            currentTime = System.currentTimeMillis();
             final int updateAtLeastEvery = prefs.getInt(
                     SeriesGuidePreferences.KEY_UPDATEATLEASTEVERY, 7);
 
@@ -122,8 +116,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 shows.close();
             } else {
                 try {
-                    mShows = TheTVDB.deltaUpdateShows(previousUpdateTime, updateAtLeastEvery,
-                            mAppContext);
+                    mShows = TheTVDB.deltaUpdateShows(currentTime, updateAtLeastEvery, mAppContext);
                 } catch (SAXException e) {
                     return UPDATE_SAXERROR;
                 }
@@ -180,10 +173,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         publishProgress(mShows.length + 1, mShows.length + 1);
 
         // store time of update if it was successful
-        if (currentServerTime != 0 && resultCode == UPDATE_SUCCESS) {
-            prefs.edit()
-                    .putString(SeriesGuidePreferences.KEY_LASTUPDATETIME,
-                            String.valueOf(currentServerTime)).commit();
+        if (currentTime != 0 && resultCode == UPDATE_SUCCESS) {
+            prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTUPDATE, currentTime).commit();
         }
 
         return resultCode;

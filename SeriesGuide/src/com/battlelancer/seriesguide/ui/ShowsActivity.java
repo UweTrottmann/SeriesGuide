@@ -222,11 +222,10 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 false);
         if (isAutoUpdateEnabled) {
             // allow auto-update if 11 hours have passed
-            // TODO: store local last update time instead of tvdb server time
-            final long previousUpdateTime = Long.valueOf(prefs.getString(
-                    SeriesGuidePreferences.KEY_LASTUPDATETIME, "0"));
+            final long previousUpdateTime = prefs.getLong(
+                    SeriesGuidePreferences.KEY_LASTUPDATE, 0);
             long currentTime = System.currentTimeMillis();
-            final boolean isTime = currentTime - (previousUpdateTime * 1000) > DateUtils.DAY_IN_MILLIS
+            final boolean isTime = currentTime - (previousUpdateTime) > DateUtils.DAY_IN_MILLIS
                     - DateUtils.HOUR_IN_MILLIS;
 
             if (isTime) {
