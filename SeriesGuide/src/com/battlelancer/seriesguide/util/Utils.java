@@ -401,12 +401,23 @@ public class Utils {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
-    public static boolean isNetworkAvailable(Context context) {
+    public static boolean isNetworkConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         if (activeNetworkInfo != null) {
             return activeNetworkInfo.isConnected();
+        }
+        return false;
+    }
+
+    public static boolean isWifiConnected(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiNetworkInfo = connectivityManager
+                .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (wifiNetworkInfo != null) {
+            return wifiNetworkInfo.isConnected();
         }
         return false;
     }

@@ -42,8 +42,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_ONLY_SEASON_EPISODES = "onlySeasonEpisodes";
 
-    public static final String KEY_LASTUPDATETIME = "updatetime";
-
     public static final String KEY_NUMBERFORMAT = "numberformat";
 
     public static final String NUMBERFORMAT_DEFAULT = "default";
@@ -69,6 +67,12 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
     public static final String KEY_HIDEIMAGES = "hideimages";
 
     public static final String KEY_GOOGLEANALYTICS = "enableGAnalytics";
+
+    public static final String KEY_AUTOUPDATE = "com.battlelancer.seriesguide.autoupdate";
+
+    public static final String KEY_AUTOUPDATEWLANONLY = "com.battlelancer.seriesguide.autoupdatewlanonly";
+
+    public static final String KEY_LASTUPDATE = "com.battlelancer.seriesguide.lastupdate";
 
     protected static final int ABOUT_DIALOG = 0;
 
