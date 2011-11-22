@@ -53,8 +53,6 @@
   <string name="context_unfavorite">Премахни от "любими"</string>
   <string name="favorited">Добави към "любими"</string>
   <string name="unfavorited">Премахни от "любими"</string>
-  <string name="update_delta">Търсене на обновени сериали...</string>
-  <string name="update_full">Актуализиране на всички сериали...</string>
   <string name="update_error">Актуализацията не е възможна.</string>
   <string name="update_incomplete1">Не може да се актуализира</string>
   <string name="update_incomplete2">.</string>

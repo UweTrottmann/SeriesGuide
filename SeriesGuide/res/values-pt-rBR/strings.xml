@@ -53,8 +53,6 @@
   <string name="context_unfavorite">Remover dos favoritos</string>
   <string name="favorited">Adicionado aos favoritos</string>
   <string name="unfavorited">Removido dos favoritos</string>
-  <string name="update_delta">Procurando por séries atualizadas...</string>
-  <string name="update_full">Atualizando todos os shows...</string>
   <string name="update_error">Não foi possível atualizar.</string>
   <string name="update_incomplete1">Não foi possível atualizar</string>
   <string name="update_incomplete2">.</string>

@@ -50,8 +50,6 @@
   <string name="context_unfavorite">Odstranit z oblíbených</string>
   <string name="favorited">Přidáno k oblíbeným</string>
   <string name="unfavorited">Odstraněno z oblíbených</string>
-  <string name="update_delta">Hledání aktualizovaných pořadů...</string>
-  <string name="update_full">Aktualizace všech pořadů...</string>
   <string name="update_error">Nelze aktualizovat.</string>
   <string name="update_incomplete1">Nelze aktualizovat</string>
   <string name="update_incomplete2">.</string>

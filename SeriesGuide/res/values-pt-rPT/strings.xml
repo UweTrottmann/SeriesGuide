@@ -51,8 +51,6 @@
   <string name="context_unfavorite">Apagar dos favoritos</string>
   <string name="favorited">Adiciona aos favoritos</string>
   <string name="unfavorited">Apagar dos favoritos</string>
-  <string name="update_delta">Procurar por séries actualizadas...</string>
-  <string name="update_full">Actualizar todos as séries...</string>
   <string name="update_error">Não foi possível actualizar.</string>
   <string name="update_incomplete1">Não foi possível actualizar</string>
   <string name="update_incomplete2">.</string>

@@ -53,8 +53,6 @@
   <string name="context_unfavorite">Удалить из избранного</string>
   <string name="favorited">Добавлено в избранное</string>
   <string name="unfavorited">Удалено из избранного</string>
-  <string name="update_delta">Поиск обновлений сериалов…</string>
-  <string name="update_full">Обновление всех сериалов ...</string>
   <string name="update_error">Не удалось обновить.</string>
   <string name="update_incomplete1">Не удалось обновить</string>
   <string name="update_incomplete2">.</string>

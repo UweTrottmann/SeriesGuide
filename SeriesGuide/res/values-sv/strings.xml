@@ -49,8 +49,6 @@
   <string name="context_unfavorite">Ta bort från favoriter</string>
   <string name="favorited">Lägg till som favorit</string>
   <string name="unfavorited">Ta bort från favoriter</string>
-  <string name="update_delta">Söker uppdaterade serier...</string>
-  <string name="update_full">Uppdatera alla serier...</string>
   <string name="update_error">Kunde inte uppdatera.</string>
   <string name="update_incomplete1">Det gick inte att uppdatera</string>
   <string name="update_incomplete2">.</string>

@@ -53,8 +53,6 @@
   <string name="context_unfavorite">Verwijderen uit favorieten</string>
   <string name="favorited">Toegevoegd aan favorieten</string>
   <string name="unfavorited">Verwijderd uit favorieten</string>
-  <string name="update_delta">Zoeken naar bijgewerkte series...</string>
-  <string name="update_full">Alle series vernieuwen</string>
   <string name="update_error">Bijwerken mislukt.</string>
   <string name="update_incomplete1">Bijwerken mislukt</string>
   <string name="update_incomplete2">.</string>

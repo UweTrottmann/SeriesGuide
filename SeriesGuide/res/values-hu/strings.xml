@@ -52,8 +52,6 @@
   <string name="context_unfavorite">Törlés a Kedvencekből</string>
   <string name="favorited">Hozzáadva a Kedvencekhez</string>
   <string name="unfavorited">Eltávolítva a Kendvencekből</string>
-  <string name="update_delta">Frissítések keresése...</string>
-  <string name="update_full">Sorozatok frissítése...</string>
   <string name="update_error">Sikertelen frissítés.</string>
   <string name="update_success">A frissítés sikerült.</string>
   <string name="imagedownload_incomplete">A frissítés sikerült, néhány kép kivételével. Próbálja meg később.</string>
@@ -153,11 +151,13 @@
   <string name="seasons">Évadok</string>
   <string name="cancel">Mégse</string>
   <string name="share">Megosztás</string>
+  <string name="done">Kész</string>
   <string name="pref_number">Számozás formátuma</string>
   <string name="pref_numbersummary">Váltás a 1x01, S01E01 és s01e01 formátumok között</string>
   <string name="addtocalendar">Hozzáadás naptárhoz</string>
   <string name="addtocalendar_failed">Nincs elég információ naptár-esemény létrehozásához.</string>
   <string name="search_description">Epizódok</string>
+  <string name="description_search">Keresés</string>
   <string name="description_overview">Tartalom</string>
   <string name="norating">n/a</string>
   <string name="loading">Betöltés...</string>

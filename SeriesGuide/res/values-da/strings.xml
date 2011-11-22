@@ -51,8 +51,6 @@
   <string name="context_unfavorite">Fjern fra favoritter</string>
   <string name="favorited">Tilføjet til favoritter</string>
   <string name="unfavorited">Fjernet fra favoritter</string>
-  <string name="update_delta">Søger efter opdaterede tv-serier...</string>
-  <string name="update_full">Opdaterer alle tv-serier...</string>
   <string name="update_error">Kunne ikke opdatere.</string>
   <string name="update_incomplete1">Kunne ikke opdatere</string>
   <string name="update_incomplete2">.</string>

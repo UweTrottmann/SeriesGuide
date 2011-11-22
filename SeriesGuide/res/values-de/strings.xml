@@ -53,8 +53,6 @@
   <string name="context_unfavorite">Von Favoriten entfernen</string>
   <string name="favorited">Zu Favoriten hinzugefügt</string>
   <string name="unfavorited">Von Favoriten entfernt</string>
-  <string name="update_delta">Suche aktualisierte Serien...</string>
-  <string name="update_full">Aktualisiere alle Serien...</string>
   <string name="update_error">Konnte kein Update durchführen</string>
   <string name="update_incomplete1">Konnte</string>
   <string name="update_incomplete2">nicht aktualisieren.</string>

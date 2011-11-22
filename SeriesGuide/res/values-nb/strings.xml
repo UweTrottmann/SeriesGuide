@@ -53,8 +53,6 @@
   <string name="context_unfavorite">Fjern fra favoritter</string>
   <string name="favorited">Lagt til i favoritter</string>
   <string name="unfavorited">Fjernet fra favoritter</string>
-  <string name="update_delta">Ser etter oppdaterte serier...</string>
-  <string name="update_full">Oppdaterer alle seriene...</string>
   <string name="update_error">Kunne ikke oppdatere.</string>
   <string name="update_incomplete1">Kunne ikke oppdatere</string>
   <string name="update_incomplete2">.</string>

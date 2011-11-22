@@ -51,8 +51,6 @@
   <string name="context_unfavorite">Odstrániť z obľúbených</string>
   <string name="favorited">Pridané k obľúbeným</string>
   <string name="unfavorited">Odstránené z obľúbených</string>
-  <string name="update_delta">Vyhľadávam aktualizované relácie...</string>
-  <string name="update_full">Aktualizácia všetkých relácií...</string>
   <string name="update_error">Nebolo možné aktualizovať.</string>
   <string name="update_incomplete1">Nemožno aktualizovať</string>
   <string name="update_incomplete2">.</string>

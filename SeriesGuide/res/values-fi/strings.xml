@@ -54,8 +54,6 @@
   <string name="context_unfavorite">Poista suosikeista</string>
   <string name="favorited">Lisätty suosikkeihin</string>
   <string name="unfavorited">Poistettu suosikeista</string>
-  <string name="update_delta">Etsitään päivitettäviä ohjelmia...</string>
-  <string name="update_full">Päivitetään kaikki ohjelmat...</string>
   <string name="update_error">Ei voitu päivittää.</string>
   <string name="update_incomplete1">Ei voitu päivittää</string>
   <string name="update_incomplete2">.</string>
