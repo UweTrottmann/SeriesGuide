@@ -20,6 +20,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -65,11 +66,12 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
     @Override
     protected void onPreExecute() {
+        // create a notification (holy crap is that a lot of code)
         String ns = Context.NOTIFICATION_SERVICE;
         mNotificationManager = (NotificationManager) mAppContext.getSystemService(ns);
 
         int icon = R.drawable.icon;
-        CharSequence tickerText = "Updating your shows...";
+        CharSequence tickerText = mAppContext.getString(R.string.update_notification);
         long when = System.currentTimeMillis();
 
         mNotification = new Notification(icon, tickerText, when);
@@ -78,7 +80,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         RemoteViews contentView = new RemoteViews(mAppContext.getPackageName(),
                 R.layout.update_notification);
         contentView.setImageViewResource(R.id.image, icon);
-        contentView.setTextViewText(R.id.text, "Looking for updates...");
+        contentView.setTextViewText(R.id.text, mAppContext.getString(R.string.update_notification));
         contentView.setProgressBar(R.id.progressbar, 0, 0, true);
         mNotification.contentView = contentView;
 
@@ -95,7 +97,10 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mAppContext);
         final ContentResolver resolver = mAppContext.getContentResolver();
         final AtomicInteger updateCount = mUpdateCount;
+        final boolean isAutoUpdateWlanOnly = prefs.getBoolean(
+                SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
         long currentTime = 0;
+
         if (mShows == null) {
 
             currentTime = System.currentTimeMillis();
@@ -127,12 +132,14 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         String id;
 
         for (int i = updateCount.get(); i < mShows.length; i++) {
-            // fail early if cancelled or network connection is lost
+            // fail early if cancelled or network connection is lost or wifi is
+            // disconnected
             if (isCancelled()) {
                 resultCode = UPDATE_INCOMPLETE;
                 break;
             }
-            if (!Utils.isNetworkAvailable(mAppContext)) {
+            if (!Utils.isNetworkConnected(mAppContext)
+                    || (isAutoUpdateWlanOnly && !Utils.isWifiConnected(mAppContext))) {
                 resultCode = UPDATE_OFFLINE;
                 break;
             }
@@ -165,7 +172,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         // renew FTS3 table (only if we updated shows)
-        if (mShows.length != 0) {
+        if (updateCount.get() != 0 && mShows.length != 0) {
             publishProgress(mShows.length, mShows.length + 1);
             TheTVDB.onRenewFTSTable(mAppContext);
         }
@@ -182,6 +189,38 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
     @Override
     protected void onPostExecute(Integer result) {
+        String message = null;
+        int length = 0;
+        switch (result) {
+            case UPDATE_SUCCESS:
+                AnalyticsUtils.getInstance(mAppContext).trackEvent("Shows", "Update Task",
+                        "Success", 0);
+
+                message = mAppContext.getString(R.string.update_success);
+                length = Toast.LENGTH_SHORT;
+
+                break;
+            case UPDATE_SAXERROR:
+                AnalyticsUtils.getInstance(mAppContext).trackEvent("Shows", "Update Task",
+                        "SAX error", 0);
+
+                message = mAppContext.getString(R.string.update_failed) + " "
+                        + mAppContext.getString(R.string.update_saxerror);
+                length = Toast.LENGTH_LONG;
+                break;
+            case UPDATE_OFFLINE:
+                AnalyticsUtils.getInstance(mAppContext).trackEvent("Shows", "Update Task",
+                        "Offline", 0);
+
+                message = mAppContext.getString(R.string.update_failed) + " "
+                        + mAppContext.getString(R.string.update_offline);
+                length = Toast.LENGTH_LONG;
+                break;
+        }
+
+        if (message != null) {
+            Toast.makeText(mAppContext, message, length).show();
+        }
         mNotificationManager.cancel(UPDATE_NOTIFICATION_ID);
         TaskManager.getInstance(mAppContext).onTaskCompleted();
     }

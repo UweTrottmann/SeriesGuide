@@ -87,10 +87,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final int CONTEXT_UNFAVORITE = 205;
 
-    public static final int UPDATE_OFFLINE_DIALOG = 300;
-
-    public static final int UPDATE_SAXERROR_DIALOG = 302;
-
     private static final int CONFIRM_DELETE_DIALOG = 304;
 
     private static final int WHATS_NEW_DIALOG = 305;
@@ -124,8 +120,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private FetchArtTask mArtTask;
 
     private SlowAdapter mAdapter;
-
-    private String mFailedShowsString;
 
     private Constants.ShowSorting mSorting;
 
@@ -235,7 +229,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 boolean isOnAllowedConnection = true;
                 if (isAutoUpdateWlanOnly) {
                     // abort if we are not on WiFi
-                    if (!Utils.isWifiAvailable(this)) {
+                    if (!Utils.isWifiConnected(this)) {
                         isOnAllowedConnection = false;
                     }
                 }
@@ -311,26 +305,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        String message = "";
         switch (id) {
-            case UPDATE_SAXERROR_DIALOG:
-                if (getFailedShowsString() != null && getFailedShowsString().length() != 0) {
-                    message += getString(R.string.update_incomplete1) + " "
-                            + getFailedShowsString() + getString(R.string.update_incomplete2)
-                            + getString(R.string.saxerror);
-                } else {
-                    message += getString(R.string.update_error) + " "
-                            + getString(R.string.saxerror);
-                }
-                return new AlertDialog.Builder(this).setTitle(getString(R.string.saxerror_title))
-                        .setMessage(message).setPositiveButton(android.R.string.ok, null).create();
-            case UPDATE_OFFLINE_DIALOG:
-                return new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.offline_title))
-                        .setMessage(
-                                getString(R.string.update_error) + " "
-                                        + getString(R.string.offline))
-                        .setPositiveButton(android.R.string.ok, null).create();
             case CONFIRM_DELETE_DIALOG:
                 return new AlertDialog.Builder(this).setMessage(getString(R.string.confirm_delete))
                         .setPositiveButton(getString(R.string.delete_show), new OnClickListener() {
@@ -615,7 +590,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 task = (UpdateTask) new UpdateTask(false, this);
             } else {
                 // update a single show
-                messageId = R.string.update_inbackground;
+                messageId = R.string.update_single;
                 task = (UpdateTask) new UpdateTask(new String[] {
                     showId
                 }, 0, "", this);
@@ -909,14 +884,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             editor.commit();
         }
         return true;
-    }
-
-    public void setFailedShowsString(String mFailedShowsString) {
-        this.mFailedShowsString = mFailedShowsString;
-    }
-
-    public String getFailedShowsString() {
-        return mFailedShowsString;
     }
 
     private interface ShowsQuery {
