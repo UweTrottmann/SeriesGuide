@@ -66,6 +66,7 @@
     <!-- Notification -->
     <style name="NotificationText">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>
