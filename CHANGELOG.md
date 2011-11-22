@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+Version 2.3.2beta *(2011-11-22)*
+--------------------------------
+
+* Thrown the TVDb updater out the airlock (so soon): now SeriesGuide will update your show if it has not been for more than a week when pressing the update button.
+* AutoUpdate (finally...): as updating now happens truly in the background (sorry, manual abort is gone for now, just drop your connection...) enabling this will press the update button for you at most once a day. You have to open the app though.
+* The thresholds (7 days for updating, 11 hours before next auto-update) are subject to discussion.
+* 'Update on Wi-Fi only' (enabled by default) will prevent the updater from doing anything if you don't have a Wi-Fi connection to the internet.
+
 Version 2.3.1beta *(2011-11-19)*
 --------------------------------
 

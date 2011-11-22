@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="auto"
     package="com.battlelancer.seriesguide.beta"
-    android:versionCode="141"
-    android:versionName="2.3.1beta" >
+    android:versionCode="142"
+    android:versionName="2.3.2beta" >
 
     <uses-feature
         android:name="android.hardware.touchscreen"
