@@ -4,50 +4,49 @@ Change Log (Stable channel)
 Version 2.2.2 *(2011-11-01)*
 --------------------------------
 
-* Fix crash when adding shows on certain HTC devices (Desire HD, Mytouch 4G, ...)
+* Behebe Crash bei Hinzufügen von Serien auf einzelnen HTC Geräten (Desire HD, Mytouch 4G, ...)
 
 Version 2.2.1 *(2011-10-31)*
 --------------------------------
 
-* Fix layouts on small tablet (large screen) devices
-* Validate trakt.tv credentials
-* Secure the trakt.tv password even better (you will have to reenter it again, sorry)
-* Don't rebuild the search table if nothing was updated
-* Latest translations from crowdin. Now with Hungarian thanks to devilinside and uw11!
+* Layout-Fixes für kleine Tablets (large screens)
+* Validierung von trakt.tv Zugangsdaten
+* Noch besserer Schutz des trakt.tv Passwortes (muss daher leider erneut eingegeben werden)
+* Suchindex wird nur bei Änderungen neu erstellt
+* Aktuelle Übersetzungen. Neu in Ungarisch dank devilinside und uw11!
 
 Version 2.2 *(2011-10-18)*
 --------------------------------
 
-* Desire HD users: please try updating your phone to the latest firmware
-* Filter options for show list (replaces 'Hide watched shows' setting)
-* Layout improvements all over the app (spot the differences!), esp. on tablet/Google TV (large+) devices
-* Dual pane layout for Upcoming on large+ devices
-* Display which show is currently getting updated
-* New number format brought to you by dqdb via GitHub
-* Latest translations from crowdin
-* Many bug fixes, optimizations
-* Thanks to everyone who sent in bug reports, suggested improvements or helps translate!
+* Desire HD Nutzer: bitte versuchen Sie Ihr Gerät auf die neueste Firmware zu aktualisieren
+* Filter für Serienliste
+* Weitreichende Verbesserungen am Layout, v.a. auf Tablet/Google TV (large+) Geräten
+* Zwei-Spalten-Ansicht für 'Demnächst' auf large+ Geräten
+* Zeige gerade aktualisierte Serie an
+* Neues Nummernformat realisiert von dqdb via GitHub
+* Diverse Fehlerbehebungen und Bugfixes
+* Dank an alle die Fehlerberichte und Vorschläge eingesendet haben oder bei der Übersetzung helfen!
 
 Version 2.1.2 *(2011-10-01)*
 --------------------------------
 
-* Use new trakt library release (better error handling)
-* New show sorting: favorites by next episode
-* Clean up images when deleting a show
-* Show first episode of season when using dual-pane layout
-* Bugfixes, Improvements
+* Bessere Fehlerbehandlung in trakt API
+* Neue Serien-Sortierung: Favoriten, dann nach nächster Folge
+* Beim Löschen von Serien werden deren Bilder entfernt
+* Zeige erste Folge in Staffel-Doppelspaltenansicht automatisch
+* Bugfixes, Verbesserungen
 
 Version 2.1.1 (04.09.2011)
 ------------------------
 
-* Better user communication when doing delta and full update (now called 'Update All')
-* Use TVDB id instead of IMDb id to mark episodes as seen on trakt
-* Don't require a touchscreen to use SeriesGuide (upcoming Google TV support)
-* Always use a GridLayout for the show list.
-* Tidy up settings.
-* Change URLs to new website.
-* Improvements for DeltaUpdate.
-* Latest translations.
+* Bessere Benachrichtigungen wenn delta oder komplette Aktualisierung ('Alle aktualisieren') verwendet wird
+* Verwendung der TVDB id anstatt der IMDb id um Serien auf trakt gesehen zu markieren
+* Setze keinen Touchscreen mehr voraus (für neues Google TV)
+* Benutze immer ein GridLayout für die Serien-Liste.
+* Einstellungen aufgeräumt.
+* URLs zeigen zur neuen Website.
+* Verbesserungen am DeltaUpdate.
+* Aktuelle Übersetzungen.
 
 Version 2.1 (13.08.2011)
 ------------------------
