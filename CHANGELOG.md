@@ -1,6 +1,16 @@
 Change Log (Stable channel)
 ===========================
 
+Version 2.3 *(2011-11-26)*
+--------------------------------
+
+* Revamped updater: shows get outdated after 7 days and get included in the next update
+* AutoUpdate: presses the update button on opening the app for you
+* Updating now only works on Wi-Fi, this can be disabled in settings
+* Revamped adding of shows (incl. more trakt integration)
+* Episode pager on phones/small screens
+* TVDb buttons
+
 Version 2.2.2 *(2011-11-01)*
 --------------------------------
 
