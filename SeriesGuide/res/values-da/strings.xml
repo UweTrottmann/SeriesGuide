@@ -13,7 +13,6 @@
   <string name="ioerror">Der var en netværksfejl. Du kan have begrænset adgang til TheTVDB.com fra din forbindelse lige nu. Prøv igen senere.</string>
   <string name="saxerror">Ugyldigt svar fra TheTVDB. Prøv venligst igen senere.</string>
   <string name="offline">Der er ingen aktiv forbindelse til internettet rapporteret. Sørg for at du har forbindelse til internettet og prøv igen.</string>
-  <string name="whatsnew_title">What\'s new</string>
   <string name="search_hint">Søg episoder</string>
   <string name="search_title">Matchende episoder</string>
   <string name="share_episode">Del episode</string>
@@ -34,8 +33,6 @@
   <string name="show_isnotalive">Afsluttet</string>
   <string name="sort">Sorter efter</string>
   <string name="menu_updateart">Hent manglende plakater</string>
-  <string name="updateall_yes">Update (all)</string>
-  <string name="menu_update_delta">Update (modified only)</string>
   <string name="context_updateshow">Opdatering</string>
   <string name="context_showinfo">Vis Info</string>
   <string name="context_marknext">Set næste episode</string>
@@ -54,22 +51,16 @@
   <string name="context_unfavorite">Fjern fra favoritter</string>
   <string name="favorited">Tilføjet til favoritter</string>
   <string name="unfavorited">Fjernet fra favoritter</string>
-  <string name="update_delta">Søger efter opdaterede tv-serier...</string>
-  <string name="update_full">Opdaterer alle tv-serier...</string>
   <string name="update_error">Kunne ikke opdatere.</string>
   <string name="update_incomplete1">Kunne ikke opdatere</string>
   <string name="update_incomplete2">.</string>
-  <string name="update_success">Update successful.</string>
-  <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
   <string name="update_inbackground">Opdaterer...</string>
   <string name="update_inprogress">Der er en opdatering i gang. Vent til den er færdig, så prøv igen.</string>
   <string name="update_nosdcard">Kunne ikke opdatere. Der er intet eksternt lager eller SD-kort tilgængeligt.</string>
-  <string name="update_rebuildsearch">Building episode search index</string>
   <string name="show_airs">sendetid</string>
   <string name="show_network">på</string>
   <string name="show_pleaseupdate">Forsøg at opdatere denne tv-serie for at vise mere information (i oversigten, langt tryk, vælg opdatér). Hvis dette ikke hjælper er der højst sandsynligt ikke yderligere information i TheTVDB. Gå til deres side (www.thetvdb.com) for at lære at tilføje indhold.</string>
   <string name="show_noairtime">Ingen sendetider tilgængelige</string>
-  <string name="showinimdb">Vis i IMDB</string>
   <string name="noIMDBentry">Ingen IMDB reference tilgængelig. Opdatér denne tv-serie eller gå til www.thetvdb.com og tilføj den.</string>
   <string name="no_seasons">Ups, der er ingen sæsoner for denne tv-serie. Prøv at opdatere serien (i oversigten, langt tryk, vælg opdatér).</string>
   <string name="season_watchcount">episoder ikke set</string>
@@ -167,7 +158,6 @@
   <string name="comment">Check In kommentar</string>
   <string name="checkinsuccess">Check In lykkedes</string>
   <string name="pref_number">Talformat</string>
-  <string name="pref_numbersummary">Switch between 1x01, S01E01 or s01e01 as number format</string>
   <string name="checkinfailed">Check-in mislykkedes</string>
   <string name="oauthmessage">Autoriserer SeriesGuide med GetGlue</string>
   <string name="addtocalendar">Tilføj til kalender</string>
@@ -186,8 +176,6 @@
   <string name="username">Brugernavn</string>
   <string name="password">Adgangskode</string>
   <string name="apikey">API nøgle</string>
-  <string name="pref_trakt">Afbryd trakt.tv</string>
-  <string name="pref_traktsummary">Anvend "del" knapperne for at opsætte trakt.tv</string>
   <string name="pref_traktsync">Synkroniser med trakt.tv</string>
   <string name="pref_traktsyncsummary">Eksperimentel, manuel synkronisering med trakt.tv</string>
   <string name="save">Gem</string>
@@ -196,7 +184,6 @@
   <string name="trakt_error">trakt.tv deling mislykkedes</string>
   <string name="trakt_decryptfail">Adgangskoden kunne ikke dekrypteres</string>
   <string name="trakt_credentials_invalid">Legitimationsoplysningerne er ugyldige</string>
-  <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
   <string name="pref_traktintegrate">Integrer trakt.tv</string>
   <string name="pref_traktintegratesummary">Markeret som set i oversigten bliver delt med traktv.tv</string>
   <string name="donate">Køb mig en drink (Paypal)</string>
@@ -206,7 +193,6 @@
   <string name="trakt_createaccount">Opret ny konto</string>
   <string name="email">Email</string>
   <string name="trakt_synctodevice">Synkroniser med SeriesGuide</string>
-  <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. Only shows added to SeriesGuide are synced. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
   <string name="trakt_synctotrakt">Synkroniser til trakt.tv</string>
   <string name="trakt_syncunseen">Synkroniser usete episoder</string>
   <string name="powered_by_thetvdb">powered by thetvdb.com</string>

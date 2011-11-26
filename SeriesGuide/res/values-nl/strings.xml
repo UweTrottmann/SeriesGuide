@@ -13,7 +13,6 @@
   <string name="ioerror">Er is een nertwerkfout opgetreden. Er zijn mogelijk onvoldoende rechten op TVDB.com met de huidige verbinding. Probeer het later opnieuw.</string>
   <string name="saxerror">TheTVDB-reactie niet begrepen. Probeer het later opnieuw.</string>
   <string name="offline">Er is geen actieve verbinding met het internet beschikbaar. Zorg ervoor dat er een internetverbinding is en probeer het opnieuw.</string>
-  <string name="whatsnew_title">What\'s new</string>
   <string name="search_hint">Afleveringen zoeken</string>
   <string name="search_title">Gevonden afleveringen</string>
   <string name="share_episode">Aflevering delen</string>
@@ -54,8 +53,6 @@
   <string name="context_unfavorite">Verwijderen uit favorieten</string>
   <string name="favorited">Toegevoegd aan favorieten</string>
   <string name="unfavorited">Verwijderd uit favorieten</string>
-  <string name="update_delta">Zoeken naar bijgewerkte series...</string>
-  <string name="update_full">Alle series vernieuwen</string>
   <string name="update_error">Bijwerken mislukt.</string>
   <string name="update_incomplete1">Bijwerken mislukt</string>
   <string name="update_incomplete2">.</string>
@@ -70,7 +67,6 @@
   <string name="show_pleaseupdate">Probeer deze show te updaten voor meer informatie (in het overzicht, lang drukken op de show, \'update\').
 Mocht dit niet lukken, kan er op www.thetvdb.com informatie worden toegevoegd.</string>
   <string name="show_noairtime">Geen uitzendtijden beschikbaar</string>
-  <string name="showinimdb">Bekijk via IMDb</string>
   <string name="noIMDBentry">Geen IMDB referentie beschikbaar. Werk deze serie bij of ga naar thetvdb.com en voeg deze toe.</string>
   <string name="no_seasons">Helaas, er zijn geen seizoenen voor deze serie. Probeer de serie bij te werken.</string>
   <string name="season_watchcount">Onbekeken afleveringen</string>
@@ -186,8 +182,6 @@ Mocht dit niet lukken, kan er op www.thetvdb.com informatie worden toegevoegd.</
   <string name="username">Gebruikersnaam</string>
   <string name="password">Wachtwoord</string>
   <string name="apikey">API-sleutel</string>
-  <string name="pref_trakt">verbinding met trakt.tv verbroken</string>
-  <string name="pref_traktsummary">Gebruik de Delen-knoppen om trakt.tv in te stellen</string>
   <string name="pref_traktsync">Synchroniseren met trakt.tv</string>
   <string name="pref_traktsyncsummary">Handmatig synchroniseren met trakt.tv (experimenteel)</string>
   <string name="save">Opslaan</string>
@@ -196,7 +190,7 @@ Mocht dit niet lukken, kan er op www.thetvdb.com informatie worden toegevoegd.</
   <string name="trakt_error">delen met trakt.tv mislukt</string>
   <string name="trakt_decryptfail">wachtwoord kon niet worden gedecodeerd</string>
   <string name="trakt_credentials_invalid">informatie niet geldig</string>
-  <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
+  <string name="trakt_generalerror">Er ging iets fout. Controleer uw referenties en probeer het opnieuw.</string>
   <string name="pref_traktintegrate">Integreer trakt.tv</string>
   <string name="pref_traktintegratesummary">Bekeken afleveringen delen met trakt.tv</string>
   <string name="donate">Doneer via PayPal</string>

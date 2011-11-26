@@ -67,8 +67,13 @@
     <string name="unfavorited">Removed from favorites</string>
 
     <!-- Updating -->
-    <string name="update_delta">Looking for updated shows...</string>
-    <string name="update_full">Refreshing all shows...</string>
+    <string name="update_notification">Updating your shows...</string>
+    <string name="update_single">Updating show...</string>
+    <string name="update_delta">Updating outdated shows...</string>
+    <string name="update_full">Updating all shows...</string>
+    <string name="update_failed">Updating failed.</string>
+    <string name="update_offline">Check your internet/Wi-Fi connection.</string>
+    <string name="update_saxerror">Try again later.</string>
     <string name="update_error">Could not update.</string>
     <string name="update_incomplete1">Could not update</string>
     <string name="update_incomplete2">.</string>
@@ -78,13 +83,15 @@
     <string name="update_inprogress">There is an update in progress. Wait for it to complete, then try again.</string>
     <string name="update_nosdcard">Could not update. There is no external storage or SD card available.</string>
     <string name="update_rebuildsearch">Building episode search index</string>
+    <string name="pref_autoupdate">Auto Update</string>
+    <string name="pref_autoupdatesummary">Update on launch, at most once a day</string>
+    <string name="pref_updatewifionly">Update on Wi-Fi only</string>
 
     <!-- Show info -->
     <string name="show_airs">airs</string>
     <string name="show_network">on</string>
     <string name="show_pleaseupdate">Try to update this show to display more information (in the overview, long-press on it, select Update). If this doesn\'t help, there is likely no additional information in TheTVDB. Go to their site (www.thetvdb.com) to learn how to add some.</string>
     <string name="show_noairtime">No air times available</string>
-    <string name="showinimdb">Show in IMDb</string>
     <string name="noIMDBentry">No IMDB reference available. Update this show or go to thetvdb.com and add it.</string>
 
     <!-- Season list -->
@@ -240,8 +247,8 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="apikey">API key</string>
-    <string name="pref_trakt">Disconnect trakt.tv</string>
-    <string name="pref_traktsummary">Use the Share buttons to setup trakt.tv</string>
+    <string name="pref_trakt">trakt.tv credentials</string>
+    <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
     <string name="pref_traktsync">Sync with trakt.tv</string>
     <string name="pref_traktsyncsummary">Experimental, manual syncing with trakt.tv</string>
     <string name="save">Save</string>
@@ -280,6 +287,8 @@
     <string name="app_name">SeriesGuide</string>
     <string name="whatsnew_content">- Redesign of UI and backend (try using it in landscape, or on Android 3.0+!).\n\n- New time offset setting.\n\n- Remove single episodes.\n\n- Long-clicking on Back takes you to the show list.\n\n- Dropped support for Android 1.6\n\n- Much more...</string>
     <string name="helptranslate">Help translate SeriesGuide</string>
+    <string name="imdb">IMDb</string>
+    <string name="tvdb">TVDb</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>

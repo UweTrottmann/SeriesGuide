@@ -13,7 +13,6 @@
   <string name="ioerror">Es trat ein Netzwerkfehler auf, versuchen Sie es später erneut. Sie können TheTVDB.com wahrscheinlich gerade nicht oder schlecht erreichen.</string>
   <string name="saxerror">Die Antwort von TheTVDB wurde nicht verstanden. Bitte versuchen Sie es später erneut.</string>
   <string name="offline">Es wurde keine aktive Internetverbindung gefunden. Bitte stellen Sie sicher, dass Sie mit dem Internet verbunden sind und versuchen Sie es erneut.</string>
-  <string name="whatsnew_title">What\'s new</string>
   <string name="search_hint">Suche Folgen</string>
   <string name="search_title">Gefundene Folgen</string>
   <string name="share_episode">Folge empfehlen</string>
@@ -54,8 +53,6 @@
   <string name="context_unfavorite">Von Favoriten entfernen</string>
   <string name="favorited">Zu Favoriten hinzugefügt</string>
   <string name="unfavorited">Von Favoriten entfernt</string>
-  <string name="update_delta">Suche aktualisierte Serien...</string>
-  <string name="update_full">Aktualisiere alle Serien...</string>
   <string name="update_error">Konnte kein Update durchführen</string>
   <string name="update_incomplete1">Konnte</string>
   <string name="update_incomplete2">nicht aktualisieren.</string>
@@ -69,7 +66,6 @@
   <string name="show_network">auf</string>
   <string name="show_pleaseupdate">Bitte aktualisiere diese Serie um mehr Information anzuzeigen (in der Übersicht lange auf den Namen drücken, Aktualisieren wählen). Sollte dies ohne Wirkung sein, kannst du auf www.thetvdb.com Informationen für diese Serie hinzufügen.</string>
   <string name="show_noairtime">Keine Sendezeit verfügbar</string>
-  <string name="showinimdb">In IMDb anzeigen</string>
   <string name="noIMDBentry">Kein IMDB Verweis vorhanden. Aktualisieren Sie diese Serie oder fügen Sie auf thetvdb.com einen Verweis hinzu.</string>
   <string name="no_seasons">Ooops, für diese Serie existieren keine Staffeln. Versuchen Sie die Serie zu aktualisieren (in der Übersicht lange auf den Namen drücken, Aktualisieren wählen).</string>
   <string name="season_watchcount">ungesehene Folgen</string>
@@ -113,7 +109,6 @@
   <string name="pref_hideimagessummary">SeriesGuide Bilder nicht in Gallerie anzeigen (Neustart notwendig)</string>
   <string name="pref_more">Weiteres</string>
   <string name="about">Über SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - developed by Uwe Trottmann.\n\nPlease see the CREDITS link below for all the people and resources that help drive this project.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
   <string name="help">Hilfe (Englisch)</string>
   <string name="help_summary">Zeige Hilfe-Seite an</string>
   <string name="backup">Sichern/Wiederherstellen</string>
@@ -187,8 +182,8 @@
   <string name="username">Benutzername</string>
   <string name="password">Passwort</string>
   <string name="apikey">API key</string>
-  <string name="pref_trakt">trakt.tv trennen</string>
-  <string name="pref_traktsummary">trakt.tv über die Teilen-Buttons einrichten.</string>
+  <string name="pref_trakt">trakt.tv Anmeldeinformationen</string>
+  <string name="pref_traktsummary">Hinzufügen oder Bearbeiten Ihrer trakt.tv Anmeldeinformationen</string>
   <string name="pref_traktsync">Synchronisieren mit trakt.tv</string>
   <string name="pref_traktsyncsummary">Experimentelle, manuelle Synchronisierung mit trakt.tv</string>
   <string name="save">Speichern</string>
@@ -207,10 +202,10 @@
   <string name="trakt_createaccount">Neues Konto einrichten</string>
   <string name="email">E-Mail</string>
   <string name="trakt_synctodevice">Sync nach SeriesGuide</string>
-  <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. Only shows added to SeriesGuide are synced. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
   <string name="trakt_synctotrakt">Sync nach trakt.tv</string>
   <string name="trakt_syncunseen">Auch ungesehene Folgen syncen</string>
   <string name="powered_by_thetvdb">ein Dienst von thetvdb.com</string>
+  <string name="download_stable">SeriesGuide downloaden</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Nächste Folge</item>

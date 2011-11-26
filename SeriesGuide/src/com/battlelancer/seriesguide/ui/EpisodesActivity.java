@@ -2,8 +2,8 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesDatabase;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.thetvdbapi.Series;
 
 import android.content.Intent;
@@ -29,7 +29,7 @@ public class EpisodesActivity extends BaseActivity {
         }
 
         final String seriesid = getIntent().getStringExtra(Shows.REF_SHOW_ID);
-        final Series show = SeriesDatabase.getShow(this, seriesid);
+        final Series show = DBUtils.getShow(this, seriesid);
         if (show != null) {
             String showname = show.getSeriesName();
             actionBar.setTitle(showname + " " + customTitle);

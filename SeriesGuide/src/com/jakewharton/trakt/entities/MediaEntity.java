@@ -1,8 +1,9 @@
 package com.jakewharton.trakt.entities;
 
-import java.util.Calendar;
 import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.MediaType;
+
+import java.util.Calendar;
 
 public class MediaEntity implements TraktEntity {
 	private static final long serialVersionUID = 4535846809492296227L;

@@ -1,8 +1,9 @@
 package com.jakewharton.trakt.entities;
 
-import java.util.Date;
 import com.google.myjson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
+
+import java.util.Date;
 
 public final class Movie extends MediaBase implements TraktEntity {
 	private static final long serialVersionUID = -1543214252495012419L;

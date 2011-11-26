@@ -8,6 +8,7 @@
 	<classpathentry kind="lib" path="lib/signpost-core-1.2.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/apibuilder-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/myjson-1.7.1.jar"/>
+	<classpathentry kind="lib" path="lib/actionbarsherlock-plugin-preference-3.4.1.jar"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

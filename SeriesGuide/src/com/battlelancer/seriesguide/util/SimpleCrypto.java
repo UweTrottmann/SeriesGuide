@@ -1,7 +1,7 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -1,8 +1,9 @@
 package com.jakewharton.trakt.entities;
 
-import java.util.Date;
 import com.google.myjson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
+
+import java.util.Date;
 
 public final class Person implements TraktEntity {
 	private static final long serialVersionUID = -4755476212550445673L;

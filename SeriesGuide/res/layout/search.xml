@@ -7,12 +7,12 @@
     <ListView
         android:id="@+id/android:list"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="fill_parent" />
 
     <TextView
         android:id="@+id/android:empty"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_margin="10dp"
         android:text="@string/no_results" />
 

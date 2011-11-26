@@ -1,17 +1,5 @@
 package com.jakewharton.trakt;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Field;
-import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.nio.charset.Charset;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
 import com.google.myjson.GsonBuilder;
 import com.google.myjson.JsonDeserializationContext;
 import com.google.myjson.JsonDeserializer;
@@ -34,6 +22,19 @@ import com.jakewharton.trakt.enumerations.MediaType;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.jakewharton.trakt.enumerations.RatingType;
 import com.jakewharton.trakt.util.Base64;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.nio.charset.Charset;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Trakt-specific API service extension which facilitates provides helper

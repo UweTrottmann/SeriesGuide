@@ -1,9 +1,10 @@
 package com.jakewharton.trakt.entities;
 
-import java.util.List;
 import com.google.myjson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.Rating;
+
+import java.util.List;
 
 public abstract class MediaBase implements TraktEntity {
 	private static final long serialVersionUID = 753880113366868498L;

@@ -1,7 +1,8 @@
 package com.jakewharton.trakt.entities;
 
-import java.util.List;
 import com.jakewharton.trakt.TraktEntity;
+
+import java.util.List;
 
 public class TvShowSeason implements TraktEntity {
 	private static final long serialVersionUID = -1283154821327471366L;

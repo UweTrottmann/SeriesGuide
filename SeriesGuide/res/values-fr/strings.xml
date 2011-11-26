@@ -13,7 +13,6 @@
   <string name="ioerror">Il y avait une erreur de réseau. Vous pouvez avoir un accès limité à TheTVDB.com à l\'heure actuelle. Veuillez réessayer plus tard.</string>
   <string name="saxerror">La réponse de TheTVDB n\'a pas été comprise. Veuillez réessayer plus tard.</string>
   <string name="offline">Il n\'y a pas de connexion active à Internet signalée. S\'il vous plaît assurez-vous que vous êtes connecté à Internet et essayez à nouveau.</string>
-  <string name="whatsnew_title">What\'s new</string>
   <string name="search_hint">Recherche d\'épisodes</string>
   <string name="search_title">Correspondance des épisodes</string>
   <string name="share_episode">Partager épisode</string>
@@ -34,8 +33,8 @@
   <string name="show_isnotalive">Terminé</string>
   <string name="sort">Trié par</string>
   <string name="menu_updateart">Obtenez les affiches manquantes</string>
-  <string name="updateall_yes">Update (all)</string>
-  <string name="menu_update_delta">Update (modified only)</string>
+  <string name="updateall_yes">Mise à jour (tous)</string>
+  <string name="menu_update_delta">Mise à jour (modifié uniquement)</string>
   <string name="context_updateshow">Mise à jour</string>
   <string name="context_showinfo">Afficher les infos</string>
   <string name="context_marknext">Consulté prochain épisode</string>
@@ -54,22 +53,19 @@
   <string name="context_unfavorite">Supprimer des favoris</string>
   <string name="favorited">Ajouté aux favoris</string>
   <string name="unfavorited">Supprimé des favoris</string>
-  <string name="update_delta">Recherchez une mise à jour des séries ...</string>
-  <string name="update_full">Actualiser les séries</string>
   <string name="update_error">Impossible de mettre à jour.</string>
   <string name="update_incomplete1">Impossible de mettre à jour</string>
   <string name="update_incomplete2">.</string>
-  <string name="update_success">Update successful.</string>
-  <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
+  <string name="update_success">Mise à jour réussie.</string>
+  <string name="imagedownload_incomplete">Mise à jour réussie. Malheureusement, certaines images n\'ont pas pu être télécharger. Réessayez plus tard.</string>
   <string name="update_inbackground">Mise à jour ...</string>
   <string name="update_inprogress">Il ya une mise à jour en cours. Attendez qu\'elle soit terminée, puis essayez à nouveau.</string>
   <string name="update_nosdcard">Impossible de mettre à jour. Il n\'y a pas de stockage externe ou votre carte SD disponible.</string>
-  <string name="update_rebuildsearch">Building episode search index</string>
+  <string name="update_rebuildsearch">Construction de l\'index de recherche des épisodes</string>
   <string name="show_airs">Diffusions</string>
   <string name="show_network">sur</string>
   <string name="show_pleaseupdate">Essayez de mettre à jour cette série pour afficher plus d\'informations (dans l\'aperçu, pression longue sur la série, sélectionnez Mise à jour). Si ca ne vous aide pas, il n\'y a probablement pas plus d\'informations sur TheTVDB. Allez sur leur site (www.thetvdb.com) pour apprendre à ajouter des éléments.</string>
   <string name="show_noairtime">pas de date de diffusion disponible</string>
-  <string name="showinimdb">Afficher dans IMDb</string>
   <string name="noIMDBentry">Aucune référence disponibles sur IMBD. Mettez à jour de cette série ou aller à thetvdb.com et l\'ajouter.</string>
   <string name="no_seasons">Oups, il n\'y a pas de saison de cette série. Essayez la mise à jour de la série (dans l\'aperçu, appui long sur la série, sélectionnez Mise à jour).</string>
   <string name="season_watchcount">épisodes pas vu</string>
@@ -103,7 +99,7 @@
   <string name="pref_epsortingsummary">Ordre de tri des épisodes</string>
   <string name="pref_showlist">Afficher la liste</string>
   <string name="pref_onlyfuture">Aucun épisode diffusé</string>
-  <string name="pref_onlyfuturesummary">\"next:\" never shows already aired episodes</string>
+  <string name="pref_onlyfuturesummary">\ "Suivant: \" ne montre jamais les épisodes déjà diffusés</string>
   <string name="pref_onlyseasoneps">Aucun épisodes spéciaux</string>
   <string name="pref_onlyseasonepssummary">\ "Suivant: \" ne jamais montrer les épisodes spéciaux</string>
   <string name="pref_content">Contenu</string>
@@ -143,7 +139,7 @@
   <string name="import_failed_noread">Le fichier de sauvegarde n\'est pas lisible (\ "/ sdcard / seriesguidebackup / seriesdatabase \"). Impossible de restaurer la base de données.</string>
   <string name="import_success">Base de données restaurée avec succès</string>
   <string name="import_failed">Restauration échouée</string>
-  <string name="dbupgradefailed">Looks like your backup is too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
+  <string name="dbupgradefailed">On dirait que votre sauvegarde est trop vieille ou vide. Note : Importer des sauvegardes de pre-2.0 dans une version 1.9.x tout d\'abord.</string>
   <string name="backup_button">Sauvegarde sur carte SD</string>
   <string name="import_button">Restauration à partir de la carte SD</string>
   <string name="backup_question">Cela va écraser tous les anciens fichiers de sauvegarde.</string>
@@ -167,7 +163,7 @@
   <string name="comment">Enregistrement Commentaire</string>
   <string name="checkinsuccess">Enregistrement reusssi</string>
   <string name="pref_number">Format de nombre</string>
-  <string name="pref_numbersummary">Switch between 1x01, S01E01 or s01e01 as number format</string>
+  <string name="pref_numbersummary">Basculer entre 1x01, S01E01 ou s01e01 comme format de numérotation</string>
   <string name="checkinfailed">Enregistrement échoué</string>
   <string name="oauthmessage">Authentification de SerieGuide avec GetBlue...</string>
   <string name="addtocalendar">Ajouter au calendrier</string>
@@ -185,8 +181,6 @@
   <string name="username">Nom d\'utilisateur</string>
   <string name="password">Mot de passe</string>
   <string name="apikey">Clé API</string>
-  <string name="pref_trakt">Déconnexion trakt.tv</string>
-  <string name="pref_traktsummary">Utilisez les boutons Partager pour configurer trakt.tv</string>
   <string name="pref_traktsync">Synchroniser avec trakt.tv</string>
   <string name="pref_traktsyncsummary">Expérimentale, synchronisation manuelle avec trakt.tv</string>
   <string name="save">Enregistrer</string>
@@ -195,18 +189,16 @@
   <string name="trakt_error">partage avec Trakt.TV a échoué</string>
   <string name="trakt_decryptfail">Mot de passe n\'a pas pu être décrypté</string>
   <string name="trakt_credentials_invalid">références non valides</string>
-  <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
+  <string name="trakt_generalerror">Quelque chose s\'est mal passé. Veuillez vérifier vos identifiants et essayez à nouveau.</string>
   <string name="pref_traktintegrate">Intégrer à trakt.tv</string>
   <string name="pref_traktintegratesummary">Marquer comme vu dans l\'Aperçu partagé avec trakt.tv</string>
   <string name="donate">Achetez-moi une boisson (Paypal)</string>
-  <string name="feedback">Provide feedback</string>
   <string name="love">Totalement ninja!</string>
-  <string name="hate">Weak Sauce :(</string>
   <string name="trakt_createaccount">Créer un nouveau compte</string>
   <string name="email">Email</string>
-  <string name="trakt_synctodevice">Synchroniser avec SeriesGuide</string>
-  <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. Only shows added to SeriesGuide are synced. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
-  <string name="trakt_synctotrakt">Synchroniser avec trakt.tv</string>
+  <string name="trakt_synctodevice">Synchroniser vers SeriesGuide</string>
+  <string name="trakt_experimental"><b>Experimental</b> synchronisation avec trakt. Ceci peut être instable à certains moments. Seuls les séries ajoutées à SeriesGuide sont synchronisés. Vers SeriesGuide marque seulement les épisodes regardés , mais ne supprime pas les marquages ​​existants dans SeriesGuide. Vers trakt ne transmet que les épisodes vus.</string>
+  <string name="trakt_synctotrakt">Synchroniser vers trakt.tv</string>
   <string name="trakt_syncunseen">Synchronisez les épisodes non vus</string>
   <string name="powered_by_thetvdb">proposé par thetvdb.com</string>
   <string-array name="shsorting">
@@ -237,6 +229,6 @@
   <string-array name="showfilter_list">
     <item>tout</item>
     <item>Favoris</item>
-    <item>Unseen/Upcoming</item>
+    <item>Pas vu / Prochains</item>
   </string-array>
 </resources>

@@ -49,4 +49,17 @@
     <include layout="@layout/episode_meta" >
     </include>
 
+    <include
+        android:id="@+id/divider"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/holodivider" >
+    </include>
+
+    <include
+        android:id="@+id/buttonbar_ref"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        layout="@layout/show_info_buttonbar" />
+
 </LinearLayout>

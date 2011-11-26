@@ -1,10 +1,11 @@
 package com.jakewharton.trakt.entities;
 
-import java.util.Date;
-import java.util.List;
 import com.google.myjson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.DayOfTheWeek;
+
+import java.util.Date;
+import java.util.List;
 
 public final class TvShow extends MediaBase implements TraktEntity {
 	private static final long serialVersionUID = 862473930551420996L;

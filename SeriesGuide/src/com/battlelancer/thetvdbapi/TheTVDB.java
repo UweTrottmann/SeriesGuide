@@ -2,15 +2,14 @@
 package com.battlelancer.thetvdbapi;
 
 import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
-import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Lists;
+import com.battlelancer.seriesguide.util.Utils;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -53,7 +52,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.zip.ZipInputStream;
@@ -87,10 +85,10 @@ public class TheTVDB {
         String language = getTheTVDBLanguage(context);
         Series show = fetchShow(showId, language, context);
 
-        boolean isShowExists = SeriesDatabase.isShowExists(showId, context);
+        boolean isShowExists = DBUtils.isShowExists(showId, context);
 
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
-        batch.add(SeriesDatabase.buildShowOp(show, context, !isShowExists));
+        batch.add(DBUtils.buildShowOp(show, context, !isShowExists));
         batch.addAll(importShowEpisodes(showId, language, context));
 
         try {
@@ -103,7 +101,7 @@ public class TheTVDB {
             throw new RuntimeException("Problem applying batch operation", e);
         }
 
-        SeriesDatabase.updateLatestEpisode(context, showId);
+        DBUtils.updateLatestEpisode(context, showId);
 
         return !isShowExists;
     }
@@ -120,7 +118,7 @@ public class TheTVDB {
         Series show = fetchShow(showId, language, context);
 
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
-        batch.add(SeriesDatabase.buildShowOp(show, context, false));
+        batch.add(DBUtils.buildShowOp(show, context, false));
         batch.addAll(importShowEpisodes(showId, language, context));
 
         try {
@@ -186,7 +184,7 @@ public class TheTVDB {
         });
         item.getChild("id").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setId(Integer.valueOf(body));
+                currentShow.setId(body);
             }
         });
         item.getChild("SeriesName").setEndTextElementListener(new EndTextElementListener() {
@@ -261,7 +259,7 @@ public class TheTVDB {
         });
         show.getChild("Airs_Time").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setAirsTime(SeriesGuideData.parseTimeToMilliseconds(body.trim()));
+                currentShow.setAirsTime(Utils.parseTimeToMilliseconds(body.trim()));
                 currentShow.setAirTime(body.trim());
             }
         });
@@ -342,9 +340,8 @@ public class TheTVDB {
         RootElement root = new RootElement("Data");
         Element episode = root.getChild("Episode");
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
-        final HashSet<Long> episodeIDs = SeriesDatabase.getEpisodeIDsForShow(seriesid, context);
-        final HashSet<Long> existingSeasonIDs = SeriesDatabase.getSeasonIDsForShow(seriesid,
-                context);
+        final HashSet<Long> episodeIDs = DBUtils.getEpisodeIDsForShow(seriesid, context);
+        final HashSet<Long> existingSeasonIDs = DBUtils.getSeasonIDsForShow(seriesid, context);
         final HashSet<Long> updatedSeasonIDs = new HashSet<Long>();
         final ContentValues values = new ContentValues();
 
@@ -352,14 +349,13 @@ public class TheTVDB {
         episode.setEndElementListener(new EndElementListener() {
             public void end() {
                 // add insert/update op for episode
-                batch.add(SeriesDatabase.buildEpisodeOp(values,
+                batch.add(DBUtils.buildEpisodeOp(values,
                         !episodeIDs.contains(values.getAsLong(Episodes._ID))));
 
                 long seasonid = values.getAsLong(Seasons.REF_SEASON_ID);
                 if (!updatedSeasonIDs.contains(seasonid)) {
                     // add insert/update op for season
-                    batch.add(SeriesDatabase.buildSeasonOp(values,
-                            !existingSeasonIDs.contains(seasonid)));
+                    batch.add(DBUtils.buildSeasonOp(values, !existingSeasonIDs.contains(seasonid)));
                     updatedSeasonIDs.add(values.getAsLong(Seasons.REF_SEASON_ID));
                 }
 
@@ -446,61 +442,36 @@ public class TheTVDB {
     }
 
     /**
-     * Return list of show ids which have been updated since
-     * {@code previousUpdateTime}. Time is UNIX time.
-     * 
-     * @param previousUpdateTime
+     * Return list of show ids hitting a x-day limit.
+     * @param currentTime
+     * @param updateAtLeastEvery
      * @param context
+     * 
      * @return
      * @throws SAXException
      */
-    public static String[] deltaUpdateShows(long previousUpdateTime, Context context)
-            throws SAXException {
+    public static String[] deltaUpdateShows(long currentTime, int updateAtLeastEvery,
+            Context context) throws SAXException {
+        final HashSet<Integer> existingShowIds = new HashSet<Integer>();
+        final HashSet<String> updatableShowIds = new HashSet<String>();
+
         // get existing show ids
         final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI, new String[] {
-            Shows._ID
+                Shows._ID, Shows.LASTUPDATED
         }, null, null, null);
-        final HashSet<Integer> existingShowIds = new HashSet<Integer>();
+
         while (shows.moveToNext()) {
-            existingShowIds.add(shows.getInt(0));
+            long lastUpdatedTime = shows.getLong(1);
+            if (currentTime - lastUpdatedTime > DateUtils.DAY_IN_MILLIS * updateAtLeastEvery) {
+                // add shows that are due for updating
+                updatableShowIds.add(shows.getString(0));
+            } else {
+                // add remaining ones to check-list for tvdb update function
+                existingShowIds.add(shows.getInt(0));
+            }
         }
+
         shows.close();
-
-        // get existing episode ids
-        final Cursor episodes = context.getContentResolver().query(Episodes.CONTENT_URI,
-                new String[] {
-                        Episodes._ID, Shows.REF_SHOW_ID
-                }, null, null, null);
-        final HashMap<String, String> episodeMap = new HashMap<String, String>();
-        while (episodes.moveToNext()) {
-            episodeMap.put(episodes.getString(0), episodes.getString(1));
-        }
-        episodes.close();
-
-        // parse updatable show ids
-        final HashSet<String> updatableShowIds = new HashSet<String>();
-        final RootElement root = new RootElement("Items");
-        root.getChild("Series").setEndTextElementListener(new EndTextElementListener() {
-            @Override
-            public void end(String body) {
-                if (existingShowIds.contains(body)) {
-                    updatableShowIds.add(body);
-                }
-            }
-        });
-        root.getChild("Episode").setEndTextElementListener(new EndTextElementListener() {
-            @Override
-            public void end(String body) {
-                String showId = episodeMap.get(body);
-                if (showId != null) {
-                    updatableShowIds.add(showId);
-                }
-            }
-        });
-        final String url = xmlMirror + "Updates.php?type=all&time=" + previousUpdateTime;
-        HttpUriRequest request = new HttpGet(url);
-        HttpClient httpClient = getHttpClient(context);
-        execute(request, httpClient, root.getContentHandler(), false);
 
         return updatableShowIds.toArray(new String[updatableShowIds.size()]);
     }
@@ -546,8 +517,7 @@ public class TheTVDB {
         }
 
         Bitmap bitmap = null;
-        ImageCache imageCache = ((SeriesGuideApplication) context.getApplicationContext())
-                .getImageCache();
+        ImageCache imageCache = ImageCache.getInstance(context);
         boolean resultCode = true;
 
         if (fileName.length() != 0 && !imageCache.contains(fileName)) {

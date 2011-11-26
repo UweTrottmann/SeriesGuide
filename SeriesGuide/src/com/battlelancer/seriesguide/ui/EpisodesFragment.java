@@ -1,16 +1,16 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideData;
-import com.battlelancer.seriesguide.SeriesGuideData.EpisodeSorting;
 import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -52,7 +52,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
 
     private static final int DELETE_EPISODE_ID = 2;
 
-    private EpisodeSorting sorting;
+    private Constants.EpisodeSorting sorting;
 
     private boolean mDualPane;
 
@@ -133,7 +133,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
                     TextView tv = (TextView) view;
                     String fieldValue = cursor.getString(EpisodesQuery.FIRSTAIRED);
                     if (fieldValue.length() != 0) {
-                        tv.setText(SeriesGuideData.parseDateToLocalRelative(fieldValue,
+                        tv.setText(Utils.parseDateToLocalRelative(fieldValue,
                                 cursor.getLong(EpisodesQuery.SHOW_AIRSTIME), getActivity()));
                     } else {
                         tv.setText(getString(R.string.episode_firstaired) + " "
@@ -165,7 +165,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
                 @Override
                 public void run() {
                     // Make sure no fragment is already shown
-                    EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
+                    EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getSupportFragmentManager()
                             .findFragmentById(R.id.fragment_details);
                     if (detailsFragment == null) {
                         if (context != null) {
@@ -220,7 +220,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
             if (detailsFragment == null
                     || !detailsFragment.getEpisodeId().equalsIgnoreCase(episodeId)) {
                 // Make new fragment to show this selection.
-                detailsFragment = EpisodeDetailsFragment.newInstance(episodeId);
+                detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true);
 
                 // Execute a transaction, replacing any existing
                 // fragment with this one inside the frame.
@@ -337,7 +337,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
         if (activity != null) {
             new Thread(new Runnable() {
                 public void run() {
-                    SeriesDatabase.markEpisode(activity, episodeId, state);
+                    DBUtils.markEpisode(activity, episodeId, state);
                 }
             }).start();
         }
@@ -348,7 +348,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
         if (activity != null) {
             new Thread(new Runnable() {
                 public void run() {
-                    SeriesDatabase.markSeasonEpisodes(activity, getSeasonId(), state);
+                    DBUtils.markSeasonEpisodes(activity, getSeasonId(), state);
                     activity.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
                 }
             }).start();
@@ -356,26 +356,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
     }
 
     private void updatePreferences() {
-        String[] epsortingData = getResources().getStringArray(R.array.epsortingData);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity()
-                .getApplicationContext());
-        String currentPref = prefs.getString("episodeSorting", epsortingData[1]);
-
-        if (currentPref.equals(epsortingData[0])) {
-            sorting = SeriesGuideData.EpisodeSorting.LATEST_FIRST;
-        } else if (currentPref.equals(epsortingData[1])) {
-            sorting = SeriesGuideData.EpisodeSorting.OLDEST_FIRST;
-        } else if (currentPref.equals(epsortingData[2])) {
-            sorting = SeriesGuideData.EpisodeSorting.UNWATCHED_FIRST;
-        } else if (currentPref.equals(epsortingData[3])) {
-            sorting = SeriesGuideData.EpisodeSorting.ALPHABETICAL_ASC;
-        } else if (currentPref.equals(epsortingData[4])) {
-            sorting = SeriesGuideData.EpisodeSorting.ALPHABETICAL_DESC;
-        } else if (currentPref.equals(epsortingData[5])) {
-            sorting = SeriesGuideData.EpisodeSorting.DVDLATEST_FIRST;
-        } else {
-            sorting = SeriesGuideData.EpisodeSorting.DVDOLDEST_FIRST;
-        }
+        sorting = Utils.getEpisodeSorting(getActivity());
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
@@ -456,7 +437,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
     }
 
     private void updateSorting(int item) {
-        sorting = (SeriesGuideData.EpisodeSorting.values())[item];
+        sorting = (Constants.EpisodeSorting.values())[item];
         AnalyticsUtils.getInstance(getActivity()).trackEvent("Episodes", "Sorting", sorting.name(),
                 0);
 

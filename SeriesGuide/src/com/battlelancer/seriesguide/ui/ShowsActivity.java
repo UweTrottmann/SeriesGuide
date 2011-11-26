@@ -1,20 +1,17 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.AddShow;
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesDatabase;
-import com.battlelancer.seriesguide.SeriesGuideApplication;
-import com.battlelancer.seriesguide.SeriesGuideData;
-import com.battlelancer.seriesguide.SeriesGuideData.ShowSorting;
-import com.battlelancer.seriesguide.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.ShowInfo;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.EulaHelper;
-import com.battlelancer.seriesguide.util.UIUtils;
+import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
 import android.app.AlertDialog;
@@ -45,6 +42,7 @@ import android.support.v4.content.Loader;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.text.format.DateUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -89,10 +87,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final int CONTEXT_UNFAVORITE = 205;
 
-    public static final int UPDATE_OFFLINE_DIALOG = 300;
-
-    public static final int UPDATE_SAXERROR_DIALOG = 302;
-
     private static final int CONFIRM_DELETE_DIALOG = 304;
 
     private static final int WHATS_NEW_DIALOG = 305;
@@ -104,14 +98,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private static final int LOADER_ID = 900;
 
     // Background Task States
-    private static final String STATE_UPDATE_IN_PROGRESS = "seriesguide.update.inprogress";
-
-    private static final String STATE_UPDATE_SHOWS = "seriesguide.update.shows";
-
-    private static final String STATE_UPDATE_INDEX = "seriesguide.update.index";
-
-    private static final String STATE_UPDATE_FAILEDSHOWS = "seriesguide.update.failedshows";
-
     private static final String STATE_ART_IN_PROGRESS = "seriesguide.art.inprogress";
 
     private static final String STATE_ART_PATHS = "seriesguide.art.paths";
@@ -131,15 +117,11 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private Bundle mSavedState;
 
-    private UpdateTask mUpdateTask;
-
     private FetchArtTask mArtTask;
 
     private SlowAdapter mAdapter;
 
-    private String mFailedShowsString;
-
-    private ShowSorting mSorting;
+    private Constants.ShowSorting mSorting;
 
     private long mToDeleteId;
 
@@ -226,6 +208,37 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     protected void onStart() {
         super.onStart();
         AnalyticsUtils.getInstance(this).trackPageView("/Shows");
+
+        // auto-update
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+        final boolean isAutoUpdateEnabled = prefs.getBoolean(SeriesGuidePreferences.KEY_AUTOUPDATE,
+                false);
+        if (isAutoUpdateEnabled) {
+            // allow auto-update if 11 hours have passed
+            final long previousUpdateTime = prefs.getLong(
+                    SeriesGuidePreferences.KEY_LASTUPDATE, 0);
+            long currentTime = System.currentTimeMillis();
+            final boolean isTime = currentTime - (previousUpdateTime) > DateUtils.DAY_IN_MILLIS
+                    - DateUtils.HOUR_IN_MILLIS;
+
+            if (isTime) {
+                // allow auto-update only on allowed connection
+                final boolean isAutoUpdateWlanOnly = prefs.getBoolean(
+                        SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
+                boolean isOnAllowedConnection = true;
+                if (isAutoUpdateWlanOnly) {
+                    // abort if we are not on WiFi
+                    if (!Utils.isWifiConnected(this)) {
+                        isOnAllowedConnection = false;
+                    }
+                }
+
+                if (isOnAllowedConnection) {
+                    performUpdateTask(false, null);
+                }
+            }
+        }
     }
 
     @Override
@@ -253,13 +266,11 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        saveUpdateTask(outState);
         saveArtTask(outState);
         mSavedState = outState;
     }
 
     private void restoreLocalState(Bundle savedInstanceState) {
-        restoreUpdateTask(savedInstanceState);
         restoreArtTask(savedInstanceState);
     }
 
@@ -292,60 +303,9 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         }
     }
 
-    private void restoreUpdateTask(Bundle savedInstanceState) {
-        if (savedInstanceState.getBoolean(STATE_UPDATE_IN_PROGRESS)) {
-            String[] shows = savedInstanceState.getStringArray(STATE_UPDATE_SHOWS);
-            int index = savedInstanceState.getInt(STATE_UPDATE_INDEX);
-            String failedShows = savedInstanceState.getString(STATE_UPDATE_FAILEDSHOWS);
-
-            if (shows != null) {
-                mUpdateTask = (UpdateTask) new UpdateTask(shows, index, failedShows, this)
-                        .execute();
-                AnalyticsUtils.getInstance(this).trackEvent("Shows", "Task Lifecycle",
-                        "Update Task Restored", 0);
-            }
-        }
-    }
-
-    private void saveUpdateTask(Bundle outState) {
-        final UpdateTask task = mUpdateTask;
-        if (task != null && task.getStatus() != AsyncTask.Status.FINISHED) {
-            task.cancel(true);
-
-            outState.putBoolean(STATE_UPDATE_IN_PROGRESS, true);
-            outState.putStringArray(STATE_UPDATE_SHOWS, task.mShows);
-            outState.putInt(STATE_UPDATE_INDEX, task.mUpdateCount.get());
-            outState.putString(STATE_UPDATE_FAILEDSHOWS, task.mFailedShows);
-
-            mUpdateTask = null;
-
-            AnalyticsUtils.getInstance(this).trackEvent("Shows", "Task Lifecycle",
-                    "Update Task Saved", 0);
-        }
-    }
-
     @Override
     protected Dialog onCreateDialog(int id) {
-        String message = "";
         switch (id) {
-            case UPDATE_SAXERROR_DIALOG:
-                if (getFailedShowsString() != null && getFailedShowsString().length() != 0) {
-                    message += getString(R.string.update_incomplete1) + " "
-                            + getFailedShowsString() + getString(R.string.update_incomplete2)
-                            + getString(R.string.saxerror);
-                } else {
-                    message += getString(R.string.update_error) + " "
-                            + getString(R.string.saxerror);
-                }
-                return new AlertDialog.Builder(this).setTitle(getString(R.string.saxerror_title))
-                        .setMessage(message).setPositiveButton(android.R.string.ok, null).create();
-            case UPDATE_OFFLINE_DIALOG:
-                return new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.offline_title))
-                        .setMessage(
-                                getString(R.string.update_error) + " "
-                                        + getString(R.string.offline))
-                        .setPositiveButton(android.R.string.ok, null).create();
             case CONFIRM_DELETE_DIALOG:
                 return new AlertDialog.Builder(this).setMessage(getString(R.string.confirm_delete))
                         .setPositiveButton(getString(R.string.delete_show), new OnClickListener() {
@@ -359,7 +319,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
                                 new Thread(new Runnable() {
                                     public void run() {
-                                        SeriesDatabase.deleteShow(getApplicationContext(),
+                                        DBUtils.deleteShow(getApplicationContext(),
                                                 String.valueOf(mToDeleteId));
                                         if (progress.isShowing()) {
                                             progress.dismiss();
@@ -473,7 +433,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case CONTEXT_DELETE_ID:
                 fireTrackerEvent("Delete show");
 
-                if (!isUpdateTaskRunning()) {
+                if (!TaskManager.getInstance(this).isUpdateTaskRunning()) {
                     mToDeleteId = info.id;
                     showDialog(CONFIRM_DELETE_DIALOG);
                 }
@@ -481,21 +441,19 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case CONTEXT_UPDATESHOW_ID:
                 fireTrackerEvent("Update show");
 
-                if (!isUpdateTaskRunning()) {
-                    performUpdateTask(false, String.valueOf(info.id));
-                }
+                performUpdateTask(false, String.valueOf(info.id));
                 return true;
             case CONTEXT_SHOWINFO:
                 fireTrackerEvent("Display show info");
 
-                Intent i = new Intent(this, ShowInfo.class);
+                Intent i = new Intent(this, ShowInfoActivity.class);
                 i.putExtra(Shows._ID, String.valueOf(info.id));
                 startActivity(i);
                 return true;
             case CONTEXT_MARKNEXT:
                 fireTrackerEvent("Mark next episode");
 
-                SeriesDatabase.markNextEpisode(this, info.id);
+                DBUtils.markNextEpisode(this, info.id);
                 Thread t = new UpdateLatestEpisodeThread(this, String.valueOf(info.id));
                 t.start();
                 return true;
@@ -531,15 +489,13 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case R.id.menu_update:
                 fireTrackerEvent("Update all shows");
 
-                if (!isUpdateTaskRunning() && !isArtTaskRunning()) {
-                    performUpdateTask(false, null);
-                }
+                performUpdateTask(false, null);
                 return true;
             case R.id.menu_upcoming:
                 startActivity(new Intent(this, UpcomingRecentActivity.class));
                 return true;
             case R.id.menu_new_show:
-                startActivity(new Intent(this, AddShow.class));
+                startActivity(new Intent(this, AddActivity.class));
                 return true;
             case R.id.menu_showsortby:
                 fireTrackerEvent("Sort shows");
@@ -549,12 +505,12 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case R.id.menu_updateart:
                 fireTrackerEvent("Fetch missing posters");
 
-                if (isArtTaskRunning() || isUpdateTaskRunning()) {
+                if (isArtTaskRunning()) {
                     return true;
                 }
 
                 // already fail if there is no external storage
-                if (!UIUtils.isExtStorageAvailable()) {
+                if (!Utils.isExtStorageAvailable()) {
                     Toast.makeText(this, getString(R.string.update_nosdcard), Toast.LENGTH_LONG)
                             .show();
                 } else {
@@ -569,9 +525,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case R.id.menu_fullupdate:
                 fireTrackerEvent("Full Update");
 
-                if (!isUpdateTaskRunning() && !isArtTaskRunning()) {
-                    performUpdateTask(true, null);
-                }
+                performUpdateTask(true, null);
                 return true;
             default: {
                 return super.onOptionsItemSelected(item);
@@ -605,7 +559,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         public void run() {
             if (mShowId != null) {
                 // update single show
-                SeriesDatabase.updateLatestEpisode(mContext, mShowId);
+                DBUtils.updateLatestEpisode(mContext, mShowId);
             } else {
                 // update all shows
                 final Cursor shows = mContext.getContentResolver().query(Shows.CONTENT_URI,
@@ -614,7 +568,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                         }, null, null, null);
                 while (shows.moveToNext()) {
                     String id = shows.getString(0);
-                    SeriesDatabase.updateLatestEpisode(mContext, id);
+                    DBUtils.updateLatestEpisode(mContext, id);
                 }
                 shows.close();
             }
@@ -625,39 +579,24 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private void performUpdateTask(boolean isFullUpdate, String showId) {
         int messageId;
+        UpdateTask task;
         if (isFullUpdate) {
             messageId = R.string.update_full;
-            mUpdateTask = (UpdateTask) new UpdateTask(true, this).execute();
+            task = (UpdateTask) new UpdateTask(true, this);
         } else {
             if (showId == null) {
                 // (delta) update all shows
                 messageId = R.string.update_delta;
-                mUpdateTask = (UpdateTask) new UpdateTask(false, this).execute();
+                task = (UpdateTask) new UpdateTask(false, this);
             } else {
                 // update a single show
-                messageId = R.string.update_inbackground;
-                mUpdateTask = (UpdateTask) new UpdateTask(new String[] {
+                messageId = R.string.update_single;
+                task = (UpdateTask) new UpdateTask(new String[] {
                     showId
-                }, 0, "", this).execute();
+                }, 0, "", this);
             }
         }
-        Toast.makeText(this, getString(messageId), Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * If the updateThread is already running, shows a toast telling the user to
-     * wait.
-     * 
-     * @return true if an update is in progress and toast was shown, false
-     *         otherwise
-     */
-    private boolean isUpdateTaskRunning() {
-        if (mUpdateTask != null && mUpdateTask.getStatus() != AsyncTask.Status.FINISHED) {
-            Toast.makeText(this, getString(R.string.update_inprogress), Toast.LENGTH_LONG).show();
-            return true;
-        } else {
-            return false;
-        }
+        TaskManager.getInstance(this).tryUpdateTask(task, messageId);
     }
 
     private class FetchArtTask extends AsyncTask<Void, Void, Integer> {
@@ -786,13 +725,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     }
 
     public void onCancelTasks() {
-        if (mUpdateTask != null && mUpdateTask.getStatus() == AsyncTask.Status.RUNNING) {
-            mUpdateTask.cancel(true);
-            mUpdateTask = null;
-
-            AnalyticsUtils.getInstance(this).trackEvent("Shows", "Task Lifecycle",
-                    "Update Task Canceled", 0);
-        }
         if (mArtTask != null && mArtTask.getStatus() == AsyncTask.Status.RUNNING) {
             mArtTask.cancel(true);
             mArtTask = null;
@@ -844,14 +776,14 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         updateSorting(prefs);
 
         // between-version upgrade code
-        int lastVersion = prefs.getInt(SeriesGuideData.KEY_VERSION, -1);
+        int lastVersion = prefs.getInt(SeriesGuidePreferences.KEY_VERSION, -1);
         try {
             int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
                     PackageManager.GET_META_DATA).versionCode;
             if (currentVersion > lastVersion) {
                 if (lastVersion < VER_TRAKT_SEC_CHANGES) {
-                        prefs.edit().putString(SeriesGuidePreferences.PREF_TRAKTPWD, null).commit();
-                        prefs.edit().putString(SeriesGuidePreferences.KEY_SECURE, null).commit();
+                    prefs.edit().putString(SeriesGuidePreferences.KEY_TRAKTPWD, null).commit();
+                    prefs.edit().putString(SeriesGuidePreferences.KEY_SECURE, null).commit();
                 }
 
                 // BETA warning dialog switch
@@ -859,7 +791,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 // showDialog(WHATS_NEW_DIALOG);
 
                 // set this as lastVersion
-                prefs.edit().putInt(SeriesGuideData.KEY_VERSION, currentVersion).commit();
+                prefs.edit().putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion).commit();
             }
         } catch (NameNotFoundException e) {
             // this should never happen
@@ -875,14 +807,14 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
      * @return Returns true if the value changed, false otherwise.
      */
     private boolean updateSorting(SharedPreferences prefs) {
-        final ShowSorting oldSorting = mSorting;
+        final Constants.ShowSorting oldSorting = mSorting;
         final CharSequence[] items = getResources().getStringArray(R.array.shsortingData);
         final String sortsetting = prefs.getString(SeriesGuidePreferences.KEY_SHOWSSORTORDER,
                 "favorites");
 
         for (int i = 0; i < items.length; i++) {
             if (sortsetting.equals(items[i])) {
-                mSorting = ShowSorting.values()[i];
+                mSorting = Constants.ShowSorting.values()[i];
                 break;
             }
         }
@@ -912,7 +844,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 selection = Shows.NEXTAIRDATE + "!=? AND julianday(" + Shows.NEXTAIRDATE
                         + ") <= julianday('now')";
                 selectionArgs = new String[] {
-                    SeriesDatabase.UNKNOWN_NEXT_AIR_DATE
+                    DBUtils.UNKNOWN_NEXT_AIR_DATE
                 };
                 break;
         }
@@ -952,14 +884,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             editor.commit();
         }
         return true;
-    }
-
-    public void setFailedShowsString(String mFailedShowsString) {
-        this.mFailedShowsString = mFailedShowsString;
-    }
-
-    public String getFailedShowsString() {
-        return mFailedShowsString;
     }
 
     private interface ShowsQuery {
@@ -1062,8 +986,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             }
 
             // airday
-            String[] values = SeriesGuideData.parseMillisecondsToTime(
-                    mCursor.getLong(ShowsQuery.AIRSTIME),
+            String[] values = Utils.parseMillisecondsToTime(mCursor.getLong(ShowsQuery.AIRSTIME),
                     mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), ShowsActivity.this);
             viewHolder.airsTime.setText(values[1] + " " + values[0]);
 
@@ -1141,8 +1064,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private void setPosterBitmap(ImageView poster, String path, boolean isBusy) {
         Bitmap bitmap = null;
         if (path.length() != 0) {
-            bitmap = ((SeriesGuideApplication) getApplication()).getImageCache().getThumb(path,
-                    isBusy);
+            bitmap = ImageCache.getInstance(this).getThumb(path, isBusy);
         }
 
         if (bitmap != null) {

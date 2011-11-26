@@ -18,7 +18,7 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.SeriesGuideData;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 
 import android.content.Context;
@@ -64,7 +64,7 @@ public class AnalyticsUtils {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
                 .getApplicationContext());
-        if (prefs.getBoolean(SeriesGuideData.KEY_GOOGLEANALYTICS, true)) {
+        if (prefs.getBoolean(SeriesGuidePreferences.KEY_GOOGLEANALYTICS, true)) {
             ANALYTICS_ENABLED = true;
         } else {
             ANALYTICS_ENABLED = false;

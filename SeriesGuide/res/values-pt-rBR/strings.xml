@@ -13,7 +13,6 @@
   <string name="ioerror">Houve um erro de rede. Você pode ter acesso limitado ao TheTVDB.com em sua conexão atual. Tente novamente mais tarde.</string>
   <string name="saxerror">A resposta do TheTVDB não foi entendida. Por favor, tente novamente mais tarde.</string>
   <string name="offline">Não foi encontrada nenhuma conexão ativa com a internet. Por favor, verifique se você está conectado e tente novamente.</string>
-  <string name="whatsnew_title">What\'s new</string>
   <string name="search_hint">Procurar episódios</string>
   <string name="search_title">Comparando episódios</string>
   <string name="share_episode">Compartilhar episódio</string>
@@ -34,8 +33,8 @@
   <string name="show_isnotalive">Finalizada</string>
   <string name="sort">Ordenar por</string>
   <string name="menu_updateart">Obter Imagens ausentes</string>
-  <string name="updateall_yes">Update (all)</string>
-  <string name="menu_update_delta">Update (modified only)</string>
+  <string name="updateall_yes">Atualizar (tudo)</string>
+  <string name="menu_update_delta">Atualizar (apenas modificados)</string>
   <string name="context_updateshow">Atualizar</string>
   <string name="context_showinfo">Mostrar informações</string>
   <string name="context_marknext">Próximo episódio já assistido</string>
@@ -54,22 +53,19 @@
   <string name="context_unfavorite">Remover dos favoritos</string>
   <string name="favorited">Adicionado aos favoritos</string>
   <string name="unfavorited">Removido dos favoritos</string>
-  <string name="update_delta">Procurando por séries atualizadas...</string>
-  <string name="update_full">Atualizando todos os shows...</string>
   <string name="update_error">Não foi possível atualizar.</string>
   <string name="update_incomplete1">Não foi possível atualizar</string>
   <string name="update_incomplete2">.</string>
-  <string name="update_success">Update successful.</string>
-  <string name="imagedownload_incomplete">Update successful. Sadly some images did not download. Try again later.</string>
+  <string name="update_success">Atualização bem-sucedida.</string>
+  <string name="imagedownload_incomplete">Atualização bem-sucedida. Infelizmente algumas imagens não puderam ser recebidas. Tente novamente mais tarde.</string>
   <string name="update_inbackground">Atualizando ...</string>
   <string name="update_inprogress">Existe uma atualização em andamento. Aguarde a conclusão para tentar novamente.</string>
   <string name="update_nosdcard">Não foi possível atualizar. Não há nenhum armazenamento externo ou cartão SD disponíveis.</string>
-  <string name="update_rebuildsearch">Building episode search index</string>
+  <string name="update_rebuildsearch">Montagem do índice de busca de episódio</string>
   <string name="show_airs">estréia</string>
   <string name="show_network">sim</string>
   <string name="show_pleaseupdate">Tente atualizar esta série para mostrar mais informações (na visão geral, pressione longamente sobre ele e selecione Atualizar). Se isto não ajudar, talvez não haja mais informações no TheTVDB. Vá para o site (www.thetvdb.com) para aprender como adicionar alguma.</string>
   <string name="show_noairtime">Não existem horários de exibição disponíveis</string>
-  <string name="showinimdb">Mostrar no IMDb</string>
   <string name="noIMDBentry">Nenhuma referência disponível no IMDB. Atualize a série ou vá a thetvdb.com e adicione.</string>
   <string name="no_seasons">Ooops, não existem temporadas para esta série. Tente atualizar (em visão geral, pressione longamente sobre ele e selecione Atualizar).</string>
   <string name="season_watchcount">episódios não assistidos</string>
@@ -167,7 +163,7 @@
   <string name="comment">Comentário</string>
   <string name="checkinsuccess">Check In bem sucedido</string>
   <string name="pref_number">Formato de número</string>
-  <string name="pref_numbersummary">Switch between 1x01, S01E01 or s01e01 as number format</string>
+  <string name="pref_numbersummary">Alternar entre 1x01, S01E01 ou s01e01 como formato de número</string>
   <string name="checkinfailed">Check In falhou</string>
   <string name="oauthmessage">Autenticando SeriesGuide com GetGlue...</string>
   <string name="addtocalendar">Adicionar ao calendário</string>
@@ -185,8 +181,6 @@
   <string name="username">Usuário</string>
   <string name="password">Senha</string>
   <string name="apikey">Chave da API</string>
-  <string name="pref_trakt">Desconectar do trakt.tv</string>
-  <string name="pref_traktsummary">Use os botões de ações para configurar trakt.tv</string>
   <string name="pref_traktsync">Sincronizar com trakt.tv</string>
   <string name="pref_traktsyncsummary">Experimental, sincronização manual com o trakt.tv</string>
   <string name="save">Salvar</string>
@@ -195,7 +189,7 @@
   <string name="trakt_error">Falha no compartilhamento de Trakt.TV</string>
   <string name="trakt_decryptfail">Senha não pode ser decifrado</string>
   <string name="trakt_credentials_invalid">credenciais não válidas</string>
-  <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
+  <string name="trakt_generalerror">Algo deu errado. Por favor, verifique suas credenciais e tente novamente.</string>
   <string name="pref_traktintegrate">Integrar ao trakt.tv</string>
   <string name="pref_traktintegratesummary">Marcar como visto em geral e compartilhar com o trakt.tv</string>
   <string name="donate">Me comprar uma bebida (Paypal)</string>
@@ -237,6 +231,6 @@
   <string-array name="showfilter_list">
     <item>Todos</item>
     <item>Favoritos</item>
-    <item>Unseen/Upcoming</item>
+    <item>Não visto/Próximo</item>
   </string-array>
 </resources>

@@ -1,9 +1,5 @@
 package com.jakewharton.trakt;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 import com.google.myjson.GsonBuilder;
 import com.google.myjson.JsonElement;
 import com.google.myjson.JsonObject;
@@ -12,6 +8,11 @@ import com.google.myjson.reflect.TypeToken;
 import com.jakewharton.apibuilder.ApiBuilder;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.entities.Response;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Trakt-specific API builder extension which provides helper methods for

@@ -1,10 +1,11 @@
 package com.jakewharton.trakt.entities;
 
-import java.util.Calendar;
-import java.util.Date;
 import com.google.myjson.annotations.SerializedName;
 import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.Rating;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public final class TvShowEpisode implements TraktEntity {
 	private static final long serialVersionUID = -1550739539663499211L;

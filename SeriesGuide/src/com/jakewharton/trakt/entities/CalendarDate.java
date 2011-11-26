@@ -1,8 +1,9 @@
 package com.jakewharton.trakt.entities;
 
+import com.jakewharton.trakt.TraktEntity;
+
 import java.util.Date;
 import java.util.List;
-import com.jakewharton.trakt.TraktEntity;
 
 public final class CalendarDate implements TraktEntity {
 	private static final long serialVersionUID = 5985118362541597172L;

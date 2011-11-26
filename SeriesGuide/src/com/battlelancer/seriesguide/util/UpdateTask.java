@@ -2,23 +2,24 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesGuideData;
-import com.battlelancer.seriesguide.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
 import org.xml.sax.SAXException;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.view.View;
-import android.view.ViewStub;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -37,27 +38,27 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
     public String mFailedShows = "";
 
-    private final ShowsActivity mShowsActivity;
+    private Context mAppContext;
 
     public final AtomicInteger mUpdateCount = new AtomicInteger();
 
     private boolean mIsFullUpdate = false;
 
-    private View mProgressOverlay;
-
-    private ProgressBar mUpdateProgress;
-
     private String mCurrentShowName;
 
-    private TextView mUpdateStatus;
+    private NotificationManager mNotificationManager;
 
-    public UpdateTask(boolean isFullUpdate, ShowsActivity context) {
-        mShowsActivity = context;
+    private Notification mNotification;
+
+    private static final int UPDATE_NOTIFICATION_ID = 1;
+
+    public UpdateTask(boolean isFullUpdate, Context context) {
+        mAppContext = context.getApplicationContext();
         mIsFullUpdate = isFullUpdate;
     }
 
-    public UpdateTask(String[] shows, int index, String failedShows, ShowsActivity context) {
-        mShowsActivity = context;
+    public UpdateTask(String[] shows, int index, String failedShows, Context context) {
+        mAppContext = context.getApplicationContext();
         mShows = shows;
         mUpdateCount.set(index);
         mFailedShows = failedShows;
@@ -65,46 +66,49 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
     @Override
     protected void onPreExecute() {
-        // see if we already inflated the progress overlay
-        mProgressOverlay = mShowsActivity.findViewById(R.id.overlay_update);
-        if (mProgressOverlay == null) {
-            mProgressOverlay = ((ViewStub) mShowsActivity.findViewById(R.id.stub_update)).inflate();
-        }
-        mShowsActivity.showOverlay(mProgressOverlay);
-        // setup the progress overlay
-        mUpdateProgress = (ProgressBar) mProgressOverlay.findViewById(R.id.ProgressBarShowListDet);
-        mUpdateProgress.setIndeterminate(true);
+        // create a notification (holy crap is that a lot of code)
+        String ns = Context.NOTIFICATION_SERVICE;
+        mNotificationManager = (NotificationManager) mAppContext.getSystemService(ns);
 
-        mUpdateStatus = (TextView) mProgressOverlay.findViewById(R.id.textViewUpdateStatus);
-        mUpdateStatus.setText("");
+        int icon = R.drawable.icon;
+        CharSequence tickerText = mAppContext.getString(R.string.update_notification);
+        long when = System.currentTimeMillis();
 
-        final View cancelButton = mProgressOverlay.findViewById(R.id.overlayCancel);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                mShowsActivity.onCancelTasks();
-            }
-        });
+        mNotification = new Notification(icon, tickerText, when);
+        mNotification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
+
+        RemoteViews contentView = new RemoteViews(mAppContext.getPackageName(),
+                R.layout.update_notification);
+        contentView.setImageViewResource(R.id.image, icon);
+        contentView.setTextViewText(R.id.text, mAppContext.getString(R.string.update_notification));
+        contentView.setProgressBar(R.id.progressbar, 0, 0, true);
+        mNotification.contentView = contentView;
+
+        Intent notificationIntent = new Intent(mAppContext, ShowsActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(mAppContext, 0, notificationIntent,
+                0);
+        mNotification.contentIntent = contentIntent;
+
+        mNotificationManager.notify(UPDATE_NOTIFICATION_ID, mNotification);
     }
 
     @Override
     protected Integer doInBackground(Void... params) {
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(mShowsActivity.getApplicationContext());
-        final ContentResolver resolver = mShowsActivity.getContentResolver();
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mAppContext);
+        final ContentResolver resolver = mAppContext.getContentResolver();
         final AtomicInteger updateCount = mUpdateCount;
-        long currentServerTime = 0;
+        final boolean isAutoUpdateWlanOnly = prefs.getBoolean(
+                SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
+        long currentTime = 0;
+
         if (mShows == null) {
 
-            try {
-                currentServerTime = TheTVDB.getServerTime(mShowsActivity);
-            } catch (SAXException e1) {
-                return UPDATE_SAXERROR;
-            }
-            final long previousUpdateTime = Long.valueOf(prefs.getString(
-                    SeriesGuidePreferences.KEY_LASTUPDATETIME, "0"));
+            currentTime = System.currentTimeMillis();
+            final int updateAtLeastEvery = prefs.getInt(
+                    SeriesGuidePreferences.KEY_UPDATEATLEASTEVERY, 7);
 
             // new update task
-            if (mIsFullUpdate || isFullUpdateNeeded(currentServerTime, previousUpdateTime)) {
+            if (mIsFullUpdate) {
                 final Cursor shows = resolver.query(Shows.CONTENT_URI, new String[] {
                     Shows._ID
                 }, null, null, null);
@@ -117,7 +121,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 shows.close();
             } else {
                 try {
-                    mShows = TheTVDB.deltaUpdateShows(previousUpdateTime, mShowsActivity);
+                    mShows = TheTVDB.deltaUpdateShows(currentTime, updateAtLeastEvery, mAppContext);
                 } catch (SAXException e) {
                     return UPDATE_SAXERROR;
                 }
@@ -126,15 +130,16 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
         int resultCode = UPDATE_SUCCESS;
         String id;
-        mUpdateProgress.setIndeterminate(false);
 
         for (int i = updateCount.get(); i < mShows.length; i++) {
-            // fail early if cancelled or network connection is lost
+            // fail early if cancelled or network connection is lost or wifi is
+            // disconnected
             if (isCancelled()) {
                 resultCode = UPDATE_INCOMPLETE;
                 break;
             }
-            if (!SeriesGuideData.isNetworkAvailable(mShowsActivity)) {
+            if (!Utils.isNetworkConnected(mAppContext)
+                    || (isAutoUpdateWlanOnly && !Utils.isWifiConnected(mAppContext))) {
                 resultCode = UPDATE_OFFLINE;
                 break;
             }
@@ -153,7 +158,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
             for (int itry = 0; itry < 2; itry++) {
                 try {
-                    TheTVDB.updateShow(id, mShowsActivity);
+                    TheTVDB.updateShow(id, mAppContext);
                     break;
                 } catch (SAXException saxe) {
                     // failed twice
@@ -166,83 +171,82 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             updateCount.incrementAndGet();
         }
 
-        publishProgress(mShows.length, mShows.length + 1);
-
         // renew FTS3 table (only if we updated shows)
-        if (mShows.length != 0) {
-            TheTVDB.onRenewFTSTable(mShowsActivity);
+        if (updateCount.get() != 0 && mShows.length != 0) {
+            publishProgress(mShows.length, mShows.length + 1);
+            TheTVDB.onRenewFTSTable(mAppContext);
         }
 
         publishProgress(mShows.length + 1, mShows.length + 1);
 
         // store time of update if it was successful
-        if (currentServerTime != 0 && resultCode == UPDATE_SUCCESS) {
-            prefs.edit()
-                    .putString(SeriesGuidePreferences.KEY_LASTUPDATETIME,
-                            String.valueOf(currentServerTime)).commit();
+        if (currentTime != 0 && resultCode == UPDATE_SUCCESS) {
+            prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTUPDATE, currentTime).commit();
         }
 
         return resultCode;
     }
 
-    private boolean isFullUpdateNeeded(long currentServerTime, long previousUpdateTime) {
-        // check if more than 28 days have passed
-        // we compare with local time to avoid an additional network call
-        if (currentServerTime - previousUpdateTime > 3600 * 24 * 28) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     @Override
     protected void onPostExecute(Integer result) {
-        mShowsActivity.setFailedShowsString(mFailedShows);
-
+        String message = null;
+        int length = 0;
         switch (result) {
             case UPDATE_SUCCESS:
-                AnalyticsUtils.getInstance(mShowsActivity).trackEvent("Shows", "Update Task",
+                AnalyticsUtils.getInstance(mAppContext).trackEvent("Shows", "Update Task",
                         "Success", 0);
 
-                Toast.makeText(mShowsActivity, mShowsActivity.getString(R.string.update_success),
-                        Toast.LENGTH_SHORT).show();
+                message = mAppContext.getString(R.string.update_success);
+                length = Toast.LENGTH_SHORT;
+
                 break;
             case UPDATE_SAXERROR:
-                AnalyticsUtils.getInstance(mShowsActivity).trackEvent("Shows", "Update Task",
+                AnalyticsUtils.getInstance(mAppContext).trackEvent("Shows", "Update Task",
                         "SAX error", 0);
 
-                mShowsActivity.showDialog(ShowsActivity.UPDATE_SAXERROR_DIALOG);
+                message = mAppContext.getString(R.string.update_failed) + " "
+                        + mAppContext.getString(R.string.update_saxerror);
+                length = Toast.LENGTH_LONG;
                 break;
             case UPDATE_OFFLINE:
-                AnalyticsUtils.getInstance(mShowsActivity).trackEvent("Shows", "Update Task",
+                AnalyticsUtils.getInstance(mAppContext).trackEvent("Shows", "Update Task",
                         "Offline", 0);
 
-                mShowsActivity.showDialog(ShowsActivity.UPDATE_OFFLINE_DIALOG);
+                message = mAppContext.getString(R.string.update_failed) + " "
+                        + mAppContext.getString(R.string.update_offline);
+                length = Toast.LENGTH_LONG;
                 break;
         }
 
-        mShowsActivity.updateLatestEpisode();
-        mShowsActivity.hideOverlay(mProgressOverlay);
+        if (message != null) {
+            Toast.makeText(mAppContext, message, length).show();
+        }
+        mNotificationManager.cancel(UPDATE_NOTIFICATION_ID);
+        TaskManager.getInstance(mAppContext).onTaskCompleted();
     }
 
     @Override
     protected void onCancelled() {
-        mShowsActivity.hideOverlay(mProgressOverlay);
+        mNotificationManager.cancel(UPDATE_NOTIFICATION_ID);
+        TaskManager.getInstance(mAppContext).onTaskCompleted();
     }
 
     @Override
     protected void onProgressUpdate(Integer... values) {
-        mUpdateProgress.setMax(values[1]);
-        mUpdateProgress.setProgress(values[0]);
+        String text;
         if (values[0] == values[1]) {
             // clear the text field if we are finishing up
-            mUpdateStatus.setText("");
+            text = "";
         } else if (values[0] + 1 == values[1]) {
             // if we're one before completion, we're rebuilding the search index
-            mUpdateStatus.setText(mShowsActivity.getString(R.string.update_rebuildsearch) + "...");
+            text = mAppContext.getString(R.string.update_rebuildsearch) + "...";
         } else {
-            mUpdateStatus.setText(mCurrentShowName + "...");
+            text = mCurrentShowName + "...";
         }
+
+        mNotification.contentView.setTextViewText(R.id.text, text);
+        mNotification.contentView.setProgressBar(R.id.progressbar, values[1], values[0], false);
+        mNotificationManager.notify(UPDATE_NOTIFICATION_ID, mNotification);
     }
 
     private void addFailedShow(String seriesName) {

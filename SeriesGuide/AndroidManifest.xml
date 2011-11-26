@@ -2,11 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="auto"
     package="com.battlelancer.seriesguide"
-    android:versionCode="130"
-    android:versionName="2.2.2" >
-
-    <!-- <uses-permission android:name="android.permission.VIBRATE" >
-    </uses-permission> -->
+    android:versionCode="131"
+    android:versionName="2.3" >
 
     <uses-feature
         android:name="android.hardware.touchscreen"
@@ -34,32 +31,24 @@
 
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
-        </activity>
-        <activity
-            android:label="@string/add_show"
-            android:name="com.battlelancer.seriesguide.AddShow"
-            android:windowSoftInputMode="stateVisible" >
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
+                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
         </activity>
         <activity
             android:label="@string/preferences"
-            android:name="com.battlelancer.seriesguide.SeriesGuidePreferences" >
+            android:name="com.battlelancer.seriesguide.ui.SeriesGuidePreferences" >
         </activity>
         <activity
             android:label="@string/backup"
-            android:name="com.battlelancer.seriesguide.BackupDelete" >
+            android:name="com.battlelancer.seriesguide.ui.BackupDeleteActivity" >
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.ShowInfo" >
+        <activity android:name="com.battlelancer.seriesguide.ui.ShowInfoActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
+                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
         </activity>
         <activity
             android:launchMode="singleTop"
-            android:name="com.battlelancer.seriesguide.SearchSeriesGuide" >
+            android:name="com.battlelancer.seriesguide.ui.SearchActivity" >
             <intent-filter >
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -131,12 +120,12 @@
         <activity android:name="com.battlelancer.seriesguide.ui.SeasonsActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
+                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.EpisodesActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
+                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
         </activity>
 
         <provider
@@ -147,19 +136,23 @@
         <activity android:name="com.battlelancer.seriesguide.ui.OverviewActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
+                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.EpisodeDetailsActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
+                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.TraktSyncActivity" >
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.UpcomingRecentActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.SearchSeriesGuide" />
+                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
+        </activity>
+        <activity
+            android:label="@string/add_show"
+            android:name="com.battlelancer.seriesguide.ui.AddActivity" >
         </activity>
     </application>
 
@@ -169,7 +162,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
-    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

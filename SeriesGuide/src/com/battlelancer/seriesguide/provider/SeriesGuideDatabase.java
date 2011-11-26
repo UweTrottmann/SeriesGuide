@@ -1,14 +1,13 @@
 
 package com.battlelancer.seriesguide.provider;
 
-import com.battlelancer.seriesguide.FileUtil;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearchColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodesColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesContract.ShowsColumns;
-import com.battlelancer.seriesguide.util.UIUtils;
+import com.battlelancer.seriesguide.util.Utils;
 
 import android.app.SearchManager;
 import android.content.ContentValues;
@@ -39,7 +38,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_AIRTIMECOLUMN = 21;
 
-    public static final int DATABASE_VERSION = DBVER_AIRTIMECOLUMN;
+    public static final int DBVER_PERSHOWUPDATEDATE = 22;
+
+    public static final int DATABASE_VERSION = DBVER_PERSHOWUPDATEDATE;
 
     public interface Tables {
         String SHOWS = "series";
@@ -75,7 +76,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + ShowsColumns.IMDBID + " TEXT DEFAULT ''," + ShowsColumns.FAVORITE
             + " INTEGER DEFAULT 0," + ShowsColumns.NEXTAIRDATETEXT + " TEXT DEFAULT ''" + ","
             + ShowsColumns.SYNCENABLED + " INTEGER DEFAULT 1" + "," + ShowsColumns.AIRTIME
-            + " TEXT DEFAULT ''" + ");";
+            + " TEXT DEFAULT ''," + ShowsColumns.LASTUPDATED + " INTEGER DEFAULT 0" + ");";
 
     private static final String CREATE_SEASONS_TABLE = "CREATE TABLE " + Tables.SEASONS + " ("
             + BaseColumns._ID + " INTEGER PRIMARY KEY," + SeasonsColumns.COMBINED + " INTEGER,"
@@ -120,7 +121,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         Log.d(TAG, "onUpgrade() from " + oldVersion + " to " + newVersion);
 
         // make a backup of the database file
-        if (UIUtils.isExtStorageAvailable()) {
+        if (Utils.isExtStorageAvailable()) {
             File dbFile = new File(db.getPath());
             File exportDir = new File(Environment.getExternalStorageDirectory(),
                     "seriesguidebackup");
@@ -129,7 +130,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             try {
                 file.createNewFile();
-                FileUtil.copyFile(dbFile, file);
+                Utils.copyFile(dbFile, file);
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage(), e);
             }
@@ -153,6 +154,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 20:
                 upgradeToTwentyOne(db);
                 version = 21;
+            case 21:
+                upgradeToTwentyTwo(db);
+                version = 22;
         }
 
         // drop all tables if version is not right
@@ -167,6 +171,18 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             onCreate(db);
         }
+    }
+
+    /**
+     * Add a column to store the last time a show has been updated to allow for
+     * more precise control over which shows should get updated.
+     * This is in conjunction with a 7 day limit when a show will get updated regardless
+     * if it has been marked as updated or not.
+     * @param db
+     */
+    private void upgradeToTwentyTwo(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.LASTUPDATED
+                + " INTEGER DEFAULT 0;");
     }
 
     private void upgradeToTwentyOne(SQLiteDatabase db) {

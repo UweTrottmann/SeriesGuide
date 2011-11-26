@@ -3,12 +3,11 @@ package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesGuideData;
-import com.battlelancer.seriesguide.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.ShowInfo;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.ui.ShowInfoActivity;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -48,6 +47,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 
 public class ShareUtils {
+
+    public static final String KEY_GETGLUE_COMMENT = "com.battlelancer.seriesguide.getglue.comment";
+
+    public static final String KEY_GETGLUE_IMDBID = "com.battlelancer.seriesguide.getglue.imdbid";
 
     protected static final String TAG = "ShareUtils";
 
@@ -104,7 +107,7 @@ public class ShareUtils {
                                     // Android apps
                                     String text = sharestring;
                                     if (imdbId.length() != 0) {
-                                        text += " " + ShowInfo.IMDB_TITLE_URL + imdbId;
+                                        text += " " + ShowInfoActivity.IMDB_TITLE_URL + imdbId;
                                     }
 
                                     Intent i = new Intent(Intent.ACTION_SEND);
@@ -220,8 +223,8 @@ public class ShareUtils {
             }).start();
         } else {
             Intent i = new Intent(activity, PrepareRequestTokenActivity.class);
-            i.putExtra(SeriesGuideData.KEY_GETGLUE_IMDBID, imdbId);
-            i.putExtra(SeriesGuideData.KEY_GETGLUE_COMMENT, comment);
+            i.putExtra(ShareUtils.KEY_GETGLUE_IMDBID, imdbId);
+            i.putExtra(ShareUtils.KEY_GETGLUE_COMMENT, comment);
             activity.startActivity(i);
         }
     }
@@ -249,7 +252,7 @@ public class ShareUtils {
         String number = episode.getString(episode.getColumnIndexOrThrow(Episodes.NUMBER));
         String title = episode.getString(episode.getColumnIndexOrThrow(Episodes.TITLE));
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return SeriesGuideData.getNextEpisodeString(prefs, season, number, title);
+        return Utils.getNextEpisodeString(prefs, season, number, title);
     }
 
     public static void onAddCalendarEvent(Context context, String title, String description,
@@ -265,7 +268,7 @@ public class ShareUtils {
             boolean useUserTimeZone = prefs.getBoolean(SeriesGuidePreferences.KEY_USE_MY_TIMEZONE,
                     false);
 
-            Calendar cal = SeriesGuideData.getLocalCalendar(airdate, airtime, useUserTimeZone,
+            Calendar cal = Utils.getLocalCalendar(airdate, airtime, useUserTimeZone,
                     context);
 
             long startTime = cal.getTimeInMillis();
@@ -349,8 +352,8 @@ public class ShareUtils {
                     .getApplicationContext());
 
             ServiceManager manager = new ServiceManager();
-            final String username = prefs.getString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
-            String password = prefs.getString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
+            final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+            String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
 
             try {
                 password = SimpleCrypto.decrypt(password, mContext);
@@ -440,7 +443,7 @@ public class ShareUtils {
             final Bundle args = getArguments();
 
             // restore the username from settings
-            final String username = prefs.getString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
+            final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
             ((EditText) layout.findViewById(R.id.username)).setText(username);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -478,7 +481,8 @@ public class ShareUtils {
 
                         @Override
                         protected Response doInBackground(String... params) {
-                            if (username.length() == 0 || passwordHash.length() == 0) {
+                            // SHA of any password is always non-empty
+                            if (username.length() == 0) {
                                 return null;
                             }
 
@@ -518,8 +522,8 @@ public class ShareUtils {
 
                                 // prepare writing credentials to settings
                                 Editor editor = prefs.edit();
-                                editor.putString(SeriesGuidePreferences.PREF_TRAKTUSER, username)
-                                        .putString(SeriesGuidePreferences.PREF_TRAKTPWD,
+                                editor.putString(SeriesGuidePreferences.KEY_TRAKTUSER, username)
+                                        .putString(SeriesGuidePreferences.KEY_TRAKTPWD,
                                                 passwordEncr);
 
                                 if (response.getStatus().equalsIgnoreCase("success")
@@ -606,8 +610,8 @@ public class ShareUtils {
     public static boolean isTraktCredentialsValid(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
                 .getApplicationContext());
-        String username = prefs.getString(SeriesGuidePreferences.PREF_TRAKTUSER, "");
-        String password = prefs.getString(SeriesGuidePreferences.PREF_TRAKTPWD, "");
+        String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+        String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
 
         return (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase(""));
     }

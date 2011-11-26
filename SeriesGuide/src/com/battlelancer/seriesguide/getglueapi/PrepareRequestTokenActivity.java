@@ -3,8 +3,8 @@ package com.battlelancer.seriesguide.getglueapi;
 
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.SeriesGuideData;
 import com.battlelancer.seriesguide.ui.BaseActivity;
+import com.battlelancer.seriesguide.util.ShareUtils;
 
 import oauth.signpost.OAuth;
 import oauth.signpost.OAuthConsumer;
@@ -128,8 +128,8 @@ public class PrepareRequestTokenActivity extends BaseActivity {
 
         private void executeAfterAccessTokenRetrieval() throws Exception {
             Bundle extras = getIntent().getExtras();
-            String comment = extras.getString(SeriesGuideData.KEY_GETGLUE_COMMENT);
-            String imdbId = extras.getString(SeriesGuideData.KEY_GETGLUE_IMDBID);
+            String comment = extras.getString(ShareUtils.KEY_GETGLUE_COMMENT);
+            String imdbId = extras.getString(ShareUtils.KEY_GETGLUE_IMDBID);
 
             GetGlue.checkIn(prefs, imdbId, comment);
         }
