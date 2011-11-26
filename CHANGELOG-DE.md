@@ -1,6 +1,16 @@
 Change Log (Stable channel)
 ===========================
 
+Version 2.3 *(2011-11-26)*
+--------------------------------
+
+* Erneuerter Updater: Serien nach 7 Tagen als veraltet markiert und dann im nächsten Update eingeschlossen
+* Auto-Update: betätigt den Aktual.-Knopf automatisch beim Starten der App
+* Aktualisieren funktioniert nur über Wi-Fi, kann in den Einstellungen deaktiviert werden
+* Hinzufügen von Serien überarbeitet (bessere trakt Integration)
+* Folgen-Swiper/Pager auf Telefonen und kleinen Bildschirmen
+* TVDb Buttons
+
 Version 2.2.2 *(2011-11-01)*
 --------------------------------
 
