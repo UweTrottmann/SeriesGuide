@@ -40,7 +40,7 @@
     <string name="sort">Sort by</string>
     <string name="menu_updateart">Get Missing Posters</string>
     <string name="updateall_yes">Update (all)</string>
-    <string name="menu_update_delta">Update (modified only)</string>
+    <string name="menu_update_delta">Update (outdated only)</string>
     <string name="context_updateshow">Update</string>
     <string name="context_showinfo">Show Info</string>
     <string name="context_marknext">Watched next episode</string>
