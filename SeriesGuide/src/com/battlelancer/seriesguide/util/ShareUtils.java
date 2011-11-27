@@ -31,6 +31,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -157,6 +158,7 @@ public class ShareUtils {
             final String imdbId = getArguments().getString(ShareItems.IMDBID);
 
             input = new EditText(getActivity());
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
             input.setMinLines(3);
             input.setGravity(Gravity.TOP);
             input.setFilters(new InputFilter[] {
