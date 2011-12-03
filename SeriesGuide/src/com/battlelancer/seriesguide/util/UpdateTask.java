@@ -1,27 +1,43 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesContract;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.thetvdbapi.TheTVDB;
+import com.jakewharton.apibuilder.ApiException;
+import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.TraktException;
+import com.jakewharton.trakt.entities.Activity;
+import com.jakewharton.trakt.entities.ActivityItem;
+import com.jakewharton.trakt.entities.TvShowEpisode;
+import com.jakewharton.trakt.enumerations.ActivityAction;
+import com.jakewharton.trakt.enumerations.ActivityType;
 
 import org.xml.sax.SAXException;
 
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.OperationApplicationException;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
@@ -102,7 +118,6 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         long currentTime = 0;
 
         if (mShows == null) {
-
             currentTime = System.currentTimeMillis();
             final int updateAtLeastEvery = prefs.getInt(
                     SeriesGuidePreferences.KEY_UPDATEATLEASTEVERY, 7);
@@ -175,6 +190,74 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         if (updateCount.get() != 0 && mShows.length != 0) {
             publishProgress(mShows.length, mShows.length + 1);
             TheTVDB.onRenewFTSTable(mAppContext);
+        }
+
+        // look on trakt for recent activity
+        if (ShareUtils.isTraktCredentialsValid(mAppContext)) {
+            // get trakt.tv credentials
+            ServiceManager manager = new ServiceManager();
+            final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+            String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
+            try {
+                password = SimpleCrypto.decrypt(password, mAppContext);
+
+                manager.setAuthentication(username, password);
+                manager.setApiKey(Constants.TRAKT_API_KEY);
+
+                try {
+                    // trakt uses time in seconds
+                    final long lastUpdateTimeSec = prefs.getLong(
+                            SeriesGuidePreferences.KEY_LASTUPDATE, currentTime) / 1000;
+
+                    // get watched episodes from trakt
+                    Activity activity = manager
+                            .activityService()
+                            .user(username)
+                            .types(ActivityType.Episode)
+                            .actions(ActivityAction.Checkin, ActivityAction.Seen,
+                                    ActivityAction.Checkin).timestamp(lastUpdateTimeSec).fire();
+
+                    // build an update batch
+                    final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
+                    for (ActivityItem item : activity.activity) {
+                        switch (item.action) {
+                            case Seen: {
+                                List<TvShowEpisode> episodes = item.episodes;
+                                String showTvdbId = item.show.tvdbId;
+                                for (TvShowEpisode episode : episodes) {
+                                    addEpisodeOp(batch, episode, showTvdbId);
+                                }
+                            }
+                            case Checkin:
+                            case Scrobble: {
+                                TvShowEpisode episode = item.episode;
+                                String showTvdbId = item.show.tvdbId;
+                                addEpisodeOp(batch, episode, showTvdbId);
+                            }
+                        }
+                    }
+
+                    // execute the batch update
+                    try {
+                        mAppContext.getContentResolver().applyBatch(
+                                SeriesContract.CONTENT_AUTHORITY, batch);
+                    } catch (RemoteException e) {
+                        // Failed binder transactions aren't recoverable
+                        throw new RuntimeException("Problem applying batch operation", e);
+                    } catch (OperationApplicationException e) {
+                        // Failures like constraint violation aren't
+                        // recoverable
+                        throw new RuntimeException("Problem applying batch operation", e);
+                    }
+                } catch (TraktException te) {
+                    return UPDATE_SAXERROR;
+                } catch (ApiException e) {
+                    return UPDATE_SAXERROR;
+                }
+            } catch (Exception e1) {
+                // password could not be decrypted
+                return UPDATE_SAXERROR;
+            }
         }
 
         publishProgress(mShows.length + 1, mShows.length + 1);
@@ -254,6 +337,14 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             mFailedShows += ", ";
         }
         mFailedShows += seriesName;
+    }
+
+    private static void addEpisodeOp(final ArrayList<ContentProviderOperation> batch,
+            TvShowEpisode episode, String showTvdbId) {
+        batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodesOfShowUri(showTvdbId))
+                .withSelection(Episodes.NUMBER + "=?," + Episodes.SEASON + "=?", new String[] {
+                        String.valueOf(episode.number), String.valueOf(episode.season)
+                }).withValue(Episodes.WATCHED, true).build());
     }
 
 }
