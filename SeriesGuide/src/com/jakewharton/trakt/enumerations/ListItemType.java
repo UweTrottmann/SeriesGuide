@@ -4,13 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 import com.jakewharton.trakt.TraktEnumeration;
 
-public enum MediaType implements TraktEnumeration {
+public enum ListItemType implements TraktEnumeration {
     Movie("movie"),
-    TvShow("episode");
+    TvShow("show"),
+    TvShowSeason("season"),
+    TvShowEpisode("episode");
 
     private final String value;
 
-    private MediaType(String value) {
+    private ListItemType(String value) {
         this.value = value;
     }
 
@@ -19,15 +21,15 @@ public enum MediaType implements TraktEnumeration {
         return this.value;
     }
 
-    private static final Map<String, MediaType> STRING_MAPPING = new HashMap<String, MediaType>();
+    private static final Map<String, ListItemType> STRING_MAPPING = new HashMap<String, ListItemType>();
 
     static {
-        for (MediaType via : MediaType.values()) {
+        for (ListItemType via : ListItemType.values()) {
             STRING_MAPPING.put(via.toString().toUpperCase(), via);
         }
     }
 
-    public static MediaType fromValue(String value) {
+    public static ListItemType fromValue(String value) {
         return STRING_MAPPING.get(value.toUpperCase());
     }
 }

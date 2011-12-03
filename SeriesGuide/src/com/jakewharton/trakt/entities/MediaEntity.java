@@ -1,35 +1,48 @@
 package com.jakewharton.trakt.entities;
 
-import java.util.Calendar;
 import com.jakewharton.trakt.TraktEntity;
 import com.jakewharton.trakt.enumerations.MediaType;
 
-public class MediaEntity implements TraktEntity {
-	private static final long serialVersionUID = 4535846809492296227L;
+import java.util.Calendar;
 
-	private MediaType type;
-	private Calendar watched;
-	private Calendar date;
-	private Movie movie;
-	private TvShow show;
-	private TvShowEpisode episode;
-	
-	public MediaType getType() {
-		return this.type;
-	}
-	public Calendar getWatched() {
-		return this.watched;
-	}
-	public Calendar getDate() {
-		return this.date;
-	}
-	public Movie getMovie() {
-		return this.movie;
-	}
-	public TvShow getShow() {
-		return this.show;
-	}
-	public TvShowEpisode getEpisode() {
-		return this.episode;
-	}
+public class MediaEntity implements TraktEntity {
+    private static final long serialVersionUID = 4535846809492296227L;
+
+    public MediaType type;
+    public Calendar watched;
+    public Calendar date;
+    public Movie movie;
+    public TvShow show;
+    public TvShowEpisode episode;
+
+    /** @deprecated Use {@link #type} */
+    @Deprecated
+    public MediaType getType() {
+        return this.type;
+    }
+    /** @deprecated Use {@link #watched} */
+    @Deprecated
+    public Calendar getWatched() {
+        return this.watched;
+    }
+    /** @deprecated Use {@link #date} */
+    @Deprecated
+    public Calendar getDate() {
+        return this.date;
+    }
+    /** @deprecated Use {@link #movie} */
+    @Deprecated
+    public Movie getMovie() {
+        return this.movie;
+    }
+    /** @deprecated Use {@link #show} */
+    @Deprecated
+    public TvShow getShow() {
+        return this.show;
+    }
+    /** @deprecated Use {@link #episode} */
+    @Deprecated
+    public TvShowEpisode getEpisode() {
+        return this.episode;
+    }
 }
