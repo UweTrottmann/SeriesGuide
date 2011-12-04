@@ -16,14 +16,16 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.Series;
 import com.battlelancer.thetvdbapi.TheTVDB;
@@ -35,6 +37,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -297,9 +300,8 @@ public class OverviewFragment extends Fragment {
             // Airdate
             airdate = episode.getString(EpisodeQuery.FIRSTAIRED);
             if (airdate.length() != 0) {
-                nextheader.setText(Utils.parseDateToLocalRelative(airdate,
-                        show.getAirsTime(), context)
-                        + ":");
+                nextheader.setText(Utils.parseDateToLocalRelative(airdate, show.getAirsTime(),
+                        context) + ":");
             }
 
             onLoadEpisodeDetails(episode);
@@ -387,11 +389,8 @@ public class OverviewFragment extends Fragment {
 
         // Guest stars
         TextView gueststars = (TextView) getActivity().findViewById(R.id.TextViewEpisodeGuestStars);
-        gueststars
-                .setText(getString(R.string.episode_gueststars)
-                        + " "
-                        + Utils.splitAndKitTVDBStrings(episode
-                                .getString(EpisodeQuery.GUESTSTARS)));
+        gueststars.setText(getString(R.string.episode_gueststars) + " "
+                + Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));
 
         // Writers
         TextView writers = (TextView) getActivity().findViewById(R.id.TextViewEpisodeWriters);
@@ -406,6 +405,21 @@ public class OverviewFragment extends Fragment {
             ratingBar.setProgress((int) (Double.valueOf(ratingText) / 0.1));
             rating.setText(ratingText + "/10");
         }
+
+        // TVDb button
+        getView().findViewById(R.id.buttonShowInfoIMDB).setVisibility(View.GONE);
+        final String showId = getShowId();
+        final String seasonId = episode.getString(EpisodeQuery.REF_SEASON_ID);
+        final String episodeId = episode.getString(EpisodeQuery._ID);
+        getView().findViewById(R.id.buttonTVDB).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TVDB_EPISODE_URL_1
+                        + showId + Constants.TVDB_EPISODE_URL_2 + seasonId
+                        + Constants.TVDB_EPISODE_URL_3 + episodeId));
+                startActivity(i);
+            }
+        });
     }
 
     private void onMarkWatched() {
@@ -520,11 +534,12 @@ public class OverviewFragment extends Fragment {
     }
 
     interface EpisodeQuery {
+
         String[] PROJECTION = new String[] {
                 Episodes._ID, Shows.REF_SHOW_ID, Episodes.OVERVIEW, Episodes.NUMBER,
                 Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIRED, Episodes.DIRECTORS,
                 Episodes.GUESTSTARS, Episodes.WRITERS, Episodes.RATING, Episodes.IMAGE,
-                Episodes.DVDNUMBER, Episodes.TITLE
+                Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID
         };
 
         int _ID = 0;
@@ -554,5 +569,7 @@ public class OverviewFragment extends Fragment {
         int DVDNUMBER = 12;
 
         int TITLE = 13;
+
+        int REF_SEASON_ID = 14;
     }
 }
