@@ -214,10 +214,9 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 .getDefaultSharedPreferences(getApplicationContext());
         final boolean isAutoUpdateEnabled = prefs.getBoolean(SeriesGuidePreferences.KEY_AUTOUPDATE,
                 false);
-        if (isAutoUpdateEnabled) {
+        if (isAutoUpdateEnabled && !TaskManager.getInstance(this).isUpdateTaskRunning(false)) {
             // allow auto-update if 11 hours have passed
-            final long previousUpdateTime = prefs.getLong(
-                    SeriesGuidePreferences.KEY_LASTUPDATE, 0);
+            final long previousUpdateTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTUPDATE, 0);
             long currentTime = System.currentTimeMillis();
             final boolean isTime = currentTime - (previousUpdateTime) > DateUtils.DAY_IN_MILLIS
                     - DateUtils.HOUR_IN_MILLIS;
@@ -433,7 +432,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case CONTEXT_DELETE_ID:
                 fireTrackerEvent("Delete show");
 
-                if (!TaskManager.getInstance(this).isUpdateTaskRunning()) {
+                if (!TaskManager.getInstance(this).isUpdateTaskRunning(true)) {
                     mToDeleteId = info.id;
                     showDialog(CONFIRM_DELETE_DIALOG);
                 }
