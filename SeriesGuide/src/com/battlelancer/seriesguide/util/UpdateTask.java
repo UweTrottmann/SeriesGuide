@@ -91,7 +91,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         long when = System.currentTimeMillis();
 
         mNotification = new Notification(icon, tickerText, when);
-        mNotification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
+        mNotification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR
+                | Notification.FLAG_ONLY_ALERT_ONCE;
 
         RemoteViews contentView = new RemoteViews(mAppContext.getPackageName(),
                 R.layout.update_notification);
