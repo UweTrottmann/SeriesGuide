@@ -11,6 +11,7 @@ public class TvShowEpisode implements TraktEntity {
     private static final long serialVersionUID = -1550739539663499211L;
 
     public Integer season;
+    public Integer episode;
     public Integer number;
     public String title;
     public String overview;

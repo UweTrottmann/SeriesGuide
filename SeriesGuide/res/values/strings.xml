@@ -83,6 +83,7 @@
     <string name="update_inprogress">There is an update in progress. Wait for it to complete, then try again.</string>
     <string name="update_nosdcard">Could not update. There is no external storage or SD card available.</string>
     <string name="update_rebuildsearch">Building episode search index</string>
+    <string name="update_traktactivity">Get trakt activities</string>
     <string name="pref_autoupdate">Auto Update</string>
     <string name="pref_autoupdatesummary">Update on launch, at most once a day</string>
     <string name="pref_updatewifionly">Update on Wi-Fi only</string>

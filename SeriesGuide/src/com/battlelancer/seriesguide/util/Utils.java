@@ -3,10 +3,12 @@ package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -434,6 +436,58 @@ public class Utils {
             if (outChannel != null) {
                 outChannel.close();
             }
+        }
+    }
+
+    /**
+     * Update the latest episode fields for all existing shows.
+     */
+    public static void updateLatestEpisodes(Context context) {
+        Thread t = new UpdateLatestEpisodeThread(context);
+        t.start();
+    }
+
+    /**
+     * Update the latest episode field for a specific show.
+     */
+    public static void updateLatestEpisode(Context context, String showId) {
+        Thread t = new UpdateLatestEpisodeThread(context, showId);
+        t.start();
+    }
+
+    public static class UpdateLatestEpisodeThread extends Thread {
+        private Context mContext;
+
+        private String mShowId;
+
+        public UpdateLatestEpisodeThread(Context context) {
+            mContext = context;
+            this.setName("UpdateLatestEpisode");
+        }
+
+        public UpdateLatestEpisodeThread(Context context, String showId) {
+            this(context);
+            mShowId = showId;
+        }
+
+        public void run() {
+            if (mShowId != null) {
+                // update single show
+                DBUtils.updateLatestEpisode(mContext, mShowId);
+            } else {
+                // update all shows
+                final Cursor shows = mContext.getContentResolver().query(Shows.CONTENT_URI,
+                        new String[] {
+                            Shows._ID
+                        }, null, null, null);
+                while (shows.moveToNext()) {
+                    String id = shows.getString(0);
+                    DBUtils.updateLatestEpisode(mContext, id);
+                }
+                shows.close();
+            }
+
+            // Adapter gets notified by ContentProvider
         }
     }
 

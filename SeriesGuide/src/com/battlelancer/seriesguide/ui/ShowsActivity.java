@@ -216,8 +216,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 false);
         if (isAutoUpdateEnabled) {
             // allow auto-update if 11 hours have passed
-            final long previousUpdateTime = prefs.getLong(
-                    SeriesGuidePreferences.KEY_LASTUPDATE, 0);
+            final long previousUpdateTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTUPDATE, 0);
             long currentTime = System.currentTimeMillis();
             final boolean isTime = currentTime - (previousUpdateTime) > DateUtils.DAY_IN_MILLIS
                     - DateUtils.HOUR_IN_MILLIS;
@@ -244,7 +243,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     @Override
     protected void onResume() {
         super.onResume();
-        updateLatestEpisode();
+        Utils.updateLatestEpisodes(this);
         if (mSavedState != null) {
             restoreLocalState(mSavedState);
         }
@@ -454,8 +453,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 fireTrackerEvent("Mark next episode");
 
                 DBUtils.markNextEpisode(this, info.id);
-                Thread t = new UpdateLatestEpisodeThread(this, String.valueOf(info.id));
-                t.start();
+                Utils.updateLatestEpisode(this, String.valueOf(info.id));
                 return true;
         }
         return super.onContextItemSelected(item);
@@ -530,50 +528,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             default: {
                 return super.onOptionsItemSelected(item);
             }
-        }
-    }
-
-    /**
-     * Update the latest episode fields for all existing shows.
-     */
-    public void updateLatestEpisode() {
-        Thread t = new UpdateLatestEpisodeThread(this);
-        t.start();
-    }
-
-    private static class UpdateLatestEpisodeThread extends Thread {
-        private Context mContext;
-
-        private String mShowId;
-
-        public UpdateLatestEpisodeThread(Context context) {
-            mContext = context;
-            this.setName("UpdateLatestEpisode");
-        }
-
-        public UpdateLatestEpisodeThread(Context context, String showId) {
-            this(context);
-            mShowId = showId;
-        }
-
-        public void run() {
-            if (mShowId != null) {
-                // update single show
-                DBUtils.updateLatestEpisode(mContext, mShowId);
-            } else {
-                // update all shows
-                final Cursor shows = mContext.getContentResolver().query(Shows.CONTENT_URI,
-                        new String[] {
-                            Shows._ID
-                        }, null, null, null);
-                while (shows.moveToNext()) {
-                    String id = shows.getString(0);
-                    DBUtils.updateLatestEpisode(mContext, id);
-                }
-                shows.close();
-            }
-
-            // Adapter gets notified by ContentProvider
         }
     }
 

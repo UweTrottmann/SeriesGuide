@@ -6,10 +6,10 @@ import com.jakewharton.trakt.TraktEnumeration;
 
 public enum ActivityAction implements TraktEnumeration {
     All("all"),
-    Watching("episode"),
-    Scrobble("show"),
-    Checkin("movie"),
-    Seen("list"),
+    Watching("watching"),
+    Scrobble("scrobble"),
+    Checkin("checkin"),
+    Seen("seen"),
     Collection("collection"),
     Rating("rating"),
     Watchlist("watchlist"),

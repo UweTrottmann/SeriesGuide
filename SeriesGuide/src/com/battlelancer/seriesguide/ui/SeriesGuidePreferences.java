@@ -74,6 +74,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_LASTUPDATE = "com.battlelancer.seriesguide.lastupdate";
 
+    public static final String KEY_LASTTRAKTUPDATE = "com.battlelancer.seriesguide.lasttraktupdate";
+
     protected static final int ABOUT_DIALOG = 0;
 
     private static final String TRANSLATIONS_URL = "http://crowdin.net/project/seriesguide-translations/invite";

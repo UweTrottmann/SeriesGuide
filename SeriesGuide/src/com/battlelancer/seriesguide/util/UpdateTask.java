@@ -44,7 +44,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
     private static final int UPDATE_SUCCESS = 100;
 
-    private static final int UPDATE_SAXERROR = 102;
+    private static final int UPDATE_ERROR = 102;
 
     private static final int UPDATE_OFFLINE = 103;
 
@@ -139,11 +139,12 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 try {
                     mShows = TheTVDB.deltaUpdateShows(currentTime, updateAtLeastEvery, mAppContext);
                 } catch (SAXException e) {
-                    return UPDATE_SAXERROR;
+                    return UPDATE_ERROR;
                 }
             }
         }
 
+        final int maxProgress = mShows.length + 2;
         int resultCode = UPDATE_SUCCESS;
         String id;
 
@@ -170,7 +171,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             }
             show.close();
 
-            publishProgress(i, mShows.length + 1);
+            publishProgress(i, maxProgress);
 
             for (int itry = 0; itry < 2; itry++) {
                 try {
@@ -179,7 +180,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 } catch (SAXException saxe) {
                     // failed twice
                     if (itry == 1) {
-                        resultCode = UPDATE_SAXERROR;
+                        resultCode = UPDATE_ERROR;
                         addFailedShow(mCurrentShowName);
                     }
                 }
@@ -189,79 +190,92 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
         // renew FTS3 table (only if we updated shows)
         if (updateCount.get() != 0 && mShows.length != 0) {
-            publishProgress(mShows.length, mShows.length + 1);
+            publishProgress(mShows.length, maxProgress);
             TheTVDB.onRenewFTSTable(mAppContext);
         }
+
+        publishProgress(maxProgress - 1, maxProgress);
 
         // look on trakt for recent activity
         if (ShareUtils.isTraktCredentialsValid(mAppContext)) {
             // get trakt.tv credentials
-            ServiceManager manager = new ServiceManager();
             final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
             String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
             try {
                 password = SimpleCrypto.decrypt(password, mAppContext);
-
-                manager.setAuthentication(username, password);
-                manager.setApiKey(Constants.TRAKT_API_KEY);
-
-                try {
-                    // trakt uses time in seconds
-                    final long lastUpdateTimeSec = prefs.getLong(
-                            SeriesGuidePreferences.KEY_LASTUPDATE, currentTime) / 1000;
-
-                    // get watched episodes from trakt
-                    Activity activity = manager
-                            .activityService()
-                            .user(username)
-                            .types(ActivityType.Episode)
-                            .actions(ActivityAction.Checkin, ActivityAction.Seen,
-                                    ActivityAction.Checkin).timestamp(lastUpdateTimeSec).fire();
-
-                    // build an update batch
-                    final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
-                    for (ActivityItem item : activity.activity) {
-                        switch (item.action) {
-                            case Seen: {
-                                List<TvShowEpisode> episodes = item.episodes;
-                                String showTvdbId = item.show.tvdbId;
-                                for (TvShowEpisode episode : episodes) {
-                                    addEpisodeOp(batch, episode, showTvdbId);
-                                }
-                            }
-                            case Checkin:
-                            case Scrobble: {
-                                TvShowEpisode episode = item.episode;
-                                String showTvdbId = item.show.tvdbId;
-                                addEpisodeOp(batch, episode, showTvdbId);
-                            }
-                        }
-                    }
-
-                    // execute the batch update
-                    try {
-                        mAppContext.getContentResolver().applyBatch(
-                                SeriesContract.CONTENT_AUTHORITY, batch);
-                    } catch (RemoteException e) {
-                        // Failed binder transactions aren't recoverable
-                        throw new RuntimeException("Problem applying batch operation", e);
-                    } catch (OperationApplicationException e) {
-                        // Failures like constraint violation aren't
-                        // recoverable
-                        throw new RuntimeException("Problem applying batch operation", e);
-                    }
-                } catch (TraktException te) {
-                    return UPDATE_SAXERROR;
-                } catch (ApiException e) {
-                    return UPDATE_SAXERROR;
-                }
-            } catch (Exception e1) {
-                // password could not be decrypted
-                return UPDATE_SAXERROR;
+            } catch (Exception e) {
+                return UPDATE_ERROR;
             }
+
+            ServiceManager manager = new ServiceManager();
+            manager.setAuthentication(username, password);
+            manager.setApiKey(Constants.TRAKT_API_KEY);
+
+            // get last trakt update timestamp
+            final long startTimeTrakt = prefs.getLong(SeriesGuidePreferences.KEY_LASTTRAKTUPDATE,
+                    currentTime) / 1000;
+
+            // get watched episodes from trakt
+            Activity activity;
+            try {
+                activity = manager
+                        .activityService()
+                        .user(username)
+                        .types(ActivityType.Episode)
+                        .actions(ActivityAction.Checkin, ActivityAction.Seen,
+                                ActivityAction.Scrobble).timestamp(startTimeTrakt).fire();
+            } catch (TraktException te) {
+                return UPDATE_ERROR;
+            } catch (ApiException ae) {
+                return UPDATE_ERROR;
+            }
+
+            // build an update batch
+            final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
+            for (ActivityItem item : activity.activity) {
+                switch (item.action) {
+                    case Seen: {
+                        List<TvShowEpisode> episodes = item.episodes;
+                        String showTvdbId = item.show.tvdbId;
+                        for (TvShowEpisode episode : episodes) {
+                            addEpisodeOp(batch, episode, showTvdbId);
+                        }
+                        break;
+                    }
+                    case Checkin:
+                    case Scrobble: {
+                        TvShowEpisode episode = item.episode;
+                        String showTvdbId = item.show.tvdbId;
+                        addEpisodeOp(batch, episode, showTvdbId);
+                        break;
+                    }
+                }
+            }
+
+            // execute the batch
+            try {
+                mAppContext.getContentResolver()
+                        .applyBatch(SeriesContract.CONTENT_AUTHORITY, batch);
+            } catch (RemoteException e) {
+                // Failed binder transactions aren't recoverable
+                throw new RuntimeException("Problem applying batch operation", e);
+            } catch (OperationApplicationException e) {
+                // Failures like constraint violation aren't
+                // recoverable
+                throw new RuntimeException("Problem applying batch operation", e);
+            }
+
+            // store time of this update as seen by the trakt server
+            prefs.edit()
+                    .putLong(SeriesGuidePreferences.KEY_LASTTRAKTUPDATE,
+                            activity.timestamps.current.getTime()).commit();
+
         }
 
-        publishProgress(mShows.length + 1, mShows.length + 1);
+        publishProgress(maxProgress, maxProgress);
+        
+        // update the latest episodes
+        Utils.updateLatestEpisodes(mAppContext);
 
         // store time of update if it was successful
         if (currentTime != 0 && resultCode == UPDATE_SUCCESS) {
@@ -284,7 +298,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 length = Toast.LENGTH_SHORT;
 
                 break;
-            case UPDATE_SAXERROR:
+            case UPDATE_ERROR:
                 AnalyticsUtils.getInstance(mAppContext).trackEvent("Shows", "Update Task",
                         "SAX error", 0);
 
@@ -322,8 +336,12 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             // clear the text field if we are finishing up
             text = "";
         } else if (values[0] + 1 == values[1]) {
-            // if we're one before completion, we're rebuilding the search index
-            text = mAppContext.getString(R.string.update_rebuildsearch) + "...";
+            // if we're one before completion, we're looking on trakt for user
+            // activity
+            text = mAppContext.getString(R.string.update_traktactivity);
+        } else if (values[0] + 2 == values[1]) {
+            // if we're two before completion, we're rebuilding the search index
+            text = mAppContext.getString(R.string.update_rebuildsearch);
         } else {
             text = mCurrentShowName + "...";
         }
@@ -343,8 +361,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
     private static void addEpisodeOp(final ArrayList<ContentProviderOperation> batch,
             TvShowEpisode episode, String showTvdbId) {
         batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodesOfShowUri(showTvdbId))
-                .withSelection(Episodes.NUMBER + "=?," + Episodes.SEASON + "=?", new String[] {
-                        String.valueOf(episode.number), String.valueOf(episode.season)
+                .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[] {
+                        String.valueOf(episode.episode), String.valueOf(episode.season)
                 }).withValue(Episodes.WATCHED, true).build());
     }
 
