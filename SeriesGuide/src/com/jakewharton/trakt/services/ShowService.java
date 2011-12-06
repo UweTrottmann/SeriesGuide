@@ -505,6 +505,48 @@ public class ShowService extends TraktApiService {
         return new RelatedBuilder(this).title(tvdbId);
     }
 
+    /**
+     * <p>Check into a show on trakt. Think of this method as in between a seen
+     * and a scrobble. After checking in, the trakt will automatically display
+     * it as watching then switch over to watched status once the duration has
+     * elapsed.</p>
+     *
+     * <p><em>Warning</em>: This method requires a developer API key.</p>
+     *
+     * @param tvdbId TVDB ID for the show.
+     * @return Builder instance.
+     */
+    public CheckinBuilder checkin(int tvdbId) {
+        return new CheckinBuilder(this).tvdbId(tvdbId);
+    }
+
+    /**
+     * <p>Check into a show on trakt. Think of this method as in between a seen
+     * and a scrobble. After checking in, the trakt will automatically display
+     * it as watching then switch over to watched status once the duration has
+     * elapsed.</p>
+     *
+     * <p><em>Warning</em>: This method requires a developer API key.</p>
+     *
+     * @param title Show title.
+     * @param year Show year.
+     * @return Builder instance.
+     */
+    public CheckinBuilder checkin(String title, int year) {
+        return new CheckinBuilder(this).title(title).year(year);
+    }
+
+    /**
+     * <p>Notify trakt that a user wants to cancel their current check in.</p>
+     *
+     * <p><em>Warning</em>: This method requires a developer API key.</p>
+     *
+     * @return Builder instance.
+     */
+    public CancelCheckinBuilder cancelCheckin() {
+        return new CancelCheckinBuilder(this);
+    }
+
 
     public static final class CancelWatchingBuilder extends TraktApiBuilder<Response> {
         private static final String URI = "/show/cancelwatching/" + FIELD_API_KEY;
@@ -1124,7 +1166,7 @@ public class ShowService extends TraktApiService {
 
         private ScrobbleBuilder(ShowService service) {
             super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
-            this.includeDebugStrings();
+            this.includeScrobbleDebugStrings();
         }
 
         /**
@@ -1421,7 +1463,7 @@ public class ShowService extends TraktApiService {
 
         private WatchingBuilder(ShowService service) {
             super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
-            this.includeDebugStrings();
+            this.includeScrobbleDebugStrings();
         }
 
         /**
@@ -1743,6 +1785,78 @@ public class ShowService extends TraktApiService {
                 this.field(FIELD_HIDE_WATCHED, HIDE_WATCHED);
             }
             return this;
+        }
+    }
+    public static final class CheckinBuilder extends TraktApiBuilder<Response> {
+        private static final String POST_TVDB_ID = "tvdb_id";
+        private static final String POST_TITLE = "title";
+        private static final String POST_YEAR = "year";
+        private static final String POST_SEASON = "season";
+        private static final String POST_EPISODE = "episode";
+        private static final String POST_DURATION = "duration";
+        private static final String POST_VENUE_ID = "venue_id";
+        private static final String POST_VENUE_NAME = "venue_name";
+
+        private static final String URI = "/show/checkin/" + FIELD_API_KEY;
+
+        private CheckinBuilder(ShowService service) {
+            super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
+            this.includeCheckinDebugStrings();
+        }
+
+        /** TVDB ID for the show. */
+        public CheckinBuilder tvdbId(int tvdbId) {
+            this.postParameter(POST_TVDB_ID, tvdbId);
+            return this;
+        }
+
+        /** Show title. */
+        public CheckinBuilder title(String title) {
+            this.postParameter(POST_TITLE, title);
+            return this;
+        }
+
+        /** Show year. */
+        public CheckinBuilder year(int year) {
+            this.postParameter(POST_YEAR, year);
+            return this;
+        }
+
+        /** Show season. Send '0' if watching a special. */
+        public CheckinBuilder season(int season) {
+            this.postParameter(POST_SEASON, season);
+            return this;
+        }
+
+        /** Show episode. */
+        public CheckinBuilder episode(int episode) {
+            this.postParameter(POST_EPISODE, episode);
+            return this;
+        }
+
+        /** Duration in minutes. */
+        public CheckinBuilder duration(int duration) {
+            this.postParameter(POST_DURATION, duration);
+            return this;
+        }
+
+        /** Foursquare venue ID. */
+        public CheckinBuilder venueId(int venueId) {
+            this.postParameter(POST_VENUE_ID, venueId);
+            return this;
+        }
+
+        /** Custom venue name for display purposes. */
+        public CheckinBuilder venueName(String venueName) {
+            this.postParameter(POST_VENUE_NAME, venueName);
+            return this;
+        }
+    }
+    public static final class CancelCheckinBuilder extends TraktApiBuilder<Response> {
+        private static final String URI = "/show/cancelcheckin/" + FIELD_API_KEY;
+
+        private CancelCheckinBuilder(ShowService service) {
+            super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
         }
     }
 }

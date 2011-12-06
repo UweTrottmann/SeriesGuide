@@ -78,6 +78,12 @@ public abstract class TraktApiService extends ApiService {
     /** Default media center build date debug string. */
     private static final String DEFAULT_MEDIA_CENTER_DATE = "trakt-java library";
 
+    /** Default application name debug string. */
+    private static final String DEFAULT_APP_DATE = "trakt-java library";
+
+    /** Default application version debug string. */
+    private static final String DEFAULT_APP_VERSION = "trakt-java library";
+
     /** Time zone for Trakt dates. */
     private static final TimeZone TRAKT_TIME_ZONE = TimeZone.getTimeZone("GMT-8:00");
 
@@ -97,6 +103,12 @@ public abstract class TraktApiService extends ApiService {
     /** Media center build date debug string. */
     private String mediaCenterDate;
 
+    /** Application date debug string. */
+    private String appDate;
+
+    /** Application version debug string. */
+    private String appVersion;
+
     /** Whether or not to use SSL API endpoint. */
     private boolean useSsl;
 
@@ -115,6 +127,8 @@ public abstract class TraktApiService extends ApiService {
         this.setPluginVersion(DEFAULT_PLUGIN_VERSION);
         this.setMediaCenterVersion(DEFAULT_MEDIA_CENTER_VERSION);
         this.setMediaCenterDate(DEFAULT_MEDIA_CENTER_DATE);
+        this.setAppDate(DEFAULT_APP_DATE);
+        this.setAppVersion(DEFAULT_APP_VERSION);
     }
 
 
@@ -178,7 +192,7 @@ public abstract class TraktApiService extends ApiService {
     }
 
     /**
-     * Get the plugin version debug string.
+     * Get the plugin version debug string used for scrobbling.
      *
      * @return Value.
      */
@@ -187,7 +201,7 @@ public abstract class TraktApiService extends ApiService {
     }
 
     /**
-     * Set the plugin version debug string.
+     * Set the plugin version debug string used for scrobbling.
      *
      * @param pluginVersion Value.
      */
@@ -196,7 +210,7 @@ public abstract class TraktApiService extends ApiService {
     }
 
     /**
-     * Get the media center version debug string.
+     * Get the media center version debug string used for scrobbling.
      *
      * @return Value.
      */
@@ -205,7 +219,7 @@ public abstract class TraktApiService extends ApiService {
     }
 
     /**
-     * Set the media center version debug string.
+     * Set the media center version debug string used for scrobbling.
      *
      * @param mediaCenterVersion Value.
      */
@@ -214,7 +228,7 @@ public abstract class TraktApiService extends ApiService {
     }
 
     /**
-     * Get the media center build date debug string.
+     * Get the media center build date debug string used for scrobbling.
      *
      * @return Value.
      */
@@ -223,12 +237,48 @@ public abstract class TraktApiService extends ApiService {
     }
 
     /**
-     * Set the media center build date debug string.
+     * Set the media center build date debug string used for scrobbling.
      *
      * @param mediaCenterDate Value.
      */
     public void setMediaCenterDate(String mediaCenterDate) {
         this.mediaCenterDate = mediaCenterDate;
+    }
+
+    /**
+     * Get the application date debug string used for checking in.
+     *
+     * @return Value.
+     */
+    /*package*/ String getAppDate() {
+        return appDate;
+    }
+
+    /**
+     * Set the application date debug string used for checking in.
+     *
+     * @param appDate Value.
+     */
+    public void setAppDate(String appDate) {
+        this.appDate = appDate;
+    }
+
+    /**
+     * Get the application version debug string used for checking in.
+     *
+     * @return Value.
+     */
+    /*package*/ String getAppVersion() {
+        return appVersion;
+    }
+
+    /**
+     * Set the application version debug string used for checking in.
+     *
+     * @param appVersion Value.
+     */
+    public void setAppVersion(String appVersion) {
+        this.appVersion = appVersion;
     }
 
     /**

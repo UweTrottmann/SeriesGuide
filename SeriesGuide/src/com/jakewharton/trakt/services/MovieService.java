@@ -230,6 +230,63 @@ public class MovieService extends TraktApiService {
         return new RelatedBuilder(this).title(tmdbId);
     }
 
+    /**
+     * <p>Check into a movie on trakt. Think of this method as in between a
+     * seen and a scrobble. After checking in, the trakt will automatically
+     * display it as watching then switch over to watched status once the
+     * duration has elapsed.<p>
+     *
+     * <p><em>Warning</em>: This method requires a developer API key.</p>
+     *
+     * @param imdbId IMDB ID for movie.
+     * @return Builder instance.
+     */
+    public CheckinBuilder checking(String imdbId) {
+        return new CheckinBuilder(this).imdbId(imdbId);
+    }
+
+    /**
+     * <p>Check into a movie on trakt. Think of this method as in between a
+     * seen and a scrobble. After checking in, the trakt will automatically
+     * display it as watching then switch over to watched status once the
+     * duration has elapsed.<p>
+     *
+     * <p><em>Warning</em>: This method requires a developer API key.</p>
+     *
+     * @param tmdbId TMDB ID for movie.
+     * @return Builder instance.
+     */
+    public CheckinBuilder checkin(int tmdbId) {
+        return new CheckinBuilder(this).tmdbId(tmdbId);
+    }
+
+    /**
+     * <p>Check into a movie on trakt. Think of this method as in between a
+     * seen and a scrobble. After checking in, the trakt will automatically
+     * display it as watching then switch over to watched status once the
+     * duration has elapsed.<p>
+     *
+     * <p><em>Warning</em>: This method requires a developer API key.</p>
+     *
+     * @param title Movie title.
+     * @param year Movie year.
+     * @return Builder instance.
+     */
+    public CheckinBuilder checkin(String title, int year) {
+        return new CheckinBuilder(this).title(title).year(year);
+    }
+
+    /**
+     * <p>Notify trakt that a user wants to cancel their current check in.</p>
+     *
+     * <p><em>Warning</em>: This method requires a developer API key.</p>
+     *
+     * @return Builder instance.
+     */
+    public CancelCheckinBuilder cancelCheckin() {
+        return new CancelCheckinBuilder(this);
+    }
+
 
     public static final class CancelWatchingBuilder extends TraktApiBuilder<Response> {
         private static final String URI = "/movie/cancelwatching/" + FIELD_API_KEY;
@@ -250,7 +307,7 @@ public class MovieService extends TraktApiService {
 
         private ScrobbleBuilder(MovieService service) {
             super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
-            this.includeDebugStrings();
+            this.includeScrobbleDebugStrings();
         }
 
         /**
@@ -701,7 +758,7 @@ public class MovieService extends TraktApiService {
 
         private WatchingBuilder(MovieService service) {
             super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
-            this.includeDebugStrings();
+            this.includeScrobbleDebugStrings();
         }
         /**
          * IMDB ID for the movie.
@@ -935,6 +992,71 @@ public class MovieService extends TraktApiService {
                 this.field(FIELD_HIDE_WATCHED, HIDE_WATCHED);
             }
             return this;
+        }
+    }
+    public static final class CheckinBuilder extends TraktApiBuilder<Response> {
+        private static final String POST_IMDB_ID = "imdb_id";
+        private static final String POST_TMDB_ID = "tmdb_id";
+        private static final String POST_TITLE = "title";
+        private static final String POST_YEAR = "year";
+        private static final String POST_DURATION = "duration";
+        private static final String POST_VENUE_ID = "venue_id";
+        private static final String POST_VENUE_NAME = "venue_name";
+
+        private static final String URI = "/movie/checkin/" + FIELD_API_KEY;
+
+        private CheckinBuilder(MovieService service) {
+            super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
+            this.includeCheckinDebugStrings();
+        }
+
+        /** IMDB ID for the movie. */
+        public CheckinBuilder imdbId(String imdbId) {
+            this.postParameter(POST_IMDB_ID, imdbId);
+            return this;
+        }
+
+        /** TMDB ID for the movie. */
+        public CheckinBuilder tmdbId(int tmdbId) {
+            this.postParameter(POST_TMDB_ID, tmdbId);
+            return this;
+        }
+
+        /** Movie title. */
+        public CheckinBuilder title(String title) {
+            this.postParameter(POST_TITLE, title);
+            return this;
+        }
+
+        /** Movie year. */
+        public CheckinBuilder year(int year) {
+            this.postParameter(POST_YEAR, year);
+            return this;
+        }
+
+        /** Duration in minutes. */
+        public CheckinBuilder duration(int duration) {
+            this.postParameter(POST_DURATION, duration);
+            return this;
+        }
+
+        /** Foursquare venue ID. */
+        public CheckinBuilder venueId(int venueId) {
+            this.postParameter(POST_VENUE_ID, venueId);
+            return this;
+        }
+
+        /** Custom venue name for display purposes. */
+        public CheckinBuilder venueName(String venueName) {
+            this.postParameter(POST_VENUE_NAME, venueName);
+            return this;
+        }
+    }
+    public static final class CancelCheckinBuilder extends TraktApiBuilder<Response> {
+        private static final String URI = "/movie/cancelcheckin/" + FIELD_API_KEY;
+
+        private CancelCheckinBuilder(MovieService service) {
+            super(service, new TypeToken<Response>() {}, URI, HttpMethod.Post);
         }
     }
 }

@@ -362,7 +362,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             TvShowEpisode episode, String showTvdbId) {
         batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodesOfShowUri(showTvdbId))
                 .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[] {
-                        String.valueOf(episode.episode), String.valueOf(episode.season)
+                        String.valueOf(episode.number), String.valueOf(episode.season)
                 }).withValue(Episodes.WATCHED, true).build());
     }
 

@@ -42,6 +42,8 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
     private static final String POST_PLUGIN_VERSION = "plugin_version";
     private static final String POST_MEDIA_CENTER_VERSION = "media_center_version";
     private static final String POST_MEDIA_CENTER_DATE = "media_center_date";
+    private static final String POST_APP_DATE = "app_date";
+    private static final String POST_APP_VERSION = "app_version";
 
     /** Format for encoding a {@link java.util.Date} in a URL. */
     private static final SimpleDateFormat URL_DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
@@ -155,13 +157,20 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
     }
 
     /**
-     * Mark current builder as Trakt developer method. This will automatically
-     * add the debug fields to the post body.
+     * Add scrobble debug fields to the builder post body.
      */
-    protected final void includeDebugStrings() {
+    protected final void includeScrobbleDebugStrings() {
         this.postParameter(POST_PLUGIN_VERSION, service.getPluginVersion());
         this.postParameter(POST_MEDIA_CENTER_VERSION, service.getMediaCenterVersion());
         this.postParameter(POST_MEDIA_CENTER_DATE, service.getMediaCenterDate());
+    }
+
+    /**
+     * MAdd check-in debug fields to the builder post body.
+     */
+    protected final void includeCheckinDebugStrings() {
+        this.postParameter(POST_APP_VERSION, service.getAppVersion());
+        this.postParameter(POST_APP_DATE, service.getAppDate());
     }
 
     /**
