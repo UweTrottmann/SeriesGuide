@@ -79,8 +79,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final int CONTEXT_UPDATESHOW_ID = 201;
 
-    private static final int CONTEXT_SHOWINFO = 202;
-
     private static final int CONTEXT_MARKNEXT = 203;
 
     private static final int CONTEXT_FAVORITE = 204;
@@ -398,10 +396,9 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         }
         show.close();
 
-        menu.add(0, CONTEXT_SHOWINFO, 1, R.string.context_showinfo);
-        menu.add(0, CONTEXT_MARKNEXT, 2, R.string.context_marknext);
-        menu.add(0, CONTEXT_UPDATESHOW_ID, 3, R.string.context_updateshow);
-        menu.add(0, CONTEXT_DELETE_ID, 4, R.string.delete_show);
+        menu.add(0, CONTEXT_MARKNEXT, 1, R.string.context_marknext);
+        menu.add(0, CONTEXT_UPDATESHOW_ID, 2, R.string.context_updateshow);
+        menu.add(0, CONTEXT_DELETE_ID, 3, R.string.delete_show);
     }
 
     @Override
@@ -441,13 +438,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 fireTrackerEvent("Update show");
 
                 performUpdateTask(false, String.valueOf(info.id));
-                return true;
-            case CONTEXT_SHOWINFO:
-                fireTrackerEvent("Display show info");
-
-                Intent i = new Intent(this, ShowInfoActivity.class);
-                i.putExtra(Shows._ID, String.valueOf(info.id));
-                startActivity(i);
                 return true;
             case CONTEXT_MARKNEXT:
                 fireTrackerEvent("Mark next episode");

@@ -17,6 +17,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActionBar;
+import android.support.v4.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -46,6 +47,7 @@ public class ShowInfoActivity extends BaseActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.context_showinfo));
         actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         Bundle extras = getIntent().getExtras();
         seriesid = extras.getString(Shows._ID);
@@ -57,6 +59,21 @@ public class ShowInfoActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         AnalyticsUtils.getInstance(this).trackPageView("/ShowInfo");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // Navigate to the parent activity instead
+                final Intent intent = new Intent(this, OverviewActivity.class);
+                intent.putExtra(Shows._ID, seriesid);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                overridePendingTransition(R.anim.home_enter, R.anim.home_exit);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void fillData() {
@@ -166,7 +183,8 @@ public class ShowInfoActivity extends BaseActivity {
             tvdbButton.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
                     fireTrackerEvent("TVDb");
-                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TVDB_SHOW_URL + tvdbId));
+                    Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TVDB_SHOW_URL
+                            + tvdbId));
                     startActivity(i);
                 }
             });
