@@ -211,9 +211,10 @@ public class OverviewFragment extends Fragment {
             return;
         }
 
-        // Save imdbId for GetGlue sharing
+        // Save info for sharing
         mShareData.putString(ShareItems.IMDBID, show.getImdbId());
         mShareData.putInt(ShareItems.TVDBID, Integer.valueOf(show.getId()));
+        mShareData.putInt(ShareItems.CHECKIN_DURATION, Integer.valueOf(show.getRuntime()));
 
         // Show name
         TextView showname = (TextView) getActivity().findViewById(R.id.seriesname);
@@ -241,15 +242,6 @@ public class OverviewFragment extends Fragment {
                 background.setImageDrawable(drawable);
             }
         }
-
-        // ImageView poster = (ImageView)
-        // getActivity().findViewById(R.id.showposter);
-        // Bitmap bitmap = imageCache.getThumb(show.getPoster());
-        // if (bitmap != null) {
-        // poster.setImageBitmap(bitmap);
-        // } else {
-        // poster.setImageResource(R.drawable.show_generic);
-        // }
 
         // Airtime and Network
         String timeAndNetwork = "";
@@ -297,9 +289,8 @@ public class OverviewFragment extends Fragment {
             // Airdate
             airdate = episode.getString(EpisodeQuery.FIRSTAIRED);
             if (airdate.length() != 0) {
-                nextheader.setText(Utils.parseDateToLocalRelative(airdate,
-                        show.getAirsTime(), context)
-                        + ":");
+                nextheader.setText(Utils.parseDateToLocalRelative(airdate, show.getAirsTime(),
+                        context) + ":");
             }
 
             onLoadEpisodeDetails(episode);
@@ -387,11 +378,8 @@ public class OverviewFragment extends Fragment {
 
         // Guest stars
         TextView gueststars = (TextView) getActivity().findViewById(R.id.TextViewEpisodeGuestStars);
-        gueststars
-                .setText(getString(R.string.episode_gueststars)
-                        + " "
-                        + Utils.splitAndKitTVDBStrings(episode
-                                .getString(EpisodeQuery.GUESTSTARS)));
+        gueststars.setText(getString(R.string.episode_gueststars) + " "
+                + Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));
 
         // Writers
         TextView writers = (TextView) getActivity().findViewById(R.id.TextViewEpisodeWriters);

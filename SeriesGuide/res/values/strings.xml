@@ -219,10 +219,11 @@
     <string name="share">Share</string>
 
     <string-array name="share_items">
-        <item>GetGlue Check In</item>
-        <item>Mark seen on trakt.tv</item>
+        <item>Check In (GetGlue)</item>
+        <item>Check In (trakt)</item>
+        <item>Mark seen (trakt)</item>
+        <item>Rate (trakt)</item>
         <item>Other services</item>
-        <item>Rate on trakt.tv</item>
     </string-array>
 
     <string name="done">Done</string>
@@ -254,8 +255,8 @@
     <string name="pref_traktsyncsummary">Experimental, manual syncing with trakt.tv</string>
     <string name="save">Save</string>
     <string name="dontsave">Don\'t save</string>
-    <string name="trakt_success">Successfully marked on trakt.tv</string>
-    <string name="trakt_error">trakt.tv sharing failed</string>
+    <string name="trakt_success">Successfully talked to trakt</string>
+    <string name="trakt_error">Interaction with trakt failed</string>
     <string name="trakt_decryptfail">password could not be decrypted</string>
     <string name="trakt_credentials_invalid">credentials not valid</string>
     <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>

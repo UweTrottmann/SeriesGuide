@@ -56,8 +56,7 @@ public class ShareUtils {
     protected static final String TAG = "ShareUtils";
 
     /**
-     * Show a dialog allowing to chose from various sharing options. The given
-     * {@link Bundle} has to include a sharestring, episodestring and imdbId.
+     * Show a dialog allowing to chose from various sharing options.
      * 
      * @param shareData - a {@link Bundle} including all
      *            {@link ShareUtils.ShareItems}
@@ -87,7 +86,7 @@ public class ShareUtils {
                         public void onClick(DialogInterface dialog, int item) {
                             switch (item) {
                                 case 0:
-                                    // GetGlue check-in
+                                    // GetGlue check in
                                     if (imdbId.length() != 0) {
                                         showGetGlueDialog(getFragmentManager(), getArguments());
                                     } else {
@@ -97,25 +96,19 @@ public class ShareUtils {
                                     }
                                     break;
                                 case 1: {
-                                    // trakt mark as seen
+                                    // trakt check in
                                     getArguments().putInt(ShareItems.TRAKTACTION,
-                                            TraktAction.SEEN_EPISODE.index());
+                                            TraktAction.CHECKIN_EPISODE.index());
                                     new TraktTask(getActivity(), getFragmentManager(),
                                             getArguments()).execute();
                                     break;
                                 }
                                 case 2: {
-                                    // Android apps
-                                    String text = sharestring;
-                                    if (imdbId.length() != 0) {
-                                        text += " " + ShowInfoActivity.IMDB_TITLE_URL + imdbId;
-                                    }
-
-                                    Intent i = new Intent(Intent.ACTION_SEND);
-                                    i.setType("text/plain");
-                                    i.putExtra(Intent.EXTRA_TEXT, text);
-                                    startActivity(Intent.createChooser(i,
-                                            getString(R.string.share_episode)));
+                                    // trakt mark as seen
+                                    getArguments().putInt(ShareItems.TRAKTACTION,
+                                            TraktAction.SEEN_EPISODE.index());
+                                    new TraktTask(getActivity(), getFragmentManager(),
+                                            getArguments()).execute();
                                     break;
                                 }
                                 case 3: {
@@ -127,6 +120,20 @@ public class ShareUtils {
                                     FragmentTransaction ft = getFragmentManager()
                                             .beginTransaction();
                                     newFragment.show(ft, "traktratedialog");
+                                    break;
+                                }
+                                case 4: {
+                                    // Android apps
+                                    String text = sharestring;
+                                    if (imdbId.length() != 0) {
+                                        text += " " + ShowInfoActivity.IMDB_TITLE_URL + imdbId;
+                                    }
+
+                                    Intent i = new Intent(Intent.ACTION_SEND);
+                                    i.setType("text/plain");
+                                    i.putExtra(Intent.EXTRA_TEXT, text);
+                                    startActivity(Intent.createChooser(i,
+                                            getString(R.string.share_episode)));
                                     break;
                                 }
                             }
@@ -247,6 +254,8 @@ public class ShareUtils {
         String RATING = "rating";
 
         String TRAKTACTION = "traktaction";
+
+        String CHECKIN_DURATION = "checkin_duration";
     }
 
     public static String onCreateShareString(Context context, final Cursor episode) {
@@ -270,8 +279,7 @@ public class ShareUtils {
             boolean useUserTimeZone = prefs.getBoolean(SeriesGuidePreferences.KEY_USE_MY_TIMEZONE,
                     false);
 
-            Calendar cal = Utils.getLocalCalendar(airdate, airtime, useUserTimeZone,
-                    context);
+            Calendar cal = Utils.getLocalCalendar(airdate, airtime, useUserTimeZone, context);
 
             long startTime = cal.getTimeInMillis();
             long endTime = startTime + Long.valueOf(runtime) * 60 * 1000;
@@ -307,7 +315,7 @@ public class ShareUtils {
     }
 
     public enum TraktAction {
-        SEEN_EPISODE(0), RATE_EPISODE(1);
+        SEEN_EPISODE(0), RATE_EPISODE(1), CHECKIN_EPISODE(2);
 
         final private int mIndex;
 
@@ -345,18 +353,17 @@ public class ShareUtils {
         @Override
         protected String doInBackground(Void... params) {
             if (!isTraktCredentialsValid(mContext)) {
-                // return an empty string, so onPostExecute displays a
-                // credentials dialog which calls us again.
-                return "";
+                // return null, so onPostExecute displays a credentials dialog
+                // which later calls us again.
+                return null;
             }
 
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext
                     .getApplicationContext());
 
-            ServiceManager manager = new ServiceManager();
+            // get trakt credentials
             final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
             String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
-
             try {
                 password = SimpleCrypto.decrypt(password, mContext);
             } catch (Exception e1) {
@@ -364,21 +371,32 @@ public class ShareUtils {
                 return mContext.getString(R.string.trakt_decryptfail);
             }
 
+            // setup trakt-java service manager
+            ServiceManager manager = new ServiceManager();
             manager.setAuthentication(username, password);
             manager.setApiKey(Constants.TRAKT_API_KEY);
 
-            if (isCancelled()) {
-                return null;
-            }
-
+            // get some values
             final int tvdbid = mTraktData.getInt(ShareItems.TVDBID);
             final int season = mTraktData.getInt(ShareItems.SEASON);
             final int episode = mTraktData.getInt(ShareItems.EPISODE);
             final TraktAction action = TraktAction.values()[mTraktData
                     .getInt(ShareItems.TRAKTACTION)];
 
+            // last chance to abort (return value thrown away)
+            if (isCancelled()) {
+                return null;
+            }
+
             try {
+                Response response = null;
                 switch (action) {
+                    case CHECKIN_EPISODE: {
+                        final int duration = mTraktData.getInt(ShareItems.CHECKIN_DURATION);
+                        response = manager.showService().checkin(tvdbid).season(season)
+                                .episode(episode).duration(duration).fire();
+                        break;
+                    }
                     case SEEN_EPISODE: {
                         manager.showService().episodeSeen(tvdbid).episode(season, episode).fire();
                         break;
@@ -386,33 +404,38 @@ public class ShareUtils {
                     case RATE_EPISODE: {
                         final Rating rating = Rating.fromValue(mTraktData
                                 .getString(ShareItems.RATING));
-                        manager.rateService().episode(tvdbid).season(season).episode(episode)
-                                .rating(rating).fire();
+                        response = manager.rateService().episode(tvdbid).season(season)
+                                .episode(episode).rating(rating).fire();
                         break;
                     }
                 }
-                return null;
+
+                // return a confirmation or error message
+                if (response != null) {
+                    if (response.status == "success") {
+                        return mContext.getString(R.string.trakt_success) + ": " + response.message;
+                    } else {
+                        return mContext.getString(R.string.trakt_error) + ": " + response.error;
+                    }
+                } else {
+                    return mContext.getString(R.string.trakt_success);
+                }
             } catch (TraktException te) {
-                return "Trakt error: " + te.getMessage();
+                return mContext.getString(R.string.trakt_error) + ": " + te.getMessage();
             } catch (ApiException e) {
-                return "API error: " + e.getMessage();
+                return mContext.getString(R.string.trakt_error) + ": " + e.getMessage();
             }
         }
 
         @Override
         protected void onPostExecute(String result) {
-            if (result == null) {
-                Toast.makeText(mContext, mContext.getString(R.string.trakt_success),
-                        Toast.LENGTH_SHORT).show();
-            } else if (result.length() == 0) {
+            if (result != null) {
+                Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
+            } else {
                 TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
                         .newInstance(mTraktData);
                 FragmentTransaction ft = mManager.beginTransaction();
                 newFragment.show(ft, "traktdialog");
-            } else {
-                Toast.makeText(mContext,
-                        mContext.getString(R.string.trakt_error) + " (" + result + ")",
-                        Toast.LENGTH_LONG).show();
             }
         }
     }
