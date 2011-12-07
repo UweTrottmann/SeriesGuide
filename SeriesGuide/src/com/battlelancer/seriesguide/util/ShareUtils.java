@@ -32,6 +32,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -328,7 +329,14 @@ public class ShareUtils {
         }
     }
 
-    public static class TraktTask extends AsyncTask<Void, Void, String> {
+    public interface TraktStatus {
+        String SUCCESS = "success";
+
+        String FAILURE = "failure";
+    }
+
+    public static class TraktTask extends AsyncTask<Void, Void, Response> {
+
         private final Context mContext;
 
         private final FragmentManager mManager;
@@ -351,30 +359,23 @@ public class ShareUtils {
         }
 
         @Override
-        protected String doInBackground(Void... params) {
+        protected Response doInBackground(Void... params) {
             if (!isTraktCredentialsValid(mContext)) {
                 // return null, so onPostExecute displays a credentials dialog
                 // which later calls us again.
                 return null;
             }
 
-            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext
-                    .getApplicationContext());
-
-            // get trakt credentials
-            final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
-            String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
+            ServiceManager manager;
             try {
-                password = SimpleCrypto.decrypt(password, mContext);
-            } catch (Exception e1) {
+                manager = Utils.setupServiceManager(mContext);
+            } catch (Exception e) {
                 // password could not be decrypted
-                return mContext.getString(R.string.trakt_decryptfail);
+                Response r = new Response();
+                r.status = TraktStatus.FAILURE;
+                r.error = mContext.getString(R.string.trakt_decryptfail);
+                return r;
             }
-
-            // setup trakt-java service manager
-            ServiceManager manager = new ServiceManager();
-            manager.setAuthentication(username, password);
-            manager.setApiKey(Constants.TRAKT_API_KEY);
 
             // get some values
             final int tvdbid = mTraktData.getInt(ShareItems.TVDBID);
@@ -389,49 +390,68 @@ public class ShareUtils {
             }
 
             try {
-                Response response = null;
+                Response r = null;
                 switch (action) {
                     case CHECKIN_EPISODE: {
                         final int duration = mTraktData.getInt(ShareItems.CHECKIN_DURATION);
-                        response = manager.showService().checkin(tvdbid).season(season)
-                                .episode(episode).duration(duration).fire();
+                        r = manager.showService().checkin(tvdbid).season(season).episode(episode)
+                                .duration(duration).fire();
                         break;
                     }
                     case SEEN_EPISODE: {
                         manager.showService().episodeSeen(tvdbid).episode(season, episode).fire();
+                        r = new Response();
+                        r.status = TraktStatus.SUCCESS;
+                        r.message = mContext.getString(R.string.trakt_seen);
                         break;
                     }
                     case RATE_EPISODE: {
                         final Rating rating = Rating.fromValue(mTraktData
                                 .getString(ShareItems.RATING));
-                        response = manager.rateService().episode(tvdbid).season(season)
-                                .episode(episode).rating(rating).fire();
+                        r = manager.rateService().episode(tvdbid).season(season).episode(episode)
+                                .rating(rating).fire();
                         break;
                     }
                 }
 
-                // return a confirmation or error message
-                if (response != null) {
-                    if (response.status == "success") {
-                        return mContext.getString(R.string.trakt_success) + ": " + response.message;
-                    } else {
-                        return mContext.getString(R.string.trakt_error) + ": " + response.error;
-                    }
-                } else {
-                    return mContext.getString(R.string.trakt_success);
-                }
+                return r;
             } catch (TraktException te) {
-                return mContext.getString(R.string.trakt_error) + ": " + te.getMessage();
+                Response r = new Response();
+                r.status = TraktStatus.FAILURE;
+                r.error = te.getMessage();
+                return r;
             } catch (ApiException e) {
-                return mContext.getString(R.string.trakt_error) + ": " + e.getMessage();
+                Response r = new Response();
+                r.status = TraktStatus.FAILURE;
+                r.error = e.getMessage();
+                return r;
             }
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            if (result != null) {
-                Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
+        protected void onPostExecute(Response r) {
+            if (r != null) {
+                if (r.status.equalsIgnoreCase(TraktStatus.SUCCESS)) {
+                    // all good
+                    Toast.makeText(mContext,
+                            mContext.getString(R.string.trakt_success) + ": " + r.message,
+                            Toast.LENGTH_SHORT).show();
+                } else if (r.status.equalsIgnoreCase(TraktStatus.FAILURE)) {
+                    if (r.wait != 0) {
+                        // looks like a check in is in progress
+                        TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment
+                                .newInstance(mTraktData, r.wait);
+                        FragmentTransaction ft = mManager.beginTransaction();
+                        newFragment.show(ft, "cancel-checkin-dialog");
+                    } else {
+                        // well, something went wrong
+                        Toast.makeText(mContext,
+                                mContext.getString(R.string.trakt_error) + ": " + r.error,
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
             } else {
+                // credentials are invalid
                 TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
                         .newInstance(mTraktData);
                 FragmentTransaction ft = mManager.beginTransaction();
@@ -579,6 +599,94 @@ public class ShareUtils {
                 }
             });
             builder.setNegativeButton(R.string.dontsave, null);
+
+            return builder.create();
+        }
+    }
+
+    public static class TraktCancelCheckinDialogFragment extends DialogFragment {
+
+        private int mWait;
+
+        public static TraktCancelCheckinDialogFragment newInstance(Bundle traktData, int wait) {
+            TraktCancelCheckinDialogFragment f = new TraktCancelCheckinDialogFragment();
+            f.setArguments(traktData);
+            f.mWait = wait;
+            return f;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final Context context = getActivity().getApplicationContext();
+            final FragmentManager fm = getFragmentManager();
+            final Bundle args = getArguments();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+            builder.setMessage(context.getString(R.string.traktcheckin_inprogress,
+                    DateUtils.formatElapsedTime(mWait)));
+
+            builder.setPositiveButton(R.string.traktcheckin_cancel, new OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int which) {
+                    AsyncTask<String, Void, Response> cancelCheckinTask = new AsyncTask<String, Void, Response>() {
+
+                        @Override
+                        protected Response doInBackground(String... params) {
+
+                            ServiceManager manager;
+                            try {
+                                manager = Utils.setupServiceManager(context);
+                            } catch (Exception e) {
+                                // password could not be decrypted
+                                Response r = new Response();
+                                r.status = TraktStatus.FAILURE;
+                                r.error = context.getString(R.string.trakt_decryptfail);
+                                return r;
+                            }
+
+                            Response response;
+                            try {
+                                response = manager.showService().cancelCheckin().fire();
+                            } catch (TraktException te) {
+                                Response r = new Response();
+                                r.status = TraktStatus.FAILURE;
+                                r.error = te.getMessage();
+                                return r;
+                            } catch (ApiException e) {
+                                Response r = new Response();
+                                r.status = TraktStatus.FAILURE;
+                                r.error = e.getMessage();
+                                return r;
+                            }
+                            return response;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Response r) {
+                            if (r.status.equalsIgnoreCase(TraktStatus.SUCCESS)) {
+                                // all good
+                                Toast.makeText(
+                                        context,
+                                        context.getString(R.string.trakt_success) + ": "
+                                                + r.message, Toast.LENGTH_SHORT).show();
+
+                                // relaunch the trakt task which called us to
+                                // try the check in again
+                                new TraktTask(context, fm, args).execute();
+                            } else if (r.status.equalsIgnoreCase(TraktStatus.FAILURE)) {
+                                // well, something went wrong
+                                Toast.makeText(context,
+                                        context.getString(R.string.trakt_error) + ": " + r.error,
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    };
+
+                    cancelCheckinTask.execute();
+                }
+            });
+            builder.setNegativeButton(R.string.traktcheckin_wait, null);
 
             return builder.create();
         }

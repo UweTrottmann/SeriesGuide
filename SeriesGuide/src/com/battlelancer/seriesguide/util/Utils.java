@@ -5,6 +5,7 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.jakewharton.trakt.ServiceManager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -489,6 +490,28 @@ public class Utils {
 
             // Adapter gets notified by ContentProvider
         }
+    }
+
+    /**
+     * Set up a trakt-java ServiceManger with user credentials and our API key.
+     * 
+     * @param context
+     * @return
+     * @throws Exception
+     */
+    public static ServiceManager setupServiceManager(Context context) throws Exception {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
+                .getApplicationContext());
+
+        final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+        String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
+        password = SimpleCrypto.decrypt(password, context);
+
+        ServiceManager manager = new ServiceManager();
+        manager.setAuthentication(username, password);
+        manager.setApiKey(Constants.TRAKT_API_KEY);
+
+        return manager;
     }
 
 }

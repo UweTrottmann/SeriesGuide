@@ -230,6 +230,9 @@
     <string name="checkin">Check In</string>
     <string name="comment">Check In Comment</string>
     <string name="checkinsuccess">Check In successful</string>
+    <string name="traktcheckin_cancel">Cancel it</string>
+    <string name="traktcheckin_inprogress">There is already a checkin in progress. Either cancel this checkin or wait %s before you can check in again.</string>
+    <string name="traktcheckin_wait">I\'ll wait</string>
     <string name="pref_number">Number format</string>
     <string name="pref_numbersummary">Switch between 1x01, S01E01 or s01e01 as number format</string>
     <string name="checkinfailed">Check-In failed</string>
@@ -257,6 +260,7 @@
     <string name="dontsave">Don\'t save</string>
     <string name="trakt_success">Successfully talked to trakt</string>
     <string name="trakt_error">Interaction with trakt failed</string>
+    <string name="trakt_seen">marked as seen</string>
     <string name="trakt_decryptfail">password could not be decrypted</string>
     <string name="trakt_credentials_invalid">credentials not valid</string>
     <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>

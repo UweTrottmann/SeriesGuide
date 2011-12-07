@@ -8,6 +8,7 @@ public class Response implements TraktEntity {
     public String status; //TODO: enum
     public String message;
     public String error;
+    public int wait;
 
     /** @deprecated Use {@link #status} */
     @Deprecated
