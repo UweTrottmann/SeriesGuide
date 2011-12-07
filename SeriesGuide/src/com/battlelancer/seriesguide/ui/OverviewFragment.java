@@ -416,7 +416,7 @@ public class OverviewFragment extends Fragment {
         // share with trakt
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity()
                 .getApplicationContext());
-        if (prefs.getBoolean("com.battlelancer.seriesguide.traktintegration", false)) {
+        if (prefs.getBoolean(SeriesGuidePreferences.KEY_INTEGRATETRAKT, false)) {
             // Pass in copy of bundle so its values aren't overwritten by the
             // new episode loading below
             new ShareUtils.TraktTask(getActivity(), getFragmentManager(), new Bundle(mShareData))

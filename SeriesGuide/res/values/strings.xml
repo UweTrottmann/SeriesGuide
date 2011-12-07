@@ -260,7 +260,7 @@
     <string name="trakt_credentials_invalid">credentials not valid</string>
     <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
     <string name="pref_traktintegrate">Integrate trakt.tv</string>
-    <string name="pref_traktintegratesummary">Mark as seen in Overview is shared with trakt.tv</string>
+    <string name="pref_traktintegratesummary">Submit watched in overview, get activity on update</string>
     <string name="donate">Buy me a drink (Paypal)</string>
     <string name="feedback">Provide feedback</string>
     <string name="love">Totally ninja!</string>

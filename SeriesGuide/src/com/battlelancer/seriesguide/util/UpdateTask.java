@@ -194,10 +194,11 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             TheTVDB.onRenewFTSTable(mAppContext);
         }
 
-        publishProgress(maxProgress - 1, maxProgress);
-
         // look on trakt for recent activity
-        if (ShareUtils.isTraktCredentialsValid(mAppContext)) {
+        if (prefs.getBoolean(SeriesGuidePreferences.KEY_INTEGRATETRAKT, false)
+                && ShareUtils.isTraktCredentialsValid(mAppContext)) {
+            publishProgress(maxProgress - 1, maxProgress);
+
             // get trakt.tv credentials
             final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
             String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
@@ -273,7 +274,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         publishProgress(maxProgress, maxProgress);
-        
+
         // update the latest episodes
         Utils.updateLatestEpisodes(mAppContext);
 

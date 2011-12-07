@@ -76,6 +76,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_LASTTRAKTUPDATE = "com.battlelancer.seriesguide.lasttraktupdate";
 
+    public static final String KEY_INTEGRATETRAKT = "com.battlelancer.seriesguide.traktintegration";
+
     protected static final int ABOUT_DIALOG = 0;
 
     private static final String TRANSLATIONS_URL = "http://crowdin.net/project/seriesguide-translations/invite";
@@ -89,6 +91,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
     private final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
     private static final String TAG = "SeriesGuidePreferences";
+
 
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
