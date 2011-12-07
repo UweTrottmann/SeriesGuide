@@ -26,14 +26,17 @@ public class UpcomingRecentActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.upcoming_multipane);
-        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        ActionBar.Tab upcomingTab = getSupportActionBar().newTab().setText(R.string.upcoming);
-        ActionBar.Tab recentTab = getSupportActionBar().newTab().setText(R.string.recent);
+        ActionBar.Tab upcomingTab = actionBar.newTab().setText(R.string.upcoming);
+        ActionBar.Tab recentTab = actionBar.newTab().setText(R.string.recent);
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
 
-        mTabsAdapter = new TabsAdapter(this, getSupportActionBar(), mViewPager);
+        mTabsAdapter = new TabsAdapter(this, actionBar, mViewPager);
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
         argsUpcoming.putString("query", Episodes.FIRSTAIRED + ">=?");
@@ -53,7 +56,7 @@ public class UpcomingRecentActivity extends BaseActivity {
         mTabsAdapter.addTab(recentTab, UpcomingFragment.class, argsRecent);
 
         if (savedInstanceState != null) {
-            getSupportActionBar().setSelectedNavigationItem(savedInstanceState.getInt("index"));
+            actionBar.setSelectedNavigationItem(savedInstanceState.getInt("index"));
         }
     }
 

@@ -21,6 +21,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.SherlockPreferenceActivity;
 import android.support.v4.view.MenuItem;
@@ -103,6 +104,9 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
         final SeriesGuidePreferences activity = this;
         addPreferencesFromResource(R.layout.preferences);
+        
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());

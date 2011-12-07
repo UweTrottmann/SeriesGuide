@@ -33,7 +33,7 @@ public class TaskManager {
     }
 
     public synchronized void tryUpdateTask(UpdateTask task, int messageId) {
-        if (!isUpdateTaskRunning()) {
+        if (!isUpdateTaskRunning(true)) {
             mTask = task;
             Toast.makeText(mContext, messageId, Toast.LENGTH_SHORT).show();
             task.execute();
@@ -44,9 +44,11 @@ public class TaskManager {
         mTask = null;
     }
 
-    public boolean isUpdateTaskRunning() {
+    public boolean isUpdateTaskRunning(boolean displayWarning) {
         if (mTask != null) {
-            Toast.makeText(mContext, R.string.update_inprogress, Toast.LENGTH_LONG).show();
+            if (displayWarning) {
+                Toast.makeText(mContext, R.string.update_inprogress, Toast.LENGTH_LONG).show();
+            }
             return true;
         } else {
             return false;
