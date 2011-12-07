@@ -32,7 +32,6 @@ import com.battlelancer.thetvdbapi.TheTVDB;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -41,7 +40,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -419,15 +417,19 @@ public class OverviewFragment extends Fragment {
 
         Toast.makeText(getActivity(), getString(R.string.mark_episode), Toast.LENGTH_SHORT).show();
 
-        // share with trakt
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity()
-                .getApplicationContext());
-        if (prefs.getBoolean(SeriesGuidePreferences.KEY_INTEGRATETRAKT, false)) {
-            // Pass in copy of bundle so its values aren't overwritten by the
-            // new episode loading below
-            new ShareUtils.TraktTask(getActivity(), getFragmentManager(), new Bundle(mShareData))
-                    .execute();
-        }
+        // TODO: reevaluate how to do this now that check in is available
+        // // share with trakt
+        // SharedPreferences prefs =
+        // PreferenceManager.getDefaultSharedPreferences(getActivity()
+        // .getApplicationContext());
+        // if (prefs.getBoolean(SeriesGuidePreferences.KEY_INTEGRATETRAKT,
+        // false)) {
+        // // Pass in copy of bundle so its values aren't overwritten by the
+        // // new episode loading below
+        // new ShareUtils.TraktTask(getActivity(), getFragmentManager(), new
+        // Bundle(mShareData))
+        // .execute();
+        // }
 
         // load new episode, update seasons (if shown)
         onLoadEpisode();
