@@ -180,7 +180,7 @@
     <string name="pref_notifications">Enable notifications</string>
     <string name="pref_notificationssummary">Show notifications for upcoming episodes</string>
     <string name="pref_usetz">Use my time zone</string>
-    <string name="pref_usetzsummary">Air dates in your time zone (for users outside the USA)</string>
+    <string name="pref_usetzsummary">Auto-offset from US Pacific time (for outside the USA)</string>
     <string name="pref_offset">Time Offset</string>
     <string name="pref_offsetsummary">by a certain amount of hours</string>
 
