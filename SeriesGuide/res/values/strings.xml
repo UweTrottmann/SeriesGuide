@@ -47,6 +47,7 @@
 
     <!-- Date and Time -->
     <string name="today">today</string>
+    <string name="now">now</string>
 
     <!-- Marking -->
     <string name="mark_episode">Watched episode</string>
@@ -277,6 +278,7 @@
     <string name="trakt_synctotrakt">Sync to trakt.tv</string>
     <string name="trakt_syncunseen">Sync unseen episodes</string>
     <string name="powered_by_thetvdb">powered by thetvdb.com</string>
+    <string name="friends">Friends</string>
 
     <string-array name="showfilter_list">
         <item>All</item>

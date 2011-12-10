@@ -54,6 +54,10 @@ public class UpcomingRecentActivity extends BaseActivity {
         argsRecent.putString("analyticstag", "/Recent");
         argsUpcoming.putInt("loaderid", 20);
         mTabsAdapter.addTab(recentTab, UpcomingFragment.class, argsRecent);
+        
+        // trakt friends tab
+        ActionBar.Tab friendsTab = actionBar.newTab().setText(R.string.friends);
+        mTabsAdapter.addTab(friendsTab, TraktFriendsFragment.class, null);
 
         if (savedInstanceState != null) {
             actionBar.setSelectedNavigationItem(savedInstanceState.getInt("index"));

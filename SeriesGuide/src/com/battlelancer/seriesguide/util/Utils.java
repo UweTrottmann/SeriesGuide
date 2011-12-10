@@ -514,4 +514,11 @@ public class Utils {
         return manager;
     }
 
+    public static String getTraktUsername(Context context) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
+                .getApplicationContext());
+
+        return prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+    }
+
 }
