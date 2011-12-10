@@ -89,7 +89,7 @@ public class ShareUtils {
                                 case 0:
                                     // GetGlue check in
                                     if (imdbId.length() != 0) {
-                                        showGetGlueDialog(getFragmentManager(), getArguments());
+                                        showGetGlueDialog(getSupportFragmentManager(), getArguments());
                                     } else {
                                         Toast.makeText(getActivity(),
                                                 getString(R.string.noIMDBentry), Toast.LENGTH_LONG)
@@ -100,7 +100,7 @@ public class ShareUtils {
                                     // trakt check in
                                     getArguments().putInt(ShareItems.TRAKTACTION,
                                             TraktAction.CHECKIN_EPISODE.index());
-                                    new TraktTask(getActivity(), getFragmentManager(),
+                                    new TraktTask(getActivity(), getSupportFragmentManager(),
                                             getArguments()).execute();
                                     break;
                                 }
@@ -108,7 +108,7 @@ public class ShareUtils {
                                     // trakt mark as seen
                                     getArguments().putInt(ShareItems.TRAKTACTION,
                                             TraktAction.SEEN_EPISODE.index());
-                                    new TraktTask(getActivity(), getFragmentManager(),
+                                    new TraktTask(getActivity(), getSupportFragmentManager(),
                                             getArguments()).execute();
                                     break;
                                 }
@@ -118,7 +118,7 @@ public class ShareUtils {
                                             TraktAction.RATE_EPISODE.index());
                                     TraktRateDialogFragment newFragment = TraktRateDialogFragment
                                             .newInstance(getArguments());
-                                    FragmentTransaction ft = getFragmentManager()
+                                    FragmentTransaction ft = getSupportFragmentManager()
                                             .beginTransaction();
                                     newFragment.show(ft, "traktratedialog");
                                     break;
@@ -484,7 +484,7 @@ public class ShareUtils {
             final LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final View layout = inflater.inflate(R.layout.trakt_credentials_dialog, null);
-            final FragmentManager fm = getFragmentManager();
+            final FragmentManager fm = getSupportFragmentManager();
             final Bundle args = getArguments();
 
             // restore the username from settings
@@ -618,7 +618,7 @@ public class ShareUtils {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final Context context = getActivity().getApplicationContext();
-            final FragmentManager fm = getFragmentManager();
+            final FragmentManager fm = getSupportFragmentManager();
             final Bundle args = getArguments();
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -717,7 +717,7 @@ public class ShareUtils {
                 public void onClick(View v) {
                     final Rating rating = Rating.Love;
                     getArguments().putString(ShareItems.RATING, rating.toString());
-                    new TraktTask(context, getFragmentManager(), getArguments()).execute();
+                    new TraktTask(context, getSupportFragmentManager(), getArguments()).execute();
                     dismiss();
                 }
             });
@@ -727,7 +727,7 @@ public class ShareUtils {
                 public void onClick(View v) {
                     final Rating rating = Rating.Hate;
                     getArguments().putString(ShareItems.RATING, rating.toString());
-                    new TraktTask(context, getFragmentManager(), getArguments()).execute();
+                    new TraktTask(context, getSupportFragmentManager(), getArguments()).execute();
                     dismiss();
                 }
             });
