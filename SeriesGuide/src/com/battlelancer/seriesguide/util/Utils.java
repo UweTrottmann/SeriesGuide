@@ -507,10 +507,23 @@ public class Utils {
         String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
         password = SimpleCrypto.decrypt(password, context);
 
-        ServiceManager manager = new ServiceManager();
+        ServiceManager manager = getServiceManager();
         manager.setAuthentication(username, password);
-        manager.setApiKey(Constants.TRAKT_API_KEY);
+        // this made some problems, so sadly disabled for now
+        // manager.setUseSsl(true);
 
+        return manager;
+    }
+
+    /**
+     * Returns a service manager with just our API key set, NO user credentials
+     * are set.
+     * 
+     * @return
+     */
+    public static ServiceManager getServiceManager() {
+        ServiceManager manager = new ServiceManager();
+        manager.setApiKey(Constants.TRAKT_API_KEY);
         return manager;
     }
 
