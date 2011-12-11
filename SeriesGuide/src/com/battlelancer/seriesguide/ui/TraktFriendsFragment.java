@@ -4,7 +4,9 @@ package com.battlelancer.seriesguide.ui;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.Utils;
+import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.MediaEntity;
 import com.jakewharton.trakt.entities.UserProfile;
 import com.jakewharton.trakt.entities.WatchedMediaEntity;
@@ -36,7 +38,7 @@ public class TraktFriendsFragment extends ListFragment implements
         super.onActivityCreated(savedInstanceState);
 
         // TODO put into res
-        setEmptyText("Looks like you have no friends on trakt, yet.");
+        setEmptyText("Try again later or you might just have no friends on trakt, yet.");
 
         mAdapter = new TraktFriendsAdapter(getActivity());
         setListAdapter(mAdapter);
@@ -66,10 +68,17 @@ public class TraktFriendsFragment extends ListFragment implements
                     return null;
                 }
 
-                List<UserProfile> friends = manager.userService()
-                        .friends(Utils.getTraktUsername(getContext())).fire();
-
-                return friends;
+                try {
+                    List<UserProfile> friends = manager.userService()
+                            .friends(Utils.getTraktUsername(getContext())).fire();
+                    return friends;
+                } catch (TraktException te) {
+                    // TODO
+                    return null;
+                } catch (ApiException ae) {
+                    // TODO
+                    return null;
+                }
             } else {
                 // TODO
                 return null;
@@ -203,17 +212,22 @@ public class TraktFriendsFragment extends ListFragment implements
             // Bind the data efficiently with the holder.
             UserProfile friend = getItem(position);
             holder.name.setText(friend.username);
+            // TODO avatar
+
+            String show = "";
+            String episode = "";
+            String timestamp = "";
             if (friend.watching != null) {
                 // look if this friend is watching something right now
                 WatchedMediaEntity watching = friend.watching;
                 switch (watching.type) {
                     case TvShow:
-                        holder.show.setText(watching.show.title);
+                        show = watching.show.title;
                         String episodenumber = Utils.getEpisodeNumber(mPrefs,
                                 String.valueOf(watching.episode.season),
                                 String.valueOf(watching.episode.number));
-                        holder.episode.setText(episodenumber + " " + watching.episode.title);
-                        holder.timestamp.setText(R.string.now);
+                        episode = episodenumber + " " + watching.episode.title;
+                        timestamp = getContext().getString(R.string.now);
                         break;
                 }
             } else if (friend.watched != null) {
@@ -228,22 +242,18 @@ public class TraktFriendsFragment extends ListFragment implements
                 }
 
                 if (latestShow != null) {
-                    holder.show.setText(latestShow.show.title);
+                    show = latestShow.show.title;
                     String episodenumber = Utils.getEpisodeNumber(mPrefs,
                             String.valueOf(latestShow.episode.season),
                             String.valueOf(latestShow.episode.number));
-                    holder.episode.setText(episodenumber + " " + latestShow.episode.title);
-                    holder.timestamp.setText("TODO");
-                } else {
-                    holder.show.setText("");
-                    holder.episode.setText("");
-                    holder.timestamp.setText("");
+                    episode = episodenumber + " " + latestShow.episode.title;
+                    timestamp = "TODO";
                 }
-            } else {
-                holder.show.setText("");
-                holder.episode.setText("");
-                holder.timestamp.setText("");
             }
+
+            holder.show.setText(show);
+            holder.episode.setText(episode);
+            holder.timestamp.setText(timestamp);
 
             return convertView;
         }
