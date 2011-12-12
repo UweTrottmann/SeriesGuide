@@ -3,7 +3,7 @@
     android:installLocation="auto"
     package="com.battlelancer.seriesguide"
     android:versionCode="131"
-    android:versionName="2.2dev" >
+    android:versionName="2.3dev" >
 
     <uses-feature
         android:name="android.hardware.touchscreen"
@@ -22,7 +22,9 @@
             android:name="com.google.android.backup.api_key"
             android:value="AEdPqrEAAAAIToXnISqkDzDlKt206D1VdujnhhoFa0mAEM8Veg" />
 
-        <activity android:name="com.battlelancer.seriesguide.ui.ShowsActivity" >
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.ShowsActivity"
+            android:uiOptions="splitActionBarWhenNarrow" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
 
@@ -117,12 +119,12 @@
                     android:scheme="seriesguide-oauth-getglue" />
             </intent-filter>
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.SeasonsActivity" >
+        <activity android:name="com.battlelancer.seriesguide.ui.SeasonsActivity" android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.EpisodesActivity" >
+        <activity android:name="com.battlelancer.seriesguide.ui.EpisodesActivity" android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
@@ -133,12 +135,12 @@
             android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider" >
         </provider>
 
-        <activity android:name="com.battlelancer.seriesguide.ui.OverviewActivity" >
+        <activity android:name="com.battlelancer.seriesguide.ui.OverviewActivity" android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.EpisodeDetailsActivity" >
+        <activity android:name="com.battlelancer.seriesguide.ui.EpisodeDetailsActivity" android:uiOptions="splitActionBarWhenNarrow">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
@@ -158,7 +160,7 @@
 
     <uses-sdk
         android:minSdkVersion="7"
-        android:targetSdkVersion="13" />
+        android:targetSdkVersion="14" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

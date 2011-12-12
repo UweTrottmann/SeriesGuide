@@ -176,7 +176,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
         mAdapter = new SlowAdapter(this, layout, null, from, to, 0);
 
-        GridView list = (GridView) findViewById(android.R.id.list);
+        GridView list = (GridView) findViewById(R.id.showlist);
         list.setAdapter(mAdapter);
         list.setFastScrollEnabled(true);
         list.setOnItemClickListener(new OnItemClickListener() {
@@ -189,7 +189,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         });
         list.setOnScrollListener(this);
         // TODO: make new empty view, move current to a welcome dialog
-        View emptyView = findViewById(android.R.id.empty);
+        View emptyView = findViewById(R.id.empty);
         if (emptyView != null) {
             list.setEmptyView(emptyView);
         }
