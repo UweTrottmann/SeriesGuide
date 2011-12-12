@@ -1,18 +1,15 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.SimpleCrypto;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.SearchResult;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.entities.TvShow;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,32 +78,25 @@ public class TraktAddFragment extends AddFragment {
             int type = params[0];
             List<SearchResult> showList = new ArrayList<SearchResult>();
 
-            ServiceManager manager = new ServiceManager();
-            manager.setApiKey(Constants.TRAKT_API_KEY);
-
             List<TvShow> shows = new ArrayList<TvShow>();
 
             if (type == TRENDING) {
                 try {
-                    shows = manager.showService().trending().fire();
+                    shows = Utils.getServiceManager().showService().trending().fire();
                 } catch (Exception e) {
                     // we don't care
                 }
             } else {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext
-                        .getApplicationContext());
-                final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
-                String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
                 try {
-                    password = SimpleCrypto.decrypt(password, mContext);
-                    manager.setAuthentication(username, password);
+                    ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
 
                     switch (type) {
                         case RECOMMENDED:
                             shows = manager.recommendationsService().shows().fire();
                             break;
                         case LIBRARY:
-                            shows = manager.userService().libraryShowsAll(username).fire();
+                            shows = manager.userService()
+                                    .libraryShowsAll(Utils.getTraktUsername(mContext)).fire();
                             break;
                     }
                 } catch (Exception e) {

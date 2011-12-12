@@ -1,7 +1,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -199,18 +198,12 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 && ShareUtils.isTraktCredentialsValid(mAppContext)) {
             publishProgress(maxProgress - 1, maxProgress);
 
-            // get trakt.tv credentials
-            final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
-            String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
+            ServiceManager manager;
             try {
-                password = SimpleCrypto.decrypt(password, mAppContext);
+                manager = Utils.getServiceManagerWithAuth(mAppContext, false);
             } catch (Exception e) {
                 return UPDATE_ERROR;
             }
-
-            ServiceManager manager = new ServiceManager();
-            manager.setAuthentication(username, password);
-            manager.setApiKey(Constants.TRAKT_API_KEY);
 
             // get last trakt update timestamp
             final long startTimeTrakt = prefs.getLong(SeriesGuidePreferences.KEY_LASTTRAKTUPDATE,
@@ -221,7 +214,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             try {
                 activity = manager
                         .activityService()
-                        .user(username)
+                        .user(Utils.getTraktUsername(mAppContext))
                         .types(ActivityType.Episode)
                         .actions(ActivityAction.Checkin, ActivityAction.Seen,
                                 ActivityAction.Scrobble).timestamp(startTimeTrakt).fire();

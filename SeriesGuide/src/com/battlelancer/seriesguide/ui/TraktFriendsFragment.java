@@ -62,7 +62,7 @@ public class TraktFriendsFragment extends ListFragment implements
             if (ShareUtils.isTraktCredentialsValid(getContext())) {
                 ServiceManager manager = null;
                 try {
-                    manager = Utils.setupServiceManager(getContext());
+                    manager = Utils.getServiceManagerWithAuth(getContext(), false);
                 } catch (Exception e) {
                     // TODO
                     return null;

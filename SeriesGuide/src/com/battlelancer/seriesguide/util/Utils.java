@@ -33,6 +33,10 @@ import java.util.TimeZone;
 
 public class Utils {
 
+    private static ServiceManager sServiceManagerWithAuthInstance;
+
+    private static ServiceManager sServiceManagerInstance;
+
     /**
      * Returns the Calendar constant (e.g. <code>Calendar.SUNDAY</code>) for a
      * given weekday string of the US locale. If no match is found
@@ -493,38 +497,54 @@ public class Utils {
     }
 
     /**
-     * Set up a trakt-java ServiceManger with user credentials and our API key.
+     * Get the trakt-java ServiceManger with user credentials and our API key
+     * set.
      * 
      * @param context
+     * @param refreshCredentials Set this flag to refresh the user credentials.
      * @return
-     * @throws Exception
+     * @throws Exception When decrypting the password failed.
      */
-    public static ServiceManager setupServiceManager(Context context) throws Exception {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                .getApplicationContext());
+    public static synchronized ServiceManager getServiceManagerWithAuth(Context context,
+            boolean refreshCredentials) throws Exception {
+        if (sServiceManagerWithAuthInstance == null) {
+            sServiceManagerWithAuthInstance = new ServiceManager();
+            sServiceManagerWithAuthInstance.setApiKey(Constants.TRAKT_API_KEY);
+            // this made some problems, so sadly disabled for now
+            // manager.setUseSsl(true);
 
-        final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
-        String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
-        password = SimpleCrypto.decrypt(password, context);
+            refreshCredentials = true;
+        }
 
-        ServiceManager manager = getServiceManager();
-        manager.setAuthentication(username, password);
-        // this made some problems, so sadly disabled for now
-        // manager.setUseSsl(true);
+        if (refreshCredentials) {
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
+                    .getApplicationContext());
 
-        return manager;
+            final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+            String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
+            password = SimpleCrypto.decrypt(password, context);
+
+            sServiceManagerWithAuthInstance.setAuthentication(username, password);
+        }
+
+        return sServiceManagerWithAuthInstance;
     }
 
     /**
-     * Returns a service manager with just our API key set, NO user credentials
-     * are set.
+     * Get a trakt-java ServiceManager with just our API key set. NO user auth
+     * data.
      * 
      * @return
      */
-    public static ServiceManager getServiceManager() {
-        ServiceManager manager = new ServiceManager();
-        manager.setApiKey(Constants.TRAKT_API_KEY);
-        return manager;
+    public static synchronized ServiceManager getServiceManager() {
+        if (sServiceManagerInstance == null) {
+            sServiceManagerInstance = new ServiceManager();
+            sServiceManagerInstance.setApiKey(Constants.TRAKT_API_KEY);
+            // this made some problems, so sadly disabled for now
+            // manager.setUseSsl(true);
+        }
+
+        return sServiceManagerInstance;
     }
 
     public static String getTraktUsername(Context context) {

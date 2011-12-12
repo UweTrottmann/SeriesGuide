@@ -368,7 +368,7 @@ public class ShareUtils {
 
             ServiceManager manager;
             try {
-                manager = Utils.setupServiceManager(mContext);
+                manager = Utils.getServiceManagerWithAuth(mContext, false);
             } catch (Exception e) {
                 // password could not be decrypted
                 Response r = new Response();
@@ -531,6 +531,7 @@ public class ShareUtils {
                                 return null;
                             }
 
+                            // use a separate ServiceManager here to avoid setting wrong credentials
                             final ServiceManager manager = new ServiceManager();
                             manager.setApiKey(Constants.TRAKT_API_KEY);
                             manager.setAuthentication(username, passwordHash);
@@ -577,6 +578,13 @@ public class ShareUtils {
                                     Toast.makeText(context,
                                             response.getStatus() + ": " + response.getMessage(),
                                             Toast.LENGTH_SHORT).show();
+                                    
+                                    // set new auth data for service manager
+                                    try {
+                                        Utils.getServiceManagerWithAuth(context, true);
+                                    } catch (Exception e) {
+                                        // we don't care
+                                    }
                                 } else {
                                     Toast.makeText(context,
                                             response.getStatus() + ": " + response.getError(),
@@ -636,7 +644,7 @@ public class ShareUtils {
 
                             ServiceManager manager;
                             try {
-                                manager = Utils.setupServiceManager(context);
+                                manager = Utils.getServiceManagerWithAuth(context, false);
                             } catch (Exception e) {
                                 // password could not be decrypted
                                 Response r = new Response();
