@@ -151,8 +151,8 @@ public class UserProfile implements TraktEntity {
     public String avatar;
     public String url;
     public Stats stats;
-    public WatchedMediaEntity watching;
-    public List<MediaEntity> watched;
+    public ActivityItemBase watching;
+    public List<ActivityItem> watched;
     public Integer plays;
     public TvShowEpisode episode;
     public Calendar approved;
@@ -214,12 +214,12 @@ public class UserProfile implements TraktEntity {
     }
     /** @deprecated Use {@link #watching} */
     @Deprecated
-    public MediaEntity getWatching() {
+    public ActivityItemBase getWatching() {
         return this.watching;
     }
     /** @deprecated Use {@link #watched} */
     @Deprecated
-    public List<MediaEntity> getWatched() {
+    public List<ActivityItem> getWatched() {
         return this.watched;
     }
     /** @deprecated Use {@link #plays} */

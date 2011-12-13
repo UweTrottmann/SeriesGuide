@@ -3,12 +3,12 @@ package com.jakewharton.trakt.services;
 import com.google.myjson.reflect.TypeToken;
 import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktApiService;
+import com.jakewharton.trakt.entities.ActivityItem;
+import com.jakewharton.trakt.entities.ActivityItemBase;
 import com.jakewharton.trakt.entities.CalendarDate;
-import com.jakewharton.trakt.entities.MediaEntity;
 import com.jakewharton.trakt.entities.Movie;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.UserProfile;
-import com.jakewharton.trakt.entities.WatchedMediaEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -309,38 +309,38 @@ public final class UserService extends TraktApiService {
             return this;
         }
     }
-    public static final class WatchingBuilder extends TraktApiBuilder<WatchedMediaEntity> {
+    public static final class WatchingBuilder extends TraktApiBuilder<ActivityItemBase> {
         private static final String URI = "/user/watching.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 
         private WatchingBuilder(UserService service, String username) {
-            super(service, new TypeToken<WatchedMediaEntity>() {}, URI);
+            super(service, new TypeToken<ActivityItemBase>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
     }
-    public static final class WatchedBuilder extends TraktApiBuilder<List<MediaEntity>> {
+    public static final class WatchedBuilder extends TraktApiBuilder<List<ActivityItem>> {
         private static final String URI = "/user/watched.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 
         private WatchedBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<MediaEntity>>() {}, URI);
+            super(service, new TypeToken<List<ActivityItem>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
     }
-    public static final class WatchedEpisodesBuilder extends TraktApiBuilder<List<MediaEntity>> {
+    public static final class WatchedEpisodesBuilder extends TraktApiBuilder<List<ActivityItem>> {
         private static final String URI = "/user/watched/episodes.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 
         private WatchedEpisodesBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<MediaEntity>>() {}, URI);
+            super(service, new TypeToken<List<ActivityItem>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }
     }
-    public static final class WatchedMoviesBuilder extends TraktApiBuilder<List<MediaEntity>> {
+    public static final class WatchedMoviesBuilder extends TraktApiBuilder<List<ActivityItem>> {
         private static final String URI = "/user/watched/movies.json/" + FIELD_API_KEY + "/" + FIELD_USERNAME;
 
         private WatchedMoviesBuilder(UserService service, String username) {
-            super(service, new TypeToken<List<MediaEntity>>() {}, URI);
+            super(service, new TypeToken<List<ActivityItem>>() {}, URI);
 
             this.field(FIELD_USERNAME, username);
         }

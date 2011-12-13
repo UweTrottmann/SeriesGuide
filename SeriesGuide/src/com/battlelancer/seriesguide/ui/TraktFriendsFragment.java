@@ -7,10 +7,10 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.entities.MediaEntity;
+import com.jakewharton.trakt.entities.ActivityItem;
+import com.jakewharton.trakt.entities.ActivityItemBase;
 import com.jakewharton.trakt.entities.UserProfile;
-import com.jakewharton.trakt.entities.WatchedMediaEntity;
-import com.jakewharton.trakt.enumerations.MediaType;
+import com.jakewharton.trakt.enumerations.ActivityType;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -219,9 +219,9 @@ public class TraktFriendsFragment extends ListFragment implements
             String timestamp = "";
             if (friend.watching != null) {
                 // look if this friend is watching something right now
-                WatchedMediaEntity watching = friend.watching;
+                ActivityItemBase watching = friend.watching;
                 switch (watching.type) {
-                    case TvShow:
+                    case Episode:
                         show = watching.show.title;
                         String episodenumber = Utils.getEpisodeNumber(mPrefs,
                                 String.valueOf(watching.episode.season),
@@ -232,10 +232,10 @@ public class TraktFriendsFragment extends ListFragment implements
                 }
             } else if (friend.watched != null) {
                 // if not display the latest episode he watched
-                List<MediaEntity> watched = friend.watched;
-                MediaEntity latestShow = null;
-                for (MediaEntity mediaEntity : watched) {
-                    if (mediaEntity.type == MediaType.TvShow) {
+                List<ActivityItem> watched = friend.watched;
+                ActivityItem latestShow = null;
+                for (ActivityItem mediaEntity : watched) {
+                    if (mediaEntity.type == ActivityType.Episode) {
                         latestShow = mediaEntity;
                         break;
                     }
