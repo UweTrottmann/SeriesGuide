@@ -55,8 +55,7 @@ public class TraktFriendsFragment extends ListFragment implements
         View detailsFragment = getActivity().findViewById(R.id.fragment_details);
         mDualPane = detailsFragment != null && detailsFragment.getVisibility() == View.VISIBLE;
 
-        // TODO put into res
-        setEmptyText("Try again later or you might just have no friends on trakt, yet.");
+        setEmptyText(getString(R.string.friends_empty));
 
         mAdapter = new TraktFriendsAdapter(getActivity());
         setListAdapter(mAdapter);

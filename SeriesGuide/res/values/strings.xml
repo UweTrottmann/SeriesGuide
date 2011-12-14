@@ -279,6 +279,7 @@
     <string name="trakt_syncunseen">Sync unseen episodes</string>
     <string name="powered_by_thetvdb">powered by thetvdb.com</string>
     <string name="friends">Friends</string>
+    <string name="friends_empty">No recent activity or you just might have no friends on trakt, yet.</string>
 
     <string-array name="showfilter_list">
         <item>All</item>
