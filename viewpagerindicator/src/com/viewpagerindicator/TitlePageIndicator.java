@@ -1,7 +1,7 @@
 /*
+ * Copyright (C) 2011 Jake Wharton
  * Copyright (C) 2011 Patrik Akerfeldt
  * Copyright (C) 2011 Francisco Figueiredo Jr.
- * Copyright (C) 2011 Jake Wharton
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,10 +27,14 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.view.MotionEventCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewConfigurationCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 
 /**
  * A TitlePageIndicator is a PageIndicator which displays the title of left view
@@ -52,6 +56,18 @@ public class TitlePageIndicator extends View implements PageIndicator {
      * that 10% between the center and an edge.
      */
     private static final float BOLD_FADE_PERCENTAGE = 0.05f;
+
+    /**
+     * Interface for a callback when the center item has been clicked.
+     */
+    public static interface OnCenterItemClickListener {
+        /**
+         * Callback when the center item has been clicked.
+         *
+         * @param position Position of the current center item.
+         */
+        public void onCenterItemClick(int position);
+    }
 
     public enum IndicatorStyle {
         None(0), Triangle(1), Underline(2);
@@ -95,13 +111,22 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private float mClipPadding;
     private float mFooterLineHeight;
 
+    private static final int INVALID_POINTER = -1;
+
+    private int mTouchSlop;
+    private float mLastMotionX = -1;
+    private int mActivePointerId = INVALID_POINTER;
+    private boolean mIsDragging;
+
+    private OnCenterItemClickListener mCenterItemClickListener;
+
 
     public TitlePageIndicator(Context context) {
         this(context, null);
     }
 
     public TitlePageIndicator(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.titlePageIndicatorStyle);
+        this(context, attrs, R.attr.vpiTitlePageIndicatorStyle);
     }
 
     public TitlePageIndicator(Context context, AttributeSet attrs, int defStyle) {
@@ -153,6 +178,9 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mPaintFooterIndicator.setColor(footerColor);
 
         a.recycle();
+
+        final ViewConfiguration configuration = ViewConfiguration.get(context);
+        mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
     }
 
 
@@ -276,10 +304,22 @@ public class TitlePageIndicator extends View implements PageIndicator {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        if (mViewPager == null) {
+            return;
+        }
+        final int count = mViewPager.getAdapter().getCount();
+        if (count == 0) {
+            return;
+        }
+
         //Calculate views bounds
         ArrayList<RectF> bounds = calculateAllBounds(mPaintText);
 
-        final int count = mViewPager.getAdapter().getCount();
+        //Make sure we're on a page that still exists
+        if (mCurrentPage >= bounds.size()) {
+            setCurrentItem(bounds.size()-1);
+        }
+
         final int countMinusOne = count - 1;
         final float halfWidth = getWidth() / 2f;
         final int left = getLeft();
@@ -412,25 +452,98 @@ public class TitlePageIndicator extends View implements PageIndicator {
         }
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            final int count = mViewPager.getAdapter().getCount();
-            final int width = getWidth();
-            final float halfWidth = width / 2f;
-            final float sixthWidth = width / 6f;
-
-            if ((mCurrentPage > 0) && (event.getX() < halfWidth - sixthWidth)) {
-                mViewPager.setCurrentItem(mCurrentPage - 1);
-                return true;
-            } else if ((mCurrentPage < count - 1) && (event.getX() > halfWidth + sixthWidth)) {
-                mViewPager.setCurrentItem(mCurrentPage + 1);
-                return true;
-            }
+    public boolean onTouchEvent(android.view.MotionEvent ev) {
+        if ((mViewPager == null) || (mViewPager.getAdapter().getCount() == 0)) {
+            return false;
         }
 
-        return super.onTouchEvent(event);
-    }
+        final int action = ev.getAction();
+
+        switch (action & MotionEventCompat.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN:
+                mActivePointerId = MotionEventCompat.getPointerId(ev, 0);
+                mLastMotionX = ev.getX();
+                break;
+
+            case MotionEvent.ACTION_MOVE: {
+                final int activePointerIndex = MotionEventCompat.findPointerIndex(ev, mActivePointerId);
+                final float x = MotionEventCompat.getX(ev, activePointerIndex);
+                final float deltaX = x - mLastMotionX;
+
+                if (!mIsDragging) {
+                    if (Math.abs(deltaX) > mTouchSlop) {
+                        mIsDragging = true;
+                    }
+                }
+
+                if (mIsDragging) {
+                    if (!mViewPager.isFakeDragging()) {
+                        mViewPager.beginFakeDrag();
+                    }
+
+                    mLastMotionX = x;
+
+                    mViewPager.fakeDragBy(deltaX);
+                }
+
+                break;
+            }
+
+            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_UP:
+                if (!mIsDragging) {
+                    final int count = mViewPager.getAdapter().getCount();
+                    final int width = getWidth();
+                    final float halfWidth = width / 2f;
+                    final float sixthWidth = width / 6f;
+                    final float leftThird = halfWidth - sixthWidth;
+                    final float rightThird = halfWidth + sixthWidth;
+                    final float eventX = ev.getX();
+
+                    if (eventX < leftThird) {
+                        if (mCurrentPage > 0) {
+                            mViewPager.setCurrentItem(mCurrentPage - 1);
+                            return true;
+                        }
+                    } else if (eventX > rightThird) {
+                        if (mCurrentPage < count - 1) {
+                            mViewPager.setCurrentItem(mCurrentPage + 1);
+                            return true;
+                        }
+                    } else {
+                        //Middle third
+                        if (mCenterItemClickListener != null) {
+                            mCenterItemClickListener.onCenterItemClick(mCurrentPage);
+                        }
+                    }
+                }
+
+                mIsDragging = false;
+                mActivePointerId = INVALID_POINTER;
+                if (mViewPager.isFakeDragging()) mViewPager.endFakeDrag();
+                break;
+
+            case MotionEventCompat.ACTION_POINTER_DOWN: {
+                final int index = MotionEventCompat.getActionIndex(ev);
+                final float x = MotionEventCompat.getX(ev, index);
+                mLastMotionX = x;
+                mActivePointerId = MotionEventCompat.getPointerId(ev, index);
+                break;
+            }
+
+            case MotionEventCompat.ACTION_POINTER_UP:
+                final int pointerIndex = MotionEventCompat.getActionIndex(ev);
+                final int pointerId = MotionEventCompat.getPointerId(ev, pointerIndex);
+                if (pointerId == mActivePointerId) {
+                    final int newPointerIndex = pointerIndex == 0 ? 1 : 0;
+                    mActivePointerId = MotionEventCompat.getPointerId(ev, newPointerIndex);
+                }
+                mLastMotionX = MotionEventCompat.getX(ev, MotionEventCompat.findPointerIndex(ev, mActivePointerId));
+                break;
+        }
+
+        return true;
+    };
 
     /**
      * Set bounds for the right textView including clip padding.
@@ -502,15 +615,16 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
     @Override
     public void setViewPager(ViewPager view) {
-        if (view.getAdapter() == null) {
+        final PagerAdapter adapter = view.getAdapter();
+        if (adapter == null) {
             throw new IllegalStateException("ViewPager does not have adapter instance.");
         }
-        if (!(view.getAdapter() instanceof TitleProvider)) {
+        if (!(adapter instanceof TitleProvider)) {
             throw new IllegalStateException("ViewPager adapter must implement TitleProvider to be used with TitlePageIndicator.");
         }
         mViewPager = view;
         mViewPager.setOnPageChangeListener(this);
-        mTitleProvider = (TitleProvider)mViewPager.getAdapter();
+        mTitleProvider = (TitleProvider)adapter;
         invalidate();
     }
 
@@ -518,6 +632,20 @@ public class TitlePageIndicator extends View implements PageIndicator {
     public void setViewPager(ViewPager view, int initialPosition) {
         setViewPager(view);
         setCurrentItem(initialPosition);
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        invalidate();
+    }
+
+    /**
+     * Set a callback listener for the center item click.
+     *
+     * @param listener Callback instance.
+     */
+    public void setOnCenterItemClickListener(OnCenterItemClickListener listener) {
+        mCenterItemClickListener = listener;
     }
 
     @Override
