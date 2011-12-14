@@ -37,6 +37,7 @@ public class ActivityItemBase implements TraktEntity {
     }
 
     public Date timestamp;
+    public Date watched;
     public When when;
     public Elapsed elapsed;
     public ActivityType type;
