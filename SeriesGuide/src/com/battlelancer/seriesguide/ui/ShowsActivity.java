@@ -148,6 +148,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
         // setup action bar filter list (! use different layouts for ABS)
         ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(this,
                 R.array.showfilter_list, R.layout.abs__simple_spinner_item);

@@ -28,6 +28,7 @@ public class UpcomingRecentActivity extends BaseActivity {
         setContentView(R.layout.upcoming_multipane);
         
         final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
