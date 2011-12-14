@@ -2,6 +2,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.thetvdbapi.SearchResult;
 import com.battlelancer.thetvdbapi.TheTVDB;
@@ -10,25 +11,20 @@ import com.viewpagerindicator.TitleProvider;
 
 import org.xml.sax.SAXException;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBar;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.LinkedList;
 
-public class AddActivity extends BaseActivity {
+public class AddActivity extends BaseActivity implements OnAddShowListener {
 
     private AddPagerAdapter mAdapter;
 
@@ -40,7 +36,7 @@ public class AddActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.episode_pager);
-        
+
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
@@ -51,41 +47,6 @@ public class AddActivity extends BaseActivity {
 
         TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mPager);
-    }
-
-    void showAddDialog(SearchResult show) {
-        // DialogFragment.show() will take care of adding the fragment
-        // in a transaction. We also want to remove any currently showing
-        // dialog, so make our own transaction and take care of that here.
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-
-        // Create and show the dialog.
-        DialogFragment newFragment = new AddDialogFragment(show);
-        newFragment.show(ft, "dialog");
-    }
-
-    private void addShow(SearchResult show) {
-        clearSearchField();
-
-        // notify user here already
-        Toast.makeText(this, "\"" + show.getSeriesName() + "\" " + getString(R.string.add_started),
-                Toast.LENGTH_SHORT).show();
-
-        // add the show to a running add task or create a new one
-        if (mAddTask == null || mAddTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mAddTask = (AddShowTask) new AddShowTask(this, show).execute();
-        } else {
-            // addTask is still running, try to add another show to its queue
-            boolean hasAddedShow = mAddTask.addShow(show);
-            if (!hasAddedShow) {
-                mAddTask = (AddShowTask) new AddShowTask(this, show).execute();
-            }
-        }
     }
 
     /**
@@ -260,30 +221,23 @@ public class AddActivity extends BaseActivity {
 
     }
 
-    public static class AddDialogFragment extends DialogFragment {
+    @Override
+    public void onAddShow(SearchResult show) {
+        clearSearchField();
 
-        private SearchResult mShow;
+        // notify user here already
+        Toast.makeText(this, "\"" + show.getSeriesName() + "\" " + getString(R.string.add_started),
+                Toast.LENGTH_SHORT).show();
 
-        public AddDialogFragment(SearchResult show) {
-            mShow = show;
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-            return new AlertDialog.Builder(getActivity())
-                    .setTitle(mShow.getSeriesName())
-                    .setMessage(mShow.getOverview())
-                    .setPositiveButton(R.string.add_show, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            ((AddActivity) getActivity()).addShow(mShow);
-                        }
-                    })
-                    .setNegativeButton(R.string.dont_add_show,
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                }
-                            }).create();
+        // add the show to a running add task or create a new one
+        if (mAddTask == null || mAddTask.getStatus() == AsyncTask.Status.FINISHED) {
+            mAddTask = (AddShowTask) new AddShowTask(this, show).execute();
+        } else {
+            // addTask is still running, try to add another show to its queue
+            boolean hasAddedShow = mAddTask.addShow(show);
+            if (!hasAddedShow) {
+                mAddTask = (AddShowTask) new AddShowTask(this, show).execute();
+            }
         }
     }
 }

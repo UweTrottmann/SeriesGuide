@@ -27,7 +27,7 @@ public class AddFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         SearchResult result = mAdapter.getItem(position);
-        ((AddActivity) getActivity()).showAddDialog(result);
+        AddDialogFragment.showAddDialog(result, getFragmentManager());
     }
 
     protected void setSearchResults(List<SearchResult> searchResults) {
