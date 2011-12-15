@@ -1,6 +1,37 @@
 body {
 font-family: 'Open Sans', sans-serif;
 text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
+background: #000000;
+color: #ffffff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+font-weight: normal;
+color: #ffffff;
+}
+
+a {
+color:#2B9BC3;
+text-decoration:none;
+line-height:inherit;
+font-weight:inherit;
+}
+
+a:hover {
+color:#2B9BC3;
+text-decoration:underline;
+}
+
+.spacer {
+height:50px;
+}
+
+.largespacer {
+height:80px;
+}
+
+.well {
+background: #111111;
 }
 
 #content {
