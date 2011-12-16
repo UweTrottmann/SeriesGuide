@@ -184,17 +184,17 @@ public class TheTVDB {
         });
         item.getChild("id").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setId(body);
+                currentShow.tvdbid = body;
             }
         });
         item.getChild("SeriesName").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setSeriesName(body.trim());
+                currentShow.title = body.trim();
             }
         });
         item.getChild("Overview").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setOverview(body.trim());
+                currentShow.overview = body.trim();
             }
         });
 
@@ -443,10 +443,10 @@ public class TheTVDB {
 
     /**
      * Return list of show ids hitting a x-day limit.
+     * 
      * @param currentTime
      * @param updateAtLeastEvery
      * @param context
-     * 
      * @return
      * @throws SAXException
      */

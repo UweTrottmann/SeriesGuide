@@ -47,8 +47,8 @@ public class AddDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        return new AlertDialog.Builder(getActivity()).setTitle(mShow.getSeriesName())
-                .setMessage(mShow.getOverview())
+        return new AlertDialog.Builder(getActivity()).setTitle(mShow.title)
+                .setMessage(mShow.overview)
                 .setPositiveButton(R.string.add_show, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         mListener.onAddShow(mShow);

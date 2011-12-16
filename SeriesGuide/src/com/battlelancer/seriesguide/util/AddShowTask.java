@@ -1,3 +1,4 @@
+
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.R;
@@ -73,7 +74,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             SearchResult nextShow = mAddQueue.removeFirst();
 
             try {
-                if (TheTVDB.addShow(nextShow.getId(), mContext.getApplicationContext())) {
+                if (TheTVDB.addShow(nextShow.tvdbid, mContext.getApplicationContext())) {
                     // success
                     result = ADD_SUCCESS;
                 } else {
@@ -85,7 +86,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 result = ADD_SAXERROR;
             }
 
-            mCurrentShowName = nextShow.getSeriesName();
+            mCurrentShowName = nextShow.title;
             publishProgress(result);
         }
 
@@ -102,11 +103,9 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
     protected void onProgressUpdate(Integer... values) {
         switch (values[0]) {
             case ADD_SUCCESS:
-                Toast.makeText(
-                        mContext.getApplicationContext(),
-                        "\"" + mCurrentShowName + "\" "
-                                + mContext.getString(R.string.add_success), Toast.LENGTH_SHORT)
-                        .show();
+                Toast.makeText(mContext.getApplicationContext(),
+                        "\"" + mCurrentShowName + "\" " + mContext.getString(R.string.add_success),
+                        Toast.LENGTH_SHORT).show();
                 break;
             case ADD_ALREADYEXISTS:
                 Toast.makeText(

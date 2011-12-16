@@ -129,9 +129,9 @@ public class TraktAddFragment extends AddFragment {
         while (trendingit.hasNext()) {
             TvShow tvShow = (TvShow) trendingit.next();
             SearchResult show = new SearchResult();
-            show.setId(tvShow.tvdbId);
-            show.setSeriesName(tvShow.title);
-            show.setOverview(tvShow.overview);
+            show.tvdbid = tvShow.tvdbId;
+            show.title = tvShow.title;
+            show.overview = tvShow.overview;
             outputList.add(show);
         }
         return outputList;

@@ -101,9 +101,9 @@ public class TraktFriendsFragment extends ListFragment implements
             } else {
                 // offer to add the show if it's not in the show database yet
                 SearchResult newshow = new SearchResult();
-                newshow.setId(show.tvdbId);
-                newshow.setSeriesName(show.title);
-                newshow.setOverview(show.overview);
+                newshow.tvdbid = show.tvdbId;
+                newshow.title = show.title;
+                newshow.overview = show.overview;
                 AddDialogFragment.showAddDialog(newshow, getFragmentManager());
             }
 

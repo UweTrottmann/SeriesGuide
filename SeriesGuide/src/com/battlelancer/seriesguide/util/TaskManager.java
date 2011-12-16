@@ -39,7 +39,7 @@ public class TaskManager {
     public synchronized void performAddTask(SearchResult show) {
         // notify user here already
         Toast.makeText(mContext,
-                "\"" + show.getSeriesName() + "\" " + mContext.getString(R.string.add_started),
+                "\"" + show.title + "\" " + mContext.getString(R.string.add_started),
                 Toast.LENGTH_SHORT).show();
 
         // add the show to a running add task or create a new one
