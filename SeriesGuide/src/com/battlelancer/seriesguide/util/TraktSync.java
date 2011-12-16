@@ -111,7 +111,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
         while (showTvdbIds.moveToNext()) {
             String tvdbId = showTvdbIds.getString(0);
             for (TvShow tvShow : shows) {
-                if (tvdbId.equalsIgnoreCase(tvShow.getTvdbId())) {
+                if (tvdbId.equalsIgnoreCase(tvShow.tvdbId)) {
                     if (mResult.length() != 0) {
                         mResult += ", ";
                     }
@@ -127,13 +127,13 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
                     // go through watched seasons, try to match them with local
                     // season
-                    List<TvShowSeason> seasons = tvShow.getSeasons();
+                    List<TvShowSeason> seasons = tvShow.seasons;
                     for (TvShowSeason season : seasons) {
                         Cursor seasonMatch = mContext.getContentResolver().query(
                                 Seasons.buildSeasonsOfShowUri(tvdbId), new String[] {
                                     Seasons._ID
                                 }, Seasons.COMBINED + "=?", new String[] {
-                                    season.getSeason().toString()
+                                    season.season.toString()
                                 }, null);
 
                         // if we found a season, go on with its episodes
@@ -142,7 +142,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
                             // build episodes update query to mark seen episodes
 
-                            for (Integer episode : season.getEpisodes().getNumbers()) {
+                            for (Integer episode : season.episodes.numbers) {
                                 batch.add(ContentProviderOperation
                                         .newUpdate(Episodes.buildEpisodesOfSeasonUri(seasonId))
                                         .withSelection(Episodes.NUMBER + "=?", new String[] {
@@ -173,7 +173,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                         throw new RuntimeException("Problem applying batch operation", e);
                     }
 
-                    mResult += tvShow.getTitle();
+                    mResult += tvShow.title;
 
                     // remove synced show
                     shows.remove(tvShow);
