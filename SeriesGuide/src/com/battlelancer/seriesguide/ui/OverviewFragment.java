@@ -417,20 +417,6 @@ public class OverviewFragment extends Fragment {
 
         Toast.makeText(getActivity(), getString(R.string.mark_episode), Toast.LENGTH_SHORT).show();
 
-        // TODO: reevaluate how to do this now that check in is available
-        // // share with trakt
-        // SharedPreferences prefs =
-        // PreferenceManager.getDefaultSharedPreferences(getActivity()
-        // .getApplicationContext());
-        // if (prefs.getBoolean(SeriesGuidePreferences.KEY_INTEGRATETRAKT,
-        // false)) {
-        // // Pass in copy of bundle so its values aren't overwritten by the
-        // // new episode loading below
-        // new ShareUtils.TraktTask(getActivity(), getFragmentManager(), new
-        // Bundle(mShareData))
-        // .execute();
-        // }
-
         // load new episode, update seasons (if shown)
         onLoadEpisode();
         SeasonsFragment seasons = (SeasonsFragment) getFragmentManager().findFragmentById(
