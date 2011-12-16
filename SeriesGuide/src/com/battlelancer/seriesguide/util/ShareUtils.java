@@ -28,6 +28,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.InputFilter;
@@ -37,6 +38,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -89,7 +91,8 @@ public class ShareUtils {
                                 case 0:
                                     // GetGlue check in
                                     if (imdbId.length() != 0) {
-                                        showGetGlueDialog(getSupportFragmentManager(), getArguments());
+                                        showGetGlueDialog(getSupportFragmentManager(),
+                                                getArguments());
                                     } else {
                                         Toast.makeText(getActivity(),
                                                 getString(R.string.noIMDBentry), Toast.LENGTH_LONG)
@@ -98,10 +101,33 @@ public class ShareUtils {
                                     break;
                                 case 1: {
                                     // trakt check in
+
+                                    // DialogFragment.show() will take care of
+                                    // adding the fragment
+                                    // in a transaction. We also want to remove
+                                    // any currently showing
+                                    // dialog, so make our own transaction and
+                                    // take care of that here.
+                                    FragmentTransaction ft = getFragmentManager()
+                                            .beginTransaction();
+                                    Fragment prev = getFragmentManager().findFragmentByTag(
+                                            "progress-dialog");
+                                    if (prev != null) {
+                                        ft.remove(prev);
+                                    }
+                                    ft.addToBackStack(null);
+
+                                    // Create and show the dialog.
+                                    ProgressDialog newFragment = ProgressDialog.newInstance();
+
+                                    // start the trakt check in task, add the
+                                    // dialog as listener
                                     getArguments().putInt(ShareItems.TRAKTACTION,
                                             TraktAction.CHECKIN_EPISODE.index());
-                                    new TraktTask(getActivity(), getSupportFragmentManager(),
-                                            getArguments()).execute();
+                                    new TraktTask(getActivity(), getFragmentManager(),
+                                            getArguments(), newFragment).execute();
+
+                                    newFragment.show(ft, "progress-dialog");
                                     break;
                                 }
                                 case 2: {
@@ -343,6 +369,12 @@ public class ShareUtils {
 
         private final Bundle mTraktData;
 
+        private OnTaskFinishedListener mListener;
+
+        public interface OnTaskFinishedListener {
+            public void onTaskFinished();
+        }
+
         /**
          * Do the specified TraktAction. traktData should include all required
          * parameters.
@@ -356,6 +388,21 @@ public class ShareUtils {
             mContext = context;
             mManager = manager;
             mTraktData = traktData;
+        }
+
+        /**
+         * Specify a listener which will be notified once any activity context
+         * dependent work is completed.
+         * 
+         * @param context
+         * @param manager
+         * @param traktData
+         * @param listener
+         */
+        public TraktTask(Context context, FragmentManager manager, Bundle traktData,
+                OnTaskFinishedListener listener) {
+            this(context, manager, traktData);
+            mListener = listener;
         }
 
         @Override
@@ -457,6 +504,11 @@ public class ShareUtils {
                 FragmentTransaction ft = mManager.beginTransaction();
                 newFragment.show(ft, "traktdialog");
             }
+
+            // tell a potential listener that our work is done
+            if (mListener != null) {
+                mListener.onTaskFinished();
+            }
         }
     }
 
@@ -531,7 +583,8 @@ public class ShareUtils {
                                 return null;
                             }
 
-                            // use a separate ServiceManager here to avoid setting wrong credentials
+                            // use a separate ServiceManager here to avoid
+                            // setting wrong credentials
                             final ServiceManager manager = new ServiceManager();
                             manager.setApiKey(Constants.TRAKT_API_KEY);
                             manager.setAuthentication(username, passwordHash);
@@ -578,7 +631,7 @@ public class ShareUtils {
                                     Toast.makeText(context,
                                             response.getStatus() + ": " + response.getMessage(),
                                             Toast.LENGTH_SHORT).show();
-                                    
+
                                     // set new auth data for service manager
                                     try {
                                         Utils.getServiceManagerWithAuth(context, true);
@@ -745,6 +798,35 @@ public class ShareUtils {
             builder.setNegativeButton(android.R.string.cancel, null);
 
             return builder.create();
+        }
+    }
+
+    public static class ProgressDialog extends DialogFragment implements
+            TraktTask.OnTaskFinishedListener {
+
+        public static ProgressDialog newInstance() {
+            ProgressDialog f = new ProgressDialog();
+            f.setCancelable(false);
+            return f;
+        }
+        
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            
+            setStyle(STYLE_NO_TITLE, 0);
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+            View v = inflater.inflate(R.layout.progress_dialog, container, false);
+            return v;
+        }
+
+        @Override
+        public void onTaskFinished() {
+            dismiss();
         }
     }
 
