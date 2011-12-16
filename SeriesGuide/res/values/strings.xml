@@ -281,6 +281,9 @@
     <string name="friends">Friends</string>
     <string name="friends_empty">No recent activity or you just might have no friends on trakt, yet.</string>
     <string name="sending">Sending...</string>
+    <string name="trending">Trending</string>
+    <string name="recommended">Recommended</string>
+    <string name="library">Library</string>
 
     <string-array name="showfilter_list">
         <item>All</item>

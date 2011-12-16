@@ -74,15 +74,14 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
         @Override
         public String getTitle(int position) {
             switch (position) {
-            // TODO: put into strings.xml
                 case 1:
-                    return "Trending";
+                    return mContext.getString(R.string.trending);
                 case 2:
-                    return "Recommended";
+                    return mContext.getString(R.string.recommended);
                 case 3:
-                    return "Library";
+                    return mContext.getString(R.string.library);
                 default:
-                    return "Search";
+                    return mContext.getString(R.string.search_button);
             }
         }
 
