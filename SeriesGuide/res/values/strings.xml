@@ -211,6 +211,7 @@
     <string name="smallwidget">Next episodes (small)</string>
     <string name="bigwidget">Next episodes (middle)</string>
     <string name="largewidget">Next episodes (large)</string>
+    <string name="activity">Activity</string>
     <string name="upcoming">Upcoming</string>
     <string name="recent">Recent</string>
     <string name="noupcoming">Look\'s like there are no episodes. Maybe try updating your shows.</string>
