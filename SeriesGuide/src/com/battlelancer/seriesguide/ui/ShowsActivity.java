@@ -115,7 +115,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private Bundle mSavedState;
 
-    private FetchArtTask mArtTask;
+    private FetchPosterTask mArtTask;
 
     private SlowAdapter mAdapter;
 
@@ -278,7 +278,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             int index = savedInstanceState.getInt(STATE_ART_INDEX);
 
             if (paths != null) {
-                mArtTask = (FetchArtTask) new FetchArtTask(paths, index).execute();
+                mArtTask = (FetchPosterTask) new FetchPosterTask(paths, index).execute();
                 AnalyticsUtils.getInstance(this).trackEvent("Shows", "Task Lifecycle",
                         "Art Task Restored", 0);
             }
@@ -286,7 +286,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     }
 
     private void saveArtTask(Bundle outState) {
-        final FetchArtTask task = mArtTask;
+        final FetchPosterTask task = mArtTask;
         if (task != null && task.getStatus() != AsyncTask.Status.FINISHED) {
             task.cancel(true);
 
@@ -505,7 +505,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 } else {
                     Toast.makeText(this, getString(R.string.update_inbackground), Toast.LENGTH_LONG)
                             .show();
-                    mArtTask = (FetchArtTask) new FetchArtTask().execute();
+                    mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
                 }
                 return true;
             case R.id.menu_preferences:
@@ -544,17 +544,17 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         TaskManager.getInstance(this).tryUpdateTask(task, messageId);
     }
 
-    private class FetchArtTask extends AsyncTask<Void, Void, Integer> {
+    private class FetchPosterTask extends AsyncTask<Void, Void, Integer> {
         final AtomicInteger mFetchCount = new AtomicInteger();
 
         ArrayList<String> mPaths;
 
         private View mProgressOverlay;
 
-        protected FetchArtTask() {
+        protected FetchPosterTask() {
         }
 
-        protected FetchArtTask(ArrayList<String> paths, int index) {
+        protected FetchPosterTask(ArrayList<String> paths, int index) {
             mPaths = paths;
             mFetchCount.set(index);
         }

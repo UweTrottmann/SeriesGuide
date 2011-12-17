@@ -23,12 +23,12 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.Series;
-import com.battlelancer.thetvdbapi.TheTVDB;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -439,68 +439,16 @@ public class OverviewFragment extends Fragment {
                 imageView.setImageBitmap(bitmap);
             } else {
                 if (artTask == null) {
-                    artTask = (FetchArtTask) new FetchArtTask(imagePath, imageView).execute();
+                    artTask = (FetchArtTask) new FetchArtTask(imagePath, imageView, getActivity())
+                            .execute();
                 } else if (artTask != null && artTask.getStatus() == AsyncTask.Status.FINISHED) {
-                    artTask = (FetchArtTask) new FetchArtTask(imagePath, imageView).execute();
+                    artTask = (FetchArtTask) new FetchArtTask(imagePath, imageView, getActivity())
+                            .execute();
                 }
             }
         } else {
             // no image available
             container.setVisibility(View.GONE);
-        }
-    }
-
-    private class FetchArtTask extends AsyncTask<Void, Void, Integer> {
-        private static final int SUCCESS = 0;
-
-        private static final int ERROR = 1;
-
-        private String mPath;
-
-        private ImageView mImageView;
-
-        protected FetchArtTask(String path, ImageView imageView) {
-            mPath = path;
-            mImageView = imageView;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            mImageView.setImageResource(R.drawable.ic_action_refresh);
-        }
-
-        @Override
-        protected Integer doInBackground(Void... params) {
-            int resultCode;
-
-            if (TheTVDB.fetchArt(mPath, false, getActivity())) {
-                resultCode = SUCCESS;
-            } else {
-                resultCode = ERROR;
-            }
-
-            return resultCode;
-        }
-
-        @Override
-        protected void onPostExecute(Integer resultCode) {
-            if (isCancelled()) {
-                return;
-            }
-
-            switch (resultCode) {
-                case SUCCESS:
-                    Bitmap bitmap = imageCache.get(mPath);
-                    if (bitmap != null) {
-                        mImageView.setImageBitmap(bitmap);
-                        return;
-                    }
-                    // no break because image could be null (got deleted, ...)
-                default:
-                    // fallback
-                    mImageView.setImageResource(R.drawable.show_generic);
-                    break;
-            }
         }
     }
 
