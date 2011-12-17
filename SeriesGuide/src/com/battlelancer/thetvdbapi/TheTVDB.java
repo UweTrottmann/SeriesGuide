@@ -44,9 +44,9 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.Xml;
 
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -321,7 +321,7 @@ public class TheTVDB {
         });
 
         HttpUriRequest request = new HttpGet(url);
-        HttpClient httpClient = getHttpClient(context);
+        HttpClient httpClient = getHttpClient();
         execute(request, httpClient, root.getContentHandler(), false);
 
         return currentShow;
@@ -435,7 +435,7 @@ public class TheTVDB {
         });
 
         HttpUriRequest request = new HttpGet(url);
-        HttpClient httpClient = getHttpClient(context);
+        HttpClient httpClient = getHttpClient();
         execute(request, httpClient, root.getContentHandler(), true);
 
         return batch;
@@ -494,7 +494,7 @@ public class TheTVDB {
         });
         final String url = xmlMirror + "Updates.php?type=none";
         HttpUriRequest request = new HttpGet(url);
-        HttpClient httpClient = getHttpClient(context);
+        HttpClient httpClient = getHttpClient();
         execute(request, httpClient, root.getContentHandler(), false);
 
         return serverTime[0];
@@ -516,41 +516,37 @@ public class TheTVDB {
             return true;
         }
 
-        Bitmap bitmap = null;
         ImageCache imageCache = ImageCache.getInstance(context);
         boolean resultCode = true;
 
         if (fileName.length() != 0 && !imageCache.contains(fileName)) {
-            try {
-                String imageUrl;
-                if (isPoster) {
-                    imageUrl = mirror_banners + "/_cache/" + fileName;
-                } else {
-                    imageUrl = mirror_banners + "/" + fileName;
-                }
+            String imageUrl;
+            if (isPoster) {
+                // the cached version is a lot smaller, but still big enough for
+                // our purposes
+                imageUrl = mirror_banners + "/_cache/" + fileName;
+            } else {
+                imageUrl = mirror_banners + "/" + fileName;
+            }
 
-                // try to download and decode the image
-                bitmap = downloadBitmap(imageUrl);
-                if (bitmap != null) {
-                    imageCache.put(fileName, bitmap);
-                    if (isPoster) {
-                        // create thumbnail
-                        imageCache.getThumbHelper(fileName);
-                    }
-                } else {
-                    resultCode = false;
+            // try to download and decode the image
+            final Bitmap bitmap = downloadBitmap(imageUrl);
+            if (bitmap != null) {
+                imageCache.put(fileName, bitmap);
+                if (isPoster) {
+                    // already create a thumbnail
+                    imageCache.getThumbHelper(fileName);
                 }
-            } catch (MalformedURLException e) {
-                // do nothing, just skip this one (should only happen if there
-                // are faulty paths in thetvdb)
+            } else {
+                resultCode = false;
             }
         }
 
         return resultCode;
     }
 
-    static Bitmap downloadBitmap(String url) throws MalformedURLException {
-        final DefaultHttpClient client = new DefaultHttpClient();
+    static Bitmap downloadBitmap(String url) {
+        final HttpClient client = getHttpClient();
         final HttpGet getRequest = new HttpGet(url);
 
         try {
@@ -572,9 +568,10 @@ public class TheTVDB {
                         return null;
                     } else {
                         inputStream = entity.getContent();
-                        return BitmapFactory.decodeStream(inputStream);
+                        // return BitmapFactory.decodeStream(inputStream);
+                        // Bug on slow connections, fixed in future release.
+                        return BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
                     }
-
                 } finally {
                     if (inputStream != null) {
                         inputStream.close();
@@ -595,6 +592,34 @@ public class TheTVDB {
         return null;
     }
 
+    /*
+     * An InputStream that skips the exact number of bytes provided, unless it
+     * reaches EOF.
+     */
+    static class FlushedInputStream extends FilterInputStream {
+        public FlushedInputStream(InputStream inputStream) {
+            super(inputStream);
+        }
+
+        @Override
+        public long skip(long n) throws IOException {
+            long totalBytesSkipped = 0L;
+            while (totalBytesSkipped < n) {
+                long bytesSkipped = in.skip(n - totalBytesSkipped);
+                if (bytesSkipped == 0L) {
+                    int b = read();
+                    if (b < 0) {
+                        break; // we reached EOF
+                    } else {
+                        bytesSkipped = 1; // we read one byte
+                    }
+                }
+                totalBytesSkipped += bytesSkipped;
+            }
+            return totalBytesSkipped;
+        }
+    }
+
     private static String getTheTVDBLanguage(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
                 .getApplicationContext());
@@ -610,7 +635,7 @@ public class TheTVDB {
      * Generate and return a {@link HttpClient} configured for general use,
      * including setting an application-specific user-agent string.
      */
-    public static HttpClient getHttpClient(Context context) {
+    public static HttpClient getHttpClient() {
         final HttpParams params = new BasicHttpParams();
 
         // Use generous timeouts for slow mobile networks
