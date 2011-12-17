@@ -29,6 +29,7 @@ public class FetchArtTask extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected void onPreExecute() {
+        mImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         mImageView.setImageResource(R.drawable.ic_action_refresh);
     }
 
@@ -55,6 +56,7 @@ public class FetchArtTask extends AsyncTask<Void, Void, Integer> {
             case SUCCESS:
                 Bitmap bitmap = ImageCache.getInstance(mContext).get(mPath);
                 if (bitmap != null) {
+                    mImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                     mImageView.setImageBitmap(bitmap);
                     return;
                 }
