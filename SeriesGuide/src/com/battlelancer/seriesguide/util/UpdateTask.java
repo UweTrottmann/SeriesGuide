@@ -194,7 +194,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         // look on trakt for recent activity
-        if (prefs.getBoolean(SeriesGuidePreferences.KEY_INTEGRATETRAKT, false)
+        if (prefs.getBoolean(SeriesGuidePreferences.KEY_INTEGRATETRAKT, true)
                 && ShareUtils.isTraktCredentialsValid(mAppContext)) {
             publishProgress(maxProgress - 1, maxProgress);
 

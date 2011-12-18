@@ -166,7 +166,7 @@
     <string name="pref_hideimagessummary">Hide SeriesGuide images from your photo gallery (reboot required)</string>
     <string name="pref_more">More</string>
     <string name="about">About SeriesGuide</string>
-    <string name="about_message">http://seriesguide.uwetrottmann.com - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://github.com/UweTrottmann/SeriesGuide/blob/master/SeriesGuide/CREDITS.txt</string>
+    <string name="about_message">http://seriesguide.uwetrottmann.com - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
     <string name="help">Help</string>
     <string name="backup">Backup/Restore</string>
     <string name="backup_summary">Backup or restore your shows</string>
@@ -256,7 +256,7 @@
     <string name="pref_trakt">trakt.tv credentials</string>
     <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
     <string name="pref_traktsync">Sync with trakt.tv</string>
-    <string name="pref_traktsyncsummary">Experimental, manual syncing with trakt.tv</string>
+    <string name="pref_traktsyncsummary">Initial syncing with trakt.tv</string>
     <string name="save">Save</string>
     <string name="dontsave">Don\'t save</string>
     <string name="trakt_success">Successfully talked to trakt</string>
