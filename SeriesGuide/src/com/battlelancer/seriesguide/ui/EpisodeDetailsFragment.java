@@ -342,6 +342,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
                     .findViewById(R.id.ImageViewEpisodeImage);
             if (bitmap != null) {
                 // image is in cache
+                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 imageView.setImageBitmap(bitmap);
             } else {
                 if (mArtTask == null) {

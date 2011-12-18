@@ -436,6 +436,7 @@ public class OverviewFragment extends Fragment {
             final Bitmap bitmap = imageCache.get(imagePath);
             if (bitmap != null) {
                 // image is in cache
+                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 imageView.setImageBitmap(bitmap);
             } else {
                 if (artTask == null) {
