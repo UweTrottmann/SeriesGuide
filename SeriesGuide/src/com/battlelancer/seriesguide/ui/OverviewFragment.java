@@ -24,7 +24,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FetchArtTask;
-import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.Utils;
@@ -38,6 +37,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.BaseColumns;
@@ -433,26 +433,20 @@ public class OverviewFragment extends Fragment {
             container.setVisibility(View.VISIBLE);
             final ImageView imageView = (ImageView) container
                     .findViewById(R.id.ImageViewEpisodeImage);
-            ImageDownloader.getInstance(getActivity()).download(
-                    "http://www.thetvdb.com/banners/" + imagePath, imageView);
-
-            // final Bitmap bitmap = imageCache.get(imagePath);
-            // if (bitmap != null) {
-            // // image is in cache
-            // imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            // imageView.setImageBitmap(bitmap);
-            // } else {
-            // if (artTask == null) {
-            // artTask = (FetchArtTask) new FetchArtTask(imagePath, imageView,
-            // getActivity())
-            // .execute();
-            // } else if (artTask != null && artTask.getStatus() ==
-            // AsyncTask.Status.FINISHED) {
-            // artTask = (FetchArtTask) new FetchArtTask(imagePath, imageView,
-            // getActivity())
-            // .execute();
-            // }
-            // }
+            final Bitmap bitmap = imageCache.get(imagePath);
+            if (bitmap != null) {
+                // image is in cache
+                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                imageView.setImageBitmap(bitmap);
+            } else {
+                if (artTask == null) {
+                    artTask = (FetchArtTask) new FetchArtTask(imagePath, imageView, getActivity())
+                            .execute();
+                } else if (artTask != null && artTask.getStatus() == AsyncTask.Status.FINISHED) {
+                    artTask = (FetchArtTask) new FetchArtTask(imagePath, imageView, getActivity())
+                            .execute();
+                }
+            }
         } else {
             // no image available
             container.setVisibility(View.GONE);
