@@ -7,15 +7,15 @@
         android:showAsAction="ifRoom"
         android:title="@string/add_show"/>
     <item
-        android:id="@+id/menu_update"
-        android:icon="@drawable/ic_action_refresh"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_update_delta"/>
-    <item
         android:id="@+id/menu_upcoming"
         android:icon="@drawable/ic_action_upcoming"
         android:showAsAction="ifRoom|withText"
         android:title="@string/activity"/>
+    <item
+        android:id="@+id/menu_update"
+        android:icon="@drawable/ic_action_refresh"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_update_delta"/>
     <item
         android:id="@+id/menu_search"
         android:icon="@drawable/ic_action_search"
@@ -31,15 +31,15 @@
         android:showAsAction="never"
         android:title="@string/preferences"/>
     <item
-        android:id="@+id/menu_feedback"
-        android:icon="@drawable/ic_menu_send"
-        android:showAsAction="never"
-        android:title="@string/feedback"/>
-    <item
         android:id="@+id/menu_help"
         android:icon="@drawable/ic_menu_help"
         android:showAsAction="never"
         android:title="@string/help"/>
+    <item
+        android:id="@+id/menu_feedback"
+        android:icon="@drawable/ic_menu_send"
+        android:showAsAction="never"
+        android:title="@string/feedback"/>
     <item
         android:id="@+id/menu_updateart"
         android:icon="@drawable/ic_action_image"
