@@ -81,7 +81,7 @@
             android:title="@string/pref_offset" />
 
         <CheckBoxPreference
-            android:defaultValue="False"
+            android:defaultValue="True"
             android:key="com.battlelancer.seriesguide.autoupdate"
             android:summary="@string/pref_autoupdatesummary"
             android:title="@string/pref_autoupdate" />

@@ -212,7 +212,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
         final boolean isAutoUpdateEnabled = prefs.getBoolean(SeriesGuidePreferences.KEY_AUTOUPDATE,
-                false);
+                true);
         if (isAutoUpdateEnabled && !TaskManager.getInstance(this).isUpdateTaskRunning(false)) {
             // allow auto-update if 11 hours have passed
             final long previousUpdateTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTUPDATE, 0);
