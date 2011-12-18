@@ -24,6 +24,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -213,6 +215,8 @@ public class Utils {
     public static final SimpleDateFormat thetvdbTimeFormatNormal = new SimpleDateFormat("H:mm",
             Locale.US);
 
+    private static final int DEFAULT_BUFFER_SIZE = 8192;
+
     public static long parseTimeToMilliseconds(String tvdbTimeString) {
         Date time = null;
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
@@ -398,12 +402,16 @@ public class Utils {
         return sorting;
     }
 
-    public static boolean isHoneycomb() {
+    public static boolean isHoneycombOrHigher() {
         // Can use static final constants like HONEYCOMB, declared in later
         // versions
         // of the OS since they are inlined at compile time. This is guaranteed
         // behavior.
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+    }
+
+    public static boolean isFroyoOrHigher() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO;
     }
 
     public static boolean isExtStorageAvailable() {
@@ -444,6 +452,17 @@ public class Utils {
                 outChannel.close();
             }
         }
+    }
+
+    public static int copy(InputStream input, OutputStream output) throws IOException {
+        byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+        int count = 0;
+        int n = 0;
+        while (-1 != (n = input.read(buffer))) {
+            output.write(buffer, 0, n);
+            count += n;
+        }
+        return count;
     }
 
     /**

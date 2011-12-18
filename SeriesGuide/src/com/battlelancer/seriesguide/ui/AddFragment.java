@@ -32,7 +32,7 @@ public class AddFragment extends ListFragment {
 
     protected void setSearchResults(List<SearchResult> searchResults) {
         mAdapter.clear();
-        if (Utils.isHoneycomb()) {
+        if (Utils.isHoneycombOrHigher()) {
             mAdapter.addAll(searchResults);
         } else {
             for (SearchResult searchResult : searchResults) {
