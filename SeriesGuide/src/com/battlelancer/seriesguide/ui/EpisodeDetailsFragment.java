@@ -10,6 +10,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FetchArtTask;
+import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.Utils;
@@ -337,22 +338,29 @@ public class EpisodeDetailsFragment extends ListFragment implements
 
     protected void onLoadImage(String imagePath, FrameLayout container) {
         if (imagePath.length() != 0) {
-            final Bitmap bitmap = mImageCache.get(imagePath);
+            container.setVisibility(View.VISIBLE);
             final ImageView imageView = (ImageView) container
                     .findViewById(R.id.ImageViewEpisodeImage);
-            if (bitmap != null) {
-                // image is in cache
-                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageView.setImageBitmap(bitmap);
-            } else {
-                if (mArtTask == null) {
-                    mArtTask = (FetchArtTask) new FetchArtTask(imagePath, imageView, getActivity())
-                            .execute();
-                } else if (mArtTask != null && mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
-                    mArtTask = (FetchArtTask) new FetchArtTask(imagePath, imageView, getActivity())
-                            .execute();
-                }
-            }
+            ImageDownloader.getInstance(getActivity()).download(
+                    "http://www.thetvdb.com/banners/" + imagePath, imageView);
+
+            // final Bitmap bitmap = mImageCache.get(imagePath);
+            // if (bitmap != null) {
+            // // image is in cache
+            // imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            // imageView.setImageBitmap(bitmap);
+            // } else {
+            // if (mArtTask == null) {
+            // mArtTask = (FetchArtTask) new FetchArtTask(imagePath, imageView,
+            // getActivity())
+            // .execute();
+            // } else if (mArtTask != null && mArtTask.getStatus() ==
+            // AsyncTask.Status.FINISHED) {
+            // mArtTask = (FetchArtTask) new FetchArtTask(imagePath, imageView,
+            // getActivity())
+            // .execute();
+            // }
+            // }
         } else {
             // no image available
             container.setVisibility(View.GONE);

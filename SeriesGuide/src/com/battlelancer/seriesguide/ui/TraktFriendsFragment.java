@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.SearchResult;
@@ -33,6 +34,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -294,12 +296,15 @@ public class TraktFriendsFragment extends ListFragment implements
     }
 
     private static class TraktFriendsAdapter extends ArrayAdapter<UserProfile> {
+        private final ImageDownloader mImageDownloader;
+        
         private final LayoutInflater mInflater;
 
         private final SharedPreferences mPrefs;
 
         public TraktFriendsAdapter(Context context) {
             super(context, R.layout.friend);
+            mImageDownloader = ImageDownloader.getInstance(context);
             mPrefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
@@ -327,6 +332,7 @@ public class TraktFriendsFragment extends ListFragment implements
                 holder.show = (TextView) convertView.findViewById(R.id.show);
                 holder.episode = (TextView) convertView.findViewById(R.id.episode);
                 holder.timestamp = (TextView) convertView.findViewById(R.id.timestamp);
+                holder.avatar = (ImageView) convertView.findViewById(R.id.avatar);
 
                 convertView.setTag(holder);
             } else {
@@ -336,8 +342,9 @@ public class TraktFriendsFragment extends ListFragment implements
             // TODO refactor!
             // Bind the data efficiently with the holder.
             UserProfile friend = getItem(position);
+            
             holder.name.setText(friend.username);
-            // TODO avatar
+            mImageDownloader.download(friend.avatar, holder.avatar);
 
             String show = "";
             String episode = "";
@@ -393,6 +400,8 @@ public class TraktFriendsFragment extends ListFragment implements
             TextView episode;
 
             TextView timestamp;
+            
+            ImageView avatar;
         }
     }
 
