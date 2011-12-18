@@ -476,7 +476,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 onSearchRequested();
                 return true;
             case R.id.menu_update:
-                fireTrackerEvent("Update all shows");
+                fireTrackerEvent("Update");
 
                 performUpdateTask(false, null);
                 return true;
@@ -510,12 +510,39 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 return true;
             case R.id.menu_preferences:
                 startActivity(new Intent(this, SeriesGuidePreferences.class));
+                
                 return true;
             case R.id.menu_fullupdate:
                 fireTrackerEvent("Full Update");
 
                 performUpdateTask(true, null);
                 return true;
+            case R.id.menu_feedback: {
+                fireTrackerEvent("Feedback");
+                
+                final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                intent.setType("plain/text");
+                intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
+                    SeriesGuidePreferences.SUPPORT_MAIL
+                });
+                intent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+                        "SeriesGuide " + Utils.getVersion(this) + " Feedback");
+                intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
+
+                startActivity(Intent.createChooser(intent, "Send mail..."));
+                
+                return true;
+            }
+            case R.id.menu_help: {
+                fireTrackerEvent("Help");
+
+                Intent myIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(SeriesGuidePreferences.HELP_URL));
+                
+                startActivity(myIntent);
+                
+                return true;
+            }
             default: {
                 return super.onOptionsItemSelected(item);
             }

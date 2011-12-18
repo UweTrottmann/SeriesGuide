@@ -7,14 +7,13 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.util.ActivityHelper;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -79,20 +78,19 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_INTEGRATETRAKT = "com.battlelancer.seriesguide.traktintegration";
 
+    public static final String SUPPORT_MAIL = "seriesguide@battlelancer.com";
+
+    public static final String HELP_URL = "http://seriesguide.uwetrottmann.com/help";
+
     protected static final int ABOUT_DIALOG = 0;
 
     private static final String TRANSLATIONS_URL = "http://crowdin.net/project/seriesguide-translations/invite";
 
-    private static final String HELP_URL = "http://seriesguide.uwetrottmann.com/help";
-
     private static final String PAYPAL_DONATE_URL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VVBLMQBSBU74L";
-
-    private static final String SUPPORT_MAIL = "seriesguide@battlelancer.com";
 
     private final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
     private static final String TAG = "SeriesGuidePreferences";
-
 
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
@@ -104,21 +102,14 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
         final SeriesGuidePreferences activity = this;
         addPreferencesFromResource(R.layout.preferences);
-        
+
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
 
-        String version;
-        try {
-            version = getPackageManager().getPackageInfo(getPackageName(),
-                    PackageManager.GET_META_DATA).versionName;
-        } catch (NameNotFoundException e) {
-            version = "UnknownVersion";
-        }
-        final String versionFinal = version;
+        final String versionFinal = Utils.getVersion(this);
 
         // About
         Preference aboutPref = (Preference) findPreference("aboutPref");
@@ -130,19 +121,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                 fireTrackerEvent("About dialog");
 
                 showDialog(ABOUT_DIALOG);
-                return true;
-            }
-        });
-
-        // Help
-        Preference helpPref = (Preference) findPreference("helpPref");
-        helpPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference preference) {
-                fireTrackerEvent("Help");
-
-                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(HELP_URL));
-                startActivity(myIntent);
                 return true;
             }
         });
@@ -272,29 +250,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             }
         });
 
-        // Sending feedback
-        Preference feedback = (Preference) findPreference("com.battlelancer.seriesguide.feedback");
-        feedback.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference preference) {
-                final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-
-                intent.setType("plain/text");
-
-                intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
-                    SUPPORT_MAIL
-                });
-
-                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "SeriesGuide " + versionFinal
-                        + " Feedback");
-
-                intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
-
-                startActivity(Intent.createChooser(intent, "Send mail..."));
-                return true;
-            }
-        });
-
         // Donate
         findPreference("com.battlelancer.seriesguide.donate").setOnPreferenceClickListener(
                 new OnPreferenceClickListener() {
@@ -349,5 +304,4 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

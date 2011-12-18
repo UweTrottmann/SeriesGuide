@@ -123,15 +123,6 @@
             android:title="@string/about" />
 
         <Preference
-            android:key="helpPref"
-            android:summary="@string/help_summary"
-            android:title="@string/help" />
-
-        <Preference
-            android:key="com.battlelancer.seriesguide.feedback"
-            android:title="@string/feedback" />
-
-        <Preference
             android:key="com.battlelancer.seriesguide.donate"
             android:title="@string/donate" />
 

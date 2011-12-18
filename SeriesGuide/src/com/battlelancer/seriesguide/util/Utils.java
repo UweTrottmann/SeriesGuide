@@ -9,6 +9,8 @@ import com.jakewharton.trakt.ServiceManager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -552,6 +554,17 @@ public class Utils {
                 .getApplicationContext());
 
         return prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+    }
+
+    public static String getVersion(Context context) {
+        String version;
+        try {
+            version = context.getPackageManager().getPackageInfo(context.getPackageName(),
+                    PackageManager.GET_META_DATA).versionName;
+        } catch (NameNotFoundException e) {
+            version = "UnknownVersion";
+        }
+        return version;
     }
 
 }
