@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.SeriesGuide" parent="Theme.Sherlock">
+    <style name="SeriesGuideTheme" parent="Theme.Sherlock">
         <item name="abDivider">@null</item>
         <item name="selectableItemBackground">@drawable/list_selector_holo_dark</item>
     </style>
@@ -67,6 +67,12 @@
     <style name="NotificationText">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="BackupLinearLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">fill</item>
     </style>
 
 </resources>

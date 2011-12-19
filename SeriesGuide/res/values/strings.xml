@@ -186,24 +186,26 @@
     <string name="pref_offsetsummary">by a certain amount of hours</string>
 
     <!-- Backup and Restore -->
-    <string name="backup_description">Backup will store a copy of the SeriesGuide database in the folder \"seriesguidebackup\" on your SD card. If you reinstall SeriesGuide or install SeriesGuide on another Android device, just put this folder on the devices SD card. Hit Restore below and all your shows will be there again! (You can not import databases from newer versions into an older version, except it uses the same database version. See About in Settings.)</string>
-    <string name="backup_failed_nosd">Can\'t backup. There is no external storage, such as a SD card, available.</string>
+    <string name="backup_description"><b>Backup</b> creates a copy of your show database in the folder below named <b>seriesdatabase</b>.\n\nTo restore just make sure this file is in the folder below, then hit <b>Restore</b> and all your shows will be there again!\n\nOnly backups with the same or a lower database version as below can be restored.</string>
+    <string name="backup_path"><b>Backup folder</b></string>
+    <string name="backup_version"><b>Database version</b></string>
+    <string name="backup_failed_nosd">Can\'t backup. The backup folder is not available.</string>
     <string name="backup_inprogress">Backing up database...</string>
     <string name="backup_success">Backup successful</string>
     <string name="backup_failed">Backup failed</string>
     <string name="import_inprogress">Restoring database...</string>
-    <string name="import_failed_nosd">Can\'t restore backup. There is no external storage, such as a SD card, available.</string>
-    <string name="import_failed_nofile">There is no backup file (\"/sdcard/seriesguidebackup/seriesdatabase\"). Can\'t restore database.</string>
-    <string name="import_failed_noread">Backup file is not readable (\"/sdcard/seriesguidebackup/seriesdatabase\"). Can\'t restore database.</string>
+    <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
+    <string name="import_failed_nofile">There is no backup file. Can\'t restore database.</string>
+    <string name="import_failed_noread">Backup file is not readable. Can\'t restore database.</string>
+    <string name="dbupgradefailed">Your backup may be too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
     <string name="import_success">Database successfully restored</string>
     <string name="import_failed">Restore failed</string>
-    <string name="dbupgradefailed">Looks like your backup is too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
-    <string name="backup_button">Backup to SD card</string>
-    <string name="import_button">Restore from SD card</string>
-    <string name="backup_question">This will overwrite any previous backup file.</string>
+    <string name="backup_button">Backup</string>
+    <string name="import_button">Restore</string>
+    <string name="backup_question">This will overwrite any previous backup file in the backup folder.</string>
     <string name="backup_yes">Backup</string>
     <string name="backup_no">Don\'t Backup</string>
-    <string name="import_question">Make sure the backup is on the SD card. All current shows will be overwritten.</string>
+    <string name="import_question">Make sure the backup is inside the backup folder. The current show list will be lost.</string>
     <string name="import_yes">Restore</string>
     <string name="import_no">Don\'t Restore</string>
     <!-- Misc -->
@@ -273,8 +275,8 @@
     <string name="hate">Weak Sauce :(</string>
     <string name="trakt_createaccount">Create new account</string>
     <string name="email">Email</string>
+    <string name="trakt_experimental">Only shows added to SeriesGuide are synced. \'Sync to SeriesGuide\' fetches watched episodes from trakt. \'Sync to trakt\' transmits watched episodes from SeriesGuide to trakt.</string>
     <string name="trakt_synctodevice">Sync to SeriesGuide</string>
-    <string name="trakt_experimental"><b>Experimental</b> syncing with trakt. This may still be bumpy at times. Only shows added to SeriesGuide are synced. To SeriesGuide only marks episodes watched, but does not remove existing watched markings in SeriesGuide. To trakt only transmits seen episodes.</string>
     <string name="trakt_synctotrakt">Sync to trakt.tv</string>
     <string name="trakt_syncunseen">Sync unseen episodes</string>
     <string name="powered_by_thetvdb">powered by thetvdb.com</string>
@@ -294,11 +296,10 @@
     <!-- strings for BETA release -->
     <string name="download_stable">Download SeriesGuide</string>
     <string name="gobreak">Go break things</string>
-    <string name="betawarning">WARNING: This is an unstable BETA release for testing purposes only. To download the stable end-user version click the download button below.\n\nIf you want to help test the beta go ahead. Please report every crash, try everything out and send feedback to seriesguide@battlelancer.com (see Settings).</string>
+    <string name="betawarning">WARNING: This is an unstable BETA release for testing purposes only. To download the stable end-user version click the download button below.\n\nIf you want to help test the beta go ahead. Please report every crash, try everything out and send feedback to seriesguide@battlelancer.com.</string>
 
     <!-- REMOVE before uploading to crowdin -->
     <string name="app_name">SeriesGuide</string>
-    <string name="whatsnew_content">- Redesign of UI and backend (try using it in landscape, or on Android 3.0+!).\n\n- New time offset setting.\n\n- Remove single episodes.\n\n- Long-clicking on Back takes you to the show list.\n\n- Dropped support for Android 1.6\n\n- Much more...</string>
     <string name="helptranslate">Help translate SeriesGuide</string>
     <string name="imdb">IMDb</string>
     <string name="tvdb">TVDb</string>
