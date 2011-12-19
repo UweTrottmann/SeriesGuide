@@ -17,28 +17,29 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.ShareUtils;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.Series;
-import com.battlelancer.thetvdbapi.TheTVDB;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -211,9 +212,10 @@ public class OverviewFragment extends Fragment {
             return;
         }
 
-        // Save imdbId for GetGlue sharing
+        // Save info for sharing
         mShareData.putString(ShareItems.IMDBID, show.getImdbId());
         mShareData.putInt(ShareItems.TVDBID, Integer.valueOf(show.getId()));
+        mShareData.putInt(ShareItems.CHECKIN_DURATION, Integer.valueOf(show.getRuntime()));
 
         // Show name
         TextView showname = (TextView) getActivity().findViewById(R.id.seriesname);
@@ -241,15 +243,6 @@ public class OverviewFragment extends Fragment {
                 background.setImageDrawable(drawable);
             }
         }
-
-        // ImageView poster = (ImageView)
-        // getActivity().findViewById(R.id.showposter);
-        // Bitmap bitmap = imageCache.getThumb(show.getPoster());
-        // if (bitmap != null) {
-        // poster.setImageBitmap(bitmap);
-        // } else {
-        // poster.setImageResource(R.drawable.show_generic);
-        // }
 
         // Airtime and Network
         String timeAndNetwork = "";
@@ -297,9 +290,8 @@ public class OverviewFragment extends Fragment {
             // Airdate
             airdate = episode.getString(EpisodeQuery.FIRSTAIRED);
             if (airdate.length() != 0) {
-                nextheader.setText(Utils.parseDateToLocalRelative(airdate,
-                        show.getAirsTime(), context)
-                        + ":");
+                nextheader.setText(Utils.parseDateToLocalRelative(airdate, show.getAirsTime(),
+                        context) + ":");
             }
 
             onLoadEpisodeDetails(episode);
@@ -387,11 +379,8 @@ public class OverviewFragment extends Fragment {
 
         // Guest stars
         TextView gueststars = (TextView) getActivity().findViewById(R.id.TextViewEpisodeGuestStars);
-        gueststars
-                .setText(getString(R.string.episode_gueststars)
-                        + " "
-                        + Utils.splitAndKitTVDBStrings(episode
-                                .getString(EpisodeQuery.GUESTSTARS)));
+        gueststars.setText(getString(R.string.episode_gueststars) + " "
+                + Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));
 
         // Writers
         TextView writers = (TextView) getActivity().findViewById(R.id.TextViewEpisodeWriters);
@@ -406,22 +395,27 @@ public class OverviewFragment extends Fragment {
             ratingBar.setProgress((int) (Double.valueOf(ratingText) / 0.1));
             rating.setText(ratingText + "/10");
         }
+
+        // TVDb button
+        getView().findViewById(R.id.buttonShowInfoIMDB).setVisibility(View.GONE);
+        final String showId = getShowId();
+        final String seasonId = episode.getString(EpisodeQuery.REF_SEASON_ID);
+        final String episodeId = episode.getString(EpisodeQuery._ID);
+        getView().findViewById(R.id.buttonTVDB).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TVDB_EPISODE_URL_1
+                        + showId + Constants.TVDB_EPISODE_URL_2 + seasonId
+                        + Constants.TVDB_EPISODE_URL_3 + episodeId));
+                startActivity(i);
+            }
+        });
     }
 
     private void onMarkWatched() {
         DBUtils.markEpisode(getActivity(), String.valueOf(episodeid), true);
 
         Toast.makeText(getActivity(), getString(R.string.mark_episode), Toast.LENGTH_SHORT).show();
-
-        // share with trakt
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity()
-                .getApplicationContext());
-        if (prefs.getBoolean("com.battlelancer.seriesguide.traktintegration", false)) {
-            // Pass in copy of bundle so its values aren't overwritten by the
-            // new episode loading below
-            new ShareUtils.TraktTask(getActivity(), getFragmentManager(), new Bundle(mShareData))
-                    .execute();
-        }
 
         // load new episode, update seasons (if shown)
         onLoadEpisode();
@@ -442,71 +436,20 @@ public class OverviewFragment extends Fragment {
             final Bitmap bitmap = imageCache.get(imagePath);
             if (bitmap != null) {
                 // image is in cache
+                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 imageView.setImageBitmap(bitmap);
             } else {
                 if (artTask == null) {
-                    artTask = (FetchArtTask) new FetchArtTask(imagePath, imageView).execute();
+                    artTask = (FetchArtTask) new FetchArtTask(imagePath, imageView, getActivity())
+                            .execute();
                 } else if (artTask != null && artTask.getStatus() == AsyncTask.Status.FINISHED) {
-                    artTask = (FetchArtTask) new FetchArtTask(imagePath, imageView).execute();
+                    artTask = (FetchArtTask) new FetchArtTask(imagePath, imageView, getActivity())
+                            .execute();
                 }
             }
         } else {
             // no image available
             container.setVisibility(View.GONE);
-        }
-    }
-
-    private class FetchArtTask extends AsyncTask<Void, Void, Integer> {
-        private static final int SUCCESS = 0;
-
-        private static final int ERROR = 1;
-
-        private String mPath;
-
-        private ImageView mImageView;
-
-        protected FetchArtTask(String path, ImageView imageView) {
-            mPath = path;
-            mImageView = imageView;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            mImageView.setImageResource(R.drawable.ic_action_refresh);
-        }
-
-        @Override
-        protected Integer doInBackground(Void... params) {
-            int resultCode;
-
-            if (TheTVDB.fetchArt(mPath, false, getActivity())) {
-                resultCode = SUCCESS;
-            } else {
-                resultCode = ERROR;
-            }
-
-            return resultCode;
-        }
-
-        @Override
-        protected void onPostExecute(Integer resultCode) {
-            if (isCancelled()) {
-                return;
-            }
-
-            switch (resultCode) {
-                case SUCCESS:
-                    Bitmap bitmap = imageCache.get(mPath);
-                    if (bitmap != null) {
-                        mImageView.setImageBitmap(bitmap);
-                        return;
-                    }
-                    // no break because image could be null (got deleted, ...)
-                default:
-                    // fallback
-                    mImageView.setImageResource(R.drawable.show_generic);
-                    break;
-            }
         }
     }
 
@@ -520,11 +463,12 @@ public class OverviewFragment extends Fragment {
     }
 
     interface EpisodeQuery {
+
         String[] PROJECTION = new String[] {
                 Episodes._ID, Shows.REF_SHOW_ID, Episodes.OVERVIEW, Episodes.NUMBER,
                 Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIRED, Episodes.DIRECTORS,
                 Episodes.GUESTSTARS, Episodes.WRITERS, Episodes.RATING, Episodes.IMAGE,
-                Episodes.DVDNUMBER, Episodes.TITLE
+                Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID
         };
 
         int _ID = 0;
@@ -554,5 +498,7 @@ public class OverviewFragment extends Fragment {
         int DVDNUMBER = 12;
 
         int TITLE = 13;
+
+        int REF_SEASON_ID = 14;
     }
 }

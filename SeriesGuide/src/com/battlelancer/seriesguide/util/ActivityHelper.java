@@ -41,7 +41,7 @@ public class ActivityHelper {
      * helper or Honeycomb-specific helper will be returned.
      */
     public static ActivityHelper createInstance(Activity activity) {
-        return Utils.isHoneycomb() ? new ActivityHelperHoneycomb(activity) : new ActivityHelper(
+        return Utils.isHoneycombOrHigher() ? new ActivityHelperHoneycomb(activity) : new ActivityHelper(
                 activity);
     }
 

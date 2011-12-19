@@ -7,6 +7,8 @@ import oauth.signpost.OAuth;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -73,10 +75,13 @@ public class GetGlue {
 
         // send the request
         HttpClient httpClient = new DefaultHttpClient();
-        httpClient.execute(request);
-        // HttpResponse response = httpClient.execute(request);
+        HttpResponse response = httpClient.execute(request);
 
-        // TODO: improve error handling
+        int statuscode = response.getStatusLine().getStatusCode();
+        if (statuscode != HttpStatus.SC_OK) {
+            throw new Exception("Unexpected server response " + response.getStatusLine() + " for "
+                    + request.getRequestLine());
+        }
     }
 
     public static void clearCredentials(SharedPreferences prefs) {

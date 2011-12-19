@@ -6,47 +6,23 @@ package com.battlelancer.thetvdbapi;
  */
 public class SearchResult {
 
-    private String id;
+    public String tvdbid;
 
-    private String seriesName;
+    public String title;
 
-    private String overview;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getSeriesName() {
-        return seriesName;
-    }
-
-    public void setSeriesName(String seriesName) {
-        this.seriesName = seriesName;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
-    public String getOverview() {
-        return this.overview;
-    }
+    public String overview;
 
     public SearchResult copy() {
         SearchResult copy = new SearchResult();
-        copy.id = this.id;
-        copy.seriesName = this.seriesName;
+        copy.tvdbid = this.tvdbid;
+        copy.title = this.title;
         copy.overview = this.overview;
         return copy;
     }
 
     @Override
     public String toString() {
-        return this.seriesName;
+        return this.title;
     }
 
 }

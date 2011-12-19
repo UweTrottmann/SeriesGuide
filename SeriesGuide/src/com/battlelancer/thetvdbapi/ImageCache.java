@@ -78,7 +78,7 @@ public class ImageCache {
 
     private final Map<String, Bitmap> mCache;
 
-    private CompressFormat mCompressedImageFormat = CompressFormat.JPEG;
+    private static final CompressFormat mCompressedImageFormat = CompressFormat.JPEG;
 
     private final float mScale;
 
@@ -97,9 +97,8 @@ public class ImageCache {
     private ImageCache(Context ctx) {
         this.mCtx = ctx;
         this.mCache = new HashMap<String, Bitmap>(50);
-        final String packageName = ctx.getApplicationInfo().packageName;
         this.mSecondLevelCacheDir = Environment.getExternalStorageDirectory().getAbsolutePath()
-                + "/Android/data/" + packageName + "/files";
+                + "/Android/data/" + ctx.getPackageName() + "/files";
         mScale = mCtx.getResources().getDisplayMetrics().density;
         createDirectories();
 
@@ -153,34 +152,6 @@ public class ImageCache {
                 Log.w(TAG, "Could not create .nomedia file");
             }
         }
-    }
-
-    /**
-     * The image format that should be used when caching images on disk. The
-     * default value is {@link CompressFormat#PNG}. Note that when switching to
-     * a format like JPEG, you will lose any transparency that was part of the
-     * image.
-     * 
-     * @param compressedImageFormat the {@link CompressFormat}
-     */
-    public void setCompressedImageFormat(CompressFormat compressedImageFormat) {
-        this.mCompressedImageFormat = compressedImageFormat;
-    }
-
-    public CompressFormat getCompressedImageFormat() {
-        return mCompressedImageFormat;
-    }
-
-    /**
-     * @param cachedImageQuality the quality of images being compressed and
-     *            written to disk (2nd level cache) as a number in [0..100]
-     */
-    public void setCachedImageQuality(int cachedImageQuality) {
-        this.mCachedImageQuality = cachedImageQuality;
-    }
-
-    public int getCachedImageQuality() {
-        return mCachedImageQuality;
     }
 
     /**

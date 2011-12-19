@@ -2,43 +2,35 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.ui.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.thetvdbapi.SearchResult;
-import com.battlelancer.thetvdbapi.TheTVDB;
 import com.viewpagerindicator.TitlePageIndicator;
 import com.viewpagerindicator.TitleProvider;
 
-import org.xml.sax.SAXException;
-
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.support.v4.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import java.util.LinkedList;
-
-public class AddActivity extends BaseActivity {
+public class AddActivity extends BaseActivity implements OnAddShowListener {
 
     private AddPagerAdapter mAdapter;
 
     private ViewPager mPager;
 
-    private AddShowTask mAddTask;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.episode_pager);
+
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         mAdapter = new AddPagerAdapter(getSupportFragmentManager(), this);
 
@@ -47,166 +39,6 @@ public class AddActivity extends BaseActivity {
 
         TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mPager);
-    }
-
-    void showAddDialog(SearchResult show) {
-        // DialogFragment.show() will take care of adding the fragment
-        // in a transaction. We also want to remove any currently showing
-        // dialog, so make our own transaction and take care of that here.
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
-
-        // Create and show the dialog.
-        DialogFragment newFragment = new AddDialogFragment(show);
-        newFragment.show(ft, "dialog");
-    }
-
-    private void addShow(SearchResult show) {
-        clearSearchField();
-
-        // notify user here already
-        Toast.makeText(this, "\"" + show.getSeriesName() + "\" " + getString(R.string.add_started),
-                Toast.LENGTH_SHORT).show();
-
-        // add the show to a running add task or create a new one
-        if (mAddTask == null || mAddTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mAddTask = (AddShowTask) new AddShowTask(this, show).execute();
-        } else {
-            // addTask is still running, try to add another show to its queue
-            boolean hasAddedShow = mAddTask.addShow(show);
-            if (!hasAddedShow) {
-                mAddTask = (AddShowTask) new AddShowTask(this, show).execute();
-            }
-        }
-    }
-
-    /**
-     * Clears the search field.
-     */
-    private void clearSearchField() {
-        EditText searchbox = (EditText) findViewById(R.id.searchbox);
-        if (searchbox != null) {
-            searchbox.setText("");
-        }
-    }
-
-    public static class AddShowTask extends AsyncTask<Void, Integer, Void> {
-
-        private static final int ADD_ALREADYEXISTS = 0;
-
-        private static final int ADD_SUCCESS = 1;
-
-        private static final int ADD_SAXERROR = 2;
-
-        final private Context mContext;
-
-        final private LinkedList<SearchResult> mAddQueue = new LinkedList<SearchResult>();
-
-        private boolean mIsFinishedAddingShows = false;
-
-        private String mCurrentShowName;
-
-        public AddShowTask(Context activity, SearchResult show) {
-            mContext = activity;
-            mAddQueue.add(show);
-        }
-
-        public AddShowTask(Context activity, LinkedList<SearchResult> shows) {
-            mContext = activity;
-            mAddQueue.addAll(shows);
-        }
-
-        public LinkedList<SearchResult> getRemainingShows() {
-            return mAddQueue;
-        }
-
-        /**
-         * Add a show to the add queue. If this returns false, the show was not
-         * added because the task is finishing up. Create a new one instead.
-         * 
-         * @param show
-         * @return
-         */
-        public boolean addShow(SearchResult show) {
-            if (mIsFinishedAddingShows) {
-                return false;
-            } else {
-                mAddQueue.add(show);
-                return true;
-            }
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            int result;
-            boolean modifiedDB = false;
-
-            while (!mAddQueue.isEmpty()) {
-                if (isCancelled()) {
-                    // only cancelled on config change, so don't rebuild fts
-                    // table yet
-                    return null;
-                }
-
-                SearchResult nextShow = mAddQueue.removeFirst();
-
-                try {
-                    if (TheTVDB.addShow(nextShow.getId(), mContext.getApplicationContext())) {
-                        // success
-                        result = ADD_SUCCESS;
-                    } else {
-                        // already exists
-                        result = ADD_ALREADYEXISTS;
-                    }
-                    modifiedDB = true;
-                } catch (SAXException e) {
-                    result = ADD_SAXERROR;
-                }
-
-                mCurrentShowName = nextShow.getSeriesName();
-                publishProgress(result);
-            }
-
-            mIsFinishedAddingShows = true;
-            // renew FTS3 table
-            if (modifiedDB) {
-                TheTVDB.onRenewFTSTable(mContext.getApplicationContext());
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            switch (values[0]) {
-                case ADD_SUCCESS:
-                    Toast.makeText(
-                            mContext.getApplicationContext(),
-                            "\"" + mCurrentShowName + "\" "
-                                    + mContext.getString(R.string.add_success), Toast.LENGTH_SHORT)
-                            .show();
-                    break;
-                case ADD_ALREADYEXISTS:
-                    Toast.makeText(
-                            mContext.getApplicationContext(),
-                            "\"" + mCurrentShowName + "\" "
-                                    + mContext.getString(R.string.add_already_exists),
-                            Toast.LENGTH_LONG).show();
-                    break;
-                case ADD_SAXERROR:
-                    Toast.makeText(
-                            mContext.getApplicationContext(),
-                            mContext.getString(R.string.add_error_begin) + mCurrentShowName
-                                    + mContext.getString(R.string.add_error_end) + " ("
-                                    + mContext.getString(R.string.saxerror_title) + ")",
-                            Toast.LENGTH_LONG).show();
-                    break;
-            }
-        }
     }
 
     public static class AddPagerAdapter extends FragmentPagerAdapter implements TitleProvider {
@@ -242,44 +74,27 @@ public class AddActivity extends BaseActivity {
         @Override
         public String getTitle(int position) {
             switch (position) {
-            // TODO: put into strings.xml
                 case 1:
-                    return "Trending";
+                    return mContext.getString(R.string.trending);
                 case 2:
-                    return "Recommended";
+                    return mContext.getString(R.string.recommended);
                 case 3:
-                    return "Library";
+                    return mContext.getString(R.string.library);
                 default:
-                    return "Search";
+                    return mContext.getString(R.string.search_button);
             }
         }
 
     }
 
-    public static class AddDialogFragment extends DialogFragment {
-
-        private SearchResult mShow;
-
-        public AddDialogFragment(SearchResult show) {
-            mShow = show;
+    @Override
+    public void onAddShow(SearchResult show) {
+        // clear the search field (if it is shown)
+        EditText searchbox = (EditText) findViewById(R.id.searchbox);
+        if (searchbox != null) {
+            searchbox.setText("");
         }
 
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-            return new AlertDialog.Builder(getActivity())
-                    .setTitle(mShow.getSeriesName())
-                    .setMessage(mShow.getOverview())
-                    .setPositiveButton(R.string.add_show, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            ((AddActivity) getActivity()).addShow(mShow);
-                        }
-                    })
-                    .setNegativeButton(R.string.dont_add_show,
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int whichButton) {
-                                }
-                            }).create();
-        }
+        TaskManager.getInstance(this).performAddTask(show);
     }
 }

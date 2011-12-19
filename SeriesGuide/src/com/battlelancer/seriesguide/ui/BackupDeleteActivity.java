@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -82,6 +83,15 @@ public class BackupDeleteActivity extends BaseActivity {
                 showDialog(IMPORT_DIALOG);
             }
         });
+
+        String path = Environment.getExternalStorageDirectory() + "/seriesguidebackup";
+
+        TextView backuppath = (TextView) findViewById(R.id.backuppath);
+        backuppath.setText(getString(R.string.backup_path) + ": " + path);
+
+        TextView dbVersion = (TextView) findViewById(R.id.dbversion);
+        dbVersion.setText(getString(R.string.backup_version) + ": "
+                + SeriesGuideDatabase.DATABASE_VERSION);
     }
 
     @Override
@@ -150,15 +160,15 @@ public class BackupDeleteActivity extends BaseActivity {
             }
             if (errorMsg == null) {
                 // track event
-                AnalyticsUtils.getInstance(BackupDeleteActivity.this).trackEvent(TAG, "Backup", "Success",
-                        0);
+                AnalyticsUtils.getInstance(BackupDeleteActivity.this).trackEvent(TAG, "Backup",
+                        "Success", 0);
 
                 Toast.makeText(BackupDeleteActivity.this, getString(R.string.backup_success),
                         Toast.LENGTH_SHORT).show();
             } else {
                 // track event
-                AnalyticsUtils.getInstance(BackupDeleteActivity.this)
-                        .trackEvent(TAG, "Backup", errorMsg, 0);
+                AnalyticsUtils.getInstance(BackupDeleteActivity.this).trackEvent(TAG, "Backup",
+                        errorMsg, 0);
 
                 Toast.makeText(BackupDeleteActivity.this,
                         getString(R.string.backup_failed) + " - " + errorMsg, Toast.LENGTH_LONG)
@@ -211,7 +221,7 @@ public class BackupDeleteActivity extends BaseActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                
+
                 // tell user something might have gone wrong if there are no
                 // shows in the database right now
                 final Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[] {
@@ -235,14 +245,15 @@ public class BackupDeleteActivity extends BaseActivity {
             }
             if (errMsg == null) {
                 // track event
-                AnalyticsUtils.getInstance(BackupDeleteActivity.this).trackEvent(TAG, "Import", "Success",
-                        0);
+                AnalyticsUtils.getInstance(BackupDeleteActivity.this).trackEvent(TAG, "Import",
+                        "Success", 0);
 
                 Toast.makeText(BackupDeleteActivity.this, getString(R.string.import_success),
                         Toast.LENGTH_SHORT).show();
             } else {
                 // track event
-                AnalyticsUtils.getInstance(BackupDeleteActivity.this).trackEvent(TAG, "Import", errMsg, 0);
+                AnalyticsUtils.getInstance(BackupDeleteActivity.this).trackEvent(TAG, "Import",
+                        errMsg, 0);
 
                 Toast.makeText(BackupDeleteActivity.this,
                         getString(R.string.import_failed) + " - " + errMsg, Toast.LENGTH_LONG)

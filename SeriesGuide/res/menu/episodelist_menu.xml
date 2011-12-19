@@ -9,12 +9,12 @@
 
     <item
         android:id="@+id/mark_all"
-        android:icon="@drawable/ic_action_mark"
-        android:title="@string/mark_all"/>
+        android:icon="@drawable/ic_menu_markall"
+        android:title="@string/mark_all" android:showAsAction="never"/>
 
     <item
         android:id="@+id/unmark_all"
-        android:icon="@drawable/ic_action_clear"
-        android:title="@string/unmark_all"/>
+        android:icon="@drawable/ic_menu_unmarkall"
+        android:title="@string/unmark_all" android:showAsAction="never"/>
 
 </menu>

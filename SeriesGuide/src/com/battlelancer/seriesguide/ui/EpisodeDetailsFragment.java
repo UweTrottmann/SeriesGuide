@@ -9,11 +9,11 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
-import com.battlelancer.thetvdbapi.TheTVDB;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -146,6 +146,8 @@ public class EpisodeDetailsFragment extends ListFragment implements
                 shareData.putInt(ShareItems.SEASON, episode.getInt(EpisodeDetailsQuery.SEASON));
                 shareData
                         .putInt(ShareItems.TVDBID, episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID));
+                shareData.putInt(ShareItems.CHECKIN_DURATION,
+                        episode.getInt(EpisodeDetailsQuery.SHOW_RUNTIME));
                 ShareUtils.showShareDialog(getFragmentManager(), shareData);
                 break;
             }
@@ -335,76 +337,25 @@ public class EpisodeDetailsFragment extends ListFragment implements
 
     protected void onLoadImage(String imagePath, FrameLayout container) {
         if (imagePath.length() != 0) {
-            final Bitmap bitmap = mImageCache.get(imagePath);
             final ImageView imageView = (ImageView) container
                     .findViewById(R.id.ImageViewEpisodeImage);
+            final Bitmap bitmap = mImageCache.get(imagePath);
             if (bitmap != null) {
                 // image is in cache
+                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 imageView.setImageBitmap(bitmap);
             } else {
                 if (mArtTask == null) {
-                    mArtTask = (FetchArtTask) new FetchArtTask(imagePath, imageView).execute();
+                    mArtTask = (FetchArtTask) new FetchArtTask(imagePath, imageView, getActivity())
+                            .execute();
                 } else if (mArtTask != null && mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
-                    mArtTask = (FetchArtTask) new FetchArtTask(imagePath, imageView).execute();
+                    mArtTask = (FetchArtTask) new FetchArtTask(imagePath, imageView, getActivity())
+                            .execute();
                 }
             }
         } else {
             // no image available
             container.setVisibility(View.GONE);
-        }
-    }
-
-    private class FetchArtTask extends AsyncTask<Void, Void, Integer> {
-        private static final int SUCCESS = 0;
-
-        private static final int ERROR = 1;
-
-        private String mPath;
-
-        private ImageView mImageView;
-
-        protected FetchArtTask(String path, ImageView imageView) {
-            mPath = path;
-            mImageView = imageView;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            mImageView.setImageResource(R.drawable.ic_action_refresh);
-        }
-
-        @Override
-        protected Integer doInBackground(Void... params) {
-            int resultCode;
-
-            if (isCancelled()) {
-                return null;
-            }
-
-            if (TheTVDB.fetchArt(mPath, false, getActivity())) {
-                resultCode = SUCCESS;
-            } else {
-                resultCode = ERROR;
-            }
-
-            return resultCode;
-        }
-
-        @Override
-        protected void onPostExecute(Integer resultCode) {
-            switch (resultCode) {
-                case SUCCESS:
-                    Bitmap bitmap = mImageCache.get(mPath);
-                    if (bitmap != null) {
-                        mImageView.setImageBitmap(bitmap);
-                        return;
-                    }
-                    // no break because image could be null (got deleted, ...)
-                default:
-                    // fallback
-                    mImageView.setImageResource(R.drawable.show_generic);
-                    break;
-            }
         }
     }
 

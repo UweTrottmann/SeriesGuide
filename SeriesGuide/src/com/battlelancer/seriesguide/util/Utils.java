@@ -3,10 +3,15 @@ package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.jakewharton.trakt.ServiceManager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -19,6 +24,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -29,6 +36,10 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class Utils {
+
+    private static ServiceManager sServiceManagerWithAuthInstance;
+
+    private static ServiceManager sServiceManagerInstance;
 
     /**
      * Returns the Calendar constant (e.g. <code>Calendar.SUNDAY</code>) for a
@@ -203,6 +214,8 @@ public class Utils {
 
     public static final SimpleDateFormat thetvdbTimeFormatNormal = new SimpleDateFormat("H:mm",
             Locale.US);
+
+    private static final int DEFAULT_BUFFER_SIZE = 8192;
 
     public static long parseTimeToMilliseconds(String tvdbTimeString) {
         Date time = null;
@@ -389,12 +402,16 @@ public class Utils {
         return sorting;
     }
 
-    public static boolean isHoneycomb() {
+    public static boolean isHoneycombOrHigher() {
         // Can use static final constants like HONEYCOMB, declared in later
         // versions
         // of the OS since they are inlined at compile time. This is guaranteed
         // behavior.
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+    }
+
+    public static boolean isFroyoOrHigher() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO;
     }
 
     public static boolean isExtStorageAvailable() {
@@ -435,6 +452,138 @@ public class Utils {
                 outChannel.close();
             }
         }
+    }
+
+    public static int copy(InputStream input, OutputStream output) throws IOException {
+        byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
+        int count = 0;
+        int n = 0;
+        while (-1 != (n = input.read(buffer))) {
+            output.write(buffer, 0, n);
+            count += n;
+        }
+        return count;
+    }
+
+    /**
+     * Update the latest episode fields for all existing shows.
+     */
+    public static void updateLatestEpisodes(Context context) {
+        Thread t = new UpdateLatestEpisodeThread(context);
+        t.start();
+    }
+
+    /**
+     * Update the latest episode field for a specific show.
+     */
+    public static void updateLatestEpisode(Context context, String showId) {
+        Thread t = new UpdateLatestEpisodeThread(context, showId);
+        t.start();
+    }
+
+    public static class UpdateLatestEpisodeThread extends Thread {
+        private Context mContext;
+
+        private String mShowId;
+
+        public UpdateLatestEpisodeThread(Context context) {
+            mContext = context;
+            this.setName("UpdateLatestEpisode");
+        }
+
+        public UpdateLatestEpisodeThread(Context context, String showId) {
+            this(context);
+            mShowId = showId;
+        }
+
+        public void run() {
+            if (mShowId != null) {
+                // update single show
+                DBUtils.updateLatestEpisode(mContext, mShowId);
+            } else {
+                // update all shows
+                final Cursor shows = mContext.getContentResolver().query(Shows.CONTENT_URI,
+                        new String[] {
+                            Shows._ID
+                        }, null, null, null);
+                while (shows.moveToNext()) {
+                    String id = shows.getString(0);
+                    DBUtils.updateLatestEpisode(mContext, id);
+                }
+                shows.close();
+            }
+
+            // Adapter gets notified by ContentProvider
+        }
+    }
+
+    /**
+     * Get the trakt-java ServiceManger with user credentials and our API key
+     * set.
+     * 
+     * @param context
+     * @param refreshCredentials Set this flag to refresh the user credentials.
+     * @return
+     * @throws Exception When decrypting the password failed.
+     */
+    public static synchronized ServiceManager getServiceManagerWithAuth(Context context,
+            boolean refreshCredentials) throws Exception {
+        if (sServiceManagerWithAuthInstance == null) {
+            sServiceManagerWithAuthInstance = new ServiceManager();
+            sServiceManagerWithAuthInstance.setApiKey(Constants.TRAKT_API_KEY);
+            // this made some problems, so sadly disabled for now
+            // manager.setUseSsl(true);
+
+            refreshCredentials = true;
+        }
+
+        if (refreshCredentials) {
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
+                    .getApplicationContext());
+
+            final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+            String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
+            password = SimpleCrypto.decrypt(password, context);
+
+            sServiceManagerWithAuthInstance.setAuthentication(username, password);
+        }
+
+        return sServiceManagerWithAuthInstance;
+    }
+
+    /**
+     * Get a trakt-java ServiceManager with just our API key set. NO user auth
+     * data.
+     * 
+     * @return
+     */
+    public static synchronized ServiceManager getServiceManager() {
+        if (sServiceManagerInstance == null) {
+            sServiceManagerInstance = new ServiceManager();
+            sServiceManagerInstance.setApiKey(Constants.TRAKT_API_KEY);
+            // this made some problems, so sadly disabled for now
+            // manager.setUseSsl(true);
+        }
+
+        return sServiceManagerInstance;
+    }
+
+    public static String getTraktUsername(Context context) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
+                .getApplicationContext());
+
+        return prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+    }
+
+    public static String getVersion(Context context) {
+        String version;
+        try {
+            version = context.getPackageManager().getPackageInfo(context.getPackageName(),
+                    PackageManager.GET_META_DATA).versionName;
+        } catch (NameNotFoundException e) {
+            version = "UnknownVersion";
+        }
+        return version;
     }
 
 }

@@ -17,10 +17,13 @@
         style="@style/NotificationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
         android:layout_toRightOf="@id/image"
-        android:text="NotificationText"
-        android:layout_marginBottom="5dp" />
-    <ProgressBar
+        android:ellipsize="marquee"
+        android:scrollHorizontally="true"
+        android:text="NotificationText" />
+
+    <ProgressBar
         android:id="@+id/progressbar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
