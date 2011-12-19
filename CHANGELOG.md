@@ -10,6 +10,7 @@ Version 2.4 *(in development)*
 * Auto update enabled by default on new installations (only over WiFi, only on opening the show list, once a day).
 * `Upcoming` renamed `Activity`, now includes the latest activity of friends on trakt.
 * Optimized for Android 4.0.
+* TVDb button in `Overview`.
 
 Version 2.3 *(2011-11-26)*
 --------------------------------
