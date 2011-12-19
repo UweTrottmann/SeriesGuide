@@ -94,8 +94,6 @@
   <string name="pref_hideimagessummary">Ukryj obrazki z programu przed standardową przeglądarką Androida (wymagany reboot)</string>
   <string name="pref_more">Więcej</string>
   <string name="about">O programie...</string>
-  <string name="help">Pomoc</string>
-  <string name="help_summary">Przejdz do strony z pomocą</string>
   <string name="backup">Opcje kopii zapasowej</string>
   <string name="backup_summary">Zrób lub przywróć kopię bazy danych seriali</string>
   <string name="pref_sharing">Udostępnianie</string>
@@ -108,23 +106,14 @@
   <string name="pref_notificationssummary">Pokaż powiadomienia o nadchodzących odcinkach</string>
   <string name="pref_usetz">Użyj mojej strefy czasowej</string>
   <string name="pref_offset">Różnica w czasie</string>
-  <string name="backup_description">Kopia zapasowa zapisuje całą twoją bazę seriali w folderze /seriesguidebackup/ na karcie SD. Jeśli przeinstalujesz SeriesGuide lub zainstalujesz na innym urządzeniu z Androidem, wystarczy, że przeniesiesz ten folder na kartę pamięci w tamtym urządzeniu. Następnie wystarczy kliknąć przycisk Przywróć i cała twoja baza zostanie przywrócona ;) (nie można importować bazy danych z nowszej wersji do starszej wersji!)</string>
-  <string name="backup_failed_nosd">Nie można zrobić kopii. Karta pamięci jest niedostępna.</string>
   <string name="backup_inprogress">Tworzenie kopii zapasowej...</string>
   <string name="backup_success">Kopia wykonana pomyślnie</string>
   <string name="backup_failed">Błąd tworzenia kopii zapasowej</string>
   <string name="import_inprogress">Przywracanie bazy danych...</string>
-  <string name="import_failed_nosd">Nie można przywrócić kopii. Karta pamięci jest niedostępna.</string>
-  <string name="import_failed_nofile">Nie udało się znaleźć pliku bazy danych (w /sdcard/seriesguidebackup/seriesdatabase). Nie można przywrócić danych.</string>
-  <string name="import_failed_noread">Pliku bazy danych jest uszkodzony / nie można go odczytać (w /sdcard/seriesguidebackup/seriesdatabase). Nie można przywrócić danych.</string>
   <string name="import_success">Baza danych przywrócona</string>
   <string name="import_failed">Przywracanie nie powiodło się</string>
-  <string name="backup_button">Stworzenie kopii zapasowej na karcie SD</string>
-  <string name="import_button">Przywracanie kopii zapasowej z karty SD</string>
-  <string name="backup_question">Ta operacja nadpisze poprzednie kopie. Kontynuować?</string>
   <string name="backup_yes">Tak.</string>
   <string name="backup_no">Nie</string>
-  <string name="import_question">Upewnij się, że posiadasz kopię bezpieczeństwa na karcie SD. Cała aktualna baza zostanie nadpisana. Kontynuować?</string>
   <string name="import_yes">Tak</string>
   <string name="import_no">Nie</string>
   <string name="smallwidget">Przyszłe odcinki (mały - 4x1)</string>
@@ -160,14 +149,10 @@
   <string name="apikey">klucz API</string>
   <string name="save">Zapisz</string>
   <string name="dontsave">Nie zapisuj</string>
-  <string name="trakt_success">Oznaczenie na trakt.tv zakończono pomyślnie</string>
-  <string name="trakt_error">Udostępnianie na trakt.tv nie udane</string>
   <string name="trakt_decryptfail">Hasło nie może zostać zdekodowane</string>
   <string name="trakt_credentials_invalid">Zły login/hasło.</string>
   <string name="pref_traktintegrate">Zintegruj z trakt.tv</string>
-  <string name="pref_traktintegratesummary">Oznaczenie jako obejrzane na liście seriali synchronizuje się z trakt.tv</string>
   <string name="donate">Kup mi drinka (Paypal)</string>
-  <string name="feedback">Zgłoś błąd / wyślij opinię</string>
   <string name="love">Uwielbiam to!</string>
   <string name="hate">Słaby :(</string>
   <string name="trakt_createaccount">Utwórz nowe konto</string>
@@ -192,10 +177,11 @@
     <item>Najpierw najstarsze (DVD)</item>
   </string-array>
   <string-array name="share_items">
-    <item>Wyślij do GetGlue</item>
-    <item>Oznacz jako obejrzane w trakt.tv</item>
-    <item>Więcej...</item>
-    <item>Oceń na trakt.tv</item>
+    <item>Check In (GetGlue)</item>
+    <item>Check In (trakt)</item>
+    <item>Mark seen (trakt)</item>
+    <item>Rate (trakt)</item>
+    <item>Other services</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>All</item>

@@ -87,8 +87,6 @@
   <string name="pref_hideimagessummary">SeriesGuide resimlerini fotoğraf galerinizden gizleyin (yeniden başlatma gerektirir)</string>
   <string name="pref_more">Daha fazla</string>
   <string name="about">SeriesGuide Hakkında</string>
-  <string name="help">Yardım Alın</string>
-  <string name="help_summary">Yardım sayfasına git</string>
   <string name="backup">Yedekle/Geri Yükle</string>
   <string name="backup_summary">Dizilerinizi yedekleyin veya geri yükleyin</string>
   <string name="pref_sharing">Paylaşım</string>
@@ -96,22 +94,14 @@
   <string name="clear_cache">Görsel Önbelleklerini Temizle</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_offset">Saat Farkı</string>
-  <string name="backup_failed_nosd">Yedeklenemiyor. harici depolama aygıtı veya SD kart bulunamadı.</string>
   <string name="backup_inprogress">Veritabanı yedekleniyor...</string>
   <string name="backup_success">Yedekleme başarılı</string>
   <string name="backup_failed">Yedekleme başarısız oldu</string>
   <string name="import_inprogress">Veritabanı geri yükleniyor...</string>
-  <string name="import_failed_nosd">Geri yüklenemiyor. harici depolama aygıtı veya SD kart bulunamadı.</string>
-  <string name="import_failed_nofile">Yedekleme dosyası yok (\"/sdcard/seriesguidebackup/seriesdatabase\"). Veritabanı geri yüklenemez.</string>
-  <string name="import_failed_noread">Yedekleme dosyası okunamıyor (\"/sdcard/seriesguidebackup/seriesdatabase\"). Veritabanı geri yüklenemez.</string>
   <string name="import_success">Veritabanı başarıyla geri yüklendi</string>
   <string name="import_failed">Geri yükleme başarısız oldu</string>
-  <string name="backup_button">SD karta yedekle</string>
-  <string name="import_button">SD karttan geri yükle</string>
-  <string name="backup_question">Bu önceki yedek dosyası üzerine yazılacak.</string>
   <string name="backup_yes">Yedekle</string>
   <string name="backup_no">Yedekleme</string>
-  <string name="import_question">SD kartında yedek olduğundan emin olun. Tüm geçerli dizilerin üzerine yazılacak.</string>
   <string name="import_yes">Geri yükle</string>
   <string name="import_no">Geri Yükleme</string>
   <string name="smallwidget">Sonraki bölümler (küçük)</string>
@@ -162,10 +152,11 @@
     <item>Önce en eskisi (DVD)</item>
   </string-array>
   <string-array name="share_items">
-    <item>GetGlue\'da Check In yapın</item>
-    <item>Mark seen on trakt.tv</item>
-    <item>Diğer Servisler</item>
-    <item>Rate on trakt.tv</item>
+    <item>Check In (GetGlue)</item>
+    <item>Check In (trakt)</item>
+    <item>Mark seen (trakt)</item>
+    <item>Rate (trakt)</item>
+    <item>Other services</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>All</item>

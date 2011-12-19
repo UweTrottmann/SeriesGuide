@@ -102,9 +102,6 @@
   <string name="pref_hideimagessummary">Skrýt SeriesGuide obrázky z Vaší galerie fotografií (vyžaduje restart)</string>
   <string name="pref_more">Více</string>
   <string name="about">O SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - vývojář Uwe Trottmann \n\n Prosím podívejte se na níže uvedený odkaz, kde jsou jména všech lidí a zdroje, které pomáhají vývoji tohoto projektu\n\n http://code.google.com/p/seriesguide/wiki/Credits</string>
-  <string name="help">Nápověda</string>
-  <string name="help_summary">Jít na stránku nápovědy</string>
   <string name="backup">Zálohování/obnovení</string>
   <string name="backup_summary">Zálohování a obnovení Vašich pořadů</string>
   <string name="pref_sharing">Sdílení</string>
@@ -118,26 +115,16 @@
   <string name="pref_notifications">Povolit notifikace</string>
   <string name="pref_notificationssummary">Zobrazit notifikace pro blížící se epizody</string>
   <string name="pref_usetz">Použít moje časové pásmo</string>
-  <string name="pref_usetzsummary">Vysílací časy ve Vašem časovém pásmu (pro uživatele mimo USA)</string>
   <string name="pref_offset">Časový posun</string>
   <string name="pref_offsetsummary">o určité množství hodin</string>
-  <string name="backup_description">Volba Zálohovat uloží kopii databáze SeriesGuide do složky \"seriesguidebackup\" na Vaší SD kartu. Pokud SeriesGuide přeinstalujete nebo nainstalujete na jiné Android zařízení, stačí dát zkopírovat tuto složku na jeho SD kartu. Stisknete Obnovit a všechny Vaše pořady jsou zpět! (Nelze importovat databáze z novějších verzí do starších verzí, kromě případu kdy obě verze používají stejnou verzi databáze. Více najdete v O SeriesGuide v Nastavení.</string>
-  <string name="backup_failed_nosd">Nelze zálohovat. Externí úložíště (např. SD karta) není k dispozici.</string>
   <string name="backup_inprogress">Zálohování databáze ...</string>
   <string name="backup_success">Zálohování úspěšné</string>
   <string name="backup_failed">Zálohování se nezdařilo</string>
   <string name="import_inprogress">Obnovení databáze ...</string>
-  <string name="import_failed_nosd">Nelze obnovit zálohu. Externí úložíště (např. SD karta) není k dispozici.</string>
-  <string name="import_failed_nofile">Soubor zálohy není přítomen (\"/sdcard/seriesguidebackup/seriesdatabase\"). Nelze obnovit databázi.</string>
-  <string name="import_failed_noread">Soubor zálohy není čitelný (\"/sdcard/seriesguidebackup/seriesdatabase\"). Nelze obnovit databázi.</string>
   <string name="import_success">Databáze úspěšně obnovena</string>
   <string name="import_failed">Obnovení se nezdařilo.</string>
-  <string name="backup_button">Zálohovat na SD kartu</string>
-  <string name="import_button">Obnovit z SD karty</string>
-  <string name="backup_question">Tato akce přepíše všechny předchozí soubory zálohy.</string>
   <string name="backup_yes">Zálohovat</string>
   <string name="backup_no">Nezálohovat</string>
-  <string name="import_question">Ujistěte se, že záloha je na SD kartě. Všechny aktuální pořady budou přepsány.</string>
   <string name="import_yes">Obnovit</string>
   <string name="import_no">Neobnovovat</string>
   <string name="smallwidget">Další epizody (malé)</string>
@@ -167,15 +154,11 @@
   <string name="password">Heslo</string>
   <string name="apikey">API klíč</string>
   <string name="pref_traktsync">Synchronizovat s trakt.tv</string>
-  <string name="pref_traktsyncsummary">Experimentální, ruční synchronizace s trakt.tv</string>
   <string name="save">Uložit</string>
   <string name="dontsave">Neukládat</string>
-  <string name="trakt_success">Úspěšně označeno na trakt.tv</string>
-  <string name="trakt_error">trakt.tv sdílení selhalo</string>
   <string name="trakt_decryptfail">Heslo nelze dešifrovat.</string>
   <string name="pref_traktintegrate">Integrace trakt.tv</string>
   <string name="donate">Kup mi drink (Paypal)</string>
-  <string name="feedback">Poskytnout zpětnou vazbu</string>
   <string name="love">Totally ninja!</string>
   <string name="hate">Odpad</string>
   <string name="trakt_createaccount">Vytvořit nový účet</string>
@@ -204,10 +187,11 @@
     <item>Nejstarší nejdříve (DVD)</item>
   </string-array>
   <string-array name="share_items">
-    <item>GetGlue Check In</item>
-    <item>Označit jako zhlédnuté na trakt.tv</item>
-    <item>Ostatní služby</item>
-    <item>Hodnotit na trakt.tv</item>
+    <item>Check In (GetGlue)</item>
+    <item>Check In (trakt)</item>
+    <item>Mark seen (trakt)</item>
+    <item>Rate (trakt)</item>
+    <item>Other services</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>All</item>

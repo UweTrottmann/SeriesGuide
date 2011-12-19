@@ -34,7 +34,6 @@
   <string name="sort">Trié par</string>
   <string name="menu_updateart">Obtenez les affiches manquantes</string>
   <string name="updateall_yes">Mise à jour (tous)</string>
-  <string name="menu_update_delta">Mise à jour (modifié uniquement)</string>
   <string name="context_updateshow">Mise à jour</string>
   <string name="context_showinfo">Afficher les infos</string>
   <string name="context_marknext">Consulté prochain épisode</string>
@@ -53,6 +52,13 @@
   <string name="context_unfavorite">Supprimer des favoris</string>
   <string name="favorited">Ajouté aux favoris</string>
   <string name="unfavorited">Supprimé des favoris</string>
+  <string name="update_notification">Mise à jour de vos séries...</string>
+  <string name="update_single">Mise à jour de la série...</string>
+  <string name="update_delta">Mise à jour des séries obsolètes...</string>
+  <string name="update_full">Mise à jour de toutes les séries...</string>
+  <string name="update_failed">Echec de la mise à jour.</string>
+  <string name="update_offline">Vérifiez votre connexion Internet/Wi-Fi.</string>
+  <string name="update_saxerror">Réessayez plus tard.</string>
   <string name="update_error">Impossible de mettre à jour.</string>
   <string name="update_incomplete1">Impossible de mettre à jour</string>
   <string name="update_incomplete2">.</string>
@@ -62,6 +68,9 @@
   <string name="update_inprogress">Il ya une mise à jour en cours. Attendez qu\'elle soit terminée, puis essayez à nouveau.</string>
   <string name="update_nosdcard">Impossible de mettre à jour. Il n\'y a pas de stockage externe ou votre carte SD disponible.</string>
   <string name="update_rebuildsearch">Construction de l\'index de recherche des épisodes</string>
+  <string name="pref_autoupdate">Mise à jour automatique</string>
+  <string name="pref_autoupdatesummary">Mise à jour au démarrage, maximum une fois par jour</string>
+  <string name="pref_updatewifionly">Mise à jour sur Wi-Fi uniquement</string>
   <string name="show_airs">Diffusions</string>
   <string name="show_network">sur</string>
   <string name="show_pleaseupdate">Essayez de mettre à jour cette série pour afficher plus d\'informations (dans l\'aperçu, pression longue sur la série, sélectionnez Mise à jour). Si ca ne vous aide pas, il n\'y a probablement pas plus d\'informations sur TheTVDB. Allez sur leur site (www.thetvdb.com) pour apprendre à ajouter des éléments.</string>
@@ -109,9 +118,6 @@
   <string name="pref_hideimagessummary">Cacher les images SeriesGuide de votre galerie de photos (redémarrage nécessaire)</string>
   <string name="pref_more">Plus</string>
   <string name="about">A propos de SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - développé par Uwe Trottmann.\n\nVeuillez consulter le lien ci-dessous pour les CRÉDITS de toutes les personnes et les ressources qui aident à conduire ce projet\n\nhttp://code.google.com/p/seriesguide/wiki/Crédits</string>
-  <string name="help">Obtenir de l\'aide</string>
-  <string name="help_summary">Aller à la page d\'aide</string>
   <string name="backup">Sauvegarde / Restauration</string>
   <string name="backup_summary">Sauvegarder ou restaurer vos séries</string>
   <string name="pref_sharing">Partage</string>
@@ -125,27 +131,16 @@
   <string name="pref_notifications">Activer les notifications</string>
   <string name="pref_notificationssummary">Afficher les notifications pour les prochains épisodes</string>
   <string name="pref_usetz">Utiliser mon fuseau horaire</string>
-  <string name="pref_usetzsummary">Dates de diffusion dans votre fuseau horaire (pour les utilisateurs en dehors des Etats-Unis)</string>
   <string name="pref_offset">Décalage horaire</string>
   <string name="pref_offsetsummary">par un certain nombre d\'heures</string>
-  <string name="backup_description">La sauvegarde va copier de la base de données SeriesGuide dans le dossier \"seriesguidebackup\" sur votre carte SD. Si vous réinstallez SeriesGuide ou installez SeriesGuide sur un autre périphérique Android, juste mettre ce dossier sur la carte SD. Appuyer sur Restaurer ci-dessous et toutes vos séries seront disponibles ! (Vous ne pouvez pas importer de bases de données de versions plus récentes dans une version plus ancienne, sauf si elle utilise la même version de la base de données. Voir dans paramètres.)</string>
-  <string name="backup_failed_nosd">Sauvegarde impossible. Il n\'y a pas de stockage externe, comme une carte SD, de disponible.</string>
   <string name="backup_inprogress">Sauvegarde de base de données ...</string>
   <string name="backup_success">Sauvegarde réussie</string>
   <string name="backup_failed">Sauvegarde échouée</string>
   <string name="import_inprogress">Restaurez la base de données...</string>
-  <string name="import_failed_nosd">Impossible de restaurer la sauvegarde. Il n\'y a pas de stockage externe, telle une carte SD de disponible.</string>
-  <string name="import_failed_nofile">Il n\'y a pas de fichier de sauvegarde (\ "/ sdcard / seriesguidebackup / seriesdatabase \"). Impossible de restaurer la base de données.</string>
-  <string name="import_failed_noread">Le fichier de sauvegarde n\'est pas lisible (\ "/ sdcard / seriesguidebackup / seriesdatabase \"). Impossible de restaurer la base de données.</string>
   <string name="import_success">Base de données restaurée avec succès</string>
   <string name="import_failed">Restauration échouée</string>
-  <string name="dbupgradefailed">On dirait que votre sauvegarde est trop vieille ou vide. Note : Importer des sauvegardes de pre-2.0 dans une version 1.9.x tout d\'abord.</string>
-  <string name="backup_button">Sauvegarde sur carte SD</string>
-  <string name="import_button">Restauration à partir de la carte SD</string>
-  <string name="backup_question">Cela va écraser tous les anciens fichiers de sauvegarde.</string>
   <string name="backup_yes">Sauvegarde</string>
   <string name="backup_no">Ne pas sauvegarder</string>
-  <string name="import_question">Assurez-vous que la sauvegarde se trouve sur la carte SD. Toutes les séries actuelles seront remplacées.</string>
   <string name="import_yes">Restaurer</string>
   <string name="import_no">Ne pas restaurer</string>
   <string name="smallwidget">prochains épisodes (petit)</string>
@@ -181,23 +176,20 @@
   <string name="username">Nom d\'utilisateur</string>
   <string name="password">Mot de passe</string>
   <string name="apikey">Clé API</string>
+  <string name="pref_trakt">Informations d\'identification de trakt.tv</string>
+  <string name="pref_traktsummary">Ajouter ou modifier vos informations d\'identification de trakt.tv</string>
   <string name="pref_traktsync">Synchroniser avec trakt.tv</string>
-  <string name="pref_traktsyncsummary">Expérimentale, synchronisation manuelle avec trakt.tv</string>
   <string name="save">Enregistrer</string>
   <string name="dontsave">Ne pas enregistrer</string>
-  <string name="trakt_success">Marqué avec succès sur trakt.tv</string>
-  <string name="trakt_error">partage avec Trakt.TV a échoué</string>
   <string name="trakt_decryptfail">Mot de passe n\'a pas pu être décrypté</string>
   <string name="trakt_credentials_invalid">références non valides</string>
   <string name="trakt_generalerror">Quelque chose s\'est mal passé. Veuillez vérifier vos identifiants et essayez à nouveau.</string>
   <string name="pref_traktintegrate">Intégrer à trakt.tv</string>
-  <string name="pref_traktintegratesummary">Marquer comme vu dans l\'Aperçu partagé avec trakt.tv</string>
   <string name="donate">Achetez-moi une boisson (Paypal)</string>
   <string name="love">Totalement ninja!</string>
   <string name="trakt_createaccount">Créer un nouveau compte</string>
   <string name="email">Email</string>
   <string name="trakt_synctodevice">Synchroniser vers SeriesGuide</string>
-  <string name="trakt_experimental"><b>Experimental</b> synchronisation avec trakt. Ceci peut être instable à certains moments. Seuls les séries ajoutées à SeriesGuide sont synchronisés. Vers SeriesGuide marque seulement les épisodes regardés , mais ne supprime pas les marquages ​​existants dans SeriesGuide. Vers trakt ne transmet que les épisodes vus.</string>
   <string name="trakt_synctotrakt">Synchroniser vers trakt.tv</string>
   <string name="trakt_syncunseen">Synchronisez les épisodes non vus</string>
   <string name="powered_by_thetvdb">proposé par thetvdb.com</string>
@@ -221,10 +213,11 @@
     <item>Plus ancien en premier (DVD)</item>
   </string-array>
   <string-array name="share_items">
-    <item>Enregistrement GetGlue</item>
-    <item>Indiquer vu sur trakt.tv</item>
-    <item>Autres services</item>
-    <item>Noter sur trakt.tv</item>
+    <item>Check In (GetGlue)</item>
+    <item>Check In (trakt)</item>
+    <item>Mark seen (trakt)</item>
+    <item>Rate (trakt)</item>
+    <item>Other services</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>tout</item>

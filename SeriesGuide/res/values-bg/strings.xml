@@ -34,7 +34,6 @@
   <string name="sort">Подреди по</string>
   <string name="menu_updateart">Изтегли липсващите плакати</string>
   <string name="updateall_yes">Актуализирай (всички)</string>
-  <string name="menu_update_delta">Актуализирай (само променените)</string>
   <string name="context_updateshow">Актуализация</string>
   <string name="context_showinfo">Информация за сериала</string>
   <string name="context_marknext">Гледан следващ епизод</string>
@@ -109,9 +108,6 @@
   <string name="pref_hideimagessummary">Скрий SeriesGuide изображения от вашата галерия със снимки (изисква рестартиране)</string>
   <string name="pref_more">Още</string>
   <string name="about">Относно SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - разработено от Uwe Trottmann.\n\nМоля прегледайте CREDITS линка по-долу за допълнителна информация за всички хора и ресурси благодарение на, които този проект се разработва.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
-  <string name="help">Потърси помощ</string>
-  <string name="help_summary">Отидете на страницата за помощ</string>
   <string name="backup">Архивиране/Възстановяване</string>
   <string name="backup_summary">Архивиране или възстановяване на вашите сериали</string>
   <string name="pref_sharing">Споделяне</string>
@@ -125,27 +121,16 @@
   <string name="pref_notifications">Включи известията</string>
   <string name="pref_notificationssummary">Показвай известия за предстоящи епизоди</string>
   <string name="pref_usetz">Използвай моята часова зона</string>
-  <string name="pref_usetzsummary">Дати на излизане във вашата часова зона (за потребители извън САЩ)</string>
   <string name="pref_offset">Часова зона</string>
   <string name="pref_offsetsummary">по определено количество часове</string>
-  <string name="backup_description">Архивирането ще запази копие на базата данни на SeriesGuide в папка \"seriesguidebackup\" на вашата SD карта. Ако преинсталирате SeriesGuide или го инсталирате на друго Андроид устройство, просто сложете тази папка в SD картата на новото устройство. След това изберете Възстановяване по-долу и всички ваши сериали ще бъдат възстановени! (Моля обърнете внимание, че не може да вкарвате база данни от ново по-нова версия на SeriesGuide в по-стара такава, освен ако версията на базата данни не е еднаква. Може да проверите версиите в Относно от менюто Настройки.)</string>
-  <string name="backup_failed_nosd">Архивирането не може да бъде извършено. Не може да бъде открита външна памет, като SD карта.</string>
   <string name="backup_inprogress">Архивиране на база данни...</string>
   <string name="backup_success">Архивирането приключи успешно</string>
   <string name="backup_failed">Архивирането не беше успешно</string>
   <string name="import_inprogress">Възстановяване на база данни...</string>
-  <string name="import_failed_nosd">Възстановяването на архив не може да бъде извършено. Не може да бъде открита външна памет, като SD карта.</string>
-  <string name="import_failed_nofile">Не съществува архивен файл (\"/sdcard/seriesguidebackup/seriesdatabase\"). Базата данни не може да бъде възстановена.</string>
-  <string name="import_failed_noread">Архивният файл не може да бъде прочетен (\"/sdcard/seriesguidebackup/seriesdatabase\"). Базата данни не може да бъде възстановена.</string>
   <string name="import_success">Базата данни беше възстановена успешно</string>
   <string name="import_failed">Неуспешно възстановяване</string>
-  <string name="dbupgradefailed">Изглежда, че вашият архив е твърде стар или празен. Забележка: ако имате архив по-стар от версия 2.0, първо го възстановете във версия 1.9.х.</string>
-  <string name="backup_button">Архивиране върху SD карта</string>
-  <string name="import_button">Възстановяване от SD карта</string>
-  <string name="backup_question">Това ще препокрие всички предишни архивни файлове.</string>
   <string name="backup_yes">Архивиране</string>
   <string name="backup_no">Не архивирай</string>
-  <string name="import_question">Уверете се, че архива е на SD картата. Всички предишни сериали ще бъдат препокрити.</string>
   <string name="import_yes">Възстановяване</string>
   <string name="import_no">Не възстановявай</string>
   <string name="smallwidget">Нови епизоди (малък)</string>
@@ -182,24 +167,18 @@
   <string name="password">Парола</string>
   <string name="apikey">API ключ</string>
   <string name="pref_traktsync">Синхронизирай с trakt.tv</string>
-  <string name="pref_traktsyncsummary">Експериментално, ръчно синхронизиране с trakt.tv</string>
   <string name="save">Запиши</string>
   <string name="dontsave">Не запазвай промените</string>
-  <string name="trakt_success">Успешно маркиран на track.tv</string>
-  <string name="trakt_error">споделянето с track.tv беше неуспешно</string>
   <string name="trakt_decryptfail">паролата не може да се дешифрира</string>
   <string name="trakt_credentials_invalid">данните за достъп са невалидни</string>
   <string name="trakt_generalerror">Нещо се обърка. Моля проверете данните за достъп и опитайте отново.</string>
   <string name="pref_traktintegrate">Интегриране с track.tv</string>
-  <string name="pref_traktintegratesummary">Сподели с track.tv маркираните като гледани</string>
   <string name="donate">Почерпи ме едно питие (Paypal)</string>
-  <string name="feedback">Обратна връзка</string>
   <string name="love">Пълна нинджа!</string>
   <string name="hate">Слаб Сос :(</string>
   <string name="trakt_createaccount">Създаване на нов акаунт</string>
   <string name="email">Имейл</string>
   <string name="trakt_synctodevice">Синхронизирай със SeriesGuide</string>
-  <string name="trakt_experimental"><b>Експериментално</b> синхронизиране с trakt. Понякога може да бъде неточно. Само сериали, които са добавени в SeriesGuide биват синхронизирани. SeriesGuide ще отбелязва само гледани епизоди, но няма да премахва такива, които вече са маркирани като изгледани. Функцията trakt синхронизира само гледани епизоди.</string>
   <string name="trakt_synctotrakt">Синхронизирай с trakt.tv</string>
   <string name="trakt_syncunseen">Синхронизирай негледаните епизоди</string>
   <string name="powered_by_thetvdb">Благодарение на thetvdb.com</string>
@@ -223,10 +202,11 @@
     <item>Най-старите отгоре (DVD)</item>
   </string-array>
   <string-array name="share_items">
-    <item>Вписване в GetGlue</item>
-    <item>Маркирай като гледан на trakt.tv</item>
-    <item>Други услуги</item>
-    <item>Гласувай на trakt.tv</item>
+    <item>Check In (GetGlue)</item>
+    <item>Check In (trakt)</item>
+    <item>Mark seen (trakt)</item>
+    <item>Rate (trakt)</item>
+    <item>Other services</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Всички</item>

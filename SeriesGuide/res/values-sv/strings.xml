@@ -94,8 +94,6 @@
   <string name="pref_hideimagessummary">Göm SeriesGuide bilder från fotogalleriet (omstart krävs)</string>
   <string name="pref_more">Mer</string>
   <string name="about">Om SeriesGuide</string>
-  <string name="help">Få hjälp</string>
-  <string name="help_summary">Gå till hjälpsidan</string>
   <string name="backup">Säkerhetskopiering/återställning</string>
   <string name="backup_summary">Säkerhetskopiera eller återställ dina shower</string>
   <string name="clearGetGlueCredentials">Koppla från GetGlue</string>
@@ -107,22 +105,14 @@
   <string name="pref_notificationssummary">Visa meddelanden för kommande avsnitt</string>
   <string name="pref_usetz">Använd min tidszon</string>
   <string name="pref_offsetsummary">med ett visst antal timmar</string>
-  <string name="backup_description">Säkerhetskopiering kommer lagra en kopia av SeriesGuide-databasen i mappen \"seriesguidebackup\" på ditt SD-kort. Om du ominstallerar SeriesGuide eller installerar SeriesGuide på en annan Androidenhet, lägg då mappen på enhetens SD-kort. Tryck Återställ nedan och alla dina shower återhämtas! (Du kan ej importera databaser från nyare versioner till en äldre version, såvida det inte är samma databasversion. Se Om i Inställningar.)</string>
-  <string name="backup_failed_nosd">Kan inte säkerhetskopiera. Det finns ingen extern lagringsenhet, t.ex. ett SD-kort, tillgänglig.</string>
   <string name="backup_inprogress">Säkerhetskopiera databasen ...</string>
   <string name="backup_success">Säkerhetskopiering framgångsrika</string>
   <string name="backup_failed">Säkerhetskopieringen misslyckades</string>
   <string name="import_inprogress">Återställer databasen...</string>
-  <string name="import_failed_nosd">Kan inte återställa säkerhetskopia. Det finns ingen extern lagringsenhet, tex ett SD-kort, tillgänglig.</string>
-  <string name="import_failed_nofile">There finns ingen säkerhetskopia (\"/sdcard/seriesguidebackup/seriesdatabase\"). Kan inte återställa databasen.</string>
   <string name="import_success">Databasen har återställt</string>
   <string name="import_failed">Återställningen misslyckades</string>
-  <string name="backup_button">Säkerhetskopiering till SD-kort</string>
-  <string name="import_button">Återställa från SD-kort</string>
-  <string name="backup_question">Detta överskrivs alla tidigare säkerhetskopian.</string>
   <string name="backup_yes">Säkerhetskopiering</string>
   <string name="backup_no">Säkerhetskopiera inte</string>
-  <string name="import_question">Kontrollera att säkerhetskopian finns på SD-kortet. Alla aktuella episodar kommer att skrivas över.</string>
   <string name="import_yes">Återställa</string>
   <string name="import_no">Återställ inte</string>
   <string name="smallwidget">Nästa avsnitt (small)</string>
@@ -151,7 +141,6 @@
   <string name="save">Spara</string>
   <string name="dontsave">Spara inte</string>
   <string name="donate">Köp mig en drink (Paypal)</string>
-  <string name="feedback">Lämna kommentarer</string>
   <string name="love">Totalt ninja!</string>
   <string name="hate">Svag Sås: (</string>
   <string name="trakt_createaccount">Skapa nytt konto</string>
@@ -179,10 +168,11 @@
     <item>Äldst först (DVD)</item>
   </string-array>
   <string-array name="share_items">
-    <item>GetGlue Check In</item>
-    <item>Mark seen on trakt.tv</item>
-    <item>Andra tjänster</item>
-    <item>Rate on trakt.tv</item>
+    <item>Check In (GetGlue)</item>
+    <item>Check In (trakt)</item>
+    <item>Mark seen (trakt)</item>
+    <item>Rate (trakt)</item>
+    <item>Other services</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>All</item>

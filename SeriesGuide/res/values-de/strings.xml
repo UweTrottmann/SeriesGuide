@@ -34,7 +34,6 @@
   <string name="sort">Sortieren nach</string>
   <string name="menu_updateart">Fehlende Poster laden</string>
   <string name="updateall_yes">Aktualisieren (alle)</string>
-  <string name="menu_update_delta">Aktualisieren (nur veränderte)</string>
   <string name="context_updateshow">Aktualisieren</string>
   <string name="context_showinfo">Serien Info</string>
   <string name="context_marknext">Nächste Folge gesehen</string>
@@ -53,6 +52,13 @@
   <string name="context_unfavorite">Von Favoriten entfernen</string>
   <string name="favorited">Zu Favoriten hinzugefügt</string>
   <string name="unfavorited">Von Favoriten entfernt</string>
+  <string name="update_notification">Ihre Serien werden aktualisiert...</string>
+  <string name="update_single">Aktualisiere Serie...</string>
+  <string name="update_delta">Aktualisiere veraltete Serien...</string>
+  <string name="update_full">Aktualisiere alle Serien...</string>
+  <string name="update_failed">Aktualisierung fehlgeschlagen.</string>
+  <string name="update_offline">Überprüfen Sie Ihre Internet/Wi-Fi-Verbindung.</string>
+  <string name="update_saxerror">Versuchen Sie es später erneut.</string>
   <string name="update_error">Konnte kein Update durchführen</string>
   <string name="update_incomplete1">Konnte</string>
   <string name="update_incomplete2">nicht aktualisieren.</string>
@@ -62,6 +68,9 @@
   <string name="update_inprogress">Es wird gerade ein Update ausgeführt. Warten Sie das Ende des Updates ab und versuchen Sie es erneut.</string>
   <string name="update_nosdcard">Konnte kein Update ausführen. Es ist kein externer Speicher oder eine SD Karte verfügbar.</string>
   <string name="update_rebuildsearch">Baue Suchindex für Folgen</string>
+  <string name="pref_autoupdate">Auto-Update</string>
+  <string name="pref_autoupdatesummary">Aktualisiert am Start, höchstens einmal pro Tag</string>
+  <string name="pref_updatewifionly">Akt. nur via Wi-Fi</string>
   <string name="show_airs">läuft</string>
   <string name="show_network">auf</string>
   <string name="show_pleaseupdate">Bitte aktualisiere diese Serie um mehr Information anzuzeigen (in der Übersicht lange auf den Namen drücken, Aktualisieren wählen). Sollte dies ohne Wirkung sein, kannst du auf www.thetvdb.com Informationen für diese Serie hinzufügen.</string>
@@ -109,8 +118,6 @@
   <string name="pref_hideimagessummary">SeriesGuide Bilder nicht in Gallerie anzeigen (Neustart notwendig)</string>
   <string name="pref_more">Weiteres</string>
   <string name="about">Über SeriesGuide</string>
-  <string name="help">Hilfe (Englisch)</string>
-  <string name="help_summary">Zeige Hilfe-Seite an</string>
   <string name="backup">Sichern/Wiederherstellen</string>
   <string name="backup_summary">Sicherung aller Serien erstellen oder Sicherung wiederherstellen</string>
   <string name="pref_sharing">Empfehlen</string>
@@ -124,29 +131,16 @@
   <string name="pref_notifications">Benachrichtigungen aktivieren</string>
   <string name="pref_notificationssummary">Benachrichtigungen für bevorstehende Folgen anzeigen</string>
   <string name="pref_usetz">Meine Zeitzone verwenden</string>
-  <string name="pref_usetzsummary">Sendetermine in Ihrer Zeitzone (für Nutzer außerhalb der USA)</string>
   <string name="pref_offset">Zeitkorrektur</string>
   <string name="pref_offsetsummary">um eine bestimmte Anzahl von Stunden</string>
-  <string name="backup_description">Backup speichert eine Kopie der Datenbank von SeriesGuide im Ordner \"seriesguidebackup\" auf Ihrer SD Karte. Falls Sie SeriesGuide neu installieren oder SeriesGuide auf einem anderen Android-Gerät installieren, müssen Sie nur diesen Ordner auf die SD Karte des Geräts kopieren. Ein Klick auf Wiederherstellen und all Ihre Serien sind wieder zurück! (Backups neuerer SeriesGuide-Versionen können nicht in alten Versionen wiederhergestellt werden, außer sie verwenden die gleiche Datenbankversion. Siehe Über SeriesGuide in den Einstellungen.)</string>
-  <string name="backup_failed_nosd">Konnte kein Backup erstellen. Es ist kein externer Speicher, z.B. eine SD Karte, verfügbar.</string>
   <string name="backup_inprogress">Erstelle Datenbank Backup...</string>
   <string name="backup_success">Backup erforlgreich</string>
   <string name="backup_failed">Backup fehlgeschlagen</string>
   <string name="import_inprogress">Wiederherstellen der Datenbank...</string>
-  <string name="import_failed_nosd">Konnte Backup nicht wiederherstellen. Es ist kein externer Speicher, z.B. eine SD Karte, verfügbar.</string>
-  <string name="import_failed_nofile">Es gibt keine Backup-Datei
-		(\"/sdcard/seriesguidebackup/seriesdatabase\"). Konnte Datenbank nicht wiederherstellen.</string>
-  <string name="import_failed_noread">Die Backup-Datei ist nicht lesbar 
-		(\"/sdcard/seriesguidebackup/seriesdatabase\"). Konnte Datenbank nicht wiederherstellen.</string>
   <string name="import_success">Datenbank erfolgreich wiederhergestellt</string>
   <string name="import_failed">Wiederherstellen fehlgeschlagen</string>
-  <string name="dbupgradefailed">Sieht aus als ob die Sicherung zu alt oder leer ist. Hinweis: Vor-2.0-Sicherungen zuerst in eine 1.9.x-Version importieren.</string>
-  <string name="backup_button">Backup auf SD Karte</string>
-  <string name="import_button">Wiederherstellen von SD Karte</string>
-  <string name="backup_question">Dies überschreibt eine vorhandene Backup-Datei.</string>
   <string name="backup_yes">Backup erstellen</string>
   <string name="backup_no">Kein Backup</string>
-  <string name="import_question">Stellen Sie sicher, dass sich die Backup-Datei auf der SD Karte befindet. Alle aktuellen Serien werden gelöscht.</string>
   <string name="import_yes">Wiederherstellen</string>
   <string name="import_no">Nicht wiederherstellen</string>
   <string name="smallwidget">Nächste Folgen (klein)</string>
@@ -185,18 +179,13 @@
   <string name="pref_trakt">trakt.tv Anmeldeinformationen</string>
   <string name="pref_traktsummary">Hinzufügen oder Bearbeiten Ihrer trakt.tv Anmeldeinformationen</string>
   <string name="pref_traktsync">Synchronisieren mit trakt.tv</string>
-  <string name="pref_traktsyncsummary">Experimentelle, manuelle Synchronisierung mit trakt.tv</string>
   <string name="save">Speichern</string>
   <string name="dontsave">Nicht speichern</string>
-  <string name="trakt_success">Erfolgreich auf trakt.tv markiert</string>
-  <string name="trakt_error">trakt.tv Markierung gescheitert</string>
   <string name="trakt_decryptfail">Kennwort konnte nicht entschlüsselt werden</string>
   <string name="trakt_credentials_invalid">Anmeldeinformationen ungültig</string>
   <string name="trakt_generalerror">Etwas ist schief gelaufen. Bitte überprüfen Sie Ihre Anmeldeinformationen, und versuchen Sie es erneut.</string>
   <string name="pref_traktintegrate">trakt.tv integrieren</string>
-  <string name="pref_traktintegratesummary">Markieren als gesehen in der Übersicht wird an trakt.tv übermittelt</string>
   <string name="donate">Spendieren Sie ein Bier (Paypal)</string>
-  <string name="feedback">Geben Sie Feedback</string>
   <string name="love">Absolut top!</string>
   <string name="hate">Totaler Flop!</string>
   <string name="trakt_createaccount">Neues Konto einrichten</string>
@@ -205,7 +194,6 @@
   <string name="trakt_synctotrakt">Sync nach trakt.tv</string>
   <string name="trakt_syncunseen">Auch ungesehene Folgen syncen</string>
   <string name="powered_by_thetvdb">ein Dienst von thetvdb.com</string>
-  <string name="download_stable">SeriesGuide downloaden</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Nächste Folge</item>
@@ -226,10 +214,11 @@
     <item>Älteste zuerst (DVD)</item>
   </string-array>
   <string-array name="share_items">
-    <item>GetGlue Check In</item>
-    <item>Gesehen mark. (trakt.tv)</item>
-    <item>Andere Dienste</item>
-    <item>Bewerten (trakt.tv)</item>
+    <item>Check In (GetGlue)</item>
+    <item>Check In (trakt)</item>
+    <item>Mark seen (trakt)</item>
+    <item>Rate (trakt)</item>
+    <item>Other services</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Alle</item>

@@ -102,10 +102,6 @@
   <string name="pref_hideimagessummary">Ocultar imagens da SeriesGuide da sua galeria (é necessário reiniciar)</string>
   <string name="pref_more">Mais</string>
   <string name="about">Sobre SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - desenvolvido por Uwe Trottmann.\n\nPor favor, veja os CRÉDITOS no link abaixo.
-\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
-  <string name="help">Obter ajuda</string>
-  <string name="help_summary">Ir para a página de ajuda</string>
   <string name="backup">Backup/Restauração</string>
   <string name="backup_summary">Fazer backup ou restaurar as suas séries</string>
   <string name="pref_sharing">Partilhar</string>
@@ -118,27 +114,16 @@
   <string name="pref_notifications">Permitir notificações</string>
   <string name="pref_notificationssummary">Mostrar notificações de futuros episódios</string>
   <string name="pref_usetz">Usar o meu fuso horário</string>
-  <string name="pref_usetzsummary">Datas de exibição no seu fuso horário (para usuários fora dos EUA)</string>
   <string name="pref_offset">Tempo dessincronizado</string>
   <string name="pref_offsetsummary">por uma certa quantidade de horas</string>
-  <string name="backup_description">Backup irá armazenar uma cópia da base de dados do SeriesGuide na pasta \ "seriesguidebackup \" no seu cartão SD. Se você reinstalar ou instalar SeriesGuide em outro dispositivo Android, basta colocar esta pasta sobre os dispositivos de cartão SD. Hit Restaurar abaixo e todos os seus programas vão estar lá de novo! (Não é possível importar dados de versões mais recentes numa versão mais antiga, só que usa a versão da mesma base de dados. Consulte Sobre em Configurações.)</string>
-  <string name="backup_failed_nosd">Não é possível fazer backup. Não existe armazenamento externo, como um cartão SD, disponíveis.</string>
   <string name="backup_inprogress">A fazer backup da base de dados...</string>
   <string name="backup_success">Backup bem sucedido</string>
   <string name="backup_failed">Backup falhou</string>
   <string name="import_inprogress">Restaurar base de dados ...</string>
-  <string name="import_failed_nosd">Não é possível fazer backup. Não existe um armazenamento externo, como um cartão SD, disponíveis.</string>
-  <string name="import_failed_nofile">Não há nenhum arquivo de backup (\ "/ sdcard / seriesguidebackup / seriesdatabase \"). Não é possível restaurar a base de dados.</string>
-  <string name="import_failed_noread">O arquivo de backup não é legível (\ "/ sdcard / seriesguidebackup / seriesdatabase \"). Não é possível restaurar a base de dados.</string>
   <string name="import_success">Base de dados restaurada com sucesso</string>
   <string name="import_failed">Restauração falhou</string>
-  <string name="dbupgradefailed">Parece que o backup é muito antigo ou está vazio. Nota: Importe pre-2.0 backups para  uma primeira versão 1.9.x.</string>
-  <string name="backup_button">Backup para o cartão SD</string>
-  <string name="import_button">Restaurar a partir do cartão SD</string>
-  <string name="backup_question">Isso substituirá qualquer arquivo de backup anterior.</string>
   <string name="backup_yes">Backup</string>
   <string name="backup_no">Não fazer backup</string>
-  <string name="import_question">Verifique se o backup está no cartão SD. Todas as séries actuais serão substituídas.</string>
   <string name="import_yes">Restaurar</string>
   <string name="import_no">Não restaurar</string>
   <string name="smallwidget">Próximos episódios (pequeno)</string>
@@ -175,18 +160,14 @@
   <string name="pref_traktsync">Sincronizar com trakt.tv</string>
   <string name="save">Guardar</string>
   <string name="dontsave">Não guardar</string>
-  <string name="trakt_success">Marcado com êxito em trakt.tv</string>
-  <string name="trakt_error">Falha na partilha em trakt.tv</string>
   <string name="trakt_decryptfail">a password não pode ser descodificada</string>
   <string name="trakt_credentials_invalid">credenciais inválidas</string>
   <string name="pref_traktintegrate">Integrar trakt.tv</string>
   <string name="donate">Pague-me um copo (Paypal)</string>
-  <string name="feedback">Dê a sua opinião</string>
   <string name="love">Totalmente ninja!</string>
   <string name="trakt_createaccount">Criar nova conta</string>
   <string name="email">E-mail</string>
   <string name="trakt_synctodevice">Sincronizar com SeriesGuide</string>
-  <string name="trakt_experimental">Sincronização <b>experimental</b> com trakt. Somente series adiconadas em SeriesGuide são sincronizadas.Na SeriesGuide só marca episódios vistos, mas não remove marcas de visto existentes na SeriesGuide. No trakt é somente transmitido os episódios assistidos. </string>
   <string name="trakt_synctotrakt">Sincronizar com trakt.tv</string>
   <string name="trakt_syncunseen">Sincronizar os episódios por assistir</string>
   <string name="powered_by_thetvdb">Powered by thetvdb.com</string>
@@ -210,10 +191,11 @@
     <item>Antigo primeiro (DVD)</item>
   </string-array>
   <string-array name="share_items">
-    <item>GetGlue Check In</item>
-    <item>Marcar como visto em trakt.tv</item>
-    <item>Outros serviços</item>
-    <item>Classifique em trakt.tv</item>
+    <item>Check In (GetGlue)</item>
+    <item>Check In (trakt)</item>
+    <item>Mark seen (trakt)</item>
+    <item>Rate (trakt)</item>
+    <item>Other services</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Todos</item>
