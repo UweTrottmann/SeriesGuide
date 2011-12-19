@@ -326,11 +326,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                                 }).start();
                             }
                         }).setNegativeButton(getString(R.string.dontdelete_show), null).create();
-            case WHATS_NEW_DIALOG:
-                return new AlertDialog.Builder(this).setTitle(getString(R.string.whatsnew_title))
-                        .setIcon(android.R.drawable.ic_dialog_info)
-                        .setMessage(getString(R.string.whatsnew_content))
-                        .setPositiveButton(android.R.string.ok, null).create();
             case BETA_WARNING_DIALOG:
                 /* Used for unstable beta releases */
                 return new AlertDialog.Builder(this)
