@@ -11,6 +11,7 @@ Version 2.4 *(in development)*
 * `Upcoming` renamed `Activity`, now includes the latest activity of friends on trakt.
 * Optimized for Android 4.0.
 * TVDb button in `Overview`.
+* Make the backup screen a little more informative.
 
 Version 2.3 *(2011-11-26)*
 --------------------------------
