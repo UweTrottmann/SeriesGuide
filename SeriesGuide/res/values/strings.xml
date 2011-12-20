@@ -286,6 +286,10 @@
     <string name="trending">Trending</string>
     <string name="recommended">Recommended</string>
     <string name="library">Library</string>
+    <string name="welcome_message"><big>Welcome!</big>\nHere are a few things to get you started.\n\nSeriesGuide works with your trakt.tv account:\n - Check In shows\n - View friends activity\n - View recommendations and library</string>
+    <string name="welcome_setuptrakt">Setup a trakt account</string>
+    <string name="welcome_gettingstarted">To populate your show list:</string>
+    <string name="welcome_add">Start adding shows</string>
 
     <string-array name="showfilter_list">
         <item>All</item>

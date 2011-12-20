@@ -17,14 +17,17 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.WelcomeDialogFragment;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 
 /**
  * A helper for showing EULAs and storing a {@link SharedPreferences} bit
@@ -55,7 +58,7 @@ public class EulaHelper {
      *            EULA must be accepted or the program exits.
      * @param activity Activity started from.
      */
-    public static void showEula(final boolean accepted, final Activity activity) {
+    public static void showEula(final boolean accepted, final FragmentActivity activity) {
         AlertDialog.Builder eula = new AlertDialog.Builder(activity).setTitle(R.string.eula_title)
                 .setIcon(android.R.drawable.ic_dialog_info).setMessage(R.string.eula_text)
                 .setCancelable(accepted);
@@ -75,6 +78,21 @@ public class EulaHelper {
                     new android.content.DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             setAcceptedEula(activity);
+
+                            // show welcome dialog
+                            FragmentTransaction ft = activity.getSupportFragmentManager()
+                                    .beginTransaction();
+                            Fragment prev = activity.getSupportFragmentManager().findFragmentByTag(
+                                    "welcome-dialog");
+                            if (prev != null) {
+                                ft.remove(prev);
+                            }
+                            ft.addToBackStack(null);
+
+                            // Create and show the dialog.
+                            WelcomeDialogFragment newFragment = WelcomeDialogFragment.newInstance();
+                            newFragment.show(ft, "welcome-dialog");
+
                             dialog.dismiss();
                         }
                     }).setNegativeButton(R.string.decline,
