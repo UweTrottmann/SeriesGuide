@@ -187,7 +187,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             }
         });
         list.setOnScrollListener(this);
-        // TODO: make new empty view, move current to a welcome dialog
         View emptyView = findViewById(R.id.empty);
         if (emptyView != null) {
             list.setEmptyView(emptyView);

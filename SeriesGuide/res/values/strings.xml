@@ -56,7 +56,7 @@
     <string name="unmark_all">Watched none</string>
 
     <!-- SeriesGuide mainscreen -->
-    <string name="hello"><big>Welcome to SeriesGuide</big>\n\nLooks like you have no shows added, yet. Click <b>Add Show</b> in the menu to add some.\n\nOr if you want to <b>restore a backup</b>, open Settings in the menu and look for Backup/Restore.</string>
+    <string name="shows_empty">Currently there are no shows here.</string>
     <string name="confirm_delete">Do you really want to remove that show?</string>
     <string name="delete_show">Remove</string>
     <string name="dontdelete_show">Don\'t remove</string>
