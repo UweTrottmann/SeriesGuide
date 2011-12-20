@@ -212,11 +212,10 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         final boolean isAutoUpdateEnabled = prefs.getBoolean(SeriesGuidePreferences.KEY_AUTOUPDATE,
                 true);
         if (isAutoUpdateEnabled && !TaskManager.getInstance(this).isUpdateTaskRunning(false)) {
-            // allow auto-update if 11 hours have passed
+            // allow auto-update if 12 hours have passed
             final long previousUpdateTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTUPDATE, 0);
             long currentTime = System.currentTimeMillis();
-            final boolean isTime = currentTime - (previousUpdateTime) > DateUtils.DAY_IN_MILLIS
-                    - DateUtils.HOUR_IN_MILLIS;
+            final boolean isTime = currentTime - (previousUpdateTime) > 12 * DateUtils.HOUR_IN_MILLIS;
 
             if (isTime) {
                 // allow auto-update only on allowed connection
@@ -503,7 +502,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 return true;
             case R.id.menu_preferences:
                 startActivity(new Intent(this, SeriesGuidePreferences.class));
-                
+
                 return true;
             case R.id.menu_fullupdate:
                 fireTrackerEvent("Full Update");
@@ -512,7 +511,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 return true;
             case R.id.menu_feedback: {
                 fireTrackerEvent("Feedback");
-                
+
                 final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
                 intent.setType("plain/text");
                 intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
@@ -523,7 +522,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
 
                 startActivity(Intent.createChooser(intent, "Send mail..."));
-                
+
                 return true;
             }
             case R.id.menu_help: {
@@ -531,9 +530,9 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
                 Intent myIntent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse(SeriesGuidePreferences.HELP_URL));
-                
+
                 startActivity(myIntent);
-                
+
                 return true;
             }
             default: {
