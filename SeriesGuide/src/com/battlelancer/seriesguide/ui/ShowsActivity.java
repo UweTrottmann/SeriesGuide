@@ -87,8 +87,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final int CONFIRM_DELETE_DIALOG = 304;
 
-    private static final int WHATS_NEW_DIALOG = 305;
-
     private static final int SORT_DIALOG = 306;
 
     private static final int BETA_WARNING_DIALOG = 307;
