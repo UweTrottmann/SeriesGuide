@@ -42,7 +42,6 @@
   <string name="unmark_episode">Onbekeken aflevering</string>
   <string name="mark_all">Alles bekeken</string>
   <string name="unmark_all">Niets bekeken</string>
-  <string name="hello"><big>Welkom bij SeriesGuide</big>\n\nEr zijn momenteel nog geen series toegevoegd. Klik <b>Serie toevoegen</b> in het menu om deze toe te voegen.\n\nOf <b>Herstel back-up</b>, via Instellingen in het menu en zoek naar Back-up/Herstellen.</string>
   <string name="confirm_delete">Programma verwijderen?</string>
   <string name="delete_show">Verwijderen</string>
   <string name="dontdelete_show">Annuleren</string>

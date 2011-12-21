@@ -42,7 +42,6 @@
   <string name="unmark_episode">Епизода все още не е гледан</string>
   <string name="mark_all">Всички са гледани</string>
   <string name="unmark_all">Никой не е гледан</string>
-  <string name="hello"><big>Добре дошли в SeriesGuide</big>\n\nИзглежда, че все още нямате добавени сериали. За да добавите нови, моля изберете <b>Добавяне на сериал</b> от менюто.\n\nИли ако желаете да <b>възстановите архив</b>, отворете Настройки от менюто и потърсете Архивиране/Възстановяване.</string>
   <string name="confirm_delete">Наистина ли желаете да премахнете този сериал?</string>
   <string name="delete_show">Премахване</string>
   <string name="dontdelete_show">Не изтривайте</string>

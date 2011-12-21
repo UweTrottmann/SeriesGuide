@@ -42,7 +42,6 @@
   <string name="unmark_episode">Episode pas encore vu</string>
   <string name="mark_all">Tous regardé</string>
   <string name="unmark_all">aucun de vu</string>
-  <string name="hello"><big>Bienvenue sur SeriesGuide</big>\n\nIl semble que vous n\'avez pas encore ajoutées de séries. Cliquez sur <b>Ajouter Série</b> dans le menu pour en ajouter.\n\nOu si vous souhaitez <b>restaurer une sauvegarde</b>, ouvrez Paramètres dans le menu et rechercher sauvegarde/restauration.</string>
   <string name="confirm_delete">Voulez-vous vraiment supprimer cette série?</string>
   <string name="delete_show">Supprimer</string>
   <string name="dontdelete_show">Ne pas supprimer</string>

@@ -41,7 +41,6 @@
   <string name="unmark_episode">Endnu ikke set episode</string>
   <string name="mark_all">Set alle</string>
   <string name="unmark_all">Set ingen</string>
-  <string name="hello"><big>Velkommen til SeriesGuide</big>\n\nDet ser ud som om du ikke har tilføjet tv-serier endnu. Vælg <b>Tilføj tv-serie</b> i menuen for at tilføje tv-serier.\n\nEller du kan <b>gendanne en sikkerhedskopi</b>, vælg  indstillinger i menuen og find Sikkerhedskopier/Gendan.</string>
   <string name="confirm_delete">Er du sikker på at du vil fjerne denne serie?</string>
   <string name="delete_show">Fjern</string>
   <string name="dontdelete_show">Fjern ikke</string>

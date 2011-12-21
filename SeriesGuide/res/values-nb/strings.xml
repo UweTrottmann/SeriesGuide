@@ -42,7 +42,6 @@
   <string name="unmark_episode">Ennå ikke sett episode</string>
   <string name="mark_all">Sett alle</string>
   <string name="unmark_all">Ingen sett</string>
-  <string name="hello"><big>Velkommen til SeriesGuide</big>\n\nDu har ikke lagt til noen serier, enda. Klikk <b>Legg til</b> i menyen for å legge til noen.\n\nHvis du ønsker å <b>gjenopprette en sikkerhetskopi</b>, gå til innstillingene og se etter Sikkerhetskopiering/gjenoppretting.</string>
   <string name="confirm_delete">Vil du virkelig fjerne serien?</string>
   <string name="delete_show">Fjern</string>
   <string name="dontdelete_show">Ikke fjern</string>

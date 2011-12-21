@@ -42,7 +42,6 @@
   <string name="unmark_episode">Пока не просмотренный эпизод</string>
   <string name="mark_all">Видел всё</string>
   <string name="unmark_all">Не видел ни одного</string>
-  <string name="hello"><big>Добро пожаловать в SeriesGuide</big>\n\n Похоже вы ещё не добавили ни одного сериала. Нажмите кнопку <b>Добавить сериал</b> в меню, чтобы добавить какой-нибудь.\n\n или, если вы хотите <b>восстановить резервную копию,</b> откройте Настройки в меню и ищите Резервное копирование / Восстановление.</string>
   <string name="confirm_delete">Вы действительно хотите удалить это шоу?</string>
   <string name="delete_show">Удалить</string>
   <string name="dontdelete_show">Не удалять</string>

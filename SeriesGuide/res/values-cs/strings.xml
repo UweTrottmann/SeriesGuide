@@ -40,7 +40,6 @@
   <string name="unmark_episode">Epizoda zatím nezhlédnuta</string>
   <string name="mark_all">Všechny zhlédnuty</string>
   <string name="unmark_all">Nezhlédnut žádný</string>
-  <string name="hello"><big>Vítejte v SeriesGuide</big> \n\n Zdá se, že zatím nemáte přidné žádné pořady. Klepněte na tlačítko <b>Přidat Pořad</b> v menu, abyste nějaké přidali. \n\n Nebo pokud chcete <b>obnovit zálohu</b>, otevřete Nastavení v menu a zvolte Zálohování/Obnovení.</string>
   <string name="confirm_delete">Opravdu chcete odstranit tento pořad?</string>
   <string name="delete_show">Odstranit</string>
   <string name="dontdelete_show">Neodstraňovat</string>

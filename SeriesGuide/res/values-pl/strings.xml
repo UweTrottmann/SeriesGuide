@@ -41,7 +41,6 @@
   <string name="unmark_episode">Oznacz jako nie obejrzany</string>
   <string name="mark_all">Oznacz jako obejrzane</string>
   <string name="unmark_all">Oznacz jako nie obejrzane</string>
-  <string name="hello"><big>Witaj w SeriesGuide</big>\n\nWygląda na to, że jeszcze nie dodałeś żadnego serialu. Kliknij na <b>Dodaj serial</b> w menu, żeby jakiś dodać.\n\nJeśli chcesz <b>przywrócić kopię zapasową</b>, wejdź w Ustawienia i poszukaj opcji Kopii zapasowej.</string>
   <string name="confirm_delete">Czy na pewno chcesz usunąć ten serial?</string>
   <string name="delete_show">Usuń</string>
   <string name="dontdelete_show">Nie</string>

@@ -42,7 +42,6 @@
   <string name="unmark_episode">Episódio ainda não assistido</string>
   <string name="mark_all">Todos assistidos</string>
   <string name="unmark_all">Nenhum assistido</string>
-  <string name="hello"><big>Bem-vindo ao SeriesGuide</big>\n\nLooks como você não acrescentou séries, ainda. Clique em <b>Adicionar Série</b> no menu para adicionar.\n\n Ou se você quiser <b>restaurar um backup,</b> abra as Configurações no menu e procurar Backup / Restore.</string>
   <string name="confirm_delete">Deseja realmente remover essa série?</string>
   <string name="delete_show">Remover</string>
   <string name="dontdelete_show">Não remover</string>

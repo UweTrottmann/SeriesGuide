@@ -13,7 +13,6 @@
   <string name="ioerror">Tapahtui verkkovirhe. Sinulla sattaa olla rajoitettu pääsy kohteeseen TheTVDB.com yhteydelläsi tällä hetkellä. Yritä myöhemmin uudestaan.</string>
   <string name="saxerror">TheTVDB:n vastausta ei ymmärretty. Yritä myöhemmin uudestaan.</string>
   <string name="offline">Käytössä ei ole aktiivista yhteyttä internetiin. Tarkista yhteytesi internetiin ja yritä uudestaan.</string>
-  <string name="whatsnew_title">Mitä uutta</string>
   <string name="search_hint">Hae jaksoja</string>
   <string name="search_title">Löytyneet jaksot</string>
   <string name="share_episode">Jaa jakso</string>
@@ -35,15 +34,16 @@
   <string name="sort">Lajittele</string>
   <string name="menu_updateart">Nouda puuttuvat julisteet</string>
   <string name="updateall_yes">Päivitä (kaikki)</string>
+  <string name="menu_update_delta">Päivitä (vain vanhentuneet)</string>
   <string name="context_updateshow">Päivitä</string>
   <string name="context_showinfo">Näytä tiedot</string>
   <string name="context_marknext">Seuraava jakso katsottu</string>
   <string name="today">tänään</string>
+  <string name="now">nyt</string>
   <string name="mark_episode">Jakso katsottu</string>
   <string name="unmark_episode">Jakso vielä katsomatta</string>
   <string name="mark_all">Kaikki katsottu</string>
   <string name="unmark_all">Kaikki katsomattomia</string>
-  <string name="hello"><big>Tervetuloa SeriesGuideen</big>\n\nEt ole näkjöään lisännyt yhtäkään ohjelmaa, vielä. Napsauta valikossa <b>Lisää ohjelma</b> lisätäksesi joitakin.\n\nTai jos haluat <b>palauttaa varmuuskopion</b>, avaa valikossa Asetukset ja etsi kohta Varmuuskopioi/Palauta.</string>
   <string name="confirm_delete">Haluatko varmasti poistää tämän ohjelman?</string>
   <string name="delete_show">Poista</string>
   <string name="dontdelete_show">Älä poista</string>
@@ -119,6 +119,7 @@
   <string name="pref_hideimagessummary">Piilota SeriesGuiden kuvat kuvagalleriasta (vaatii uudelleenkäynnistyksen)</string>
   <string name="pref_more">Lisää</string>
   <string name="about">Tietoja SeriesGuidesta</string>
+  <string name="help">Apua</string>
   <string name="backup">Varmuuskopioi/Palauta</string>
   <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
   <string name="pref_sharing">Jakaminen</string>
@@ -134,12 +135,20 @@
   <string name="pref_usetz">Käytä aikavyöhykettäni</string>
   <string name="pref_offset">Aikaviive</string>
   <string name="pref_offsetsummary">tietyllä tuntimäärällä</string>
+  <string name="backup_path"><b>Varmuuskopiointikansio</b></string>
+  <string name="backup_version"><b>Tietokannan versio</b></string>
+  <string name="backup_failed_nosd">Ei voi varmuuskopioida. Varmuuskopiointikansiota ei löydy.</string>
   <string name="backup_inprogress">Varmuuskopioidaan tietokantaa...</string>
   <string name="backup_success">Varmuuskopioitu onnistuneesti</string>
   <string name="backup_failed">Varmuuskopiointi epäonnistui</string>
   <string name="import_inprogress">Palautetaan tietokantaa...</string>
+  <string name="import_failed_nosd">Ei voi palauttaa varmuuskopiota. Varmuuskopiointikansiota ei löydy.</string>
+  <string name="import_failed_nofile">Varmuuskopiointitiedostoa ei ole. Ei voi palauttaa tietokantaa.</string>
+  <string name="import_failed_noread">Varmuuskopiointitiedosto ei ole luettavissa. Ei voi palauttaa tietokantaa.</string>
   <string name="import_success">Tietokanta palautettu onnistuneesti</string>
   <string name="import_failed">Palautus epäonnistui</string>
+  <string name="backup_button">Varmuuskopioi</string>
+  <string name="import_button">Palauta</string>
   <string name="backup_yes">Varmuuskopioi</string>
   <string name="backup_no">Älä varmuuskopioi</string>
   <string name="import_yes">Palauta</string>
@@ -187,6 +196,7 @@
   <string name="trakt_generalerror">Jokin meni pieleen. Tarkista käyttäjätietosi ja yritä uudelleen.</string>
   <string name="pref_traktintegrate">Integroi trakt.tv</string>
   <string name="donate">Osta minulle drinkki (Paypal)</string>
+  <string name="feedback">Lähetä palautetta</string>
   <string name="love">Maailman parasta!</string>
   <string name="hate">Ei sytyttänyt :(</string>
   <string name="trakt_createaccount">Luo uusi tili</string>
@@ -218,7 +228,7 @@
     <item>Check In (GetGlue)</item>
     <item>Check In (trakt)</item>
     <item>Mark seen (trakt)</item>
-    <item>Rate (trakt)</item>
+    <item>Arvostele (trakt)</item>
     <item>Other services</item>
   </string-array>
   <string-array name="showfilter_list">

@@ -40,7 +40,6 @@
   <string name="unmark_episode">Episodio no visto</string>
   <string name="mark_all">Todos vistos</string>
   <string name="unmark_all">Ninguno visto</string>
-  <string name="hello"><big>Bienvenido a SeriesGuide</big>\n\nNo ha añadido series todavía. Pulse <b>Añadir Serie</b> en el menú para añadirlas.\n\nO si quiere <b>restaurar una copia de seguridad</b>, abra Configuración en el menú y busque Respaldar/Restaurar.</string>
   <string name="confirm_delete">¿Estás seguro que quieres eliminar ese programa?</string>
   <string name="delete_show">Eliminar</string>
   <string name="dontdelete_show">No eliminar</string>

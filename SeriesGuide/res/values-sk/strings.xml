@@ -41,7 +41,6 @@
   <string name="unmark_episode">Ešte nepozretá epizóda</string>
   <string name="mark_all">Pozreté všetky</string>
   <string name="unmark_all">Nepozreté žiadne</string>
-  <string name="hello"><big>Vitajte v SeriesGuide</big> \n\n Zdá se, že zatiaľ nemáte pridné žiadne relácie. Stlačte tlačidlo <b>Pridať reláciu</b> v menu, aby ste nejaké pridali. \n\n Alebo pokiaľ chcete <b>obnoviť zálohu</b>, otvorte Nastavenie v menu a zvoľte Zálohovanie/Obnovenie.</string>
   <string name="confirm_delete">Naozaj chcete odstrániť túto show?</string>
   <string name="delete_show">Odstrániť</string>
   <string name="dontdelete_show">Neodstraňovat</string>

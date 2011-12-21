@@ -42,7 +42,6 @@
   <string name="unmark_episode">Még nem láttam</string>
   <string name="mark_all">Mind megnézve</string>
   <string name="unmark_all">Egyik sincs megnézve</string>
-  <string name="hello"><big>Üdvözli a SeriesGuide</big>\n\nÚgy tűnik, még nincs sorozat hozzáadva az adatbázishoz. Kattintson a <b>Sorozat hozzáadása</b> ikonra a hozzáadáshoz.\n\nDe választhatja a <b>Biztonsági mentés</b> menüpontot is a Beállításokban egy meglévő adatbázis helyreállításához.</string>
   <string name="confirm_delete">El szeretnéd távolítani ezt a sorozatot?</string>
   <string name="delete_show">Törlés</string>
   <string name="dontdelete_show">Mégse</string>
