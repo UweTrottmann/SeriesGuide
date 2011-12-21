@@ -14,7 +14,6 @@
     <string name="ioerror">There was a network error. You may have limited access to the TheTVDB.com from your connection right now. Try again later.</string>
     <string name="saxerror">The response from TheTVDB was not understood. Please try again later.</string>
     <string name="offline">There is no active connection to the internet reported. Please make sure you are connected to the internet and try again.</string>
-    <string name="whatsnew_title">What\'s new</string>
     <string name="search_hint">Search episodes</string>
     <string name="search_title">Matching episodes</string>
     <string name="share_episode">Share episode</string>
