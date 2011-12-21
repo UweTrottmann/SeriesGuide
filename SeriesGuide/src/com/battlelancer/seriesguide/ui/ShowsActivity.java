@@ -325,7 +325,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case BETA_WARNING_DIALOG:
                 /* Used for unstable beta releases */
                 return new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.whatsnew_title))
+                        .setTitle(R.string.app_name)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setMessage(getString(R.string.betawarning))
                         .setPositiveButton(R.string.gobreak, null)
