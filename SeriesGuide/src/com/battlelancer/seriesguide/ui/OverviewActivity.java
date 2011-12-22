@@ -19,6 +19,7 @@ public class OverviewActivity extends BaseActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.description_overview));
         actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
             mFragment = new OverviewFragment();

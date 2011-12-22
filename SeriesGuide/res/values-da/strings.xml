@@ -41,7 +41,6 @@
   <string name="unmark_episode">Endnu ikke set episode</string>
   <string name="mark_all">Set alle</string>
   <string name="unmark_all">Set ingen</string>
-  <string name="hello"><big>Velkommen til SeriesGuide</big>\n\nDet ser ud som om du ikke har tilføjet tv-serier endnu. Vælg <b>Tilføj tv-serie</b> i menuen for at tilføje tv-serier.\n\nEller du kan <b>gendanne en sikkerhedskopi</b>, vælg  indstillinger i menuen og find Sikkerhedskopier/Gendan.</string>
   <string name="confirm_delete">Er du sikker på at du vil fjerne denne serie?</string>
   <string name="delete_show">Fjern</string>
   <string name="dontdelete_show">Fjern ikke</string>
@@ -104,9 +103,6 @@
   <string name="pref_hideimagessummary">Skjul SeriesGuide billeder fra dit billedegalleri (genstart nødvendig)</string>
   <string name="pref_more">Mere</string>
   <string name="about">Om SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - udviklet af Uwe Trottmann.\n\nSe venligst CREDITS link nedenunder for at se alle de mennesker og ressourcer der hjælper med at holde dette projekt kørende.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
-  <string name="help">Få hjælp</string>
-  <string name="help_summary">Gå til hjælpesiden</string>
   <string name="backup">Sikkerhedskopier/Gendan</string>
   <string name="backup_summary">Sikkerhedskopier eller gendan dine tv-serier</string>
   <string name="pref_sharing">Deling</string>
@@ -120,27 +116,16 @@
   <string name="pref_notifications">Slå notifikationer til</string>
   <string name="pref_notificationssummary">Vis notifikationer for kommende episoder</string>
   <string name="pref_usetz">Brug min tidszone</string>
-  <string name="pref_usetzsummary">Sendetider i din tidszone (for brugere udenfor USA)</string>
   <string name="pref_offset">Tidsforskydning</string>
   <string name="pref_offsetsummary">med et bestemt antal timer</string>
-  <string name="backup_description">Sikkerhedskopiering vil gemme en kopi af SeriesGuide databasen in mappen \"seriesguidebackup\" på dit SD-kort. Hvis du geninstallerer SeriesGuide eller installerer SeriesGuide på en anden Android enhed, så kopier denne mappe til enhedens SD-kort. Vælg gendan nedenfor og alle dine tv-serier er tilbage! (Du kan ikke importere databaser fra nyere udgaver til ældre udgaver af SeriesGuide, medmindre den bruger samme udgave af databasen. Se "om" i indstillinger.</string>
-  <string name="backup_failed_nosd">Kan ikke sikkerhedskopiere. Der er intet eksternt lager, fx et SD-kort, tilgængeligt.</string>
   <string name="backup_inprogress">Sikkerhedskopierer databasen...</string>
   <string name="backup_success">Sikkerhedskopiering vellykket</string>
   <string name="backup_failed">Sikkerhedskopi mislykkedes</string>
   <string name="import_inprogress">Gendanner databasen...</string>
-  <string name="import_failed_nosd">Kan ikke gendanne sikkerhedskopi. Der er intet eksternt lager, fx et SD-kort, tilgængeligt.</string>
-  <string name="import_failed_nofile">Der er ingen sikkerhedskopi-fil (\"/sdcard/seriesguidebackup/seriesdatabase\"). Kan ikke gendanne databasen.</string>
-  <string name="import_failed_noread">Sikkerhedskopi-filen er ikke læsbar (\"/sdcard/seriesguidebackup/seriesdatabase\"). Kan ikke gendanne databasen.</string>
   <string name="import_success">Databasen gendannet</string>
   <string name="import_failed">Gendannelse mislykkedes</string>
-  <string name="dbupgradefailed">Din sikkerhedskopi er tilsyneladende for gammel eller tom. Tip: Importer pre-2.0 sikkerhedskopier i en 1.9.x version først </string>
-  <string name="backup_button">Backup til SD-kort</string>
-  <string name="import_button">Gendan fra SD-kort</string>
-  <string name="backup_question">Dette vil overskrive eventuelle tidligere sikkerhedskopifil.</string>
   <string name="backup_yes">Backup</string>
   <string name="backup_no">Sikkerhedskopier ikke</string>
-  <string name="import_question">Tjek at sikkerhedskopien er på SD-kortet. Alle nuværende tv-serier vil blive overskrevet.</string>
   <string name="import_yes">Genoprette</string>
   <string name="import_no">Gendan ikke</string>
   <string name="smallwidget">Kommende episoder (lille)</string>
@@ -177,17 +162,12 @@
   <string name="password">Adgangskode</string>
   <string name="apikey">API nøgle</string>
   <string name="pref_traktsync">Synkroniser med trakt.tv</string>
-  <string name="pref_traktsyncsummary">Eksperimentel, manuel synkronisering med trakt.tv</string>
   <string name="save">Gem</string>
   <string name="dontsave">Gem ikke</string>
-  <string name="trakt_success">Markering på trakt.tv fuldført</string>
-  <string name="trakt_error">trakt.tv deling mislykkedes</string>
   <string name="trakt_decryptfail">Adgangskoden kunne ikke dekrypteres</string>
   <string name="trakt_credentials_invalid">Legitimationsoplysningerne er ugyldige</string>
   <string name="pref_traktintegrate">Integrer trakt.tv</string>
-  <string name="pref_traktintegratesummary">Markeret som set i oversigten bliver delt med traktv.tv</string>
   <string name="donate">Køb mig en drink (Paypal)</string>
-  <string name="feedback">Giv feedback</string>
   <string name="love">Totalt ninja!</string>
   <string name="hate">Svag sovs :(</string>
   <string name="trakt_createaccount">Opret ny konto</string>
@@ -216,10 +196,11 @@
     <item>Ældste først (DVD)</item>
   </string-array>
   <string-array name="share_items">
-    <item>GetGlue Check In</item>
-    <item>Marker som set på trakt.tv</item>
-    <item>Andre tjenester</item>
-    <item>Bedøm på trakt.tv</item>
+    <item>Check In (GetGlue)</item>
+    <item>Check In (trakt)</item>
+    <item>Mark seen (trakt)</item>
+    <item>Rate (trakt)</item>
+    <item>Other services</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Alle</item>

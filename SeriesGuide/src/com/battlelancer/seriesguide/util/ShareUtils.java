@@ -28,13 +28,17 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.InputFilter;
+import android.text.InputType;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -55,8 +59,7 @@ public class ShareUtils {
     protected static final String TAG = "ShareUtils";
 
     /**
-     * Show a dialog allowing to chose from various sharing options. The given
-     * {@link Bundle} has to include a sharestring, episodestring and imdbId.
+     * Show a dialog allowing to chose from various sharing options.
      * 
      * @param shareData - a {@link Bundle} including all
      *            {@link ShareUtils.ShareItems}
@@ -86,9 +89,10 @@ public class ShareUtils {
                         public void onClick(DialogInterface dialog, int item) {
                             switch (item) {
                                 case 0:
-                                    // GetGlue check-in
+                                    // GetGlue check in
                                     if (imdbId.length() != 0) {
-                                        showGetGlueDialog(getFragmentManager(), getArguments());
+                                        showGetGlueDialog(getSupportFragmentManager(),
+                                                getArguments());
                                     } else {
                                         Toast.makeText(getActivity(),
                                                 getString(R.string.noIMDBentry), Toast.LENGTH_LONG)
@@ -96,14 +100,56 @@ public class ShareUtils {
                                     }
                                     break;
                                 case 1: {
-                                    // trakt mark as seen
+                                    // trakt check in
+
+                                    // DialogFragment.show() will take care of
+                                    // adding the fragment
+                                    // in a transaction. We also want to remove
+                                    // any currently showing
+                                    // dialog, so make our own transaction and
+                                    // take care of that here.
+                                    FragmentTransaction ft = getFragmentManager()
+                                            .beginTransaction();
+                                    Fragment prev = getFragmentManager().findFragmentByTag(
+                                            "progress-dialog");
+                                    if (prev != null) {
+                                        ft.remove(prev);
+                                    }
+                                    ft.addToBackStack(null);
+
+                                    // Create and show the dialog.
+                                    ProgressDialog newFragment = ProgressDialog.newInstance();
+
+                                    // start the trakt check in task, add the
+                                    // dialog as listener
                                     getArguments().putInt(ShareItems.TRAKTACTION,
-                                            TraktAction.SEEN_EPISODE.index());
+                                            TraktAction.CHECKIN_EPISODE.index());
                                     new TraktTask(getActivity(), getFragmentManager(),
-                                            getArguments()).execute();
+                                            getArguments(), newFragment).execute();
+
+                                    newFragment.show(ft, "progress-dialog");
                                     break;
                                 }
                                 case 2: {
+                                    // trakt mark as seen
+                                    getArguments().putInt(ShareItems.TRAKTACTION,
+                                            TraktAction.SEEN_EPISODE.index());
+                                    new TraktTask(getActivity(), getSupportFragmentManager(),
+                                            getArguments()).execute();
+                                    break;
+                                }
+                                case 3: {
+                                    // trakt rate
+                                    getArguments().putInt(ShareItems.TRAKTACTION,
+                                            TraktAction.RATE_EPISODE.index());
+                                    TraktRateDialogFragment newFragment = TraktRateDialogFragment
+                                            .newInstance(getArguments());
+                                    FragmentTransaction ft = getSupportFragmentManager()
+                                            .beginTransaction();
+                                    newFragment.show(ft, "traktratedialog");
+                                    break;
+                                }
+                                case 4: {
                                     // Android apps
                                     String text = sharestring;
                                     if (imdbId.length() != 0) {
@@ -115,17 +161,6 @@ public class ShareUtils {
                                     i.putExtra(Intent.EXTRA_TEXT, text);
                                     startActivity(Intent.createChooser(i,
                                             getString(R.string.share_episode)));
-                                    break;
-                                }
-                                case 3: {
-                                    // trakt rate
-                                    getArguments().putInt(ShareItems.TRAKTACTION,
-                                            TraktAction.RATE_EPISODE.index());
-                                    TraktRateDialogFragment newFragment = TraktRateDialogFragment
-                                            .newInstance(getArguments());
-                                    FragmentTransaction ft = getFragmentManager()
-                                            .beginTransaction();
-                                    newFragment.show(ft, "traktratedialog");
                                     break;
                                 }
                             }
@@ -157,6 +192,7 @@ public class ShareUtils {
             final String imdbId = getArguments().getString(ShareItems.IMDBID);
 
             input = new EditText(getActivity());
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
             input.setMinLines(3);
             input.setGravity(Gravity.TOP);
             input.setFilters(new InputFilter[] {
@@ -245,6 +281,8 @@ public class ShareUtils {
         String RATING = "rating";
 
         String TRAKTACTION = "traktaction";
+
+        String CHECKIN_DURATION = "checkin_duration";
     }
 
     public static String onCreateShareString(Context context, final Cursor episode) {
@@ -268,8 +306,7 @@ public class ShareUtils {
             boolean useUserTimeZone = prefs.getBoolean(SeriesGuidePreferences.KEY_USE_MY_TIMEZONE,
                     false);
 
-            Calendar cal = Utils.getLocalCalendar(airdate, airtime, useUserTimeZone,
-                    context);
+            Calendar cal = Utils.getLocalCalendar(airdate, airtime, useUserTimeZone, context);
 
             long startTime = cal.getTimeInMillis();
             long endTime = startTime + Long.valueOf(runtime) * 60 * 1000;
@@ -305,7 +342,7 @@ public class ShareUtils {
     }
 
     public enum TraktAction {
-        SEEN_EPISODE(0), RATE_EPISODE(1);
+        SEEN_EPISODE(0), RATE_EPISODE(1), CHECKIN_EPISODE(2);
 
         final private int mIndex;
 
@@ -318,12 +355,25 @@ public class ShareUtils {
         }
     }
 
-    public static class TraktTask extends AsyncTask<Void, Void, String> {
+    public interface TraktStatus {
+        String SUCCESS = "success";
+
+        String FAILURE = "failure";
+    }
+
+    public static class TraktTask extends AsyncTask<Void, Void, Response> {
+
         private final Context mContext;
 
         private final FragmentManager mManager;
 
         private final Bundle mTraktData;
+
+        private OnTaskFinishedListener mListener;
+
+        public interface OnTaskFinishedListener {
+            public void onTaskFinished();
+        }
 
         /**
          * Do the specified TraktAction. traktData should include all required
@@ -340,77 +390,124 @@ public class ShareUtils {
             mTraktData = traktData;
         }
 
+        /**
+         * Specify a listener which will be notified once any activity context
+         * dependent work is completed.
+         * 
+         * @param context
+         * @param manager
+         * @param traktData
+         * @param listener
+         */
+        public TraktTask(Context context, FragmentManager manager, Bundle traktData,
+                OnTaskFinishedListener listener) {
+            this(context, manager, traktData);
+            mListener = listener;
+        }
+
         @Override
-        protected String doInBackground(Void... params) {
+        protected Response doInBackground(Void... params) {
             if (!isTraktCredentialsValid(mContext)) {
-                // return an empty string, so onPostExecute displays a
-                // credentials dialog which calls us again.
-                return "";
-            }
-
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext
-                    .getApplicationContext());
-
-            ServiceManager manager = new ServiceManager();
-            final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
-            String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
-
-            try {
-                password = SimpleCrypto.decrypt(password, mContext);
-            } catch (Exception e1) {
-                // password could not be decrypted
-                return mContext.getString(R.string.trakt_decryptfail);
-            }
-
-            manager.setAuthentication(username, password);
-            manager.setApiKey(Constants.TRAKT_API_KEY);
-
-            if (isCancelled()) {
+                // return null, so onPostExecute displays a credentials dialog
+                // which later calls us again.
                 return null;
             }
 
+            ServiceManager manager;
+            try {
+                manager = Utils.getServiceManagerWithAuth(mContext, false);
+            } catch (Exception e) {
+                // password could not be decrypted
+                Response r = new Response();
+                r.status = TraktStatus.FAILURE;
+                r.error = mContext.getString(R.string.trakt_decryptfail);
+                return r;
+            }
+
+            // get some values
             final int tvdbid = mTraktData.getInt(ShareItems.TVDBID);
             final int season = mTraktData.getInt(ShareItems.SEASON);
             final int episode = mTraktData.getInt(ShareItems.EPISODE);
             final TraktAction action = TraktAction.values()[mTraktData
                     .getInt(ShareItems.TRAKTACTION)];
 
+            // last chance to abort (return value thrown away)
+            if (isCancelled()) {
+                return null;
+            }
+
             try {
+                Response r = null;
                 switch (action) {
+                    case CHECKIN_EPISODE: {
+                        final int duration = mTraktData.getInt(ShareItems.CHECKIN_DURATION);
+                        r = manager.showService().checkin(tvdbid).season(season).episode(episode)
+                                .duration(duration).fire();
+                        break;
+                    }
                     case SEEN_EPISODE: {
                         manager.showService().episodeSeen(tvdbid).episode(season, episode).fire();
+                        r = new Response();
+                        r.status = TraktStatus.SUCCESS;
+                        r.message = mContext.getString(R.string.trakt_seen);
                         break;
                     }
                     case RATE_EPISODE: {
                         final Rating rating = Rating.fromValue(mTraktData
                                 .getString(ShareItems.RATING));
-                        manager.rateService().episode(tvdbid).season(season).episode(episode)
+                        r = manager.rateService().episode(tvdbid).season(season).episode(episode)
                                 .rating(rating).fire();
                         break;
                     }
                 }
-                return null;
+
+                return r;
             } catch (TraktException te) {
-                return "Trakt error: " + te.getMessage();
+                Response r = new Response();
+                r.status = TraktStatus.FAILURE;
+                r.error = te.getMessage();
+                return r;
             } catch (ApiException e) {
-                return "API error: " + e.getMessage();
+                Response r = new Response();
+                r.status = TraktStatus.FAILURE;
+                r.error = e.getMessage();
+                return r;
             }
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            if (result == null) {
-                Toast.makeText(mContext, mContext.getString(R.string.trakt_success),
-                        Toast.LENGTH_SHORT).show();
-            } else if (result.length() == 0) {
+        protected void onPostExecute(Response r) {
+            if (r != null) {
+                if (r.status.equalsIgnoreCase(TraktStatus.SUCCESS)) {
+                    // all good
+                    Toast.makeText(mContext,
+                            mContext.getString(R.string.trakt_success) + ": " + r.message,
+                            Toast.LENGTH_SHORT).show();
+                } else if (r.status.equalsIgnoreCase(TraktStatus.FAILURE)) {
+                    if (r.wait != 0) {
+                        // looks like a check in is in progress
+                        TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment
+                                .newInstance(mTraktData, r.wait);
+                        FragmentTransaction ft = mManager.beginTransaction();
+                        newFragment.show(ft, "cancel-checkin-dialog");
+                    } else {
+                        // well, something went wrong
+                        Toast.makeText(mContext,
+                                mContext.getString(R.string.trakt_error) + ": " + r.error,
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            } else {
+                // credentials are invalid
                 TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
                         .newInstance(mTraktData);
                 FragmentTransaction ft = mManager.beginTransaction();
                 newFragment.show(ft, "traktdialog");
-            } else {
-                Toast.makeText(mContext,
-                        mContext.getString(R.string.trakt_error) + " (" + result + ")",
-                        Toast.LENGTH_LONG).show();
+            }
+
+            // tell a potential listener that our work is done
+            if (mListener != null) {
+                mListener.onTaskFinished();
             }
         }
     }
@@ -439,7 +536,7 @@ public class ShareUtils {
             final LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final View layout = inflater.inflate(R.layout.trakt_credentials_dialog, null);
-            final FragmentManager fm = getFragmentManager();
+            final FragmentManager fm = getSupportFragmentManager();
             final Bundle args = getArguments();
 
             // restore the username from settings
@@ -486,6 +583,8 @@ public class ShareUtils {
                                 return null;
                             }
 
+                            // use a separate ServiceManager here to avoid
+                            // setting wrong credentials
                             final ServiceManager manager = new ServiceManager();
                             manager.setApiKey(Constants.TRAKT_API_KEY);
                             manager.setAuthentication(username, passwordHash);
@@ -532,6 +631,13 @@ public class ShareUtils {
                                     Toast.makeText(context,
                                             response.getStatus() + ": " + response.getMessage(),
                                             Toast.LENGTH_SHORT).show();
+
+                                    // set new auth data for service manager
+                                    try {
+                                        Utils.getServiceManagerWithAuth(context, true);
+                                    } catch (Exception e) {
+                                        // we don't care
+                                    }
                                 } else {
                                     Toast.makeText(context,
                                             response.getStatus() + ": " + response.getError(),
@@ -554,6 +660,94 @@ public class ShareUtils {
                 }
             });
             builder.setNegativeButton(R.string.dontsave, null);
+
+            return builder.create();
+        }
+    }
+
+    public static class TraktCancelCheckinDialogFragment extends DialogFragment {
+
+        private int mWait;
+
+        public static TraktCancelCheckinDialogFragment newInstance(Bundle traktData, int wait) {
+            TraktCancelCheckinDialogFragment f = new TraktCancelCheckinDialogFragment();
+            f.setArguments(traktData);
+            f.mWait = wait;
+            return f;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final Context context = getActivity().getApplicationContext();
+            final FragmentManager fm = getSupportFragmentManager();
+            final Bundle args = getArguments();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+            builder.setMessage(context.getString(R.string.traktcheckin_inprogress,
+                    DateUtils.formatElapsedTime(mWait)));
+
+            builder.setPositiveButton(R.string.traktcheckin_cancel, new OnClickListener() {
+
+                public void onClick(DialogInterface dialog, int which) {
+                    AsyncTask<String, Void, Response> cancelCheckinTask = new AsyncTask<String, Void, Response>() {
+
+                        @Override
+                        protected Response doInBackground(String... params) {
+
+                            ServiceManager manager;
+                            try {
+                                manager = Utils.getServiceManagerWithAuth(context, false);
+                            } catch (Exception e) {
+                                // password could not be decrypted
+                                Response r = new Response();
+                                r.status = TraktStatus.FAILURE;
+                                r.error = context.getString(R.string.trakt_decryptfail);
+                                return r;
+                            }
+
+                            Response response;
+                            try {
+                                response = manager.showService().cancelCheckin().fire();
+                            } catch (TraktException te) {
+                                Response r = new Response();
+                                r.status = TraktStatus.FAILURE;
+                                r.error = te.getMessage();
+                                return r;
+                            } catch (ApiException e) {
+                                Response r = new Response();
+                                r.status = TraktStatus.FAILURE;
+                                r.error = e.getMessage();
+                                return r;
+                            }
+                            return response;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Response r) {
+                            if (r.status.equalsIgnoreCase(TraktStatus.SUCCESS)) {
+                                // all good
+                                Toast.makeText(
+                                        context,
+                                        context.getString(R.string.trakt_success) + ": "
+                                                + r.message, Toast.LENGTH_SHORT).show();
+
+                                // relaunch the trakt task which called us to
+                                // try the check in again
+                                new TraktTask(context, fm, args).execute();
+                            } else if (r.status.equalsIgnoreCase(TraktStatus.FAILURE)) {
+                                // well, something went wrong
+                                Toast.makeText(context,
+                                        context.getString(R.string.trakt_error) + ": " + r.error,
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    };
+
+                    cancelCheckinTask.execute();
+                }
+            });
+            builder.setNegativeButton(R.string.traktcheckin_wait, null);
 
             return builder.create();
         }
@@ -584,7 +778,7 @@ public class ShareUtils {
                 public void onClick(View v) {
                     final Rating rating = Rating.Love;
                     getArguments().putString(ShareItems.RATING, rating.toString());
-                    new TraktTask(context, getFragmentManager(), getArguments()).execute();
+                    new TraktTask(context, getSupportFragmentManager(), getArguments()).execute();
                     dismiss();
                 }
             });
@@ -594,7 +788,7 @@ public class ShareUtils {
                 public void onClick(View v) {
                     final Rating rating = Rating.Hate;
                     getArguments().putString(ShareItems.RATING, rating.toString());
-                    new TraktTask(context, getFragmentManager(), getArguments()).execute();
+                    new TraktTask(context, getSupportFragmentManager(), getArguments()).execute();
                     dismiss();
                 }
             });
@@ -604,6 +798,35 @@ public class ShareUtils {
             builder.setNegativeButton(android.R.string.cancel, null);
 
             return builder.create();
+        }
+    }
+
+    public static class ProgressDialog extends DialogFragment implements
+            TraktTask.OnTaskFinishedListener {
+
+        public static ProgressDialog newInstance() {
+            ProgressDialog f = new ProgressDialog();
+            f.setCancelable(false);
+            return f;
+        }
+        
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            
+            setStyle(STYLE_NO_TITLE, 0);
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+            View v = inflater.inflate(R.layout.progress_dialog, container, false);
+            return v;
+        }
+
+        @Override
+        public void onTaskFinished() {
+            dismiss();
         }
     }
 

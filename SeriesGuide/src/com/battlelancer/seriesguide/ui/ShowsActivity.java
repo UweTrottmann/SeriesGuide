@@ -79,8 +79,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final int CONTEXT_UPDATESHOW_ID = 201;
 
-    private static final int CONTEXT_SHOWINFO = 202;
-
     private static final int CONTEXT_MARKNEXT = 203;
 
     private static final int CONTEXT_FAVORITE = 204;
@@ -88,8 +86,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private static final int CONTEXT_UNFAVORITE = 205;
 
     private static final int CONFIRM_DELETE_DIALOG = 304;
-
-    private static final int WHATS_NEW_DIALOG = 305;
 
     private static final int SORT_DIALOG = 306;
 
@@ -117,7 +113,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private Bundle mSavedState;
 
-    private FetchArtTask mArtTask;
+    private FetchPosterTask mArtTask;
 
     private SlowAdapter mAdapter;
 
@@ -150,6 +146,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
         // setup action bar filter list (! use different layouts for ABS)
         ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(this,
                 R.array.showfilter_list, R.layout.abs__simple_spinner_item);
@@ -178,7 +175,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
         mAdapter = new SlowAdapter(this, layout, null, from, to, 0);
 
-        GridView list = (GridView) findViewById(android.R.id.list);
+        GridView list = (GridView) findViewById(R.id.showlist);
         list.setAdapter(mAdapter);
         list.setFastScrollEnabled(true);
         list.setOnItemClickListener(new OnItemClickListener() {
@@ -190,8 +187,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             }
         });
         list.setOnScrollListener(this);
-        // TODO: make new empty view, move current to a welcome dialog
-        View emptyView = findViewById(android.R.id.empty);
+        View emptyView = findViewById(R.id.empty);
         if (emptyView != null) {
             list.setEmptyView(emptyView);
         }
@@ -213,14 +209,12 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
         final boolean isAutoUpdateEnabled = prefs.getBoolean(SeriesGuidePreferences.KEY_AUTOUPDATE,
-                false);
-        if (isAutoUpdateEnabled) {
-            // allow auto-update if 11 hours have passed
-            final long previousUpdateTime = prefs.getLong(
-                    SeriesGuidePreferences.KEY_LASTUPDATE, 0);
+                true);
+        if (isAutoUpdateEnabled && !TaskManager.getInstance(this).isUpdateTaskRunning(false)) {
+            // allow auto-update if 12 hours have passed
+            final long previousUpdateTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTUPDATE, 0);
             long currentTime = System.currentTimeMillis();
-            final boolean isTime = currentTime - (previousUpdateTime) > DateUtils.DAY_IN_MILLIS
-                    - DateUtils.HOUR_IN_MILLIS;
+            final boolean isTime = currentTime - (previousUpdateTime) > 12 * DateUtils.HOUR_IN_MILLIS;
 
             if (isTime) {
                 // allow auto-update only on allowed connection
@@ -244,7 +238,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     @Override
     protected void onResume() {
         super.onResume();
-        updateLatestEpisode();
+        Utils.updateLatestEpisodes(this);
         if (mSavedState != null) {
             restoreLocalState(mSavedState);
         }
@@ -280,7 +274,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             int index = savedInstanceState.getInt(STATE_ART_INDEX);
 
             if (paths != null) {
-                mArtTask = (FetchArtTask) new FetchArtTask(paths, index).execute();
+                mArtTask = (FetchPosterTask) new FetchPosterTask(paths, index).execute();
                 AnalyticsUtils.getInstance(this).trackEvent("Shows", "Task Lifecycle",
                         "Art Task Restored", 0);
             }
@@ -288,7 +282,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     }
 
     private void saveArtTask(Bundle outState) {
-        final FetchArtTask task = mArtTask;
+        final FetchPosterTask task = mArtTask;
         if (task != null && task.getStatus() != AsyncTask.Status.FINISHED) {
             task.cancel(true);
 
@@ -328,15 +322,10 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                                 }).start();
                             }
                         }).setNegativeButton(getString(R.string.dontdelete_show), null).create();
-            case WHATS_NEW_DIALOG:
-                return new AlertDialog.Builder(this).setTitle(getString(R.string.whatsnew_title))
-                        .setIcon(android.R.drawable.ic_dialog_info)
-                        .setMessage(getString(R.string.whatsnew_content))
-                        .setPositiveButton(android.R.string.ok, null).create();
             case BETA_WARNING_DIALOG:
                 /* Used for unstable beta releases */
                 return new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.whatsnew_title))
+                        .setTitle(R.string.app_name)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setMessage(getString(R.string.betawarning))
                         .setPositiveButton(R.string.gobreak, null)
@@ -399,10 +388,9 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         }
         show.close();
 
-        menu.add(0, CONTEXT_SHOWINFO, 1, R.string.context_showinfo);
-        menu.add(0, CONTEXT_MARKNEXT, 2, R.string.context_marknext);
-        menu.add(0, CONTEXT_UPDATESHOW_ID, 3, R.string.context_updateshow);
-        menu.add(0, CONTEXT_DELETE_ID, 4, R.string.delete_show);
+        menu.add(0, CONTEXT_MARKNEXT, 1, R.string.context_marknext);
+        menu.add(0, CONTEXT_UPDATESHOW_ID, 2, R.string.context_updateshow);
+        menu.add(0, CONTEXT_DELETE_ID, 3, R.string.delete_show);
     }
 
     @Override
@@ -433,7 +421,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case CONTEXT_DELETE_ID:
                 fireTrackerEvent("Delete show");
 
-                if (!TaskManager.getInstance(this).isUpdateTaskRunning()) {
+                if (!TaskManager.getInstance(this).isUpdateTaskRunning(true)) {
                     mToDeleteId = info.id;
                     showDialog(CONFIRM_DELETE_DIALOG);
                 }
@@ -443,19 +431,11 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
                 performUpdateTask(false, String.valueOf(info.id));
                 return true;
-            case CONTEXT_SHOWINFO:
-                fireTrackerEvent("Display show info");
-
-                Intent i = new Intent(this, ShowInfoActivity.class);
-                i.putExtra(Shows._ID, String.valueOf(info.id));
-                startActivity(i);
-                return true;
             case CONTEXT_MARKNEXT:
                 fireTrackerEvent("Mark next episode");
 
                 DBUtils.markNextEpisode(this, info.id);
-                Thread t = new UpdateLatestEpisodeThread(this, String.valueOf(info.id));
-                t.start();
+                Utils.updateLatestEpisode(this, String.valueOf(info.id));
                 return true;
         }
         return super.onContextItemSelected(item);
@@ -487,7 +467,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 onSearchRequested();
                 return true;
             case R.id.menu_update:
-                fireTrackerEvent("Update all shows");
+                fireTrackerEvent("Update");
 
                 performUpdateTask(false, null);
                 return true;
@@ -516,64 +496,47 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 } else {
                     Toast.makeText(this, getString(R.string.update_inbackground), Toast.LENGTH_LONG)
                             .show();
-                    mArtTask = (FetchArtTask) new FetchArtTask().execute();
+                    mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
                 }
                 return true;
             case R.id.menu_preferences:
                 startActivity(new Intent(this, SeriesGuidePreferences.class));
+
                 return true;
             case R.id.menu_fullupdate:
                 fireTrackerEvent("Full Update");
 
                 performUpdateTask(true, null);
                 return true;
+            case R.id.menu_feedback: {
+                fireTrackerEvent("Feedback");
+
+                final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                intent.setType("plain/text");
+                intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
+                    SeriesGuidePreferences.SUPPORT_MAIL
+                });
+                intent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+                        "SeriesGuide " + Utils.getVersion(this) + " Feedback");
+                intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
+
+                startActivity(Intent.createChooser(intent, "Send mail..."));
+
+                return true;
+            }
+            case R.id.menu_help: {
+                fireTrackerEvent("Help");
+
+                Intent myIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(SeriesGuidePreferences.HELP_URL));
+
+                startActivity(myIntent);
+
+                return true;
+            }
             default: {
                 return super.onOptionsItemSelected(item);
             }
-        }
-    }
-
-    /**
-     * Update the latest episode fields for all existing shows.
-     */
-    public void updateLatestEpisode() {
-        Thread t = new UpdateLatestEpisodeThread(this);
-        t.start();
-    }
-
-    private static class UpdateLatestEpisodeThread extends Thread {
-        private Context mContext;
-
-        private String mShowId;
-
-        public UpdateLatestEpisodeThread(Context context) {
-            mContext = context;
-            this.setName("UpdateLatestEpisode");
-        }
-
-        public UpdateLatestEpisodeThread(Context context, String showId) {
-            this(context);
-            mShowId = showId;
-        }
-
-        public void run() {
-            if (mShowId != null) {
-                // update single show
-                DBUtils.updateLatestEpisode(mContext, mShowId);
-            } else {
-                // update all shows
-                final Cursor shows = mContext.getContentResolver().query(Shows.CONTENT_URI,
-                        new String[] {
-                            Shows._ID
-                        }, null, null, null);
-                while (shows.moveToNext()) {
-                    String id = shows.getString(0);
-                    DBUtils.updateLatestEpisode(mContext, id);
-                }
-                shows.close();
-            }
-
-            // Adapter gets notified by ContentProvider
         }
     }
 
@@ -599,17 +562,17 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         TaskManager.getInstance(this).tryUpdateTask(task, messageId);
     }
 
-    private class FetchArtTask extends AsyncTask<Void, Void, Integer> {
+    private class FetchPosterTask extends AsyncTask<Void, Void, Integer> {
         final AtomicInteger mFetchCount = new AtomicInteger();
 
         ArrayList<String> mPaths;
 
         private View mProgressOverlay;
 
-        protected FetchArtTask() {
+        protected FetchPosterTask() {
         }
 
-        protected FetchArtTask(ArrayList<String> paths, int index) {
+        protected FetchPosterTask(ArrayList<String> paths, int index) {
             mPaths = paths;
             mFetchCount.set(index);
         }

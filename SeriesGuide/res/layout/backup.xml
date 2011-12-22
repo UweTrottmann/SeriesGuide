@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    style="@style/BackupLinearLayout"
+    android:orientation="vertical"
+    android:padding="@dimen/body_padding" >
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -16,24 +16,45 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
+                android:padding="@dimen/body_padding"
                 android:text="@string/backup_description" />
 
-            <Button
-                android:id="@+id/ButtonExportDBtoSD"
+            <TextView
+                android:id="@+id/backuppath"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:text="@string/backup_button" />
+                android:padding="@dimen/body_padding"
+                android:text="Backup folder: n/a"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <Button
-                android:id="@+id/ButtonImportDBfromSD"
+            <TextView
+                android:id="@+id/dbversion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:text="@string/import_button" />
+                android:padding="@dimen/body_padding"
+                android:text="Database version: n/a"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <LinearLayout
+                android:id="@+id/buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp" >
+
+                <Button
+                    android:id="@+id/ButtonExportDBtoSD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30dp"
+                    android:text="@string/backup_button" />
+
+                <Button
+                    android:id="@+id/ButtonImportDBfromSD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/import_button" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

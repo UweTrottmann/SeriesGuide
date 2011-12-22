@@ -5,19 +5,25 @@ import com.jakewharton.trakt.TraktEntity;
 import java.util.Calendar;
 
 public class Shout implements TraktEntity {
-	private static final long serialVersionUID = 4324069488018464744L;
+    private static final long serialVersionUID = 4324069488018464744L;
 
-	private Calendar inserted;
-	private String shout;
-	private UserProfile user;
-	
-	public Calendar getInserted() {
-		return this.inserted;
-	}
-	public String getShout() {
-		return this.shout;
-	}
-	public UserProfile getUser() {
-		return this.user;
-	}
+    public Calendar inserted;
+    public String shout;
+    public UserProfile user;
+
+    /** @deprecated Use {@link #inserted} */
+    @Deprecated
+    public Calendar getInserted() {
+        return this.inserted;
+    }
+    /** @deprecated Use {@link #shout} */
+    @Deprecated
+    public String getShout() {
+        return this.shout;
+    }
+    /** @deprecated Use {@link #user} */
+    @Deprecated
+    public UserProfile getUser() {
+        return this.user;
+    }
 }

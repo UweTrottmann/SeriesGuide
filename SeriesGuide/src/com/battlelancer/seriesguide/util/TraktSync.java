@@ -1,13 +1,11 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
@@ -20,11 +18,9 @@ import com.jakewharton.trakt.services.ShowService.EpisodeUnseenBuilder;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.OperationApplicationException;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.RemoteException;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -78,25 +74,18 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             return FAILED_CREDENTIALS;
         }
 
-        // get trakt.tv credentials
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext
-                .getApplicationContext());
-        ServiceManager manager = new ServiceManager();
-        final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
-        String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
+        ServiceManager manager;
         try {
-            password = SimpleCrypto.decrypt(password, mContext);
+            manager = Utils.getServiceManagerWithAuth(mContext, false);
         } catch (Exception e1) {
             // password could not be decrypted
             return FAILED_CREDENTIALS;
         }
-        manager.setAuthentication(username, password);
-        manager.setApiKey(Constants.TRAKT_API_KEY);
 
         if (mIsSyncToTrakt) {
             return syncToTrakt(manager);
         } else {
-            return syncToSeriesGuide(manager, username);
+            return syncToSeriesGuide(manager, Utils.getTraktUsername(mContext));
         }
     }
 
@@ -122,7 +111,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
         while (showTvdbIds.moveToNext()) {
             String tvdbId = showTvdbIds.getString(0);
             for (TvShow tvShow : shows) {
-                if (tvdbId.equalsIgnoreCase(tvShow.getTvdbId())) {
+                if (tvdbId.equalsIgnoreCase(tvShow.tvdbId)) {
                     if (mResult.length() != 0) {
                         mResult += ", ";
                     }
@@ -138,13 +127,13 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
                     // go through watched seasons, try to match them with local
                     // season
-                    List<TvShowSeason> seasons = tvShow.getSeasons();
+                    List<TvShowSeason> seasons = tvShow.seasons;
                     for (TvShowSeason season : seasons) {
                         Cursor seasonMatch = mContext.getContentResolver().query(
                                 Seasons.buildSeasonsOfShowUri(tvdbId), new String[] {
                                     Seasons._ID
                                 }, Seasons.COMBINED + "=?", new String[] {
-                                    season.getSeason().toString()
+                                    season.season.toString()
                                 }, null);
 
                         // if we found a season, go on with its episodes
@@ -153,7 +142,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
                             // build episodes update query to mark seen episodes
 
-                            for (Integer episode : season.getEpisodes().getNumbers()) {
+                            for (Integer episode : season.episodes.numbers) {
                                 batch.add(ContentProviderOperation
                                         .newUpdate(Episodes.buildEpisodesOfSeasonUri(seasonId))
                                         .withSelection(Episodes.NUMBER + "=?", new String[] {
@@ -184,7 +173,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                         throw new RuntimeException("Problem applying batch operation", e);
                     }
 
-                    mResult += tvShow.getTitle();
+                    mResult += tvShow.title;
 
                     // remove synced show
                     shows.remove(tvShow);

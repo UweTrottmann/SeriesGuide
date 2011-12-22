@@ -33,17 +33,18 @@
   <string name="show_isnotalive">Endete</string>
   <string name="sort">Sortieren nach</string>
   <string name="menu_updateart">Fehlende Poster laden</string>
-  <string name="updateall_yes">Aktualisieren (alle)</string>
-  <string name="menu_update_delta">Aktualisieren (nur veränderte)</string>
+  <string name="updateall_yes">Update (alle)</string>
+  <string name="menu_update_delta">Update (nur veraltete)</string>
   <string name="context_updateshow">Aktualisieren</string>
   <string name="context_showinfo">Serien Info</string>
   <string name="context_marknext">Nächste Folge gesehen</string>
   <string name="today">heute</string>
+  <string name="now">jetzt</string>
   <string name="mark_episode">Gesehen</string>
   <string name="unmark_episode">Noch nicht gesehen</string>
   <string name="mark_all">Alle gesehen</string>
   <string name="unmark_all">Keine gesehen</string>
-  <string name="hello"><big>Willkommen in SeriesGuide</big>\n\nSie haben anscheinend noch keine Serien hinzugefügt. Klicken Sie dazu im Menü auf <b>Serie hinzufügen</b>.\n\nAlternativ können Sie eine <b>Sicherung wiederherstellen</b>. Gehen Sie über das Menü in Einstellungen und wählen sie Sichern/Wiederherstellen.</string>
+  <string name="shows_empty">Derzeit befinden sich keine Serien hier.</string>
   <string name="confirm_delete">Soll diese Serie wirklich gelöscht werden?</string>
   <string name="delete_show">Löschen</string>
   <string name="dontdelete_show">Nicht löschen</string>
@@ -53,6 +54,13 @@
   <string name="context_unfavorite">Von Favoriten entfernen</string>
   <string name="favorited">Zu Favoriten hinzugefügt</string>
   <string name="unfavorited">Von Favoriten entfernt</string>
+  <string name="update_notification">Ihre Serien werden aktualisiert...</string>
+  <string name="update_single">Aktualisiere Serie...</string>
+  <string name="update_delta">Aktualisiere veraltete Serien...</string>
+  <string name="update_full">Aktualisiere alle Serien...</string>
+  <string name="update_failed">Aktualisierung fehlgeschlagen.</string>
+  <string name="update_offline">Überprüfen Sie Ihre Internet/Wi-Fi-Verbindung.</string>
+  <string name="update_saxerror">Versuchen Sie es später erneut.</string>
   <string name="update_error">Konnte kein Update durchführen</string>
   <string name="update_incomplete1">Konnte</string>
   <string name="update_incomplete2">nicht aktualisieren.</string>
@@ -62,6 +70,10 @@
   <string name="update_inprogress">Es wird gerade ein Update ausgeführt. Warten Sie das Ende des Updates ab und versuchen Sie es erneut.</string>
   <string name="update_nosdcard">Konnte kein Update ausführen. Es ist kein externer Speicher oder eine SD Karte verfügbar.</string>
   <string name="update_rebuildsearch">Baue Suchindex für Folgen</string>
+  <string name="update_traktactivity">Hole trakt Aktivitäten</string>
+  <string name="pref_autoupdate">Auto-Update</string>
+  <string name="pref_autoupdatesummary">Aktualisiert am Start, höchstens einmal pro Tag</string>
+  <string name="pref_updatewifionly">Akt. nur via Wi-Fi</string>
   <string name="show_airs">läuft</string>
   <string name="show_network">auf</string>
   <string name="show_pleaseupdate">Bitte aktualisiere diese Serie um mehr Information anzuzeigen (in der Übersicht lange auf den Namen drücken, Aktualisieren wählen). Sollte dies ohne Wirkung sein, kannst du auf www.thetvdb.com Informationen für diese Serie hinzufügen.</string>
@@ -109,8 +121,8 @@
   <string name="pref_hideimagessummary">SeriesGuide Bilder nicht in Gallerie anzeigen (Neustart notwendig)</string>
   <string name="pref_more">Weiteres</string>
   <string name="about">Über SeriesGuide</string>
-  <string name="help">Hilfe (Englisch)</string>
-  <string name="help_summary">Zeige Hilfe-Seite an</string>
+  <string name="about_message">http://seriesguide.uwetrottmann.com - entwickelt von Uwe Trottmann.\n\nÜber den Link unten gelangen Sie zu einer Liste aller Personen und Ressourcen die dieses Projekt vorantreiben helfen.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="help">Hilfe</string>
   <string name="backup">Sichern/Wiederherstellen</string>
   <string name="backup_summary">Sicherung aller Serien erstellen oder Sicherung wiederherstellen</string>
   <string name="pref_sharing">Empfehlen</string>
@@ -124,34 +136,35 @@
   <string name="pref_notifications">Benachrichtigungen aktivieren</string>
   <string name="pref_notificationssummary">Benachrichtigungen für bevorstehende Folgen anzeigen</string>
   <string name="pref_usetz">Meine Zeitzone verwenden</string>
-  <string name="pref_usetzsummary">Sendetermine in Ihrer Zeitzone (für Nutzer außerhalb der USA)</string>
+  <string name="pref_usetzsummary">Auto-Offset von US Pacific Time (für außerhalb der USA)</string>
   <string name="pref_offset">Zeitkorrektur</string>
   <string name="pref_offsetsummary">um eine bestimmte Anzahl von Stunden</string>
-  <string name="backup_description">Backup speichert eine Kopie der Datenbank von SeriesGuide im Ordner \"seriesguidebackup\" auf Ihrer SD Karte. Falls Sie SeriesGuide neu installieren oder SeriesGuide auf einem anderen Android-Gerät installieren, müssen Sie nur diesen Ordner auf die SD Karte des Geräts kopieren. Ein Klick auf Wiederherstellen und all Ihre Serien sind wieder zurück! (Backups neuerer SeriesGuide-Versionen können nicht in alten Versionen wiederhergestellt werden, außer sie verwenden die gleiche Datenbankversion. Siehe Über SeriesGuide in den Einstellungen.)</string>
-  <string name="backup_failed_nosd">Konnte kein Backup erstellen. Es ist kein externer Speicher, z.B. eine SD Karte, verfügbar.</string>
+  <string name="backup_description"><b>Backup</b> erstellt eine Kopie Ihrer Serien Datenbank im unten genannten Ordner mit dem Namen <b>seriesdatabase</b>.\n\nZum Wiederherstellen, stellen Sie sicher, dass diese Datei im Ordner unten liegt, dann tippen Sie <b>Wiederherstellen</b> und alle Ihre Serien sind zurück!\n\nNur Backups mit der gleichen oder einer niedrigeren Datenbankversion als unten können wiederhergestellt werden.</string>
+  <string name="backup_path"><b>Backup-Ordner</b></string>
+  <string name="backup_version"><b>Datenbankversion</b></string>
+  <string name="backup_failed_nosd">Backup fehlgeschlagen. Der Backup-Ordner ist nicht verfügbar.</string>
   <string name="backup_inprogress">Erstelle Datenbank Backup...</string>
   <string name="backup_success">Backup erforlgreich</string>
   <string name="backup_failed">Backup fehlgeschlagen</string>
   <string name="import_inprogress">Wiederherstellen der Datenbank...</string>
-  <string name="import_failed_nosd">Konnte Backup nicht wiederherstellen. Es ist kein externer Speicher, z.B. eine SD Karte, verfügbar.</string>
-  <string name="import_failed_nofile">Es gibt keine Backup-Datei
-		(\"/sdcard/seriesguidebackup/seriesdatabase\"). Konnte Datenbank nicht wiederherstellen.</string>
-  <string name="import_failed_noread">Die Backup-Datei ist nicht lesbar 
-		(\"/sdcard/seriesguidebackup/seriesdatabase\"). Konnte Datenbank nicht wiederherstellen.</string>
+  <string name="import_failed_nosd">Wiederherstellen fehlgeschlagen. Der Backup-Ordner ist nicht verfügbar.</string>
+  <string name="import_failed_nofile">Es existiert keine Sicherungsdatei. Kann Datenbank nicht wiederherstellen.</string>
+  <string name="import_failed_noread">Backup-Datei ist nicht lesbar. Kann Datenbank nicht wiederherstellen.</string>
+  <string name="dbupgradefailed">Das Backup ist möglicherweise zu alt oder leer. Hinweis: Importieren Sie Pre-2.0 Sicherungen zuerst in einer 1.9.x Version.</string>
   <string name="import_success">Datenbank erfolgreich wiederhergestellt</string>
   <string name="import_failed">Wiederherstellen fehlgeschlagen</string>
-  <string name="dbupgradefailed">Sieht aus als ob die Sicherung zu alt oder leer ist. Hinweis: Vor-2.0-Sicherungen zuerst in eine 1.9.x-Version importieren.</string>
-  <string name="backup_button">Backup auf SD Karte</string>
-  <string name="import_button">Wiederherstellen von SD Karte</string>
-  <string name="backup_question">Dies überschreibt eine vorhandene Backup-Datei.</string>
+  <string name="backup_button">Backup</string>
+  <string name="import_button">Wiederherstellen</string>
+  <string name="backup_question">Damit wird eine existierende Sicherungsdatei im Backup-Ordner überschrieben.</string>
   <string name="backup_yes">Backup erstellen</string>
   <string name="backup_no">Kein Backup</string>
-  <string name="import_question">Stellen Sie sicher, dass sich die Backup-Datei auf der SD Karte befindet. Alle aktuellen Serien werden gelöscht.</string>
+  <string name="import_question">Stellen Sie sicher, dass die Sicherungsdatei im Backup-Ordner ist. Die aktuelle Serien-Liste wird verloren gehen.</string>
   <string name="import_yes">Wiederherstellen</string>
   <string name="import_no">Nicht wiederherstellen</string>
   <string name="smallwidget">Nächste Folgen (klein)</string>
   <string name="bigwidget">Nächste Folgen (mittel)</string>
   <string name="largewidget">Nächste Folgen (groß)</string>
+  <string name="activity">Aktivität</string>
   <string name="upcoming">Demnächst</string>
   <string name="recent">Vor kurzem</string>
   <string name="noupcoming">Anscheinend wurden keine Folgen gefunden. Versuchen Sie Ihre Serien zu aktualisieren.</string>
@@ -163,6 +176,9 @@
   <string name="checkin">Check In</string>
   <string name="comment">Check In Kommentar</string>
   <string name="checkinsuccess">Check In erfolgreich</string>
+  <string name="traktcheckin_cancel">Breche ab</string>
+  <string name="traktcheckin_inprogress">Es ist bereits ein Check In im Gange. Brechen Sie diesen Check In ab oder warten Sie %s bevor Sie wieder einchecken können.</string>
+  <string name="traktcheckin_wait">Ich warte</string>
   <string name="pref_number">Zahlenformat</string>
   <string name="pref_numbersummary">Wechseln Sie zwischen 1x01, S01E01 oder s01e01 als Zahlenformat</string>
   <string name="checkinfailed">Check-In fehlgeschlagen</string>
@@ -185,27 +201,41 @@
   <string name="pref_trakt">trakt.tv Anmeldeinformationen</string>
   <string name="pref_traktsummary">Hinzufügen oder Bearbeiten Ihrer trakt.tv Anmeldeinformationen</string>
   <string name="pref_traktsync">Synchronisieren mit trakt.tv</string>
-  <string name="pref_traktsyncsummary">Experimentelle, manuelle Synchronisierung mit trakt.tv</string>
+  <string name="pref_traktsyncsummary">Erst-Synchronisierung mit trakt.tv</string>
   <string name="save">Speichern</string>
   <string name="dontsave">Nicht speichern</string>
-  <string name="trakt_success">Erfolgreich auf trakt.tv markiert</string>
-  <string name="trakt_error">trakt.tv Markierung gescheitert</string>
+  <string name="trakt_success">Erfolgreich mit trakt kommuniziert</string>
+  <string name="trakt_error">Interaktion mit trakt ist fehlgeschlagen</string>
+  <string name="trakt_seen">als gesehen markiert</string>
   <string name="trakt_decryptfail">Kennwort konnte nicht entschlüsselt werden</string>
   <string name="trakt_credentials_invalid">Anmeldeinformationen ungültig</string>
   <string name="trakt_generalerror">Etwas ist schief gelaufen. Bitte überprüfen Sie Ihre Anmeldeinformationen, und versuchen Sie es erneut.</string>
   <string name="pref_traktintegrate">trakt.tv integrieren</string>
-  <string name="pref_traktintegratesummary">Markieren als gesehen in der Übersicht wird an trakt.tv übermittelt</string>
+  <string name="pref_traktintegratesummary">trakt Aktivitäten beim Update holen</string>
   <string name="donate">Spendieren Sie ein Bier (Paypal)</string>
-  <string name="feedback">Geben Sie Feedback</string>
+  <string name="feedback">Feedback senden</string>
   <string name="love">Absolut top!</string>
   <string name="hate">Totaler Flop!</string>
   <string name="trakt_createaccount">Neues Konto einrichten</string>
   <string name="email">E-Mail</string>
+  <string name="trakt_experimental">Nur in SeriesGuide hinzugefügte Serien werden synchronisiert. \'Sync nach SeriesGuide\' holt gesehene Folgen von trakt. \'Sync nach trakt\' übermittelt gesehene Folgen in SeriesGuide zu trakt.</string>
   <string name="trakt_synctodevice">Sync nach SeriesGuide</string>
   <string name="trakt_synctotrakt">Sync nach trakt.tv</string>
   <string name="trakt_syncunseen">Auch ungesehene Folgen syncen</string>
   <string name="powered_by_thetvdb">ein Dienst von thetvdb.com</string>
+  <string name="friends">Freunde</string>
+  <string name="friends_empty">Keine Aktivität oder Sie haben noch keine Freunde auf trakt.</string>
+  <string name="sending">Senden...</string>
+  <string name="trending">Beliebt</string>
+  <string name="recommended">Empfehlungen</string>
+  <string name="library">Bibliothek</string>
+  <string name="welcome_message"><big>Willkommen!</big>\nHier sind ein paar Dinge zum Einstieg.\n\nSeriesGuide arbeitet mit Ihrem trakt.tv Konto:\n - In Serien einchecken\n - Aktivität der Freunde anzeigen\n - Empfehlungen und Bibliothek anzeigen</string>
+  <string name="welcome_setuptrakt">trakt-Konto einrichten</string>
+  <string name="welcome_gettingstarted">Um Ihre Serienliste zu füllen:</string>
+  <string name="welcome_add">Serien hinzufügen</string>
   <string name="download_stable">SeriesGuide downloaden</string>
+  <string name="gobreak">Go break things</string>
+  <string name="betawarning">WARNUNG: Dies ist eine instabile BETA Version, die nur zum Testen geeignet ist. Um die stabile Endnutzerversion zu benutzen, tippen Sie auf den Download-Button unten.\n\nWenn Sie helfen möchten die Beta zu testen, nur zu. Bitte berichten Sie jeden Absturz und senden sie Feedback an seriesguide@battlelancer.com.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Nächste Folge</item>
@@ -226,10 +256,11 @@
     <item>Älteste zuerst (DVD)</item>
   </string-array>
   <string-array name="share_items">
-    <item>GetGlue Check In</item>
-    <item>Gesehen mark. (trakt.tv)</item>
+    <item>Check In (GetGlue)</item>
+    <item>Check In (trakt)</item>
+    <item>Gesehen markieren (trakt)</item>
+    <item>Bewerten (trakt)</item>
     <item>Andere Dienste</item>
-    <item>Bewerten (trakt.tv)</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Alle</item>

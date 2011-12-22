@@ -10,12 +10,12 @@
     <item
         android:id="@+id/menu_shareepisode"
         android:icon="@drawable/ic_action_share"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="always"
         android:title="@string/share_episode"/>
 
     <item
         android:id="@+id/menu_addevent"
         android:icon="@drawable/ic_action_calendar"
-        android:title="@string/addtocalendar"></item>
+        android:title="@string/addtocalendar" android:showAsAction="never"></item>
 
 </menu>

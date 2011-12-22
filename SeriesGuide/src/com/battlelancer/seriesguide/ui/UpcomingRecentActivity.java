@@ -4,6 +4,9 @@ package com.battlelancer.seriesguide.ui;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.AddDialogFragment.OnAddShowListener;
+import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.thetvdbapi.SearchResult;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -17,7 +20,7 @@ import android.support.v4.view.ViewPager;
 
 import java.util.ArrayList;
 
-public class UpcomingRecentActivity extends BaseActivity {
+public class UpcomingRecentActivity extends BaseActivity implements OnAddShowListener {
     ViewPager mViewPager;
 
     TabsAdapter mTabsAdapter;
@@ -26,14 +29,18 @@ public class UpcomingRecentActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.upcoming_multipane);
-        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        ActionBar.Tab upcomingTab = getSupportActionBar().newTab().setText(R.string.upcoming);
-        ActionBar.Tab recentTab = getSupportActionBar().newTab().setText(R.string.recent);
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        ActionBar.Tab upcomingTab = actionBar.newTab().setText(R.string.upcoming);
+        ActionBar.Tab recentTab = actionBar.newTab().setText(R.string.recent);
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
 
-        mTabsAdapter = new TabsAdapter(this, getSupportActionBar(), mViewPager);
+        mTabsAdapter = new TabsAdapter(this, actionBar, mViewPager);
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
         argsUpcoming.putString("query", Episodes.FIRSTAIRED + ">=?");
@@ -52,8 +59,12 @@ public class UpcomingRecentActivity extends BaseActivity {
         argsUpcoming.putInt("loaderid", 20);
         mTabsAdapter.addTab(recentTab, UpcomingFragment.class, argsRecent);
 
+        // trakt friends tab
+        ActionBar.Tab friendsTab = actionBar.newTab().setText(R.string.friends);
+        mTabsAdapter.addTab(friendsTab, TraktFriendsFragment.class, null);
+
         if (savedInstanceState != null) {
-            getSupportActionBar().setSelectedNavigationItem(savedInstanceState.getInt("index"));
+            actionBar.setSelectedNavigationItem(savedInstanceState.getInt("index"));
         }
     }
 
@@ -137,5 +148,13 @@ public class UpcomingRecentActivity extends BaseActivity {
         @Override
         public void onTabUnselected(Tab tab, FragmentTransaction ft) {
         }
+    }
+
+    /**
+     * Provide a listener for the TraktFriendsFragment.
+     */
+    @Override
+    public void onAddShow(SearchResult show) {
+        TaskManager.getInstance(this).performAddTask(show);
     }
 }

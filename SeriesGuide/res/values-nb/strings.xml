@@ -34,7 +34,6 @@
   <string name="sort">Sorter etter</string>
   <string name="menu_updateart">Hent manglende bilder</string>
   <string name="updateall_yes">Oppdater (alle)</string>
-  <string name="menu_update_delta">Oppdater (kun endrede)</string>
   <string name="context_updateshow">Oppdater</string>
   <string name="context_showinfo">Vis info</string>
   <string name="context_marknext">Sett neste episode</string>
@@ -43,7 +42,6 @@
   <string name="unmark_episode">Ennå ikke sett episode</string>
   <string name="mark_all">Sett alle</string>
   <string name="unmark_all">Ingen sett</string>
-  <string name="hello"><big>Velkommen til SeriesGuide</big>\n\nDu har ikke lagt til noen serier, enda. Klikk <b>Legg til</b> i menyen for å legge til noen.\n\nHvis du ønsker å <b>gjenopprette en sikkerhetskopi</b>, gå til innstillingene og se etter Sikkerhetskopiering/gjenoppretting.</string>
   <string name="confirm_delete">Vil du virkelig fjerne serien?</string>
   <string name="delete_show">Fjern</string>
   <string name="dontdelete_show">Ikke fjern</string>
@@ -109,9 +107,6 @@
   <string name="pref_hideimagessummary">Skjul SeriesGuide bilder fra fotogalleriet (omstart kreves)</string>
   <string name="pref_more">Mer</string>
   <string name="about">Om SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - uviklet av Uwe Trottmann.\n\nVennligst se CREDITS linken under for alle personene og ressursene som bidrar til å holde dette prosjektet i gang.\n\nhttp://code.google.com/p/seriesguide/wiki/Credits</string>
-  <string name="help">Få hjelp</string>
-  <string name="help_summary">Gå til Hjelp siden</string>
   <string name="backup">Sikkerhetskopiering/gjenoppretting</string>
   <string name="backup_summary">Sikkerhetskopiere eller gjenopprette dine serier</string>
   <string name="pref_sharing">Deling</string>
@@ -125,27 +120,16 @@
   <string name="pref_notifications">Aktiver varsler</string>
   <string name="pref_notificationssummary">Vis varsler for kommende episoder</string>
   <string name="pref_usetz">Bruk min tidssone</string>
-  <string name="pref_usetzsummary">Visningsdatoer i din tidssone (for brukere utenfor USA)</string>
   <string name="pref_offset">Tidsforskjell</string>
   <string name="pref_offsetsummary">med et visst antall timer</string>
-  <string name="backup_description">Sikkerhetskopiering vil lagre en kopi av databasen SeriesGuide i mappen \"seriesguidebackup\" på SD-kortet. Hvis du installerer SeriesGuide på nytt eller installerer SeriesGuide på en annen Android-enhet, er det bare å sette denne mappen på enhetens SD-kort. Trykk gjenoppretting nedenfor og alle dine serier vil være der igjen! (Du kan ikke importere databaser fra nyere versjoner til en eldre versjon, bortsett fra at den bruker samme databaseversjonen. Se Om i innstillingene.)</string>
-  <string name="backup_failed_nosd">Kan ikke utføre sikkerhetskopien Det finnes ingen ekstern lagring, for eksempel et SD-kort.</string>
   <string name="backup_inprogress">Sikkerhetskopierer database...</string>
   <string name="backup_success">Sikkerhetskopiering vellykket</string>
   <string name="backup_failed">Sikkerhetskopieringen mislyktes</string>
   <string name="import_inprogress">Gjenoppretter databasen...</string>
-  <string name="import_failed_nosd">Kan ikke gjenopprette sikkerhetskopien. Det finnes ingen ekstern lagring, for eksempel et SD-kort.</string>
-  <string name="import_failed_nofile">Det er ingen sikkerhetskopifil (\"/sdcard/seriesguidebackup/seriesdatabase\"). Kan ikke gjenopprette databasen.</string>
-  <string name="import_failed_noread">Sikkerhetskopifilen er ikke lesbar (\"/sdcard/seriesguidebackup/seriesdatabase\"). Kan ikke gjenopprette databasen.</string>
   <string name="import_success">Databasen er gjenopprettet</string>
   <string name="import_failed">Gjenoppretting mislyktes</string>
-  <string name="dbupgradefailed">Det ser ut til at sikkerhetskopien din er for gammel eller tom. Merk: Importer tidligere versjoner enn 2.0 sikkerhetskopier i en 1.9.x versjone først.</string>
-  <string name="backup_button">Sikkerhetskopiering til SD-kort</string>
-  <string name="import_button">Gjenopprett fra SD-kort</string>
-  <string name="backup_question">Dette overskriver alle tidligere sikkerhetskopier.</string>
   <string name="backup_yes">Sikkerhetskopi</string>
   <string name="backup_no">Ikke ta sikkerhetskopi</string>
-  <string name="import_question">Kontroller at sikkerhetskopien er på SD-kortet. Alle gjeldende serier vil bli overskrevet.</string>
   <string name="import_yes">Gjenopprett</string>
   <string name="import_no">Ikke Gjenopprett</string>
   <string name="smallwidget">Neste episode (liten)</string>
@@ -182,23 +166,17 @@
   <string name="password">Passord</string>
   <string name="apikey">API nøkkel</string>
   <string name="pref_traktsync">Synkroniser med trakt.tv</string>
-  <string name="pref_traktsyncsummary">Eksperimentell, manuell synkronisering med trakt.tv</string>
   <string name="save">Lagre</string>
   <string name="dontsave">Ikke lagre</string>
-  <string name="trakt_success">Vellykket markert på trakt.tv</string>
-  <string name="trakt_error">deling med trakt.tv mislyktes</string>
   <string name="trakt_decryptfail">passordet kunne ikke dekrypteres</string>
   <string name="trakt_credentials_invalid">påloggingsinformasjon ikke gyldig</string>
   <string name="pref_traktintegrate">Integrer med trakt.tv</string>
-  <string name="pref_traktintegratesummary">Markert som sett i Oversikt blir delt med trakt.tv</string>
   <string name="donate">Spander en øl (Paypal)</string>
-  <string name="feedback">Gi tilbakemelding</string>
   <string name="love">Helt ninja!</string>
   <string name="hate">Svak saus :(</string>
   <string name="trakt_createaccount">Opprett ny konto</string>
   <string name="email">E-post</string>
   <string name="trakt_synctodevice">Synkroniser til SeriesGuide</string>
-  <string name="trakt_experimental"><b>Eksperimentell</b> synkronisering med trakt. Dette kan være ustabilt til tider. Kun serier som er lagt til i SeriesGuide blir synkronisert. Til SeriesGuide blir kun episoder som er sett markert. Episoder som allerede er sett blir ikke berørt. Til trakt synkroniseres bare episoder som er sett.</string>
   <string name="trakt_synctotrakt">Synkroniser med trakt.tv</string>
   <string name="trakt_syncunseen">Synkroniser usette episoder</string>
   <string name="powered_by_thetvdb">drevet av thetvdb.com</string>
@@ -222,10 +200,11 @@
     <item>Eldste først (DVD)</item>
   </string-array>
   <string-array name="share_items">
-    <item>GetGlue Sjekk inn</item>
-    <item>Marker som sett på trakt.tv</item>
-    <item>Andre tjenester</item>
-    <item>Vurder på trakt.tv</item>
+    <item>Check In (GetGlue)</item>
+    <item>Check In (trakt)</item>
+    <item>Mark seen (trakt)</item>
+    <item>Rate (trakt)</item>
+    <item>Other services</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Alle</item>

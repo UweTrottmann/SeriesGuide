@@ -81,7 +81,7 @@
             android:title="@string/pref_offset" />
 
         <CheckBoxPreference
-            android:defaultValue="False"
+            android:defaultValue="True"
             android:key="com.battlelancer.seriesguide.autoupdate"
             android:summary="@string/pref_autoupdatesummary"
             android:title="@string/pref_autoupdate" />
@@ -105,7 +105,7 @@
             android:title="@string/pref_trakt" />
 
         <CheckBoxPreference
-            android:defaultValue="False"
+            android:defaultValue="True"
             android:key="com.battlelancer.seriesguide.traktintegration"
             android:summary="@string/pref_traktintegratesummary"
             android:title="@string/pref_traktintegrate" />
@@ -121,15 +121,6 @@
         <Preference
             android:key="aboutPref"
             android:title="@string/about" />
-
-        <Preference
-            android:key="helpPref"
-            android:summary="@string/help_summary"
-            android:title="@string/help" />
-
-        <Preference
-            android:key="com.battlelancer.seriesguide.feedback"
-            android:title="@string/feedback" />
 
         <Preference
             android:key="com.battlelancer.seriesguide.donate"

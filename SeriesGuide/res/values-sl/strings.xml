@@ -79,10 +79,11 @@
     <item>Oldest first (DVD)</item>
   </string-array>
   <string-array name="share_items">
-    <item>GetGlue Check In</item>
-    <item>Mark seen on trakt.tv</item>
+    <item>Check In (GetGlue)</item>
+    <item>Check In (trakt)</item>
+    <item>Mark seen (trakt)</item>
+    <item>Rate (trakt)</item>
     <item>Other services</item>
-    <item>Rate on trakt.tv</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>All</item>

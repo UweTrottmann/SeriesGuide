@@ -1,5 +1,30 @@
-Change Log (Stable channel)
-===========================
+Changelog
+=========
+
+Version 2.4 *(in testing: 2.3.9beta)*
+--------------------------------
+
+* Check into a show on trakt. After checking in, trakt will automatically display it as watching then switch over to watched status once the runtime of the show has elapsed.
+* Recently watched episodes are fetched from trakt on each update: allows easy syncing of devices. After adding a show the initial fetch of watched episodes should still be done via `Settings` >> `Sync with trakt` >> `Sync to SeriesGuide`. Enabled by default on new installations.
+* `Integrate with trakt.tv` now controls the former behaviour. The eye icon does not automatically mark episodes as seen on trakt anymore. Use the check in functionality.
+* Auto update enabled by default on new installations (only over WiFi, only on opening the show list, once a day).
+* `Upcoming` renamed `Activity`, now includes the latest activity of friends on trakt.
+* Optimized for Android 4.0.
+* TVDb button in `Overview`.
+* Make the backup screen a little more informative.
+* Add a welcome dialog to get users started.
+* Set auto-update limit to 12 hours (down from 23 hours).
+* Use ActionBarSherlock 3.5.0
+
+Version 2.3 *(2011-11-26)*
+--------------------------------
+
+* Revamped updater: shows get outdated after 7 days and get included in the next update
+* AutoUpdate: presses the update button on opening the app for you
+* Updating now only works on Wi-Fi, this can be disabled in settings
+* Revamped adding of shows (incl. more trakt integration)
+* Episode pager on phones/small screens
+* TVDb buttons
 
 Version 2.3 *(2011-11-26)*
 --------------------------------

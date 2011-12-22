@@ -87,8 +87,6 @@
   <string name="pref_hideimagessummary">Απόκρυψη εικόνων του SeriesGuide από τη συλλογή των φωτογραφιών σας (απαιτείται επανεκκίνηση)</string>
   <string name="pref_more">Περισσότερα</string>
   <string name="about">Σχετικά με το SeriesGuide</string>
-  <string name="help">Λήψη βοήθειας</string>
-  <string name="help_summary">Μετάβαση στη σελίδα Βοήθειας</string>
   <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>
   <string name="backup_summary">Δημιουργία αντιγράφου ασφαλείας ή επαναφορά των σειρών</string>
   <string name="pref_sharing">Κοινή χρήση</string>
@@ -96,23 +94,14 @@
   <string name="clear_cache">Καθαρισμός μνημών cache εικόνας</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_offset">Διαφορά ώρας</string>
-  <string name="backup_description">Η δημιουργία του αντιγράφου ασφαλείας θα αποθηκεύσει ένα αντίγραφο της βάσης δεδομένων SeriesGuide στον φάκελο \"seriesguidebackup\" στην κάρτα SD. Εάν επανεγκαταστήσετε το SeriesGuide ή εγκαταστήστε το SeriesGuide σε κάποια άλλη συσκευή με Android, απλά τοποθετείστε αυτόν το φάκελο στην κάρτα SD. Επιλέξτε την Επαναφορά που υπάρχει παρακάτω και όλες οι σειρές θα εμφανίζονται και πάλι! (Δεν μπορείτε να  εισάγετε βάσεις δεδομένων από νεότερες εκδόσεις σε μια παλαιότερη έκδοση, εκτός αν αυτή χρησιμοποιεί την ίδια έκδοση της βάσης δεδομένων. Ανατρέξτε στην ενότητα "Σχετικά με" στις ρυθμίσεις.)</string>
-  <string name="backup_failed_nosd">Δεν είναι δυνατή η δημιουργία αντιγράφου ασφαλείας. Δεν υπάρχει καμία εξωτερική συσκευή αποθήκευσης, όπως κάρτα SD, διαθέσιμη.</string>
   <string name="backup_inprogress">Πραγματοποιείται η δημιουργία αντιγράφου ασφαλείας της βάσης δεδομένων...</string>
   <string name="backup_success">Η δημιουργία αντιγράφου ασφαλείας ήταν επιτυχής</string>
   <string name="backup_failed">Η δημιουργία του αντιγράφου ασφαλείας απέτυχε</string>
   <string name="import_inprogress">Επαναφορά βάσης δεδομένων ...</string>
-  <string name="import_failed_nosd">Δεν είναι δυνατή η επαναφορά του αντιγράφου ασφαλείας Δεν υπάρχει καμία εξωτερική συσκευή αποθήκευσης, όπως κάρτα SD, διαθέσιμη.</string>
-  <string name="import_failed_nofile">Δεν υπάρχει κανένα αρχείο αντιγράφου ασφαλείας (\"/sdcard/seriesguidebackup/seriesdatabase\"). Δεν είναι δυνατή η επαναφορά της βάσης δεδομένων.</string>
-  <string name="import_failed_noread">Το αντίγραφο ασφαλείας δεν μπορεί να αναγνωσθεί ("/sdcard/seriesguidebackup/seriesdatabase"). Δεν είναι δυνατή η επαναφορά της βάσης δεδομένων.</string>
   <string name="import_success">Η βάση δεδομένων έχει επαναφερθεί επιτυχώς</string>
   <string name="import_failed">Η επαναφορά απέτυχε</string>
-  <string name="backup_button">Δημιουργία αντιγράφου ασφαλείας σε κάρτα SD</string>
-  <string name="import_button">Επαναφορά από την κάρτα SD</string>
-  <string name="backup_question">Αυτό θα αντικαταστήσει οποιαδήποτε προηγούμενο αρχείο αντιγράφου ασφαλείας.</string>
   <string name="backup_yes">Δημιουργία αντιγράφου ασφαλείας</string>
   <string name="backup_no">Να μην δημιουργηθεί αντίγραφο ασφαλείας</string>
-  <string name="import_question">Βεβαιωθείτε ότι το αντίγραφο ασφαλείας βρίσκεται στην κάρτα SD. Όλες οι τρέχουσες σειρές θα αντικατασταθούν.</string>
   <string name="import_yes">Επαναφορά</string>
   <string name="import_no">Να μην γίνει Επαναφορά</string>
   <string name="smallwidget">Επόμενο επεισόδιο (μικρό)</string>
@@ -155,10 +144,11 @@
     <item>Το παλαιότερο πρώτα (DVD)</item>
   </string-array>
   <string-array name="share_items">
-    <item>GetGlue Check In</item>
-    <item>Mark seen on trakt.tv</item>
+    <item>Check In (GetGlue)</item>
+    <item>Check In (trakt)</item>
+    <item>Mark seen (trakt)</item>
+    <item>Rate (trakt)</item>
     <item>Other services</item>
-    <item>Rate on trakt.tv</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>All</item>

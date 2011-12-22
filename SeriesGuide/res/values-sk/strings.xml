@@ -41,7 +41,6 @@
   <string name="unmark_episode">Ešte nepozretá epizóda</string>
   <string name="mark_all">Pozreté všetky</string>
   <string name="unmark_all">Nepozreté žiadne</string>
-  <string name="hello"><big>Vitajte v SeriesGuide</big> \n\n Zdá se, že zatiaľ nemáte pridné žiadne relácie. Stlačte tlačidlo <b>Pridať reláciu</b> v menu, aby ste nejaké pridali. \n\n Alebo pokiaľ chcete <b>obnoviť zálohu</b>, otvorte Nastavenie v menu a zvoľte Zálohovanie/Obnovenie.</string>
   <string name="confirm_delete">Naozaj chcete odstrániť túto show?</string>
   <string name="delete_show">Odstrániť</string>
   <string name="dontdelete_show">Neodstraňovat</string>
@@ -103,9 +102,6 @@
   <string name="pref_hideimagessummary">Skryť obrázky SeriesGuide z vašej fotogalérie (potrebný reštart)</string>
   <string name="pref_more">Viac</string>
   <string name="about">O SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - vývojár Uwe Trottmann \n\n Prosím pozrite sa na nižšie uvedený odkaz, kde sú mená všetkých ľudí a zdroje, ktoré pomáhajú pri vývoji tohto projektu\n\n http://code.google.com/p/seriesguide/wiki/Credits</string>
-  <string name="help">Získať pomoc</string>
-  <string name="help_summary">Prejsť na stránku pomocníka.</string>
   <string name="backup">Zálohovanie / obnovenie</string>
   <string name="backup_summary">Zálohovanie alebo obnovenie vašich relácií</string>
   <string name="pref_sharing">Zdieľanie</string>
@@ -119,27 +115,16 @@
   <string name="pref_notifications">Povoliť notifikácie</string>
   <string name="pref_notificationssummary">Zobraziť upozornenia pre nadchádzajúce epizódy</string>
   <string name="pref_usetz">Používať moje časové pásmo</string>
-  <string name="pref_usetzsummary">Dátumy vysielania vo vašom časovom pásme (pre používateľov mimo USA)</string>
   <string name="pref_offset">Časový posun</string>
   <string name="pref_offsetsummary">od určitého množstva hodín</string>
-  <string name="backup_description">Tlačidlo Zálohovanie uloží kópiu databázy SeriesGuide v priečinku \"seriesguidebackup\" na vašej SD karte. Ak preinštalujete SeriesGuide alebo nainštalovať SeriesGuide na inom Android zariadení, uložte tento priečinok na SD kartu v danom zariadení. Stlačte tlačidlo Obnovenie a všetky vaše relácie tam budú zase! (Nie je nožné importovať relácie z novších verzií do starších, s výnimkou ak používate rovnakú verziu databázy. Pozrite sa na O SeriesGuide v nastaveniach.)</string>
-  <string name="backup_failed_nosd">Nemožno zálohovať. Neexistuje žiadny externé úložisko, ako SD karta, k dispozícii.</string>
   <string name="backup_inprogress">Zálohuje sa databáza ...</string>
   <string name="backup_success">Zálohovanie úspešné</string>
   <string name="backup_failed">Zálohovanie zlyhalo</string>
   <string name="import_inprogress">Obnovuje sa databáza...</string>
-  <string name="import_failed_nosd">Nemožno obnoviť. Neexistuje žiadny externé úložisko, ako SD karta, k dispozícii.</string>
-  <string name="import_failed_nofile">Neexistuje žiadny súbor zálohy (\ "/ sdcard / seriesguidebackup / seriesdatabase \"). Nemožno obnoviť databázu.</string>
-  <string name="import_failed_noread">Záložný súbor nie je čitateľný (\ "/ sdcard / seriesguidebackup / seriesdatabase \"). Môže \ \'t obnovenie databázy.</string>
   <string name="import_success">Databáza sa úspešne obnovila</string>
   <string name="import_failed">Obnovenie zlyhalo</string>
-  <string name="dbupgradefailed">Vyzerá to tak, že vaša záložná je príliš stará alebo prázdna. Poznámka: Importujte najprv pre-2.0 zálohy v 1.9.x verzii.</string>
-  <string name="backup_button">Zálohovať na SD kartu</string>
-  <string name="import_button">Obnoviť z SD karty</string>
-  <string name="backup_question">Toto prepíše všetky predchádzajúce zálohy.</string>
   <string name="backup_yes">Zálohovať</string>
   <string name="backup_no">Nezálohovať</string>
-  <string name="import_question">Uistite sa, že záloha je na SD karte. Všetky aktuálne relácie budú prepísané.</string>
   <string name="import_yes">Obnoviť</string>
   <string name="import_no">Neobnoviť</string>
   <string name="smallwidget">Ďalšie epizódy (malé)</string>
@@ -168,16 +153,12 @@
   <string name="password">Heslo</string>
   <string name="apikey">API kľúč</string>
   <string name="pref_traktsync">Synchronizovať s trakt.tv</string>
-  <string name="pref_traktsyncsummary">Experimentálne, manuálna synchronizácia s trakt.tv</string>
   <string name="save">Uložiť</string>
   <string name="dontsave">Neuložiť</string>
-  <string name="trakt_success">Úspešne označené na trakt.tv</string>
-  <string name="trakt_error">trakt.tv zdieľanie zlyhalo</string>
   <string name="trakt_decryptfail">Heslo nebolo možné dešifrovať</string>
   <string name="trakt_credentials_invalid">poverenia nie je platné</string>
   <string name="pref_traktintegrate">Integrovať trakt.tv</string>
   <string name="donate">Kúpte mi drink (Paypal)</string>
-  <string name="feedback">Povedzte nám svoj názor</string>
   <string name="love">Totally ninja!</string>
   <string name="hate">Odpad :(</string>
   <string name="trakt_createaccount">Vytvoriť nový účet</string>
@@ -206,10 +187,11 @@
     <item>Najstaršie najskôr (DVD)</item>
   </string-array>
   <string-array name="share_items">
-    <item>GetGlue Check In</item>
-    <item>Označiť ako pozreté na trakt.tv</item>
-    <item>Iné služby</item>
-    <item>Ohodnotiť na trakt.tv</item>
+    <item>Check In (GetGlue)</item>
+    <item>Check In (trakt)</item>
+    <item>Mark seen (trakt)</item>
+    <item>Rate (trakt)</item>
+    <item>Other services</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>All</item>

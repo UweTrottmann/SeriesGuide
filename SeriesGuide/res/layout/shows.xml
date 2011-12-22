@@ -11,15 +11,16 @@
         android:padding="@dimen/showgrid_padding" >
 
         <TextView
-            android:id="@id/android:empty"
+            android:id="@+id/empty"
             android:layout_width="250dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:padding="10dp"
-            android:text="@string/hello"
+            android:text="@string/shows_empty"
             android:visibility="gone" />
 
         <GridView
-            android:id="@id/android:list"
+            android:id="@+id/showlist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:columnWidth="@dimen/showgrid_columnWidth"

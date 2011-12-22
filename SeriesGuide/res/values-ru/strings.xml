@@ -34,7 +34,6 @@
   <string name="sort">Сортировать по</string>
   <string name="menu_updateart">Получить отсутствующие серии</string>
   <string name="updateall_yes">Обновить (все)</string>
-  <string name="menu_update_delta">Обновить (только изменённые)</string>
   <string name="context_updateshow">Обновить</string>
   <string name="context_showinfo">Показать информацию</string>
   <string name="context_marknext">См. следующий эпизод</string>
@@ -43,7 +42,6 @@
   <string name="unmark_episode">Пока не просмотренный эпизод</string>
   <string name="mark_all">Видел всё</string>
   <string name="unmark_all">Не видел ни одного</string>
-  <string name="hello"><big>Добро пожаловать в SeriesGuide</big>\n\n Похоже вы ещё не добавили ни одного сериала. Нажмите кнопку <b>Добавить сериал</b> в меню, чтобы добавить какой-нибудь.\n\n или, если вы хотите <b>восстановить резервную копию,</b> откройте Настройки в меню и ищите Резервное копирование / Восстановление.</string>
   <string name="confirm_delete">Вы действительно хотите удалить это шоу?</string>
   <string name="delete_show">Удалить</string>
   <string name="dontdelete_show">Не удалять</string>
@@ -104,9 +102,6 @@
   <string name="pref_hideimagessummary">Не отображать изображения SeriesGuide в вашей фото-галерее (нужна перезагрузка)</string>
   <string name="pref_more">Подробнее</string>
   <string name="about">О SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - разработано Uwe Trottmann \n\n Пожалуйста просмотрите ссылку CREDITS ниже, это все те люди и ресурсы, которые помогают управлять этим проектом \n\n http://code.google.com/р/seriesguide/wiki/Credits</string>
-  <string name="help">Получить помощь</string>
-  <string name="help_summary">Перейти на страницу справки</string>
   <string name="backup">Резервное копирование/восстановление</string>
   <string name="backup_summary">Резервного копирования или восстановления ваших шоу</string>
   <string name="pref_sharing">Поделиться</string>
@@ -117,26 +112,16 @@
   <string name="pref_notifications">Включить уведомления</string>
   <string name="pref_notificationssummary">Показать уведомления о выходящих эпизодах</string>
   <string name="pref_usetz">Использовать мой часовой пояс</string>
-  <string name="pref_usetzsummary">Даты эфиров в вашем часовом поясе (для пользователей за пределами США)</string>
   <string name="pref_offset">Временной сдвиг</string>
   <string name="pref_offsetsummary">на определенное количество часов</string>
-  <string name="backup_description">Резервная копия базы данных SeriesGuide будет сохранена в папке \"seriesguidebackup\" на вашей SD карте. Когда вы будете переустанавливать SeriesGuide или устанавливать его на другое Android-устройство, просто скопируйте эту папку на SD карту устройства. Нажмите Восстановить и все ваши сериалы отобразятся в программе! (Нельзя импортировать базы данных из более новых версий программы в более старые, кроме тех что используют одну и ту же версию базы данных. Смотрите О программе в Настройках.)</string>
-  <string name="backup_failed_nosd">Резервное копирование не возможно. Нет никакого внешнего хранилища, на пример SD карты.</string>
   <string name="backup_inprogress">Резервное копирование базы данных...</string>
   <string name="backup_success">Резервное копирование успешно</string>
   <string name="backup_failed">Резервное копирование не удалось</string>
   <string name="import_inprogress">Восстановление базы данных...</string>
-  <string name="import_failed_nosd">Восстановление из резервной копии не возможно. Нет никакого внешнего хранилища, на пример SD карты.</string>
-  <string name="import_failed_nofile">Резервная копия отсутствует (\"/sdcard/seriesguidebackup/seriesdatabase\"). Невозможно восстановить базу данных.</string>
-  <string name="import_failed_noread">Не удалось прочитать резервную копию (\"/sdcard/seriesguidebackup/seriesdatabase\"). Невозможно восстановить базу данных.</string>
   <string name="import_success">База данных успешно восстановлена</string>
   <string name="import_failed">Восстановление не удалось</string>
-  <string name="backup_button">Резервное копирование на SD карту</string>
-  <string name="import_button">Восстановление из карты памяти SD</string>
-  <string name="backup_question">Это перезапишет предидущую резервную копию.</string>
   <string name="backup_yes">Резервное копирование</string>
   <string name="backup_no">Не резервировать</string>
-  <string name="import_question">Убедитесь, что резервная копия находится на SD-карте. Все текущие шоу будут перезаписаны.</string>
   <string name="import_yes">Восстановление</string>
   <string name="import_no">Не востановлять</string>
   <string name="smallwidget">Следующие эпизоды (маленький)</string>
@@ -170,11 +155,9 @@
   <string name="pref_traktsync">Синхронизировать с trakt.tv</string>
   <string name="save">Сохранить</string>
   <string name="dontsave">Не сохранять</string>
-  <string name="trakt_success">Успешно отмечено на trakt.tv</string>
   <string name="trakt_decryptfail">не удалось расшифровать пароль</string>
   <string name="trakt_generalerror">Что-то пошло не так. Пожалуйста, проверьте ваши данные и повторите попытку.</string>
   <string name="donate">Купить мне выпивку (Paypal)</string>
-  <string name="feedback">Обратная связь</string>
   <string name="trakt_createaccount">Создать новую учетную запись</string>
   <string name="email">Электронная почта</string>
   <string name="trakt_synctodevice">Синхронизация с SeriesGuide</string>
@@ -200,10 +183,11 @@
     <item>Более старые первыми (DVD)</item>
   </string-array>
   <string-array name="share_items">
-    <item>GetGlue Check In</item>
-    <item>Отметить как просмотрено на trackt.tv</item>
-    <item>Другие сервисы</item>
-    <item>Оценить на trackt.tv</item>
+    <item>Check In (GetGlue)</item>
+    <item>Check In (trakt)</item>
+    <item>Mark seen (trakt)</item>
+    <item>Rate (trakt)</item>
+    <item>Other services</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Все</item>
