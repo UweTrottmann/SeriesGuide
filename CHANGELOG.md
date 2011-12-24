@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 2.4 *(in development)*
+Version 2.4 *(in testing: 2.3.9beta)*
 --------------------------------
 
 * Check into a show on trakt. After checking in, trakt will automatically display it as watching then switch over to watched status once the runtime of the show has elapsed.
@@ -12,6 +12,9 @@ Version 2.4 *(in development)*
 * Optimized for Android 4.0.
 * TVDb button in `Overview`.
 * Make the backup screen a little more informative.
+* Add a welcome dialog to get users started.
+* Set auto-update limit to 12 hours (down from 23 hours).
+* Use ActionBarSherlock 3.5.0
 
 Version 2.3 *(2011-11-26)*
 --------------------------------
