@@ -132,12 +132,17 @@
   <string name="pref_usetz">Saját időzóna használata</string>
   <string name="pref_offset">Időeltolás</string>
   <string name="pref_offsetsummary">Időeltolás a megadott órával</string>
+  <string name="backup_path"><b>Biztonsági másolat mappa</b></string>
+  <string name="backup_version"><b>Adatbázis verzió</b></string>
   <string name="backup_inprogress">Adatbázis mentése...</string>
   <string name="backup_success">Az adatbázis mentése sikerült</string>
   <string name="backup_failed">A mentés nem sikertelült</string>
   <string name="import_inprogress">Adatbázis visszaállítása...</string>
   <string name="import_success">Az adatbázis visszaállítása sikerült</string>
   <string name="import_failed">A visszaállítás nem sikerült</string>
+  <string name="backup_button">Bizt. másolat</string>
+  <string name="import_button">Visszaállítás</string>
+  <string name="backup_question">Ez a korábbi mentést felül fogja írni a biztonsági másolat mappában.</string>
   <string name="backup_yes">Mentés</string>
   <string name="backup_no">Mégse</string>
   <string name="import_yes">Visszaállítás</string>
@@ -184,6 +189,7 @@
   <string name="trakt_generalerror">Hiba történt. Ellenőrizze bejelentkezési adatait és próbálja újra.</string>
   <string name="pref_traktintegrate">A trakt.tv használata</string>
   <string name="donate">Fizessen egy italt (Paypal)</string>
+  <string name="feedback">Visszajelzés küldése</string>
   <string name="love">Totally ninja!</string>
   <string name="hate">Weak Sauce :(</string>
   <string name="trakt_createaccount">Új fiók létrehozása</string>
@@ -192,6 +198,9 @@
   <string name="trakt_synctotrakt">Prog->trakt.tv</string>
   <string name="trakt_syncunseen">Meg nem nézett epizódokat is</string>
   <string name="powered_by_thetvdb">powered by thetvdb.com</string>
+  <string name="friends">Barátok</string>
+  <string name="welcome_setuptrakt">A trakt.tv fiók beállítása</string>
+  <string name="download_stable">A SeriesGuide letöltése</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Következő epizód</item>
@@ -216,7 +225,7 @@
     <item>Check In (trakt)</item>
     <item>Mark seen (trakt)</item>
     <item>Rate (trakt)</item>
-    <item>Other services</item>
+    <item>Egyéb szolgáltatások</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Mind</item>

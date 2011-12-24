@@ -32,14 +32,17 @@
   <string name="show_isalive">Continuando</string>
   <string name="show_isnotalive">Terminó</string>
   <string name="sort">Ordenar por</string>
+  <string name="updateall_yes">Actualización (todos)</string>
   <string name="context_updateshow">Actualizar</string>
   <string name="context_showinfo">Mostrar información</string>
   <string name="context_marknext">Siguiente episodio visto</string>
   <string name="today">Hoy</string>
+  <string name="now">ahora</string>
   <string name="mark_episode">Episodio visto</string>
   <string name="unmark_episode">Episodio no visto</string>
   <string name="mark_all">Todos vistos</string>
   <string name="unmark_all">Ninguno visto</string>
+  <string name="shows_empty">Actualmente no hay ninguna serie.</string>
   <string name="confirm_delete">¿Estás seguro que quieres eliminar ese programa?</string>
   <string name="delete_show">Eliminar</string>
   <string name="dontdelete_show">No eliminar</string>
@@ -47,12 +50,22 @@
   <string name="nextepisode">siguiente:</string>
   <string name="context_favorite">Añadir a favoritos</string>
   <string name="context_unfavorite">Quitar de favoritos</string>
+  <string name="favorited">Agregado a Favoritos</string>
+  <string name="unfavorited">Borrado de los favoritos</string>
+  <string name="update_full">Actualizando todos las series...</string>
+  <string name="update_failed">Error de actualización.</string>
+  <string name="update_offline">Compruebe su conexión a internet/Wi-Fi.</string>
+  <string name="update_saxerror">Inténtelo más tarde.</string>
   <string name="update_error">No se pudo actualizar.</string>
   <string name="update_incomplete1">No se pudo actualizar</string>
   <string name="update_incomplete2">.</string>
+  <string name="update_success">Actualización exitosa.</string>
+  <string name="imagedownload_incomplete">Actualización exitosa. Por desgracia, algunas imágenes no se han podido descargar. Inténtelo más tarde.</string>
   <string name="update_inbackground">Actualizando...</string>
   <string name="update_inprogress">Hay una actualización en curso. Espere a que finalice y después vuelva a intentarlo.</string>
   <string name="update_nosdcard">No se pudo actualizar. No hay almacenamiento externo o no hay espacio suficiente en la tarjeta SD.</string>
+  <string name="pref_autoupdate">Actualización automática</string>
+  <string name="pref_updatewifionly">Actualizar sólo en Wi-Fi</string>
   <string name="show_airs">sale al aire</string>
   <string name="show_network">en</string>
   <string name="show_pleaseupdate">Intente actualizar este programa para desplegar más información (en la vista principal, presione unos segundos, seleccione Actualizar). Si esto no ayuda, es probable que no hay más información en TheTVDB. Vaya a su sitio (www.thetvdb) para aprender a añadir información.</string>
@@ -78,11 +91,13 @@
   <string name="add_error_begin">No se pudo agregar \ "</string>
   <string name="add_error_end">\ ".</string>
   <string name="add_already_exists">ya existe. En su lugar, fue actualizado.</string>
+  <string name="loading_usershows">Cargandos tus series en trakt.tv</string>
   <string name="preferences">Configuración</string>
   <string name="pref_sorting">Ordenar Por</string>
   <string name="pref_showsorting">Mostrar orden</string>
   <string name="pref_showsortingsummary">Ordenar series alfabéticamente, por siguiente episodio o por favoritos</string>
   <string name="pref_seasonsorting">Ordenar Temporada</string>
+  <string name="pref_sortingsummary">En qué orden cronológico ordenar las temporadas</string>
   <string name="pref_episodesorting">Ordenar Episodios</string>
   <string name="pref_showlist">Mostrar lista</string>
   <string name="pref_onlyfuture">No hay episodios emitidos</string>
@@ -94,11 +109,13 @@
   <string name="pref_hideimagessummary">Ocultar imágenes de SeriesGuide de su galería de fotos (requiere reiniciar)</string>
   <string name="pref_more">Más</string>
   <string name="about">Acerca de SeriesGuide</string>
+  <string name="help">Ayuda</string>
   <string name="backup">Respaldo/Restauración</string>
   <string name="backup_summary">Respaldar o restaurar sus programas</string>
   <string name="pref_sharing">Compartiendo</string>
   <string name="clearGetGlueCredentials">Desconestar de GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Use los botones Compartir para configurar GetGlue</string>
+  <string name="pref_advanced">Avanzado</string>
   <string name="clear_cache">Borrar Cachés de Imágenes</string>
   <string name="clear_cache_summary">Borrar imágenes de caché y tarjeta SD, se descargarán de nuevo las actualizaciones</string>
   <string name="pref_ganalytics">Google Analytics</string>
@@ -111,15 +128,23 @@
   <string name="backup_success">Respaldo exitoso</string>
   <string name="backup_failed">Error en respaldo</string>
   <string name="import_inprogress">Restaurando base de datos...</string>
+  <string name="import_failed_nosd">No se puede restaurar la copia de seguridad. La carpeta de copia de seguridad no está disponible.</string>
+  <string name="import_failed_nofile">No hay ningún archivo de copia de seguridad. No se puede restaurar.</string>
+  <string name="import_failed_noread">El archivo de copia de seguridad no es legible. No se puede restaurar la base de datos.</string>
   <string name="import_success">Base de datos restaurada exitosamente</string>
   <string name="import_failed">Error en la restauración</string>
+  <string name="backup_button">Copia de seguridad</string>
+  <string name="import_button">Restaurar</string>
+  <string name="backup_question">Esto sobrescribirá cualquier archivo de copia de seguridad anterior en la carpeta de copia de seguridad.</string>
   <string name="backup_yes">Respaldo</string>
   <string name="backup_no">No Respaldar</string>
+  <string name="import_question">Asegúrese de que la copia de seguridad está dentro de la carpeta de copia de seguridad. La lista actual de series se perderá.</string>
   <string name="import_yes">Restaurar</string>
   <string name="import_no">No Restaurar</string>
   <string name="smallwidget">Episodios siguientes (pequeño)</string>
   <string name="bigwidget">Episodios siguientes (medio)</string>
   <string name="largewidget">Episodios siguientes (grande)</string>
+  <string name="activity">Actividad</string>
   <string name="upcoming">Próximos</string>
   <string name="recent">Reciente</string>
   <string name="noupcoming">No hay episodios. Intente actualizando sus series.</string>
@@ -127,11 +152,15 @@
   <string name="cancel">Cancelar</string>
   <string name="share">Compartir</string>
   <string name="done">Hecho</string>
+  <string name="traktcheckin_cancel">Cancelar</string>
+  <string name="traktcheckin_inprogress">Hay ya un registro en curso. Cancelar este registro o esperar %s antes de registrar de nuevo.</string>
   <string name="pref_number">Formato numérico</string>
+  <string name="pref_numbersummary">Cambiar entre 1x01 o s01e01 como formato</string>
   <string name="oauthmessage">Autenticar SeriesGuide con GetGlue...</string>
   <string name="addtocalendar">Añadir al calendario</string>
   <string name="addtocalendar_failed">Lo sentimos, no hay suficiente información para crear un calendario.</string>
   <string name="search_description">Episodios</string>
+  <string name="description_home">Inicio</string>
   <string name="description_search">Buscar</string>
   <string name="norating">n/a</string>
   <string name="loading">Cargando...</string>
@@ -143,14 +172,24 @@
   <string name="pref_traktsync">Sincronizar con trakt.tv</string>
   <string name="save">Guardar</string>
   <string name="dontsave">No guardar</string>
+  <string name="trakt_seen">marcado como visto</string>
+  <string name="trakt_decryptfail">no se pudo descifrar la contraseña</string>
   <string name="pref_traktintegrate">Integrar con trakt.tv</string>
+  <string name="feedback">Enviar comentarios</string>
   <string name="love">¡Una pasada!</string>
   <string name="hate">¡Apesta!</string>
   <string name="trakt_createaccount">Crear una cuenta nueva</string>
+  <string name="email">Correo electrónico</string>
   <string name="trakt_synctodevice">Sincronizar SeriesGuide</string>
   <string name="trakt_synctotrakt">Sincronizar con trakt.tv</string>
   <string name="trakt_syncunseen">Sincronizar episodios no vistos</string>
   <string name="powered_by_thetvdb">con la tecnología de thetvdb.com</string>
+  <string name="friends">Amigos</string>
+  <string name="sending">Enviando...</string>
+  <string name="recommended">Recomendado</string>
+  <string name="library">Biblioteca</string>
+  <string name="welcome_add">Empezar a agregar series</string>
+  <string name="download_stable">Descargar SeriesGuide</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Episodio siguiente</item>
@@ -175,7 +214,7 @@
     <item>Check In (trakt)</item>
     <item>Mark seen (trakt)</item>
     <item>Rate (trakt)</item>
-    <item>Other services</item>
+    <item>Otros servicios</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>All</item>
