@@ -311,6 +311,10 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         if (message != null) {
+            // add a list of failed shows
+            if (mFailedShows.length() != 0){
+                message += "(" + mFailedShows + ")";
+            }
             Toast.makeText(mAppContext, message, length).show();
         }
         mNotificationManager.cancel(UPDATE_NOTIFICATION_ID);
