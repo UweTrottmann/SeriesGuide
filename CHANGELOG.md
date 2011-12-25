@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 2.4 *(in testing: 2.4beta)*
+Version 2.4 *(2011-12-25)*
 --------------------------------
 
 Since 2.3.9beta (2011-12-21):
@@ -17,10 +17,10 @@ Since 2.3.9beta (2011-12-21):
 * Add a welcome dialog to get users started.
 * Set auto-update limit to 12 hours (down from 23 hours).
 * Use ActionBarSherlock 3.5.0.
-* Fix text color for notification on Android 2.2 and below.
 
 Since 2.4beta (2011-12-24):
 
+* Fix text color for notification on Android 2.2 and below.
 * Display failed shows in update error message.
 * Latest translations from crowdin.net.
 
