@@ -1,37 +1,32 @@
 ** ENGLISH **
 
-Manage the progress of (re-)watching your favorite TV shows. Keep track of which episodes you still have to watch or which ones are upcoming.
+Manage the progress of (re-)watching your favorite TV shows. Keep track which episodes you still have to watch or which ones are upcoming. Get more information about a show and each episode (description, actors, episode image, ...) and share what you are watching with trakt.tv, GetGlue or any supported Android app like Google+, Twitter and Facebook.
 
 - No sign-in.
-- Offline support. (Internet connection required for adding/updating shows and downloading images)
-- Backup/Restore your shows (see 'Backup/Restore' in Settings).
+- Everything is available offline. (Internet connection required for adding/updating shows and downloading episode images)
+- Backup and restore your shows (see 'Backup/Restore' in Settings).
 - App widget displays upcoming episodes
-- GetGlue check-in support
-- trakt.tv mark seen/rating support and experimental, manual sync
-- Share episodes via Android apps (Gmail, Facebook, Twitter, ...)
+- trakt.tv support (Check In, Rate, Friends activity, Sync...)
+- GetGlue Check In support
+- Share episodes via Android apps (Email, Facebook, Twitter, ...)
 
-All data is fetched from thetvdb.com, an open TV database. Please help keeping the information on thetvdb.com up to date!
-
-NOTE: Airtimes and Network info are those in the United States. However some shows episodes are released in English internationally shortly after they aired in the US.
+NOTE: Airtimes and Network info are those in the United States Pacific Time due to limitations of the data source (thetvdb.com).
 
 Visit the developers web page for more info and some hints.
 Latest news are on Twitter (twitter.com/SeriesGuide).
 
 ** GERMAN **
 
-Verwalten Sie den Fortschritt, wenn Sie Ihre Lieblings-TV-Serien (erneut) ansehen. Behalten Sie den Überblick welche Folgen Sie noch sehen müssen oder welche demnächst in den USA auf Sendung gehen.
+Verwalten Sie den Fortschritt, wenn Sie Ihre Lieblings-TV-Serien (erneut) ansehen. Behalten Sie den Überblick welche Folgen Sie noch sehen müssen oder welche demnächst in den USA auf Sendung gehen. Zusätzlich können Sie mehr über eine Serie oder eine spezielle Folge erfahren (Beschreibung, Schauspieler, Bild aus der Folge, ...) und anderen über trakt.tv, GetGlue oder jede unterstütze Android App wie Google+, Twitter und Facebook mitteilen, was Sie sich ansehen.
 
 - Keine Anmeldung.
 - Alles offline verfügbar. (Internet-Verbindung zum Hinzufügen/Aktualisieren von Serien und zum Laden von Bildern erforderlich)
 - Sichern oder Wiederherstellen Ihrer Serien (siehe 'Sichern/Wiederherstellung' in den Einstellungen)
 - App-Widget zeigt künftige Folgen
+- trakt.tv Unterstützung (Check In, Bewerten, Aktivität von Freunden, Sync, ...)
 - GetGlue Check-In Unterstützung
-- trakt.tv Gesehen Markierung/Bewertung Unterstützung und experimenteller, manuelle Synchronisation
 - Empfehlen Sie Folgen via Android Apps (Gmail, Facebook, Twitter, ...)
 
-Alle Daten stammen von thetvdb.com, einer freien TV Datenbank. Helfen Sie mit thetvdb.com aktuell zu halten!
+HINWEIS: Ausstrahlungs- und Senderdaten sind die in den USA Pazifik-Zeit auf Grund von Limitierungen in thetvdb.com. Helft mit thetvdb.com zu überzeugen, dass zu ändern!
 
-HINWEIS: Ausstrahlungs- und Senderdaten sind die der USA. Allerdings werden englischsprachige Folgen meist kurz nach Ausstrahlung in den USA international veröffentlicht.
-
-Besuchen Sie die Entwickler-Website um ein paar Tipps zu erfahren.
-Neuigkeiten gibts auf Twitter (twitter.com/SeriesGuide).
+Besuchen Sie die Entwickler-Website um ein paar Tipps zu erfahren oder Hilfe zu erhalten.
