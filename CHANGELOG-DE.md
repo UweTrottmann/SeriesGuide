@@ -1,5 +1,38 @@
-Change Log (Stable channel)
-===========================
+Changelog
+=========
+
+Version 2.4 *(2011-12-25)*
+--------------------------------
+
+Seit 2.3.9beta (2011-12-21):
+
+* Einchecken (Check In) einer Serie bei trakt. Nach dem Check In zeigt trakt die Folge als 'watching' an und ändert die Folge nach Ablauf der Laufzeit als gesehen.
+* Bei einem Update werden kürzlich gesehene Folgen von trakt geladen, dies ermöglicht eine einfache Synchronisation zwischen Geräten. Nach dem Hinzufügen einer Serie sollte initial aber ein Sync über `Einstellungen` >> `Sync mit trakt` >> `Sync nach SeriesGuide` vorgenommen werden.
+* `trakt.tv integrieren` kontrolliert das eben beschriebene Verhalten. Das 'Auge' markiert Folgen nicht mehr automatisch auf trakt. Bitte Check In (trakt) benutzen.
+* Auto Update auf neuen Installationen standardmäßig aktiv (nur über WiFi, nur beim Öffnen der Serienliste, nur einmal am Tag).
+* `Demnächst` in `Aktivität` umbenannt, zeigt jetzt die letzten Aktivitäten von Freunden auf trakt an.
+* Für Android 4.0 optimiert.
+* TVDb Knopf in `Übersicht`.
+* Informativerer Backup Bildschirm.
+* Willkommens-Dialog um Erstnutzern den Einstieg zu erleichtern.
+* Auto-Update limit auf 12 Stunden gesetzt (von vorher 23).
+* ActionBarSherlock 3.5.0.
+
+Seit 2.4beta (2011-12-24):
+
+* Benachrichtigungs Text-Farbe auf Android 2.2 und älter korrigiert
+* Display failed shows in update error message.
+* Latest translations from crowdin.net.
+
+Version 2.3 *(2011-11-26)*
+--------------------------------
+
+* Erneuerter Updater: Serien nach 7 Tagen als veraltet markiert und dann im nächsten Update eingeschlossen
+* Auto-Update: betätigt den Aktual.-Knopf automatisch beim Starten der App
+* Aktualisieren funktioniert nur über Wi-Fi, kann in den Einstellungen deaktiviert werden
+* Hinzufügen von Serien überarbeitet (bessere trakt Integration)
+* Folgen-Swiper/Pager auf Telefonen und kleinen Bildschirmen
+* TVDb Buttons
 
 Version 2.2.2 *(2011-11-01)*
 --------------------------------
