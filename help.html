@@ -3,68 +3,81 @@ layout: default
 title: Help
 ---
 
-<h1>
-	Help
-</h1>
-<div>
-	<p>
+<div class="span10">
+    <h1>
+    	Help
+    </h1>
+
+    <div class="spacer"></div>     
+    
+    <p>Check out the <a href="hints.html"><strong>Getting Started</strong></a> page to learn about <strong>syncing with trakt</strong>, <strong>backing up your database</strong> and <strong>keeping your shows up to date</strong>.</p>
+    <p>Below you will find information about known problems and commonly asked questions:</p>
+
+    <div class="spacer"></div>    
+    
+    <h2 href="#Known_issues">Known issues</h2>
 		<ul>
-			<ul>
-				<ul>
-					<li>
-						<a href="#Known_issues">Known issues</a>
-					</li>
-					<ul>
-						<li><a href="#translation">I want to use SeriesGuide in English or I think the translation is wrong/bad</a></li>
-						<li><a href="#timezone">After I change the time zone on my device the time and days are wrong</a></li>
-						<li><a href="#memory">SeriesGuide uses up more device memory than other Apps</a></li>
-						<li><a href="#widget">The app widget displays no data or is missing in the list of available widgets</a></li>
-						<li><a href="#imdb">'No IMDB reference available. Update this show or go to thetvdb.com and add it.'</a></li>
-					</ul>
-					<li><a href="#Frequently_Asked_Questions">Frequently Asked Questions</a></li>
-					<ul>
-						<li><a href="#play_epidodes">Is this app intended to play episodes, it will not do so on my device. What is wrong?</a></li>
-						<li><a href="#tvdb_info_missing">Why can't I find show x or episode y? Why is information about show x or episode y wrong?</a></li>
-						<li><a href="#future">Will a low number of downloads affect future releases of SeriesGuide ?</a></li>
-					</ul>
-					<li><a href="#Still_lost?">Still lost?</a></li>
-				</ul>
-			</ul>
+			<li><a href="#translation">I want to use SeriesGuide in English or I think the translation is wrong/bad</a></li>
+			<li><a href="#timezone">After I change the time zone on my device the time and days are wrong</a></li>
+			<li><a href="#memory">SeriesGuide uses up more device memory than other Apps</a></li>
+			<li><a href="#widget">The app widget displays no data or is missing in the list of available widgets</a></li>
+			<li><a href="#imdb">'No IMDB reference available. Update this show or go to thetvdb.com and add it.'</a></li>
 		</ul>
-	</p>
+		
+    <h2 href="#Frequently_Asked_Questions">Frequently Asked Questions</h2>
+		<ul>
+			<li><a href="#play_epidodes">Is this app intended to play episodes, it will not do so on my device. What is wrong?</a></li>
+			<li><a href="#tvdb_info_missing">Why can't I find show x or episode y? Why is information about show x or episode y wrong?</a></li>
+			<li><a href="#future">Will a low number of downloads affect future releases of SeriesGuide ?</a></li>
+		</ul>
+
+    <div class="spacer"></div>
+     
 	<h2><a name="Known_issues"></a>Known issues</h2>
 	<a name="translation"></a></a>
 	<h4>I want to use SeriesGuide in English or I think the translation is wrong/bad</h4>
 	To use the app in English you have to set your devices language to any variant of the English language. Android will take care of the rest. By the way, all translations come from volunteers who translate free of charge (!) on crowdin. Please consider <a href="crowdin.net/project/seriesguide-translations/invite">helping to translate or proof read</a>!
-	<br /><br />
+	
+	<div class="spacer"></div>
+	
 	<h4><a name="timezone"></a>After I change the time zone on my device the time and days are wrong</h4>
 	Please stop SeriesGuide and restart it. (From your home screen, go into Settings &gt;&gt; Applications &gt;&gt; Manage Applications. Find SeriesGuide and stop it.)  
-	<br /><br />
+	
+    <div class="spacer"></div>    	
+	
 	<h4><a name="memory"></a>SeriesGuide uses up more device memory than other Apps</h4>
 	You can put SeriesGuide on your SD card with the downside of disabling the app widgets. However, compared to other similar apps SeriesGuide uses a reasonable amount of memory. Keep in mind that all data is kept offline and indexed for fast search, this needs to be stored somewhere.<br />
 	Currently SeriesGuide only stores images on your SD card. Unfortunately this is not possible for the show database itself. This is due to limitations in the Android framework (Android decides where the database is stored) and to avoid wear of the SD card.
-	<br /><br />
+	
+	<div class="spacer"></div>
+	
 	<h4><a name="widget"></a>The app widget displays no data or is missing in the list of available widgets</h4>
-	You may have moved SeriesGuide to the SD card. For the widget to work, SeriesGuide has to be on your phone or internal memory. Reboot afterwards, and everything should be fine again. 
-	<br /><br />
+	You may have moved SeriesGuide to the SD card. For the widget to work, SeriesGuide has to be on your phone or internal memory. Move it back and everything should be fine again (if not, try rebooting your device). 
+	
+	<div class="spacer"></div>
+	
 	<h4><a name="imdb"></a>&#x27;No IMDb reference available. Update this show or go to thetvdb.com and add it.&#x27;</h4>
 	This show is missing its IMDb ID entry on thetvdb.com required for viewing in IMDb or sharing via GetGlue. This is typically the last part of its URL on imdb.com (e.g. tt0898266). You can add it if it is missing by logging into thetvdb.com and clicking the &#x27;show/hide edit&#x27; link on the shows overview page.<br>
 	However keep in mind that some shows just don&#x27;t have IMDb entries (yet?).
-	<br /><br />
-	<br />
-	<br />
+	
+	<div class="largespacer"></div>
+	
 	<h2><a name="Frequently_Asked_Questions"></a>Frequently Asked Questions</h2>
 	<h4><a name="play_epidodes"></a>Is this app intended to play episodes, it will not do so on my device. What is wrong?</h4>
 	It is not possible to actually watch episodes through this app, sorry. SeriesGuide just allows you to keep track of your favorite TV shows: it displays episode information and let&#x27;s you quickly find out which episodes you have already watched. 
-	<br /><br />
+	
+    <div class="spacer"></div>    	
+	
 	<h4><a name="tvdb_info_missing"></a>Why can&#x27;t I find show x or episode y? Why is information about show x or episode y wrong?</h4>
 	First of all try updating (see <a href="">here</a>). Otherwise the information on <a href="http://thetvdb.com" rel="nofollow">thetvdb.com</a> might be wrong or outdated. SeriesGuide gets its data from <a href="http://thetvdb.com" rel="nofollow">thetvdb.com</a>, an open user-maintained tv database. If you want to help them you can add or edit show information and episodes yourself at thetvdb.com (make sure to <a href="http://forums.thetvdb.com/viewtopic.php?f=7&amp;t=4076" rel="nofollow">read their guidelines</a> first).
-	<br /><br />
+	
+	<div class="spacer"></div>
+	
 	<h4><a name="future"></a>Will a low number of downloads affect future releases of SeriesGuide?</h4>
 	I depend on this app myself, so for now the release frequency will only be affected by my work requirements as a student. 
-	<br /><br />
-	<br />
-	<br />
+	
+	<div class="largespacer"></div>
+	
 	<h2><a name="Still_lost?"></a>Still lost?</h2>
-	If your problem can not be solved here, post your problem at the <a href="https://groups.google.com/forum/#!forum/seriesguide-discussion" rel="nofollow">SeriesGuide Discussion Google Group</a>. If you encountered a bug and know about bug reporting, please create a <a href="https://github.com/UweTrottmann/SeriesGuide/issues" rel="nofollow">new issue</a>. Or just send an email via the feedback link in SeriesGuide settings or the <a href="https://market.android.com/details?id=com.battlelancer.seriesguide">Android market page</a>.
+	If your problem can not be solved here, post your problem at the <a href="https://groups.google.com/forum/#!forum/seriesguide-discussion" rel="nofollow">SeriesGuide Discussion Google Group</a>. If you encountered a bug and know about bug reporting, please create a <a href="https://github.com/UweTrottmann/SeriesGuide/issues" rel="nofollow">new issue</a>. Or just send an email via <strong>Send feedback</strong> in SeriesGuide or the <a href="https://market.android.com/details?id=com.battlelancer.seriesguide">Android market page</a>.
 </div>
