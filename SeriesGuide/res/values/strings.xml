@@ -208,6 +208,7 @@
     <string name="import_yes">Restore</string>
     <string name="import_no">Don\'t Restore</string>
     <!-- Misc -->
+    <string name="widget_label">Next episodes</string>
     <string name="smallwidget">Next episodes (small)</string>
     <string name="bigwidget">Next episodes (middle)</string>
     <string name="largewidget">Next episodes (large)</string>

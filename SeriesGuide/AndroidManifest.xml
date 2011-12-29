@@ -60,6 +60,21 @@
                 android:resource="@xml/searchable" />
         </activity>
 
+        <receiver android:name="com.battlelancer.seriesguide.appwidget.ListWidgetProvider" android:label="@string/widget_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_v11_info" />
+        </receiver>
+
+        <service
+            android:name="com.battlelancer.seriesguide.appwidget.ListWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" >
+        </service>
+
         <receiver
             android:name="com.battlelancer.seriesguide.appwidget.AppWidget"
             android:label="@string/smallwidget" >
