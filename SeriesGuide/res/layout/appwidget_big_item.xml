@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/widgetPoster"
-        android:layout_width="25dp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/widget_poster_width"
+        android:layout_height="match_parent"
         android:layout_alignBottom="@+id/textViewWidgetEpisode"
         android:layout_alignTop="@+id/widgetAirtime"
         android:layout_marginRight="5dp"
@@ -19,11 +19,13 @@
         android:id="@+id/textViewWidgetShow"
         style="@style/WidgetTextView"
         android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp"
         android:layout_toLeftOf="@+id/widgetAirtime"
         android:layout_toRightOf="@+id/widgetPoster"
         android:text="Very Long Show Name Of Lovely Show"
         android:textColor="@color/text_primary"
         android:textSize="13sp" >
+
     </TextView>
 
     <TextView
@@ -31,9 +33,11 @@
         style="@style/WidgetTextView"
         android:layout_alignLeft="@+id/textViewWidgetShow"
         android:layout_below="@+id/textViewWidgetShow"
+        android:layout_marginRight="5dp"
         android:layout_toLeftOf="@+id/widgetNetwork"
         android:text="0x00 Very Long Episode Name Of Lovely Show"
         android:textSize="12sp" >
+
     </TextView>
 
     <TextView

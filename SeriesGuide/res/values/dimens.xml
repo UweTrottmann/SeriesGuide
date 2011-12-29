@@ -14,6 +14,7 @@
     <dimen name="widget_paddingRight">3dp</dimen>
     <dimen name="widget_paddingBottom">8dp</dimen>
     <dimen name="widget_paddingLeft">8dp</dimen>
+    <dimen name="widget_poster_width">25dp</dimen>
     <dimen name="showgrid_padding">0dp</dimen>
     <dimen name="showgrid_columnWidth">300dp</dimen>
     <dimen name="showgrid_spacing">10dp</dimen>
