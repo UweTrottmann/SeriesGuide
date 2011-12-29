@@ -25,7 +25,6 @@
         android:text="Very Long Show Name Of Lovely Show"
         android:textColor="@color/text_primary"
         android:textSize="13sp" >
-
     </TextView>
 
     <TextView
@@ -37,7 +36,6 @@
         android:layout_toLeftOf="@+id/widgetNetwork"
         android:text="0x00 Very Long Episode Name Of Lovely Show"
         android:textSize="12sp" >
-
     </TextView>
 
     <TextView

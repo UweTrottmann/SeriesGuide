@@ -3,7 +3,7 @@
     android:initialLayout="@layout/appwidget_big"
     android:minHeight="135dp"
     android:minWidth="250dp"
-    android:previewImage="@drawable/next_episodes__middle__ori_landscape"
+    android:previewImage="@drawable/next_episodes__middle__ori_portrait"
     android:updatePeriodMillis="1800000" >
 
 </appwidget-provider>

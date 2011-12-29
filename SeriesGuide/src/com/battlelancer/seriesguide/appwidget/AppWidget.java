@@ -41,11 +41,11 @@ import android.widget.RemoteViews;
 public class AppWidget extends AppWidgetProvider {
     public static final String REFRESH = "com.battlelancer.seriesguide.appwidget.REFRESH";
 
-    private static final String LIMIT = "2";
+    private static final String LIMIT = "1";
 
     private static final int LAYOUT = R.layout.appwidget;
 
-    private static final int ITEMLAYOUT = R.layout.appwidget_item;
+    private static final int ITEMLAYOUT = R.layout.appwidget_big_item;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -161,17 +161,15 @@ public class AppWidget extends AppWidgetProvider {
                             .getColumnIndexOrThrow(Shows.TITLE));
                     item.setTextViewText(R.id.textViewWidgetShow, value);
 
-                    if (layout != R.layout.appwidget) {
-                        // show poster
-                        value = upcomingEpisodes.getString(upcomingEpisodes
-                                .getColumnIndexOrThrow(Shows.POSTER));
-                        poster = null;
-                        if (value.length() != 0) {
-                            poster = imageCache.getThumb(value, false);
+                    // show poster
+                    value = upcomingEpisodes.getString(upcomingEpisodes
+                            .getColumnIndexOrThrow(Shows.POSTER));
+                    poster = null;
+                    if (value.length() != 0) {
+                        poster = imageCache.getThumb(value, false);
 
-                            if (poster != null) {
-                                item.setImageViewBitmap(R.id.widgetPoster, poster);
-                            }
+                        if (poster != null) {
+                            item.setImageViewBitmap(R.id.widgetPoster, poster);
                         }
                     }
 
