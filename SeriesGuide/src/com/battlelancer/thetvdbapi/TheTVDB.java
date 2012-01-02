@@ -47,7 +47,6 @@ import android.util.Xml;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -204,7 +203,7 @@ public class TheTVDB {
         InputStream in = connection.getInputStream();
         try {
             Xml.parse(in, Xml.Encoding.UTF_8, root.getContentHandler());
-        } catch (SocketTimeoutException se) {
+        } catch (Exception e) {
             throw new IOException();
         }
         in.close();
@@ -699,7 +698,7 @@ public class TheTVDB {
             // IOExceptions
             throw new SAXException("Problem reading remote response for "
                     + request.getRequestLine());
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new SAXException("Problem reading remote response for "
                     + request.getRequestLine(), e);
         }
