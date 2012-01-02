@@ -4,14 +4,12 @@ package com.battlelancer.seriesguide.appwidget;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 
-import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.SystemClock;
 import android.widget.RemoteViews;
 
 public class ListWidgetProvider extends AppWidgetProvider {
@@ -44,14 +42,18 @@ public class ListWidgetProvider extends AppWidgetProvider {
             appWidgetManager.updateAppWidget(appWidgetIds[i], rv);
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
-        
+
+        // TODO do this somewhere else or check why this causes cpu load
         // set an alarm to update the widget every 30 mins if the device is a
-        Intent update = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        update.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-        
-        PendingIntent pi = PendingIntent.getBroadcast(context, 195, update, 0);
-        
-        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        am.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 1800, pi);
+        // Intent update = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        // update.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        //
+        // PendingIntent pi = PendingIntent.getBroadcast(context, 195, update,
+        // 0);
+        //
+        // AlarmManager am = (AlarmManager)
+        // context.getSystemService(Context.ALARM_SERVICE);
+        // am.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() +
+        // 1800, pi);
     }
 }
