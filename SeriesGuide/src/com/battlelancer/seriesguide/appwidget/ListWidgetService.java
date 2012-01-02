@@ -27,7 +27,7 @@ public class ListWidgetService extends RemoteViewsService {
     class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
         private Context mContext;
 
-//        private int mAppWidgetId;
+        // private int mAppWidgetId;
 
         private Cursor mUpcomingEpisodes;
 
@@ -147,7 +147,9 @@ public class ListWidgetService extends RemoteViewsService {
             // The widget will remain
             // in its current state while work is being done here, so you don't
             // need to worry about locking up the widget.
-            mUpcomingEpisodes.close();
+            if (mUpcomingEpisodes != null) {
+                mUpcomingEpisodes.close();
+            }
             mUpcomingEpisodes = DBUtils.getUpcomingEpisodes(mContext);
         }
     }
