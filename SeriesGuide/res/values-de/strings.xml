@@ -44,7 +44,7 @@
   <string name="unmark_episode">Noch nicht gesehen</string>
   <string name="mark_all">Alle gesehen</string>
   <string name="unmark_all">Keine gesehen</string>
-  <string name="shows_empty">Derzeit befinden sich keine Serien hier.</string>
+  <string name="shows_empty">Derzeit befinden sich hier keine Serien.</string>
   <string name="confirm_delete">Soll diese Serie wirklich gelöscht werden?</string>
   <string name="delete_show">Löschen</string>
   <string name="dontdelete_show">Nicht löschen</string>
@@ -58,7 +58,7 @@
   <string name="update_single">Aktualisiere Serie...</string>
   <string name="update_delta">Aktualisiere veraltete Serien...</string>
   <string name="update_full">Aktualisiere alle Serien...</string>
-  <string name="update_failed">Aktualisierung fehlgeschlagen.</string>
+  <string name="update_failed">Aktualisieren fehlgeschlagen.</string>
   <string name="update_offline">Überprüfen Sie Ihre Internet/Wi-Fi-Verbindung.</string>
   <string name="update_saxerror">Versuchen Sie es später erneut.</string>
   <string name="update_error">Konnte kein Update durchführen</string>
@@ -72,7 +72,7 @@
   <string name="update_rebuildsearch">Baue Suchindex für Folgen</string>
   <string name="update_traktactivity">Hole trakt Aktivitäten</string>
   <string name="pref_autoupdate">Auto-Update</string>
-  <string name="pref_autoupdatesummary">Aktualisiert am Start, höchstens einmal pro Tag</string>
+  <string name="pref_autoupdatesummary">Aktualisiert beim Start, etwa einmal pro Tag</string>
   <string name="pref_updatewifionly">Akt. nur via Wi-Fi</string>
   <string name="show_airs">läuft</string>
   <string name="show_network">auf</string>
@@ -104,7 +104,7 @@
   <string name="preferences">Einstellungen</string>
   <string name="pref_sorting">Sortierung</string>
   <string name="pref_showsorting">Sortierung der Serien</string>
-  <string name="pref_showsortingsummary">Serien alphabetisch, nach nächster Folge oder Favoriten zuerst sortieren</string>
+  <string name="pref_showsortingsummary">Serien alphabetisch, nach nächster Folge oder Favoriten sortieren</string>
   <string name="pref_seasonsorting">Sortierung der Staffeln</string>
   <string name="pref_sortingsummary">In welcher Reihenfolge Staffeln sortiert werden</string>
   <string name="pref_episodesorting">Sortierung der Folgen</string>
@@ -130,7 +130,7 @@
   <string name="clearGetGlueCredentialssummary">Verwenden Sie die Teilen-Tasten, um GetGlue einzurichten</string>
   <string name="pref_advanced">Fortgeschritten</string>
   <string name="clear_cache">Bilder-Caches leeren</string>
-  <string name="clear_cache_summary">Entfernen Sie alle Bilder aus dem Cache und SD-Karte, bei Aktualisierung der Shows werden sie erneut geladen</string>
+  <string name="clear_cache_summary">Entfernen aller Bilder aus dem Cache, werden bei Aktualisierung der Serien erneut geladen</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Verfolgt die Verwendung von Funktionen zur Verbesserung von SeriesGuide</string>
   <string name="pref_notifications">Benachrichtigungen aktivieren</string>
@@ -173,9 +173,9 @@
   <string name="cancel">Abbrechen</string>
   <string name="share">Empfehlen</string>
   <string name="done">Erledigt</string>
-  <string name="checkin">Check In</string>
-  <string name="comment">Check In Kommentar</string>
-  <string name="checkinsuccess">Check In erfolgreich</string>
+  <string name="checkin">Check-In</string>
+  <string name="comment">Check-In Kommentar</string>
+  <string name="checkinsuccess">Check-In erfolgreich</string>
   <string name="traktcheckin_cancel">Breche ab</string>
   <string name="traktcheckin_inprogress">Es ist bereits ein Check In im Gange. Brechen Sie diesen Check In ab oder warten Sie %s bevor Sie wieder einchecken können.</string>
   <string name="traktcheckin_wait">Ich warte</string>
@@ -183,10 +183,10 @@
   <string name="pref_numbersummary">Wechseln Sie zwischen 1x01, S01E01 oder s01e01 als Zahlenformat</string>
   <string name="checkinfailed">Check-In fehlgeschlagen</string>
   <string name="oauthmessage">Authentifizierung von SeriesGuide mit GetGlue...</string>
-  <string name="addtocalendar">Zum Kalendar hinzufügen</string>
+  <string name="addtocalendar">Zum Kalender hinzufügen</string>
   <string name="addtocalendar_failed">Sorry, es gibt nicht genügend Informationen, um einen Kalendereintrag zu erstellen.</string>
   <string name="search_description">Folgen</string>
-  <string name="description_home">Start</string>
+  <string name="description_home">Startseite</string>
   <string name="description_search">Suche</string>
   <string name="description_overview">Übersicht</string>
   <string name="norating">n/a</string>
@@ -233,8 +233,7 @@
   <string name="welcome_setuptrakt">trakt-Konto einrichten</string>
   <string name="welcome_gettingstarted">Um Ihre Serienliste zu füllen:</string>
   <string name="welcome_add">Serien hinzufügen</string>
-  <string name="download_stable">SeriesGuide downloaden</string>
-  <string name="gobreak">Go break things</string>
+  <string name="download_stable">SeriesGuide herunterladen</string>
   <string name="betawarning">WARNUNG: Dies ist eine instabile BETA Version, die nur zum Testen geeignet ist. Um die stabile Endnutzerversion zu benutzen, tippen Sie auf den Download-Button unten.\n\nWenn Sie helfen möchten die Beta zu testen, nur zu. Bitte berichten Sie jeden Absturz und senden sie Feedback an seriesguide@battlelancer.com.</string>
   <string-array name="shsorting">
     <item>A - Z</item>

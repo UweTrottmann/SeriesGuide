@@ -63,7 +63,6 @@
   <string name="update_nosdcard">Impossibile aggiornare. Non vi è alcun storage esterno o una scheda SD disponibile.</string>
   <string name="update_rebuildsearch">Costruzione indice di ricerca episodio</string>
   <string name="pref_autoupdate">Aggiornamento automatico</string>
-  <string name="pref_autoupdatesummary">Aggiornamento all\'avvio, al massimo una volta al giorno</string>
   <string name="pref_updatewifionly">Aggiorna solo con Wi-Fi</string>
   <string name="show_airs">va in onda</string>
   <string name="show_network">su</string>
@@ -175,7 +174,7 @@
   <string name="email">E-mail</string>
   <string name="trakt_synctodevice">Sincronizza con SeriesGuide</string>
   <string name="trakt_synctotrakt">Sincronizza con Trakt.tv</string>
-  <string name="trakt_syncunseen">Sincronizza gli episodi nascosti</string>
+  <string name="trakt_syncunseen">Sincronizza gli episodi non visti</string>
   <string name="powered_by_thetvdb">powered by thetvdb.com</string>
   <string-array name="shsorting">
     <item>A - Z</item>
@@ -206,6 +205,6 @@
   <string-array name="showfilter_list">
     <item>Tutti</item>
     <item>Preferiti</item>
-    <item>Nascosti/Prossimi</item>
+    <item>Non Visti/Prossimi</item>
   </string-array>
 </resources>
