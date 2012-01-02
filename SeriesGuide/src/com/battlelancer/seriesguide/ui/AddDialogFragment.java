@@ -15,7 +15,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.SupportActivity;
 
 /**
- * A DialogFragment allowing the user to decide wether to add a show to his show
+ * A DialogFragment allowing the user to decide whether to add a show to his show
  * database.
  * 
  * @author Uwe Trottmann
@@ -30,7 +30,7 @@ public class AddDialogFragment extends DialogFragment {
 
     private OnAddShowListener mListener;
 
-    public AddDialogFragment(SearchResult show) {
+    private AddDialogFragment(SearchResult show) {
         mShow = show;
     }
 

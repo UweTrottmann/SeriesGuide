@@ -24,7 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 
 public class AppWidgetBig extends AppWidget {
-    private static final String LIMIT = "4";
+    private static final String LIMIT = "3";
 
     private static final int LAYOUT = R.layout.appwidget_big;
 
