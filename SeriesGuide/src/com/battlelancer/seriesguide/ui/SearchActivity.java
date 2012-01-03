@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockListActivity;
+import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
@@ -25,7 +26,16 @@ import android.widget.TextView;
 
 public class SearchActivity extends SherlockListActivity {
 
-    private static final String TAG = "SearchSeriesGuide";
+    private static final String TAG = "SearchActivity";
+
+    /**
+     * Google Analytics helper method for easy event tracking.
+     * 
+     * @param label
+     */
+    public void fireTrackerEvent(String label) {
+        AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,6 +46,7 @@ public class SearchActivity extends SherlockListActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         setTitle(R.string.search_title);
+        actionBar.setTitle(R.string.search_title);
         actionBar.setDisplayShowTitleEnabled(true);
     }
 
@@ -52,6 +63,7 @@ public class SearchActivity extends SherlockListActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             AnalyticsUtils.getInstance(this).trackEvent(TAG, "Search action", "Search", 0);
             String query = intent.getStringExtra(SearchManager.QUERY);
+            getSupportActionBar().setSubtitle("\"" + query + "\"");
             doMySearch(query);
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             AnalyticsUtils.getInstance(this).trackEvent(TAG, "Search action", "View", 0);
@@ -132,6 +144,12 @@ public class SearchActivity extends SherlockListActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.search_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -139,6 +157,11 @@ public class SearchActivity extends SherlockListActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 overridePendingTransition(R.anim.home_enter, R.anim.home_exit);
+                return true;
+            case R.id.menu_search:
+                fireTrackerEvent("Search");
+
+                onSearchRequested();
                 return true;
         }
         return super.onOptionsItemSelected(item);
