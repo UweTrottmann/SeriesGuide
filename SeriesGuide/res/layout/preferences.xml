@@ -100,20 +100,14 @@
             android:title="@string/clearGetGlueCredentials" />
 
         <Preference
-            android:key="com.battlelancer.seriesguide.traktcredentials"
-            android:summary="@string/pref_traktsummary"
-            android:title="@string/pref_trakt" />
+            android:key="com.battlelancer.seriesguide.trakt"
+            android:title="@string/trakt" />
 
         <CheckBoxPreference
             android:defaultValue="True"
             android:key="com.battlelancer.seriesguide.traktintegration"
             android:summary="@string/pref_traktintegratesummary"
             android:title="@string/pref_traktintegrate" />
-
-        <Preference
-            android:key="com.battlelancer.seriesguide.traktsync"
-            android:summary="@string/pref_traktsyncsummary"
-            android:title="@string/pref_traktsync" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_more" >

@@ -210,24 +210,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             }
         });
 
-        // Trakt.tv credentials
-        Preference traktCred = findPreference("com.battlelancer.seriesguide.traktcredentials");
-        traktCred.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference preference) {
-                // TODO show the trakt credentials dialog
-                // TraktCredentialsDialogFragment newFragment =
-                // TraktCredentialsDialogFragment
-                // .newInstance();
-                // FragmentTransaction ft =
-                // getSupportFragmentManager().beginTransaction();
-                // newFragment.show(ft, "traktcredentialsdialog");
-                return true;
-            }
-        });
-
-        // Trakt.tv experimental sync
-        findPreference("com.battlelancer.seriesguide.traktsync").setOnPreferenceClickListener(
+        // trakt.tv
+        findPreference("com.battlelancer.seriesguide.trakt").setOnPreferenceClickListener(
                 new OnPreferenceClickListener() {
 
                     public boolean onPreferenceClick(Preference preference) {

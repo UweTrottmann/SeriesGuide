@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="lib/apibuilder-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/myjson-1.7.1.jar"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="lib" path="/com_actionbarsherlock/lib/actionbarsherlock-plugin-compat-lib-4.0.0-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

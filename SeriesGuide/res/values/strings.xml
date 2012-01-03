@@ -306,6 +306,7 @@
     <string name="helptranslate">Help translate SeriesGuide</string>
     <string name="imdb">IMDb</string>
     <string name="tvdb">TVDb</string>
+    <string name="trakt">trakt.tv</string>
     <string name="gobreak">Go break things</string>
 
     <string-array name="shsortingData">

@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
 import com.battlelancer.seriesguide.util.TraktSync;
 
 import android.app.AlertDialog;
@@ -13,6 +14,7 @@ import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -36,6 +38,8 @@ public class TraktSyncActivity extends BaseActivity {
         mContainer = findViewById(R.id.syncbuttons);
 
         mSyncUnseenEpisodes = (CheckBox) findViewById(R.id.checkBoxSyncUnseen);
+        
+        // Sync to SeriesGuide button
         final Button syncToDeviceButton = (Button) findViewById(R.id.syncToDeviceButton);
         syncToDeviceButton.setOnClickListener(new OnClickListener() {
 
@@ -48,6 +52,7 @@ public class TraktSyncActivity extends BaseActivity {
             }
         });
 
+        // Sync to trakt button
         final Button syncToTraktButton = (Button) findViewById(R.id.syncToTraktButton);
         syncToTraktButton.setOnClickListener(new OnClickListener() {
 
@@ -55,6 +60,20 @@ public class TraktSyncActivity extends BaseActivity {
             public void onClick(View v) {
                 showDialog(DIALOG_SELECT_SHOWS);
 
+            }
+        });
+
+        // Trakt.tv credentials
+        final Button setupAccountButton = (Button) findViewById(R.id.setupAccountButton);
+        setupAccountButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // show the trakt credentials dialog
+                TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
+                        .newInstance();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                newFragment.show(ft, "traktcredentialsdialog");
             }
         });
     }
@@ -73,7 +92,7 @@ public class TraktSyncActivity extends BaseActivity {
         switch (id) {
             case DIALOG_SELECT_SHOWS:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle(R.string.pref_traktsync);
+                builder.setTitle(R.string.trakt_synctotrakt);
                 final Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[] {
                         Shows._ID, Shows.TITLE, Shows.SYNCENABLED
                 }, null, null, Shows.TITLE + " ASC");
