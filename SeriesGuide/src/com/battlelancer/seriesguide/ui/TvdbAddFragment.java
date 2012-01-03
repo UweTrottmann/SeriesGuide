@@ -10,6 +10,7 @@ import org.xml.sax.SAXException;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,8 +53,7 @@ public class TvdbAddFragment extends AddFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // only create and fill a new adapter if there is no previous one
-        // (e.g. after config/page changed)
+        // create an empty adapter to avoid displaying a progress indicator
         if (mAdapter == null) {
             mAdapter = new ArrayAdapter<SearchResult>(getActivity(), R.layout.add_searchresult,
                     R.id.TextViewAddSearchResult, new ArrayList<SearchResult>());
@@ -106,6 +106,14 @@ public class TvdbAddFragment extends AddFragment {
         }
 
         @Override
+        protected void onPreExecute() {
+            final FragmentActivity activity = getActivity();
+            if (activity != null) {
+                activity.setSupportProgressBarIndeterminateVisibility(true);
+            }
+        }
+
+        @Override
         protected List<SearchResult> doInBackground(String... params) {
             List<SearchResult> results = new ArrayList<SearchResult>();
 
@@ -124,6 +132,10 @@ public class TvdbAddFragment extends AddFragment {
 
         @Override
         protected void onPostExecute(List<SearchResult> result) {
+            final FragmentActivity activity = getActivity();
+            if (activity != null) {
+                activity.setSupportProgressBarIndeterminateVisibility(false);
+            }
             if (result == null) {
                 Toast.makeText(mContext.getApplicationContext(), R.string.search_error,
                         Toast.LENGTH_LONG).show();

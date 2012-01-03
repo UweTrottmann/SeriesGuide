@@ -2,6 +2,10 @@
 <resources>
 
     <style name="SeriesGuideTheme" parent="Theme.Sherlock">
+        <item name="vpiCirclePageIndicatorStyle">@style/Widget.CirclePageIndicator</item>
+        <item name="vpiTitlePageIndicatorStyle">@style/Widget.TitlePageIndicator</item>
+        <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
+        <item name="vpiTabTextStyle">@style/Widget.TabPageIndicator.Text</item>
     </style>
 
     <style name="Header">

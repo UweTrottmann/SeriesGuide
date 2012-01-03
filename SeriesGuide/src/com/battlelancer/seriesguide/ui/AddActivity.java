@@ -2,12 +2,13 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.thetvdbapi.SearchResult;
-import com.viewpagerindicator.TitlePageIndicator;
+import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TitleProvider;
 
 import android.content.Context;
@@ -27,17 +28,22 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.episode_pager);
+
+        // The TvdbAddFragment uses a progress bar
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
+        setContentView(R.layout.addactivity_pager);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        setSupportProgressBarIndeterminateVisibility(false);
 
         mAdapter = new AddPagerAdapter(getSupportFragmentManager(), this);
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
 
-        TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
+        TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mPager);
     }
 
