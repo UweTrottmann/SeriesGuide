@@ -72,6 +72,11 @@ public class ActionMenuView extends IcsLinearLayout implements MenuBuilder.ItemI
             //TODO figure out a way to call this pre-2.2
         }
         mPresenter.updateMenuView(false);
+
+        if (mPresenter != null && mPresenter.isOverflowMenuShowing()) {
+            mPresenter.hideOverflowMenu();
+            mPresenter.showOverflowMenu();
+        }
     }
 
     @Override

@@ -20,11 +20,11 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.MenuItem;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -72,8 +72,8 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
         setupAdapter();
 
-        getSupportActivity().getSupportLoaderManager().initLoader(
-                getArguments().getInt("loaderid"), null, this);
+        getActivity().getSupportLoaderManager().initLoader(getArguments().getInt("loaderid"), null,
+                this);
     }
 
     @Override
@@ -140,8 +140,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
                         public void onClick(View v) {
                             ((WatchedBox) v).toggle();
-                            DBUtils.markEpisode(getActivity(), rowid,
-                                    ((WatchedBox) v).isChecked());
+                            DBUtils.markEpisode(getActivity(), rowid, ((WatchedBox) v).isChecked());
                         }
                     });
 
@@ -178,8 +177,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
                     // add airtime
                     long airtime = cursor.getLong(UpcomingQuery.SHOW_AIRSTIME);
-                    String value = Utils.parseMillisecondsToTime(airtime, null,
-                            getActivity())[0];
+                    String value = Utils.parseMillisecondsToTime(airtime, null, getActivity())[0];
                     if (value.length() != 0) {
                         fieldValue += value + " ";
                     }

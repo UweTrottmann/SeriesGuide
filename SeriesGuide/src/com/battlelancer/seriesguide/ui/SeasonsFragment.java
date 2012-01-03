@@ -1,6 +1,9 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -22,14 +25,12 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.app.SupportActivity;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
@@ -104,7 +105,7 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
+    public boolean onContextItemSelected(android.view.MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
@@ -120,7 +121,7 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, android.view.MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.seasonlist_menu, menu);
     }
@@ -332,14 +333,14 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
         }
 
         public void run() {
-            final SupportActivity context = getSupportActivity();
+            final FragmentActivity context = getActivity();
             if (context == null) {
                 return;
             }
 
             if (mSeasonId != null) {
                 // update one season
-                DBUtils.updateUnwatchedCount(context.asActivity(), mSeasonId);
+                DBUtils.updateUnwatchedCount(context, mSeasonId);
             } else {
                 // update all seasons of this show
                 final Cursor seasons = context.getContentResolver().query(
@@ -348,7 +349,7 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
                         }, null, null, null);
                 while (seasons.moveToNext()) {
                     String seasonId = seasons.getString(0);
-                    DBUtils.updateUnwatchedCount(context.asActivity(), seasonId);
+                    DBUtils.updateUnwatchedCount(context, seasonId);
                 }
                 seasons.close();
             }

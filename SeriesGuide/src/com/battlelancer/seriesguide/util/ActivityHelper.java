@@ -18,12 +18,12 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.view.MenuItem;
 import android.view.KeyEvent;
 
 /**

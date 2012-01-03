@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -18,7 +19,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -139,8 +139,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
         @Override
         public String getTitle(int position) {
             Episode episode = mEpisodes.get(position);
-            return Utils.getEpisodeNumber(mPrefs, episode.getSeason(),
-                    episode.getNumber());
+            return Utils.getEpisodeNumber(mPrefs, episode.getSeason(), episode.getNumber());
         }
 
     }
