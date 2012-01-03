@@ -1,13 +1,15 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockListActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 
-import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
@@ -21,7 +23,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 
-public class SearchActivity extends ListActivity {
+public class SearchActivity extends SherlockListActivity {
 
     private static final String TAG = "SearchSeriesGuide";
 
@@ -31,7 +33,10 @@ public class SearchActivity extends ListActivity {
         setContentView(R.layout.search);
         handleIntent(getIntent());
 
-        setTitle(getString(R.string.search_title));
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        setTitle(R.string.search_title);
+        actionBar.setDisplayShowTitleEnabled(true);
     }
 
     @Override
@@ -75,7 +80,7 @@ public class SearchActivity extends ListActivity {
         resultsAdapter.setViewBinder(new ViewBinder() {
 
             public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-                // disabled because it causes to much CPU stress
+                // disabled because it causes too much CPU stress
                 // if (columnIndex ==
                 // cursor.getColumnIndexOrThrow(SeriesGuideData.EPISODE_OVERVIEW))
                 // {
@@ -124,6 +129,19 @@ public class SearchActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         onShowEpisodeDetails(String.valueOf(id));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                final Intent intent = new Intent(this, ShowsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                overridePendingTransition(R.anim.home_enter, R.anim.home_exit);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void onShowEpisodeDetails(String id) {

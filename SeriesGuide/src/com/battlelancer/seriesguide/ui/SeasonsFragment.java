@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Utils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -267,11 +268,7 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
 
         Cursor item = (Cursor) (getListView().getItemAtPosition(position));
         String season = item.getString(item.getColumnIndexOrThrow(Seasons.COMBINED));
-        if (season.equals("0") || season.length() == 0) {
-            season = getString(R.string.specialseason);
-        } else {
-            season = getString(R.string.season) + " " + season;
-        }
+        season = Utils.getSeasonString(getActivity(), season);
 
         intent.putExtra(Intent.EXTRA_TITLE, season);
         startActivity(intent);

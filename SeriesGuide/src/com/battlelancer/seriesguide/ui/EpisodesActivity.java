@@ -21,6 +21,7 @@ public class EpisodesActivity extends BaseActivity {
         setContentView(R.layout.episodes_multipane);
 
         final ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
 
         String customTitle = getIntent().getStringExtra(Intent.EXTRA_TITLE);
@@ -32,8 +33,9 @@ public class EpisodesActivity extends BaseActivity {
         final Series show = DBUtils.getShow(this, seriesid);
         if (show != null) {
             String showname = show.getSeriesName();
-            actionBar.setTitle(showname + " " + customTitle);
+            actionBar.setTitle(showname);
             setTitle(showname + " " + customTitle);
+            actionBar.setSubtitle(customTitle);
         } else {
             actionBar.setTitle(getString(R.string.seasons));
             setTitle(getString(R.string.seasons));

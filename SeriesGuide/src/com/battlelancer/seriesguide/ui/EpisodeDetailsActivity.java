@@ -41,19 +41,24 @@ public class EpisodeDetailsActivity extends BaseActivity {
         setContentView(R.layout.episode_pager);
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
 
         List<Episode> episodes = new ArrayList<Episode>();
         String episodeId = getIntent().getExtras().getString(Episodes._ID);
         int startPosition = 0;
 
-        // Lookup show poster and season of episode
+        // Lookup show and season of episode
         Cursor episode = getContentResolver().query(Episodes.buildEpisodeWithShowUri(episodeId),
                 new String[] {
-                        Seasons.REF_SEASON_ID, Shows.POSTER
+                        Seasons.REF_SEASON_ID, Shows.POSTER, Shows.TITLE, Episodes.SEASON
                 }, null, null, null);
 
         if (episode != null && episode.moveToFirst()) {
+            // display show name as title, season as subtitle
+            setTitle(episode.getString(2));
+            actionBar.setTitle(episode.getString(2));
+            actionBar.setSubtitle(Utils.getSeasonString(this, episode.getString(3)));
 
             // set show poster as background
             String posterPath = episode.getString(1);

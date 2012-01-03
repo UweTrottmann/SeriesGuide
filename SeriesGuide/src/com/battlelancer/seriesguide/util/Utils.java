@@ -586,4 +586,21 @@ public class Utils {
         return version;
     }
 
+    /**
+     * Put the TVDb season string in, get a full 'Season X' or 'Special
+     * Episodes' string out.
+     * 
+     * @param context
+     * @param season
+     * @return
+     */
+    public static String getSeasonString(Context context, String season) {
+        if (season.equals("0") || season.length() == 0) {
+            season = context.getString(R.string.specialseason);
+        } else {
+            season = context.getString(R.string.season) + " " + season;
+        }
+        return season;
+    }
+
 }
