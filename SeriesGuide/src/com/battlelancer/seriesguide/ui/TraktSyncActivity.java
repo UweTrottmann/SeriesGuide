@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
 import com.battlelancer.seriesguide.util.TraktSync;
 
@@ -24,11 +25,17 @@ public class TraktSyncActivity extends BaseActivity {
 
     private static final int DIALOG_SELECT_SHOWS = 100;
 
+    private static final String TAG = "TraktSyncActivity";
+
     private TraktSync mSyncTask;
 
     private CheckBox mSyncUnseenEpisodes;
 
     private View mContainer;
+
+    public void fireTrackerEvent(String label) {
+        AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +45,13 @@ public class TraktSyncActivity extends BaseActivity {
         mContainer = findViewById(R.id.syncbuttons);
 
         mSyncUnseenEpisodes = (CheckBox) findViewById(R.id.checkBoxSyncUnseen);
-        
+
         // Sync to SeriesGuide button
         final Button syncToDeviceButton = (Button) findViewById(R.id.syncToDeviceButton);
         syncToDeviceButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
+                fireTrackerEvent("Sync to SeriesGuide");
                 if (mSyncTask == null
                         || (mSyncTask != null && mSyncTask.getStatus() == AsyncTask.Status.FINISHED)) {
                     mSyncTask = (TraktSync) new TraktSync(TraktSyncActivity.this, mContainer,
@@ -59,7 +67,6 @@ public class TraktSyncActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 showDialog(DIALOG_SELECT_SHOWS);
-
             }
         });
 
@@ -69,6 +76,7 @@ public class TraktSyncActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
+                fireTrackerEvent("Setup trakt account");
                 // show the trakt credentials dialog
                 TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
                         .newInstance();
@@ -124,6 +132,7 @@ public class TraktSyncActivity extends BaseActivity {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                fireTrackerEvent("Sync to trakt");
                                 if (mSyncTask == null
                                         || (mSyncTask != null && mSyncTask.getStatus() == AsyncTask.Status.FINISHED)) {
                                     mSyncTask = (TraktSync) new TraktSync(TraktSyncActivity.this,
