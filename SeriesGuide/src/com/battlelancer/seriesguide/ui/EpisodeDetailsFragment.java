@@ -15,10 +15,12 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -27,6 +29,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -113,41 +116,71 @@ public class EpisodeDetailsFragment extends ListFragment implements
             mArtTask = null;
         }
     }
-    
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.episodedetails_menu, menu);
+
+        // use an appropriate quick share button
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        int lastShareAction = prefs.getInt(SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
+
+        MenuItem shareAction = menu.findItem(R.id.menu_quickshare);
+        if (lastShareAction != -1) {
+            ShareMethod shareMethod = ShareMethod.values()[lastShareAction];
+            shareAction.setTitle(shareMethod.titleRes);
+            shareAction.setIcon(shareMethod.drawableRes);
+        } else {
+            shareAction.setEnabled(false);
+            shareAction.setVisible(false);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_togglemark:
+            case R.id.menu_togglemark: {
                 fireTrackerEvent("Toggle watched");
 
                 onToggleWatchState();
                 break;
-            case R.id.menu_shareepisode: {
-                fireTrackerEvent("Share episode");
+            }
+            case R.id.menu_quickshare: {
+                final SharedPreferences prefs = PreferenceManager
+                        .getDefaultSharedPreferences(getActivity());
+                int shareMethodIndex = prefs.getInt(
+                        SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
+                ShareMethod shareMethod = ShareMethod.values()[shareMethodIndex];
 
-                final Cursor episode = (Cursor) getListAdapter().getItem(0);
-                episode.moveToFirst();
-                Bundle shareData = new Bundle();
+                fireTrackerEvent("Quick share (" + shareMethod.name() + ")");
 
-                String episodestring = ShareUtils.onCreateShareString(getActivity(), episode);
-                String sharestring = getString(R.string.share_checkout);
-                sharestring += " \"" + episode.getString(EpisodeDetailsQuery.SHOW_TITLE);
-                sharestring += " - " + episodestring + "\" via @SeriesGuide";
-                shareData.putString(ShareItems.EPISODESTRING, episodestring);
-                shareData.putString(ShareItems.SHARESTRING, sharestring);
-                shareData.putString(ShareItems.IMDBID,
-                        episode.getString(EpisodeDetailsQuery.SHOW_IMDBID));
-                shareData.putInt(ShareItems.EPISODE, episode.getInt(EpisodeDetailsQuery.NUMBER));
-                shareData.putInt(ShareItems.SEASON, episode.getInt(EpisodeDetailsQuery.SEASON));
-                shareData
-                        .putInt(ShareItems.TVDBID, episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID));
-                ShareUtils.showShareDialog(getFragmentManager(), shareData);
+                onShareEpisode(shareMethod, false);
+                break;
+            }
+            case R.id.menu_checkin_getglue: {
+                fireTrackerEvent("Check In (GetGlue)");
+                onShareEpisode(ShareMethod.CHECKIN_GETGLUE, true);
+                break;
+            }
+            case R.id.menu_checkin_trakt: {
+                fireTrackerEvent("Check In (trakt)");
+                onShareEpisode(ShareMethod.CHECKIN_TRAKT, true);
+                break;
+            }
+            case R.id.menu_markseen_trakt: {
+                fireTrackerEvent("Mark seen (trakt)");
+                onShareEpisode(ShareMethod.MARKSEEN_TRAKT, true);
+                break;
+            }
+            case R.id.menu_rate_trakt: {
+                fireTrackerEvent("Rate (trakt)");
+                onShareEpisode(ShareMethod.RATE_TRAKT, true);
+                break;
+            }
+            case R.id.menu_share_others: {
+                fireTrackerEvent("Share (apps)");
+                onShareEpisode(ShareMethod.OTHER_SERVICES, true);
                 break;
             }
             case R.id.menu_addevent: {
@@ -168,6 +201,31 @@ public class EpisodeDetailsFragment extends ListFragment implements
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void onShareEpisode(ShareMethod shareMethod, boolean isInvalidateOptionsMenu) {
+        final Cursor episode = (Cursor) getListAdapter().getItem(0);
+        episode.moveToFirst();
+        Bundle shareData = new Bundle();
+
+        String episodestring = ShareUtils.onCreateShareString(getActivity(), episode);
+        String sharestring = getString(R.string.share_checkout);
+        sharestring += " \"" + episode.getString(EpisodeDetailsQuery.SHOW_TITLE);
+        sharestring += " - " + episodestring + "\" via @SeriesGuide";
+        shareData.putString(ShareItems.EPISODESTRING, episodestring);
+        shareData.putString(ShareItems.SHARESTRING, sharestring);
+        shareData.putString(ShareItems.IMDBID, episode.getString(EpisodeDetailsQuery.SHOW_IMDBID));
+        shareData.putInt(ShareItems.EPISODE, episode.getInt(EpisodeDetailsQuery.NUMBER));
+        shareData.putInt(ShareItems.SEASON, episode.getInt(EpisodeDetailsQuery.SEASON));
+        shareData.putInt(ShareItems.TVDBID, episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID));
+
+        ShareUtils.onShareEpisode(getActivity(), shareData, shareMethod);
+
+        if (isInvalidateOptionsMenu) {
+            // invalidate the options menu so a potentially new
+            // quick share action is displayed
+            getActivity().invalidateOptionsMenu();
+        }
     }
 
     private void setupAdapter() {

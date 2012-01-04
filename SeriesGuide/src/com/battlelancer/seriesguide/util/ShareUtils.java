@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.InputFilter;
@@ -58,114 +59,117 @@ public class ShareUtils {
 
     protected static final String TAG = "ShareUtils";
 
-    /**
-     * Show a dialog allowing to chose from various sharing options.
-     * 
-     * @param shareData - a {@link Bundle} including all
-     *            {@link ShareUtils.ShareItems}
-     */
-    public static void showShareDialog(FragmentManager manager, Bundle shareData) {
-        // Create and show the dialog.
-        ShareDialogFragment newFragment = ShareDialogFragment.newInstance(shareData);
-        FragmentTransaction ft = manager.beginTransaction();
-        newFragment.show(ft, "sharedialog");
-    }
+    public enum ShareMethod {
+        CHECKIN_GETGLUE(0, R.string.menu_checkin_getglue, R.drawable.ic_getglue),
 
-    public static class ShareDialogFragment extends DialogFragment {
-        public static ShareDialogFragment newInstance(Bundle shareData) {
-            ShareDialogFragment f = new ShareDialogFragment();
-            f.setArguments(shareData);
-            return f;
+        CHECKIN_TRAKT(1, R.string.menu_checkin_trakt, R.drawable.ic_trakt),
+
+        MARKSEEN_TRAKT(2, R.string.menu_markseen_trakt, R.drawable.ic_trakt),
+
+        RATE_TRAKT(3, R.string.menu_rate_trakt, R.drawable.trakt_love_large),
+
+        OTHER_SERVICES(4, R.string.menu_share_others, R.drawable.ic_action_share);
+
+        ShareMethod(int index, int titleRes, int drawableRes) {
+            this.index = index;
+            this.titleRes = titleRes;
+            this.drawableRes = drawableRes;
         }
 
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final String imdbId = getArguments().getString(ShareUtils.ShareItems.IMDBID);
-            final String sharestring = getArguments().getString(ShareUtils.ShareItems.SHARESTRING);
-            final CharSequence[] items = getResources().getStringArray(R.array.share_items);
+        public int index;
 
-            return new AlertDialog.Builder(getActivity()).setTitle(getString(R.string.share))
-                    .setItems(items, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int item) {
-                            switch (item) {
-                                case 0:
-                                    // GetGlue check in
-                                    if (imdbId.length() != 0) {
-                                        showGetGlueDialog(getSupportFragmentManager(),
-                                                getArguments());
-                                    } else {
-                                        Toast.makeText(getActivity(),
-                                                getString(R.string.noIMDBentry), Toast.LENGTH_LONG)
-                                                .show();
-                                    }
-                                    break;
-                                case 1: {
-                                    // trakt check in
+        public int titleRes;
 
-                                    // DialogFragment.show() will take care of
-                                    // adding the fragment
-                                    // in a transaction. We also want to remove
-                                    // any currently showing
-                                    // dialog, so make our own transaction and
-                                    // take care of that here.
-                                    FragmentTransaction ft = getFragmentManager()
-                                            .beginTransaction();
-                                    Fragment prev = getFragmentManager().findFragmentByTag(
-                                            "progress-dialog");
-                                    if (prev != null) {
-                                        ft.remove(prev);
-                                    }
-                                    ft.addToBackStack(null);
+        public int drawableRes;
+    }
 
-                                    // Create and show the dialog.
-                                    ProgressDialog newFragment = ProgressDialog.newInstance();
+    /**
+     * Share an episode via the given {@link ShareMethod}.
+     * 
+     * @param activity
+     * @param shareData - a {@link Bundle} including all
+     *            {@link ShareUtils.ShareItems}
+     * @param shareMethod the {@link ShareMethod} to use
+     */
+    public static void onShareEpisode(FragmentActivity activity, Bundle shareData,
+            ShareMethod shareMethod) {
+        final FragmentManager fm = activity.getSupportFragmentManager();
+        final String imdbId = shareData.getString(ShareUtils.ShareItems.IMDBID);
+        final String sharestring = shareData.getString(ShareUtils.ShareItems.SHARESTRING);
 
-                                    // start the trakt check in task, add the
-                                    // dialog as listener
-                                    getArguments().putInt(ShareItems.TRAKTACTION,
-                                            TraktAction.CHECKIN_EPISODE.index());
-                                    new TraktTask(getActivity(), getFragmentManager(),
-                                            getArguments(), newFragment).execute();
+        // save used share method, so we can use it later for the quick share
+        // button
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        prefs.edit().putInt(SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, shareMethod.index)
+                .commit();
 
-                                    newFragment.show(ft, "progress-dialog");
-                                    break;
-                                }
-                                case 2: {
-                                    // trakt mark as seen
-                                    getArguments().putInt(ShareItems.TRAKTACTION,
-                                            TraktAction.SEEN_EPISODE.index());
-                                    new TraktTask(getActivity(), getSupportFragmentManager(),
-                                            getArguments()).execute();
-                                    break;
-                                }
-                                case 3: {
-                                    // trakt rate
-                                    getArguments().putInt(ShareItems.TRAKTACTION,
-                                            TraktAction.RATE_EPISODE.index());
-                                    TraktRateDialogFragment newFragment = TraktRateDialogFragment
-                                            .newInstance(getArguments());
-                                    FragmentTransaction ft = getSupportFragmentManager()
-                                            .beginTransaction();
-                                    newFragment.show(ft, "traktratedialog");
-                                    break;
-                                }
-                                case 4: {
-                                    // Android apps
-                                    String text = sharestring;
-                                    if (imdbId.length() != 0) {
-                                        text += " " + ShowInfoActivity.IMDB_TITLE_URL + imdbId;
-                                    }
+        switch (shareMethod) {
+            case CHECKIN_GETGLUE: {
+                // GetGlue check in
+                if (imdbId.length() != 0) {
+                    showGetGlueDialog(fm, shareData);
+                } else {
+                    Toast.makeText(activity, activity.getString(R.string.noIMDBentry),
+                            Toast.LENGTH_LONG).show();
+                }
+                break;
+            }
+            case CHECKIN_TRAKT: {
+                // trakt check in
 
-                                    Intent i = new Intent(Intent.ACTION_SEND);
-                                    i.setType("text/plain");
-                                    i.putExtra(Intent.EXTRA_TEXT, text);
-                                    startActivity(Intent.createChooser(i,
-                                            getString(R.string.share_episode)));
-                                    break;
-                                }
-                            }
-                        }
-                    }).create();
+                // DialogFragment.show() will take care of
+                // adding the fragment
+                // in a transaction. We also want to remove
+                // any currently showing
+                // dialog, so make our own transaction and
+                // take care of that here.
+                FragmentTransaction ft = fm.beginTransaction();
+                Fragment prev = fm.findFragmentByTag("progress-dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+
+                // Create and show the dialog.
+                ProgressDialog newFragment = ProgressDialog.newInstance();
+
+                // start the trakt check in task, add the
+                // dialog as listener
+                shareData.putInt(ShareItems.TRAKTACTION, TraktAction.CHECKIN_EPISODE.index());
+                new TraktTask(activity, fm, shareData, newFragment).execute();
+
+                newFragment.show(ft, "progress-dialog");
+                break;
+            }
+            case MARKSEEN_TRAKT: {
+                // trakt mark as seen
+                shareData.putInt(ShareItems.TRAKTACTION, TraktAction.SEEN_EPISODE.index());
+                new TraktTask(activity, fm, shareData).execute();
+                break;
+            }
+            case RATE_TRAKT: {
+                // trakt rate
+                shareData.putInt(ShareItems.TRAKTACTION, TraktAction.RATE_EPISODE.index());
+                TraktRateDialogFragment newFragment = TraktRateDialogFragment
+                        .newInstance(shareData);
+                FragmentTransaction ft = fm.beginTransaction();
+                newFragment.show(ft, "traktratedialog");
+                break;
+            }
+            case OTHER_SERVICES: {
+                // Android apps
+                String text = sharestring;
+                if (imdbId.length() != 0) {
+                    text += " " + ShowInfoActivity.IMDB_TITLE_URL + imdbId;
+                }
+
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_TEXT, text);
+                activity.startActivity(Intent.createChooser(i,
+                        activity.getString(R.string.share_episode)));
+                break;
+            }
         }
     }
 

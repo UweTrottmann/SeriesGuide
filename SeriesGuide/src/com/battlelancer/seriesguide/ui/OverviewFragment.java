@@ -29,12 +29,14 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.Series;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -43,6 +45,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -127,6 +130,20 @@ public class OverviewFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.overview_menu, menu);
+
+        // use an appropriate quick share button
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        int lastShareAction = prefs.getInt(SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
+
+        MenuItem shareAction = menu.findItem(R.id.menu_quickshare);
+        if (lastShareAction != -1) {
+            ShareMethod shareMethod = ShareMethod.values()[lastShareAction];
+            shareAction.setTitle(shareMethod.titleRes);
+            shareAction.setIcon(shareMethod.drawableRes);
+        } else {
+            shareAction.setEnabled(false);
+            shareAction.setVisible(false);
+        }
     }
 
     @Override
@@ -137,12 +154,43 @@ public class OverviewFragment extends Fragment {
 
                 onMarkWatched();
                 break;
-            case R.id.menu_shareepisode:
-                fireTrackerEvent("Share episode");
+            case R.id.menu_quickshare: {
+                final SharedPreferences prefs = PreferenceManager
+                        .getDefaultSharedPreferences(getActivity());
+                int shareMethodIndex = prefs.getInt(
+                        SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
+                ShareMethod shareMethod = ShareMethod.values()[shareMethodIndex];
 
-                ShareUtils.showShareDialog(getFragmentManager(), mShareData);
+                fireTrackerEvent("Quick share (" + shareMethod.name() + ")");
 
+                onShareEpisode(shareMethod, false);
                 break;
+            }
+            case R.id.menu_checkin_getglue: {
+                fireTrackerEvent("Check In (GetGlue)");
+                onShareEpisode(ShareMethod.CHECKIN_GETGLUE, true);
+                break;
+            }
+            case R.id.menu_checkin_trakt: {
+                fireTrackerEvent("Check In (trakt)");
+                onShareEpisode(ShareMethod.CHECKIN_TRAKT, true);
+                break;
+            }
+            case R.id.menu_markseen_trakt: {
+                fireTrackerEvent("Mark seen (trakt)");
+                onShareEpisode(ShareMethod.MARKSEEN_TRAKT, true);
+                break;
+            }
+            case R.id.menu_rate_trakt: {
+                fireTrackerEvent("Rate (trakt)");
+                onShareEpisode(ShareMethod.RATE_TRAKT, true);
+                break;
+            }
+            case R.id.menu_share_others: {
+                fireTrackerEvent("Share (apps)");
+                onShareEpisode(ShareMethod.OTHER_SERVICES, true);
+                break;
+            }
             case R.id.menu_addevent:
                 fireTrackerEvent("Add episode to calendar");
 
@@ -154,6 +202,16 @@ public class OverviewFragment extends Fragment {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void onShareEpisode(ShareMethod shareMethod, boolean isInvalidateOptionsMenu) {
+        ShareUtils.onShareEpisode(getActivity(), mShareData, shareMethod);
+
+        if (isInvalidateOptionsMenu) {
+            // invalidate the options menu so a potentially new
+            // quick share action is displayed
+            getActivity().invalidateOptionsMenu();
+        }
     }
 
     private void initializeViews(View fragmentView) {
