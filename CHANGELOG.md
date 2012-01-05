@@ -1,6 +1,19 @@
 Changelog
 =========
 
+Version 2.5 *(in development)*
+--------------------------------
+
+* Add menu button to quickly share with last used sharing option.
+* Display search term, title and search soft button in `SearchActivity`.
+* Where applicable the app icon takes you back to the show list. Same as long-pressing back from every screen.
+* Use progress indicators in `AddActivity`.
+* Resizable list widget for Android 3.0+. Uses an alarm to refresh (this needs testing) every 30 mins.
+* Remade fixed size widget to fit on every screen (read: the way it should have been from day one).
+* Use ActionBarSherlock 4.0 release.
+* Use ViewPagerIndicator 2.2.2 release.
+* Fixes for market reported crashes.
+
 Version 2.4 *(2011-12-25)*
 --------------------------------
 
