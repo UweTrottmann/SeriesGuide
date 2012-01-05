@@ -27,7 +27,7 @@
                 android:title="@string/menu_checkin_trakt"/>
             <item
                 android:id="@+id/menu_markseen_trakt"
-                android:icon="@drawable/ic_trakt"
+                android:icon="@drawable/ic_trakt_seen"
                 android:title="@string/menu_markseen_trakt"/>
             <item
                 android:id="@+id/menu_rate_trakt"

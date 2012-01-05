@@ -64,7 +64,7 @@ public class ShareUtils {
 
         CHECKIN_TRAKT(1, R.string.menu_checkin_trakt, R.drawable.ic_trakt),
 
-        MARKSEEN_TRAKT(2, R.string.menu_markseen_trakt, R.drawable.ic_trakt),
+        MARKSEEN_TRAKT(2, R.string.menu_markseen_trakt, R.drawable.ic_trakt_seen),
 
         RATE_TRAKT(3, R.string.menu_rate_trakt, R.drawable.trakt_love_large),
 
