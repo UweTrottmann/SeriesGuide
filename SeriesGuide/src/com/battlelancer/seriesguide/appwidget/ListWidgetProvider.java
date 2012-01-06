@@ -29,7 +29,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
             // embed the extras into the data so that the extras will not be
             // ignored.
             intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-            RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.appwidget);
+            RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.appwidget_v11);
             rv.setRemoteAdapter(appWidgetIds[i], R.id.list_view, intent);
 
             // The empty view is displayed when the collection has no items. It
