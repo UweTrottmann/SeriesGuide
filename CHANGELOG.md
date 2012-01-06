@@ -8,11 +8,20 @@ Version 2.5 *(in development)*
 * Display search term, title and search soft button in `SearchActivity`.
 * Where applicable the app icon takes you back to the show list. Same as long-pressing back from every screen.
 * Use progress indicators in `AddActivity`.
-* Resizable list widget for Android 3.0+. Uses an alarm to refresh (this needs testing) every 30 mins.
-* Remade fixed size widget to fit on every screen (read: the way it should have been from day one).
 * Use ActionBarSherlock 4.0 release.
 * Use ViewPagerIndicator 2.2.2 release.
 * Fixes for market reported crashes.
+* Latest translations from crowdin.
+
+Version 2.4.1 *(in testing)*
+-------------------------------
+
+Since 2.4.1beta (2012-01-06)
+
+* Resizable list widget for Android 3.0+. Uses an alarm to refresh (this needs testing) every 5 mins if the device is awake.
+* Remade all widgets sticking to design guidelines, this means they now display 1 (small), 3 (middle) or 7 (large) items and have correct padding.
+* Latest translations from crowdin.
+
 
 Version 2.4 *(2011-12-25)*
 --------------------------------
