@@ -8,6 +8,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,10 +17,45 @@ import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 
 public class ListWidgetProvider extends AppWidgetProvider {
+
+    public static final String UPDATE = "com.battlelancer.seriesguide.appwidget.UPDATE";
+
+    public static final long REPETITION_INTERVAL = 5 * DateUtils.MINUTE_IN_MILLIS;
+
+    @Override
+    public void onDisabled(Context context) {
+        super.onDisabled(context);
+
+        // remove the update alarm if the last widget is gone
+        Intent update = new Intent(UPDATE);
+        PendingIntent pi = PendingIntent.getBroadcast(context, 195, update, 0);
+
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        am.cancel(pi);
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+
+        if (UPDATE.equals(intent.getAction())) {
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context,
+                    ListWidgetProvider.class));
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.list_view);
+            // Toast.makeText(context,
+            // "ListWidgets called to refresh " + Arrays.toString(appWidgetIds),
+            // Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // update each of the widgets with the remote adapter
         for (int i = 0; i < appWidgetIds.length; ++i) {
+            // Toast.makeText(context, "Refreshing widget " + appWidgetIds[i],
+            // Toast.LENGTH_SHORT)
+            // .show();
 
             // Here we setup the intent which points to the StackViewService
             // which will provide the views for this collection.
@@ -46,16 +82,12 @@ public class ListWidgetProvider extends AppWidgetProvider {
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
 
-        // TODO: only deliver the intent to these widgets
-        // set an alarm to update the widget every 30 mins if the device is
-        // awake
-        Intent update = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        update.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-
+        // set an alarm to update widgets every x mins if the device is awake
+        Intent update = new Intent(UPDATE);
         PendingIntent pi = PendingIntent.getBroadcast(context, 195, update, 0);
 
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        am.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 30
-                * DateUtils.MINUTE_IN_MILLIS, pi);
+        am.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()
+                + REPETITION_INTERVAL, REPETITION_INTERVAL, pi);
     }
 }
