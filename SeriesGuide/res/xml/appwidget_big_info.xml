@@ -2,7 +2,7 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialLayout="@layout/appwidget_big"
     android:minHeight="135dp"
-    android:minWidth="250dp"
+    android:minWidth="280dp"
     android:previewImage="@drawable/next_episodes__middle__ori_portrait"
     android:updatePeriodMillis="1800000" >
 
