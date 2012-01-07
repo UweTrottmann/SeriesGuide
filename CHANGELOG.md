@@ -1,6 +1,34 @@
 Changelog
 =========
 
+Version 2.5 *(in development)*
+--------------------------------
+
+* Add menu button to quickly share with last used sharing option.
+* Display search term, title and search soft button in `SearchActivity`.
+* Where applicable the app icon takes you back to the show list. Same as long-pressing back from every screen.
+* Use progress indicators in `AddActivity`.
+* Use ActionBarSherlock 4.0 release.
+* Use ViewPagerIndicator 2.2.2 release.
+* Fixes for market reported crashes.
+* Latest translations from crowdin.
+
+Version 2.4.1 *(in testing)*
+-------------------------------
+
+Since 2.4.2beta (2012-01-07)
+
+* Tapping list widget items takes you to the respective episode page.
+* Tweaked list widget layout a little.
+* Made widget backgrounds more transparent.
+
+Since 2.4.1beta (2012-01-06)
+
+* Resizable list widget for Android 3.0+. Uses an alarm to refresh (this needs testing) every 5 mins if the device is awake.
+* Remade all widgets sticking to design guidelines, this means they now display 1 (small), 3 (middle) or 7 (large) items and have correct padding.
+* Latest translations from crowdin.
+
+
 Version 2.4 *(2011-12-25)*
 --------------------------------
 
