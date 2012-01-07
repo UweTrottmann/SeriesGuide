@@ -35,6 +35,14 @@ public class EpisodeDetailsActivity extends BaseActivity {
 
     private ViewPager mPager;
 
+    /**
+     * Data which has to be passed when creating this activity. All Bundle
+     * extras are strings.
+     */
+    public interface InitBundle {
+        String EPISODE_ID = "episode_id";
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +53,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
         actionBar.setDisplayShowTitleEnabled(true);
 
         List<Episode> episodes = new ArrayList<Episode>();
-        String episodeId = getIntent().getExtras().getString(Episodes._ID);
+        String episodeId = getIntent().getExtras().getString(InitBundle.EPISODE_ID);
         int startPosition = 0;
 
         // Lookup show and season of episode

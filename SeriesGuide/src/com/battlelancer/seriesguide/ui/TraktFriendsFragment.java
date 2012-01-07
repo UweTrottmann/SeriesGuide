@@ -23,7 +23,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.BaseColumns;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
@@ -133,7 +132,7 @@ public class TraktFriendsFragment extends ListFragment implements
         } else {
             Intent intent = new Intent();
             intent.setClass(getActivity(), EpisodeDetailsActivity.class);
-            intent.putExtra(BaseColumns._ID, episodeId);
+            intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_ID, episodeId);
             startActivity(intent);
         }
     }
@@ -297,7 +296,7 @@ public class TraktFriendsFragment extends ListFragment implements
 
     private static class TraktFriendsAdapter extends ArrayAdapter<UserProfile> {
         private final ImageDownloader mImageDownloader;
-        
+
         private final LayoutInflater mInflater;
 
         private final SharedPreferences mPrefs;
@@ -342,7 +341,7 @@ public class TraktFriendsFragment extends ListFragment implements
             // TODO refactor!
             // Bind the data efficiently with the holder.
             UserProfile friend = getItem(position);
-            
+
             holder.name.setText(friend.username);
             mImageDownloader.download(friend.avatar, holder.avatar);
 
@@ -400,7 +399,7 @@ public class TraktFriendsFragment extends ListFragment implements
             TextView episode;
 
             TextView timestamp;
-            
+
             ImageView avatar;
         }
     }
