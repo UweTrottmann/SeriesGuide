@@ -128,7 +128,7 @@ public class SearchActivity extends ListActivity {
 
     private void onShowEpisodeDetails(String id) {
         Intent i = new Intent(this, EpisodeDetailsActivity.class);
-        i.putExtra(Episodes._ID, id);
+        i.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_ID, id);
         startActivity(i);
     }
 

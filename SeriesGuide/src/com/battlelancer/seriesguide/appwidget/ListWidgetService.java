@@ -4,6 +4,7 @@ package com.battlelancer.seriesguide.appwidget;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
@@ -13,6 +14,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
@@ -112,6 +114,14 @@ public class ListWidgetService extends RemoteViewsService {
                     rv.setImageViewBitmap(R.id.widgetPoster, poster);
                 }
             }
+
+            // Set the fill-in intent for the list items
+            Bundle extras = new Bundle();
+            extras.putString(EpisodeDetailsActivity.InitBundle.EPISODE_ID,
+                    mUpcomingEpisodes.getString(0));
+            Intent fillInIntent = new Intent();
+            fillInIntent.putExtras(extras);
+            rv.setOnClickFillInIntent(R.id.appwidget_bit_item, fillInIntent);
 
             // Return the remote views object.
             return rv;

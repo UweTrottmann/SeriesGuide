@@ -2,6 +2,7 @@
 package com.battlelancer.seriesguide.appwidget;
 
 import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 
 import android.app.AlarmManager;
@@ -77,6 +78,12 @@ public class ListWidgetProvider extends AppWidgetProvider {
             pi.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, pi, 0);
             rv.setOnClickPendingIntent(R.id.widget_title, pendingIntent);
+
+            // Create intents for items to launch an EpisodeDetailsActivity
+            Intent itemIntent = new Intent(context, EpisodeDetailsActivity.class);
+            PendingIntent pendingIntentTemplate = PendingIntent.getActivity(context, 0, itemIntent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+            rv.setPendingIntentTemplate(R.id.list_view, pendingIntentTemplate);
 
             appWidgetManager.updateAppWidget(appWidgetIds[i], rv);
         }

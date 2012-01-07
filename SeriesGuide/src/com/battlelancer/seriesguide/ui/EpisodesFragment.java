@@ -22,7 +22,6 @@ import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.BaseColumns;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
@@ -233,7 +232,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
         } else {
             Intent intent = new Intent();
             intent.setClass(getActivity(), EpisodeDetailsActivity.class);
-            intent.putExtra(BaseColumns._ID, episodeId);
+            intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_ID, episodeId);
             startActivity(intent);
         }
     }
