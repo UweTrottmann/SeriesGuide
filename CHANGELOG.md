@@ -16,6 +16,12 @@ Version 2.5 *(in development)*
 Version 2.4.1 *(in testing)*
 -------------------------------
 
+Since 2.4.2beta (2012-01-07)
+
+* Tapping list widget items takes you to the respective episode page.
+* Tweaked list widget layout a little.
+* Made widget backgrounds more transparent.
+
 Since 2.4.1beta (2012-01-06)
 
 * Resizable list widget for Android 3.0+. Uses an alarm to refresh (this needs testing) every 5 mins if the device is awake.
