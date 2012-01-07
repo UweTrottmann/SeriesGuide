@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="auto"
     package="com.battlelancer.seriesguide"
-    android:versionCode="132"
-    android:versionName="2.4" >
+    android:versionCode="133"
+    android:versionName="2.4.1" >
 
     <uses-feature
         android:name="android.hardware.touchscreen"
@@ -59,6 +59,24 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+
+        <receiver android:name="com.battlelancer.seriesguide.appwidget.ListWidgetProvider" android:label="@string/widget_label">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.battlelancer.seriesguide.appwidget.UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_v11_info" />
+        </receiver>
+
+        <service
+            android:name="com.battlelancer.seriesguide.appwidget.ListWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" >
+        </service>
 
         <receiver
             android:name="com.battlelancer.seriesguide.appwidget.AppWidget"

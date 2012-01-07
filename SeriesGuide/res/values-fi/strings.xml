@@ -70,7 +70,6 @@
   <string name="update_nosdcard">Ei voitu päivittää. Ulkoista muistia tai SD-korttia ei ole saatavilla.</string>
   <string name="update_rebuildsearch">Rakennetaan jaksojen hakuindeksiä.</string>
   <string name="pref_autoupdate">Automaattinen päivitys</string>
-  <string name="pref_autoupdatesummary">Päivitä käynnistettäessä, enintään kerran päivässä</string>
   <string name="pref_updatewifionly">Päivitä vain Wi-Fi-yhteydellä</string>
   <string name="show_airs">esitetään</string>
   <string name="show_network">kanavalla</string>

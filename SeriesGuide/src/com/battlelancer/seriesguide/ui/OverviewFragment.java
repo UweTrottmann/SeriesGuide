@@ -215,7 +215,6 @@ public class OverviewFragment extends Fragment {
         // Save info for sharing
         mShareData.putString(ShareItems.IMDBID, show.getImdbId());
         mShareData.putInt(ShareItems.TVDBID, Integer.valueOf(show.getId()));
-        mShareData.putInt(ShareItems.CHECKIN_DURATION, Integer.valueOf(show.getRuntime()));
 
         // Show name
         TextView showname = (TextView) getActivity().findViewById(R.id.seriesname);

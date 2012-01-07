@@ -281,8 +281,6 @@ public class ShareUtils {
         String RATING = "rating";
 
         String TRAKTACTION = "traktaction";
-
-        String CHECKIN_DURATION = "checkin_duration";
     }
 
     public static String onCreateShareString(Context context, final Cursor episode) {
@@ -440,9 +438,8 @@ public class ShareUtils {
                 Response r = null;
                 switch (action) {
                     case CHECKIN_EPISODE: {
-                        final int duration = mTraktData.getInt(ShareItems.CHECKIN_DURATION);
                         r = manager.showService().checkin(tvdbid).season(season).episode(episode)
-                                .duration(duration).fire();
+                                .fire();
                         break;
                     }
                     case SEEN_EPISODE: {
@@ -809,11 +806,11 @@ public class ShareUtils {
             f.setCancelable(false);
             return f;
         }
-        
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            
+
             setStyle(STYLE_NO_TITLE, 0);
         }
 

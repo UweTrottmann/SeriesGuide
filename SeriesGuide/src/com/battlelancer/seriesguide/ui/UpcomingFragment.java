@@ -14,7 +14,6 @@ import com.battlelancer.seriesguide.util.Utils;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.BaseColumns;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
@@ -229,7 +228,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         } else {
             Intent intent = new Intent();
             intent.setClass(getActivity(), EpisodeDetailsActivity.class);
-            intent.putExtra(BaseColumns._ID, episodeId);
+            intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_ID, episodeId);
             startActivity(intent);
         }
     }

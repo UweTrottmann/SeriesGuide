@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/appwidget_bg"
-    android:orientation="horizontal" >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/widget_margin" >
 
     <LinearLayout
-        android:id="@+id/LinearLayoutWidget"
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:background="@drawable/appwidget_button_center"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center_vertical"
-        android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="5dp" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/appwidget_bg"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/LinearLayoutWidget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="@drawable/appwidget_button_center"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/widget_paddingLeft"
+            android:paddingRight="@dimen/widget_paddingRight" >
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/ImageButtonWidget"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/appwidget_button_center"
+            android:padding="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_action_refresh" />
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/ImageButtonWidget"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="bottom"
-        android:background="@drawable/appwidget_button_center"
-        android:padding="5dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_action_refresh" />
-
-</LinearLayout>
+</FrameLayout>

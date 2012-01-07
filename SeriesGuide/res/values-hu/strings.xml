@@ -68,7 +68,6 @@
   <string name="update_nosdcard">Nem sikerült a frissítés. Nincs külső tároló vagy elérhető SD-kártya.</string>
   <string name="update_rebuildsearch">Epizód index létrehozása</string>
   <string name="pref_autoupdate">Automatikus frissítés</string>
-  <string name="pref_autoupdatesummary">Frissítés indításkor, legfeljebb naponta egyszer</string>
   <string name="pref_updatewifionly">Frissítés csak Wi-Fi hálózat esetén</string>
   <string name="show_airs">mikor:</string>
   <string name="show_network">hol:</string>

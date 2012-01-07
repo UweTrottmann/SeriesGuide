@@ -149,8 +149,6 @@ public class EpisodeDetailsFragment extends ListFragment implements
                 shareData.putInt(ShareItems.SEASON, episode.getInt(EpisodeDetailsQuery.SEASON));
                 shareData
                         .putInt(ShareItems.TVDBID, episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID));
-                shareData.putInt(ShareItems.CHECKIN_DURATION,
-                        episode.getInt(EpisodeDetailsQuery.SHOW_RUNTIME));
                 ShareUtils.showShareDialog(getFragmentManager(), shareData);
                 break;
             }
