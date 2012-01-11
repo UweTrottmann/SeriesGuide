@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -116,12 +117,12 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
         String[] from = new String[] {
                 Episodes.TITLE, Episodes.WATCHED, Episodes.NUMBER, Episodes.FIRSTAIRED,
-                Shows.TITLE, Shows.NETWORK
+                Shows.TITLE, Shows.NETWORK, Shows.POSTER
         };
         int[] to = new int[] {
                 R.id.textViewUpcomingEpisode, R.id.watchedBoxUpcoming, R.id.textViewUpcomingNumber,
                 R.id.textViewUpcomingAirdate, R.id.textViewUpcomingShow,
-                R.id.textViewUpcomingNetwork
+                R.id.textViewUpcomingNetwork, R.id.poster
         };
 
         mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.upcoming_row, null, from, to, 0);
@@ -187,6 +188,13 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                     }
 
                     tv.setText(fieldValue);
+                    return true;
+                } 
+                /* EXPERIMENTAL */
+                else if (columnIndex == UpcomingQuery.SHOW_POSTER) {
+                    ImageView poster = (ImageView) view;
+                    String path = cursor.getString(columnIndex);
+                    Utils.setPosterBitmap(poster, path, false, getActivity());
                     return true;
                 }
                 return false;
