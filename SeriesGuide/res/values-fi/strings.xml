@@ -44,6 +44,7 @@
   <string name="unmark_episode">Jakso vielä katsomatta</string>
   <string name="mark_all">Kaikki katsottu</string>
   <string name="unmark_all">Kaikki katsomattomia</string>
+  <string name="shows_empty">Tällä hetkellä täällä ei ole ohjelmia.</string>
   <string name="confirm_delete">Haluatko varmasti poistää tämän ohjelman?</string>
   <string name="delete_show">Poista</string>
   <string name="dontdelete_show">Älä poista</string>
@@ -69,7 +70,9 @@
   <string name="update_inprogress">Päivitys käynnissä. Odota sen päättymistä ja yritä sitten uudestaan.</string>
   <string name="update_nosdcard">Ei voitu päivittää. Ulkoista muistia tai SD-korttia ei ole saatavilla.</string>
   <string name="update_rebuildsearch">Rakennetaan jaksojen hakuindeksiä.</string>
+  <string name="update_traktactivity">Nouda toiminta traktista</string>
   <string name="pref_autoupdate">Automaattinen päivitys</string>
+  <string name="pref_autoupdatesummary">Päivitys käynnistettäessä, n. kerran päivässä</string>
   <string name="pref_updatewifionly">Päivitä vain Wi-Fi-yhteydellä</string>
   <string name="show_airs">esitetään</string>
   <string name="show_network">kanavalla</string>
@@ -118,6 +121,7 @@
   <string name="pref_hideimagessummary">Piilota SeriesGuiden kuvat kuvagalleriasta (vaatii uudelleenkäynnistyksen)</string>
   <string name="pref_more">Lisää</string>
   <string name="about">Tietoja SeriesGuidesta</string>
+  <string name="about_message">http://seriesguide.uwetrottmann.com - kehittänyt Uwe Trottmann.\n\nAlla olevasta linkistä löydät tiedot ihmisistä ja resursseista, jotka ovat auttaneet tätä projektia.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="help">Apua</string>
   <string name="backup">Varmuuskopioi/Palauta</string>
   <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
@@ -132,8 +136,10 @@
   <string name="pref_notifications">Ota ilmoitukset käyttöön</string>
   <string name="pref_notificationssummary">Näytä ilmoitukset tulevista jaksoista</string>
   <string name="pref_usetz">Käytä aikavyöhykettäni</string>
+  <string name="pref_usetzsummary">Asettaa ajan automaattisesti Yhdysvaltojen Tyynenmeren ajasta (USA:n ulkopuolella oleville)</string>
   <string name="pref_offset">Aikaviive</string>
   <string name="pref_offsetsummary">tietyllä tuntimäärällä</string>
+  <string name="backup_description"><b>Varmuuskopio</b> luo kopion ohjelmatietokannastasi kansioon nimeltä <b>seriesdatabase</b>.\n\nPalauttaaksesi ohjelmat, varmista tämän tiedoston olevan kyseisessä kansiossa ja paina sitten <b>Palauta</b> ja kaikki ohjelmasi ovat jälleen täällä!\n\nVain saman tai vanhemman tietokantaversion varmuuskopiot voidaan palauttaa.</string>
   <string name="backup_path"><b>Varmuuskopiointikansio</b></string>
   <string name="backup_version"><b>Tietokannan versio</b></string>
   <string name="backup_failed_nosd">Ei voi varmuuskopioida. Varmuuskopiointikansiota ei löydy.</string>
@@ -144,17 +150,22 @@
   <string name="import_failed_nosd">Ei voi palauttaa varmuuskopiota. Varmuuskopiointikansiota ei löydy.</string>
   <string name="import_failed_nofile">Varmuuskopiointitiedostoa ei ole. Ei voi palauttaa tietokantaa.</string>
   <string name="import_failed_noread">Varmuuskopiointitiedosto ei ole luettavissa. Ei voi palauttaa tietokantaa.</string>
+  <string name="dbupgradefailed">Varmuuskopiosi saattaa olla liian vanha tai tyhjä. Huom: Tuo 2.0 versiota edeltävät varmuuskopiot ensiin versioon 1.9.x.</string>
   <string name="import_success">Tietokanta palautettu onnistuneesti</string>
   <string name="import_failed">Palautus epäonnistui</string>
   <string name="backup_button">Varmuuskopioi</string>
   <string name="import_button">Palauta</string>
+  <string name="backup_question">Tämä kirjoittaa edellisen varmuuskopiokansiossa olevan varmuuskopiotiedoston yli.</string>
   <string name="backup_yes">Varmuuskopioi</string>
   <string name="backup_no">Älä varmuuskopioi</string>
+  <string name="import_question">Varmista, että varmuuskopio on varmuuskopiokansiossa. Nykyinen ohjelmalistaus menetetään.</string>
   <string name="import_yes">Palauta</string>
   <string name="import_no">Älä palauta</string>
+  <string name="widget_label">Seuraavat jaksot</string>
   <string name="smallwidget">Seuraavat jaksot (pieni)</string>
   <string name="bigwidget">Seuraavat jaksot (keskisuuri)</string>
   <string name="largewidget">Seuraavat jaksot (suuri)</string>
+  <string name="activity">Toiminta</string>
   <string name="upcoming">Tulevat</string>
   <string name="recent">Viimeisimmät</string>
   <string name="noupcoming">Jaksoja ei löydy. Yritä päivittää ohjelmasi.</string>
@@ -166,6 +177,9 @@
   <string name="checkin">Kirjaa</string>
   <string name="comment">Kirjauskommentti</string>
   <string name="checkinsuccess">Kirjattu onnistuneesti</string>
+  <string name="traktcheckin_cancel">Peruuta se</string>
+  <string name="traktcheckin_inprogress">Kirjautuminen on jo käynnistä. Joko peruuta tämä kirjautuminen tai odota %s ennen kuin voit kirjaudut uudelleen.</string>
+  <string name="traktcheckin_wait">Odotetaan</string>
   <string name="pref_number">Lukumuoto</string>
   <string name="pref_numbersummary">Vaihda 1x01, S01E01 ja s01e01 lukumuotojen välillä.</string>
   <string name="checkinfailed">Kirjautuminen epäonnistui</string>
@@ -188,22 +202,40 @@
   <string name="pref_trakt">trakt.tv:n käyttäjätiedot</string>
   <string name="pref_traktsummary">Lisää tai muokkaa trakt.tv:n käyttäjätietojasi</string>
   <string name="pref_traktsync">Synkronoi trakt.tv:ssä</string>
+  <string name="pref_traktsyncsummary">Varhainen synkronointi trakt.tv:n kanssa</string>
   <string name="save">Tallenna</string>
   <string name="dontsave">Älä tallenna</string>
+  <string name="trakt_success">Onnistuneesti välitetty traktille</string>
+  <string name="trakt_error">Vuorovaikutus traktin kanssa epäonnistui</string>
+  <string name="trakt_seen">merkitty katsotuksi</string>
   <string name="trakt_decryptfail">Salasanaa ei voitu purkaa</string>
   <string name="trakt_credentials_invalid">Käyttäjätiedot eivät kelpaa</string>
   <string name="trakt_generalerror">Jokin meni pieleen. Tarkista käyttäjätietosi ja yritä uudelleen.</string>
   <string name="pref_traktintegrate">Integroi trakt.tv</string>
+  <string name="pref_traktintegratesummary">Nouda toiminta traktista päivitettäessä</string>
   <string name="donate">Osta minulle drinkki (Paypal)</string>
   <string name="feedback">Lähetä palautetta</string>
   <string name="love">Maailman parasta!</string>
   <string name="hate">Ei sytyttänyt :(</string>
   <string name="trakt_createaccount">Luo uusi tili</string>
   <string name="email">Sähköposti</string>
+  <string name="trakt_experimental">Vain SeriesGuideen lisätyt ohjelmat synkronoidaan. \'Synkronoi SeriesGuideen\' noutaa katsotut jaksot traktista.\'Synkronoi traktiin\' lähettää katsotut jaksot SerisGuidesta traktiin.</string>
   <string name="trakt_synctodevice">Synkronoi SeriesGuideen</string>
-  <string name="trakt_synctotrakt">Synkronoi trakt.tv:en</string>
-  <string name="trakt_syncunseen">Synkronoi ennennäkemättömät jaksot</string>
+  <string name="trakt_synctotrakt">Synkronoi traktiin</string>
+  <string name="trakt_syncunseen">Synkronoi katsomattomat jaksot</string>
   <string name="powered_by_thetvdb">Pohjautuu thetvdb.com:iin</string>
+  <string name="friends">Ystävät</string>
+  <string name="friends_empty">Ei viimeaikaisia toimintoja tai sitten sinulla ei ole ystäviä traktissa, vielä.</string>
+  <string name="sending">Lähetetään...</string>
+  <string name="trending">Trendit</string>
+  <string name="recommended">Suositellut</string>
+  <string name="library">Kokoelma</string>
+  <string name="welcome_message"><big>Tervetuloa!</big>\nVoisit aloittaa näistä asioista.\n\nSeriesGuide toimii trakt.tv-tilisi kanssa:\n - Kirjaudu ohjelmiin\n - Katso ystäviesi toimintaa\n - Katso suosituksia ja kokoelmaa</string>
+  <string name="welcome_setuptrakt">Aseta trakt-tili</string>
+  <string name="welcome_gettingstarted">Täyttääksesi ohjelmalistasi:</string>
+  <string name="welcome_add">Aloita lisäämällä ohjelmia</string>
+  <string name="download_stable">Lataa SeriesGuide</string>
+  <string name="betawarning">VAROITUS: Tämä on epävakaa beetaversio vain testaustarkoituksiin. Lataa vakaa loppukäyttäjän versio klikkaamalla alempana olevaa latauspainiketa.\n\nJos haluat auttaa beetan testauksessa, niin jatka toki. Raportoi jokainen kaatuminen, kokeile kaikkia toimintoja ja lähetä palautetta englanniksi osoitteeseen seriesguide@battlelancer.com.</string>
   <string-array name="shsorting">
     <item>A - Ö</item>
     <item>Seuraava jakso</item>
@@ -224,11 +256,11 @@
     <item>Vanhin ensin (DVD)</item>
   </string-array>
   <string-array name="share_items">
-    <item>Check In (GetGlue)</item>
-    <item>Check In (trakt)</item>
-    <item>Mark seen (trakt)</item>
+    <item>Kirjaudu (GetGlue)</item>
+    <item>Kirjaudu (trakt)</item>
+    <item>Merkitse katsotuksi (trakt)</item>
     <item>Arvostele (trakt)</item>
-    <item>Other services</item>
+    <item>Muut palvelut</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Kaikki</item>
