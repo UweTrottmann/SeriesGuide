@@ -72,6 +72,7 @@
   <string name="update_rebuildsearch">Construction de l\'index de recherche des épisodes</string>
   <string name="update_traktactivity">Obtenir les activités sur trakt</string>
   <string name="pref_autoupdate">Mise à jour automatique</string>
+  <string name="pref_autoupdatesummary">Mise à jour au chargement, environ une fois par jour</string>
   <string name="pref_updatewifionly">Mise à jour sur Wi-Fi uniquement</string>
   <string name="show_airs">diffusions</string>
   <string name="show_network">sur</string>
@@ -160,6 +161,7 @@
   <string name="import_question">Assurez-vous que la sauvegarde est à l\'intérieur du dossier de sauvegarde. La liste actuelle de séries sera perdue.</string>
   <string name="import_yes">Restaurer</string>
   <string name="import_no">Ne pas restaurer</string>
+  <string name="widget_label">Prochains épisodes</string>
   <string name="smallwidget">prochains épisodes (petit)</string>
   <string name="bigwidget">prochains épisodes (au milieu)</string>
   <string name="largewidget">prochains épisodes (grande)</string>

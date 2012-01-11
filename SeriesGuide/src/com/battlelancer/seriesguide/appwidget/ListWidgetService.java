@@ -109,10 +109,11 @@ public class ListWidgetService extends RemoteViewsService {
             Bitmap poster = null;
             if (value.length() != 0) {
                 poster = ImageCache.getInstance(mContext).getThumb(value, false);
-
-                if (poster != null) {
-                    rv.setImageViewBitmap(R.id.widgetPoster, poster);
-                }
+            }
+            if (poster != null) {
+                rv.setImageViewBitmap(R.id.widgetPoster, poster);
+            } else {
+                rv.setImageViewResource(R.id.widgetPoster, R.drawable.show_generic);
             }
 
             // Set the fill-in intent for the list items

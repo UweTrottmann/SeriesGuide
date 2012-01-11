@@ -13,6 +13,13 @@ Version 2.5 *(in development)*
 * Fixes for market reported crashes.
 * Latest translations from crowdin.
 
+Version 2.4.2/2.4.3beta *(2012-01-11)*
+-------------------------------
+
+* Fix for a crash while updating and fetching trakt activity
+* Fix for wrong show poster displaying in list widget
+* Latest translations from crowdin. Now with Bulgarian, too, thanks to .
+
 Version 2.4.1 *(2012-01-07)*
 -------------------------------
 
@@ -35,6 +42,10 @@ Since 2.4.1beta (2012-01-06)
 
 Version 2.4 *(2011-12-25)*
 --------------------------------
+
+* Check into a show on trakt. After checking in, trakt will automatically display it as watching then switch over to watched status once the runtime of the show has elapsed.
+* Recently watched episodes are fetched from trakt on each update: allows easy syncing of devices. After adding a show the initial fetch of watched episodes should still be done via `Settings` >> `Sync with trakt` >> `Sync to SeriesGuide`.
+* `Upcoming` renamed `Activity`.
 
 * Check into a show on trakt. After checking in, trakt will automatically display it as watching then switch over to watched status once the runtime of the show has elapsed.
 * Recently watched episodes are fetched from trakt on each update: allows easy syncing of devices. After adding a show the initial fetch of watched episodes should still be done via `Settings` >> `Sync with trakt` >> `Sync to SeriesGuide`.
