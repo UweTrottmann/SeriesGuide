@@ -16,9 +16,9 @@ Version 2.5 *(in development)*
 Version 2.4.2/2.4.3beta *(2012-01-11)*
 -------------------------------
 
-* Fix for a crash while updating and fetching trakt activity
-* Fix for wrong show poster displaying in list widget
-* Latest translations from crowdin. Now with Bulgarian, too, thanks to .
+* Fix for a crash while updating and fetching trakt activity.
+* Fix for wrong show poster displaying in list widget.
+* Latest translations from crowdin.
 
 Version 2.4.1 *(2012-01-07)*
 -------------------------------
