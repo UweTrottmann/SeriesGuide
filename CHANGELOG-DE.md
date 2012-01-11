@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Version 2.4.2 *(2012-01-11)*
+-------------------------------
+
+* Fix für einen Absturz beim Aktualisieren, falls trakt Aktivität geholt wird
+* Fix für falsch angezeigtes Serienposter im Listen-Widget
+* Aktuelle Übersetzungen von crowdin.
+
 Version 2.4.1 *(2012-01-07)*
 -------------------------------
 
