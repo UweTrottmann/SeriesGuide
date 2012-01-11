@@ -227,21 +227,24 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             // build an update batch
             final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
             for (ActivityItem item : activity.activity) {
-                switch (item.action) {
-                    case Seen: {
-                        List<TvShowEpisode> episodes = item.episodes;
-                        String showTvdbId = item.show.tvdbId;
-                        for (TvShowEpisode episode : episodes) {
-                            addEpisodeOp(batch, episode, showTvdbId);
+                // check for null (potential fix for reported crash)
+                if (item.show != null) {
+                    switch (item.action) {
+                        case Seen: {
+                            List<TvShowEpisode> episodes = item.episodes;
+                            String showTvdbId = item.show.tvdbId;
+                            for (TvShowEpisode episode : episodes) {
+                                addEpisodeOp(batch, episode, showTvdbId);
+                            }
+                            break;
                         }
-                        break;
-                    }
-                    case Checkin:
-                    case Scrobble: {
-                        TvShowEpisode episode = item.episode;
-                        String showTvdbId = item.show.tvdbId;
-                        addEpisodeOp(batch, episode, showTvdbId);
-                        break;
+                        case Checkin:
+                        case Scrobble: {
+                            TvShowEpisode episode = item.episode;
+                            String showTvdbId = item.show.tvdbId;
+                            addEpisodeOp(batch, episode, showTvdbId);
+                            break;
+                        }
                     }
                 }
             }
@@ -312,7 +315,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
         if (message != null) {
             // add a list of failed shows
-            if (mFailedShows.length() != 0){
+            if (mFailedShows.length() != 0) {
                 message += "(" + mFailedShows + ")";
             }
             Toast.makeText(mAppContext, message, length).show();
