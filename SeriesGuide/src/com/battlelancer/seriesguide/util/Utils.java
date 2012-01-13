@@ -3,8 +3,10 @@ package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.beta.R.drawable;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.thetvdbapi.ImageCache;
 import com.jakewharton.trakt.ServiceManager;
 
 import android.content.Context;
@@ -12,6 +14,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -19,6 +22,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
+import android.widget.ImageView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -584,6 +588,33 @@ public class Utils {
             version = "UnknownVersion";
         }
         return version;
+    }
+
+    /**
+     * If {@code isBusy} is {@code true}, then the image is only loaded if it is
+     * in memory. In every other case a place-holder is shown.
+     * 
+     * @param poster
+     * @param path
+     * @param isBusy
+     * @param context TODO
+     */
+    public static void setPosterBitmap(ImageView poster, String path, boolean isBusy,
+            Context context) {
+        Bitmap bitmap = null;
+        if (path.length() != 0) {
+            bitmap = ImageCache.getInstance(context).getThumb(path, isBusy);
+        }
+    
+        if (bitmap != null) {
+            poster.setImageBitmap(bitmap);
+            poster.setTag(null);
+        } else {
+            // set placeholder
+            poster.setImageResource(R.drawable.show_generic);
+            // Non-null tag means the view still needs to load it's data
+            poster.setTag(path);
+        }
     }
 
 }

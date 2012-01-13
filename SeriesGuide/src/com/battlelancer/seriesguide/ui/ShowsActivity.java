@@ -11,7 +11,6 @@ import com.battlelancer.seriesguide.util.EulaHelper;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
 import android.app.AlertDialog;
@@ -29,7 +28,6 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -957,13 +955,13 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             final String path = mCursor.getString(ShowsQuery.POSTER);
             if (!mBusy) {
                 // load poster
-                setPosterBitmap(viewHolder.poster, path, false);
+                Utils.setPosterBitmap(viewHolder.poster, path, false, null);
 
                 // Null tag means the view has the correct data
                 viewHolder.poster.setTag(null);
             } else {
                 // only load in-memory poster
-                setPosterBitmap(viewHolder.poster, path, true);
+                Utils.setPosterBitmap(viewHolder.poster, path, true, null);
             }
 
             return convertView;
@@ -1001,7 +999,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                     final ViewHolder holder = (ViewHolder) view.getChildAt(i).getTag();
                     final ImageView poster = holder.poster;
                     if (poster.getTag() != null) {
-                        setPosterBitmap(poster, (String) poster.getTag(), false);
+                        Utils.setPosterBitmap(poster, (String) poster.getTag(), false, null);
                         poster.setTag(null);
                     }
                 }
@@ -1013,31 +1011,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case OnScrollListener.SCROLL_STATE_FLING:
                 mBusy = true;
                 break;
-        }
-    }
-
-    /**
-     * If {@code isBusy} is {@code true}, then the image is only loaded if it is
-     * in memory. In every other case a place-holder is shown.
-     * 
-     * @param poster
-     * @param path
-     * @param isBusy
-     */
-    private void setPosterBitmap(ImageView poster, String path, boolean isBusy) {
-        Bitmap bitmap = null;
-        if (path.length() != 0) {
-            bitmap = ImageCache.getInstance(this).getThumb(path, isBusy);
-        }
-
-        if (bitmap != null) {
-            poster.setImageBitmap(bitmap);
-            poster.setTag(null);
-        } else {
-            // set placeholder
-            poster.setImageResource(R.drawable.show_generic);
-            // Non-null tag means the view still needs to load it's data
-            poster.setTag(path);
         }
     }
 }
