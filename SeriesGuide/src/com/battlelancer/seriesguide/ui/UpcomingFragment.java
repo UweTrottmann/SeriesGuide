@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -20,12 +21,15 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -35,7 +39,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class UpcomingFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class UpcomingFragment extends ListFragment implements
+        LoaderManager.LoaderCallbacks<Cursor>, OnScrollListener {
 
     private static final int MARK_WATCHED_ID = 0;
 
@@ -44,6 +49,8 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     private SimpleCursorAdapter mAdapter;
 
     private boolean mDualPane;
+
+    private boolean mBusy;
 
     static UpcomingFragment newInstance(String query, String sortOrder, String analyticsTag,
             int loaderId) {
@@ -125,87 +132,14 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                 R.id.textViewUpcomingNetwork, R.id.poster
         };
 
-        mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.upcoming_row, null, from, to, 0);
-        mAdapter.setViewBinder(new ViewBinder() {
-
-            public boolean setViewValue(View view, final Cursor cursor, int columnIndex) {
-                // set WatchedBox state and add onClickListener
-                if (columnIndex == UpcomingQuery.WATCHED) {
-                    WatchedBox wb = (WatchedBox) view;
-
-                    // save rowid to hand over to OnClick event listener
-                    final String rowid = cursor.getString(UpcomingQuery._ID);
-
-                    wb.setOnClickListener(new OnClickListener() {
-
-                        public void onClick(View v) {
-                            ((WatchedBox) v).toggle();
-                            DBUtils.markEpisode(getActivity(), rowid, ((WatchedBox) v).isChecked());
-                        }
-                    });
-
-                    wb.setChecked(cursor.getInt(columnIndex) > 0);
-                    return true;
-                } else if (columnIndex == UpcomingQuery.NUMBER) {
-                    // set season and episode number
-                    TextView text = (TextView) view;
-                    String episodeString = cursor.getString(UpcomingQuery.SEASON);
-                    String number = cursor.getString(UpcomingQuery.NUMBER);
-                    if (number.length() == 1) {
-                        episodeString += "x0" + number;
-                    } else {
-                        episodeString += "x" + number;
-                    }
-                    text.setText(episodeString);
-                    return true;
-                } else if (columnIndex == UpcomingQuery.FIRSTAIRED) {
-                    TextView tv = (TextView) view;
-
-                    // set airdate
-                    String fieldValue = cursor.getString(UpcomingQuery.FIRSTAIRED);
-                    if (fieldValue.length() != 0) {
-                        tv.setText(Utils.parseDateToLocalRelative(fieldValue,
-                                cursor.getLong(UpcomingQuery.SHOW_AIRSTIME), getActivity()));
-                    } else {
-                        tv.setText("");
-                    }
-
-                    return true;
-                } else if (columnIndex == UpcomingQuery.SHOW_NETWORK) {
-                    TextView tv = (TextView) view;
-                    String fieldValue = "";
-
-                    // add airtime
-                    long airtime = cursor.getLong(UpcomingQuery.SHOW_AIRSTIME);
-                    String value = Utils.parseMillisecondsToTime(airtime, null, getActivity())[0];
-                    if (value.length() != 0) {
-                        fieldValue += value + " ";
-                    }
-                    // add network
-                    value = cursor.getString(UpcomingQuery.SHOW_NETWORK);
-                    if (value.length() != 0) {
-                        fieldValue += getString(R.string.show_network) + " " + value;
-                    }
-
-                    tv.setText(fieldValue);
-                    return true;
-                } 
-                /* EXPERIMENTAL */
-                else if (columnIndex == UpcomingQuery.SHOW_POSTER) {
-                    ImageView poster = (ImageView) view;
-                    String path = cursor.getString(columnIndex);
-                    Utils.setPosterBitmap(poster, path, false, getActivity());
-                    return true;
-                }
-                return false;
-            }
-        });
+        mAdapter = new SlowAdapter(getActivity(), R.layout.upcoming_row, null, from, to, 0);
 
         setListAdapter(mAdapter);
 
         final ListView list = getListView();
         list.setFastScrollEnabled(true);
         list.setDivider(null);
+        list.setOnScrollListener(this);
         registerForContextMenu(list);
     }
 
@@ -292,5 +226,165 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         int SHOW_NETWORK = 8;
 
         int SHOW_POSTER = 9;
+    }
+
+    private class SlowAdapter extends SimpleCursorAdapter {
+
+        private LayoutInflater mLayoutInflater;
+
+        private int mLayout;
+
+        public SlowAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
+            super(context, layout, c, from, to, flags);
+
+            mLayoutInflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            mLayout = layout;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (!mDataValid) {
+                throw new IllegalStateException(
+                        "this should only be called when the cursor is valid");
+            }
+            if (!mCursor.moveToPosition(position)) {
+                throw new IllegalStateException("couldn't move cursor to position " + position);
+            }
+
+            ViewHolder viewHolder;
+
+            if (convertView == null) {
+                convertView = mLayoutInflater.inflate(mLayout, null);
+
+                viewHolder = new ViewHolder();
+                viewHolder.episode = (TextView) convertView
+                        .findViewById(R.id.textViewUpcomingEpisode);
+                viewHolder.show = (TextView) convertView.findViewById(R.id.textViewUpcomingShow);
+                viewHolder.watchedBox = (WatchedBox) convertView
+                        .findViewById(R.id.watchedBoxUpcoming);
+                viewHolder.number = viewHolder.episode = (TextView) convertView
+                        .findViewById(R.id.textViewUpcomingNumber);
+                viewHolder.airdate = viewHolder.episode = (TextView) convertView
+                        .findViewById(R.id.textViewUpcomingAirdate);
+                viewHolder.network = viewHolder.episode = (TextView) convertView
+                        .findViewById(R.id.textViewUpcomingNetwork);
+                viewHolder.poster = (ImageView) convertView.findViewById(R.id.poster);
+
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+
+            // set text properties immediately
+            viewHolder.episode.setText(mCursor.getString(UpcomingQuery.TITLE));
+            viewHolder.show.setText(mCursor.getString(UpcomingQuery.SHOW_TITLE));
+
+            // watched box
+            // save rowid to hand over to OnClick event listener
+            final String rowid = mCursor.getString(UpcomingQuery._ID);
+            viewHolder.watchedBox.setOnClickListener(new OnClickListener() {
+                public void onClick(View v) {
+                    ((WatchedBox) v).toggle();
+                    DBUtils.markEpisode(getActivity(), rowid, ((WatchedBox) v).isChecked());
+                }
+            });
+            viewHolder.watchedBox.setChecked(mCursor.getInt(UpcomingQuery.WATCHED) > 0);
+
+            // season and episode number
+            String episodeString = mCursor.getString(UpcomingQuery.SEASON);
+            String number = mCursor.getString(UpcomingQuery.NUMBER);
+            if (number.length() == 1) {
+                episodeString += "x0" + number;
+            } else {
+                episodeString += "x" + number;
+            }
+            viewHolder.number.setText(episodeString);
+
+            // airdate
+            String airDate = mCursor.getString(UpcomingQuery.FIRSTAIRED);
+            if (airDate.length() != 0) {
+                viewHolder.airdate.setText(Utils.parseDateToLocalRelative(airDate,
+                        mCursor.getLong(UpcomingQuery.SHOW_AIRSTIME), getActivity()));
+            } else {
+                viewHolder.airdate.setText("");
+            }
+
+            // network
+            // add airtime
+            String network = "";
+            long airtime = mCursor.getLong(UpcomingQuery.SHOW_AIRSTIME);
+            String value = Utils.parseMillisecondsToTime(airtime, null, getActivity())[0];
+            if (value.length() != 0) {
+                network += value + " ";
+            }
+            // add network
+            value = mCursor.getString(UpcomingQuery.SHOW_NETWORK);
+            if (value.length() != 0) {
+                network += getString(R.string.show_network) + " " + value;
+            }
+            viewHolder.network.setText(network);
+
+            // set poster only when not busy scrolling
+            final String path = mCursor.getString(UpcomingQuery.SHOW_POSTER);
+            if (!mBusy) {
+                // load poster
+                Utils.setPosterBitmap(viewHolder.poster, path, false, null);
+
+                // Null tag means the view has the correct data
+                viewHolder.poster.setTag(null);
+            } else {
+                // only load in-memory poster
+                Utils.setPosterBitmap(viewHolder.poster, path, true, null);
+            }
+
+            return convertView;
+        }
+    }
+
+    public final class ViewHolder {
+
+        public TextView show;
+
+        public TextView episode;
+
+        public WatchedBox watchedBox;
+
+        public TextView number;
+
+        public TextView airdate;
+
+        public TextView network;
+
+        public ImageView poster;
+    }
+
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
+            int totalItemCount) {
+    }
+
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        switch (scrollState) {
+            case OnScrollListener.SCROLL_STATE_IDLE:
+                mBusy = false;
+
+                int count = view.getChildCount();
+                for (int i = 0; i < count; i++) {
+                    final ViewHolder holder = (ViewHolder) view.getChildAt(i).getTag();
+                    final ImageView poster = holder.poster;
+                    if (poster.getTag() != null) {
+                        Utils.setPosterBitmap(poster, (String) poster.getTag(), false, null);
+                        poster.setTag(null);
+                    }
+                }
+
+                break;
+            case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
+                mBusy = false;
+                break;
+            case OnScrollListener.SCROLL_STATE_FLING:
+                mBusy = true;
+                break;
+        }
     }
 }
