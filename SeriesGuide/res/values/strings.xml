@@ -53,6 +53,7 @@
     <string name="unmark_episode">Not yet watched episode</string>
     <string name="mark_all">Watched all</string>
     <string name="unmark_all">Watched none</string>
+    <string name="mark_untilhere">Watched all previously aired</string>
 
     <!-- SeriesGuide mainscreen -->
     <string name="shows_empty">Currently there are no shows here.</string>
