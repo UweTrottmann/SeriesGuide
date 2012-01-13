@@ -192,6 +192,31 @@ public class DBUtils {
     }
 
     /**
+     * Marks all episodes of a show that have aired before the air date of the
+     * given episode.
+     * 
+     * @param context
+     * @param episodeId
+     */
+    public static void markUntilHere(Context context, String episodeId) {
+        Cursor episode = context.getContentResolver().query(Episodes.buildEpisodeUri(episodeId),
+                new String[] {
+                        Episodes.FIRSTAIRED, Shows.REF_SHOW_ID
+                }, null, null, null);
+        final String untilDate = episode.getString(0);
+        final String showId = episode.getString(1);
+        episode.close();
+
+        ContentValues values = new ContentValues();
+        values.put(Episodes.WATCHED, true);
+
+        context.getContentResolver().update(Episodes.buildEpisodesOfShowUri(showId), values,
+                Episodes.FIRSTAIRED + "<?", new String[] {
+                    untilDate
+                });
+    }
+
+    /**
      * Fetches the row to a given show id and returns the results an Series
      * object. Returns {@code null} if there is no show with that id.
      * 
@@ -492,8 +517,7 @@ public class DBUtils {
                     .getColumnIndexOrThrow(Episodes.NUMBER));
             final String title = unwatched.getString(unwatched
                     .getColumnIndexOrThrow(Episodes.TITLE));
-            String nextEpisodeString = Utils.getNextEpisodeString(prefs, season, number,
-                    title);
+            String nextEpisodeString = Utils.getNextEpisodeString(prefs, season, number, title);
 
             // nextairdatetext
             String nextAirdateString = "";

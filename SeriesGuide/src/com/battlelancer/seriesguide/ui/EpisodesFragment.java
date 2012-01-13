@@ -47,9 +47,11 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
 
     private static final int MARK_UNWATCHED_ID = 1;
 
-    private static final int EPISODES_LOADER = 4;
-
     private static final int DELETE_EPISODE_ID = 2;
+
+    private static final int MARK_UNTILHERE_ID = 3;
+
+    private static final int EPISODES_LOADER = 4;
 
     private Constants.EpisodeSorting sorting;
 
@@ -256,7 +258,8 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
         } else {
             menu.add(0, MARK_WATCHED_ID, 0, R.string.mark_episode);
         }
-        menu.add(0, DELETE_EPISODE_ID, 2, R.string.delete_show);
+        menu.add(0, MARK_UNTILHERE_ID, 2, R.string.mark_untilhere);
+        menu.add(0, DELETE_EPISODE_ID, 3, R.string.delete_show);
     }
 
     @Override
@@ -270,6 +273,10 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
             case MARK_UNWATCHED_ID:
                 markEpisode(String.valueOf(info.id), false);
                 return true;
+            case MARK_UNTILHERE_ID: {
+                markUntilHere(String.valueOf(info.id));
+                return true;
+            }
             case DELETE_EPISODE_ID:
                 getActivity().getContentResolver().delete(
                         Episodes.buildEpisodeUri(String.valueOf(info.id)), null, null);
@@ -349,6 +356,17 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
                 public void run() {
                     DBUtils.markSeasonEpisodes(activity, getSeasonId(), state);
                     activity.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
+                }
+            }).start();
+        }
+    }
+
+    private void markUntilHere(final String episodeId) {
+        final Activity activity = getActivity();
+        if (activity != null) {
+            new Thread(new Runnable() {
+                public void run() {
+                    DBUtils.markUntilHere(activity, episodeId);
                 }
             }).start();
         }
