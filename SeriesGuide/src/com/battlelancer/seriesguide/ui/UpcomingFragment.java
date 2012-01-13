@@ -263,11 +263,11 @@ public class UpcomingFragment extends ListFragment implements
                 viewHolder.show = (TextView) convertView.findViewById(R.id.textViewUpcomingShow);
                 viewHolder.watchedBox = (WatchedBox) convertView
                         .findViewById(R.id.watchedBoxUpcoming);
-                viewHolder.number = viewHolder.episode = (TextView) convertView
+                viewHolder.number = (TextView) convertView
                         .findViewById(R.id.textViewUpcomingNumber);
-                viewHolder.airdate = viewHolder.episode = (TextView) convertView
+                viewHolder.airdate = (TextView) convertView
                         .findViewById(R.id.textViewUpcomingAirdate);
-                viewHolder.network = viewHolder.episode = (TextView) convertView
+                viewHolder.network = (TextView) convertView
                         .findViewById(R.id.textViewUpcomingNetwork);
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.poster);
 
