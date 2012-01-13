@@ -208,14 +208,16 @@ public class DBUtils {
         final String showId = episode.getString(1);
         episode.close();
 
-        ContentValues values = new ContentValues();
-        values.put(Episodes.WATCHED, true);
+        if (untilDate.length() != 0) {
+            ContentValues values = new ContentValues();
+            values.put(Episodes.WATCHED, true);
 
-        context.getContentResolver().update(Episodes.buildEpisodesOfShowUri(showId), values,
-                Episodes.FIRSTAIRED + "<? AND " + Episodes.FIRSTAIRED + "!=''", new String[] {
-                    untilDate
-                });
-        context.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
+            context.getContentResolver().update(Episodes.buildEpisodesOfShowUri(showId), values,
+                    Episodes.FIRSTAIRED + "<? AND " + Episodes.FIRSTAIRED + "!=''", new String[] {
+                        untilDate
+                    });
+            context.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
+        }
     }
 
     /**
