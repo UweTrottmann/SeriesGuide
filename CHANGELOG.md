@@ -4,10 +4,11 @@ Changelog
 Version 2.5 *(in development)*
 --------------------------------
 
-Since 2.5beta (2012-01-13):
+Since 2.5beta/2.5.1beta (2012-01-13):
 
 * Add 'Watched all previously aired' option to episode list of a season.
 * Add show posters in Upcoming and Recent.
+* Fix to display correct episode title.
 
 In development:
 
