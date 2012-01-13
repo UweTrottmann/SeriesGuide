@@ -4,6 +4,13 @@ Changelog
 Version 2.5 *(in development)*
 --------------------------------
 
+Since 2.5beta (2012-01-13):
+
+* Add 'Watched all previously aired' option to episode list of a season.
+* Add show posters in Upcoming and Recent.
+
+In development:
+
 * Add menu button to quickly share with last used sharing option.
 * Display search term, title and search soft button in `SearchActivity`.
 * Where applicable the app icon takes you back to the show list. Same as long-pressing back from every screen.

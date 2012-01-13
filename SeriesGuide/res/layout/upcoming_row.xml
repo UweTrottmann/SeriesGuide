@@ -20,7 +20,7 @@
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="@dimen/body_padding"
         android:layout_toRightOf="@+id/watchedBoxUpcoming"
         android:src="@drawable/show_generic" />
 
