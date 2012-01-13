@@ -11,14 +11,25 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:paddingBottom="15dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="15dp" />
+        android:paddingLeft="5dp"
+        android:paddingRight="8dp"
+        android:paddingTop="5dp" />
+
+    <ImageView
+        android:id="@+id/poster"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="@dimen/body_padding"
+        android:layout_toRightOf="@+id/watchedBoxUpcoming"
+        android:src="@drawable/show_generic" />
 
     <LinearLayout
         android:id="@+id/upcomingmeta"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/watchedBoxUpcoming" >
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/poster" >
 
         <TextView
             android:id="@+id/textViewUpcomingAirdate"
@@ -44,7 +55,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/upcomingmeta"
-        android:layout_toRightOf="@id/watchedBoxUpcoming"
+        android:layout_toRightOf="@+id/poster"
         android:text="Show Title" />
 
     <TextView
@@ -52,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewUpcomingShow"
-        android:layout_toRightOf="@id/watchedBoxUpcoming"
+        android:layout_toRightOf="@+id/poster"
         android:text="4x12" />
 
     <TextView
