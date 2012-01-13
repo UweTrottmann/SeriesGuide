@@ -203,6 +203,7 @@ public class DBUtils {
                 new String[] {
                         Episodes.FIRSTAIRED, Shows.REF_SHOW_ID
                 }, null, null, null);
+        episode.moveToFirst();
         final String untilDate = episode.getString(0);
         final String showId = episode.getString(1);
         episode.close();
@@ -211,9 +212,10 @@ public class DBUtils {
         values.put(Episodes.WATCHED, true);
 
         context.getContentResolver().update(Episodes.buildEpisodesOfShowUri(showId), values,
-                Episodes.FIRSTAIRED + "<?", new String[] {
+                Episodes.FIRSTAIRED + "<? AND " + Episodes.FIRSTAIRED + "!=''", new String[] {
                     untilDate
                 });
+        context.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
     }
 
     /**
