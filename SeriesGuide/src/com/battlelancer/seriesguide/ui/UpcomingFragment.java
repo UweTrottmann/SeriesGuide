@@ -205,6 +205,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
         final ListView list = getListView();
         list.setFastScrollEnabled(true);
+        list.setDivider(null);
         registerForContextMenu(list);
     }
 
