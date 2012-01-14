@@ -79,8 +79,7 @@ public class UpcomingFragment extends ListFragment implements
 
         setupAdapter();
 
-        getActivity().getSupportLoaderManager().initLoader(getArguments().getInt("loaderid"), null,
-                this);
+        getActivity().getSupportLoaderManager().initLoader(getLoaderId(), null, this);
     }
 
     @Override
@@ -172,6 +171,16 @@ public class UpcomingFragment extends ListFragment implements
             intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_ID, episodeId);
             startActivity(intent);
         }
+    }
+
+    public void onRequery(boolean isOnlyFavorites) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, isOnlyFavorites);
+        getLoaderManager().restartLoader(getLoaderId(), bundle, this);
+    }
+
+    private int getLoaderId() {
+        return getArguments().getInt("loaderid");
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {

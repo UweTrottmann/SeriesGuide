@@ -3,6 +3,8 @@ package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -11,7 +13,9 @@ import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.thetvdbapi.SearchResult;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -71,6 +75,37 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("index", getSupportActionBar().getSelectedNavigationIndex());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.activity_menu, menu);
+
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+        boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
+
+        MenuItem item = menu.findItem(R.id.menu_onlyfavorites);
+        item.setChecked(isOnlyFavorites);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_onlyfavorites: {
+                item.setChecked(!item.isChecked());
+                SharedPreferences prefs = PreferenceManager
+                        .getDefaultSharedPreferences(getApplicationContext());
+                prefs.edit().putBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, item.isChecked())
+                        .commit();
+                return true;
+            }
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
     }
 
     /**

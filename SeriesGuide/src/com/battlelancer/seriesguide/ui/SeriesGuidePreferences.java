@@ -78,6 +78,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_LAST_USED_SHARE_METHOD = "com.battlelancer.seriesguide.lastusedsharemethod";
 
+    public static final String KEY_ONLYFAVORITES = "com.battlelancer.seriesguide.onlyfavorites";
+
     public static final String SUPPORT_MAIL = "seriesguide@battlelancer.com";
 
     public static final String HELP_URL = "http://seriesguide.uwetrottmann.com/help";
