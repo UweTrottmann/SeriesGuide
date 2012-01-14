@@ -40,7 +40,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_PERSHOWUPDATEDATE = 22;
 
-    public static final int DATABASE_VERSION = DBVER_PERSHOWUPDATEDATE;
+    public static final int DBVER_HIDDENSHOWS = 23;
+
+    public static final int DATABASE_VERSION = DBVER_HIDDENSHOWS;
 
     public interface Tables {
         String SHOWS = "series";
@@ -76,7 +78,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + ShowsColumns.IMDBID + " TEXT DEFAULT ''," + ShowsColumns.FAVORITE
             + " INTEGER DEFAULT 0," + ShowsColumns.NEXTAIRDATETEXT + " TEXT DEFAULT ''" + ","
             + ShowsColumns.SYNCENABLED + " INTEGER DEFAULT 1" + "," + ShowsColumns.AIRTIME
-            + " TEXT DEFAULT ''," + ShowsColumns.LASTUPDATED + " INTEGER DEFAULT 0" + ");";
+            + " TEXT DEFAULT ''," + ShowsColumns.HIDDEN + " INTEGER DEFAULT 0,"
+            + ShowsColumns.LASTUPDATED + " INTEGER DEFAULT 0" + ");";
 
     private static final String CREATE_SEASONS_TABLE = "CREATE TABLE " + Tables.SEASONS + " ("
             + BaseColumns._ID + " INTEGER PRIMARY KEY," + SeasonsColumns.COMBINED + " INTEGER,"
@@ -157,6 +160,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 21:
                 upgradeToTwentyTwo(db);
                 version = 22;
+            case 22:
+                upgradeToTwentyThree(db);
+                version = 23;
         }
 
         // drop all tables if version is not right
@@ -174,10 +180,22 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
+     * Adds a column to the {@link Tables.SHOWS} table similar to the favorite
+     * boolean, but to allow hiding shows.
+     * 
+     * @param db
+     */
+    private void upgradeToTwentyThree(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.HIDDEN
+                + " INTEGER DEFAULT 0;");
+    }
+
+    /**
      * Add a column to store the last time a show has been updated to allow for
-     * more precise control over which shows should get updated.
-     * This is in conjunction with a 7 day limit when a show will get updated regardless
-     * if it has been marked as updated or not.
+     * more precise control over which shows should get updated. This is in
+     * conjunction with a 7 day limit when a show will get updated regardless if
+     * it has been marked as updated or not.
+     * 
      * @param db
      */
     private void upgradeToTwentyTwo(SQLiteDatabase db) {
