@@ -66,6 +66,10 @@
     <string name="context_unfavorite">Remove from favorites</string>
     <string name="favorited">Added to favorites</string>
     <string name="unfavorited">Removed from favorites</string>
+    <string name="context_hide">Hide</string>
+    <string name="context_unhide">Un-Hide</string>
+    <string name="hidden">Hidden show</string>
+    <string name="unhidden">Un-Hidden show</string>
 
     <!-- Updating -->
     <string name="update_notification">Updating your shows...</string>
@@ -295,6 +299,7 @@
         <item>All</item>
         <item>Favorites</item>
         <item>Unseen/Upcoming</item>
+        <item>Hidden</item>
     </string-array>
 
     <!-- strings for BETA release -->

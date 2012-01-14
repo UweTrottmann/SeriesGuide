@@ -175,6 +175,7 @@ public class UpcomingFragment extends ListFragment implements
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        // TODO check if changing the tz has any effect
         SimpleDateFormat pdtformat = Constants.theTVDBDateFormat;
         pdtformat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
         final Date date = new Date();
@@ -182,8 +183,8 @@ public class UpcomingFragment extends ListFragment implements
         final String query = getArguments().getString("query");
         final String sortOrder = getArguments().getString("sortorder");
         return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
-                UpcomingQuery.PROJECTION, query, new String[] {
-                    today
+                UpcomingQuery.PROJECTION, query + " AND " + Shows.HIDDEN + "=?", new String[] {
+                        today, "0"
                 }, sortOrder);
         // Episodes.FIRSTAIRED + ">=?"
     }
@@ -200,7 +201,7 @@ public class UpcomingFragment extends ListFragment implements
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
                 Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIRED, Shows.TITLE, Shows.AIRSTIME,
-                Shows.NETWORK, Shows.POSTER
+                Shows.NETWORK, Shows.POSTER, Shows.HIDDEN
         };
 
         // String sortOrder = Episodes.FIRSTAIRED + " ASC," + Shows.AIRSTIME +
@@ -226,6 +227,8 @@ public class UpcomingFragment extends ListFragment implements
         int SHOW_NETWORK = 8;
 
         int SHOW_POSTER = 9;
+
+        int SHOW_HIDDEN = 10;
     }
 
     private class SlowAdapter extends SimpleCursorAdapter {

@@ -23,9 +23,11 @@ import android.net.Uri;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.TimeZone;
 
 public class DBUtils {
 
@@ -97,45 +99,59 @@ public class DBUtils {
     }
 
     /**
-     * Returns all upcoming episodes together with their shows title, network,
-     * airtime and posterpath.
+     * Returns all episodes that air today or later. Using Pacific Time to
+     * determine today. Excludes shows that are hidden.
      * 
-     * @return Cursor including all upcoming episodes with show title, network,
-     *         airtime and posterpath.
+     * @return Cursor including episodes with show title, network, airtime and
+     *         posterpath.
      */
     public static Cursor getUpcomingEpisodes(Context context) {
-        Date date = new Date();
-        String today = Constants.theTVDBDateFormat.format(date);
+        // TODO check if changing the tz has any effect
+        SimpleDateFormat pdtformat = Constants.theTVDBDateFormat;
+        pdtformat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
+        final Date date = new Date();
+        final String today = pdtformat.format(date);
 
         String[] projection = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
                 Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIRED, Shows.TITLE, Shows.AIRSTIME,
-                Shows.NETWORK, Shows.POSTER
+                Shows.NETWORK, Shows.POSTER, Shows.HIDDEN
         };
         String sortOrder = Episodes.FIRSTAIRED + " ASC," + Shows.AIRSTIME + " ASC," + Shows.TITLE
                 + " ASC";
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW, projection,
-                Episodes.FIRSTAIRED + ">=?", new String[] {
-                    today
+                Episodes.FIRSTAIRED + ">=? AND " + Shows.HIDDEN + "=?", new String[] {
+                        today, "0"
                 }, sortOrder);
     }
 
+    /**
+     * Return all episodes that aired the day before and earlier. Using Pacific
+     * Time to determine today. Excludes shows that are hidden.
+     * 
+     * @param context
+     * @return Cursor including episodes with show title, network, airtime and
+     *         posterpath.
+     */
     public static Cursor getRecentEpisodes(Context context) {
-        Date date = new Date();
-        String today = Constants.theTVDBDateFormat.format(date);
+        // TODO check if changing the tz has any effect
+        SimpleDateFormat pdtformat = Constants.theTVDBDateFormat;
+        pdtformat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
+        final Date date = new Date();
+        final String today = pdtformat.format(date);
 
         String[] projection = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
                 Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIRED, Shows.TITLE, Shows.AIRSTIME,
-                Shows.NETWORK, Shows.POSTER
+                Shows.NETWORK, Shows.POSTER, Shows.HIDDEN
         };
         String sortOrder = Episodes.FIRSTAIRED + " DESC," + Shows.AIRSTIME + " ASC," + Shows.TITLE
                 + " ASC";
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW, projection,
-                Episodes.FIRSTAIRED + "<?", new String[] {
-                    today
+                Episodes.FIRSTAIRED + "<? AND " + Shows.HIDDEN + "=?", new String[] {
+                        today, "0"
                 }, sortOrder);
     }
 
