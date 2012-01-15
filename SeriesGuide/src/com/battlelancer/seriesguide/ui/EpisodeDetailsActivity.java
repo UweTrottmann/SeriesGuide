@@ -4,6 +4,7 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -16,7 +17,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -70,7 +70,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
 
             // set show poster as background
             String posterPath = episode.getString(1);
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ECLAIR_MR1) {
+            if (Utils.isFroyoOrHigher()) {
                 // using alpha seems not to work on eclair, so only set
                 // a background on froyo+ then
                 final ImageView background = (ImageView) findViewById(R.id.background);
@@ -155,37 +155,5 @@ public class EpisodeDetailsActivity extends BaseActivity {
             return Utils.getEpisodeNumber(mPrefs, episode.getSeason(), episode.getNumber());
         }
 
-    }
-
-    public class Episode {
-        private String mId;
-
-        private String mNumber;
-
-        private String mSeason;
-
-        public String getId() {
-            return mId;
-        }
-
-        public void setId(String mId) {
-            this.mId = mId;
-        }
-
-        public String getNumber() {
-            return mNumber;
-        }
-
-        public void setNumber(String mNumber) {
-            this.mNumber = mNumber;
-        }
-
-        public String getSeason() {
-            return mSeason;
-        }
-
-        public void setSeason(String mSeason) {
-            this.mSeason = mSeason;
-        }
     }
 }

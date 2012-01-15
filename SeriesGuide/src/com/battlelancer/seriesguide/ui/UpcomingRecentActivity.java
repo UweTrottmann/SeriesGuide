@@ -4,11 +4,11 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.thetvdbapi.SearchResult;
 
 import android.content.Context;
 import android.os.Bundle;

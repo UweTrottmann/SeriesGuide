@@ -2,24 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="horizontal" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="horizontal" >
+    <FrameLayout
+        android:id="@+id/fragment_episodes"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
-        <FrameLayout
-            android:id="@+id/fragment_episodes"
-            android:layout_width="0px"
+    <FrameLayout
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
+
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="1" />
+            android:scaleType="centerCrop" >
+        </ImageView>
 
-        <FrameLayout
-            android:id="@+id/fragment_details"
-            android:layout_width="0px"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_weight="1" />
-    </LinearLayout>
+            android:orientation="vertical" >
+
+            <com.viewpagerindicator.TitlePageIndicator
+                android:id="@+id/indicator"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dip" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>

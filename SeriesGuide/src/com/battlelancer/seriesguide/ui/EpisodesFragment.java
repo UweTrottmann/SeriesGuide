@@ -80,12 +80,11 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
 
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
-        View detailsFragment = getActivity().findViewById(R.id.fragment_details);
-        mDualPane = detailsFragment != null && detailsFragment.getVisibility() == View.VISIBLE;
+        View pagerFragment = getActivity().findViewById(R.id.pager);
+        mDualPane = pagerFragment != null && pagerFragment.getVisibility() == View.VISIBLE;
 
         if (mDualPane) {
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            loadFirstEpisode();
         }
 
         String[] from = new String[] {
@@ -156,46 +155,6 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
     }
 
     /**
-     * Load the first episode manually while the CursorLoader is still getting
-     * its data.
-     */
-    private void loadFirstEpisode() {
-        final Activity context = getActivity();
-        if (context != null) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    // Make sure no fragment is already shown
-                    EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getSupportFragmentManager()
-                            .findFragmentById(R.id.fragment_details);
-                    if (detailsFragment == null) {
-                        if (context != null) {
-                            // get episodes
-                            final Cursor episodes = context.getContentResolver().query(
-                                    Episodes.buildEpisodesOfSeasonWithShowUri(getSeasonId()),
-                                    new String[] {
-                                        Episodes._ID
-                                    }, null, null, sorting.query());
-                            // show the first one, if there are any
-                            if (episodes.getCount() > 0) {
-                                episodes.moveToFirst();
-                                final String episodeId = episodes.getString(0);
-                                context.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        showDetails(episodeId);
-                                    }
-                                });
-                            }
-                            episodes.close();
-                        }
-                    }
-                }
-            }).start();
-        }
-    }
-
-    /**
      * Convenience method for showDetails(episodeId) which looks up the episode
      * id in the list view at the given position.
      * 
@@ -215,22 +174,8 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
      */
     private void showDetails(String episodeId) {
         if (mDualPane) {
-            // Check if fragment is shown, create new if needed.
-            EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
-                    .findFragmentById(R.id.fragment_details);
-            if (detailsFragment == null
-                    || !detailsFragment.getEpisodeId().equalsIgnoreCase(episodeId)) {
-                // Make new fragment to show this selection.
-                detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true);
-
-                // Execute a transaction, replacing any existing
-                // fragment with this one inside the frame.
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_details, detailsFragment, "fragmentDetails");
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
-            }
-
+            EpisodesActivity activity = (EpisodesActivity) getActivity();
+            activity.onChangePage(episodeId);
         } else {
             Intent intent = new Intent();
             intent.setClass(getActivity(), EpisodeDetailsActivity.class);

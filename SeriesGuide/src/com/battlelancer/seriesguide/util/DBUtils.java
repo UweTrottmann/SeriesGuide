@@ -2,6 +2,7 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -10,7 +11,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.thetvdbapi.ImageCache;
-import com.battlelancer.thetvdbapi.Series;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;

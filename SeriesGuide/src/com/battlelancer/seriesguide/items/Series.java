@@ -1,5 +1,5 @@
 
-package com.battlelancer.thetvdbapi;
+package com.battlelancer.seriesguide.items;
 
 public class Series {
 

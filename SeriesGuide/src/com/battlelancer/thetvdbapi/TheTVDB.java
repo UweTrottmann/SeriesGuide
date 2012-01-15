@@ -2,6 +2,8 @@
 package com.battlelancer.thetvdbapi;
 
 import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
