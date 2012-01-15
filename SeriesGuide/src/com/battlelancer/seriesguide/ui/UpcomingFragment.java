@@ -211,12 +211,11 @@ public class UpcomingFragment extends ListFragment implements
         final String today = pdtformat.format(date);
         final String sortOrder = getArguments().getString("sortorder");
         String query = getArguments().getString("query");
-        query += " AND " + Shows.HIDDEN + "=?";
 
         boolean isOnlyFavorites = args.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
         String[] selectionArgs;
         if (isOnlyFavorites) {
-            query += " AND " + Shows.FAVORITE + "=?";
+            query += UpcomingQuery.SELECTION_ONLYFAVORITES;
             selectionArgs = new String[] {
                     today, "0", "1"
             };
@@ -238,16 +237,24 @@ public class UpcomingFragment extends ListFragment implements
         mAdapter.swapCursor(null);
     }
 
-    interface UpcomingQuery {
+    public interface UpcomingQuery {
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
                 Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIRED, Shows.TITLE, Shows.AIRSTIME,
-                Shows.NETWORK, Shows.POSTER, Shows.HIDDEN
+                Shows.NETWORK, Shows.POSTER
         };
 
-        // String sortOrder = Episodes.FIRSTAIRED + " ASC," + Shows.AIRSTIME +
-        // " ASC," + Shows.TITLE
-        // + " ASC";
+        String QUERY_UPCOMING = Episodes.FIRSTAIRED + ">=? AND " + Shows.HIDDEN + "=?";
+
+        String QUERY_RECENT = Episodes.FIRSTAIRED + "<? AND " + Shows.HIDDEN + "=?";
+
+        String SELECTION_ONLYFAVORITES = " AND " + Shows.FAVORITE + "=?";
+
+        String SORTING_UPCOMING = Episodes.FIRSTAIRED + " ASC," + Shows.AIRSTIME + " ASC,"
+                + Shows.TITLE + " ASC";
+
+        String SORTING_RECENT = Episodes.FIRSTAIRED + " DESC," + Shows.AIRSTIME + " ASC,"
+                + Shows.TITLE + " ASC";
 
         int _ID = 0;
 
@@ -268,8 +275,6 @@ public class UpcomingFragment extends ListFragment implements
         int SHOW_NETWORK = 8;
 
         int SHOW_POSTER = 9;
-
-        int SHOW_HIDDEN = 10;
     }
 
     private class SlowAdapter extends SimpleCursorAdapter {

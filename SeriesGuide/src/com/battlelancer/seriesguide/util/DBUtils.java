@@ -8,8 +8,8 @@ import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.content.ContentProviderOperation;
@@ -111,19 +111,24 @@ public class DBUtils {
         pdtformat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
         final Date date = new Date();
         final String today = pdtformat.format(date);
+        String query = UpcomingQuery.QUERY_UPCOMING;
 
-        String[] projection = new String[] {
-                Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
-                Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIRED, Shows.TITLE, Shows.AIRSTIME,
-                Shows.NETWORK, Shows.POSTER, Shows.HIDDEN
-        };
-        String sortOrder = Episodes.FIRSTAIRED + " ASC," + Shows.AIRSTIME + " ASC," + Shows.TITLE
-                + " ASC";
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
+        String[] selectionArgs;
+        if (isOnlyFavorites) {
+            query += UpcomingQuery.SELECTION_ONLYFAVORITES;
+            selectionArgs = new String[] {
+                    today, "0", "1"
+            };
+        } else {
+            selectionArgs = new String[] {
+                    today, "0"
+            };
+        }
 
-        return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW, projection,
-                Episodes.FIRSTAIRED + ">=? AND " + Shows.HIDDEN + "=?", new String[] {
-                        today, "0"
-                }, sortOrder);
+        return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
+                UpcomingQuery.PROJECTION, query, selectionArgs, UpcomingQuery.SORTING_UPCOMING);
     }
 
     /**
@@ -140,19 +145,24 @@ public class DBUtils {
         pdtformat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
         final Date date = new Date();
         final String today = pdtformat.format(date);
+        String query = UpcomingQuery.QUERY_RECENT;
 
-        String[] projection = new String[] {
-                Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
-                Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIRED, Shows.TITLE, Shows.AIRSTIME,
-                Shows.NETWORK, Shows.POSTER, Shows.HIDDEN
-        };
-        String sortOrder = Episodes.FIRSTAIRED + " DESC," + Shows.AIRSTIME + " ASC," + Shows.TITLE
-                + " ASC";
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
+        String[] selectionArgs;
+        if (isOnlyFavorites) {
+            query += UpcomingQuery.SELECTION_ONLYFAVORITES;
+            selectionArgs = new String[] {
+                    today, "0", "1"
+            };
+        } else {
+            selectionArgs = new String[] {
+                    today, "0"
+            };
+        }
 
-        return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW, projection,
-                Episodes.FIRSTAIRED + "<? AND " + Shows.HIDDEN + "=?", new String[] {
-                        today, "0"
-                }, sortOrder);
+        return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
+                UpcomingQuery.PROJECTION, query, selectionArgs, UpcomingQuery.SORTING_RECENT);
     }
 
     /**
