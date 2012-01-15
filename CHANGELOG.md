@@ -4,10 +4,22 @@ Changelog
 Version 2.5 *(in development)*
 --------------------------------
 
+Since 2.5beta/2.5.1beta (2012-01-13):
+ 
+* Add 'Watched all previously aired' option to episode list of a season.
+* Add show posters in Upcoming and Recent.
+* Fix to display correct episode title.
+
+In development:
+
+* Swipe between episodes on xlarge screens (10 inch tablets) or in landscape, too.
+* 'Only favorites' option for Upcoming/Recent, also respected by widget.
+* Hide shows, they will disappear from everywhere except the new 'Hidden' show filter.
 * Add menu button to quickly share with last used sharing option.
 * Display search term, title and search soft button in `SearchActivity`.
 * Where applicable the app icon takes you back to the show list. Same as long-pressing back from every screen.
 * Use progress indicators in `AddActivity`.
+* Friends layout more similar to Upcoming.
 * Use ActionBarSherlock 4.0 release.
 * Use ViewPagerIndicator 2.2.2 release.
 * Fixes for market reported crashes.
