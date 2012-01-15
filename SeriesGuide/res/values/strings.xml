@@ -70,6 +70,9 @@
     <string name="context_unhide">Un-Hide</string>
     <string name="hidden">Hidden show</string>
     <string name="unhidden">Un-Hidden show</string>
+    
+    <!-- Activity -->
+    <string name="only_favorites">Only favorites</string>
 
     <!-- Updating -->
     <string name="update_notification">Updating your shows...</string>

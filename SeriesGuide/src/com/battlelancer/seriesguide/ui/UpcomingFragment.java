@@ -13,8 +13,11 @@ import com.battlelancer.seriesguide.util.Utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
@@ -79,9 +82,25 @@ public class UpcomingFragment extends ListFragment implements
 
         setupAdapter();
 
-        getActivity().getSupportLoaderManager().initLoader(getArguments().getInt("loaderid"), null,
-                this);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, isOnlyFavorites);
+        getActivity().getSupportLoaderManager().initLoader(getLoaderId(), bundle, this);
+
+        prefs.registerOnSharedPreferenceChangeListener(mPrefListener);
     }
+
+    private final OnSharedPreferenceChangeListener mPrefListener = new OnSharedPreferenceChangeListener() {
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (key.equals(SeriesGuidePreferences.KEY_ONLYFAVORITES)) {
+                boolean isOnlyFavorites = sharedPreferences.getBoolean(key, false);
+                onRequery(isOnlyFavorites);
+            }
+        }
+    };
 
     @Override
     public void onStart() {
@@ -174,19 +193,41 @@ public class UpcomingFragment extends ListFragment implements
         }
     }
 
+    public void onRequery(boolean isOnlyFavorites) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, isOnlyFavorites);
+        getLoaderManager().restartLoader(getLoaderId(), bundle, this);
+    }
+
+    private int getLoaderId() {
+        return getArguments().getInt("loaderid");
+    }
+
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         // TODO check if changing the tz has any effect
         SimpleDateFormat pdtformat = Constants.theTVDBDateFormat;
         pdtformat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
         final Date date = new Date();
         final String today = pdtformat.format(date);
-        final String query = getArguments().getString("query");
         final String sortOrder = getArguments().getString("sortorder");
+        String query = getArguments().getString("query");
+        query += " AND " + Shows.HIDDEN + "=?";
+
+        boolean isOnlyFavorites = args.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
+        String[] selectionArgs;
+        if (isOnlyFavorites) {
+            query += " AND " + Shows.FAVORITE + "=?";
+            selectionArgs = new String[] {
+                    today, "0", "1"
+            };
+        } else {
+            selectionArgs = new String[] {
+                    today, "0"
+            };
+        }
+
         return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
-                UpcomingQuery.PROJECTION, query + " AND " + Shows.HIDDEN + "=?", new String[] {
-                        today, "0"
-                }, sortOrder);
-        // Episodes.FIRSTAIRED + ">=?"
+                UpcomingQuery.PROJECTION, query, selectionArgs, sortOrder);
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
