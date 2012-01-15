@@ -14,6 +14,7 @@ import com.battlelancer.seriesguide.util.Utils;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -86,7 +87,20 @@ public class UpcomingFragment extends ListFragment implements
         Bundle bundle = new Bundle();
         bundle.putBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, isOnlyFavorites);
         getActivity().getSupportLoaderManager().initLoader(getLoaderId(), bundle, this);
+
+        prefs.registerOnSharedPreferenceChangeListener(mPrefListener);
     }
+
+    private final OnSharedPreferenceChangeListener mPrefListener = new OnSharedPreferenceChangeListener() {
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (key.equals(SeriesGuidePreferences.KEY_ONLYFAVORITES)) {
+                boolean isOnlyFavorites = sharedPreferences.getBoolean(key, false);
+                onRequery(isOnlyFavorites);
+            }
+        }
+    };
 
     @Override
     public void onStart() {
