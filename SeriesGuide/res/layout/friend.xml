@@ -1,61 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/friend_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/body_padding"
-    android:id="@+id/friend_root" >
+    android:layout_height="wrap_content"
+    android:padding="@dimen/body_padding" >
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="@dimen/body_padding"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/icon" />
 
     <LinearLayout
         android:id="@+id/userstrip"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <ImageView
-            android:id="@+id/avatar"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/icon" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/avatar" >
 
         <TextView
             android:id="@+id/name"
+            style="@style/Airdata"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/imageView1"
             android:layout_weight="1"
-            android:text="JakeWharton"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:text="Placeholder" />
 
         <TextView
             android:id="@+id/timestamp"
+            style="@style/Airdata"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="Fri 23:47"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:text="XXX XX:XX" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/show"
+        style="@style/ListHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_below="@+id/userstrip"
-        android:text="Caprica"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_toRightOf="@+id/avatar"
+        android:text="Placeholder" />
 
     <TextView
         android:id="@+id/episode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_below="@+id/show"
-        android:text="1x05 There is Another Sky"
+        android:layout_toRightOf="@+id/avatar"
+        android:text="0x00 Placeholder holding place"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

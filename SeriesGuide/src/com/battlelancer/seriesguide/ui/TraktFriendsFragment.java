@@ -60,6 +60,8 @@ public class TraktFriendsFragment extends ListFragment implements
 
         mAdapter = new TraktFriendsAdapter(getActivity());
         setListAdapter(mAdapter);
+        getListView().setDivider(null);
+        getListView().setSelector(R.drawable.list_selector_holo_dark);
 
         setListShown(false);
 
