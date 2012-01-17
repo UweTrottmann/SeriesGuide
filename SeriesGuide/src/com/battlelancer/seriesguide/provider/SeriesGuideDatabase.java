@@ -194,6 +194,44 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     private void upgradeToTwentyFour(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN " + EpisodesColumns.FIRSTAIREDMS
                 + " INTEGER DEFAULT -1;");
+
+        // populate the new column from existing data
+        final Cursor shows = db.query(Tables.SHOWS, new String[] {
+                Shows._ID, Shows.AIRSTIME
+        }, null, null, null, null, null);
+
+        while (shows.moveToNext()) {
+            final String showId = shows.getString(0);
+            final long airtime = shows.getLong(1);
+
+            final Cursor episodes = db.query(Tables.EPISODES, new String[] {
+                    Episodes._ID, Episodes.FIRSTAIRED
+            }, Shows.REF_SHOW_ID + "=?", new String[] {
+                showId
+            }, null, null, null);
+
+            db.beginTransaction();
+            try {
+                ContentValues values = new ContentValues();
+                while (episodes.moveToNext()) {
+                    String firstAired = episodes.getString(1);
+                    long episodeAirtime = Utils.buildEpisodeAirtime(firstAired, airtime);
+
+                    values.put(Episodes.FIRSTAIREDMS, episodeAirtime);
+                    db.update(Tables.EPISODES, values, Episodes._ID + "=?", new String[] {
+                        episodes.getString(0)
+                    });
+                    values.clear();
+                }
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+
+            episodes.close();
+        }
+
+        shows.close();
     }
 
     /**
