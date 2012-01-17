@@ -108,6 +108,8 @@ public class SeriesContract {
         String OVERVIEW = "episodedescription";
 
         String TITLE = "episodetitle";
+        
+        String FIRSTAIREDMS = "episode_firstairedms";
     }
 
     interface EpisodeSearchColumns {

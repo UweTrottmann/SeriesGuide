@@ -320,24 +320,27 @@ public class Utils {
         SimpleDateFormat tvdbDateFormat = Constants.theTVDBDateFormat;
         tvdbDateFormat.setTimeZone(pacific);
 
+        // TODO remove excess log output
         try {
 
             Date day = tvdbDateFormat.parse(tvdbDateString);
 
             Calendar dayCal = Calendar.getInstance(pacific);
-            Log.d(TAG, "dayCal " + dayCal.toString());
             dayCal.setTime(day);
             Log.d(TAG, "dayCal " + dayCal.toString());
 
-            Calendar timeCal = Calendar.getInstance(pacific);
-            Log.d(TAG, "timeCal " + timeCal.toString());
-            timeCal.setTimeInMillis(airtime);
-            Log.d(TAG, "timeCal " + timeCal.toString());
+            // set an airtime if we have one (may not be the case for ended
+            // shows)
+            if (airtime != -1) {
+                Calendar timeCal = Calendar.getInstance(pacific);
+                timeCal.setTimeInMillis(airtime);
+                Log.d(TAG, "timeCal " + timeCal.toString());
 
-            dayCal.set(Calendar.HOUR_OF_DAY, timeCal.get(Calendar.HOUR_OF_DAY));
-            Log.d(TAG, "set hour " + dayCal.toString());
-            dayCal.set(Calendar.MINUTE, timeCal.get(Calendar.MINUTE));
-            Log.d(TAG, "set minute " + dayCal.toString());
+                dayCal.set(Calendar.HOUR_OF_DAY, timeCal.get(Calendar.HOUR_OF_DAY));
+                Log.d(TAG, "set hour " + dayCal.toString());
+                dayCal.set(Calendar.MINUTE, timeCal.get(Calendar.MINUTE));
+                Log.d(TAG, "set minute " + dayCal.toString());
+            }
 
             long episodeAirtime = dayCal.getTimeInMillis();
             Log.d(TAG, String.valueOf(episodeAirtime));
@@ -349,7 +352,7 @@ public class Utils {
             e.printStackTrace();
         }
 
-        return 0;
+        return -1;
     }
 
     /**

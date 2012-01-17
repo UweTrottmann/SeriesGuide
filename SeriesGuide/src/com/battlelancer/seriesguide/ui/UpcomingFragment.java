@@ -1,7 +1,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -38,9 +37,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+import java.util.Calendar;
 
 public class UpcomingFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnScrollListener {
@@ -204,11 +201,11 @@ public class UpcomingFragment extends ListFragment implements
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        // TODO check if changing the tz has any effect
-        SimpleDateFormat pdtformat = Constants.theTVDBDateFormat;
-        pdtformat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
-        final Date date = new Date();
-        final String today = pdtformat.format(date);
+        Calendar cal = Calendar.getInstance();
+        // go an hour back in time, so episodes move to recent one hour late
+        cal.add(Calendar.HOUR_OF_DAY, -1);
+        final String recentThreshold = String.valueOf(cal.getTimeInMillis());
+
         final String sortOrder = getArguments().getString("sortorder");
         String query = getArguments().getString("query");
 
@@ -217,11 +214,11 @@ public class UpcomingFragment extends ListFragment implements
         if (isOnlyFavorites) {
             query += UpcomingQuery.SELECTION_ONLYFAVORITES;
             selectionArgs = new String[] {
-                    today, "0", "1"
+                    recentThreshold, "0", "1"
             };
         } else {
             selectionArgs = new String[] {
-                    today, "0"
+                    recentThreshold, "0"
             };
         }
 
@@ -244,17 +241,15 @@ public class UpcomingFragment extends ListFragment implements
                 Shows.NETWORK, Shows.POSTER
         };
 
-        String QUERY_UPCOMING = Episodes.FIRSTAIRED + ">=? AND " + Shows.HIDDEN + "=?";
+        String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND " + Shows.HIDDEN + "=?";
 
-        String QUERY_RECENT = Episodes.FIRSTAIRED + "<? AND " + Shows.HIDDEN + "=?";
+        String QUERY_RECENT = Episodes.FIRSTAIREDMS + "<? AND " + Shows.HIDDEN + "=?";
 
         String SELECTION_ONLYFAVORITES = " AND " + Shows.FAVORITE + "=?";
 
-        String SORTING_UPCOMING = Episodes.FIRSTAIRED + " ASC," + Shows.AIRSTIME + " ASC,"
-                + Shows.TITLE + " ASC";
+        String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC";
 
-        String SORTING_RECENT = Episodes.FIRSTAIRED + " DESC," + Shows.AIRSTIME + " ASC,"
-                + Shows.TITLE + " ASC";
+        String SORTING_RECENT = Episodes.FIRSTAIREDMS + " DESC," + Shows.TITLE + " ASC";
 
         int _ID = 0;
 
