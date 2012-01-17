@@ -238,7 +238,7 @@ public class UpcomingFragment extends ListFragment implements
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
                 Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIRED, Shows.TITLE, Shows.AIRSTIME,
-                Shows.NETWORK, Shows.POSTER
+                Shows.NETWORK, Shows.POSTER, Episodes.FIRSTAIREDMS
         };
 
         String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND " + Shows.HIDDEN + "=?";
@@ -270,6 +270,8 @@ public class UpcomingFragment extends ListFragment implements
         int SHOW_NETWORK = 8;
 
         int SHOW_POSTER = 9;
+
+        int FIRSTAIREDMS = 10;
     }
 
     private class SlowAdapter extends SimpleCursorAdapter {
@@ -346,24 +348,22 @@ public class UpcomingFragment extends ListFragment implements
             viewHolder.number.setText(episodeString);
 
             // airdate
-            String airDate = mCursor.getString(UpcomingQuery.FIRSTAIRED);
-            if (airDate.length() != 0) {
-                viewHolder.airdate.setText(Utils.parseDateToLocalRelative(airDate,
-                        mCursor.getLong(UpcomingQuery.SHOW_AIRSTIME), getActivity()));
+            long airtime = mCursor.getLong(UpcomingQuery.FIRSTAIREDMS);
+            if (airtime != -1) {
+                viewHolder.airdate.setText(Utils.formatToRelativeTimeSpan(airtime, mContext));
             } else {
                 viewHolder.airdate.setText("");
             }
 
             // network
-            // add airtime
             String network = "";
-            long airtime = mCursor.getLong(UpcomingQuery.SHOW_AIRSTIME);
-            String value = Utils.parseMillisecondsToTime(airtime, null, getActivity())[0];
-            if (value.length() != 0) {
-                network += value + " ";
+            // add airtime
+            if (airtime != -1) {
+                String[] timeAndDay = Utils.formatToTimeAndDay(airtime, mContext);
+                network += timeAndDay[1] + " " + timeAndDay[0] + " ";
             }
             // add network
-            value = mCursor.getString(UpcomingQuery.SHOW_NETWORK);
+            String value = mCursor.getString(UpcomingQuery.SHOW_NETWORK);
             if (value.length() != 0) {
                 network += getString(R.string.show_network) + " " + value;
             }

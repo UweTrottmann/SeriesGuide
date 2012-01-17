@@ -90,7 +90,7 @@ public class TheTVDB {
 
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
         batch.add(DBUtils.buildShowOp(show, context, !isShowExists));
-        batch.addAll(importShowEpisodes(showId, language, context));
+        batch.addAll(importShowEpisodes(showId, show.getAirsTime(), language, context));
 
         try {
             context.getContentResolver().applyBatch(SeriesContract.CONTENT_AUTHORITY, batch);
@@ -120,7 +120,7 @@ public class TheTVDB {
 
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
         batch.add(DBUtils.buildShowOp(show, context, false));
-        batch.addAll(importShowEpisodes(showId, language, context));
+        batch.addAll(importShowEpisodes(showId, show.getAirsTime(), language, context));
 
         try {
             context.getContentResolver().applyBatch(SeriesContract.CONTENT_AUTHORITY, batch);
@@ -329,18 +329,17 @@ public class TheTVDB {
     }
 
     public static ArrayList<ContentProviderOperation> importShowEpisodes(String seriesid,
-            String language, Context context) throws SAXException {
+            long showAirtime, String language, Context context) throws SAXException {
         String url = xmlMirror + Constants.API_KEY + "/series/" + seriesid + "/all/"
                 + (language != null ? language + ".zip" : "en.zip");
 
-        return parseEpisodes(url, seriesid, context);
+        return parseEpisodes(url, seriesid, showAirtime, context);
     }
 
     public static ArrayList<ContentProviderOperation> parseEpisodes(String url, String showId,
-            Context context) throws SAXException {
+            final long showAirtime, Context context) throws SAXException {
         RootElement root = new RootElement("Data");
         Element episode = root.getChild("Episode");
-        final long showAirtime = DBUtils.getShow(context, showId).getAirsTime();
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
         final HashSet<Long> episodeIDs = DBUtils.getEpisodeIDsForShow(showId, context);
         final HashSet<Long> existingSeasonIDs = DBUtils.getSeasonIDsForShow(showId, context);

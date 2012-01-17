@@ -21,7 +21,6 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -44,8 +43,6 @@ public class Utils {
     private static ServiceManager sServiceManagerWithAuthInstance;
 
     private static ServiceManager sServiceManagerInstance;
-
-    private static final String TAG = "Utils";
 
     /**
      * Returns the Calendar constant (e.g. <code>Calendar.SUNDAY</code>) for a
@@ -128,6 +125,46 @@ public class Utils {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static String formatToRelativeTimeSpan(long airtime, Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean useUserTimeZone = prefs.getBoolean(SeriesGuidePreferences.KEY_USE_MY_TIMEZONE,
+                false);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(airtime);
+
+        if (!useUserTimeZone) {
+            // assume we are US located
+            Calendar real = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
+            real.setTimeInMillis(airtime);
+
+            // and airtime is not in LA but local time
+            cal.set(real.get(Calendar.YEAR), real.get(Calendar.MONTH),
+                    real.get(Calendar.DAY_OF_MONTH), real.get(Calendar.HOUR_OF_DAY),
+                    real.get(Calendar.MINUTE), real.get(Calendar.SECOND));
+            cal.set(Calendar.MILLISECOND, real.get(Calendar.MILLISECOND));
+
+            airtime = cal.getTimeInMillis();
+        }
+
+        // add user-set hour offset
+        int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
+        if (offset != 0) {
+            cal.add(Calendar.HOUR_OF_DAY, offset);
+        }
+
+        // check for US Central and automagically subtract one hour
+        if (TimeZone.getDefault().getRawOffset() == TimeZone.getTimeZone("US/Central")
+                .getRawOffset()) {
+            cal.add(Calendar.HOUR_OF_DAY, -1);
+        }
+
+        String timeString = DateUtils
+                .getRelativeTimeSpanString(cal.getTimeInMillis(), System.currentTimeMillis(),
+                        DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
+        return timeString;
     }
 
     public static String parseDateToLocal(String tvdbDateString, long airtime, Context ctx) {
@@ -254,6 +291,7 @@ public class Utils {
             cal.set(Calendar.HOUR_OF_DAY, time.getHours());
             cal.set(Calendar.MINUTE, time.getMinutes());
             cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
             return cal.getTimeInMillis();
         } else {
             return -1;
@@ -315,37 +353,70 @@ public class Utils {
         };
     }
 
+    public static String[] formatToTimeAndDay(long airtime, Context context) {
+        final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
+        final SimpleDateFormat dayFormat = new SimpleDateFormat("E");
+        final TimeZone pacificTimeZone = TimeZone.getTimeZone("America/Los_Angeles");
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final boolean useUserTimeZone = prefs.getBoolean(
+                SeriesGuidePreferences.KEY_USE_MY_TIMEZONE, false);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(airtime);
+
+        // add user-set hour offset
+        int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
+        if (offset != 0) {
+            cal.add(Calendar.HOUR_OF_DAY, offset);
+        }
+        // check for US Central and automagically subtract one hour
+        if (TimeZone.getDefault().getRawOffset() == TimeZone.getTimeZone("US/Central")
+                .getRawOffset()) {
+            cal.add(Calendar.HOUR_OF_DAY, -1);
+        }
+
+        if (useUserTimeZone) {
+            timeFormat.setTimeZone(TimeZone.getDefault());
+            dayFormat.setTimeZone(TimeZone.getDefault());
+        } else {
+            timeFormat.setTimeZone(pacificTimeZone);
+            dayFormat.setTimeZone(pacificTimeZone);
+        }
+
+        Date airDate = cal.getTime();
+        String day = dayFormat.format(airDate);
+        String time = timeFormat.format(airDate);
+
+        return new String[] {
+                time, day
+        };
+    }
+
     public static long buildEpisodeAirtime(String tvdbDateString, long airtime) {
         TimeZone pacific = TimeZone.getTimeZone("America/Los_Angeles");
         SimpleDateFormat tvdbDateFormat = Constants.theTVDBDateFormat;
         tvdbDateFormat.setTimeZone(pacific);
 
-        // TODO remove excess log output
         try {
 
             Date day = tvdbDateFormat.parse(tvdbDateString);
 
             Calendar dayCal = Calendar.getInstance(pacific);
             dayCal.setTime(day);
-            Log.d(TAG, "dayCal " + dayCal.toString());
 
             // set an airtime if we have one (may not be the case for ended
             // shows)
             if (airtime != -1) {
                 Calendar timeCal = Calendar.getInstance(pacific);
                 timeCal.setTimeInMillis(airtime);
-                Log.d(TAG, "timeCal " + timeCal.toString());
 
                 dayCal.set(Calendar.HOUR_OF_DAY, timeCal.get(Calendar.HOUR_OF_DAY));
-                Log.d(TAG, "set hour " + dayCal.toString());
                 dayCal.set(Calendar.MINUTE, timeCal.get(Calendar.MINUTE));
-                Log.d(TAG, "set minute " + dayCal.toString());
+                dayCal.set(Calendar.SECOND, 0);
+                dayCal.set(Calendar.MILLISECOND, 0);
             }
 
             long episodeAirtime = dayCal.getTimeInMillis();
-            Log.d(TAG, String.valueOf(episodeAirtime));
-            Date date = new Date(episodeAirtime);
-            Log.d(TAG, date.toString()); // uses current tz
             return episodeAirtime;
 
         } catch (ParseException e) {

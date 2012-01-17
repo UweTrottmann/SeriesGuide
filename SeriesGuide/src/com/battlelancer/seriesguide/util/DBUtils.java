@@ -23,11 +23,10 @@ import android.net.Uri;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.TimeZone;
 
 public class DBUtils {
 
@@ -106,11 +105,10 @@ public class DBUtils {
      *         posterpath.
      */
     public static Cursor getUpcomingEpisodes(Context context) {
-        // TODO check if changing the tz has any effect
-        SimpleDateFormat pdtformat = Constants.theTVDBDateFormat;
-        pdtformat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
-        final Date date = new Date();
-        final String today = pdtformat.format(date);
+        Calendar cal = Calendar.getInstance();
+        // go an hour back in time, so episodes move to recent one hour late
+        cal.add(Calendar.HOUR_OF_DAY, -1);
+        final String recentThreshold = String.valueOf(cal.getTimeInMillis());
         String query = UpcomingQuery.QUERY_UPCOMING;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -119,11 +117,11 @@ public class DBUtils {
         if (isOnlyFavorites) {
             query += UpcomingQuery.SELECTION_ONLYFAVORITES;
             selectionArgs = new String[] {
-                    today, "0", "1"
+                    recentThreshold, "0", "1"
             };
         } else {
             selectionArgs = new String[] {
-                    today, "0"
+                    recentThreshold, "0"
             };
         }
 
@@ -140,11 +138,10 @@ public class DBUtils {
      *         posterpath.
      */
     public static Cursor getRecentEpisodes(Context context) {
-        // TODO check if changing the tz has any effect
-        SimpleDateFormat pdtformat = Constants.theTVDBDateFormat;
-        pdtformat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
-        final Date date = new Date();
-        final String today = pdtformat.format(date);
+        Calendar cal = Calendar.getInstance();
+        // go an hour back in time, so episodes move to recent one hour late
+        cal.add(Calendar.HOUR_OF_DAY, -1);
+        final String recentThreshold = String.valueOf(cal.getTimeInMillis());
         String query = UpcomingQuery.QUERY_RECENT;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -153,11 +150,11 @@ public class DBUtils {
         if (isOnlyFavorites) {
             query += UpcomingQuery.SELECTION_ONLYFAVORITES;
             selectionArgs = new String[] {
-                    today, "0", "1"
+                    recentThreshold, "0", "1"
             };
         } else {
             selectionArgs = new String[] {
-                    today, "0"
+                    recentThreshold, "0"
             };
         }
 
