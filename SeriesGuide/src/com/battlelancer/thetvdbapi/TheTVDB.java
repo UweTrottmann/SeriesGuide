@@ -336,13 +336,14 @@ public class TheTVDB {
         return parseEpisodes(url, seriesid, context);
     }
 
-    public static ArrayList<ContentProviderOperation> parseEpisodes(String url, String seriesid,
+    public static ArrayList<ContentProviderOperation> parseEpisodes(String url, String showId,
             Context context) throws SAXException {
         RootElement root = new RootElement("Data");
         Element episode = root.getChild("Episode");
+        final long showAirtime = DBUtils.getShow(context, showId).getAirsTime();
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
-        final HashSet<Long> episodeIDs = DBUtils.getEpisodeIDsForShow(seriesid, context);
-        final HashSet<Long> existingSeasonIDs = DBUtils.getSeasonIDsForShow(seriesid, context);
+        final HashSet<Long> episodeIDs = DBUtils.getEpisodeIDsForShow(showId, context);
+        final HashSet<Long> existingSeasonIDs = DBUtils.getSeasonIDsForShow(showId, context);
         final HashSet<Long> updatedSeasonIDs = new HashSet<Long>();
         final ContentValues values = new ContentValues();
 
@@ -386,6 +387,7 @@ public class TheTVDB {
                 });
         episode.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
+                Utils.buildEpisodeAirtime(body, showAirtime);
                 values.put(Episodes.FIRSTAIRED, body.trim());
             }
         });

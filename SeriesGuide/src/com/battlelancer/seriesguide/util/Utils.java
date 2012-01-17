@@ -21,6 +21,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -43,6 +44,8 @@ public class Utils {
     private static ServiceManager sServiceManagerWithAuthInstance;
 
     private static ServiceManager sServiceManagerInstance;
+
+    private static final String TAG = "Utils";
 
     /**
      * Returns the Calendar constant (e.g. <code>Calendar.SUNDAY</code>) for a
@@ -310,6 +313,43 @@ public class Utils {
         return new String[] {
                 timeFormat.format(date), day
         };
+    }
+
+    public static long buildEpisodeAirtime(String tvdbDateString, long airtime) {
+        TimeZone pacific = TimeZone.getTimeZone("America/Los_Angeles");
+        SimpleDateFormat tvdbDateFormat = Constants.theTVDBDateFormat;
+        tvdbDateFormat.setTimeZone(pacific);
+
+        try {
+
+            Date day = tvdbDateFormat.parse(tvdbDateString);
+
+            Calendar dayCal = Calendar.getInstance(pacific);
+            Log.d(TAG, "dayCal " + dayCal.toString());
+            dayCal.setTime(day);
+            Log.d(TAG, "dayCal " + dayCal.toString());
+
+            Calendar timeCal = Calendar.getInstance(pacific);
+            Log.d(TAG, "timeCal " + timeCal.toString());
+            timeCal.setTimeInMillis(airtime);
+            Log.d(TAG, "timeCal " + timeCal.toString());
+
+            dayCal.set(Calendar.HOUR_OF_DAY, timeCal.get(Calendar.HOUR_OF_DAY));
+            Log.d(TAG, "set hour " + dayCal.toString());
+            dayCal.set(Calendar.MINUTE, timeCal.get(Calendar.MINUTE));
+            Log.d(TAG, "set minute " + dayCal.toString());
+
+            long episodeAirtime = dayCal.getTimeInMillis();
+            Log.d(TAG, String.valueOf(episodeAirtime));
+            Date date = new Date(episodeAirtime);
+            Log.d(TAG, date.toString()); // uses current tz
+            return episodeAirtime;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 
     /**
@@ -621,7 +661,7 @@ public class Utils {
         if (path.length() != 0) {
             bitmap = ImageCache.getInstance(context).getThumb(path, isBusy);
         }
-    
+
         if (bitmap != null) {
             poster.setImageBitmap(bitmap);
             poster.setTag(null);
