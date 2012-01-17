@@ -209,9 +209,10 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         super.onStart();
         AnalyticsUtils.getInstance(this).trackPageView("/Shows");
 
-        // auto-update
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
+
+        // auto-update
         final boolean isAutoUpdateEnabled = prefs.getBoolean(SeriesGuidePreferences.KEY_AUTOUPDATE,
                 true);
         if (isAutoUpdateEnabled && !TaskManager.getInstance(this).isUpdateTaskRunning(false)) {
@@ -224,15 +225,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 // allow auto-update only on allowed connection
                 final boolean isAutoUpdateWlanOnly = prefs.getBoolean(
                         SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
-                boolean isOnAllowedConnection = true;
-                if (isAutoUpdateWlanOnly) {
-                    // abort if we are not on WiFi
-                    if (!Utils.isWifiConnected(this)) {
-                        isOnAllowedConnection = false;
-                    }
-                }
-
-                if (isOnAllowedConnection) {
+                if (!isAutoUpdateWlanOnly || Utils.isWifiConnected(this)) {
                     performUpdateTask(false, null);
                 }
             }
@@ -768,14 +761,16 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         updateSorting(prefs);
 
         // between-version upgrade code
-        int lastVersion = prefs.getInt(SeriesGuidePreferences.KEY_VERSION, -1);
+        final int lastVersion = prefs.getInt(SeriesGuidePreferences.KEY_VERSION, -1);
         try {
-            int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
+            final int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
                     PackageManager.GET_META_DATA).versionCode;
             if (currentVersion > lastVersion) {
+                Editor editor = prefs.edit();
+
                 if (lastVersion < VER_TRAKT_SEC_CHANGES) {
-                    prefs.edit().putString(SeriesGuidePreferences.KEY_TRAKTPWD, null).commit();
-                    prefs.edit().putString(SeriesGuidePreferences.KEY_SECURE, null).commit();
+                    editor.putString(SeriesGuidePreferences.KEY_TRAKTPWD, null);
+                    editor.putString(SeriesGuidePreferences.KEY_SECURE, null);
                 }
 
                 // // BETA warning dialog switch
@@ -783,8 +778,11 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 // showDialog(WHATS_NEW_DIALOG);
 
                 // set this as lastVersion
-                prefs.edit().putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion).commit();
+                editor.putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion);
+
+                editor.commit();
             }
+
         } catch (NameNotFoundException e) {
             // this should never happen
         }
