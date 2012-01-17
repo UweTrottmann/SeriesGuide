@@ -457,11 +457,11 @@ public class DBUtils {
      */
     public static ContentProviderOperation buildEpisodeOp(ContentValues values, boolean isNew) {
         ContentProviderOperation op;
-        final String episodeId = values.getAsString(Episodes._ID);
         if (isNew) {
             op = ContentProviderOperation.newInsert(Episodes.CONTENT_URI).withValues(values)
                     .build();
         } else {
+            final String episodeId = values.getAsString(Episodes._ID);
             op = ContentProviderOperation.newUpdate(Episodes.buildEpisodeUri(episodeId))
                     .withValues(values).build();
         }
