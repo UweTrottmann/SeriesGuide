@@ -261,7 +261,6 @@ public class TheTVDB {
         show.getChild("Airs_Time").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 currentShow.setAirsTime(Utils.parseTimeToMilliseconds(body.trim()));
-                currentShow.setAirTime(body.trim());
             }
         });
         show.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {

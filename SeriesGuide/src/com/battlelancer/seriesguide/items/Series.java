@@ -27,8 +27,6 @@ public class Series {
 
     private long airsTime;
 
-    private String airTime;
-
     private String contentRating;
 
     private String genres;
@@ -228,14 +226,6 @@ public class Series {
 
     public long getNextEpisode() {
         return nextEpisode;
-    }
-
-    public void setAirTime(String airTime) {
-        this.airTime = airTime;
-    }
-
-    public String getAirTime() {
-        return airTime;
     }
 
 }

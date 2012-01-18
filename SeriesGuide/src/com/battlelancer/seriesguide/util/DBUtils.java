@@ -327,7 +327,6 @@ public class DBUtils {
         values.put(Shows.ACTORS, show.getActors());
         values.put(Shows.AIRSDAYOFWEEK, show.getAirsDayOfWeek());
         values.put(Shows.AIRSTIME, show.getAirsTime());
-        values.put(Shows.AIRTIME, show.getAirTime());
         values.put(Shows.FIRSTAIRED, show.getFirstAired());
         values.put(Shows.GENRES, show.getGenres());
         values.put(Shows.NETWORK, show.getNetwork());
