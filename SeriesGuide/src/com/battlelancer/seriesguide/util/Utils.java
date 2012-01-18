@@ -85,7 +85,7 @@ public class Utils {
 
     /**
      * Parses a TVDB date string and airtime in milliseconds to a relative
-     * timestring and day shortcode. An array is returned which holds the
+     * timestring and day shortcode. An string is returned which holds the
      * timestring and the day shortcode (in this order).
      * 
      * @param tvdbDateString
@@ -127,36 +127,6 @@ public class Utils {
             e.printStackTrace();
         }
         return "";
-    }
-
-    public static String formatToRelativeTimeSpan(long airtime, Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        boolean useUserTimeZone = prefs.getBoolean(SeriesGuidePreferences.KEY_USE_MY_TIMEZONE,
-                false);
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(airtime);
-
-        if (!useUserTimeZone) {
-            // assume we are US located
-            Calendar real = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
-            real.setTimeInMillis(airtime);
-
-            // and airtime is not in LA but local time
-            cal.set(real.get(Calendar.YEAR), real.get(Calendar.MONTH),
-                    real.get(Calendar.DAY_OF_MONTH), real.get(Calendar.HOUR_OF_DAY),
-                    real.get(Calendar.MINUTE), real.get(Calendar.SECOND));
-            cal.set(Calendar.MILLISECOND, real.get(Calendar.MILLISECOND));
-
-            airtime = cal.getTimeInMillis();
-        }
-
-        addOffsets(prefs, cal);
-
-        String timeString = DateUtils
-                .getRelativeTimeSpanString(cal.getTimeInMillis(), System.currentTimeMillis(),
-                        DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
-        return timeString;
     }
 
     public static String parseDateToLocal(String tvdbDateString, long airtime, Context ctx) {
@@ -315,7 +285,7 @@ public class Utils {
             }
         }
 
-        addOffsets(prefs, cal);
+        setOffsets(prefs, cal);
 
         // create time string
         final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
@@ -343,44 +313,100 @@ public class Utils {
         };
     }
 
+    /**
+     * Return an array with absolute time [0], day [1] and relative time [2] of
+     * the given millisecond time. Respects user offsets and 'Use my time zone'
+     * setting.
+     * 
+     * @param airtime
+     * @param context
+     * @return
+     */
     public static String[] formatToTimeAndDay(long airtime, Context context) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        Calendar cal = getAirtimeCalendar(airtime, prefs);
+
+        // TODO introduce flags to exclude some values (speedier?)
         final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
         final SimpleDateFormat dayFormat = new SimpleDateFormat("E");
-        final TimeZone pacificTimeZone = TimeZone.getTimeZone("America/Los_Angeles");
+        Date airDate = cal.getTime();
+        String day = dayFormat.format(airDate);
+        String absoluteTime = timeFormat.format(airDate);
+
+        String relativeTime = DateUtils
+                .getRelativeTimeSpanString(cal.getTimeInMillis(), System.currentTimeMillis(),
+                        DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
+
+        return new String[] {
+                absoluteTime, day, relativeTime
+        };
+    }
+
+    /**
+     * Return date string of the given time, prefixed with 'today, ' if
+     * applicable.
+     * 
+     * @param airtime
+     * @param context
+     * @return
+     */
+    public static String formatToDate(long airtime, Context context) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        Calendar cal = getAirtimeCalendar(airtime, prefs);
+
+        String timezone = cal.getTimeZone().getDisplayName(true, TimeZone.SHORT);
+        String dateString = DateFormat.getDateFormat(context).format(cal.getTime()) + " "
+                + timezone;
+        // add today prefix if applicable
+        if (DateUtils.isToday(cal.getTimeInMillis())) {
+            dateString = context.getString(R.string.today) + ", " + dateString;
+        }
+
+        return dateString;
+    }
+
+    /**
+     * Create a calendar set to the given airtime, time is adjusted according to
+     * 'Use my time zone', 'Time Offset' settings and user time zone.
+     * 
+     * @param airtime
+     * @param prefs
+     * @return
+     */
+    public static Calendar getAirtimeCalendar(long airtime, final SharedPreferences prefs) {
         final boolean useUserTimeZone = prefs.getBoolean(
                 SeriesGuidePreferences.KEY_USE_MY_TIMEZONE, false);
 
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(airtime);
 
-        addOffsets(prefs, cal);
+        if (!useUserTimeZone) {
+            // assume we are US located
+            Calendar real = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
+            real.setTimeInMillis(airtime);
 
-        if (useUserTimeZone) {
-            timeFormat.setTimeZone(TimeZone.getDefault());
-            dayFormat.setTimeZone(TimeZone.getDefault());
-        } else {
-            timeFormat.setTimeZone(pacificTimeZone);
-            dayFormat.setTimeZone(pacificTimeZone);
+            // and airtime is not in LA but local time
+            cal.set(real.get(Calendar.YEAR), real.get(Calendar.MONTH),
+                    real.get(Calendar.DAY_OF_MONTH), real.get(Calendar.HOUR_OF_DAY),
+                    real.get(Calendar.MINUTE), real.get(Calendar.SECOND));
+            cal.set(Calendar.MILLISECOND, real.get(Calendar.MILLISECOND));
         }
 
-        Date airDate = cal.getTime();
-        String day = dayFormat.format(airDate);
-        String time = timeFormat.format(airDate);
+        setOffsets(prefs, cal);
 
-        return new String[] {
-                time, day
-        };
+        return cal;
     }
 
     /**
-     * Add user set manual offset and auto-offset if we are in US Central time
-     * zone.
+     * Add user set manual offset and/or auto-offset if we are in US Central
+     * time zone.
      * 
      * @param prefs
      * @param cal
      */
-    private static void addOffsets(final SharedPreferences prefs, final Calendar cal) {
+    private static void setOffsets(final SharedPreferences prefs, Calendar cal) {
         // add user-set hour offset
         int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
         if (offset != 0) {

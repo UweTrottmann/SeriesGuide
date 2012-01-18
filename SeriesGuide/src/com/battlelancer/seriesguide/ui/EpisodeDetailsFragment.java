@@ -189,12 +189,11 @@ public class EpisodeDetailsFragment extends ListFragment implements
                 final Cursor episode = (Cursor) getListAdapter().getItem(0);
                 episode.moveToFirst();
                 final String showTitle = episode.getString(EpisodeDetailsQuery.SHOW_TITLE);
-                final String airDate = episode.getString(EpisodeDetailsQuery.FIRSTAIRED);
-                final long airsTime = episode.getLong(EpisodeDetailsQuery.SHOW_AIRSTIME);
-                final String runTime = episode.getString(EpisodeDetailsQuery.SHOW_RUNTIME);
                 final String episodestring = ShareUtils.onCreateShareString(getActivity(), episode);
-                ShareUtils.onAddCalendarEvent(getActivity(), showTitle, episodestring, airDate,
-                        airsTime, runTime);
+                final long airtime = episode.getLong(EpisodeDetailsQuery.FIRSTAIREDMS);
+                final String runTime = episode.getString(EpisodeDetailsQuery.SHOW_RUNTIME);
+                ShareUtils.onAddCalendarEvent(getActivity(), showTitle, episodestring, airtime,
+                        runTime);
                 break;
             }
             default:
@@ -232,7 +231,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
 
         String[] from = new String[] {
                 Episodes.TITLE, Episodes.OVERVIEW, Episodes.NUMBER, Episodes.DVDNUMBER,
-                Episodes.FIRSTAIRED, Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
+                Episodes.FIRSTAIREDMS, Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
                 Episodes.RATING, Episodes.IMAGE, Shows.TITLE, Episodes.WATCHED, Shows.REF_SHOW_ID
 
         };
@@ -266,16 +265,13 @@ public class EpisodeDetailsFragment extends ListFragment implements
                     watchedState.setTextColor(isWatched ? Color.GREEN : Color.GRAY);
                     return true;
                 }
-                if (columnIndex == EpisodeDetailsQuery.FIRSTAIRED) {
+                if (columnIndex == EpisodeDetailsQuery.FIRSTAIREDMS) {
                     // First airdate
                     TextView airdate = (TextView) view;
-                    final String firstAired = episode.getString(EpisodeDetailsQuery.FIRSTAIRED);
-                    if (firstAired.length() != 0) {
-                        airdate.setText(getString(R.string.episode_firstaired)
-                                + " "
-                                + Utils.parseDateToLocal(firstAired,
-                                        episode.getLong(EpisodeDetailsQuery.SHOW_AIRSTIME),
-                                        getActivity()));
+                    final long airtime = episode.getLong(EpisodeDetailsQuery.FIRSTAIREDMS);
+                    if (airtime != -1) {
+                        airdate.setText(getString(R.string.episode_firstaired) + " "
+                                + Utils.formatToDate(airtime, getActivity()));
                     } else {
                         airdate.setText(getString(R.string.episode_firstaired) + " "
                                 + getString(R.string.episode_unkownairdate));
@@ -426,7 +422,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
 
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Shows.REF_SHOW_ID, Episodes.OVERVIEW,
-                Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIRED,
+                Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIREDMS,
                 Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
                 Tables.EPISODES + "." + Episodes.RATING, Episodes.IMAGE, Episodes.DVDNUMBER,
                 Episodes.TITLE, Shows.TITLE, Shows.AIRSTIME, Shows.IMDBID, Shows.RUNTIME,
@@ -445,7 +441,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
 
         int WATCHED = 5;
 
-        int FIRSTAIRED = 6;
+        int FIRSTAIREDMS = 6;
 
         int DIRECTORS = 7;
 

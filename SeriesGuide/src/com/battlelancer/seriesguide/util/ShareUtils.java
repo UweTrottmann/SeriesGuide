@@ -296,7 +296,7 @@ public class ShareUtils {
     }
 
     public static void onAddCalendarEvent(Context context, String title, String description,
-            String airdate, long airtime, String runtime) {
+            long airtime, String runtime) {
         Intent intent = new Intent(Intent.ACTION_EDIT);
         intent.setType("vnd.android.cursor.item/event");
         intent.putExtra("title", title);
@@ -305,13 +305,11 @@ public class ShareUtils {
         try {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
                     .getApplicationContext());
-            boolean useUserTimeZone = prefs.getBoolean(SeriesGuidePreferences.KEY_USE_MY_TIMEZONE,
-                    false);
 
-            Calendar cal = Utils.getLocalCalendar(airdate, airtime, useUserTimeZone, context);
+            Calendar cal = Utils.getAirtimeCalendar(airtime, prefs);
 
             long startTime = cal.getTimeInMillis();
-            long endTime = startTime + Long.valueOf(runtime) * 60 * 1000;
+            long endTime = startTime + Long.valueOf(runtime) * DateUtils.MINUTE_IN_MILLIS;
             intent.putExtra("beginTime", startTime);
             intent.putExtra("endTime", endTime);
 

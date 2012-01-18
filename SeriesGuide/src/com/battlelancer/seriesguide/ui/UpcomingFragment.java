@@ -139,7 +139,7 @@ public class UpcomingFragment extends ListFragment implements
     private void setupAdapter() {
 
         String[] from = new String[] {
-                Episodes.TITLE, Episodes.WATCHED, Episodes.NUMBER, Episodes.FIRSTAIRED,
+                Episodes.TITLE, Episodes.WATCHED, Episodes.NUMBER, Episodes.FIRSTAIREDMS,
                 Shows.TITLE, Shows.NETWORK, Shows.POSTER
         };
         int[] to = new int[] {
@@ -237,8 +237,8 @@ public class UpcomingFragment extends ListFragment implements
     public interface UpcomingQuery {
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
-                Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIRED, Shows.TITLE, Shows.AIRSTIME,
-                Shows.NETWORK, Shows.POSTER, Episodes.FIRSTAIREDMS
+                Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIREDMS, Shows.TITLE,
+                Shows.AIRSTIME, Shows.NETWORK, Shows.POSTER
         };
 
         String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND " + Shows.HIDDEN + "=?";
@@ -261,7 +261,7 @@ public class UpcomingFragment extends ListFragment implements
 
         int SEASON = 4;
 
-        int FIRSTAIRED = 5;
+        int FIRSTAIREDMS = 5;
 
         int SHOW_TITLE = 6;
 
@@ -270,8 +270,6 @@ public class UpcomingFragment extends ListFragment implements
         int SHOW_NETWORK = 8;
 
         int SHOW_POSTER = 9;
-
-        int FIRSTAIREDMS = 10;
     }
 
     private class SlowAdapter extends SimpleCursorAdapter {
@@ -350,7 +348,7 @@ public class UpcomingFragment extends ListFragment implements
             // airdate
             long airtime = mCursor.getLong(UpcomingQuery.FIRSTAIREDMS);
             if (airtime != -1) {
-                viewHolder.airdate.setText(Utils.formatToRelativeTimeSpan(airtime, mContext));
+                viewHolder.airdate.setText(Utils.formatToTimeAndDay(airtime, mContext)[2]);
             } else {
                 viewHolder.airdate.setText("");
             }

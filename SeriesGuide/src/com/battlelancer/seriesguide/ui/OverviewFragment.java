@@ -72,9 +72,9 @@ public class OverviewFragment extends Fragment {
 
     private FetchArtTask artTask;
 
-    private String airdate;
-
     final private Bundle mShareData = new Bundle();
+
+    private long mAirtime;
 
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(getActivity()).trackEvent("Overview", "Click", label, 0);
@@ -194,9 +194,10 @@ public class OverviewFragment extends Fragment {
             case R.id.menu_addevent:
                 fireTrackerEvent("Add episode to calendar");
 
-                ShareUtils.onAddCalendarEvent(getActivity(), show.getSeriesName(),
-                        mShareData.getString(ShareItems.EPISODESTRING), airdate,
-                        show.getAirsTime(), show.getRuntime());
+                ShareUtils
+                        .onAddCalendarEvent(getActivity(), show.getSeriesName(),
+                                mShareData.getString(ShareItems.EPISODESTRING), mAirtime,
+                                show.getRuntime());
                 break;
             default:
                 break;
@@ -346,10 +347,9 @@ public class OverviewFragment extends Fragment {
             episode.moveToFirst();
 
             // Airdate
-            airdate = episode.getString(EpisodeQuery.FIRSTAIRED);
-            if (airdate.length() != 0) {
-                nextheader.setText(Utils.parseDateToLocalRelative(airdate, show.getAirsTime(),
-                        context) + ":");
+            mAirtime = episode.getLong(EpisodeQuery.FIRSTAIREDMS);
+            if (mAirtime != -1) {
+                nextheader.setText(Utils.formatToTimeAndDay(mAirtime, context)[2] + ":");
             }
 
             onLoadEpisodeDetails(episode);
@@ -524,7 +524,7 @@ public class OverviewFragment extends Fragment {
 
         String[] PROJECTION = new String[] {
                 Episodes._ID, Shows.REF_SHOW_ID, Episodes.OVERVIEW, Episodes.NUMBER,
-                Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIRED, Episodes.DIRECTORS,
+                Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIREDMS, Episodes.DIRECTORS,
                 Episodes.GUESTSTARS, Episodes.WRITERS, Episodes.RATING, Episodes.IMAGE,
                 Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID
         };
@@ -541,7 +541,7 @@ public class OverviewFragment extends Fragment {
 
         int WATCHED = 5;
 
-        int FIRSTAIRED = 6;
+        int FIRSTAIREDMS = 6;
 
         int DIRECTORS = 7;
 
