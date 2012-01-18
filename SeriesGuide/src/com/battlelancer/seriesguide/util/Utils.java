@@ -40,6 +40,8 @@ import java.util.TimeZone;
 
 public class Utils {
 
+    private static final int DEFAULT_BUFFER_SIZE = 8192;
+
     private static ServiceManager sServiceManagerWithAuthInstance;
 
     private static ServiceManager sServiceManagerInstance;
@@ -149,17 +151,7 @@ public class Utils {
             airtime = cal.getTimeInMillis();
         }
 
-        // add user-set hour offset
-        int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
-        if (offset != 0) {
-            cal.add(Calendar.HOUR_OF_DAY, offset);
-        }
-
-        // check for US Central and automagically subtract one hour
-        if (TimeZone.getDefault().getRawOffset() == TimeZone.getTimeZone("US/Central")
-                .getRawOffset()) {
-            cal.add(Calendar.HOUR_OF_DAY, -1);
-        }
+        addOffsets(prefs, cal);
 
         String timeString = DateUtils
                 .getRelativeTimeSpanString(cal.getTimeInMillis(), System.currentTimeMillis(),
@@ -258,8 +250,6 @@ public class Utils {
     public static final SimpleDateFormat thetvdbTimeFormatNormal = new SimpleDateFormat("H:mm",
             Locale.US);
 
-    private static final int DEFAULT_BUFFER_SIZE = 8192;
-
     public static long parseTimeToMilliseconds(String tvdbTimeString) {
         Date time = null;
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
@@ -300,7 +290,7 @@ public class Utils {
 
     public static String[] parseMillisecondsToTime(long milliseconds, String dayofweek,
             Context context) {
-        // return empty strings if time is missing (maybe return at least day?)
+        // return empty strings if time is missing
         if (context == null || milliseconds == -1) {
             return new String[] {
                     "", ""
@@ -312,39 +302,39 @@ public class Utils {
         final boolean useUserTimeZone = prefs.getBoolean(
                 SeriesGuidePreferences.KEY_USE_MY_TIMEZONE, false);
 
-        // set calendar time and day (if available) on Pacific cal
+        // set calendar time and day on Pacific cal
         final Calendar cal = Calendar.getInstance(pacificTimeZone);
         cal.setTimeInMillis(milliseconds);
+
+        boolean isDaily = false;
         if (dayofweek != null) {
-            cal.set(Calendar.DAY_OF_WEEK, getDayOfWeek(dayofweek));
+            if (dayofweek.equals("Daily")) {
+                isDaily = true;
+            } else {
+                cal.set(Calendar.DAY_OF_WEEK, getDayOfWeek(dayofweek));
+            }
         }
 
-        // add user-set hour offset
-        int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
-        if (offset != 0) {
-            cal.add(Calendar.HOUR_OF_DAY, offset);
-        }
-        // check for US Central and automagically subtract one hour
-        if (TimeZone.getDefault().getRawOffset() == TimeZone.getTimeZone("US/Central")
-                .getRawOffset()) {
-            cal.add(Calendar.HOUR_OF_DAY, -1);
-        }
+        addOffsets(prefs, cal);
 
         // create time string
         final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
         final SimpleDateFormat dayFormat = new SimpleDateFormat("E");
-        String day = "";
         final Date date = cal.getTime();
 
         if (useUserTimeZone) {
             timeFormat.setTimeZone(TimeZone.getDefault());
             dayFormat.setTimeZone(TimeZone.getDefault());
         } else {
+            // assume we are US Pacific based
             timeFormat.setTimeZone(pacificTimeZone);
             dayFormat.setTimeZone(pacificTimeZone);
         }
 
-        if (dayofweek != null) {
+        String day = "";
+        if (isDaily) {
+            day = context.getString(R.string.daily);
+        } else if (dayofweek != null) {
             day = dayFormat.format(date);
         }
 
@@ -364,16 +354,7 @@ public class Utils {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(airtime);
 
-        // add user-set hour offset
-        int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
-        if (offset != 0) {
-            cal.add(Calendar.HOUR_OF_DAY, offset);
-        }
-        // check for US Central and automagically subtract one hour
-        if (TimeZone.getDefault().getRawOffset() == TimeZone.getTimeZone("US/Central")
-                .getRawOffset()) {
-            cal.add(Calendar.HOUR_OF_DAY, -1);
-        }
+        addOffsets(prefs, cal);
 
         if (useUserTimeZone) {
             timeFormat.setTimeZone(TimeZone.getDefault());
@@ -390,6 +371,26 @@ public class Utils {
         return new String[] {
                 time, day
         };
+    }
+
+    /**
+     * Add user set manual offset and auto-offset if we are in US Central time
+     * zone.
+     * 
+     * @param prefs
+     * @param cal
+     */
+    private static void addOffsets(final SharedPreferences prefs, final Calendar cal) {
+        // add user-set hour offset
+        int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
+        if (offset != 0) {
+            cal.add(Calendar.HOUR_OF_DAY, offset);
+        }
+        // check for US Central and automagically subtract one hour
+        if (TimeZone.getDefault().getRawOffset() == TimeZone.getTimeZone("US/Central")
+                .getRawOffset()) {
+            cal.add(Calendar.HOUR_OF_DAY, -1);
+        }
     }
 
     public static long buildEpisodeAirtime(String tvdbDateString, long airtime) {
