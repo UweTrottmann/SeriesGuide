@@ -209,7 +209,6 @@ public class Utils {
 
         Calendar cal = getAirtimeCalendar(airtime, prefs);
 
-        // TODO introduce flags to exclude some values (speedier?)
         final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
         final SimpleDateFormat dayFormat = new SimpleDateFormat("E");
         Date airDate = cal.getTime();
@@ -642,7 +641,7 @@ public class Utils {
      * @param poster
      * @param path
      * @param isBusy
-     * @param context TODO
+     * @param context
      */
     public static void setPosterBitmap(ImageView poster, String path, boolean isBusy,
             Context context) {
