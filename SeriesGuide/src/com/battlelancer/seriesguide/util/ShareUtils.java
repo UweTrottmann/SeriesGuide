@@ -29,9 +29,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.SupportActivity;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.format.DateUtils;
@@ -91,7 +91,7 @@ public class ShareUtils {
      *            {@link ShareUtils.ShareItems}
      * @param shareMethod the {@link ShareMethod} to use
      */
-    public static void onShareEpisode(FragmentActivity activity, Bundle shareData,
+    public static void onShareEpisode(SupportActivity activity, Bundle shareData,
             ShareMethod shareMethod) {
         final FragmentManager fm = activity.getSupportFragmentManager();
         final String imdbId = shareData.getString(ShareUtils.ShareItems.IMDBID);
@@ -99,7 +99,8 @@ public class ShareUtils {
 
         // save used share method, so we can use it later for the quick share
         // button
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity
+                .asActivity());
         prefs.edit().putInt(SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, shareMethod.index)
                 .commit();
 
@@ -109,7 +110,7 @@ public class ShareUtils {
                 if (imdbId.length() != 0) {
                     showGetGlueDialog(fm, shareData);
                 } else {
-                    Toast.makeText(activity, activity.getString(R.string.noIMDBentry),
+                    Toast.makeText(activity.asActivity(), activity.getString(R.string.noIMDBentry),
                             Toast.LENGTH_LONG).show();
                 }
                 break;
@@ -136,7 +137,7 @@ public class ShareUtils {
                 // start the trakt check in task, add the
                 // dialog as listener
                 shareData.putInt(ShareItems.TRAKTACTION, TraktAction.CHECKIN_EPISODE.index());
-                new TraktTask(activity, fm, shareData, newFragment).execute();
+                new TraktTask(activity.asActivity(), fm, shareData, newFragment).execute();
 
                 newFragment.show(ft, "progress-dialog");
                 break;
@@ -144,7 +145,7 @@ public class ShareUtils {
             case MARKSEEN_TRAKT: {
                 // trakt mark as seen
                 shareData.putInt(ShareItems.TRAKTACTION, TraktAction.SEEN_EPISODE.index());
-                new TraktTask(activity, fm, shareData).execute();
+                new TraktTask(activity.asActivity(), fm, shareData).execute();
                 break;
             }
             case RATE_TRAKT: {

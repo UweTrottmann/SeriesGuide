@@ -1,9 +1,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -26,17 +23,20 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.SupportActivity;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
@@ -106,7 +106,7 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
     }
 
     @Override
-    public boolean onContextItemSelected(android.view.MenuItem item) {
+    public boolean onContextItemSelected(MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
@@ -330,14 +330,14 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
         }
 
         public void run() {
-            final FragmentActivity context = getActivity();
+            final SupportActivity context = getSupportActivity();
             if (context == null) {
                 return;
             }
 
             if (mSeasonId != null) {
                 // update one season
-                DBUtils.updateUnwatchedCount(context, mSeasonId);
+                DBUtils.updateUnwatchedCount(context.asActivity(), mSeasonId);
             } else {
                 // update all seasons of this show
                 final Cursor seasons = context.getContentResolver().query(
@@ -346,7 +346,7 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
                         }, null, null, null);
                 while (seasons.moveToNext()) {
                     String seasonId = seasons.getString(0);
-                    DBUtils.updateUnwatchedCount(context, seasonId);
+                    DBUtils.updateUnwatchedCount(context.asActivity(), seasonId);
                 }
                 seasons.close();
             }

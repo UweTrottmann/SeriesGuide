@@ -43,7 +43,6 @@
             android:layout_gravity="center"
             android:visibility="gone"
             android:textAppearance="?attr/actionMenuTextAppearance"
-            style="?attr/buttonStyleSmall"
             android:textColor="?attr/actionMenuTextColor"
             android:singleLine="true"
             android:ellipsize="none"

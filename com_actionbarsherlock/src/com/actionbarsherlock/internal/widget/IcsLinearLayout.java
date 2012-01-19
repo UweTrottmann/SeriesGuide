@@ -33,19 +33,19 @@ import android.view.ViewGroup;
 public class IcsLinearLayout extends ViewGroup {
 
     private static final int[] LinearLayout = new int[] {
-        /* 0 */ android.R.attr.baselineAlignedChildIndex,
-        /* 1 */ android.R.attr.weightSum,
-        /* 2 */ android.R.attr.divider,
+        /* 0 */ android.R.attr.divider,
+        /* 1 */ android.R.attr.dividerPadding,
+        /* 2 */ android.R.attr.weightSum,
         /* 3 */ android.R.attr.measureWithLargestChild,
         /* 4 */ android.R.attr.showDividers,
-        /* 5 */ android.R.attr.dividerPadding,
+        /* 5 */ android.R.attr.baselineAlignedChildIndex,
     };
-    private static final int LinearLayout_baselineAlignedChildIndex = 0;
-    private static final int LinearLayout_weightSum = 1;
-    private static final int LinearLayout_divider = 2;
+    private static final int LinearLayout_divider = 0;
+    private static final int LinearLayout_dividerPadding = 1;
+    private static final int LinearLayout_weightSum = 2;
     private static final int LinearLayout_measureWithLargestChild = 3;
     private static final int LinearLayout_showDividers = 4;
-    private static final int LinearLayout_dividerPadding = 5;
+    private static final int LinearLayout_baselineAlignedChildIndex = 5;
 
 
     /**
@@ -87,7 +87,7 @@ public class IcsLinearLayout extends ViewGroup {
      */
     private int mBaselineChildTop = 0;
 
-    private int mGravity = Gravity.START | Gravity.TOP;
+    private int mGravity = Gravity.TOP;
 
     private int mTotalLength;
 
@@ -151,9 +151,31 @@ public class IcsLinearLayout extends ViewGroup {
         a.recycle();
     }
 
-    @Override
+    /**
+     * Set how dividers should be shown between items in this layout
+     *
+     * @param showDividers One or more of {@link #SHOW_DIVIDER_BEGINNING},
+     *                     {@link #SHOW_DIVIDER_MIDDLE}, or {@link #SHOW_DIVIDER_END},
+     *                     or {@link #SHOW_DIVIDER_NONE} to show no dividers.
+     */
+    public void setShowDividers(int showDividers) {
+        if (showDividers != mShowDividers) {
+            requestLayout();
+        }
+        mShowDividers = showDividers;
+    }
+
+    //@Override
     public boolean shouldDelayChildPressedState() {
         return false;
+    }
+
+    /**
+     * @return A flag set indicating how dividers should be shown around items.
+     * @see #setShowDividers(int)
+     */
+    public int getShowDividers() {
+        return mShowDividers;
     }
 
     /**
@@ -173,6 +195,30 @@ public class IcsLinearLayout extends ViewGroup {
         }
         setWillNotDraw(divider == null);
         requestLayout();
+    }
+
+    /**
+     * Set padding displayed on both ends of dividers.
+     *
+     * @param padding Padding value in pixels that will be applied to each end
+     *
+     * @see #setShowDividers(int)
+     * @see #setDividerDrawable(Drawable)
+     * @see #getDividerPadding()
+     */
+    public void setDividerPadding(int padding) {
+        mDividerPadding = padding;
+    }
+
+    /**
+     * Get the padding size used to inset dividers in pixels
+     *
+     * @see #setShowDividers(int)
+     * @see #setDividerDrawable(Drawable)
+     * @see #setDividerPadding(int)
+     */
+    public int getDividerPadding() {
+        return mDividerPadding;
     }
 
     /**
@@ -223,6 +269,16 @@ public class IcsLinearLayout extends ViewGroup {
     }
 
     /**
+     * <p>Indicates whether widgets contained within this layout are aligned
+     * on their baseline or not.</p>
+     *
+     * @return true when widgets are baseline-aligned, false otherwise
+     */
+    public boolean isBaselineAligned() {
+        return mBaselineAligned;
+    }
+
+    /**
      * <p>Defines whether widgets contained in this layout are
      * baseline-aligned or not.</p>
      *
@@ -233,6 +289,32 @@ public class IcsLinearLayout extends ViewGroup {
      */
     public void setBaselineAligned(boolean baselineAligned) {
         mBaselineAligned = baselineAligned;
+    }
+
+    /**
+     * When true, all children with a weight will be considered having
+     * the minimum size of the largest child. If false, all children are
+     * measured normally.
+     *
+     * @return True to measure children with a weight using the minimum
+     *         size of the largest child, false otherwise.
+     */
+    public boolean isMeasureWithLargestChildEnabled() {
+        return mUseLargestChild;
+    }
+
+    /**
+     * When set to true, all children with a weight will be considered having
+     * the minimum size of the largest child. If false, all children are
+     * measured normally.
+     *
+     * Disabled by default.
+     *
+     * @param enabled True to measure children with a weight using the
+     *        minimum size of the largest child, false otherwise.
+     */
+    public void setMeasureWithLargestChildEnabled(boolean enabled) {
+        mUseLargestChild = enabled;
     }
 
     @Override
@@ -273,6 +355,29 @@ public class IcsLinearLayout extends ViewGroup {
     }
 
     /**
+     * @return The index of the child that will be used if this layout is
+     *   part of a larger layout that is baseline aligned, or -1 if none has
+     *   been set.
+     */
+    public int getBaselineAlignedChildIndex() {
+        return mBaselineAlignedChildIndex;
+    }
+
+    /**
+     * @param i The index of the child that will be used if this layout is
+     *          part of a larger layout that is baseline aligned.
+     *
+     * @attr ref android.R.styleable#LinearLayout_baselineAlignedChildIndex
+     */
+    public void setBaselineAlignedChildIndex(int i) {
+        if ((i < 0) || (i >= getChildCount())) {
+            throw new IllegalArgumentException("base aligned child index out "
+                    + "of range (0, " + getChildCount() + ")");
+        }
+        mBaselineAlignedChildIndex = i;
+    }
+
+    /**
      * <p>Returns the view at the specified index. This method can be overriden
      * to take into account virtual children. Refer to
      * {@link android.widget.TableLayout} and {@link android.widget.TableRow}
@@ -296,6 +401,33 @@ public class IcsLinearLayout extends ViewGroup {
      */
     int getVirtualChildCount() {
         return getChildCount();
+    }
+
+    /**
+     * Returns the desired weights sum.
+     *
+     * @return A number greater than 0.0f if the weight sum is defined, or
+     *         a number lower than or equals to 0.0f if not weight sum is
+     *         to be used.
+     */
+    public float getWeightSum() {
+        return mWeightSum;
+    }
+
+    /**
+     * Defines the desired weights sum. If unspecified the weights sum is computed
+     * at layout time by adding the layout_weight of each child.
+     *
+     * This can be used for instance to give a single child 50% of the total
+     * available space by giving it a layout_weight of 0.5 and setting the
+     * weightSum to 1.0.
+     *
+     * @param weightSum a number greater than 0.0f, or a number lower than or equals
+     *        to 0.0f if the weight sum should be computed from the children's
+     *        layout_weight
+     */
+    public void setWeightSum(float weightSum) {
+        mWeightSum = Math.max(0.0f, weightSum);
     }
 
     /**
@@ -452,7 +584,7 @@ public class IcsLinearLayout extends ViewGroup {
 
             final int margin = lp.topMargin + lp.bottomMargin;
             final int childHeight = child.getMeasuredHeight() + margin;
-            childState = combineMeasuredStatesInt(childState, IcsView.getMeasuredStateInt(child));
+            childState = combineMeasuredStatesInt(childState, getMeasuredStateInt(child));
 
             if (baselineAligned) {
                 final int childBaseline = child.getBaseline();
@@ -545,7 +677,7 @@ public class IcsLinearLayout extends ViewGroup {
         widthSize = Math.max(widthSize, getSuggestedMinimumWidth());
 
         // Reconcile our calculated size with the widthMeasureSpec
-        int widthSizeAndState = IcsView.resolveSizeAndState(widthSize, widthMeasureSpec, 0);
+        int widthSizeAndState = resolveSizeAndStateInt(widthSize, widthMeasureSpec, 0);
         widthSize = widthSizeAndState & MEASURED_SIZE_MASK;
 
         // Either expand children with weight to take up available space or
@@ -604,7 +736,7 @@ public class IcsLinearLayout extends ViewGroup {
 
                     // Child may now not fit in horizontal dimension.
                     childState = combineMeasuredStatesInt(childState,
-                            IcsView.getMeasuredStateInt(child) & MEASURED_STATE_MASK);
+                            getMeasuredStateInt(child) & MEASURED_STATE_MASK);
                 }
 
                 if (isExactly) {
@@ -698,7 +830,7 @@ public class IcsLinearLayout extends ViewGroup {
         maxHeight = Math.max(maxHeight, getSuggestedMinimumHeight());
 
         setMeasuredDimension(widthSizeAndState | (childState&MEASURED_STATE_MASK),
-                IcsView.resolveSizeAndState(maxHeight, heightMeasureSpec,
+                resolveSizeAndStateInt(maxHeight, heightMeasureSpec,
                         (childState<<MEASURED_HEIGHT_STATE_SHIFT)));
 
         if (matchHeight) {
@@ -716,6 +848,62 @@ public class IcsLinearLayout extends ViewGroup {
      */
     public static int combineMeasuredStatesInt(int curState, int newState) {
         return curState | newState;
+    }
+
+    /**
+     * Version of {@link #resolveSizeAndState(int, int, int)}
+     * returning only the {@link #MEASURED_SIZE_MASK} bits of the result.
+     */
+    public static int resolveSizeInt(int size, int measureSpec) {
+        return resolveSizeAndStateInt(size, measureSpec, 0) & MEASURED_SIZE_MASK;
+    }
+
+    /**
+     * Utility to reconcile a desired size and state, with constraints imposed
+     * by a MeasureSpec.  Will take the desired size, unless a different size
+     * is imposed by the constraints.  The returned value is a compound integer,
+     * with the resolved size in the {@link #MEASURED_SIZE_MASK} bits and
+     * optionally the bit {@link #MEASURED_STATE_TOO_SMALL} set if the resulting
+     * size is smaller than the size the view wants to be.
+     *
+     * @param size How big the view wants to be
+     * @param measureSpec Constraints imposed by the parent
+     * @return Size information bit mask as defined by
+     * {@link #MEASURED_SIZE_MASK} and {@link #MEASURED_STATE_TOO_SMALL}.
+     */
+    public static int resolveSizeAndStateInt(int size, int measureSpec, int childMeasuredState) {
+        int result = size;
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize =  MeasureSpec.getSize(measureSpec);
+        switch (specMode) {
+        case MeasureSpec.UNSPECIFIED:
+            result = size;
+            break;
+        case MeasureSpec.AT_MOST:
+            if (specSize < size) {
+                result = specSize | MEASURED_STATE_TOO_SMALL;
+            } else {
+                result = size;
+            }
+            break;
+        case MeasureSpec.EXACTLY:
+            result = specSize;
+            break;
+        }
+        return result | (childMeasuredState&MEASURED_STATE_MASK);
+    }
+
+    /**
+     * Return only the state bits of {@link #getMeasuredWidthAndState()}
+     * and {@link #getMeasuredHeightAndState()}, combined into one integer.
+     * The width component is in the regular bits {@link #MEASURED_STATE_MASK}
+     * and the height component is at the shifted bits
+     * {@link #MEASURED_HEIGHT_STATE_SHIFT}>>{@link #MEASURED_STATE_MASK}.
+     */
+    public static int getMeasuredStateInt(View child) {
+        return (child.getMeasuredWidth()&MEASURED_STATE_MASK)
+                | ((child.getMeasuredHeight()>>MEASURED_HEIGHT_STATE_SHIFT)
+                        & (MEASURED_STATE_MASK>>MEASURED_HEIGHT_STATE_SHIFT));
     }
 
     private void forceUniformHeight(int count, int widthMeasureSpec) {
@@ -920,6 +1108,27 @@ public class IcsLinearLayout extends ViewGroup {
 
     private void setChildFrame(View child, int left, int top, int width, int height) {
         child.layout(left, top, left + width, top + height);
+    }
+
+    /**
+     * Describes how the child views are positioned. Defaults to GRAVITY_TOP. If
+     * this layout has a VERTICAL orientation, this controls where all the child
+     * views are placed if there is extra vertical space. If this layout has a
+     * HORIZONTAL orientation, this controls the alignment of the children.
+     *
+     * @param gravity See {@link android.view.Gravity}
+     *
+     * @attr ref android.R.styleable#LinearLayout_gravity
+     */
+    public void setGravity(int gravity) {
+        if (mGravity != gravity) {
+            if ((gravity & Gravity.VERTICAL_GRAVITY_MASK) == 0) {
+                gravity |= Gravity.TOP;
+            }
+
+            mGravity = gravity;
+            requestLayout();
+        }
     }
 
     @Override

@@ -3,6 +3,7 @@
 /* //device/apps/common/assets/res/layout/screen_simple.xml
 **
 ** Copyright 2006, The Android Open Source Project
+** Copyright 2011, Jake Wharton
 **
 ** Licensed under the Apache License, Version 2.0 (the "License"); 
 ** you may not use this file except in compliance with the License. 
@@ -22,17 +23,21 @@ enabled.
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
+    <!-- TODO
     <ViewStub android:id="@+id/abs__action_mode_bar_stub"
               android:inflatedId="@+id/abs__action_mode_bar"
               android:layout="@layout/abs__action_mode_bar"
               android:layout_width="fill_parent"
-              android:layout_height="wrap_content" />
+              android:layout_height="?attr/abHeight"/>
+    -->
     <FrameLayout
          android:id="@+id/abs__content"
          android:layout_width="fill_parent"
          android:layout_height="fill_parent"
          android:foregroundGravity="fill_horizontal|top"
-         android:foreground="?attr/windowContentOverlay" />
+         android:foreground="?android:attr/windowContentOverlay" />
 </LinearLayout>

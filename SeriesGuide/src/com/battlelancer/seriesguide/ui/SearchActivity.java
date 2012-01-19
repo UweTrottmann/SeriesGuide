@@ -1,16 +1,13 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockListActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 
+import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,13 +15,15 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 
-public class SearchActivity extends SherlockListActivity {
+public class SearchActivity extends ListActivity {
 
     private static final String TAG = "SearchActivity";
 
@@ -43,11 +42,12 @@ public class SearchActivity extends SherlockListActivity {
         setContentView(R.layout.search);
         handleIntent(getIntent());
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        setTitle(R.string.search_title);
-        actionBar.setTitle(R.string.search_title);
-        actionBar.setDisplayShowTitleEnabled(true);
+        // ABS 4
+        // final ActionBar actionBar = getSupportActionBar();
+        // actionBar.setHomeButtonEnabled(true);
+        // setTitle(R.string.search_title);
+        // actionBar.setTitle(R.string.search_title);
+        // actionBar.setDisplayShowTitleEnabled(true);
     }
 
     @Override
@@ -63,7 +63,8 @@ public class SearchActivity extends SherlockListActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             AnalyticsUtils.getInstance(this).trackEvent(TAG, "Search action", "Search", 0);
             String query = intent.getStringExtra(SearchManager.QUERY);
-            getSupportActionBar().setSubtitle("\"" + query + "\"");
+         // ABS 4
+//            getSupportActionBar().setSubtitle("\"" + query + "\"");
             doMySearch(query);
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             AnalyticsUtils.getInstance(this).trackEvent(TAG, "Search action", "View", 0);
@@ -145,7 +146,7 @@ public class SearchActivity extends SherlockListActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.search_menu, menu);
+        getMenuInflater().inflate(R.menu.search_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

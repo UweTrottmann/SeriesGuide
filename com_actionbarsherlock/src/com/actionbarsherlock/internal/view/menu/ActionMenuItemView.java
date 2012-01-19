@@ -18,17 +18,15 @@ package com.actionbarsherlock.internal.view.menu;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.accessibility.AccessibilityEvent;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -200,32 +198,6 @@ public class ActionMenuItemView extends LinearLayout
 
         setContentDescription(mTitle);
         updateTextButtonVisibility();
-    }
-
-    @Override
-    public boolean dispatchPopulateAccessibilityEvent(AccessibilityEvent event) {
-        onPopulateAccessibilityEvent(event);
-        return true;
-    }
-
-    @Override
-    public void onPopulateAccessibilityEvent(AccessibilityEvent event) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            super.onPopulateAccessibilityEvent(event);
-        }
-        final CharSequence cdesc = getContentDescription();
-        if (!TextUtils.isEmpty(cdesc)) {
-            event.getText().add(cdesc);
-        }
-    }
-
-    @Override
-    public boolean dispatchHoverEvent(MotionEvent event) {
-        // Don't allow children to hover; we want this to be treated as a single component.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            return onHoverEvent(event);
-        }
-        return false;
     }
 
     public boolean showsIcon() {

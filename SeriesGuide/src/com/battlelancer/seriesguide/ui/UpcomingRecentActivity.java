@@ -1,10 +1,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.AddDialogFragment.OnAddShowListener;
@@ -15,9 +11,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBar;
+import android.support.v4.app.ActionBar.Tab;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
 import android.support.v4.view.ViewPager;
 
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.activity_menu, menu);
+        getMenuInflater().inflate(R.menu.activity_menu, menu);
 
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
@@ -168,16 +169,16 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
         }
 
         @Override
-        public void onTabSelected(Tab tab) {
+        public void onTabReselected(Tab tab, FragmentTransaction ft) {
+        }
+
+        @Override
+        public void onTabSelected(Tab tab, FragmentTransaction ft) {
             mViewPager.setCurrentItem(tab.getPosition());
         }
 
         @Override
-        public void onTabReselected(Tab tab) {
-        }
-
-        @Override
-        public void onTabUnselected(Tab tab) {
+        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
         }
     }
 

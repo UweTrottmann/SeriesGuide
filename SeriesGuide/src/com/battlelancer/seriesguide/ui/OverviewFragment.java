@@ -16,9 +16,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.Series;
@@ -49,7 +46,10 @@ import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -206,7 +206,7 @@ public class OverviewFragment extends Fragment {
     }
 
     private void onShareEpisode(ShareMethod shareMethod, boolean isInvalidateOptionsMenu) {
-        ShareUtils.onShareEpisode(getActivity(), mShareData, shareMethod);
+        ShareUtils.onShareEpisode(getSupportActivity(), mShareData, shareMethod);
 
         if (isInvalidateOptionsMenu) {
             // invalidate the options menu so a potentially new

@@ -18,13 +18,13 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.util.ActivityHelper;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.MenuItem;
 import android.view.KeyEvent;
 
 /**
