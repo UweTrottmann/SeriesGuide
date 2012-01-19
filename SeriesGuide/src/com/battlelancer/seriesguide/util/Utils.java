@@ -356,9 +356,11 @@ public class Utils {
 
         Calendar cal = getAirtimeCalendar(airtime, prefs);
 
-        String timezone = cal.getTimeZone().getDisplayName(true, TimeZone.SHORT);
-        String dateString = DateFormat.getDateFormat(context).format(cal.getTime()) + " "
-                + timezone;
+        TimeZone localTimeZone = cal.getTimeZone();
+        Date date = cal.getTime();
+        String timezone = localTimeZone.getDisplayName(localTimeZone.inDaylightTime(date),
+                TimeZone.SHORT);
+        String dateString = DateFormat.getDateFormat(context).format(date) + " " + timezone;
         // add today prefix if applicable
         if (DateUtils.isToday(cal.getTimeInMillis())) {
             dateString = context.getString(R.string.today) + ", " + dateString;
