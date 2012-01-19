@@ -4,7 +4,7 @@
     <item
         android:id="@+id/menu_togglemark"
         android:icon="@drawable/ic_action_seen"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="ifRoom"
         android:title="@string/togglewatched"/>
     <item
         android:id="@+id/menu_quickshare"
