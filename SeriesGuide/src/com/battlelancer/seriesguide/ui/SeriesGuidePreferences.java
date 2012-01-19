@@ -80,6 +80,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_ONLYFAVORITES = "com.battlelancer.seriesguide.onlyfavorites";
 
+    public static final String KEY_UPCOMING_LIMIT = "com.battlelancer.seriesguide.upcominglimit";
+
     public static final String SUPPORT_MAIL = "seriesguide@battlelancer.com";
 
     public static final String HELP_URL = "http://seriesguide.uwetrottmann.com/help";

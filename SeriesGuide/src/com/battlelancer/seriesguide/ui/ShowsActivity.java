@@ -834,10 +834,15 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 };
                 break;
             case SHOWFILTER_UNSEENEPISODES:
-                selection = Shows.NEXTAIRDATE + "!=? AND julianday(" + Shows.NEXTAIRDATE
-                        + ") <= julianday('now') AND " + Shows.HIDDEN + "=?";
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                int upcomingLimit = prefs.getInt(SeriesGuidePreferences.KEY_UPCOMING_LIMIT, 1);
+
+                selection = Shows.NEXTAIRDATE + "!=? AND " + Shows.NEXTAIRDATE + " <=? AND "
+                        + Shows.HIDDEN + "=?";
+                String nowIn24Hours = String.valueOf(System.currentTimeMillis() + upcomingLimit
+                        * DateUtils.DAY_IN_MILLIS);
                 selectionArgs = new String[] {
-                        DBUtils.UNKNOWN_NEXT_AIR_DATE, "0"
+                        DBUtils.UNKNOWN_NEXT_AIR_DATE, nowIn24Hours, "0"
                 };
                 break;
             case SHOWFILTER_HIDDEN:
