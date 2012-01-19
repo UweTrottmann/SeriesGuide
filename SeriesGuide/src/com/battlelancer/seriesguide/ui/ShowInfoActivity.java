@@ -132,15 +132,16 @@ public class ShowInfoActivity extends BaseActivity {
             status.setText(getString(R.string.show_isnotalive));
         }
 
+        // first airdate
+        long airtime = Utils.buildEpisodeAirtime(show.getFirstAired(), show.getAirsTime());
+        firstaired.setText(getString(R.string.show_firstaired) + " "
+                + Utils.formatToDate(airtime, this));
+
         // Others
         actors.setText(getString(R.string.show_actors) + " "
                 + Utils.splitAndKitTVDBStrings(show.getActors()));
         contentrating.setText(getString(R.string.show_contentrating) + " "
                 + show.getContentRating());
-        firstaired.setText(getString(R.string.show_firstaired)
-                + " "
-                + Utils.parseDateToLocal(show.getFirstAired(), show.getAirsTime(),
-                        getApplicationContext()));
         genres.setText(getString(R.string.show_genres) + " "
                 + Utils.splitAndKitTVDBStrings(show.getGenres()));
         String ratingText = show.getRating();
@@ -198,5 +199,4 @@ public class ShowInfoActivity extends BaseActivity {
             showart.setImageBitmap(null);
         }
     }
-
 }

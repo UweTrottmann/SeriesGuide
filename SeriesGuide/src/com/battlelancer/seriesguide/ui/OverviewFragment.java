@@ -349,7 +349,8 @@ public class OverviewFragment extends Fragment {
             // Airdate
             mAirtime = episode.getLong(EpisodeQuery.FIRSTAIREDMS);
             if (mAirtime != -1) {
-                nextheader.setText(Utils.formatToTimeAndDay(mAirtime, context)[2] + ":");
+                final String[] dayAndTime = Utils.formatToTimeAndDay(mAirtime, context);
+                nextheader.setText(dayAndTime[2] + " (" + dayAndTime[1] + "):");
             }
 
             onLoadEpisodeDetails(episode);

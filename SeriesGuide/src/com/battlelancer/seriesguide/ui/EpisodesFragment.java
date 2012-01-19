@@ -88,7 +88,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
         }
 
         String[] from = new String[] {
-                Episodes.WATCHED, Episodes.TITLE, Episodes.NUMBER, Episodes.FIRSTAIRED
+                Episodes.WATCHED, Episodes.TITLE, Episodes.NUMBER, Episodes.FIRSTAIREDMS
         };
         int[] to = new int[] {
                 R.id.CustomCheckBoxWatched, R.id.TextViewEpisodeListTitle,
@@ -129,12 +129,11 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
                     }
                     tv.setText(episodenumber);
                     return true;
-                } else if (columnIndex == EpisodesQuery.FIRSTAIRED) {
+                } else if (columnIndex == EpisodesQuery.FIRSTAIREDMS) {
                     TextView tv = (TextView) view;
-                    String fieldValue = cursor.getString(EpisodesQuery.FIRSTAIRED);
-                    if (fieldValue.length() != 0) {
-                        tv.setText(Utils.parseDateToLocalRelative(fieldValue,
-                                cursor.getLong(EpisodesQuery.SHOW_AIRSTIME), getActivity()));
+                    long airtime = cursor.getLong(EpisodesQuery.FIRSTAIREDMS);
+                    if (airtime != -1) {
+                        tv.setText(Utils.formatToTimeAndDay(airtime, getActivity())[2]);
                     } else {
                         tv.setText(getString(R.string.episode_firstaired) + " "
                                 + getString(R.string.episode_unkownairdate));
@@ -338,7 +337,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
     interface EpisodesQuery {
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.WATCHED, Episodes.TITLE,
-                Episodes.NUMBER, Episodes.FIRSTAIRED, Episodes.DVDNUMBER, Shows.AIRSTIME
+                Episodes.NUMBER, Episodes.FIRSTAIREDMS, Episodes.DVDNUMBER, Shows.AIRSTIME
         };
 
         int _ID = 0;
@@ -349,7 +348,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
 
         int NUMBER = 3;
 
-        int FIRSTAIRED = 4;
+        int FIRSTAIREDMS = 4;
 
         int DVDNUMBER = 5;
 
