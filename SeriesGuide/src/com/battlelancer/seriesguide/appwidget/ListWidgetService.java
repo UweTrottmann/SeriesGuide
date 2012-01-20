@@ -89,7 +89,7 @@ public class ListWidgetService extends RemoteViewsService {
             rv.setTextViewText(R.id.widgetNetwork, value);
 
             // show name
-            value = mUpcomingEpisodes.getString(UpcomingQuery.TITLE);
+            value = mUpcomingEpisodes.getString(UpcomingQuery.SHOW_TITLE);
             rv.setTextViewText(R.id.textViewWidgetShow, value);
 
             // show poster
