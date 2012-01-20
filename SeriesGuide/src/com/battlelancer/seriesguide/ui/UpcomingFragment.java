@@ -107,6 +107,14 @@ public class UpcomingFragment extends ListFragment implements
     }
 
     @Override
+    public void onDestroy() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        prefs.unregisterOnSharedPreferenceChangeListener(mPrefListener);
+
+        super.onDestroy();
+    }
+
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
