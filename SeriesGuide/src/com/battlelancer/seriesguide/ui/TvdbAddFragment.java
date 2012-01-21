@@ -88,7 +88,6 @@ public class TvdbAddFragment extends AddFragment {
     protected void search() {
         String query = mSearchBox.getText().toString().trim();
         if (query.length() == 0) {
-            Toast.makeText(getActivity(), R.string.search_noinput, Toast.LENGTH_LONG).show();
             return;
         }
         if (mSearchTask == null || mSearchTask.getStatus() == AsyncTask.Status.FINISHED) {

@@ -1,33 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="@string/pref_sorting" >
-
-        <ListPreference
-            android:defaultValue="alphabetic"
-            android:entries="@array/shsorting"
-            android:entryValues="@array/shsortingData"
-            android:key="showSorting"
-            android:summary="@string/pref_showsortingsummary"
-            android:title="@string/pref_showsorting" />
-
-        <ListPreference
-            android:defaultValue="latestfirst"
-            android:entries="@array/sesorting"
-            android:entryValues="@array/sesortingData"
-            android:key="seasonSorting"
-            android:summary="@string/pref_sortingsummary"
-            android:title="@string/pref_seasonsorting" />
-
-        <ListPreference
-            android:defaultValue="oldestfirst"
-            android:entries="@array/epsorting"
-            android:entryValues="@array/epsortingData"
-            android:key="episodeSorting"
-            android:summary="@string/pref_epsortingsummary"
-            android:title="@string/pref_episodesorting" />
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="@string/pref_showlist" >
 
         <CheckBoxPreference
@@ -44,6 +17,22 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_content" >
+
+        <ListPreference
+            android:defaultValue="latestfirst"
+            android:entries="@array/sesorting"
+            android:entryValues="@array/sesortingData"
+            android:key="seasonSorting"
+            android:summary="@string/pref_sortingsummary"
+            android:title="@string/pref_seasonsorting" />
+
+        <ListPreference
+            android:defaultValue="oldestfirst"
+            android:entries="@array/epsorting"
+            android:entryValues="@array/epsortingData"
+            android:key="episodeSorting"
+            android:summary="@string/pref_epsortingsummary"
+            android:title="@string/pref_episodesorting" />
 
         <Preference
             android:key="backup"

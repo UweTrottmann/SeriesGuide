@@ -102,7 +102,7 @@ public class ShowInfoActivity extends BaseActivity {
 
         // Overview
         if (show.getOverview().length() == 0) {
-            overview.setText(getString(R.string.show_pleaseupdate));
+            overview.setText("");
         } else {
             overview.setText(show.getOverview());
         }
@@ -171,8 +171,8 @@ public class ShowInfoActivity extends BaseActivity {
                             startActivity(myIntent);
                         }
                     } else {
-                        Toast.makeText(getApplicationContext(), getString(R.string.noIMDBentry),
-                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),
+                                getString(R.string.show_noimdbentry), Toast.LENGTH_LONG).show();
                     }
                 }
             });

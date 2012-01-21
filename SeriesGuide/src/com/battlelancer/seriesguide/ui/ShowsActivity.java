@@ -513,10 +513,10 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
                 // already fail if there is no external storage
                 if (!Utils.isExtStorageAvailable()) {
-                    Toast.makeText(this, getString(R.string.update_nosdcard), Toast.LENGTH_LONG)
+                    Toast.makeText(this, getString(R.string.arttask_nosdcard), Toast.LENGTH_LONG)
                             .show();
                 } else {
-                    Toast.makeText(this, getString(R.string.update_inbackground), Toast.LENGTH_LONG)
+                    Toast.makeText(this, getString(R.string.arttask_start), Toast.LENGTH_LONG)
                             .show();
                     mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
                 }
@@ -686,8 +686,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                     AnalyticsUtils.getInstance(ShowsActivity.this).trackEvent("Shows",
                             "Fetch missing posters", "Incomplete", 0);
 
-                    Toast.makeText(getApplicationContext(),
-                            getString(R.string.imagedownload_incomplete), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.arttask_incomplete),
+                            Toast.LENGTH_LONG).show();
                     break;
             }
 

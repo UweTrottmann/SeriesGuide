@@ -110,8 +110,9 @@ public class ShareUtils {
                 if (imdbId.length() != 0) {
                     showGetGlueDialog(fm, shareData);
                 } else {
-                    Toast.makeText(activity.asActivity(), activity.getString(R.string.noIMDBentry),
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity.asActivity(),
+                            activity.getString(R.string.checkin_impossible), Toast.LENGTH_LONG)
+                            .show();
                 }
                 break;
             }

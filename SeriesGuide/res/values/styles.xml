@@ -45,7 +45,7 @@
     </style>
 
     <style name="HoloCompatButton.Small">
-        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_height">48dp</item>
         <item name="android:layout_width">wrap_content</item>
     </style>
 

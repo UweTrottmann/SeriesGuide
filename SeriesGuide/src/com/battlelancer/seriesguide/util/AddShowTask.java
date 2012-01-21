@@ -118,8 +118,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 Toast.makeText(
                         mContext.getApplicationContext(),
                         mContext.getString(R.string.add_error_begin) + mCurrentShowName
-                                + mContext.getString(R.string.add_error_end) + " ("
-                                + mContext.getString(R.string.saxerror_title) + ")",
+                                + mContext.getString(R.string.add_error_end),
                         Toast.LENGTH_LONG).show();
                 break;
         }

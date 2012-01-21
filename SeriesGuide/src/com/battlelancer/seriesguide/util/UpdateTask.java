@@ -299,16 +299,14 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 AnalyticsUtils.getInstance(mAppContext).trackEvent("Shows", "Update Task",
                         "SAX error", 0);
 
-                message = mAppContext.getString(R.string.update_failed) + " "
-                        + mAppContext.getString(R.string.update_saxerror);
+                message = mAppContext.getString(R.string.update_saxerror);
                 length = Toast.LENGTH_LONG;
                 break;
             case UPDATE_OFFLINE:
                 AnalyticsUtils.getInstance(mAppContext).trackEvent("Shows", "Update Task",
                         "Offline", 0);
 
-                message = mAppContext.getString(R.string.update_failed) + " "
-                        + mAppContext.getString(R.string.update_offline);
+                message = mAppContext.getString(R.string.update_offline);
                 length = Toast.LENGTH_LONG;
                 break;
         }
