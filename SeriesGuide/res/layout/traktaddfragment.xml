@@ -22,7 +22,7 @@
         android:layout_gravity="bottom|right"
         android:background="#bf000000"
         android:padding="8dp"
-        android:text="powered by trakt.tv"
+        android:text="@string/powered_by_trakt"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </FrameLayout>

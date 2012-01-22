@@ -12,6 +12,13 @@
     <string name="search_title">Matching episodes</string>
     <string name="share_episode">Share episode</string>
     <string name="share_checkout">Check out</string>
+    <string name="search_description">Episodes</string>
+    <string name="description_home">Home</string>
+    <string name="description_search">Search</string>
+    <string name="description_overview">Overview</string>
+    <string name="norating">n/a</string>
+    <string name="loading">Loading...</string>
+    <string name="sending">Sending...</string>
 
     <!-- Metadata -->
     <string name="episode_firstaired">Airdate:</string>
@@ -67,7 +74,14 @@
     <string name="unhidden">Un-Hidden show</string>
     
     <!-- Activity -->
+    <string name="activity">Activity</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="recent">Recent</string>
+    <string name="friends">Friends</string>
+    <string name="friends_empty">No friend activity on trakt</string>
+    <string name="noupcoming">There are no upcoming episodes</string>
     <string name="only_favorites">Only favorites</string>
+    <string name="togglewatched">Toggle watched</string>
 
     <!-- Updating -->
     <string name="update_notification">Updating your shows...</string>
@@ -113,6 +127,11 @@
     <string name="add_error_begin">Could not add \"</string>
     <string name="add_error_end">\".</string>
     <string name="add_already_exists">already is in your show list.</string>
+    <string name="trending">Trending</string>
+    <string name="recommended">Recommended</string>
+    <string name="library">Library</string>
+    <string name="powered_by_thetvdb">powered by thetvdb.com</string>
+    <string name="powered_by_trakt">powered by trakt.tv</string>
 
     <!-- Settings -->
     <string name="pref_more">More</string>
@@ -133,6 +152,8 @@
     <string name="backup_summary">Backup or restore your shows</string>
     <string name="pref_language">Content language</string>
     <string name="pref_languagesummary">Translations not available for every show</string>
+    <string name="pref_number">Number format</string>
+    <string name="pref_numbersummary">Choose between 1x01, S01E01 or s01e01</string>
     <string name="pref_usetz">Use your time zone</string>
     <string name="pref_usetzsummary">Offset air dates to your time zone (for non-USA users)</string>
     <string name="pref_offset">Manual time offset</string>
@@ -149,6 +170,10 @@
     <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
     <string name="pref_traktsync">Sync with trakt.tv</string>
     <string name="pref_traktsyncsummary">Initial syncing with trakt.tv</string>
+    <string name="pref_traktintegrate">Integrate trakt.tv</string>
+    <string name="pref_traktintegratesummary">Get trakt activity on update</string>
+    <string name="donate">Buy me a drink (Paypal)</string>
+    <string name="feedback">Send feedback</string>
     <string name="pref_advanced">Advanced</string>
     <string name="clear_cache">Clear image caches</string>
     <string name="clear_cache_summary">Remove all cached images from your device</string>
@@ -178,38 +203,34 @@
     </string-array>
 
     <!-- Backup and Restore -->
-    <string name="backup_description"><b>Backup</b> creates a copy of your show database in the folder below named <b>seriesdatabase</b>.\n\nTo restore just make sure this file is in the folder below, then hit <b>Restore</b> and all your shows will be there again!\n\nOnly backups with the same or a lower database version as below can be restored.</string>
+    <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
     <string name="backup_path"><b>Backup folder</b></string>
     <string name="backup_version"><b>Database version</b></string>
     <string name="backup_failed_nosd">Can\'t backup. The backup folder is not available.</string>
     <string name="backup_inprogress">Backing up database...</string>
-    <string name="backup_success">Backup successful</string>
-    <string name="backup_failed">Backup failed</string>
+    <string name="backup_success">Backup successful.</string>
+    <string name="backup_failed">Backup failed.</string>
     <string name="import_inprogress">Restoring database...</string>
     <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
-    <string name="import_failed_nofile">There is no backup file. Can\'t restore database.</string>
-    <string name="import_failed_noread">Backup file is not readable. Can\'t restore database.</string>
+    <string name="import_failed_nofile">There is no backup file.</string>
+    <string name="import_failed_noread">The backup file is not readable.</string>
     <string name="dbupgradefailed">Your backup may be too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
-    <string name="import_success">Database successfully restored</string>
-    <string name="import_failed">Restore failed</string>
+    <string name="import_success">Backup successfully restored.</string>
+    <string name="import_failed">Restoring the backup failed.</string>
     <string name="backup_button">Backup</string>
     <string name="import_button">Restore</string>
-    <string name="backup_question">This will overwrite any previous backup file in the backup folder.</string>
+    <string name="backup_question">This will overwrite the current backup file in the backup folder!</string>
     <string name="backup_yes">Backup</string>
     <string name="backup_no">Don\'t Backup</string>
-    <string name="import_question">Make sure the backup is inside the backup folder. The current show list will be lost.</string>
+    <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
     <string name="import_yes">Restore</string>
     <string name="import_no">Don\'t Restore</string>
+    
     <!-- Misc -->
     <string name="widget_label">Next episodes</string>
     <string name="smallwidget">Next episodes (small)</string>
     <string name="bigwidget">Next episodes (middle)</string>
     <string name="largewidget">Next episodes (large)</string>
-    <string name="activity">Activity</string>
-    <string name="upcoming">Upcoming</string>
-    <string name="recent">Recent</string>
-    <string name="noupcoming">Look\'s like there are no episodes. Maybe try updating your shows.</string>
-    <string name="togglewatched">Toggle Watched</string>
     <string name="seasons">Seasons</string>
     <string name="cancel">Cancel</string>
     <string name="share">Share</string>
@@ -219,35 +240,30 @@
     <string name="menu_checkin_trakt">Check In (trakt)</string>
     <string name="menu_markseen_trakt">Mark seen (trakt)</string>
     <string name="menu_rate_trakt">Rate (trakt)</string>
-    <string name="menu_share_others">Other services</string>
+    <string name="menu_share_others">Via other apps</string>
 
     <string name="done">Done</string>
     <string name="checkin">Check In</string>
     <string name="comment">Check In Comment</string>
-    <string name="checkinsuccess">Check In successful</string>
+    <string name="checkinsuccess">Check In successful.</string>
     <string name="checkin_impossible">Can not check into this show.</string>
     <string name="traktcheckin_cancel">Cancel it</string>
     <string name="traktcheckin_inprogress">There is already a checkin in progress. Either cancel this checkin or wait %s before you can check in again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
-    <string name="pref_number">Number format</string>
-    <string name="pref_numbersummary">Switch between 1x01, S01E01 or s01e01 as number format</string>
-    <string name="checkinfailed">Check-In failed</string>
+    <string name="checkinfailed">Check-In failed.</string>
     <string name="oauthmessage">Authenticating SeriesGuide with GetGlue...</string>
     <string name="addtocalendar">Add to calendar</string>
-    <string name="addtocalendar_failed">Sorry, there is not enough information to create a calendar event.</string>
-    <string name="search_description">Episodes</string>
-    <string name="description_home">Home</string>
-    <string name="description_search">Search</string>
-    <string name="description_overview">Overview</string>
-    <string name="norating">n/a</string>
-    <string name="loading">Loading...</string>
+    <string name="addtocalendar_failed">Can not create a calendar event.</string>
+    
+    <!-- EULA -->
     <string name="eula_title">What you should know</string>
-    <string name="eula_text">You may not do any harm with this app (overload servers, reverse engineer, ...).\n\nThis app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Github (https://github.com/UweTrottmann/SeriesGuide).</string>
+    <string name="eula_text">This app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Github (https://github.com/UweTrottmann/SeriesGuide).</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
     <string name="username">Username</string>
+    
+    <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="apikey">API key</string>
     <string name="save">Save</string>
     <string name="dontsave">Don\'t save</string>
     <string name="trakt_success">Successfully talked to trakt</string>
@@ -256,29 +272,19 @@
     <string name="trakt_decryptfail">password could not be decrypted</string>
     <string name="trakt_credentials_invalid">credentials not valid</string>
     <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
-    <string name="pref_traktintegrate">Integrate trakt.tv</string>
-    <string name="pref_traktintegratesummary">Get trakt activity on update</string>
-    <string name="donate">Buy me a drink (Paypal)</string>
-    <string name="feedback">Send feedback</string>
     <string name="love">Totally ninja!</string>
     <string name="hate">Weak Sauce :(</string>
     <string name="trakt_createaccount">Create new account</string>
-    <string name="email">Email</string>
     <string name="trakt_experimental">Only shows added to SeriesGuide are synced. \'Sync to SeriesGuide\' fetches watched episodes from trakt. \'Sync to trakt\' transmits watched episodes from SeriesGuide to trakt.</string>
     <string name="trakt_synctodevice">Sync to SeriesGuide</string>
     <string name="trakt_synctotrakt">Sync to trakt.tv</string>
     <string name="trakt_syncunseen">Sync unseen episodes</string>
-    <string name="powered_by_thetvdb">powered by thetvdb.com</string>
-    <string name="friends">Friends</string>
-    <string name="friends_empty">No recent activity or you just might have no friends on trakt, yet.</string>
-    <string name="sending">Sending...</string>
-    <string name="trending">Trending</string>
-    <string name="recommended">Recommended</string>
-    <string name="library">Library</string>
-    <string name="welcome_message"><big>Welcome!</big>\nHere are a few things to get you started.\n\nSeriesGuide works with your trakt.tv account:\n - Check In shows\n - View friends activity\n - View recommendations and library</string>
+
+    <!-- Welcome dialog -->
+    <string name="welcome_message"><big>Get started</big></string>
+    <string name="welcome_add">Add shows</string>
     <string name="welcome_setuptrakt">Setup a trakt account</string>
-    <string name="welcome_gettingstarted">To populate your show list:</string>
-    <string name="welcome_add">Start adding shows</string>
+    <string name="welcome_traktmessage">Enhance your experience by connecting SeriesGuide with trakt.tv.</string>
 
     <string-array name="showfilter_list">
         <item>All</item>
@@ -289,7 +295,7 @@
 
     <!-- strings for BETA release -->
     <string name="download_stable">Download SeriesGuide</string>
-    <string name="betawarning">WARNING: This is an unstable BETA release for testing purposes only. To download the stable end-user version click the download button below.\n\nIf you want to help test the beta go ahead. Please report every crash, try everything out and send feedback to seriesguide@battlelancer.com.</string>
+    <string name="betawarning">This release is for beta testers only! If you are in doubt download the stable version below.\n\nIf you want to help test the beta go break things. Please report every crash, try everything and send feedback.</string>
 
     <!-- REMOVE before uploading to crowdin -->
     <string name="app_name">SeriesGuide</string>
