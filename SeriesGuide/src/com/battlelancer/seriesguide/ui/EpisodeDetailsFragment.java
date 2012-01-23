@@ -40,6 +40,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -329,7 +330,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.SHOW_TITLE) {
-                    TextView showtitle = (TextView) view;
+                    Button showtitle = (Button) view;
                     showtitle.setText(episode.getString(EpisodeDetailsQuery.SHOW_TITLE));
                     final String showId = episode.getString(EpisodeDetailsQuery.REF_SHOW_ID);
                     showtitle.setOnClickListener(new OnClickListener() {
