@@ -245,6 +245,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     protected void onDestroy() {
         super.onDestroy();
         onCancelTasks();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.unregisterOnSharedPreferenceChangeListener(mPrefsListener);
     }
 
     @Override
