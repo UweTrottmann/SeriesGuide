@@ -4,6 +4,7 @@ package com.battlelancer.seriesguide.ui;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.AddDialogFragment.OnAddShowListener;
+import com.battlelancer.seriesguide.ui.UpcomingFragment.InitBundle;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -47,18 +48,20 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
         mTabsAdapter = new TabsAdapter(this, actionBar, mViewPager);
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
-        argsUpcoming.putString("query", UpcomingQuery.QUERY_UPCOMING);
-        argsUpcoming.putString("sortorder", UpcomingQuery.SORTING_UPCOMING);
-        argsUpcoming.putString("analyticstag", "/Upcoming");
-        argsUpcoming.putInt("loaderid", 10);
+        argsUpcoming.putString(InitBundle.QUERY, UpcomingQuery.QUERY_UPCOMING);
+        argsUpcoming.putString(InitBundle.SORTORDER, UpcomingQuery.SORTING_UPCOMING);
+        argsUpcoming.putString(InitBundle.ANALYTICS_TAG, "/Upcoming");
+        argsUpcoming.putInt(InitBundle.LOADER_ID, 10);
+        argsUpcoming.putInt(InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
         mTabsAdapter.addTab(upcomingTab, UpcomingFragment.class, argsUpcoming);
 
         // recent tab
         final Bundle argsRecent = new Bundle();
-        argsRecent.putString("query", UpcomingQuery.QUERY_RECENT);
-        argsRecent.putString("sortorder", UpcomingQuery.SORTING_RECENT);
-        argsRecent.putString("analyticstag", "/Recent");
-        argsUpcoming.putInt("loaderid", 20);
+        argsRecent.putString(InitBundle.QUERY, UpcomingQuery.QUERY_RECENT);
+        argsRecent.putString(InitBundle.SORTORDER, UpcomingQuery.SORTING_RECENT);
+        argsRecent.putString(InitBundle.ANALYTICS_TAG, "/Recent");
+        argsRecent.putInt(InitBundle.LOADER_ID, 20);
+        argsRecent.putInt(InitBundle.EMPTY_STRING_ID, R.string.norecent);
         mTabsAdapter.addTab(recentTab, UpcomingFragment.class, argsRecent);
 
         // trakt friends tab

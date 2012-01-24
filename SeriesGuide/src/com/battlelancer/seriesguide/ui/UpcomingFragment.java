@@ -52,16 +52,20 @@ public class UpcomingFragment extends ListFragment implements
 
     private boolean mBusy;
 
-    static UpcomingFragment newInstance(String query, String sortOrder, String analyticsTag,
-            int loaderId) {
-        UpcomingFragment f = new UpcomingFragment();
-        Bundle args = new Bundle();
-        args.putString("query", query);
-        args.putString("sortorder", sortOrder);
-        args.putString("analyticstag", analyticsTag);
-        args.putInt("loaderid", loaderId);
-        f.setArguments(args);
-        return f;
+    /**
+     * Data which has to be passed when creating {@link UpcomingFragment}. All
+     * Bundle extras are strings, except LOADER_ID and EMPTY_STRING_ID.
+     */
+    public interface InitBundle {
+        String QUERY = "query";
+
+        String SORTORDER = "sortorder";
+
+        String ANALYTICS_TAG = "analyticstag";
+
+        String LOADER_ID = "loaderid";
+
+        String EMPTY_STRING_ID = "emptyid";
     }
 
     @Override
@@ -70,7 +74,7 @@ public class UpcomingFragment extends ListFragment implements
 
         getListView().setSelector(R.drawable.list_selector_holo_dark);
 
-        setEmptyText(getString(R.string.noupcoming));
+        setEmptyText(getString(getArguments().getInt(InitBundle.EMPTY_STRING_ID)));
 
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
