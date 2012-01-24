@@ -5,6 +5,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
+import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 
 import android.content.Context;
@@ -61,8 +62,11 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
         mTabsAdapter.addTab(recentTab, UpcomingFragment.class, argsRecent);
 
         // trakt friends tab
-        ActionBar.Tab friendsTab = actionBar.newTab().setText(R.string.friends);
-        mTabsAdapter.addTab(friendsTab, TraktFriendsFragment.class, null);
+        final boolean isTraktSetup = ShareUtils.isTraktCredentialsValid(this);
+        if (isTraktSetup) {
+            ActionBar.Tab friendsTab = actionBar.newTab().setText(R.string.friends);
+            mTabsAdapter.addTab(friendsTab, TraktFriendsFragment.class, null);
+        }
 
         if (savedInstanceState != null) {
             actionBar.setSelectedNavigationItem(savedInstanceState.getInt("index"));
