@@ -236,7 +236,7 @@ public class ShareUtils {
             new Thread(new Runnable() {
                 public void run() {
                     try {
-                        GetGlue.checkIn(prefs, imdbId, comment);
+                        GetGlue.checkIn(prefs, imdbId, comment, activity);
                         activity.runOnUiThread(new Runnable() {
                             public void run() {
                                 Toast.makeText(activity,
@@ -587,7 +587,7 @@ public class ShareUtils {
                             // use a separate ServiceManager here to avoid
                             // setting wrong credentials
                             final ServiceManager manager = new ServiceManager();
-                            manager.setApiKey(Constants.TRAKT_API_KEY);
+                            manager.setApiKey(getResources().getString(R.string.trakt_apikey));
                             manager.setAuthentication(username, passwordHash);
                             Response response = null;
 

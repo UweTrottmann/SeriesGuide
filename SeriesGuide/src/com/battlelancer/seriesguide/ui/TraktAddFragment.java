@@ -82,7 +82,7 @@ public class TraktAddFragment extends AddFragment {
 
             if (type == TRENDING) {
                 try {
-                    shows = Utils.getServiceManager().showService().trending().fire();
+                    shows = Utils.getServiceManager(mContext).showService().trending().fire();
                 } catch (Exception e) {
                     // we don't care
                 }

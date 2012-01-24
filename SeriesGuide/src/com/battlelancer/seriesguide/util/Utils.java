@@ -561,7 +561,8 @@ public class Utils {
             boolean refreshCredentials) throws Exception {
         if (sServiceManagerWithAuthInstance == null) {
             sServiceManagerWithAuthInstance = new ServiceManager();
-            sServiceManagerWithAuthInstance.setApiKey(Constants.TRAKT_API_KEY);
+            sServiceManagerWithAuthInstance.setApiKey(context.getResources().getString(
+                    R.string.trakt_apikey));
             // this made some problems, so sadly disabled for now
             // manager.setUseSsl(true);
 
@@ -586,12 +587,14 @@ public class Utils {
      * Get a trakt-java ServiceManager with just our API key set. NO user auth
      * data.
      * 
+     * @param context
      * @return
      */
-    public static synchronized ServiceManager getServiceManager() {
+    public static synchronized ServiceManager getServiceManager(Context context) {
         if (sServiceManagerInstance == null) {
             sServiceManagerInstance = new ServiceManager();
-            sServiceManagerInstance.setApiKey(Constants.TRAKT_API_KEY);
+            sServiceManagerInstance.setApiKey(context.getResources().getString(
+                    R.string.trakt_apikey));
             // this made some problems, so sadly disabled for now
             // manager.setUseSsl(true);
         }

@@ -1,7 +1,7 @@
 
 package com.battlelancer.thetvdbapi;
 
-import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract;
@@ -144,8 +144,8 @@ public class TheTVDB {
      */
     public static Series fetchShow(String seriesid, String language, Context context)
             throws SAXException {
-        String url = xmlMirror + Constants.API_KEY + "/series/" + seriesid + "/"
-                + (language != null ? language + ".xml" : "");
+        String url = xmlMirror + context.getResources().getString(R.string.tvdb_apikey)
+                + "/series/" + seriesid + "/" + (language != null ? language + ".xml" : "");
 
         return parseShow(url, context);
     }
@@ -329,7 +329,8 @@ public class TheTVDB {
 
     public static ArrayList<ContentProviderOperation> importShowEpisodes(String seriesid,
             long showAirtime, String language, Context context) throws SAXException {
-        String url = xmlMirror + Constants.API_KEY + "/series/" + seriesid + "/all/"
+        String url = xmlMirror + context.getResources().getString(R.string.tvdb_apikey)
+                + "/series/" + seriesid + "/all/"
                 + (language != null ? language + ".zip" : "en.zip");
 
         return parseEpisodes(url, seriesid, showAirtime, context);
