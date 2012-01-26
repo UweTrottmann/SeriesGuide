@@ -178,7 +178,7 @@ public class TraktFriendsFragment extends ListFragment implements
                         for (ActivityItem activity : friend.watched) {
 
                             // is this an episode?
-                            if (activity.type == ActivityType.Episode) {
+                            if (activity != null && activity.type == ActivityType.Episode) {
 
                                 // is this activity no longer than 4 weeks old?
                                 if (activity.watched.getTime() > System.currentTimeMillis()
