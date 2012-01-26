@@ -334,10 +334,9 @@ public class Utils {
             return episodeAirtime;
 
         } catch (ParseException e) {
-            e.printStackTrace();
+            // we just return -1 then
+            return -1;
         }
-
-        return -1;
     }
 
     /**
