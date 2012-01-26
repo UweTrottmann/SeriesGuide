@@ -83,6 +83,10 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final int CONTEXT_UNFAVORITE = 205;
 
+    private static final int CONTEXT_HIDE = 206;
+
+    private static final int CONTEXT_UNHIDE = 207;
+
     private static final int CONFIRM_DELETE_DIALOG = 304;
 
     private static final int SORT_DIALOG = 306;
@@ -104,6 +108,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private static final int SHOWFILTER_FAVORITES = 1;
 
     private static final int SHOWFILTER_UNSEENEPISODES = 2;
+
+    private static final int SHOWFILTER_HIDDEN = 3;
 
     private static final String FILTER_ID = "filterid";
 
@@ -147,7 +153,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(this,
-                R.array.showfilter_list, R.layout.abs__simple_spinner_item);
+                R.array.showfilter_list, android.R.layout.simple_dropdown_item_1line);
         mActionBarList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         actionBar.setListNavigationCallbacks(mActionBarList, this);
 
@@ -203,9 +209,10 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         super.onStart();
         AnalyticsUtils.getInstance(this).trackPageView("/Shows");
 
-        // auto-update
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
+
+        // auto-update
         final boolean isAutoUpdateEnabled = prefs.getBoolean(SeriesGuidePreferences.KEY_AUTOUPDATE,
                 true);
         if (isAutoUpdateEnabled && !TaskManager.getInstance(this).isUpdateTaskRunning(false)) {
@@ -218,15 +225,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 // allow auto-update only on allowed connection
                 final boolean isAutoUpdateWlanOnly = prefs.getBoolean(
                         SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
-                boolean isOnAllowedConnection = true;
-                if (isAutoUpdateWlanOnly) {
-                    // abort if we are not on WiFi
-                    if (!Utils.isWifiConnected(this)) {
-                        isOnAllowedConnection = false;
-                    }
-                }
-
-                if (isOnAllowedConnection) {
+                if (!isAutoUpdateWlanOnly || Utils.isWifiConnected(this)) {
                     performUpdateTask(false, null);
                 }
             }
@@ -246,6 +245,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     protected void onDestroy() {
         super.onDestroy();
         onCancelTasks();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.unregisterOnSharedPreferenceChangeListener(mPrefsListener);
     }
 
     @Override
@@ -376,7 +377,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         final Cursor show = getContentResolver().query(Shows.buildShowUri(String.valueOf(info.id)),
                 new String[] {
-                    Shows.FAVORITE
+                        Shows.FAVORITE, Shows.HIDDEN
                 }, null, null, null);
         show.moveToFirst();
         if (show.getInt(0) == 0) {
@@ -384,11 +385,16 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         } else {
             menu.add(0, CONTEXT_UNFAVORITE, 0, R.string.context_unfavorite);
         }
+        if (show.getInt(1) == 0) {
+            menu.add(0, CONTEXT_HIDE, 3, R.string.context_hide);
+        } else {
+            menu.add(0, CONTEXT_UNHIDE, 3, R.string.context_unhide);
+        }
         show.close();
 
         menu.add(0, CONTEXT_MARKNEXT, 1, R.string.context_marknext);
         menu.add(0, CONTEXT_UPDATESHOW_ID, 2, R.string.context_updateshow);
-        menu.add(0, CONTEXT_DELETE_ID, 3, R.string.delete_show);
+        menu.add(0, CONTEXT_DELETE_ID, 4, R.string.delete_show);
     }
 
     @Override
@@ -414,6 +420,26 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 getContentResolver().update(Shows.buildShowUri(String.valueOf(info.id)), values,
                         null, null);
                 Toast.makeText(this, getString(R.string.unfavorited), Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            case CONTEXT_HIDE: {
+                fireTrackerEvent("Hidden show");
+
+                ContentValues values = new ContentValues();
+                values.put(Shows.HIDDEN, true);
+                getContentResolver().update(Shows.buildShowUri(String.valueOf(info.id)), values,
+                        null, null);
+                Toast.makeText(this, getString(R.string.hidden), Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            case CONTEXT_UNHIDE: {
+                fireTrackerEvent("Unhidden show");
+
+                ContentValues values = new ContentValues();
+                values.put(Shows.HIDDEN, false);
+                getContentResolver().update(Shows.buildShowUri(String.valueOf(info.id)), values,
+                        null, null);
+                Toast.makeText(this, getString(R.string.unhidden), Toast.LENGTH_SHORT).show();
                 return true;
             }
             case CONTEXT_DELETE_ID:
@@ -489,10 +515,10 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
                 // already fail if there is no external storage
                 if (!Utils.isExtStorageAvailable()) {
-                    Toast.makeText(this, getString(R.string.update_nosdcard), Toast.LENGTH_LONG)
+                    Toast.makeText(this, getString(R.string.arttask_nosdcard), Toast.LENGTH_LONG)
                             .show();
                 } else {
-                    Toast.makeText(this, getString(R.string.update_inbackground), Toast.LENGTH_LONG)
+                    Toast.makeText(this, getString(R.string.arttask_start), Toast.LENGTH_LONG)
                             .show();
                     mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
                 }
@@ -662,8 +688,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                     AnalyticsUtils.getInstance(ShowsActivity.this).trackEvent("Shows",
                             "Fetch missing posters", "Incomplete", 0);
 
-                    Toast.makeText(getApplicationContext(),
-                            getString(R.string.imagedownload_incomplete), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.arttask_incomplete),
+                            Toast.LENGTH_LONG).show();
                     break;
             }
 
@@ -737,14 +763,16 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         updateSorting(prefs);
 
         // between-version upgrade code
-        int lastVersion = prefs.getInt(SeriesGuidePreferences.KEY_VERSION, -1);
+        final int lastVersion = prefs.getInt(SeriesGuidePreferences.KEY_VERSION, -1);
         try {
-            int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
+            final int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
                     PackageManager.GET_META_DATA).versionCode;
             if (currentVersion > lastVersion) {
+                Editor editor = prefs.edit();
+
                 if (lastVersion < VER_TRAKT_SEC_CHANGES) {
-                    prefs.edit().putString(SeriesGuidePreferences.KEY_TRAKTPWD, null).commit();
-                    prefs.edit().putString(SeriesGuidePreferences.KEY_SECURE, null).commit();
+                    editor.putString(SeriesGuidePreferences.KEY_TRAKTPWD, null);
+                    editor.putString(SeriesGuidePreferences.KEY_SECURE, null);
                 }
 
                 // BETA warning dialog switch
@@ -752,8 +780,11 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 // showDialog(WHATS_NEW_DIALOG);
 
                 // set this as lastVersion
-                prefs.edit().putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion).commit();
+                editor.putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion);
+
+                editor.commit();
             }
+
         } catch (NameNotFoundException e) {
             // this should never happen
         }
@@ -793,19 +824,33 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         int filterId = args.getInt(FILTER_ID);
         switch (filterId) {
             case SHOWFILTER_ALL:
-                // do nothing, leave selection null
+                selection = Shows.HIDDEN + "=?";
+                selectionArgs = new String[] {
+                    "0"
+                };
                 break;
             case SHOWFILTER_FAVORITES:
-                selection = Shows.FAVORITE + "=?";
+                selection = Shows.FAVORITE + "=? AND " + Shows.HIDDEN + "=?";
                 selectionArgs = new String[] {
-                    "1"
+                        "1", "0"
                 };
                 break;
             case SHOWFILTER_UNSEENEPISODES:
-                selection = Shows.NEXTAIRDATE + "!=? AND julianday(" + Shows.NEXTAIRDATE
-                        + ") <= julianday('now')";
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                int upcomingLimit = prefs.getInt(SeriesGuidePreferences.KEY_UPCOMING_LIMIT, 1);
+
+                selection = Shows.NEXTAIRDATE + "!=? AND " + Shows.NEXTAIRDATE + " <=? AND "
+                        + Shows.HIDDEN + "=?";
+                String nowIn24Hours = String.valueOf(System.currentTimeMillis() + upcomingLimit
+                        * DateUtils.DAY_IN_MILLIS);
                 selectionArgs = new String[] {
-                    DBUtils.UNKNOWN_NEXT_AIR_DATE
+                        DBUtils.UNKNOWN_NEXT_AIR_DATE, nowIn24Hours, "0"
+                };
+                break;
+            case SHOWFILTER_HIDDEN:
+                selection = Shows.HIDDEN + "=?";
+                selectionArgs = new String[] {
+                    "1"
                 };
                 break;
         }

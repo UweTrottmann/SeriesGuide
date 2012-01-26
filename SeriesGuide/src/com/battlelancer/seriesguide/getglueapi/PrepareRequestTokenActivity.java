@@ -1,7 +1,6 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
-import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.ShareUtils;
@@ -15,6 +14,7 @@ import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -48,8 +48,10 @@ public class PrepareRequestTokenActivity extends BaseActivity {
         actionBar.setDisplayShowTitleEnabled(true);
 
         try {
-            this.consumer = new CommonsHttpOAuthConsumer(Constants.CONSUMER_KEY,
-                    Constants.CONSUMER_SECRET);
+            Resources res = getResources();
+            this.consumer = new CommonsHttpOAuthConsumer(
+                    res.getString(R.string.getglue_consumer_key),
+                    res.getString(R.string.getglue_consumer_secret));
             this.provider = new CommonsHttpOAuthProvider(GetGlue.REQUEST_URL, GetGlue.ACCESS_URL,
                     GetGlue.AUTHORIZE_URL);
 
@@ -131,7 +133,7 @@ public class PrepareRequestTokenActivity extends BaseActivity {
             String comment = extras.getString(ShareUtils.KEY_GETGLUE_COMMENT);
             String imdbId = extras.getString(ShareUtils.KEY_GETGLUE_IMDBID);
 
-            GetGlue.checkIn(prefs, imdbId, comment);
+            GetGlue.checkIn(prefs, imdbId, comment, PrepareRequestTokenActivity.this);
         }
 
         @Override

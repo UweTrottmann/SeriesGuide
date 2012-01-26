@@ -15,6 +15,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -23,7 +25,16 @@ import android.widget.TextView;
 
 public class SearchActivity extends ListActivity {
 
-    private static final String TAG = "SearchSeriesGuide";
+    private static final String TAG = "SearchActivity";
+
+    /**
+     * Google Analytics helper method for easy event tracking.
+     * 
+     * @param label
+     */
+    public void fireTrackerEvent(String label) {
+        AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +42,12 @@ public class SearchActivity extends ListActivity {
         setContentView(R.layout.search);
         handleIntent(getIntent());
 
-        setTitle(getString(R.string.search_title));
+        // ABS 4
+        // final ActionBar actionBar = getSupportActionBar();
+        // actionBar.setHomeButtonEnabled(true);
+        // setTitle(R.string.search_title);
+        // actionBar.setTitle(R.string.search_title);
+        // actionBar.setDisplayShowTitleEnabled(true);
     }
 
     @Override
@@ -47,6 +63,8 @@ public class SearchActivity extends ListActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             AnalyticsUtils.getInstance(this).trackEvent(TAG, "Search action", "Search", 0);
             String query = intent.getStringExtra(SearchManager.QUERY);
+         // ABS 4
+//            getSupportActionBar().setSubtitle("\"" + query + "\"");
             doMySearch(query);
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
             AnalyticsUtils.getInstance(this).trackEvent(TAG, "Search action", "View", 0);
@@ -75,7 +93,7 @@ public class SearchActivity extends ListActivity {
         resultsAdapter.setViewBinder(new ViewBinder() {
 
             public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-                // disabled because it causes to much CPU stress
+                // disabled because it causes too much CPU stress
                 // if (columnIndex ==
                 // cursor.getColumnIndexOrThrow(SeriesGuideData.EPISODE_OVERVIEW))
                 // {
@@ -124,6 +142,30 @@ public class SearchActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         onShowEpisodeDetails(String.valueOf(id));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                final Intent intent = new Intent(this, ShowsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                overridePendingTransition(R.anim.home_enter, R.anim.home_exit);
+                return true;
+            case R.id.menu_search:
+                fireTrackerEvent("Search");
+
+                onSearchRequested();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void onShowEpisodeDetails(String id) {

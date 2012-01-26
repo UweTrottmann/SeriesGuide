@@ -1,7 +1,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -13,8 +12,11 @@ import com.battlelancer.seriesguide.util.Utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
@@ -35,9 +37,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+import java.util.Calendar;
 
 public class UpcomingFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnScrollListener {
@@ -52,16 +52,20 @@ public class UpcomingFragment extends ListFragment implements
 
     private boolean mBusy;
 
-    static UpcomingFragment newInstance(String query, String sortOrder, String analyticsTag,
-            int loaderId) {
-        UpcomingFragment f = new UpcomingFragment();
-        Bundle args = new Bundle();
-        args.putString("query", query);
-        args.putString("sortorder", sortOrder);
-        args.putString("analyticstag", analyticsTag);
-        args.putInt("loaderid", loaderId);
-        f.setArguments(args);
-        return f;
+    /**
+     * Data which has to be passed when creating {@link UpcomingFragment}. All
+     * Bundle extras are strings, except LOADER_ID and EMPTY_STRING_ID.
+     */
+    public interface InitBundle {
+        String QUERY = "query";
+
+        String SORTORDER = "sortorder";
+
+        String ANALYTICS_TAG = "analyticstag";
+
+        String LOADER_ID = "loaderid";
+
+        String EMPTY_STRING_ID = "emptyid";
     }
 
     @Override
@@ -70,7 +74,7 @@ public class UpcomingFragment extends ListFragment implements
 
         getListView().setSelector(R.drawable.list_selector_holo_dark);
 
-        setEmptyText(getString(R.string.noupcoming));
+        setEmptyText(getString(getArguments().getInt(InitBundle.EMPTY_STRING_ID)));
 
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
@@ -79,15 +83,39 @@ public class UpcomingFragment extends ListFragment implements
 
         setupAdapter();
 
-        getSupportActivity().getSupportLoaderManager().initLoader(
-                getArguments().getInt("loaderid"), null, this);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, isOnlyFavorites);
+        getSupportActivity().getSupportLoaderManager().initLoader(getLoaderId(), bundle, this);
+
+        prefs.registerOnSharedPreferenceChangeListener(mPrefListener);
     }
+
+    private final OnSharedPreferenceChangeListener mPrefListener = new OnSharedPreferenceChangeListener() {
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (key.equals(SeriesGuidePreferences.KEY_ONLYFAVORITES)) {
+                boolean isOnlyFavorites = sharedPreferences.getBoolean(key, false);
+                onRequery(isOnlyFavorites);
+            }
+        }
+    };
 
     @Override
     public void onStart() {
         super.onStart();
         final String tag = getArguments().getString("analyticstag");
         AnalyticsUtils.getInstance(getActivity()).trackPageView(tag);
+    }
+
+    @Override
+    public void onDestroy() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        prefs.unregisterOnSharedPreferenceChangeListener(mPrefListener);
+
+        super.onDestroy();
     }
 
     @Override
@@ -123,7 +151,7 @@ public class UpcomingFragment extends ListFragment implements
     private void setupAdapter() {
 
         String[] from = new String[] {
-                Episodes.TITLE, Episodes.WATCHED, Episodes.NUMBER, Episodes.FIRSTAIRED,
+                Episodes.TITLE, Episodes.WATCHED, Episodes.NUMBER, Episodes.FIRSTAIREDMS,
                 Shows.TITLE, Shows.NETWORK, Shows.POSTER
         };
         int[] to = new int[] {
@@ -174,18 +202,40 @@ public class UpcomingFragment extends ListFragment implements
         }
     }
 
+    public void onRequery(boolean isOnlyFavorites) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, isOnlyFavorites);
+        getLoaderManager().restartLoader(getLoaderId(), bundle, this);
+    }
+
+    private int getLoaderId() {
+        return getArguments().getInt("loaderid");
+    }
+
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        SimpleDateFormat pdtformat = Constants.theTVDBDateFormat;
-        pdtformat.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
-        final Date date = new Date();
-        final String today = pdtformat.format(date);
-        final String query = getArguments().getString("query");
+        Calendar cal = Calendar.getInstance();
+        // go an hour back in time, so episodes move to recent one hour late
+        cal.add(Calendar.HOUR_OF_DAY, -1);
+        final String recentThreshold = String.valueOf(cal.getTimeInMillis());
+
         final String sortOrder = getArguments().getString("sortorder");
+        String query = getArguments().getString("query");
+
+        boolean isOnlyFavorites = args.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
+        String[] selectionArgs;
+        if (isOnlyFavorites) {
+            query += UpcomingQuery.SELECTION_ONLYFAVORITES;
+            selectionArgs = new String[] {
+                    recentThreshold, "0", "1"
+            };
+        } else {
+            selectionArgs = new String[] {
+                    recentThreshold, "0"
+            };
+        }
+
         return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
-                UpcomingQuery.PROJECTION, query, new String[] {
-                    today
-                }, sortOrder);
-        // Episodes.FIRSTAIRED + ">=?"
+                UpcomingQuery.PROJECTION, query, selectionArgs, sortOrder);
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -196,16 +246,22 @@ public class UpcomingFragment extends ListFragment implements
         mAdapter.swapCursor(null);
     }
 
-    interface UpcomingQuery {
+    public interface UpcomingQuery {
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
-                Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIRED, Shows.TITLE, Shows.AIRSTIME,
-                Shows.NETWORK, Shows.POSTER
+                Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIREDMS, Shows.TITLE,
+                Shows.AIRSTIME, Shows.NETWORK, Shows.POSTER
         };
 
-        // String sortOrder = Episodes.FIRSTAIRED + " ASC," + Shows.AIRSTIME +
-        // " ASC," + Shows.TITLE
-        // + " ASC";
+        String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND " + Shows.HIDDEN + "=?";
+
+        String QUERY_RECENT = Episodes.FIRSTAIREDMS + "<? AND " + Shows.HIDDEN + "=?";
+
+        String SELECTION_ONLYFAVORITES = " AND " + Shows.FAVORITE + "=?";
+
+        String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC";
+
+        String SORTING_RECENT = Episodes.FIRSTAIREDMS + " DESC," + Shows.TITLE + " ASC";
 
         int _ID = 0;
 
@@ -217,7 +273,7 @@ public class UpcomingFragment extends ListFragment implements
 
         int SEASON = 4;
 
-        int FIRSTAIRED = 5;
+        int FIRSTAIREDMS = 5;
 
         int SHOW_TITLE = 6;
 
@@ -302,24 +358,22 @@ public class UpcomingFragment extends ListFragment implements
             viewHolder.number.setText(episodeString);
 
             // airdate
-            String airDate = mCursor.getString(UpcomingQuery.FIRSTAIRED);
-            if (airDate.length() != 0) {
-                viewHolder.airdate.setText(Utils.parseDateToLocalRelative(airDate,
-                        mCursor.getLong(UpcomingQuery.SHOW_AIRSTIME), getActivity()));
+            long airtime = mCursor.getLong(UpcomingQuery.FIRSTAIREDMS);
+            if (airtime != -1) {
+                viewHolder.airdate.setText(Utils.formatToTimeAndDay(airtime, mContext)[2]);
             } else {
                 viewHolder.airdate.setText("");
             }
 
             // network
-            // add airtime
             String network = "";
-            long airtime = mCursor.getLong(UpcomingQuery.SHOW_AIRSTIME);
-            String value = Utils.parseMillisecondsToTime(airtime, null, getActivity())[0];
-            if (value.length() != 0) {
-                network += value + " ";
+            // add airtime
+            if (airtime != -1) {
+                String[] timeAndDay = Utils.formatToTimeAndDay(airtime, mContext);
+                network += timeAndDay[1] + " " + timeAndDay[0] + " ";
             }
             // add network
-            value = mCursor.getString(UpcomingQuery.SHOW_NETWORK);
+            String value = mCursor.getString(UpcomingQuery.SHOW_NETWORK);
             if (value.length() != 0) {
                 network += getString(R.string.show_network) + " " + value;
             }

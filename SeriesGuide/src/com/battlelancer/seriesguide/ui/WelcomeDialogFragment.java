@@ -2,6 +2,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
 
 import android.content.Intent;
@@ -14,6 +15,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 public class WelcomeDialogFragment extends DialogFragment {
+
+    private static final String TAG = "WelcomeDialogFragment";
+
+    public void fireTrackerEvent(String label) {
+        AnalyticsUtils.getInstance(getActivity()).trackEvent(TAG, "Click", label, 0);
+    }
 
     public static WelcomeDialogFragment newInstance() {
         WelcomeDialogFragment f = new WelcomeDialogFragment();
@@ -32,6 +39,7 @@ public class WelcomeDialogFragment extends DialogFragment {
         v.findViewById(R.id.welcome_setuptrakt).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                fireTrackerEvent("Setup trakt account");
                 TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
                         .newInstance();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -41,6 +49,7 @@ public class WelcomeDialogFragment extends DialogFragment {
         v.findViewById(R.id.welcome_add).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                fireTrackerEvent("Start adding shows");
                 Intent i = new Intent(getActivity(), AddActivity.class);
                 startActivity(i);
                 dismiss();

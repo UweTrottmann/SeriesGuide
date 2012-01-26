@@ -9,18 +9,6 @@ import java.text.SimpleDateFormat;
 
 public class Constants {
 
-    /** THESE ARE NOT INCLUDED IN THE OPEN SOURCE CODE FOR SECURITY REASONS **/
-
-    public static final String API_KEY = "";
-
-    public static final String CONSUMER_KEY = "";
-
-    public static final String CONSUMER_SECRET = "";
-
-    public static final String TRAKT_API_KEY = "";
-
-    /** THESE ARE NOT INCLUDED IN THE OPEN SOURCE CODE FOR SECURITY REASONS **/
-
     public static final SimpleDateFormat theTVDBDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public static enum EpisodeSorting {

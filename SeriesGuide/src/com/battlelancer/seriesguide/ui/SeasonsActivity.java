@@ -2,9 +2,9 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.thetvdbapi.Series;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -28,6 +28,8 @@ public class SeasonsActivity extends BaseActivity {
         }
 
         final ActionBar actionBar = getSupportActionBar();
+        // ABS 4
+        // actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
 
         Bundle extras = getIntent().getExtras();

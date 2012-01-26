@@ -2,15 +2,15 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.thetvdbapi.ImageCache;
-import com.battlelancer.thetvdbapi.Series;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
@@ -24,6 +24,7 @@ import android.os.RemoteException;
 import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -32,10 +33,10 @@ public class DBUtils {
     static final String TAG = "SeriesDatabase";
 
     /**
-     * Use 9999 for unkown airdates/no next episodes, sorting then assumes year
-     * 9999 and sorts these last.
+     * Use 9223372036854775807 (Long.MAX_VALUE) for unknown airtime/no next
+     * episode so they will get sorted last.
      */
-    public static final String UNKNOWN_NEXT_AIR_DATE = "9999";
+    public static final String UNKNOWN_NEXT_AIR_DATE = "9223372036854775807";
 
     /**
      * Looks up the episodes of a given season and stores the count of already
@@ -97,46 +98,68 @@ public class DBUtils {
     }
 
     /**
-     * Returns all upcoming episodes together with their shows title, network,
-     * airtime and posterpath.
+     * Returns all episodes that air today or later. Using Pacific Time to
+     * determine today. Excludes shows that are hidden.
      * 
-     * @return Cursor including all upcoming episodes with show title, network,
-     *         airtime and posterpath.
+     * @return Cursor including episodes with show title, network, airtime and
+     *         posterpath.
      */
     public static Cursor getUpcomingEpisodes(Context context) {
-        Date date = new Date();
-        String today = Constants.theTVDBDateFormat.format(date);
+        Calendar cal = Calendar.getInstance();
+        // go an hour back in time, so episodes move to recent one hour late
+        cal.add(Calendar.HOUR_OF_DAY, -1);
+        final String recentThreshold = String.valueOf(cal.getTimeInMillis());
+        String query = UpcomingQuery.QUERY_UPCOMING;
 
-        String[] projection = new String[] {
-                Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
-                Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIRED, Shows.TITLE, Shows.AIRSTIME,
-                Shows.NETWORK, Shows.POSTER
-        };
-        String sortOrder = Episodes.FIRSTAIRED + " ASC," + Shows.AIRSTIME + " ASC," + Shows.TITLE
-                + " ASC";
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
+        String[] selectionArgs;
+        if (isOnlyFavorites) {
+            query += UpcomingQuery.SELECTION_ONLYFAVORITES;
+            selectionArgs = new String[] {
+                    recentThreshold, "0", "1"
+            };
+        } else {
+            selectionArgs = new String[] {
+                    recentThreshold, "0"
+            };
+        }
 
-        return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW, projection,
-                Episodes.FIRSTAIRED + ">=?", new String[] {
-                    today
-                }, sortOrder);
+        return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
+                UpcomingQuery.PROJECTION, query, selectionArgs, UpcomingQuery.SORTING_UPCOMING);
     }
 
+    /**
+     * Return all episodes that aired the day before and earlier. Using Pacific
+     * Time to determine today. Excludes shows that are hidden.
+     * 
+     * @param context
+     * @return Cursor including episodes with show title, network, airtime and
+     *         posterpath.
+     */
     public static Cursor getRecentEpisodes(Context context) {
-        Date date = new Date();
-        String today = Constants.theTVDBDateFormat.format(date);
+        Calendar cal = Calendar.getInstance();
+        // go an hour back in time, so episodes move to recent one hour late
+        cal.add(Calendar.HOUR_OF_DAY, -1);
+        final String recentThreshold = String.valueOf(cal.getTimeInMillis());
+        String query = UpcomingQuery.QUERY_RECENT;
 
-        String[] projection = new String[] {
-                Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
-                Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIRED, Shows.TITLE, Shows.AIRSTIME,
-                Shows.NETWORK, Shows.POSTER
-        };
-        String sortOrder = Episodes.FIRSTAIRED + " DESC," + Shows.AIRSTIME + " ASC," + Shows.TITLE
-                + " ASC";
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
+        String[] selectionArgs;
+        if (isOnlyFavorites) {
+            query += UpcomingQuery.SELECTION_ONLYFAVORITES;
+            selectionArgs = new String[] {
+                    recentThreshold, "0", "1"
+            };
+        } else {
+            selectionArgs = new String[] {
+                    recentThreshold, "0"
+            };
+        }
 
-        return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW, projection,
-                Episodes.FIRSTAIRED + "<?", new String[] {
-                    today
-                }, sortOrder);
+        return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
+                UpcomingQuery.PROJECTION, query, selectionArgs, UpcomingQuery.SORTING_RECENT);
     }
 
     /**
@@ -304,7 +327,6 @@ public class DBUtils {
         values.put(Shows.ACTORS, show.getActors());
         values.put(Shows.AIRSDAYOFWEEK, show.getAirsDayOfWeek());
         values.put(Shows.AIRSTIME, show.getAirsTime());
-        values.put(Shows.AIRTIME, show.getAirTime());
         values.put(Shows.FIRSTAIRED, show.getFirstAired());
         values.put(Shows.GENRES, show.getGenres());
         values.put(Shows.NETWORK, show.getNetwork());
@@ -431,11 +453,11 @@ public class DBUtils {
      */
     public static ContentProviderOperation buildEpisodeOp(ContentValues values, boolean isNew) {
         ContentProviderOperation op;
-        final String episodeId = values.getAsString(Episodes._ID);
         if (isNew) {
             op = ContentProviderOperation.newInsert(Episodes.CONTENT_URI).withValues(values)
                     .build();
         } else {
+            final String episodeId = values.getAsString(Episodes._ID);
             op = ContentProviderOperation.newUpdate(Episodes.buildEpisodeUri(episodeId))
                     .withValues(values).build();
         }
@@ -478,67 +500,54 @@ public class DBUtils {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final boolean onlyFutureEpisodes = prefs.getBoolean(
                 SeriesGuidePreferences.KEY_ONLY_FUTURE_EPISODES, false);
-        final boolean onlySeasonEpisodes = prefs.getBoolean(
+        final boolean isNoSpecialEpisodes = prefs.getBoolean(
                 SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES, false);
 
-        final String[] projection = new String[] {
-                Episodes._ID, Episodes.FIRSTAIRED, Episodes.SEASON, Episodes.NUMBER, Episodes.TITLE
-        };
-        final String sortBy = Episodes.FIRSTAIRED + " ASC";
         final StringBuilder selection = new StringBuilder();
         String[] selectionArgs = null;
-
         selection.append(Episodes.WATCHED).append("=0");
-        if (onlySeasonEpisodes) {
+        if (isNoSpecialEpisodes) {
             selection.append(" AND ").append(Episodes.SEASON).append("!=0");
         }
         if (onlyFutureEpisodes) {
-            selection.append(" AND ").append(Episodes.FIRSTAIRED).append(">=?");
-            Date date = new Date();
-            String today = Constants.theTVDBDateFormat.format(date);
+            selection.append(" AND ").append(Episodes.FIRSTAIREDMS).append(">=?");
+            String now = String.valueOf(System.currentTimeMillis());
             selectionArgs = new String[] {
-                today
+                now
             };
         } else {
-            selection.append(" AND ").append(Episodes.FIRSTAIRED).append(" like '%-%'");
+            // only get episodes which have an air date
+            // selection.append(" AND ").append(Episodes.FIRSTAIRED).append(" like '%-%'");
+            selection.append(" AND ").append(Episodes.FIRSTAIREDMS).append("!=-1");
         }
 
         final Cursor unwatched = context.getContentResolver().query(
-                Episodes.buildEpisodesOfShowUri(id), projection, selection.toString(),
-                selectionArgs, sortBy);
+                Episodes.buildEpisodesOfShowUri(id), NextEpisodeQuery.PROJECTION,
+                selection.toString(), selectionArgs, NextEpisodeQuery.SORTING);
 
         // maybe there are no episodes due to errors, or airdates are just
-        // unknown ("")
+        // unknown (they are -1 which we filtered out above)
         long episodeid = 0;
         final ContentValues update = new ContentValues();
+
         if (unwatched.getCount() != 0) {
             unwatched.moveToFirst();
 
             // nexttext (0x12 Episode)
-            final String season = unwatched.getString(unwatched
-                    .getColumnIndexOrThrow(Episodes.SEASON));
-            final String number = unwatched.getString(unwatched
-                    .getColumnIndexOrThrow(Episodes.NUMBER));
-            final String title = unwatched.getString(unwatched
-                    .getColumnIndexOrThrow(Episodes.TITLE));
-            String nextEpisodeString = Utils.getNextEpisodeString(prefs, season, number, title);
+            final String season = unwatched.getString(NextEpisodeQuery.SEASON);
+            final String number = unwatched.getString(NextEpisodeQuery.NUMBER);
+            final String title = unwatched.getString(NextEpisodeQuery.TITLE);
+            final String nextEpisodeString = Utils.getNextEpisodeString(prefs, season, number,
+                    title);
 
             // nextairdatetext
-            String nextAirdateString = "";
-            final String firstAired = unwatched.getString(unwatched
-                    .getColumnIndexOrThrow(Episodes.FIRSTAIRED));
-            if (firstAired.length() != 0) {
-                final Series show = getShow(context, id);
-                if (show != null) {
-                    nextAirdateString += Utils.parseDateToLocalRelative(firstAired,
-                            show.getAirsTime(), context);
-                }
-            }
+            final long airtime = unwatched.getLong(1);
+            final String[] dayAndTimes = Utils.formatToTimeAndDay(airtime, context);
+            final String nextAirdateString = dayAndTimes[2] + " (" + dayAndTimes[1] + ")";
 
-            episodeid = unwatched.getLong(unwatched.getColumnIndexOrThrow(Episodes._ID));
+            episodeid = unwatched.getLong(NextEpisodeQuery._ID);
             update.put(Shows.NEXTEPISODE, episodeid);
-            update.put(Shows.NEXTAIRDATE,
-                    unwatched.getString(unwatched.getColumnIndexOrThrow(Episodes.FIRSTAIRED)));
+            update.put(Shows.NEXTAIRDATE, unwatched.getString(NextEpisodeQuery.FIRSTAIREDMS));
             update.put(Shows.NEXTTEXT, nextEpisodeString);
             update.put(Shows.NEXTAIRDATETEXT, nextAirdateString);
         } else {
@@ -547,11 +556,31 @@ public class DBUtils {
             update.put(Shows.NEXTTEXT, "");
             update.put(Shows.NEXTAIRDATETEXT, "");
         }
+
         unwatched.close();
 
+        // update the show with the new next episode values
         context.getContentResolver().update(Shows.buildShowUri(id), update, null, null);
 
         return episodeid;
     }
 
+    private interface NextEpisodeQuery {
+        String[] PROJECTION = new String[] {
+                Episodes._ID, Episodes.FIRSTAIREDMS, Episodes.SEASON, Episodes.NUMBER,
+                Episodes.TITLE
+        };
+
+        final String SORTING = Episodes.FIRSTAIREDMS + " ASC";
+
+        int _ID = 0;
+
+        int FIRSTAIREDMS = 1;
+
+        int SEASON = 2;
+
+        int NUMBER = 3;
+
+        int TITLE = 4;
+    }
 }

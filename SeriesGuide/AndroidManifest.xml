@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="auto"
     package="com.battlelancer.seriesguide.beta"
-    android:versionCode="149"
-    android:versionName="2.5.1beta" >
+    android:versionCode="150"
+    android:versionName="2.5.2beta" >
 
     <uses-feature
         android:name="android.hardware.touchscreen"
@@ -182,7 +182,7 @@
 
     <uses-sdk
         android:minSdkVersion="7"
-        android:targetSdkVersion="14" />
+        android:targetSdkVersion="15" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />

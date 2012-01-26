@@ -2,7 +2,7 @@
 <resources>
 
     <dimen name="body_padding">5dp</dimen>
-    <dimen name="body_padding_large">5dp</dimen>
+    <dimen name="body_padding_large">10dp</dimen>
     <dimen name="text_size_xsmall">12sp</dimen>
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_xmedium">16sp</dimen>

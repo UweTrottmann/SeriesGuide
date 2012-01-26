@@ -2,8 +2,10 @@
 <resources>
 
     <style name="SeriesGuideTheme" parent="Theme.Sherlock">
-        <item name="abDivider">@null</item>
-        <item name="selectableItemBackground">@drawable/list_selector_holo_dark</item>
+        <item name="vpiCirclePageIndicatorStyle">@style/Widget.CirclePageIndicator</item>
+        <item name="vpiTitlePageIndicatorStyle">@style/Widget.TitlePageIndicator</item>
+        <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
+        <item name="vpiTabTextStyle">@style/Widget.TabPageIndicator.Text</item>
     </style>
 
     <style name="Header">
@@ -40,9 +42,7 @@
     <style name="HoloCompatButton">
         <item name="android:background">@drawable/btn_default_holo_dark</item>
         <item name="android:textColor">@color/button_text</item>
-    </style>
-
-    <style name="HoloCompatButton.Small">
+        <item name="android:textSize">@dimen/text_size_xsmall</item>
         <item name="android:layout_height">30dp</item>
         <item name="android:layout_width">wrap_content</item>
     </style>

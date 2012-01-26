@@ -22,6 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@+id/searchbutton"
+                android:contentDescription="@string/search_hint_add"
                 android:hint="@string/search_hint_add"
                 android:imeOptions="actionSearch"
                 android:inputType="text" />
@@ -32,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/btn_default_holo_dark"
+                android:contentDescription="@string/search_button"
                 android:src="@drawable/ic_action_search" />
         </RelativeLayout>
 

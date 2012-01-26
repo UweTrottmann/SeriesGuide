@@ -1,8 +1,8 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.SearchResult;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;

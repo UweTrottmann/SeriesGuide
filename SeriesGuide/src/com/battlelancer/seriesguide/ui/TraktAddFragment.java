@@ -2,8 +2,8 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.SearchResult;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.entities.TvShow;
 
@@ -82,7 +82,7 @@ public class TraktAddFragment extends AddFragment {
 
             if (type == TRENDING) {
                 try {
-                    shows = Utils.getServiceManager().showService().trending().fire();
+                    shows = Utils.getServiceManager(mContext).showService().trending().fire();
                 } catch (Exception e) {
                     // we don't care
                 }

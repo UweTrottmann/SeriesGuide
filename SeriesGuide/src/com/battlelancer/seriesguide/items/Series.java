@@ -1,5 +1,5 @@
 
-package com.battlelancer.thetvdbapi;
+package com.battlelancer.seriesguide.items;
 
 public class Series {
 
@@ -26,8 +26,6 @@ public class Series {
     private String airsDayOfWeek;
 
     private long airsTime;
-
-    private String airTime;
 
     private String contentRating;
 
@@ -228,14 +226,6 @@ public class Series {
 
     public long getNextEpisode() {
         return nextEpisode;
-    }
-
-    public void setAirTime(String airTime) {
-        this.airTime = airTime;
-    }
-
-    public String getAirTime() {
-        return airTime;
     }
 
 }

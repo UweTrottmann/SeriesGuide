@@ -12,10 +12,12 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -24,6 +26,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -33,9 +36,11 @@ import android.support.v4.view.MenuItem;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -114,39 +119,69 @@ public class EpisodeDetailsFragment extends ListFragment implements
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, android.view.MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.episodedetails_menu, menu);
+
+        // use an appropriate quick share button
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        int lastShareAction = prefs.getInt(SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
+
+        MenuItem shareAction = menu.findItem(R.id.menu_quickshare);
+        if (lastShareAction != -1) {
+            ShareMethod shareMethod = ShareMethod.values()[lastShareAction];
+            shareAction.setTitle(shareMethod.titleRes);
+            shareAction.setIcon(shareMethod.drawableRes);
+        } else {
+            shareAction.setEnabled(false);
+            shareAction.setVisible(false);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_togglemark:
+            case R.id.menu_togglemark: {
                 fireTrackerEvent("Toggle watched");
 
                 onToggleWatchState();
                 break;
-            case R.id.menu_shareepisode: {
-                fireTrackerEvent("Share episode");
+            }
+            case R.id.menu_quickshare: {
+                final SharedPreferences prefs = PreferenceManager
+                        .getDefaultSharedPreferences(getActivity());
+                int shareMethodIndex = prefs.getInt(
+                        SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
+                ShareMethod shareMethod = ShareMethod.values()[shareMethodIndex];
 
-                final Cursor episode = (Cursor) getListAdapter().getItem(0);
-                episode.moveToFirst();
-                Bundle shareData = new Bundle();
+                fireTrackerEvent("Quick share (" + shareMethod.name() + ")");
 
-                String episodestring = ShareUtils.onCreateShareString(getActivity(), episode);
-                String sharestring = getString(R.string.share_checkout);
-                sharestring += " \"" + episode.getString(EpisodeDetailsQuery.SHOW_TITLE);
-                sharestring += " - " + episodestring + "\" via @SeriesGuide";
-                shareData.putString(ShareItems.EPISODESTRING, episodestring);
-                shareData.putString(ShareItems.SHARESTRING, sharestring);
-                shareData.putString(ShareItems.IMDBID,
-                        episode.getString(EpisodeDetailsQuery.SHOW_IMDBID));
-                shareData.putInt(ShareItems.EPISODE, episode.getInt(EpisodeDetailsQuery.NUMBER));
-                shareData.putInt(ShareItems.SEASON, episode.getInt(EpisodeDetailsQuery.SEASON));
-                shareData
-                        .putInt(ShareItems.TVDBID, episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID));
-                ShareUtils.showShareDialog(getFragmentManager(), shareData);
+                onShareEpisode(shareMethod, false);
+                break;
+            }
+            case R.id.menu_checkin_getglue: {
+                fireTrackerEvent("Check In (GetGlue)");
+                onShareEpisode(ShareMethod.CHECKIN_GETGLUE, true);
+                break;
+            }
+            case R.id.menu_checkin_trakt: {
+                fireTrackerEvent("Check In (trakt)");
+                onShareEpisode(ShareMethod.CHECKIN_TRAKT, true);
+                break;
+            }
+            case R.id.menu_markseen_trakt: {
+                fireTrackerEvent("Mark seen (trakt)");
+                onShareEpisode(ShareMethod.MARKSEEN_TRAKT, true);
+                break;
+            }
+            case R.id.menu_rate_trakt: {
+                fireTrackerEvent("Rate (trakt)");
+                onShareEpisode(ShareMethod.RATE_TRAKT, true);
+                break;
+            }
+            case R.id.menu_share_others: {
+                fireTrackerEvent("Share (apps)");
+                onShareEpisode(ShareMethod.OTHER_SERVICES, true);
                 break;
             }
             case R.id.menu_addevent: {
@@ -155,12 +190,11 @@ public class EpisodeDetailsFragment extends ListFragment implements
                 final Cursor episode = (Cursor) getListAdapter().getItem(0);
                 episode.moveToFirst();
                 final String showTitle = episode.getString(EpisodeDetailsQuery.SHOW_TITLE);
-                final String airDate = episode.getString(EpisodeDetailsQuery.FIRSTAIRED);
-                final long airsTime = episode.getLong(EpisodeDetailsQuery.SHOW_AIRSTIME);
-                final String runTime = episode.getString(EpisodeDetailsQuery.SHOW_RUNTIME);
                 final String episodestring = ShareUtils.onCreateShareString(getActivity(), episode);
-                ShareUtils.onAddCalendarEvent(getActivity(), showTitle, episodestring, airDate,
-                        airsTime, runTime);
+                final long airtime = episode.getLong(EpisodeDetailsQuery.FIRSTAIREDMS);
+                final String runTime = episode.getString(EpisodeDetailsQuery.SHOW_RUNTIME);
+                ShareUtils.onAddCalendarEvent(getActivity(), showTitle, episodestring, airtime,
+                        runTime);
                 break;
             }
             default:
@@ -169,11 +203,36 @@ public class EpisodeDetailsFragment extends ListFragment implements
         return super.onOptionsItemSelected(item);
     }
 
+    private void onShareEpisode(ShareMethod shareMethod, boolean isInvalidateOptionsMenu) {
+        final Cursor episode = (Cursor) getListAdapter().getItem(0);
+        episode.moveToFirst();
+        Bundle shareData = new Bundle();
+
+        String episodestring = ShareUtils.onCreateShareString(getActivity(), episode);
+        String sharestring = getString(R.string.share_checkout);
+        sharestring += " \"" + episode.getString(EpisodeDetailsQuery.SHOW_TITLE);
+        sharestring += " - " + episodestring + "\" via @SeriesGuide";
+        shareData.putString(ShareItems.EPISODESTRING, episodestring);
+        shareData.putString(ShareItems.SHARESTRING, sharestring);
+        shareData.putString(ShareItems.IMDBID, episode.getString(EpisodeDetailsQuery.SHOW_IMDBID));
+        shareData.putInt(ShareItems.EPISODE, episode.getInt(EpisodeDetailsQuery.NUMBER));
+        shareData.putInt(ShareItems.SEASON, episode.getInt(EpisodeDetailsQuery.SEASON));
+        shareData.putInt(ShareItems.TVDBID, episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID));
+
+        ShareUtils.onShareEpisode(getSupportActivity(), shareData, shareMethod);
+
+        if (isInvalidateOptionsMenu) {
+            // invalidate the options menu so a potentially new
+            // quick share action is displayed
+            getActivity().invalidateOptionsMenu();
+        }
+    }
+
     private void setupAdapter() {
 
         String[] from = new String[] {
                 Episodes.TITLE, Episodes.OVERVIEW, Episodes.NUMBER, Episodes.DVDNUMBER,
-                Episodes.FIRSTAIRED, Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
+                Episodes.FIRSTAIREDMS, Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
                 Episodes.RATING, Episodes.IMAGE, Shows.TITLE, Episodes.WATCHED, Shows.REF_SHOW_ID
 
         };
@@ -207,16 +266,13 @@ public class EpisodeDetailsFragment extends ListFragment implements
                     watchedState.setTextColor(isWatched ? Color.GREEN : Color.GRAY);
                     return true;
                 }
-                if (columnIndex == EpisodeDetailsQuery.FIRSTAIRED) {
+                if (columnIndex == EpisodeDetailsQuery.FIRSTAIREDMS) {
                     // First airdate
                     TextView airdate = (TextView) view;
-                    final String firstAired = episode.getString(EpisodeDetailsQuery.FIRSTAIRED);
-                    if (firstAired.length() != 0) {
-                        airdate.setText(getString(R.string.episode_firstaired)
-                                + " "
-                                + Utils.parseDateToLocal(firstAired,
-                                        episode.getLong(EpisodeDetailsQuery.SHOW_AIRSTIME),
-                                        getActivity()));
+                    final long airtime = episode.getLong(EpisodeDetailsQuery.FIRSTAIREDMS);
+                    if (airtime != -1) {
+                        airdate.setText(getString(R.string.episode_firstaired) + " "
+                                + Utils.formatToDate(airtime, getActivity()));
                     } else {
                         airdate.setText(getString(R.string.episode_firstaired) + " "
                                 + getString(R.string.episode_unkownairdate));
@@ -274,7 +330,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.SHOW_TITLE) {
-                    TextView showtitle = (TextView) view;
+                    Button showtitle = (Button) view;
                     showtitle.setText(episode.getString(EpisodeDetailsQuery.SHOW_TITLE));
                     final String showId = episode.getString(EpisodeDetailsQuery.REF_SHOW_ID);
                     showtitle.setOnClickListener(new OnClickListener() {
@@ -367,7 +423,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
 
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Shows.REF_SHOW_ID, Episodes.OVERVIEW,
-                Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIRED,
+                Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIREDMS,
                 Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
                 Tables.EPISODES + "." + Episodes.RATING, Episodes.IMAGE, Episodes.DVDNUMBER,
                 Episodes.TITLE, Shows.TITLE, Shows.AIRSTIME, Shows.IMDBID, Shows.RUNTIME,
@@ -386,7 +442,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
 
         int WATCHED = 5;
 
-        int FIRSTAIRED = 6;
+        int FIRSTAIREDMS = 6;
 
         int DIRECTORS = 7;
 

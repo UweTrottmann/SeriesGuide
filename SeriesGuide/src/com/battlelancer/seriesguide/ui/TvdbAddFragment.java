@@ -2,7 +2,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.thetvdbapi.SearchResult;
+import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
 import org.xml.sax.SAXException;
@@ -10,6 +10,7 @@ import org.xml.sax.SAXException;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.SupportActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,8 +53,7 @@ public class TvdbAddFragment extends AddFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // only create and fill a new adapter if there is no previous one
-        // (e.g. after config/page changed)
+        // create an empty adapter to avoid displaying a progress indicator
         if (mAdapter == null) {
             mAdapter = new ArrayAdapter<SearchResult>(getActivity(), R.layout.add_searchresult,
                     R.id.TextViewAddSearchResult, new ArrayList<SearchResult>());
@@ -88,7 +88,6 @@ public class TvdbAddFragment extends AddFragment {
     protected void search() {
         String query = mSearchBox.getText().toString().trim();
         if (query.length() == 0) {
-            Toast.makeText(getActivity(), R.string.search_noinput, Toast.LENGTH_LONG).show();
             return;
         }
         if (mSearchTask == null || mSearchTask.getStatus() == AsyncTask.Status.FINISHED) {
@@ -103,6 +102,15 @@ public class TvdbAddFragment extends AddFragment {
 
         public SearchTask(Context context) {
             mContext = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            final SupportActivity activity = getSupportActivity();
+            if (activity != null) {
+                // ABS 4
+                activity.setProgressBarIndeterminateVisibility(Boolean.TRUE);
+            }
         }
 
         @Override
@@ -124,6 +132,10 @@ public class TvdbAddFragment extends AddFragment {
 
         @Override
         protected void onPostExecute(List<SearchResult> result) {
+            final SupportActivity activity = getSupportActivity();
+            if (activity != null) {
+                activity.setProgressBarIndeterminateVisibility(Boolean.FALSE);
+            }
             if (result == null) {
                 Toast.makeText(mContext.getApplicationContext(), R.string.search_error,
                         Toast.LENGTH_LONG).show();

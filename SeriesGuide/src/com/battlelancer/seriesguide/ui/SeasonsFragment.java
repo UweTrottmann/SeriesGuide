@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Utils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -35,6 +36,7 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
@@ -120,7 +122,7 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, android.view.MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.seasonlist_menu, menu);
     }
@@ -266,11 +268,7 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
 
         Cursor item = (Cursor) (getListView().getItemAtPosition(position));
         String season = item.getString(item.getColumnIndexOrThrow(Seasons.COMBINED));
-        if (season.equals("0") || season.length() == 0) {
-            season = getString(R.string.specialseason);
-        } else {
-            season = getString(R.string.season) + " " + season;
-        }
+        season = Utils.getSeasonString(getActivity(), season);
 
         intent.putExtra(Intent.EXTRA_TITLE, season);
         startActivity(intent);

@@ -37,7 +37,7 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="in 5 days" />
+            android:text="in X days" />
 
         <TextView
             android:id="@+id/textViewUpcomingNetwork"
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/upcomingmeta"
         android:layout_toRightOf="@+id/poster"
-        android:text="Show Title" />
+        android:text="Placeholder" />
 
     <TextView
         android:id="@+id/textViewUpcomingNumber"
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewUpcomingShow"
         android:layout_toRightOf="@+id/poster"
-        android:text="4x12" />
+        android:text="XxXX" />
 
     <TextView
         android:id="@+id/textViewUpcomingEpisode"
@@ -73,6 +73,6 @@
         android:layout_below="@id/textViewUpcomingShow"
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@id/textViewUpcomingNumber"
-        android:text="Those who wandered upon us" />
+        android:text="Placeholder holding place" />
 
 </RelativeLayout>

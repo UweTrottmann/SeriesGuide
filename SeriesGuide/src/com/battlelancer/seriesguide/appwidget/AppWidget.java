@@ -17,9 +17,8 @@
 package com.battlelancer.seriesguide.appwidget;
 
 import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
@@ -125,45 +124,33 @@ public class AppWidget extends AppWidgetProvider {
 
                     RemoteViews item = new RemoteViews(context.getPackageName(), itemLayout);
                     // upcoming episode
-                    String season = upcomingEpisodes.getString(upcomingEpisodes
-                            .getColumnIndexOrThrow(Episodes.SEASON));
-                    String number = upcomingEpisodes.getString(upcomingEpisodes
-                            .getColumnIndexOrThrow(Episodes.NUMBER));
-                    String title = upcomingEpisodes.getString(upcomingEpisodes
-                            .getColumnIndexOrThrow(Episodes.TITLE));
+                    String season = upcomingEpisodes.getString(UpcomingQuery.SEASON);
+                    String number = upcomingEpisodes.getString(UpcomingQuery.NUMBER);
+                    String title = upcomingEpisodes.getString(UpcomingQuery.TITLE);
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     item.setTextViewText(R.id.textViewWidgetEpisode,
                             Utils.getNextEpisodeString(prefs, season, number, title));
 
-                    // add relative airdate
-                    long airtime = upcomingEpisodes.getLong(upcomingEpisodes
-                            .getColumnIndexOrThrow(Shows.AIRSTIME));
-                    value = Utils.parseDateToLocalRelative(
-                            upcomingEpisodes.getString(upcomingEpisodes
-                                    .getColumnIndexOrThrow(Episodes.FIRSTAIRED)), airtime, context);
+                    // relative airtime
+                    long airtime = upcomingEpisodes.getLong(UpcomingQuery.FIRSTAIREDMS);
+                    String[] dayAndTime = Utils.formatToTimeAndDay(airtime, context);
+                    value = dayAndTime[2] + " (" + dayAndTime[1] + ")";
                     item.setTextViewText(R.id.widgetAirtime, value);
 
-                    // add airtime and network (if any)
-                    value = "";
-                    if (airtime != -1) {
-                        value = Utils.parseMillisecondsToTime(airtime, null,
-                                getApplicationContext())[0];
-                    }
-                    String network = upcomingEpisodes.getString(upcomingEpisodes
-                            .getColumnIndexOrThrow(Shows.NETWORK));
+                    // absolute airtime and network (if any)
+                    value = dayAndTime[0];
+                    String network = upcomingEpisodes.getString(UpcomingQuery.SHOW_NETWORK);
                     if (network.length() != 0) {
                         value += " " + network;
                     }
                     item.setTextViewText(R.id.widgetNetwork, value);
 
                     // show name
-                    value = upcomingEpisodes.getString(upcomingEpisodes
-                            .getColumnIndexOrThrow(Shows.TITLE));
+                    value = upcomingEpisodes.getString(UpcomingQuery.SHOW_TITLE);
                     item.setTextViewText(R.id.textViewWidgetShow, value);
 
                     // show poster
-                    value = upcomingEpisodes.getString(upcomingEpisodes
-                            .getColumnIndexOrThrow(Shows.POSTER));
+                    value = upcomingEpisodes.getString(UpcomingQuery.SHOW_POSTER);
                     poster = null;
                     if (value.length() != 0) {
                         poster = imageCache.getThumb(value, false);

@@ -40,7 +40,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_PERSHOWUPDATEDATE = 22;
 
-    public static final int DATABASE_VERSION = DBVER_PERSHOWUPDATEDATE;
+    public static final int DBVER_HIDDENSHOWS = 23;
+
+    public static final int DBVER_AIRTIMEREFORM = 24;
+
+    public static final int DATABASE_VERSION = DBVER_AIRTIMEREFORM;
 
     public interface Tables {
         String SHOWS = "series";
@@ -76,7 +80,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + ShowsColumns.IMDBID + " TEXT DEFAULT ''," + ShowsColumns.FAVORITE
             + " INTEGER DEFAULT 0," + ShowsColumns.NEXTAIRDATETEXT + " TEXT DEFAULT ''" + ","
             + ShowsColumns.SYNCENABLED + " INTEGER DEFAULT 1" + "," + ShowsColumns.AIRTIME
-            + " TEXT DEFAULT ''," + ShowsColumns.LASTUPDATED + " INTEGER DEFAULT 0" + ");";
+            + " TEXT DEFAULT ''," + ShowsColumns.HIDDEN + " INTEGER DEFAULT 0,"
+            + ShowsColumns.LASTUPDATED + " INTEGER DEFAULT 0" + ");";
 
     private static final String CREATE_SEASONS_TABLE = "CREATE TABLE " + Tables.SEASONS + " ("
             + BaseColumns._ID + " INTEGER PRIMARY KEY," + SeasonsColumns.COMBINED + " INTEGER,"
@@ -89,13 +94,14 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     private static final String CREATE_EPISODES_TABLE = "CREATE TABLE " + Tables.EPISODES + " ("
             + BaseColumns._ID + " INTEGER PRIMARY KEY," + EpisodesColumns.TITLE + " TEXT NOT NULL,"
             + EpisodesColumns.OVERVIEW + " TEXT," + EpisodesColumns.NUMBER + " INTEGER default 0,"
-            + EpisodesColumns.SEASON + " INTEGER default 0," + EpisodesColumns.DVDNUMBER + " REAL,"
+            + EpisodesColumns.SEASON + " INTEGER DEFAULT 0," + EpisodesColumns.DVDNUMBER + " REAL,"
             + EpisodesColumns.FIRSTAIRED + " TEXT," + SeasonsColumns.REF_SEASON_ID + " TEXT "
             + References.SEASON_ID + "," + ShowsColumns.REF_SHOW_ID + " TEXT " + References.SHOW_ID
             + "," + EpisodesColumns.WATCHED + " INTEGER DEFAULT 0," + EpisodesColumns.DIRECTORS
             + " TEXT DEFAULT ''," + EpisodesColumns.GUESTSTARS + " TEXT DEFAULT '',"
             + EpisodesColumns.WRITERS + " TEXT DEFAULT ''," + EpisodesColumns.IMAGE
-            + " TEXT DEFAULT ''," + EpisodesColumns.RATING + " TEXT DEFAULT '');";
+            + " TEXT DEFAULT ''," + EpisodesColumns.FIRSTAIREDMS + " INTEGER DEFAULT -1,"
+            + EpisodesColumns.RATING + " TEXT DEFAULT '');";
 
     private static final String CREATE_SEARCH_TABLE = "CREATE VIRTUAL TABLE "
             + Tables.EPISODES_SEARCH + " USING FTS3(" + EpisodeSearchColumns.TITLE + " TEXT,"
@@ -157,6 +163,12 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 21:
                 upgradeToTwentyTwo(db);
                 version = 22;
+            case 22:
+                upgradeToTwentyThree(db);
+                version = 23;
+            case 23:
+                upgradeToTwentyFour(db);
+                version = 24;
         }
 
         // drop all tables if version is not right
@@ -174,10 +186,71 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     /**
+     * Adds a column to the {@link Tables.EPISODES} table to store the airdate
+     * and possibly time in milliseconds.
+     * 
+     * @param db
+     */
+    private void upgradeToTwentyFour(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN " + EpisodesColumns.FIRSTAIREDMS
+                + " INTEGER DEFAULT -1;");
+
+        // populate the new column from existing data
+        final Cursor shows = db.query(Tables.SHOWS, new String[] {
+                Shows._ID, Shows.AIRSTIME
+        }, null, null, null, null, null);
+
+        while (shows.moveToNext()) {
+            final String showId = shows.getString(0);
+            final long airtime = shows.getLong(1);
+
+            final Cursor episodes = db.query(Tables.EPISODES, new String[] {
+                    Episodes._ID, Episodes.FIRSTAIRED
+            }, Shows.REF_SHOW_ID + "=?", new String[] {
+                showId
+            }, null, null, null);
+
+            db.beginTransaction();
+            try {
+                ContentValues values = new ContentValues();
+                while (episodes.moveToNext()) {
+                    String firstAired = episodes.getString(1);
+                    long episodeAirtime = Utils.buildEpisodeAirtime(firstAired, airtime);
+
+                    values.put(Episodes.FIRSTAIREDMS, episodeAirtime);
+                    db.update(Tables.EPISODES, values, Episodes._ID + "=?", new String[] {
+                        episodes.getString(0)
+                    });
+                    values.clear();
+                }
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+
+            episodes.close();
+        }
+
+        shows.close();
+    }
+
+    /**
+     * Adds a column to the {@link Tables.SHOWS} table similar to the favorite
+     * boolean, but to allow hiding shows.
+     * 
+     * @param db
+     */
+    private void upgradeToTwentyThree(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.HIDDEN
+                + " INTEGER DEFAULT 0;");
+    }
+
+    /**
      * Add a column to store the last time a show has been updated to allow for
-     * more precise control over which shows should get updated.
-     * This is in conjunction with a 7 day limit when a show will get updated regardless
-     * if it has been marked as updated or not.
+     * more precise control over which shows should get updated. This is in
+     * conjunction with a 7 day limit when a show will get updated regardless if
+     * it has been marked as updated or not.
+     * 
      * @param db
      */
     private void upgradeToTwentyTwo(SQLiteDatabase db) {

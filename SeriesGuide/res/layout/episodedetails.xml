@@ -10,13 +10,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
-    <TextView
+    <Button
         android:id="@+id/textViewEpisodeDetailsShowName"
-        style="@style/HoloCompatButton.Small"
-        android:layout_below="@id/TextViewEpisodeTitle"
-        android:clickable="true"
-        android:focusable="true" >
-    </TextView>
+        style="@style/HoloCompatButton"
+        android:layout_below="@id/TextViewEpisodeTitle" >
+    </Button>
 
     <LinearLayout
         android:layout_width="fill_parent"

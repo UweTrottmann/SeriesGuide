@@ -1,9 +1,8 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.beta.R.drawable;
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.thetvdbapi.ImageCache;
@@ -41,171 +40,11 @@ import java.util.TimeZone;
 
 public class Utils {
 
+    private static final int DEFAULT_BUFFER_SIZE = 8192;
+
     private static ServiceManager sServiceManagerWithAuthInstance;
 
     private static ServiceManager sServiceManagerInstance;
-
-    /**
-     * Returns the Calendar constant (e.g. <code>Calendar.SUNDAY</code>) for a
-     * given weekday string of the US locale. If no match is found
-     * <code>Calendar.SUNDAY</code> will be returned.
-     * 
-     * @param day
-     * @return
-     */
-    private static int getDayOfWeek(String day) {
-        DateFormatSymbols dfs = new DateFormatSymbols(Locale.US);
-        String[] weekdays = dfs.getWeekdays();
-
-        for (int i = 1; i < weekdays.length; i++) {
-            if (day.equalsIgnoreCase(weekdays[i])) {
-                return i;
-            }
-        }
-        return Calendar.SUNDAY;
-    }
-
-    public static String getDayShortcode(String day) {
-        return getDayShortcode(getDayOfWeek(day));
-    }
-
-    /**
-     * Returns the short version of the date symbol for the given weekday (e.g.
-     * <code>Calendar.SUNDAY</code>) in the user default locale.
-     * 
-     * @param day
-     * @return
-     */
-    public static String getDayShortcode(int day) {
-        DateFormatSymbols dfs = new DateFormatSymbols();
-        String[] weekdays = dfs.getShortWeekdays();
-        return weekdays[day];
-    }
-
-    /**
-     * Parses a TVDB date string and airtime in milliseconds to a relative
-     * timestring and day shortcode. An array is returned which holds the
-     * timestring and the day shortcode (in this order).
-     * 
-     * @param tvdbDateString
-     * @param airtime
-     * @param ctx
-     * @return String array holding timestring and shortcode.
-     */
-    public static String parseDateToLocalRelative(String tvdbDateString, long airtime, Context ctx) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-        boolean useUserTimeZone = prefs.getBoolean(SeriesGuidePreferences.KEY_USE_MY_TIMEZONE,
-                false);
-        try {
-            Calendar cal = getLocalCalendar(tvdbDateString, airtime, useUserTimeZone, ctx);
-            Calendar now = Calendar.getInstance();
-            String day = "";
-
-            // Use midnight to compare if not airing today
-            if (!DateUtils.isToday(cal.getTimeInMillis())) {
-                int dayofweek = cal.get(Calendar.DAY_OF_WEEK);
-                DateFormatSymbols dfs = new DateFormatSymbols();
-                day = " (" + dfs.getShortWeekdays()[dayofweek] + ")";
-
-                cal.set(Calendar.HOUR_OF_DAY, 0);
-                cal.set(Calendar.MINUTE, 0);
-                cal.set(Calendar.SECOND, 0);
-                cal.set(Calendar.MILLISECOND, 0);
-                now.set(Calendar.HOUR_OF_DAY, 0);
-                now.set(Calendar.MINUTE, 0);
-                now.set(Calendar.SECOND, 0);
-                now.set(Calendar.MILLISECOND, 0);
-            }
-
-            return DateUtils.getRelativeTimeSpanString(cal.getTimeInMillis(),
-                    now.getTimeInMillis(), DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL)
-                    .toString()
-                    + day;
-        } catch (ParseException e) {
-            // shouldn't happen, if so there are errors in theTVDB
-            e.printStackTrace();
-        }
-        return "";
-    }
-
-    public static String parseDateToLocal(String tvdbDateString, long airtime, Context ctx) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-        try {
-
-            Calendar local = getLocalCalendar(tvdbDateString, airtime,
-                    prefs.getBoolean(SeriesGuidePreferences.KEY_USE_MY_TIMEZONE, false), ctx);
-            String timezone = local.getTimeZone().getDisplayName(true, TimeZone.SHORT);
-
-            String today = "";
-            if (DateUtils.isToday(local.getTimeInMillis())) {
-                today = ctx.getString(R.string.today) + ", ";
-            }
-
-            return today + DateFormat.getDateFormat(ctx).format(local.getTime()) + " " + timezone;
-        } catch (ParseException e) {
-            // shouldn't happen, if so there are errors in theTVDB
-            e.printStackTrace();
-        }
-        return "";
-    }
-
-    /**
-     * Returns a local calendar with the air time and date set. If
-     * useUserTimeZone is true time and date are converted from Pacific Time to
-     * the users time zone.
-     * 
-     * @param tvdbDateString
-     * @param airtime
-     * @param useUserTimeZone
-     * @param context
-     * @return
-     * @throws ParseException
-     */
-    public static Calendar getLocalCalendar(String tvdbDateString, long airtime,
-            boolean useUserTimeZone, Context context) throws ParseException {
-
-        Calendar cal;
-        if (useUserTimeZone) {
-            cal = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
-        } else {
-            // use local calendar, e.g. for US based users where airtime is the
-            // same across time zones
-            cal = Calendar.getInstance();
-        }
-
-        // set airday
-        Date date = Constants.theTVDBDateFormat.parse(tvdbDateString);
-        cal.set(Calendar.DATE, date.getDate());
-        cal.set(Calendar.MONTH, date.getMonth());
-        cal.set(Calendar.YEAR, date.getYear() + 1900);
-
-        // set airtime
-        Calendar time = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
-        time.setTimeInMillis(airtime);
-        cal.set(Calendar.HOUR_OF_DAY, time.get(Calendar.HOUR_OF_DAY));
-        cal.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
-        cal.set(Calendar.SECOND, 0);
-
-        // add user-set hour offset
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
-        cal.add(Calendar.HOUR_OF_DAY, offset);
-
-        // check for US Central and automagically subtract one hour
-        if (TimeZone.getDefault().getRawOffset() == TimeZone.getTimeZone("US/Central")
-                .getRawOffset()) {
-            cal.add(Calendar.HOUR_OF_DAY, -1);
-        }
-
-        if (useUserTimeZone) {
-            // convert to local timezone
-            Calendar local = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
-            local.setTime(cal.getTime());
-            return local;
-        } else {
-            return cal;
-        }
-    }
 
     public static final SimpleDateFormat thetvdbTimeFormatAMPM = new SimpleDateFormat("h:mm aa",
             Locale.US);
@@ -219,8 +58,12 @@ public class Utils {
     public static final SimpleDateFormat thetvdbTimeFormatNormal = new SimpleDateFormat("H:mm",
             Locale.US);
 
-    private static final int DEFAULT_BUFFER_SIZE = 8192;
-
+    /**
+     * Parse a shows TVDb air time value to a ms value.
+     * 
+     * @param tvdbTimeString
+     * @return
+     */
     public static long parseTimeToMilliseconds(String tvdbTimeString) {
         Date time = null;
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
@@ -252,15 +95,26 @@ public class Utils {
             cal.set(Calendar.HOUR_OF_DAY, time.getHours());
             cal.set(Calendar.MINUTE, time.getMinutes());
             cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
             return cal.getTimeInMillis();
         } else {
             return -1;
         }
     }
 
+    /**
+     * Parse a shows airtime ms value to an actual time. If given a TVDb day
+     * string the day will get determined, too, all respecting user settings
+     * like time zone and time offset.
+     * 
+     * @param milliseconds
+     * @param dayofweek
+     * @param context
+     * @return
+     */
     public static String[] parseMillisecondsToTime(long milliseconds, String dayofweek,
             Context context) {
-        // return empty strings if time is missing (maybe return at least day?)
+        // return empty strings if time is missing
         if (context == null || milliseconds == -1) {
             return new String[] {
                     "", ""
@@ -272,13 +126,174 @@ public class Utils {
         final boolean useUserTimeZone = prefs.getBoolean(
                 SeriesGuidePreferences.KEY_USE_MY_TIMEZONE, false);
 
-        // set calendar time and day (if available) on Pacific cal
+        // set calendar time and day on Pacific cal
         final Calendar cal = Calendar.getInstance(pacificTimeZone);
         cal.setTimeInMillis(milliseconds);
+
+        // determine the shows common air day (Mo through Sun or daily)
+        int dayIndex = -1;
         if (dayofweek != null) {
-            cal.set(Calendar.DAY_OF_WEEK, getDayOfWeek(dayofweek));
+            dayIndex = getDayOfWeek(dayofweek);
+            if (dayIndex > 0) {
+                cal.set(Calendar.DAY_OF_WEEK, dayIndex);
+            }
         }
 
+        setOffsets(prefs, cal);
+
+        // create time string
+        final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
+        final SimpleDateFormat dayFormat = new SimpleDateFormat("E");
+        final Date date = cal.getTime();
+
+        if (useUserTimeZone) {
+            timeFormat.setTimeZone(TimeZone.getDefault());
+            dayFormat.setTimeZone(TimeZone.getDefault());
+        } else {
+            // assume we are US Pacific based
+            timeFormat.setTimeZone(pacificTimeZone);
+            dayFormat.setTimeZone(pacificTimeZone);
+        }
+
+        String day = "";
+        if (dayIndex == 0) {
+            day = context.getString(R.string.daily);
+        } else if (dayIndex != -1) {
+            day = dayFormat.format(date);
+        }
+
+        return new String[] {
+                timeFormat.format(date), day
+        };
+    }
+
+    /**
+     * Returns the Calendar constant (e.g. <code>Calendar.SUNDAY</code>) for a
+     * given TVDb airday string (Monday through Sunday and Daily). If no match
+     * is found -1 will be returned.
+     * 
+     * @param TVDb day string
+     * @return
+     */
+    private static int getDayOfWeek(String day) {
+        // catch Daily
+        if (day.equalsIgnoreCase("Daily")) {
+            return 0;
+        }
+
+        // catch Monday through Sunday
+        DateFormatSymbols dfs = new DateFormatSymbols(Locale.US);
+        String[] weekdays = dfs.getWeekdays();
+
+        for (int i = 1; i < weekdays.length; i++) {
+            if (day.equalsIgnoreCase(weekdays[i])) {
+                return i;
+            }
+        }
+
+        // no match
+        return -1;
+    }
+
+    /**
+     * Return an array with absolute time [0], day [1] and relative time [2] of
+     * the given millisecond time. Respects user offsets and 'Use my time zone'
+     * setting.
+     * 
+     * @param airtime
+     * @param context
+     * @return
+     */
+    public static String[] formatToTimeAndDay(long airtime, Context context) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        Calendar cal = getAirtimeCalendar(airtime, prefs);
+
+        final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
+        final SimpleDateFormat dayFormat = new SimpleDateFormat("E");
+        Date airDate = cal.getTime();
+        String day = dayFormat.format(airDate);
+        String absoluteTime = timeFormat.format(airDate);
+
+        String relativeTime = DateUtils
+                .getRelativeTimeSpanString(cal.getTimeInMillis(), System.currentTimeMillis(),
+                        DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
+
+        return new String[] {
+                absoluteTime, day, relativeTime
+        };
+    }
+
+    /**
+     * Return date string of the given time, prefixed with the actual day of the
+     * week (e.g. 'Mon, ') or 'today, ' if applicable.
+     * 
+     * @param airtime
+     * @param context
+     * @return
+     */
+    public static String formatToDate(long airtime, Context context) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        Calendar cal = getAirtimeCalendar(airtime, prefs);
+
+        TimeZone localTimeZone = cal.getTimeZone();
+        Date date = cal.getTime();
+        String timezone = localTimeZone.getDisplayName(localTimeZone.inDaylightTime(date),
+                TimeZone.SHORT);
+
+        String dateString = DateFormat.getDateFormat(context).format(date) + " " + timezone;
+        // add today prefix if applicable
+        if (DateUtils.isToday(cal.getTimeInMillis())) {
+            dateString = context.getString(R.string.today) + ", " + dateString;
+        } else {
+            final SimpleDateFormat dayFormat = new SimpleDateFormat("E");
+            dateString = dayFormat.format(date) + ", " + dateString;
+        }
+
+        return dateString;
+    }
+
+    /**
+     * Create a calendar set to the given airtime, time is adjusted according to
+     * 'Use my time zone', 'Time Offset' settings and user time zone.
+     * 
+     * @param airtime
+     * @param prefs
+     * @return
+     */
+    public static Calendar getAirtimeCalendar(long airtime, final SharedPreferences prefs) {
+        final boolean useUserTimeZone = prefs.getBoolean(
+                SeriesGuidePreferences.KEY_USE_MY_TIMEZONE, false);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(airtime);
+
+        if (!useUserTimeZone) {
+            // assume we are US located
+            Calendar real = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
+            real.setTimeInMillis(airtime);
+
+            // and airtime is not in LA but local time
+            cal.set(real.get(Calendar.YEAR), real.get(Calendar.MONTH),
+                    real.get(Calendar.DAY_OF_MONTH), real.get(Calendar.HOUR_OF_DAY),
+                    real.get(Calendar.MINUTE), real.get(Calendar.SECOND));
+            cal.set(Calendar.MILLISECOND, real.get(Calendar.MILLISECOND));
+        }
+
+        setOffsets(prefs, cal);
+
+        return cal;
+    }
+
+    /**
+     * Add user set manual offset and/or auto-offset if we are in US Central
+     * time zone.
+     * 
+     * @param prefs
+     * @param cal
+     */
+    private static void setOffsets(final SharedPreferences prefs, Calendar cal) {
         // add user-set hour offset
         int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
         if (offset != 0) {
@@ -289,28 +304,40 @@ public class Utils {
                 .getRawOffset()) {
             cal.add(Calendar.HOUR_OF_DAY, -1);
         }
+    }
 
-        // create time string
-        final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
-        final SimpleDateFormat dayFormat = new SimpleDateFormat("E");
-        String day = "";
-        final Date date = cal.getTime();
+    public static long buildEpisodeAirtime(String tvdbDateString, long airtime) {
+        TimeZone pacific = TimeZone.getTimeZone("America/Los_Angeles");
+        SimpleDateFormat tvdbDateFormat = Constants.theTVDBDateFormat;
+        tvdbDateFormat.setTimeZone(pacific);
 
-        if (useUserTimeZone) {
-            timeFormat.setTimeZone(TimeZone.getDefault());
-            dayFormat.setTimeZone(TimeZone.getDefault());
-        } else {
-            timeFormat.setTimeZone(pacificTimeZone);
-            dayFormat.setTimeZone(pacificTimeZone);
+        try {
+
+            Date day = tvdbDateFormat.parse(tvdbDateString);
+
+            Calendar dayCal = Calendar.getInstance(pacific);
+            dayCal.setTime(day);
+
+            // set an airtime if we have one (may not be the case for ended
+            // shows)
+            if (airtime != -1) {
+                Calendar timeCal = Calendar.getInstance(pacific);
+                timeCal.setTimeInMillis(airtime);
+
+                dayCal.set(Calendar.HOUR_OF_DAY, timeCal.get(Calendar.HOUR_OF_DAY));
+                dayCal.set(Calendar.MINUTE, timeCal.get(Calendar.MINUTE));
+                dayCal.set(Calendar.SECOND, 0);
+                dayCal.set(Calendar.MILLISECOND, 0);
+            }
+
+            long episodeAirtime = dayCal.getTimeInMillis();
+            return episodeAirtime;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
 
-        if (dayofweek != null) {
-            day = dayFormat.format(date);
-        }
-
-        return new String[] {
-                timeFormat.format(date), day
-        };
+        return -1;
     }
 
     /**
@@ -534,7 +561,8 @@ public class Utils {
             boolean refreshCredentials) throws Exception {
         if (sServiceManagerWithAuthInstance == null) {
             sServiceManagerWithAuthInstance = new ServiceManager();
-            sServiceManagerWithAuthInstance.setApiKey(Constants.TRAKT_API_KEY);
+            sServiceManagerWithAuthInstance.setApiKey(context.getResources().getString(
+                    R.string.trakt_apikey));
             // this made some problems, so sadly disabled for now
             // manager.setUseSsl(true);
 
@@ -559,12 +587,14 @@ public class Utils {
      * Get a trakt-java ServiceManager with just our API key set. NO user auth
      * data.
      * 
+     * @param context
      * @return
      */
-    public static synchronized ServiceManager getServiceManager() {
+    public static synchronized ServiceManager getServiceManager(Context context) {
         if (sServiceManagerInstance == null) {
             sServiceManagerInstance = new ServiceManager();
-            sServiceManagerInstance.setApiKey(Constants.TRAKT_API_KEY);
+            sServiceManagerInstance.setApiKey(context.getResources().getString(
+                    R.string.trakt_apikey));
             // this made some problems, so sadly disabled for now
             // manager.setUseSsl(true);
         }
@@ -591,13 +621,30 @@ public class Utils {
     }
 
     /**
+     * Put the TVDb season string in, get a full 'Season X' or 'Special
+     * Episodes' string out.
+     * 
+     * @param context
+     * @param season
+     * @return
+     */
+    public static String getSeasonString(Context context, String season) {
+        if (season.equals("0") || season.length() == 0) {
+            season = context.getString(R.string.specialseason);
+        } else {
+            season = context.getString(R.string.season) + " " + season;
+        }
+        return season;
+    }
+
+    /**
      * If {@code isBusy} is {@code true}, then the image is only loaded if it is
      * in memory. In every other case a place-holder is shown.
      * 
      * @param poster
      * @param path
      * @param isBusy
-     * @param context TODO
+     * @param context
      */
     public static void setPosterBitmap(ImageView poster, String path, boolean isBusy,
             Context context) {
@@ -605,7 +652,7 @@ public class Utils {
         if (path.length() != 0) {
             bitmap = ImageCache.getInstance(context).getThumb(path, isBusy);
         }
-    
+
         if (bitmap != null) {
             poster.setImageBitmap(bitmap);
             poster.setTag(null);

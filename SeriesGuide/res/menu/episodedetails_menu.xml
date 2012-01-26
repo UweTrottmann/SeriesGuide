@@ -4,18 +4,46 @@
     <item
         android:id="@+id/menu_togglemark"
         android:icon="@drawable/ic_action_seen"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="ifRoom"
         android:title="@string/togglewatched"/>
-
+    <item
+        android:id="@+id/menu_quickshare"
+        android:icon="@drawable/ic_action_share"
+        android:showAsAction="always"
+        android:title="@string/share_episode"/>
     <item
         android:id="@+id/menu_shareepisode"
         android:icon="@drawable/ic_action_share"
         android:showAsAction="always"
-        android:title="@string/share_episode"/>
-
+        android:title="@string/share_episode">
+        <menu>
+            <item
+                android:id="@+id/menu_checkin_getglue"
+                android:icon="@drawable/ic_getglue"
+                android:title="@string/menu_checkin_getglue"/>
+            <item
+                android:id="@+id/menu_checkin_trakt"
+                android:icon="@drawable/ic_trakt"
+                android:title="@string/menu_checkin_trakt"/>
+            <item
+                android:id="@+id/menu_markseen_trakt"
+                android:icon="@drawable/ic_trakt_seen"
+                android:title="@string/menu_markseen_trakt"/>
+            <item
+                android:id="@+id/menu_rate_trakt"
+                android:icon="@drawable/trakt_love_large"
+                android:title="@string/menu_rate_trakt"/>
+            <item
+                android:id="@+id/menu_share_others"
+                android:icon="@drawable/ic_action_share"
+                android:title="@string/menu_share_others"/>
+        </menu>
+    </item>
     <item
         android:id="@+id/menu_addevent"
         android:icon="@drawable/ic_action_calendar"
-        android:title="@string/addtocalendar" android:showAsAction="never"></item>
+        android:showAsAction="never"
+        android:title="@string/addtocalendar">
+    </item>
 
 </menu>

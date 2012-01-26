@@ -80,16 +80,15 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
 
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
-        View detailsFragment = getActivity().findViewById(R.id.fragment_details);
-        mDualPane = detailsFragment != null && detailsFragment.getVisibility() == View.VISIBLE;
+        View pagerFragment = getActivity().findViewById(R.id.pager);
+        mDualPane = pagerFragment != null && pagerFragment.getVisibility() == View.VISIBLE;
 
         if (mDualPane) {
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            loadFirstEpisode();
         }
 
         String[] from = new String[] {
-                Episodes.WATCHED, Episodes.TITLE, Episodes.NUMBER, Episodes.FIRSTAIRED
+                Episodes.WATCHED, Episodes.TITLE, Episodes.NUMBER, Episodes.FIRSTAIREDMS
         };
         int[] to = new int[] {
                 R.id.CustomCheckBoxWatched, R.id.TextViewEpisodeListTitle,
@@ -130,12 +129,11 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
                     }
                     tv.setText(episodenumber);
                     return true;
-                } else if (columnIndex == EpisodesQuery.FIRSTAIRED) {
+                } else if (columnIndex == EpisodesQuery.FIRSTAIREDMS) {
                     TextView tv = (TextView) view;
-                    String fieldValue = cursor.getString(EpisodesQuery.FIRSTAIRED);
-                    if (fieldValue.length() != 0) {
-                        tv.setText(Utils.parseDateToLocalRelative(fieldValue,
-                                cursor.getLong(EpisodesQuery.SHOW_AIRSTIME), getActivity()));
+                    long airtime = cursor.getLong(EpisodesQuery.FIRSTAIREDMS);
+                    if (airtime != -1) {
+                        tv.setText(Utils.formatToTimeAndDay(airtime, getActivity())[2]);
                     } else {
                         tv.setText(getString(R.string.episode_firstaired) + " "
                                 + getString(R.string.episode_unkownairdate));
@@ -153,46 +151,6 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
 
         registerForContextMenu(getListView());
         setHasOptionsMenu(true);
-    }
-
-    /**
-     * Load the first episode manually while the CursorLoader is still getting
-     * its data.
-     */
-    private void loadFirstEpisode() {
-        final Activity context = getActivity();
-        if (context != null) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    // Make sure no fragment is already shown
-                    EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getSupportFragmentManager()
-                            .findFragmentById(R.id.fragment_details);
-                    if (detailsFragment == null) {
-                        if (context != null) {
-                            // get episodes
-                            final Cursor episodes = context.getContentResolver().query(
-                                    Episodes.buildEpisodesOfSeasonWithShowUri(getSeasonId()),
-                                    new String[] {
-                                        Episodes._ID
-                                    }, null, null, sorting.query());
-                            // show the first one, if there are any
-                            if (episodes.getCount() > 0) {
-                                episodes.moveToFirst();
-                                final String episodeId = episodes.getString(0);
-                                context.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        showDetails(episodeId);
-                                    }
-                                });
-                            }
-                            episodes.close();
-                        }
-                    }
-                }
-            }).start();
-        }
     }
 
     /**
@@ -215,22 +173,8 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
      */
     private void showDetails(String episodeId) {
         if (mDualPane) {
-            // Check if fragment is shown, create new if needed.
-            EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
-                    .findFragmentById(R.id.fragment_details);
-            if (detailsFragment == null
-                    || !detailsFragment.getEpisodeId().equalsIgnoreCase(episodeId)) {
-                // Make new fragment to show this selection.
-                detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true);
-
-                // Execute a transaction, replacing any existing
-                // fragment with this one inside the frame.
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_details, detailsFragment, "fragmentDetails");
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
-            }
-
+            EpisodesActivity activity = (EpisodesActivity) getActivity();
+            activity.onChangePage(episodeId);
         } else {
             Intent intent = new Intent();
             intent.setClass(getActivity(), EpisodeDetailsActivity.class);
@@ -393,7 +337,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
     interface EpisodesQuery {
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.WATCHED, Episodes.TITLE,
-                Episodes.NUMBER, Episodes.FIRSTAIRED, Episodes.DVDNUMBER, Shows.AIRSTIME
+                Episodes.NUMBER, Episodes.FIRSTAIREDMS, Episodes.DVDNUMBER, Shows.AIRSTIME
         };
 
         int _ID = 0;
@@ -404,7 +348,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
 
         int NUMBER = 3;
 
-        int FIRSTAIRED = 4;
+        int FIRSTAIREDMS = 4;
 
         int DVDNUMBER = 5;
 

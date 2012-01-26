@@ -350,9 +350,15 @@ public abstract class SherlockPreferenceActivity extends PreferenceActivity impl
 
     private boolean hasFeature(long featureId) {
         if (IS_HONEYCOMB) {
-            return getWindow().hasFeature((int)featureId);
+            return HoneycombHasFeature.invoke(getWindow(), (int)featureId);
         }
         return (mWindowFlags & (1 << featureId)) != 0;
+    }
+
+    private static final class HoneycombHasFeature {
+        public static boolean invoke(android.view.Window window, int featureId) {
+            return window.hasFeature(featureId);
+        }
     }
 
     // ------------------------------------------------------------------------
@@ -913,11 +919,9 @@ public abstract class SherlockPreferenceActivity extends PreferenceActivity impl
     private boolean dispatchPrepareOptionsMenu() {
         if (DEBUG) Log.d(TAG, "[dispatchPrepareOptionsMenu]");
 
-        if (onPrepareOptionsMenu(mSupportMenu)) {
-            mFragments.dispatchPrepareOptionsMenu(mSupportMenu);
-            return true;
-        }
-        return false;
+        boolean result = onPrepareOptionsMenu(mSupportMenu);
+        result |= mFragments.dispatchPrepareOptionsMenu(mSupportMenu);
+        return result;
     }
 
     /**
