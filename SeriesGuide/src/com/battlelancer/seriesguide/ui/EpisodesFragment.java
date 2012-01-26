@@ -19,7 +19,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
@@ -409,8 +408,6 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
         prefEditor.commit();
         getLoaderManager().restartLoader(EPISODES_LOADER, null, EpisodesFragment.this);
 
-        if (Build.VERSION.SDK_INT >= 11) {
-            getActivity().invalidateOptionsMenu();
-        }
+        getSupportActivity().invalidateOptionsMenu();
     }
 }

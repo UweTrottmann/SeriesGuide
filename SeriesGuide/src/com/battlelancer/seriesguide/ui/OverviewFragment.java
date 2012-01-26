@@ -211,7 +211,7 @@ public class OverviewFragment extends Fragment {
         if (isInvalidateOptionsMenu) {
             // invalidate the options menu so a potentially new
             // quick share action is displayed
-            getActivity().invalidateOptionsMenu();
+            getSupportActivity().invalidateOptionsMenu();
         }
     }
 
