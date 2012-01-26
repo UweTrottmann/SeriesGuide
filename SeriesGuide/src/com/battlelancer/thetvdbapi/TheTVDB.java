@@ -451,10 +451,9 @@ public class TheTVDB {
      * @param updateAtLeastEvery
      * @param context
      * @return
-     * @throws SAXException
      */
     public static String[] deltaUpdateShows(long currentTime, int updateAtLeastEvery,
-            Context context) throws SAXException {
+            Context context) {
         final HashSet<Integer> existingShowIds = new HashSet<Integer>();
         final HashSet<String> updatableShowIds = new HashSet<String>();
 

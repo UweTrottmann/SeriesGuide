@@ -135,11 +135,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 }
                 shows.close();
             } else {
-                try {
-                    mShows = TheTVDB.deltaUpdateShows(currentTime, updateAtLeastEvery, mAppContext);
-                } catch (SAXException e) {
-                    return UPDATE_ERROR;
-                }
+                mShows = TheTVDB.deltaUpdateShows(currentTime, updateAtLeastEvery, mAppContext);
             }
         }
 
