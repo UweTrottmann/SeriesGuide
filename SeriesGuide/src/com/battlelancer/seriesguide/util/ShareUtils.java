@@ -208,7 +208,7 @@ public class ShareUtils {
             if (savedInstanceState != null) {
                 input.setText(savedInstanceState.getString("inputtext"));
             } else {
-                input.setText(episodestring + ". #SeriesGuide");
+                input.setText(episodestring);
             }
 
             return new AlertDialog.Builder(getActivity()).setTitle(getString(R.string.comment))
