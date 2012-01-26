@@ -9,6 +9,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Lists;
 import com.battlelancer.seriesguide.util.Utils;
@@ -449,13 +450,16 @@ public class TheTVDB {
      * 
      * @param currentTime
      * @param updateAtLeastEvery
+     * @param prefs
      * @param context
      * @return
      */
-    public static String[] deltaUpdateShows(long currentTime, int updateAtLeastEvery,
+    public static String[] deltaUpdateShows(long currentTime, SharedPreferences prefs,
             Context context) {
         final HashSet<Integer> existingShowIds = new HashSet<Integer>();
         final HashSet<String> updatableShowIds = new HashSet<String>();
+        final int updateAtLeastEvery = prefs.getInt(SeriesGuidePreferences.KEY_UPDATEATLEASTEVERY,
+                7);
 
         // get existing show ids
         final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI, new String[] {
