@@ -10,20 +10,31 @@ Since 2.5beta/2.5.1beta (2012-01-13):
 * Add show posters in Upcoming and Recent.
 * Fix to display correct episode title.
 
-In development:
+Since 2.5.2beta (soon):
 
+* Better internal representation for time. It may take a while until your shows appear (the database is upgrading in the background). YOU MAY NEED to update all of your shows afterwards. Episodes move now correctly from Upcoming to Recent 1 hour after they aired.
+
+* Hide shows, they will disappear from everywhere except the new 'Hidden' show filter.
 * Swipe between episodes on xlarge screens (10 inch tablets) or in landscape, too.
 * 'Only favorites' option for Upcoming/Recent, also respected by widget.
-* Hide shows, they will disappear from everywhere except the new 'Hidden' show filter.
 * Add menu button to quickly share with last used sharing option.
-* Display search term, title and search soft button in `SearchActivity`.
-* Where applicable the app icon takes you back to the show list. Same as long-pressing back from every screen.
 * Use progress indicators in `AddActivity`.
 * Friends layout more similar to Upcoming.
-* Use ActionBarSherlock 4.0 release.
 * Use ViewPagerIndicator 2.2.2 release.
+* Fixes for the updater.
 * Fixes for market reported crashes.
-* Latest translations from crowdin.
+* Cleaner welcome dialog.
+* Improvements for descriptions and text everywhere.
+* Hide friends tab in Activity if trakt account is not set up.
+* Don't use beta icon for stable release (only devices with extra high resolution displays were affected).
+* Hide text of some action bar buttons.
+* Support for 'Daily' air day.
+
+Postponed:
+* Display search term, title and search soft button in `SearchActivity`.
+* Where applicable the app icon takes you back to the show list. Same as long-pressing back from every screen.
+* Use ActionBarSherlock 4.0 release.
+* UI for custom upcoming interval (currently 24 hours).
 
 Version 2.4.2/2.4.3beta *(2012-01-11)*
 -------------------------------
