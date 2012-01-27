@@ -7,7 +7,6 @@
         <item name="vpiTitlePageIndicatorStyle">@style/Widget.TitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
         <item name="vpiTabTextStyle">@style/Widget.TabPageIndicator.Text</item>
-        <item name="android:textColor">@color/text_dim</item>
     </style>
 
     <style name="Header">
