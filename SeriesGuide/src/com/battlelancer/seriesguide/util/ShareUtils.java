@@ -827,7 +827,9 @@ public class ShareUtils {
 
         @Override
         public void onTaskFinished() {
-            dismiss();
+            if (isVisible()) {
+                dismiss();
+            }
         }
     }
 
