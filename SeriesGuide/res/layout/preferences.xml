@@ -34,11 +34,6 @@
             android:summary="@string/pref_epsortingsummary"
             android:title="@string/pref_episodesorting" />
 
-        <Preference
-            android:key="backup"
-            android:summary="@string/backup_summary"
-            android:title="@string/backup" />
-
         <ListPreference
             android:defaultValue="en"
             android:entries="@array/languages"
@@ -115,6 +110,11 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_advanced" >
+
+        <Preference
+            android:key="backup"
+            android:summary="@string/backup_summary"
+            android:title="@string/backup" />
 
         <Preference
             android:key="clearCache"
