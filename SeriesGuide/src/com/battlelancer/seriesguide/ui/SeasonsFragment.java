@@ -464,8 +464,6 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
         prefEditor.commit();
         getLoaderManager().restartLoader(LOADER_ID, null, SeasonsFragment.this);
 
-        if (Build.VERSION.SDK_INT >= 11) {
-            getActivity().invalidateOptionsMenu();
-        }
+        getSupportActivity().invalidateOptionsMenu();
     }
 }
