@@ -7,16 +7,16 @@
   <string name="episode_iswatched">Έχει παρακολουθηθεί</string>
   <string name="episode_notwatched">Δεν έχει παρακολουθηθεί</string>
   <string name="specialseason">Ειδικά Επεισόδια</string>
-  <string name="ioerror_title">Σφάλμα δικτύου</string>
-  <string name="saxerror_title">Σφάλμα ανάλυσης</string>
-  <string name="offline_title">Δεν υπάρχει σύνδεση</string>
-  <string name="ioerror">Υπήρξε ένα σφάλμα δικτύου. Ενδεχομένως υπάρχει περιορισμένη πρόσβαση στο TheTVDB.com από τη σύνδεσή σας αυτή τη στιγμή. Προσπαθήστε ξανά αργότερα.</string>
-  <string name="saxerror">Η απόκριση από το TheTVDB δεν είναι κατανοητή. Παρακαλώ δοκιμάστε αργότερα.</string>
-  <string name="offline">Δεν υπάρχει ενεργή σύνδεση στο διαδίκτυο. Παρακαλώ βεβαιωθείτε ότι είστε συνδεδεμένοι στο διαδίκτυο και προσπαθήστε πάλι.</string>
   <string name="search_hint">Αναζήτηση επεισοδίων</string>
   <string name="search_title">Επεισόδια που ταιριάζουν</string>
   <string name="share_episode">Κοινή χρήση επεισοδίου</string>
   <string name="share_checkout">Check out</string>
+  <string name="search_description">Επεισόδια</string>
+  <string name="description_home">Αρχική σελίδα</string>
+  <string name="description_search">Αναζήτηση</string>
+  <string name="description_overview">Επισκόπηση</string>
+  <string name="norating">n/a</string>
+  <string name="loading">Φόρτωση...</string>
   <string name="episode_firstaired">Ημερομηνία πρώτης προβολής:</string>
   <string name="episode_dvdnumber">Επεισόδιο DVD</string>
   <string name="show_actors">Ηθοποιοί:</string>
@@ -32,11 +32,13 @@
   <string name="show_isalive">Συνεχίζεται</string>
   <string name="show_isnotalive">Σταμάτησε</string>
   <string name="sort">Ταξινόμηση κατά</string>
-  <string name="menu_updateart">Κάνε λήψη των αφισών που λείπουν</string>
+  <string name="updateall_yes">Ενημέρωση (όλα)</string>
+  <string name="menu_update_delta">Ενημέρωση (παλιά μόνο)</string>
   <string name="context_updateshow">Ενημέρωση</string>
   <string name="context_showinfo">Εμφάνιση πληροφοριών</string>
   <string name="context_marknext">Το επόμενο επεισόδιο έχει παρακολουθηθεί</string>
   <string name="today">Σήμερα</string>
+  <string name="now">τώρα</string>
   <string name="mark_episode">Το επεισόδιο έχει παρακολουθηθεί</string>
   <string name="unmark_episode">Το επεισόδιο δεν έχει παρακολουθηθεί ακόμα</string>
   <string name="mark_all">Έχουν παρακολουθηθεί όλα</string>
@@ -46,89 +48,107 @@
   <string name="dontdelete_show">Να μην αφαιρεθεί</string>
   <string name="no_nextepisode">Δεν βρέθηκε επόμενο επεισόδιο</string>
   <string name="nextepisode">Επόμενο:</string>
-  <string name="update_error">Δεν ήταν δυνατή η ενημέρωση.</string>
-  <string name="update_incomplete1">Δεν ήταν δυνατή η ενημέρωση</string>
-  <string name="update_incomplete2">.</string>
-  <string name="update_inbackground">Ενημέρωση ...</string>
-  <string name="update_inprogress">Υπάρχει μια ενημέρωση σε εξέλιξη. Περιμένετε να ολοκληρωθεί και στη συνέχεια προσπαθήστε ξανά.</string>
-  <string name="update_nosdcard">Δεν ήταν δυνατή η ενημέρωση. Δεν υπάρχει καμία εξωτερική συσκευή αποθήκευσης ή κάρτα SD διαθέσιμη.</string>
+  <string name="context_favorite">Προσθήκη στα Αγαπημένα</string>
+  <string name="context_unfavorite">Κατάργηση από τα Αγαπημένα</string>
+  <string name="favorited">Προσθήκη στα Αγαπημένα</string>
+  <string name="unfavorited">Κατάργηση από τα Αγαπημένα</string>
+  <string name="upcoming">Επόμενα</string>
+  <string name="recent">Πρόσφατο</string>
+  <string name="friends">Φίλοι</string>
+  <string name="update_notification">Ενημέρωσε τις σειρές σου...</string>
+  <string name="update_single">Ενημέρωση σειράς...</string>
+  <string name="update_delta">Ενημέρωση παλιών σειρών...</string>
+  <string name="update_full">Ενημέρωση σειρών...</string>
+  <string name="update_success">Επιτυχής ενημέρωση.</string>
   <string name="show_airs">Προβάλλεται την</string>
   <string name="show_network">Στο</string>
-  <string name="show_pleaseupdate">Προσπαθήστε να ενημερώσετε αυτήν την σειρά για να εμφανιστούν περισσότερες πληροφορίες (στην επισκόπηση, πατήστε και κρατήστε την, επιλέξτε Ενημέρωση). Εάν αυτό δεν βοηθήσει, είναι πιθανό να μην υπάρχουν πρόσθετες πληροφορίες στο TheTVDB. Πήγαινε στο site (www.thetvdb.com) για να μάθετε πώς μπορείτε να προσθέσετε μερικές.</string>
   <string name="show_noairtime">Δεν υπάρχουν διαθέσιμες ημερομηνίες προβολής</string>
-  <string name="noIMDBentry">Καμία διαθέσιμη αναφορά στο IMDB. Κάντε ενημέρωση αυτής της σειράς ή μεταβείτε στο thetvdb.com και προσθέστε το.</string>
-  <string name="no_seasons">Όπα, δεν υπάρχουν σεζόν για αυτήν την σειρά. Προσπαθήστε να ενημερώσετε την σειρά (στην επισκόπηση, πατήστε και κρατήστε την, επιλέξτε Ενημέρωση).</string>
   <string name="season_watchcount">Επεισόδια που δεν έχουν παρακολουθηθεί</string>
   <string name="season_allwatched">Όλα τα επεισόδια έχουν παρακολουθηθεί</string>
   <string name="season_onenotwatched">Επεισόδιο που δεν έχει παρακολουθηθεί</string>
   <string name="season_unaired">Δεν έχει προβληθεί</string>
   <string name="oneotherepisode">άλλο επεισόδιο</string>
   <string name="otherepisodes">άλλα επεισόδια</string>
-  <string name="no_episodes">Όπα, δεν υπάρχουν επεισόδια για αυτήν την σεζόν. Προσπαθήστε να ενημερώσετε την σειρά (στην επισκόπηση, πατήστε και κρατήστε την, επιλέξτε Ενημέρωση).</string>
   <string name="search_button">Αναζήτηση</string>
-  <string name="no_results">Δεν βρέθηκε κανένα αποτέλεσμα. Δοκιμάστε ολόκληρες λέξεις.</string>
-  <string name="search_error">Δεν μπόρεσε να επικοινωνήσει με TheTVDB. Παρακαλώ ελέγξτε τη σύνδεση του δικτύου σας ή προσπαθήστε ξανά αργότερα.</string>
-  <string name="search_noinput">Παρακαλώ εισάγετε μια λέξη κλειδί.</string>
   <string name="add_show">Προσθήκη σειράς</string>
   <string name="dont_add_show">Να μην γίνει προσθήκη</string>
-  <string name="search_hint_add">Αναζήτηση σειράς</string>
+  <string name="add_started">Θα εμφανιστεί στην λίστα σας σύντομα.</string>
   <string name="add_success">Προστέθηκε με επιτυχία.</string>
   <string name="add_error_begin">Δεν είναι δυνατή η προσθήκη \ "</string>
   <string name="add_error_end">\ ".</string>
-  <string name="preferences">Ρυθμίσεις</string>
-  <string name="pref_sorting">Ταξινόμηση</string>
-  <string name="pref_showsorting">Εμφάνιση Ταξινόμησης</string>
-  <string name="pref_seasonsorting">Ταξινόμηση σεζόν</string>
-  <string name="pref_episodesorting">Ταξινόμηση επεισοδίων</string>
-  <string name="pref_showlist">Εμφάνιση λίστας</string>
-  <string name="pref_content">Περιεχόμενο</string>
-  <string name="pref_language">Γλώσσα TheTVDB</string>
-  <string name="pref_hideimages">Απόκρυψη εικόνων</string>
-  <string name="pref_hideimagessummary">Απόκρυψη εικόνων του SeriesGuide από τη συλλογή των φωτογραφιών σας (απαιτείται επανεκκίνηση)</string>
+  <string name="library">Βιβλιοθήκη</string>
+  <string name="powered_by_thetvdb">Powered by thetvdb.com</string>
   <string name="pref_more">Περισσότερα</string>
-  <string name="about">Σχετικά με το SeriesGuide</string>
+  <string name="pref_showlist">Εμφάνιση λίστας</string>
+  <string name="help">Βοήθεια</string>
+  <string name="preferences">Ρυθμίσεις</string>
+  <string name="pref_onlyfuture">Επεισόδια που δεν έχουν προβληθεί</string>
+  <string name="pref_onlyfuturesummary">\"Next:\" μην εμφανίζεις special επεισόδια που έχουν προβληθεί</string>
+  <string name="pref_onlyseasoneps">Όχι special επεισόδια</string>
+  <string name="pref_onlyseasonepssummary">\"Next:\" μην εμφανίζεις special επεισόδια</string>
+  <string name="pref_content">Περιεχόμενο</string>
   <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>
   <string name="backup_summary">Δημιουργία αντιγράφου ασφαλείας ή επαναφορά των σειρών</string>
+  <string name="pref_number">Μορφή των αριθμών</string>
+  <string name="about">Σχετικά με το SeriesGuide</string>
+  <string name="about_message">http://seriesguide.uwetrottmann.com - αναπτύχθηκε από Uwe Trottmann.\n\nPlease δείτε τον παρακάτω σύνδεσμο για όλα τα άτομα και πόρων που βοηθούν αυτό το project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">Κοινή χρήση</string>
   <string name="clearGetGlueCredentials">Αποσύνδεση GetGlue</string>
-  <string name="clear_cache">Καθαρισμός μνημών cache εικόνας</string>
+  <string name="pref_trakt">Στοιχεία trakt.tv</string>
+  <string name="pref_traktsummary">Προσθέσετε ή επεξεργαστείτε τα στοιχεία του trakt.tv</string>
+  <string name="pref_traktsync">Συγχρονισμός με trakt.tv</string>
+  <string name="pref_traktintegrate">Ενσωμάτωση trakt.tv</string>
+  <string name="donate">Αγόρασε μου ένα ποτό (Paypal)</string>
+  <string name="pref_advanced">Για προχωρημένους</string>
+  <string name="pref_hideimages">Απόκρυψη εικόνων</string>
   <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_offset">Διαφορά ώρας</string>
+  <string name="pref_ganalyticssummary">Καταγραφή της χρήσης για την βελτίωση του SeriesGuide</string>
+  <string name="backup_path"><b>Φάκελος αντιγράφων ασφαλείας</b></string>
+  <string name="backup_version"><b>Έκδοση βάσης δεδομένων</b></string>
+  <string name="backup_failed_nosd">Δεν μπορεί να δημιουργηθούν αντίγραφα ασφαλείας γιατί ο φάκελος δεν είναι διαθέσιμος.</string>
   <string name="backup_inprogress">Πραγματοποιείται η δημιουργία αντιγράφου ασφαλείας της βάσης δεδομένων...</string>
-  <string name="backup_success">Η δημιουργία αντιγράφου ασφαλείας ήταν επιτυχής</string>
-  <string name="backup_failed">Η δημιουργία του αντιγράφου ασφαλείας απέτυχε</string>
   <string name="import_inprogress">Επαναφορά βάσης δεδομένων ...</string>
-  <string name="import_success">Η βάση δεδομένων έχει επαναφερθεί επιτυχώς</string>
-  <string name="import_failed">Η επαναφορά απέτυχε</string>
+  <string name="import_failed_nosd">Δεν μπορεί να γίνει ανάκτηση γιατί ο φάκελος δεν είναι διαθέσιμος.</string>
   <string name="backup_yes">Δημιουργία αντιγράφου ασφαλείας</string>
   <string name="backup_no">Να μην δημιουργηθεί αντίγραφο ασφαλείας</string>
   <string name="import_yes">Επαναφορά</string>
   <string name="import_no">Να μην γίνει Επαναφορά</string>
+  <string name="widget_label">Επόμενα επεισόδια</string>
   <string name="smallwidget">Επόμενο επεισόδιο (μικρό)</string>
   <string name="bigwidget">Επόμενα επεισόδια (μεσαίο)</string>
   <string name="largewidget">Επόμενο επεισόδιο (μεγάλο)</string>
-  <string name="upcoming">Επόμενα</string>
-  <string name="recent">Πρόσφατο</string>
-  <string name="noupcoming">Φαίνεται πως δεν υπάρχουν επεισόδια. Μπορείτε να δοκιμάσετε την ενημέρωση των σειρών σας.</string>
-  <string name="togglewatched">Εναλλαγή Παρακολουθημένων</string>
   <string name="seasons">Σεζόν</string>
   <string name="cancel">Άκυρο</string>
   <string name="share">Κοινή χρήση</string>
   <string name="done">Ολοκληρώθηκε</string>
   <string name="checkin">Check In</string>
   <string name="comment">Check In του σχολίου</string>
-  <string name="checkinsuccess">Check In επιτυχές</string>
-  <string name="pref_number">Μορφή των αριθμών</string>
-  <string name="checkinfailed">Το Check-In απέτυχε</string>
+  <string name="traktcheckin_cancel">Ακυρώσετε</string>
   <string name="oauthmessage">Έλεγχος ταυτότητας SeriesGuide με GetGlue...</string>
   <string name="addtocalendar">Προσθήκη στο ημερολόγιο</string>
-  <string name="addtocalendar_failed">Συγνώμη, δεν υπάρχουν αρκετές πληροφορίες για τη δημιουργία ενός συμβάντος ημερολογίου.</string>
-  <string name="search_description">Επεισόδια</string>
+  <string name="eula_title">Τι πρέπει να γνωρίζετε</string>
+  <string name="accept">Αποδοχή</string>
+  <string name="decline">Αρνούμαι</string>
+  <string name="username">Όνομα χρήστη</string>
+  <string name="email">Email</string>
+  <string name="password">Κωδικός πρόσβασης</string>
+  <string name="save">Αποθήκευση</string>
+  <string name="dontsave">Μην αποθηκεύσεις</string>
+  <string name="trakt_decryptfail">Ο κωδικός πρόσβασης δεν μπορούσε να αποκρυπτογραφηθεί</string>
+  <string name="trakt_credentials_invalid">Τα στοιχεία δεν είναι έγκυρα</string>
+  <string name="trakt_generalerror">Κάτι δεν πήγε καλά. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>
+  <string name="love">Εντελώς ninja!</string>
+  <string name="trakt_createaccount">Δημιουργία νέου λογαριασμού</string>
+  <string name="trakt_synctodevice">Συγχρονισμός SeriesGuide</string>
+  <string name="trakt_synctotrakt">Συγχρονισμός trakt.tv</string>
+  <string name="trakt_syncunseen">Συγχρονισμός επεισοδίων που δεν έχω δει</string>
+  <string name="welcome_setuptrakt">Εγκατάσταση λογαριασμού trakt</string>
+  <string name="download_stable">Λήψη SeriesGuide</string>
   <string-array name="shsorting">
     <item>Α - Ω</item>
     <item>Επόμενο επεισόδιο</item>
-    <item>Favorites (A - Z)</item>
-    <item>Favorites (Next ep.)</item>
+    <item>Αγαπημένα (Α - Ω)</item>
+    <item>Αγαπημένα (Επόμενο επ.)</item>
   </string-array>
   <string-array name="sesorting">
     <item>Η πιο πρόσφατη πρώτα</item>
@@ -143,16 +163,10 @@
     <item>Το πιο πρόσφατο, πρώτο (DVD)</item>
     <item>Το παλαιότερο πρώτα (DVD)</item>
   </string-array>
-  <string-array name="share_items">
-    <item>Check In (GetGlue)</item>
-    <item>Check In (trakt)</item>
-    <item>Mark seen (trakt)</item>
-    <item>Rate (trakt)</item>
-    <item>Other services</item>
-  </string-array>
   <string-array name="showfilter_list">
-    <item>All</item>
-    <item>Favorites</item>
-    <item>Unseen/Upcoming</item>
+    <item>Όλα</item>
+    <item>Αγαπημένα</item>
+    <item>Δεν έχω δει/Επερχόμενα</item>
+    <item>Hidden</item>
   </string-array>
 </resources>

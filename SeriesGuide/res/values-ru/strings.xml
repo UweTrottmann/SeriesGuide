@@ -7,16 +7,16 @@
   <string name="episode_iswatched">Посмотрели уже</string>
   <string name="episode_notwatched">Не смотрел еще</string>
   <string name="specialseason">Особые эпизоды</string>
-  <string name="ioerror_title">Ошибка сети</string>
-  <string name="saxerror_title">Ошибка разбора</string>
-  <string name="offline_title">Нет связи</string>
-  <string name="ioerror">Произошла ошибка сети. Вероятно ваш доступ к TheTVDB.com в настоящее время ограничен. Попробуйте позже.</string>
-  <string name="saxerror">Ответ от TheTVDB не распознан. Пожалуйста, попробуйте еще раз позже.</string>
-  <string name="offline">Отсутствует активное соединение с интернетом. Пожалуйста убедитесь что вы подключены к интернету и попробуйте еще раз.</string>
   <string name="search_hint">Поиск эпизодов</string>
   <string name="search_title">Сопоставление эпизодов</string>
   <string name="share_episode">Поделиться эпизодом</string>
   <string name="share_checkout">Извлечь</string>
+  <string name="search_description">Эпизоды</string>
+  <string name="description_home">На главную</string>
+  <string name="description_search">Поиск</string>
+  <string name="description_overview">Обзор</string>
+  <string name="norating">нет данных</string>
+  <string name="loading">Загрузка...</string>
   <string name="episode_firstaired">Эфир:</string>
   <string name="episode_dvdnumber">DVD эпизод</string>
   <string name="show_actors">Актеры:</string>
@@ -32,7 +32,6 @@
   <string name="show_isalive">Продолжение</string>
   <string name="show_isnotalive">Закончился</string>
   <string name="sort">Сортировать по</string>
-  <string name="menu_updateart">Получить отсутствующие серии</string>
   <string name="updateall_yes">Обновить (все)</string>
   <string name="context_updateshow">Обновить</string>
   <string name="context_showinfo">Показать информацию</string>
@@ -51,75 +50,45 @@
   <string name="context_unfavorite">Удалить из избранного</string>
   <string name="favorited">Добавлено в избранное</string>
   <string name="unfavorited">Удалено из избранного</string>
-  <string name="update_error">Не удалось обновить.</string>
-  <string name="update_incomplete1">Не удалось обновить</string>
-  <string name="update_incomplete2">.</string>
+  <string name="upcoming">Следующий</string>
+  <string name="recent">Недавние</string>
   <string name="update_success">Успешно обновленно.</string>
-  <string name="update_inbackground">Обновление ...</string>
-  <string name="update_inprogress">Идет процесс обновления. Дождитесь его завершения, а затем повторите попытку.</string>
-  <string name="update_nosdcard">Не удалось обновить. Нет внешнего накопителя или SD-карты.</string>
   <string name="show_airs">в эфире</string>
   <string name="show_network">включено</string>
-  <string name="show_pleaseupdate">Попробуйте получить больше информации о сериале (Долгое нажатие по названию сериала в общем списке -> Обновить). Если это не помогает, значит информация отсутствует на сайте TheTVDB. Посетите сайт www.thetvdb.com и узнайте как добавить информацию.</string>
   <string name="show_noairtime">Эфирное время неизвестно</string>
-  <string name="noIMDBentry">Ссылка IMDB не доступна. Обновите это шоу или перейти к thetvdb.com и добавьте его.</string>
-  <string name="no_seasons">Упс, отсутствует информация о сезонах. Попробуйте обновить информацию о сериале (длинное нажатие по названию в списке сериалов —> Обновить).</string>
   <string name="season_watchcount">не просмотренные эпизоды</string>
   <string name="season_allwatched">Отметить все как просмотренные</string>
   <string name="season_onenotwatched">эпизод не смотрел</string>
   <string name="season_unaired">Не транслировался в эфир</string>
   <string name="oneotherepisode">другой эпизод</string>
   <string name="otherepisodes">другие эпизоды</string>
-  <string name="no_episodes">Упс, отсутствует информация об эпизодах. Попробуйте обновить информацию о сериале (длинное нажатие по названию в списке сериалов —> Обновить).</string>
   <string name="search_button">Поиск</string>
-  <string name="no_results">Ничего не удалось найти. Попробуйте целыми словами.</string>
-  <string name="search_error">Не удалось подключиться к TheTVDB. Проверьте подключение к интернету или попробуйте позже.</string>
-  <string name="search_noinput">Пожалуйста, введите слово для поиска.</string>
   <string name="add_show">Добавить сериал</string>
   <string name="dont_add_show">Не добавлять</string>
-  <string name="search_hint_add">Найти сериал</string>
   <string name="add_started">скоро появится в списке ваших сериалов</string>
   <string name="add_success">успешно добавлено.</string>
   <string name="add_error_begin">Не удалось добавить \"</string>
   <string name="add_error_end">\".</string>
-  <string name="loading_usershows">Загрузка ваших сериалов на trakt.tv</string>
-  <string name="preferences">Настройки</string>
-  <string name="pref_sorting">Сортировка</string>
-  <string name="pref_showsorting">Показать сортировку</string>
-  <string name="pref_showsortingsummary">Сортировать сериалы в алфавитном порядке, по следующему эпизоду или сначала избранное</string>
-  <string name="pref_seasonsorting">Сортировка сезонов</string>
-  <string name="pref_sortingsummary">В каком хронологическом порядке сортировать сезоны</string>
-  <string name="pref_episodesorting">Сортировка эпизодов</string>
-  <string name="pref_epsortingsummary">В каком порядке сортировать эпизоды</string>
+  <string name="pref_more">Подробнее</string>
   <string name="pref_showlist">Показать список</string>
+  <string name="preferences">Настройки</string>
   <string name="pref_onlyfuture">Без показанных эпизодов</string>
   <string name="pref_onlyfuturesummary">\"next:\" никогда не показывать уже прошедшие в эфире эпизоды</string>
   <string name="pref_onlyseasoneps">Без особых эпизодов</string>
   <string name="pref_onlyseasonepssummary">\"next:\" никогда не показывать особые эпизоды</string>
   <string name="pref_content">Содержание</string>
-  <string name="pref_language">Язык TheTVDB</string>
-  <string name="pref_hideimages">Скрыть картинки</string>
-  <string name="pref_hideimagessummary">Не отображать изображения SeriesGuide в вашей фото-галерее (нужна перезагрузка)</string>
-  <string name="pref_more">Подробнее</string>
-  <string name="about">О SeriesGuide</string>
   <string name="backup">Резервное копирование/восстановление</string>
   <string name="backup_summary">Резервного копирования или восстановления ваших шоу</string>
+  <string name="pref_number">Формат номеров серий</string>
+  <string name="about">О SeriesGuide</string>
   <string name="pref_sharing">Поделиться</string>
+  <string name="pref_traktsync">Синхронизировать с trakt.tv</string>
+  <string name="donate">Купить мне выпивку (Paypal)</string>
   <string name="pref_advanced">Расширенный</string>
-  <string name="clear_cache">Очистить кэши изображений</string>
-  <string name="clear_cache_summary">Удалить все изображения из кэша и SD-карты, при обновлении сериалов они будут снова скачаны</string>
+  <string name="pref_hideimages">Скрыть картинки</string>
   <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_notifications">Включить уведомления</string>
-  <string name="pref_notificationssummary">Показать уведомления о выходящих эпизодах</string>
-  <string name="pref_usetz">Использовать мой часовой пояс</string>
-  <string name="pref_offset">Временной сдвиг</string>
-  <string name="pref_offsetsummary">на определенное количество часов</string>
   <string name="backup_inprogress">Резервное копирование базы данных...</string>
-  <string name="backup_success">Резервное копирование успешно</string>
-  <string name="backup_failed">Резервное копирование не удалось</string>
   <string name="import_inprogress">Восстановление базы данных...</string>
-  <string name="import_success">База данных успешно восстановлена</string>
-  <string name="import_failed">Восстановление не удалось</string>
   <string name="backup_yes">Резервное копирование</string>
   <string name="backup_no">Не резервировать</string>
   <string name="import_yes">Восстановление</string>
@@ -127,39 +96,23 @@
   <string name="smallwidget">Следующие эпизоды (маленький)</string>
   <string name="bigwidget">Следующие эпизоды (средний)</string>
   <string name="largewidget">Следующие эпизоды (большой)</string>
-  <string name="upcoming">Следующий</string>
-  <string name="recent">Недавние</string>
-  <string name="noupcoming">Похоже что эпизодов нет. Попробуйте обновить ваши сериалы.</string>
   <string name="seasons">Сезоны</string>
   <string name="cancel">Отмена</string>
   <string name="share">Поделиться</string>
   <string name="done">Выполнено</string>
   <string name="checkin">Войти</string>
-  <string name="checkinsuccess">Вход выполнен успешно</string>
-  <string name="pref_number">Формат номеров серий</string>
-  <string name="checkinfailed">Вход не выполнен</string>
   <string name="addtocalendar">Добавить в календарь</string>
-  <string name="addtocalendar_failed">К сожалению, не хватает информации, чтобы создать событие в календаре.</string>
-  <string name="search_description">Эпизоды</string>
-  <string name="description_home">На главную</string>
-  <string name="description_search">Поиск</string>
-  <string name="description_overview">Обзор</string>
-  <string name="norating">нет данных</string>
-  <string name="loading">Загрузка...</string>
   <string name="eula_title">Что вы должны знать</string>
   <string name="accept">Принять</string>
   <string name="decline">Отклонить</string>
   <string name="username">Имя пользователя</string>
+  <string name="email">Электронная почта</string>
   <string name="password">Пароль</string>
-  <string name="apikey">API ключ</string>
-  <string name="pref_traktsync">Синхронизировать с trakt.tv</string>
   <string name="save">Сохранить</string>
   <string name="dontsave">Не сохранять</string>
   <string name="trakt_decryptfail">не удалось расшифровать пароль</string>
   <string name="trakt_generalerror">Что-то пошло не так. Пожалуйста, проверьте ваши данные и повторите попытку.</string>
-  <string name="donate">Купить мне выпивку (Paypal)</string>
   <string name="trakt_createaccount">Создать новую учетную запись</string>
-  <string name="email">Электронная почта</string>
   <string name="trakt_synctodevice">Синхронизация с SeriesGuide</string>
   <string name="trakt_synctotrakt">Синхронизировать с trakt.tv</string>
   <string name="trakt_syncunseen">Синхронизировать не просмотренные эпизоды</string>
@@ -182,16 +135,10 @@
     <item>Сначала последние (DVD)</item>
     <item>Более старые первыми (DVD)</item>
   </string-array>
-  <string-array name="share_items">
-    <item>Check In (GetGlue)</item>
-    <item>Check In (trakt)</item>
-    <item>Mark seen (trakt)</item>
-    <item>Rate (trakt)</item>
-    <item>Other services</item>
-  </string-array>
   <string-array name="showfilter_list">
     <item>Все</item>
     <item>Избранное</item>
     <item>Не просмотренные/предстоящие</item>
+    <item>Hidden</item>
   </string-array>
 </resources>

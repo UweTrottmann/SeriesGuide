@@ -6,19 +6,20 @@
   <string name="episode_unkownairdate">okänd</string>
   <string name="episode_iswatched">Sett redan</string>
   <string name="episode_notwatched">Inte sett ännu</string>
-  <string name="specialseason">Särskilda Episoder</string>
-  <string name="ioerror_title">Nätverksfel</string>
-  <string name="saxerror_title">Tolkningsfel</string>
-  <string name="offline_title">Ingen förbindelse</string>
-  <string name="ioerror">Det var ett nätverksfel. Du kan ha begränsad tillgång till TheTVDB.com från din anslutning just nu. Försök igen senare.</string>
-  <string name="saxerror">Svaret från TheTVDB kunde inte tolkas. Försök igen senare.</string>
-  <string name="offline">Det finns ingen aktiv anslutning till Internet rapporteras. Kontrollera att du är ansluten till Internet och försök igen.</string>
-  <string name="search_hint">Sök episoder</string>
-  <string name="search_title">Matchande episoder</string>
-  <string name="share_episode">Dela episod</string>
+  <string name="specialseason">Special Avsnitt</string>
+  <string name="search_hint">Sök avsnitt</string>
+  <string name="search_title">Matchande avsnitt</string>
+  <string name="share_episode">Dela avsnitt</string>
   <string name="share_checkout">Kolla</string>
+  <string name="search_description">Avsnitt</string>
+  <string name="description_home">Hem</string>
+  <string name="description_search">Sök</string>
+  <string name="description_overview">Översikt</string>
+  <string name="norating">saknas</string>
+  <string name="loading">Laddar...</string>
+  <string name="sending">Skickar...</string>
   <string name="episode_firstaired">Sändningsdatum:</string>
-  <string name="episode_dvdnumber">DVD Episode</string>
+  <string name="episode_dvdnumber">DVD Avsnitt</string>
   <string name="show_actors">Skådespelare:</string>
   <string name="show_firstaired">Först sändes:</string>
   <string name="show_genres">Genrer:</string>
@@ -32,127 +33,161 @@
   <string name="show_isalive">Fortsätter</string>
   <string name="show_isnotalive">Avslutad</string>
   <string name="sort">Sortera efter</string>
+  <string name="updateall_yes">Uppdatera (alla)</string>
+  <string name="menu_update_delta">Uppdatera (endast föråldrade)</string>
   <string name="context_updateshow">Uppdatera</string>
-  <string name="context_showinfo">Visa Info</string>
-  <string name="context_marknext">Såg nästa episod</string>
+  <string name="context_showinfo">Serie Info</string>
+  <string name="context_marknext">Visad nästa avsnitt</string>
   <string name="today">idag</string>
-  <string name="mark_episode">Såg episod</string>
-  <string name="unmark_episode">Ännu inte tittat på episoden</string>
+  <string name="now">nu</string>
+  <string name="daily">Dagligen</string>
+  <string name="mark_episode">Sett avsnittet</string>
+  <string name="unmark_episode">Ännu ej sett avsnittet</string>
   <string name="mark_all">Sett alla</string>
   <string name="unmark_all">Sett ingen</string>
-  <string name="confirm_delete">Vill du verkligen ta bort showen?</string>
+  <string name="confirm_delete">Vill du verkligen ta bort serien?</string>
   <string name="delete_show">Ta bort</string>
   <string name="dontdelete_show">Radera ej</string>
-  <string name="no_nextepisode">ingen nästa episod hittades</string>
+  <string name="no_nextepisode">inget nytt avsnitt hittades</string>
   <string name="nextepisode">nästa:</string>
   <string name="context_favorite">Lägg till i favoriter</string>
   <string name="context_unfavorite">Ta bort från favoriter</string>
   <string name="favorited">Lägg till som favorit</string>
   <string name="unfavorited">Ta bort från favoriter</string>
-  <string name="update_error">Kunde inte uppdatera.</string>
-  <string name="update_incomplete1">Det gick inte att uppdatera</string>
-  <string name="update_incomplete2">.</string>
-  <string name="update_inbackground">Uppdaterar ...</string>
-  <string name="update_inprogress">Det finns en uppdatering pågår. Vänta tills den är klar och försök sedan igen.</string>
-  <string name="update_nosdcard">Kunde inte uppdatera. Det finns inget SD-kort eller extern lagring tillgänglig.</string>
+  <string name="context_hide">Dölj</string>
+  <string name="context_unhide">Visa</string>
+  <string name="hidden">Gömd serie</string>
+  <string name="unhidden">Visa serie</string>
+  <string name="activity">Aktivitet</string>
+  <string name="upcoming">Kommande</string>
+  <string name="recent">De senaste</string>
+  <string name="friends">Vänner</string>
+  <string name="only_favorites">Bara favoriter</string>
+  <string name="update_notification">Uppdaterar dina serier...</string>
+  <string name="update_single">Uppdaterar serier...</string>
+  <string name="update_delta">Uppdaterar föråldrade serier...</string>
+  <string name="update_full">Uppdaterar alla serier...</string>
+  <string name="update_success">Uppdatering lyckad.</string>
+  <string name="update_inprogress">En uppdatering pågår redan, försök igen senare.</string>
   <string name="show_airs">sänds</string>
   <string name="show_network">på</string>
-  <string name="show_pleaseupdate">Försök att uppdatera denna show för att visa mer information (i översikten, långtryck på den, välj sedan Uppdatera). Om detta inte hjälper så finns det förmodligen ingen ytterligare information i TheTVDB. Gå till deras webbplats (www.thetvdb.com) för att lära dig att lägga till några.</string>
   <string name="show_noairtime">Inga sändningstider tillgängliga</string>
-  <string name="noIMDBentry">Ingen IMDB referens tillgänglig. Uppdatera denna show eller gå till thetvdb.com lägg till den.</string>
-  <string name="no_seasons">Det finns inga säsonger för den showen. Prova uppdatera (i översikten, klicka länge på showen, välj Uppdatera)</string>
+  <string name="show_noimdbentry">Ingen IMDB sidan hittades.</string>
   <string name="season_watchcount">avsnitt inte sett</string>
-  <string name="season_allwatched">Alla tittade episoder</string>
+  <string name="season_allwatched">Alla avsnitt sedda</string>
   <string name="season_onenotwatched">avsnitt inte sett</string>
   <string name="season_unaired">osända</string>
-  <string name="oneotherepisode">andra episod</string>
-  <string name="otherepisodes">andra episoder</string>
-  <string name="no_episodes">Det finns inga avsnitt för den här showen. Prova uppdatera (klicka länge på showen, välj Uppdatera)</string>
+  <string name="oneotherepisode">annat avsnitt</string>
+  <string name="otherepisodes">andra avsnitt</string>
   <string name="search_button">Sök</string>
-  <string name="no_results">Kunde inte hitta några resultat. Prova hela ord.</string>
-  <string name="search_error">Kunde inte nå TheTVDB. Kontrollera din nätverksanslutning och försök igen senare.</string>
-  <string name="search_noinput">Ange ett sökord.</string>
-  <string name="add_show">Lägg till show</string>
+  <string name="search_hint_add">Serienamn</string>
+  <string name="add_show">Lägg till serie</string>
   <string name="dont_add_show">Lägg ej till</string>
-  <string name="search_hint_add">Sök show</string>
+  <string name="add_started">Kommer visas i din serielista inom kort.</string>
   <string name="add_success">lagts till.</string>
   <string name="add_error_begin">Kunde inte lägga till \"</string>
   <string name="add_error_end">\".</string>
-  <string name="preferences">Inställningar</string>
-  <string name="pref_sorting">Sortering</string>
-  <string name="pref_showsorting">Visa sortering</string>
-  <string name="pref_showsortingsummary">Sortera serier alfabetiskt, med nästa avsnitt eller favoriter first</string>
-  <string name="pref_seasonsorting">Säsong Sortering</string>
-  <string name="pref_episodesorting">Episode Sortering</string>
+  <string name="trending">Trendiga</string>
+  <string name="recommended">Rekommenderade</string>
+  <string name="library">Bibliotek</string>
+  <string name="powered_by_thetvdb">driven av thetvdb.com</string>
+  <string name="pref_more">Mer</string>
   <string name="pref_showlist">Visa lista</string>
+  <string name="help">Hjälp</string>
+  <string name="preferences">Inställningar</string>
   <string name="pref_onlyfuture">Inga visade avsnitt</string>
   <string name="pref_onlyfuturesummary">\ "Nästa: \" visar inte redan visade avsnitt</string>
+  <string name="pref_onlyseasoneps">Inga special avsnitt</string>
   <string name="pref_onlyseasonepssummary">\ "Nästa: \" aldrig visar special avsnitt</string>
   <string name="pref_content">Innehåll</string>
-  <string name="pref_language">TheTVDB Språk</string>
-  <string name="pref_hideimages">Dölja bilder</string>
-  <string name="pref_hideimagessummary">Göm SeriesGuide bilder från fotogalleriet (omstart krävs)</string>
-  <string name="pref_more">Mer</string>
-  <string name="about">Om SeriesGuide</string>
   <string name="backup">Säkerhetskopiering/återställning</string>
-  <string name="backup_summary">Säkerhetskopiera eller återställ dina shower</string>
+  <string name="backup_summary">Säkerhetskopiera eller återställ dina serier</string>
+  <string name="pref_number">Nummer format</string>
+  <string name="pref_usetz">Använd din tidszon</string>
+  <string name="pref_autoupdate">Aktivera automatisk uppdatering</string>
+  <string name="about">Om SeriesGuide</string>
+  <string name="about_message">http://seriesguide.uwetrottmann.com - utvecklad av Uwe Trottmann.\n\nVar god se länk nedan för alla människor och resurser som hjälpte till att driva projektet.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="pref_sharing">Delning</string>
   <string name="clearGetGlueCredentials">Koppla från GetGlue</string>
+  <string name="pref_trakt">trakt.TV referenser</string>
+  <string name="pref_traktsummary">Lägg till eller redigera dina trakt.tv referenser</string>
+  <string name="pref_traktsync">Synkronisera med trakt.tv</string>
+  <string name="pref_traktsyncsummary">Inledande synkronisering med trakt.tv</string>
+  <string name="pref_traktintegrate">Integrera trakt.tv</string>
+  <string name="pref_traktintegratesummary">Hämta trakt verksamhet vid uppdatering</string>
+  <string name="donate">Köp mig en drink (Paypal)</string>
+  <string name="feedback">Skicka feedback</string>
   <string name="pref_advanced">Avancerade</string>
   <string name="clear_cache">Töm bildcache</string>
-  <string name="clear_cache_summary">Ta bort alla bilder från cache och SD-kort, de kommer att laddas ner igen vid uppdatering av serierna.</string>
+  <string name="pref_hideimages">Dölja bilder</string>
   <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_notifications">Aktivera meddelanden</string>
-  <string name="pref_notificationssummary">Visa meddelanden för kommande avsnitt</string>
-  <string name="pref_usetz">Använd min tidszon</string>
-  <string name="pref_offsetsummary">med ett visst antal timmar</string>
+  <string name="pref_ganalyticssummary">Spårar användningen av funktioner för att förbättra SeriesGuide</string>
+  <string name="backup_path"><b>Backup mapp</b></string>
+  <string name="backup_version"><b>Databasversion</b></string>
+  <string name="backup_failed_nosd">Kan inte säkerhetskopiera. Mappen är inte tillgänglig.</string>
   <string name="backup_inprogress">Säkerhetskopiera databasen ...</string>
-  <string name="backup_success">Säkerhetskopiering framgångsrika</string>
-  <string name="backup_failed">Säkerhetskopieringen misslyckades</string>
+  <string name="backup_success">Säkerhetskopiering klar.</string>
+  <string name="backup_failed">Säkerhetskopieringen misslyckades.</string>
   <string name="import_inprogress">Återställer databasen...</string>
-  <string name="import_success">Databasen har återställt</string>
-  <string name="import_failed">Återställningen misslyckades</string>
+  <string name="import_failed_nosd">Kan inte återställa säkerhetskopian. Backup mappen är inte tillgänglig.</string>
+  <string name="import_failed_nofile">Det finns ingen säkerhetskopia.</string>
+  <string name="import_failed_noread">Säkerhetskopian är inte läsbar.</string>
+  <string name="dbupgradefailed">Säkerhetskopian kan vara för gammal eller tom. Anmärkning: Importera pre-2.0 säkerhetskopior i en 1.9.x version först.</string>
+  <string name="import_success">Säkerhetskopian har återställts.</string>
+  <string name="backup_button">Säkerhetskopiera</string>
+  <string name="import_button">Återställa</string>
   <string name="backup_yes">Säkerhetskopiering</string>
   <string name="backup_no">Säkerhetskopiera inte</string>
   <string name="import_yes">Återställa</string>
   <string name="import_no">Återställ inte</string>
+  <string name="widget_label">Nästa avsnitt</string>
   <string name="smallwidget">Nästa avsnitt (small)</string>
   <string name="bigwidget">Nästa avsnitt (middle)</string>
   <string name="largewidget">Nästa avsnitt (large)</string>
-  <string name="upcoming">Kommande</string>
-  <string name="recent">De senaste</string>
   <string name="seasons">Säsonger</string>
   <string name="cancel">Avbryt</string>
   <string name="share">Dela</string>
+  <string name="menu_checkin_trakt">Checka In (trakt)</string>
+  <string name="menu_share_others">Via andra appar</string>
   <string name="done">Klar</string>
+  <string name="checkin">Check In</string>
+  <string name="comment">Check In Kommentar</string>
+  <string name="traktcheckin_cancel">Avbryt den</string>
+  <string name="traktcheckin_inprogress">Incheckning pågår. Antingen avbryter du denna incheckning eller vänta %s innan du kan checka in igen.</string>
+  <string name="traktcheckin_wait">Jag väntar</string>
+  <string name="oauthmessage">Autentiserar SeriesGuide med GetGlue...</string>
   <string name="addtocalendar">Lägg till i kalender</string>
-  <string name="addtocalendar_failed">Tyvärr finns det inte tillräckligt med information för att skapa en kalenderhändelse.</string>
-  <string name="search_description">Avsnitt</string>
-  <string name="description_home">Hem</string>
-  <string name="description_search">Sök</string>
-  <string name="description_overview">Översikt</string>
-  <string name="norating">saknas</string>
-  <string name="loading">Laddar...</string>
   <string name="eula_title">Vad du bör veta</string>
+  <string name="eula_text">Denna app samlar in viss information medan du använder den, bland annat via Google Analytics. Du kan välja bort Google Analytics i Inställningarna.\n\nJag är inte ansvarig för din enhet eller om något dåligt händer medan du använder programmet.\n\nKällkoden är tillgänglig för på Github (https://github.com/UweTrottmann/SeriesGuide).</string>
   <string name="accept">Acceptera</string>
   <string name="decline">Avböj</string>
   <string name="username">Användarnamn</string>
+  <string name="email">E-post</string>
   <string name="password">Lösenord</string>
-  <string name="apikey">API-nyckel</string>
   <string name="save">Spara</string>
   <string name="dontsave">Spara inte</string>
-  <string name="donate">Köp mig en drink (Paypal)</string>
+  <string name="trakt_success">Lyckades tala med trakt</string>
+  <string name="trakt_error">Interaktion med trakt misslyckades</string>
+  <string name="trakt_seen">markerat som sedd</string>
+  <string name="trakt_decryptfail">Lösenordet kunde inte dekrypteras</string>
+  <string name="trakt_credentials_invalid">referenser ogiltiga</string>
+  <string name="trakt_generalerror">Något gick fel. Kontrollera dina referenser och försök igen.</string>
   <string name="love">Totalt ninja!</string>
-  <string name="hate">Svag Sås: (</string>
+  <string name="hate">Svag Sås :(</string>
   <string name="trakt_createaccount">Skapa nytt konto</string>
-  <string name="email">E-post</string>
+  <string name="trakt_experimental">Bara serier tillagda till SeriesGuide synkroniseras. \'Synka till SeriesGuide\ "hämtar visade avsnitt från trakt. \'Synka till trakt\ "överför visade avsnitt från SeriesGuide till trakt.</string>
   <string name="trakt_synctodevice">Synkronisera med SeriesGuide</string>
   <string name="trakt_synctotrakt">Synkronisera med trakt.tv</string>
   <string name="trakt_syncunseen">Synkronisera ej sedda avsnitt</string>
+  <string name="welcome_add">Lägg till serier</string>
+  <string name="welcome_setuptrakt">Skapa ett trakt konto</string>
+  <string name="welcome_traktmessage">Förbättra din upplevelse genom att ansluta SeriesGuide med trakt.tv.</string>
+  <string name="download_stable">Ladda ner SeriesGuide</string>
   <string-array name="shsorting">
-    <item>A - Ö</item>
-    <item>Nästa episod</item>
-    <item>Favorites (A - Z)</item>
-    <item>Favorites (Next ep.)</item>
+    <item>A - Z</item>
+    <item>Nästa avsnitt</item>
+    <item>Favoriter (A-Z)</item>
+    <item>Favoriter (nästa avs.)</item>
   </string-array>
   <string-array name="sesorting">
     <item>Senaste först</item>
@@ -162,21 +197,15 @@
     <item>Senaste först</item>
     <item>Äldsta först</item>
     <item>Ej sedda först</item>
-    <item>A - Ö</item>
-    <item>Ö - A</item>
+    <item>A - Z</item>
+    <item>Z - A</item>
     <item>Senaste först (DVD)</item>
     <item>Äldst först (DVD)</item>
   </string-array>
-  <string-array name="share_items">
-    <item>Check In (GetGlue)</item>
-    <item>Check In (trakt)</item>
-    <item>Mark seen (trakt)</item>
-    <item>Rate (trakt)</item>
-    <item>Other services</item>
-  </string-array>
   <string-array name="showfilter_list">
-    <item>All</item>
-    <item>Favorites</item>
-    <item>Unseen/Upcoming</item>
+    <item>Alla</item>
+    <item>Favoriter</item>
+    <item>Osedda/Kommande</item>
+    <item>Dolda</item>
   </string-array>
 </resources>

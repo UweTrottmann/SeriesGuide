@@ -7,16 +7,13 @@
   <string name="episode_iswatched">Già visto</string>
   <string name="episode_notwatched">Non ancora visto</string>
   <string name="specialseason">Episodi Speciali</string>
-  <string name="ioerror_title">Errore di rete</string>
-  <string name="saxerror_title">Errore di parsing</string>
-  <string name="offline_title">Nessuna connessione</string>
-  <string name="ioerror">C\'è stato un errore di rete. Possibile  accesso momentaneamente limitato alla connessione di TheTVDB.com . Riprovare più tardi.</string>
-  <string name="saxerror">La riposta di TheTVDB non è stata capita. Si prega di riprovare più tardi.</string>
-  <string name="offline">Non c\'è nessuna connessione attiva a internet. Si prega di assicurarsi di essere collegati a internet e riprovare.</string>
   <string name="search_hint">Cerca episodi</string>
   <string name="search_title">Episodi corrispondenti</string>
   <string name="share_episode">Condividi episodio</string>
   <string name="share_checkout">Check-out</string>
+  <string name="search_description">Episodi</string>
+  <string name="description_search">Ricerca</string>
+  <string name="loading">Caricamento...</string>
   <string name="episode_firstaired">Ora messa in onda:</string>
   <string name="episode_dvdnumber">Episodio su DVD</string>
   <string name="show_actors">Attori:</string>
@@ -29,7 +26,6 @@
   <string name="show_isalive">Continua</string>
   <string name="show_isnotalive">Conclusa</string>
   <string name="sort">Ordina per</string>
-  <string name="menu_updateart">Ottieni Poster mancanti</string>
   <string name="updateall_yes">Aggiorna (Tutti)</string>
   <string name="context_updateshow">Aggiorna</string>
   <string name="context_showinfo">Mostra Info</string>
@@ -48,134 +44,82 @@
   <string name="context_unfavorite">Rimuovi dai preferiti</string>
   <string name="favorited">Aggiunto ai preferiti</string>
   <string name="unfavorited">Rimuovi dai preferiti</string>
+  <string name="upcoming">Prossimi</string>
+  <string name="recent">Recenti</string>
   <string name="update_notification">Aggiornamento delle tue Serie...</string>
   <string name="update_single">Aggiornamento Serie...</string>
   <string name="update_full">Aggiornamento di tutte le Serie...</string>
-  <string name="update_failed">Aggiornamento non riuscito.</string>
-  <string name="update_offline">Verifica la tua connessione internet/WiFi.</string>
-  <string name="update_saxerror">Riprova più tardi.</string>
-  <string name="update_error">Impossibile aggiornare.</string>
-  <string name="update_incomplete1">Impossibile aggiornare</string>
   <string name="update_success">Aggiornamento riuscito.</string>
-  <string name="imagedownload_incomplete">Aggiornamento riuscito. Purtroppo alcune immagini non sono state scaricate. Riprovare più tardi.</string>
-  <string name="update_inbackground">Aggiornamento in corso ...</string>
-  <string name="update_inprogress">C\'è un aggiornamento in corso. Attendere il completamento, quindi provare di nuovo.</string>
-  <string name="update_nosdcard">Impossibile aggiornare. Non vi è alcun storage esterno o una scheda SD disponibile.</string>
-  <string name="update_rebuildsearch">Costruzione indice di ricerca episodio</string>
-  <string name="pref_autoupdate">Aggiornamento automatico</string>
-  <string name="pref_updatewifionly">Aggiorna solo con Wi-Fi</string>
   <string name="show_airs">va in onda</string>
   <string name="show_network">su</string>
-  <string name="show_pleaseupdate">Prova ad aggiornare questa Serie per visualizzare ulteriori informazioni (in panoramica, premere a lungo su di essa, selezionare aggiorna). Se questo non ti è di aiuto,  probabilmente non ci sono ulteriori informazioni su TheTVDB. Vai al loro sito (www.thetvdb.com) per imparare ad aggiungerle.</string>
   <string name="show_noairtime">Nessuna data di trasmissione disponibile</string>
-  <string name="noIMDBentry">Nessun riferimento IMDB disponibile. Aggiornare questa Serie o andare su thetvdb.com e aggiungerla.</string>
-  <string name="no_seasons">Ops, non ci sono stagioni per questa Serie. Prova ad aggiornare la Serie (nella visione panoramica, premere a lungo su di essa, selezionare Aggiorna).</string>
   <string name="season_watchcount">episodi non visti</string>
   <string name="season_allwatched">Tutti gli episodi visti</string>
   <string name="season_onenotwatched">episodio non visto</string>
   <string name="season_unaired">Non trasmesso</string>
   <string name="oneotherepisode">altro episodio</string>
   <string name="otherepisodes">altri episodi</string>
-  <string name="no_episodes">Ops, non ci sono episodi per questa stagione. Prova ad aggiornare la Serie (nella visione panoramica, premere a lungo su di essa, selezionare Aggiorna).</string>
   <string name="search_button">Cerca</string>
-  <string name="no_results">Impossibile trovare alcun risultato. Prova con parole complete.</string>
-  <string name="search_error">Impossibile connettersi a TheTVDB. Si prega di controllare la connessione di rete o riprovare più tardi.</string>
-  <string name="search_noinput">Inserisci una parola di ricerca.</string>
   <string name="add_show">Aggiungi Serie</string>
   <string name="dont_add_show">Non aggiungere</string>
-  <string name="search_hint_add">Cerca Serie</string>
   <string name="add_started">apparirà nel tuo elenco Serie a breve.</string>
   <string name="add_success">Aggiunta con successo.</string>
   <string name="add_error_begin">Impossibile aggiungere\"</string>
   <string name="add_error_end">\".</string>
-  <string name="add_already_exists">esiste già. È stato aggiornato.</string>
-  <string name="loading_usershows">Carica le tue Serie su Trakt.tv</string>
-  <string name="preferences">Impostazioni</string>
-  <string name="pref_sorting">Ordinamento</string>
-  <string name="pref_showsorting">Visualizza ordinamento</string>
-  <string name="pref_showsortingsummary">Ordina le serie in ordine alfabetico, dalla prossima puntata o prima i preferiti</string>
-  <string name="pref_seasonsorting">Ordine stagioni</string>
-  <string name="pref_sortingsummary">Ordine cronologico delle stagioni</string>
-  <string name="pref_episodesorting">Ordine Episodi</string>
-  <string name="pref_epsortingsummary">In quale ordine gli episodi</string>
+  <string name="powered_by_thetvdb">powered by thetvdb.com</string>
   <string name="pref_showlist">Visualizza elenco</string>
+  <string name="preferences">Impostazioni</string>
   <string name="pref_onlyfuture">Episodi non in onda</string>
   <string name="pref_onlyfuturesummary">\"Next:\" non mostrare gli episodi già trasmessi</string>
   <string name="pref_onlyseasoneps">No puntate speciali</string>
   <string name="pref_onlyseasonepssummary">\"Next:\" non mostrare gli episodi speciali</string>
   <string name="pref_content">Contenuto</string>
-  <string name="pref_language">TheTVDB Lingua</string>
-  <string name="pref_languagesummary">I contenuti localizzati non sono disponibili per ogni serie, aggiorna in seguito</string>
-  <string name="pref_hideimages">Nascondi le immagini</string>
-  <string name="pref_hideimagessummary">Nascondi le immagini di SeriesGuide dalla galleria fotografica (riavvio necessario)</string>
-  <string name="about">Su SeriesGuide</string>
   <string name="backup">Backup/Ripristino</string>
   <string name="backup_summary">Backup o ripristina le tue serie</string>
+  <string name="pref_number">Formato numerico</string>
+  <string name="about">Su SeriesGuide</string>
   <string name="pref_sharing">Condivisione</string>
   <string name="clearGetGlueCredentials">Scollegare da GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Utilizza i pulsanti di condivisione per impostare GetGlue</string>
+  <string name="pref_trakt">Credenziali Trakt.TV</string>
+  <string name="pref_traktsummary">Aggiungi o modifica le credenziali Trakt.tv</string>
+  <string name="pref_traktsync">Sincronizzazione con Trakt.tv</string>
+  <string name="pref_traktintegrate">Integrare Trakt.tv</string>
+  <string name="donate">Offrimi da bere (PayPal)</string>
   <string name="pref_advanced">Avanzato</string>
-  <string name="clear_cache">Rimuovi le immagini nella cache</string>
+  <string name="pref_hideimages">Nascondi le immagini</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Tracce l\'uso delle funzionalità per aiutare a migliorare SeriesGuide</string>
-  <string name="pref_notifications">Abilita le notifiche</string>
-  <string name="pref_notificationssummary">Mostra le notifiche dei prossimi episodi</string>
-  <string name="pref_usetz">Usa il mio fuso orario</string>
-  <string name="pref_offset">Compensazione Oraria</string>
-  <string name="pref_offsetsummary">da una certa quantità di ore</string>
   <string name="backup_inprogress">Backup database...</string>
-  <string name="backup_success">Backup con successo</string>
-  <string name="backup_failed">Backup non riuscito</string>
   <string name="import_inprogress">Ripristino del database...</string>
-  <string name="import_success">Database ripristinato con successo</string>
-  <string name="import_failed">Ripristino non riuscito</string>
   <string name="backup_yes">Backup</string>
   <string name="import_yes">Ripristina</string>
   <string name="import_no">Non Ripristinare</string>
   <string name="smallwidget">Prossimi episodi (piccolo)</string>
   <string name="bigwidget">Prossimi episodi (medio)</string>
   <string name="largewidget">Prossimi episodi (grande)</string>
-  <string name="upcoming">Prossimi</string>
-  <string name="recent">Recenti</string>
   <string name="seasons">Stagioni</string>
   <string name="cancel">Annulla</string>
   <string name="share">Condividi</string>
   <string name="done">Fatto</string>
   <string name="checkin">Check-In</string>
   <string name="comment">Check-In commento</string>
-  <string name="checkinsuccess">Check-In con successo</string>
-  <string name="pref_number">Formato numerico</string>
-  <string name="pref_numbersummary">Cambia il formato del numero tra: 1x01, S01E01 o s01e01</string>
-  <string name="checkinfailed">Check-In non riuscito</string>
   <string name="oauthmessage">Autenticazione SeriesGuide su GetGlue...</string>
   <string name="addtocalendar">Aggiungi al calendario</string>
-  <string name="addtocalendar_failed">Spiacenti, non ci sono informazioni sufficienti per creare un evento nel calendario.</string>
-  <string name="search_description">Episodi</string>
-  <string name="description_search">Ricerca</string>
-  <string name="loading">Caricamento...</string>
   <string name="eula_title">Che cosa si deve sapere</string>
-  <string name="eula_text">L\'utente non può arrecare alcun danno con questa applicazione (sovraccarico del server , reverse engineering, ...).\n\nQuesta app raccoglie alcune informazioni, mentre la si utilizza, anche mediante Google Analytics. Puoi scegliere nelle impostazion per Google Analytics.\n\nNon sono responsabile per la rottura del dispositivo o di qualunque casa di male che accada durante l\'uso di questa applicazione.\n\nIl codice sorgente è disponibile per tutti su Github (https://github.com/UweTrottmann/SeriesGuide).</string>
   <string name="accept">Accettare</string>
   <string name="decline">Declina</string>
   <string name="username">Nome utente</string>
+  <string name="email">E-mail</string>
   <string name="password">Password</string>
-  <string name="apikey">Chiave API</string>
-  <string name="pref_trakt">Credenziali Trakt.TV</string>
-  <string name="pref_traktsummary">Aggiungi o modifica le credenziali Trakt.tv</string>
-  <string name="pref_traktsync">Sincronizzazione con Trakt.tv</string>
   <string name="save">Salva</string>
   <string name="dontsave">Non Salvare</string>
   <string name="trakt_decryptfail">la password non può essere decriptata</string>
   <string name="trakt_credentials_invalid">credenziali non valide</string>
   <string name="trakt_generalerror">Qualcosa è andato storto. Si prega di controllare le vostre credenziali e riprovare.</string>
-  <string name="pref_traktintegrate">Integrare Trakt.tv</string>
-  <string name="donate">Offrimi da bere (PayPal)</string>
   <string name="trakt_createaccount">Crea nuovo account</string>
-  <string name="email">E-mail</string>
   <string name="trakt_synctodevice">Sincronizza con SeriesGuide</string>
   <string name="trakt_synctotrakt">Sincronizza con Trakt.tv</string>
   <string name="trakt_syncunseen">Sincronizza gli episodi non visti</string>
-  <string name="powered_by_thetvdb">powered by thetvdb.com</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Prossimo episodio</item>
@@ -195,16 +139,10 @@
     <item>Prima i più recenti (DVD)</item>
     <item>Prima i più vecchi (DVD)</item>
   </string-array>
-  <string-array name="share_items">
-    <item>Check In (GetGlue)</item>
-    <item>Check In (trakt)</item>
-    <item>Mark seen (trakt)</item>
-    <item>Rate (trakt)</item>
-    <item>Other services</item>
-  </string-array>
   <string-array name="showfilter_list">
     <item>Tutti</item>
     <item>Preferiti</item>
     <item>Non Visti/Prossimi</item>
+    <item>Hidden</item>
   </string-array>
 </resources>
