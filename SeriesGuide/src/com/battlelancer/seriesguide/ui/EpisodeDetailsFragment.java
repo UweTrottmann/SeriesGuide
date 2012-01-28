@@ -189,15 +189,16 @@ public class EpisodeDetailsFragment extends ListFragment implements
 
                 final Cursor episode = (Cursor) getListAdapter().getItem(0);
                 episode.moveToFirst();
-                
+
                 final String showTitle = episode.getString(EpisodeDetailsQuery.SHOW_TITLE);
                 final String episodestring = ShareUtils.onCreateShareString(getActivity(), episode);
                 final long airtime = episode.getLong(EpisodeDetailsQuery.FIRSTAIREDMS);
                 final String runTime = episode.getString(EpisodeDetailsQuery.SHOW_RUNTIME);
                 ShareUtils.onAddCalendarEvent(getActivity(), showTitle, episodestring, airtime,
                         runTime);
-                
-                episode.close();
+
+                // don't close cursor!
+                // episode.close();
                 break;
             }
             default:
@@ -209,7 +210,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
     private void onShareEpisode(ShareMethod shareMethod, boolean isInvalidateOptionsMenu) {
         final Cursor episode = (Cursor) getListAdapter().getItem(0);
         episode.moveToFirst();
-        
+
         Bundle shareData = new Bundle();
         String episodestring = ShareUtils.onCreateShareString(getActivity(), episode);
         String sharestring = getString(R.string.share_checkout);
@@ -221,8 +222,9 @@ public class EpisodeDetailsFragment extends ListFragment implements
         shareData.putInt(ShareItems.EPISODE, episode.getInt(EpisodeDetailsQuery.NUMBER));
         shareData.putInt(ShareItems.SEASON, episode.getInt(EpisodeDetailsQuery.SEASON));
         shareData.putInt(ShareItems.TVDBID, episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID));
-        
-        episode.close();
+
+        // don't close cursor!
+        // episode.close();
 
         ShareUtils.onShareEpisode(getSupportActivity(), shareData, shareMethod);
 
