@@ -3,6 +3,10 @@ package com.battlelancer.seriesguide.getglueapi;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
+import oauth.signpost.exception.OAuthCommunicationException;
+import oauth.signpost.exception.OAuthExpectationFailedException;
+import oauth.signpost.exception.OAuthMessageSignerException;
+import oauth.signpost.exception.OAuthNotAuthorizedException;
 
 import android.content.Context;
 import android.content.Intent;
@@ -48,15 +52,20 @@ public class OAuthRequestTokenTask extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... params) {
 
         try {
-            Log.i(TAG, "Retrieving request token from Google servers");
+            Log.i(TAG, "Retrieving request token from GetGlue servers");
             final String url = provider.retrieveRequestToken(consumer, GetGlue.OAUTH_CALLBACK_URL);
             Log.i(TAG, "Popping a browser with the authorize URL : " + url);
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url))
                     .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY
                             | Intent.FLAG_FROM_BACKGROUND);
             context.startActivity(intent);
-        } catch (Exception e) {
-            Log.e(TAG, "Error during OAUth retrieve request token", e);
+        } catch (OAuthMessageSignerException e) {
+            return e.getMessage();
+        } catch (OAuthNotAuthorizedException e) {
+            return e.getMessage();
+        } catch (OAuthExpectationFailedException e) {
+            return e.getMessage();
+        } catch (OAuthCommunicationException e) {
             return e.getMessage();
         }
 
