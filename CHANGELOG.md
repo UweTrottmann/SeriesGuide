@@ -10,7 +10,7 @@ Since 2.5beta/2.5.1beta (2012-01-13):
 * Add show posters in Upcoming and Recent.
 * Fix to display correct episode title.
 
-Since 2.5.2beta (soon):
+Since 2.5.2beta (2012-01-28):
 
 * Better internal representation for time. It may take a while until your shows appear (the database is upgrading in the background). YOU MAY NEED to update all of your shows afterwards. Episodes move now correctly from Upcoming to Recent 1 hour after they aired.
 
