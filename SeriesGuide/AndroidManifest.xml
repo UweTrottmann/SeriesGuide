@@ -133,8 +133,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="callback"
-                    android:scheme="seriesguide-oauth-getglue" />
+                    android:host="getgluecallback"
+                    android:scheme="sgoauth" />
             </intent-filter>
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.SeasonsActivity" >
