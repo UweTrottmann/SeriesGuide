@@ -7,15 +7,15 @@
   <string name="episode_iswatched">Již zhlédnuto</string>
   <string name="episode_notwatched">Zatím nezhlédnuto</string>
   <string name="specialseason">Bonusové Epizody</string>
-  <string name="ioerror_title">Chyba sítě</string>
-  <string name="saxerror_title">Parsing Error</string>
-  <string name="offline_title">Žádné připojení</string>
-  <string name="ioerror">Došlo k chybě sítě. Můžete mít omezený přístup k TheTVDB.com. Zkuste to znovu později.</string>
-  <string name="saxerror">Odpověď od TheTVDB nebyla srozumitelná. Prosím, opakujte později.</string>
-  <string name="offline">Není k dispozici aktivní připojení k Internetu. Ujistěte se, že jste připojeni k Internetu a zkuste to znovu.</string>
   <string name="search_hint">Hledat epizody</string>
   <string name="search_title">Odpovídající epizody</string>
   <string name="share_episode">Sdílet epizodu</string>
+  <string name="search_description">Epizody</string>
+  <string name="description_home">Domů</string>
+  <string name="description_search">Hledat</string>
+  <string name="description_overview">Přehled</string>
+  <string name="norating">n/a</string>
+  <string name="loading">Načítání...</string>
   <string name="episode_firstaired">Datum vysílání:</string>
   <string name="episode_dvdnumber">DVD epizody</string>
   <string name="show_actors">Hrají:</string>
@@ -31,7 +31,6 @@
   <string name="show_isalive">Pokračuje</string>
   <string name="show_isnotalive">Ukončeno</string>
   <string name="sort">Řadit podle</string>
-  <string name="menu_updateart">Získat chybějící plakáty</string>
   <string name="context_updateshow">Aktualizovat</string>
   <string name="context_showinfo">Zobrazit informace</string>
   <string name="context_marknext">Další epizoda zhlédnuta</string>
@@ -49,79 +48,48 @@
   <string name="context_unfavorite">Odstranit z oblíbených</string>
   <string name="favorited">Přidáno k oblíbeným</string>
   <string name="unfavorited">Odstraněno z oblíbených</string>
-  <string name="update_error">Nelze aktualizovat.</string>
-  <string name="update_incomplete1">Nelze aktualizovat</string>
-  <string name="update_incomplete2">.</string>
-  <string name="update_inbackground">Probíhá aktualizace...</string>
-  <string name="update_inprogress">Právě probíhá aktualizace. Vyčkejte na její dokončení, pak opakujte akci.</string>
-  <string name="update_nosdcard">Nelze aktualizovat. Není k dispozici žádné externí úložiště nebo SD karta.</string>
+  <string name="upcoming">Nadcházející</string>
+  <string name="recent">Nedávné</string>
   <string name="show_airs">vysílá</string>
   <string name="show_network">na</string>
-  <string name="show_pleaseupdate">Pokuste se aktualizovat pořad pro získání více informací (v přehledu jej dlouze stiskněte a vyberte Aktualizovat). Nepomůže-li to, je pravděpodobné, že nejsou žádné další informace na TheTVDB. Předěte na jejich stránky (www.thetvdb.com) a naučte se, jak nějaké přidat.</string>
   <string name="show_noairtime">Žádné vysílací časy nejsou k dispozici</string>
-  <string name="noIMDBentry">Žádné reference IMDB nejsou k dispozici. Aktualizujte tento pořad, nebo jděte na thetvdb.com a přidejte jej.</string>
-  <string name="no_seasons">Ooops, neexistují žádné sezóny pro tento pořad. Zkuste aktualizovat pořad (v přehledu jej dlouze stiskněte a zvolte Aktualizovat).</string>
   <string name="season_watchcount">nezhlédnuté epizody</string>
   <string name="season_allwatched">Všechny epizody zhlédnuty</string>
   <string name="season_onenotwatched">epizoda nezhlédnuta</string>
   <string name="season_unaired">Neodvysíláno</string>
   <string name="oneotherepisode">jiná epizoda</string>
   <string name="otherepisodes">jiné epizody</string>
-  <string name="no_episodes">Ooops, neexistují žádné epizody pro tuto sezónu. Zkuste aktualizovat pořad (v přehledu jej dlouze stiskněte a zvolte Aktualizovat).</string>
   <string name="search_button">Hledat</string>
-  <string name="no_results">Nebyly nalezeny žádné výsledky. Zkuste celá slova.</string>
-  <string name="search_error">Nelze se připojit na TheTVDB. Prosím, zkontrolujte síťové připojení nebo to zkuste později.</string>
-  <string name="search_noinput">Zadejte hledané slovo.</string>
   <string name="add_show">Přidat pořad</string>
   <string name="dont_add_show">Nepřidávat</string>
-  <string name="search_hint_add">Hledat pořad</string>
   <string name="add_started">se brzy objeví ve Vašem seznamu pořadů .</string>
   <string name="add_success">úspěšně přidáno.</string>
   <string name="add_error_begin">Nelze přidat\"</string>
   <string name="add_error_end">\".</string>
-  <string name="add_already_exists">již existuje. Místo toho byl aktualizován.</string>
-  <string name="loading_usershows">Načítání Vašich pořadů na trakt.tv</string>
-  <string name="preferences">Nastavení</string>
-  <string name="pref_sorting">Řazení</string>
-  <string name="pref_showsorting">Řazení pořadů</string>
-  <string name="pref_showsortingsummary">Řadit pořady abecedně, podle příští epizody, nebo oblíbené nejdříve</string>
-  <string name="pref_seasonsorting">Řazení sezón</string>
-  <string name="pref_sortingsummary">Ve kterém chronologickém směru řadit sezóny</string>
-  <string name="pref_episodesorting">Řazení epizod</string>
-  <string name="pref_epsortingsummary">V jakém pořadí řadit epizody</string>
+  <string name="powered_by_thetvdb">powered by thetvdb.com</string>
+  <string name="pref_more">Více</string>
   <string name="pref_showlist">Zobrazit seznam</string>
+  <string name="preferences">Nastavení</string>
   <string name="pref_onlyfuture">Žádné odvysílané epizody</string>
   <string name="pref_onlyfuturesummary">\"další:\" nezobrazovat již odvysílané epizody</string>
   <string name="pref_onlyseasoneps">Žádné speciální epizody</string>
   <string name="pref_onlyseasonepssummary">\"další:\" nezobrazovat speciální epizody</string>
   <string name="pref_content">Obsah</string>
-  <string name="pref_language">Jazyk TheTVDB</string>
-  <string name="pref_languagesummary">Místní obsah není k dispozici pro všechny pořady, aktualizujte</string>
-  <string name="pref_hideimages">Skrýt obrázky</string>
-  <string name="pref_hideimagessummary">Skrýt SeriesGuide obrázky z Vaší galerie fotografií (vyžaduje restart)</string>
-  <string name="pref_more">Více</string>
-  <string name="about">O SeriesGuide</string>
   <string name="backup">Zálohování/obnovení</string>
   <string name="backup_summary">Zálohování a obnovení Vašich pořadů</string>
+  <string name="pref_number">Formát číslování</string>
+  <string name="about">O SeriesGuide</string>
   <string name="pref_sharing">Sdílení</string>
   <string name="clearGetGlueCredentials">Odpojení GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Použijte tlačítka Sdílet pro nastavení GetGlue</string>
+  <string name="pref_traktsync">Synchronizovat s trakt.tv</string>
+  <string name="pref_traktintegrate">Integrace trakt.tv</string>
+  <string name="donate">Kup mi drink (Paypal)</string>
   <string name="pref_advanced">Pokročilé</string>
-  <string name="clear_cache">Vymazat mezipaměť obrázků</string>
-  <string name="clear_cache_summary">Odstranit všechny obrázky z cache a SD karty, aktualizace pořadů je znovu stáhne</string>
+  <string name="pref_hideimages">Skrýt obrázky</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Sledování využívání funkcí pro zlepšení SeriesGuide</string>
-  <string name="pref_notifications">Povolit notifikace</string>
-  <string name="pref_notificationssummary">Zobrazit notifikace pro blížící se epizody</string>
-  <string name="pref_usetz">Použít moje časové pásmo</string>
-  <string name="pref_offset">Časový posun</string>
-  <string name="pref_offsetsummary">o určité množství hodin</string>
   <string name="backup_inprogress">Zálohování databáze ...</string>
-  <string name="backup_success">Zálohování úspěšné</string>
-  <string name="backup_failed">Zálohování se nezdařilo</string>
   <string name="import_inprogress">Obnovení databáze ...</string>
-  <string name="import_success">Databáze úspěšně obnovena</string>
-  <string name="import_failed">Obnovení se nezdařilo.</string>
   <string name="backup_yes">Zálohovat</string>
   <string name="backup_no">Nezálohovat</string>
   <string name="import_yes">Obnovit</string>
@@ -129,43 +97,27 @@
   <string name="smallwidget">Další epizody (malé)</string>
   <string name="bigwidget">Další epizody (střední)</string>
   <string name="largewidget">Další epizody (velký)</string>
-  <string name="upcoming">Nadcházející</string>
-  <string name="recent">Nedávné</string>
-  <string name="noupcoming">Zdá se, že zde nejsou žádné epizody. Zkuste aktualizovat Vaše pořady.</string>
   <string name="seasons">Sezóny</string>
   <string name="cancel">Zrušit</string>
   <string name="share">Sdílet</string>
   <string name="done">Hotovo</string>
-  <string name="pref_number">Formát číslování</string>
   <string name="oauthmessage">Ověřování SeriesGuide s GetGlue...</string>
   <string name="addtocalendar">Přidat do kalendáře</string>
-  <string name="addtocalendar_failed">Omlouváme se, ale není dostatek informací k vytvoření události kalendáře.</string>
-  <string name="search_description">Epizody</string>
-  <string name="description_home">Domů</string>
-  <string name="description_search">Hledat</string>
-  <string name="description_overview">Přehled</string>
-  <string name="norating">n/a</string>
-  <string name="loading">Načítání...</string>
   <string name="eula_title">Co byste měli vědět</string>
   <string name="accept">Přijmout</string>
   <string name="decline">Odmítnout</string>
   <string name="username">Uživatelské jméno</string>
+  <string name="email">E-mail</string>
   <string name="password">Heslo</string>
-  <string name="apikey">API klíč</string>
-  <string name="pref_traktsync">Synchronizovat s trakt.tv</string>
   <string name="save">Uložit</string>
   <string name="dontsave">Neukládat</string>
   <string name="trakt_decryptfail">Heslo nelze dešifrovat.</string>
-  <string name="pref_traktintegrate">Integrace trakt.tv</string>
-  <string name="donate">Kup mi drink (Paypal)</string>
   <string name="love">Totally ninja!</string>
   <string name="hate">Odpad</string>
   <string name="trakt_createaccount">Vytvořit nový účet</string>
-  <string name="email">E-mail</string>
   <string name="trakt_synctodevice">Synchronizace na SeriesGuide</string>
   <string name="trakt_synctotrakt">Synchronizace na trakt.tv</string>
   <string name="trakt_syncunseen">Synchronizovat nezhlédnuté epizody</string>
-  <string name="powered_by_thetvdb">powered by thetvdb.com</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Další epizoda</item>
@@ -185,16 +137,10 @@
     <item>Poslední nejdříve (DVD)</item>
     <item>Nejstarší nejdříve (DVD)</item>
   </string-array>
-  <string-array name="share_items">
-    <item>Check In (GetGlue)</item>
-    <item>Check In (trakt)</item>
-    <item>Mark seen (trakt)</item>
-    <item>Rate (trakt)</item>
-    <item>Other services</item>
-  </string-array>
   <string-array name="showfilter_list">
     <item>All</item>
     <item>Favorites</item>
     <item>Unseen/Upcoming</item>
+    <item>Hidden</item>
   </string-array>
 </resources>
