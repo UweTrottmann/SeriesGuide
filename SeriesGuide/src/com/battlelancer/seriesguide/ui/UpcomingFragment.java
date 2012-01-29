@@ -290,12 +290,15 @@ public class UpcomingFragment extends ListFragment implements
 
         private int mLayout;
 
+        private SharedPreferences mPrefs;
+
         public SlowAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
             super(context, layout, c, from, to, flags);
 
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             mLayout = layout;
+            mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         }
 
         @Override
@@ -348,14 +351,10 @@ public class UpcomingFragment extends ListFragment implements
             viewHolder.watchedBox.setChecked(mCursor.getInt(UpcomingQuery.WATCHED) > 0);
 
             // season and episode number
-            String episodeString = mCursor.getString(UpcomingQuery.SEASON);
-            String number = mCursor.getString(UpcomingQuery.NUMBER);
-            if (number.length() == 1) {
-                episodeString += "x0" + number;
-            } else {
-                episodeString += "x" + number;
-            }
-            viewHolder.number.setText(episodeString);
+            String episodeNumber = Utils.getEpisodeNumber(mPrefs,
+                    mCursor.getString(UpcomingQuery.SEASON),
+                    mCursor.getString(UpcomingQuery.NUMBER));
+            viewHolder.number.setText(episodeNumber);
 
             // airdate
             long airtime = mCursor.getLong(UpcomingQuery.FIRSTAIREDMS);
