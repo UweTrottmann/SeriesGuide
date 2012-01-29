@@ -29,6 +29,14 @@ Since 2.5.2beta (2012-01-28):
 * Don't use beta icon for stable release (only devices with extra high resolution displays were affected).
 * Hide text of some action bar buttons.
 * Support for 'Daily' air day.
+* Latest translations from crowdin, now with Arabic by mohd55 and Hungarian by devilinside.
+
+Since 2.5.3beta (2012-01-29)
+* Updated design towards ICS styles.
+* Fix for crash when trying to create a trakt account.
+* Use user-specified episode numbers in Upcoming/Recent.
+* Fix GetGlue comment box text not wrapping.
+* Latest translations from crowdin. Thanks everyone for the big effort!
 
 Postponed:
 * Display search term, title and search soft button in `SearchActivity`.
