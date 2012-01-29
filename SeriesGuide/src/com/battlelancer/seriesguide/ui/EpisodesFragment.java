@@ -74,6 +74,8 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
         super.onActivityCreated(savedInstanceState);
 
         getListView().setSelector(R.drawable.list_selector_holo_dark);
+        getListView().setDivider(
+                getResources().getDrawable(R.drawable.divider_horizontal_holo_dark));
 
         updatePreferences();
 
