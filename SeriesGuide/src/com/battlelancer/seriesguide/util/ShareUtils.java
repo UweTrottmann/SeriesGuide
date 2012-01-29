@@ -199,6 +199,7 @@ public class ShareUtils {
 
             input = new EditText(getActivity());
             input.setMinLines(3);
+            input.setMaxLines(5);
             input.setGravity(Gravity.TOP);
             input.setFilters(new InputFilter[] {
                 new InputFilter.LengthFilter(140)
