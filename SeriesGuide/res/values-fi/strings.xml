@@ -61,11 +61,15 @@
   <string name="upcoming">Tulevat</string>
   <string name="recent">Viimeisimmät</string>
   <string name="friends">Ystävät</string>
+  <string name="friends_empty">Ei ystävien toimintaa traktissa.</string>
+  <string name="noupcoming">Ei tulevia jaksoja.</string>
+  <string name="norecent">Ei viimeaikaisia jaksoja.</string>
   <string name="update_notification">Päivitetään ohjelmasi...</string>
   <string name="update_single">Päivitetään ohjelma...</string>
   <string name="update_delta">Päivitetään vanhentuneet ohjelmat...</string>
   <string name="update_full">Päivitetään kaikkia ohjelmia...</string>
   <string name="update_success">Päivitys onnistui.</string>
+  <string name="menu_updateart">Lataa julisteet</string>
   <string name="show_airs">esitetään</string>
   <string name="show_network">kanavalla</string>
   <string name="show_noairtime">Ei esitysaikoja saatavilla</string>
@@ -112,6 +116,7 @@
   <string name="donate">Osta minulle drinkki (Paypal)</string>
   <string name="feedback">Lähetä palautetta</string>
   <string name="pref_advanced">Lisäasetukset</string>
+  <string name="clear_cache">Tyhjennä kuvavälimuisti</string>
   <string name="pref_hideimages">Piilota kuvat</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Seuraa ominaisuuksien käyttöä, jonka avulla parannetaan SeriesGuidea</string>
@@ -189,6 +194,6 @@
     <item>Kaikki</item>
     <item>Suosikit</item>
     <item>Katsomattomat/Tulevat</item>
-    <item>Hidden</item>
+    <item>Piilotetut</item>
   </string-array>
 </resources>

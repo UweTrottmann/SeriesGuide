@@ -14,6 +14,7 @@
   <string name="search_description">Episodios</string>
   <string name="description_home">Inicio</string>
   <string name="description_search">Buscar</string>
+  <string name="description_overview">Reseña</string>
   <string name="norating">n/a</string>
   <string name="loading">Cargando...</string>
   <string name="sending">Enviando...</string>
@@ -33,6 +34,7 @@
   <string name="show_isnotalive">Terminó</string>
   <string name="sort">Ordenar por</string>
   <string name="updateall_yes">Actualización (todos)</string>
+  <string name="menu_update_delta">.Actuliar (solo desactulizadas)</string>
   <string name="context_updateshow">Actualizar</string>
   <string name="context_showinfo">Mostrar información</string>
   <string name="context_marknext">Siguiente episodio visto</string>
@@ -61,6 +63,7 @@
   <string name="norecent">No hay capítulos recientes.</string>
   <string name="update_notification">Actualizando tus series...</string>
   <string name="update_single">Actualizando series...</string>
+  <string name="update_delta">Actualizando shows desactualizados...</string>
   <string name="update_full">Actualizando todos las series...</string>
   <string name="update_success">Actualización exitosa.</string>
   <string name="update_saxerror">Error al actualizar, prueba más tarde.</string>
@@ -89,6 +92,7 @@
   <string name="help">Ayuda</string>
   <string name="preferences">Configuración</string>
   <string name="pref_onlyfuture">No hay episodios emitidos</string>
+  <string name="pref_onlyfuturesummary">\"siguiente\" no mostrar episodios estrenados</string>
   <string name="pref_onlyseasoneps">No hay episodios especiales</string>
   <string name="pref_onlyseasonepssummary">\"next:\" no mostrar episodios especiales</string>
   <string name="pref_content">Contenido</string>
@@ -96,8 +100,11 @@
   <string name="backup_summary">Respaldar o restaurar sus programas</string>
   <string name="pref_number">Formato numérico</string>
   <string name="about">Acerca de SeriesGuide</string>
+  <string name="about_message">http://seriesguide.uwetrottmann.com - desarrollado por Uwe Trottmann.\n\nPor favor mira el vinculo debajo para conocer a toda la gente y resursos que ayudaron a realizar este proyecto.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">Compartiendo</string>
   <string name="clearGetGlueCredentials">Desconectar de GetGlue</string>
+  <string name="pref_trakt">Credenciales trakt.tv</string>
+  <string name="pref_traktsummary">Agrega o modifica tus credenciales trakt.tv</string>
   <string name="pref_traktsync">Sincronizar con trakt.tv</string>
   <string name="pref_traktintegrate">Integrar con trakt.tv</string>
   <string name="donate">Cómprame una bebida (PayPal)</string>
@@ -105,6 +112,10 @@
   <string name="pref_advanced">Avanzado</string>
   <string name="pref_hideimages">Ocultar imágenes</string>
   <string name="pref_ganalytics">Google Analytics</string>
+  <string name="pref_ganalyticssummary">Hacer un seguimiento del uso para ayudar a mejorar Series Guide</string>
+  <string name="backup_path"><b>Carpeta de respaldo</b></string>
+  <string name="backup_version"><b>Versión de la base de datos</b></string>
+  <string name="backup_failed_nosd">No se puede respaldar. La carpeta de respaldo no esta disponible.</string>
   <string name="backup_inprogress">Respaldando base de datos...</string>
   <string name="import_inprogress">Restaurando base de datos...</string>
   <string name="import_failed_nosd">No se puede restaurar la copia de seguridad. La carpeta de copia de seguridad no está disponible.</string>
@@ -128,6 +139,7 @@
   <string name="addtocalendar">Añadir al calendario</string>
   <string name="eula_title">Desfase horario</string>
   <string name="accept">Aceptar</string>
+  <string name="decline">Rechazar</string>
   <string name="username">Usuario</string>
   <string name="email">Correo electrónico</string>
   <string name="password">Contraseña</string>
@@ -143,6 +155,7 @@
   <string name="trakt_synctodevice">Sincronizar SeriesGuide</string>
   <string name="trakt_synctotrakt">Sincronizar con trakt.tv</string>
   <string name="trakt_syncunseen">Sincronizar episodios no vistos</string>
+  <string name="welcome_setuptrakt">Configurar una cuenta trakt</string>
   <string name="download_stable">Descargar SeriesGuide</string>
   <string-array name="shsorting">
     <item>A - Z</item>
