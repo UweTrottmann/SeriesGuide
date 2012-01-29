@@ -198,7 +198,6 @@ public class ShareUtils {
             final String imdbId = getArguments().getString(ShareItems.IMDBID);
 
             input = new EditText(getActivity());
-            input.setInputType(InputType.TYPE_CLASS_TEXT);
             input.setMinLines(3);
             input.setGravity(Gravity.TOP);
             input.setFilters(new InputFilter[] {
