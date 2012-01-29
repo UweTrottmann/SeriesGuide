@@ -20,7 +20,7 @@
     </style>
     
      <style name="CustomTitlePageIndicator">
-        <item name="android:background">transparent</item>
+        <item name="android:background">@android:color/transparent</item>
         <item name="footerColor">#33B5E5</item>
         <item name="footerLineHeight">2dp</item>
         <item name="footerIndicatorHeight">5dp</item>
