@@ -574,6 +574,7 @@ public class ShareUtils {
                             .toString();
                     final boolean isNewAccount = ((CheckBox) layout
                             .findViewById(R.id.checkNewAccount)).isChecked();
+                    final String traktApiKey = getResources().getString(R.string.trakt_apikey);
 
                     AsyncTask<String, Void, Response> accountValidatorTask = new AsyncTask<String, Void, Response>() {
 
@@ -587,7 +588,7 @@ public class ShareUtils {
                             // use a separate ServiceManager here to avoid
                             // setting wrong credentials
                             final ServiceManager manager = new ServiceManager();
-                            manager.setApiKey(getResources().getString(R.string.trakt_apikey));
+                            manager.setApiKey(traktApiKey);
                             manager.setAuthentication(username, passwordHash);
                             Response response = null;
 
