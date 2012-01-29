@@ -4,7 +4,7 @@
     <style name="SeriesGuideTheme" parent="Theme.Sherlock">
         <item name="selectableItemBackground">@drawable/list_selector_holo_dark</item>
         <item name="vpiCirclePageIndicatorStyle">@style/Widget.CirclePageIndicator</item>
-        <item name="vpiTitlePageIndicatorStyle">@style/Widget.TitlePageIndicator</item>
+        <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
         <item name="vpiTabTextStyle">@style/Widget.TabPageIndicator.Text</item>
     </style>
@@ -17,6 +17,17 @@
     <style name="ListHeader">
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textColor">@color/text_primary</item>
+    </style>
+    
+     <style name="CustomTitlePageIndicator">
+        <item name="android:background">transparent</item>
+        <item name="footerColor">#33B5E5</item>
+        <item name="footerLineHeight">2dp</item>
+        <item name="footerIndicatorHeight">5dp</item>
+        <item name="footerIndicatorStyle">underline</item>
+        <item name="textColor">@color/text_primary</item>
+        <item name="selectedColor">@color/text_primary</item>
+        <item name="selectedBold">true</item>
     </style>
 
     <style name="Airdata">
