@@ -24,6 +24,7 @@
             android:layout_above="@+id/toolbarEpisodeDetails"
             android:layout_alignParentTop="true"
             android:cacheColorHint="#00000000"
+            android:divider="@null"
             android:listSelector="@color/transparent" />
 
         <TextView
