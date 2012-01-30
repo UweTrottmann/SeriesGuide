@@ -219,7 +219,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             // allow auto-update if 12 hours have passed
             final long previousUpdateTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTUPDATE, 0);
             long currentTime = System.currentTimeMillis();
-            final boolean isTime = currentTime - (previousUpdateTime) > 12 * DateUtils.HOUR_IN_MILLIS;
+            final boolean isTime = currentTime - (previousUpdateTime) > 5 * DateUtils.MINUTE_IN_MILLIS;
 
             if (isTime) {
                 // allow auto-update only on allowed connection
