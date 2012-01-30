@@ -3,6 +3,7 @@
 
     <dimen name="body_padding">10dp</dimen>
     <dimen name="body_padding_large">15dp</dimen>
+    <dimen name="item_padding">4dp</dimen>
     <dimen name="text_size_xlarge">24sp</dimen>
     <dimen name="showgrid_padding">10dp</dimen>
     <dimen name="showgrid_columnWidth">310dp</dimen>

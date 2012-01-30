@@ -15,7 +15,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center_horizontal"
-        android:padding="@dimen/body_padding" >
+        android:padding="@dimen/body_padding_large" >
 
         <ListView
             android:id="@android:id/list"

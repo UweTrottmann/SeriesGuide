@@ -8,12 +8,12 @@
         android:id="@+id/fragment_episodes"
         android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="2" />
 
     <FrameLayout
         android:layout_width="0px"
         android:layout_height="match_parent"
-        android:layout_weight="1" >
+        android:layout_weight="3" >
 
         <ImageView
             android:id="@+id/background"
