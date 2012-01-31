@@ -46,6 +46,7 @@ import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.SupportActivity;
 import android.support.v4.view.Menu;
 import android.support.v4.view.MenuItem;
 import android.view.LayoutInflater;
@@ -144,6 +145,10 @@ public class OverviewFragment extends Fragment {
             shareAction.setEnabled(false);
             shareAction.setVisible(false);
         }
+
+        if (episodeid == 0) {
+            menu.findItem(R.id.menu_addevent).setVisible(false);
+        }
     }
 
     @Override
@@ -191,7 +196,7 @@ public class OverviewFragment extends Fragment {
                 onShareEpisode(ShareMethod.OTHER_SERVICES, true);
                 break;
             }
-            case R.id.menu_addevent:
+            case R.id.menu_addevent: {
                 fireTrackerEvent("Add episode to calendar");
 
                 ShareUtils
@@ -199,6 +204,7 @@ public class OverviewFragment extends Fragment {
                                 mShareData.getString(ShareItems.EPISODESTRING), mAirtime,
                                 show.getRuntime());
                 break;
+            }
             default:
                 break;
         }
@@ -380,16 +386,17 @@ public class OverviewFragment extends Fragment {
     }
 
     protected void onLoadEpisode() {
-        final Activity context = getActivity();
-        if (context == null) {
+        final SupportActivity activity = getSupportActivity();
+        if (activity == null) {
             return;
         }
 
         new Thread(new Runnable() {
             public void run() {
-                episodeid = DBUtils.updateLatestEpisode(context, getShowId());
-                context.runOnUiThread(new Runnable() {
+                episodeid = DBUtils.updateLatestEpisode(activity.asActivity(), getShowId());
+                activity.runOnUiThread(new Runnable() {
                     public void run() {
+                        activity.invalidateOptionsMenu();
                         fillEpisodeData();
                     }
                 });
