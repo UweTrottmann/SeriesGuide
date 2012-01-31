@@ -16,7 +16,6 @@ import com.battlelancer.thetvdbapi.TheTVDB;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -90,8 +89,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private static final int CONFIRM_DELETE_DIALOG = 304;
 
     private static final int SORT_DIALOG = 306;
-
-    private static final int BETA_WARNING_DIALOG = 307;
 
     private static final int LOADER_ID = 900;
 
@@ -321,31 +318,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                                 }).start();
                             }
                         }).setNegativeButton(getString(R.string.dontdelete_show), null).create();
-            case BETA_WARNING_DIALOG:
-                /* Used for unstable beta releases */
-                return new AlertDialog.Builder(this)
-                        .setTitle(R.string.app_name)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setMessage(getString(R.string.betawarning))
-                        .setPositiveButton(R.string.gobreak, null)
-                        .setNeutralButton(getString(R.string.download_stable),
-                                new OnClickListener() {
-
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        try {
-                                            Intent myIntent = new Intent(
-                                                    Intent.ACTION_VIEW,
-                                                    Uri.parse("market://details?id=com.battlelancer.seriesguide"));
-                                            startActivity(myIntent);
-                                        } catch (ActivityNotFoundException e) {
-                                            Intent myIntent = new Intent(
-                                                    Intent.ACTION_VIEW,
-                                                    Uri.parse("http://market.android.com/details?id=com.battlelancer.seriesguide"));
-                                            startActivity(myIntent);
-                                        }
-                                        finish();
-                                    }
-                                }).create();
             case SORT_DIALOG:
                 final CharSequence[] items = getResources().getStringArray(R.array.shsorting);
 
@@ -775,9 +747,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                     editor.putString(SeriesGuidePreferences.KEY_SECURE, null);
                 }
 
-                // // BETA warning dialog switch
-                // showDialog(BETA_WARNING_DIALOG);
-                // showDialog(WHATS_NEW_DIALOG);
+                // BETA warning dialog switch
+                // ChangesDialogFragment.show(getSupportFragmentManager());
 
                 // set this as lastVersion
                 editor.putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion);
