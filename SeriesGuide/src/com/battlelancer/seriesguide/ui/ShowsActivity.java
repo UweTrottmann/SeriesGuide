@@ -810,7 +810,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                 int upcomingLimit = prefs.getInt(SeriesGuidePreferences.KEY_UPCOMING_LIMIT, 1);
 
-                selection = Shows.NEXTAIRDATE + "!=? AND " + Shows.NEXTAIRDATE + " <=? AND "
+                selection = Shows.NEXTAIRDATEMS + "!=? AND " + Shows.NEXTAIRDATEMS + " <=? AND "
                         + Shows.HIDDEN + "=?";
                 String nowIn24Hours = String.valueOf(System.currentTimeMillis() + upcomingLimit
                         * DateUtils.DAY_IN_MILLIS);

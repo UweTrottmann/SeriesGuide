@@ -547,12 +547,12 @@ public class DBUtils {
 
             episodeid = unwatched.getLong(NextEpisodeQuery._ID);
             update.put(Shows.NEXTEPISODE, episodeid);
-            update.put(Shows.NEXTAIRDATE, unwatched.getString(NextEpisodeQuery.FIRSTAIREDMS));
+            update.put(Shows.NEXTAIRDATEMS, unwatched.getString(NextEpisodeQuery.FIRSTAIREDMS));
             update.put(Shows.NEXTTEXT, nextEpisodeString);
             update.put(Shows.NEXTAIRDATETEXT, nextAirdateString);
         } else {
             update.put(Shows.NEXTEPISODE, "");
-            update.put(Shows.NEXTAIRDATE, UNKNOWN_NEXT_AIR_DATE);
+            update.put(Shows.NEXTAIRDATEMS, UNKNOWN_NEXT_AIR_DATE);
             update.put(Shows.NEXTTEXT, "");
             update.put(Shows.NEXTAIRDATETEXT, "");
         }

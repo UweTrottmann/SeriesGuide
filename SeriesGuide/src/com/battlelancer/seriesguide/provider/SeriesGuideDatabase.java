@@ -44,7 +44,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_AIRTIMEREFORM = 24;
 
-    public static final int DATABASE_VERSION = DBVER_AIRTIMEREFORM;
+    public static final int DBVER_NEXTAIRDATEMS = 25;
+
+    public static final int DATABASE_VERSION = DBVER_NEXTAIRDATEMS;
 
     public interface Tables {
         String SHOWS = "series";
@@ -75,13 +77,13 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + " TEXT DEFAULT ''," + ShowsColumns.RUNTIME + " TEXT DEFAULT '',"
             + ShowsColumns.STATUS + " TEXT DEFAULT ''," + ShowsColumns.CONTENTRATING
             + " TEXT DEFAULT ''," + ShowsColumns.NEXTEPISODE + " TEXT DEFAULT '',"
-            + ShowsColumns.POSTER + " TEXT DEFAULT ''," + ShowsColumns.NEXTAIRDATE
-            + " TEXT DEFAULT '0'," + ShowsColumns.NEXTTEXT + " TEXT DEFAULT '',"
-            + ShowsColumns.IMDBID + " TEXT DEFAULT ''," + ShowsColumns.FAVORITE
-            + " INTEGER DEFAULT 0," + ShowsColumns.NEXTAIRDATETEXT + " TEXT DEFAULT ''" + ","
-            + ShowsColumns.SYNCENABLED + " INTEGER DEFAULT 1" + "," + ShowsColumns.AIRTIME
-            + " TEXT DEFAULT ''," + ShowsColumns.HIDDEN + " INTEGER DEFAULT 0,"
-            + ShowsColumns.LASTUPDATED + " INTEGER DEFAULT 0" + ");";
+            + ShowsColumns.POSTER + " TEXT DEFAULT ''," + ShowsColumns.NEXTAIRDATEMS + " INTEGER,"
+            + ShowsColumns.NEXTTEXT + " TEXT DEFAULT ''," + ShowsColumns.IMDBID
+            + " TEXT DEFAULT ''," + ShowsColumns.FAVORITE + " INTEGER DEFAULT 0,"
+            + ShowsColumns.NEXTAIRDATETEXT + " TEXT DEFAULT ''" + "," + ShowsColumns.SYNCENABLED
+            + " INTEGER DEFAULT 1" + "," + ShowsColumns.AIRTIME + " TEXT DEFAULT '',"
+            + ShowsColumns.HIDDEN + " INTEGER DEFAULT 0," + ShowsColumns.LASTUPDATED
+            + " INTEGER DEFAULT 0" + ");";
 
     private static final String CREATE_SEASONS_TABLE = "CREATE TABLE " + Tables.SEASONS + " ("
             + BaseColumns._ID + " INTEGER PRIMARY KEY," + SeasonsColumns.COMBINED + " INTEGER,"
@@ -169,6 +171,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 23:
                 upgradeToTwentyFour(db);
                 version = 24;
+            case 24:
+                upgradeToTwentyFive(db);
+                version = 25;
         }
 
         // drop all tables if version is not right
@@ -183,6 +188,21 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             onCreate(db);
         }
+    }
+
+    /**
+     * Add a {@link Shows} column for storing the next air date in ms as integer
+     * data type rather than as text.
+     * 
+     * @param db
+     */
+    private void upgradeToTwentyFive(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.NEXTAIRDATEMS
+                + " INTEGER DEFAULT 0;");
+
+        ContentValues values = new ContentValues();
+        values.put(ShowsColumns.NEXTAIRDATE, "");
+        db.update(Tables.SHOWS, values, null, null);
     }
 
     /**
