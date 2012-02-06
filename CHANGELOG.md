@@ -31,6 +31,7 @@ Since 2.5.2beta (2012-01-28):
 * Support for 'Daily' air day.
 
 Postponed:
+
 * Display search term, title and search soft button in `SearchActivity`.
 * Where applicable the app icon takes you back to the show list. Same as long-pressing back from every screen.
 * Use ActionBarSherlock 4.0 release.
