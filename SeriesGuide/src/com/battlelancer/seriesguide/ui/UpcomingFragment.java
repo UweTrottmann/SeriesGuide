@@ -259,9 +259,11 @@ public class UpcomingFragment extends ListFragment implements
 
         String SELECTION_ONLYFAVORITES = " AND " + Shows.FAVORITE + "=?";
 
-        String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC";
+        String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC,"
+                + Episodes.NUMBER + " ASC";
 
-        String SORTING_RECENT = Episodes.FIRSTAIREDMS + " DESC," + Shows.TITLE + " ASC";
+        String SORTING_RECENT = Episodes.FIRSTAIREDMS + " DESC," + Shows.TITLE + " ASC,"
+                + Episodes.NUMBER + " DESC";
 
         int _ID = 0;
 

@@ -571,7 +571,7 @@ public class DBUtils {
                 Episodes.TITLE
         };
 
-        final String SORTING = Episodes.FIRSTAIREDMS + " ASC";
+        final String SORTING = Episodes.FIRSTAIREDMS + " ASC," + Episodes.NUMBER + " ASC";
 
         int _ID = 0;
 
