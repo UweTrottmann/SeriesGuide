@@ -199,10 +199,6 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     private void upgradeToTwentyFive(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.NEXTAIRDATEMS
                 + " INTEGER DEFAULT 0;");
-
-        ContentValues values = new ContentValues();
-        values.put(ShowsColumns.NEXTAIRDATE, "");
-        db.update(Tables.SHOWS, values, null, null);
     }
 
     /**
