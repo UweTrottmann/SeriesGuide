@@ -1,7 +1,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
@@ -10,7 +9,7 @@ import org.xml.sax.SAXException;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.SupportActivity;
+import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -106,7 +105,7 @@ public class TvdbAddFragment extends AddFragment {
 
         @Override
         protected void onPreExecute() {
-            final SupportActivity activity = getSupportActivity();
+            final FragmentActivity activity = getActivity();
             if (activity != null) {
                 // ABS 4
                 activity.setProgressBarIndeterminateVisibility(Boolean.TRUE);
@@ -132,7 +131,7 @@ public class TvdbAddFragment extends AddFragment {
 
         @Override
         protected void onPostExecute(List<SearchResult> result) {
-            final SupportActivity activity = getSupportActivity();
+            final FragmentActivity activity = getActivity();
             if (activity != null) {
                 activity.setProgressBarIndeterminateVisibility(Boolean.FALSE);
             }

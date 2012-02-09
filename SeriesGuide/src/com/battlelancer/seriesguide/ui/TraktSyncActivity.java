@@ -1,12 +1,13 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.R;
+import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
 import com.battlelancer.seriesguide.util.TraktSync;
 
+import com.battlelancer.seriesguide.R;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
@@ -15,7 +16,6 @@ import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.ActionBar;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -148,7 +148,7 @@ public class TraktSyncActivity extends BaseActivity {
                                 }
                             }
                         });
-                builder.setNegativeButton(android.R.string.cancel, null);
+                builder.setNegativeButton(com.battlelancer.seriesguide.R.string.cancel, null);
 
                 return builder.create();
         }

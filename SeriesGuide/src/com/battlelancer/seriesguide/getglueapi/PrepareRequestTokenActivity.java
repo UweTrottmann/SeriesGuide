@@ -1,7 +1,7 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
-import com.battlelancer.seriesguide.R;
+import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.ShareUtils;
 
@@ -19,7 +19,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActionBar;
 import android.util.Log;
 import android.widget.Toast;
 

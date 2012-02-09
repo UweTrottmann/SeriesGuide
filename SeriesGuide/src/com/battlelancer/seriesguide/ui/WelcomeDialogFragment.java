@@ -1,10 +1,10 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
 
+import com.battlelancer.seriesguide.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;

@@ -1,8 +1,6 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
-import com.battlelancer.seriesguide.R;
-
 import oauth.signpost.OAuth;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
@@ -13,6 +11,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import com.battlelancer.seriesguide.R;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;

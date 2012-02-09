@@ -1,12 +1,12 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 
+import com.battlelancer.seriesguide.R;
 import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -153,7 +153,7 @@ public class SearchActivity extends ListActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
+            case com.battlelancer.seriesguide.R.id.home:
                 final Intent intent = new Intent(this, ShowsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

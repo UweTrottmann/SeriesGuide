@@ -16,7 +16,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.WelcomeDialogFragment;
 
 import android.app.AlertDialog;
@@ -60,12 +59,12 @@ public class EulaHelper {
      */
     public static void showEula(final boolean accepted, final FragmentActivity activity) {
         AlertDialog.Builder eula = new AlertDialog.Builder(activity).setTitle(R.string.eula_title)
-                .setIcon(android.R.drawable.ic_dialog_info).setMessage(R.string.eula_text)
+                .setIcon(com.battlelancer.seriesguide.R.drawable.ic_dialog_info).setMessage(R.string.eula_text)
                 .setCancelable(accepted);
 
         if (accepted) {
             // If they've accepted the EULA allow, show an OK to dismiss.
-            eula.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            eula.setPositiveButton(com.battlelancer.seriesguide.R.string.ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                 }

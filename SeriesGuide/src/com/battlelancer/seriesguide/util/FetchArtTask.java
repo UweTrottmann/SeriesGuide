@@ -1,7 +1,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.TheTVDB;
 

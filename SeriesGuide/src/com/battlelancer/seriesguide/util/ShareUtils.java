@@ -1,8 +1,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -29,11 +27,10 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.SupportActivity;
 import android.text.InputFilter;
-import android.text.InputType;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -91,7 +88,7 @@ public class ShareUtils {
      *            {@link ShareUtils.ShareItems}
      * @param shareMethod the {@link ShareMethod} to use
      */
-    public static void onShareEpisode(SupportActivity activity, Bundle shareData,
+    public static void onShareEpisode(FragmentActivity activity, Bundle shareData,
             ShareMethod shareMethod) {
         final FragmentManager fm = activity.getSupportFragmentManager();
         final String imdbId = shareData.getString(ShareUtils.ShareItems.IMDBID);
@@ -99,8 +96,7 @@ public class ShareUtils {
 
         // save used share method, so we can use it later for the quick share
         // button
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity
-                .asActivity());
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
         prefs.edit().putInt(SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, shareMethod.index)
                 .commit();
 
@@ -110,9 +106,8 @@ public class ShareUtils {
                 if (imdbId.length() != 0) {
                     showGetGlueDialog(fm, shareData);
                 } else {
-                    Toast.makeText(activity.asActivity(),
-                            activity.getString(R.string.checkin_impossible), Toast.LENGTH_LONG)
-                            .show();
+                    Toast.makeText(activity, activity.getString(R.string.checkin_impossible),
+                            Toast.LENGTH_LONG).show();
                 }
                 break;
             }
@@ -138,7 +133,7 @@ public class ShareUtils {
                 // start the trakt check in task, add the
                 // dialog as listener
                 shareData.putInt(ShareItems.TRAKTACTION, TraktAction.CHECKIN_EPISODE.index());
-                new TraktTask(activity.asActivity(), fm, shareData, newFragment).execute();
+                new TraktTask(activity, fm, shareData, newFragment).execute();
 
                 newFragment.show(ft, "progress-dialog");
                 break;
@@ -146,7 +141,7 @@ public class ShareUtils {
             case MARKSEEN_TRAKT: {
                 // trakt mark as seen
                 shareData.putInt(ShareItems.TRAKTACTION, TraktAction.SEEN_EPISODE.index());
-                new TraktTask(activity.asActivity(), fm, shareData).execute();
+                new TraktTask(activity, fm, shareData).execute();
                 break;
             }
             case RATE_TRAKT: {
@@ -217,7 +212,7 @@ public class ShareUtils {
                         public void onClick(DialogInterface dialog, int which) {
                             onGetGlueCheckIn(getActivity(), input.getText().toString(), imdbId);
                         }
-                    }).setNegativeButton(android.R.string.cancel, null).create();
+                    }).setNegativeButton(com.battlelancer.seriesguide.R.string.cancel, null).create();
         }
 
         @Override
@@ -780,7 +775,7 @@ public class ShareUtils {
                 public void onClick(View v) {
                     final Rating rating = Rating.Love;
                     getArguments().putString(ShareItems.RATING, rating.toString());
-                    new TraktTask(context, getSupportFragmentManager(), getArguments()).execute();
+                    new TraktTask(context, getFragmentManager(), getArguments()).execute();
                     dismiss();
                 }
             });
@@ -790,14 +785,14 @@ public class ShareUtils {
                 public void onClick(View v) {
                     final Rating rating = Rating.Hate;
                     getArguments().putString(ShareItems.RATING, rating.toString());
-                    new TraktTask(context, getSupportFragmentManager(), getArguments()).execute();
+                    new TraktTask(context, getFragmentManager(), getArguments()).execute();
                     dismiss();
                 }
             });
 
             builder = new AlertDialog.Builder(context);
             builder.setView(layout);
-            builder.setNegativeButton(android.R.string.cancel, null);
+            builder.setNegativeButton(com.battlelancer.seriesguide.R.string.cancel, null);
 
             return builder.create();
         }

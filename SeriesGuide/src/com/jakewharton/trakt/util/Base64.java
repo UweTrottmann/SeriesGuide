@@ -17,6 +17,8 @@
 
 package com.jakewharton.trakt.util;
 
+import java.io.IOException;
+
 /**
  * <p>Provides serialization and deserialization between a regular string and a
  * base-64 encoded string.</p>

@@ -1,14 +1,14 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.R;
+import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.DBUtils;
 
+import com.battlelancer.seriesguide.R;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBar;
 import android.support.v4.app.Fragment;
 
 public class SeasonsActivity extends BaseActivity {

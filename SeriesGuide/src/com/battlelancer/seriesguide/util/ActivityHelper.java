@@ -18,12 +18,11 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.R;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.view.MenuItem;
 import android.view.KeyEvent;
 
 /**
@@ -51,7 +50,7 @@ public class ActivityHelper {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
+            case com.battlelancer.seriesguide.R.id.home:
                 goHome();
                 return true;
         }

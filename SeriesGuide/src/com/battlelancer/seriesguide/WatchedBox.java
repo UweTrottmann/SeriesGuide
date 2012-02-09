@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide;
 
+import com.battlelancer.seriesguide.R;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;

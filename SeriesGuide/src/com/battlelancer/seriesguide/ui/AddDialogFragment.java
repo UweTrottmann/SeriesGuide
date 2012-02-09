@@ -1,9 +1,10 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 
+import com.battlelancer.seriesguide.R;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -12,7 +13,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.SupportActivity;
 
 /**
  * A DialogFragment allowing the user to decide whether to add a show to his
@@ -35,7 +35,7 @@ public class AddDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onAttach(SupportActivity activity) {
+    public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
             mListener = (OnAddShowListener) activity;

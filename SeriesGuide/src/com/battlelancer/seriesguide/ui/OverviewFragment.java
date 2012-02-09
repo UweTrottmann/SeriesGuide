@@ -17,7 +17,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
@@ -31,6 +30,7 @@ import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
+import com.battlelancer.seriesguide.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,12 +45,12 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.SupportActivity;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -212,12 +212,12 @@ public class OverviewFragment extends Fragment {
     }
 
     private void onShareEpisode(ShareMethod shareMethod, boolean isInvalidateOptionsMenu) {
-        ShareUtils.onShareEpisode(getSupportActivity(), mShareData, shareMethod);
+        ShareUtils.onShareEpisode(getActivity(), mShareData, shareMethod);
 
         if (isInvalidateOptionsMenu) {
             // invalidate the options menu so a potentially new
             // quick share action is displayed
-            getSupportActivity().invalidateOptionsMenu();
+            getActivity().invalidateOptionsMenu();
         }
     }
 
@@ -386,14 +386,14 @@ public class OverviewFragment extends Fragment {
     }
 
     protected void onLoadEpisode() {
-        final SupportActivity activity = getSupportActivity();
+        final FragmentActivity activity = getActivity();
         if (activity == null) {
             return;
         }
 
         new Thread(new Runnable() {
             public void run() {
-                episodeid = DBUtils.updateLatestEpisode(activity.asActivity(), getShowId());
+                episodeid = DBUtils.updateLatestEpisode(activity, getShowId());
                 activity.runOnUiThread(new Runnable() {
                     public void run() {
                         activity.invalidateOptionsMenu();

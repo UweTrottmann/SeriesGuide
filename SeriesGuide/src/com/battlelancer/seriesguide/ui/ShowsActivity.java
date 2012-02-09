@@ -1,8 +1,10 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
@@ -13,6 +15,7 @@ import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
+import com.battlelancer.seriesguide.R;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -32,12 +35,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
-import android.support.v4.app.ActionBar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.text.format.DateUtils;
 import android.view.ContextMenu;
@@ -150,8 +150,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(this,
-                R.array.showfilter_list, R.layout.abs__simple_spinner_item);
-        mActionBarList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.array.showfilter_list, com.battlelancer.seriesguide.R.layout.simple_spinner_item);
+        mActionBarList.setDropDownViewResource(com.battlelancer.seriesguide.R.layout.simple_spinner_dropdown_item);
         actionBar.setListNavigationCallbacks(mActionBarList, this);
 
         // try to restore previously set show filter

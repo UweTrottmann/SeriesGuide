@@ -37,7 +37,7 @@ public class ActivityHelperHoneycomb extends ActivityHelper {
     // @Override
     // public boolean onOptionsItemSelected(MenuItem item) {
     // switch (item.getItemId()) {
-    // case android.R.id.home:
+    // case com.battlelancer.seriesguide.R.id.home:
     // // Handle the HOME / UP affordance.
     // goHome();
     // return true;

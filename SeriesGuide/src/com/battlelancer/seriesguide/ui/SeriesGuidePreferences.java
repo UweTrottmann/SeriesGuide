@@ -1,7 +1,9 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.R;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.util.ActivityHelper;
@@ -9,6 +11,7 @@ import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
+import com.battlelancer.seriesguide.R;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -19,9 +22,6 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActionBar;
-import android.support.v4.app.SherlockPreferenceActivity;
-import android.support.v4.view.MenuItem;
 import android.text.util.Linkify;
 import android.view.KeyEvent;
 import android.widget.ScrollView;
@@ -275,7 +275,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                 aboutScroll.addView(message);
                 return new AlertDialog.Builder(this).setTitle(getString(R.string.about))
                         .setCancelable(true).setIcon(R.drawable.icon)
-                        .setPositiveButton(getString(android.R.string.ok), null)
+                        .setPositiveButton(getString(com.battlelancer.seriesguide.R.string.ok), null)
                         .setView(aboutScroll).create();
             }
         }

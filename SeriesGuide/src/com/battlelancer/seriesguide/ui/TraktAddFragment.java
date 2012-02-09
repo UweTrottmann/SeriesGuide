@@ -1,12 +1,12 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.entities.TvShow;
 
+import com.battlelancer.seriesguide.R;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;

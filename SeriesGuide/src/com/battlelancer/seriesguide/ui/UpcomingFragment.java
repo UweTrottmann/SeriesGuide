@@ -1,7 +1,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -10,6 +9,7 @@ import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 
+import com.battlelancer.seriesguide.R;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,11 +22,11 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.MenuItem;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -87,7 +87,7 @@ public class UpcomingFragment extends ListFragment implements
         boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
         Bundle bundle = new Bundle();
         bundle.putBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, isOnlyFavorites);
-        getSupportActivity().getSupportLoaderManager().initLoader(getLoaderId(), bundle, this);
+        getActivity().getSupportLoaderManager().initLoader(getLoaderId(), bundle, this);
 
         prefs.registerOnSharedPreferenceChangeListener(mPrefListener);
     }
