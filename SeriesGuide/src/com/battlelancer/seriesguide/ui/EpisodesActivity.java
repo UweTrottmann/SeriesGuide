@@ -47,8 +47,7 @@ public class EpisodesActivity extends BaseActivity {
         setContentView(R.layout.episodes_multipane);
 
         final ActionBar actionBar = getSupportActionBar();
-        // ABS 4
-        // actionBar.setHomeButtonEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
 
         View pagerFragment = findViewById(R.id.pager);

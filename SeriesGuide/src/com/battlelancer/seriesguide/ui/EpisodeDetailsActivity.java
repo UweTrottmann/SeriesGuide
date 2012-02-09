@@ -49,8 +49,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
         setContentView(R.layout.episode_pager);
 
         final ActionBar actionBar = getSupportActionBar();
-        // ABS 4
-        // actionBar.setHomeButtonEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
 
         List<Episode> episodes = new ArrayList<Episode>();

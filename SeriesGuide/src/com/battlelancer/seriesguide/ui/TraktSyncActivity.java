@@ -44,8 +44,7 @@ public class TraktSyncActivity extends BaseActivity {
         setContentView(R.layout.trakt_sync);
 
         final ActionBar actionBar = getSupportActionBar();
-        // ABS 4
-        // actionBar.setHomeButtonEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle(R.string.trakt);
         setTitle(R.string.trakt);
 

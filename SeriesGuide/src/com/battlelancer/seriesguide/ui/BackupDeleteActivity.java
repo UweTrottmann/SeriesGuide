@@ -67,8 +67,7 @@ public class BackupDeleteActivity extends BaseActivity {
         setContentView(R.layout.backup);
 
         final ActionBar actionBar = getSupportActionBar();
-        // ABS 4
-        // actionBar.setHomeButtonEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle(getString(R.string.backup));
         actionBar.setDisplayShowTitleEnabled(true);
 

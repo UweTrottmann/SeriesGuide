@@ -108,7 +108,7 @@ public class TvdbAddFragment extends AddFragment {
         protected void onPreExecute() {
             final FragmentActivity activity = getActivity();
             if (activity != null) {
-                // ABS 4
+                // TODO check if this works with ABS 4
                 activity.setProgressBarIndeterminateVisibility(Boolean.TRUE);
             }
         }

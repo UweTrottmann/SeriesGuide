@@ -28,8 +28,7 @@ public class SeasonsActivity extends BaseActivity {
         }
 
         final ActionBar actionBar = getSupportActionBar();
-        // ABS 4
-        // actionBar.setHomeButtonEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
 
         Bundle extras = getIntent().getExtras();

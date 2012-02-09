@@ -37,8 +37,7 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         setProgressBarIndeterminateVisibility(Boolean.FALSE);
-        // ABS4
-        // setSupportProgressBarIndeterminateVisibility(false);
+        setSupportProgressBarIndeterminateVisibility(false);
 
         mAdapter = new AddPagerAdapter(getSupportFragmentManager(), this);
 
