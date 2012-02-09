@@ -42,7 +42,7 @@ public class ChangesDialogFragment extends DialogFragment {
         message.setMovementMethod(LinkMovementMethod.getInstance());
 
         return new AlertDialog.Builder(getActivity()).setTitle(R.string.app_name)
-                .setIcon(com.battlelancer.seriesguide.R.drawable.ic_dialog_alert).setView(message)
+                .setIcon(android.R.drawable.ic_dialog_alert).setView(message)
                 .setPositiveButton(R.string.gobreak, null)
                 .setNeutralButton(getString(R.string.download_stable), new OnClickListener() {
 

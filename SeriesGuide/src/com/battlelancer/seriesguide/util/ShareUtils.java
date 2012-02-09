@@ -1,16 +1,9 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.getglueapi.GetGlue;
-import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.ui.ShowInfoActivity;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.entities.Response;
-import com.jakewharton.trakt.enumerations.Rating;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -44,9 +37,17 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Calendar;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.getglueapi.GetGlue;
+import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.ui.ShowInfoActivity;
+import com.jakewharton.apibuilder.ApiException;
+import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.TraktException;
+import com.jakewharton.trakt.entities.Response;
+import com.jakewharton.trakt.enumerations.Rating;
 
 public class ShareUtils {
 
@@ -212,7 +213,7 @@ public class ShareUtils {
                         public void onClick(DialogInterface dialog, int which) {
                             onGetGlueCheckIn(getActivity(), input.getText().toString(), imdbId);
                         }
-                    }).setNegativeButton(com.battlelancer.seriesguide.R.string.cancel, null).create();
+                    }).setNegativeButton(android.R.string.cancel, null).create();
         }
 
         @Override
@@ -792,7 +793,7 @@ public class ShareUtils {
 
             builder = new AlertDialog.Builder(context);
             builder.setView(layout);
-            builder.setNegativeButton(com.battlelancer.seriesguide.R.string.cancel, null);
+            builder.setNegativeButton(android.R.string.cancel, null);
 
             return builder.create();
         }

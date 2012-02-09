@@ -1,11 +1,12 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.items.SearchResult;
-
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
+
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.SearchResult;
 
 /**
  * Inspired by florianmski's traktoid TraktManager. This class is used to hold

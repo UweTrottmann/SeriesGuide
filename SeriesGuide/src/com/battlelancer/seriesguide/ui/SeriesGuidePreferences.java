@@ -275,7 +275,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                 aboutScroll.addView(message);
                 return new AlertDialog.Builder(this).setTitle(getString(R.string.about))
                         .setCancelable(true).setIcon(R.drawable.icon)
-                        .setPositiveButton(getString(com.battlelancer.seriesguide.R.string.ok), null)
+                        .setPositiveButton(getString(android.R.string.ok), null)
                         .setView(aboutScroll).create();
             }
         }

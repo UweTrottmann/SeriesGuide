@@ -1,20 +1,9 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.provider.SeriesContract;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.thetvdbapi.TheTVDB;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.entities.Activity;
-import com.jakewharton.trakt.entities.ActivityItem;
-import com.jakewharton.trakt.entities.TvShowEpisode;
-import com.jakewharton.trakt.enumerations.ActivityAction;
-import com.jakewharton.trakt.enumerations.ActivityType;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.xml.sax.SAXException;
 
@@ -34,9 +23,21 @@ import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesContract;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.battlelancer.thetvdbapi.TheTVDB;
+import com.jakewharton.apibuilder.ApiException;
+import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.TraktException;
+import com.jakewharton.trakt.entities.Activity;
+import com.jakewharton.trakt.entities.ActivityItem;
+import com.jakewharton.trakt.entities.TvShowEpisode;
+import com.jakewharton.trakt.enumerations.ActivityAction;
+import com.jakewharton.trakt.enumerations.ActivityType;
 
 public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 

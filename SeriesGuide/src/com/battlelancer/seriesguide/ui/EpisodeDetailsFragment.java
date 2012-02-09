@@ -231,7 +231,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
         if (isInvalidateOptionsMenu) {
             // invalidate the options menu so a potentially new
             // quick share action is displayed
-            getSupportActivity().invalidateOptionsMenu();
+            getActivity().invalidateOptionsMenu();
         }
     }
 

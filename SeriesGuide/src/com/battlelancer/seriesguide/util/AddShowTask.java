@@ -1,8 +1,7 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.thetvdbapi.TheTVDB;
+import java.util.LinkedList;
 
 import org.xml.sax.SAXException;
 
@@ -10,7 +9,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import java.util.LinkedList;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.thetvdbapi.TheTVDB;
 
 public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 

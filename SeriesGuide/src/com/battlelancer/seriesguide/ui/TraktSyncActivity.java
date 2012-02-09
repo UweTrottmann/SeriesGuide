@@ -148,7 +148,7 @@ public class TraktSyncActivity extends BaseActivity {
                                 }
                             }
                         });
-                builder.setNegativeButton(com.battlelancer.seriesguide.R.string.cancel, null);
+                builder.setNegativeButton(android.R.string.cancel, null);
 
                 return builder.create();
         }

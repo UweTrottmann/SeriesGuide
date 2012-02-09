@@ -1,16 +1,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.ui.AddDialogFragment.OnAddShowListener;
-import com.battlelancer.seriesguide.ui.UpcomingFragment.InitBundle;
-import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
-import com.battlelancer.seriesguide.util.ShareUtils;
-import com.battlelancer.seriesguide.util.TaskManager;
+import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -19,10 +10,19 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 
-import java.util.ArrayList;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.Tab;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.ui.AddDialogFragment.OnAddShowListener;
+import com.battlelancer.seriesguide.ui.UpcomingFragment.InitBundle;
+import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
+import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.TaskManager;
 
 public class UpcomingRecentActivity extends BaseActivity implements OnAddShowListener {
     ViewPager mViewPager;
@@ -83,7 +83,7 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_menu, menu);
+        getSupportMenuInflater().inflate(R.menu.activity_menu, menu);
 
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());

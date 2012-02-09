@@ -1,8 +1,9 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.thetvdbapi.TheTVDB;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.xml.sax.SAXException;
 
@@ -21,9 +22,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.thetvdbapi.TheTVDB;
 
 public class TvdbAddFragment extends AddFragment {
 

@@ -16,8 +16,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.ui.WelcomeDialogFragment;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,6 +25,9 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.WelcomeDialogFragment;
 
 /**
  * A helper for showing EULAs and storing a {@link SharedPreferences} bit
@@ -59,12 +60,12 @@ public class EulaHelper {
      */
     public static void showEula(final boolean accepted, final FragmentActivity activity) {
         AlertDialog.Builder eula = new AlertDialog.Builder(activity).setTitle(R.string.eula_title)
-                .setIcon(com.battlelancer.seriesguide.R.drawable.ic_dialog_info).setMessage(R.string.eula_text)
+                .setIcon(android.R.drawable.ic_dialog_info).setMessage(R.string.eula_text)
                 .setCancelable(accepted);
 
         if (accepted) {
             // If they've accepted the EULA allow, show an OK to dismiss.
-            eula.setPositiveButton(com.battlelancer.seriesguide.R.string.ok, new DialogInterface.OnClickListener() {
+            eula.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                 }

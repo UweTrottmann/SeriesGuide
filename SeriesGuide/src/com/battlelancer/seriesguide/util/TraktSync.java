@@ -1,18 +1,8 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.provider.SeriesContract;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.entities.TvShow;
-import com.jakewharton.trakt.entities.TvShowSeason;
-import com.jakewharton.trakt.services.ShowService.EpisodeSeenBuilder;
-import com.jakewharton.trakt.services.ShowService.EpisodeUnseenBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
@@ -25,8 +15,19 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesContract;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
+import com.jakewharton.apibuilder.ApiException;
+import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.TraktException;
+import com.jakewharton.trakt.entities.TvShow;
+import com.jakewharton.trakt.entities.TvShowSeason;
+import com.jakewharton.trakt.services.ShowService.EpisodeSeenBuilder;
+import com.jakewharton.trakt.services.ShowService.EpisodeUnseenBuilder;
 
 public class TraktSync extends AsyncTask<Void, Void, Integer> {
 

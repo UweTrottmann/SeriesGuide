@@ -339,7 +339,7 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
 
             if (mSeasonId != null) {
                 // update one season
-                DBUtils.updateUnwatchedCount(context.asActivity(), mSeasonId);
+                DBUtils.updateUnwatchedCount(context, mSeasonId);
             } else {
                 // update all seasons of this show
                 final Cursor seasons = context.getContentResolver().query(
@@ -348,7 +348,7 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
                         }, null, null, null);
                 while (seasons.moveToNext()) {
                     String seasonId = seasons.getString(0);
-                    DBUtils.updateUnwatchedCount(context.asActivity(), seasonId);
+                    DBUtils.updateUnwatchedCount(context, seasonId);
                 }
                 seasons.close();
             }

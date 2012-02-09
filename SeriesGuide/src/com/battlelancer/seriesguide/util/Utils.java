@@ -1,11 +1,20 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.thetvdbapi.ImageCache;
-import com.jakewharton.trakt.ServiceManager;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.channels.FileChannel;
+import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -22,20 +31,12 @@ import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.widget.ImageView;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.channels.FileChannel;
-import java.text.DateFormatSymbols;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.thetvdbapi.ImageCache;
+import com.jakewharton.trakt.ServiceManager;
 
 public class Utils {
 

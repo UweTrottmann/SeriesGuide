@@ -153,7 +153,7 @@ public class SearchActivity extends ListActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case com.battlelancer.seriesguide.R.id.home:
+            case android.R.id.home:
                 final Intent intent = new Intent(this, ShowsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);

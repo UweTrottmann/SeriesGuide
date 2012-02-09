@@ -1,16 +1,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.items.Series;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.ImageCache;
-
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -23,6 +13,17 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.Series;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.thetvdbapi.ImageCache;
 
 public class ShowInfoActivity extends BaseActivity {
     public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
@@ -63,7 +64,7 @@ public class ShowInfoActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case com.battlelancer.seriesguide.R.id.home:
+            case android.R.id.home:
                 // Navigate to the parent activity instead
                 final Intent intent = new Intent(this, OverviewActivity.class);
                 intent.putExtra(Shows._ID, seriesid);

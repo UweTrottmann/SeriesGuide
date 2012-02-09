@@ -1,21 +1,10 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.provider.SeriesContract;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.EulaHelper;
-import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.UpdateTask;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.TheTVDB;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import com.battlelancer.seriesguide.R;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -59,9 +48,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesContract;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.EulaHelper;
+import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.UpdateTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.thetvdbapi.TheTVDB;
 
 public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollListener,
         LoaderManager.LoaderCallbacks<Cursor>, ActionBar.OnNavigationListener {
@@ -150,8 +150,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(this,
-                R.array.showfilter_list, com.battlelancer.seriesguide.R.layout.simple_spinner_item);
-        mActionBarList.setDropDownViewResource(com.battlelancer.seriesguide.R.layout.simple_spinner_dropdown_item);
+                R.array.showfilter_list, android.R.layout.simple_spinner_item);
+        mActionBarList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         actionBar.setListNavigationCallbacks(mActionBarList, this);
 
         // try to restore previously set show filter
@@ -439,7 +439,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.seriesguide_menu, menu);
+        getSupportMenuInflater().inflate(R.menu.seriesguide_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
