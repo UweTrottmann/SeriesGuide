@@ -173,7 +173,7 @@
     <string name="pref_traktsyncsummary">Initial syncing with trakt.tv</string>
     <string name="pref_traktintegrate">Integrate trakt.tv</string>
     <string name="pref_traktintegratesummary">Get trakt activity on update</string>
-    <string name="donate">Buy me a drink (Paypal)</string>
+    <string name="donate">Buy the dev a drink (Paypal)</string>
     <string name="feedback">Send feedback</string>
     <string name="pref_advanced">Advanced</string>
     <string name="clear_cache">Clear image caches</string>
