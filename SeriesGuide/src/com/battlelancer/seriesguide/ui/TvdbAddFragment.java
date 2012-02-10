@@ -108,8 +108,7 @@ public class TvdbAddFragment extends AddFragment {
         protected void onPreExecute() {
             final FragmentActivity activity = getActivity();
             if (activity != null) {
-                // TODO check if this works with ABS 4
-                activity.setProgressBarIndeterminateVisibility(Boolean.TRUE);
+                activity.setSupportProgressBarIndeterminateVisibility(true);
             }
         }
 
@@ -134,7 +133,7 @@ public class TvdbAddFragment extends AddFragment {
         protected void onPostExecute(List<SearchResult> result) {
             final FragmentActivity activity = getActivity();
             if (activity != null) {
-                activity.setProgressBarIndeterminateVisibility(Boolean.FALSE);
+                activity.setSupportProgressBarIndeterminateVisibility(false);
             }
             if (result == null) {
                 Toast.makeText(mContext.getApplicationContext(), R.string.search_error,
