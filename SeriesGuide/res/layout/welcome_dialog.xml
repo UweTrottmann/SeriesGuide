@@ -7,54 +7,37 @@
     <RelativeLayout
         android:id="@+id/RelativeLayout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/body_padding_large" >
 
-        <LinearLayout
-            android:id="@+id/branding"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <ImageView
-                android:id="@+id/logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:src="@drawable/icon" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/logo"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/logo"
-                android:text="@string/welcome_message"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/welcome_add"
+        <TextView
+            android:id="@+id/welcome_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/branding"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="30dp"
-            android:drawableLeft="@drawable/ic_action_add"
-            android:text="@string/welcome_add" />
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/welcome_text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <include
+            android:id="@+id/divider1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/welcome_text"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            layout="@layout/holodivider" />
 
         <TextView
             android:id="@+id/trakt_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/welcome_add"
+            android:layout_below="@+id/divider1"
             android:layout_marginBottom="8dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
             android:text="@string/welcome_traktmessage"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -64,10 +47,30 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/trakt_message"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="8dp"
             android:drawableLeft="@drawable/ic_trakt"
             android:drawablePadding="5dp"
             android:text="@string/welcome_setuptrakt" />
+
+        <include
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/welcome_setuptrakt"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            layout="@layout/holodivider" />
+
+        <CheckBox
+            android:id="@+id/welcome_sendusagedata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divider2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:checked="true"
+            android:text="@string/sendusagedata"
+            android:textSize="16sp" />
     </RelativeLayout>
 
 </ScrollView>
