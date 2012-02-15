@@ -71,8 +71,9 @@ public class WelcomeDialogFragment extends DialogFragment {
         });
 
         final CheckBox cb = (CheckBox) v.findViewById(R.id.welcome_sendusagedata);
+        final FragmentActivity activity = getActivity();
 
-        return new AlertDialog.Builder(getActivity()).setIcon(R.drawable.icon)
+        return new AlertDialog.Builder(activity).setIcon(R.drawable.icon)
                 .setTitle(R.string.welcome_message).setView(v)
                 .setPositiveButton(R.string.dismiss, new DialogInterface.OnClickListener() {
                     @Override
@@ -81,7 +82,7 @@ public class WelcomeDialogFragment extends DialogFragment {
                             @Override
                             protected Void doInBackground(Void... voids) {
                                 SharedPreferences sp = PreferenceManager
-                                        .getDefaultSharedPreferences(getActivity());
+                                        .getDefaultSharedPreferences(activity);
                                 sp.edit()
                                         .putBoolean("accepted_eula", true)
                                         .putBoolean(SeriesGuidePreferences.KEY_GOOGLEANALYTICS,
