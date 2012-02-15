@@ -1,9 +1,19 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesContract;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.UpdateTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.thetvdbapi.TheTVDB;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -48,20 +58,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesContract;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.EulaHelper;
-import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.UpdateTask;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.TheTVDB;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollListener,
         LoaderManager.LoaderCallbacks<Cursor>, ActionBar.OnNavigationListener {
@@ -138,8 +137,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shows);
 
-        if (!EulaHelper.hasAcceptedEula(this)) {
-            EulaHelper.showEula(false, this);
+        if (!WelcomeDialogFragment.hasSeenWelcomeDialog(this)) {
+            WelcomeDialogFragment.showWelcomeDialog(this);
         }
 
         final SharedPreferences prefs = PreferenceManager
@@ -214,8 +213,9 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 true);
         if (isAutoUpdateEnabled && !TaskManager.getInstance(this).isUpdateTaskRunning(false)) {
             // allow auto-update if 12 hours have passed
-            final long previousUpdateTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTUPDATE, 0);
             long currentTime = System.currentTimeMillis();
+            final long previousUpdateTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTUPDATE,
+                    currentTime);
             final boolean isTime = currentTime - (previousUpdateTime) > 15 * DateUtils.MINUTE_IN_MILLIS;
 
             if (isTime) {
