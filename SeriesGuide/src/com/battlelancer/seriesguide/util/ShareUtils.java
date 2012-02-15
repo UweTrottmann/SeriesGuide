@@ -533,7 +533,7 @@ public class ShareUtils {
             final LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final View layout = inflater.inflate(R.layout.trakt_credentials_dialog, null);
-            final FragmentManager fm = getSupportFragmentManager();
+            final FragmentManager fm = getFragmentManager();
             final Bundle args = getArguments();
 
             // restore the username from settings
