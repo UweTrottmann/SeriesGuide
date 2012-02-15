@@ -257,6 +257,7 @@ public class ActionBarView extends AbsActionBarView {
             mNavigationMode = ActionBar.NAVIGATION_MODE_STANDARD;
             setDisplayOptions(mDisplayOptions | ActionBar.DISPLAY_SHOW_CUSTOM);
         }
+
         mContentHeight = a.getLayoutDimension(R.styleable.SherlockActionBar_height, 0);
 
         a.recycle();
@@ -351,9 +352,7 @@ public class ActionBarView extends AbsActionBarView {
      */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
-            super.onConfigurationChanged(newConfig);
-        }
+        super.onConfigurationChanged(newConfig);
 
         mTitleView = null;
         mSubtitleView = null;

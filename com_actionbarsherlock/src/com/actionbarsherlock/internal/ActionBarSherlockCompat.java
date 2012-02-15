@@ -190,7 +190,7 @@ public class ActionBarSherlockCompat extends ActionBarSherlock {
             installDecor();
         }
 
-        if ((mActionBar != null) || !hasFeature(Window.FEATURE_ACTION_BAR) || mActivity.isChild()) {
+        if ((mActionBar != null) || !hasFeature(Window.FEATURE_ACTION_BAR) || hasFeature(Window.FEATURE_NO_TITLE) || mActivity.isChild()) {
             return;
         }
 
@@ -319,7 +319,7 @@ public class ActionBarSherlockCompat extends ActionBarSherlock {
             mMenu = null;
             if (mActionBar != null) {
                 if (DEBUG) Log.d(TAG, "[dispatchInvalidateOptionsMenu] setting action bar menu to null");
-                mActionBar.setMenu(null, mMenuPresenterCallback);
+                mActionBarView.setMenu(null, mMenuPresenterCallback);
             }
             return;
         }
@@ -327,7 +327,7 @@ public class ActionBarSherlockCompat extends ActionBarSherlock {
         if (!callbackPrepareOptionsMenu(mMenu)) {
             if (mActionBar != null) {
                 if (DEBUG) Log.d(TAG, "[dispatchInvalidateOptionsMenu] setting action bar menu to null");
-                mActionBar.setMenu(null, mMenuPresenterCallback);
+                mActionBarView.setMenu(null, mMenuPresenterCallback);
             }
             mMenu.startDispatchingItemsChanged();
             return;
@@ -336,10 +336,11 @@ public class ActionBarSherlockCompat extends ActionBarSherlock {
         //TODO figure out KeyEvent? See PhoneWindow#preparePanel
         KeyCharacterMap kmap = KeyCharacterMap.load(KeyCharacterMap.VIRTUAL_KEYBOARD);
         mMenu.setQwertyMode(kmap.getKeyboardType() != KeyCharacterMap.NUMERIC);
-        mMenu.startDispatchingItemsChanged();
 
         if (DEBUG) Log.d(TAG, "[dispatchInvalidateOptionsMenu] setting action bar menu to " + mMenu);
-        mActionBar.setMenu(mMenu, mMenuPresenterCallback);
+        mActionBarView.setMenu(mMenu, mMenuPresenterCallback);
+
+        mMenu.startDispatchingItemsChanged();
     }
 
     @Override
@@ -386,7 +387,7 @@ public class ActionBarSherlockCompat extends ActionBarSherlock {
     public boolean dispatchPrepareOptionsMenu(android.view.Menu menu) {
         if (DEBUG) Log.d(TAG, "[dispatchPrepareOptionsMenu] android.view.Menu: " + menu);
 
-        if (!callbackPrepareOptionsMenu(mMenu)) {
+        if (mMenu == null || !callbackPrepareOptionsMenu(mMenu)) {
             return false;
         }
 
@@ -479,10 +480,12 @@ public class ActionBarSherlockCompat extends ActionBarSherlock {
         }
 
         if (keyCode == KeyEvent.KEYCODE_MENU && event.getAction() == KeyEvent.ACTION_UP && isReservingOverflow()) {
-            if (mActionBarView.isOverflowMenuShowing()) {
-                mActionBarView.hideOverflowMenu();
-            } else {
-                mActionBarView.showOverflowMenu();
+            if (mActionMode == null) {
+                if (mActionBarView.isOverflowMenuShowing()) {
+                    mActionBarView.hideOverflowMenu();
+                } else {
+                    mActionBarView.showOverflowMenu();
+                }
             }
             if (DEBUG) Log.d(TAG, "[dispatchKeyEvent] returning true");
             return true;
@@ -514,7 +517,10 @@ public class ActionBarSherlockCompat extends ActionBarSherlock {
                 }
 
                 //Since we don't require onCreate dispatching, parse for uiOptions here
-                mUiOptions = loadUiOptionsFromManifest(mActivity);
+                int uiOptions = loadUiOptionsFromManifest(mActivity);
+                if (uiOptions != 0) {
+                    mUiOptions = uiOptions;
+                }
 
                 boolean splitActionBar = false;
                 final boolean splitWhenNarrow = (mUiOptions & ActivityInfo.UIOPTION_SPLIT_ACTION_BAR_WHEN_NARROW) != 0;
@@ -937,13 +943,13 @@ public class ActionBarSherlockCompat extends ActionBarSherlock {
         a.recycle();
 
         int layoutResource;
-        if (hasFeature(Window.FEATURE_ACTION_BAR)) {
+        if (hasFeature(Window.FEATURE_ACTION_BAR) && !hasFeature(Window.FEATURE_NO_TITLE)) {
             if (hasFeature(Window.FEATURE_ACTION_BAR_OVERLAY)) {
                 layoutResource = R.layout.abs__screen_action_bar_overlay;
             } else {
                 layoutResource = R.layout.abs__screen_action_bar;
             }
-        } else if (hasFeature(Window.FEATURE_ACTION_MODE_OVERLAY)) {
+        } else if (hasFeature(Window.FEATURE_ACTION_MODE_OVERLAY) && !hasFeature(Window.FEATURE_NO_TITLE)) {
             layoutResource = R.layout.abs__screen_simple_overlay_action_mode;
         } else {
             layoutResource = R.layout.abs__screen_simple;

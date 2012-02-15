@@ -43,7 +43,6 @@ import com.actionbarsherlock.internal.nineoldandroids.animation.Animator.Animato
 import com.actionbarsherlock.internal.nineoldandroids.widget.NineFrameLayout;
 import com.actionbarsherlock.internal.view.menu.MenuBuilder;
 import com.actionbarsherlock.internal.view.menu.MenuPopupHelper;
-import com.actionbarsherlock.internal.view.menu.MenuPresenter;
 import com.actionbarsherlock.internal.view.menu.SubMenuBuilder;
 import com.actionbarsherlock.internal.widget.ActionBarContainer;
 import com.actionbarsherlock.internal.widget.ActionBarContextView;
@@ -169,16 +168,10 @@ public class ActionBarImpl extends ActionBar {
 
         // Older apps get the home button interaction enabled by default.
         // Newer apps need to enable it explicitly.
-        //setHomeButtonEnabled(mContext.getApplicationInfo().targetSdkVersion < 14);
-        // We're all new brotha!  This. Is. ActionBarSherlock!
-        setHomeButtonEnabled(false);
+        setHomeButtonEnabled(mContext.getApplicationInfo().targetSdkVersion < 14);
 
         setHasEmbeddedTabs(getResources_getBoolean(mContext,
                 R.bool.abs__action_bar_embed_tabs));
-    }
-
-    public void setMenu(Menu menu, MenuPresenter.Callback cb) {
-        mActionView.setMenu(menu, cb);
     }
 
     public void onConfigurationChanged(Configuration newConfig) {
@@ -510,8 +503,10 @@ public class ActionBarImpl extends ActionBar {
             return;
         }
 
-        /* XXX final FragmentTransaction trans = mActivity.getSupportFragmentManager().beginTransaction()
-                .disallowAddToBackStack();*/
+        /* XXX
+        final FragmentTransaction trans = mActivity.getFragmentManager().beginTransaction()
+                .disallowAddToBackStack();
+        */
 
         if (mSelectedTab == tab) {
             if (mSelectedTab != null) {
@@ -529,9 +524,11 @@ public class ActionBarImpl extends ActionBar {
             }
         }
 
-        /* XXX if (!trans.isEmpty()) {
+        /* XXX
+        if (!trans.isEmpty()) {
             trans.commit();
-        }*/
+        }
+        */
     }
 
     @Override
