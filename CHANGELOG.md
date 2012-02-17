@@ -30,7 +30,15 @@ Since 2.5.2beta (2012-01-28):
 * Hide text of some action bar buttons.
 * Support for 'Daily' air day.
 
-Since 2.5.3beta (soon):
+Since 2.5.3beta (2012-01-29)
+
+* Updated design towards ICS styles.
+* Fix for crash when trying to create a trakt account.
+* Use user-specified episode numbers in Upcoming/Recent.
+* Fix GetGlue comment box text not wrapping.
+* Latest translations from crowdin. Thanks everyone for the big effort!
+
+Since 2.5.4beta (soon):
 
 * Hide legacy widgets except small size on Android 3.0+ devices.
 * Fix incorrect next episodes if two air the same day. The lower numbered one is now assumed to be aired first (though still at the same time).
@@ -39,12 +47,13 @@ Since 2.5.3beta (soon):
 * New notification icon (finally!).
 * Layout tweaks in Upcoming and episode details.
 * Hide 'Add to calendar' button if it is useless.
+* Use ActionBarSherlock 4.0.
+* Display search term, title and search soft button in `SearchActivity`.
+* Enabled home button (app icon in the ActionBar) everywhere.
+* New welcome and beta dialog.
 
 Postponed:
 
-* Use ActionBarSherlock 4.0 release.
-* Display search term, title and search soft button in `SearchActivity`.
-* Where applicable the app icon takes you back to the show list. Same as long-pressing back from every screen.
 * UI for custom upcoming interval (currently 24 hours).
 
 Version 2.4.2/2.4.3beta *(2012-01-11)*
