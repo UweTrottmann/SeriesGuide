@@ -32,6 +32,7 @@ Since 2.5.2beta (2012-01-28):
 * Latest translations from crowdin, now with Arabic by mohd55 and Hungarian by devilinside.
 
 Since 2.5.3beta (2012-01-29)
+
 * Updated design towards ICS styles.
 * Fix for crash when trying to create a trakt account.
 * Use user-specified episode numbers in Upcoming/Recent.
