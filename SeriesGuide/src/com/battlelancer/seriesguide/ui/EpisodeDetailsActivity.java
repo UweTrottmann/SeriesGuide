@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
@@ -12,7 +13,6 @@ import com.battlelancer.thetvdbapi.ImageCache;
 import com.viewpagerindicator.TitlePageIndicator;
 import com.viewpagerindicator.TitleProvider;
 
-import com.battlelancer.seriesguide.R;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;

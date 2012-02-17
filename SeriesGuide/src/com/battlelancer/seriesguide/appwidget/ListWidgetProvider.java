@@ -1,10 +1,10 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 
-import com.battlelancer.seriesguide.R;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;

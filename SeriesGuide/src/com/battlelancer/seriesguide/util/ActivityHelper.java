@@ -18,13 +18,13 @@
 
 package com.battlelancer.seriesguide.util;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.view.KeyEvent;
-
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.view.KeyEvent;
 
 /**
  * A class that handles some common activity-related functionality in the app,

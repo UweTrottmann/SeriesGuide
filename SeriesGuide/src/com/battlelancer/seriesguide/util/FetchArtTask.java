@@ -1,14 +1,14 @@
 
 package com.battlelancer.seriesguide.util;
 
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.thetvdbapi.ImageCache;
+import com.battlelancer.thetvdbapi.TheTVDB;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.widget.ImageView;
-
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.thetvdbapi.ImageCache;
-import com.battlelancer.thetvdbapi.TheTVDB;
 
 public class FetchArtTask extends AsyncTask<Void, Void, Integer> {
     private static final int SUCCESS = 0;

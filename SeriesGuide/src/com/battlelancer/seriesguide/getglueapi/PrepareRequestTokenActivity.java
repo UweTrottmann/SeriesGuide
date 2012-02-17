@@ -1,11 +1,17 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.BaseActivity;
+import com.battlelancer.seriesguide.util.ShareUtils;
+
 import oauth.signpost.OAuth;
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -16,11 +22,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
-
-import com.actionbarsherlock.app.ActionBar;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.ui.BaseActivity;
-import com.battlelancer.seriesguide.util.ShareUtils;
 
 /**
  * Prepares a OAuthConsumer and OAuthProvider OAuthConsumer is configured with
