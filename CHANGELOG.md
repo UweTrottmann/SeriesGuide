@@ -40,6 +40,7 @@ Since 2.5.3beta (2012-01-29)
 
 Since 2.5.4beta (soon):
 
+* Fix shows with older episodes not sorting/filtering correctly.
 * Hide legacy widgets except small size on Android 3.0+ devices.
 * Fix incorrect next episodes if two air the same day. The lower numbered one is now assumed to be aired first (though still at the same time).
 * Fix sorting and filtering if shows have older episodes listed under next.
