@@ -16,8 +16,6 @@
   <string name="description_search">Suche</string>
   <string name="description_overview">Übersicht</string>
   <string name="norating">n/a</string>
-  <string name="loading">Wird geladen...</string>
-  <string name="sending">Senden...</string>
   <string name="episode_firstaired">Ausstrahlung:</string>
   <string name="episode_dvdnumber">DVD Folge</string>
   <string name="show_actors">Schauspieler:</string>
@@ -69,19 +67,12 @@
   <string name="norecent">Keine bereits gesendeten Folgen.</string>
   <string name="only_favorites">Nur Favoriten</string>
   <string name="togglewatched">"Gesehen" umschalten</string>
-  <string name="update_notification">Ihre Serien werden aktualisiert...</string>
-  <string name="update_single">Aktualisiere Serie...</string>
-  <string name="update_delta">Aktualisiere veraltete Serien...</string>
-  <string name="update_full">Aktualisiere alle Serien...</string>
   <string name="update_success">Aktualisierung erfolgreich.</string>
   <string name="update_offline">Aktualisierung ist fehlgeschlagen, überprüfen Sie Ihre Internet-/Wi-Fi-Verbindung.</string>
   <string name="update_saxerror">Aktualisierung fehlgeschlagen, versuchen Sie es später erneut.</string>
   <string name="update_inprogress">Es wird bereits eine Aktualisierung durchgeführt, versuchen Sie es später erneut.</string>
-  <string name="update_rebuildsearch">Folgen-Suche aktualisieren...</string>
-  <string name="update_traktactivity">Lade trakt-Aktivität...</string>
   <string name="menu_updateart">Poster laden</string>
   <string name="arttask_incomplete">Einige Poster wurden nicht geladen, versuchen Sie es später erneut.</string>
-  <string name="arttask_start">Poster werden geladen...</string>
   <string name="arttask_nosdcard">Das Laden von Bildern erfordert externen Speicherplatz (SD-Karte).</string>
   <string name="show_airs">läuft</string>
   <string name="show_network">auf</string>
@@ -113,15 +104,12 @@
   <string name="pref_showlist">Serienliste</string>
   <string name="help">Hilfe</string>
   <string name="preferences">Einstellungen</string>
-  <string name="pref_showsorting">Sortiere Serien nach...</string>
   <string name="pref_onlyfuture">Keine gesendeten Folgen</string>
   <string name="pref_onlyfuturesummary">\"nächste:\" zeigt niemals bereits gesendete Folgen an</string>
   <string name="pref_onlyseasoneps">Keine \"Special Episodes\"</string>
   <string name="pref_onlyseasonepssummary">\"nächste:\" zeigt niemals \"Special Episodes\" an</string>
   <string name="pref_content">Inhalt</string>
-  <string name="pref_seasonsorting">Sortiere Staffeln nach...</string>
   <string name="pref_sortingsummary">Legen Sie fest wie Staffeln sortiert werden</string>
-  <string name="pref_episodesorting">Folgen sortieren nach...</string>
   <string name="pref_epsortingsummary">Legen Sie fest wie Folgen sortiert werden</string>
   <string name="backup">Sichern/Wiederherstellen</string>
   <string name="backup_summary">Sicherung aller Serien erstellen oder Sicherung wiederherstellen</string>
@@ -147,7 +135,6 @@
   <string name="pref_traktsyncsummary">Erst-Synchronisierung mit trakt.tv</string>
   <string name="pref_traktintegrate">trakt.tv integrieren</string>
   <string name="pref_traktintegratesummary">trakt-Aktivität bei Aktualisierung holen</string>
-  <string name="donate">Spendieren Sie ein Bier (Paypal)</string>
   <string name="feedback">Feedback senden</string>
   <string name="pref_advanced">Fortgeschritten</string>
   <string name="clear_cache">Bilder-Zwischenspeicher leeren</string>
@@ -160,10 +147,8 @@
   <string name="backup_path"><b>Backup-Ordner</b></string>
   <string name="backup_version"><b>Datenbankversion</b></string>
   <string name="backup_failed_nosd">Backup fehlgeschlagen. Der Backup-Ordner ist nicht verfügbar.</string>
-  <string name="backup_inprogress">Erstelle Datenbank Backup...</string>
   <string name="backup_success">Sicherung erfolgreich.</string>
   <string name="backup_failed">Sicherung ist fehlgeschlagen.</string>
-  <string name="import_inprogress">Wiederherstellen der Datenbank...</string>
   <string name="import_failed_nosd">Wiederherstellen fehlgeschlagen. Der Backup-Ordner ist nicht verfügbar.</string>
   <string name="import_failed_nofile">Es existiert keine Sicherungs-Datei.</string>
   <string name="import_failed_noread">Die Sicherungs-Datei ist nicht lesbar.</string>
@@ -199,13 +184,8 @@
   <string name="traktcheckin_inprogress">Es ist bereits ein Check-In aktiv. Brechen Sie Ihn ab oder warten Sie %s bevor Sie wieder einchecken können.</string>
   <string name="traktcheckin_wait">Ich warte</string>
   <string name="checkinfailed">Check-In fehlgeschlagen.</string>
-  <string name="oauthmessage">Authentifizierung von SeriesGuide mit GetGlue...</string>
   <string name="addtocalendar">Zum Kalender hinzufügen</string>
   <string name="addtocalendar_failed">Kann kein Kalenderereignis erstellen.</string>
-  <string name="eula_title">Was Sie wissen sollten</string>
-  <string name="eula_text">Diese App sammelt bestimmte Informationen, während Sie diese verwenden, unter anderem über Google Analytics. Sie können Google Analytics in den Einstellungen abschalten.\n\nIch bin nicht verantwortlich für Schäden an Ihrem Gerät oder Sonstigem, während Sie diese App benutzen.\n\nDer Quell-Code steht für jedermann auf GitHub zur Verfügung (https://github.com/UweTrottmann/SeriesGuide).</string>
-  <string name="accept">Akzeptieren</string>
-  <string name="decline">Ablehnen</string>
   <string name="username">Benutzername</string>
   <string name="email">E-Mail</string>
   <string name="password">Passwort</string>
@@ -225,11 +205,7 @@
   <string name="trakt_synctotrakt">Sync nach trakt.tv</string>
   <string name="trakt_syncunseen">Ungesehene Folgen synchronisieren</string>
   <string name="welcome_message"><big>Erste Schritte</big></string>
-  <string name="welcome_add">Serien hinzufügen</string>
-  <string name="welcome_setuptrakt">trakt-Konto einrichten</string>
-  <string name="welcome_traktmessage">Verbessern Sie Ihr Nutzungserlebnis, indem Sie SeriesGuide mit trakt.tv verbinden.</string>
   <string name="download_stable">SeriesGuide herunterladen</string>
-  <string name="betawarning">Diese Version ist für nur Beta-Tester! Laden Sie im Zweifelsfall unten die stabile Version.\n\nWenn Sie helfen möchten die Beta zu testen, dann los! Berichten Sie jeden Absturz, probieren Sie alles aus und senden Sie Feedback.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Nächste Folge</item>

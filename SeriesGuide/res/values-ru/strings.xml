@@ -16,7 +16,6 @@
   <string name="description_search">Поиск</string>
   <string name="description_overview">Обзор</string>
   <string name="norating">нет данных</string>
-  <string name="loading">Загрузка...</string>
   <string name="episode_firstaired">Эфир:</string>
   <string name="episode_dvdnumber">DVD эпизод</string>
   <string name="show_actors">Актеры:</string>
@@ -83,12 +82,9 @@
   <string name="about">О SeriesGuide</string>
   <string name="pref_sharing">Поделиться</string>
   <string name="pref_traktsync">Синхронизировать с trakt.tv</string>
-  <string name="donate">Купить мне выпивку (Paypal)</string>
   <string name="pref_advanced">Расширенный</string>
   <string name="pref_hideimages">Скрыть картинки</string>
   <string name="pref_ganalytics">Google Analytics</string>
-  <string name="backup_inprogress">Резервное копирование базы данных...</string>
-  <string name="import_inprogress">Восстановление базы данных...</string>
   <string name="backup_yes">Резервное копирование</string>
   <string name="backup_no">Не резервировать</string>
   <string name="import_yes">Восстановление</string>
@@ -102,9 +98,6 @@
   <string name="done">Выполнено</string>
   <string name="checkin">Войти</string>
   <string name="addtocalendar">Добавить в календарь</string>
-  <string name="eula_title">Что вы должны знать</string>
-  <string name="accept">Принять</string>
-  <string name="decline">Отклонить</string>
   <string name="username">Имя пользователя</string>
   <string name="email">Электронная почта</string>
   <string name="password">Пароль</string>

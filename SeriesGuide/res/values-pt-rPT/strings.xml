@@ -16,7 +16,6 @@
   <string name="description_search">Procurar</string>
   <string name="description_overview">Visão geral</string>
   <string name="norating">n/a</string>
-  <string name="loading">A carregar...</string>
   <string name="episode_firstaired">Data de exibição:</string>
   <string name="episode_dvdnumber">Episódio de DVD</string>
   <string name="show_actors">Actores:</string>
@@ -54,10 +53,6 @@
   <string name="unfavorited">Apagar dos favoritos</string>
   <string name="upcoming">Próximos</string>
   <string name="recent">Recente</string>
-  <string name="update_notification">Atualizando os seus programas de TV...</string>
-  <string name="update_single">Atualizando programas de TV...</string>
-  <string name="update_delta">Atualizando programas de TV desactualizados...</string>
-  <string name="update_full">Atualizando todos os programas de TV...</string>
   <string name="update_success">Actualização com sucesso.</string>
   <string name="show_airs">exibe</string>
   <string name="show_network">em</string>
@@ -95,15 +90,12 @@
   <string name="pref_traktsummary">Adicionar ou editar as suas credenciais do trakt.tv</string>
   <string name="pref_traktsync">Sincronizar com trakt.tv</string>
   <string name="pref_traktintegrate">Integrar trakt.tv</string>
-  <string name="donate">Pague-me um copo (Paypal)</string>
   <string name="pref_advanced">Avançado</string>
   <string name="pref_hideimages">Esconder imagens</string>
   <string name="pref_ganalytics">Analíticas Google</string>
   <string name="pref_ganalyticssummary">Controlar o uso de recursos para ajudar a melhorar o SeriesGuide</string>
   <string name="backup_path"><b>Pasta de backup</b></string>
   <string name="backup_version"><b>Versão de banco de dados</b></string>
-  <string name="backup_inprogress">A fazer backup da base de dados...</string>
-  <string name="import_inprogress">Restaurar base de dados ...</string>
   <string name="backup_button">Backup</string>
   <string name="backup_yes">Backup</string>
   <string name="backup_no">Não fazer backup</string>
@@ -118,11 +110,7 @@
   <string name="done">Concluído</string>
   <string name="checkin">Check In</string>
   <string name="comment">Check Inn Comentário</string>
-  <string name="oauthmessage">A autenticar SeriesGuide com GetGlue ...</string>
   <string name="addtocalendar">Adicionar ao calendário</string>
-  <string name="eula_title">O que devia saber</string>
-  <string name="accept">Aceitar</string>
-  <string name="decline">Recusar</string>
   <string name="username">Utilizador</string>
   <string name="email">E-mail</string>
   <string name="password">Palavra-passe</string>
@@ -136,7 +124,6 @@
   <string name="trakt_synctodevice">Sincronizar com SeriesGuide</string>
   <string name="trakt_synctotrakt">Sincronizar com trakt.tv</string>
   <string name="trakt_syncunseen">Sincronizar os episódios por assistir</string>
-  <string name="welcome_setuptrakt">Configurar uma conta de trakt</string>
   <string name="download_stable">Download SeriesGuide</string>
   <string-array name="shsorting">
     <item>A - Z</item>

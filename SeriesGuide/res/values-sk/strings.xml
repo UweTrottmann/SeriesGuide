@@ -16,7 +16,6 @@
   <string name="description_search">Hľadať</string>
   <string name="description_overview">Prehľad</string>
   <string name="norating">nedostupné</string>
-  <string name="loading">Nahrávanie...</string>
   <string name="episode_firstaired">Dátum vysielania:</string>
   <string name="episode_dvdnumber">DVD epizóda</string>
   <string name="show_actors">Hrajú:</string>
@@ -84,13 +83,10 @@
   <string name="clearGetGlueCredentials">Odpojiť GetGlue</string>
   <string name="pref_traktsync">Synchronizovať s trakt.tv</string>
   <string name="pref_traktintegrate">Integrovať trakt.tv</string>
-  <string name="donate">Kúpte mi drink (Paypal)</string>
   <string name="pref_advanced">Pokročilé</string>
   <string name="pref_hideimages">Skryť obrázky</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Sledovanie využívania funkcií pre zlepšenie SeriesGuide</string>
-  <string name="backup_inprogress">Zálohuje sa databáza ...</string>
-  <string name="import_inprogress">Obnovuje sa databáza...</string>
   <string name="backup_yes">Zálohovať</string>
   <string name="backup_no">Nezálohovať</string>
   <string name="import_yes">Obnoviť</string>
@@ -102,11 +98,7 @@
   <string name="cancel">Zrušiť</string>
   <string name="share">Zdieľať</string>
   <string name="done">Hotovo</string>
-  <string name="oauthmessage">Autentifikácia SeriesGuide s GetGlue ...</string>
   <string name="addtocalendar">Pridať do kalendára</string>
-  <string name="eula_title">Čo by ste mali vedieť</string>
-  <string name="accept">Prijať</string>
-  <string name="decline">Odmietnuť</string>
   <string name="username">Užívateľské meno</string>
   <string name="email">E-mail</string>
   <string name="password">Heslo</string>

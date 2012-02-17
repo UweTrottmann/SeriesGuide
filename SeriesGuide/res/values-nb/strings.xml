@@ -16,8 +16,6 @@
   <string name="description_search">Søk</string>
   <string name="description_overview">Oversikt</string>
   <string name="norating">n/a</string>
-  <string name="loading">Laster...</string>
-  <string name="sending">Sender...</string>
   <string name="episode_firstaired">Sende dato:</string>
   <string name="episode_dvdnumber">DVD Episode</string>
   <string name="show_actors">Skuespillere:</string>
@@ -57,10 +55,6 @@
   <string name="upcoming">Kommer snart</string>
   <string name="recent">De siste</string>
   <string name="friends">Venner</string>
-  <string name="update_notification">Oppdaterer seriene dine...</string>
-  <string name="update_single">Oppdaterer serier...</string>
-  <string name="update_delta">Oppdaterer utdaterte serier...</string>
-  <string name="update_full">Oppdaterer alle serier...</string>
   <string name="update_success">Oppdatering vellykket.</string>
   <string name="show_airs">sendes</string>
   <string name="show_network">på</string>
@@ -103,7 +97,6 @@
   <string name="pref_traktsync">Synkroniser med trakt.tv</string>
   <string name="pref_traktintegrate">Integrer med trakt.tv</string>
   <string name="pref_traktintegratesummary">Motta trakt aktiviteter ved oppdatering</string>
-  <string name="donate">Spander en øl (Paypal)</string>
   <string name="feedback">Gi tilbakemelding</string>
   <string name="pref_advanced">Avansert</string>
   <string name="pref_hideimages">Skjul bilder</string>
@@ -112,8 +105,6 @@
   <string name="backup_path"><b>Sikkerhetskopimappe</b></string>
   <string name="backup_version"><b>Databaseversjon</b></string>
   <string name="backup_failed_nosd">Kan ikke ta sikkerhetskopi. Sikkerhetskopimappen er ikke tilgjengelig.</string>
-  <string name="backup_inprogress">Sikkerhetskopierer database...</string>
-  <string name="import_inprogress">Gjenoppretter databasen...</string>
   <string name="import_failed_nosd">Kan ikke gjenopprette sikkerhetskopien. Sikkerhetskopimappen finnes ikke.</string>
   <string name="dbupgradefailed">Sikkerhetskopien kan være for gammel eller tom. Merk: Importere før-2.0 sikkerhetskopier i en 1.9.x versjon først.</string>
   <string name="backup_button">Sikkerhetskopiering</string>
@@ -135,11 +126,7 @@
   <string name="traktcheckin_cancel">Avbryt den</string>
   <string name="traktcheckin_inprogress">Det pågår allerde en innsjekking. Enten avbryte denne innsjekkingen eller vent %s før du kan sjekke inn på nytt.</string>
   <string name="traktcheckin_wait">Jeg venter</string>
-  <string name="oauthmessage">Autentiserer SeriesGuide med GetGlue...</string>
   <string name="addtocalendar">Legg til i kalender</string>
-  <string name="eula_title">Dette bør du vite</string>
-  <string name="accept">Godta</string>
-  <string name="decline">Avslå</string>
   <string name="username">Brukernavn</string>
   <string name="email">E-post</string>
   <string name="password">Passord</string>

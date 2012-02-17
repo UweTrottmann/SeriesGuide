@@ -16,8 +16,6 @@
   <string name="description_search">Zoeken</string>
   <string name="description_overview">Overzicht</string>
   <string name="norating">n/a</string>
-  <string name="loading">Laden...</string>
-  <string name="sending">Verzenden...</string>
   <string name="episode_firstaired">Uitzenddatum:</string>
   <string name="episode_dvdnumber">DVD aflevering</string>
   <string name="show_actors">Acteurs:</string>
@@ -69,19 +67,12 @@
   <string name="norecent">Er zijn geen recente afleveringen.</string>
   <string name="only_favorites">Uitsluitend favorieten</string>
   <string name="togglewatched">Bekeken/niet bekeken wijzigen</string>
-  <string name="update_notification">Series bijwerken...</string>
-  <string name="update_single">Serie bijwerken...</string>
-  <string name="update_delta">Verouderde series bijwerken...</string>
-  <string name="update_full">Alle series bijwerken...</string>
   <string name="update_success">Bijwerken succesvol voltooid.</string>
   <string name="update_offline">Bijwerken is mislukt, controleer de internet/Wi-Fi verbinding.</string>
   <string name="update_saxerror">Bijwerken is mislukt, probeer het later opnieuw.</string>
   <string name="update_inprogress">Er wordt al een update uitgevoerd, probeer later opnieuw.</string>
-  <string name="update_rebuildsearch">Zoeken afleveringen vernieuwen...</string>
-  <string name="update_traktactivity">trakt activiteiten laden...</string>
   <string name="menu_updateart">Affiches laden</string>
   <string name="arttask_incomplete">Sommige affiches zijn niet geladen, probeer het later opnieuw.</string>
-  <string name="arttask_start">Laden affiches...</string>
   <string name="arttask_nosdcard">Het laden van affiches vereist externe opslag (SD-kaart).</string>
   <string name="show_airs">uitzending:</string>
   <string name="show_network">op</string>
@@ -113,15 +104,12 @@
   <string name="pref_showlist">Lijst weergeven</string>
   <string name="help">Help</string>
   <string name="preferences">Instellingen</string>
-  <string name="pref_showsorting">Series sorteren op...</string>
   <string name="pref_onlyfuture">Geen uitgezonden afleveringen</string>
   <string name="pref_onlyfuturesummary">\"volgende:\" geeft nooit reeds uitgezonden afleveringen weer</string>
   <string name="pref_onlyseasoneps">Geen speciale afleveringen</string>
   <string name="pref_onlyseasonepssummary">\"volgende:\" geeft nooit speciale afleveringen weer</string>
   <string name="pref_content">Inhoud</string>
-  <string name="pref_seasonsorting">Seizoenen sorteren op...</string>
   <string name="pref_sortingsummary">Geef aan hoe de seizoenen gesorteerd moeten worden</string>
-  <string name="pref_episodesorting">Afleveringen sorteren op...</string>
   <string name="pref_epsortingsummary">Geef aan hoe de afleveringen gesorteerd moeten worden</string>
   <string name="backup">Back-up maken/herstellen</string>
   <string name="backup_summary">Back-up maken/herstellen van series</string>
@@ -147,7 +135,6 @@
   <string name="pref_traktsyncsummary">Initiële synchronisatie met trakt.tv</string>
   <string name="pref_traktintegrate">trakt.tv integreren</string>
   <string name="pref_traktintegratesummary">trakt activiteit verkrijgen bij bijwerken</string>
-  <string name="donate">Doneren (PayPal)</string>
   <string name="feedback">Reactie verzenden</string>
   <string name="pref_advanced">Geavanceerd</string>
   <string name="clear_cache">Afbeeldingenbuffer wissen</string>
@@ -160,10 +147,8 @@
   <string name="backup_path"><b>Back-up map</b></string>
   <string name="backup_version"><b>Gegevensbestand versie</b></string>
   <string name="backup_failed_nosd">Back-up maken niet mogelijk. De back-up map is niet beschikbaar.</string>
-  <string name="backup_inprogress">Van gegevensbestand wordt back-up gemaakt...</string>
   <string name="backup_success">Maken back-up succesvol.</string>
   <string name="backup_failed">Maken back-up mislukt.</string>
-  <string name="import_inprogress">Gegevensbestand herstellen...</string>
   <string name="import_failed_nosd">Back-up herstellen niet mogelijk. De back-up map is niet beschikbaar.</string>
   <string name="import_failed_nofile">Er is geen back-upbestand.</string>
   <string name="import_failed_noread">Het back-upbestand is niet leesbaar.</string>
@@ -199,13 +184,8 @@
   <string name="traktcheckin_inprogress">Er is al een aanmelding gaande. Annuleer deze aanmelding of wacht %s om opnieuw aan te melden.</string>
   <string name="traktcheckin_wait">Wachten</string>
   <string name="checkinfailed">Aanmelden mislukt.</string>
-  <string name="oauthmessage">SeriesGuide verifiëren met GetGlue...</string>
   <string name="addtocalendar">Aan agenda toevoegen</string>
   <string name="addtocalendar_failed">Kan geen agendagebeurtenis aanmaken.</string>
-  <string name="eula_title">Wat u moet weten</string>
-  <string name="eula_text">Tijdens het gebruik verzamelt deze app bepaalde informatie via Google Analytics. Via Instellingen kan er voor Google Analytics worden afgemeld.\n\nDe maker van deze app is niet verantwoordelijk voor het defect raken van het apparaat tijdens het gebruik van deze app.\n\nDe broncode is voor iedereen beschikbaar op Github (https://github.com/UweTrottmann/SeriesGuide).</string>
-  <string name="accept">Accepteren</string>
-  <string name="decline">Afwijzen</string>
   <string name="username">Gebruikersnaam</string>
   <string name="email">E-mail</string>
   <string name="password">Wachtwoord</string>
@@ -225,11 +205,7 @@
   <string name="trakt_synctotrakt">Synchroniseren naar trakt.tv</string>
   <string name="trakt_syncunseen">Synchroniseren onbekeken afleveringen</string>
   <string name="welcome_message"><big>Aan de slag</big></string>
-  <string name="welcome_add">Series toevoegen</string>
-  <string name="welcome_setuptrakt">Een trakt-account instellen</string>
-  <string name="welcome_traktmessage">Verbeter uw ervaring door SeriesGuide te verbinden met trakt.tv.</string>
   <string name="download_stable">SeriesGuide downloaden</string>
-  <string name="betawarning">Deze versie is uitsluitend voor beta testers! Download bij twijfel onderstaande stabiele versie.\n\nIndien u wilt helpen testen, de beta versie kan zaken beschadigen. Rapporteer a.u.b. elke vastloper, probeer alles uit en stuur een reactie.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Volgende aflevering</item>

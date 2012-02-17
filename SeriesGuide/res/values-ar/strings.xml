@@ -16,8 +16,6 @@
   <string name="description_search">البحث</string>
   <string name="description_overview">نظرة عامة</string>
   <string name="norating">لا يوجد</string>
-  <string name="loading">...تحميل</string>
-  <string name="sending">...إرسال</string>
   <string name="episode_firstaired">:موعد العرض</string>
   <string name="episode_dvdnumber">حلقة دي في دي</string>
   <string name="show_actors">:الممثلون</string>
@@ -69,19 +67,12 @@
   <string name="norecent">.لا توجد حلقات حالية</string>
   <string name="only_favorites">المفضلة فقط</string>
   <string name="togglewatched">تبديل المُشاهدة</string>
-  <string name="update_notification">...تحديث قائمة مسلسلاتك</string>
-  <string name="update_single">...تحديث المسلسلات</string>
-  <string name="update_delta">...تحديث المسلسلات الغير مُحدثة</string>
-  <string name="update_full">...تحديث كافة المسلسلات</string>
   <string name="update_success">.تم التحديث بنجاح</string>
   <string name="update_offline">.فشل التحديث، تحقق من اتصال إنترنت/وأي فأي الخاص بك</string>
   <string name="update_saxerror">.فشل التحديث، حاول مرة أخرى لاحقاً</string>
   <string name="update_inprogress">.تحديث قيد التقدم، حاول مرة أخرى لاحقاً</string>
-  <string name="update_rebuildsearch">.تحديث البحث عن حلقات</string>
-  <string name="update_traktactivity">...تحميل نشاطات موقع تراكت</string>
   <string name="menu_updateart">تحميل الأغلفة</string>
   <string name="arttask_incomplete">.بعض الأغلفة لم تُحمّل, حاول مرة اخرى لاحقاً</string>
-  <string name="arttask_start">...تحميل الأغلفة</string>
   <string name="arttask_nosdcard">.(تحميل الأغلفة يتطلب تخزين خارجي (بطاقة إس دي</string>
   <string name="show_airs">تُبث</string>
   <string name="show_network">على</string>
@@ -113,15 +104,12 @@
   <string name="pref_showlist">قائمة المسلسلات</string>
   <string name="help">مساعدة</string>
   <string name="preferences">إعدادات</string>
-  <string name="pref_showsorting">...ترتيب المسلسلات حسب</string>
   <string name="pref_onlyfuture">الحلقات لم تُبث بعد</string>
   <string name="pref_onlyfuturesummary">.التالي:/" لا تُظهر الحلقات التي تم عرضُها بالفعل"/</string>
   <string name="pref_onlyseasoneps">لا توجد حلقات خاصة</string>
   <string name="pref_onlyseasonepssummary">.التالي:/" لا تُظهر الحلقات الخاصة"/</string>
   <string name="pref_content">المحتوى</string>
-  <string name="pref_seasonsorting">...ترتيب المواسم حسب</string>
   <string name="pref_sortingsummary">تحديد كيفية ترتيب المواسم</string>
-  <string name="pref_episodesorting">...ترتيب الحلقات حسب</string>
   <string name="pref_epsortingsummary">تحديد كيفية ترتيب الحلقات</string>
   <string name="backup">النسخ الاحتياطي / الاستعادة</string>
   <string name="backup_summary">النسخ الاحتياطي أو استعادة مسلسلاتك</string>
@@ -146,7 +134,6 @@
   <string name="pref_traktsyncsummary">trakt.tv مزامنة أولية مع</string>
   <string name="pref_traktintegrate">trakt.tv دمج</string>
   <string name="pref_traktintegratesummary">الحصول على أنشطتك من موقع تراكت مع التحديث</string>
-  <string name="donate">(إشتر لي مشروباً (باي بال</string>
   <string name="feedback">أرسل ملاحظاتك</string>
   <string name="pref_advanced">خيارات متقدمة</string>
   <string name="clear_cache">مسح ذاكرة التخزين المؤقتة للصور</string>
@@ -158,10 +145,8 @@
   <string name="backup_path"><b>مجلد النسخة الاحتياطية</b></string>
   <string name="backup_version"><b>إصدار قاعدة بيانات</b></string>
   <string name="backup_failed_nosd">.لا يمكن عمل نسخة احتياطية. مجلد النسخة الاحتياطية غير موجود</string>
-  <string name="backup_inprogress">...النسخ الاحتياطي لقاعدة البيانات</string>
   <string name="backup_success">نجاح عملية النسخ الاحتياطي.</string>
   <string name="backup_failed">فشل النسخ الاحتياطي.</string>
-  <string name="import_inprogress">...استعادة قاعدة بيانات</string>
   <string name="import_failed_nosd">.لا يمكن استعادة النسخة الاحتياطية. مجلد النسخة الاحتياطية غير متاح</string>
   <string name="import_failed_nofile">.لا يوجد أي ملف للنسخ الاحتياطي</string>
   <string name="import_failed_noread">.ملف النسخ الاحتياطي غير قابل للقراءة</string>
@@ -195,12 +180,8 @@
   <string name="traktcheckin_inprogress">قبل التحقق مرة أخرى %s هناك تحقق قائم حالياً. الرجاء إلغاء التحقق القائم أو إنتظر</string>
   <string name="traktcheckin_wait">سأنتظر</string>
   <string name="checkinfailed">التحقق فشل.</string>
-  <string name="oauthmessage">...GetGlue مصادقة البرنامج مع</string>
   <string name="addtocalendar">إضافة إلى التقويم</string>
   <string name="addtocalendar_failed">.لا يمكن إنشاء حدث تقويم</string>
-  <string name="eula_title">ما الذي يجب عليك معرفته</string>
-  <string name="accept">قبول</string>
-  <string name="decline">رفض</string>
   <string name="username">اسم المستخدم</string>
   <string name="email">البريد الإلكتروني</string>
   <string name="password">كلمة المرور</string>
@@ -220,9 +201,6 @@
   <string name="trakt_synctotrakt">trakt.tv المزامنة إلى</string>
   <string name="trakt_syncunseen">مزامنة الحلقات الغير مُشاهدة</string>
   <string name="welcome_message"><big>البدء في العمل</big></string>
-  <string name="welcome_add">إضافة مسلسلات</string>
-  <string name="welcome_setuptrakt">trakt إعداد حساب موقع</string>
-  <string name="welcome_traktmessage">.تعزيز تجربتك عن طريق ربط البرنامج بموقع تراكت</string>
   <string name="download_stable">حمّل دليل الحلقات</string>
   <string-array name="shsorting">
     <item>A-Z</item>

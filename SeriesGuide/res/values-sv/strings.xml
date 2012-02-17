@@ -16,8 +16,6 @@
   <string name="description_search">Sök</string>
   <string name="description_overview">Översikt</string>
   <string name="norating">saknas</string>
-  <string name="loading">Laddar...</string>
-  <string name="sending">Skickar...</string>
   <string name="episode_firstaired">Sändningsdatum:</string>
   <string name="episode_dvdnumber">DVD Avsnitt</string>
   <string name="show_actors">Skådespelare:</string>
@@ -63,10 +61,6 @@
   <string name="recent">De senaste</string>
   <string name="friends">Vänner</string>
   <string name="only_favorites">Bara favoriter</string>
-  <string name="update_notification">Uppdaterar dina serier...</string>
-  <string name="update_single">Uppdaterar serier...</string>
-  <string name="update_delta">Uppdaterar föråldrade serier...</string>
-  <string name="update_full">Uppdaterar alla serier...</string>
   <string name="update_success">Uppdatering lyckad.</string>
   <string name="update_inprogress">En uppdatering pågår redan, försök igen senare.</string>
   <string name="show_airs">sänds</string>
@@ -115,7 +109,6 @@
   <string name="pref_traktsyncsummary">Inledande synkronisering med trakt.tv</string>
   <string name="pref_traktintegrate">Integrera trakt.tv</string>
   <string name="pref_traktintegratesummary">Hämta trakt verksamhet vid uppdatering</string>
-  <string name="donate">Köp mig en drink (Paypal)</string>
   <string name="feedback">Skicka feedback</string>
   <string name="pref_advanced">Avancerade</string>
   <string name="clear_cache">Töm bildcache</string>
@@ -125,10 +118,8 @@
   <string name="backup_path"><b>Backup mapp</b></string>
   <string name="backup_version"><b>Databasversion</b></string>
   <string name="backup_failed_nosd">Kan inte säkerhetskopiera. Mappen är inte tillgänglig.</string>
-  <string name="backup_inprogress">Säkerhetskopiera databasen ...</string>
   <string name="backup_success">Säkerhetskopiering klar.</string>
   <string name="backup_failed">Säkerhetskopieringen misslyckades.</string>
-  <string name="import_inprogress">Återställer databasen...</string>
   <string name="import_failed_nosd">Kan inte återställa säkerhetskopian. Backup mappen är inte tillgänglig.</string>
   <string name="import_failed_nofile">Det finns ingen säkerhetskopia.</string>
   <string name="import_failed_noread">Säkerhetskopian är inte läsbar.</string>
@@ -155,12 +146,7 @@
   <string name="traktcheckin_cancel">Avbryt den</string>
   <string name="traktcheckin_inprogress">Incheckning pågår. Antingen avbryter du denna incheckning eller vänta %s innan du kan checka in igen.</string>
   <string name="traktcheckin_wait">Jag väntar</string>
-  <string name="oauthmessage">Autentiserar SeriesGuide med GetGlue...</string>
   <string name="addtocalendar">Lägg till i kalender</string>
-  <string name="eula_title">Vad du bör veta</string>
-  <string name="eula_text">Denna app samlar in viss information medan du använder den, bland annat via Google Analytics. Du kan välja bort Google Analytics i Inställningarna.\n\nJag är inte ansvarig för din enhet eller om något dåligt händer medan du använder programmet.\n\nKällkoden är tillgänglig för på Github (https://github.com/UweTrottmann/SeriesGuide).</string>
-  <string name="accept">Acceptera</string>
-  <string name="decline">Avböj</string>
   <string name="username">Användarnamn</string>
   <string name="email">E-post</string>
   <string name="password">Lösenord</string>
@@ -179,9 +165,6 @@
   <string name="trakt_synctodevice">Synkronisera med SeriesGuide</string>
   <string name="trakt_synctotrakt">Synkronisera med trakt.tv</string>
   <string name="trakt_syncunseen">Synkronisera ej sedda avsnitt</string>
-  <string name="welcome_add">Lägg till serier</string>
-  <string name="welcome_setuptrakt">Skapa ett trakt konto</string>
-  <string name="welcome_traktmessage">Förbättra din upplevelse genom att ansluta SeriesGuide med trakt.tv.</string>
   <string name="download_stable">Ladda ner SeriesGuide</string>
   <string-array name="shsorting">
     <item>A - Z</item>

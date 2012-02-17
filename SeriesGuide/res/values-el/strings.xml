@@ -16,7 +16,6 @@
   <string name="description_search">Αναζήτηση</string>
   <string name="description_overview">Επισκόπηση</string>
   <string name="norating">n/a</string>
-  <string name="loading">Φόρτωση...</string>
   <string name="episode_firstaired">Ημερομηνία πρώτης προβολής:</string>
   <string name="episode_dvdnumber">Επεισόδιο DVD</string>
   <string name="show_actors">Ηθοποιοί:</string>
@@ -55,10 +54,6 @@
   <string name="upcoming">Επόμενα</string>
   <string name="recent">Πρόσφατο</string>
   <string name="friends">Φίλοι</string>
-  <string name="update_notification">Ενημέρωσε τις σειρές σου...</string>
-  <string name="update_single">Ενημέρωση σειράς...</string>
-  <string name="update_delta">Ενημέρωση παλιών σειρών...</string>
-  <string name="update_full">Ενημέρωση σειρών...</string>
   <string name="update_success">Επιτυχής ενημέρωση.</string>
   <string name="show_airs">Προβάλλεται την</string>
   <string name="show_network">Στο</string>
@@ -98,7 +93,6 @@
   <string name="pref_traktsummary">Προσθέσετε ή επεξεργαστείτε τα στοιχεία του trakt.tv</string>
   <string name="pref_traktsync">Συγχρονισμός με trakt.tv</string>
   <string name="pref_traktintegrate">Ενσωμάτωση trakt.tv</string>
-  <string name="donate">Αγόρασε μου ένα ποτό (Paypal)</string>
   <string name="pref_advanced">Για προχωρημένους</string>
   <string name="pref_hideimages">Απόκρυψη εικόνων</string>
   <string name="pref_ganalytics">Google Analytics</string>
@@ -106,8 +100,6 @@
   <string name="backup_path"><b>Φάκελος αντιγράφων ασφαλείας</b></string>
   <string name="backup_version"><b>Έκδοση βάσης δεδομένων</b></string>
   <string name="backup_failed_nosd">Δεν μπορεί να δημιουργηθούν αντίγραφα ασφαλείας γιατί ο φάκελος δεν είναι διαθέσιμος.</string>
-  <string name="backup_inprogress">Πραγματοποιείται η δημιουργία αντιγράφου ασφαλείας της βάσης δεδομένων...</string>
-  <string name="import_inprogress">Επαναφορά βάσης δεδομένων ...</string>
   <string name="import_failed_nosd">Δεν μπορεί να γίνει ανάκτηση γιατί ο φάκελος δεν είναι διαθέσιμος.</string>
   <string name="backup_yes">Δημιουργία αντιγράφου ασφαλείας</string>
   <string name="backup_no">Να μην δημιουργηθεί αντίγραφο ασφαλείας</string>
@@ -124,11 +116,7 @@
   <string name="checkin">Check In</string>
   <string name="comment">Check In του σχολίου</string>
   <string name="traktcheckin_cancel">Ακυρώσετε</string>
-  <string name="oauthmessage">Έλεγχος ταυτότητας SeriesGuide με GetGlue...</string>
   <string name="addtocalendar">Προσθήκη στο ημερολόγιο</string>
-  <string name="eula_title">Τι πρέπει να γνωρίζετε</string>
-  <string name="accept">Αποδοχή</string>
-  <string name="decline">Αρνούμαι</string>
   <string name="username">Όνομα χρήστη</string>
   <string name="email">Email</string>
   <string name="password">Κωδικός πρόσβασης</string>
@@ -142,7 +130,6 @@
   <string name="trakt_synctodevice">Συγχρονισμός SeriesGuide</string>
   <string name="trakt_synctotrakt">Συγχρονισμός trakt.tv</string>
   <string name="trakt_syncunseen">Συγχρονισμός επεισοδίων που δεν έχω δει</string>
-  <string name="welcome_setuptrakt">Εγκατάσταση λογαριασμού trakt</string>
   <string name="download_stable">Λήψη SeriesGuide</string>
   <string-array name="shsorting">
     <item>Α - Ω</item>

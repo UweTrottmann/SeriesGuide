@@ -16,7 +16,6 @@
   <string name="description_search">Arama</string>
   <string name="description_overview">Genel</string>
   <string name="norating">Geçersiz</string>
-  <string name="loading">Yükleniyor...</string>
   <string name="episode_firstaired">Tarih:</string>
   <string name="episode_dvdnumber">DVD Bölümü</string>
   <string name="show_actors">Oyuncular:</string>
@@ -48,11 +47,12 @@
   <string name="dontdelete_show">Kaldırma</string>
   <string name="no_nextepisode">sonraki bölüm bulunamadı</string>
   <string name="nextepisode">gelecek bölüm</string>
+  <string name="context_favorite">Sık Kullanılanlara Ekle</string>
+  <string name="context_unfavorite">Sık Kullanılanlardan Kaldır</string>
   <string name="favorited">Sık kullanılanlara eklendi</string>
   <string name="unfavorited">Sık Kullanılanlar\'dan kaldırıldı</string>
   <string name="upcoming">Yaklaşan</string>
   <string name="recent">Yakında</string>
-  <string name="update_full">Tüm diziler güncelleniyor ...</string>
   <string name="update_success">Güncelleştirme başarılı.</string>
   <string name="show_airs">yayın:</string>
   <string name="show_network"> kanal</string>
@@ -86,12 +86,17 @@
   <string name="about">SeriesGuide Hakkında</string>
   <string name="pref_sharing">Paylaşım</string>
   <string name="clearGetGlueCredentials">GetGlue Bağlantısını Kes</string>
+  <string name="pref_trakt">trakt.TV kimlik</string>
+  <string name="pref_traktsummary">Ekleyin veya trakt.tv kimlik bilgilerinizi düzenleyin</string>
   <string name="pref_traktsync">Trakt.tv ile eşitle</string>
   <string name="pref_traktintegrate">trakt.tv entegrasyonu</string>
+  <string name="pref_advanced">Gelişmiş</string>
   <string name="pref_hideimages">Resimleri gizle</string>
   <string name="pref_ganalytics">Google Analytics</string>
-  <string name="backup_inprogress">Veritabanı yedekleniyor...</string>
-  <string name="import_inprogress">Veritabanı geri yükleniyor...</string>
+  <string name="pref_ganalyticssummary">SeriesGuide geliştirmeye yardımcı olmak için kullanım özelliklerini izler</string>
+  <string name="backup_path"><b>Yedekleme klasörü</b></string>
+  <string name="backup_version"><b>Veritabanı sürümü</b></string>
+  <string name="backup_failed_nosd">Can\'t sırt. Yedekleme klasörü kullanılamaz.</string>
   <string name="backup_yes">Yedekle</string>
   <string name="backup_no">Yedekleme</string>
   <string name="import_yes">Geri yükle</string>
@@ -105,11 +110,7 @@
   <string name="done">Tamamlandı</string>
   <string name="checkin">Check In yapın</string>
   <string name="comment">Check In Yorumu</string>
-  <string name="oauthmessage">SeriesGuide GetGlue ile yetkilendiriliyor...</string>
   <string name="addtocalendar">Takvime ekle</string>
-  <string name="eula_title">Bilmeniz gerekenler</string>
-  <string name="accept">Kabul ediyorum</string>
-  <string name="decline">Reddet</string>
   <string name="username">kullanıcı adı</string>
   <string name="email">E-posta</string>
   <string name="password">Şifre</string>
@@ -117,19 +118,19 @@
   <string name="dontsave">Kaydetme</string>
   <string name="trakt_decryptfail">parola şifresi çözülemedi</string>
   <string name="trakt_credentials_invalid">kimlik bilgileri geçerli değil</string>
+  <string name="trakt_generalerror">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
   <string name="love">Harikulade!</string>
   <string name="hate">Eh işte :(</string>
   <string name="trakt_createaccount">Yeni hesap oluştur</string>
   <string name="trakt_synctodevice">SeriesGuide ile eşitle</string>
   <string name="trakt_synctotrakt">trakt.tv ile eşitle</string>
   <string name="trakt_syncunseen">İzlenmemiş olan bölümleri eşitle</string>
-  <string name="welcome_setuptrakt">trakt hesabı kurulumu</string>
   <string name="download_stable">SeriesGuide indir</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Sonraki bölüm</item>
-    <item>Favorites (A - Z)</item>
-    <item>Favorites (Next ep.)</item>
+    <item>Sık Kullanılanlar (a - z)</item>
+    <item>Sık Kullanılanlar (sonraki bl)</item>
   </string-array>
   <string-array name="sesorting">
     <item>Önce en yenisi</item>
@@ -145,8 +146,8 @@
     <item>Önce en eskisi (DVD)</item>
   </string-array>
   <string-array name="showfilter_list">
-    <item>All</item>
-    <item>Favorites</item>
+    <item>Tümü</item>
+    <item>Sık Kullanılanlar</item>
     <item>İzlenmemiş / Yaklaşan</item>
     <item>Hidden</item>
   </string-array>

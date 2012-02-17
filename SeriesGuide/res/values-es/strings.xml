@@ -16,8 +16,6 @@
   <string name="description_search">Buscar</string>
   <string name="description_overview">Reseña</string>
   <string name="norating">n/a</string>
-  <string name="loading">Cargando...</string>
-  <string name="sending">Enviando...</string>
   <string name="episode_firstaired">Fecha de estreno:</string>
   <string name="episode_dvdnumber">Episodio de DVD</string>
   <string name="show_actors">Actores:</string>
@@ -40,10 +38,13 @@
   <string name="context_marknext">Siguiente episodio visto</string>
   <string name="today">Hoy</string>
   <string name="now">ahora</string>
+  <string name="daily">Diariamente</string>
   <string name="mark_episode">Episodio visto</string>
   <string name="unmark_episode">Episodio no visto</string>
   <string name="mark_all">Todos vistos</string>
   <string name="unmark_all">Ninguno visto</string>
+  <string name="mark_untilhere">Visto todo lo previamente emitido</string>
+  <string name="shows_empty">No hay shows aquí.</string>
   <string name="confirm_delete">¿Estás seguro que quieres eliminar ese programa?</string>
   <string name="delete_show">Eliminar</string>
   <string name="dontdelete_show">No eliminar</string>
@@ -54,6 +55,7 @@
   <string name="favorited">Agregado a Favoritos</string>
   <string name="unfavorited">Borrado de los favoritos</string>
   <string name="context_hide">Oculto</string>
+  <string name="context_unhide">Des-esconder</string>
   <string name="hidden">Serie oculta</string>
   <string name="activity">Actividad</string>
   <string name="upcoming">Próximos</string>
@@ -61,10 +63,6 @@
   <string name="friends">Amigos</string>
   <string name="noupcoming">No hay capítulos próximamente.</string>
   <string name="norecent">No hay capítulos recientes.</string>
-  <string name="update_notification">Actualizando tus series...</string>
-  <string name="update_single">Actualizando series...</string>
-  <string name="update_delta">Actualizando shows desactualizados...</string>
-  <string name="update_full">Actualizando todos las series...</string>
   <string name="update_success">Actualización exitosa.</string>
   <string name="update_saxerror">Error al actualizar, prueba más tarde.</string>
   <string name="update_inprogress">Una actualización está en curso, prueba más tarde.</string>
@@ -84,6 +82,7 @@
   <string name="add_success">añadido exitosamente.</string>
   <string name="add_error_begin">No se pudo agregar \ "</string>
   <string name="add_error_end">\ ".</string>
+  <string name="trending">Tendencias</string>
   <string name="recommended">Recomendado</string>
   <string name="library">Biblioteca</string>
   <string name="powered_by_thetvdb">con la tecnología de thetvdb.com</string>
@@ -106,8 +105,9 @@
   <string name="pref_trakt">Credenciales trakt.tv</string>
   <string name="pref_traktsummary">Agrega o modifica tus credenciales trakt.tv</string>
   <string name="pref_traktsync">Sincronizar con trakt.tv</string>
+  <string name="pref_traktsyncsummary">Sincronización inicial con trakt.tv</string>
   <string name="pref_traktintegrate">Integrar con trakt.tv</string>
-  <string name="donate">Cómprame una bebida (PayPal)</string>
+  <string name="pref_traktintegratesummary">Obtener actividad de trakt en actualización</string>
   <string name="feedback">Enviar comentarios</string>
   <string name="pref_advanced">Avanzado</string>
   <string name="pref_hideimages">Ocultar imágenes</string>
@@ -116,8 +116,6 @@
   <string name="backup_path"><b>Carpeta de respaldo</b></string>
   <string name="backup_version"><b>Versión de la base de datos</b></string>
   <string name="backup_failed_nosd">No se puede respaldar. La carpeta de respaldo no esta disponible.</string>
-  <string name="backup_inprogress">Respaldando base de datos...</string>
-  <string name="import_inprogress">Restaurando base de datos...</string>
   <string name="import_failed_nosd">No se puede restaurar la copia de seguridad. La carpeta de copia de seguridad no está disponible.</string>
   <string name="backup_button">Copia de seguridad</string>
   <string name="import_button">Restaurar</string>
@@ -135,16 +133,15 @@
   <string name="done">Hecho</string>
   <string name="traktcheckin_cancel">Cancelar</string>
   <string name="traktcheckin_inprogress">Hay ya un registro en curso. Cancelar este registro o esperar %s antes de registrar de nuevo.</string>
-  <string name="oauthmessage">Autenticar SeriesGuide con GetGlue...</string>
+  <string name="traktcheckin_wait">﻿Esperaré</string>
   <string name="addtocalendar">Añadir al calendario</string>
-  <string name="eula_title">Desfase horario</string>
-  <string name="accept">Aceptar</string>
-  <string name="decline">Rechazar</string>
   <string name="username">Usuario</string>
   <string name="email">Correo electrónico</string>
   <string name="password">Contraseña</string>
   <string name="save">Guardar</string>
   <string name="dontsave">No guardar</string>
+  <string name="trakt_success">Hablé con éxito con trakt</string>
+  <string name="trakt_error">Interacción con trakt falló</string>
   <string name="trakt_seen">marcado como visto</string>
   <string name="trakt_decryptfail">no se pudo descifrar la contraseña</string>
   <string name="trakt_credentials_invalid">Los datos no son correctos</string>
@@ -155,7 +152,6 @@
   <string name="trakt_synctodevice">Sincronizar SeriesGuide</string>
   <string name="trakt_synctotrakt">Sincronizar con trakt.tv</string>
   <string name="trakt_syncunseen">Sincronizar episodios no vistos</string>
-  <string name="welcome_setuptrakt">Configurar una cuenta trakt</string>
   <string name="download_stable">Descargar SeriesGuide</string>
   <string-array name="shsorting">
     <item>A - Z</item>

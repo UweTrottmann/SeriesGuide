@@ -16,8 +16,6 @@
   <string name="description_search">Rechercher</string>
   <string name="description_overview">Aperçu</string>
   <string name="norating">s/o</string>
-  <string name="loading">Chargement en cours ...</string>
-  <string name="sending">Envoi…</string>
   <string name="episode_firstaired">Date de diffusion:</string>
   <string name="episode_dvdnumber">Episode DVD</string>
   <string name="show_actors">Acteurs:</string>
@@ -69,19 +67,12 @@
   <string name="norecent">Pas d\'épisodes récents.</string>
   <string name="only_favorites">Juste les favoris</string>
   <string name="togglewatched">Vu/Non vu</string>
-  <string name="update_notification">Mise à jour de vos séries...</string>
-  <string name="update_single">Mise à jour de la série...</string>
-  <string name="update_delta">Mise à jour des séries obsolètes...</string>
-  <string name="update_full">Mise à jour de toutes les séries...</string>
   <string name="update_success">Mise à jour réussie.</string>
   <string name="update_offline">Échec de la mise à jour, vérifiez votre connexion 3G/Wifi.</string>
   <string name="update_saxerror">Échec de la mise à jour, réessayez plus tard.</string>
   <string name="update_inprogress">Une mise à jour est déjà en cours, réessayez plus tard.</string>
-  <string name="update_rebuildsearch">Recherche d\'épisodes en cours…</string>
-  <string name="update_traktactivity">Chargement de l\'activité Trakt…</string>
   <string name="menu_updateart">Charger les affiches</string>
   <string name="arttask_incomplete">Le chargement de quelques affiches a échoué, réessayez plus tard.</string>
-  <string name="arttask_start">Chargement des affiches…</string>
   <string name="arttask_nosdcard">Le chargement des affiches nécessite une carte SD.</string>
   <string name="show_airs">diffusions</string>
   <string name="show_network">sur</string>
@@ -113,15 +104,12 @@
   <string name="pref_showlist">Liste des séries</string>
   <string name="help">Aide</string>
   <string name="preferences">Paramètres</string>
-  <string name="pref_showsorting">Trier les séries par…</string>
   <string name="pref_onlyfuture">Pas d\'épisodes diffusés</string>
   <string name="pref_onlyfuturesummary">\"Suivant:\" ne montre pas les épisodes déjà diffusés</string>
   <string name="pref_onlyseasoneps">Pas d\'épisodes spéciaux</string>
   <string name="pref_onlyseasonepssummary">\"Suivant:\" ne montre pas les épisodes spéciaux</string>
   <string name="pref_content">Contenu</string>
-  <string name="pref_seasonsorting">Trier les saisons par…</string>
   <string name="pref_sortingsummary">Indiquer comment trier les saisons</string>
-  <string name="pref_episodesorting">Trier les épisodes par…</string>
   <string name="pref_epsortingsummary">Indiquer comment trier les épisodes</string>
   <string name="backup">Sauvegarde/Restauration</string>
   <string name="backup_summary">Sauvegarder ou restaurer vos séries</string>
@@ -147,7 +135,6 @@
   <string name="pref_traktsyncsummary">Synchro initiale avec trakt.tv</string>
   <string name="pref_traktintegrate">Intégrer trakt.tv</string>
   <string name="pref_traktintegratesummary">Synchro trakt pendant la mise à jour</string>
-  <string name="donate">Payez-moi un verre (Paypal)</string>
   <string name="feedback">Envoyez vos commentaires</string>
   <string name="pref_advanced">Avancés</string>
   <string name="clear_cache">Vider le cache d\'images</string>
@@ -160,10 +147,8 @@
   <string name="backup_path"><b>Répertoire de sauvegarde</b></string>
   <string name="backup_version"><b>Version de la base</b></string>
   <string name="backup_failed_nosd">Sauvegarde impossible. Le répertoire de sauvegarde est indisponible.</string>
-  <string name="backup_inprogress">Sauvegarde de la base de données...</string>
   <string name="backup_success">Sauvegarde réussie.</string>
   <string name="backup_failed">Sauvegarde échouée.</string>
-  <string name="import_inprogress">Restauration de la base de données...</string>
   <string name="import_failed_nosd">Restauration impossible. Le répertoire de sauvegarde est indisponible.</string>
   <string name="import_failed_nofile">Il n\'y a pas de fichier de sauvegarde.</string>
   <string name="import_failed_noread">La sauvegarde est illisible.</string>
@@ -199,13 +184,8 @@
   <string name="traktcheckin_inprogress">Il y a déjà une synchro en cours. Annulez celle-ci où attendez encore %s avant de tenter une nouvelle synchro.</string>
   <string name="traktcheckin_wait">j\'attends</string>
   <string name="checkinfailed">Vérification échouée.</string>
-  <string name="oauthmessage">Authentification de SerieGuide avec GetBlue...</string>
   <string name="addtocalendar">Ajouter au calendrier</string>
   <string name="addtocalendar_failed">Impossible de créer un évènement calendrier.</string>
-  <string name="eula_title">Ce que vous devriez savoir</string>
-  <string name="eula_text">Cette appli collecte certaines infos lorsque vous l\'utilisez, notamment via Google Analytics. Vous pouvez désactiver Google Analytics dans les paramètres.\n\nJe ne suis pas responsable de la destruction de votre périphérique ou de quoique ce soit de malencontreux qui arriverait pendant sont utilisation.\n\nLe code source est disponible sur Github (https://github.com/UweTrottmann/SeriesGuide).</string>
-  <string name="accept">Accepter</string>
-  <string name="decline">Refuser</string>
   <string name="username">Nom d\'utilisateur</string>
   <string name="email">E-mail</string>
   <string name="password">Mot de passe</string>
@@ -225,11 +205,7 @@
   <string name="trakt_synctotrakt">Synchroniser vers trakt.tv</string>
   <string name="trakt_syncunseen">Synchronisez les épisodes non vus</string>
   <string name="welcome_message"><big>Démarrage</big></string>
-  <string name="welcome_add">Ajouter des séries</string>
-  <string name="welcome_setuptrakt">Configurer un compte trakt</string>
-  <string name="welcome_traktmessage">Améliorez l\'expérience SeriesGuide avec la connexion à trakt.tv.</string>
   <string name="download_stable">Télécharger SeriesGuide</string>
-  <string name="betawarning">Cette version est réservée au beta testeurs! Si vous avez un doute téléchargez la version stable ci-dessous.\n\nSi vous voulez contribuer au test de la beta alors allez-y, cassez tout. Veuillez rapporter tous les crashes, essayer toutes les fonctionnalités et envoyer vos impressions.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Episode suivant</item>

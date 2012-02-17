@@ -13,7 +13,6 @@
   <string name="share_checkout">Check-out</string>
   <string name="search_description">Episodi</string>
   <string name="description_search">Ricerca</string>
-  <string name="loading">Caricamento...</string>
   <string name="episode_firstaired">Ora messa in onda:</string>
   <string name="episode_dvdnumber">Episodio su DVD</string>
   <string name="show_actors">Attori:</string>
@@ -46,9 +45,6 @@
   <string name="unfavorited">Rimuovi dai preferiti</string>
   <string name="upcoming">Prossimi</string>
   <string name="recent">Recenti</string>
-  <string name="update_notification">Aggiornamento delle tue Serie...</string>
-  <string name="update_single">Aggiornamento Serie...</string>
-  <string name="update_full">Aggiornamento di tutte le Serie...</string>
   <string name="update_success">Aggiornamento riuscito.</string>
   <string name="show_airs">va in onda</string>
   <string name="show_network">su</string>
@@ -84,13 +80,10 @@
   <string name="pref_traktsummary">Aggiungi o modifica le credenziali Trakt.tv</string>
   <string name="pref_traktsync">Sincronizzazione con Trakt.tv</string>
   <string name="pref_traktintegrate">Integrare Trakt.tv</string>
-  <string name="donate">Offrimi da bere (PayPal)</string>
   <string name="pref_advanced">Avanzato</string>
   <string name="pref_hideimages">Nascondi le immagini</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Tracce l\'uso delle funzionalità per aiutare a migliorare SeriesGuide</string>
-  <string name="backup_inprogress">Backup database...</string>
-  <string name="import_inprogress">Ripristino del database...</string>
   <string name="backup_yes">Backup</string>
   <string name="import_yes">Ripristina</string>
   <string name="import_no">Non Ripristinare</string>
@@ -103,11 +96,7 @@
   <string name="done">Fatto</string>
   <string name="checkin">Check-In</string>
   <string name="comment">Check-In commento</string>
-  <string name="oauthmessage">Autenticazione SeriesGuide su GetGlue...</string>
   <string name="addtocalendar">Aggiungi al calendario</string>
-  <string name="eula_title">Che cosa si deve sapere</string>
-  <string name="accept">Accettare</string>
-  <string name="decline">Declina</string>
   <string name="username">Nome utente</string>
   <string name="email">E-mail</string>
   <string name="password">Password</string>

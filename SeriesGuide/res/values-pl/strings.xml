@@ -16,8 +16,6 @@
   <string name="description_search">Szukaj</string>
   <string name="description_overview">Opis</string>
   <string name="norating">brak danych</string>
-  <string name="loading">Wczytywanie...</string>
-  <string name="sending">Wysyłanie...</string>
   <string name="episode_firstaired">Data emisji:</string>
   <string name="episode_dvdnumber">Odcinek na DVD</string>
   <string name="show_actors">Obsada:</string>
@@ -69,19 +67,12 @@
   <string name="norecent">Brak ostatnio emitowanych odcinków.</string>
   <string name="only_favorites">Tylko ulubione</string>
   <string name="togglewatched">Przełącz obejrzane</string>
-  <string name="update_notification">Aktualizacja seriali...</string>
-  <string name="update_single">Aktualizacja serialu...</string>
-  <string name="update_delta">Aktualizacja starych seriali...</string>
-  <string name="update_full">Aktualizacja wszystkich seriali...</string>
   <string name="update_success">Aktualizacja zakończona.</string>
   <string name="update_offline">Aktualizacja nie powiodła się. Sprawdź połączenie internetowe/Wi-Fi.</string>
   <string name="update_saxerror">Aktualizacja nie powiodła się. Spróbuj ponownie później.</string>
   <string name="update_inprogress">Aktualizacja w toku, spróbuj ponownie później.</string>
-  <string name="update_rebuildsearch">Odświeżanie wyszukiwania odcinków...</string>
-  <string name="update_traktactivity">Wczytaj aktywność trakt...</string>
   <string name="menu_updateart">Wczytaj plakaty</string>
   <string name="arttask_incomplete">Niektóre plakaty nie zostały wczytane. Spróbuj ponownie później.</string>
-  <string name="arttask_start">Wczytywanie plakatów...</string>
   <string name="arttask_nosdcard">Wczytywanie plakatów wymaga karty SD.</string>
   <string name="show_airs">emisja</string>
   <string name="show_network">w</string>
@@ -113,15 +104,12 @@
   <string name="pref_showlist">Lista seriali</string>
   <string name="help">Pomoc</string>
   <string name="preferences">Ustawienia</string>
-  <string name="pref_showsorting">Sortuj seriale wg...</string>
   <string name="pref_onlyfuture">Bez wyemitowanych</string>
   <string name="pref_onlyfuturesummary">\"następny:\" nie pokazuje już wyemitowanych odcinków</string>
   <string name="pref_onlyseasoneps">Bez specjalnych</string>
   <string name="pref_onlyseasonepssummary">\"Next:\" nie pokazuje odcinków specjalnych</string>
   <string name="pref_content">Treść</string>
-  <string name="pref_seasonsorting">Sortuj sezony wg...</string>
   <string name="pref_sortingsummary">Określ sortowanie sezonów</string>
-  <string name="pref_episodesorting">Sortuj odcinki wg...</string>
   <string name="pref_epsortingsummary">Określ sortowanie odcinków</string>
   <string name="backup">Kopia zapasowa/Przywracanie</string>
   <string name="backup_summary">Archiwizuj lub przywróć listę seriali</string>
@@ -147,7 +135,6 @@
   <string name="pref_traktsyncsummary">Wstępna synchronizacja z trakt.tv</string>
   <string name="pref_traktintegrate">Zintegruj z trakt.tv</string>
   <string name="pref_traktintegratesummary">Pobierz aktywność trakt przy aktualizacji</string>
-  <string name="donate">Kup mi drinka (Paypal)</string>
   <string name="feedback">Wyślij opinię</string>
   <string name="pref_advanced">Zaawansowane</string>
   <string name="clear_cache">Usuń bufor obrazów</string>
@@ -160,10 +147,8 @@
   <string name="backup_path"><b>Folder kopii zapasowej</b></string>
   <string name="backup_version"><b>Wersja bazy danych</b></string>
   <string name="backup_failed_nosd">Nie można utworzyć kopii zapasowej. Wskazany folder jest niedostępny.</string>
-  <string name="backup_inprogress">Tworzenie kopii zapasowej...</string>
   <string name="backup_success">Archiwizacja zakończona.</string>
   <string name="backup_failed">Archiwizacja nieudana.</string>
-  <string name="import_inprogress">Przywracanie bazy danych...</string>
   <string name="import_failed_nosd">Nie można przywrócić kopii zapasowej. Wskazany folder jest niedostępny.</string>
   <string name="import_failed_nofile">Brak pliku archiwum.</string>
   <string name="import_failed_noread">Plik archiwum jest nieodczytywalny.</string>
@@ -199,13 +184,8 @@
   <string name="traktcheckin_inprogress">Sprawdzanie jest w toku. Anuluj obecne sprawdzanie lub poczekaj %s przed kolejnym sprawdzaniem.</string>
   <string name="traktcheckin_wait">Poczekam</string>
   <string name="checkinfailed">Błąd sprawdzania.</string>
-  <string name="oauthmessage">Uwierzytelnianie SeriesGuide z GetGlue...</string>
   <string name="addtocalendar">Dodaj do kalendarza</string>
   <string name="addtocalendar_failed">Nie można utworzyć zdarzenia kalendarza.</string>
-  <string name="eula_title">Co powinieneś wiedzieć</string>
-  <string name="eula_text">Tej aplikacji gromadzi pewne informacje podczas korzystania z niej, włączając w to Google Analytics. Można wyłączyć Google Analytics w Ustawieniach.\n\nNie jestem odpowiedzialny za wszelkie uszkodzenia i błędy w Twoim urządzeniu.\n\nKod źródłowy jest ogólnie dostępny na Github (https://github.com/UweTrottmann/SeriesGuide).</string>
-  <string name="accept">Akceptuję</string>
-  <string name="decline">Nie akceptuję</string>
   <string name="username">Nazwa użytkownika</string>
   <string name="email">E-mail</string>
   <string name="password">Hasło</string>
@@ -225,11 +205,7 @@
   <string name="trakt_synctotrakt">Synchronizuj do trakt.tv</string>
   <string name="trakt_syncunseen">Synchronizuj nieobejrzane odcinki</string>
   <string name="welcome_message"><big>Pierwsze kroki</big></string>
-  <string name="welcome_add">Dodaj seriale</string>
-  <string name="welcome_setuptrakt">Ustawienia konta trakt</string>
-  <string name="welcome_traktmessage">Zwiększ swoje doznania poprzez połączenie SeriesGuide z trakt.tv.</string>
   <string name="download_stable">Pobierz SeriesGuide</string>
-  <string name="betawarning">To wydanie jest tylko dla beta testerów! Jeśli masz wątpliwości, pobierz wersję stabilną poniżej.\n\nJeśli chcesz pomóc testować wersję beta toi kontynuuj. Prosimy o zgłaszanie każdej awarii, wypróbowanie wszystkiego i przesyłanie opinii.</string>
   <string-array name="shsorting">
     <item>Od A do Z</item>
     <item>Następny odcinek</item>
