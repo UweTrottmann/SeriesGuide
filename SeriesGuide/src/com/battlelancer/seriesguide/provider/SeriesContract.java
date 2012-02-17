@@ -12,6 +12,7 @@ public class SeriesContract {
 
         String NEXTEPISODE = "next";
 
+        /** Deprecated, use {@link NEXTAIRDATEMS} instead. **/
         String NEXTAIRDATE = "nextairdate";
 
         String NEXTTEXT = "nexttext";
@@ -65,6 +66,11 @@ public class SeriesContract {
          */
         String LASTUPDATED = "series_lastupdate";
 
+        /**
+         * Added in db version 25 to allow correct sorting by next air date.
+         */
+        String NEXTAIRDATEMS = "series_nextairdate";
+
     }
 
     interface SeasonsColumns {
@@ -108,7 +114,7 @@ public class SeriesContract {
         String OVERVIEW = "episodedescription";
 
         String TITLE = "episodetitle";
-        
+
         String FIRSTAIREDMS = "episode_firstairedms";
     }
 

@@ -2,7 +2,6 @@
 <resources>
 
     <style name="SeriesGuideTheme" parent="Theme.Sherlock">
-        <item name="selectableItemBackground">@drawable/list_selector_holo_dark</item>
         <item name="vpiCirclePageIndicatorStyle">@style/Widget.CirclePageIndicator</item>
         <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>

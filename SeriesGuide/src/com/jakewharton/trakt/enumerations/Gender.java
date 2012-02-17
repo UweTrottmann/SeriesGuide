@@ -1,8 +1,9 @@
 package com.jakewharton.trakt.enumerations;
 
+import com.jakewharton.trakt.TraktEnumeration;
+
 import java.util.HashMap;
 import java.util.Map;
-import com.jakewharton.trakt.TraktEnumeration;
 
 public enum Gender implements TraktEnumeration {
     Male("male"),

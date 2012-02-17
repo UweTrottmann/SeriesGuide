@@ -22,11 +22,11 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.MenuItem;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -87,7 +87,7 @@ public class UpcomingFragment extends ListFragment implements
         boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
         Bundle bundle = new Bundle();
         bundle.putBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, isOnlyFavorites);
-        getSupportActivity().getSupportLoaderManager().initLoader(getLoaderId(), bundle, this);
+        getActivity().getSupportLoaderManager().initLoader(getLoaderId(), bundle, this);
 
         prefs.registerOnSharedPreferenceChangeListener(mPrefListener);
     }
@@ -259,9 +259,11 @@ public class UpcomingFragment extends ListFragment implements
 
         String SELECTION_ONLYFAVORITES = " AND " + Shows.FAVORITE + "=?";
 
-        String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC";
+        String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC,"
+                + Episodes.NUMBER + " ASC";
 
-        String SORTING_RECENT = Episodes.FIRSTAIREDMS + " DESC," + Shows.TITLE + " ASC";
+        String SORTING_RECENT = Episodes.FIRSTAIREDMS + " DESC," + Shows.TITLE + " ASC,"
+                + Episodes.NUMBER + " DESC";
 
         int _ID = 0;
 

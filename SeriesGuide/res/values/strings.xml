@@ -17,8 +17,8 @@
     <string name="description_search">Search</string>
     <string name="description_overview">Overview</string>
     <string name="norating">n/a</string>
-    <string name="loading">Loading...</string>
-    <string name="sending">Sending...</string>
+    <string name="loading">Loading&#8230;</string>
+    <string name="sending">Sending&#8230;</string>
 
     <!-- Metadata -->
     <string name="episode_firstaired">Airdate:</string>
@@ -85,21 +85,21 @@
     <string name="togglewatched">Toggle watched</string>
 
     <!-- Updating -->
-    <string name="update_notification">Updating your shows...</string>
-    <string name="update_single">Updating show...</string>
-    <string name="update_delta">Updating outdated shows...</string>
-    <string name="update_full">Updating all shows...</string>
+    <string name="update_notification">Updating your shows&#8230;</string>
+    <string name="update_single">Updating show&#8230;</string>
+    <string name="update_delta">Updating outdated shows&#8230;</string>
+    <string name="update_full">Updating all shows&#8230;</string>
     <string name="update_success">Update successful.</string>
     <string name="update_offline">Updating failed, check your internet/Wi-Fi connection.</string>
     <string name="update_saxerror">Updating failed, try again later.</string>
     <string name="update_inprogress">An update is already in progress, try again later.</string>
-    <string name="update_rebuildsearch">Refreshing episode search...</string>
-    <string name="update_traktactivity">Loading trakt activity...</string>
+    <string name="update_rebuildsearch">Refreshing episode search&#8230;</string>
+    <string name="update_traktactivity">Loading trakt activity&#8230;</string>
     
     <!-- Loading posters -->
     <string name="menu_updateart">Load posters</string>
     <string name="arttask_incomplete">Some posters did not load, try again later.</string>
-    <string name="arttask_start">Loading posters...</string>
+    <string name="arttask_start">Loading posters&#8230;</string>
     <string name="arttask_nosdcard">Loading posters requires external storage (SD card).</string>
 
     <!-- Show info -->
@@ -139,15 +139,15 @@
     <string name="pref_showlist">Show list</string>
     <string name="help">Help</string>
     <string name="preferences">Settings</string>
-    <string name="pref_showsorting">Sort shows by...</string>
+    <string name="pref_showsorting">Sort shows by&#8230;</string>
     <string name="pref_onlyfuture">No aired episodes</string>
     <string name="pref_onlyfuturesummary">\"next:\" never shows already aired episodes</string>
     <string name="pref_onlyseasoneps">No special episodes</string>
     <string name="pref_onlyseasonepssummary">\"next:\" never shows special episodes</string>
     <string name="pref_content">Content</string>
-    <string name="pref_seasonsorting">Sort seasons by...</string>
+    <string name="pref_seasonsorting">Sort seasons by&#8230;</string>
     <string name="pref_sortingsummary">Specify how to sort seasons</string>
-    <string name="pref_episodesorting">Sort episodes by...</string>
+    <string name="pref_episodesorting">Sort episodes by&#8230;</string>
     <string name="pref_epsortingsummary">Specify how to sort episodes</string>
     <string name="backup">Backup/Restore</string>
     <string name="backup_summary">Backup or restore your shows</string>
@@ -173,7 +173,7 @@
     <string name="pref_traktsyncsummary">Initial syncing with trakt.tv</string>
     <string name="pref_traktintegrate">Integrate trakt.tv</string>
     <string name="pref_traktintegratesummary">Get trakt activity on update</string>
-    <string name="donate">Buy me a drink (Paypal)</string>
+    <string name="donate">Buy the dev a drink (Paypal)</string>
     <string name="feedback">Send feedback</string>
     <string name="pref_advanced">Advanced</string>
     <string name="clear_cache">Clear image caches</string>
@@ -182,6 +182,7 @@
     <string name="pref_hideimagessummary">Hide images from your photo gallery (reboot required)</string>
     <string name="pref_ganalytics">Google Analytics</string>
     <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
+    <string name="sendusagedata">Send the developer usage statistics</string>
     
     <string-array name="shsorting">
         <item>A - Z</item>
@@ -208,10 +209,10 @@
     <string name="backup_path"><b>Backup folder</b></string>
     <string name="backup_version"><b>Database version</b></string>
     <string name="backup_failed_nosd">Can\'t backup. The backup folder is not available.</string>
-    <string name="backup_inprogress">Backing up database...</string>
+    <string name="backup_inprogress">Backing up database&#8230;</string>
     <string name="backup_success">Backup successful.</string>
     <string name="backup_failed">Backup failed.</string>
-    <string name="import_inprogress">Restoring database...</string>
+    <string name="import_inprogress">Restoring database&#8230;</string>
     <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
     <string name="import_failed_nofile">There is no backup file.</string>
     <string name="import_failed_noread">The backup file is not readable.</string>
@@ -252,17 +253,11 @@
     <string name="traktcheckin_inprogress">There is already a checkin in progress. Either cancel this checkin or wait %s before you can check in again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
     <string name="checkinfailed">Check-In failed.</string>
-    <string name="oauthmessage">Authenticating SeriesGuide with GetGlue...</string>
+    <string name="oauthmessage">Authenticating SeriesGuide with GetGlue&#8230;</string>
     <string name="addtocalendar">Add to calendar</string>
     <string name="addtocalendar_failed">Can not create a calendar event.</string>
     
-    <!-- EULA -->
-    <string name="eula_title">What you should know</string>
-    <string name="eula_text">This app collects certain information while you use it, including via Google Analytics. You can opt out of Google Analytics in Settings.\n\nI am not responsible for breaking your device or anything bad that happens while you use it.\n\nThe source code is available for everyone on Github (https://github.com/UweTrottmann/SeriesGuide).</string>
-    <string name="accept">Accept</string>
-    <string name="decline">Decline</string>
-    <string name="username">Username</string>
-    
+    <string name="username">Username</string> 
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="save">Save</string>
@@ -283,9 +278,10 @@
 
     <!-- Welcome dialog -->
     <string name="welcome_message"><big>Get started</big></string>
-    <string name="welcome_add">Add shows</string>
-    <string name="welcome_setuptrakt">Setup a trakt account</string>
-    <string name="welcome_traktmessage">Enhance your experience by connecting SeriesGuide with trakt.tv.</string>
+    <string name="welcome_text">Welcome!</string>
+    <string name="welcome_setuptrakt">Connect to trakt</string>
+    <string name="welcome_traktmessage">Access your trakt.tv library and friends activity with SeriesGuide:</string>
+    <string name="dismiss">Dismiss</string>
 
     <string-array name="showfilter_list">
         <item>All</item>
@@ -296,7 +292,7 @@
 
     <!-- strings for BETA release -->
     <string name="download_stable">Download SeriesGuide</string>
-    <string name="betawarning">This release is for beta testers only! If you are in doubt download the stable version below.\n\nIf you want to help test the beta go break things. Please report every crash, try everything and send feedback.</string>
+    <string name="betawarning">This release is for beta testers only! If you are in doubt download the stable version below.\n\nIf you want to help test have a look at the <a href="http://git.io/sgbetachanges">recent changes</a>.\n\nPlease report every crash, try everything and send feedback.</string>
 
     <!-- REMOVE before uploading to crowdin -->
     <string name="app_name">SeriesGuide beta</string>

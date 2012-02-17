@@ -1,6 +1,8 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.AddDialogFragment.OnAddShowListener;
@@ -11,12 +13,10 @@ import com.viewpagerindicator.TitleProvider;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.Window;
 import android.widget.EditText;
 
 public class AddActivity extends BaseActivity implements OnAddShowListener {
@@ -37,8 +37,7 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         setProgressBarIndeterminateVisibility(Boolean.FALSE);
-        // ABS4
-        // setSupportProgressBarIndeterminateVisibility(false);
+        setSupportProgressBarIndeterminateVisibility(false);
 
         mAdapter = new AddPagerAdapter(getSupportFragmentManager(), this);
 

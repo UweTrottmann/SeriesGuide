@@ -85,7 +85,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         String ns = Context.NOTIFICATION_SERVICE;
         mNotificationManager = (NotificationManager) mAppContext.getSystemService(ns);
 
-        int icon = R.drawable.icon;
+        int icon = R.drawable.ic_notification;
         CharSequence tickerText = mAppContext.getString(R.string.update_notification);
         long when = System.currentTimeMillis();
 

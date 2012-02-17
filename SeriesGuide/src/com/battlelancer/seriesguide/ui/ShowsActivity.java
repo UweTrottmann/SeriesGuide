@@ -1,13 +1,15 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.beta.R;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.EulaHelper;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
@@ -16,7 +18,6 @@ import com.battlelancer.thetvdbapi.TheTVDB;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -33,12 +34,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
-import android.support.v4.app.ActionBar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.text.format.DateUtils;
 import android.view.ContextMenu;
@@ -91,8 +89,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final int SORT_DIALOG = 306;
 
-    private static final int BETA_WARNING_DIALOG = 307;
-
     private static final int LOADER_ID = 900;
 
     // Background Task States
@@ -141,8 +137,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shows);
 
-        if (!EulaHelper.hasAcceptedEula(this)) {
-            EulaHelper.showEula(false, this);
+        if (!WelcomeDialogFragment.hasSeenWelcomeDialog(this)) {
+            WelcomeDialogFragment.showWelcomeDialog(this);
         }
 
         final SharedPreferences prefs = PreferenceManager
@@ -153,7 +149,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(this,
-                R.array.showfilter_list, R.layout.abs__simple_spinner_item);
+                R.array.showfilter_list, R.layout.sherlock_spinner_item);
         mActionBarList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         actionBar.setListNavigationCallbacks(mActionBarList, this);
 
@@ -217,9 +213,10 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 true);
         if (isAutoUpdateEnabled && !TaskManager.getInstance(this).isUpdateTaskRunning(false)) {
             // allow auto-update if 12 hours have passed
-            final long previousUpdateTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTUPDATE, 0);
             long currentTime = System.currentTimeMillis();
-            final boolean isTime = currentTime - (previousUpdateTime) > 12 * DateUtils.HOUR_IN_MILLIS;
+            final long previousUpdateTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTUPDATE,
+                    currentTime);
+            final boolean isTime = currentTime - (previousUpdateTime) > 15 * DateUtils.MINUTE_IN_MILLIS;
 
             if (isTime) {
                 // allow auto-update only on allowed connection
@@ -321,31 +318,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                                 }).start();
                             }
                         }).setNegativeButton(getString(R.string.dontdelete_show), null).create();
-            case BETA_WARNING_DIALOG:
-                /* Used for unstable beta releases */
-                return new AlertDialog.Builder(this)
-                        .setTitle(R.string.app_name)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setMessage(getString(R.string.betawarning))
-                        .setPositiveButton(R.string.gobreak, null)
-                        .setNeutralButton(getString(R.string.download_stable),
-                                new OnClickListener() {
-
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        try {
-                                            Intent myIntent = new Intent(
-                                                    Intent.ACTION_VIEW,
-                                                    Uri.parse("market://details?id=com.battlelancer.seriesguide"));
-                                            startActivity(myIntent);
-                                        } catch (ActivityNotFoundException e) {
-                                            Intent myIntent = new Intent(
-                                                    Intent.ACTION_VIEW,
-                                                    Uri.parse("http://market.android.com/details?id=com.battlelancer.seriesguide"));
-                                            startActivity(myIntent);
-                                        }
-                                        finish();
-                                    }
-                                }).create();
             case SORT_DIALOG:
                 final CharSequence[] items = getResources().getStringArray(R.array.shsorting);
 
@@ -467,7 +439,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.seriesguide_menu, menu);
+        getSupportMenuInflater().inflate(R.menu.seriesguide_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -776,8 +748,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 }
 
                 // BETA warning dialog switch
-                showDialog(BETA_WARNING_DIALOG);
-                // showDialog(WHATS_NEW_DIALOG);
+                ChangesDialogFragment.show(getSupportFragmentManager());
 
                 // set this as lastVersion
                 editor.putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion);
@@ -839,7 +810,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                 int upcomingLimit = prefs.getInt(SeriesGuidePreferences.KEY_UPCOMING_LIMIT, 1);
 
-                selection = Shows.NEXTAIRDATE + "!=? AND " + Shows.NEXTAIRDATE + " <=? AND "
+                selection = Shows.NEXTAIRDATEMS + "!=? AND " + Shows.NEXTAIRDATEMS + " <=? AND "
                         + Shows.HIDDEN + "=?";
                 String nowIn24Hours = String.valueOf(System.currentTimeMillis() + upcomingLimit
                         * DateUtils.DAY_IN_MILLIS);

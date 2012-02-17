@@ -14,8 +14,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:gravity="center_horizontal"
-        android:padding="@dimen/body_padding" >
+        android:gravity="center_horizontal" >
 
         <ListView
             android:id="@android:id/list"
@@ -32,7 +31,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_margin="10dp"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:text="@string/loading" />
     </RelativeLayout>
 
