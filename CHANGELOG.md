@@ -39,7 +39,7 @@ Since 2.5.3beta (2012-01-29)
 * Fix GetGlue comment box text not wrapping.
 * Latest translations from crowdin. Thanks everyone for the big effort!
 
-Since 2.5.4beta (soon):
+Since 2.5.4beta (2012-02-17 GMT+1):
 
 * Fix shows with older episodes not sorting/filtering correctly.
 * Hide legacy widgets except small size on Android 3.0+ devices.
