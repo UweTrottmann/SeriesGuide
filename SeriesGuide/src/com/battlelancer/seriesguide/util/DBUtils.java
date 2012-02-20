@@ -170,6 +170,10 @@ public class DBUtils {
      * @param state
      */
     public static void markEpisode(Context context, String episodeId, boolean state) {
+        if (context == null) {
+            return;
+        }
+
         ContentValues values = new ContentValues();
         values.put(Episodes.WATCHED, state);
 
