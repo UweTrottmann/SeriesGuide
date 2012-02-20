@@ -42,7 +42,7 @@
     <item
         android:id="@+id/menu_addevent"
         android:icon="@drawable/ic_action_calendar"
-        android:showAsAction="never"
+        android:showAsAction="ifRoom"
         android:title="@string/addtocalendar">
     </item>
 
