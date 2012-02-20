@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -51,8 +50,8 @@ public class TraktAddFragment extends AddFragment {
         // only create and fill a new adapter if there is no previous one
         // (e.g. after config/page changed)
         if (mAdapter == null) {
-            mAdapter = new ArrayAdapter<SearchResult>(getActivity(), R.layout.add_searchresult,
-                    R.id.TextViewAddSearchResult, new ArrayList<SearchResult>());
+            mAdapter = new AddAdapter(getActivity(), R.layout.add_searchresult,
+                    new ArrayList<SearchResult>());
 
             int type = getArguments().getInt("traktlisttype");
             new GetTraktShowsTask(getActivity()).execute(type);

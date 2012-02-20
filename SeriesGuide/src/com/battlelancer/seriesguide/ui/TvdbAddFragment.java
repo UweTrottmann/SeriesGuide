@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -55,8 +54,8 @@ public class TvdbAddFragment extends AddFragment {
 
         // create an empty adapter to avoid displaying a progress indicator
         if (mAdapter == null) {
-            mAdapter = new ArrayAdapter<SearchResult>(getActivity(), R.layout.add_searchresult,
-                    R.id.TextViewAddSearchResult, new ArrayList<SearchResult>());
+            mAdapter = new AddAdapter(getActivity(), R.layout.add_searchresult,
+                    new ArrayList<SearchResult>());
         }
 
         ImageButton searchButton = (ImageButton) getView().findViewById(R.id.searchbutton);
