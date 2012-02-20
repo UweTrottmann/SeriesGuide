@@ -24,10 +24,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 
 public class EpisodesActivity extends BaseActivity {
 
@@ -78,8 +81,8 @@ public class EpisodesActivity extends BaseActivity {
             mFragment = onCreatePane();
             mFragment.setArguments(intentToFragmentArguments(getIntent()));
 
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_episodes, mFragment)
-                    .commit();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_episodes, mFragment, "episodes").commit();
         }
 
         // build the episode pager if we are in a multi-pane layout
@@ -126,7 +129,36 @@ public class EpisodesActivity extends BaseActivity {
 
             TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
             indicator.setViewPager(mPager, 0);
+        } else {
+            // FIXME Dirty: make sure no fragments are left over from a config
+            // change
+            for (Fragment fragment : getActiveFragments()) {
+                if (fragment.getTag() == null) {
+                    Log.d("EpisodesActivity", "Removing a leftover fragment");
+                    getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                }
+            }
         }
+    }
+
+    List<WeakReference<Fragment>> mFragments = new ArrayList<WeakReference<Fragment>>();
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        mFragments.add(new WeakReference<Fragment>(fragment));
+    }
+
+    public ArrayList<Fragment> getActiveFragments() {
+        ArrayList<Fragment> ret = new ArrayList<Fragment>();
+        for (WeakReference<Fragment> ref : mFragments) {
+            Fragment f = ref.get();
+            if (f != null) {
+                if (f.isAdded()) {
+                    ret.add(f);
+                }
+            }
+        }
+        return ret;
     }
 
     protected Fragment onCreatePane() {
