@@ -54,6 +54,12 @@ Since 2.5.4beta (2012-02-17 GMT+1):
 * Enabled home button (app icon in the ActionBar) everywhere.
 * New welcome and beta dialog.
 
+Since 2.5.5beta (2012-02-20 GMT+1):
+
+* Fix for crash when marking episodes watched.
+* Always show the 'Add to calendar' button, if room.
+* Fix #53 for episodes list.
+
 Postponed:
 
 * UI for custom upcoming interval (currently 24 hours).
