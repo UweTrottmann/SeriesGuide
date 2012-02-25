@@ -4,6 +4,17 @@ Changelog
 Version 2.5 *(in development)*
 --------------------------------
 
+Notable changes:
+
+* Database upgrade for better time representation. It may take a few seconds for the database to upgrade.
+* Hide individual shows.
+* 'Only favorites' option for Upcoming/Recent, also respected by widgets.
+* 'Watched all previously aired' option when long-tapping an episode.
+* Unified interface across all devices thanks to ActionBarSherlock 4.0.
+* Removed middle and large widget on Android 3.0+ devices. Use the new list widget!
+
+Detailed changes:
+
 Since 2.5beta/2.5.1beta (2012-01-13):
  
 * Add 'Watched all previously aired' option to episode list of a season.
@@ -40,7 +51,6 @@ Since 2.5.3beta (2012-01-29)
 
 Since 2.5.4beta (2012-02-17 GMT+1):
 
-* Fix shows with older episodes not sorting/filtering correctly.
 * Hide legacy widgets except small size on Android 3.0+ devices.
 * Fix incorrect next episodes if two air the same day. The lower numbered one is now assumed to be aired first (though still at the same time).
 * Fix sorting and filtering if shows have older episodes listed under next.
@@ -52,6 +62,12 @@ Since 2.5.4beta (2012-02-17 GMT+1):
 * Display search term, title and search soft button in `SearchActivity`.
 * Enabled home button (app icon in the ActionBar) everywhere.
 * New welcome and beta dialog.
+
+Since 2.5.5beta (2012-02-20 GMT+1):
+
+* Fix for crash when marking episodes watched.
+* Always show the 'Add to calendar' button, if room.
+* Fix #53 for episodes list.
 
 Postponed:
 
