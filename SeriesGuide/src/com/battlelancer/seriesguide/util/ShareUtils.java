@@ -43,6 +43,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -194,6 +195,11 @@ public class ShareUtils {
             final String episodestring = getArguments().getString(ShareItems.EPISODESTRING);
             final String imdbId = getArguments().getString(ShareItems.IMDBID);
 
+            final LinearLayout layout = new LinearLayout(getActivity());
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(16, 16, 16, 16);
+
             input = new EditText(getActivity());
             input.setMinLines(3);
             input.setMaxLines(5);
@@ -202,6 +208,8 @@ public class ShareUtils {
                 new InputFilter.LengthFilter(140)
             });
 
+            layout.addView(input, layoutParams);
+
             if (savedInstanceState != null) {
                 input.setText(savedInstanceState.getString("inputtext"));
             } else {
@@ -209,7 +217,7 @@ public class ShareUtils {
             }
 
             return new AlertDialog.Builder(getActivity()).setTitle(getString(R.string.comment))
-                    .setView(input)
+                    .setView(layout)
                     .setPositiveButton(R.string.checkin, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             onGetGlueCheckIn(getActivity(), input.getText().toString(), imdbId);
