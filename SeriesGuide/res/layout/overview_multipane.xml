@@ -20,7 +20,9 @@
             android:id="@+id/fragment_seasons"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:paddingLeft="1dp" />
+            android:paddingBottom="@dimen/layout_padding"
+            android:paddingRight="@dimen/layout_padding"
+            android:paddingTop="@dimen/layout_padding" />
     </FrameLayout>
 
 </LinearLayout>

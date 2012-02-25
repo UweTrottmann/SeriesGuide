@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="layout_padding">16dp</dimen>
+    <dimen name="inline_padding">4dp</dimen>
+    <dimen name="default_padding">8dp</dimen>
     <dimen name="body_padding">5dp</dimen>
     <dimen name="body_padding_large">10dp</dimen>
     <dimen name="item_padding">2dp</dimen>

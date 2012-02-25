@@ -6,8 +6,7 @@
         style="@style/DescriptionFont"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp" />
+        android:layout_margin="@dimen/default_padding" />
 
     <include layout="@layout/ratingbar" >
     </include>
@@ -37,7 +36,7 @@
     <include
         android:id="@+id/buttonbar_ref"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         layout="@layout/show_info_buttonbar" />
 
 </merge>

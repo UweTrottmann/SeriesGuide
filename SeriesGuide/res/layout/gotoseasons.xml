@@ -4,7 +4,7 @@
     <LinearLayout
         android:id="@+id/gotoseasons"
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:background="@drawable/list_selector_holo_dark"
         android:focusable="true"
         android:gravity="center_vertical"
@@ -12,10 +12,10 @@
 
         <TextView
             android:id="@+id/gotoseasonsText"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_padding"
             android:layout_weight="1"
-            android:paddingLeft="5dp"
             android:text="@string/seasons"
             android:textSize="@dimen/text_size_medium" >
         </TextView>
