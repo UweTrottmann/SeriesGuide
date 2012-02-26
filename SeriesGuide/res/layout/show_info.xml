@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
     <ScrollView
         android:id="@+id/showinfo_container"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/divider"
-        android:layout_alignParentTop="true"
-        android:padding="@dimen/body_padding" >
+        android:layout_alignParentTop="true" >
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            style="@style/ScrollingLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/title"
                 style="@style/Header"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Show title" />
 
@@ -28,10 +28,10 @@
 
             <ImageView
                 android:id="@+id/ImageViewShowInfoPoster"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_padding"
                 android:src="@drawable/fringe_test" />
 
             <include layout="@layout/show_info_metamore" >
@@ -41,7 +41,7 @@
 
     <include
         android:id="@+id/divider"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonbar_ref"
         layout="@layout/holodivider" >
@@ -49,8 +49,8 @@
 
     <include
         android:id="@+id/buttonbar_ref"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         layout="@layout/show_info_buttonbar" />
 

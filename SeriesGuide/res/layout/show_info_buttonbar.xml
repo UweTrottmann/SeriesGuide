@@ -16,7 +16,8 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/default_padding" >
 
         <TextView
             android:layout_width="0dp"
@@ -44,7 +45,8 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingRight="@dimen/default_padding" >
 
         <TextView
             android:layout_width="0dp"
