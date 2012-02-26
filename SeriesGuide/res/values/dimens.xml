@@ -24,5 +24,6 @@
     <dimen name="showgrid_padding">8dp</dimen>
     <dimen name="showgrid_columnWidth">300dp</dimen>
     <dimen name="showgrid_spacing">10dp</dimen>
+    <dimen name="imagecontainer_height">180dp</dimen>
 
 </resources>
