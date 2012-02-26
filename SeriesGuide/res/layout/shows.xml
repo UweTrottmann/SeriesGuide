@@ -17,7 +17,7 @@
         android:id="@+id/showlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
+        android:clipToPadding="@bool/gridClipToPadding"
         android:columnWidth="@dimen/showgrid_columnWidth"
         android:gravity="center"
         android:horizontalSpacing="@dimen/showgrid_spacing"
