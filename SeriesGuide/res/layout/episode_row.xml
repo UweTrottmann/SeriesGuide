@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/body_padding" >
+    android:paddingRight="@dimen/default_padding" >
 
     <com.battlelancer.seriesguide.WatchedBox
         android:id="@+id/CustomCheckBoxWatched"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:paddingBottom="15dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="15dp" />
+        android:background="@drawable/list_selector_holo_dark"
+        android:padding="16dp" />
 
     <TextView
         android:id="@+id/TextViewEpisodeListTitle"
         style="@style/ListHeader"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/CustomCheckBoxWatched"
+        android:paddingTop="@dimen/default_padding"
         android:text="Really long Episode Title, You Know!?" />
 
     <TextView
@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/TextViewEpisodeListTitle"
         android:layout_toRightOf="@id/CustomCheckBoxWatched"
+        android:paddingBottom="@dimen/default_padding"
         android:text="Episode X" />
 
     <TextView
@@ -37,6 +38,7 @@
         android:layout_below="@id/TextViewEpisodeListTitle"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/TextViewEpisodeListNumber"
+        android:paddingBottom="@dimen/default_padding"
         android:text="Airdate: XXXX-XX-XX" />
 
 </RelativeLayout>

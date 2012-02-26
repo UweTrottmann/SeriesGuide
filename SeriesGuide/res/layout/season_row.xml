@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/body_padding" >
+    android:padding="@dimen/default_padding" >
 
     <TextView
         android:id="@+id/TextViewSeasonListTitle"
         style="@style/ListHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="0dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="2dp"
         android:text="Special Episodes" />
 
     <LinearLayout
         android:id="@+id/seasonProgress"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="3dp" >
+        android:layout_height="wrap_content" >
 
         <ProgressBar
             android:id="@+id/seasonProgressBar"
@@ -33,10 +28,10 @@
 
         <TextView
             android:id="@+id/seasonProgressText"
-            android:layout_width="60dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="x/n" >
+            android:layout_marginLeft="@dimen/default_padding"
+            android:text="n/a" >
         </TextView>
     </LinearLayout>
 
@@ -44,10 +39,6 @@
         android:id="@+id/TextViewSeasonListWatchCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="0dp"
         android:text="20 episodes not watched" />
 
 </LinearLayout>

@@ -33,6 +33,8 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,12 +72,13 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.list_fragment, container, false);
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        getListView().setSelector(R.drawable.list_selector_holo_dark);
-        getListView().setDivider(
-                getResources().getDrawable(R.drawable.divider_horizontal_holo_dark));
 
         updatePreferences();
 
