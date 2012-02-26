@@ -11,6 +11,8 @@
     <style name="Header">
         <item name="android:textSize">@dimen/text_size_xlarge</item>
         <item name="android:textColor">@color/text_primary</item>
+        <item name="android:layout_marginLeft">@dimen/default_padding</item>
+        <item name="android:layout_marginRight">@dimen/default_padding</item>
     </style>
 
     <style name="ListHeader">
@@ -71,8 +73,8 @@
     <style name="HoloCompatButton">
         <item name="android:background">@drawable/btn_default_holo_dark</item>
         <item name="android:textColor">@color/button_text</item>
-        <item name="android:textSize">@dimen/text_size_xsmall</item>
-        <item name="android:layout_height">35dp</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:layout_width">wrap_content</item>
     </style>
 
