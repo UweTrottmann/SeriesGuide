@@ -3,12 +3,15 @@
 
     <TextView
         android:id="@+id/TextViewEpisodeDescription"
-        style="@style/DescriptionFont"
+        style="@style/SmallItems.WithSideMargins" />
+
+    <include
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/default_padding" />
-
-    <include layout="@layout/ratingbar" >
+        android:layout_marginBottom="@dimen/default_padding"
+        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginRight="@dimen/default_padding"
+        layout="@layout/ratingbar" >
     </include>
 
     <TextView

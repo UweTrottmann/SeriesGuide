@@ -5,20 +5,24 @@
         android:id="@+id/TextViewShowInfoAirtime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginRight="@dimen/default_padding"
         android:text="airs Tue 9:00 PM" />
 
     <TextView
         android:id="@+id/TextViewShowInfoNetwork"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginRight="@dimen/default_padding"
         android:text="on Very Long Network Name (VLNM)" >
     </TextView>
 
     <TextView
         android:id="@+id/TextViewShowInfoStatus"
+        style="@style/Subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:text="Continuing" >
     </TextView>
 
