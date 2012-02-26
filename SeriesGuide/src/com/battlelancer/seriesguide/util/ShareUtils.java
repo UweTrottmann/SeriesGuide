@@ -421,8 +421,14 @@ public class ShareUtils {
             // display a progress dialog to avoid navigating away crashes if
             // CancelCheckInDialog needs to be shown later
             if (mAction == TraktAction.CHECKIN_EPISODE && mProgressDialog == null) {
-                ProgressDialog newFragment = ProgressDialog.newInstance();
                 FragmentTransaction ft = mFm.beginTransaction();
+                Fragment prev = mFm.findFragmentByTag("progress-dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+
+                ProgressDialog newFragment = ProgressDialog.newInstance();
                 newFragment.show(ft, "progress-dialog");
                 mProgressDialog = newFragment;
             }
