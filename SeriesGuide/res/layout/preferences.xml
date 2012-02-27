@@ -1,33 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="@string/pref_sorting" >
-
-        <ListPreference
-            android:defaultValue="alphabetic"
-            android:entries="@array/shsorting"
-            android:entryValues="@array/shsortingData"
-            android:key="showSorting"
-            android:summary="@string/pref_showsortingsummary"
-            android:title="@string/pref_showsorting" />
-
-        <ListPreference
-            android:defaultValue="latestfirst"
-            android:entries="@array/sesorting"
-            android:entryValues="@array/sesortingData"
-            android:key="seasonSorting"
-            android:summary="@string/pref_sortingsummary"
-            android:title="@string/pref_seasonsorting" />
-
-        <ListPreference
-            android:defaultValue="oldestfirst"
-            android:entries="@array/epsorting"
-            android:entryValues="@array/epsortingData"
-            android:key="episodeSorting"
-            android:summary="@string/pref_epsortingsummary"
-            android:title="@string/pref_episodesorting" />
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="@string/pref_showlist" >
 
         <CheckBoxPreference
@@ -45,10 +18,21 @@
 
     <PreferenceCategory android:title="@string/pref_content" >
 
-        <Preference
-            android:key="backup"
-            android:summary="@string/backup_summary"
-            android:title="@string/backup" />
+        <ListPreference
+            android:defaultValue="latestfirst"
+            android:entries="@array/sesorting"
+            android:entryValues="@array/sesortingData"
+            android:key="seasonSorting"
+            android:summary="@string/pref_sortingsummary"
+            android:title="@string/pref_seasonsorting" />
+
+        <ListPreference
+            android:defaultValue="oldestfirst"
+            android:entries="@array/epsorting"
+            android:entryValues="@array/epsortingData"
+            android:key="episodeSorting"
+            android:summary="@string/pref_epsortingsummary"
+            android:title="@string/pref_episodesorting" />
 
         <ListPreference
             android:defaultValue="en"
@@ -100,20 +84,14 @@
             android:title="@string/clearGetGlueCredentials" />
 
         <Preference
-            android:key="com.battlelancer.seriesguide.traktcredentials"
-            android:summary="@string/pref_traktsummary"
-            android:title="@string/pref_trakt" />
+            android:key="com.battlelancer.seriesguide.trakt"
+            android:title="@string/trakt" />
 
         <CheckBoxPreference
             android:defaultValue="True"
             android:key="com.battlelancer.seriesguide.traktintegration"
             android:summary="@string/pref_traktintegratesummary"
             android:title="@string/pref_traktintegrate" />
-
-        <Preference
-            android:key="com.battlelancer.seriesguide.traktsync"
-            android:summary="@string/pref_traktsyncsummary"
-            android:title="@string/pref_traktsync" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_more" >
@@ -132,6 +110,11 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_advanced" >
+
+        <Preference
+            android:key="backup"
+            android:summary="@string/backup_summary"
+            android:title="@string/backup" />
 
         <Preference
             android:key="clearCache"

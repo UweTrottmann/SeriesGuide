@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
@@ -16,7 +17,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActionBar;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -67,6 +67,7 @@ public class BackupDeleteActivity extends BaseActivity {
         setContentView(R.layout.backup);
 
         final ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle(getString(R.string.backup));
         actionBar.setDisplayShowTitleEnabled(true);
 

@@ -16,8 +16,12 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.R;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -26,12 +30,13 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
-import com.battlelancer.thetvdbapi.Series;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -40,11 +45,11 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -68,9 +73,9 @@ public class OverviewFragment extends Fragment {
 
     private FetchArtTask artTask;
 
-    private String airdate;
-
     final private Bundle mShareData = new Bundle();
+
+    private long mAirtime;
 
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(getActivity()).trackEvent("Overview", "Click", label, 0);
@@ -123,9 +128,27 @@ public class OverviewFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, android.view.MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.overview_menu, menu);
+
+        // use an appropriate quick share button
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        int lastShareAction = prefs.getInt(SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
+
+        MenuItem shareAction = menu.findItem(R.id.menu_quickshare);
+        if (lastShareAction != -1) {
+            ShareMethod shareMethod = ShareMethod.values()[lastShareAction];
+            shareAction.setTitle(shareMethod.titleRes);
+            shareAction.setIcon(shareMethod.drawableRes);
+        } else {
+            shareAction.setEnabled(false);
+            shareAction.setVisible(false);
+        }
+
+        if (episodeid == 0) {
+            menu.findItem(R.id.menu_addevent).setVisible(false);
+        }
     }
 
     @Override
@@ -136,23 +159,66 @@ public class OverviewFragment extends Fragment {
 
                 onMarkWatched();
                 break;
-            case R.id.menu_shareepisode:
-                fireTrackerEvent("Share episode");
+            case R.id.menu_quickshare: {
+                final SharedPreferences prefs = PreferenceManager
+                        .getDefaultSharedPreferences(getActivity());
+                int shareMethodIndex = prefs.getInt(
+                        SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
+                ShareMethod shareMethod = ShareMethod.values()[shareMethodIndex];
 
-                ShareUtils.showShareDialog(getFragmentManager(), mShareData);
+                fireTrackerEvent("Quick share (" + shareMethod.name() + ")");
 
+                onShareEpisode(shareMethod, false);
                 break;
-            case R.id.menu_addevent:
+            }
+            case R.id.menu_checkin_getglue: {
+                fireTrackerEvent("Check In (GetGlue)");
+                onShareEpisode(ShareMethod.CHECKIN_GETGLUE, true);
+                break;
+            }
+            case R.id.menu_checkin_trakt: {
+                fireTrackerEvent("Check In (trakt)");
+                onShareEpisode(ShareMethod.CHECKIN_TRAKT, true);
+                break;
+            }
+            case R.id.menu_markseen_trakt: {
+                fireTrackerEvent("Mark seen (trakt)");
+                onShareEpisode(ShareMethod.MARKSEEN_TRAKT, true);
+                break;
+            }
+            case R.id.menu_rate_trakt: {
+                fireTrackerEvent("Rate (trakt)");
+                onShareEpisode(ShareMethod.RATE_TRAKT, true);
+                break;
+            }
+            case R.id.menu_share_others: {
+                fireTrackerEvent("Share (apps)");
+                onShareEpisode(ShareMethod.OTHER_SERVICES, true);
+                break;
+            }
+            case R.id.menu_addevent: {
                 fireTrackerEvent("Add episode to calendar");
 
-                ShareUtils.onAddCalendarEvent(getActivity(), show.getSeriesName(),
-                        mShareData.getString(ShareItems.EPISODESTRING), airdate,
-                        show.getAirsTime(), show.getRuntime());
+                ShareUtils
+                        .onAddCalendarEvent(getActivity(), show.getSeriesName(),
+                                mShareData.getString(ShareItems.EPISODESTRING), mAirtime,
+                                show.getRuntime());
                 break;
+            }
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void onShareEpisode(ShareMethod shareMethod, boolean isInvalidateOptionsMenu) {
+        ShareUtils.onShareEpisode(getActivity(), mShareData, shareMethod);
+
+        if (isInvalidateOptionsMenu) {
+            // invalidate the options menu so a potentially new
+            // quick share action is displayed
+            getActivity().invalidateOptionsMenu();
+        }
     }
 
     private void initializeViews(View fragmentView) {
@@ -287,10 +353,10 @@ public class OverviewFragment extends Fragment {
             episode.moveToFirst();
 
             // Airdate
-            airdate = episode.getString(EpisodeQuery.FIRSTAIRED);
-            if (airdate.length() != 0) {
-                nextheader.setText(Utils.parseDateToLocalRelative(airdate, show.getAirsTime(),
-                        context) + ":");
+            mAirtime = episode.getLong(EpisodeQuery.FIRSTAIREDMS);
+            if (mAirtime != -1) {
+                final String[] dayAndTime = Utils.formatToTimeAndDay(mAirtime, context);
+                nextheader.setText(dayAndTime[2] + " (" + dayAndTime[1] + "):");
             }
 
             onLoadEpisodeDetails(episode);
@@ -320,16 +386,17 @@ public class OverviewFragment extends Fragment {
     }
 
     protected void onLoadEpisode() {
-        final Activity context = getActivity();
-        if (context == null) {
+        final FragmentActivity activity = getActivity();
+        if (activity == null) {
             return;
         }
 
         new Thread(new Runnable() {
             public void run() {
-                episodeid = DBUtils.updateLatestEpisode(context, getShowId());
-                context.runOnUiThread(new Runnable() {
+                episodeid = DBUtils.updateLatestEpisode(activity, getShowId());
+                activity.runOnUiThread(new Runnable() {
                     public void run() {
+                        activity.invalidateOptionsMenu();
                         fillEpisodeData();
                     }
                 });
@@ -465,7 +532,7 @@ public class OverviewFragment extends Fragment {
 
         String[] PROJECTION = new String[] {
                 Episodes._ID, Shows.REF_SHOW_ID, Episodes.OVERVIEW, Episodes.NUMBER,
-                Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIRED, Episodes.DIRECTORS,
+                Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIREDMS, Episodes.DIRECTORS,
                 Episodes.GUESTSTARS, Episodes.WRITERS, Episodes.RATING, Episodes.IMAGE,
                 Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID
         };
@@ -482,7 +549,7 @@ public class OverviewFragment extends Fragment {
 
         int WATCHED = 5;
 
-        int FIRSTAIRED = 6;
+        int FIRSTAIREDMS = 6;
 
         int DIRECTORS = 7;
 

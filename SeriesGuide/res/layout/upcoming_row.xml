@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/body_padding" >
+    android:paddingBottom="@dimen/item_padding"
+    android:paddingRight="@dimen/body_padding"
+    android:paddingTop="@dimen/item_padding" >
 
     <com.battlelancer.seriesguide.WatchedBox
         android:id="@+id/watchedBoxUpcoming"
@@ -10,15 +12,27 @@
         android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:background="@drawable/list_selector_holo_dark"
         android:paddingBottom="15dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="15dp" />
+        android:paddingLeft="5dp"
+        android:paddingRight="8dp"
+        android:paddingTop="5dp" />
+
+    <ImageView
+        android:id="@+id/poster"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="@dimen/body_padding"
+        android:layout_toRightOf="@+id/watchedBoxUpcoming"
+        android:src="@drawable/show_generic" />
 
     <LinearLayout
         android:id="@+id/upcomingmeta"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/watchedBoxUpcoming" >
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/poster" >
 
         <TextView
             android:id="@+id/textViewUpcomingAirdate"
@@ -26,7 +40,7 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="in 5 days" />
+            android:text="in X days" />
 
         <TextView
             android:id="@+id/textViewUpcomingNetwork"
@@ -44,16 +58,16 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/upcomingmeta"
-        android:layout_toRightOf="@id/watchedBoxUpcoming"
-        android:text="Show Title" />
+        android:layout_toRightOf="@+id/poster"
+        android:text="Placeholder" />
 
     <TextView
         android:id="@+id/textViewUpcomingNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewUpcomingShow"
-        android:layout_toRightOf="@id/watchedBoxUpcoming"
-        android:text="4x12" />
+        android:layout_toRightOf="@+id/poster"
+        android:text="XxXX" />
 
     <TextView
         android:id="@+id/textViewUpcomingEpisode"
@@ -62,6 +76,6 @@
         android:layout_below="@id/textViewUpcomingShow"
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@id/textViewUpcomingNumber"
-        android:text="Those who wandered upon us" />
+        android:text="Placeholder holding place" />
 
 </RelativeLayout>

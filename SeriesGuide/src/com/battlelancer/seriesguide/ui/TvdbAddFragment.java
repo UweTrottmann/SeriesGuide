@@ -2,7 +2,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.thetvdbapi.SearchResult;
+import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
 import org.xml.sax.SAXException;
@@ -10,13 +10,13 @@ import org.xml.sax.SAXException;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -52,11 +52,10 @@ public class TvdbAddFragment extends AddFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // only create and fill a new adapter if there is no previous one
-        // (e.g. after config/page changed)
+        // create an empty adapter to avoid displaying a progress indicator
         if (mAdapter == null) {
-            mAdapter = new ArrayAdapter<SearchResult>(getActivity(), R.layout.add_searchresult,
-                    R.id.TextViewAddSearchResult, new ArrayList<SearchResult>());
+            mAdapter = new AddAdapter(getActivity(), R.layout.add_searchresult,
+                    new ArrayList<SearchResult>());
         }
 
         ImageButton searchButton = (ImageButton) getView().findViewById(R.id.searchbutton);
@@ -88,7 +87,6 @@ public class TvdbAddFragment extends AddFragment {
     protected void search() {
         String query = mSearchBox.getText().toString().trim();
         if (query.length() == 0) {
-            Toast.makeText(getActivity(), R.string.search_noinput, Toast.LENGTH_LONG).show();
             return;
         }
         if (mSearchTask == null || mSearchTask.getStatus() == AsyncTask.Status.FINISHED) {
@@ -103,6 +101,14 @@ public class TvdbAddFragment extends AddFragment {
 
         public SearchTask(Context context) {
             mContext = context;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            final FragmentActivity activity = getActivity();
+            if (activity != null) {
+                activity.setSupportProgressBarIndeterminateVisibility(true);
+            }
         }
 
         @Override
@@ -124,6 +130,10 @@ public class TvdbAddFragment extends AddFragment {
 
         @Override
         protected void onPostExecute(List<SearchResult> result) {
+            final FragmentActivity activity = getActivity();
+            if (activity != null) {
+                activity.setSupportProgressBarIndeterminateVisibility(false);
+            }
             if (result == null) {
                 Toast.makeText(mContext.getApplicationContext(), R.string.search_error,
                         Toast.LENGTH_LONG).show();

@@ -1,14 +1,16 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
-import com.battlelancer.thetvdbapi.Series;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -16,8 +18,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActionBar;
-import android.support.v4.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -102,7 +102,7 @@ public class ShowInfoActivity extends BaseActivity {
 
         // Overview
         if (show.getOverview().length() == 0) {
-            overview.setText(getString(R.string.show_pleaseupdate));
+            overview.setText("");
         } else {
             overview.setText(show.getOverview());
         }
@@ -132,15 +132,16 @@ public class ShowInfoActivity extends BaseActivity {
             status.setText(getString(R.string.show_isnotalive));
         }
 
+        // first airdate
+        long airtime = Utils.buildEpisodeAirtime(show.getFirstAired(), show.getAirsTime());
+        firstaired.setText(getString(R.string.show_firstaired) + " "
+                + Utils.formatToDate(airtime, this));
+
         // Others
         actors.setText(getString(R.string.show_actors) + " "
                 + Utils.splitAndKitTVDBStrings(show.getActors()));
         contentrating.setText(getString(R.string.show_contentrating) + " "
                 + show.getContentRating());
-        firstaired.setText(getString(R.string.show_firstaired)
-                + " "
-                + Utils.parseDateToLocal(show.getFirstAired(), show.getAirsTime(),
-                        getApplicationContext()));
         genres.setText(getString(R.string.show_genres) + " "
                 + Utils.splitAndKitTVDBStrings(show.getGenres()));
         String ratingText = show.getRating();
@@ -170,8 +171,8 @@ public class ShowInfoActivity extends BaseActivity {
                             startActivity(myIntent);
                         }
                     } else {
-                        Toast.makeText(getApplicationContext(), getString(R.string.noIMDBentry),
-                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),
+                                getString(R.string.show_noimdbentry), Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -198,5 +199,4 @@ public class ShowInfoActivity extends BaseActivity {
             showart.setImageBitmap(null);
         }
     }
-
 }

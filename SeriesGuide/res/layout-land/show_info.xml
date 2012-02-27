@@ -1,67 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-
-    <ScrollView
-        android:id="@+id/showinfo_container"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/divider"
-        android:layout_alignParentTop="true"
-        android:padding="@dimen/body_padding" >
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="true"
-            android:orientation="horizontal" >
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/title"
-                    style="@style/Header"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Show title" />
-
-                <include layout="@layout/show_info_meta" >
-                </include>
-
-                <include layout="@layout/show_info_metamore" >
-                </include>
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/ImageViewShowInfoPoster"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="2"
-                android:src="@drawable/fringe_test" >
-            </ImageView>
-        </LinearLayout>
-    </ScrollView>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
     <include
-        android:id="@+id/divider"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonbar_ref"
-        layout="@layout/holodivider" />
+        layout="@layout/show_info_wide" >
+    </include>
 
-    <include
-        android:id="@+id/buttonbar_ref"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        layout="@layout/show_info_buttonbar" />
-
-</RelativeLayout>
+</ScrollView>

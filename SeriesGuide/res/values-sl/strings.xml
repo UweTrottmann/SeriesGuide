@@ -6,9 +6,6 @@
   <string name="episode_unkownairdate">neznano</string>
   <string name="episode_iswatched">Že gledano</string>
   <string name="specialseason">Posebne epizode</string>
-  <string name="ioerror_title">Omrežna napaka</string>
-  <string name="offline_title">Ni povezave</string>
-  <string name="saxerror">Odgovor od TheTVDB nerazumljiv. Prosimo, poskusite znova pozneje.</string>
   <string name="search_hint">Iskanje epizode</string>
   <string name="search_title">Ujemanje epizode</string>
   <string name="share_episode">Deli epizodo</string>
@@ -36,44 +33,29 @@
   <string name="no_nextepisode">ni naslednje epizode</string>
   <string name="nextepisode">naslednji:</string>
   <string name="unfavorited">Odstrani iz priljubljenih</string>
-  <string name="update_error">Ni bilo mogoče posodobiti.</string>
-  <string name="update_incomplete1">Ni mogoče posodobiti</string>
-  <string name="update_inbackground">Posodabljam...</string>
-  <string name="update_inprogress">Posodobitev v teku: počakajte, da zaključi, nato poskusite znova.</string>
-  <string name="update_nosdcard">Posodobitev neuspešna: ni zunanjega pomnilnika ali SD kartica na razpolago.</string>
+  <string name="upcoming">Prihajajoče</string>
+  <string name="show_airs">na sporedu</string>
   <string name="show_network">dne</string>
-  <string name="no_seasons">Ups, ni sezon za to oddajo. Poskusite posodobiti oddajo (v pregledu, dolgo pritisnite na oddajo, potem izberite Posodobi).</string>
   <string name="season_watchcount">Neogledane epizode.</string>
   <string name="season_allwatched">Vse epizode ogledal</string>
   <string name="season_onenotwatched">Neogledana epizoda.</string>
   <string name="oneotherepisode">druga epizoda</string>
   <string name="otherepisodes">druge epizode</string>
-  <string name="no_episodes">Ups, ni oddaj za to sezono. Poskusite posodobiti oddajo (v pregledu, dolgo pritisnite na oddajo, potem izberite Posodobi).</string>
   <string name="search_button">Iskanje</string>
-  <string name="no_results">Rezultatov ni bilo mogoče najti. Poskusite popolne besede.</string>
-  <string name="search_error">Ni bilo možno doseči TheTVDB. Prosimo, preverite omrežno povezavo ali poskusite znova pozneje.</string>
-  <string name="search_noinput">Prosimo, vnesite besedo za iskanje.</string>
   <string name="add_show">Dodaj oddajo.</string>
   <string name="dont_add_show">Ne dodaj</string>
-  <string name="search_hint_add">Iskanje oddaje.</string>
   <string name="add_success">Uspešno dodano.</string>
   <string name="add_error_begin">Ne morem dodati \ "</string>
   <string name="add_error_end">\ ".</string>
-  <string name="preferences">Nastavitve</string>
-  <string name="pref_sorting">Razvrščanje</string>
-  <string name="pref_showsorting">Pokaži urejanje</string>
-  <string name="pref_seasonsorting">Razvrščanje sezone</string>
-  <string name="pref_episodesorting">Razvrščanje epizod.</string>
-  <string name="pref_showlist">Pokaži seznam</string>
-  <string name="pref_content">Vsebina</string>
-  <string name="pref_language">TheTVDB jezik</string>
-  <string name="pref_hideimages">Skrij slike</string>
   <string name="pref_more">Več</string>
-  <string name="about">O SeriesGuide</string>
+  <string name="pref_showlist">Pokaži seznam</string>
   <string name="help">Pomoč</string>
+  <string name="preferences">Nastavitve</string>
+  <string name="pref_content">Vsebina</string>
+  <string name="about">O SeriesGuide</string>
+  <string name="pref_hideimages">Skrij slike</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="backup_no">Brez varnostne kopije</string>
-  <string name="upcoming">Prihajajoče</string>
   <string name="seasons">Sezone</string>
   <string-array name="shsorting">
     <item>A - Z</item>
@@ -89,21 +71,15 @@
     <item>Latest first</item>
     <item>Oldest first</item>
     <item>Unwatched first</item>
-    <item>A - Z</item>
-    <item>Z - A</item>
+    <item>A - Ž</item>
+    <item>Ž - A</item>
     <item>Latest first (DVD)</item>
     <item>Oldest first (DVD)</item>
-  </string-array>
-  <string-array name="share_items">
-    <item>Check In (GetGlue)</item>
-    <item>Check In (trakt)</item>
-    <item>Mark seen (trakt)</item>
-    <item>Rate (trakt)</item>
-    <item>Other services</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>All</item>
     <item>Favorites</item>
     <item>Unseen/Upcoming</item>
+    <item>Hidden</item>
   </string-array>
 </resources>

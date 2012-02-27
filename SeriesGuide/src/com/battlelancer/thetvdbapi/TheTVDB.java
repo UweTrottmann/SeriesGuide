@@ -1,12 +1,15 @@
 
 package com.battlelancer.thetvdbapi;
 
-import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Lists;
 import com.battlelancer.seriesguide.util.Utils;
@@ -88,7 +91,7 @@ public class TheTVDB {
 
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
         batch.add(DBUtils.buildShowOp(show, context, !isShowExists));
-        batch.addAll(importShowEpisodes(showId, language, context));
+        batch.addAll(importShowEpisodes(showId, show.getAirsTime(), language, context));
 
         try {
             context.getContentResolver().applyBatch(SeriesContract.CONTENT_AUTHORITY, batch);
@@ -118,7 +121,7 @@ public class TheTVDB {
 
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
         batch.add(DBUtils.buildShowOp(show, context, false));
-        batch.addAll(importShowEpisodes(showId, language, context));
+        batch.addAll(importShowEpisodes(showId, show.getAirsTime(), language, context));
 
         try {
             context.getContentResolver().applyBatch(SeriesContract.CONTENT_AUTHORITY, batch);
@@ -142,8 +145,8 @@ public class TheTVDB {
      */
     public static Series fetchShow(String seriesid, String language, Context context)
             throws SAXException {
-        String url = xmlMirror + Constants.API_KEY + "/series/" + seriesid + "/"
-                + (language != null ? language + ".xml" : "");
+        String url = xmlMirror + context.getResources().getString(R.string.tvdb_apikey)
+                + "/series/" + seriesid + "/" + (language != null ? language + ".xml" : "");
 
         return parseShow(url, context);
     }
@@ -259,7 +262,6 @@ public class TheTVDB {
         show.getChild("Airs_Time").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 currentShow.setAirsTime(Utils.parseTimeToMilliseconds(body.trim()));
-                currentShow.setAirTime(body.trim());
             }
         });
         show.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
@@ -327,20 +329,21 @@ public class TheTVDB {
     }
 
     public static ArrayList<ContentProviderOperation> importShowEpisodes(String seriesid,
-            String language, Context context) throws SAXException {
-        String url = xmlMirror + Constants.API_KEY + "/series/" + seriesid + "/all/"
+            long showAirtime, String language, Context context) throws SAXException {
+        String url = xmlMirror + context.getResources().getString(R.string.tvdb_apikey)
+                + "/series/" + seriesid + "/all/"
                 + (language != null ? language + ".zip" : "en.zip");
 
-        return parseEpisodes(url, seriesid, context);
+        return parseEpisodes(url, seriesid, showAirtime, context);
     }
 
-    public static ArrayList<ContentProviderOperation> parseEpisodes(String url, String seriesid,
-            Context context) throws SAXException {
+    public static ArrayList<ContentProviderOperation> parseEpisodes(String url, String showId,
+            final long showAirtime, Context context) throws SAXException {
         RootElement root = new RootElement("Data");
         Element episode = root.getChild("Episode");
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
-        final HashSet<Long> episodeIDs = DBUtils.getEpisodeIDsForShow(seriesid, context);
-        final HashSet<Long> existingSeasonIDs = DBUtils.getSeasonIDsForShow(seriesid, context);
+        final HashSet<Long> episodeIDs = DBUtils.getEpisodeIDsForShow(showId, context);
+        final HashSet<Long> existingSeasonIDs = DBUtils.getSeasonIDsForShow(showId, context);
         final HashSet<Long> updatedSeasonIDs = new HashSet<Long>();
         final ContentValues values = new ContentValues();
 
@@ -384,6 +387,8 @@ public class TheTVDB {
                 });
         episode.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
+                long episodeAirTime = Utils.buildEpisodeAirtime(body, showAirtime);
+                values.put(Episodes.FIRSTAIREDMS, episodeAirTime);
                 values.put(Episodes.FIRSTAIRED, body.trim());
             }
         });
@@ -445,14 +450,16 @@ public class TheTVDB {
      * 
      * @param currentTime
      * @param updateAtLeastEvery
+     * @param prefs
      * @param context
      * @return
-     * @throws SAXException
      */
-    public static String[] deltaUpdateShows(long currentTime, int updateAtLeastEvery,
-            Context context) throws SAXException {
+    public static String[] deltaUpdateShows(long currentTime, SharedPreferences prefs,
+            Context context) {
         final HashSet<Integer> existingShowIds = new HashSet<Integer>();
         final HashSet<String> updatableShowIds = new HashSet<String>();
+        final int updateAtLeastEvery = prefs.getInt(SeriesGuidePreferences.KEY_UPDATEATLEASTEVERY,
+                7);
 
         // get existing show ids
         final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI, new String[] {

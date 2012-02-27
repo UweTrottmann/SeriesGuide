@@ -47,7 +47,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
     private static final int UPDATE_OFFLINE = 103;
 
-    private static final int UPDATE_INCOMPLETE = 104;
+    private static final int UPDATE_CANCELLED = 104;
 
     public String[] mShows = null;
 
@@ -85,7 +85,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         String ns = Context.NOTIFICATION_SERVICE;
         mNotificationManager = (NotificationManager) mAppContext.getSystemService(ns);
 
-        int icon = R.drawable.icon;
+        int icon = R.drawable.ic_notification;
         CharSequence tickerText = mAppContext.getString(R.string.update_notification);
         long when = System.currentTimeMillis();
 
@@ -117,29 +117,30 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
         long currentTime = 0;
 
+        // build a list of shows to update
         if (mShows == null) {
-            currentTime = System.currentTimeMillis();
-            final int updateAtLeastEvery = prefs.getInt(
-                    SeriesGuidePreferences.KEY_UPDATEATLEASTEVERY, 7);
 
-            // new update task
+            currentTime = System.currentTimeMillis();
+
             if (mIsFullUpdate) {
+
+                // get all show IDs for a full update
                 final Cursor shows = resolver.query(Shows.CONTENT_URI, new String[] {
                     Shows._ID
                 }, null, null, null);
+
                 mShows = new String[shows.getCount()];
                 int i = 0;
                 while (shows.moveToNext()) {
                     mShows[i] = shows.getString(0);
                     i++;
                 }
+
                 shows.close();
+
             } else {
-                try {
-                    mShows = TheTVDB.deltaUpdateShows(currentTime, updateAtLeastEvery, mAppContext);
-                } catch (SAXException e) {
-                    return UPDATE_ERROR;
-                }
+                // get only shows which have not been updated for a certain time
+                mShows = TheTVDB.deltaUpdateShows(currentTime, prefs, mAppContext);
             }
         }
 
@@ -147,11 +148,11 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         int resultCode = UPDATE_SUCCESS;
         String id;
 
+        // actually update the shows
         for (int i = updateCount.get(); i < mShows.length; i++) {
-            // fail early if cancelled or network connection is lost or wifi is
-            // disconnected
+            // skip ahead if we get cancelled or connectivity is lost/forbidden
             if (isCancelled()) {
-                resultCode = UPDATE_INCOMPLETE;
+                resultCode = UPDATE_CANCELLED;
                 break;
             }
             if (!Utils.isNetworkConnected(mAppContext)
@@ -161,42 +162,75 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             }
 
             id = mShows[i];
-
-            Cursor show = resolver.query(Shows.buildShowUri(id), new String[] {
-                Shows.TITLE
-            }, null, null, null);
-            if (show.moveToFirst()) {
-                mCurrentShowName = show.getString(0);
-            }
-            show.close();
+            setCurrentShowName(resolver, id);
 
             publishProgress(i, maxProgress);
 
             for (int itry = 0; itry < 2; itry++) {
                 try {
+
                     TheTVDB.updateShow(id, mAppContext);
                     break;
+
                 } catch (SAXException saxe) {
-                    // failed twice
                     if (itry == 1) {
+                        // failed twice, give up
                         resultCode = UPDATE_ERROR;
                         addFailedShow(mCurrentShowName);
                     }
                 }
             }
+
             updateCount.incrementAndGet();
         }
 
-        // renew FTS3 table (only if we updated shows)
+        // try to avoid renewing the search table as it is time consuming
         if (updateCount.get() != 0 && mShows.length != 0) {
             publishProgress(mShows.length, maxProgress);
             TheTVDB.onRenewFTSTable(mAppContext);
         }
 
-        // look on trakt for recent activity
-        if (prefs.getBoolean(SeriesGuidePreferences.KEY_INTEGRATETRAKT, true)
-                && ShareUtils.isTraktCredentialsValid(mAppContext)) {
+        // mark episodes based on trakt activity
+        final int traktResult = getTraktActivity(prefs, maxProgress, currentTime,
+                isAutoUpdateWlanOnly);
+        // do not overwrite earlier failure codes
+        if (resultCode == UPDATE_SUCCESS) {
+            resultCode = traktResult;
+        }
+
+        publishProgress(maxProgress, maxProgress);
+
+        // update the latest episodes
+        Utils.updateLatestEpisodes(mAppContext);
+
+        // store time of update if it was successful
+        if (currentTime != 0 && resultCode == UPDATE_SUCCESS) {
+            prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTUPDATE, currentTime).commit();
+        }
+
+        return resultCode;
+    }
+
+    private int getTraktActivity(SharedPreferences prefs, int maxProgress, long currentTime,
+            boolean isAutoUpdateWlanOnly) {
+        final boolean isTraktSyncEnabled = prefs.getBoolean(
+                SeriesGuidePreferences.KEY_INTEGRATETRAKT, true);
+
+        if (isTraktSyncEnabled && ShareUtils.isTraktCredentialsValid(mAppContext)) {
+            // return if we get cancelled or connectivity is lost/forbidden
+            if (isCancelled()) {
+                return UPDATE_CANCELLED;
+            }
+            if (!Utils.isNetworkConnected(mAppContext)
+                    || (isAutoUpdateWlanOnly && !Utils.isWifiConnected(mAppContext))) {
+                return UPDATE_OFFLINE;
+            }
+
             publishProgress(maxProgress - 1, maxProgress);
+
+            // get last trakt update timestamp
+            final long startTimeTrakt = prefs.getLong(SeriesGuidePreferences.KEY_LASTTRAKTUPDATE,
+                    currentTime) / 1000;
 
             ServiceManager manager;
             try {
@@ -204,10 +238,6 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             } catch (Exception e) {
                 return UPDATE_ERROR;
             }
-
-            // get last trakt update timestamp
-            final long startTimeTrakt = prefs.getLong(SeriesGuidePreferences.KEY_LASTTRAKTUPDATE,
-                    currentTime) / 1000;
 
             // get watched episodes from trakt
             Activity activity;
@@ -269,17 +299,17 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
         }
 
-        publishProgress(maxProgress, maxProgress);
+        return UPDATE_SUCCESS;
+    }
 
-        // update the latest episodes
-        Utils.updateLatestEpisodes(mAppContext);
-
-        // store time of update if it was successful
-        if (currentTime != 0 && resultCode == UPDATE_SUCCESS) {
-            prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTUPDATE, currentTime).commit();
+    private void setCurrentShowName(final ContentResolver resolver, String id) {
+        Cursor show = resolver.query(Shows.buildShowUri(id), new String[] {
+            Shows.TITLE
+        }, null, null, null);
+        if (show.moveToFirst()) {
+            mCurrentShowName = show.getString(0);
         }
-
-        return resultCode;
+        show.close();
     }
 
     @Override
@@ -299,16 +329,14 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 AnalyticsUtils.getInstance(mAppContext).trackEvent("Shows", "Update Task",
                         "SAX error", 0);
 
-                message = mAppContext.getString(R.string.update_failed) + " "
-                        + mAppContext.getString(R.string.update_saxerror);
+                message = mAppContext.getString(R.string.update_saxerror);
                 length = Toast.LENGTH_LONG;
                 break;
             case UPDATE_OFFLINE:
                 AnalyticsUtils.getInstance(mAppContext).trackEvent("Shows", "Update Task",
                         "Offline", 0);
 
-                message = mAppContext.getString(R.string.update_failed) + " "
-                        + mAppContext.getString(R.string.update_offline);
+                message = mAppContext.getString(R.string.update_offline);
                 length = Toast.LENGTH_LONG;
                 break;
         }

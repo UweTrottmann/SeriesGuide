@@ -7,16 +7,15 @@
   <string name="episode_iswatched">Já assisti</string>
   <string name="episode_notwatched">Não assisti ainda</string>
   <string name="specialseason">Episódios Especiais</string>
-  <string name="ioerror_title">Erro de rede</string>
-  <string name="saxerror_title">Erro de Parsing</string>
-  <string name="offline_title">Sem ligação</string>
-  <string name="ioerror">Houve um erro de rede. Você pode ter acesso limitado ao TheTVDB.com com a sua conexão actual. Tente novamente mais tarde.</string>
-  <string name="saxerror">A resposta do TheTVDB não foi entendida. Por favor, tente novamente mais tarde.</string>
-  <string name="offline">Não existe nenhuma conexão ativa com a internet. Por favor, verifique se você está conectado à Internet e tente novamente.</string>
   <string name="search_hint">A procurar episódios</string>
   <string name="search_title">A comparar episódios</string>
   <string name="share_episode">Partilhar episódio</string>
   <string name="share_checkout">Check out</string>
+  <string name="search_description">Episódios</string>
+  <string name="description_home">Início</string>
+  <string name="description_search">Procurar</string>
+  <string name="description_overview">Visão geral</string>
+  <string name="norating">n/a</string>
   <string name="episode_firstaired">Data de exibição:</string>
   <string name="episode_dvdnumber">Episódio de DVD</string>
   <string name="show_actors">Actores:</string>
@@ -32,7 +31,6 @@
   <string name="show_isalive">Em exibição</string>
   <string name="show_isnotalive">Terminou</string>
   <string name="sort">Ordenar por</string>
-  <string name="menu_updateart">Obter Posters ausentes</string>
   <string name="updateall_yes">Atualização (tudo)</string>
   <string name="menu_update_delta">Atualização (apenas desatualizada)</string>
   <string name="context_updateshow">Actualizar</string>
@@ -44,7 +42,6 @@
   <string name="unmark_episode">Ainda não assisti o episódio</string>
   <string name="mark_all">Assisti a todos</string>
   <string name="unmark_all">Assisti a nenhum</string>
-  <string name="shows_empty">Atualmente aqui não há nenhum programa de TV.</string>
   <string name="confirm_delete">Deseja mesmo remover essa série?</string>
   <string name="delete_show">Remover</string>
   <string name="dontdelete_show">Não remover</string>
@@ -54,94 +51,51 @@
   <string name="context_unfavorite">Apagar dos favoritos</string>
   <string name="favorited">Adiciona aos favoritos</string>
   <string name="unfavorited">Apagar dos favoritos</string>
-  <string name="update_notification">Atualizando os seus programas de TV...</string>
-  <string name="update_single">Atualizando programas de TV...</string>
-  <string name="update_delta">Atualizando programas de TV desactualizados...</string>
-  <string name="update_full">Atualizando todos os programas de TV...</string>
-  <string name="update_failed">Atualização sem sucesso.</string>
-  <string name="update_offline">Verifique a sua conexão de internet/ Wi-Fi.</string>
-  <string name="update_saxerror">Tente novamente mais tarde.</string>
-  <string name="update_error">Não foi possível actualizar.</string>
-  <string name="update_incomplete1">Não foi possível actualizar</string>
-  <string name="update_incomplete2">.</string>
+  <string name="upcoming">Próximos</string>
+  <string name="recent">Recente</string>
   <string name="update_success">Actualização com sucesso.</string>
-  <string name="imagedownload_incomplete">Actualização com sucesso. Infelizmente algumas imagens não foram transferidas. Tente novamente mais tarde.</string>
-  <string name="update_inbackground">A actualizar...</string>
-  <string name="update_inprogress">Existe uma actualização em progresso. Espere pela sua finalização e tente mais tarde.</string>
-  <string name="update_nosdcard">Não foi possível atualizar. Não há armazenamento externo ou cartão SD disponíveis.</string>
-  <string name="update_traktactivity">Obter actividades do trakt</string>
-  <string name="pref_autoupdate">Atualização automática</string>
-  <string name="pref_updatewifionly">Atualizar apenas em Wi-Fi</string>
   <string name="show_airs">exibe</string>
   <string name="show_network">em</string>
-  <string name="show_pleaseupdate">Tente actualizar esta série para mostrar mais informações (na visão geral, seleccione continuamente sobre a opção, e selecione Actualizar). Se isto não for o suficiente, talvez não haja quaisquer informações adicionais no TheTVDB. Registe-se no site (www.thetvdb.com) para aprender a adicionar complementos.</string>
   <string name="show_noairtime">Não existem horários de exibição disponíveis</string>
-  <string name="noIMDBentry">Nenhuma referência disponível no IMDB. Actualize esta série ou vá ao thetvdb.com e a adicione.</string>
-  <string name="no_seasons">Uuups, não existem temporadas para esta série. Tente actualizar o programa (na página principal, prima continuamente sobre o programa e seleccione Actualizar).</string>
   <string name="season_watchcount">episódios por assistir</string>
   <string name="season_allwatched">Todos os episódios assistidos</string>
   <string name="season_onenotwatched">episódio por assistir</string>
   <string name="season_unaired">não foi exibido</string>
   <string name="oneotherepisode">outro episódio</string>
   <string name="otherepisodes">outros episódios</string>
-  <string name="no_episodes">Ooops, não existem episódios para esta série. Tente actualizar o programa (na página principal, prima continuamente sobre o programa e selecione Actualizar).</string>
   <string name="search_button">Procurar</string>
-  <string name="no_results">Não foi possível encontrar nenhum resultado. Tente palavras completas.</string>
-  <string name="search_error">Não foi possível conectar-se à TheTVDB. Por favor, verifique sua conexão de rede ou tente novamente mais tarde.</string>
-  <string name="search_noinput">Por favor, insira uma palavra de pesquisa.</string>
   <string name="add_show">Adicionar Série</string>
   <string name="dont_add_show">Não adicionar</string>
-  <string name="search_hint_add">Procurar série</string>
   <string name="add_started">aparecerá na sua lista de séries brevemente.</string>
   <string name="add_success">adicionado com êxito.</string>
   <string name="add_error_begin">Não foi possível adicionar \"</string>
   <string name="add_error_end">\".</string>
-  <string name="add_already_exists">já existe. Em vez disso foi atualizado.</string>
-  <string name="loading_usershows">Carregar as suas séries em trakt.tv</string>
-  <string name="preferences">Definições</string>
-  <string name="pref_sorting">Organizar</string>
-  <string name="pref_showsorting">Organizar séries</string>
-  <string name="pref_showsortingsummary">Ordenar as séries por ordem alfabética, pelo próximo episódio ou favoritos</string>
-  <string name="pref_seasonsorting">Ordenar por temporadas</string>
-  <string name="pref_sortingsummary">Em qual ordem cronológica para ordenar as temporadas</string>
-  <string name="pref_episodesorting">Ordenar por episódio</string>
-  <string name="pref_epsortingsummary">Em que ordem para ordenar os episódios</string>
+  <string name="powered_by_thetvdb">Powered by thetvdb.com</string>
+  <string name="pref_more">Mais</string>
   <string name="pref_showlist">Mostrar lista</string>
+  <string name="help">Ajuda</string>
+  <string name="preferences">Definições</string>
   <string name="pref_onlyfuture">Sem episódio em exibição</string>
   <string name="pref_onlyfuturesummary">\"next:\" nunca mostrar episódios já exibidos</string>
   <string name="pref_onlyseasoneps">Sem episódios especiais</string>
   <string name="pref_onlyseasonepssummary">\"next:\" nunca mostrar episódios especiais</string>
   <string name="pref_content">Conteúdo</string>
-  <string name="pref_language">Língua do TheTVDB</string>
-  <string name="pref_languagesummary">Conteúdo local não está disponível para todas as séries. Actualizar posteriormente.</string>
-  <string name="pref_hideimages">Esconder imagens</string>
-  <string name="pref_hideimagessummary">Ocultar imagens da SeriesGuide da sua galeria (é necessário reiniciar)</string>
-  <string name="pref_more">Mais</string>
-  <string name="about">Sobre SeriesGuide</string>
-  <string name="help">Ajuda</string>
   <string name="backup">Backup/Restauração</string>
   <string name="backup_summary">Fazer backup ou restaurar as suas séries</string>
+  <string name="pref_number">Formato do número</string>
+  <string name="about">Sobre SeriesGuide</string>
   <string name="pref_sharing">Partilhar</string>
   <string name="clearGetGlueCredentials">Desligar GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Use os botões de partilha para configurar o GetGlue</string>
+  <string name="pref_trakt">credenciais trakt.tv</string>
+  <string name="pref_traktsummary">Adicionar ou editar as suas credenciais do trakt.tv</string>
+  <string name="pref_traktsync">Sincronizar com trakt.tv</string>
+  <string name="pref_traktintegrate">Integrar trakt.tv</string>
   <string name="pref_advanced">Avançado</string>
-  <string name="clear_cache">Limpar a Cache de Imagens</string>
-  <string name="clear_cache_summary">Remover todas as imagens da cache e do cartão SD, ao actualizar as séries estas irão ser armazenadas</string>
+  <string name="pref_hideimages">Esconder imagens</string>
   <string name="pref_ganalytics">Analíticas Google</string>
   <string name="pref_ganalyticssummary">Controlar o uso de recursos para ajudar a melhorar o SeriesGuide</string>
-  <string name="pref_notifications">Permitir notificações</string>
-  <string name="pref_notificationssummary">Mostrar notificações de futuros episódios</string>
-  <string name="pref_usetz">Usar o meu fuso horário</string>
-  <string name="pref_offset">Tempo dessincronizado</string>
-  <string name="pref_offsetsummary">por uma certa quantidade de horas</string>
   <string name="backup_path"><b>Pasta de backup</b></string>
   <string name="backup_version"><b>Versão de banco de dados</b></string>
-  <string name="backup_inprogress">A fazer backup da base de dados...</string>
-  <string name="backup_success">Backup bem sucedido</string>
-  <string name="backup_failed">Backup falhou</string>
-  <string name="import_inprogress">Restaurar base de dados ...</string>
-  <string name="import_success">Base de dados restaurada com sucesso</string>
-  <string name="import_failed">Restauração falhou</string>
   <string name="backup_button">Backup</string>
   <string name="backup_yes">Backup</string>
   <string name="backup_no">Não fazer backup</string>
@@ -150,54 +104,26 @@
   <string name="smallwidget">Próximos episódios (pequeno)</string>
   <string name="bigwidget">Próximos episódios (médio)</string>
   <string name="largewidget">Próximos episódios (grandes)</string>
-  <string name="upcoming">Próximos</string>
-  <string name="recent">Recente</string>
-  <string name="noupcoming">Parece que não existem episódios. Tente actualizar as suas séries.</string>
-  <string name="togglewatched">Seleccionar Vistos</string>
   <string name="seasons">Temporadas</string>
   <string name="cancel">Cancelar</string>
   <string name="share">Partilhar</string>
   <string name="done">Concluído</string>
   <string name="checkin">Check In</string>
   <string name="comment">Check Inn Comentário</string>
-  <string name="checkinsuccess">Check In bem-sucedido</string>
-  <string name="pref_number">Formato do número</string>
-  <string name="pref_numbersummary">Troque entre 1x01, S01E01 ou s01e01 como formato de número</string>
-  <string name="checkinfailed">Check In falhou</string>
-  <string name="oauthmessage">A autenticar SeriesGuide com GetGlue ...</string>
   <string name="addtocalendar">Adicionar ao calendário</string>
-  <string name="addtocalendar_failed">Desculpe, não existe informação suficiente para criar um calendário de eventos.</string>
-  <string name="search_description">Episódios</string>
-  <string name="description_home">Início</string>
-  <string name="description_search">Procurar</string>
-  <string name="description_overview">Visão geral</string>
-  <string name="norating">n/a</string>
-  <string name="loading">A carregar...</string>
-  <string name="eula_title">O que devia saber</string>
-  <string name="accept">Aceitar</string>
-  <string name="decline">Recusar</string>
   <string name="username">Utilizador</string>
+  <string name="email">E-mail</string>
   <string name="password">Palavra-passe</string>
-  <string name="apikey">API key</string>
-  <string name="pref_trakt">credenciais trakt.tv</string>
-  <string name="pref_traktsummary">Adicionar ou editar as suas credenciais do trakt.tv</string>
-  <string name="pref_traktsync">Sincronizar com trakt.tv</string>
   <string name="save">Guardar</string>
   <string name="dontsave">Não guardar</string>
   <string name="trakt_decryptfail">a password não pode ser descodificada</string>
   <string name="trakt_credentials_invalid">credenciais inválidas</string>
   <string name="trakt_generalerror">Ocorreu algo errado. Por favor, verifique as suas credenciais e tente novamente.</string>
-  <string name="pref_traktintegrate">Integrar trakt.tv</string>
-  <string name="donate">Pague-me um copo (Paypal)</string>
   <string name="love">Totalmente ninja!</string>
   <string name="trakt_createaccount">Criar nova conta</string>
-  <string name="email">E-mail</string>
   <string name="trakt_synctodevice">Sincronizar com SeriesGuide</string>
   <string name="trakt_synctotrakt">Sincronizar com trakt.tv</string>
   <string name="trakt_syncunseen">Sincronizar os episódios por assistir</string>
-  <string name="powered_by_thetvdb">Powered by thetvdb.com</string>
-  <string name="welcome_setuptrakt">Configurar uma conta de trakt</string>
-  <string name="welcome_add">Começar a adicionar programas de TV</string>
   <string name="download_stable">Download SeriesGuide</string>
   <string-array name="shsorting">
     <item>A - Z</item>
@@ -218,16 +144,10 @@
     <item>Mais recente primeiro (DVD)</item>
     <item>Antigo primeiro (DVD)</item>
   </string-array>
-  <string-array name="share_items">
-    <item>Check In (GetGlue)</item>
-    <item>Check In (trakt)</item>
-    <item>Mark seen (trakt)</item>
-    <item>Rate (trakt)</item>
-    <item>Other services</item>
-  </string-array>
   <string-array name="showfilter_list">
     <item>Todos</item>
     <item>Favoritos</item>
     <item>Unseen/Upcoming</item>
+    <item>Hidden</item>
   </string-array>
 </resources>

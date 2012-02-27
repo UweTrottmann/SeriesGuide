@@ -1,7 +1,7 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
-import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.R;
 
 import oauth.signpost.OAuth;
 import oauth.signpost.OAuthConsumer;
@@ -13,7 +13,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 
 import java.net.URLEncoder;
 
@@ -25,15 +27,15 @@ public class GetGlue {
 
     private static final String GETGLUE_SOURCE = "&source=http://seriesguide.uwetrottmann.com/&app=SeriesGuide";
 
-    public static final String REQUEST_URL = "http://api.getglue.com/oauth/request_token";
+    public static final String REQUEST_URL = "https://api.getglue.com/oauth/request_token";
 
-    public static final String ACCESS_URL = "http://api.getglue.com/oauth/access_token";
+    public static final String ACCESS_URL = "https://api.getglue.com/oauth/access_token";
 
     public static final String AUTHORIZE_URL = "http://getglue.com/oauth/authorize?style=mobile";
 
-    public static final String OAUTH_CALLBACK_SCHEME = "seriesguide-oauth-getglue";
+    public static final String OAUTH_CALLBACK_SCHEME = "sgoauth";
 
-    public static final String OAUTH_CALLBACK_HOST = "callback";
+    public static final String OAUTH_CALLBACK_HOST = "getgluecallback";
 
     public static final String OAUTH_CALLBACK_URL = OAUTH_CALLBACK_SCHEME + "://"
             + OAUTH_CALLBACK_HOST;
@@ -50,8 +52,8 @@ public class GetGlue {
         return true;
     }
 
-    public static void checkIn(SharedPreferences prefs, String imdbId, String comment)
-            throws Exception {
+    public static void checkIn(SharedPreferences prefs, String imdbId, String comment,
+            Context context) throws Exception {
 
         String token = prefs.getString(OAuth.OAUTH_TOKEN, "");
         String secret = prefs.getString(OAuth.OAUTH_TOKEN_SECRET, "");
@@ -63,8 +65,10 @@ public class GetGlue {
 
         // create a consumer object and configure it with the access
         // token and token secret obtained from the service provider
-        OAuthConsumer consumer = new CommonsHttpOAuthConsumer(Constants.CONSUMER_KEY,
-                Constants.CONSUMER_SECRET);
+        Resources res = context.getResources();
+        OAuthConsumer consumer = new CommonsHttpOAuthConsumer(
+                res.getString(R.string.getglue_consumer_key),
+                res.getString(R.string.getglue_consumer_secret));
         consumer.setTokenWithSecret(token, secret);
 
         // create an HTTP request to a protected resource

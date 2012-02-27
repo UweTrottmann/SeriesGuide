@@ -2,8 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="auto"
     package="com.battlelancer.seriesguide"
-    android:versionCode="134"
-    android:versionName="2.4.2" >
+    android:versionCode="135"
+    android:versionName="2.5" >
+
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="15" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.touchscreen"
@@ -60,7 +68,9 @@
                 android:resource="@xml/searchable" />
         </activity>
 
-        <receiver android:name="com.battlelancer.seriesguide.appwidget.ListWidgetProvider" android:label="@string/widget_label">
+        <receiver
+            android:name="com.battlelancer.seriesguide.appwidget.ListWidgetProvider"
+            android:label="@string/widget_label" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -95,6 +105,7 @@
 
         <receiver
             android:name="com.battlelancer.seriesguide.appwidget.AppWidgetBig"
+            android:enabled="@bool/isFroyoOrLower"
             android:label="@string/bigwidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -105,11 +116,14 @@
                 android:resource="@xml/appwidget_big_info" />
         </receiver>
 
-        <service android:name="com.battlelancer.seriesguide.appwidget.AppWidgetBig$UpdateServiceBig" >
+        <service
+            android:name="com.battlelancer.seriesguide.appwidget.AppWidgetBig$UpdateServiceBig"
+            android:enabled="@bool/isFroyoOrLower" >
         </service>
 
         <receiver
             android:name="com.battlelancer.seriesguide.appwidget.AppWidgetLarge"
+            android:enabled="@bool/isFroyoOrLower"
             android:label="@string/largewidget" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -120,7 +134,9 @@
                 android:resource="@xml/appwidget_large_info" />
         </receiver>
 
-        <service android:name="com.battlelancer.seriesguide.appwidget.AppWidgetLarge$UpdateServiceLarge" >
+        <service
+            android:name="com.battlelancer.seriesguide.appwidget.AppWidgetLarge$UpdateServiceLarge"
+            android:enabled="@bool/isFroyoOrLower" >
         </service>
 
         <activity
@@ -133,8 +149,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="callback"
-                    android:scheme="seriesguide-oauth-getglue" />
+                    android:host="getgluecallback"
+                    android:scheme="sgoauth" />
             </intent-filter>
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.SeasonsActivity" >
@@ -179,13 +195,5 @@
             android:label="@string/add_show" >
         </activity>
     </application>
-
-    <uses-sdk
-        android:minSdkVersion="7"
-        android:targetSdkVersion="14" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

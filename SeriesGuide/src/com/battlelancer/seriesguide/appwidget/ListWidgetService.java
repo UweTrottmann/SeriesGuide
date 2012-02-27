@@ -2,9 +2,8 @@
 package com.battlelancer.seriesguide.appwidget;
 
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
+import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
@@ -68,44 +67,33 @@ public class ListWidgetService extends RemoteViewsService {
             RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.appwidget_big_item);
 
             // episode description
-            String season = mUpcomingEpisodes.getString(mUpcomingEpisodes
-                    .getColumnIndexOrThrow(Episodes.SEASON));
-            String number = mUpcomingEpisodes.getString(mUpcomingEpisodes
-                    .getColumnIndexOrThrow(Episodes.NUMBER));
-            String title = mUpcomingEpisodes.getString(mUpcomingEpisodes
-                    .getColumnIndexOrThrow(Episodes.TITLE));
+            String season = mUpcomingEpisodes.getString(UpcomingQuery.SEASON);
+            String number = mUpcomingEpisodes.getString(UpcomingQuery.NUMBER);
+            String title = mUpcomingEpisodes.getString(UpcomingQuery.TITLE);
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
             rv.setTextViewText(R.id.textViewWidgetEpisode,
                     Utils.getNextEpisodeString(prefs, season, number, title));
 
-            // airdate
-            long airtime = mUpcomingEpisodes.getLong(mUpcomingEpisodes
-                    .getColumnIndexOrThrow(Shows.AIRSTIME));
-            String value = Utils.parseDateToLocalRelative(mUpcomingEpisodes
-                    .getString(mUpcomingEpisodes.getColumnIndexOrThrow(Episodes.FIRSTAIRED)),
-                    airtime, mContext);
+            // relative airtime
+            long airtime = mUpcomingEpisodes.getLong(UpcomingQuery.FIRSTAIREDMS);
+            String[] dayAndTime = Utils.formatToTimeAndDay(airtime, mContext);
+            String value = dayAndTime[2] + " (" + dayAndTime[1] + ")";
             rv.setTextViewText(R.id.widgetAirtime, value);
 
-            // airtime and network (if any)
-            value = "";
-            if (airtime != -1) {
-                value = Utils.parseMillisecondsToTime(airtime, null, getApplicationContext())[0];
-            }
-            String network = mUpcomingEpisodes.getString(mUpcomingEpisodes
-                    .getColumnIndexOrThrow(Shows.NETWORK));
+            // absolute airtime and network (if any)
+            value = dayAndTime[0];
+            String network = mUpcomingEpisodes.getString(UpcomingQuery.SHOW_NETWORK);
             if (network.length() != 0) {
                 value += " " + network;
             }
             rv.setTextViewText(R.id.widgetNetwork, value);
 
             // show name
-            value = mUpcomingEpisodes.getString(mUpcomingEpisodes
-                    .getColumnIndexOrThrow(Shows.TITLE));
+            value = mUpcomingEpisodes.getString(UpcomingQuery.SHOW_TITLE);
             rv.setTextViewText(R.id.textViewWidgetShow, value);
 
             // show poster
-            value = mUpcomingEpisodes.getString(mUpcomingEpisodes
-                    .getColumnIndexOrThrow(Shows.POSTER));
+            value = mUpcomingEpisodes.getString(UpcomingQuery.SHOW_POSTER);
             Bitmap poster = null;
             if (value.length() != 0) {
                 poster = ImageCache.getInstance(mContext).getThumb(value, false);
@@ -119,7 +107,7 @@ public class ListWidgetService extends RemoteViewsService {
             // Set the fill-in intent for the list items
             Bundle extras = new Bundle();
             extras.putString(EpisodeDetailsActivity.InitBundle.EPISODE_ID,
-                    mUpcomingEpisodes.getString(0));
+                    mUpcomingEpisodes.getString(UpcomingQuery._ID));
             Intent fillInIntent = new Intent();
             fillInIntent.putExtras(extras);
             rv.setOnClickFillInIntent(R.id.appwidget_bit_item, fillInIntent);

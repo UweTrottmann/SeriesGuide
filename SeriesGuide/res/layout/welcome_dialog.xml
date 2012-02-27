@@ -4,43 +4,73 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="@dimen/body_padding_large" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/welcome_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/welcome_message"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/welcome_text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <include
+            android:id="@+id/divider1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/welcome_text"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            layout="@layout/holodivider" />
+
+        <TextView
+            android:id="@+id/trakt_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divider1"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/welcome_traktmessage"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <Button
             android:id="@+id/welcome_setuptrakt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/body_padding_large"
-            android:layout_marginTop="5dp"
+            android:layout_below="@+id/trakt_message"
+            android:layout_centerHorizontal="true"
+            android:drawableLeft="@drawable/ic_trakt"
+            android:drawablePadding="5dp"
             android:text="@string/welcome_setuptrakt" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+        <include
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/welcome_gettingstarted"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_below="@+id/welcome_setuptrakt"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            layout="@layout/holodivider" />
 
-        <Button
-            android:id="@+id/welcome_add"
+        <CheckBox
+            android:id="@+id/welcome_sendusagedata"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:text="@string/welcome_add" />
-    </LinearLayout>
+            android:layout_below="@+id/divider2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:checked="true"
+            android:text="@string/sendusagedata"
+            android:textSize="16sp" />
+    </RelativeLayout>
 
 </ScrollView>

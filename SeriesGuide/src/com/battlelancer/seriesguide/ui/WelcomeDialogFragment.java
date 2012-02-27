@@ -2,50 +2,95 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
 
-import android.content.Intent;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
+import android.widget.CheckBox;
 
 public class WelcomeDialogFragment extends DialogFragment {
+
+    private static final String TAG = "WelcomeDialogFragment";
+
+    public static boolean hasSeenWelcomeDialog(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getBoolean("accepted_eula", false);
+    }
+
+    public void fireTrackerEvent(String label) {
+        AnalyticsUtils.getInstance(getActivity()).trackEvent(TAG, "Click", label, 0);
+    }
 
     public static WelcomeDialogFragment newInstance() {
         WelcomeDialogFragment f = new WelcomeDialogFragment();
         return f;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setStyle(STYLE_NO_TITLE, 0);
+    public static void showWelcomeDialog(FragmentActivity activity) {
+        // show welcome dialog
+        FragmentTransaction ft = activity.getSupportFragmentManager().beginTransaction();
+        Fragment prev = activity.getSupportFragmentManager().findFragmentByTag("welcome-dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        WelcomeDialogFragment newFragment = WelcomeDialogFragment.newInstance();
+        newFragment.show(ft, "welcome-dialog");
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.welcome_dialog, container, false);
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        LayoutInflater inflater = (LayoutInflater) getActivity().getLayoutInflater();
+        View v = inflater.inflate(R.layout.welcome_dialog, null, false);
+
         v.findViewById(R.id.welcome_setuptrakt).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                fireTrackerEvent("Setup trakt account");
                 TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
                         .newInstance();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 newFragment.show(ft, "traktdialog");
             }
         });
-        v.findViewById(R.id.welcome_add).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), AddActivity.class);
-                startActivity(i);
-                dismiss();
-            }
-        });
-        return v;
+
+        final CheckBox cb = (CheckBox) v.findViewById(R.id.welcome_sendusagedata);
+        final FragmentActivity activity = getActivity();
+
+        return new AlertDialog.Builder(activity).setIcon(R.drawable.icon)
+                .setTitle(R.string.welcome_message).setView(v)
+                .setPositiveButton(R.string.dismiss, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        new AsyncTask<Void, Void, Void>() {
+                            @Override
+                            protected Void doInBackground(Void... voids) {
+                                SharedPreferences sp = PreferenceManager
+                                        .getDefaultSharedPreferences(activity);
+                                sp.edit()
+                                        .putBoolean("accepted_eula", true)
+                                        .putBoolean(SeriesGuidePreferences.KEY_GOOGLEANALYTICS,
+                                                cb.isChecked()).commit();
+                                return null;
+                            }
+                        }.execute();
+                    }
+                }).setCancelable(false).create();
     }
 }

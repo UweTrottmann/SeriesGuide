@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="layout_padding">10dp</dimen>
+    <dimen name="inline_padding">4dp</dimen>
+    <dimen name="default_padding">8dp</dimen>
     <dimen name="body_padding">5dp</dimen>
-    <dimen name="body_padding_large">5dp</dimen>
+    <dimen name="body_padding_large">10dp</dimen>
+    <dimen name="item_padding">2dp</dimen>
     <dimen name="text_size_xsmall">12sp</dimen>
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_xmedium">16sp</dimen>
@@ -17,8 +21,11 @@
     <dimen name="widget_paddingBottom">8dp</dimen>
     <dimen name="widget_paddingLeft">8dp</dimen>
     <dimen name="widget_poster_width">25dp</dimen>
-    <dimen name="showgrid_padding">0dp</dimen>
+    <dimen name="showgrid_padding">8dp</dimen>
     <dimen name="showgrid_columnWidth">300dp</dimen>
     <dimen name="showgrid_spacing">10dp</dimen>
+    <dimen name="imagecontainer_height">180dp</dimen>
+    <integer name="episodespane_weight">1</integer>
+    <integer name="detailsspane_weight">1</integer>
 
 </resources>

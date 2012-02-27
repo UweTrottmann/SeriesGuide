@@ -4,14 +4,75 @@ Changelog
 Version 2.5 *(in development)*
 --------------------------------
 
+Notable changes:
+
+* Database upgrade for better time representation. It may take a few seconds for the database to upgrade.
+* Hide individual shows.
+* 'Only favorites' option for Upcoming/Recent, also respected by widgets.
+* 'Watched all previously aired' option when long-tapping an episode.
+* Unified interface across all devices thanks to ActionBarSherlock 4.0.
+* Removed middle and large widget on Android 3.0+ devices. Use the new list widget!
+
+Detailed changes:
+
+Since 2.5beta/2.5.1beta (2012-01-13):
+ 
+* Add 'Watched all previously aired' option to episode list of a season.
+* Add show posters in Upcoming and Recent.
+* Fix to display correct episode title.
+
+Since 2.5.2beta (2012-01-28):
+
+* Better internal representation for time. It may take a while until your shows appear (the database is upgrading in the background). YOU MAY NEED to update all of your shows afterwards. Episodes move now correctly from Upcoming to Recent 1 hour after they aired.
+
+* Hide shows, they will disappear from everywhere except the new 'Hidden' show filter.
+* Swipe between episodes on xlarge screens (10 inch tablets) or in landscape, too.
+* 'Only favorites' option for Upcoming/Recent, also respected by widget.
 * Add menu button to quickly share with last used sharing option.
-* Display search term, title and search soft button in `SearchActivity`.
-* Where applicable the app icon takes you back to the show list. Same as long-pressing back from every screen.
 * Use progress indicators in `AddActivity`.
-* Use ActionBarSherlock 4.0 release.
+* Friends layout more similar to Upcoming.
 * Use ViewPagerIndicator 2.2.2 release.
+* Fixes for the updater.
 * Fixes for market reported crashes.
-* Latest translations from crowdin.
+* Cleaner welcome dialog.
+* Improvements for descriptions and text everywhere.
+* Hide friends tab in Activity if trakt account is not set up.
+* Don't use beta icon for stable release (only devices with extra high resolution displays were affected).
+* Hide text of some action bar buttons.
+* Support for 'Daily' air day.
+* Latest translations from crowdin, now with Arabic by mohd55 and Hungarian by devilinside.
+
+Since 2.5.3beta (2012-01-29)
+
+* Updated design towards ICS styles.
+* Fix for crash when trying to create a trakt account.
+* Use user-specified episode numbers in Upcoming/Recent.
+* Fix GetGlue comment box text not wrapping.
+* Latest translations from crowdin. Thanks everyone for the big effort!
+
+Since 2.5.4beta (2012-02-17 GMT+1):
+
+* Hide legacy widgets except small size on Android 3.0+ devices.
+* Fix incorrect next episodes if two air the same day. The lower numbered one is now assumed to be aired first (though still at the same time).
+* Fix sorting and filtering if shows have older episodes listed under next.
+* Reduced auto-update interval to at least every 15min.
+* New notification icon (finally!).
+* Layout tweaks in Upcoming and episode details.
+* Hide 'Add to calendar' button if it is useless.
+* Use ActionBarSherlock 4.0.
+* Display search term, title and search soft button in `SearchActivity`.
+* Enabled home button (app icon in the ActionBar) everywhere.
+* New welcome and beta dialog.
+
+Since 2.5.5beta (2012-02-20 GMT+1):
+
+* Fix for crash when marking episodes watched.
+* Always show the 'Add to calendar' button, if room.
+* Fix #53 for episodes list.
+
+Postponed:
+
+* UI for custom upcoming interval (currently 24 hours).
 
 Version 2.4.2/2.4.3beta *(2012-01-11)*
 -------------------------------

@@ -2,11 +2,11 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.SearchResult;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -60,6 +60,8 @@ public class TraktFriendsFragment extends ListFragment implements
 
         mAdapter = new TraktFriendsAdapter(getActivity());
         setListAdapter(mAdapter);
+        getListView().setDivider(null);
+        getListView().setSelector(R.drawable.list_selector_holo_dark);
 
         setListShown(false);
 
@@ -176,7 +178,7 @@ public class TraktFriendsFragment extends ListFragment implements
                         for (ActivityItem activity : friend.watched) {
 
                             // is this an episode?
-                            if (activity.type == ActivityType.Episode) {
+                            if (activity != null && activity.type == ActivityType.Episode) {
 
                                 // is this activity no longer than 4 weeks old?
                                 if (activity.watched.getTime() > System.currentTimeMillis()

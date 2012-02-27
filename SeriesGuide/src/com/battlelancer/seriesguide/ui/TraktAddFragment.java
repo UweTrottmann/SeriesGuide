@@ -2,8 +2,8 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.SearchResult;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.entities.TvShow;
 
@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -51,8 +50,8 @@ public class TraktAddFragment extends AddFragment {
         // only create and fill a new adapter if there is no previous one
         // (e.g. after config/page changed)
         if (mAdapter == null) {
-            mAdapter = new ArrayAdapter<SearchResult>(getActivity(), R.layout.add_searchresult,
-                    R.id.TextViewAddSearchResult, new ArrayList<SearchResult>());
+            mAdapter = new AddAdapter(getActivity(), R.layout.add_searchresult,
+                    new ArrayList<SearchResult>());
 
             int type = getArguments().getInt("traktlisttype");
             new GetTraktShowsTask(getActivity()).execute(type);
@@ -82,7 +81,7 @@ public class TraktAddFragment extends AddFragment {
 
             if (type == TRENDING) {
                 try {
-                    shows = Utils.getServiceManager().showService().trending().fire();
+                    shows = Utils.getServiceManager(mContext).showService().trending().fire();
                 } catch (Exception e) {
                     // we don't care
                 }

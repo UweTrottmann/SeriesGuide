@@ -1,6 +1,9 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.WatchedBox;
@@ -19,7 +22,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
@@ -28,15 +30,14 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.MenuInflater;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -47,9 +48,11 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
 
     private static final int MARK_UNWATCHED_ID = 1;
 
-    private static final int EPISODES_LOADER = 4;
-
     private static final int DELETE_EPISODE_ID = 2;
+
+    private static final int MARK_UNTILHERE_ID = 3;
+
+    private static final int EPISODES_LOADER = 4;
 
     private Constants.EpisodeSorting sorting;
 
@@ -69,25 +72,27 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.list_fragment, container, false);
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        getListView().setSelector(R.drawable.list_selector_holo_dark);
 
         updatePreferences();
 
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
-        View detailsFragment = getActivity().findViewById(R.id.fragment_details);
-        mDualPane = detailsFragment != null && detailsFragment.getVisibility() == View.VISIBLE;
+        View pagerFragment = getActivity().findViewById(R.id.pager);
+        mDualPane = pagerFragment != null && pagerFragment.getVisibility() == View.VISIBLE;
 
         if (mDualPane) {
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            loadFirstEpisode();
         }
 
         String[] from = new String[] {
-                Episodes.WATCHED, Episodes.TITLE, Episodes.NUMBER, Episodes.FIRSTAIRED
+                Episodes.WATCHED, Episodes.TITLE, Episodes.NUMBER, Episodes.FIRSTAIREDMS
         };
         int[] to = new int[] {
                 R.id.CustomCheckBoxWatched, R.id.TextViewEpisodeListTitle,
@@ -128,12 +133,11 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
                     }
                     tv.setText(episodenumber);
                     return true;
-                } else if (columnIndex == EpisodesQuery.FIRSTAIRED) {
+                } else if (columnIndex == EpisodesQuery.FIRSTAIREDMS) {
                     TextView tv = (TextView) view;
-                    String fieldValue = cursor.getString(EpisodesQuery.FIRSTAIRED);
-                    if (fieldValue.length() != 0) {
-                        tv.setText(Utils.parseDateToLocalRelative(fieldValue,
-                                cursor.getLong(EpisodesQuery.SHOW_AIRSTIME), getActivity()));
+                    long airtime = cursor.getLong(EpisodesQuery.FIRSTAIREDMS);
+                    if (airtime != -1) {
+                        tv.setText(Utils.formatToTimeAndDay(airtime, getActivity())[2]);
                     } else {
                         tv.setText(getString(R.string.episode_firstaired) + " "
                                 + getString(R.string.episode_unkownairdate));
@@ -151,46 +155,6 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
 
         registerForContextMenu(getListView());
         setHasOptionsMenu(true);
-    }
-
-    /**
-     * Load the first episode manually while the CursorLoader is still getting
-     * its data.
-     */
-    private void loadFirstEpisode() {
-        final Activity context = getActivity();
-        if (context != null) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    // Make sure no fragment is already shown
-                    EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getSupportFragmentManager()
-                            .findFragmentById(R.id.fragment_details);
-                    if (detailsFragment == null) {
-                        if (context != null) {
-                            // get episodes
-                            final Cursor episodes = context.getContentResolver().query(
-                                    Episodes.buildEpisodesOfSeasonWithShowUri(getSeasonId()),
-                                    new String[] {
-                                        Episodes._ID
-                                    }, null, null, sorting.query());
-                            // show the first one, if there are any
-                            if (episodes.getCount() > 0) {
-                                episodes.moveToFirst();
-                                final String episodeId = episodes.getString(0);
-                                context.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        showDetails(episodeId);
-                                    }
-                                });
-                            }
-                            episodes.close();
-                        }
-                    }
-                }
-            }).start();
-        }
     }
 
     /**
@@ -213,22 +177,8 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
      */
     private void showDetails(String episodeId) {
         if (mDualPane) {
-            // Check if fragment is shown, create new if needed.
-            EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
-                    .findFragmentById(R.id.fragment_details);
-            if (detailsFragment == null
-                    || !detailsFragment.getEpisodeId().equalsIgnoreCase(episodeId)) {
-                // Make new fragment to show this selection.
-                detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true);
-
-                // Execute a transaction, replacing any existing
-                // fragment with this one inside the frame.
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_details, detailsFragment, "fragmentDetails");
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
-            }
-
+            EpisodesActivity activity = (EpisodesActivity) getActivity();
+            activity.onChangePage(episodeId);
         } else {
             Intent intent = new Intent();
             intent.setClass(getActivity(), EpisodeDetailsActivity.class);
@@ -256,11 +206,12 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
         } else {
             menu.add(0, MARK_WATCHED_ID, 0, R.string.mark_episode);
         }
-        menu.add(0, DELETE_EPISODE_ID, 2, R.string.delete_show);
+        menu.add(0, MARK_UNTILHERE_ID, 2, R.string.mark_untilhere);
+        menu.add(0, DELETE_EPISODE_ID, 3, R.string.delete_show);
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
+    public boolean onContextItemSelected(android.view.MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
@@ -270,6 +221,10 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
             case MARK_UNWATCHED_ID:
                 markEpisode(String.valueOf(info.id), false);
                 return true;
+            case MARK_UNTILHERE_ID: {
+                markUntilHere(String.valueOf(info.id));
+                return true;
+            }
             case DELETE_EPISODE_ID:
                 getActivity().getContentResolver().delete(
                         Episodes.buildEpisodeUri(String.valueOf(info.id)), null, null);
@@ -354,6 +309,17 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
         }
     }
 
+    private void markUntilHere(final String episodeId) {
+        final Activity activity = getActivity();
+        if (activity != null) {
+            new Thread(new Runnable() {
+                public void run() {
+                    DBUtils.markUntilHere(activity, episodeId);
+                }
+            }).start();
+        }
+    }
+
     private void updatePreferences() {
         sorting = Utils.getEpisodeSorting(getActivity());
     }
@@ -375,7 +341,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
     interface EpisodesQuery {
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.WATCHED, Episodes.TITLE,
-                Episodes.NUMBER, Episodes.FIRSTAIRED, Episodes.DVDNUMBER, Shows.AIRSTIME
+                Episodes.NUMBER, Episodes.FIRSTAIREDMS, Episodes.DVDNUMBER, Shows.AIRSTIME
         };
 
         int _ID = 0;
@@ -386,7 +352,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
 
         int NUMBER = 3;
 
-        int FIRSTAIRED = 4;
+        int FIRSTAIREDMS = 4;
 
         int DVDNUMBER = 5;
 
@@ -447,8 +413,6 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
         prefEditor.commit();
         getLoaderManager().restartLoader(EPISODES_LOADER, null, EpisodesFragment.this);
 
-        if (Build.VERSION.SDK_INT >= 11) {
-            getActivity().invalidateOptionsMenu();
-        }
+        getActivity().invalidateOptionsMenu();
     }
 }

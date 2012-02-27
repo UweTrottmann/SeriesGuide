@@ -3,41 +3,37 @@
 
     <TextView
         android:id="@+id/TextViewEpisodeDescription"
-        style="@style/DescriptionFont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp" />
+        style="@style/SmallItems.WithSideMargins" />
 
     <include layout="@layout/ratingbar" >
     </include>
 
     <TextView
         android:id="@+id/TextViewEpisodeGuestStars"
-        style="@style/SmallItems" />
+        style="@style/SmallItems.WithSideMargins" />
 
     <TextView
         android:id="@+id/TextViewEpisodeDirectors"
-        style="@style/SmallItems" />
+        style="@style/SmallItems.WithSideMargins" />
 
     <TextView
         android:id="@+id/TextViewEpisodeWriters"
-        style="@style/SmallItems" />
+        style="@style/SmallItems.WithSideMargins" />
 
     <TextView
         android:id="@+id/textViewEpisodeDVDnumber"
-        style="@style/SmallItems" />
+        style="@style/SmallItems.WithSideMargins" />
 
     <include
         android:id="@+id/divider"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/holodivider" />
 
     <include
         android:id="@+id/buttonbar_ref"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         layout="@layout/show_info_buttonbar" />
 
 </merge>

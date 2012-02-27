@@ -25,6 +25,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
@@ -94,14 +95,14 @@ public class TitlePageIndicator extends View implements PageIndicator {
     private int mCurrentPage;
     private int mCurrentOffset;
     private int mScrollState;
-    private final Paint mPaintText;
+    private final Paint mPaintText = new Paint();
     private boolean mBoldText;
     private int mColorText;
     private int mColorSelected;
     private Path mPath;
-    private final Paint mPaintFooterLine;
+    private final Paint mPaintFooterLine = new Paint();
     private IndicatorStyle mFooterIndicatorStyle;
-    private final Paint mPaintFooterIndicator;
+    private final Paint mPaintFooterIndicator = new Paint();
     private float mFooterIndicatorHeight;
     private float mFooterIndicatorUnderlinePadding;
     private float mFooterPadding;
@@ -166,14 +167,11 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
         final float textSize = a.getDimension(R.styleable.TitlePageIndicator_textSize, defaultTextSize);
         final int footerColor = a.getColor(R.styleable.TitlePageIndicator_footerColor, defaultFooterColor);
-        mPaintText = new Paint();
         mPaintText.setTextSize(textSize);
         mPaintText.setAntiAlias(true);
-        mPaintFooterLine = new Paint();
         mPaintFooterLine.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaintFooterLine.setStrokeWidth(mFooterLineHeight);
         mPaintFooterLine.setColor(footerColor);
-        mPaintFooterIndicator = new Paint();
         mPaintFooterIndicator.setStyle(Paint.Style.FILL_AND_STROKE);
         mPaintFooterIndicator.setColor(footerColor);
 
@@ -293,6 +291,15 @@ public class TitlePageIndicator extends View implements PageIndicator {
     public void setClipPadding(float clipPadding) {
         mClipPadding = clipPadding;
         invalidate();
+    }
+
+    public void setTypeface(Typeface typeface) {
+        mPaintText.setTypeface(typeface);
+        invalidate();
+    }
+
+    public Typeface getTypeface() {
+        return mPaintText.getTypeface();
     }
 
     /*
@@ -695,60 +702,29 @@ public class TitlePageIndicator extends View implements PageIndicator {
         mListener = listener;
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see android.view.View#onMeasure(int, int)
-     */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(measureWidth(widthMeasureSpec), measureHeight(heightMeasureSpec));
-    }
+        //Measure our width in whatever mode specified
+        final int measuredWidth = MeasureSpec.getSize(widthMeasureSpec);
 
-    /**
-     * Determines the width of this view
-     *
-     * @param measureSpec
-     *            A measureSpec packed into an int
-     * @return The width of the view, honoring constraints from measureSpec
-     */
-    private int measureWidth(int measureSpec) {
-        int result = 0;
-        int specMode = MeasureSpec.getMode(measureSpec);
-        int specSize = MeasureSpec.getSize(measureSpec);
-
-        if (specMode != MeasureSpec.EXACTLY) {
-            throw new IllegalStateException(getClass().getSimpleName() + " can only be used in EXACTLY mode.");
-        }
-        result = specSize;
-        return result;
-    }
-
-    /**
-     * Determines the height of this view
-     *
-     * @param measureSpec
-     *            A measureSpec packed into an int
-     * @return The height of the view, honoring constraints from measureSpec
-     */
-    private int measureHeight(int measureSpec) {
-        float result = 0;
-        int specMode = MeasureSpec.getMode(measureSpec);
-        int specSize = MeasureSpec.getSize(measureSpec);
-
-        if (specMode == MeasureSpec.EXACTLY) {
+        //Determine our height
+        float height = 0;
+        final int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
+        if (heightSpecMode == MeasureSpec.EXACTLY) {
             //We were told how big to be
-            result = specSize;
+            height = MeasureSpec.getSize(heightMeasureSpec);
         } else {
             //Calculate the text bounds
             RectF bounds = new RectF();
             bounds.bottom = mPaintText.descent()-mPaintText.ascent();
-            result = bounds.bottom - bounds.top + mFooterLineHeight + mFooterPadding + mTopPadding;
+            height = bounds.bottom - bounds.top + mFooterLineHeight + mFooterPadding + mTopPadding;
             if (mFooterIndicatorStyle != IndicatorStyle.None) {
-                result += mFooterIndicatorHeight;
+                height += mFooterIndicatorHeight;
             }
         }
-        return (int)result;
+        final int measuredHeight = (int)height;
+
+        setMeasuredDimension(measuredWidth, measuredHeight);
     }
 
     @Override

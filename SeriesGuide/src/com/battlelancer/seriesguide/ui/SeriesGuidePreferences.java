@@ -1,12 +1,14 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.util.ActivityHelper;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
-import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
@@ -20,10 +22,6 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActionBar;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.SherlockPreferenceActivity;
-import android.support.v4.view.MenuItem;
 import android.text.util.Linkify;
 import android.view.KeyEvent;
 import android.widget.ScrollView;
@@ -77,6 +75,12 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
     public static final String KEY_LASTTRAKTUPDATE = "com.battlelancer.seriesguide.lasttraktupdate";
 
     public static final String KEY_INTEGRATETRAKT = "com.battlelancer.seriesguide.traktintegration";
+
+    public static final String KEY_LAST_USED_SHARE_METHOD = "com.battlelancer.seriesguide.lastusedsharemethod";
+
+    public static final String KEY_ONLYFAVORITES = "com.battlelancer.seriesguide.onlyfavorites";
+
+    public static final String KEY_UPCOMING_LIMIT = "com.battlelancer.seriesguide.upcominglimit";
 
     public static final String SUPPORT_MAIL = "seriesguide@battlelancer.com";
 
@@ -212,22 +216,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             }
         });
 
-        // Trakt.tv credentials
-        Preference traktCred = findPreference("com.battlelancer.seriesguide.traktcredentials");
-        traktCred.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference preference) {
-                // show the trakt credentials dialog
-                TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
-                        .newInstance();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                newFragment.show(ft, "traktcredentialsdialog");
-                return true;
-            }
-        });
-
-        // Trakt.tv experimental sync
-        findPreference("com.battlelancer.seriesguide.traktsync").setOnPreferenceClickListener(
+        // trakt.tv
+        findPreference("com.battlelancer.seriesguide.trakt").setOnPreferenceClickListener(
                 new OnPreferenceClickListener() {
 
                     public boolean onPreferenceClick(Preference preference) {

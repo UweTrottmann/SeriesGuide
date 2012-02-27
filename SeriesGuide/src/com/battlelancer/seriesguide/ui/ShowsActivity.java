@@ -1,23 +1,23 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.EulaHelper;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -29,18 +29,14 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
-import android.support.v4.app.ActionBar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.view.Menu;
-import android.support.v4.view.MenuItem;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.text.format.DateUtils;
 import android.view.ContextMenu;
@@ -85,11 +81,13 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final int CONTEXT_UNFAVORITE = 205;
 
+    private static final int CONTEXT_HIDE = 206;
+
+    private static final int CONTEXT_UNHIDE = 207;
+
     private static final int CONFIRM_DELETE_DIALOG = 304;
 
     private static final int SORT_DIALOG = 306;
-
-    private static final int BETA_WARNING_DIALOG = 307;
 
     private static final int LOADER_ID = 900;
 
@@ -106,6 +104,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private static final int SHOWFILTER_FAVORITES = 1;
 
     private static final int SHOWFILTER_UNSEENEPISODES = 2;
+
+    private static final int SHOWFILTER_HIDDEN = 3;
 
     private static final String FILTER_ID = "filterid";
 
@@ -137,8 +137,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shows);
 
-        if (!EulaHelper.hasAcceptedEula(this)) {
-            EulaHelper.showEula(false, this);
+        if (!WelcomeDialogFragment.hasSeenWelcomeDialog(this)) {
+            WelcomeDialogFragment.showWelcomeDialog(this);
         }
 
         final SharedPreferences prefs = PreferenceManager
@@ -149,7 +149,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(this,
-                R.array.showfilter_list, R.layout.abs__simple_spinner_item);
+                R.array.showfilter_list, R.layout.sherlock_spinner_item);
         mActionBarList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         actionBar.setListNavigationCallbacks(mActionBarList, this);
 
@@ -205,30 +205,24 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         super.onStart();
         AnalyticsUtils.getInstance(this).trackPageView("/Shows");
 
-        // auto-update
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
+
+        // auto-update
         final boolean isAutoUpdateEnabled = prefs.getBoolean(SeriesGuidePreferences.KEY_AUTOUPDATE,
                 true);
         if (isAutoUpdateEnabled && !TaskManager.getInstance(this).isUpdateTaskRunning(false)) {
             // allow auto-update if 12 hours have passed
-            final long previousUpdateTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTUPDATE, 0);
             long currentTime = System.currentTimeMillis();
-            final boolean isTime = currentTime - (previousUpdateTime) > 12 * DateUtils.HOUR_IN_MILLIS;
+            final long previousUpdateTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTUPDATE,
+                    currentTime);
+            final boolean isTime = currentTime - (previousUpdateTime) > 15 * DateUtils.MINUTE_IN_MILLIS;
 
             if (isTime) {
                 // allow auto-update only on allowed connection
                 final boolean isAutoUpdateWlanOnly = prefs.getBoolean(
                         SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
-                boolean isOnAllowedConnection = true;
-                if (isAutoUpdateWlanOnly) {
-                    // abort if we are not on WiFi
-                    if (!Utils.isWifiConnected(this)) {
-                        isOnAllowedConnection = false;
-                    }
-                }
-
-                if (isOnAllowedConnection) {
+                if (!isAutoUpdateWlanOnly || Utils.isWifiConnected(this)) {
                     performUpdateTask(false, null);
                 }
             }
@@ -248,6 +242,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     protected void onDestroy() {
         super.onDestroy();
         onCancelTasks();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.unregisterOnSharedPreferenceChangeListener(mPrefsListener);
     }
 
     @Override
@@ -322,31 +318,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                                 }).start();
                             }
                         }).setNegativeButton(getString(R.string.dontdelete_show), null).create();
-            case BETA_WARNING_DIALOG:
-                /* Used for unstable beta releases */
-                return new AlertDialog.Builder(this)
-                        .setTitle(R.string.app_name)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setMessage(getString(R.string.betawarning))
-                        .setPositiveButton(R.string.gobreak, null)
-                        .setNeutralButton(getString(R.string.download_stable),
-                                new OnClickListener() {
-
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        try {
-                                            Intent myIntent = new Intent(
-                                                    Intent.ACTION_VIEW,
-                                                    Uri.parse("market://details?id=com.battlelancer.seriesguide"));
-                                            startActivity(myIntent);
-                                        } catch (ActivityNotFoundException e) {
-                                            Intent myIntent = new Intent(
-                                                    Intent.ACTION_VIEW,
-                                                    Uri.parse("http://market.android.com/details?id=com.battlelancer.seriesguide"));
-                                            startActivity(myIntent);
-                                        }
-                                        finish();
-                                    }
-                                }).create();
             case SORT_DIALOG:
                 final CharSequence[] items = getResources().getStringArray(R.array.shsorting);
 
@@ -378,7 +349,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         final Cursor show = getContentResolver().query(Shows.buildShowUri(String.valueOf(info.id)),
                 new String[] {
-                    Shows.FAVORITE
+                        Shows.FAVORITE, Shows.HIDDEN
                 }, null, null, null);
         show.moveToFirst();
         if (show.getInt(0) == 0) {
@@ -386,11 +357,16 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         } else {
             menu.add(0, CONTEXT_UNFAVORITE, 0, R.string.context_unfavorite);
         }
+        if (show.getInt(1) == 0) {
+            menu.add(0, CONTEXT_HIDE, 3, R.string.context_hide);
+        } else {
+            menu.add(0, CONTEXT_UNHIDE, 3, R.string.context_unhide);
+        }
         show.close();
 
         menu.add(0, CONTEXT_MARKNEXT, 1, R.string.context_marknext);
         menu.add(0, CONTEXT_UPDATESHOW_ID, 2, R.string.context_updateshow);
-        menu.add(0, CONTEXT_DELETE_ID, 3, R.string.delete_show);
+        menu.add(0, CONTEXT_DELETE_ID, 4, R.string.delete_show);
     }
 
     @Override
@@ -418,6 +394,26 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 Toast.makeText(this, getString(R.string.unfavorited), Toast.LENGTH_SHORT).show();
                 return true;
             }
+            case CONTEXT_HIDE: {
+                fireTrackerEvent("Hidden show");
+
+                ContentValues values = new ContentValues();
+                values.put(Shows.HIDDEN, true);
+                getContentResolver().update(Shows.buildShowUri(String.valueOf(info.id)), values,
+                        null, null);
+                Toast.makeText(this, getString(R.string.hidden), Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            case CONTEXT_UNHIDE: {
+                fireTrackerEvent("Unhidden show");
+
+                ContentValues values = new ContentValues();
+                values.put(Shows.HIDDEN, false);
+                getContentResolver().update(Shows.buildShowUri(String.valueOf(info.id)), values,
+                        null, null);
+                Toast.makeText(this, getString(R.string.unhidden), Toast.LENGTH_SHORT).show();
+                return true;
+            }
             case CONTEXT_DELETE_ID:
                 fireTrackerEvent("Delete show");
 
@@ -443,7 +439,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.seriesguide_menu, menu);
+        getSupportMenuInflater().inflate(R.menu.seriesguide_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -491,10 +487,10 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
                 // already fail if there is no external storage
                 if (!Utils.isExtStorageAvailable()) {
-                    Toast.makeText(this, getString(R.string.update_nosdcard), Toast.LENGTH_LONG)
+                    Toast.makeText(this, getString(R.string.arttask_nosdcard), Toast.LENGTH_LONG)
                             .show();
                 } else {
-                    Toast.makeText(this, getString(R.string.update_inbackground), Toast.LENGTH_LONG)
+                    Toast.makeText(this, getString(R.string.arttask_start), Toast.LENGTH_LONG)
                             .show();
                     mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
                 }
@@ -664,8 +660,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                     AnalyticsUtils.getInstance(ShowsActivity.this).trackEvent("Shows",
                             "Fetch missing posters", "Incomplete", 0);
 
-                    Toast.makeText(getApplicationContext(),
-                            getString(R.string.imagedownload_incomplete), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.arttask_incomplete),
+                            Toast.LENGTH_LONG).show();
                     break;
             }
 
@@ -739,23 +735,27 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         updateSorting(prefs);
 
         // between-version upgrade code
-        int lastVersion = prefs.getInt(SeriesGuidePreferences.KEY_VERSION, -1);
+        final int lastVersion = prefs.getInt(SeriesGuidePreferences.KEY_VERSION, -1);
         try {
-            int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
+            final int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
                     PackageManager.GET_META_DATA).versionCode;
             if (currentVersion > lastVersion) {
+                Editor editor = prefs.edit();
+
                 if (lastVersion < VER_TRAKT_SEC_CHANGES) {
-                    prefs.edit().putString(SeriesGuidePreferences.KEY_TRAKTPWD, null).commit();
-                    prefs.edit().putString(SeriesGuidePreferences.KEY_SECURE, null).commit();
+                    editor.putString(SeriesGuidePreferences.KEY_TRAKTPWD, null);
+                    editor.putString(SeriesGuidePreferences.KEY_SECURE, null);
                 }
 
                 // BETA warning dialog switch
-                // showDialog(BETA_WARNING_DIALOG);
-                // showDialog(WHATS_NEW_DIALOG);
+                ChangesDialogFragment.show(getSupportFragmentManager());
 
                 // set this as lastVersion
-                prefs.edit().putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion).commit();
+                editor.putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion);
+
+                editor.commit();
             }
+
         } catch (NameNotFoundException e) {
             // this should never happen
         }
@@ -795,19 +795,33 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         int filterId = args.getInt(FILTER_ID);
         switch (filterId) {
             case SHOWFILTER_ALL:
-                // do nothing, leave selection null
+                selection = Shows.HIDDEN + "=?";
+                selectionArgs = new String[] {
+                    "0"
+                };
                 break;
             case SHOWFILTER_FAVORITES:
-                selection = Shows.FAVORITE + "=?";
+                selection = Shows.FAVORITE + "=? AND " + Shows.HIDDEN + "=?";
                 selectionArgs = new String[] {
-                    "1"
+                        "1", "0"
                 };
                 break;
             case SHOWFILTER_UNSEENEPISODES:
-                selection = Shows.NEXTAIRDATE + "!=? AND julianday(" + Shows.NEXTAIRDATE
-                        + ") <= julianday('now')";
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                int upcomingLimit = prefs.getInt(SeriesGuidePreferences.KEY_UPCOMING_LIMIT, 1);
+
+                selection = Shows.NEXTAIRDATEMS + "!=? AND " + Shows.NEXTAIRDATEMS + " <=? AND "
+                        + Shows.HIDDEN + "=?";
+                String nowIn24Hours = String.valueOf(System.currentTimeMillis() + upcomingLimit
+                        * DateUtils.DAY_IN_MILLIS);
                 selectionArgs = new String[] {
-                    DBUtils.UNKNOWN_NEXT_AIR_DATE
+                        DBUtils.UNKNOWN_NEXT_AIR_DATE, nowIn24Hours, "0"
+                };
+                break;
+            case SHOWFILTER_HIDDEN:
+                selection = Shows.HIDDEN + "=?";
+                selectionArgs = new String[] {
+                    "1"
                 };
                 break;
         }
@@ -957,13 +971,13 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             final String path = mCursor.getString(ShowsQuery.POSTER);
             if (!mBusy) {
                 // load poster
-                setPosterBitmap(viewHolder.poster, path, false);
+                Utils.setPosterBitmap(viewHolder.poster, path, false, null);
 
                 // Null tag means the view has the correct data
                 viewHolder.poster.setTag(null);
             } else {
                 // only load in-memory poster
-                setPosterBitmap(viewHolder.poster, path, true);
+                Utils.setPosterBitmap(viewHolder.poster, path, true, null);
             }
 
             return convertView;
@@ -1001,7 +1015,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                     final ViewHolder holder = (ViewHolder) view.getChildAt(i).getTag();
                     final ImageView poster = holder.poster;
                     if (poster.getTag() != null) {
-                        setPosterBitmap(poster, (String) poster.getTag(), false);
+                        Utils.setPosterBitmap(poster, (String) poster.getTag(), false, null);
                         poster.setTag(null);
                     }
                 }
@@ -1013,31 +1027,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case OnScrollListener.SCROLL_STATE_FLING:
                 mBusy = true;
                 break;
-        }
-    }
-
-    /**
-     * If {@code isBusy} is {@code true}, then the image is only loaded if it is
-     * in memory. In every other case a place-holder is shown.
-     * 
-     * @param poster
-     * @param path
-     * @param isBusy
-     */
-    private void setPosterBitmap(ImageView poster, String path, boolean isBusy) {
-        Bitmap bitmap = null;
-        if (path.length() != 0) {
-            bitmap = ImageCache.getInstance(this).getThumb(path, isBusy);
-        }
-
-        if (bitmap != null) {
-            poster.setImageBitmap(bitmap);
-            poster.setTag(null);
-        } else {
-            // set placeholder
-            poster.setImageResource(R.drawable.show_generic);
-            // Non-null tag means the view still needs to load it's data
-            poster.setTag(path);
         }
     }
 }

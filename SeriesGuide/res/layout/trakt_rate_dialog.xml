@@ -4,30 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:padding="20dp" >
+    android:padding="16dp" >
 
     <Button
         android:id="@+id/totallyninja"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="4dp"
         android:layout_weight="1"
-        android:drawableLeft="@drawable/trakt_love_large"
-        android:drawablePadding="5dp"
+        android:drawablePadding="4dp"
+        android:drawableTop="@drawable/trakt_love_large"
         android:text="@string/love" >
     </Button>
-
-    <FrameLayout
-        android:layout_width="20dp"
-        android:layout_height="match_parent" >
-    </FrameLayout>
 
     <Button
         android:id="@+id/weaksauce"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
         android:layout_weight="1"
-        android:drawableLeft="@drawable/trakt_hate_large"
-        android:drawablePadding="5dp"
+        android:drawablePadding="4dp"
+        android:drawableTop="@drawable/trakt_hate_large"
         android:text="@string/hate" >
     </Button>
 

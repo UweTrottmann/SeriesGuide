@@ -7,16 +7,15 @@
   <string name="episode_iswatched">Izlendi</string>
   <string name="episode_notwatched">Izlenmedi</string>
   <string name="specialseason">Özel Bölümler</string>
-  <string name="ioerror_title">Ağ Hatası</string>
-  <string name="saxerror_title">Ayrıştırma Hatası</string>
-  <string name="offline_title">Bağlantı yok</string>
-  <string name="ioerror">Bir ağ hatası oluştu. Bağlantınız tarafından TheTVDB.com için erişiminiz sınırlandırılmış olabilir. Daha sonra yeniden deneyin.</string>
-  <string name="saxerror">TheTVDB\'den gelen yanıt anlaşılamadı. Daha sonra tekrar deneyiniz.</string>
-  <string name="offline">Etkin bir internet bağlantısı bağlantısı yok. Lütfen internete bağlı olduğunuzdan emin olun ve tekrar deneyin.</string>
   <string name="search_hint">Bölüm ara</string>
   <string name="search_title">Eşleşen bölümler</string>
   <string name="share_episode">Bölümü paylaş</string>
   <string name="share_checkout">Kontrol et</string>
+  <string name="search_description">Bölümler</string>
+  <string name="description_home">Anasayfa</string>
+  <string name="description_search">Arama</string>
+  <string name="description_overview">Genel</string>
+  <string name="norating">Geçersiz</string>
   <string name="episode_firstaired">Tarih:</string>
   <string name="episode_dvdnumber">DVD Bölümü</string>
   <string name="show_actors">Oyuncular:</string>
@@ -32,11 +31,13 @@
   <string name="show_isalive">Devam ediyor</string>
   <string name="show_isnotalive">Sona erdi</string>
   <string name="sort">Sırala</string>
-  <string name="menu_updateart">Eksik Posterleri Al</string>
+  <string name="updateall_yes">Güncelleştirme (tümü)</string>
+  <string name="menu_update_delta">Güncelleştirme (yalnızca eski)</string>
   <string name="context_updateshow">Güncelle</string>
   <string name="context_showinfo">Bilgi Göster</string>
   <string name="context_marknext">Sonraki izlenen bölüm</string>
   <string name="today">bugün</string>
+  <string name="now">Şimdi</string>
   <string name="mark_episode">İzlenen bölüm</string>
   <string name="unmark_episode">İzlenmeyen bölüm</string>
   <string name="mark_all">Tümü izlendi</string>
@@ -45,61 +46,57 @@
   <string name="delete_show">Kaldır</string>
   <string name="dontdelete_show">Kaldırma</string>
   <string name="no_nextepisode">sonraki bölüm bulunamadı</string>
-  <string name="nextepisode">Yayın Tarihi:</string>
-  <string name="update_error">Güncellenemedi.</string>
-  <string name="update_incomplete1">Güncellenemedi</string>
-  <string name="update_incomplete2">.</string>
-  <string name="update_inbackground">Güncelleniyor...</string>
-  <string name="update_inprogress">Devam eden bir güncelleme var. Tamamlanmasını bekleyin, daha sonra yeniden deneyin</string>
-  <string name="update_nosdcard">Güncelleştirilemedi. Kullanılabilir hiçbir harici depolama birimi ya da SD kart yok.</string>
+  <string name="nextepisode">gelecek bölüm</string>
+  <string name="context_favorite">Sık Kullanılanlara Ekle</string>
+  <string name="context_unfavorite">Sık Kullanılanlardan Kaldır</string>
+  <string name="favorited">Sık kullanılanlara eklendi</string>
+  <string name="unfavorited">Sık Kullanılanlar\'dan kaldırıldı</string>
+  <string name="upcoming">Yaklaşan</string>
+  <string name="recent">Yakında</string>
+  <string name="update_success">Güncelleştirme başarılı.</string>
   <string name="show_airs">yayın:</string>
-  <string name="show_network"> </string>
-  <string name="show_pleaseupdate">Daha fazla bilgi için diziyi güncellemeyi deneyin (Genel bakışta dizi adına uzun basın, ardından Güncelle\'yi seçin) Yardımı olmazsa TheTVDB\'de ek bilgi mevcut değildir. Siteye (www.thetvdb.com) giderek nasıl ekleyebileceğinizi öğrenin.</string>
+  <string name="show_network"> kanal</string>
   <string name="show_noairtime">Yayın mevcut değil</string>
-  <string name="noIMDBentry">IMDB referansı bulunamadı. Diziyi güncelleyin veya thetvdb.com\'a gidip ekleyin.</string>
-  <string name="no_seasons">Malesef bu dizinin sezonları mevcut değil. Güncelleştirmeyi deneyin</string>
   <string name="season_watchcount">izlenmeyen bölümler</string>
   <string name="season_allwatched">Tüm bölümler izlendi</string>
   <string name="season_onenotwatched">bölüm izlenmedi</string>
   <string name="season_unaired">yayınlanmadı</string>
   <string name="oneotherepisode">diğer bölüm</string>
   <string name="otherepisodes">diğer bölümler</string>
-  <string name="no_episodes">Malesef bu dizinin sezonları mevcut değil. Güncelleştirmeyi deneyin (genel görünümde, basılı tutun, Güncelle\'yi seçin).</string>
   <string name="search_button">Ara</string>
-  <string name="no_results">Herhangi bir sonuç bulunamadı. Tamamlanmış kelimeler deneyin.</string>
-  <string name="search_error">TheTVDB\'ye ulaşamadı. Lütfen ağ bağlantınızı kontrol edin veya daha sonra yeniden deneyin.</string>
-  <string name="search_noinput">Lütfen bir kelime girin.</string>
   <string name="add_show">Dizi ekle</string>
   <string name="dont_add_show">Ekleme</string>
-  <string name="search_hint_add">Dizi ara</string>
+  <string name="add_started">kısa bir süre sonra listenizde görünecektir.</string>
   <string name="add_success">başarıyla eklendi.</string>
   <string name="add_error_begin">Eklenemedi \"</string>
   <string name="add_error_end">\ ".</string>
-  <string name="preferences">Ayarlar</string>
-  <string name="pref_sorting">Sırala</string>
-  <string name="pref_showsorting">Sıralamayı Göster</string>
-  <string name="pref_seasonsorting">Sezonları sırala</string>
-  <string name="pref_episodesorting">Bölümleri Sırala</string>
-  <string name="pref_showlist">Listeyi göster</string>
-  <string name="pref_content">İçerik</string>
-  <string name="pref_language">TheTVDB Dili</string>
-  <string name="pref_hideimages">Resimleri gizle</string>
-  <string name="pref_hideimagessummary">SeriesGuide resimlerini fotoğraf galerinizden gizleyin (yeniden başlatma gerektirir)</string>
+  <string name="powered_by_thetvdb">thetvdb.com tarafından desteklenmektedir</string>
   <string name="pref_more">Daha fazla</string>
-  <string name="about">SeriesGuide Hakkında</string>
+  <string name="pref_showlist">Listeyi göster</string>
+  <string name="help">Yardım</string>
+  <string name="preferences">Ayarlar</string>
+  <string name="pref_onlyfuture">Yayınlanan bölüm yok</string>
+  <string name="pref_onlyfuturesummary">\"Next:\" yayınlanmış olan bölümler artık gösterilmeyecek</string>
+  <string name="pref_onlyseasoneps">Özel bölüm yok</string>
+  <string name="pref_onlyseasonepssummary">\"Next:\" özel bölümleri göstermez</string>
+  <string name="pref_content">İçerik</string>
   <string name="backup">Yedekle/Geri Yükle</string>
   <string name="backup_summary">Dizilerinizi yedekleyin veya geri yükleyin</string>
+  <string name="pref_number">Sayı biçimi</string>
+  <string name="about">SeriesGuide Hakkında</string>
   <string name="pref_sharing">Paylaşım</string>
   <string name="clearGetGlueCredentials">GetGlue Bağlantısını Kes</string>
-  <string name="clear_cache">Görsel Önbelleklerini Temizle</string>
+  <string name="pref_trakt">trakt.TV kimlik</string>
+  <string name="pref_traktsummary">Ekleyin veya trakt.tv kimlik bilgilerinizi düzenleyin</string>
+  <string name="pref_traktsync">Trakt.tv ile eşitle</string>
+  <string name="pref_traktintegrate">trakt.tv entegrasyonu</string>
+  <string name="pref_advanced">Gelişmiş</string>
+  <string name="pref_hideimages">Resimleri gizle</string>
   <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_offset">Saat Farkı</string>
-  <string name="backup_inprogress">Veritabanı yedekleniyor...</string>
-  <string name="backup_success">Yedekleme başarılı</string>
-  <string name="backup_failed">Yedekleme başarısız oldu</string>
-  <string name="import_inprogress">Veritabanı geri yükleniyor...</string>
-  <string name="import_success">Veritabanı başarıyla geri yüklendi</string>
-  <string name="import_failed">Geri yükleme başarısız oldu</string>
+  <string name="pref_ganalyticssummary">SeriesGuide geliştirmeye yardımcı olmak için kullanım özelliklerini izler</string>
+  <string name="backup_path"><b>Yedekleme klasörü</b></string>
+  <string name="backup_version"><b>Veritabanı sürümü</b></string>
+  <string name="backup_failed_nosd">Can\'t sırt. Yedekleme klasörü kullanılamaz.</string>
   <string name="backup_yes">Yedekle</string>
   <string name="backup_no">Yedekleme</string>
   <string name="import_yes">Geri yükle</string>
@@ -107,36 +104,33 @@
   <string name="smallwidget">Sonraki bölümler (küçük)</string>
   <string name="bigwidget">Sonraki bölümler (orta)</string>
   <string name="largewidget">Sonraki bölümler (büyük)</string>
-  <string name="upcoming">Yaklaşan</string>
-  <string name="recent">Yakında</string>
-  <string name="noupcoming">Görünüşe göre hiç bölüm yok. Dizilerinizi güncellemeyi deneyebilirsiniz.</string>
-  <string name="togglewatched">İzlenenlere geçiş yap</string>
   <string name="seasons">Sezon</string>
   <string name="cancel">Vazgeç</string>
   <string name="share">Paylaş</string>
   <string name="done">Tamamlandı</string>
   <string name="checkin">Check In yapın</string>
   <string name="comment">Check In Yorumu</string>
-  <string name="checkinsuccess">Check In başarılı</string>
-  <string name="pref_number">Sayı biçimi</string>
-  <string name="checkinfailed">Check-In başarısız</string>
-  <string name="oauthmessage">SeriesGuide GetGlue ile yetkilendiriliyor...</string>
   <string name="addtocalendar">Takvime ekle</string>
-  <string name="addtocalendar_failed">Üzgünüm, takvim etkinliği oluşturmak için yeterli bilgi yok.</string>
-  <string name="search_description">Bölümler</string>
-  <string name="description_home">Anasayfa</string>
-  <string name="description_search">Arama</string>
-  <string name="loading">Yükleniyor...</string>
   <string name="username">kullanıcı adı</string>
+  <string name="email">E-posta</string>
   <string name="password">Şifre</string>
   <string name="save">Kaydet</string>
   <string name="dontsave">Kaydetme</string>
-  <string name="email">E-posta</string>
+  <string name="trakt_decryptfail">parola şifresi çözülemedi</string>
+  <string name="trakt_credentials_invalid">kimlik bilgileri geçerli değil</string>
+  <string name="trakt_generalerror">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
+  <string name="love">Harikulade!</string>
+  <string name="hate">Eh işte :(</string>
+  <string name="trakt_createaccount">Yeni hesap oluştur</string>
+  <string name="trakt_synctodevice">SeriesGuide ile eşitle</string>
+  <string name="trakt_synctotrakt">trakt.tv ile eşitle</string>
+  <string name="trakt_syncunseen">İzlenmemiş olan bölümleri eşitle</string>
+  <string name="download_stable">SeriesGuide indir</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Sonraki bölüm</item>
-    <item>Favorites (A - Z)</item>
-    <item>Favorites (Next ep.)</item>
+    <item>Sık Kullanılanlar (a - z)</item>
+    <item>Sık Kullanılanlar (sonraki bl)</item>
   </string-array>
   <string-array name="sesorting">
     <item>Önce en yenisi</item>
@@ -151,16 +145,10 @@
     <item>Önce en yenisi (DVD)</item>
     <item>Önce en eskisi (DVD)</item>
   </string-array>
-  <string-array name="share_items">
-    <item>Check In (GetGlue)</item>
-    <item>Check In (trakt)</item>
-    <item>Mark seen (trakt)</item>
-    <item>Rate (trakt)</item>
-    <item>Other services</item>
-  </string-array>
   <string-array name="showfilter_list">
-    <item>All</item>
-    <item>Favorites</item>
-    <item>Unseen/Upcoming</item>
+    <item>Tümü</item>
+    <item>Sık Kullanılanlar</item>
+    <item>İzlenmemiş / Yaklaşan</item>
+    <item>Hidden</item>
   </string-array>
 </resources>

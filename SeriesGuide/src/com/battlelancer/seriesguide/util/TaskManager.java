@@ -2,7 +2,7 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.thetvdbapi.SearchResult;
+import com.battlelancer.seriesguide.items.SearchResult;
 
 import android.content.Context;
 import android.os.AsyncTask;

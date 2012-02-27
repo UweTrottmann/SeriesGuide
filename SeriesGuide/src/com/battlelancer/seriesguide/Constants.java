@@ -9,18 +9,6 @@ import java.text.SimpleDateFormat;
 
 public class Constants {
 
-    /** THESE ARE NOT INCLUDED IN THE OPEN SOURCE CODE FOR SECURITY REASONS **/
-
-    public static final String API_KEY = "";
-
-    public static final String CONSUMER_KEY = "";
-
-    public static final String CONSUMER_SECRET = "";
-
-    public static final String TRAKT_API_KEY = "";
-
-    /** THESE ARE NOT INCLUDED IN THE OPEN SOURCE CODE FOR SECURITY REASONS **/
-
     public static final SimpleDateFormat theTVDBDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public static enum EpisodeSorting {
@@ -70,11 +58,11 @@ public class Constants {
     }
 
     public static enum ShowSorting {
-        ALPHABETIC(0, Shows.TITLE + " asc"), UPCOMING(1, Shows.NEXTAIRDATE + " asc,"
+        ALPHABETIC(0, Shows.TITLE + " asc"), UPCOMING(1, Shows.NEXTAIRDATEMS + " asc,"
                 + Shows.AIRSTIME + " asc," + Shows.TITLE + " asc"), FAVORITES_FIRST(2,
                 Shows.FAVORITE + " desc," + Shows.TITLE + " asc"), FAVORITES_UPCOMING(3,
-                Shows.FAVORITE + " desc," + Shows.NEXTAIRDATE + " asc," + Shows.AIRSTIME + " asc,"
-                        + Shows.TITLE + " asc");
+                Shows.FAVORITE + " desc," + Shows.NEXTAIRDATEMS + " asc," + Shows.AIRSTIME
+                        + " asc," + Shows.TITLE + " asc");
 
         private final int index;
 

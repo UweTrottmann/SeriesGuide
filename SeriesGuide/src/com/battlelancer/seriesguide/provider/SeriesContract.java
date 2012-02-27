@@ -12,6 +12,7 @@ public class SeriesContract {
 
         String NEXTEPISODE = "next";
 
+        /** Deprecated, use {@link NEXTAIRDATEMS} instead. **/
         String NEXTAIRDATE = "nextairdate";
 
         String NEXTTEXT = "nexttext";
@@ -46,6 +47,11 @@ public class SeriesContract {
 
         String FAVORITE = "series_favorite";
 
+        /**
+         * Added in db version 23 to allow hiding of shows.
+         */
+        String HIDDEN = "series_hidden";
+
         String NEXTAIRDATETEXT = "series_nextairdatetext";
 
         String SYNCENABLED = "series_syncenabled";
@@ -54,11 +60,17 @@ public class SeriesContract {
          * Added in db version 21 to store the airtime in pure text.
          */
         String AIRTIME = "series_airtime";
-        
+
         /**
          * Added in db version 22 to store the last time a show was updated.
          */
         String LASTUPDATED = "series_lastupdate";
+
+        /**
+         * Added in db version 25 to allow correct sorting by next air date.
+         */
+        String NEXTAIRDATEMS = "series_nextairdate";
+
     }
 
     interface SeasonsColumns {
@@ -102,6 +114,8 @@ public class SeriesContract {
         String OVERVIEW = "episodedescription";
 
         String TITLE = "episodetitle";
+
+        String FIRSTAIREDMS = "episode_firstairedms";
     }
 
     interface EpisodeSearchColumns {

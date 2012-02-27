@@ -5,18 +5,17 @@
   <string name="season">Sezon</string>
   <string name="episode_unkownairdate">nieznana</string>
   <string name="episode_iswatched">Obejrzany</string>
-  <string name="episode_notwatched">Nie obejrzany</string>
+  <string name="episode_notwatched">Nieobejrzany</string>
   <string name="specialseason">Odcinki specjalne</string>
-  <string name="ioerror_title">Błąd sieci</string>
-  <string name="saxerror_title">Błąd parsowania</string>
-  <string name="offline_title">Brak połączenia</string>
-  <string name="ioerror">Wystąpił błąd sieci. Możliwe, że nie masz aktualnie dostępu do TheTVDB.com. Spróbuj ponownie później.</string>
-  <string name="saxerror">Odpowiedź z TVDB niezrozumiała. Proszę spróbować później.</string>
-  <string name="offline">Nie ma aktywnego połączenia z internetem. Upewnij się, że jesteś połączony z siecią.</string>
   <string name="search_hint">Wyszukiwanie odcinków</string>
-  <string name="search_title">Dopasowanie odcinków</string>
+  <string name="search_title">Pasujące odcinki</string>
   <string name="share_episode">Udostępnij</string>
   <string name="share_checkout">Sprawdź</string>
+  <string name="search_description">Odcinki</string>
+  <string name="description_home">Strona główna</string>
+  <string name="description_search">Szukaj</string>
+  <string name="description_overview">Opis</string>
+  <string name="norating">brak danych</string>
   <string name="episode_firstaired">Data emisji:</string>
   <string name="episode_dvdnumber">Odcinek na DVD</string>
   <string name="show_actors">Obsada:</string>
@@ -32,135 +31,186 @@
   <string name="show_isalive">Będzie kontynuowany</string>
   <string name="show_isnotalive">Zakończony</string>
   <string name="sort">Sortuj wg</string>
-  <string name="menu_updateart">Pobierz brakujące plakaty</string>
+  <string name="updateall_yes">Aktualizuj (wszystko)</string>
+  <string name="menu_update_delta">Aktualizuj (stare)</string>
   <string name="context_updateshow">Aktualizuj</string>
   <string name="context_showinfo">Pokaż informacje</string>
-  <string name="context_marknext">Oznacz odcinek jako obejrzany</string>
+  <string name="context_marknext">Następny odcinek obejrzany</string>
   <string name="today">dzisiaj</string>
-  <string name="mark_episode">Oznacz jako obejrzany</string>
-  <string name="unmark_episode">Oznacz jako nie obejrzany</string>
+  <string name="now">teraz</string>
+  <string name="daily">codziennie</string>
+  <string name="mark_episode">Odcinek obejrzany</string>
+  <string name="unmark_episode">Odcinek nieobejrzany</string>
   <string name="mark_all">Oznacz jako obejrzane</string>
   <string name="unmark_all">Oznacz jako nie obejrzane</string>
+  <string name="mark_untilhere">Oznacz wcześniej wyemitowane odcinki jako obejrzane</string>
+  <string name="shows_empty">Brak seriali.</string>
   <string name="confirm_delete">Czy na pewno chcesz usunąć ten serial?</string>
   <string name="delete_show">Usuń</string>
-  <string name="dontdelete_show">Nie</string>
+  <string name="dontdelete_show">Nie usuwaj</string>
   <string name="no_nextepisode">nie znaleziono nowych odcinków</string>
   <string name="nextepisode">następny:</string>
+  <string name="context_favorite">Dodaj do ulubionych</string>
   <string name="context_unfavorite">Usuń z ulubionych</string>
   <string name="favorited">Dodano do ulubionych</string>
   <string name="unfavorited">Usunięto z ulubionych</string>
-  <string name="update_error">Nie można zaktualizować.</string>
-  <string name="update_incomplete1">Nie można zaktualizować</string>
-  <string name="update_incomplete2">.</string>
-  <string name="update_inbackground">Aktualizacja...</string>
-  <string name="update_inprogress">Aktualizacja jest w toku. Poczekaj na zakończenie, a następnie spróbuj ponownie.</string>
-  <string name="update_nosdcard">Nie można zaktualizować. Brak pamięci zewnętrznej lub karty SD.</string>
+  <string name="context_hide">Ukryj</string>
+  <string name="context_unhide">Odkryj</string>
+  <string name="hidden">Ukryty serial</string>
+  <string name="unhidden">Odkryty serial</string>
+  <string name="activity">Aktywność</string>
+  <string name="upcoming">Nadchodzące</string>
+  <string name="recent">Ostatnie</string>
+  <string name="friends">Znajomi</string>
+  <string name="friends_empty">Brak aktywności znajomych na trakt.</string>
+  <string name="noupcoming">Brak nadchodzących odcinków.</string>
+  <string name="norecent">Brak ostatnio emitowanych odcinków.</string>
+  <string name="only_favorites">Tylko ulubione</string>
+  <string name="togglewatched">Przełącz obejrzane</string>
+  <string name="update_success">Aktualizacja zakończona.</string>
+  <string name="update_offline">Aktualizacja nie powiodła się. Sprawdź połączenie internetowe/Wi-Fi.</string>
+  <string name="update_saxerror">Aktualizacja nie powiodła się. Spróbuj ponownie później.</string>
+  <string name="update_inprogress">Aktualizacja w toku, spróbuj ponownie później.</string>
+  <string name="menu_updateart">Wczytaj plakaty</string>
+  <string name="arttask_incomplete">Niektóre plakaty nie zostały wczytane. Spróbuj ponownie później.</string>
+  <string name="arttask_nosdcard">Wczytywanie plakatów wymaga karty SD.</string>
   <string name="show_airs">emisja</string>
   <string name="show_network">w</string>
-  <string name="show_pleaseupdate">Spróbuj zaktualizować serial, żeby zobaczyć więcej informacji (na liście przytrzymaj palec na nazwie i kliknij Aktualizuj). Jeśli to nie pomoże, oznacza to, że nie ma więcej informacji w bazie TheTVDB. Jesli chcesz to przejdź na ich stronę (www.thetvdb.com), aby dodać coś od siebie.</string>
   <string name="show_noairtime">Brak dostępnego czasu emisji</string>
-  <string name="noIMDBentry">Brak dostępnych odniesień do IMDB. Uaktualnij serial lub przejdź do thetvdb.com i dodaj je.</string>
-  <string name="no_seasons">Niestety nie znaleziono żadnych sezonów tego serialu. Spróbuj zaktualizować serial (na liście przytrzymaj palec na nazwie i kliknij Aktualizuj)</string>
+  <string name="show_noimdbentry">Nie znaleziono strony IMDB.</string>
   <string name="season_watchcount">odcinki nie obejrzane</string>
   <string name="season_allwatched">Wszystkie odcinki obejrzane</string>
   <string name="season_onenotwatched">odcinek nie obejrzany</string>
   <string name="season_unaired">Nie emitowany w TV</string>
   <string name="oneotherepisode">inny odcinek</string>
   <string name="otherepisodes">inne odcinki</string>
-  <string name="no_episodes">Niestety nie znaleziono żadnych odcinków dla tego sezonu. Spróbuj zaktualizować serial (na liście przytrzymaj palec na nazwie i kliknij Aktualizuj)</string>
   <string name="search_button">Szukaj</string>
-  <string name="no_results">Nie znaleziono żadnych wyników. Uzupełnij tytuł.</string>
-  <string name="search_error">Nie udało się połaczyć z TheTVDB. Sprawdź połączenie z internetem i spróbuj ponownie.</string>
-  <string name="search_noinput">Wpisz szukane słowo.</string>
+  <string name="search_hint_add">Nazwa serialu</string>
+  <string name="no_results">Brak wyników. Uzupełnij zapytanie.</string>
+  <string name="search_error">Wyszukiwanie nie powiodło się. Spróbuj ponownie później.</string>
   <string name="add_show">Dodaj serial</string>
   <string name="dont_add_show">Nie dodawaj</string>
-  <string name="search_hint_add">Szukaj serialu</string>
-  <string name="add_started">pojawi się na twojej liście seriali wkrótce.</string>
+  <string name="add_started">pojawi się na liście seriali wkrótce.</string>
   <string name="add_success">dodano pomyślnie.</string>
   <string name="add_error_begin">Nie można dodać \"</string>
-  <string name="add_error_end">\"</string>
-  <string name="add_already_exists">już istnieje. Został uaktualniony.</string>
-  <string name="preferences">Ustawienia</string>
-  <string name="pref_sorting">Sortowanie</string>
-  <string name="pref_showsorting">Sortuj seriale wg</string>
-  <string name="pref_seasonsorting">Sortowanie sezonów</string>
-  <string name="pref_episodesorting">Sortowanie odcinków</string>
-  <string name="pref_showlist">Pokaż listę</string>
-  <string name="pref_onlyseasoneps">Brak odcinków specjalnych</string>
-  <string name="pref_content">Treść</string>
-  <string name="pref_language">Język bazy TVDB</string>
-  <string name="pref_hideimages">Ukryj obrazki</string>
-  <string name="pref_hideimagessummary">Ukryj obrazki z programu przed standardową przeglądarką Androida (wymagany reboot)</string>
+  <string name="add_error_end">\".</string>
+  <string name="add_already_exists">już jest na liście seriali.</string>
+  <string name="trending">Trendy</string>
+  <string name="recommended">Zalecane</string>
+  <string name="library">Biblioteka</string>
+  <string name="powered_by_thetvdb">powered by thetvdb.com</string>
+  <string name="powered_by_trakt">powered by trakt.tv</string>
   <string name="pref_more">Więcej</string>
-  <string name="about">O programie...</string>
-  <string name="backup">Opcje kopii zapasowej</string>
-  <string name="backup_summary">Zrób lub przywróć kopię bazy danych seriali</string>
+  <string name="pref_showlist">Lista seriali</string>
+  <string name="help">Pomoc</string>
+  <string name="preferences">Ustawienia</string>
+  <string name="pref_onlyfuture">Bez wyemitowanych</string>
+  <string name="pref_onlyfuturesummary">\"następny:\" nie pokazuje już wyemitowanych odcinków</string>
+  <string name="pref_onlyseasoneps">Bez specjalnych</string>
+  <string name="pref_onlyseasonepssummary">\"Next:\" nie pokazuje odcinków specjalnych</string>
+  <string name="pref_content">Treść</string>
+  <string name="pref_sortingsummary">Określ sortowanie sezonów</string>
+  <string name="pref_epsortingsummary">Określ sortowanie odcinków</string>
+  <string name="backup">Kopia zapasowa/Przywracanie</string>
+  <string name="backup_summary">Archiwizuj lub przywróć listę seriali</string>
+  <string name="pref_language">Język treści</string>
+  <string name="pref_languagesummary">Tłumaczenie nie jest dostępne dla każdego serialu</string>
+  <string name="pref_number">Format numeracji</string>
+  <string name="pref_numbersummary">Wybierz między 1x01, S01E01 i S01E01</string>
+  <string name="pref_usetz">Moja strefa czasowa</string>
+  <string name="pref_usetzsummary">Przesunięcie czasu emisji dla Twojej strefy czasowej (poza USA)</string>
+  <string name="pref_offset">Ręczne przesunięcie czasu</string>
+  <string name="pref_offsetsummary">Przesunięcie czasu emisji o określoną liczbę godzin</string>
+  <string name="pref_autoupdate">Aktualizacje automatyczne</string>
+  <string name="pref_autoupdatesummary">Okresowo aktualizuje seriale podczas startu SeriesGuide</string>
+  <string name="pref_updatewifionly">Aktual. tylko Wi-Fi</string>
+  <string name="about">O SeriesGuide</string>
+  <string name="about_message">http://seriesguide.uwetrottmann.com - opracowany przez Uwe Trottmann.\n\nPoniższy odnośnik prowadzi do listy osób i zasobów, które umożliwiły utworzenie tego projektu.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">Udostępnianie</string>
   <string name="clearGetGlueCredentials">Rozłącz z GetGlue</string>
+  <string name="clearGetGlueCredentialssummary">Usuń połączenie z GetGlue</string>
+  <string name="pref_trakt">poświadczenia trakt.tv</string>
+  <string name="pref_traktsummary">Dodaj lub edytuj dane logowania trakt.tv</string>
+  <string name="pref_traktsync">Synchronizuj z trakt.tv</string>
+  <string name="pref_traktsyncsummary">Wstępna synchronizacja z trakt.tv</string>
+  <string name="pref_traktintegrate">Zintegruj z trakt.tv</string>
+  <string name="pref_traktintegratesummary">Pobierz aktywność trakt przy aktualizacji</string>
+  <string name="feedback">Wyślij opinię</string>
   <string name="pref_advanced">Zaawansowane</string>
-  <string name="clear_cache">Wyczyść pamięć podręczną obrazów</string>
-  <string name="clear_cache_summary">Usuwa wszystkie obrazki z pamięci cache oraz karty SD. Zostaną one ponownie pobrane podczas aktualizacji listy seriali.</string>
+  <string name="clear_cache">Usuń bufor obrazów</string>
+  <string name="clear_cache_summary">Usuwa wszystkie buforowane obrazy z urządzenia</string>
+  <string name="pref_hideimages">Ukryj obrazy</string>
+  <string name="pref_hideimagessummary">Ukrywa obrazy przed standardową przeglądarką grafik (wymagany restart)</string>
   <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_notifications">Włącz powiadomienia</string>
-  <string name="pref_notificationssummary">Pokaż powiadomienia o nadchodzących odcinkach</string>
-  <string name="pref_usetz">Użyj mojej strefy czasowej</string>
-  <string name="pref_offset">Różnica w czasie</string>
-  <string name="backup_inprogress">Tworzenie kopii zapasowej...</string>
-  <string name="backup_success">Kopia wykonana pomyślnie</string>
-  <string name="backup_failed">Błąd tworzenia kopii zapasowej</string>
-  <string name="import_inprogress">Przywracanie bazy danych...</string>
-  <string name="import_success">Baza danych przywrócona</string>
-  <string name="import_failed">Przywracanie nie powiodło się</string>
-  <string name="backup_yes">Tak.</string>
-  <string name="backup_no">Nie</string>
-  <string name="import_yes">Tak</string>
-  <string name="import_no">Nie</string>
-  <string name="smallwidget">Przyszłe odcinki (mały - 4x1)</string>
-  <string name="bigwidget">Przyszłe odcinki (średni - 4x2)</string>
-  <string name="largewidget">Przyszłe odcinki (duży - 4x4)</string>
-  <string name="upcoming">Nadchodzące</string>
-  <string name="recent">Ostatnie</string>
-  <string name="noupcoming">Wygląda na to, że nie ma żadnych odcinków. Spróbuj zaktualizować serial.</string>
-  <string name="togglewatched">Odwróć zaznaczenie</string>
-  <string name="seasons">Lista sezonów</string>
+  <string name="pref_ganalyticssummary">Śledzi wykorzystanie funkcji, aby pomóc w ulepszeniu SeriesGuide</string>
+  <string name="backup_description"><b>Kopia zapasowa</b> tworzy kopię listy seriali w pliku o nazwie <b>seriesdatabase</b> w poniższym folderze.\n\nAby<b>Przywrócić</b> listę upewnij się, że plik jest w poniższym folderze.\n\nTylko archiwa list z tej samej lub niższej wersji (niż poniższa) mogą zostać przywrócone.</string>
+  <string name="backup_path"><b>Folder kopii zapasowej</b></string>
+  <string name="backup_version"><b>Wersja bazy danych</b></string>
+  <string name="backup_failed_nosd">Nie można utworzyć kopii zapasowej. Wskazany folder jest niedostępny.</string>
+  <string name="backup_success">Archiwizacja zakończona.</string>
+  <string name="backup_failed">Archiwizacja nieudana.</string>
+  <string name="import_failed_nosd">Nie można przywrócić kopii zapasowej. Wskazany folder jest niedostępny.</string>
+  <string name="import_failed_nofile">Brak pliku archiwum.</string>
+  <string name="import_failed_noread">Plik archiwum jest nieodczytywalny.</string>
+  <string name="dbupgradefailed">Kopia zapasowa jest za stara lub pusta. Uwaga: najpierw zaimportuj archiwa wersji przed 2.0 w wersji 1.9.x.</string>
+  <string name="import_success">Zakończono przywracanie.</string>
+  <string name="import_failed">Przywracanie nie powiodło się.</string>
+  <string name="backup_button">Kopia zapasowa</string>
+  <string name="import_button">Przywróć</string>
+  <string name="backup_question">Spowoduje to zastąpienie bieżącego pliku kopii zapasowej w folderze kopii zapasowej!</string>
+  <string name="backup_yes">Archiwizuj</string>
+  <string name="backup_no">Nie archiwizuj</string>
+  <string name="import_question">Bieżąca lista seriali zostanie utracona! Upewnij się, że plik kopii zapasowej jest we wskazanym folderze.</string>
+  <string name="import_yes">Przywróć</string>
+  <string name="import_no">Nie przywracaj</string>
+  <string name="widget_label">Następne odcinki</string>
+  <string name="smallwidget">Następne odcinki (mały)</string>
+  <string name="bigwidget">Następne odcinki (średni)</string>
+  <string name="largewidget">Następne odcinki (duży)</string>
+  <string name="seasons">Sezony</string>
   <string name="cancel">Anuluj</string>
   <string name="share">Udostępnij</string>
+  <string name="menu_checkin_getglue">Sprawdź w (GetGlue)</string>
+  <string name="menu_checkin_trakt">Sprawdź w (trakt)</string>
+  <string name="menu_markseen_trakt">Oznacz jako obejrzane (trakt)</string>
+  <string name="menu_rate_trakt">Oceń (trakt)</string>
+  <string name="menu_share_others">za pomocą innych aplikacji</string>
   <string name="done">Zrobione</string>
   <string name="checkin">Zatwierdź</string>
   <string name="comment">Wysyłanie komentarza</string>
-  <string name="checkinsuccess">Wysłano pomyślnie</string>
-  <string name="pref_number">Typ numerowania</string>
-  <string name="checkinfailed">Błąd podczas wysyłania</string>
-  <string name="oauthmessage">Uwierzytelnianie SeriesGuide z GetGlue...</string>
+  <string name="checkinsuccess">Sprawdzanie zakończone.</string>
+  <string name="checkin_impossible">Nie można sprawdzić tego serialu.</string>
+  <string name="traktcheckin_cancel">Anuluj</string>
+  <string name="traktcheckin_inprogress">Sprawdzanie jest w toku. Anuluj obecne sprawdzanie lub poczekaj %s przed kolejnym sprawdzaniem.</string>
+  <string name="traktcheckin_wait">Poczekam</string>
+  <string name="checkinfailed">Błąd sprawdzania.</string>
   <string name="addtocalendar">Dodaj do kalendarza</string>
-  <string name="addtocalendar_failed">Niestety nie ma wystarczającej ilości informacji, żeby stworzyć wydarzenie w kalendarzu.</string>
-  <string name="search_description">Odcinki</string>
-  <string name="description_home">Domek</string>
-  <string name="description_search">Szukaj</string>
-  <string name="description_overview">Opis</string>
-  <string name="norating">brak danych</string>
-  <string name="loading">Wczytywanie...</string>
-  <string name="eula_title">Co powinieneś wiedzieć</string>
-  <string name="accept">Akceptuję</string>
-  <string name="decline">Nie akceptuję</string>
-  <string name="username">Login</string>
+  <string name="addtocalendar_failed">Nie można utworzyć zdarzenia kalendarza.</string>
+  <string name="username">Nazwa użytkownika</string>
+  <string name="email">E-mail</string>
   <string name="password">Hasło</string>
-  <string name="apikey">klucz API</string>
   <string name="save">Zapisz</string>
   <string name="dontsave">Nie zapisuj</string>
+  <string name="trakt_success">Komunikacja z trakt.tv pomyślna</string>
+  <string name="trakt_error">Komunikacja z trakt.tv zakończona niepowodzeniem</string>
+  <string name="trakt_seen">oznaczony jako obejrzany</string>
   <string name="trakt_decryptfail">Hasło nie może zostać zdekodowane</string>
   <string name="trakt_credentials_invalid">Zły login/hasło.</string>
-  <string name="pref_traktintegrate">Zintegruj z trakt.tv</string>
-  <string name="donate">Kup mi drinka (Paypal)</string>
+  <string name="trakt_generalerror">Coś poszło nie tak. Prosimy o sprawdzenie poświadczeń i ponowną próbę.</string>
   <string name="love">Uwielbiam to!</string>
   <string name="hate">Słaby :(</string>
   <string name="trakt_createaccount">Utwórz nowe konto</string>
-  <string name="email">E-mail</string>
+  <string name="trakt_experimental">Tylko seriale dodane do SeriesGuide są synchronizowane. \"Synchronizuj do SeriesGuide\" pobiera obejrzane odcinki z trakt. \"Synchronizuj do trakt\" wysyła obejrzane odcinki z SeriesGuide do trakt.</string>
+  <string name="trakt_synctodevice">Synchronizuj do SeriesGuide</string>
+  <string name="trakt_synctotrakt">Synchronizuj do trakt.tv</string>
+  <string name="trakt_syncunseen">Synchronizuj nieobejrzane odcinki</string>
+  <string name="welcome_message"><big>Pierwsze kroki</big></string>
+  <string name="download_stable">Pobierz SeriesGuide</string>
   <string-array name="shsorting">
     <item>Od A do Z</item>
     <item>Następny odcinek</item>
-    <item>Favorites (A - Z)</item>
-    <item>Favorites (Next ep.)</item>
+    <item>Ulubione od A do Z</item>
+    <item>Ulubione (nast. od.)</item>
   </string-array>
   <string-array name="sesorting">
     <item>Najpierw najnowsze</item>
@@ -169,22 +219,16 @@
   <string-array name="epsorting">
     <item>Najpierw najnowsze</item>
     <item>Najpierw najstarsze</item>
-    <item>Nieobejrzane najpierw</item>
+    <item>Najpierw nieobejrzane</item>
     <item>Od A do Z</item>
     <item>Od Z do A</item>
     <item>Najpierw najnowsze (DVD)</item>
     <item>Najpierw najstarsze (DVD)</item>
   </string-array>
-  <string-array name="share_items">
-    <item>Check In (GetGlue)</item>
-    <item>Check In (trakt)</item>
-    <item>Mark seen (trakt)</item>
-    <item>Rate (trakt)</item>
-    <item>Other services</item>
-  </string-array>
   <string-array name="showfilter_list">
-    <item>All</item>
-    <item>Favorites</item>
-    <item>Unseen/Upcoming</item>
+    <item>Wszystkie</item>
+    <item>Ulubione</item>
+    <item>Nieobejrzane/nadchodzące</item>
+    <item>Ukryte</item>
   </string-array>
 </resources>

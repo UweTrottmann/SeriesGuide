@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="layout_padding">16dp</dimen>
     <dimen name="body_padding">10dp</dimen>
     <dimen name="body_padding_large">15dp</dimen>
+    <dimen name="item_padding">4dp</dimen>
     <dimen name="text_size_xlarge">24sp</dimen>
-    <dimen name="showgrid_padding">10dp</dimen>
+    <dimen name="showgrid_padding">16dp</dimen>
     <dimen name="showgrid_columnWidth">310dp</dimen>
     <dimen name="showgrid_spacing">20dp</dimen>
+    <dimen name="imagecontainer_height">250dp</dimen>
+    <integer name="episodespane_weight">2</integer>
+    <integer name="detailsspane_weight">3</integer>
 
 </resources>
