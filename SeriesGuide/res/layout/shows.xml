@@ -1,43 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_shows"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
-    <FrameLayout
-        android:id="@+id/fragment_shows"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:padding="@dimen/showgrid_padding" >
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:text="@string/shows_empty"
+        android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/empty"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="10dp"
-            android:text="@string/shows_empty"
-            android:visibility="gone" />
+    <GridView
+        android:id="@+id/showlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="@bool/gridClipToPadding"
+        android:columnWidth="@dimen/showgrid_columnWidth"
+        android:gravity="center"
+        android:horizontalSpacing="@dimen/showgrid_spacing"
+        android:listSelector="@drawable/list_selector_holo_dark"
+        android:numColumns="auto_fit"
+        android:padding="@dimen/showgrid_padding"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="@dimen/showgrid_spacing" >
+    </GridView>
 
-        <GridView
-            android:id="@+id/showlist"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:columnWidth="@dimen/showgrid_columnWidth"
-            android:gravity="center"
-            android:horizontalSpacing="@dimen/showgrid_spacing"
-            android:listSelector="@drawable/list_selector_holo_dark"
-            android:numColumns="auto_fit"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="@dimen/showgrid_spacing" >
-        </GridView>
+    <ViewStub
+        android:id="@+id/stub_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inflatedId="@+id/overlay_update"
+        android:layout="@layout/progress_overlay" />
 
-        <ViewStub
-            android:id="@+id/stub_update"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inflatedId="@+id/overlay_update"
-            android:layout="@layout/progress_overlay" />
-    </FrameLayout>
-
-</LinearLayout>
+</FrameLayout>

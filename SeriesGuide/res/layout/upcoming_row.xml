@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/item_padding"
     android:paddingBottom="@dimen/item_padding"
-    android:paddingRight="@dimen/body_padding" >
+    android:paddingRight="@dimen/body_padding"
+    android:paddingTop="@dimen/item_padding" >
 
     <com.battlelancer.seriesguide.WatchedBox
         android:id="@+id/watchedBoxUpcoming"
@@ -12,6 +12,7 @@
         android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:background="@drawable/list_selector_holo_dark"
         android:paddingBottom="15dp"
         android:paddingLeft="5dp"
         android:paddingRight="8dp"

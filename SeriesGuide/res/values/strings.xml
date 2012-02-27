@@ -260,8 +260,9 @@
     <string name="username">Username</string> 
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="save">Save</string>
-    <string name="dontsave">Don\'t save</string>
+    <string name="waitplease">A moment, please&#8230;</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
     <string name="trakt_success">Successfully talked to trakt</string>
     <string name="trakt_error">Interaction with trakt failed</string>
     <string name="trakt_seen">marked as seen</string>

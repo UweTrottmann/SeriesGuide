@@ -3,33 +3,29 @@
 
     <TextView
         android:id="@+id/TextViewEpisodeDescription"
-        style="@style/DescriptionFont"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="5dp" />
+        style="@style/SmallItems.WithSideMargins" />
 
     <include layout="@layout/ratingbar" >
     </include>
 
     <TextView
         android:id="@+id/TextViewEpisodeGuestStars"
-        style="@style/SmallItems" />
+        style="@style/SmallItems.WithSideMargins" />
 
     <TextView
         android:id="@+id/TextViewEpisodeDirectors"
-        style="@style/SmallItems" />
+        style="@style/SmallItems.WithSideMargins" />
 
     <TextView
         android:id="@+id/TextViewEpisodeWriters"
-        style="@style/SmallItems" />
+        style="@style/SmallItems.WithSideMargins" />
 
     <TextView
         android:id="@+id/textViewEpisodeDVDnumber"
-        style="@style/SmallItems" />
+        style="@style/SmallItems.WithSideMargins" />
 
     <TextView
         android:id="@+id/TextViewEpisodeFirstAirdate"
-        style="@style/SmallItems" />
+        style="@style/SmallItems.WithSideMargins" />
 
 </merge>

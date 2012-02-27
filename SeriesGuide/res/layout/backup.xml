@@ -1,61 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/BackupLinearLayout"
-    android:orientation="vertical"
-    android:padding="@dimen/body_padding" >
+    android:padding="@dimen/layout_padding" >
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/layout_padding"
+            android:text="@string/backup_description"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/backuppath"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/layout_padding"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:text="Backup folder: n/a"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/dbversion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/layout_padding"
+            android:layout_marginTop="@dimen/layout_padding"
+            android:text="Database version: n/a"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" >
+            android:id="@+id/buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/inline_padding"
+            android:layout_marginTop="@dimen/inline_padding" >
 
-            <TextView
+            <Button
+                android:id="@+id/ButtonExportDBtoSD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/body_padding"
-                android:text="@string/backup_description" />
+                android:layout_marginRight="@dimen/inline_padding"
+                android:text="@string/backup_button" />
 
-            <TextView
-                android:id="@+id/backuppath"
+            <Button
+                android:id="@+id/ButtonImportDBfromSD"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/body_padding"
-                android:text="Backup folder: n/a"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <TextView
-                android:id="@+id/dbversion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/body_padding"
-                android:text="Database version: n/a"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <LinearLayout
-                android:id="@+id/buttons"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp" >
-
-                <Button
-                    android:id="@+id/ButtonExportDBtoSD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="30dp"
-                    android:text="@string/backup_button" />
-
-                <Button
-                    android:id="@+id/ButtonImportDBfromSD"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/import_button" />
-            </LinearLayout>
+                android:layout_marginLeft="@dimen/inline_padding"
+                android:text="@string/import_button" />
         </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

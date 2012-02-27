@@ -43,6 +43,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.security.MessageDigest;
@@ -130,13 +132,13 @@ public class ShareUtils {
 
                 // Create and show the dialog.
                 ProgressDialog newFragment = ProgressDialog.newInstance();
+                newFragment.show(ft, "progress-dialog");
 
                 // start the trakt check in task, add the
                 // dialog as listener
                 shareData.putInt(ShareItems.TRAKTACTION, TraktAction.CHECKIN_EPISODE.index());
                 new TraktTask(activity, fm, shareData, newFragment).execute();
 
-                newFragment.show(ft, "progress-dialog");
                 break;
             }
             case MARKSEEN_TRAKT: {
@@ -193,6 +195,11 @@ public class ShareUtils {
             final String episodestring = getArguments().getString(ShareItems.EPISODESTRING);
             final String imdbId = getArguments().getString(ShareItems.IMDBID);
 
+            final LinearLayout layout = new LinearLayout(getActivity());
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(16, 16, 16, 16);
+
             input = new EditText(getActivity());
             input.setMinLines(3);
             input.setMaxLines(5);
@@ -201,6 +208,8 @@ public class ShareUtils {
                 new InputFilter.LengthFilter(140)
             });
 
+            layout.addView(input, layoutParams);
+
             if (savedInstanceState != null) {
                 input.setText(savedInstanceState.getString("inputtext"));
             } else {
@@ -208,7 +217,7 @@ public class ShareUtils {
             }
 
             return new AlertDialog.Builder(getActivity()).setTitle(getString(R.string.comment))
-                    .setView(input)
+                    .setView(layout)
                     .setPositiveButton(R.string.checkin, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             onGetGlueCheckIn(getActivity(), input.getText().toString(), imdbId);
@@ -363,11 +372,13 @@ public class ShareUtils {
 
         private final Context mContext;
 
-        private final FragmentManager mManager;
+        private final FragmentManager mFm;
 
         private final Bundle mTraktData;
 
-        private OnTaskFinishedListener mListener;
+        private OnTaskFinishedListener mProgressDialog;
+
+        private TraktAction mAction;
 
         public interface OnTaskFinishedListener {
             public void onTaskFinished();
@@ -384,7 +395,7 @@ public class ShareUtils {
          */
         public TraktTask(Context context, FragmentManager manager, Bundle traktData) {
             mContext = context;
-            mManager = manager;
+            mFm = manager;
             mTraktData = traktData;
         }
 
@@ -400,7 +411,27 @@ public class ShareUtils {
         public TraktTask(Context context, FragmentManager manager, Bundle traktData,
                 OnTaskFinishedListener listener) {
             this(context, manager, traktData);
-            mListener = listener;
+            mProgressDialog = listener;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            mAction = TraktAction.values()[mTraktData.getInt(ShareItems.TRAKTACTION)];
+
+            // display a progress dialog to avoid navigating away crashes if
+            // CancelCheckInDialog needs to be shown later
+            if (mAction == TraktAction.CHECKIN_EPISODE && mProgressDialog == null) {
+                FragmentTransaction ft = mFm.beginTransaction();
+                Fragment prev = mFm.findFragmentByTag("progress-dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+
+                ProgressDialog newFragment = ProgressDialog.newInstance();
+                newFragment.show(ft, "progress-dialog");
+                mProgressDialog = newFragment;
+            }
         }
 
         @Override
@@ -426,8 +457,6 @@ public class ShareUtils {
             final int tvdbid = mTraktData.getInt(ShareItems.TVDBID);
             final int season = mTraktData.getInt(ShareItems.SEASON);
             final int episode = mTraktData.getInt(ShareItems.EPISODE);
-            final TraktAction action = TraktAction.values()[mTraktData
-                    .getInt(ShareItems.TRAKTACTION)];
 
             // last chance to abort (return value thrown away)
             if (isCancelled()) {
@@ -436,7 +465,7 @@ public class ShareUtils {
 
             try {
                 Response r = null;
-                switch (action) {
+                switch (mAction) {
                     case CHECKIN_EPISODE: {
                         r = manager.showService().checkin(tvdbid).season(season).episode(episode)
                                 .fire();
@@ -474,6 +503,11 @@ public class ShareUtils {
 
         @Override
         protected void onPostExecute(Response r) {
+            // tell a potential listener that our work is done
+            if (mProgressDialog != null) {
+                mProgressDialog.onTaskFinished();
+            }
+
             if (r != null) {
                 if (r.status.equalsIgnoreCase(TraktStatus.SUCCESS)) {
                     // all good
@@ -485,7 +519,7 @@ public class ShareUtils {
                         // looks like a check in is in progress
                         TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment
                                 .newInstance(mTraktData, r.wait);
-                        FragmentTransaction ft = mManager.beginTransaction();
+                        FragmentTransaction ft = mFm.beginTransaction();
                         newFragment.show(ft, "cancel-checkin-dialog");
                     } else {
                         // well, something went wrong
@@ -498,13 +532,8 @@ public class ShareUtils {
                 // credentials are invalid
                 TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
                         .newInstance(mTraktData);
-                FragmentTransaction ft = mManager.beginTransaction();
+                FragmentTransaction ft = mFm.beginTransaction();
                 newFragment.show(ft, "traktdialog");
-            }
-
-            // tell a potential listener that our work is done
-            if (mListener != null) {
-                mListener.onTaskFinished();
             }
         }
     }
@@ -527,11 +556,11 @@ public class ShareUtils {
         }
 
         @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+            getDialog().setTitle(R.string.pref_trakt);
             final Context context = getActivity().getApplicationContext();
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            final LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final View layout = inflater.inflate(R.layout.trakt_credentials_dialog, null);
             final FragmentManager fm = getFragmentManager();
             final Bundle args = getArguments();
@@ -540,10 +569,7 @@ public class ShareUtils {
             final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
             ((EditText) layout.findViewById(R.id.username)).setText(username);
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setView(layout);
-            builder.setTitle("trakt.tv");
-
+            // new account toggle
             final View mailviews = layout.findViewById(R.id.mailviews);
             mailviews.setVisibility(View.GONE);
 
@@ -559,9 +585,28 @@ public class ShareUtils {
                         }
                     });
 
-            builder.setPositiveButton(R.string.save, new OnClickListener() {
+            // status strip
+            final TextView status = (TextView) layout.findViewById(R.id.status);
+            final View progressbar = layout.findViewById(R.id.progressbar);
+            final View progress = layout.findViewById(R.id.progress);
+            progress.setVisibility(View.GONE);
 
-                public void onClick(DialogInterface dialog, int which) {
+            final Button connectbtn = (Button) layout.findViewById(R.id.connectbutton);
+            final Button disconnectbtn = (Button) layout.findViewById(R.id.disconnectbutton);
+
+            // disable disconnect button if there are no saved credentials
+            if (username.length() == 0) {
+                disconnectbtn.setEnabled(false);
+            }
+
+            connectbtn.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    // prevent multiple instances
+                    connectbtn.setEnabled(false);
+                    disconnectbtn.setEnabled(false);
+
                     final String username = ((EditText) layout.findViewById(R.id.username))
                             .getText().toString();
                     final String passwordHash = ShareUtils.toSHA1(((EditText) layout
@@ -575,8 +620,16 @@ public class ShareUtils {
                     AsyncTask<String, Void, Response> accountValidatorTask = new AsyncTask<String, Void, Response>() {
 
                         @Override
+                        protected void onPreExecute() {
+                            progress.setVisibility(View.VISIBLE);
+                            progressbar.setVisibility(View.VISIBLE);
+                            status.setText(R.string.waitplease);
+                        }
+
+                        @Override
                         protected Response doInBackground(String... params) {
-                            // SHA of any password is always non-empty
+                            // SHA of any password is always non-empty, so only
+                            // check for an empty username
                             if (username.length() == 0) {
                                 return null;
                             }
@@ -586,6 +639,9 @@ public class ShareUtils {
                             final ServiceManager manager = new ServiceManager();
                             manager.setApiKey(traktApiKey);
                             manager.setAuthentication(username, passwordHash);
+                            // TODO test the hell out of SSL API
+                            manager.setUseSsl(true);
+
                             Response response = null;
 
                             try {
@@ -608,48 +664,55 @@ public class ShareUtils {
 
                         @Override
                         protected void onPostExecute(Response response) {
-                            if (response != null) {
-                                String passwordEncr;
-                                // try to encrypt the password before storing it
-                                try {
-                                    passwordEncr = SimpleCrypto.encrypt(passwordHash, context);
-                                } catch (Exception e) {
-                                    passwordEncr = "";
-                                }
+                            progressbar.setVisibility(View.GONE);
+                            connectbtn.setEnabled(true);
+                            disconnectbtn.setEnabled(true);
 
-                                // prepare writing credentials to settings
-                                Editor editor = prefs.edit();
-                                editor.putString(SeriesGuidePreferences.KEY_TRAKTUSER, username)
-                                        .putString(SeriesGuidePreferences.KEY_TRAKTPWD,
-                                                passwordEncr);
-
-                                if (response.getStatus().equalsIgnoreCase("success")
-                                        && passwordEncr.length() != 0 && editor.commit()) {
-                                    // all went through
-                                    Toast.makeText(context,
-                                            response.getStatus() + ": " + response.getMessage(),
-                                            Toast.LENGTH_SHORT).show();
-
-                                    // set new auth data for service manager
-                                    try {
-                                        Utils.getServiceManagerWithAuth(context, true);
-                                    } catch (Exception e) {
-                                        // we don't care
-                                    }
-                                } else {
-                                    Toast.makeText(context,
-                                            response.getStatus() + ": " + response.getError(),
-                                            Toast.LENGTH_LONG).show();
-                                }
-                            } else {
-                                Toast.makeText(context,
-                                        context.getString(R.string.trakt_generalerror),
-                                        Toast.LENGTH_LONG).show();
+                            if (response == null) {
+                                status.setText(R.string.trakt_generalerror);
+                                return;
                             }
 
-                            if (isForwardingGivenTask) {
-                                // relaunch the trakt task which called us
-                                new TraktTask(context, fm, args).execute();
+                            String passwordEncr;
+                            // try to encrypt the password before storing it
+                            try {
+                                passwordEncr = SimpleCrypto.encrypt(passwordHash, context);
+                            } catch (Exception e) {
+                                // password encryption failed
+                                status.setText(R.string.trakt_generalerror);
+                                return;
+                            }
+
+                            // prepare writing credentials to settings
+                            Editor editor = prefs.edit();
+                            editor.putString(SeriesGuidePreferences.KEY_TRAKTUSER, username)
+                                    .putString(SeriesGuidePreferences.KEY_TRAKTPWD, passwordEncr);
+
+                            if (response.status.equals(TraktStatus.SUCCESS)
+                                    && passwordEncr.length() != 0 && editor.commit()) {
+                                // set new auth data for service manager
+                                try {
+                                    Utils.getServiceManagerWithAuth(context, true);
+                                } catch (Exception e) {
+                                    status.setText(R.string.trakt_generalerror);
+                                    return;
+                                }
+
+                                // all went through
+                                dismiss();
+
+                                if (isForwardingGivenTask) {
+                                    // relaunch the trakt task which called
+                                    // us
+                                    new TraktTask(context, fm, args).execute();
+                                }
+                            } else if (response.status.equals(TraktStatus.FAILURE)) {
+                                // credentials were wrong or account
+                                // creation failed
+                                status.setText(response.error);
+                            } else {
+                                // unknown error message from trakt
+                                status.setText(R.string.trakt_generalerror);
                             }
                         }
                     };
@@ -657,9 +720,36 @@ public class ShareUtils {
                     accountValidatorTask.execute();
                 }
             });
-            builder.setNegativeButton(R.string.dontsave, null);
 
-            return builder.create();
+            disconnectbtn.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    // clear trakt credentials
+                    new AsyncTask<Void, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(Void... params) {
+                            Editor editor = prefs.edit();
+                            editor.putString(SeriesGuidePreferences.KEY_TRAKTUSER, "").putString(
+                                    SeriesGuidePreferences.KEY_TRAKTPWD, "");
+                            editor.commit();
+
+                            try {
+                                Utils.getServiceManagerWithAuth(context, false).setAuthentication(
+                                        "", "");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            return null;
+                        }
+                    }.execute();
+
+                    dismiss();
+                }
+            });
+
+            return layout;
         }
     }
 
@@ -677,7 +767,7 @@ public class ShareUtils {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final Context context = getActivity().getApplicationContext();
-            final FragmentManager fm = getSupportFragmentManager();
+            final FragmentManager fm = getFragmentManager();
             final Bundle args = getArguments();
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
