@@ -25,6 +25,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginRight="@dimen/body_padding"
         android:layout_toRightOf="@+id/watchedBoxUpcoming"
+        android:contentDescription="@string/description_poster"
         android:src="@drawable/show_generic" />
 
     <LinearLayout

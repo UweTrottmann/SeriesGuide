@@ -1,122 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/BackupLinearLayout"
-    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:padding="@dimen/body_padding" >
 
-    <ScrollView
+    <RelativeLayout
+        android:id="@+id/syncbuttons"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp" >
 
-        <RelativeLayout
-            android:id="@+id/syncbuttons"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp" >
+        <TextView
+            android:id="@+id/textViewTitleCreds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/pref_trakt"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <TextView
-                android:id="@+id/textViewTitleCreds"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="@string/pref_trakt"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:id="@+id/textViewSetup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textViewTitleCreds"
+            android:text="@string/pref_traktsummary" >
+        </TextView>
 
-            <TextView
-                android:id="@+id/textViewSetup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/textViewTitleCreds"
-                android:text="@string/pref_traktsummary" >
-            </TextView>
+        <Button
+            android:id="@+id/setupAccountButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewSetup"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="@string/pref_trakt" >
+        </Button>
 
-            <Button
-                android:id="@+id/setupAccountButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textViewSetup"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:text="@string/pref_trakt" >
-            </Button>
+        <TextView
+            android:id="@+id/textViewTitleSync"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/setupAccountButton"
+            android:layout_marginTop="10dp"
+            android:text="@string/pref_traktsync"
+            android:textAppearance="?android:attr/textAppearanceMedium" >
+        </TextView>
 
-            <TextView
-                android:id="@+id/textViewTitleSync"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/setupAccountButton"
-                android:layout_marginTop="10dp"
-                android:text="@string/pref_traktsync"
-                android:textAppearance="?android:attr/textAppearanceMedium" >
-            </TextView>
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textViewTitleSync"
+            android:text="@string/trakt_experimental" >
+        </TextView>
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/textViewTitleSync"
-                android:text="@string/trakt_experimental" >
-            </TextView>
+        <Button
+            android:id="@+id/syncToDeviceButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView1"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="@string/trakt_synctodevice" >
+        </Button>
 
-            <Button
-                android:id="@+id/syncToDeviceButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView1"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:text="@string/trakt_synctodevice" >
-            </Button>
+        <Button
+            android:id="@+id/syncToTraktButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/syncToDeviceButton"
+            android:layout_alignRight="@+id/syncToDeviceButton"
+            android:layout_below="@+id/syncToDeviceButton"
+            android:layout_marginTop="10dp"
+            android:text="@string/trakt_synctotrakt" >
+        </Button>
 
-            <Button
-                android:id="@+id/syncToTraktButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/syncToDeviceButton"
-                android:layout_alignRight="@+id/syncToDeviceButton"
-                android:layout_below="@+id/syncToDeviceButton"
-                android:layout_marginTop="10dp"
-                android:text="@string/trakt_synctotrakt" >
-            </Button>
+        <CheckBox
+            android:id="@+id/checkBoxSyncUnseen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/syncToTraktButton"
+            android:layout_alignRight="@+id/syncToTraktButton"
+            android:layout_below="@+id/syncToTraktButton"
+            android:layout_marginTop="20dp"
+            android:text="@string/trakt_syncunseen" >
+        </CheckBox>
 
-            <CheckBox
-                android:id="@+id/checkBoxSyncUnseen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/syncToTraktButton"
-                android:layout_alignRight="@+id/syncToTraktButton"
-                android:layout_below="@+id/syncToTraktButton"
-                android:layout_marginTop="20dp"
-                android:text="@string/trakt_syncunseen" >
-            </CheckBox>
+        <ProgressBar
+            android:id="@+id/progressBarToTraktSync"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/syncToTraktButton"
+            android:layout_alignTop="@+id/syncToTraktButton"
+            android:layout_toRightOf="@+id/syncToTraktButton"
+            android:visibility="gone" >
+        </ProgressBar>
 
-            <ProgressBar
-                android:id="@+id/progressBarToTraktSync"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/syncToTraktButton"
-                android:layout_alignTop="@+id/syncToTraktButton"
-                android:layout_toRightOf="@+id/syncToTraktButton"
-                android:visibility="gone" >
-            </ProgressBar>
+        <ProgressBar
+            android:id="@+id/progressBarToDeviceSync"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/syncToDeviceButton"
+            android:layout_alignTop="@+id/syncToDeviceButton"
+            android:layout_toRightOf="@+id/syncToDeviceButton"
+            android:visibility="gone" >
+        </ProgressBar>
+    </RelativeLayout>
 
-            <ProgressBar
-                android:id="@+id/progressBarToDeviceSync"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/syncToDeviceButton"
-                android:layout_alignTop="@+id/syncToDeviceButton"
-                android:layout_toRightOf="@+id/syncToDeviceButton"
-                android:visibility="gone" >
-            </ProgressBar>
-        </RelativeLayout>
-    </ScrollView>
-
-</LinearLayout>
+</ScrollView>

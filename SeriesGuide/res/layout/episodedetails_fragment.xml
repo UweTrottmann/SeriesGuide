@@ -16,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:cacheColorHint="#00000000"
+        android:descendantFocusability="afterDescendants"
         android:divider="@null"
         android:listSelector="@color/transparent" />
 

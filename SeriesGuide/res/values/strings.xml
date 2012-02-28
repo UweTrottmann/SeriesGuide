@@ -16,6 +16,7 @@
     <string name="description_home">Home</string>
     <string name="description_search">Search</string>
     <string name="description_overview">Overview</string>
+    <string name="description_poster">Show poster</string>
     <string name="norating">n/a</string>
     <string name="loading">Loading&#8230;</string>
     <string name="sending">Sending&#8230;</string>
