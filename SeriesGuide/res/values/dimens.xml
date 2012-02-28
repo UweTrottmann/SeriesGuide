@@ -11,10 +11,8 @@
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_xmedium">16sp</dimen>
     <dimen name="text_size_medium">18sp</dimen>
-    <dimen name="text_size_large">22sp</dimen>
     <dimen name="text_size_xlarge">22sp</dimen>
     <dimen name="widget_item_height">37dp</dimen>
-    <dimen name="widget_item_height_small">34dp</dimen>
     <dimen name="widget_margin">5dp</dimen>
     <dimen name="widget_paddingTop">8dp</dimen>
     <dimen name="widget_paddingRight">3dp</dimen>
