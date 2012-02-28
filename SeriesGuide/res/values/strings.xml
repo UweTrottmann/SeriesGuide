@@ -13,9 +13,8 @@
     <string name="share_episode">Share episode</string>
     <string name="share_checkout">Check out</string>
     <string name="search_description">Episodes</string>
-    <string name="description_home">Home</string>
-    <string name="description_search">Search</string>
     <string name="description_overview">Overview</string>
+    <string name="description_poster">Show poster</string>
     <string name="norating">n/a</string>
     <string name="loading">Loading&#8230;</string>
     <string name="sending">Sending&#8230;</string>
@@ -170,7 +169,6 @@
     <string name="pref_trakt">trakt.tv credentials</string>
     <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
     <string name="pref_traktsync">Sync with trakt.tv</string>
-    <string name="pref_traktsyncsummary">Initial syncing with trakt.tv</string>
     <string name="pref_traktintegrate">Integrate trakt.tv</string>
     <string name="pref_traktintegratesummary">Get trakt activity on update</string>
     <string name="donate">Buy the dev a drink (Paypal)</string>
@@ -267,7 +265,6 @@
     <string name="trakt_error">Interaction with trakt failed</string>
     <string name="trakt_seen">marked as seen</string>
     <string name="trakt_decryptfail">password could not be decrypted</string>
-    <string name="trakt_credentials_invalid">credentials not valid</string>
     <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
     <string name="love">Totally ninja!</string>
     <string name="hate">Weak Sauce :(</string>

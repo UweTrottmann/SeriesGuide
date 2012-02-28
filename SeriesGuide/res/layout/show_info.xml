@@ -13,7 +13,7 @@
         <LinearLayout
             style="@style/ScrollingLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
             <TextView
@@ -21,7 +21,7 @@
                 style="@style/Header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Show title" />
+                android:text="@string/app_name" />
 
             <include layout="@layout/show_info_meta" >
             </include>
@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_padding"
                 android:layout_marginTop="@dimen/default_padding"
+                android:contentDescription="@string/description_poster"
                 android:src="@drawable/fringe_test" />
 
             <include layout="@layout/show_info_metamore" >
