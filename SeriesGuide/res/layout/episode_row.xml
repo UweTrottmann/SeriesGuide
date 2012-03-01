@@ -1,44 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.battlelancer.seriesguide.CheckableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingRight="@dimen/default_padding" >
+    android:layout_height="wrap_content" >
 
-    <com.battlelancer.seriesguide.WatchedBox
-        android:id="@+id/CustomCheckBoxWatched"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/list_selector_holo_dark"
-        android:padding="16dp" />
-
-    <TextView
-        android:id="@+id/TextViewEpisodeListTitle"
-        style="@style/ListHeader"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/CustomCheckBoxWatched"
-        android:paddingTop="@dimen/default_padding"
-        android:text="Really long Episode Title, You Know!?" />
+        android:paddingRight="@dimen/default_padding" >
 
-    <TextView
-        android:id="@+id/TextViewEpisodeListNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/TextViewEpisodeListTitle"
-        android:layout_toRightOf="@id/CustomCheckBoxWatched"
-        android:paddingBottom="@dimen/default_padding"
-        android:text="Episode X" />
+        <com.battlelancer.seriesguide.WatchedBox
+            android:id="@+id/CustomCheckBoxWatched"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/list_selector_holo_dark"
+            android:padding="16dp" />
 
-    <TextView
-        android:id="@+id/TextViewEpisodeListAirdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/TextViewEpisodeListTitle"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@id/TextViewEpisodeListNumber"
-        android:paddingBottom="@dimen/default_padding"
-        android:text="Airdate: XXXX-XX-XX" />
+        <TextView
+            android:id="@+id/TextViewEpisodeListTitle"
+            style="@style/ListHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/CustomCheckBoxWatched"
+            android:paddingTop="@dimen/default_padding"
+            android:text="Really long Episode Title, You Know!?" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/TextViewEpisodeListNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/TextViewEpisodeListTitle"
+            android:layout_toRightOf="@id/CustomCheckBoxWatched"
+            android:paddingBottom="@dimen/default_padding"
+            android:text="Episode X" />
+
+        <TextView
+            android:id="@+id/TextViewEpisodeListAirdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/TextViewEpisodeListTitle"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/TextViewEpisodeListNumber"
+            android:paddingBottom="@dimen/default_padding"
+            android:text="Airdate: XXXX-XX-XX" />
+    </RelativeLayout>
+
+</com.battlelancer.seriesguide.CheckableFrameLayout>

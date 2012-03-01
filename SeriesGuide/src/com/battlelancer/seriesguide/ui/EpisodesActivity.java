@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,7 +35,7 @@ import java.util.List;
 
 public class EpisodesActivity extends BaseActivity {
 
-    private Fragment mFragment;
+    private EpisodesFragment mEpisodesFragment;
 
     private EpisodePagerAdapter mAdapter;
 
@@ -78,11 +79,14 @@ public class EpisodesActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
             // build the episode list fragment
-            mFragment = onCreatePane();
-            mFragment.setArguments(intentToFragmentArguments(getIntent()));
+            mEpisodesFragment = onCreatePane();
+            mEpisodesFragment.setArguments(intentToFragmentArguments(getIntent()));
 
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_episodes, mFragment, "episodes").commit();
+                    .add(R.id.fragment_episodes, mEpisodesFragment, "episodes").commit();
+        } else {
+            mEpisodesFragment = (EpisodesFragment) getSupportFragmentManager().findFragmentByTag(
+                    "episodes");
         }
 
         // build the episode pager if we are in a multi-pane layout
@@ -129,6 +133,21 @@ public class EpisodesActivity extends BaseActivity {
 
             TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
             indicator.setViewPager(mPager, 0);
+            indicator.setOnPageChangeListener(new OnPageChangeListener() {
+
+                @Override
+                public void onPageSelected(int position) {
+                    mEpisodesFragment.setItemChecked(position);
+                }
+
+                @Override
+                public void onPageScrolled(int arg0, float arg1, int arg2) {
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int arg0) {
+                }
+            });
         } else {
             // FIXME Dirty: make sure no fragments are left over from a config
             // change
@@ -161,7 +180,7 @@ public class EpisodesActivity extends BaseActivity {
         return ret;
     }
 
-    protected Fragment onCreatePane() {
+    protected EpisodesFragment onCreatePane() {
         return new EpisodesFragment();
     }
 

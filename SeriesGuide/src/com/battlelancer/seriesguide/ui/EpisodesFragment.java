@@ -415,4 +415,15 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
 
         getActivity().invalidateOptionsMenu();
     }
+
+    public void setItemChecked(int position) {
+        final ListView list = getListView();
+        list.setItemChecked(position, true);
+        if (Utils.isFroyoOrHigher()) {
+            if (position <= list.getFirstVisiblePosition()
+                    || position >= list.getLastVisiblePosition()) {
+                list.smoothScrollToPosition(position);
+            }
+        }
+    }
 }
