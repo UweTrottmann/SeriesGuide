@@ -91,7 +91,7 @@
     <string name="update_success">Update successful.</string>
     <string name="update_offline">Updating failed, check your internet/Wi-Fi connection.</string>
     <string name="update_saxerror">Updating failed, try again later.</string>
-    <string name="update_inprogress">An update is already in progress, try again later.</string>
+    <string name="update_inprogress">An update is in progress, try again later.</string>
     <string name="update_rebuildsearch">Refreshing episode search&#8230;</string>
     <string name="update_traktactivity">Loading trakt activity&#8230;</string>
     
