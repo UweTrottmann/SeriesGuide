@@ -201,6 +201,16 @@
         <item>Latest first (DVD)</item>
         <item>Oldest first (DVD)</item>
     </string-array>
+    
+    <string name="pref_upcominglimit">Upcoming shows within&#8230;</string>
+    <string name="pref_upcominglimitsummary">How far in the future to display upcoming shows</string>
+    <string-array name="upcominglimit">
+        <item>a day</item>
+        <item>3 days</item>
+        <item>a week</item>
+        <item>two weeks</item>
+        <item>a month</item>
+    </string-array>
 
     <!-- Backup and Restore -->
     <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
@@ -426,6 +436,13 @@
         <item>11</item>
         <item>12</item>
         <item>13</item>
+    </string-array>
+    <string-array name="upcominglimitData">
+        <item>1</item>
+        <item>3</item>
+        <item>7</item>
+        <item>14</item>
+        <item>30</item>
     </string-array>
 
 </resources>

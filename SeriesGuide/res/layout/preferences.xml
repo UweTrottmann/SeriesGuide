@@ -14,6 +14,14 @@
             android:key="onlySeasonEpisodes"
             android:summary="@string/pref_onlyseasonepssummary"
             android:title="@string/pref_onlyseasoneps" />
+
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/upcominglimit"
+            android:entryValues="@array/upcominglimitData"
+            android:key="com.battlelancer.seriesguide.upcominglimit"
+            android:summary="@string/pref_upcominglimitsummary"
+            android:title="@string/pref_upcominglimit" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_content" >

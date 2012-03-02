@@ -715,12 +715,14 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             boolean isAffectingChange = false;
-            if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_SHOWSSORTORDER)) {
+
+            if (key.equals(SeriesGuidePreferences.KEY_SHOWSSORTORDER)) {
                 updateSorting(sharedPreferences);
                 isAffectingChange = true;
+            } else if (key.equals(SeriesGuidePreferences.KEY_UPCOMING_LIMIT)) {
+                isAffectingChange = true;
             }
-            // TODO: maybe don't requery every time a pref changes (possibly
-            // problematic if you change a setting in the settings activity)
+
             if (isAffectingChange) {
                 requery();
             }
@@ -808,14 +810,15 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 break;
             case SHOWFILTER_UNSEENEPISODES:
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                int upcomingLimit = prefs.getInt(SeriesGuidePreferences.KEY_UPCOMING_LIMIT, 1);
+                int upcomingLimit = Integer.valueOf(prefs.getString(
+                        SeriesGuidePreferences.KEY_UPCOMING_LIMIT, "1"));
 
                 selection = Shows.NEXTAIRDATEMS + "!=? AND " + Shows.NEXTAIRDATEMS + " <=? AND "
                         + Shows.HIDDEN + "=?";
-                String nowIn24Hours = String.valueOf(System.currentTimeMillis() + upcomingLimit
+                String inTheFuture = String.valueOf(System.currentTimeMillis() + upcomingLimit
                         * DateUtils.DAY_IN_MILLIS);
                 selectionArgs = new String[] {
-                        DBUtils.UNKNOWN_NEXT_AIR_DATE, nowIn24Hours, "0"
+                        DBUtils.UNKNOWN_NEXT_AIR_DATE, inTheFuture, "0"
                 };
                 break;
             case SHOWFILTER_HIDDEN:
