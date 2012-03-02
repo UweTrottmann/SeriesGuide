@@ -3,7 +3,7 @@
     android:id="@+id/friend_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/body_padding" >
+    android:padding="@dimen/default_padding" >
 
     <ImageView
         android:id="@+id/avatar"
@@ -11,15 +11,13 @@
         android:layout_height="60dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="@dimen/body_padding"
-        android:layout_marginTop="5dp"
+        android:layout_marginRight="@dimen/default_padding"
         android:src="@drawable/icon" />
 
     <LinearLayout
         android:id="@+id/userstrip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/avatar" >
 
         <TextView

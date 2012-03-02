@@ -72,8 +72,6 @@ public class UpcomingFragment extends ListFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        getListView().setSelector(R.drawable.list_selector_holo_dark);
-
         setEmptyText(getString(getArguments().getInt(InitBundle.EMPTY_STRING_ID)));
 
         // Check to see if we have a frame in which to embed the details
@@ -168,6 +166,12 @@ public class UpcomingFragment extends ListFragment implements
         list.setFastScrollEnabled(true);
         list.setDivider(null);
         list.setOnScrollListener(this);
+        list.setSelector(R.drawable.list_selector_holo_dark);
+        list.setClipToPadding(Utils.isHoneycombOrHigher() ? false : true);
+        final float scale = getResources().getDisplayMetrics().density;
+        int layoutPadding = (int) (10 * scale + 0.5f);
+        int defaultPadding = (int) (8 * scale + 0.5f);
+        list.setPadding(layoutPadding, layoutPadding, layoutPadding, defaultPadding);
         registerForContextMenu(list);
     }
 

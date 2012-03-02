@@ -13,4 +13,10 @@
         android:listSelector="@drawable/list_selector_holo_dark" >
     </ListView>
 
+    <TextView
+        android:id="@+android:id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
 </FrameLayout>
