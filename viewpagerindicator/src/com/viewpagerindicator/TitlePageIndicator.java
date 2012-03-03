@@ -321,10 +321,12 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
         //Calculate views bounds
         ArrayList<RectF> bounds = calculateAllBounds(mPaintText);
+        final int boundsSize = bounds.size();
 
         //Make sure we're on a page that still exists
-        if (mCurrentPage >= bounds.size()) {
-            setCurrentItem(bounds.size()-1);
+        if (mCurrentPage >= boundsSize) {
+            setCurrentItem(boundsSize - 1);
+            return;
         }
 
         final int countMinusOne = count - 1;
@@ -400,6 +402,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
         }
 
         //Now draw views
+        int colorTextAlpha = mColorText >>> 24;
         for (int i = 0; i < count; i++) {
             //Get the title
             RectF bound = bounds.get(i);
@@ -411,6 +414,10 @@ public class TitlePageIndicator extends View implements PageIndicator {
 
                 //Draw text as unselected
                 mPaintText.setColor(mColorText);
+                if(currentPage && currentSelected) {
+                    //Fade out/in unselected text as the selected text fades in/out
+                    mPaintText.setAlpha(colorTextAlpha - (int)(colorTextAlpha * selectedPercent));
+                }
                 canvas.drawText(mTitleProvider.getTitle(i), bound.left, bound.bottom + mTopPadding, mPaintText);
 
                 //If we are within the selected bounds draw the selected text
@@ -440,7 +447,7 @@ public class TitlePageIndicator extends View implements PageIndicator {
                 break;
 
             case Underline:
-                if (!currentSelected) {
+                if (!currentSelected || page >= boundsSize) {
                     break;
                 }
 
@@ -460,6 +467,9 @@ public class TitlePageIndicator extends View implements PageIndicator {
     }
 
     public boolean onTouchEvent(android.view.MotionEvent ev) {
+        if (super.onTouchEvent(ev)) {
+            return true;
+        }
         if ((mViewPager == null) || (mViewPager.getAdapter().getCount() == 0)) {
             return false;
         }
