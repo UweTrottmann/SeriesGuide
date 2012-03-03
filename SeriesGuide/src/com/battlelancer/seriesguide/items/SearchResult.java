@@ -12,11 +12,14 @@ public class SearchResult {
 
     public String overview;
 
+    public String poster;
+
     public SearchResult copy() {
         SearchResult copy = new SearchResult();
         copy.tvdbid = this.tvdbid;
         copy.title = this.title;
         copy.overview = this.overview;
+        copy.poster = this.poster;
         return copy;
     }
 

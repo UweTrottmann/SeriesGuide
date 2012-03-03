@@ -2,24 +2,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/add_layout_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/default_padding" >
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/poster"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/description"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/title"
+        android:layout_marginRight="@dimen/default_padding"
+        android:contentDescription="@string/description_poster"
+        android:src="@drawable/show_generic" />
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/poster"
         android:paddingBottom="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:paddingTop="@dimen/default_padding"
         android:text="@string/app_name"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/description"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
+        android:layout_toRightOf="@id/poster"
         android:ellipsize="end"
         android:maxLines="3"
+        android:paddingBottom="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
         android:text="@string/app_name"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 

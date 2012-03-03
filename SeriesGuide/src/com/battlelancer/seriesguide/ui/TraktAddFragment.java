@@ -131,6 +131,10 @@ public class TraktAddFragment extends AddFragment {
             show.tvdbid = tvShow.tvdbId;
             show.title = tvShow.title;
             show.overview = tvShow.overview;
+            String posterPath = tvShow.images.poster;
+            if (posterPath != null) {
+                show.poster = posterPath.substring(0, posterPath.length() - 4) + "-138.jpg";
+            }
             outputList.add(show);
         }
         return outputList;
