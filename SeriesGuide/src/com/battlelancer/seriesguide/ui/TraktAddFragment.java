@@ -3,11 +3,13 @@ package com.battlelancer.seriesguide.ui;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.entities.TvShow;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -103,7 +106,18 @@ public class TraktAddFragment extends AddFragment {
                 }
             }
 
-            parseTvShowsToSearchResults(shows, showList);
+            // get a list of existing shows to filter against
+            final Cursor existing = mContext.getContentResolver().query(Shows.CONTENT_URI,
+                    new String[] {
+                        Shows._ID
+                    }, null, null, null);
+            final HashSet<String> existingIds = new HashSet<String>();
+            while (existing.moveToNext()) {
+                existingIds.add(existing.getString(0));
+            }
+            existing.close();
+
+            parseTvShowsToSearchResults(shows, showList, existingIds);
 
             return showList;
         }
@@ -122,21 +136,24 @@ public class TraktAddFragment extends AddFragment {
      * @param outputList
      * @return
      */
-    private static List<SearchResult> parseTvShowsToSearchResults(List<TvShow> inputList,
-            List<SearchResult> outputList) {
+    private static void parseTvShowsToSearchResults(List<TvShow> inputList,
+            List<SearchResult> outputList, HashSet<String> existingIds) {
         Iterator<TvShow> trendingit = inputList.iterator();
         while (trendingit.hasNext()) {
             TvShow tvShow = (TvShow) trendingit.next();
-            SearchResult show = new SearchResult();
-            show.tvdbid = tvShow.tvdbId;
-            show.title = tvShow.title;
-            show.overview = tvShow.overview;
-            String posterPath = tvShow.images.poster;
-            if (posterPath != null) {
-                show.poster = posterPath.substring(0, posterPath.length() - 4) + "-138.jpg";
+
+            // only list non-existing shows
+            if (!existingIds.contains(tvShow.tvdbId)) {
+                SearchResult show = new SearchResult();
+                show.tvdbid = tvShow.tvdbId;
+                show.title = tvShow.title;
+                show.overview = tvShow.overview;
+                String posterPath = tvShow.images.poster;
+                if (posterPath != null) {
+                    show.poster = posterPath.substring(0, posterPath.length() - 4) + "-138.jpg";
+                }
+                outputList.add(show);
             }
-            outputList.add(show);
         }
-        return outputList;
     }
 }
