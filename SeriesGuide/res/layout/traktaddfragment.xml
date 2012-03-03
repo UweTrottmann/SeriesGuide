@@ -5,15 +5,18 @@
 
     <ListView
         android:id="@android:id/list"
+        style="@style/ScrollingLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+        android:layout_height="match_parent"
+        android:clipToPadding="@bool/gridClipToPadding"
+        android:divider="@drawable/divider_horizontal_holo_dark"
+        android:listSelector="@drawable/list_selector_holo_dark" />
+
     <ProgressBar
         android:id="@android:id/empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center" />
+        android:layout_gravity="center" />
 
     <TextView
         android:id="@+id/poweredby"
@@ -21,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:background="#bf000000"
-        android:padding="8dp"
+        android:padding="@dimen/default_padding"
         android:text="@string/powered_by_trakt"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
