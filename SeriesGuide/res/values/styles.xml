@@ -97,7 +97,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="BackupLinearLayout">
+    <style name="CenteredColumn">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_gravity">fill</item>

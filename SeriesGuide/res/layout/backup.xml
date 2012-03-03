@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/BackupLinearLayout"
+    style="@style/CenteredColumn"
     android:padding="@dimen/layout_padding" >
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/layout_padding"
+            android:layout_marginBottom="@dimen/default_padding"
             android:text="@string/backup_description"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -19,19 +19,19 @@
             android:id="@+id/backuppath"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/layout_padding"
-            android:layout_marginTop="@dimen/layout_padding"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:layout_marginTop="@dimen/default_padding"
             android:text="Backup folder: n/a"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/dbversion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/layout_padding"
-            android:layout_marginTop="@dimen/layout_padding"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:layout_marginTop="@dimen/default_padding"
             android:text="Database version: n/a"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <LinearLayout
             android:id="@+id/buttons"
