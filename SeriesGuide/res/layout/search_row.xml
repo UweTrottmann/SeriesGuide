@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/default_padding" >
 
     <TextView
         android:id="@+id/TextViewSearchSeriesName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
         android:text="Really, Really, Really, Really, Really Long Series Name" >
     </TextView>
 
@@ -18,28 +17,26 @@
         style="@style/ListHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
         android:text="This is it! Really, really, really long title" >
     </TextView>
 
     <RelativeLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp" >
+        android:paddingBottom="@dimen/inline_padding"
+        android:paddingTop="@dimen/inline_padding" >
 
         <TextView
             android:id="@+id/TextViewSearchEpNumbers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:paddingRight="@dimen/default_padding"
             android:text="Episode X Season X" />
 
         <TextView
             android:id="@+id/TextViewSearchEpWatchedState"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/TextViewSearchEpNumbers"
             android:text="watchedstate" />
     </RelativeLayout>
@@ -48,10 +45,8 @@
         android:id="@+id/TextViewSearchSnippet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="15dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="2dp"
+        android:paddingBottom="@dimen/inline_padding"
+        android:paddingTop="@dimen/inline_padding"
         android:text="...some bla..." >
     </TextView>
 
