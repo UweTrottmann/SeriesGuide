@@ -84,11 +84,25 @@ public class ImageDownloader {
      * @param imageView The ImageView to bind the downloaded image to.
      */
     public void download(String url, ImageView imageView) {
+        download(url, imageView, true);
+    }
+
+    /**
+     * Download the specified image from the Internet and binds it to the
+     * provided ImageView. The binding is immediate if the image is found in the
+     * cache and will be done asynchronously otherwise. A null bitmap will be
+     * associated to the ImageView if an error occurs.
+     * 
+     * @param url The URL of the image to download.
+     * @param imageView The ImageView to bind the downloaded image to.
+     * @param isDiskCaching Wether to cache the image to disk or just memory.
+     */
+    public void download(String url, ImageView imageView, boolean isDiskCaching) {
         resetPurgeTimer();
         Bitmap bitmap = getBitmapFromCache(url);
 
         if (bitmap == null) {
-            forceDownload(url, imageView);
+            forceDownload(url, imageView, isDiskCaching);
         } else {
             cancelPotentialDownload(url, imageView);
             imageView.setImageBitmap(bitmap);
@@ -99,7 +113,7 @@ public class ImageDownloader {
      * Same as download but the image is always downloaded and the cache is not
      * used. Kept private at the moment as its interest is not clear.
      */
-    private void forceDownload(String url, ImageView imageView) {
+    private void forceDownload(String url, ImageView imageView, boolean isDiskCaching) {
         // State sanity: url is guaranteed to never be null in
         // DownloadedDrawable and cache keys.
         if (url == null) {
@@ -108,7 +122,7 @@ public class ImageDownloader {
         }
 
         if (cancelPotentialDownload(url, imageView)) {
-            BitmapDownloaderTask task = new BitmapDownloaderTask(imageView);
+            BitmapDownloaderTask task = new BitmapDownloaderTask(imageView, isDiskCaching);
             DownloadedDrawable downloadedDrawable = new DownloadedDrawable(task);
             imageView.setImageDrawable(downloadedDrawable);
             task.execute(url);
@@ -152,17 +166,22 @@ public class ImageDownloader {
         return null;
     }
 
-    Bitmap downloadBitmap(String url) {
-        String filename = Integer.toHexString(url.hashCode()) + "." + CompressFormat.JPEG.name();
-        File imagefile = new File(mDiskCacheDir + "/" + filename);
+    Bitmap downloadBitmap(String url, boolean isDiskCaching) {
 
-        if (Utils.isExtStorageAvailable()) {
-            // try to get bitmap from disk cache first
-            if (imagefile.exists()) {
-                // disk cache hit
-                final Bitmap bitmap = BitmapFactory.decodeFile(imagefile.getAbsolutePath());
-                if (bitmap != null) {
-                    return bitmap;
+        File imagefile = null;
+        if (isDiskCaching) {
+            String filename = Integer.toHexString(url.hashCode()) + "."
+                    + CompressFormat.JPEG.name();
+            imagefile = new File(mDiskCacheDir + "/" + filename);
+
+            if (Utils.isExtStorageAvailable()) {
+                // try to get bitmap from disk cache first
+                if (imagefile.exists()) {
+                    // disk cache hit
+                    final Bitmap bitmap = BitmapFactory.decodeFile(imagefile.getAbsolutePath());
+                    if (bitmap != null) {
+                        return bitmap;
+                    }
                 }
             }
         }
@@ -192,7 +211,7 @@ public class ImageDownloader {
 
                     // write directly to disk
                     Bitmap bitmap;
-                    if (Utils.isExtStorageAvailable()) {
+                    if (isDiskCaching && Utils.isExtStorageAvailable()) {
                         FileOutputStream outputstream = new FileOutputStream(imagefile);
                         Utils.copy(new FlushedInputStream(inputStream), outputstream);
                         outputstream.close();
@@ -272,8 +291,11 @@ public class ImageDownloader {
 
         private final WeakReference<ImageView> imageViewReference;
 
-        public BitmapDownloaderTask(ImageView imageView) {
+        private final boolean mIsDiskCaching;
+
+        public BitmapDownloaderTask(ImageView imageView, boolean isDiskCaching) {
             imageViewReference = new WeakReference<ImageView>(imageView);
+            mIsDiskCaching = isDiskCaching;
         }
 
         /**
@@ -282,7 +304,7 @@ public class ImageDownloader {
         @Override
         protected Bitmap doInBackground(String... params) {
             url = params[0];
-            return downloadBitmap(url);
+            return downloadBitmap(url, mIsDiskCaching);
         }
 
         /**
