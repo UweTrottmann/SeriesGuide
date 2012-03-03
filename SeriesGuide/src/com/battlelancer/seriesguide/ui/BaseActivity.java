@@ -18,20 +18,20 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.util.ActivityHelper;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 
 /**
  * A base activity that defers common functionality across app activities to an
  * {@link ActivityHelper}.
  */
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends SherlockFragmentActivity {
     final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
     @Override

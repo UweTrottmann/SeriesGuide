@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -30,7 +31,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -47,7 +47,7 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class EpisodeDetailsFragment extends ListFragment implements
+public class EpisodeDetailsFragment extends SherlockListFragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int EPISODE_LOADER = 3;
@@ -231,7 +231,7 @@ public class EpisodeDetailsFragment extends ListFragment implements
         if (isInvalidateOptionsMenu) {
             // invalidate the options menu so a potentially new
             // quick share action is displayed
-            getActivity().invalidateOptionsMenu();
+            getSherlockActivity().invalidateOptionsMenu();
         }
     }
 

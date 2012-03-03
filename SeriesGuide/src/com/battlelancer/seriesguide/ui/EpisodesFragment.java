@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -26,23 +27,23 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class EpisodesFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class EpisodesFragment extends SherlockListFragment implements
+        LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int MARK_WATCHED_ID = 0;
 
@@ -413,7 +414,7 @@ public class EpisodesFragment extends ListFragment implements LoaderManager.Load
         prefEditor.commit();
         getLoaderManager().restartLoader(EPISODES_LOADER, null, EpisodesFragment.this);
 
-        getActivity().invalidateOptionsMenu();
+        getSherlockActivity().invalidateOptionsMenu();
     }
 
     public void setItemChecked(int position) {
