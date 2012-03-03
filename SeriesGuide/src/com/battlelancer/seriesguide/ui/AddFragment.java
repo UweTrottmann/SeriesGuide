@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.util.ImageDownloader;
@@ -8,7 +9,6 @@ import com.battlelancer.seriesguide.util.Utils;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class AddFragment extends ListFragment {
+public class AddFragment extends SherlockListFragment {
 
     protected AddAdapter mAdapter;
 

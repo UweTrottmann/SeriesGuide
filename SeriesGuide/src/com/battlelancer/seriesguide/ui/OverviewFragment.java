@@ -16,6 +16,8 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -47,8 +49,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,7 +61,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class OverviewFragment extends Fragment {
+public class OverviewFragment extends SherlockFragment {
 
     private boolean mDualPane;
 
@@ -217,7 +217,7 @@ public class OverviewFragment extends Fragment {
         if (isInvalidateOptionsMenu) {
             // invalidate the options menu so a potentially new
             // quick share action is displayed
-            getActivity().invalidateOptionsMenu();
+            getSherlockActivity().invalidateOptionsMenu();
         }
     }
 
@@ -386,7 +386,7 @@ public class OverviewFragment extends Fragment {
     }
 
     protected void onLoadEpisode() {
-        final FragmentActivity activity = getActivity();
+        final SherlockFragmentActivity activity = getSherlockActivity();
         if (activity == null) {
             return;
         }

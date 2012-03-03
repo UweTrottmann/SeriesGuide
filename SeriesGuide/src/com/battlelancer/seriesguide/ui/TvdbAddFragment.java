@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.thetvdbapi.TheTVDB;
@@ -10,7 +11,6 @@ import org.xml.sax.SAXException;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,7 +105,7 @@ public class TvdbAddFragment extends AddFragment {
 
         @Override
         protected void onPreExecute() {
-            final FragmentActivity activity = getActivity();
+            final SherlockFragmentActivity activity = getSherlockActivity();
             if (activity != null) {
                 activity.setSupportProgressBarIndeterminateVisibility(true);
             }
@@ -130,7 +130,7 @@ public class TvdbAddFragment extends AddFragment {
 
         @Override
         protected void onPostExecute(List<SearchResult> result) {
-            final FragmentActivity activity = getActivity();
+            final SherlockFragmentActivity activity = getSherlockActivity();
             if (activity != null) {
                 activity.setSupportProgressBarIndeterminateVisibility(false);
             }

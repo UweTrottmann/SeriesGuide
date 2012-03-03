@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -28,7 +29,6 @@ import android.provider.BaseColumns;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -45,7 +45,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class SeasonsFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class SeasonsFragment extends SherlockListFragment implements
+        LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int ID_MARK_ALL_WATCHED = 0;
 
@@ -469,6 +470,6 @@ public class SeasonsFragment extends ListFragment implements LoaderManager.Loade
         prefEditor.commit();
         getLoaderManager().restartLoader(LOADER_ID, null, SeasonsFragment.this);
 
-        getActivity().invalidateOptionsMenu();
+        getSherlockActivity().invalidateOptionsMenu();
     }
 }
