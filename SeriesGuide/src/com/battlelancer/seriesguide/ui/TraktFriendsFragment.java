@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
@@ -186,9 +187,12 @@ public class TraktFriendsFragment extends ListFragment implements
                             // is this an episode?
                             if (activity != null && activity.type == ActivityType.Episode) {
 
-                                // is this activity no longer than 4 weeks old?
-                                if (activity.watched.getTime() > System.currentTimeMillis()
-                                        - DateUtils.WEEK_IN_MILLIS * 4) {
+                                // is this activity no longer than 4 weeks old
+                                // and not in the future?
+                                long watchedTime = activity.watched.getTime();
+                                if (watchedTime > System.currentTimeMillis()
+                                        - DateUtils.WEEK_IN_MILLIS * 4
+                                        && watchedTime <= System.currentTimeMillis()) {
                                     UserProfile clonedfriend = new UserProfile();
                                     clonedfriend.username = friend.username;
                                     clonedfriend.avatar = friend.avatar;
@@ -353,6 +357,8 @@ public class TraktFriendsFragment extends ListFragment implements
             holder.name.setText(friend.username);
             mImageDownloader.download(friend.avatar, holder.avatar);
 
+            holder.timestamp.setTextColor(Color.LTGRAY);
+
             String show = "";
             String episode = "";
             String timestamp = "";
@@ -367,6 +373,7 @@ public class TraktFriendsFragment extends ListFragment implements
                                 String.valueOf(watching.episode.number));
                         episode = episodenumber + " " + watching.episode.title;
                         timestamp = getContext().getString(R.string.now);
+                        holder.timestamp.setTextColor(Color.RED);
                         break;
                 }
             } else if (friend.watched != null) {
