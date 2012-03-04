@@ -64,7 +64,7 @@ public class ListWidgetService extends RemoteViewsService {
 
             // We construct a remote views item based on our widget item xml
             // file, and set the text based on the position.
-            RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.appwidget_big_item);
+            RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.appwidget_row);
 
             // episode description
             String season = mUpcomingEpisodes.getString(UpcomingQuery.SEASON);
@@ -110,7 +110,7 @@ public class ListWidgetService extends RemoteViewsService {
                     mUpcomingEpisodes.getString(UpcomingQuery._ID));
             Intent fillInIntent = new Intent();
             fillInIntent.putExtras(extras);
-            rv.setOnClickFillInIntent(R.id.appwidget_bit_item, fillInIntent);
+            rv.setOnClickFillInIntent(R.id.appwidget_row, fillInIntent);
 
             // Return the remote views object.
             return rv;

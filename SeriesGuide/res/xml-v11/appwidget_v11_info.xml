@@ -2,7 +2,7 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialLayout="@layout/appwidget_v11"
     android:minHeight="135dp"
-    android:minWidth="280dp"
+    android:minWidth="250dp"
     android:previewImage="@drawable/next_episodes_ori_portrait"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0" ></appwidget-provider>

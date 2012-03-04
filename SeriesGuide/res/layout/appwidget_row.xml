@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/appwidget_row"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/inline_padding" >
+
+    <ImageView
+        android:id="@+id/widgetPoster"
+        android:layout_width="@dimen/widget_item_width"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:paddingRight="@dimen/inline_padding"
+        android:src="@drawable/show_generic" >
+    </ImageView>
+
+    <TextView
+        android:id="@+id/textViewWidgetShow"
+        style="@style/WidgetTextView"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/widgetAirtime"
+        android:layout_toRightOf="@+id/widgetPoster"
+        android:text="Very Long Show Name Of Lovely Show"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/widget_text_large" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/textViewWidgetEpisode"
+        style="@style/WidgetTextView"
+        android:layout_alignLeft="@+id/textViewWidgetShow"
+        android:layout_below="@+id/textViewWidgetShow"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/widgetNetwork"
+        android:text="0x00 Very Long Episode Name Of Lovely Show"
+        android:textSize="@dimen/widget_text_middle" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/widgetAirtime"
+        style="@style/WidgetTextView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="In X days, Mon"
+        android:textSize="@dimen/widget_text_small" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/widgetNetwork"
+        style="@style/WidgetTextView"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/widgetAirtime"
+        android:text="20:00 PM Syfy"
+        android:textSize="@dimen/widget_text_small" >
+    </TextView>
+
+</RelativeLayout>

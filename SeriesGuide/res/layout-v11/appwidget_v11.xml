@@ -47,9 +47,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/no_nextepisode"
-            android:textColor="#ffffff"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
 
 </FrameLayout>
