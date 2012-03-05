@@ -2,16 +2,16 @@ body {
 font-family: 'Open Sans', sans-serif;
 text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
 background: #000000;
-color: #ffffff;
+color:#ffffff;
 }
 
 h1, h2, h3, h4, h5, h6 {
 font-weight: normal;
-color: #ffffff;
+color:#ffffff;
 }
 
 a {
-color:#2B9BC3;
+color:#33b5e5;
 text-decoration:none;
 line-height:inherit;
 font-weight:inherit;
@@ -31,26 +31,35 @@ height:80px;
 }
 
 .well {
-background: #111111;
+background:#111111;
+}
+
+.share-button {
+float: left;
+margin-left: 5px;
 }
 
 #content {
 margin-top:60px;
 }
 
-#resources dl {
-margin-bottom:0;
-}
-
 #flattr {
 margin-top:5px;
 }
 
+#poweredby-ul {
+margin-bottom:0px;
+}
+
+#poweredby-ul li {
+margin-bottom:0px;
+}
+
 #footer {
-margin-top: 80px;
-margin-bottom: 50px;
+margin-top:80px;
+margin-bottom:50px;
 }
 
 p.right {
-float: right;
+float:right;
 }

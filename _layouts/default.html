@@ -3,11 +3,18 @@
 <head>
 	<meta content="en" http-equiv="Content-Language" />
 	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+	
 	<title>{{ page.title }}</title>
 	<link rel="shortcut icon" href="favicon.ico"/>
+	
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.min.css" />
 	<link href="../static/styles.css" rel="stylesheet" type="text/css" />
+	
+	<!-- Flattr -->
 	<script type="text/javascript">
 	/* <![CDATA[ */
     (function() {
@@ -19,48 +26,48 @@
     })();
 	/* ]]> */
 	</script>
+	
 	<!-- Google+ page -->
 	<link href="https://plus.google.com/112462818579768957964" rel="publisher" /><script type="text/javascript">
-	(function() 
-	{var po = document.createElement("script");
-	po.type = "text/javascript"; po.async = true;po.src = "https://apis.google.com/js/plusone.js";
-	var s = document.getElementsByTagName("script")[0];
-	s.parentNode.insertBefore(po, s);
+	(function() {
+		var po = document.createElement("script");
+		po.type = "text/javascript"; po.async = true;po.src = "https://apis.google.com/js/plusone.js";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(po, s);
 	})();</script>
 	
+	<!-- Analytics -->
 	<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-27760852-1']);
+	_gaq.push(['_trackPageview']);
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-27760852-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
     </script>
 </head>
 
 <body>
 
-<div class="topbar-wrapper" style="z-index: 5;">
-    <div class="topbar">
-      <div class="fill">
-        <div class="container">
-			<h3><a href="/">SeriesGuide</a></h3>
-			<ul>
-			  <li><a href="/">Home</a></li>
-			  <li><a href="hints.html">Getting Started</a></li>
-			  <li><a href="help.html">Help</a></li>
-			  <li><a href="https://github.com/UweTrottmann/SeriesGuide/blob/master/CHANGELOG.md">Changelog (external)</a></li>
-			  <li><a href="https://github.com/UweTrottmann/SeriesGuide">Source Code (external)</a></li>
-			</ul>
-        </div>
-      </div> <!-- /fill -->
-    </div> <!-- /topbar -->
-</div>
+
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+		<a class="brand" href="/">SeriesGuide</a>
+		<ul class="nav">
+		  <li><a href="/">Home</a></li>
+		  <li><a href="hints.html">Getting Started</a></li>
+		  <li><a href="help.html">Help</a></li>
+		  <li class="divider-vertical"></li>
+		  <li><a href="https://github.com/UweTrottmann/SeriesGuide/blob/master/CHANGELOG.md">Changelog (external)</a></li>
+		  <li><a href="https://github.com/UweTrottmann/SeriesGuide">Source Code (external)</a></li>
+		</ul>
+    </div>
+  </div> <!-- navbar-inner -->
+</div> <!-- navbar -->
 
 <div id="content" class="container">
 	{{ content }}
