@@ -10,6 +10,10 @@ font-weight: normal;
 color:#ffffff;
 }
 
+p {
+font-family: 'Open Sans', sans-serif;
+}
+
 a {
 color:#33b5e5;
 text-decoration:none;
