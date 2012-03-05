@@ -128,16 +128,13 @@ public class ShareUtils {
                 if (prev != null) {
                     ft.remove(prev);
                 }
-                ft.addToBackStack(null);
-
-                // Create and show the dialog.
                 ProgressDialog newFragment = ProgressDialog.newInstance();
                 newFragment.show(ft, "progress-dialog");
 
                 // start the trakt check in task, add the
                 // dialog as listener
                 shareData.putInt(ShareItems.TRAKTACTION, TraktAction.CHECKIN_EPISODE.index());
-                new TraktTask(activity, fm, shareData, newFragment).execute();
+                new TraktTask(activity, fm, shareData).execute();
 
                 break;
             }
@@ -376,14 +373,6 @@ public class ShareUtils {
 
         private final Bundle mTraktData;
 
-        private OnTaskFinishedListener mProgressDialog;
-
-        private TraktAction mAction;
-
-        public interface OnTaskFinishedListener {
-            public void onTaskFinished();
-        }
-
         /**
          * Do the specified TraktAction. traktData should include all required
          * parameters.
@@ -397,41 +386,6 @@ public class ShareUtils {
             mContext = context;
             mFm = manager;
             mTraktData = traktData;
-        }
-
-        /**
-         * Specify a listener which will be notified once any activity context
-         * dependent work is completed.
-         * 
-         * @param context
-         * @param manager
-         * @param traktData
-         * @param listener
-         */
-        public TraktTask(Context context, FragmentManager manager, Bundle traktData,
-                OnTaskFinishedListener listener) {
-            this(context, manager, traktData);
-            mProgressDialog = listener;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            mAction = TraktAction.values()[mTraktData.getInt(ShareItems.TRAKTACTION)];
-
-            // display a progress dialog to avoid navigating away crashes if
-            // CancelCheckInDialog needs to be shown later
-            if (mAction == TraktAction.CHECKIN_EPISODE && mProgressDialog == null) {
-                FragmentTransaction ft = mFm.beginTransaction();
-                Fragment prev = mFm.findFragmentByTag("progress-dialog");
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-                ft.addToBackStack(null);
-
-                ProgressDialog newFragment = ProgressDialog.newInstance();
-                newFragment.show(ft, "progress-dialog");
-                mProgressDialog = newFragment;
-            }
         }
 
         @Override
@@ -463,9 +417,10 @@ public class ShareUtils {
                 return null;
             }
 
+            TraktAction action = TraktAction.values()[mTraktData.getInt(ShareItems.TRAKTACTION)];
             try {
                 Response r = null;
-                switch (mAction) {
+                switch (action) {
                     case CHECKIN_EPISODE: {
                         r = manager.showService().checkin(tvdbid).season(season).episode(episode)
                                 .fire();
@@ -503,36 +458,43 @@ public class ShareUtils {
 
         @Override
         protected void onPostExecute(Response r) {
-            // tell a potential listener that our work is done
-            if (mProgressDialog != null) {
-                mProgressDialog.onTaskFinished();
+            FragmentTransaction ft = mFm.beginTransaction();
+
+            // dismiss a potential progress dialog
+            Fragment prev = mFm.findFragmentByTag("progress-dialog");
+            if (prev != null) {
+                ft.remove(prev);
+
             }
 
             if (r != null) {
                 if (r.status.equalsIgnoreCase(TraktStatus.SUCCESS)) {
                     // all good
+
                     Toast.makeText(mContext,
                             mContext.getString(R.string.trakt_success) + ": " + r.message,
                             Toast.LENGTH_SHORT).show();
+
+                    ft.commit();
                 } else if (r.status.equalsIgnoreCase(TraktStatus.FAILURE)) {
                     if (r.wait != 0) {
                         // looks like a check in is in progress
                         TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment
                                 .newInstance(mTraktData, r.wait);
-                        FragmentTransaction ft = mFm.beginTransaction();
                         newFragment.show(ft, "cancel-checkin-dialog");
                     } else {
                         // well, something went wrong
                         Toast.makeText(mContext,
                                 mContext.getString(R.string.trakt_error) + ": " + r.error,
                                 Toast.LENGTH_LONG).show();
+
+                        ft.commit();
                     }
                 }
             } else {
                 // credentials are invalid
                 TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
                         .newInstance(mTraktData);
-                FragmentTransaction ft = mFm.beginTransaction();
                 newFragment.show(ft, "traktdialog");
             }
         }
@@ -702,6 +664,14 @@ public class ShareUtils {
                                 dismiss();
 
                                 if (isForwardingGivenTask) {
+                                    FragmentTransaction ft = fm.beginTransaction();
+                                    Fragment prev = fm.findFragmentByTag("progress-dialog");
+                                    if (prev != null) {
+                                        ft.remove(prev);
+                                    }
+                                    ProgressDialog newFragment = ProgressDialog.newInstance();
+                                    newFragment.show(ft, "progress-dialog");
+
                                     // relaunch the trakt task which called
                                     // us
                                     new TraktTask(context, fm, args).execute();
@@ -778,6 +748,14 @@ public class ShareUtils {
             builder.setPositiveButton(R.string.traktcheckin_cancel, new OnClickListener() {
 
                 public void onClick(DialogInterface dialog, int which) {
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Fragment prev = fm.findFragmentByTag("progress-dialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ProgressDialog newFragment = ProgressDialog.newInstance();
+                    newFragment.show(ft, "progress-dialog");
+
                     AsyncTask<String, Void, Response> cancelCheckinTask = new AsyncTask<String, Void, Response>() {
 
                         @Override
@@ -889,8 +867,7 @@ public class ShareUtils {
         }
     }
 
-    public static class ProgressDialog extends DialogFragment implements
-            TraktTask.OnTaskFinishedListener {
+    public static class ProgressDialog extends DialogFragment {
 
         public static ProgressDialog newInstance() {
             ProgressDialog f = new ProgressDialog();
@@ -910,13 +887,6 @@ public class ShareUtils {
                 Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.progress_dialog, container, false);
             return v;
-        }
-
-        @Override
-        public void onTaskFinished() {
-            if (isVisible()) {
-                dismiss();
-            }
         }
     }
 
