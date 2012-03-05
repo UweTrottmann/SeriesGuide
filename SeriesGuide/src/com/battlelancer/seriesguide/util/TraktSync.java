@@ -12,6 +12,7 @@ import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
+import com.jakewharton.trakt.enumerations.ExtendedParam;
 import com.jakewharton.trakt.services.ShowService.EpisodeSeenBuilder;
 import com.jakewharton.trakt.services.ShowService.EpisodeUnseenBuilder;
 
@@ -95,7 +96,8 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
         List<TvShow> shows;
         try {
             // get watched episodes from trakt
-            shows = manager.userService().libraryShowsWatched(username).fire();
+            shows = manager.userService().libraryShowsWatched(username).extended(ExtendedParam.Min)
+                    .fire();
         } catch (TraktException te) {
             return FAILED_API;
         } catch (ApiException e) {
