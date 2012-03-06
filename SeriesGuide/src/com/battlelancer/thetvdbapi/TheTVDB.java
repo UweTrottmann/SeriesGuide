@@ -13,6 +13,8 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Lists;
 import com.battlelancer.seriesguide.util.Utils;
+import com.jakewharton.trakt.entities.TvShow;
+import com.jakewharton.trakt.entities.TvShowSeason;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -78,12 +80,14 @@ public class TheTVDB {
      * a show already exists in your database.
      * 
      * @param showId
+     * @param seenShows TODO
      * @return true if show and its episodes were added, false if it already
      *         exists
      * @throws IOException
      * @throws SAXException
      */
-    public static boolean addShow(String showId, Context context) throws SAXException {
+    public static boolean addShow(String showId, List<TvShow> seenShows, Context context)
+            throws SAXException {
         String language = getTheTVDBLanguage(context);
         Series show = fetchShow(showId, language, context);
 
@@ -101,6 +105,53 @@ public class TheTVDB {
         } catch (OperationApplicationException e) {
             // Failures like constraint violation aren't recoverable
             throw new RuntimeException("Problem applying batch operation", e);
+        }
+
+        // try to find seen episodes from trakt
+        for (TvShow tvShow : seenShows) {
+            if (tvShow.tvdbId.equals(showId)) {
+                batch.clear();
+
+                // try to find matching seasons
+                final List<TvShowSeason> seasons = tvShow.seasons;
+                for (TvShowSeason season : seasons) {
+                    final Cursor seasonMatch = context.getContentResolver().query(
+                            Seasons.buildSeasonsOfShowUri(showId), new String[] {
+                                Seasons._ID
+                            }, Seasons.COMBINED + "=?", new String[] {
+                                season.season.toString()
+                            }, null);
+
+                    // add ops to mark episodes as watched
+                    if (seasonMatch.moveToFirst()) {
+                        final String seasonId = seasonMatch.getString(0);
+
+                        for (Integer episode : season.episodes.numbers) {
+                            batch.add(ContentProviderOperation
+                                    .newUpdate(Episodes.buildEpisodesOfSeasonUri(seasonId))
+                                    .withSelection(Episodes.NUMBER + "=?", new String[] {
+                                        episode.toString()
+                                    }).withValue(Episodes.WATCHED, true).build());
+                        }
+                    }
+
+                    seasonMatch.close();
+                }
+
+                try {
+                    context.getContentResolver()
+                            .applyBatch(SeriesContract.CONTENT_AUTHORITY, batch);
+                } catch (RemoteException e) {
+                    // Failed binder transactions aren't recoverable
+                    throw new RuntimeException("Problem applying batch operation", e);
+                } catch (OperationApplicationException e) {
+                    // Failures like constraint violation aren't
+                    // recoverable
+                    throw new RuntimeException("Problem applying batch operation", e);
+                }
+
+                break;
+            }
         }
 
         DBUtils.updateLatestEpisode(context, showId);

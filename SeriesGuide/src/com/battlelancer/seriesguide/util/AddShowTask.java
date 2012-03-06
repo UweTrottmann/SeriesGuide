@@ -3,15 +3,23 @@ package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.thetvdbapi.TheTVDB;
+import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.entities.TvShow;
+import com.jakewharton.trakt.enumerations.ExtendedParam;
 
 import org.xml.sax.SAXException;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
@@ -29,13 +37,13 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
     private String mCurrentShowName;
 
-    public AddShowTask(Context activity, SearchResult show) {
-        mContext = activity;
+    public AddShowTask(Context context, SearchResult show) {
+        mContext = context.getApplicationContext();
         mAddQueue.add(show);
     }
 
-    public AddShowTask(Context activity, LinkedList<SearchResult> shows) {
-        mContext = activity;
+    public AddShowTask(Context context, LinkedList<SearchResult> shows) {
+        mContext = context.getApplicationContext();
         mAddQueue.addAll(shows);
     }
 
@@ -64,6 +72,26 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         int result;
         boolean modifiedDB = false;
 
+        if (isCancelled()) {
+            return null;
+        }
+
+        // get watched episodes from trakt (if enabled/possible)
+        // already here, so we only have to get it once
+        List<TvShow> shows = new ArrayList<TvShow>();
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        if (prefs.getBoolean(SeriesGuidePreferences.KEY_INTEGRATETRAKT, true)
+                && ShareUtils.isTraktCredentialsValid(mContext)) {
+            try {
+                ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
+
+                shows = manager.userService().libraryShowsWatched(Utils.getTraktUsername(mContext))
+                        .extended(ExtendedParam.Min).fire();
+            } catch (Exception e1) {
+                // something went wrong, just go on
+            }
+        }
+
         while (!mAddQueue.isEmpty()) {
             if (isCancelled()) {
                 // only cancelled on config change, so don't rebuild fts
@@ -74,7 +102,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             SearchResult nextShow = mAddQueue.removeFirst();
 
             try {
-                if (TheTVDB.addShow(nextShow.tvdbid, mContext.getApplicationContext())) {
+                if (TheTVDB.addShow(nextShow.tvdbid, shows, mContext)) {
                     // success
                     result = ADD_SUCCESS;
                 } else {
@@ -93,7 +121,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         mIsFinishedAddingShows = true;
         // renew FTS3 table
         if (modifiedDB) {
-            TheTVDB.onRenewFTSTable(mContext.getApplicationContext());
+            TheTVDB.onRenewFTSTable(mContext);
         }
 
         return null;
@@ -103,23 +131,23 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
     protected void onProgressUpdate(Integer... values) {
         switch (values[0]) {
             case ADD_SUCCESS:
-                Toast.makeText(mContext.getApplicationContext(),
+                Toast.makeText(mContext,
                         "\"" + mCurrentShowName + "\" " + mContext.getString(R.string.add_success),
                         Toast.LENGTH_SHORT).show();
                 break;
             case ADD_ALREADYEXISTS:
                 Toast.makeText(
-                        mContext.getApplicationContext(),
+                        mContext,
                         "\"" + mCurrentShowName + "\" "
                                 + mContext.getString(R.string.add_already_exists),
                         Toast.LENGTH_LONG).show();
                 break;
             case ADD_SAXERROR:
                 Toast.makeText(
-                        mContext.getApplicationContext(),
+                        mContext,
                         mContext.getString(R.string.add_error_begin) + mCurrentShowName
-                                + mContext.getString(R.string.add_error_end),
-                        Toast.LENGTH_LONG).show();
+                                + mContext.getString(R.string.add_error_end), Toast.LENGTH_LONG)
+                        .show();
                 break;
         }
     }
