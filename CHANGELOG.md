@@ -74,7 +74,11 @@ Since 2.5.6beta (soon)
 * Modify design to be closer to Android Design guidelines.
 * Highlight selected item in multi-pane episode view.
 * UI for custom upcoming interval (currently 24 hours).
-* Posters and no already added shows in Add Show (not for the search screen). 
+* Posters and no already added shows in Add Show (not for the search screen).
+* When adding a show get seen episodes from trakt.
+* Download half the data when syncing from trakt via Settings.
+* Bigger sized list widget items on xlarge devices. Smaller minimum list widget size, therefore smaller on GoogleTV.
+* Fixed stuck progress dialog when checking in with trakt.
 * Some other minor improvements.
 
 Version 2.4.2/2.4.3beta *(2012-01-11)*
