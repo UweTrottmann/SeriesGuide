@@ -7,11 +7,14 @@ import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.ShareUtils;
 
-import org.scribe.builder.ServiceBuilder;
-import org.scribe.exceptions.OAuthException;
-import org.scribe.model.Token;
-import org.scribe.model.Verifier;
-import org.scribe.oauth.OAuthService;
+import oauth.signpost.OAuthConsumer;
+import oauth.signpost.OAuthProvider;
+import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
+import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
+import oauth.signpost.exception.OAuthCommunicationException;
+import oauth.signpost.exception.OAuthExpectationFailedException;
+import oauth.signpost.exception.OAuthMessageSignerException;
+import oauth.signpost.exception.OAuthNotAuthorizedException;
 
 import android.content.Context;
 import android.content.Intent;
@@ -32,9 +35,9 @@ public class PrepareRequestTokenActivity extends BaseActivity {
 
     final String TAG = "PrepareRequestTokenActivity";
 
-    private OAuthService mService;
+    private OAuthConsumer mConsumer;
 
-    private Token mRequestToken;
+    private OAuthProvider mProvider;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,21 +49,13 @@ public class PrepareRequestTokenActivity extends BaseActivity {
         actionBar.setDisplayShowTitleEnabled(true);
 
         Resources res = getResources();
-        mService = new ServiceBuilder().provider(GetGlueApi.class)
-                .apiKey(res.getString(R.string.getglue_consumer_key))
-                .apiSecret(res.getString(R.string.getglue_consumer_secret))
-                .callback(GetGlue.OAUTH_CALLBACK_URL).build();
+        this.mConsumer = new CommonsHttpOAuthConsumer(res.getString(R.string.getglue_consumer_key),
+                res.getString(R.string.getglue_consumer_secret));
+        this.mProvider = new CommonsHttpOAuthProvider(GetGlue.REQUEST_URL, GetGlue.ACCESS_URL,
+                GetGlue.AUTHORIZE_URL);
 
         Log.i(TAG, "Starting task to retrieve request token.");
-        new OAuthRequestTokenTask(this, mService).execute();
-    }
-
-    protected synchronized void setRequestToken(Token requestToken) {
-        mRequestToken = requestToken;
-    }
-
-    protected synchronized Token getRequestToken() {
-        return mRequestToken;
+        new OAuthRequestTokenTask(this, mConsumer, mProvider).execute();
     }
 
     /**
@@ -75,7 +70,7 @@ public class PrepareRequestTokenActivity extends BaseActivity {
         if (uri != null && uri.getScheme().equals(GetGlue.OAUTH_CALLBACK_SCHEME)) {
             Log.i(TAG, "Callback received, retrieving Access Token");
 
-            new RetrieveAccessTokenTask(mService, getRequestToken(), this).execute(uri);
+            new RetrieveAccessTokenTask(mConsumer, mProvider, this).execute(uri);
 
             finish();
         }
@@ -89,14 +84,17 @@ public class PrepareRequestTokenActivity extends BaseActivity {
 
         private SharedPreferences mPrefs;
 
-        private OAuthService mService;
+        private OAuthProvider mProvider;
+
+        private OAuthConsumer mConsumer;
 
         private Context mContext;
 
-        public RetrieveAccessTokenTask(OAuthService service, Token requestToken, Context context) {
-            mService = service;
+        public RetrieveAccessTokenTask(OAuthConsumer consumer, OAuthProvider provider,
+                Context context) {
             mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-            mRequestToken = requestToken;
+            mProvider = provider;
+            mConsumer = consumer;
             mContext = context;
         }
 
@@ -106,27 +104,28 @@ public class PrepareRequestTokenActivity extends BaseActivity {
          */
         @Override
         protected Integer doInBackground(Uri... params) {
-            if (mRequestToken == null) {
-                Log.e(TAG, "OAuth - Request Token invalid");
-                return AUTH_FAILED;
-            }
-
             final Uri uri = params[0];
-            Verifier verifier = new Verifier(uri.getQueryParameter("oauth_verifier"));
+            final String oauth_verifier = uri.getQueryParameter("oauth_verifier");
 
             try {
-                Token accessToken = mService.getAccessToken(mRequestToken, verifier);
+                mProvider.retrieveAccessToken(mConsumer, oauth_verifier);
 
-                mPrefs.edit().putString(GetGlue.OAUTH_TOKEN, accessToken.getToken())
-                        .putString(GetGlue.OAUTH_TOKEN_SECRET, accessToken.getSecret()).commit();
+                mPrefs.edit().putString(GetGlue.OAUTH_TOKEN, mConsumer.getToken())
+                        .putString(GetGlue.OAUTH_TOKEN_SECRET, mConsumer.getTokenSecret()).commit();
 
                 Log.i(TAG, "OAuth - Access Token Retrieved");
-            } catch (OAuthException e) {
+                return AUTH_SUCCESS;
+            } catch (OAuthMessageSignerException e) {
                 Log.e(TAG, "OAuth - Access Token Retrieval Error", e);
-                return AUTH_FAILED;
+            } catch (OAuthNotAuthorizedException e) {
+                Log.e(TAG, "OAuth - Access Token Retrieval Error", e);
+            } catch (OAuthExpectationFailedException e) {
+                Log.e(TAG, "OAuth - Access Token Retrieval Error", e);
+            } catch (OAuthCommunicationException e) {
+                Log.e(TAG, "OAuth - Access Token Retrieval Error", e);
             }
 
-            return AUTH_SUCCESS;
+            return AUTH_FAILED;
         }
 
         @Override

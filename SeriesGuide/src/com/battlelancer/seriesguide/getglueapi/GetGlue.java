@@ -4,12 +4,18 @@ package com.battlelancer.seriesguide.getglueapi;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 
-import org.scribe.builder.ServiceBuilder;
-import org.scribe.exceptions.OAuthException;
-import org.scribe.model.OAuthRequest;
-import org.scribe.model.Token;
-import org.scribe.model.Verb;
-import org.scribe.oauth.OAuthService;
+import oauth.signpost.OAuthConsumer;
+import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
+import oauth.signpost.exception.OAuthCommunicationException;
+import oauth.signpost.exception.OAuthExpectationFailedException;
+import oauth.signpost.exception.OAuthMessageSignerException;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -18,6 +24,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -93,24 +100,37 @@ public class GetGlue {
 
             // create a consumer object and configure it with the access
             // token and token secret obtained from the service provider
+            OAuthConsumer consumer = new CommonsHttpOAuthConsumer(
+                    res.getString(R.string.getglue_consumer_key),
+                    res.getString(R.string.getglue_consumer_secret));
+            consumer.setTokenWithSecret(mPrefs.getString(OAUTH_TOKEN, ""),
+                    mPrefs.getString(OAUTH_TOKEN_SECRET, ""));
+
+            HttpGet request = new HttpGet(url);
+            HttpClient httpClient = new DefaultHttpClient();
+
             try {
-                OAuthService service = new ServiceBuilder().provider(GetGlueApi.class)
-                        .apiKey(res.getString(R.string.getglue_consumer_key))
-                        .apiSecret(res.getString(R.string.getglue_consumer_secret)).build();
-
-                OAuthRequest request = new OAuthRequest(Verb.GET, url);
-                Token accessToken = new Token(mPrefs.getString(OAUTH_TOKEN, ""), mPrefs.getString(
-                        OAUTH_TOKEN_SECRET, ""));
-                service.signRequest(accessToken, request);
-
-                request.send();
-            } catch (OAuthException e) {
-                e.printStackTrace();
-                mComment = e.getMessage();
+                consumer.sign(request);
+            } catch (OAuthMessageSignerException e) {
+                return CHECKIN_FAILED;
+            } catch (OAuthExpectationFailedException e) {
+                return CHECKIN_FAILED;
+            } catch (OAuthCommunicationException e) {
                 return CHECKIN_FAILED;
             }
 
-            return CHECKIN_SUCCESSFUL;
+            try {
+                HttpResponse response = httpClient.execute(request);
+
+                int statuscode = response.getStatusLine().getStatusCode();
+                if (statuscode == HttpStatus.SC_OK) {
+                    return CHECKIN_SUCCESSFUL;
+                }
+            } catch (ClientProtocolException e) {
+            } catch (IOException e) {
+            }
+
+            return CHECKIN_FAILED;
         }
 
         @Override
@@ -122,8 +142,7 @@ public class GetGlue {
                             "Success", 0);
                     break;
                 case CHECKIN_FAILED:
-                    Toast.makeText(mContext,
-                            mContext.getString(R.string.checkinfailed) + " - " + mComment,
+                    Toast.makeText(mContext, mContext.getString(R.string.checkinfailed),
                             Toast.LENGTH_LONG).show();
                     AnalyticsUtils.getInstance(mContext).trackEvent("Sharing", "GetGlue", mComment,
                             0);

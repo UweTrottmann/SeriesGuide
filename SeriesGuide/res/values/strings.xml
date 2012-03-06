@@ -260,7 +260,7 @@
     <string name="traktcheckin_cancel">Cancel it</string>
     <string name="traktcheckin_inprogress">There is already a checkin in progress. Either cancel this checkin or wait %s before you can check in again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
-    <string name="checkinfailed">Check-In failed.</string>
+    <string name="checkinfailed">Check-In failed. Try disconnecting GetGlue.</string>
     <string name="oauthmessage">Authenticating SeriesGuide with GetGlue&#8230;</string>
     <string name="addtocalendar">Add to calendar</string>
     <string name="addtocalendar_failed">Can not create a calendar event.</string>

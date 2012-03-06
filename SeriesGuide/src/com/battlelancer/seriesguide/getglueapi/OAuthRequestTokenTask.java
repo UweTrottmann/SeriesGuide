@@ -1,10 +1,14 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
-import org.scribe.exceptions.OAuthException;
-import org.scribe.model.Token;
-import org.scribe.oauth.OAuthService;
+import oauth.signpost.OAuthConsumer;
+import oauth.signpost.OAuthProvider;
+import oauth.signpost.exception.OAuthCommunicationException;
+import oauth.signpost.exception.OAuthExpectationFailedException;
+import oauth.signpost.exception.OAuthMessageSignerException;
+import oauth.signpost.exception.OAuthNotAuthorizedException;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -14,13 +18,16 @@ import android.widget.Toast;
 public class OAuthRequestTokenTask extends AsyncTask<Void, Void, String> {
     final String TAG = getClass().getName();
 
-    private PrepareRequestTokenActivity mContext;
+    private Context mContext;
 
-    private OAuthService mService;
+    private OAuthConsumer mConsumer;
 
-    public OAuthRequestTokenTask(PrepareRequestTokenActivity context, OAuthService service) {
+    private OAuthProvider mProvider;
+
+    public OAuthRequestTokenTask(Context context, OAuthConsumer consumer, OAuthProvider provider) {
         mContext = context;
-        mService = service;
+        mConsumer = consumer;
+        mProvider = provider;
     }
 
     /**
@@ -29,23 +36,24 @@ public class OAuthRequestTokenTask extends AsyncTask<Void, Void, String> {
      */
     @Override
     protected String doInBackground(Void... params) {
-
         try {
             Log.i(TAG, "Retrieving request token from GetGlue servers");
-            Token requestToken = mService.getRequestToken();
-            String authUrl = mService.getAuthorizationUrl(requestToken);
-            // TODO: convert to listener
-            mContext.setRequestToken(requestToken);
+            String authUrl = mProvider.retrieveRequestToken(mConsumer, GetGlue.OAUTH_CALLBACK_URL);
 
-            Log.i(TAG, "Open a browser to get request token authorized");
+            Log.i(TAG, "Popping a browser with the authorize URL");
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(authUrl))
                     .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY
                             | Intent.FLAG_FROM_BACKGROUND);
             mContext.startActivity(intent);
-        } catch (OAuthException e) {
+        } catch (OAuthMessageSignerException e) {
+            return e.getMessage();
+        } catch (OAuthNotAuthorizedException e) {
+            return e.getMessage();
+        } catch (OAuthExpectationFailedException e) {
+            return e.getMessage();
+        } catch (OAuthCommunicationException e) {
             return e.getMessage();
         }
-
         return null;
     }
 
