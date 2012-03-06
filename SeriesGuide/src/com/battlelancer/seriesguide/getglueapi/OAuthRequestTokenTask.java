@@ -1,47 +1,26 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
-import oauth.signpost.OAuthConsumer;
-import oauth.signpost.OAuthProvider;
-import oauth.signpost.exception.OAuthCommunicationException;
-import oauth.signpost.exception.OAuthExpectationFailedException;
-import oauth.signpost.exception.OAuthMessageSignerException;
-import oauth.signpost.exception.OAuthNotAuthorizedException;
+import org.scribe.exceptions.OAuthException;
+import org.scribe.model.Token;
+import org.scribe.oauth.OAuthService;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-/**
- * An asynchronous task that communicates with Twitter to retrieve a request
- * token. (OAuthGetRequestToken) After receiving the request token from Twitter,
- * pop a browser to the user to authorize the Request Token.
- * (OAuthAuthorizeToken)
- */
 public class OAuthRequestTokenTask extends AsyncTask<Void, Void, String> {
     final String TAG = getClass().getName();
 
-    private Context context;
+    private PrepareRequestTokenActivity mContext;
 
-    private OAuthProvider provider;
+    private OAuthService mService;
 
-    private OAuthConsumer consumer;
-
-    /**
-     * We pass the OAuth consumer and provider.
-     * 
-     * @param context Required to be able to start the intent to launch the
-     *            browser.
-     * @param provider The OAuthProvider object
-     * @param consumer The OAuthConsumer object
-     */
-    public OAuthRequestTokenTask(Context context, OAuthConsumer consumer, OAuthProvider provider) {
-        this.context = context;
-        this.consumer = consumer;
-        this.provider = provider;
+    public OAuthRequestTokenTask(PrepareRequestTokenActivity context, OAuthService service) {
+        mContext = context;
+        mService = service;
     }
 
     /**
@@ -53,19 +32,17 @@ public class OAuthRequestTokenTask extends AsyncTask<Void, Void, String> {
 
         try {
             Log.i(TAG, "Retrieving request token from GetGlue servers");
-            final String url = provider.retrieveRequestToken(consumer, GetGlue.OAUTH_CALLBACK_URL);
-            Log.i(TAG, "Popping a browser with the authorize URL : " + url);
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            Token requestToken = mService.getRequestToken();
+            String authUrl = mService.getAuthorizationUrl(requestToken);
+            // TODO: convert to listener
+            mContext.setRequestToken(requestToken);
+
+            Log.i(TAG, "Open a browser to get request token authorized");
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(authUrl))
                     .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY
                             | Intent.FLAG_FROM_BACKGROUND);
-            context.startActivity(intent);
-        } catch (OAuthMessageSignerException e) {
-            return e.getMessage();
-        } catch (OAuthNotAuthorizedException e) {
-            return e.getMessage();
-        } catch (OAuthExpectationFailedException e) {
-            return e.getMessage();
-        } catch (OAuthCommunicationException e) {
+            mContext.startActivity(intent);
+        } catch (OAuthException e) {
             return e.getMessage();
         }
 
@@ -75,8 +52,8 @@ public class OAuthRequestTokenTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         if (result != null) {
-            Toast.makeText(context, result, Toast.LENGTH_LONG).show();
-            ((PrepareRequestTokenActivity) context).finish();
+            Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
+            ((PrepareRequestTokenActivity) mContext).finish();
         }
     }
 

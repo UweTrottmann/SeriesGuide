@@ -3,18 +3,19 @@ package com.battlelancer.seriesguide.getglueapi;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.ShareUtils;
 
-import oauth.signpost.OAuth;
-import oauth.signpost.OAuthConsumer;
-import oauth.signpost.OAuthProvider;
-import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
-import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
+import org.scribe.builder.ServiceBuilder;
+import org.scribe.exceptions.OAuthException;
+import org.scribe.model.Token;
+import org.scribe.model.Verifier;
+import org.scribe.oauth.OAuthService;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -24,19 +25,16 @@ import android.util.Log;
 import android.widget.Toast;
 
 /**
- * Prepares a OAuthConsumer and OAuthProvider OAuthConsumer is configured with
- * the consumer key & consumer secret. OAuthProvider is configured with the 3
- * OAuth endpoints. Execute the OAuthRequestTokenTask to retrieve the request,
- * and authorize the request. After the request is authorized, a callback is
- * made here.
+ * Executes the OAuthRequestTokenTask to retrieve a request token and authorize
+ * it by the user. After the request is authorized, this will get the callback.
  */
 public class PrepareRequestTokenActivity extends BaseActivity {
 
-    final String TAG = getClass().getName();
+    final String TAG = "PrepareRequestTokenActivity";
 
-    private OAuthConsumer consumer;
+    private OAuthService mService;
 
-    private OAuthProvider provider;
+    private Token mRequestToken;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,19 +45,22 @@ public class PrepareRequestTokenActivity extends BaseActivity {
         actionBar.setTitle(getString(R.string.oauthmessage));
         actionBar.setDisplayShowTitleEnabled(true);
 
-        try {
-            Resources res = getResources();
-            this.consumer = new CommonsHttpOAuthConsumer(
-                    res.getString(R.string.getglue_consumer_key),
-                    res.getString(R.string.getglue_consumer_secret));
-            this.provider = new CommonsHttpOAuthProvider(GetGlue.REQUEST_URL, GetGlue.ACCESS_URL,
-                    GetGlue.AUTHORIZE_URL);
+        Resources res = getResources();
+        mService = new ServiceBuilder().provider(GetGlueApi.class)
+                .apiKey(res.getString(R.string.getglue_consumer_key))
+                .apiSecret(res.getString(R.string.getglue_consumer_secret))
+                .callback(GetGlue.OAUTH_CALLBACK_URL).build();
 
-            Log.i(TAG, "Starting task to retrieve request token.");
-            new OAuthRequestTokenTask(this, consumer, provider).execute();
-        } catch (Exception e) {
-            Log.e(TAG, "Error creating consumer / provider", e);
-        }
+        Log.i(TAG, "Starting task to retrieve request token.");
+        new OAuthRequestTokenTask(this, mService).execute();
+    }
+
+    protected synchronized void setRequestToken(Token requestToken) {
+        mRequestToken = requestToken;
+    }
+
+    protected synchronized Token getRequestToken() {
+        return mRequestToken;
     }
 
     /**
@@ -69,29 +70,34 @@ public class PrepareRequestTokenActivity extends BaseActivity {
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
         final Uri uri = intent.getData();
         if (uri != null && uri.getScheme().equals(GetGlue.OAUTH_CALLBACK_SCHEME)) {
-            Log.i(TAG, "Callback received : " + uri);
-            Log.i(TAG, "Retrieving Access Token");
-            new RetrieveAccessTokenTask(consumer, provider, prefs).execute(uri);
+            Log.i(TAG, "Callback received, retrieving Access Token");
+
+            new RetrieveAccessTokenTask(mService, getRequestToken(), this).execute(uri);
+
             finish();
         }
     }
 
-    public class RetrieveAccessTokenTask extends AsyncTask<Uri, Void, String> {
+    public class RetrieveAccessTokenTask extends AsyncTask<Uri, Void, Integer> {
 
-        private OAuthProvider provider;
+        private static final int AUTH_FAILED = 0;
 
-        private OAuthConsumer consumer;
+        private static final int AUTH_SUCCESS = 1;
 
-        private SharedPreferences prefs;
+        private SharedPreferences mPrefs;
 
-        public RetrieveAccessTokenTask(OAuthConsumer consumer, OAuthProvider provider,
-                SharedPreferences prefs) {
-            this.consumer = consumer;
-            this.provider = provider;
-            this.prefs = prefs;
+        private OAuthService mService;
+
+        private Context mContext;
+
+        public RetrieveAccessTokenTask(OAuthService service, Token requestToken, Context context) {
+            mService = service;
+            mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+            mRequestToken = requestToken;
+            mContext = context;
         }
 
         /**
@@ -99,52 +105,43 @@ public class PrepareRequestTokenActivity extends BaseActivity {
          * oauth_token_secret for future API calls.
          */
         @Override
-        protected String doInBackground(Uri... params) {
-            final Uri uri = params[0];
-            final String oauth_verifier = uri.getQueryParameter(OAuth.OAUTH_VERIFIER);
-
-            try {
-                provider.retrieveAccessToken(consumer, oauth_verifier);
-
-                final Editor edit = prefs.edit();
-                edit.putString(OAuth.OAUTH_TOKEN, consumer.getToken());
-                edit.putString(OAuth.OAUTH_TOKEN_SECRET, consumer.getTokenSecret());
-                edit.commit();
-
-                String token = prefs.getString(OAuth.OAUTH_TOKEN, "");
-                String secret = prefs.getString(OAuth.OAUTH_TOKEN_SECRET, "");
-
-                consumer.setTokenWithSecret(token, secret);
-
-                executeAfterAccessTokenRetrieval();
-
-                Log.i(TAG, "OAuth - Access Token Retrieved");
-
-            } catch (Exception e) {
-                Log.e(TAG, "OAuth - Access Token Retrieval Error", e);
-                return e.getMessage();
+        protected Integer doInBackground(Uri... params) {
+            if (mRequestToken == null) {
+                Log.e(TAG, "OAuth - Request Token invalid");
+                return AUTH_FAILED;
             }
 
-            return null;
-        }
+            final Uri uri = params[0];
+            Verifier verifier = new Verifier(uri.getQueryParameter("oauth_verifier"));
 
-        private void executeAfterAccessTokenRetrieval() throws Exception {
-            Bundle extras = getIntent().getExtras();
-            String comment = extras.getString(ShareUtils.KEY_GETGLUE_COMMENT);
-            String imdbId = extras.getString(ShareUtils.KEY_GETGLUE_IMDBID);
+            try {
+                Token accessToken = mService.getAccessToken(mRequestToken, verifier);
 
-            GetGlue.checkIn(prefs, imdbId, comment, PrepareRequestTokenActivity.this);
+                mPrefs.edit().putString(GetGlue.OAUTH_TOKEN, accessToken.getToken())
+                        .putString(GetGlue.OAUTH_TOKEN_SECRET, accessToken.getSecret()).commit();
+
+                Log.i(TAG, "OAuth - Access Token Retrieved");
+            } catch (OAuthException e) {
+                Log.e(TAG, "OAuth - Access Token Retrieval Error", e);
+                return AUTH_FAILED;
+            }
+
+            return AUTH_SUCCESS;
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            if (result != null) {
-                Toast.makeText(getApplicationContext(),
-                        getString(R.string.checkinfailed) + " - " + result, Toast.LENGTH_LONG)
-                        .show();
-            } else {
-                Toast.makeText(getApplicationContext(), getString(R.string.checkinsuccess),
-                        Toast.LENGTH_SHORT).show();
+        protected void onPostExecute(Integer result) {
+            switch (result) {
+                case AUTH_SUCCESS:
+                    Bundle extras = getIntent().getExtras();
+                    String comment = extras.getString(ShareUtils.KEY_GETGLUE_COMMENT);
+                    String imdbId = extras.getString(ShareUtils.KEY_GETGLUE_IMDBID);
+                    new CheckInTask(imdbId, comment, mContext).execute();
+                    break;
+                case AUTH_FAILED:
+                    Toast.makeText(getApplicationContext(), getString(R.string.checkinfailed),
+                            Toast.LENGTH_LONG).show();
+                    break;
             }
         }
     }

@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
+import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
 import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
@@ -13,7 +14,6 @@ import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.enumerations.Rating;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -33,7 +33,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.InputFilter;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -191,6 +190,9 @@ public class ShareUtils {
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final String episodestring = getArguments().getString(ShareItems.EPISODESTRING);
             final String imdbId = getArguments().getString(ShareItems.IMDBID);
+            final FragmentActivity activity = getActivity();
+            final SharedPreferences prefs = PreferenceManager
+                    .getDefaultSharedPreferences(getActivity());
 
             final LinearLayout layout = new LinearLayout(getActivity());
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
@@ -217,7 +219,18 @@ public class ShareUtils {
                     .setView(layout)
                     .setPositiveButton(R.string.checkin, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            onGetGlueCheckIn(getActivity(), input.getText().toString(), imdbId);
+                            String comment = input.getText().toString();
+
+                            // if we are authenticated go ahead, if not
+                            // authenticate first
+                            if (GetGlue.isAuthenticated(prefs)) {
+                                new CheckInTask(imdbId, comment, activity).execute();
+                            } else {
+                                Intent i = new Intent(activity, PrepareRequestTokenActivity.class);
+                                i.putExtra(ShareUtils.KEY_GETGLUE_IMDBID, imdbId);
+                                i.putExtra(ShareUtils.KEY_GETGLUE_COMMENT, comment);
+                                startActivity(i);
+                            }
                         }
                     }).setNegativeButton(android.R.string.cancel, null).create();
         }
@@ -227,50 +240,7 @@ public class ShareUtils {
             super.onSaveInstanceState(outState);
             outState.putString("inputtext", input.getText().toString());
         }
-    }
 
-    public static void onGetGlueCheckIn(final Activity activity, final String comment,
-            final String imdbId) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity
-                .getApplicationContext());
-
-        if (GetGlue.isAuthenticated(prefs)) {
-            new Thread(new Runnable() {
-                public void run() {
-                    try {
-                        GetGlue.checkIn(prefs, imdbId, comment, activity);
-                        activity.runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText(activity,
-                                        activity.getString(R.string.checkinsuccess),
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        AnalyticsUtils.getInstance(activity).trackEvent("Sharing", "GetGlue",
-                                "Success", 0);
-
-                    } catch (final Exception e) {
-                        Log.e(TAG, "GetGlue Check-In failed");
-                        activity.runOnUiThread(new Runnable() {
-                            public void run() {
-                                Toast.makeText(
-                                        activity,
-                                        activity.getString(R.string.checkinfailed) + " - "
-                                                + e.getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        });
-                        AnalyticsUtils.getInstance(activity).trackEvent("Sharing", "GetGlue",
-                                "Failed", 0);
-
-                    }
-                }
-            }).start();
-        } else {
-            Intent i = new Intent(activity, PrepareRequestTokenActivity.class);
-            i.putExtra(ShareUtils.KEY_GETGLUE_IMDBID, imdbId);
-            i.putExtra(ShareUtils.KEY_GETGLUE_COMMENT, comment);
-            activity.startActivity(i);
-        }
     }
 
     public interface ShareItems {

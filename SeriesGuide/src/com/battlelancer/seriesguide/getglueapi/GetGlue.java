@@ -2,26 +2,26 @@
 package com.battlelancer.seriesguide.getglueapi;
 
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.AnalyticsUtils;
 
-import oauth.signpost.OAuth;
-import oauth.signpost.OAuthConsumer;
-import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.scribe.builder.ServiceBuilder;
+import org.scribe.exceptions.OAuthException;
+import org.scribe.model.OAuthRequest;
+import org.scribe.model.Token;
+import org.scribe.model.Verb;
+import org.scribe.oauth.OAuthService;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.widget.Toast;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class GetGlue {
-
-    // private static final String TAG = GetGlue.class.getName();
 
     private static final String GETGLUE_APIPATH_V2 = "http://api.getglue.com/v2/";
 
@@ -40,10 +40,15 @@ public class GetGlue {
     public static final String OAUTH_CALLBACK_URL = OAUTH_CALLBACK_SCHEME + "://"
             + OAUTH_CALLBACK_HOST;
 
-    public static boolean isAuthenticated(SharedPreferences prefs) {
+    public static final String OAUTH_TOKEN = "oauth_token";
 
-        String token = prefs.getString(OAuth.OAUTH_TOKEN, "");
-        String secret = prefs.getString(OAuth.OAUTH_TOKEN_SECRET, "");
+    public static final String OAUTH_TOKEN_SECRET = "oauth_token_secret";
+
+    private static final String GETGLUE_CHECKIN_IMDBID = "user/addCheckin?objectId=http://www.imdb.com/title/";
+
+    public static boolean isAuthenticated(final SharedPreferences prefs) {
+        String token = prefs.getString(OAUTH_TOKEN, "");
+        String secret = prefs.getString(OAUTH_TOKEN_SECRET, "");
 
         if (token == "" || secret == "") {
             return false;
@@ -52,44 +57,83 @@ public class GetGlue {
         return true;
     }
 
-    public static void checkIn(SharedPreferences prefs, String imdbId, String comment,
-            Context context) throws Exception {
+    public static class CheckInTask extends AsyncTask<Void, Void, Integer> {
 
-        String token = prefs.getString(OAuth.OAUTH_TOKEN, "");
-        String secret = prefs.getString(OAuth.OAUTH_TOKEN_SECRET, "");
+        private static final int CHECKIN_SUCCESSFUL = 0;
 
-        comment = URLEncoder.encode(comment, "UTF-8");
-        String requestString = GETGLUE_APIPATH_V2;
-        requestString += "user/addCheckin?objectId=http://www.imdb.com/title/" + imdbId
-                + GETGLUE_SOURCE + "&comment=" + comment;
+        private static final int CHECKIN_FAILED = 1;
 
-        // create a consumer object and configure it with the access
-        // token and token secret obtained from the service provider
-        Resources res = context.getResources();
-        OAuthConsumer consumer = new CommonsHttpOAuthConsumer(
-                res.getString(R.string.getglue_consumer_key),
-                res.getString(R.string.getglue_consumer_secret));
-        consumer.setTokenWithSecret(token, secret);
+        private String mImdbId;
 
-        // create an HTTP request to a protected resource
-        HttpGet request = new HttpGet(requestString);
+        private String mComment;
 
-        // sign the request
-        consumer.sign(request);
+        private Context mContext;
 
-        // send the request
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpResponse response = httpClient.execute(request);
+        private SharedPreferences mPrefs;
 
-        int statuscode = response.getStatusLine().getStatusCode();
-        if (statuscode != HttpStatus.SC_OK) {
-            throw new Exception("Unexpected server response " + response.getStatusLine() + " for "
-                    + request.getRequestLine());
+        public CheckInTask(String imdbId, String comment, Context context) {
+            mImdbId = imdbId;
+            mComment = comment;
+            mContext = context;
+            mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         }
+
+        @Override
+        protected Integer doInBackground(Void... params) {
+            final Resources res = mContext.getResources();
+            try {
+                mComment = URLEncoder.encode(mComment, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                mComment = e.getMessage();
+                return CHECKIN_FAILED;
+            }
+            String url = GETGLUE_APIPATH_V2 + GETGLUE_CHECKIN_IMDBID + mImdbId + GETGLUE_SOURCE
+                    + "&comment=" + mComment;
+
+            // create a consumer object and configure it with the access
+            // token and token secret obtained from the service provider
+            try {
+                OAuthService service = new ServiceBuilder().provider(GetGlueApi.class)
+                        .apiKey(res.getString(R.string.getglue_consumer_key))
+                        .apiSecret(res.getString(R.string.getglue_consumer_secret)).build();
+
+                OAuthRequest request = new OAuthRequest(Verb.GET, url);
+                Token accessToken = new Token(mPrefs.getString(OAUTH_TOKEN, ""), mPrefs.getString(
+                        OAUTH_TOKEN_SECRET, ""));
+                service.signRequest(accessToken, request);
+
+                request.send();
+            } catch (OAuthException e) {
+                e.printStackTrace();
+                mComment = e.getMessage();
+                return CHECKIN_FAILED;
+            }
+
+            return CHECKIN_SUCCESSFUL;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            switch (result) {
+                case CHECKIN_SUCCESSFUL:
+                    Toast.makeText(mContext, R.string.checkinsuccess, Toast.LENGTH_SHORT).show();
+                    AnalyticsUtils.getInstance(mContext).trackEvent("Sharing", "GetGlue",
+                            "Success", 0);
+                    break;
+                case CHECKIN_FAILED:
+                    Toast.makeText(mContext,
+                            mContext.getString(R.string.checkinfailed) + " - " + mComment,
+                            Toast.LENGTH_LONG).show();
+                    AnalyticsUtils.getInstance(mContext).trackEvent("Sharing", "GetGlue", mComment,
+                            0);
+                    break;
+            }
+        }
+
     }
 
-    public static void clearCredentials(SharedPreferences prefs) {
-        prefs.edit().putString(OAuth.OAUTH_TOKEN, "").putString(OAuth.OAUTH_TOKEN_SECRET, "")
-                .commit();
+    public static void clearCredentials(final SharedPreferences prefs) {
+        prefs.edit().putString(OAUTH_TOKEN, "").putString(OAUTH_TOKEN_SECRET, "").commit();
     }
 }
