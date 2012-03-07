@@ -13,6 +13,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -225,11 +226,16 @@ public class BackupDeleteActivity extends BaseActivity {
 
                 // tell user something might have gone wrong if there are no
                 // shows in the database right now
-                final Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[] {
-                    Shows._ID
-                }, null, null, null);
-                if (shows.getCount() == 0) {
-                    return getString(R.string.dbupgradefailed);
+                try {
+                    final Cursor shows = getContentResolver().query(Shows.CONTENT_URI,
+                            new String[] {
+                                Shows._ID
+                            }, null, null, null);
+                    if (shows.getCount() == 0) {
+                        return getString(R.string.dbupgradefailed);
+                    }
+                } catch (SQLiteException e) {
+                    return e.getMessage();
                 }
 
                 return null;
