@@ -116,6 +116,10 @@ Version 2.4 *(2011-12-25)*
 * Recently watched episodes are fetched from trakt on each update: allows easy syncing of devices. After adding a show the initial fetch of watched episodes should still be done via `Settings` >> `Sync with trakt` >> `Sync to SeriesGuide`.
 * `Upcoming` renamed `Activity`.
 
+* Check into a show on trakt. After checking in, trakt will automatically display it as watching then switch over to watched status once the runtime of the show has elapsed.
+* Recently watched episodes are fetched from trakt on each update: allows easy syncing of devices. After adding a show the initial fetch of watched episodes should still be done via `Settings` >> `Sync with trakt` >> `Sync to SeriesGuide`.
+* `Upcoming` renamed `Activity`.
+
 Since 2.3.9beta (2011-12-21):
 
 * Check into a show on trakt. After checking in, trakt will automatically display it as watching then switch over to watched status once the runtime of the show has elapsed.
@@ -135,6 +139,16 @@ Since 2.4beta (2011-12-24):
 * Fix text color for notification on Android 2.2 and below.
 * Display failed shows in update error message.
 * Latest translations from crowdin.net.
+
+Version 2.3 *(2011-11-26)*
+--------------------------------
+
+* Revamped updater: shows get outdated after 7 days and get included in the next update
+* AutoUpdate: presses the update button on opening the app for you
+* Updating now only works on Wi-Fi, this can be disabled in settings
+* Revamped adding of shows (incl. more trakt integration)
+* Episode pager on phones/small screens
+* TVDb buttons
 
 Version 2.3 *(2011-11-26)*
 --------------------------------

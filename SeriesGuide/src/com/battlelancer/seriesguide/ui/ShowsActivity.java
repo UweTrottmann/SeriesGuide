@@ -5,7 +5,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
@@ -109,7 +109,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final String FILTER_ID = "filterid";
 
-    private static final int VER_TRAKT_SEC_CHANGES = 139;
+    private static final int VER_TRAKT_SEC_CHANGES = 129;
 
     private Bundle mSavedState;
 
@@ -775,7 +775,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         final Constants.ShowSorting oldSorting = mSorting;
         final CharSequence[] items = getResources().getStringArray(R.array.shsortingData);
         final String sortsetting = prefs.getString(SeriesGuidePreferences.KEY_SHOWSSORTORDER,
-                "alphabetic");
+                "favorites");
 
         for (int i = 0; i < items.length; i++) {
             if (sortsetting.equals(items[i])) {

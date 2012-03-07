@@ -16,7 +16,7 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
-import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;

@@ -303,7 +303,7 @@
     <string name="betawarning">This release is for beta testers only! If you are in doubt download the stable version below.\n\nIf you want to help test have a look at the <a href="http://git.io/sgbetachanges">recent changes</a>.\n\nPlease report every crash, try everything and send feedback.</string>
 
     <!-- REMOVE before uploading to crowdin -->
-    <string name="app_name">SeriesGuide beta</string>
+    <string name="app_name">SeriesGuide</string>
     <string name="helptranslate">Help translate SeriesGuide</string>
     <string name="imdb">IMDb</string>
     <string name="tvdb">TVDb</string>

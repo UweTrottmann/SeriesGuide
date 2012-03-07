@@ -1,7 +1,7 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
-import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 
 import oauth.signpost.OAuthConsumer;

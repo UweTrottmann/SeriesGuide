@@ -1,4 +1,4 @@
-** NEW ENGLISH **
+** ENGLISH **
 
 Manage the progress of (re-)watching your favorite TV shows. Keep track which episodes you still have to watch or which ones are upcoming. Get more information about a show and each episode (description, actors, episode image, ...) and share what you are watching with trakt.tv, GetGlue or any supported Android app like Google+, Twitter and Facebook.
 
@@ -13,8 +13,9 @@ Manage the progress of (re-)watching your favorite TV shows. Keep track which ep
 NOTE: Airtimes and Network info are those in the United States Pacific Time due to limitations of the data source (thetvdb.com).
 
 Visit the developers web page for more info and some hints.
+Latest news are on Twitter (twitter.com/SeriesGuide).
 
-** NEW GERMAN **
+** GERMAN **
 
 Verwalten Sie den Fortschritt, wenn Sie Ihre Lieblings-TV-Serien (erneut) ansehen. Behalten Sie den Überblick welche Folgen Sie noch sehen müssen oder welche demnächst in den USA auf Sendung gehen. Zusätzlich können Sie mehr über eine Serie oder eine spezielle Folge erfahren (Beschreibung, Schauspieler, Bild aus der Folge, ...) und anderen über trakt.tv, GetGlue oder jede unterstütze Android App wie Google+, Twitter und Facebook mitteilen, was Sie sich ansehen.
 
@@ -24,7 +25,7 @@ Verwalten Sie den Fortschritt, wenn Sie Ihre Lieblings-TV-Serien (erneut) ansehe
 - App-Widget zeigt künftige Folgen
 - trakt.tv Unterstützung (Check In, Bewerten, Aktivität von Freunden, Sync, ...)
 - GetGlue Check-In Unterstützung
-- Empfehlen Sie Folgen via Android Apps (Email, Facebook, Twitter, ...)
+- Empfehlen Sie Folgen via Android Apps (Gmail, Facebook, Twitter, ...)
 
 HINWEIS: Ausstrahlungs- und Senderdaten sind die in den USA Pazifik-Zeit auf Grund von Limitierungen in thetvdb.com. Helft mit thetvdb.com zu überzeugen, dass zu ändern!
 
