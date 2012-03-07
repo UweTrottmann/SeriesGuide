@@ -1,6 +1,16 @@
 Changelog
 =========
 
+Version 2.5 *(in development)*
+--------------------------------
+
+* Datenbank-Upgrade für bessere Zeitrepräsentation. Es dauert ein paar Sekunden bis die Datenbank aktualisiert wurde.
+* Verstecken einzelner Serien.
+* 'Nur Favoriten'-Einstellung in Demnächst/Kürzlich, wird von Widgets respektiert.
+* 'Alle bisher gesendeten gesehen'-Funktion bei Lang-Tippen auf eine Folge.
+* Einheitliche Oberfläche auf allen Geräten dank ActionBarSherlock 4.0.
+* Mittleres und großes Widget auf Android 3.0+ Geräten entfernt. Listen-Widget benutzen!
+
 Version 2.4.2 *(2012-01-11)*
 -------------------------------
 
