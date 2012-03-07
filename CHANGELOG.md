@@ -40,6 +40,7 @@ Since 2.5.2beta (2012-01-28):
 * Don't use beta icon for stable release (only devices with extra high resolution displays were affected).
 * Hide text of some action bar buttons.
 * Support for 'Daily' air day.
+* Latest translations from crowdin, now with Arabic by mohd55 and Hungarian by devilinside.
 
 Since 2.5.3beta (2012-01-29)
 

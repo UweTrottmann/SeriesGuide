@@ -2,7 +2,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.beta.R;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

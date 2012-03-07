@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="auto"
-    package="com.battlelancer.seriesguide"
-    android:versionCode="150"
-    android:versionName="2.5dev" >
+    package="com.battlelancer.seriesguide.beta"
+    android:versionCode="153"
+    android:versionName="2.5.5beta" >
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -28,7 +28,7 @@
         android:theme="@style/SeriesGuideTheme" >
         <meta-data
             android:name="com.google.android.backup.api_key"
-            android:value="AEdPqrEAAAAIToXnISqkDzDlKt206D1VdujnhhoFa0mAEM8Veg" />
+            android:value="AEdPqrEAAAAIlG-fXzOx6u3ozZ1ah_9eqMnUD70jCFA1FPzJnQ" />
 
         <activity
             android:name="com.battlelancer.seriesguide.ui.ShowsActivity"
@@ -165,8 +165,8 @@
         </activity>
 
         <provider
-            android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider"
-            android:authorities="com.battlelancer.seriesguide" >
+            android:authorities="com.battlelancer.seriesguide.beta.provider"
+            android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider" >
         </provider>
 
         <activity

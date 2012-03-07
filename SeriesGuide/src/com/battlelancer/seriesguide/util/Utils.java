@@ -2,7 +2,7 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.thetvdbapi.ImageCache;
