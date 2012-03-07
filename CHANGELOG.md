@@ -4,7 +4,7 @@ Changelog
 Version 2.5 *(in development)*
 --------------------------------
 
-Notable changes:
+# Notable changes:
 
 * Database upgrade for better time representation. It may take a few seconds for the database to upgrade.
 * Hide individual shows.
@@ -13,15 +13,49 @@ Notable changes:
 * Unified interface across all devices thanks to ActionBarSherlock 4.0.
 * Removed middle and large widget on Android 3.0+ devices. Use the new list widget!
 
-Detailed changes:
+# Detailed changes:
 
-Since 2.5beta/2.5.1beta (2012-01-13):
- 
-* Add 'Watched all previously aired' option to episode list of a season.
-* Add show posters in Upcoming and Recent.
-* Fix to display correct episode title.
+## 2.5.6beta (soon)
 
-Since 2.5.2beta (2012-01-28):
+* Modify design to be closer to Android Design guidelines.
+* Highlight selected item in multi-pane episode view.
+* UI for custom upcoming interval (currently 24 hours).
+* Posters and no already added shows in Add Show (not for the search screen).
+* When adding a show get seen episodes from trakt.
+* Download half the data when syncing from trakt via Settings.
+* Bigger sized list widget items on xlarge devices. Smaller minimum list widget size, therefore smaller on GoogleTV.
+* Fixed stuck progress dialog when checking in with trakt.
+* Some other minor improvements.
+
+## 2.5.5beta (2012-02-20 GMT+1):
+
+* Fix for crash when marking episodes watched.
+* Always show the 'Add to calendar' button, if room.
+* Fix #53 for episodes list.
+
+## 2.5.4beta (2012-02-17 GMT+1):
+
+* Hide legacy widgets except small size on Android 3.0+ devices.
+* Fix incorrect next episodes if two air the same day. The lower numbered one is now assumed to be aired first (though still at the same time).
+* Fix sorting and filtering if shows have older episodes listed under next.
+* Reduced auto-update interval to at least every 15min.
+* New notification icon (finally!).
+* Layout tweaks in Upcoming and episode details.
+* Hide 'Add to calendar' button if it is useless.
+* Use ActionBarSherlock 4.0.
+* Display search term, title and search soft button in `SearchActivity`.
+* Enabled home button (app icon in the ActionBar) everywhere.
+* New welcome and beta dialog.
+
+## 2.5.3beta (2012-01-29)
+
+* Updated design towards ICS styles.
+* Fix for crash when trying to create a trakt account.
+* Use user-specified episode numbers in Upcoming/Recent.
+* Fix GetGlue comment box text not wrapping.
+* Latest translations from crowdin. Thanks everyone for the big effort!
+
+## 2.5.2beta (2012-01-28):
 
 * Better internal representation for time. It may take a while until your shows appear (the database is upgrading in the background). YOU MAY NEED to update all of your shows afterwards. Episodes move now correctly from Upcoming to Recent 1 hour after they aired.
 
@@ -41,45 +75,11 @@ Since 2.5.2beta (2012-01-28):
 * Hide text of some action bar buttons.
 * Support for 'Daily' air day.
 
-Since 2.5.3beta (2012-01-29)
-
-* Updated design towards ICS styles.
-* Fix for crash when trying to create a trakt account.
-* Use user-specified episode numbers in Upcoming/Recent.
-* Fix GetGlue comment box text not wrapping.
-* Latest translations from crowdin. Thanks everyone for the big effort!
-
-Since 2.5.4beta (2012-02-17 GMT+1):
-
-* Hide legacy widgets except small size on Android 3.0+ devices.
-* Fix incorrect next episodes if two air the same day. The lower numbered one is now assumed to be aired first (though still at the same time).
-* Fix sorting and filtering if shows have older episodes listed under next.
-* Reduced auto-update interval to at least every 15min.
-* New notification icon (finally!).
-* Layout tweaks in Upcoming and episode details.
-* Hide 'Add to calendar' button if it is useless.
-* Use ActionBarSherlock 4.0.
-* Display search term, title and search soft button in `SearchActivity`.
-* Enabled home button (app icon in the ActionBar) everywhere.
-* New welcome and beta dialog.
-
-Since 2.5.5beta (2012-02-20 GMT+1):
-
-* Fix for crash when marking episodes watched.
-* Always show the 'Add to calendar' button, if room.
-* Fix #53 for episodes list.
-
-Since 2.5.6beta (soon)
-
-* Modify design to be closer to Android Design guidelines.
-* Highlight selected item in multi-pane episode view.
-* UI for custom upcoming interval (currently 24 hours).
-* Posters and no already added shows in Add Show (not for the search screen).
-* When adding a show get seen episodes from trakt.
-* Download half the data when syncing from trakt via Settings.
-* Bigger sized list widget items on xlarge devices. Smaller minimum list widget size, therefore smaller on GoogleTV.
-* Fixed stuck progress dialog when checking in with trakt.
-* Some other minor improvements.
+## 2.5beta/2.5.1beta (2012-01-13):
+ 
+* Add 'Watched all previously aired' option to episode list of a season.
+* Add show posters in Upcoming and Recent.
+* Fix to display correct episode title.
 
 Version 2.4.2/2.4.3beta *(2012-01-11)*
 -------------------------------
