@@ -4,8 +4,6 @@ Changelog
 Version 2.5 *(in development)*
 --------------------------------
 
-# Notable changes:
-
 * Database upgrade for better time representation. It may take a few seconds for the database to upgrade.
 * Hide individual shows.
 * 'Only favorites' option for Upcoming/Recent, also respected by widgets.
@@ -13,9 +11,9 @@ Version 2.5 *(in development)*
 * Unified interface across all devices thanks to ActionBarSherlock 4.0.
 * Removed middle and large widget on Android 3.0+ devices. Use the new list widget!
 
-# Detailed changes:
+### Detailed changes:
 
-## 2.5.6beta (soon)
+#### 2.5.6beta (soon)
 
 * Modify design to be closer to Android Design guidelines.
 * Highlight selected item in multi-pane episode view.
@@ -27,13 +25,13 @@ Version 2.5 *(in development)*
 * Fixed stuck progress dialog when checking in with trakt.
 * Some other minor improvements.
 
-## 2.5.5beta (2012-02-20 GMT+1):
+#### 2.5.5beta (2012-02-20 GMT+1):
 
 * Fix for crash when marking episodes watched.
 * Always show the 'Add to calendar' button, if room.
 * Fix #53 for episodes list.
 
-## 2.5.4beta (2012-02-17 GMT+1):
+#### 2.5.4beta (2012-02-17 GMT+1):
 
 * Hide legacy widgets except small size on Android 3.0+ devices.
 * Fix incorrect next episodes if two air the same day. The lower numbered one is now assumed to be aired first (though still at the same time).
@@ -47,7 +45,7 @@ Version 2.5 *(in development)*
 * Enabled home button (app icon in the ActionBar) everywhere.
 * New welcome and beta dialog.
 
-## 2.5.3beta (2012-01-29)
+#### 2.5.3beta (2012-01-29)
 
 * Updated design towards ICS styles.
 * Fix for crash when trying to create a trakt account.
@@ -55,7 +53,7 @@ Version 2.5 *(in development)*
 * Fix GetGlue comment box text not wrapping.
 * Latest translations from crowdin. Thanks everyone for the big effort!
 
-## 2.5.2beta (2012-01-28):
+#### 2.5.2beta (2012-01-28):
 
 * Better internal representation for time. It may take a while until your shows appear (the database is upgrading in the background). YOU MAY NEED to update all of your shows afterwards. Episodes move now correctly from Upcoming to Recent 1 hour after they aired.
 
@@ -75,7 +73,7 @@ Version 2.5 *(in development)*
 * Hide text of some action bar buttons.
 * Support for 'Daily' air day.
 
-## 2.5beta/2.5.1beta (2012-01-13):
+#### 2.5beta/2.5.1beta (2012-01-13):
  
 * Add 'Watched all previously aired' option to episode list of a season.
 * Add show posters in Upcoming and Recent.
@@ -95,13 +93,15 @@ Version 2.4.1 *(2012-01-07)*
 * Remade all widgets sticking to design guidelines, this means they now display 1 (small), 3 (middle) or 7 (large) items and have correct padding.
 * Latest translations from crowdin.
 
-Since 2.4.2beta (2012-01-07)
+### Detailed changes:
+
+#### 2.4.2beta (2012-01-07)
 
 * Tapping list widget items takes you to the respective episode page.
 * Tweaked list widget layout a little.
 * Made widget backgrounds more transparent.
 
-Since 2.4.1beta (2012-01-06)
+#### 2.4.1beta (2012-01-06)
 
 * Resizable list widget for Android 3.0+. Uses an alarm to refresh (this needs testing) every 5 mins if the device is awake.
 * Remade all widgets sticking to design guidelines, this means they now display 1 (small), 3 (middle) or 7 (large) items and have correct padding.
@@ -115,7 +115,9 @@ Version 2.4 *(2011-12-25)*
 * Recently watched episodes are fetched from trakt on each update: allows easy syncing of devices. After adding a show the initial fetch of watched episodes should still be done via `Settings` >> `Sync with trakt` >> `Sync to SeriesGuide`.
 * `Upcoming` renamed `Activity`.
 
-Since 2.3.9beta (2011-12-21):
+### Detailed changes:
+
+#### 2.3.9beta (2011-12-21):
 
 * Check into a show on trakt. After checking in, trakt will automatically display it as watching then switch over to watched status once the runtime of the show has elapsed.
 * Recently watched episodes are fetched from trakt on each update: allows easy syncing of devices. After adding a show the initial fetch of watched episodes should still be done via `Settings` >> `Sync with trakt` >> `Sync to SeriesGuide`. Enabled by default on new installations.
@@ -129,7 +131,7 @@ Since 2.3.9beta (2011-12-21):
 * Set auto-update limit to 12 hours (down from 23 hours).
 * Use ActionBarSherlock 3.5.0.
 
-Since 2.4beta (2011-12-24):
+#### 2.4beta (2011-12-24):
 
 * Fix text color for notification on Android 2.2 and below.
 * Display failed shows in update error message.
@@ -145,18 +147,16 @@ Version 2.3 *(2011-11-26)*
 * Episode pager on phones/small screens
 * TVDb buttons
 
-Detailed changes:
+### Detailed changes:
 
-Since 2.3beta *(2011-11-06)*
+#### 2.3.2beta *(2011-11-22)*
 
-* You might need to clear your trakt.tv credentials if you encounter problems
-* Revamped adding of shows (better trakt.tv integration, recommended and library only for logged in trakt users)
-* Episode details shown in swipeable pager (only in non-dual-pane layout, yes, the background is broken)
-* Shows will get updated by the incremental updater after at least every 7 days
-* Fix crash when adding shows on certain HTC devices (Desire HD, Mytouch 4G, ...)
-* Layout/Design fixes
+* Thrown the TVDb updater out the airlock (so soon): now SeriesGuide will update your show if it has not been for more than a week when pressing the update button.
+* AutoUpdate (finally...): as updating now happens truly in the background (sorry, manual abort is gone for now, just drop your connection...) enabling this will press the update button for you at most once a day. You have to open the app though.
+* The thresholds (7 days for updating, 11 hours before next auto-update) are subject to discussion.
+* 'Update on Wi-Fi only' (enabled by default) will prevent the updater from doing anything if you don't have a Wi-Fi connection to the internet.
 
-Since 2.3.1beta *(2011-11-19)*
+#### 2.3.1beta *(2011-11-19)*
 
 * Two more air time parsing schemas (e.g. '9:00PM' and '9PM' instead of quasi-standard '9:00 PM'), let me know if there are errors!
 * Major cleanup, report any issues/broken features!
@@ -165,12 +165,14 @@ Since 2.3.1beta *(2011-11-19)*
 * Editing of trakt credentials in settings
 * Fixed broken background in episode pager
 
-Since 2.3.2beta *(2011-11-22)*
+#### 2.3beta *(2011-11-06)*
 
-* Thrown the TVDb updater out the airlock (so soon): now SeriesGuide will update your show if it has not been for more than a week when pressing the update button.
-* AutoUpdate (finally...): as updating now happens truly in the background (sorry, manual abort is gone for now, just drop your connection...) enabling this will press the update button for you at most once a day. You have to open the app though.
-* The thresholds (7 days for updating, 11 hours before next auto-update) are subject to discussion.
-* 'Update on Wi-Fi only' (enabled by default) will prevent the updater from doing anything if you don't have a Wi-Fi connection to the internet.
+* You might need to clear your trakt.tv credentials if you encounter problems
+* Revamped adding of shows (better trakt.tv integration, recommended and library only for logged in trakt users)
+* Episode details shown in swipeable pager (only in non-dual-pane layout, yes, the background is broken)
+* Shows will get updated by the incremental updater after at least every 7 days
+* Fix crash when adding shows on certain HTC devices (Desire HD, Mytouch 4G, ...)
+* Layout/Design fixes
 
 Version 2.2.2 *(2011-11-01)*
 --------------------------------
