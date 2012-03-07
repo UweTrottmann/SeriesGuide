@@ -343,6 +343,8 @@ public class ShareUtils {
 
         private final Bundle mTraktData;
 
+        private TraktAction mAction;
+
         /**
          * Do the specified TraktAction. traktData should include all required
          * parameters.
@@ -387,10 +389,10 @@ public class ShareUtils {
                 return null;
             }
 
-            TraktAction action = TraktAction.values()[mTraktData.getInt(ShareItems.TRAKTACTION)];
+            mAction = TraktAction.values()[mTraktData.getInt(ShareItems.TRAKTACTION)];
             try {
                 Response r = null;
-                switch (action) {
+                switch (mAction) {
                     case CHECKIN_EPISODE: {
                         r = manager.showService().checkin(tvdbid).season(season).episode(episode)
                                 .fire();
@@ -430,22 +432,24 @@ public class ShareUtils {
         protected void onPostExecute(Response r) {
             FragmentTransaction ft = mFm.beginTransaction();
 
-            // dismiss a potential progress dialog
-            Fragment prev = mFm.findFragmentByTag("progress-dialog");
-            if (prev != null) {
-                ft.remove(prev);
-
+            if (mAction == TraktAction.CHECKIN_EPISODE) {
+                // dismiss a potential progress dialog
+                Fragment prev = mFm.findFragmentByTag("progress-dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
             }
 
             if (r != null) {
                 if (r.status.equalsIgnoreCase(TraktStatus.SUCCESS)) {
                     // all good
-
                     Toast.makeText(mContext,
                             mContext.getString(R.string.trakt_success) + ": " + r.message,
                             Toast.LENGTH_SHORT).show();
 
-                    ft.commit();
+                    if (mAction == TraktAction.CHECKIN_EPISODE) {
+                        ft.commit();
+                    }
                 } else if (r.status.equalsIgnoreCase(TraktStatus.FAILURE)) {
                     if (r.wait != 0) {
                         // looks like a check in is in progress
@@ -458,7 +462,9 @@ public class ShareUtils {
                                 mContext.getString(R.string.trakt_error) + ": " + r.error,
                                 Toast.LENGTH_LONG).show();
 
-                        ft.commit();
+                        if (mAction == TraktAction.CHECKIN_EPISODE) {
+                            ft.commit();
+                        }
                     }
                 }
             } else {
