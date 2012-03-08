@@ -5,7 +5,7 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 2.5 *(in development)*
+Version 2.5 *(2012-03-08)*
 --------------------------------
 
 * Database upgrade for better time representation. It may take a few seconds for the database to upgrade.
@@ -17,7 +17,7 @@ Version 2.5 *(in development)*
 
 ### Detailed changes:
 
-#### 2.5.6beta (soon)
+#### 2.5.6beta (2012-03-08)
 
 * Modify design to be closer to Android Design guidelines.
 * Highlight selected item in multi-pane episode view.

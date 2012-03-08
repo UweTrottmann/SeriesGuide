@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 2.5 *(in development)*
+Version 2.5 *(2012-03-08)*
 --------------------------------
 
 * Datenbank-Upgrade für bessere Zeitrepräsentation. Es dauert ein paar Sekunden bis die Datenbank aktualisiert wurde.
