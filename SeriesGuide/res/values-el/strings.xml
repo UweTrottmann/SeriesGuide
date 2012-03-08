@@ -12,8 +12,6 @@
   <string name="share_episode">Κοινή χρήση επεισοδίου</string>
   <string name="share_checkout">Check out</string>
   <string name="search_description">Επεισόδια</string>
-  <string name="description_home">Αρχική σελίδα</string>
-  <string name="description_search">Αναζήτηση</string>
   <string name="description_overview">Επισκόπηση</string>
   <string name="norating">n/a</string>
   <string name="episode_firstaired">Ημερομηνία πρώτης προβολής:</string>
@@ -120,10 +118,7 @@
   <string name="username">Όνομα χρήστη</string>
   <string name="email">Email</string>
   <string name="password">Κωδικός πρόσβασης</string>
-  <string name="save">Αποθήκευση</string>
-  <string name="dontsave">Μην αποθηκεύσεις</string>
   <string name="trakt_decryptfail">Ο κωδικός πρόσβασης δεν μπορούσε να αποκρυπτογραφηθεί</string>
-  <string name="trakt_credentials_invalid">Τα στοιχεία δεν είναι έγκυρα</string>
   <string name="trakt_generalerror">Κάτι δεν πήγε καλά. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>
   <string name="love">Εντελώς ninja!</string>
   <string name="trakt_createaccount">Δημιουργία νέου λογαριασμού</string>
@@ -149,6 +144,13 @@
     <item>Ω - A</item>
     <item>Το πιο πρόσφατο, πρώτο (DVD)</item>
     <item>Το παλαιότερο πρώτα (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Όλα</item>

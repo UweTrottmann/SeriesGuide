@@ -76,6 +76,13 @@
     <item>Latest first (DVD)</item>
     <item>Oldest first (DVD)</item>
   </string-array>
+  <string-array name="upcominglimit">
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
+  </string-array>
   <string-array name="showfilter_list">
     <item>All</item>
     <item>Favorites</item>

@@ -12,8 +12,6 @@
   <string name="share_episode">分享此集</string>
   <string name="share_checkout">登出</string>
   <string name="search_description">集數</string>
-  <string name="description_home">首頁</string>
-  <string name="description_search">搜尋</string>
   <string name="description_overview">簡介</string>
   <string name="norating">無</string>
   <string name="episode_firstaired">預定播出日:</string>
@@ -70,7 +68,6 @@
   <string name="update_success">更新成功。</string>
   <string name="update_offline">更新失敗，請檢查你的網路/Wi-Fi設定。</string>
   <string name="update_saxerror">更新失敗，請稍後再試。</string>
-  <string name="update_inprogress">更新已在進行中，請稍後再試。</string>
   <string name="menu_updateart">載入海報</string>
   <string name="arttask_incomplete">部分海報並未載入，請稍後再試。</string>
   <string name="arttask_nosdcard">載入海報須額外的儲存空間(SD card)。</string>
@@ -132,7 +129,6 @@
   <string name="pref_trakt">trakt.tv 憑證</string>
   <string name="pref_traktsummary">新增或編輯您的trakt.tv憑證</string>
   <string name="pref_traktsync">與trakt.tv同步</string>
-  <string name="pref_traktsyncsummary">初始與trakt.tv的同步功能</string>
   <string name="pref_traktintegrate">整合trakt.tv</string>
   <string name="pref_traktintegratesummary">更新中獲取trakt的活動</string>
   <string name="feedback">傳送反饋意見</string>
@@ -183,19 +179,15 @@
   <string name="traktcheckin_cancel">取消它</string>
   <string name="traktcheckin_inprogress">正在登入中。取消此次登入或等待%s以便再次登入。</string>
   <string name="traktcheckin_wait">等待</string>
-  <string name="checkinfailed">登入失敗。</string>
   <string name="addtocalendar">新增至行事曆</string>
   <string name="addtocalendar_failed">無法建立行事曆事件。</string>
   <string name="username">帳號</string>
   <string name="email">電子信箱</string>
   <string name="password">密碼</string>
-  <string name="save">儲存</string>
-  <string name="dontsave">不儲存</string>
   <string name="trakt_success">連結trakt成功</string>
   <string name="trakt_error">與trakt的互動失敗</string>
   <string name="trakt_seen">標示為已觀看</string>
   <string name="trakt_decryptfail">無法解密密碼</string>
-  <string name="trakt_credentials_invalid">無效憑證</string>
   <string name="trakt_generalerror">發生錯誤。請檢查您的憑證並再試一次。</string>
   <string name="love">太讚啦!</string>
   <string name="hate">太弱了:(</string>
@@ -225,6 +217,13 @@
     <item>按字母Z - A順序</item>
     <item>按最新的順序排序(DVD)</item>
     <item>按最舊的順序排序(DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>全部</item>

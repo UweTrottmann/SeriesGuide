@@ -12,8 +12,6 @@
   <string name="share_episode">Del episode</string>
   <string name="share_checkout">Tjek ud</string>
   <string name="search_description">Episoder</string>
-  <string name="description_home">Hjem</string>
-  <string name="description_search">Søg</string>
   <string name="description_overview">Oversigt</string>
   <string name="norating">ikke tilgængelig</string>
   <string name="episode_firstaired">Sendt første gang:</string>
@@ -67,7 +65,6 @@
   <string name="update_success">Opdatering gennemført.</string>
   <string name="update_offline">Opdatering mislykkedes, tjek din internet/Wi-Fi forbindelse.</string>
   <string name="update_saxerror">Opdatering mislykkedes, prøv igen senere.</string>
-  <string name="update_inprogress">En opdatering kører allerede, prøv igen senere.</string>
   <string name="menu_updateart">Hent plakater</string>
   <string name="arttask_incomplete">Ikke alle plakater blev hentet, prøv igen senere.</string>
   <string name="arttask_nosdcard">Hentning af plakater kræver ekstern hukommelse (SDkort).</string>
@@ -129,7 +126,6 @@
   <string name="pref_trakt">trakt.tv login-info</string>
   <string name="pref_traktsummary">Tilføj eller ret trakt.tv login-info</string>
   <string name="pref_traktsync">Synkroniser med trakt.tv</string>
-  <string name="pref_traktsyncsummary">Indledende synkronisering med trakt.tv</string>
   <string name="pref_traktintegrate">Integrer trakt.tv</string>
   <string name="pref_traktintegratesummary">Hent trakt aktivitet ved opdatering</string>
   <string name="feedback">Send feedback</string>
@@ -179,19 +175,15 @@
   <string name="traktcheckin_cancel">Afbryd</string>
   <string name="traktcheckin_inprogress">Checkin kører allerede. Afbryd dette checkin eller vent %s før du kan lave nyt checkin.</string>
   <string name="traktcheckin_wait">Jeg venter</string>
-  <string name="checkinfailed">Check-In mislykkedes.</string>
   <string name="addtocalendar">Tilføj til kalender</string>
   <string name="addtocalendar_failed">Kan ikke oprette en kalenderbegivenhed.</string>
   <string name="username">Brugernavn</string>
   <string name="email">Email</string>
   <string name="password">Adgangskode</string>
-  <string name="save">Gem</string>
-  <string name="dontsave">Gem ikke</string>
   <string name="trakt_success">Det lykkedes at kommunikere med trakt</string>
   <string name="trakt_error">Kommunikation med trakt mislykkedes</string>
   <string name="trakt_seen">markér som set</string>
   <string name="trakt_decryptfail">Adgangskoden kunne ikke dekrypteres</string>
-  <string name="trakt_credentials_invalid">Legitimationsoplysningerne er ugyldige</string>
   <string name="trakt_generalerror">Noget gik galt. Tjek dit login-info og prøv igen.</string>
   <string name="love">Totalt ninja!</string>
   <string name="hate">Svag sovs :(</string>
@@ -220,6 +212,13 @@
     <item>Z-A</item>
     <item>Nyeste først (DVD)</item>
     <item>Ældste først (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Alle</item>

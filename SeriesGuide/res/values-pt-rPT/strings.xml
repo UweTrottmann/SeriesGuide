@@ -12,8 +12,6 @@
   <string name="share_episode">Partilhar episódio</string>
   <string name="share_checkout">Check out</string>
   <string name="search_description">Episódios</string>
-  <string name="description_home">Início</string>
-  <string name="description_search">Procurar</string>
   <string name="description_overview">Visão geral</string>
   <string name="norating">n/a</string>
   <string name="episode_firstaired">Data de exibição:</string>
@@ -114,10 +112,7 @@
   <string name="username">Utilizador</string>
   <string name="email">E-mail</string>
   <string name="password">Palavra-passe</string>
-  <string name="save">Guardar</string>
-  <string name="dontsave">Não guardar</string>
   <string name="trakt_decryptfail">a password não pode ser descodificada</string>
-  <string name="trakt_credentials_invalid">credenciais inválidas</string>
   <string name="trakt_generalerror">Ocorreu algo errado. Por favor, verifique as suas credenciais e tente novamente.</string>
   <string name="love">Totalmente ninja!</string>
   <string name="trakt_createaccount">Criar nova conta</string>
@@ -143,6 +138,13 @@
     <item>Z - A</item>
     <item>Mais recente primeiro (DVD)</item>
     <item>Antigo primeiro (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Todos</item>

@@ -12,8 +12,6 @@
   <string name="share_episode">Поделиться эпизодом</string>
   <string name="share_checkout">Извлечь</string>
   <string name="search_description">Эпизоды</string>
-  <string name="description_home">На главную</string>
-  <string name="description_search">Поиск</string>
   <string name="description_overview">Обзор</string>
   <string name="norating">нет данных</string>
   <string name="episode_firstaired">Эфир:</string>
@@ -101,8 +99,6 @@
   <string name="username">Имя пользователя</string>
   <string name="email">Электронная почта</string>
   <string name="password">Пароль</string>
-  <string name="save">Сохранить</string>
-  <string name="dontsave">Не сохранять</string>
   <string name="trakt_decryptfail">не удалось расшифровать пароль</string>
   <string name="trakt_generalerror">Что-то пошло не так. Пожалуйста, проверьте ваши данные и повторите попытку.</string>
   <string name="trakt_createaccount">Создать новую учетную запись</string>
@@ -127,6 +123,13 @@
     <item>Z - A</item>
     <item>Сначала последние (DVD)</item>
     <item>Более старые первыми (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Все</item>

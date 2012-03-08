@@ -12,8 +12,6 @@
   <string name="share_episode">Partager épisode</string>
   <string name="share_checkout">Vérifier</string>
   <string name="search_description">Episodes</string>
-  <string name="description_home">Accueil</string>
-  <string name="description_search">Rechercher</string>
   <string name="description_overview">Aperçu</string>
   <string name="norating">s/o</string>
   <string name="episode_firstaired">Date de diffusion:</string>
@@ -70,7 +68,6 @@
   <string name="update_success">Mise à jour réussie.</string>
   <string name="update_offline">Échec de la mise à jour, vérifiez votre connexion 3G/Wifi.</string>
   <string name="update_saxerror">Échec de la mise à jour, réessayez plus tard.</string>
-  <string name="update_inprogress">Une mise à jour est déjà en cours, réessayez plus tard.</string>
   <string name="menu_updateart">Charger les affiches</string>
   <string name="arttask_incomplete">Le chargement de quelques affiches a échoué, réessayez plus tard.</string>
   <string name="arttask_nosdcard">Le chargement des affiches nécessite une carte SD.</string>
@@ -132,7 +129,6 @@
   <string name="pref_trakt">Informations d\'identification de trakt.tv</string>
   <string name="pref_traktsummary">Ajouter ou modifier vos informations d\'identification sur trakt.tv</string>
   <string name="pref_traktsync">Synchroniser avec trakt.tv</string>
-  <string name="pref_traktsyncsummary">Synchro initiale avec trakt.tv</string>
   <string name="pref_traktintegrate">Intégrer trakt.tv</string>
   <string name="pref_traktintegratesummary">Synchro trakt pendant la mise à jour</string>
   <string name="feedback">Envoyez vos commentaires</string>
@@ -183,19 +179,15 @@
   <string name="traktcheckin_cancel">Annuler</string>
   <string name="traktcheckin_inprogress">Il y a déjà une synchro en cours. Annulez celle-ci où attendez encore %s avant de tenter une nouvelle synchro.</string>
   <string name="traktcheckin_wait">j\'attends</string>
-  <string name="checkinfailed">Vérification échouée.</string>
   <string name="addtocalendar">Ajouter au calendrier</string>
   <string name="addtocalendar_failed">Impossible de créer un évènement calendrier.</string>
   <string name="username">Nom d\'utilisateur</string>
   <string name="email">E-mail</string>
   <string name="password">Mot de passe</string>
-  <string name="save">Enregistrer</string>
-  <string name="dontsave">Ne pas enregistrer</string>
   <string name="trakt_success">Communication avec trakt établie</string>
   <string name="trakt_error">Échec d\'interaction avec trakt</string>
   <string name="trakt_seen">marqué comme vu</string>
   <string name="trakt_decryptfail">le mot de passe n\'a pas pu être décrypté</string>
-  <string name="trakt_credentials_invalid">Pseudo/Mot de passe non valides</string>
   <string name="trakt_generalerror">Quelque chose s\'est mal passé. Veuillez vérifier vos identifiants et essayez à nouveau.</string>
   <string name="love">Totalement ninja!</string>
   <string name="hate">Un peu fade :(</string>
@@ -224,6 +216,13 @@
     <item>Z - A</item>
     <item>Plus récents en premier (DVD)</item>
     <item>Plus ancien en premier (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>tout</item>
