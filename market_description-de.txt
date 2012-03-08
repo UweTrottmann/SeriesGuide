@@ -1,0 +1,13 @@
+Ziehen Sie in Erwägung SeriesGuide X zu installieren um die Weiterentwicklung zu unterstützen.
+
+Verwalten Sie den Fortschritt, wenn Sie Ihre Lieblings-TV-Serien (erneut) ansehen. Behalten Sie den Überblick welche Folgen Sie noch sehen müssen und geben Sie über trakt.tv, GetGlue oder jede unterstütze Android App wie Google+, Twitter und Facebook, weiter was Sie sich ansehen.
+
+HINWEIS: Ausstrahlungsdaten sind die der USA (Pazifik-Zeit) auf Grund von Limitierungen in thetvdb.com. Helft mit thetvdb.com zu überzeugen, dass zu ändern!
+
+- Keine Anmeldung (optional trakt.tv).
+- Offline-Unterstützung. (Internet-Verbindung zum Hinzufügen oder Aktualisieren von Serien, Laden von Bildern, Teilen erforderlich).
+- 'Sichern/Wiederherstellung' aller Serien in den Einstellungen.
+- App-Widget zeigt künftige Folgen.
+- trakt.tv Unterstützung (Check In, Bewerten, Aktivität von Freunden, Sync, ...).
+- GetGlue Check-In Unterstützung.
+- Empfehlen Sie Folgen via Android Apps (Email, Facebook, Twitter, ...).
