@@ -750,7 +750,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 }
 
                 // BETA warning dialog switch
-                ChangesDialogFragment.show(getSupportFragmentManager());
+                // ChangesDialogFragment.show(getSupportFragmentManager());
 
                 // set this as lastVersion
                 editor.putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion);
