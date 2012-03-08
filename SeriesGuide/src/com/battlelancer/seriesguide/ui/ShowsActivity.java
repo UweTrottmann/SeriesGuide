@@ -150,7 +150,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
         ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(this,
                 R.array.showfilter_list, R.layout.sherlock_spinner_item);
-        mActionBarList.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mActionBarList.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
         actionBar.setListNavigationCallbacks(mActionBarList, this);
 
         // try to restore previously set show filter

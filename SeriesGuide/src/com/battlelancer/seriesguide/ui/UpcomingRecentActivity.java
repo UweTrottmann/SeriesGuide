@@ -20,6 +20,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 
 import java.util.ArrayList;
@@ -175,16 +176,16 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
         }
 
         @Override
-        public void onTabSelected(Tab tab) {
+        public void onTabSelected(Tab tab, FragmentTransaction ft) {
             mViewPager.setCurrentItem(tab.getPosition());
         }
 
         @Override
-        public void onTabUnselected(Tab tab) {
+        public void onTabUnselected(Tab tab, FragmentTransaction ft) {
         }
 
         @Override
-        public void onTabReselected(Tab tab) {
+        public void onTabReselected(Tab tab, FragmentTransaction ft) {
         }
     }
 
