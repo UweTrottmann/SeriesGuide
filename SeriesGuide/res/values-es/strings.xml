@@ -12,8 +12,6 @@
   <string name="share_episode">Compartir episodio</string>
   <string name="share_checkout">Echa un vistazo a</string>
   <string name="search_description">Episodios</string>
-  <string name="description_home">Inicio</string>
-  <string name="description_search">Buscar</string>
   <string name="description_overview">Reseña</string>
   <string name="norating">n/a</string>
   <string name="episode_firstaired">Fecha de estreno:</string>
@@ -65,7 +63,6 @@
   <string name="norecent">No hay capítulos recientes.</string>
   <string name="update_success">Actualización exitosa.</string>
   <string name="update_saxerror">Error al actualizar, prueba más tarde.</string>
-  <string name="update_inprogress">Una actualización está en curso, prueba más tarde.</string>
   <string name="show_airs">sale al aire</string>
   <string name="show_network">en</string>
   <string name="show_noairtime">No hay fechas de emisión disponibles</string>
@@ -105,7 +102,6 @@
   <string name="pref_trakt">Credenciales trakt.tv</string>
   <string name="pref_traktsummary">Agrega o modifica tus credenciales trakt.tv</string>
   <string name="pref_traktsync">Sincronizar con trakt.tv</string>
-  <string name="pref_traktsyncsummary">Sincronización inicial con trakt.tv</string>
   <string name="pref_traktintegrate">Integrar con trakt.tv</string>
   <string name="pref_traktintegratesummary">Obtener actividad de trakt en actualización</string>
   <string name="feedback">Enviar comentarios</string>
@@ -138,13 +134,10 @@
   <string name="username">Usuario</string>
   <string name="email">Correo electrónico</string>
   <string name="password">Contraseña</string>
-  <string name="save">Guardar</string>
-  <string name="dontsave">No guardar</string>
   <string name="trakt_success">Hablé con éxito con trakt</string>
   <string name="trakt_error">Interacción con trakt falló</string>
   <string name="trakt_seen">marcado como visto</string>
   <string name="trakt_decryptfail">no se pudo descifrar la contraseña</string>
-  <string name="trakt_credentials_invalid">Los datos no son correctos</string>
   <string name="trakt_generalerror">Algo salió mal. Comprueba tus datos y prueba otra vez.</string>
   <string name="love">¡Una pasada!</string>
   <string name="hate">¡Apesta!</string>
@@ -171,6 +164,13 @@
     <item>Z-A</item>
     <item>Primero los más rencientes (DVD)</item>
     <item>Primero más antiguos (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Todo</item>

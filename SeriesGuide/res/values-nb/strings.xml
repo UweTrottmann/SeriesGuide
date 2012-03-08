@@ -12,8 +12,6 @@
   <string name="share_episode">Del episode</string>
   <string name="share_checkout">Sjekk ut</string>
   <string name="search_description">Episoder</string>
-  <string name="description_home">Hjem</string>
-  <string name="description_search">Søk</string>
   <string name="description_overview">Oversikt</string>
   <string name="norating">n/a</string>
   <string name="episode_firstaired">Sende dato:</string>
@@ -130,12 +128,9 @@
   <string name="username">Brukernavn</string>
   <string name="email">E-post</string>
   <string name="password">Passord</string>
-  <string name="save">Lagre</string>
-  <string name="dontsave">Ikke lagre</string>
   <string name="trakt_error">Interaksjonen med trakt mislyktes</string>
   <string name="trakt_seen">markert som sett</string>
   <string name="trakt_decryptfail">passordet kunne ikke dekrypteres</string>
-  <string name="trakt_credentials_invalid">påloggingsinformasjon ikke gyldig</string>
   <string name="trakt_generalerror">Noe gikk galt. Kontroller påloggingsinformasjonen og prøv på nytt.</string>
   <string name="love">Helt ninja!</string>
   <string name="hate">Svak saus :(</string>
@@ -163,6 +158,13 @@
     <item>Z - A</item>
     <item>Nyeste først (DVD)</item>
     <item>Eldste først (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Alle</item>

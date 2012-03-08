@@ -4,18 +4,18 @@
   <string name="episode">Episódio</string>
   <string name="season">Temporada</string>
   <string name="episode_unkownairdate">desconhecido</string>
-  <string name="episode_iswatched">Já visto</string>
-  <string name="episode_notwatched">Ainda não visto</string>
+  <string name="episode_iswatched">Já assistido</string>
+  <string name="episode_notwatched">Ainda não assistido</string>
   <string name="specialseason">Episódios Especiais</string>
   <string name="search_hint">Pesquisar episódios</string>
   <string name="search_title">Comparando episódios</string>
   <string name="share_episode">Compartilhar episódio</string>
-  <string name="share_checkout">Assisti</string>
+  <string name="share_checkout">Assistido</string>
   <string name="search_description">Episódios</string>
-  <string name="description_home">Início</string>
-  <string name="description_search">Pesquisar</string>
   <string name="description_overview">Resumo</string>
   <string name="norating">n/a</string>
+  <string name="loading">Carregando...</string>
+  <string name="sending">Enviando...</string>
   <string name="episode_firstaired">Data de exibição:</string>
   <string name="episode_dvdnumber">Episódio de DVD</string>
   <string name="show_actors">Atores:</string>
@@ -32,7 +32,7 @@
   <string name="show_isnotalive">Finalizada</string>
   <string name="sort">Ordenar por</string>
   <string name="updateall_yes">Atualizar (tudo)</string>
-  <string name="menu_update_delta">Atualizar (apenas desatualizado)</string>
+  <string name="menu_update_delta">Atualizar (apenas os desatualizados)</string>
   <string name="context_updateshow">Atualizar</string>
   <string name="context_showinfo">Mostrar Informações</string>
   <string name="context_marknext">Próximo episódio já assistido</string>
@@ -67,12 +67,18 @@
   <string name="norecent">Não há episódios recentes.</string>
   <string name="only_favorites">Apenas favoritos</string>
   <string name="togglewatched">Alternar visto</string>
+  <string name="update_notification">Atualizando suas séries...</string>
+  <string name="update_single">Atualizando série...</string>
+  <string name="update_delta">Atualizando séries já exibidas...</string>
+  <string name="update_full">Atualizando todas as séries...</string>
   <string name="update_success">Atualização bem sucedida.</string>
   <string name="update_offline">Falha na atualização, confira sua conexão de internet/Wi-Fi.</string>
   <string name="update_saxerror">Falha na atualização, tente novamente mais tarde.</string>
-  <string name="update_inprogress">Uma atualização já está em progresso, tente novamente mais tarde.</string>
+  <string name="update_rebuildsearch">Recarregando pesquisa de episódios...</string>
+  <string name="update_traktactivity">Carregando atividade do trakt...</string>
   <string name="menu_updateart">Carregar cartazes</string>
   <string name="arttask_incomplete">Alguns cartazes não carregaram, tente novamente mais tarde.</string>
+  <string name="arttask_start">Carregando posters...</string>
   <string name="arttask_nosdcard">Carregamento de cartazes requer armazenamento externo (cartão SD).</string>
   <string name="show_airs">estréia</string>
   <string name="show_network">na</string>
@@ -104,12 +110,15 @@
   <string name="pref_showlist">Lista de Séries</string>
   <string name="help">Ajuda</string>
   <string name="preferences">Configurações</string>
+  <string name="pref_showsorting">Classificar séries por...</string>
   <string name="pref_onlyfuture">Nenhum episódio exibido</string>
   <string name="pref_onlyfuturesummary">\"próximo:\" nunca mostra episódios já exibidos</string>
   <string name="pref_onlyseasoneps">Nenhum episódio especial</string>
   <string name="pref_onlyseasonepssummary">\"próximo:\" nunca mostra episódios especiais</string>
   <string name="pref_content">Conteúdo</string>
+  <string name="pref_seasonsorting">Classificar temporadas por...</string>
   <string name="pref_sortingsummary">Especifique como ordenar as temporadas</string>
+  <string name="pref_episodesorting">Classificar episódios por...</string>
   <string name="pref_epsortingsummary">Especifique como ordenar os episódios</string>
   <string name="backup">Backup/Restauração</string>
   <string name="backup_summary">Fazer backup ou restaurar as suas séries</string>
@@ -125,30 +134,33 @@
   <string name="pref_autoupdatesummary">Atualizar periodicamente suas séries quando iniciar o SeriesGuide</string>
   <string name="pref_updatewifionly">Atualizar apenas com Wi-Fi</string>
   <string name="about">Sobre o SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - desenvolvido por Uwe Trottmann.\n\nPor favor consulte o link abaixo para todas as pessoas e recursos que ajudaram a levar esse projeto.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="about_message">http://seriesguide.uwetrottmann.com - desenvolvido por Uwe Trottmann.\n\nPor favor consulte o link abaixo para todas as pessoas e recursos que ajudaram a conduzir esse projeto.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">Compartilhamento</string>
-  <string name="clearGetGlueCredentials">Desconectar GetGlue</string>
+  <string name="clearGetGlueCredentials">Desconectar do GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Apagar sua conexão com o GetGlue</string>
   <string name="pref_trakt">credenciais trakt.tv</string>
   <string name="pref_traktsummary">Adicionar ou editar suas credenciais trakt.tv</string>
   <string name="pref_traktsync">Sincronizar com trakt.tv</string>
-  <string name="pref_traktsyncsummary">Sincronização inicial com o trakt.tv</string>
   <string name="pref_traktintegrate">Integrar ao trakt.tv</string>
-  <string name="pref_traktintegratesummary">Obter atividade trakt ao atualizar</string>
+  <string name="pref_traktintegratesummary">Sincronizar com o trakt ao atualizar</string>
+  <string name="donate">Pague uma bebida ao dev (Paypal)</string>
   <string name="feedback">Enviar comentários</string>
   <string name="pref_advanced">Avançado</string>
   <string name="clear_cache">Apagar cache de imagens</string>
   <string name="clear_cache_summary">Remover todas as imagens em cache do seu dispositivo</string>
   <string name="pref_hideimages">Ocultar imagens</string>
-  <string name="pref_hideimagessummary">Ocultar imagens de sua galeria de fotos (precisa reiniciar)</string>
+  <string name="pref_hideimagessummary">Ocultar imagens de sua galeria de fotos (será necessário reiniciar)</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Rastreia o uso de recursos para ajudar a melhorar o SeriesGuide</string>
-  <string name="backup_description"><b>Backup</b> cria uma cópia do seu banco de dados de séries num arquivo chamado <b>seriesdatabase</b> na pasta abaixo.\n\nPara <b>Restaurar</b> esteja certo de que esse arquivo esteja na pasta abaixo.\n\nApenas backups com banco de dados de versão igual ou anterior como abaixo podem ser restaurados.</string>
+  <string name="sendusagedata">Enviar as estatísticas de uso para os desenvolvedores</string>
+  <string name="backup_description"><b>Backup</b> cria uma cópia do seu banco de dados de séries num arquivo chamado <b>seriesdatabase</b> na pasta abaixo.\n\nPara <b>Restaurar</b> esteja certo de que esse arquivo esteja na pasta abaixo.\n\nApenas backups com banco de dados de versão igual ou anterior a da abaixo podem ser restaurados.</string>
   <string name="backup_path"><b>Pasta de backup</b></string>
   <string name="backup_version"><b>Versão do banco de dados</b></string>
   <string name="backup_failed_nosd">Não foi possível fazer o backup. A pasta de backup não está disponível.</string>
+  <string name="backup_inprogress">Fazendo o backup de banco de dados ...</string>
   <string name="backup_success">Backup bem sucedido.</string>
   <string name="backup_failed">Backup falhou.</string>
+  <string name="import_inprogress">Restaurando banco de dados...</string>
   <string name="import_failed_nosd">Não foi possível restaurar o backup. A pasta de backup não está disponível.</string>
   <string name="import_failed_nofile">Não há nenhum arquivo de backup.</string>
   <string name="import_failed_noread">O arquivo backup não pode ser lido.</string>
@@ -170,8 +182,8 @@
   <string name="seasons">Temporadas</string>
   <string name="cancel">Cancelar</string>
   <string name="share">Compartilhar</string>
-  <string name="menu_checkin_getglue">Vendo (GetGlue)</string>
-  <string name="menu_checkin_trakt">Vendo (trakt)</string>
+  <string name="menu_checkin_getglue">Check-in (GetGlue)</string>
+  <string name="menu_checkin_trakt">Check-in (trakt)</string>
   <string name="menu_markseen_trakt">Marcar como visto (trakt)</string>
   <string name="menu_rate_trakt">Votar (trakt)</string>
   <string name="menu_share_others">Por outros aplicativos</string>
@@ -183,29 +195,31 @@
   <string name="traktcheckin_cancel">Cancele isso</string>
   <string name="traktcheckin_inprogress">Já foi marcado como vendo. Cancele a marcação ou espere %s antes de poder marcar como vendo novamente.</string>
   <string name="traktcheckin_wait">Vou esperar</string>
-  <string name="checkinfailed">Falha ao marcar.</string>
+  <string name="oauthmessage">Autenticando SeriesGuide com GetGlue...</string>
   <string name="addtocalendar">Adicionar ao calendário</string>
   <string name="addtocalendar_failed">Não é possível criar um evento de calendário.</string>
   <string name="username">Usuário</string>
   <string name="email">Email</string>
   <string name="password">Senha</string>
-  <string name="save">Salvar</string>
-  <string name="dontsave">Não salvar</string>
-  <string name="trakt_success">Avisado o trakt com sucesso</string>
+  <string name="trakt_success">Integrado ao trakt com sucesso</string>
   <string name="trakt_error">Interação com o trakt falhou</string>
   <string name="trakt_seen">marcar como visto</string>
   <string name="trakt_decryptfail">senha não pode ser descriptografada</string>
-  <string name="trakt_credentials_invalid">credenciais não válidas</string>
   <string name="trakt_generalerror">Algo deu errado. Por favor, verifique suas credenciais e tente novamente.</string>
   <string name="love">Muito Bom!</string>
   <string name="hate">Fraco :(</string>
   <string name="trakt_createaccount">Criar nova conta</string>
-  <string name="trakt_experimental">Apenas séries adicionadas ao SeriesGuide são sincronizadas. \'Sicronizar para SeriesGuide\' busca no trakt os episódios vistos. \'Sincronizar para trakt\' transmite os episódios vistos do SeriesGuide para o trakt.</string>
+  <string name="trakt_experimental">Somente as séries adicionadas ao SeriesGuide são sincronizadas. \'Sincronizar para SeriesGuide\' busca no trakt os episódios vistos. \'Sincronizar para trakt\' transmite os episódios vistos do SeriesGuide para o trakt.</string>
   <string name="trakt_synctodevice">Sincronizar para o SeriesGuide</string>
   <string name="trakt_synctotrakt">Sincronizar para trakt.tv</string>
   <string name="trakt_syncunseen">Sincronizar episódios não vistos</string>
   <string name="welcome_message"><big>Começar</big></string>
+  <string name="welcome_text">Bem vindo!</string>
+  <string name="welcome_setuptrakt">Conectar-se ao trakt</string>
+  <string name="welcome_traktmessage">Acesse sua lista do trakt.tv e as atividades de seus amigos com SeriesGuide:</string>
+  <string name="dismiss">Recusar</string>
   <string name="download_stable">Baixar SeriesGuide</string>
+  <string name="betawarning">Esta versão beta é somente para testes! Se você estiver em dúvida baixe a versão estável abaixo.\n\nSe você quer ajudar a testar dê uma olhada no relatório de <a href="http://git.io/sgbetachanges">mudanças recentes</a>.\n\nPor favor, reporte qualquer problema, tente tudo e nos envie um comentário.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Próximo episódio</item>
@@ -224,6 +238,13 @@
     <item>Z - A</item>
     <item>Mais recentes primeiro (DVD)</item>
     <item>Mais antigos primeiro (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Todos</item>

@@ -12,8 +12,6 @@
   <string name="share_episode">Podijeli epizodu</string>
   <string name="share_checkout">Check out</string>
   <string name="search_description">Epizode</string>
-  <string name="description_home">Početna</string>
-  <string name="description_search">Traži</string>
   <string name="description_overview">Pregled</string>
   <string name="norating">nedostupno</string>
   <string name="episode_firstaired">Datum prvog emitiranja:</string>
@@ -95,7 +93,6 @@
   <string name="pref_trakt">trakt.tv podaci</string>
   <string name="pref_traktsummary">Dodaj ili uredi svoje trakt.tv podatke</string>
   <string name="pref_traktsync">Sinkroniziraj sa trakt.tv</string>
-  <string name="pref_traktsyncsummary">Početna sinkronizacija sa trakt.tv</string>
   <string name="pref_traktintegrate">Integriraj trakt.tv</string>
   <string name="pref_traktintegratesummary">Dohvati aktivnosi na trakt-u prilikom ažuriranja</string>
   <string name="feedback">Pošaljite povratnu informaciju</string>
@@ -131,13 +128,10 @@
   <string name="username">Korisničko ime</string>
   <string name="email">Email</string>
   <string name="password">Lozinka</string>
-  <string name="save">Spremi</string>
-  <string name="dontsave">Odustani</string>
   <string name="trakt_success">Uspješno komunicirao sa trakt.tv</string>
   <string name="trakt_error">Komunikacija sa trakt.tv nije uspješna</string>
   <string name="trakt_seen">Označeno kao pogledano</string>
   <string name="trakt_decryptfail">lozinka nemože biti dešifrirana</string>
-  <string name="trakt_credentials_invalid">Podaci netočni</string>
   <string name="trakt_generalerror">Nešto je pošlo po krivu. Molimo provjerite podatke i pokušajte ponovno.</string>
   <string name="love">Odlično :)</string>
   <string name="hate">Trulo :(</string>
@@ -165,6 +159,13 @@
     <item>Z - A</item>
     <item>Posljednji prvi(DVD)</item>
     <item>Najstariji prvi (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Svi</item>

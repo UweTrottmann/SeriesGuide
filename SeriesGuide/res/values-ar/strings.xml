@@ -12,8 +12,6 @@
   <string name="share_episode">مشاركة الحلقة</string>
   <string name="share_checkout">فحص</string>
   <string name="search_description">الحلقات</string>
-  <string name="description_home">الصفحة الرئيسية</string>
-  <string name="description_search">البحث</string>
   <string name="description_overview">نظرة عامة</string>
   <string name="norating">لا يوجد</string>
   <string name="episode_firstaired">:موعد العرض</string>
@@ -70,7 +68,6 @@
   <string name="update_success">.تم التحديث بنجاح</string>
   <string name="update_offline">.فشل التحديث، تحقق من اتصال إنترنت/وأي فأي الخاص بك</string>
   <string name="update_saxerror">.فشل التحديث، حاول مرة أخرى لاحقاً</string>
-  <string name="update_inprogress">.تحديث قيد التقدم، حاول مرة أخرى لاحقاً</string>
   <string name="menu_updateart">تحميل الأغلفة</string>
   <string name="arttask_incomplete">.بعض الأغلفة لم تُحمّل, حاول مرة اخرى لاحقاً</string>
   <string name="arttask_nosdcard">.(تحميل الأغلفة يتطلب تخزين خارجي (بطاقة إس دي</string>
@@ -131,7 +128,6 @@
   <string name="pref_trakt">trakt.tv بيانات</string>
   <string name="pref_traktsummary">trakt.tv أضف أو عدل بياناتك في موقع</string>
   <string name="pref_traktsync">trakt.tv المزامنة مع</string>
-  <string name="pref_traktsyncsummary">trakt.tv مزامنة أولية مع</string>
   <string name="pref_traktintegrate">trakt.tv دمج</string>
   <string name="pref_traktintegratesummary">الحصول على أنشطتك من موقع تراكت مع التحديث</string>
   <string name="feedback">أرسل ملاحظاتك</string>
@@ -179,19 +175,15 @@
   <string name="traktcheckin_cancel">إلغاء</string>
   <string name="traktcheckin_inprogress">قبل التحقق مرة أخرى %s هناك تحقق قائم حالياً. الرجاء إلغاء التحقق القائم أو إنتظر</string>
   <string name="traktcheckin_wait">سأنتظر</string>
-  <string name="checkinfailed">التحقق فشل.</string>
   <string name="addtocalendar">إضافة إلى التقويم</string>
   <string name="addtocalendar_failed">.لا يمكن إنشاء حدث تقويم</string>
   <string name="username">اسم المستخدم</string>
   <string name="email">البريد الإلكتروني</string>
   <string name="password">كلمة المرور</string>
-  <string name="save">حفظ</string>
-  <string name="dontsave">بدون حفظ</string>
   <string name="trakt_success">تم الإتصال بموقع تراكت بنجاح</string>
   <string name="trakt_error">فشل الاتصال مع موقع تراكت</string>
   <string name="trakt_seen">وضع علامة كمُشَاهد</string>
   <string name="trakt_decryptfail">لا يمكن فك تشفير كلمة المرور</string>
-  <string name="trakt_credentials_invalid">بيانات الاعتماد غير صالحة</string>
   <string name="trakt_generalerror">.حصل خطأ. الرجاء التحقق من اعتمادك ثم حاول مرة أخرى</string>
   <string name="love">!أعجبني</string>
   <string name="hate">):لم يعجبني</string>
@@ -220,6 +212,13 @@
     <item>Z-A</item>
     <item>الأحدث أولاً-دي في دي</item>
     <item>الأقدم أولاً-دي في دي</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>الكل</item>

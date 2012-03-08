@@ -12,8 +12,6 @@
   <string name="share_episode">Сподели епизод</string>
   <string name="share_checkout">Отписване</string>
   <string name="search_description">Епизоди</string>
-  <string name="description_home">Начало</string>
-  <string name="description_search">Търсене</string>
   <string name="description_overview">Общ преглед</string>
   <string name="norating">няма</string>
   <string name="episode_firstaired">Дата на излизане</string>
@@ -125,7 +123,6 @@
   <string name="pref_trakt">идентификационни данни за trakt.tv</string>
   <string name="pref_traktsummary">Добавяне или редактиране на вашите идентификационни данни за trakt.tv</string>
   <string name="pref_traktsync">Синхронизирай с trakt.tv</string>
-  <string name="pref_traktsyncsummary">Започни синхронизиране с trakt.tv</string>
   <string name="pref_traktintegrate">Интегриране с track.tv</string>
   <string name="feedback">Обратна връзка</string>
   <string name="pref_advanced">Разширени</string>
@@ -171,13 +168,10 @@
   <string name="username">Потребител</string>
   <string name="email">Електронна поща</string>
   <string name="password">Парола</string>
-  <string name="save">Запиши</string>
-  <string name="dontsave">Не запазвай промените</string>
   <string name="trakt_success">Успешно свързан с trakt</string>
   <string name="trakt_error">Свързването с trakt е неуспешно</string>
   <string name="trakt_seen">маркирай като гледан</string>
   <string name="trakt_decryptfail">паролата не може да се дешифрира</string>
-  <string name="trakt_credentials_invalid">данните за достъп са невалидни</string>
   <string name="trakt_generalerror">Нещо се обърка. Моля проверете данните за достъп и опитайте отново.</string>
   <string name="love">Пълна нинджа!</string>
   <string name="hate">Слаб Сос :(</string>
@@ -205,6 +199,13 @@
     <item>Z - A</item>
     <item>Най-новите отгоре (DVD)</item>
     <item>Най-старите отгоре (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Всички</item>

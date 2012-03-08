@@ -12,7 +12,6 @@
   <string name="share_episode">Condividi episodio</string>
   <string name="share_checkout">Check-out</string>
   <string name="search_description">Episodi</string>
-  <string name="description_search">Ricerca</string>
   <string name="episode_firstaired">Ora messa in onda:</string>
   <string name="episode_dvdnumber">Episodio su DVD</string>
   <string name="show_actors">Attori:</string>
@@ -100,10 +99,7 @@
   <string name="username">Nome utente</string>
   <string name="email">E-mail</string>
   <string name="password">Password</string>
-  <string name="save">Salva</string>
-  <string name="dontsave">Non Salvare</string>
   <string name="trakt_decryptfail">la password non può essere decriptata</string>
-  <string name="trakt_credentials_invalid">credenziali non valide</string>
   <string name="trakt_generalerror">Qualcosa è andato storto. Si prega di controllare le vostre credenziali e riprovare.</string>
   <string name="trakt_createaccount">Crea nuovo account</string>
   <string name="trakt_synctodevice">Sincronizza con SeriesGuide</string>
@@ -127,6 +123,13 @@
     <item>Z - A</item>
     <item>Prima i più recenti (DVD)</item>
     <item>Prima i più vecchi (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Tutti</item>

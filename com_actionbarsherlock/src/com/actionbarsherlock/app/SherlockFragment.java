@@ -4,6 +4,8 @@ import static com.actionbarsherlock.app.SherlockFragmentActivity.DEBUG;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import com.actionbarsherlock.internal.view.menu.MenuItemMule;
+import com.actionbarsherlock.internal.view.menu.MenuMule;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -20,7 +22,7 @@ public class SherlockFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         if (!(activity instanceof SherlockFragmentActivity)) {
-            throw new IllegalStateException("SherlockFragment must be attached only to a SherlockFragmenActivity.");
+            throw new IllegalStateException(TAG + " must be attached to a SherlockFragmentActivity.");
         }
         mActivity = (SherlockFragmentActivity)activity;
 

@@ -12,8 +12,6 @@
   <string name="share_episode">Bölümü paylaş</string>
   <string name="share_checkout">Kontrol et</string>
   <string name="search_description">Bölümler</string>
-  <string name="description_home">Anasayfa</string>
-  <string name="description_search">Arama</string>
   <string name="description_overview">Genel</string>
   <string name="norating">Geçersiz</string>
   <string name="episode_firstaired">Tarih:</string>
@@ -114,10 +112,7 @@
   <string name="username">kullanıcı adı</string>
   <string name="email">E-posta</string>
   <string name="password">Şifre</string>
-  <string name="save">Kaydet</string>
-  <string name="dontsave">Kaydetme</string>
   <string name="trakt_decryptfail">parola şifresi çözülemedi</string>
-  <string name="trakt_credentials_invalid">kimlik bilgileri geçerli değil</string>
   <string name="trakt_generalerror">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
   <string name="love">Harikulade!</string>
   <string name="hate">Eh işte :(</string>
@@ -144,6 +139,13 @@
     <item>Z - A</item>
     <item>Önce en yenisi (DVD)</item>
     <item>Önce en eskisi (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Tümü</item>

@@ -12,10 +12,11 @@
   <string name="share_episode">Jaa jakso</string>
   <string name="share_checkout">Kuittaa ulos</string>
   <string name="search_description">Jaksot</string>
-  <string name="description_home">Etusivu</string>
-  <string name="description_search">Etsi</string>
   <string name="description_overview">Yleiskatsaus</string>
+  <string name="description_poster">Näytä juliste</string>
   <string name="norating">puuttuu</string>
+  <string name="loading">Ladataan…</string>
+  <string name="sending">Lähetetään…</string>
   <string name="episode_firstaired">Esityspäivä:</string>
   <string name="episode_dvdnumber">DVD-jakso</string>
   <string name="show_actors">Näyttelijät:</string>
@@ -67,12 +68,19 @@
   <string name="norecent">Ei viimeaikaisia jaksoja.</string>
   <string name="only_favorites">Vain suosikit</string>
   <string name="togglewatched">Vaihda katsottu</string>
+  <string name="update_notification">Päivitetään ohjelmiasi…</string>
+  <string name="update_single">Päivitetään ohjelmaa…</string>
+  <string name="update_delta">Päivitetään vanhentuneita ohjelmia…</string>
+  <string name="update_full">Päivitetään kaikkia ohjelmia…</string>
   <string name="update_success">Päivitys onnistui.</string>
   <string name="update_offline">Päivitys epäonnistui, tarkista internet/Wi-Fi-yhteytesi.</string>
   <string name="update_saxerror">Päivitys epäonnistui, yritä myöhemmin uudelleen.</string>
-  <string name="update_inprogress">Päivitys on jo käynnissä, yritä myöhemmin uudelleen.</string>
+  <string name="update_inprogress">Päivitys on käynnissä, yritä myöhemmin uudelleen.</string>
+  <string name="update_rebuildsearch">Päivitetään jaksohakua…</string>
+  <string name="update_traktactivity">Ladataan toimintaa traktista…</string>
   <string name="menu_updateart">Lataa julisteet</string>
   <string name="arttask_incomplete">Jotkut julisteet eivät lataantuneet, yritä myöhemmin uudelleen.</string>
+  <string name="arttask_start">Ladataan julisteita…</string>
   <string name="arttask_nosdcard">Julisteiden lataaminen vaatii ulkoisen tallennustilan (SD-kortti).</string>
   <string name="show_airs">esitetään</string>
   <string name="show_network">kanavalla</string>
@@ -104,12 +112,15 @@
   <string name="pref_showlist">Ohjelmalista</string>
   <string name="help">Apua</string>
   <string name="preferences">Asetukset</string>
+  <string name="pref_showsorting">Lajittele ohjelmat…</string>
   <string name="pref_onlyfuture">Ei esitettyjä jaksoja</string>
   <string name="pref_onlyfuturesummary">\"seuraava:\" älä koskaan näytä jo esitettyjä jaksoja</string>
   <string name="pref_onlyseasoneps">Ei erikoisjaksoja</string>
   <string name="pref_onlyseasonepssummary">\"seuraava:\" älä koskaan näytä erikoisjaksoja</string>
   <string name="pref_content">Sisältö</string>
+  <string name="pref_seasonsorting">Lajittele kaudet…</string>
   <string name="pref_sortingsummary">Määrittele kausien lajittelu</string>
+  <string name="pref_episodesorting">Lajittele jaksot…</string>
   <string name="pref_epsortingsummary">Määrittele jaksojen lajittelu</string>
   <string name="backup">Varmuuskopioi/Palauta</string>
   <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
@@ -132,9 +143,9 @@
   <string name="pref_trakt">trakt.tv:n käyttäjätiedot</string>
   <string name="pref_traktsummary">Lisää tai muokkaa trakt.tv:n käyttäjätietojasi</string>
   <string name="pref_traktsync">Synkronoi trakt.tv:ssä</string>
-  <string name="pref_traktsyncsummary">Varhainen synkronointi trakt.tv:n kanssa</string>
   <string name="pref_traktintegrate">Integroi trakt.tv</string>
   <string name="pref_traktintegratesummary">Nouda toiminta traktista päivitettäessä</string>
+  <string name="donate">Tarjoa drinkki kehittäjälle (Paypal)</string>
   <string name="feedback">Lähetä palautetta</string>
   <string name="pref_advanced">Lisäasetukset</string>
   <string name="clear_cache">Tyhjennä kuvavälimuisti</string>
@@ -143,12 +154,17 @@
   <string name="pref_hideimagessummary">Piilota kuvat puhelimesi galleriasta (vaatii uudelleenkäynnistyksen)</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Seuraa ominaisuuksien käyttöä, jonka avulla parannetaan SeriesGuidea</string>
+  <string name="sendusagedata">Lähetä kehittäjälle käyttötilastoja</string>
+  <string name="pref_upcominglimit">Tulevat ohjelmat ajalta…</string>
+  <string name="pref_upcominglimitsummary">Kuinka pitkältä ajalta näytetään tulevia ohjelmia</string>
   <string name="backup_description"><b>Varmuuskopio</b> luo kopion ohjelmatietokannastasi tiedostoon nimeltä <b>seriesdatabase</b> alla mainittuun kansioon.\n\n<b>Palauttaaksesi</b> varmista tiedoston olevan alla mainitussa kansiossa.\n\nVain saman tai vanhemman tietokantaversion omaavat varmuuskopiot voidaan palauttaa.</string>
   <string name="backup_path"><b>Varmuuskopiointikansio</b></string>
   <string name="backup_version"><b>Tietokannan versio</b></string>
   <string name="backup_failed_nosd">Ei voi varmuuskopioida. Varmuuskopiointikansiota ei löydy.</string>
+  <string name="backup_inprogress">Varmuuskopioidaan tietokantaa…</string>
   <string name="backup_success">Varmuuskopiointi onnistui.</string>
   <string name="backup_failed">Varmuuskopiointi epäonnistui.</string>
+  <string name="import_inprogress">Palautetaan tietokantaa…</string>
   <string name="import_failed_nosd">Ei voi palauttaa varmuuskopiota. Varmuuskopiointikansiota ei löydy.</string>
   <string name="import_failed_nofile">Varmuuskopiotiedostoa ei ole.</string>
   <string name="import_failed_noread">Varmuuskopiotiedostoa ei voi lukea.</string>
@@ -183,19 +199,19 @@
   <string name="traktcheckin_cancel">Peruuta se</string>
   <string name="traktcheckin_inprogress">Kuittaaminen on jo käynnissä. Joko peruuta tämä kuittaaminen tai odota %s ennen kuin voit kuittaat uudelleen.</string>
   <string name="traktcheckin_wait">Odotetaan</string>
-  <string name="checkinfailed">Kuittaaminen epäonnistui.</string>
+  <string name="oauthmessage">Todennetaan SeriesGuide palveluun GetGlue…</string>
   <string name="addtocalendar">Lisää kalenteriin</string>
   <string name="addtocalendar_failed">Ei voitu luoda kalenteritapahtumaa.</string>
   <string name="username">Käyttäjänimi</string>
   <string name="email">Sähköposti</string>
   <string name="password">Salasana</string>
-  <string name="save">Tallenna</string>
-  <string name="dontsave">Älä tallenna</string>
+  <string name="waitplease">Hetkinen, olkaa hyvä…</string>
+  <string name="connect">Yhdistä</string>
+  <string name="disconnect">Katkaise yhteys</string>
   <string name="trakt_success">Onnistuneesti välitetty traktille</string>
   <string name="trakt_error">Vuorovaikutus traktin kanssa epäonnistui</string>
   <string name="trakt_seen">merkitty katsotuksi</string>
   <string name="trakt_decryptfail">Salasanaa ei voitu purkaa</string>
-  <string name="trakt_credentials_invalid">Käyttäjätiedot eivät kelpaa</string>
   <string name="trakt_generalerror">Jokin meni pieleen. Tarkista käyttäjätietosi ja yritä uudelleen.</string>
   <string name="love">Maailman parasta!</string>
   <string name="hate">Ei sytyttänyt :(</string>
@@ -205,6 +221,10 @@
   <string name="trakt_synctotrakt">Synkronoi traktiin</string>
   <string name="trakt_syncunseen">Synkronoi katsomattomat jaksot</string>
   <string name="welcome_message"><big>Käytön aloittaminen</big></string>
+  <string name="welcome_text">Tervetuloa!</string>
+  <string name="welcome_setuptrakt">Yhdistä traktiin</string>
+  <string name="welcome_traktmessage">Pääse käsiksi trakt.tv:n kirjastoosi ja ystäviesi toimintaan SeriesGuidella:</string>
+  <string name="dismiss">Hylkää</string>
   <string name="download_stable">Lataa SeriesGuide</string>
   <string name="betawarning">Tämä julkaisu on vain beeta-testaajille! Jos olet epävarma, lataa vakaaversio alhaalta.\n\nJos haluat auttaa testaamisessa, katso <a href="http://git.io/sgbetachanges">viimeisimmät muutokset</a>.\n\n Ilmoita jokaisesta kaatumisesta, kokeile kaikkea ja lähetä palautetta.</string>
   <string-array name="shsorting">
@@ -225,6 +245,13 @@
     <item>Ö - A</item>
     <item>Uusimmat ensin (DVD)</item>
     <item>Vanhin ensin (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>päivä</item>
+    <item>3 päivää</item>
+    <item>viikko</item>
+    <item>kaksi viikkoa</item>
+    <item>kuukausi</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Kaikki</item>

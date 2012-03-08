@@ -1,10 +1,12 @@
+<a name="top"></a>
+
 Changelog
 =========
 
+All dates are in the European Central timezone.
+
 Version 2.5 *(in development)*
 --------------------------------
-
-Notable changes:
 
 * Database upgrade for better time representation. It may take a few seconds for the database to upgrade.
 * Hide individual shows.
@@ -13,15 +15,49 @@ Notable changes:
 * Unified interface across all devices thanks to ActionBarSherlock 4.0.
 * Removed middle and large widget on Android 3.0+ devices. Use the new list widget!
 
-Detailed changes:
+### Detailed changes:
 
-Since 2.5beta/2.5.1beta (2012-01-13):
- 
-* Add 'Watched all previously aired' option to episode list of a season.
-* Add show posters in Upcoming and Recent.
-* Fix to display correct episode title.
+#### 2.5.6beta (soon)
 
-Since 2.5.2beta (2012-01-28):
+* Modify design to be closer to Android Design guidelines.
+* Highlight selected item in multi-pane episode view.
+* UI for custom upcoming interval (currently 24 hours).
+* Posters and no already added shows in Add Show (not for the search screen).
+* When adding a show get seen episodes from trakt.
+* Download half the data when syncing from trakt via Settings.
+* Bigger sized list widget items on xlarge devices. Smaller minimum list widget size, therefore smaller on GoogleTV.
+* Fixed stuck progress dialog when checking in with trakt.
+* Some other minor improvements.
+
+#### 2.5.5beta (2012-02-20):
+
+* Fix for crash when marking episodes watched.
+* Always show the 'Add to calendar' button, if room.
+* Fix #53 for episodes list.
+
+#### 2.5.4beta (2012-02-17):
+
+* Hide legacy widgets except small size on Android 3.0+ devices.
+* Fix incorrect next episodes if two air the same day. The lower numbered one is now assumed to be aired first (though still at the same time).
+* Fix sorting and filtering if shows have older episodes listed under next.
+* Reduced auto-update interval to at least every 15min.
+* New notification icon (finally!).
+* Layout tweaks in Upcoming and episode details.
+* Hide 'Add to calendar' button if it is useless.
+* Use ActionBarSherlock 4.0.
+* Display search term, title and search soft button in `SearchActivity`.
+* Enabled home button (app icon in the ActionBar) everywhere.
+* New welcome and beta dialog.
+
+#### 2.5.3beta (2012-01-29)
+
+* Updated design towards ICS styles.
+* Fix for crash when trying to create a trakt account.
+* Use user-specified episode numbers in Upcoming/Recent.
+* Fix GetGlue comment box text not wrapping.
+* Latest translations from crowdin. Thanks everyone for the big effort!
+
+#### 2.5.2beta (2012-01-28):
 
 * Better internal representation for time. It may take a while until your shows appear (the database is upgrading in the background). YOU MAY NEED to update all of your shows afterwards. Episodes move now correctly from Upcoming to Recent 1 hour after they aired.
 
@@ -42,45 +78,11 @@ Since 2.5.2beta (2012-01-28):
 * Support for 'Daily' air day.
 * Latest translations from crowdin, now with Arabic by mohd55 and Hungarian by devilinside.
 
-Since 2.5.3beta (2012-01-29)
-
-* Updated design towards ICS styles.
-* Fix for crash when trying to create a trakt account.
-* Use user-specified episode numbers in Upcoming/Recent.
-* Fix GetGlue comment box text not wrapping.
-* Latest translations from crowdin. Thanks everyone for the big effort!
-
-Since 2.5.4beta (2012-02-17 GMT+1):
-
-* Hide legacy widgets except small size on Android 3.0+ devices.
-* Fix incorrect next episodes if two air the same day. The lower numbered one is now assumed to be aired first (though still at the same time).
-* Fix sorting and filtering if shows have older episodes listed under next.
-* Reduced auto-update interval to at least every 15min.
-* New notification icon (finally!).
-* Layout tweaks in Upcoming and episode details.
-* Hide 'Add to calendar' button if it is useless.
-* Use ActionBarSherlock 4.0.
-* Display search term, title and search soft button in `SearchActivity`.
-* Enabled home button (app icon in the ActionBar) everywhere.
-* New welcome and beta dialog.
-
-Since 2.5.5beta (2012-02-20 GMT+1):
-
-* Fix for crash when marking episodes watched.
-* Always show the 'Add to calendar' button, if room.
-* Fix #53 for episodes list.
-
-Since 2.5.6beta (soon)
-
-* Modify design to be closer to Android Design guidelines.
-* Highlight selected item in multi-pane episode view.
-* UI for custom upcoming interval (currently 24 hours).
-* Posters and no already added shows in Add Show (not for the search screen).
-* When adding a show get seen episodes from trakt.
-* Download half the data when syncing from trakt via Settings.
-* Bigger sized list widget items on xlarge devices. Smaller minimum list widget size, therefore smaller on GoogleTV.
-* Fixed stuck progress dialog when checking in with trakt.
-* Some other minor improvements.
+#### 2.5beta/2.5.1beta (2012-01-13):
+ 
+* Add 'Watched all previously aired' option to episode list of a season.
+* Add show posters in Upcoming and Recent.
+* Fix to display correct episode title.
 
 Version 2.4.2/2.4.3beta *(2012-01-11)*
 -------------------------------
@@ -96,13 +98,15 @@ Version 2.4.1 *(2012-01-07)*
 * Remade all widgets sticking to design guidelines, this means they now display 1 (small), 3 (middle) or 7 (large) items and have correct padding.
 * Latest translations from crowdin.
 
-Since 2.4.2beta (2012-01-07)
+### Detailed changes:
+
+#### 2.4.2beta (2012-01-07)
 
 * Tapping list widget items takes you to the respective episode page.
 * Tweaked list widget layout a little.
 * Made widget backgrounds more transparent.
 
-Since 2.4.1beta (2012-01-06)
+#### 2.4.1beta (2012-01-06)
 
 * Resizable list widget for Android 3.0+. Uses an alarm to refresh (this needs testing) every 5 mins if the device is awake.
 * Remade all widgets sticking to design guidelines, this means they now display 1 (small), 3 (middle) or 7 (large) items and have correct padding.
@@ -116,7 +120,9 @@ Version 2.4 *(2011-12-25)*
 * Recently watched episodes are fetched from trakt on each update: allows easy syncing of devices. After adding a show the initial fetch of watched episodes should still be done via `Settings` >> `Sync with trakt` >> `Sync to SeriesGuide`.
 * `Upcoming` renamed `Activity`.
 
-Since 2.3.9beta (2011-12-21):
+### Detailed changes:
+
+#### 2.3.9beta (2011-12-21):
 
 * Check into a show on trakt. After checking in, trakt will automatically display it as watching then switch over to watched status once the runtime of the show has elapsed.
 * Recently watched episodes are fetched from trakt on each update: allows easy syncing of devices. After adding a show the initial fetch of watched episodes should still be done via `Settings` >> `Sync with trakt` >> `Sync to SeriesGuide`. Enabled by default on new installations.
@@ -130,7 +136,7 @@ Since 2.3.9beta (2011-12-21):
 * Set auto-update limit to 12 hours (down from 23 hours).
 * Use ActionBarSherlock 3.5.0.
 
-Since 2.4beta (2011-12-24):
+#### 2.4beta (2011-12-24):
 
 * Fix text color for notification on Android 2.2 and below.
 * Display failed shows in update error message.
@@ -146,6 +152,33 @@ Version 2.3 *(2011-11-26)*
 * Episode pager on phones/small screens
 * TVDb buttons
 
+### Detailed changes:
+
+#### 2.3.2beta *(2011-11-22)*
+
+* Thrown the TVDb updater out the airlock (so soon): now SeriesGuide will update your show if it has not been for more than a week when pressing the update button.
+* AutoUpdate (finally...): as updating now happens truly in the background (sorry, manual abort is gone for now, just drop your connection...) enabling this will press the update button for you at most once a day. You have to open the app though.
+* The thresholds (7 days for updating, 11 hours before next auto-update) are subject to discussion.
+* 'Update on Wi-Fi only' (enabled by default) will prevent the updater from doing anything if you don't have a Wi-Fi connection to the internet.
+
+#### 2.3.1beta *(2011-11-19)*
+
+* Two more air time parsing schemas (e.g. '9:00PM' and '9PM' instead of quasi-standard '9:00 PM'), let me know if there are errors!
+* Major cleanup, report any issues/broken features!
+* Latest translations from crowdin.net. Now with Bulgarian thanks to Martin. Italian and Slovenian included for now despite low translation level.
+* TVDb buttons on show info and episode page
+* Editing of trakt credentials in settings
+* Fixed broken background in episode pager
+
+#### 2.3beta *(2011-11-06)*
+
+* You might need to clear your trakt.tv credentials if you encounter problems
+* Revamped adding of shows (better trakt.tv integration, recommended and library only for logged in trakt users)
+* Episode details shown in swipeable pager (only in non-dual-pane layout, yes, the background is broken)
+* Shows will get updated by the incremental updater after at least every 7 days
+* Fix crash when adding shows on certain HTC devices (Desire HD, Mytouch 4G, ...)
+* Layout/Design fixes
+
 Version 2.2.2 *(2011-11-01)*
 --------------------------------
 
@@ -160,6 +193,25 @@ Version 2.2.1 *(2011-10-31)*
 * Don't rebuild the search table if nothing was updated
 * Latest translations from crowdin. Now with Hungarian thanks to devilinside and uw11!
 
+Version 2.2.3beta *(2011-10-30)*
+--------------------------------
+
+* Clear old trakt credentials correctly
+
+Version 2.2.2beta *(2011-10-30)*
+--------------------------------
+
+* Fix layouts on small tablet (large) devices
+* Validate trakt.tv credentials
+* Secure the trakt.tv password even better (you will have to reenter it again, sorry)
+* Don’t rebuild the search table if nothing was updated
+
+Version 2.2.1beta *(2011-10-18)*
+--------------------------------
+
+* Relayout widget as suggested by Allen
+* Some bug fixes
+
 Version 2.2 *(2011-10-18)*
 --------------------------------
 
@@ -173,12 +225,49 @@ Version 2.2 *(2011-10-18)*
 * Many bug fixes, optimizations
 * Thanks to everyone who sent in bug reports, suggested improvements or helps translate!
 
+Version 2.2beta *(2011-10-16)*
+--------------------------------
+
+* Tell which show is currently getting updated
+* Dual pane layout for Upcoming on large+ devices
+* New number format brought to you by dqdb via GitHub
+* Small tweaks everywhere
+* Layout improvements all over the app (spot the differences!), esp. on tablet/Google TV (large+) devices
+* Display correct time stamps for US Central users
+* Latest translations from crowdin (Danish now in again)
+
+Version 2.1.5beta *(2011-10-02)*
+--------------------------------
+
+* Don't reload the show list on config changes (e.g. orientation changes): scrolling state is remembered again
+* Image loader now checks faster for existing images and only downloads images up to 100KB in size (most are around 30K)
+* Display confirmation message when adding show instantly after pressing the 'Add Show' button
+* Latest translations (mlucas beefed up Dutch)
+
 Version 2.1.2 *(2011-10-01)*
 --------------------------------
 
 * Use new trakt library release (better error handling)
 * New show sorting: favorites by next episode
 * Clean up images when deleting a show
+* Show first episode of season when using dual-pane layout
+* Bugfixes, Improvements
+
+Version 2.1.4beta *(2011-10-01)*
+--------------------------------
+
+* Filter options for show list (replaces 'Hide watched shows' setting).
+* Rearranged show list menu items to make room for filter.
+* Latest translations from crowdin.
+* Bug fixes and improvements.
+
+Version 2.1.3beta *(2011-09-11)*
+--------------------------------
+
+* Use new trakt library release (better error handling)
+* New show sorting: favorites by next episode
+* Clean up images when deleting a show
+* Store images in correct folder for beta users (you have to redownload them, sorry)
 * Show first episode of season when using dual-pane layout
 * Bugfixes, Improvements
 
@@ -191,6 +280,23 @@ Version 2.1.1 (04.09.2011)
 * Always use a GridLayout for the show list.
 * Tidy up settings.
 * Change URLs to new website.
+* Improvements for DeltaUpdate.
+* Latest translations.
+
+Version 2.1.2beta *(2011-09-04)*
+--------------------------------
+
+* Please do an 'Update All' because of: Revert some time calc code that accidentially slipped into the last beta
+* Better user communication when doing delta and full update (now called 'Update All')
+* Use TVDB id instead of IMDb id to mark episodes as seen on trakt
+* Don't require a touchscreen to use SeriesGuide (upcoming Google TV support)
+
+Version 2.1.1beta *(2011-08-27)*
+--------------------------------
+
+* Always use a GridLayout for the show list.
+* Tidy up settings.
+* Change URLs to new webiste.
 * Improvements for DeltaUpdate.
 * Latest translations.
 

@@ -69,7 +69,7 @@ public class OverviewFragment extends SherlockFragment {
 
     private ImageCache imageCache;
 
-    protected long episodeid;
+    protected long mEpisodeid;
 
     private FetchArtTask artTask;
 
@@ -133,7 +133,8 @@ public class OverviewFragment extends SherlockFragment {
         inflater.inflate(R.menu.overview_menu, menu);
 
         // use an appropriate quick share button
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getSherlockActivity());
         int lastShareAction = prefs.getInt(SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
 
         MenuItem shareAction = menu.findItem(R.id.menu_quickshare);
@@ -146,7 +147,7 @@ public class OverviewFragment extends SherlockFragment {
             shareAction.setVisible(false);
         }
 
-        if (episodeid == 0) {
+        if (mEpisodeid == 0) {
             menu.findItem(R.id.menu_addevent).setVisible(false);
         }
     }
@@ -340,7 +341,7 @@ public class OverviewFragment extends SherlockFragment {
         String episodestring = "";
         sharestring += " \"" + ((TextView) context.findViewById(R.id.seriesname)).getText();
 
-        if (episodeid != 0) {
+        if (mEpisodeid != 0) {
             episodetitle.setVisibility(View.VISIBLE);
             numbers.setVisibility(View.VISIBLE);
             LinearLayout episodemeta = (LinearLayout) context.findViewById(R.id.episodemeta);
@@ -348,7 +349,7 @@ public class OverviewFragment extends SherlockFragment {
 
             // final Bundle episode = mDbHelper.getEpisodeDetails(episodeid);
             final Cursor episode = context.getContentResolver().query(
-                    Episodes.buildEpisodeUri(String.valueOf(episodeid)), EpisodeQuery.PROJECTION,
+                    Episodes.buildEpisodeUri(String.valueOf(mEpisodeid)), EpisodeQuery.PROJECTION,
                     null, null, null);
             episode.moveToFirst();
 
@@ -386,22 +387,29 @@ public class OverviewFragment extends SherlockFragment {
     }
 
     protected void onLoadEpisode() {
-        final SherlockFragmentActivity activity = getSherlockActivity();
-        if (activity == null) {
-            return;
-        }
+        new AsyncTask<Void, Void, Integer>() {
 
-        new Thread(new Runnable() {
-            public void run() {
-                episodeid = DBUtils.updateLatestEpisode(activity, getShowId());
-                activity.runOnUiThread(new Runnable() {
-                    public void run() {
-                        activity.invalidateOptionsMenu();
-                        fillEpisodeData();
-                    }
-                });
+            private SherlockFragmentActivity activity;
+
+            @Override
+            protected Integer doInBackground(Void... params) {
+                activity = getSherlockActivity();
+                if (activity == null) {
+                    return -1;
+                }
+                mEpisodeid = DBUtils.updateLatestEpisode(activity, getShowId());
+                return 0;
             }
-        }).start();
+
+            @Override
+            protected void onPostExecute(Integer result) {
+                if (result == 0) {
+                    activity.invalidateOptionsMenu();
+                    fillEpisodeData();
+                }
+            }
+
+        }.execute();
     }
 
     /**
@@ -479,7 +487,7 @@ public class OverviewFragment extends SherlockFragment {
     }
 
     private void onMarkWatched() {
-        DBUtils.markEpisode(getActivity(), String.valueOf(episodeid), true);
+        DBUtils.markEpisode(getActivity(), String.valueOf(mEpisodeid), true);
 
         Toast.makeText(getActivity(), getString(R.string.mark_episode), Toast.LENGTH_SHORT).show();
 

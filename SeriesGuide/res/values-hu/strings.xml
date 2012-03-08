@@ -12,10 +12,10 @@
   <string name="share_episode">Epizód megosztása</string>
   <string name="share_checkout">Kijelentkezés</string>
   <string name="search_description">Epizódok</string>
-  <string name="description_home">Kezdőlap</string>
-  <string name="description_search">Keresés</string>
   <string name="description_overview">Tartalom</string>
   <string name="norating">n/a</string>
+  <string name="loading">Betöltés…</string>
+  <string name="sending">Küldés…</string>
   <string name="episode_firstaired">Vetítés:</string>
   <string name="episode_dvdnumber">DVD epizód</string>
   <string name="show_actors">Szereplők:</string>
@@ -67,12 +67,14 @@
   <string name="norecent">Nincsenek mostanában vetített epizódok.</string>
   <string name="only_favorites">Csak Kedvencek</string>
   <string name="togglewatched">Láttam igen/nem</string>
+  <string name="update_single">Sorozat frissítése…</string>
+  <string name="update_full">Minden sorozat frissítése…</string>
   <string name="update_success">A frissítés sikerült.</string>
   <string name="update_offline">A frissítés nem sikerült, ellenőrizd az internet/Wi-Fi kapcsolatot!</string>
   <string name="update_saxerror">A frissítés nem sikerült, próbáld meg később!</string>
-  <string name="update_inprogress">Már folyamatban van egy frissítés, próbáld meg később!</string>
   <string name="menu_updateart">Képek letöltése</string>
   <string name="arttask_incomplete">Néhány kép letöltése nem sikerült, próbáld meg később!</string>
+  <string name="arttask_start">Képek letöltése…</string>
   <string name="arttask_nosdcard">A képek letöltéséhez további tároló kapacitásra van szükség az SD kártyán.</string>
   <string name="show_airs">mikor:</string>
   <string name="show_network">hol:</string>
@@ -132,7 +134,6 @@
   <string name="pref_trakt">trakt.tv bejelentkezési adatok</string>
   <string name="pref_traktsummary">trakt.tv fiók hozzáadása vagy szerkesztése</string>
   <string name="pref_traktsync">Szinkronizálás a trakt.tv-vel</string>
-  <string name="pref_traktsyncsummary">Szinkronizálás a trakt.tv-vel</string>
   <string name="pref_traktintegrate">A trakt.tv használata</string>
   <string name="pref_traktintegratesummary">Frissítéskor trakt használata is</string>
   <string name="feedback">Visszajelzés küldése</string>
@@ -149,6 +150,7 @@
   <string name="backup_failed_nosd">Nem lehet menteni. A mentési mappa nem elérhető.</string>
   <string name="backup_success">Mentés sikerült.</string>
   <string name="backup_failed">A mentés nem sikerült.</string>
+  <string name="import_inprogress">Adatbázis visszaállítása…</string>
   <string name="import_failed_nosd">Nem lehet visszaállítani. A mentési mappa nem elérhető.</string>
   <string name="import_failed_nofile">Nincs mentett adatbázis.</string>
   <string name="import_failed_noread">A mentett adatbázis nem olvasható.</string>
@@ -183,19 +185,15 @@
   <string name="traktcheckin_cancel">Megszakít</string>
   <string name="traktcheckin_inprogress">Már folyamatban van egy csekkolás. Megszakíthatod, vagy várhatsz %s, mielőtt újra csekkolhatsz.</string>
   <string name="traktcheckin_wait">Várok</string>
-  <string name="checkinfailed">Bejelentkezés nem sikerült.</string>
   <string name="addtocalendar">Hozzáadás naptárhoz</string>
   <string name="addtocalendar_failed">Nem sikerült az esemény létrehozása.</string>
   <string name="username">Felhasználónév</string>
   <string name="email">E-mail</string>
   <string name="password">Jelszó</string>
-  <string name="save">Mentés</string>
-  <string name="dontsave">Mégse</string>
   <string name="trakt_success">Kapcsolódva a trakt.tv-hez</string>
   <string name="trakt_error">trakt.tv kapcsolódási hiba</string>
   <string name="trakt_seen">látottként jelölt</string>
   <string name="trakt_decryptfail">jelszó dekódolása nem sikerült</string>
-  <string name="trakt_credentials_invalid">bejelentkezési adatok érvénytelenek</string>
   <string name="trakt_generalerror">Hiba történt. Ellenőrizd a bejelentkezési adataid és próbáld újra!</string>
   <string name="love">Totally ninja!</string>
   <string name="hate">Weak Sauce :(</string>
@@ -224,6 +222,13 @@
     <item>Z - A</item>
     <item>Újabbak előre (DVD)</item>
     <item>Régebbiek előre (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Mind</item>

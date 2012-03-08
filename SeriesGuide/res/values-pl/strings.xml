@@ -12,8 +12,6 @@
   <string name="share_episode">Udostępnij</string>
   <string name="share_checkout">Sprawdź</string>
   <string name="search_description">Odcinki</string>
-  <string name="description_home">Strona główna</string>
-  <string name="description_search">Szukaj</string>
   <string name="description_overview">Opis</string>
   <string name="norating">brak danych</string>
   <string name="episode_firstaired">Data emisji:</string>
@@ -70,7 +68,6 @@
   <string name="update_success">Aktualizacja zakończona.</string>
   <string name="update_offline">Aktualizacja nie powiodła się. Sprawdź połączenie internetowe/Wi-Fi.</string>
   <string name="update_saxerror">Aktualizacja nie powiodła się. Spróbuj ponownie później.</string>
-  <string name="update_inprogress">Aktualizacja w toku, spróbuj ponownie później.</string>
   <string name="menu_updateart">Wczytaj plakaty</string>
   <string name="arttask_incomplete">Niektóre plakaty nie zostały wczytane. Spróbuj ponownie później.</string>
   <string name="arttask_nosdcard">Wczytywanie plakatów wymaga karty SD.</string>
@@ -132,7 +129,6 @@
   <string name="pref_trakt">poświadczenia trakt.tv</string>
   <string name="pref_traktsummary">Dodaj lub edytuj dane logowania trakt.tv</string>
   <string name="pref_traktsync">Synchronizuj z trakt.tv</string>
-  <string name="pref_traktsyncsummary">Wstępna synchronizacja z trakt.tv</string>
   <string name="pref_traktintegrate">Zintegruj z trakt.tv</string>
   <string name="pref_traktintegratesummary">Pobierz aktywność trakt przy aktualizacji</string>
   <string name="feedback">Wyślij opinię</string>
@@ -183,19 +179,15 @@
   <string name="traktcheckin_cancel">Anuluj</string>
   <string name="traktcheckin_inprogress">Sprawdzanie jest w toku. Anuluj obecne sprawdzanie lub poczekaj %s przed kolejnym sprawdzaniem.</string>
   <string name="traktcheckin_wait">Poczekam</string>
-  <string name="checkinfailed">Błąd sprawdzania.</string>
   <string name="addtocalendar">Dodaj do kalendarza</string>
   <string name="addtocalendar_failed">Nie można utworzyć zdarzenia kalendarza.</string>
   <string name="username">Nazwa użytkownika</string>
   <string name="email">E-mail</string>
   <string name="password">Hasło</string>
-  <string name="save">Zapisz</string>
-  <string name="dontsave">Nie zapisuj</string>
   <string name="trakt_success">Komunikacja z trakt.tv pomyślna</string>
   <string name="trakt_error">Komunikacja z trakt.tv zakończona niepowodzeniem</string>
   <string name="trakt_seen">oznaczony jako obejrzany</string>
   <string name="trakt_decryptfail">Hasło nie może zostać zdekodowane</string>
-  <string name="trakt_credentials_invalid">Zły login/hasło.</string>
   <string name="trakt_generalerror">Coś poszło nie tak. Prosimy o sprawdzenie poświadczeń i ponowną próbę.</string>
   <string name="love">Uwielbiam to!</string>
   <string name="hate">Słaby :(</string>
@@ -224,6 +216,13 @@
     <item>Od Z do A</item>
     <item>Najpierw najnowsze (DVD)</item>
     <item>Najpierw najstarsze (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Wszystkie</item>

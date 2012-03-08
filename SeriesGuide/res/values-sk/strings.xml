@@ -12,8 +12,6 @@
   <string name="share_episode">Sdieľať epizódu</string>
   <string name="share_checkout">Pozrite si</string>
   <string name="search_description">Epizódy</string>
-  <string name="description_home">Domov</string>
-  <string name="description_search">Hľadať</string>
   <string name="description_overview">Prehľad</string>
   <string name="norating">nedostupné</string>
   <string name="episode_firstaired">Dátum vysielania:</string>
@@ -102,10 +100,7 @@
   <string name="username">Užívateľské meno</string>
   <string name="email">E-mail</string>
   <string name="password">Heslo</string>
-  <string name="save">Uložiť</string>
-  <string name="dontsave">Neuložiť</string>
   <string name="trakt_decryptfail">Heslo nebolo možné dešifrovať</string>
-  <string name="trakt_credentials_invalid">poverenia nie je platné</string>
   <string name="love">Totally ninja!</string>
   <string name="hate">Odpad :(</string>
   <string name="trakt_createaccount">Vytvoriť nový účet</string>
@@ -130,6 +125,13 @@
     <item>Z - A</item>
     <item>Posledné najskôr (DVD)</item>
     <item>Najstaršie najskôr (DVD)</item>
+  </string-array>
+  <string-array name="upcominglimit">
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>All</item>

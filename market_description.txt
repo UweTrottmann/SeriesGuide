@@ -1,0 +1,13 @@
+If you want to support future development consider installing SeriesGuide X instead.
+
+Manage the progress of (re-)watching your favorite TV shows. Keep track of unseen episodes and share what you are watching with trakt.tv, GetGlue or any supported Android app like Google+, Twitter and Facebook.
+
+NOTE: Show and airtime information is United States (Pacific Time) based due to limitations of the data source (thetvdb.com).
+
+- No sign-in (optional: trakt.tv).
+- Offline support. (Internet connection may be required for adding or updating shows, downloading episode images, sharing).
+- 'Backup/Restore' in Settings.
+- Upcoming episodes widget.
+- trakt.tv support (Check In, Rate, Friends activity, Sync...).
+- GetGlue Check In support.
+- Share episodes via Android apps (Email, Facebook, Twitter, ...).
