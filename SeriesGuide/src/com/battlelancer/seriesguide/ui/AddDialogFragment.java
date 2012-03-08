@@ -26,12 +26,14 @@ public class AddDialogFragment extends DialogFragment {
         public void onAddShow(SearchResult show);
     }
 
-    private SearchResult mShow;
-
     private OnAddShowListener mListener;
 
-    private AddDialogFragment(SearchResult show) {
-        mShow = show;
+    public static AddDialogFragment newInstance(SearchResult show) {
+        AddDialogFragment f = new AddDialogFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("show", show);
+        f.setArguments(args);
+        return f;
     }
 
     @Override
@@ -46,12 +48,13 @@ public class AddDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        final SearchResult show = getArguments().getParcelable("show");
 
-        return new AlertDialog.Builder(getActivity()).setTitle(mShow.title)
-                .setMessage(mShow.overview)
+        return new AlertDialog.Builder(getActivity()).setTitle(show.title)
+                .setMessage(show.overview)
                 .setPositiveButton(R.string.add_show, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        mListener.onAddShow(mShow);
+                        mListener.onAddShow(show);
                     }
                 }).setNegativeButton(R.string.dont_add_show, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
@@ -79,7 +82,7 @@ public class AddDialogFragment extends DialogFragment {
         ft.addToBackStack(null);
 
         // Create and show the dialog.
-        DialogFragment newFragment = new AddDialogFragment(show);
+        DialogFragment newFragment = AddDialogFragment.newInstance(show);
         newFragment.show(ft, "dialog");
     }
 }
