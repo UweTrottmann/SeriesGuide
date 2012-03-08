@@ -1,5 +1,9 @@
+<a name="top"></a>
+
 Changelog
 =========
+
+All dates are in the European Central timezone.
 
 Version 2.5 *(in development)*
 --------------------------------
@@ -25,13 +29,13 @@ Version 2.5 *(in development)*
 * Fixed stuck progress dialog when checking in with trakt.
 * Some other minor improvements.
 
-#### 2.5.5beta (2012-02-20 GMT+1):
+#### 2.5.5beta (2012-02-20):
 
 * Fix for crash when marking episodes watched.
 * Always show the 'Add to calendar' button, if room.
 * Fix #53 for episodes list.
 
-#### 2.5.4beta (2012-02-17 GMT+1):
+#### 2.5.4beta (2012-02-17):
 
 * Hide legacy widgets except small size on Android 3.0+ devices.
 * Fix incorrect next episodes if two air the same day. The lower numbered one is now assumed to be aired first (though still at the same time).
