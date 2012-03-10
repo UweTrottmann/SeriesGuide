@@ -7,6 +7,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.util.ActivityHelper;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.Utils;
@@ -81,6 +82,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
     public static final String KEY_ONLYFAVORITES = "com.battlelancer.seriesguide.onlyfavorites";
 
     public static final String KEY_UPCOMING_LIMIT = "com.battlelancer.seriesguide.upcominglimit";
+
+    public static final String KEY_NOTIFICATIONS_ENABLED = "com.battlelancer.seriesguide.notifications";
 
     public static final String SUPPORT_MAIL = "seriesguide@battlelancer.com";
 
@@ -251,6 +254,26 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                         Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
                                 .parse(PAYPAL_DONATE_URL));
                         startActivity(myIntent);
+                        return true;
+                    }
+                });
+
+        findPreference(KEY_NOTIFICATIONS_ENABLED).setOnPreferenceClickListener(
+                new OnPreferenceClickListener() {
+
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        if (((CheckBoxPreference) preference).isChecked()) {
+                            AnalyticsUtils.getInstance(activity).trackEvent("Settings",
+                                    "Notifications", "Enable", 0);
+                        } else {
+                            AnalyticsUtils.getInstance(activity).trackEvent("Settings",
+                                    "Notifications", "Disable", 0);
+                        }
+
+                        Intent i = new Intent(SeriesGuidePreferences.this,
+                                NotificationService.class);
+                        startService(i);
                         return true;
                     }
                 });

@@ -297,6 +297,13 @@
         <item>Unseen/Upcoming</item>
         <item>Hidden</item>
     </string-array>
+    
+    <!-- Notifications -->
+    <string name="upcoming_show">%s is coming up</string>
+    <string name="upcoming_episodes">New episodes are coming up</string>
+    <string name="upcoming_show_detailed">%1$s airs %2$s on %3$s</string>
+    <string name="pref_notifications">Notifications</string>
+    <string name="pref_notificationssummary">For favorite shows are airing soon</string>
 
     <!-- strings for BETA release -->
     <string name="download_stable">Download SeriesGuide</string>

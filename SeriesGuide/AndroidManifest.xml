@@ -194,6 +194,12 @@
             android:name="com.battlelancer.seriesguide.ui.AddActivity"
             android:label="@string/add_show" >
         </activity>
+		
+		<service android:name=".service.NotificationService" >
+        </service>
+
+        <receiver android:name=".service.OnAlarmReceiver" >
+        </receiver>
     </application>
 
 </manifest>

@@ -25,6 +25,12 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_content" >
+        
+        <CheckBoxPreference
+            android:defaultValue="True"
+            android:key="com.battlelancer.seriesguide.notifications"
+            android:summary="@string/pref_notificationssummary"
+            android:title="@string/pref_notifications" />
 
         <ListPreference
             android:defaultValue="latestfirst"
