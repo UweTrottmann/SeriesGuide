@@ -16,6 +16,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class ChangesDialogFragment extends DialogFragment {
@@ -35,15 +38,33 @@ public class ChangesDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final TextView message = new TextView(getActivity());
-        message.setText(R.string.betawarning);
-        message.setPadding(30, 30, 30, 30);
+        message.setText(R.string.betamessage);
         message.setTextSize(16);
+
+        final TextView warning = new TextView(getActivity());
+        warning.setText(R.string.betawarning);
+        warning.setTextSize(16);
 
         Linkify.addLinks(message, Linkify.ALL);
         message.setMovementMethod(LinkMovementMethod.getInstance());
+        Linkify.addLinks(warning, Linkify.ALL);
+        warning.setMovementMethod(LinkMovementMethod.getInstance());
+
+        LinearLayout layout = new LinearLayout(getActivity());
+        layout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+                LayoutParams.WRAP_CONTENT));
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(30, 30, 30, 30);
+        layout.addView(message);
+        layout.addView(warning);
+
+        ScrollView scrollView = new ScrollView(getActivity());
+        scrollView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT));
+        scrollView.addView(layout);
 
         return new AlertDialog.Builder(getActivity()).setTitle(R.string.app_name)
-                .setIcon(android.R.drawable.ic_dialog_alert).setView(message)
+                .setIcon(android.R.drawable.ic_dialog_alert).setView(scrollView)
                 .setPositiveButton(R.string.gobreak, null)
                 .setNeutralButton(getString(R.string.download_stable), new OnClickListener() {
 
