@@ -306,7 +306,7 @@
 
     <!-- strings for BETA release -->
     <string name="download_stable">Download SeriesGuide</string>
-    <string name="betawarning">This release is for beta testers only! If you are in doubt download the stable version below.\n\nIf you want to help test have a look at the <a href="http://git.io/sgbetachanges">recent changes</a>.\n\nPlease report every crash, try everything and send feedback.</string>
+    <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
 
     <!-- REMOVE before uploading to crowdin -->
     <string name="app_name">SeriesGuide beta</string>
@@ -315,6 +315,7 @@
     <string name="tvdb">TVDb</string>
     <string name="trakt">trakt.tv</string>
     <string name="gobreak">Go break things</string>
+    <string name="betamessage"><b>What\'s new</b>\n- Greatly improved time zone and summer time issues, once you update your shows.\n- Notifications, finally! Enabled by default, only for <b>favorite</b> shows, one hour in advance. At least that is what <b>should</b> happen. Tell me if otherwise.\n\nBack to ME3, regards, Uwe\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
