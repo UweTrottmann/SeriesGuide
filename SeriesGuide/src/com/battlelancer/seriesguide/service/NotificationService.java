@@ -72,23 +72,17 @@ public class NotificationService extends IntentService {
             return;
         }
 
-        // TODO: handle custom timezones, offsets, etc...
-        long modTime = 0;
-        if (!prefs.getBoolean(SeriesGuidePreferences.KEY_USE_MY_TIMEZONE, false)) {
-
-        }
-
-        long now = System.currentTimeMillis();
+        long fakeNow = Utils.getFakeCurrentTime(prefs);
 
         // get episodes which air between one hour ago and the future
         final Cursor upcomingEpisodes = getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 PROJECTION, SELECTION, new String[] {
-                    String.valueOf(now - DateUtils.HOUR_IN_MILLIS)
+                    String.valueOf(fakeNow - DateUtils.HOUR_IN_MILLIS)
                 }, SORTING);
 
         // look if we have found something to notify about
         int count = 0;
-        long inOneHour = now + DateUtils.HOUR_IN_MILLIS;
+        long inOneHour = fakeNow + DateUtils.HOUR_IN_MILLIS;
         while (upcomingEpisodes.moveToNext()) {
             long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
             if (airtime <= inOneHour) {
@@ -140,7 +134,8 @@ public class NotificationService extends IntentService {
                 contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
             }
 
-            Notification notification = new Notification(icon, tickerText, now);
+            Notification notification = new Notification(icon, tickerText,
+                    System.currentTimeMillis());
             notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
             notification.flags |= Notification.FLAG_AUTO_CANCEL;
             notification.defaults |= Notification.DEFAULT_LIGHTS;
@@ -154,14 +149,14 @@ public class NotificationService extends IntentService {
             long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
             if (airtime > inOneHour) {
                 // wake up an hour before the next episode airs
-                wakeUpTime = airtime - DateUtils.HOUR_IN_MILLIS;
+                wakeUpTime = Utils.convertToFakeTime(airtime, prefs) - DateUtils.HOUR_IN_MILLIS;
                 break;
             }
         }
 
         // set a default wake-up time if there are no future episodes for now
         if (wakeUpTime == 0) {
-            wakeUpTime = now + 12 * DateUtils.HOUR_IN_MILLIS;
+            wakeUpTime = System.currentTimeMillis() + 12 * DateUtils.HOUR_IN_MILLIS;
         }
 
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);

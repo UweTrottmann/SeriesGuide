@@ -325,9 +325,19 @@ public class Utils {
      * @return
      */
     public static long getFakeCurrentTime(SharedPreferences prefs) {
+        return convertToFakeTime(System.currentTimeMillis(), prefs);
+    }
+
+    /**
+     * Modify a time to be earlier/later respecting user-set offsets and
+     * automatic offsets based on time zone.
+     * 
+     * @param prefs
+     * @return
+     */
+    public static long convertToFakeTime(long time, SharedPreferences prefs) {
         boolean pacificInDaylight = TimeZone.getTimeZone(TIMEZONE_US_PACIFIC).inDaylightTime(
                 new Date());
-        long now = System.currentTimeMillis();
 
         int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
         TimeZone userTimeZone = TimeZone.getDefault();
@@ -354,10 +364,10 @@ public class Utils {
 
         if (offset != 0) {
             // invert offset so we add to current time instead of subtracting
-            now -= (offset * DateUtils.HOUR_IN_MILLIS);
+            time -= (offset * DateUtils.HOUR_IN_MILLIS);
         }
 
-        return now;
+        return time;
     }
 
     public static long buildEpisodeAirtime(String tvdbDateString, long airtime) {
