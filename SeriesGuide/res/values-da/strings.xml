@@ -111,8 +111,6 @@
   <string name="pref_languagesummary">Oversættelser er ikke tilgængelige for alle tv-serier</string>
   <string name="pref_number">Talformat</string>
   <string name="pref_numbersummary">Vælg mellem 1x01, S01E01 eller s01e01</string>
-  <string name="pref_usetz">Anvend din tidszone</string>
-  <string name="pref_usetzsummary">Forskyd sendetider til din tidszone (for ikke-USA brugere)</string>
   <string name="pref_offset">Manuel tidsforskydning</string>
   <string name="pref_offsetsummary">Tidsforskyd sendetider med et bestemt antal timer</string>
   <string name="pref_autoupdate">Slå automatisk opdatering til</string>

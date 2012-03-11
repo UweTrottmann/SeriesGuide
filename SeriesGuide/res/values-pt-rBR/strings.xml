@@ -126,8 +126,6 @@
   <string name="pref_languagesummary">Traduções não disponíveis para cada série</string>
   <string name="pref_number">Formato de número</string>
   <string name="pref_numbersummary">Escolha entre 1x01, S01E01 ou s01e01</string>
-  <string name="pref_usetz">Usar seu fuso horário</string>
-  <string name="pref_usetzsummary">Mudar datas de exibição para seu fuso horário (para quem reside fora dos EUA)</string>
   <string name="pref_offset">Deslocamento de tempo manual</string>
   <string name="pref_offsetsummary">Deslocar datas de exibição por uma quantidade fixa de horas</string>
   <string name="pref_autoupdate">Ligar Auto Atualização</string>
@@ -219,7 +217,6 @@
   <string name="welcome_traktmessage">Acesse sua lista do trakt.tv e as atividades de seus amigos com SeriesGuide:</string>
   <string name="dismiss">Recusar</string>
   <string name="download_stable">Baixar SeriesGuide</string>
-  <string name="betawarning">Esta versão beta é somente para testes! Se você estiver em dúvida baixe a versão estável abaixo.\n\nSe você quer ajudar a testar dê uma olhada no relatório de <a href="http://git.io/sgbetachanges">mudanças recentes</a>.\n\nPor favor, reporte qualquer problema, tente tudo e nos envie um comentário.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Próximo episódio</item>

@@ -114,8 +114,6 @@
   <string name="pref_languagesummary">Traductions non disponibles pour toutes les séries</string>
   <string name="pref_number">Format de nombre</string>
   <string name="pref_numbersummary">Choisissez 1x01, S01E01 ou s01e01</string>
-  <string name="pref_usetz">Utiliser votre fuseau</string>
-  <string name="pref_usetzsummary">Ajuster les dates de diffusion à votre fuseau horaire</string>
   <string name="pref_offset">Décalage horaire manuel</string>
   <string name="pref_offsetsummary">Décaler par un nombre d\'heures fixes les dates de diffusion</string>
   <string name="pref_autoupdate">Activer la mise à jour automatique</string>

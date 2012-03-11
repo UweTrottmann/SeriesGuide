@@ -128,8 +128,6 @@
   <string name="pref_languagesummary">Übersetzungen sind nicht für jede Serie verfügbar</string>
   <string name="pref_number">Zahlenformat</string>
   <string name="pref_numbersummary">Wählen Sie zwischen 1x01, S01E01 und s01e01</string>
-  <string name="pref_usetz">Meine Zeitzone verwenden</string>
-  <string name="pref_usetzsummary">Zeit-Verschiebung in meine Zeitzone</string>
   <string name="pref_offset">Manuelle Zeit-Verschiebung</string>
   <string name="pref_offsetsummary">Zeit um eine gewisse Anzahl an Stunden verschieben</string>
   <string name="pref_autoupdate">Auto-Aktualisierung aktivieren</string>
@@ -227,7 +225,6 @@
   <string name="welcome_traktmessage">Greifen Sie mit SeriesGuide auf Ihre trakt.tv Bibliothek und Aktivität von Freunden zu:</string>
   <string name="dismiss">Schließen</string>
   <string name="download_stable">SeriesGuide herunterladen</string>
-  <string name="betawarning">Diese Version ist nur für Beta-Tester! Im Zweifelsfall laden Sie unten die stabile Version.\n\nWenn Sie beim Testen helfen möchten, werfen Sie einen Blick auf die <a href="http://git.io/sgbetachanges">jüngsten Änderungen</a>.\n\nBitte berichten Sie jeden Absturz, probieren Sie alles aus und senden Sie Feedback.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Nächste Folge</item>

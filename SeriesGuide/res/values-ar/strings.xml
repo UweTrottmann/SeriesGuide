@@ -113,7 +113,6 @@
   <string name="pref_language">لغة المحتوى</string>
   <string name="pref_languagesummary">الترجمات غير متوفر لكل عرض</string>
   <string name="pref_number">تنسيق الأرقام</string>
-  <string name="pref_usetz">استخدام المنطقة الزمنية الخاصة بك</string>
   <string name="pref_offset">تغيير التوقيت يدوياً</string>
   <string name="pref_offsetsummary">تغيير أوقات العرض بقدر معين من الساعات</string>
   <string name="pref_autoupdate">تشغيل التحديث التلقائي</string>

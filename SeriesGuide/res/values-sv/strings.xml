@@ -108,7 +108,6 @@
   <string name="backup_summary">Säkerhetskopiera eller återställ dina serier</string>
   <string name="pref_number">Nummer format</string>
   <string name="pref_numbersummary">Välj mellan 1x01, S01E01 eller s01e01</string>
-  <string name="pref_usetz">Använd din tidszon</string>
   <string name="pref_offset">Manuell tidsförskjutning</string>
   <string name="pref_autoupdate">Aktivera automatisk uppdatering</string>
   <string name="pref_updatewifionly">Updatera endast via Wi-Fi</string>
@@ -191,7 +190,6 @@
   <string name="welcome_text">Välkommen!</string>
   <string name="welcome_setuptrakt">Anslut till trakt</string>
   <string name="download_stable">Ladda ner SeriesGuide</string>
-  <string name="betawarning">Denna utgåva är endast förbetatestare! Ladda ner den stabila versionen nedan om du tvivlar.\n\nOm du vill hjälpa med testet ta en titt på <a href="http://git.io/sgbetachanges">de senaste ändringarna</a> .\n\nRapport varje krasch, prova allt och skicka feedback.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Nästa avsnitt</item>

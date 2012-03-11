@@ -111,7 +111,6 @@
   <string name="pref_languagesummary">Преводи не са налични за всички предавания</string>
   <string name="pref_number">Формат на числата</string>
   <string name="pref_numbersummary">Изберете между 1x01, S01E01 или s01e01</string>
-  <string name="pref_usetz">Използвайте вашата часова зона</string>
   <string name="pref_autoupdate">Включване на автоматичното актуализиране</string>
   <string name="pref_autoupdatesummary">Периодично актуализиране на вашите предавания при стартиране на SeriesGuide</string>
   <string name="pref_updatewifionly">Актуализиране само през Wi-Fi</string>
@@ -180,7 +179,6 @@
   <string name="trakt_synctotrakt">Синхронизирай с trakt.tv</string>
   <string name="trakt_syncunseen">Синхронизирай негледаните епизоди</string>
   <string name="download_stable">Изтегляне на SeriesGuide</string>
-  <string name="betawarning">Тази версия е само за бета тестери! Ако имате колебания, изтеглете стабилната версия по-долу.\n\nАко искате да помогнете с тестването, прегледайте <a href="http://git.io/sgbetachanges">последните промени</a>.\n\nМоля, докладвайте всяка грешка, опитайте всичко и изпращайте обратна връзка.</string>
   <string-array name="shsorting">
     <item>А-Ю</item>
     <item>Следващ епизод</item>

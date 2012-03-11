@@ -128,8 +128,6 @@
   <string name="pref_languagesummary">Käännöksiä ei ole saatavilla kaikille ohjelmille</string>
   <string name="pref_number">Lukumuoto</string>
   <string name="pref_numbersummary">Valitse 1x01, S01E01 tai s01e01</string>
-  <string name="pref_usetz">Käytä aikavyöhykettäsi</string>
-  <string name="pref_usetzsummary">Asettaa ajan aikavyöhykkeellesi (Yhdysvaltojen ulkopuolisille)</string>
   <string name="pref_offset">Manuaalinen ajansiirto</string>
   <string name="pref_offsetsummary">Siirrä esityspäiviä tietyllä tuntimäärällä</string>
   <string name="pref_autoupdate">Ota automaattiset päivitykset käyttöön</string>
@@ -226,7 +224,6 @@
   <string name="welcome_traktmessage">Pääse käsiksi trakt.tv:n kirjastoosi ja ystäviesi toimintaan SeriesGuidella:</string>
   <string name="dismiss">Hylkää</string>
   <string name="download_stable">Lataa SeriesGuide</string>
-  <string name="betawarning">Tämä julkaisu on vain beeta-testaajille! Jos olet epävarma, lataa vakaaversio alhaalta.\n\nJos haluat auttaa testaamisessa, katso <a href="http://git.io/sgbetachanges">viimeisimmät muutokset</a>.\n\n Ilmoita jokaisesta kaatumisesta, kokeile kaikkea ja lähetä palautetta.</string>
   <string-array name="shsorting">
     <item>A - Ö</item>
     <item>Seuraava jakso</item>

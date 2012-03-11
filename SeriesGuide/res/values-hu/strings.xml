@@ -119,8 +119,6 @@
   <string name="pref_languagesummary">A fordítás nem mindegyik sorozathoz áll rendelkezésre</string>
   <string name="pref_number">Számozás formátuma</string>
   <string name="pref_numbersummary">Válasszon az 1x01, S01E01 vagy s01e01 formátumok közül</string>
-  <string name="pref_usetz">Saját időzóna használata</string>
-  <string name="pref_usetzsummary">Vetítési idők a saját időzóna szerint (USA-n kívüli felhasználóknak)</string>
   <string name="pref_offset">Időeltolás</string>
   <string name="pref_offsetsummary">Időpontok eltolása a megadott órával</string>
   <string name="pref_autoupdate">Automatikus frissítés bekapcsolása</string>

@@ -114,8 +114,6 @@
   <string name="pref_languagesummary">並非每部影集皆提供翻譯</string>
   <string name="pref_number">數字格式</string>
   <string name="pref_numbersummary">選擇顯示1x01, S01E01 或 s01e01</string>
-  <string name="pref_usetz">使用您的時區</string>
-  <string name="pref_usetzsummary">將播出日期換算成您所在的時區(限非美國使用者)</string>
   <string name="pref_offset">手動時間換算</string>
   <string name="pref_offsetsummary">利用固定時數來換算播出時間</string>
   <string name="pref_autoupdate">開啟自動更新</string>
@@ -198,7 +196,6 @@
   <string name="trakt_syncunseen">同步未看的集數</string>
   <string name="welcome_message"><big>新手上路</big></string>
   <string name="download_stable">下載 SeriesGuide</string>
-  <string name="betawarning">此版本僅提供給beta測試者!如果你對下載下列的正式版有任何疑問。\n\n如果你希望協助測試請參考<a href="http://git.io/sgbetachanges">最新變動</a>。\n\n請回報所有的當機、測試情形並傳送回饋。</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>下一集</item>
