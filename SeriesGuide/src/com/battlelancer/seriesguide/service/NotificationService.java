@@ -24,8 +24,6 @@ import android.text.format.DateUtils;
 
 public class NotificationService extends IntentService {
 
-    private static final int NOTIFICATION_ID = 1;
-
     private static final String[] PROJECTION = new String[] {
             Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.FIRSTAIREDMS,
             Shows.TITLE, Shows.NETWORK, Episodes.NUMBER, Episodes.SEASON
@@ -36,23 +34,23 @@ public class NotificationService extends IntentService {
             + Episodes.NUMBER + " ASC";
 
     // only future, unwatched episodes, only of favorite shows
-    private static final String SELECTION = Episodes.FIRSTAIRED + ">=? and " + Episodes.WATCHED
-            + "=0 and " + Shows.FAVORITE + "=1";
+    private static final String SELECTION = Episodes.FIRSTAIREDMS + ">=? AND " + Episodes.WATCHED
+            + "=0 AND " + Shows.FAVORITE + "=1";
 
     interface NotificationQuery {
-        int _ID = 1;
+        int _ID = 0;
 
-        int TITLE = 2;
+        int TITLE = 1;
 
-        int FIRSTAIREDMS = 3;
+        int FIRSTAIREDMS = 2;
 
-        int SHOW_TITLE = 4;
+        int SHOW_TITLE = 3;
 
-        int NETWORK = 5;
+        int NETWORK = 4;
 
-        int NUMBER = 6;
+        int NUMBER = 5;
 
-        int SEASON = 7;
+        int SEASON = 6;
     }
 
     public NotificationService() {
@@ -95,7 +93,7 @@ public class NotificationService extends IntentService {
         if (count != 0) {
             NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-            int icon = R.drawable.ic_stat_ic_notification;
+            int icon = R.drawable.ic_notification;
             Context context = getApplicationContext();
             CharSequence tickerText = "";
             CharSequence contentTitle = "";
@@ -111,27 +109,30 @@ public class NotificationService extends IntentService {
                 String network = upcomingEpisodes.getString(NotificationQuery.NETWORK);
 
                 tickerText = getString(R.string.upcoming_show, showTitle);
-                contentTitle = getString(R.string.upcoming_show_detailed, showTitle, airs, network);
-                // TODO special episodes
-                contentText = Utils.getEpisodeNumber(
-                        PreferenceManager.getDefaultSharedPreferences(this),
-                        upcomingEpisodes.getString(NotificationQuery.SEASON),
-                        upcomingEpisodes.getString(NotificationQuery.NUMBER))
-                        + " " + upcomingEpisodes.getString(NotificationQuery.TITLE);
+                contentTitle = showTitle
+                        + " "
+                        + Utils.getEpisodeNumber(
+                                PreferenceManager.getDefaultSharedPreferences(this),
+                                upcomingEpisodes.getString(NotificationQuery.SEASON),
+                                upcomingEpisodes.getString(NotificationQuery.NUMBER));
+                contentText = getString(R.string.upcoming_show_detailed, airs, network);
 
                 Intent notificationIntent = new Intent(context, EpisodeDetailsActivity.class);
-                notificationIntent.putExtra(Episodes._ID,
+                notificationIntent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_ID,
                         upcomingEpisodes.getString(NotificationQuery._ID));
-                contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+                contentIntent = PendingIntent.getActivity(context, 0, notificationIntent,
+                        PendingIntent.FLAG_CANCEL_CURRENT);
 
             } else if (count > 1) {
                 // notify about multiple episodes
                 tickerText = getString(R.string.upcoming_episodes);
-                contentTitle = getString(R.string.upcoming_episodes);
-                contentText = String.valueOf(count);
+                contentTitle = getString(R.string.upcoming_episodes) + " (" + String.valueOf(count)
+                        + ")";
+                contentText = getString(R.string.upcoming_display);
 
                 Intent notificationIntent = new Intent(context, UpcomingRecentActivity.class);
-                contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+                contentIntent = PendingIntent.getActivity(context, 0, notificationIntent,
+                        PendingIntent.FLAG_CANCEL_CURRENT);
             }
 
             Notification notification = new Notification(icon, tickerText,
@@ -139,8 +140,10 @@ public class NotificationService extends IntentService {
             notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
             notification.flags |= Notification.FLAG_AUTO_CANCEL;
             notification.defaults |= Notification.DEFAULT_LIGHTS;
+            notification.defaults |= Notification.DEFAULT_SOUND;
 
-            nm.notify(NOTIFICATION_ID, notification);
+            // use string resource id, always unique within app
+            nm.notify(R.string.upcoming_show, notification);
         }
 
         // set an alarm to wake us up later to notify about future episodes
@@ -153,6 +156,8 @@ public class NotificationService extends IntentService {
                 break;
             }
         }
+
+        upcomingEpisodes.close();
 
         // set a default wake-up time if there are no future episodes for now
         if (wakeUpTime == 0) {
