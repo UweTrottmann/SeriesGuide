@@ -5,6 +5,16 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 2.6 *(in development)*
+--------------------------------
+
+### Detailed changes:
+
+#### 2.6beta (2012-03-11)
+
+* Greatly improved time zone and summer time handling: update your shows!
+* Notifications about upcoming favorite shows, enabled by default
+
 Version 2.5 *(2012-03-08)*
 --------------------------------
 

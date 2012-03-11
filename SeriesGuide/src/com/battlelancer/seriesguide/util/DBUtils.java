@@ -22,9 +22,9 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -105,13 +105,13 @@ public class DBUtils {
      *         posterpath.
      */
     public static Cursor getUpcomingEpisodes(Context context) {
-        Calendar cal = Calendar.getInstance();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        long fakeNow = Utils.getFakeCurrentTime(prefs);
         // go an hour back in time, so episodes move to recent one hour late
-        cal.add(Calendar.HOUR_OF_DAY, -1);
-        final String recentThreshold = String.valueOf(cal.getTimeInMillis());
+        fakeNow -= DateUtils.HOUR_IN_MILLIS;
+        final String recentThreshold = String.valueOf(fakeNow);
         String query = UpcomingQuery.QUERY_UPCOMING;
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
         String[] selectionArgs;
         if (isOnlyFavorites) {
@@ -138,13 +138,13 @@ public class DBUtils {
      *         posterpath.
      */
     public static Cursor getRecentEpisodes(Context context) {
-        Calendar cal = Calendar.getInstance();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        long fakeNow = Utils.getFakeCurrentTime(prefs);
         // go an hour back in time, so episodes move to recent one hour late
-        cal.add(Calendar.HOUR_OF_DAY, -1);
-        final String recentThreshold = String.valueOf(cal.getTimeInMillis());
+        fakeNow -= DateUtils.HOUR_IN_MILLIS;
+        final String recentThreshold = String.valueOf(fakeNow);
         String query = UpcomingQuery.QUERY_RECENT;
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
         String[] selectionArgs;
         if (isOnlyFavorites) {
@@ -515,7 +515,7 @@ public class DBUtils {
         }
         if (onlyFutureEpisodes) {
             selection.append(" AND ").append(Episodes.FIRSTAIREDMS).append(">=?");
-            String now = String.valueOf(System.currentTimeMillis());
+            String now = String.valueOf(Utils.getFakeCurrentTime(prefs));
             selectionArgs = new String[] {
                 now
             };

@@ -25,6 +25,12 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_content" >
+        
+        <CheckBoxPreference
+            android:defaultValue="True"
+            android:key="com.battlelancer.seriesguide.notifications"
+            android:summary="@string/pref_notificationssummary"
+            android:title="@string/pref_notifications" />
 
         <ListPreference
             android:defaultValue="latestfirst"
@@ -57,12 +63,6 @@
             android:key="numberformat"
             android:summary="@string/pref_numbersummary"
             android:title="@string/pref_number" />
-
-        <CheckBoxPreference
-            android:defaultValue="False"
-            android:key="com.battlelancer.seriesguide.usemytimezone"
-            android:summary="@string/pref_usetzsummary"
-            android:title="@string/pref_usetz" />
 
         <ListPreference
             android:defaultValue="0"

@@ -23,6 +23,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.text.format.DateUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -36,8 +37,6 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.Calendar;
 
 public class UpcomingFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnScrollListener {
@@ -217,10 +216,11 @@ public class UpcomingFragment extends ListFragment implements
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Calendar cal = Calendar.getInstance();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        long fakeNow = Utils.getFakeCurrentTime(prefs);
         // go an hour back in time, so episodes move to recent one hour late
-        cal.add(Calendar.HOUR_OF_DAY, -1);
-        final String recentThreshold = String.valueOf(cal.getTimeInMillis());
+        fakeNow -= DateUtils.HOUR_IN_MILLIS;
+        final String recentThreshold = String.valueOf(fakeNow);
 
         final String sortOrder = getArguments().getString("sortorder");
         String query = getArguments().getString("query");

@@ -154,8 +154,6 @@
     <string name="pref_languagesummary">Translations not available for every show</string>
     <string name="pref_number">Number format</string>
     <string name="pref_numbersummary">Choose between 1x01, S01E01 or s01e01</string>
-    <string name="pref_usetz">Use your time zone</string>
-    <string name="pref_usetzsummary">Offset air dates to your time zone (for non-USA users)</string>
     <string name="pref_offset">Manual time offset</string>
     <string name="pref_offsetsummary">Offset air dates by a fixed amount of hours</string>
     <string name="pref_autoupdate">Turn on Auto Update</string>
@@ -297,6 +295,14 @@
         <item>Unseen/Upcoming</item>
         <item>Hidden</item>
     </string-array>
+    
+    <!-- Notifications -->
+    <string name="upcoming_show">%s is coming up</string>
+    <string name="upcoming_episodes">New episodes are coming up</string>
+    <string name="upcoming_show_detailed">airs %1$s on %2$s</string>
+    <string name="upcoming_display">Select to display upcoming shows</string>
+    <string name="pref_notifications">Notifications</string>
+    <string name="pref_notificationssummary">For favorite shows are airing soon</string>
 
     <!-- strings for BETA release -->
     <string name="download_stable">Download SeriesGuide</string>
