@@ -302,7 +302,7 @@
     <string name="upcoming_show_detailed">airs %1$s on %2$s</string>
     <string name="upcoming_display">Select to display upcoming shows</string>
     <string name="pref_notifications">Notifications</string>
-    <string name="pref_notificationssummary">For favorite shows are airing soon</string>
+    <string name="pref_notificationssummary">For favorite shows airing soon</string>
 
     <!-- strings for BETA release -->
     <string name="download_stable">Download SeriesGuide</string>
