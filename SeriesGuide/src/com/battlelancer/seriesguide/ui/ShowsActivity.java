@@ -381,6 +381,9 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 values.put(Shows.FAVORITE, true);
                 getContentResolver().update(Shows.buildShowUri(String.valueOf(info.id)), values,
                         null, null);
+
+                Utils.runNotificationService(this);
+
                 Toast.makeText(this, getString(R.string.favorited), Toast.LENGTH_SHORT).show();
                 return true;
             }

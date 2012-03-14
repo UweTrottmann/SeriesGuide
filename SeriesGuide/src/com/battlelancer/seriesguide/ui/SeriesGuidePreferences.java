@@ -7,7 +7,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.util.ActivityHelper;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.Utils;
@@ -21,6 +20,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceManager;
 import android.text.util.Linkify;
@@ -34,8 +34,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
     public static final String KEY_TRAKTPWD = "com.battlelancer.seriesguide.traktpwd";
 
     public static final String KEY_TRAKTUSER = "com.battlelancer.seriesguide.traktuser";
-
-    public static final String KEY_USE_MY_TIMEZONE = "com.battlelancer.seriesguide.usemytimezone";
 
     public static final String KEY_ONLY_FUTURE_EPISODES = "onlyFutureEpisodes";
 
@@ -189,6 +187,18 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             }
         });
 
+        // run notification service to take care of potential time shifts when
+        // changing the time offset
+        findPreference(KEY_OFFSET).setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                Utils.runNotificationService(SeriesGuidePreferences.this);
+                return true;
+            }
+        });
+
         // Disconnect GetGlue
         Preference getgluePref = (Preference) findPreference("clearGetGlueCredentials");
         getgluePref.setEnabled(GetGlue.isAuthenticated(prefs));
@@ -242,6 +252,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                     }
                 });
 
+        // Notifications
         findPreference(KEY_NOTIFICATIONS_ENABLED).setOnPreferenceClickListener(
                 new OnPreferenceClickListener() {
 
@@ -255,9 +266,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                                     "Notifications", "Disable", 0);
                         }
 
-                        Intent i = new Intent(SeriesGuidePreferences.this,
-                                NotificationService.class);
-                        startService(i);
+                        Utils.runNotificationService(SeriesGuidePreferences.this);
                         return true;
                     }
                 });

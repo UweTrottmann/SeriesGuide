@@ -4,11 +4,13 @@ package com.battlelancer.seriesguide.util;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.jakewharton.trakt.ServiceManager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -725,6 +727,17 @@ public class Utils {
             // Non-null tag means the view still needs to load it's data
             poster.setTag(path);
         }
+    }
+
+    /**
+     * Run the notification service to display and (re)schedule upcoming episode
+     * alarms.
+     * 
+     * @param context
+     */
+    public static void runNotificationService(Context context) {
+        Intent i = new Intent(context, NotificationService.class);
+        context.startService(i);
     }
 
 }
