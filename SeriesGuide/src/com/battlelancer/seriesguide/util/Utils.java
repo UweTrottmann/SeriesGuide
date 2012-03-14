@@ -339,7 +339,7 @@ public class Utils {
      */
     public static long convertToFakeTime(long time, SharedPreferences prefs) {
         boolean pacificInDaylight = TimeZone.getTimeZone(TIMEZONE_US_PACIFIC).inDaylightTime(
-                new Date());
+                new Date(time));
 
         int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
         TimeZone userTimeZone = TimeZone.getDefault();

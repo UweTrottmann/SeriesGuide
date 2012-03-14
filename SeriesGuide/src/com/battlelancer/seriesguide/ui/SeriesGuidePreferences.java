@@ -193,8 +193,9 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-
-                Utils.runNotificationService(SeriesGuidePreferences.this);
+                if (preference.getKey().equals(KEY_OFFSET)) {
+                    Utils.runNotificationService(SeriesGuidePreferences.this);
+                }
                 return true;
             }
         });
