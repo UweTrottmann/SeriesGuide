@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.ShowInfoActivity;
+import com.battlelancer.seriesguide.util.ShareUtils.TraktTask.OnTraktActionCompleteListener;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -90,9 +91,11 @@ public class ShareUtils {
      * @param shareData - a {@link Bundle} including all
      *            {@link ShareUtils.ShareItems}
      * @param shareMethod the {@link ShareMethod} to use
+     * @param listener listener will be notified once trakt task is finished
+     *            (only first time)
      */
     public static void onShareEpisode(FragmentActivity activity, Bundle shareData,
-            ShareMethod shareMethod) {
+            ShareMethod shareMethod, OnTraktActionCompleteListener listener) {
         final FragmentManager fm = activity.getSupportFragmentManager();
         final String imdbId = shareData.getString(ShareUtils.ShareItems.IMDBID);
         final String sharestring = shareData.getString(ShareUtils.ShareItems.SHARESTRING);
@@ -141,7 +144,7 @@ public class ShareUtils {
             case MARKSEEN_TRAKT: {
                 // trakt mark as seen
                 shareData.putInt(ShareItems.TRAKTACTION, TraktAction.SEEN_EPISODE.index());
-                new TraktTask(activity, fm, shareData).execute();
+                new TraktTask(activity, fm, shareData, listener).execute();
                 break;
             }
             case RATE_TRAKT: {
@@ -346,6 +349,12 @@ public class ShareUtils {
 
         private TraktAction mAction;
 
+        private OnTraktActionCompleteListener mListener;
+
+        public interface OnTraktActionCompleteListener {
+            public void onTraktActionComplete();
+        }
+
         /**
          * Do the specified TraktAction. traktData should include all required
          * parameters.
@@ -359,6 +368,12 @@ public class ShareUtils {
             mContext = context;
             mFm = manager;
             mTraktData = traktData;
+        }
+
+        public TraktTask(Context context, FragmentManager manager, Bundle traktData,
+                OnTraktActionCompleteListener listener) {
+            this(context, manager, traktData);
+            mListener = listener;
         }
 
         @Override
@@ -484,6 +499,10 @@ public class ShareUtils {
                 TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
                         .newInstance(mTraktData);
                 newFragment.show(ft, "traktdialog");
+            }
+
+            if (mListener != null) {
+                mListener.onTraktActionComplete();
             }
         }
     }

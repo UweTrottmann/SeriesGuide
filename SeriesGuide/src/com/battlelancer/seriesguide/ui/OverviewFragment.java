@@ -33,6 +33,7 @@ import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
+import com.battlelancer.seriesguide.util.ShareUtils.TraktTask.OnTraktActionCompleteListener;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
@@ -61,7 +62,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class OverviewFragment extends SherlockFragment {
+public class OverviewFragment extends SherlockFragment implements OnTraktActionCompleteListener {
 
     private boolean mDualPane;
 
@@ -185,8 +186,6 @@ public class OverviewFragment extends SherlockFragment {
             case R.id.menu_markseen_trakt: {
                 fireTrackerEvent("Mark seen (trakt)");
                 onShareEpisode(ShareMethod.MARKSEEN_TRAKT, true);
-                // non-ideal (does not handle failures), but works for now
-                onMarkWatched();
                 break;
             }
             case R.id.menu_rate_trakt: {
@@ -215,7 +214,7 @@ public class OverviewFragment extends SherlockFragment {
     }
 
     private void onShareEpisode(ShareMethod shareMethod, boolean isInvalidateOptionsMenu) {
-        ShareUtils.onShareEpisode(getActivity(), mShareData, shareMethod);
+        ShareUtils.onShareEpisode(getActivity(), mShareData, shareMethod, this);
 
         if (isInvalidateOptionsMenu) {
             // invalidate the options menu so a potentially new
@@ -495,6 +494,10 @@ public class OverviewFragment extends SherlockFragment {
 
         // load new episode, update seasons (if shown)
         onLoadEpisode();
+        onUpdateSeasons();
+    }
+
+    private void onUpdateSeasons() {
         SeasonsFragment seasons = (SeasonsFragment) getFragmentManager().findFragmentById(
                 R.id.fragment_seasons);
         if (seasons != null) {
@@ -536,6 +539,13 @@ public class OverviewFragment extends SherlockFragment {
         Intent i = new Intent(getActivity(), ShowInfoActivity.class);
         i.putExtra(Shows._ID, getShowId());
         startActivity(i);
+    }
+
+    @Override
+    public void onTraktActionComplete() {
+        // load new episode, update seasons (if shown)
+        onLoadEpisode();
+        onUpdateSeasons();
     }
 
     interface EpisodeQuery {
