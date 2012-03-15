@@ -403,7 +403,7 @@ public class OverviewFragment extends SherlockFragment {
 
             @Override
             protected void onPostExecute(Integer result) {
-                if (result == 0) {
+                if (result == 0 && isAdded()) {
                     activity.invalidateOptionsMenu();
                     fillEpisodeData();
                 }
