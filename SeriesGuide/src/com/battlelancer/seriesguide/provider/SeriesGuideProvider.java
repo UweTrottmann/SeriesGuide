@@ -303,6 +303,9 @@ public class SeriesGuideProvider extends ContentProvider {
         final SelectionBuilder builder = new SelectionBuilder();
         final int match = sUriMatcher.match(uri);
         switch (match) {
+            case SHOWS: {
+                return builder.table(Tables.SHOWS);
+            }
             case SHOWS_ID: {
                 final String showId = Shows.getShowId(uri);
                 return builder.table(Tables.SHOWS).where(Shows._ID + "=?", showId);
