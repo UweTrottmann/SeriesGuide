@@ -327,7 +327,7 @@ public class Utils {
      * @return
      */
     public static long getFakeCurrentTime(SharedPreferences prefs) {
-        return convertToFakeTime(System.currentTimeMillis(), prefs);
+        return convertToFakeTime(System.currentTimeMillis(), prefs, true);
     }
 
     /**
@@ -335,9 +335,10 @@ public class Utils {
      * automatic offsets based on time zone.
      * 
      * @param prefs
+     * @param isCurrentTime TODO
      * @return
      */
-    public static long convertToFakeTime(long time, SharedPreferences prefs) {
+    public static long convertToFakeTime(long time, SharedPreferences prefs, boolean isCurrentTime) {
         boolean pacificInDaylight = TimeZone.getTimeZone(TIMEZONE_US_PACIFIC).inDaylightTime(
                 new Date(time));
 
@@ -365,8 +366,13 @@ public class Utils {
         }
 
         if (offset != 0) {
-            // invert offset so we add to current time instead of subtracting
-            time -= (offset * DateUtils.HOUR_IN_MILLIS);
+            if (isCurrentTime) {
+                // invert offset if we modify the current time
+                time -= (offset * DateUtils.HOUR_IN_MILLIS);
+            } else {
+                // add offset if we modify an episodes air time
+                time += (offset * DateUtils.HOUR_IN_MILLIS);
+            }
         }
 
         return time;

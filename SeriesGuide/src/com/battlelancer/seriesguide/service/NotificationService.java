@@ -160,26 +160,25 @@ public class NotificationService extends IntentService {
         }
 
         // set an alarm to wake us up later to notify about future episodes
-        // long inOneHourReal = System.currentTimeMillis() +
-        // DateUtils.HOUR_IN_MILLIS;
         long wakeUpTime = 0;
-        // upcomingEpisodes.moveToPosition(-1);
-        // while (upcomingEpisodes.moveToNext()) {
-        // long fakeairtime = Utils.convertToFakeTime(
-        // upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS), prefs);
-        // if (fakeairtime > inOneHourReal) {
-        // // wake up an hour before the next episode airs
-        // wakeUpTime = fakeairtime - DateUtils.HOUR_IN_MILLIS;
-        // break;
-        // }
-        // }
+
+        upcomingEpisodes.moveToPosition(-1);
+        while (upcomingEpisodes.moveToNext()) {
+            long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
+            if (airtime > inOneHour) {
+                // wake up an hour before the next episode airs
+                wakeUpTime = Utils.convertToFakeTime(airtime, prefs, false)
+                        - DateUtils.HOUR_IN_MILLIS;
+                break;
+            }
+        }
 
         upcomingEpisodes.close();
 
         // set a default wake-up time if there are no future episodes for now
-        // if (wakeUpTime == 0) {
-        wakeUpTime = System.currentTimeMillis() + DateUtils.HOUR_IN_MILLIS;
-        // }
+        if (wakeUpTime == 0) {
+            wakeUpTime = System.currentTimeMillis() + 6 * DateUtils.HOUR_IN_MILLIS;
+        }
 
         // TODO remove for release
         final long time = wakeUpTime;
