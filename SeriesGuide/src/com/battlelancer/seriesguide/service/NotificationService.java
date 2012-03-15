@@ -19,8 +19,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
+import android.widget.Toast;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 public class NotificationService extends IntentService {
 
@@ -35,7 +40,9 @@ public class NotificationService extends IntentService {
 
     // only future, unwatched episodes, only of favorite shows
     private static final String SELECTION = Episodes.FIRSTAIREDMS + ">=? AND " + Episodes.WATCHED
-            + "=0 AND " + Shows.FAVORITE + "=1";
+            + "=? AND " + Shows.FAVORITE + "=?";
+
+    private Handler mHandler;
 
     interface NotificationQuery {
         int _ID = 0;
@@ -58,6 +65,12 @@ public class NotificationService extends IntentService {
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        mHandler = new Handler();
+    }
+
+    @Override
     protected void onHandleIntent(Intent intent) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (!prefs.getBoolean(SeriesGuidePreferences.KEY_NOTIFICATIONS_ENABLED, true)) {
@@ -72,10 +85,10 @@ public class NotificationService extends IntentService {
 
         long fakeNow = Utils.getFakeCurrentTime(prefs);
 
-        // get episodes which air between one hour ago and the future
+        // get episodes which air between 15 mins ago and the future
         final Cursor upcomingEpisodes = getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 PROJECTION, SELECTION, new String[] {
-                    String.valueOf(fakeNow - DateUtils.HOUR_IN_MILLIS)
+                        String.valueOf(fakeNow - 15 * DateUtils.MINUTE_IN_MILLIS), "0", "1"
                 }, SORTING);
 
         // look if we have found something to notify about
@@ -148,11 +161,14 @@ public class NotificationService extends IntentService {
 
         // set an alarm to wake us up later to notify about future episodes
         long wakeUpTime = 0;
+
+        upcomingEpisodes.moveToPosition(-1);
         while (upcomingEpisodes.moveToNext()) {
             long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
             if (airtime > inOneHour) {
                 // wake up an hour before the next episode airs
-                wakeUpTime = Utils.convertToFakeTime(airtime, prefs) - DateUtils.HOUR_IN_MILLIS;
+                wakeUpTime = Utils.convertToFakeTime(airtime, prefs, false)
+                        - DateUtils.HOUR_IN_MILLIS;
                 break;
             }
         }
@@ -161,8 +177,19 @@ public class NotificationService extends IntentService {
 
         // set a default wake-up time if there are no future episodes for now
         if (wakeUpTime == 0) {
-            wakeUpTime = System.currentTimeMillis() + 12 * DateUtils.HOUR_IN_MILLIS;
+            wakeUpTime = System.currentTimeMillis() + 6 * DateUtils.HOUR_IN_MILLIS;
         }
+
+        // TODO remove for release
+        final long time = wakeUpTime;
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                DateFormat df = DateFormat.getDateTimeInstance();
+                Toast.makeText(getApplicationContext(),
+                        "Alarm set for " + df.format(new Date(time)), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(this, OnAlarmReceiver.class);

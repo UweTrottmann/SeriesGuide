@@ -3,12 +3,16 @@
 Changelog
 =========
 
-All dates are in the European Central timezone.
+All dates are European Central timezone.
 
 Version 2.6 *(in development)*
 --------------------------------
 
 ### Detailed changes:
+
+#### 2.6.1beta (2012-03-15)
+
+* Notifications should now work correctly, are restored on reboot
 
 #### 2.6beta (2012-03-11)
 

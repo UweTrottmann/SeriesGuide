@@ -4,11 +4,13 @@ package com.battlelancer.seriesguide.util;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.jakewharton.trakt.ServiceManager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -325,7 +327,7 @@ public class Utils {
      * @return
      */
     public static long getFakeCurrentTime(SharedPreferences prefs) {
-        return convertToFakeTime(System.currentTimeMillis(), prefs);
+        return convertToFakeTime(System.currentTimeMillis(), prefs, true);
     }
 
     /**
@@ -333,11 +335,12 @@ public class Utils {
      * automatic offsets based on time zone.
      * 
      * @param prefs
+     * @param isCurrentTime TODO
      * @return
      */
-    public static long convertToFakeTime(long time, SharedPreferences prefs) {
+    public static long convertToFakeTime(long time, SharedPreferences prefs, boolean isCurrentTime) {
         boolean pacificInDaylight = TimeZone.getTimeZone(TIMEZONE_US_PACIFIC).inDaylightTime(
-                new Date());
+                new Date(time));
 
         int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
         TimeZone userTimeZone = TimeZone.getDefault();
@@ -363,8 +366,13 @@ public class Utils {
         }
 
         if (offset != 0) {
-            // invert offset so we add to current time instead of subtracting
-            time -= (offset * DateUtils.HOUR_IN_MILLIS);
+            if (isCurrentTime) {
+                // invert offset if we modify the current time
+                time -= (offset * DateUtils.HOUR_IN_MILLIS);
+            } else {
+                // add offset if we modify an episodes air time
+                time += (offset * DateUtils.HOUR_IN_MILLIS);
+            }
         }
 
         return time;
@@ -725,6 +733,17 @@ public class Utils {
             // Non-null tag means the view still needs to load it's data
             poster.setTag(path);
         }
+    }
+
+    /**
+     * Run the notification service to display and (re)schedule upcoming episode
+     * alarms.
+     * 
+     * @param context
+     */
+    public static void runNotificationService(Context context) {
+        Intent i = new Intent(context, NotificationService.class);
+        context.startService(i);
     }
 
 }

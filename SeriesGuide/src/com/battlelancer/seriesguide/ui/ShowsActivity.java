@@ -111,6 +111,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final int VER_TRAKT_SEC_CHANGES = 139;
 
+    private static final int VER_SUMMERTIME_FIX = 151;
+
     private Bundle mSavedState;
 
     private FetchPosterTask mArtTask;
@@ -381,6 +383,9 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 values.put(Shows.FAVORITE, true);
                 getContentResolver().update(Shows.buildShowUri(String.valueOf(info.id)), values,
                         null, null);
+
+                Utils.runNotificationService(this);
+
                 Toast.makeText(this, getString(R.string.favorited), Toast.LENGTH_SHORT).show();
                 return true;
             }
@@ -745,8 +750,15 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 Editor editor = prefs.edit();
 
                 if (lastVersion < VER_TRAKT_SEC_CHANGES) {
+                    // clear trakt credetials
                     editor.putString(SeriesGuidePreferences.KEY_TRAKTPWD, null);
                     editor.putString(SeriesGuidePreferences.KEY_SECURE, null);
+                }
+                if (lastVersion < VER_SUMMERTIME_FIX) {
+                    // force update of all shows
+                    ContentValues values = new ContentValues();
+                    values.put(Shows.LASTUPDATED, 0);
+                    getContentResolver().update(Shows.CONTENT_URI, values, null, null);
                 }
 
                 // BETA warning dialog switch
