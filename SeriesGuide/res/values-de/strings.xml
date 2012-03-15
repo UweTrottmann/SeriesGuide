@@ -224,7 +224,14 @@
   <string name="welcome_setuptrakt">Mit trakt verbinden</string>
   <string name="welcome_traktmessage">Greifen Sie mit SeriesGuide auf Ihre trakt.tv Bibliothek und Aktivität von Freunden zu:</string>
   <string name="dismiss">Schließen</string>
+  <string name="upcoming_show">In Kürze läuft %s</string>
+  <string name="upcoming_episodes">Neue Folgen laufen in Kürze</string>
+  <string name="upcoming_show_detailed">%1$s auf %2$s</string>
+  <string name="upcoming_display">Auswählen um kommende Serien anzuzeigen</string>
+  <string name="pref_notifications">Benachrichtigungen</string>
+  <string name="pref_notificationssummary">Benachr. über in Kürze laufende Serien-Favoriten</string>
   <string name="download_stable">SeriesGuide herunterladen</string>
+  <string name="betawarning"><b>Achtung!</b> Diese Version ist für nur Beta-Tester! Laden Sie im Zweifel unten die stabile Version.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Nächste Folge</item>

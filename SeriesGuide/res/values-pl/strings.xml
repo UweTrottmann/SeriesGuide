@@ -154,7 +154,7 @@
   <string name="pref_ganalyticssummary">Śledzi wykorzystanie funkcji, aby pomóc w ulepszeniu SeriesGuide</string>
   <string name="sendusagedata">Wyślij statystyki użytkowania</string>
   <string name="pref_upcominglimit">Wyświetlaj odcinki z</string>
-  <string name="pref_upcominglimitsummary">Z jakiego okresu czasu pokazywać odcinki</string>
+  <string name="pref_upcominglimitsummary">Okres czasu pokazywania nadchodzących odcinków</string>
   <string name="backup_description"><b>Kopia zapasowa</b> tworzy kopię listy seriali w pliku o nazwie <b>seriesdatabase</b> w poniższym folderze.\n\nAby<b>Przywrócić</b> listę upewnij się, że plik jest w poniższym folderze.\n\nTylko archiwa list z tej samej lub niższej wersji (niż poniższa) mogą zostać przywrócone.</string>
   <string name="backup_path"><b>Folder kopii zapasowej</b></string>
   <string name="backup_version"><b>Wersja bazy danych</b></string>
@@ -197,6 +197,7 @@
   <string name="traktcheckin_cancel">Anuluj</string>
   <string name="traktcheckin_inprogress">Sprawdzanie jest w toku. Anuluj obecne sprawdzanie lub poczekaj %s przed kolejnym sprawdzaniem.</string>
   <string name="traktcheckin_wait">Poczekam</string>
+  <string name="checkinfailed">Zalogowanie nie powiodło się. Podłącz konto GetGlue ponownie.</string>
   <string name="oauthmessage">Logowanie SeriesGuide z GetGlue…</string>
   <string name="addtocalendar">Dodaj do kalendarza</string>
   <string name="addtocalendar_failed">Nie można utworzyć zdarzenia kalendarza.</string>
@@ -221,8 +222,14 @@
   <string name="welcome_message"><big>Pierwsze kroki</big></string>
   <string name="welcome_text">Witamy!</string>
   <string name="welcome_setuptrakt">Połącz z trakt</string>
+  <string name="welcome_traktmessage">Uzyskaj dostęp biblioteki i przyjaciół z trakt.tv w SeriesGuide:</string>
   <string name="dismiss">Anuluj</string>
+  <string name="upcoming_show">Nadchodzi odcinek %s</string>
+  <string name="upcoming_episodes">Nadchodzą nowe odcinki</string>
+  <string name="upcoming_display">Wyświetla informacje o nadchodzących odcinkach</string>
+  <string name="pref_notifications">Powiadomienia</string>
   <string name="download_stable">Pobierz SeriesGuide</string>
+  <string name="betawarning"><b>Uwaga!</b> To wydanie jest tylko dla beta testerów! Wersję stabilną można pobrać poniżej.</string>
   <string-array name="shsorting">
     <item>Od A do Z</item>
     <item>Następny odcinek</item>
@@ -243,11 +250,11 @@
     <item>Najpierw najstarsze (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>jednego dnia</item>
-    <item>trzech dni</item>
-    <item>tygodnia</item>
-    <item>dwóch tygodni</item>
-    <item>miesiąca</item>
+    <item>jeden dzień</item>
+    <item>trzy dni</item>
+    <item>tydzień</item>
+    <item>dwa tygodnie</item>
+    <item>miesiąc</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Wszystkie</item>
