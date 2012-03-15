@@ -671,13 +671,15 @@ public class ShareUtils {
                                 dismiss();
 
                                 if (isForwardingGivenTask) {
-                                    FragmentTransaction ft = fm.beginTransaction();
-                                    Fragment prev = fm.findFragmentByTag("progress-dialog");
-                                    if (prev != null) {
-                                        ft.remove(prev);
+                                    if (TraktAction.values()[args.getInt(ShareItems.TRAKTACTION)] == TraktAction.CHECKIN_EPISODE) {
+                                        FragmentTransaction ft = fm.beginTransaction();
+                                        Fragment prev = fm.findFragmentByTag("progress-dialog");
+                                        if (prev != null) {
+                                            ft.remove(prev);
+                                        }
+                                        ProgressDialog newFragment = ProgressDialog.newInstance();
+                                        newFragment.show(ft, "progress-dialog");
                                     }
-                                    ProgressDialog newFragment = ProgressDialog.newInstance();
-                                    newFragment.show(ft, "progress-dialog");
 
                                     // relaunch the trakt task which called
                                     // us
