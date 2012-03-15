@@ -238,18 +238,18 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     private void setupAdapter() {
 
         String[] from = new String[] {
-                Episodes.TITLE, Episodes.OVERVIEW, Episodes.NUMBER, Episodes.DVDNUMBER,
-                Episodes.FIRSTAIREDMS, Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
-                Episodes.RATING, Episodes.IMAGE, Shows.TITLE, Episodes.WATCHED, Shows.REF_SHOW_ID
+                Episodes.TITLE, Episodes.OVERVIEW, Episodes.FIRSTAIREDMS, Episodes.DVDNUMBER,
+                Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS, Episodes.RATING,
+                Episodes.IMAGE, Shows.TITLE, Episodes.WATCHED, Shows.REF_SHOW_ID
 
         };
         int[] to = new int[] {
                 R.id.TextViewEpisodeTitle, R.id.TextViewEpisodeDescription,
-                R.id.TextViewEpisodeNumbers, R.id.textViewEpisodeDVDnumber,
-                R.id.TextViewEpisodeFirstAirdate, R.id.TextViewEpisodeDirectors,
-                R.id.TextViewEpisodeGuestStars, R.id.TextViewEpisodeWriters, R.id.ratingbar,
-                R.id.imageContainer, R.id.textViewEpisodeDetailsShowName,
-                R.id.TextViewEpisodeWatchedState, R.id.buttonbar_ref
+                R.id.episodedetails_root, R.id.textViewEpisodeDVDnumber,
+                R.id.TextViewEpisodeDirectors, R.id.TextViewEpisodeGuestStars,
+                R.id.TextViewEpisodeWriters, R.id.ratingbar, R.id.imageContainer,
+                R.id.textViewEpisodeDetailsShowName, R.id.TextViewEpisodeWatchedState,
+                R.id.buttonbar_ref
         };
 
         mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.episodedetails, null, from, to,
@@ -257,14 +257,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         mAdapter.setViewBinder(new ViewBinder() {
 
             public boolean setViewValue(View view, Cursor episode, int columnIndex) {
-                if (columnIndex == EpisodeDetailsQuery.NUMBER) {
-                    TextView numbers = (TextView) view;
-                    numbers.setText(getString(R.string.season) + " "
-                            + episode.getString(EpisodeDetailsQuery.SEASON) + " "
-                            + getString(R.string.episode) + " "
-                            + episode.getString(EpisodeDetailsQuery.NUMBER));
-                    return true;
-                }
                 if (columnIndex == EpisodeDetailsQuery.WATCHED) {
                     TextView watchedState = (TextView) view;
                     isWatched = episode.getInt(EpisodeDetailsQuery.WATCHED) == 1 ? true : false;
@@ -274,15 +266,21 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.FIRSTAIREDMS) {
+                    TextView airdateText = (TextView) view
+                            .findViewById(R.id.TextViewEpisodeFirstAirdate);
+                    TextView airtimeText = (TextView) view.findViewById(R.id.episode_airtime);
+
                     // First airdate
-                    TextView airdate = (TextView) view;
                     final long airtime = episode.getLong(EpisodeDetailsQuery.FIRSTAIREDMS);
                     if (airtime != -1) {
-                        airdate.setText(getString(R.string.episode_firstaired) + " "
+                        airdateText.setText(getString(R.string.episode_firstaired) + " "
                                 + Utils.formatToDate(airtime, getActivity()));
+                        String[] dayAndTime = Utils.formatToTimeAndDay(airtime, getActivity());
+                        airtimeText.setText(dayAndTime[2] + " (" + dayAndTime[1] + ")");
                     } else {
-                        airdate.setText(getString(R.string.episode_firstaired) + " "
+                        airdateText.setText(getString(R.string.episode_firstaired) + " "
                                 + getString(R.string.episode_unkownairdate));
+                        airtimeText.setText("");
                     }
                     return true;
                 }
@@ -433,8 +431,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIREDMS,
                 Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
                 Tables.EPISODES + "." + Episodes.RATING, Episodes.IMAGE, Episodes.DVDNUMBER,
-                Episodes.TITLE, Shows.TITLE, Shows.AIRSTIME, Shows.IMDBID, Shows.RUNTIME,
-                Shows.POSTER, Seasons.REF_SEASON_ID
+                Episodes.TITLE, Shows.TITLE, Shows.IMDBID, Shows.RUNTIME, Shows.POSTER,
+                Seasons.REF_SEASON_ID
         };
 
         int _ID = 0;
@@ -467,15 +465,13 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
         int SHOW_TITLE = 14;
 
-        int SHOW_AIRSTIME = 15;
+        int SHOW_IMDBID = 15;
 
-        int SHOW_IMDBID = 16;
+        int SHOW_RUNTIME = 16;
 
-        int SHOW_RUNTIME = 17;
+        int SHOW_POSTER = 17;
 
-        int SHOW_POSTER = 18;
-
-        int REF_SEASON_ID = 19;
+        int REF_SEASON_ID = 18;
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
