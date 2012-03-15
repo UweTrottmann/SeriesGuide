@@ -19,13 +19,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
-import android.widget.Toast;
-
-import java.text.DateFormat;
-import java.util.Date;
 
 public class NotificationService extends IntentService {
 
@@ -41,8 +36,6 @@ public class NotificationService extends IntentService {
     // only future, unwatched episodes, only of favorite shows
     private static final String SELECTION = Episodes.FIRSTAIREDMS + ">=? AND " + Episodes.WATCHED
             + "=? AND " + Shows.FAVORITE + "=?";
-
-    private Handler mHandler;
 
     interface NotificationQuery {
         int _ID = 0;
@@ -62,12 +55,6 @@ public class NotificationService extends IntentService {
 
     public NotificationService() {
         super("AlarmManagerService");
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        mHandler = new Handler();
     }
 
     @Override
@@ -179,17 +166,6 @@ public class NotificationService extends IntentService {
         if (wakeUpTime == 0) {
             wakeUpTime = System.currentTimeMillis() + 6 * DateUtils.HOUR_IN_MILLIS;
         }
-
-        // TODO remove for release
-        final long time = wakeUpTime;
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                DateFormat df = DateFormat.getDateTimeInstance();
-                Toast.makeText(getApplicationContext(),
-                        "Alarm set for " + df.format(new Date(time)), Toast.LENGTH_SHORT).show();
-            }
-        });
 
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(this, OnAlarmReceiver.class);

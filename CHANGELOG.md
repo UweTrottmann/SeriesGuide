@@ -13,6 +13,8 @@ Version 2.6 *(in development)*
 #### 2.6.1beta (2012-03-15)
 
 * Notifications should now work correctly, are restored on reboot
+* Mark episodes seen immediately when marking seen on trakt
+* Some minor improvements.
 
 #### 2.6beta (2012-03-11)
 
