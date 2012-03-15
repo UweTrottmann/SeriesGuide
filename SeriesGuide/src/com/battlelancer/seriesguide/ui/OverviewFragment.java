@@ -185,6 +185,8 @@ public class OverviewFragment extends SherlockFragment {
             case R.id.menu_markseen_trakt: {
                 fireTrackerEvent("Mark seen (trakt)");
                 onShareEpisode(ShareMethod.MARKSEEN_TRAKT, true);
+                // non-ideal (does not handle failures), but works for now
+                onMarkWatched();
                 break;
             }
             case R.id.menu_rate_trakt: {

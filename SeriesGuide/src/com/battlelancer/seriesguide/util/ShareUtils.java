@@ -16,6 +16,7 @@ import com.jakewharton.trakt.enumerations.Rating;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -403,6 +404,17 @@ public class ShareUtils {
                         r = new Response();
                         r.status = TraktStatus.SUCCESS;
                         r.message = mContext.getString(R.string.trakt_seen);
+
+                        // if successful mark episode as seen locally
+                        // immediately
+                        ContentValues values = new ContentValues();
+                        values.put(Episodes.WATCHED, true);
+                        mContext.getContentResolver().update(
+                                Episodes.buildEpisodesOfShowUri(String.valueOf(tvdbid)), values,
+                                Episodes.SEASON + "=? AND " + Episodes.NUMBER + "=?", new String[] {
+                                        String.valueOf(season), String.valueOf(episode)
+                                });
+                        mContext.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
                         break;
                     }
                     case RATE_EPISODE: {
