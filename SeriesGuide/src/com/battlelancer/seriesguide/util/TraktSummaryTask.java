@@ -13,7 +13,26 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
+
+    private static final int HARD_CACHE_CAPACITY = 10;
+
+    // Hard cache, with a fixed maximum capacity and a life duration
+    @SuppressWarnings("serial")
+    private final static HashMap<String, TvEntity> sHardEntityCache = new LinkedHashMap<String, TvEntity>(
+            HARD_CACHE_CAPACITY / 2, 0.75f, true) {
+        @Override
+        protected boolean removeEldestEntry(LinkedHashMap.Entry<String, TvEntity> eldest) {
+            if (size() > HARD_CACHE_CAPACITY) {
+                // remove eldest if capacity is exceeded
+                return true;
+            } else
+                return false;
+        }
+    };
 
     private View mView;
 
@@ -71,7 +90,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
     @Override
     protected Ratings doInBackground(Void... params) {
         try {
-            // decide wether we have a show or an episode
+            // decide whether we have a show or an episode
             if (mTvdbIdString != null) {
                 // get the shows summary from trakt
                 TvShow entity = Utils.getServiceManager(mContext).showService()
@@ -80,10 +99,19 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
                     return entity.ratings;
                 }
             } else {
-                // get the episodes summary from trakt
-                TvEntity entity = Utils.getServiceManager(mContext).showService()
-                        .episodeSummary(mTvdbId, mSeason, mEpisode).fire();
+                // look if the episode summary is cached
+                String key = String.valueOf(mTvdbId) + String.valueOf(mSeason)
+                        + String.valueOf(mEpisode);
+                TvEntity entity = sHardEntityCache.remove(key);
+
+                // on cache miss load the summary from trakt
+                if (entity == null) {
+                    entity = Utils.getServiceManager(mContext).showService()
+                            .episodeSummary(mTvdbId, mSeason, mEpisode).fire();
+                }
+
                 if (entity != null) {
+                    sHardEntityCache.put(key, entity);
                     return entity.episode.ratings;
                 }
             }
