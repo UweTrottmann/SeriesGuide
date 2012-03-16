@@ -51,6 +51,7 @@
             android:id="@+id/traktlabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/inline_padding"
             android:text="@string/trakt"
             android:textSize="@dimen/text_size_xmedium" />
@@ -59,9 +60,10 @@
             android:id="@+id/traktvalue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/inline_padding"
-            android:text="@string/norating"
-            android:textSize="@dimen/text_size_xmedium" />
+            android:text="@string/notraktrating"
+            android:textSize="@dimen/text_size_xlarge" />
 
         <ImageView
             android:id="@+id/traktlove"
@@ -74,8 +76,8 @@
             android:id="@+id/traktvotes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/inline_padding"
-            android:text="@plurals/votes"
             android:textSize="@dimen/text_size_xmedium" />
     </LinearLayout>
 

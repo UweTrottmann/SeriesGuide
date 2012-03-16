@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktTask.OnTraktActionCompleteListener;
+import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
@@ -429,9 +430,12 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         TextView numbers = (TextView) getActivity().findViewById(R.id.TextViewEpisodeNumbers);
 
         // trakt
-        mShareData.putInt(ShareItems.TVDBID, episode.getInt(EpisodeQuery.REF_SHOW_ID));
-        mShareData.putInt(ShareItems.SEASON, episode.getInt(EpisodeQuery.SEASON));
-        mShareData.putInt(ShareItems.EPISODE, episode.getInt(EpisodeQuery.NUMBER));
+        int tvdbId = episode.getInt(EpisodeQuery.REF_SHOW_ID);
+        int season = episode.getInt(EpisodeQuery.SEASON);
+        int episodenumber = episode.getInt(EpisodeQuery.NUMBER);
+        mShareData.putInt(ShareItems.TVDBID, tvdbId);
+        mShareData.putInt(ShareItems.SEASON, season);
+        mShareData.putInt(ShareItems.EPISODE, episodenumber);
 
         numbers.setText(getString(R.string.season) + " " + episode.getString(EpisodeQuery.SEASON)
                 + " " + getString(R.string.episode) + " " + episode.getString(EpisodeQuery.NUMBER));
@@ -472,10 +476,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         }
 
         // trakt rating
-        TextView traktLoves = (TextView) getActivity().findViewById(R.id.traktvalue);
-        traktLoves.setText("n/a %");
-        TextView traktVotes = (TextView) getActivity().findViewById(R.id.traktvotes);
-        traktVotes.setText(getResources().getQuantityString(R.plurals.votes, 0, 0));
+        new TraktSummaryTask(getSherlockActivity(), getView()).episode(tvdbId, season,
+                episodenumber).execute();
 
         // TVDb button
         getView().findViewById(R.id.buttonShowInfoIMDB).setVisibility(View.GONE);
