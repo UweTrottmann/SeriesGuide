@@ -190,12 +190,16 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             TheTVDB.onRenewFTSTable(mAppContext);
         }
 
-        // mark episodes based on trakt activity
-        final int traktResult = getTraktActivity(prefs, maxProgress, currentTime,
-                isAutoUpdateWlanOnly);
-        // do not overwrite earlier failure codes
-        if (resultCode == UPDATE_SUCCESS) {
-            resultCode = traktResult;
+        // don't get trakt activity if we just update one show (arbitrary, yes,
+        // i know)
+        if (updateCount.get() == 1) {
+            // mark episodes based on trakt activity
+            final int traktResult = getTraktActivity(prefs, maxProgress, currentTime,
+                    isAutoUpdateWlanOnly);
+            // do not overwrite earlier failure codes
+            if (resultCode == UPDATE_SUCCESS) {
+                resultCode = traktResult;
+            }
         }
 
         publishProgress(maxProgress, maxProgress);
