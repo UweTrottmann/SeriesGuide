@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.entities.TvShow;
@@ -12,9 +11,7 @@ import com.jakewharton.trakt.enumerations.ExtendedParam;
 import org.xml.sax.SAXException;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -79,9 +76,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         // get watched episodes from trakt (if enabled/possible)
         // already here, so we only have to get it once
         List<TvShow> shows = new ArrayList<TvShow>();
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-        if (prefs.getBoolean(SeriesGuidePreferences.KEY_INTEGRATETRAKT, true)
-                && ShareUtils.isTraktCredentialsValid(mContext)) {
+        if (ShareUtils.isTraktCredentialsValid(mContext)) {
             try {
                 ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
 

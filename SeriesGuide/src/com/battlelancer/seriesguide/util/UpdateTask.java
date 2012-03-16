@@ -217,10 +217,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
     private int getTraktActivity(SharedPreferences prefs, int maxProgress, long currentTime,
             boolean isAutoUpdateWlanOnly) {
-        final boolean isTraktSyncEnabled = prefs.getBoolean(
-                SeriesGuidePreferences.KEY_INTEGRATETRAKT, true);
-
-        if (isTraktSyncEnabled && ShareUtils.isTraktCredentialsValid(mAppContext)) {
+        if (ShareUtils.isTraktCredentialsValid(mAppContext)) {
             // return if we get cancelled or connectivity is lost/forbidden
             if (isCancelled()) {
                 return UPDATE_CANCELLED;
