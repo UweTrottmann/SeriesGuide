@@ -18,6 +18,10 @@
     <string name="norating">n/a</string>
     <string name="loading">Loading&#8230;</string>
     <string name="sending">Sending&#8230;</string>
+    <plurals name="votes">
+        <item quantity="one">%d vote</item>
+        <item quantity="other">%d votes</item>
+    </plurals>
 
     <!-- Metadata -->
     <string name="episode_firstaired">Airdate:</string>

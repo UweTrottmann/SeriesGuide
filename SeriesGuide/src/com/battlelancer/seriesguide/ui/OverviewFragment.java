@@ -462,7 +462,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         writers.setText(getString(R.string.episode_writers) + " "
                 + Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.WRITERS)));
 
-        // Rating
+        // TVDb rating
         TextView rating = (TextView) getActivity().findViewById(R.id.value);
         String ratingText = episode.getString(EpisodeQuery.RATING);
         if (ratingText != null && ratingText.length() != 0) {
@@ -470,6 +470,12 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             ratingBar.setProgress((int) (Double.valueOf(ratingText) / 0.1));
             rating.setText(ratingText + "/10");
         }
+
+        // trakt rating
+        TextView traktLoves = (TextView) getActivity().findViewById(R.id.traktvalue);
+        traktLoves.setText("n/a %");
+        TextView traktVotes = (TextView) getActivity().findViewById(R.id.traktvotes);
+        traktVotes.setText(getResources().getQuantityString(R.plurals.votes, 0, 0));
 
         // TVDb button
         getView().findViewById(R.id.buttonShowInfoIMDB).setVisibility(View.GONE);
