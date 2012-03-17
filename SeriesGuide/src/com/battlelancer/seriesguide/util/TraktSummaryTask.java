@@ -2,6 +2,7 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Ratings;
@@ -9,7 +10,9 @@ import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
 
@@ -89,38 +92,45 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
 
     @Override
     protected Ratings doInBackground(Void... params) {
-        try {
-            // decide whether we have a show or an episode
-            if (mTvdbIdString != null) {
-                // get the shows summary from trakt
-                TvShow entity = Utils.getServiceManager(mContext).showService()
-                        .summary(mTvdbIdString).fire();
-                if (entity != null) {
-                    return entity.ratings;
-                }
-            } else {
-                // look if the episode summary is cached
-                String key = String.valueOf(mTvdbId) + String.valueOf(mSeason)
-                        + String.valueOf(mEpisode);
-                TvEntity entity = sHardEntityCache.remove(key);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        final boolean isOnlyWifiAllowed = prefs.getBoolean(
+                SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
 
-                // on cache miss load the summary from trakt
-                if (entity == null) {
-                    entity = Utils.getServiceManager(mContext).showService()
-                            .episodeSummary(mTvdbId, mSeason, mEpisode).fire();
-                }
+        if ((isOnlyWifiAllowed && Utils.isWifiConnected(mContext))
+                || (!isOnlyWifiAllowed && Utils.isNetworkConnected(mContext))) {
 
-                if (entity != null) {
-                    sHardEntityCache.put(key, entity);
-                    return entity.episode.ratings;
+            try {
+                // decide whether we have a show or an episode
+                if (mTvdbIdString != null) {
+                    // get the shows summary from trakt
+                    TvShow entity = Utils.getServiceManager(mContext).showService()
+                            .summary(mTvdbIdString).fire();
+                    if (entity != null) {
+                        return entity.ratings;
+                    }
+                } else {
+                    // look if the episode summary is cached
+                    String key = String.valueOf(mTvdbId) + String.valueOf(mSeason)
+                            + String.valueOf(mEpisode);
+                    TvEntity entity = sHardEntityCache.remove(key);
+
+                    // on cache miss load the summary from trakt
+                    if (entity == null) {
+                        entity = Utils.getServiceManager(mContext).showService()
+                                .episodeSummary(mTvdbId, mSeason, mEpisode).fire();
+                    }
+
+                    if (entity != null) {
+                        sHardEntityCache.put(key, entity);
+                        return entity.episode.ratings;
+                    }
                 }
+            } catch (TraktException te) {
+                return null;
+            } catch (ApiException e) {
+                return null;
             }
-        } catch (TraktException te) {
-            return null;
-        } catch (ApiException e) {
-            return null;
         }
-
         return null;
     }
 
