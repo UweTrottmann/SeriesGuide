@@ -89,8 +89,6 @@ public class ShowInfoActivity extends BaseActivity {
         TextView runtime = (TextView) findViewById(R.id.TextViewShowInfoRuntime);
         TextView status = (TextView) findViewById(R.id.TextViewShowInfoStatus);
         ImageView showart = (ImageView) findViewById(R.id.ImageViewShowInfoPoster);
-        View imdbButton = (View) findViewById(R.id.buttonShowInfoIMDB);
-        View tvdbButton = (View) findViewById(R.id.buttonTVDB);
 
         final Series show = DBUtils.getShow(this, seriesid);
         if (show == null) {
@@ -157,6 +155,7 @@ public class ShowInfoActivity extends BaseActivity {
         }
 
         // IMDb button
+        View imdbButton = (View) findViewById(R.id.buttonShowInfoIMDB);
         final String imdbid = show.getImdbId();
         if (imdbButton != null) {
             imdbButton.setOnClickListener(new OnClickListener() {
@@ -182,6 +181,7 @@ public class ShowInfoActivity extends BaseActivity {
         }
 
         // TVDb button
+        View tvdbButton = (View) findViewById(R.id.buttonTVDB);
         final String tvdbId = show.getId();
         if (tvdbButton != null) {
             tvdbButton.setOnClickListener(new OnClickListener() {
@@ -193,6 +193,16 @@ public class ShowInfoActivity extends BaseActivity {
                 }
             });
         }
+
+        findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
+                        show.getSeriesName(), Integer.valueOf(tvdbId));
+
+                newFragment.show(getSupportFragmentManager(), "shouts-dialog");
+            }
+        });
 
         // trakt ratings
         new TraktSummaryTask(this, findViewById(R.id.ratingbar)).show(tvdbId).execute();

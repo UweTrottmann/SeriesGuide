@@ -374,7 +374,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.REF_SHOW_ID) {
-                    final String showId = episode.getString(EpisodeDetailsQuery.REF_SHOW_ID);
+                    final int showId = episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID);
                     final String seasonId = episode.getString(EpisodeDetailsQuery.REF_SEASON_ID);
 
                     view.findViewById(R.id.buttonShowInfoIMDB).setVisibility(View.GONE);
@@ -386,6 +386,19 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                                             + Constants.TVDB_EPISODE_URL_2 + seasonId
                                             + Constants.TVDB_EPISODE_URL_3 + getEpisodeId()));
                             startActivity(i);
+                        }
+                    });
+
+                    final String title = episode.getString(EpisodeDetailsQuery.TITLE);
+                    final int season = episode.getInt(EpisodeDetailsQuery.SEASON);
+                    final int number = episode.getInt(EpisodeDetailsQuery.NUMBER);
+                    view.findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
+                                    title, showId, season, number);
+
+                            newFragment.show(getFragmentManager(), "shouts-dialog");
                         }
                     });
 
