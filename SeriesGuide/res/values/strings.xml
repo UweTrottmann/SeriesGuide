@@ -28,7 +28,7 @@
     <string name="shout_hint">Type a shout (in English)</string>
     <string name="shout">Shout!</string>
     <string name="isspoiler">Spoiler alert!</string>
-    <string name="no_shouts">Be the first to post a shout!</string>
+    <string name="no_shouts">Be the first to shout!</string>
     <string name="shouts_for">Shouts for %s</string>
 
     <!-- Metadata -->
