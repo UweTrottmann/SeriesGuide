@@ -469,10 +469,11 @@ public class ShareUtils {
                         final boolean isSpoiler = mArgs.getBoolean(ShareItems.ISSPOILER);
 
                         if (episode == 0) {
-                            r = manager.shoutService().show(tvdbid).shout(shout).fire();
+                            r = manager.shoutService().show(tvdbid).shout(shout).spoiler(isSpoiler)
+                                    .fire();
                         } else {
                             r = manager.shoutService().episode(tvdbid).season(season)
-                                    .episode(episode).shout(shout).fire();
+                                    .episode(episode).shout(shout).spoiler(isSpoiler).fire();
                         }
                     }
                 }

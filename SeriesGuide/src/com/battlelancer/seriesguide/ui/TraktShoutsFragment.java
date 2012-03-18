@@ -213,11 +213,21 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
     }
 
     public void onListItemClick(ListView l, View v, int position, long id) {
-        // open trakt user profile web page
         final Shout shout = (Shout) l.getItemAtPosition(position);
-        if (shout.user.url != null) {
-            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(shout.user.url));
-            startActivity(myIntent);
+
+        if (shout.spoiler) {
+            // if shout is a spoiler, first click will reveal the shout
+            shout.spoiler = false;
+            TextView shoutText = (TextView) v.findViewById(R.id.shout);
+            if (shoutText != null) {
+                shoutText.setText(shout.shout);
+            }
+        } else {
+            // open trakt user profile web page
+            if (shout.user.url != null) {
+                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(shout.user.url));
+                startActivity(myIntent);
+            }
         }
     }
 
@@ -537,8 +547,13 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
             final Shout shout = getItem(position);
 
             holder.name.setText(shout.user.username);
-            holder.shout.setText(shout.shout);
             mImageDownloader.download(shout.user.avatar, holder.avatar, false);
+
+            if (shout.spoiler) {
+                holder.shout.setText(R.string.isspoiler);
+            } else {
+                holder.shout.setText(shout.shout);
+            }
 
             String timestamp = (String) DateUtils.getRelativeTimeSpanString(
                     shout.inserted.getTimeInMillis(), System.currentTimeMillis(),
