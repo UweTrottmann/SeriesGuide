@@ -129,11 +129,15 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
 
             @Override
             public void onClick(View v) {
+                final String shout = shouttext.getText().toString();
+                if (shout.length() == 0) {
+                    return;
+                }
+
                 final Bundle args = getArguments();
                 int tvdbid = args.getInt(ShareItems.TVDBID);
                 int season = args.getInt(ShareItems.SEASON);
                 int episode = args.getInt(ShareItems.EPISODE);
-                final String shout = shouttext.getText().toString();
                 final boolean isSpoiler = checkIsSpoiler.isChecked();
 
                 if (season == -1) {
