@@ -195,6 +195,8 @@
             android:name="com.battlelancer.seriesguide.ui.AddActivity"
             android:label="@string/add_show" >
         </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.TraktShoutsActivity" >
+        </activity>
 
         <service android:name="com.battlelancer.seriesguide.service.NotificationService" >
         </service>

@@ -157,8 +157,12 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
             }
         });
 
-        getDialog().setTitle(
-                getString(R.string.shouts_for, getArguments().getString(ShareItems.SHARESTRING)));
+        if (getDialog() != null) {
+            getDialog()
+                    .setTitle(
+                            getString(R.string.shouts_for,
+                                    getArguments().getString(ShareItems.SHARESTRING)));
+        }
         return v;
     }
 
