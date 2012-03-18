@@ -5,9 +5,10 @@
     android:orientation="vertical" >
 
     <FrameLayout
+        android:id="@+id/shouts_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/shouttext" >
+        android:layout_above="@+id/divider" >
 
         <LinearLayout
             android:id="@+id/progress_container"
@@ -46,6 +47,13 @@
         </FrameLayout>
     </FrameLayout>
 
+    <include
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/shouttext"
+        layout="@layout/holodivider" />
+
     <EditText
         android:id="@+id/shouttext"
         android:layout_width="match_parent"
@@ -54,6 +62,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="@dimen/layout_padding"
         android:layout_marginRight="@dimen/inline_padding"
+        android:layout_marginTop="@dimen/default_padding"
         android:layout_toLeftOf="@+id/shoutbutton"
         android:hint="@string/shout_hint"
         android:maxLength="2000"
