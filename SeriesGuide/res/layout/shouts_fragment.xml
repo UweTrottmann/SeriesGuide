@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ListView
+        android:id="@+android:id/list"
+        style="@style/ScrollingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/shouttext"
+        android:clipToPadding="@bool/gridClipToPadding"
+        android:divider="@drawable/divider_horizontal_holo_dark"
+        android:listSelector="@drawable/list_selector_holo_dark" >
+    </ListView>
+
+    <TextView
+        android:id="@+android:id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+    <EditText
+        android:id="@+id/shouttext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/shoutbutton" />
+
+    <ImageButton
+        android:id="@+id/shoutbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_menu_send" />
+
+</RelativeLayout>
