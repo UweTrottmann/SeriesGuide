@@ -13,6 +13,8 @@ import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Shout;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
@@ -26,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -116,6 +119,14 @@ public class TraktShoutsFragment extends SherlockListFragment implements
                 }
             }
         });
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        // open trakt user profile web page
+        final Shout shout = (Shout) l.getItemAtPosition(position);
+        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(shout.user.url));
+        startActivity(myIntent);
     }
 
     @Override
