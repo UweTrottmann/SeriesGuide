@@ -76,7 +76,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="@dimen/layout_padding"
-        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginLeft="@dimen/layout_padding"
         android:layout_marginRight="@dimen/layout_padding"
         android:text="@string/isspoiler" />
 
