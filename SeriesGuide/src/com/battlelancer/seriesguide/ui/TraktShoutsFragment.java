@@ -206,8 +206,10 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
     public void onListItemClick(ListView l, View v, int position, long id) {
         // open trakt user profile web page
         final Shout shout = (Shout) l.getItemAtPosition(position);
-        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(shout.user.url));
-        startActivity(myIntent);
+        if (shout.user.url != null) {
+            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(shout.user.url));
+            startActivity(myIntent);
+        }
     }
 
     @Override
