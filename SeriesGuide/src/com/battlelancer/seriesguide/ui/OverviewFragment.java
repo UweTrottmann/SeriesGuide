@@ -202,10 +202,9 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             case R.id.menu_addevent: {
                 fireTrackerEvent("Add episode to calendar");
 
-                ShareUtils
-                        .onAddCalendarEvent(getActivity(), mShow.getSeriesName(),
-                                mShareData.getString(ShareItems.EPISODESTRING), mAirtime,
-                                mShow.getRuntime());
+                ShareUtils.onAddCalendarEvent(getActivity(), mShow.getSeriesName(),
+                        mShareData.getString(ShareItems.EPISODESTRING), mAirtime,
+                        mShow.getRuntime());
                 break;
             }
             default:
@@ -424,7 +423,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
         // Episode title
         TextView episodetitle = (TextView) getActivity().findViewById(R.id.TextViewEpisodeTitle);
-        episodetitle.setText(episode.getString(EpisodeQuery.TITLE));
+        final String title = episode.getString(EpisodeQuery.TITLE);
+        episodetitle.setText(title);
 
         // Season and Number
         TextView numbers = (TextView) getActivity().findViewById(R.id.TextViewEpisodeNumbers);
@@ -497,8 +497,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         getView().findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
-                        mShow.getSeriesName(), showTvdbId, season, number);
+                TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(title,
+                        showTvdbId, season, number);
 
                 newFragment.show(getFragmentManager(), "shouts-dialog");
             }
