@@ -24,6 +24,7 @@
     </plurals>
     
     <!-- Shouts -->
+    <string name="shouts">Shouts</string>
     <string name="shout_hint">Type a shout (in English)</string>
     <string name="shout">Shout!</string>
     <string name="isspoiler">Spoiler alert!</string>
