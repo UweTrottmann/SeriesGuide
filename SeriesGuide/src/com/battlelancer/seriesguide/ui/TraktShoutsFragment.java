@@ -4,6 +4,8 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ImageDownloader;
+import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
@@ -21,23 +23,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TraktShoutsFragment extends SherlockListFragment implements
         LoaderCallbacks<List<Shout>> {
-
-    public interface InitBundle {
-        String tvdbId = "tvdbid";
-
-        String season = "season";
-
-        String episode = "episode";
-    }
 
     /**
      * Build a {@link TraktShoutsFragment} for shouts of an episode.
@@ -50,9 +45,9 @@ public class TraktShoutsFragment extends SherlockListFragment implements
     public static TraktShoutsFragment newInstance(int tvdbId, int season, int episode) {
         TraktShoutsFragment f = new TraktShoutsFragment();
         Bundle args = new Bundle();
-        args.putInt(InitBundle.tvdbId, tvdbId);
-        args.putInt(InitBundle.season, season);
-        args.putInt(InitBundle.episode, episode);
+        args.putInt(ShareItems.TVDBID, tvdbId);
+        args.putInt(ShareItems.SEASON, season);
+        args.putInt(ShareItems.EPISODE, episode);
         f.setArguments(args);
         return f;
     }
@@ -66,9 +61,9 @@ public class TraktShoutsFragment extends SherlockListFragment implements
     public static TraktShoutsFragment newInstance(int tvdbId) {
         TraktShoutsFragment f = new TraktShoutsFragment();
         Bundle args = new Bundle();
-        args.putInt(InitBundle.tvdbId, tvdbId);
-        args.putInt(InitBundle.season, -1);
-        args.putInt(InitBundle.episode, -1);
+        args.putInt(ShareItems.TVDBID, tvdbId);
+        args.putInt(ShareItems.SEASON, -1);
+        args.putInt(ShareItems.EPISODE, -1);
         f.setArguments(args);
         return f;
     }
@@ -96,11 +91,29 @@ public class TraktShoutsFragment extends SherlockListFragment implements
     }
 
     private void initializeViews(View v) {
+        final EditText shouttext = (EditText) v.findViewById(R.id.shouttext);
+        final CheckBox checkIsSpoiler = (CheckBox) v.findViewById(R.id.checkIsSpoiler);
+
         v.findViewById(R.id.shoutbutton).setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(getSherlockActivity(), "Shout!", Toast.LENGTH_SHORT).show();
+                final Bundle args = getArguments();
+                int tvdbid = args.getInt(ShareItems.TVDBID);
+                int season = args.getInt(ShareItems.SEASON);
+                int episode = args.getInt(ShareItems.EPISODE);
+                final String shout = shouttext.getText().toString();
+                final boolean isSpoiler = checkIsSpoiler.isChecked();
+
+                if (season == -1) {
+                    // shout for a show
+                    new ShareUtils.TraktTask(getSherlockActivity(), getFragmentManager(), null)
+                            .shout(tvdbid, shout, isSpoiler).execute();
+                } else {
+                    // shout for an episode
+                    new ShareUtils.TraktTask(getSherlockActivity(), getFragmentManager(), null)
+                            .shout(tvdbid, season, episode, shout, isSpoiler).execute();
+                }
             }
         });
     }
@@ -137,9 +150,9 @@ public class TraktShoutsFragment extends SherlockListFragment implements
 
         @Override
         public List<Shout> loadInBackground() {
-            int tvdbId = mArgs.getInt(TraktShoutsFragment.InitBundle.tvdbId);
-            int season = mArgs.getInt(TraktShoutsFragment.InitBundle.season);
-            int episode = mArgs.getInt(TraktShoutsFragment.InitBundle.episode);
+            int tvdbId = mArgs.getInt(ShareItems.TVDBID);
+            int season = mArgs.getInt(ShareItems.SEASON);
+            int episode = mArgs.getInt(ShareItems.EPISODE);
 
             ServiceManager manager = Utils.getServiceManager(getContext());
             List<Shout> shouts = new ArrayList<Shout>();
