@@ -22,6 +22,11 @@
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>
     </plurals>
+    
+    <!-- Shouts -->
+    <string name="shout_hint">Type a shout (in English)</string>
+    <string name="shout">Shout!</string>
+    <string name="isspoiler">Spoiler alert!</string>
 
     <!-- Metadata -->
     <string name="episode_firstaired">Airdate:</string>
