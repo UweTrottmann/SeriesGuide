@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
+import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
@@ -317,7 +318,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.RATING) {
-                    // Rating
+                    // TVDb rating
                     RelativeLayout rating = (RelativeLayout) view;
                     String ratingText = episode.getString(EpisodeDetailsQuery.RATING);
                     if (ratingText != null && ratingText.length() != 0) {
@@ -326,6 +327,13 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         ratingBar.setProgress((int) (Double.valueOf(ratingText) / 0.1));
                         ratingValue.setText(ratingText + "/10");
                     }
+
+                    // trakt rating
+                    new TraktSummaryTask(getSherlockActivity(), rating).episode(
+                            episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID),
+                            episode.getInt(EpisodeDetailsQuery.SEASON),
+                            episode.getInt(EpisodeDetailsQuery.NUMBER)).execute();
+
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.IMAGE) {

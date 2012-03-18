@@ -18,6 +18,10 @@
     <string name="norating">n/a</string>
     <string name="loading">Loading&#8230;</string>
     <string name="sending">Sending&#8230;</string>
+    <plurals name="votes">
+        <item quantity="one">%d vote</item>
+        <item quantity="other">%d votes</item>
+    </plurals>
 
     <!-- Metadata -->
     <string name="episode_firstaired">Airdate:</string>
@@ -312,6 +316,7 @@
     <string name="imdb">IMDb</string>
     <string name="tvdb">TVDb</string>
     <string name="trakt">trakt.tv</string>
+    <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
     <string name="betamessage"><b>What\'s new</b>\n- Greatly improved time zone and summer time issues, once you update your shows.\n- Notifications, finally! Enabled by default, only for <b>favorite</b> shows, one hour in advance. At least that is what <b>should</b> happen. Tell me if otherwise.\n\nBack to ME3, regards, Uwe\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>
 
