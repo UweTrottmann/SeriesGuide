@@ -80,8 +80,7 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
         Bundle args = new Bundle();
         args.putString(ShareItems.SHARESTRING, title);
         args.putInt(ShareItems.TVDBID, tvdbId);
-        args.putInt(ShareItems.SEASON, -1);
-        args.putInt(ShareItems.EPISODE, -1);
+        args.putInt(ShareItems.EPISODE, 0);
         f.setArguments(args);
         return f;
     }
@@ -141,16 +140,16 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
 
                 final Bundle args = getArguments();
                 int tvdbid = args.getInt(ShareItems.TVDBID);
-                int season = args.getInt(ShareItems.SEASON);
                 int episode = args.getInt(ShareItems.EPISODE);
                 final boolean isSpoiler = checkIsSpoiler.isChecked();
 
-                if (season == -1) {
+                if (episode == 0) {
                     // shout for a show
                     new ShareUtils.TraktTask(getSherlockActivity(), getFragmentManager(),
                             TraktShoutsFragment.this).shout(tvdbid, shout, isSpoiler).execute();
                 } else {
                     // shout for an episode
+                    int season = args.getInt(ShareItems.SEASON);
                     new ShareUtils.TraktTask(getSherlockActivity(), getFragmentManager(),
                             TraktShoutsFragment.this).shout(tvdbid, season, episode, shout,
                             isSpoiler).execute();
@@ -384,15 +383,15 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
         @Override
         public List<Shout> loadInBackground() {
             int tvdbId = mArgs.getInt(ShareItems.TVDBID);
-            int season = mArgs.getInt(ShareItems.SEASON);
             int episode = mArgs.getInt(ShareItems.EPISODE);
 
             ServiceManager manager = Utils.getServiceManager(getContext());
             List<Shout> shouts = new ArrayList<Shout>();
             try {
-                if (season == -1 || episode == -1) {
+                if (episode == 0) {
                     shouts = manager.showService().shouts(tvdbId).fire();
                 } else {
+                    int season = mArgs.getInt(ShareItems.SEASON);
                     shouts = manager.showService().episodeShouts(tvdbId, season, episode).fire();
                 }
             } catch (TraktException te) {

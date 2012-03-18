@@ -468,7 +468,7 @@ public class ShareUtils {
                         final String shout = mArgs.getString(ShareItems.SHARESTRING);
                         final boolean isSpoiler = mArgs.getBoolean(ShareItems.ISSPOILER);
 
-                        if (season == -1 || episode == -1) {
+                        if (episode == 0) {
                             r = manager.shoutService().show(tvdbid).shout(shout).fire();
                         } else {
                             r = manager.shoutService().episode(tvdbid).season(season)
