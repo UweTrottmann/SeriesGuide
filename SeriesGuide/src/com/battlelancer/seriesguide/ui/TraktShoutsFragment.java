@@ -6,6 +6,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.ShareUtils.TraktTask.OnTraktActionCompleteListener;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
@@ -45,7 +46,7 @@ import java.util.List;
  * or episode shouts and for posting own shouts.
  */
 public class TraktShoutsFragment extends SherlockDialogFragment implements
-        LoaderCallbacks<List<Shout>> {
+        LoaderCallbacks<List<Shout>>, OnTraktActionCompleteListener {
 
     /**
      * Build a {@link TraktShoutsFragment} for shouts of an episode.
@@ -129,10 +130,14 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
 
             @Override
             public void onClick(View v) {
+                // prevent empty shouts
                 final String shout = shouttext.getText().toString();
                 if (shout.length() == 0) {
                     return;
                 }
+
+                // disable the shout button
+                v.setEnabled(false);
 
                 final Bundle args = getArguments();
                 int tvdbid = args.getInt(ShareItems.TVDBID);
@@ -142,12 +147,13 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
 
                 if (season == -1) {
                     // shout for a show
-                    new ShareUtils.TraktTask(getSherlockActivity(), getFragmentManager(), null)
-                            .shout(tvdbid, shout, isSpoiler).execute();
+                    new ShareUtils.TraktTask(getSherlockActivity(), getFragmentManager(),
+                            TraktShoutsFragment.this).shout(tvdbid, shout, isSpoiler).execute();
                 } else {
                     // shout for an episode
-                    new ShareUtils.TraktTask(getSherlockActivity(), getFragmentManager(), null)
-                            .shout(tvdbid, season, episode, shout, isSpoiler).execute();
+                    new ShareUtils.TraktTask(getSherlockActivity(), getFragmentManager(),
+                            TraktShoutsFragment.this).shout(tvdbid, season, episode, shout,
+                            isSpoiler).execute();
                 }
             }
         });
@@ -551,6 +557,24 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
             TextView timestamp;
 
             ImageView avatar;
+        }
+    }
+
+    @Override
+    public void onTraktActionComplete() {
+        View v = getView();
+        // after posting
+        if (v != null) {
+            // clear the text field, reenable the shout button
+            EditText shoutText = (EditText) getView().findViewById(R.id.shouttext);
+            View button = getView().findViewById(R.id.shoutbutton);
+            if (shoutText != null && button != null) {
+                shoutText.setText("");
+                button.setEnabled(true);
+
+                // requery the shouts
+                getLoaderManager().restartLoader(0, getArguments(), this);
+            }
         }
     }
 }
