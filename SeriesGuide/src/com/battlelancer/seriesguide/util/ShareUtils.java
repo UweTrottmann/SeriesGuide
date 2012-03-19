@@ -378,6 +378,9 @@ public class ShareUtils {
 
         @Override
         protected Response doInBackground(Void... params) {
+            // we need this value in onPostExecute, so get it already here
+            mAction = TraktAction.values()[mTraktData.getInt(ShareItems.TRAKTACTION)];
+
             if (!isTraktCredentialsValid(mContext)) {
                 // return null, so onPostExecute displays a credentials dialog
                 // which later calls us again.
@@ -405,7 +408,6 @@ public class ShareUtils {
                 return null;
             }
 
-            mAction = TraktAction.values()[mTraktData.getInt(ShareItems.TRAKTACTION)];
             try {
                 Response r = null;
                 switch (mAction) {
@@ -457,48 +459,50 @@ public class ShareUtils {
 
         @Override
         protected void onPostExecute(Response r) {
-            FragmentTransaction ft = mFm.beginTransaction();
-
             if (mAction == TraktAction.CHECKIN_EPISODE) {
                 // dismiss a potential progress dialog
                 Fragment prev = mFm.findFragmentByTag("progress-dialog");
                 if (prev != null) {
+                    FragmentTransaction ft = mFm.beginTransaction();
                     ft.remove(prev);
+                    ft.commit();
                 }
             }
 
             if (r != null) {
                 if (r.status.equalsIgnoreCase(TraktStatus.SUCCESS)) {
+
                     // all good
                     Toast.makeText(mContext,
                             mContext.getString(R.string.trakt_success) + ": " + r.message,
                             Toast.LENGTH_SHORT).show();
 
-                    if (mAction == TraktAction.CHECKIN_EPISODE) {
-                        ft.commit();
-                    }
                 } else if (r.status.equalsIgnoreCase(TraktStatus.FAILURE)) {
                     if (r.wait != 0) {
+
                         // looks like a check in is in progress
                         TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment
                                 .newInstance(mTraktData, r.wait);
+                        FragmentTransaction ft = mFm.beginTransaction();
                         newFragment.show(ft, "cancel-checkin-dialog");
+
                     } else {
+
                         // well, something went wrong
                         Toast.makeText(mContext,
                                 mContext.getString(R.string.trakt_error) + ": " + r.error,
                                 Toast.LENGTH_LONG).show();
 
-                        if (mAction == TraktAction.CHECKIN_EPISODE) {
-                            ft.commit();
-                        }
                     }
                 }
             } else {
+
                 // credentials are invalid
                 TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
                         .newInstance(mTraktData);
+                FragmentTransaction ft = mFm.beginTransaction();
                 newFragment.show(ft, "traktdialog");
+
             }
 
             if (mListener != null) {
