@@ -397,7 +397,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         public void onClick(View v) {
                             // see if we are attached to a single-pane activity
                             if (getSherlockActivity() instanceof EpisodeDetailsActivity) {
-                                EpisodeDetailsActivity parent = (EpisodeDetailsActivity) getSherlockActivity();
                                 Intent intent = new Intent();
                                 intent.setClass(getActivity(), TraktShoutsActivity.class);
                                 intent.putExtra(ShareItems.TVDBID, showId);
