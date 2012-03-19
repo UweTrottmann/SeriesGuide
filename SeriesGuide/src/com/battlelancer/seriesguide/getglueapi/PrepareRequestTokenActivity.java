@@ -48,17 +48,14 @@ public class PrepareRequestTokenActivity extends BaseActivity {
         actionBar.setTitle(getString(R.string.oauthmessage));
         actionBar.setDisplayShowTitleEnabled(true);
 
-        if (savedInstanceState == null) {
-            Resources res = getResources();
-            this.mConsumer = new CommonsHttpOAuthConsumer(
-                    res.getString(R.string.getglue_consumer_key),
-                    res.getString(R.string.getglue_consumer_secret));
-            this.mProvider = new CommonsHttpOAuthProvider(GetGlue.REQUEST_URL, GetGlue.ACCESS_URL,
-                    GetGlue.AUTHORIZE_URL);
+        Resources res = getResources();
+        this.mConsumer = new CommonsHttpOAuthConsumer(res.getString(R.string.getglue_consumer_key),
+                res.getString(R.string.getglue_consumer_secret));
+        this.mProvider = new CommonsHttpOAuthProvider(GetGlue.REQUEST_URL, GetGlue.ACCESS_URL,
+                GetGlue.AUTHORIZE_URL);
 
-            Log.i(TAG, "Starting task to retrieve request token.");
-            new OAuthRequestTokenTask(this, mConsumer, mProvider).execute();
-        }
+        Log.i(TAG, "Starting task to retrieve request token.");
+        new OAuthRequestTokenTask(this, mConsumer, mProvider).execute();
     }
 
     /**
