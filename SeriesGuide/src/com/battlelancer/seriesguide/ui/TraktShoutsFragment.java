@@ -182,9 +182,14 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
         mAdapter = new TraktShoutsAdapter(getActivity());
         setListAdapter(mAdapter);
 
-        setListShown(false);
-
-        getLoaderManager().initLoader(0, getArguments(), this);
+        // nag about no connectivity
+        if (!Utils.isNetworkConnected(getSherlockActivity())) {
+            setListShown(true);
+            ((TextView) mEmptyView).setText(R.string.offline);
+        } else {
+            setListShown(false);
+            getLoaderManager().initLoader(0, getArguments(), this);
+        }
     }
 
     /**
@@ -579,19 +584,21 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
     }
 
     @Override
-    public void onTraktActionComplete() {
-        View v = getView();
-        // after posting
-        if (v != null) {
-            // clear the text field, reenable the shout button
+    public void onTraktActionComplete(boolean wasSuccessfull) {
+        if (getView() != null) {
+
             EditText shoutText = (EditText) getView().findViewById(R.id.shouttext);
             View button = getView().findViewById(R.id.shoutbutton);
+
             if (shoutText != null && button != null) {
-                shoutText.setText("");
+                // reenable the shout button
                 button.setEnabled(true);
 
-                // requery the shouts
-                getLoaderManager().restartLoader(0, getArguments(), this);
+                if (wasSuccessfull) {
+                    // clear the text field and show recent shout
+                    shoutText.setText("");
+                    getLoaderManager().restartLoader(0, getArguments(), this);
+                }
             }
         }
     }

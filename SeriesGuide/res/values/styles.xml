@@ -103,4 +103,9 @@
         <item name="android:layout_gravity">fill</item>
     </style>
 
+    <style name="Dialog">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
 </resources>

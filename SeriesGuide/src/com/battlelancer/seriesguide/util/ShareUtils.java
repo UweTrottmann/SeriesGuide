@@ -333,7 +333,7 @@ public class ShareUtils {
         private OnTraktActionCompleteListener mListener;
 
         public interface OnTraktActionCompleteListener {
-            public void onTraktActionComplete();
+            public void onTraktActionComplete(boolean wasSuccessfull);
         }
 
         /**
@@ -408,6 +408,14 @@ public class ShareUtils {
                 return null;
             }
 
+            // check for network connection
+            if (!Utils.isNetworkConnected(mContext)) {
+                Response r = new Response();
+                r.status = TraktStatus.FAILURE;
+                r.error = mContext.getString(R.string.offline);
+                return r;
+            }
+
             // get an authenticated trakt-java ServiceManager
             ServiceManager manager;
             try {
@@ -416,7 +424,7 @@ public class ShareUtils {
                 // password could not be decrypted
                 Response r = new Response();
                 r.status = TraktStatus.FAILURE;
-                r.error = mContext.getString(R.string.trakt_decryptfail);
+                r.error = mContext.getString(R.string.trakt_generalerror);
                 return r;
             }
 
@@ -514,6 +522,10 @@ public class ShareUtils {
                     if (mAction == TraktAction.CHECKIN_EPISODE) {
                         ft.commit();
                     }
+
+                    if (mListener != null) {
+                        mListener.onTraktActionComplete(true);
+                    }
                 } else if (r.status.equalsIgnoreCase(TraktStatus.FAILURE)) {
                     if (r.wait != 0) {
                         // looks like a check in is in progress
@@ -522,13 +534,15 @@ public class ShareUtils {
                         newFragment.show(ft, "cancel-checkin-dialog");
                     } else {
                         // well, something went wrong
-                        Toast.makeText(mContext,
-                                mContext.getString(R.string.trakt_error) + ": " + r.error,
-                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(mContext, r.error, Toast.LENGTH_LONG).show();
 
                         if (mAction == TraktAction.CHECKIN_EPISODE) {
                             ft.commit();
                         }
+                    }
+
+                    if (mListener != null) {
+                        mListener.onTraktActionComplete(false);
                     }
                 }
             } else {
@@ -536,12 +550,12 @@ public class ShareUtils {
                 TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
                         .newInstance(mArgs);
                 newFragment.show(ft, "traktdialog");
-            }
 
-            // notify that our first run completed, however due to invalid
-            // credentials we might not have done anything
-            if (mListener != null) {
-                mListener.onTraktActionComplete();
+                // notify that our first run completed, however due to invalid
+                // credentials we have not done anything
+                if (mListener != null) {
+                    mListener.onTraktActionComplete(true);
+                }
             }
         }
     }
