@@ -24,8 +24,9 @@ public class TraktShoutsActivity extends SherlockFragmentActivity {
         int episode = args.getInt(ShareItems.EPISODE);
 
         final ActionBar actionBar = getSupportActionBar();
-        setTitle(getString(R.string.shouts_for, title));
-        actionBar.setTitle(getString(R.string.shouts_for, title));
+        setTitle(getString(R.string.shouts_for, ""));
+        actionBar.setTitle(getString(R.string.shouts_for, ""));
+        actionBar.setSubtitle(title);
 
         // embed the shouts fragment dialog
         SherlockDialogFragment newFragment;
