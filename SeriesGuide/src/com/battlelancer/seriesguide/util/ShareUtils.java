@@ -482,12 +482,12 @@ public class ShareUtils {
             } catch (TraktException te) {
                 Response r = new Response();
                 r.status = TraktStatus.FAILURE;
-                r.error = te.getMessage();
+                r.error = mContext.getString(R.string.trakt_generalerror);
                 return r;
             } catch (ApiException e) {
                 Response r = new Response();
                 r.status = TraktStatus.FAILURE;
-                r.error = e.getMessage();
+                r.error = mContext.getString(R.string.trakt_generalerror);
                 return r;
             }
         }

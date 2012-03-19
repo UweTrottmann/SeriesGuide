@@ -283,7 +283,7 @@
     <string name="trakt_error">Interaction with trakt failed</string>
     <string name="trakt_seen">marked as seen</string>
     <string name="trakt_decryptfail">password could not be decrypted</string>
-    <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
+    <string name="trakt_generalerror">Something went wrong. Check your internet connection and credentials.</string>
     <string name="love">Totally ninja!</string>
     <string name="hate">Weak Sauce :(</string>
     <string name="trakt_createaccount">Create new account</string>
