@@ -57,8 +57,6 @@ public class TraktFriendsFragment extends ListFragment implements
         View detailsFragment = getActivity().findViewById(R.id.fragment_details);
         mDualPane = detailsFragment != null && detailsFragment.getVisibility() == View.VISIBLE;
 
-        setEmptyText(getString(R.string.friends_empty));
-
         mAdapter = new TraktFriendsAdapter(getActivity());
         setListAdapter(mAdapter);
         final ListView list = getListView();
@@ -70,9 +68,15 @@ public class TraktFriendsFragment extends ListFragment implements
         int defaultPadding = (int) (8 * scale + 0.5f);
         list.setPadding(layoutPadding, layoutPadding, layoutPadding, defaultPadding);
 
-        setListShown(false);
-
-        getLoaderManager().initLoader(0, null, this);
+        // nag about no connectivity
+        if (!Utils.isNetworkConnected(getActivity())) {
+            setEmptyText(getString(R.string.offline));
+            setListShown(true);
+        } else {
+            setEmptyText(getString(R.string.friends_empty));
+            setListShown(false);
+            getLoaderManager().initLoader(0, null, this);
+        }
 
     }
 
