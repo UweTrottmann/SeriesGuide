@@ -395,10 +395,26 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     view.findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
-                                    title, showId, season, number);
+                            try {
+                                // abuse ClassCastException to
+                                // see if we are attached to a single-pane
+                                // activity
+                                EpisodeDetailsActivity parent = (EpisodeDetailsActivity) getSherlockActivity();
+                                Intent intent = new Intent();
+                                intent.setClass(getActivity(), TraktShoutsActivity.class);
+                                intent.putExtra(ShareItems.TVDBID, showId);
+                                intent.putExtra(ShareItems.SEASON, season);
+                                intent.putExtra(ShareItems.EPISODE, number);
+                                intent.putExtra(ShareItems.SHARESTRING, title);
+                                startActivity(intent);
+                            } catch (ClassCastException e) {
+                                // in a multi-pane layout show the shouts in a
+                                // dialog
+                                TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
+                                        title, showId, season, number);
 
-                            newFragment.show(getFragmentManager(), "shouts-dialog");
+                                newFragment.show(getFragmentManager(), "shouts-dialog");
+                            }
                         }
                     });
 
