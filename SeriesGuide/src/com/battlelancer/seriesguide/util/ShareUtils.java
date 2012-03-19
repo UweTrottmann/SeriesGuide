@@ -404,19 +404,19 @@ public class ShareUtils {
             // we need this value in onPostExecute, so get it already here
             mAction = TraktAction.values()[mArgs.getInt(ShareItems.TRAKTACTION)];
 
-            // check for valid credentials
-            if (!isTraktCredentialsValid(mContext)) {
-                // return null so a credentials dialog is displayed
-                // it will call us again with valid credentials
-                return null;
-            }
-
             // check for network connection
             if (!Utils.isNetworkConnected(mContext)) {
                 Response r = new Response();
                 r.status = TraktStatus.FAILURE;
                 r.error = mContext.getString(R.string.offline);
                 return r;
+            }
+
+            // check for valid credentials
+            if (!isTraktCredentialsValid(mContext)) {
+                // return null so a credentials dialog is displayed
+                // it will call us again with valid credentials
+                return null;
             }
 
             // get an authenticated trakt-java ServiceManager
