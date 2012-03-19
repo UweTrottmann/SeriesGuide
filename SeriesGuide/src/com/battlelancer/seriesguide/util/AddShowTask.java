@@ -26,6 +26,8 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
     private static final int ADD_SAXERROR = 2;
 
+    private static final int ADD_OFFLINE = 3;
+
     final private Context mContext;
 
     final private LinkedList<SearchResult> mAddQueue = new LinkedList<SearchResult>();
@@ -69,6 +71,11 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         int result;
         boolean modifiedDB = false;
 
+        if (!Utils.isNetworkConnected(mContext)) {
+            publishProgress(ADD_OFFLINE);
+            return null;
+        }
+
         if (isCancelled()) {
             return null;
         }
@@ -92,6 +99,11 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 // only cancelled on config change, so don't rebuild fts
                 // table yet
                 return null;
+            }
+
+            if (!Utils.isNetworkConnected(mContext)) {
+                publishProgress(ADD_OFFLINE);
+                break;
             }
 
             SearchResult nextShow = mAddQueue.removeFirst();
@@ -143,6 +155,9 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                         mContext.getString(R.string.add_error_begin) + mCurrentShowName
                                 + mContext.getString(R.string.add_error_end), Toast.LENGTH_LONG)
                         .show();
+                break;
+            case ADD_OFFLINE:
+                Toast.makeText(mContext, R.string.offline, Toast.LENGTH_LONG).show();
                 break;
         }
     }
