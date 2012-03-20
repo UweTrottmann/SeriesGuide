@@ -231,8 +231,11 @@ public class BackupDeleteActivity extends BaseActivity {
                             new String[] {
                                 Shows._ID
                             }, null, null, null);
-                    if (shows.getCount() == 0) {
-                        return getString(R.string.dbupgradefailed);
+                    if (shows != null) {
+                        if (shows.getCount() == 0) {
+                            return getString(R.string.dbupgradefailed);
+                        }
+                        shows.close();
                     }
                 } catch (SQLiteException e) {
                     return e.getMessage();
