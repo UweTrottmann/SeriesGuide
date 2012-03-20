@@ -10,6 +10,14 @@ Version 2.6 *(in development)*
 
 ### Detailed changes:
 
+#### 2.6.2beta (2012-03-20)
+
+* Support for trakt.tv shouts.
+* Display ratings (Loves) from trakt.tv.
+* Content language chooser in welcome dialog.
+* Crash fixes, other minor improvements and changes.
+* Better offline handling.
+
 #### 2.6.1beta (2012-03-15)
 
 * Notifications should now work correctly, are restored on reboot
