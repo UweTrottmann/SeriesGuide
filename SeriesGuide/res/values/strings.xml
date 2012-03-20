@@ -296,7 +296,7 @@
     <!-- Welcome dialog -->
     <string name="welcome_message"><big>Get started</big></string>
     <string name="welcome_text">Welcome!</string>
-    <string name="welcome_language">Choose the primary content language you prefer:</string>
+    <string name="welcome_language">Choose the primary content language:</string>
     <string name="welcome_setuplanguage">Choose language</string>
     <string name="welcome_setuptrakt">Connect to trakt</string>
     <string name="welcome_traktmessage">Access your trakt.tv library and friends activity with SeriesGuide:</string>

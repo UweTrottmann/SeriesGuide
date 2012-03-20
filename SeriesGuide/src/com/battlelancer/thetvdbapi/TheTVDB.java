@@ -680,7 +680,7 @@ public class TheTVDB {
     private static String getTheTVDBLanguage(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
                 .getApplicationContext());
-        return prefs.getString("language", "en");
+        return prefs.getString(SeriesGuidePreferences.KEY_LANGUAGE, "en");
     }
 
     public static void onRenewFTSTable(Context context) {
