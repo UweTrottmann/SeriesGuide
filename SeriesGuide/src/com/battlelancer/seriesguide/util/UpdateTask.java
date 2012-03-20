@@ -255,7 +255,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
             for (ActivityItem item : activity.activity) {
                 // check for null (potential fix for reported crash)
-                if (item.show != null) {
+                if (item.action != null && item.show != null) {
                     switch (item.action) {
                         case Seen: {
                             List<TvShowEpisode> episodes = item.episodes;
