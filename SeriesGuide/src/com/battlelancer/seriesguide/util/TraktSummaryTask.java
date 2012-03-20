@@ -1,7 +1,7 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.TraktException;
