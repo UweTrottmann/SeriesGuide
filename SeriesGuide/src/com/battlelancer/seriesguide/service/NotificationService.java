@@ -120,8 +120,7 @@ public class NotificationService extends IntentService {
                 Intent notificationIntent = new Intent(context, EpisodeDetailsActivity.class);
                 notificationIntent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_ID,
                         upcomingEpisodes.getString(NotificationQuery._ID));
-                contentIntent = PendingIntent.getActivity(context, 0, notificationIntent,
-                        PendingIntent.FLAG_CANCEL_CURRENT);
+                contentIntent = PendingIntent.getActivity(context, 2, notificationIntent, 0);
 
             } else if (count > 1) {
                 // notify about multiple episodes
@@ -131,8 +130,7 @@ public class NotificationService extends IntentService {
                 contentText = getString(R.string.upcoming_display);
 
                 Intent notificationIntent = new Intent(context, UpcomingRecentActivity.class);
-                contentIntent = PendingIntent.getActivity(context, 0, notificationIntent,
-                        PendingIntent.FLAG_CANCEL_CURRENT);
+                contentIntent = PendingIntent.getActivity(context, 3, notificationIntent, 0);
             }
 
             Notification notification = new Notification(icon, tickerText,
