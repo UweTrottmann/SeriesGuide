@@ -20,7 +20,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.Spinner;
 
 public class WelcomeDialogFragment extends DialogFragment {
 
@@ -59,6 +63,15 @@ public class WelcomeDialogFragment extends DialogFragment {
         LayoutInflater inflater = (LayoutInflater) getActivity().getLayoutInflater();
         View v = inflater.inflate(R.layout.welcome_dialog, null, false);
 
+        // language chooser
+        Spinner spinner = (Spinner) v.findViewById(R.id.welcome_setuplanguage);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.languages, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new OnLanguageSelectedListener());
+
+        // trakt connect button
         v.findViewById(R.id.welcome_setuptrakt).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,5 +105,19 @@ public class WelcomeDialogFragment extends DialogFragment {
                         }.execute();
                     }
                 }).setCancelable(false).create();
+    }
+
+    public class OnLanguageSelectedListener implements OnItemSelectedListener {
+
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+            final SharedPreferences prefs = PreferenceManager
+                    .getDefaultSharedPreferences(getActivity());
+            final String value = getResources().getStringArray(R.array.languageData)[pos];
+            prefs.edit().putString(SeriesGuidePreferences.KEY_LANGUAGE, value).commit();
+        }
+
+        public void onNothingSelected(AdapterView<?> parent) {
+            // Do nothing.
+        }
     }
 }

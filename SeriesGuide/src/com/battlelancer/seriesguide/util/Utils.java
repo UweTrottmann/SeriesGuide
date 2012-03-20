@@ -32,6 +32,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -744,6 +746,24 @@ public class Utils {
     public static void runNotificationService(Context context) {
         Intent i = new Intent(context, NotificationService.class);
         context.startService(i);
+    }
+
+    public static String toSHA1(byte[] convertme) {
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("SHA-1");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return Utils.byteArrayToHexString(md.digest(convertme));
+    }
+
+    public static String byteArrayToHexString(byte[] b) {
+        String result = "";
+        for (int i = 0; i < b.length; i++) {
+            result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
+        }
+        return result;
     }
 
 }

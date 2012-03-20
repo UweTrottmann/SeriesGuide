@@ -73,8 +73,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_LASTTRAKTUPDATE = "com.battlelancer.seriesguide.lasttraktupdate";
 
-    public static final String KEY_INTEGRATETRAKT = "com.battlelancer.seriesguide.traktintegration";
-
     public static final String KEY_LAST_USED_SHARE_METHOD = "com.battlelancer.seriesguide.lastusedsharemethod";
 
     public static final String KEY_ONLYFAVORITES = "com.battlelancer.seriesguide.onlyfavorites";
@@ -82,6 +80,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
     public static final String KEY_UPCOMING_LIMIT = "com.battlelancer.seriesguide.upcominglimit";
 
     public static final String KEY_NOTIFICATIONS_ENABLED = "com.battlelancer.seriesguide.notifications";
+
+    public static final String KEY_LANGUAGE = "language";
 
     public static final String SUPPORT_MAIL = "seriesguide@battlelancer.com";
 

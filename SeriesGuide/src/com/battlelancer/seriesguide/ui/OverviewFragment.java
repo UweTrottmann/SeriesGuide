@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktTask.OnTraktActionCompleteListener;
+import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
@@ -66,7 +67,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
     private boolean mDualPane;
 
-    private Series show;
+    private Series mShow;
 
     private ImageCache imageCache;
 
@@ -201,10 +202,9 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             case R.id.menu_addevent: {
                 fireTrackerEvent("Add episode to calendar");
 
-                ShareUtils
-                        .onAddCalendarEvent(getActivity(), show.getSeriesName(),
-                                mShareData.getString(ShareItems.EPISODESTRING), mAirtime,
-                                show.getRuntime());
+                ShareUtils.onAddCalendarEvent(getActivity(), mShow.getSeriesName(),
+                        mShareData.getString(ShareItems.EPISODESTRING), mAirtime,
+                        mShow.getRuntime());
                 break;
             }
             default:
@@ -274,26 +274,26 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     }
 
     private void fillShowData() {
-        show = DBUtils.getShow(getActivity(), getShowId());
+        mShow = DBUtils.getShow(getActivity(), getShowId());
 
-        if (show == null) {
+        if (mShow == null) {
             return;
         }
 
         // Save info for sharing
-        mShareData.putString(ShareItems.IMDBID, show.getImdbId());
-        mShareData.putInt(ShareItems.TVDBID, Integer.valueOf(show.getId()));
+        mShareData.putString(ShareItems.IMDBID, mShow.getImdbId());
+        mShareData.putInt(ShareItems.TVDBID, Integer.valueOf(mShow.getId()));
 
         // Show name
         TextView showname = (TextView) getActivity().findViewById(R.id.seriesname);
-        showname.setText(show.getSeriesName());
+        showname.setText(mShow.getSeriesName());
 
         // Running state
         TextView status = (TextView) getActivity().findViewById(R.id.showStatus);
-        if (show.getStatus() == 1) {
+        if (mShow.getStatus() == 1) {
             status.setTextColor(Color.GREEN);
             status.setText(getString(R.string.show_isalive));
-        } else if (show.getStatus() == 0) {
+        } else if (mShow.getStatus() == 0) {
             status.setTextColor(Color.GRAY);
             status.setText(getString(R.string.show_isnotalive));
         }
@@ -303,7 +303,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             // using alpha seems not to work on eclair, so only set a
             // background on froyo+ then
             final ImageView background = (ImageView) getActivity().findViewById(R.id.background);
-            Bitmap bg = imageCache.get(show.getPoster());
+            Bitmap bg = imageCache.get(mShow.getPoster());
             if (bg != null) {
                 BitmapDrawable drawable = new BitmapDrawable(getResources(), bg);
                 drawable.setAlpha(50);
@@ -313,15 +313,15 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
         // Airtime and Network
         String timeAndNetwork = "";
-        if (show.getAirsDayOfWeek().length() != 0 && show.getAirsTime() != -1) {
-            String[] values = Utils.parseMillisecondsToTime(show.getAirsTime(),
-                    show.getAirsDayOfWeek(), getActivity());
+        if (mShow.getAirsDayOfWeek().length() != 0 && mShow.getAirsTime() != -1) {
+            String[] values = Utils.parseMillisecondsToTime(mShow.getAirsTime(),
+                    mShow.getAirsDayOfWeek(), getActivity());
             timeAndNetwork += values[1] + " " + values[0];
         } else {
             timeAndNetwork += getString(R.string.show_noairtime);
         }
-        if (show.getNetwork().length() != 0) {
-            timeAndNetwork += " " + getString(R.string.show_network) + " " + show.getNetwork();
+        if (mShow.getNetwork().length() != 0) {
+            timeAndNetwork += " " + getString(R.string.show_network) + " " + mShow.getNetwork();
         }
         TextView showmeta = (TextView) getActivity().findViewById(R.id.showmeta);
         showmeta.setText(timeAndNetwork);
@@ -423,15 +423,19 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
         // Episode title
         TextView episodetitle = (TextView) getActivity().findViewById(R.id.TextViewEpisodeTitle);
-        episodetitle.setText(episode.getString(EpisodeQuery.TITLE));
+        final String title = episode.getString(EpisodeQuery.TITLE);
+        episodetitle.setText(title);
 
         // Season and Number
         TextView numbers = (TextView) getActivity().findViewById(R.id.TextViewEpisodeNumbers);
 
         // trakt
-        mShareData.putInt(ShareItems.TVDBID, episode.getInt(EpisodeQuery.REF_SHOW_ID));
-        mShareData.putInt(ShareItems.SEASON, episode.getInt(EpisodeQuery.SEASON));
-        mShareData.putInt(ShareItems.EPISODE, episode.getInt(EpisodeQuery.NUMBER));
+        final int showTvdbId = episode.getInt(EpisodeQuery.REF_SHOW_ID);
+        final int season = episode.getInt(EpisodeQuery.SEASON);
+        final int number = episode.getInt(EpisodeQuery.NUMBER);
+        mShareData.putInt(ShareItems.TVDBID, showTvdbId);
+        mShareData.putInt(ShareItems.SEASON, season);
+        mShareData.putInt(ShareItems.EPISODE, number);
 
         numbers.setText(getString(R.string.season) + " " + episode.getString(EpisodeQuery.SEASON)
                 + " " + getString(R.string.episode) + " " + episode.getString(EpisodeQuery.NUMBER));
@@ -462,7 +466,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         writers.setText(getString(R.string.episode_writers) + " "
                 + Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.WRITERS)));
 
-        // Rating
+        // TVDb rating
         TextView rating = (TextView) getActivity().findViewById(R.id.value);
         String ratingText = episode.getString(EpisodeQuery.RATING);
         if (ratingText != null && ratingText.length() != 0) {
@@ -471,18 +475,41 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             rating.setText(ratingText + "/10");
         }
 
+        // trakt rating
+        new TraktSummaryTask(getSherlockActivity(), getView()).episode(showTvdbId, season, number)
+                .execute();
+
         // TVDb button
         getView().findViewById(R.id.buttonShowInfoIMDB).setVisibility(View.GONE);
-        final String showId = getShowId();
         final String seasonId = episode.getString(EpisodeQuery.REF_SEASON_ID);
         final String episodeId = episode.getString(EpisodeQuery._ID);
         getView().findViewById(R.id.buttonTVDB).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TVDB_EPISODE_URL_1
-                        + showId + Constants.TVDB_EPISODE_URL_2 + seasonId
+                        + showTvdbId + Constants.TVDB_EPISODE_URL_2 + seasonId
                         + Constants.TVDB_EPISODE_URL_3 + episodeId));
                 startActivity(i);
+            }
+        });
+
+        // trakt shouts button
+        getView().findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mDualPane) {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), TraktShoutsActivity.class);
+                    intent.putExtra(ShareItems.TVDBID, showTvdbId);
+                    intent.putExtra(ShareItems.SEASON, season);
+                    intent.putExtra(ShareItems.EPISODE, number);
+                    intent.putExtra(ShareItems.SHARESTRING, title);
+                    startActivity(intent);
+                } else {
+                    TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(title,
+                            showTvdbId, season, number);
+                    newFragment.show(getFragmentManager(), "shouts-dialog");
+                }
             }
         });
     }
@@ -542,7 +569,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     }
 
     @Override
-    public void onTraktActionComplete() {
+    public void onTraktActionComplete(boolean wasSuccessfull) {
         // load new episode, update seasons (if shown)
         onLoadEpisode();
         onUpdateSeasons();

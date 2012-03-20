@@ -17,6 +17,7 @@ import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
+import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
@@ -317,7 +318,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.RATING) {
-                    // Rating
+                    // TVDb rating
                     RelativeLayout rating = (RelativeLayout) view;
                     String ratingText = episode.getString(EpisodeDetailsQuery.RATING);
                     if (ratingText != null && ratingText.length() != 0) {
@@ -326,6 +327,13 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         ratingBar.setProgress((int) (Double.valueOf(ratingText) / 0.1));
                         ratingValue.setText(ratingText + "/10");
                     }
+
+                    // trakt rating
+                    new TraktSummaryTask(getSherlockActivity(), rating).episode(
+                            episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID),
+                            episode.getInt(EpisodeDetailsQuery.SEASON),
+                            episode.getInt(EpisodeDetailsQuery.NUMBER)).execute();
+
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.IMAGE) {
@@ -366,7 +374,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.REF_SHOW_ID) {
-                    final String showId = episode.getString(EpisodeDetailsQuery.REF_SHOW_ID);
+                    final int showId = episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID);
                     final String seasonId = episode.getString(EpisodeDetailsQuery.REF_SEASON_ID);
 
                     view.findViewById(R.id.buttonShowInfoIMDB).setVisibility(View.GONE);
@@ -378,6 +386,32 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                                             + Constants.TVDB_EPISODE_URL_2 + seasonId
                                             + Constants.TVDB_EPISODE_URL_3 + getEpisodeId()));
                             startActivity(i);
+                        }
+                    });
+
+                    final String title = episode.getString(EpisodeDetailsQuery.TITLE);
+                    final int season = episode.getInt(EpisodeDetailsQuery.SEASON);
+                    final int number = episode.getInt(EpisodeDetailsQuery.NUMBER);
+                    view.findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // see if we are attached to a single-pane activity
+                            if (getSherlockActivity() instanceof EpisodeDetailsActivity) {
+                                Intent intent = new Intent();
+                                intent.setClass(getActivity(), TraktShoutsActivity.class);
+                                intent.putExtra(ShareItems.TVDBID, showId);
+                                intent.putExtra(ShareItems.SEASON, season);
+                                intent.putExtra(ShareItems.EPISODE, number);
+                                intent.putExtra(ShareItems.SHARESTRING, title);
+                                startActivity(intent);
+                            } else {
+                                // in a multi-pane layout show the shouts in a
+                                // dialog
+                                TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
+                                        title, showId, season, number);
+
+                                newFragment.show(getFragmentManager(), "shouts-dialog");
+                            }
                         }
                     });
 

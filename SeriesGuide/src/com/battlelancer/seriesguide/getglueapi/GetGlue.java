@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.getglueapi;
 
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.Utils;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
@@ -70,6 +71,8 @@ public class GetGlue {
 
         private static final int CHECKIN_FAILED = 1;
 
+        private static final int CHECKIN_OFFLINE = 2;
+
         private String mImdbId;
 
         private String mComment;
@@ -87,6 +90,10 @@ public class GetGlue {
 
         @Override
         protected Integer doInBackground(Void... params) {
+            if (!Utils.isNetworkConnected(mContext)) {
+                return CHECKIN_OFFLINE;
+            }
+
             final Resources res = mContext.getResources();
             try {
                 mComment = URLEncoder.encode(mComment, "UTF-8");
@@ -147,6 +154,8 @@ public class GetGlue {
                     AnalyticsUtils.getInstance(mContext).trackEvent("Sharing", "GetGlue", mComment,
                             0);
                     break;
+                case CHECKIN_OFFLINE:
+                    Toast.makeText(mContext, R.string.offline, Toast.LENGTH_LONG).show();
             }
         }
 

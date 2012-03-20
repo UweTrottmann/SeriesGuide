@@ -18,6 +18,19 @@
     <string name="norating">n/a</string>
     <string name="loading">Loading&#8230;</string>
     <string name="sending">Sending&#8230;</string>
+    <plurals name="votes">
+        <item quantity="one">%d vote</item>
+        <item quantity="other">%d votes</item>
+    </plurals>
+    <string name="offline">No network connectivity. Try again later.</string>
+    
+    <!-- Shouts -->
+    <string name="shouts">Shouts</string>
+    <string name="shout_hint">Type a shout (in English)</string>
+    <string name="shout">Shout!</string>
+    <string name="isspoiler">Spoiler alert!</string>
+    <string name="no_shouts">Be the first to shout!</string>
+    <string name="shouts_for">Shouts for %s</string>
 
     <!-- Metadata -->
     <string name="episode_firstaired">Airdate:</string>
@@ -167,8 +180,6 @@
     <string name="pref_trakt">trakt.tv credentials</string>
     <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
     <string name="pref_traktsync">Sync with trakt.tv</string>
-    <string name="pref_traktintegrate">Integrate trakt.tv</string>
-    <string name="pref_traktintegratesummary">Get trakt activity on update</string>
     <string name="donate">Buy the dev a drink (Paypal)</string>
     <string name="feedback">Send feedback</string>
     <string name="pref_advanced">Advanced</string>
@@ -285,6 +296,8 @@
     <!-- Welcome dialog -->
     <string name="welcome_message"><big>Get started</big></string>
     <string name="welcome_text">Welcome!</string>
+    <string name="welcome_language">Choose the primary content language:</string>
+    <string name="welcome_setuplanguage">Choose language</string>
     <string name="welcome_setuptrakt">Connect to trakt</string>
     <string name="welcome_traktmessage">Access your trakt.tv library and friends activity with SeriesGuide:</string>
     <string name="dismiss">Dismiss</string>
@@ -314,6 +327,7 @@
     <string name="imdb">IMDb</string>
     <string name="tvdb">TVDb</string>
     <string name="trakt">trakt.tv</string>
+    <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
     <string name="betamessage"><b>Howdy!</b>\nNotifications should work reliably now. Still enabled by default, only for <b>favorite</b> shows, one hour in advance.\n\nShepard\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>
 
@@ -337,46 +351,46 @@
         <item>dvdoldestfirst</item>
     </string-array>
     <string-array name="languages">
+        <item>English</item>
+        <item>čeština</item>
         <item>Dansk</item>
-        <item>Suomeksi</item>
-        <item>Nederlands</item>
         <item>Deutsch</item>
-        <item>Italiano</item>
+        <item>Ελληνικά</item>
         <item>Español</item>
         <item>Français</item>
-        <item>Polski</item>
+        <item>Hrvatski</item>
+        <item>Italiano</item>
         <item>Magyar</item>
-        <item>Ελληνικά</item>
-        <item>Türkçe</item>
+        <item>Nederlands</item>
+        <item>Norsk</item>
+        <item>Polski</item>
         <item>русский язык</item>
         <item>Português</item>
-        <item>čeština</item>
         <item>Slovenski</item>
-        <item>Hrvatski</item>
-        <item>English</item>
+        <item>Suomeksi</item>
         <item>Svenska</item>
-        <item>Norsk</item>
+        <item>Türkçe</item>
     </string-array>
     <string-array name="languageData">
+        <item>en</item>
+        <item>cs</item>
         <item>da</item>
-        <item>fi</item>
-        <item>nl</item>
         <item>de</item>
-        <item>it</item>
+        <item>el</item>
         <item>es</item>
         <item>fr</item>
-        <item>pl</item>
+        <item>hr</item>
+        <item>it</item>
         <item>hu</item>
-        <item>el</item>
-        <item>tr</item>
+        <item>nl</item>
+        <item>no</item>
+        <item>pl</item>
         <item>ru</item>
         <item>pt</item>
-        <item>cs</item>
         <item>sl</item>
-        <item>hr</item>
-        <item>en</item>
+        <item>fi</item>
         <item>sv</item>
-        <item>no</item>
+        <item>tr</item>
     </string-array>
     <string-array name="numberData">
         <item>default</item>

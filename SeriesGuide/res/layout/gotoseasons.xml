@@ -12,20 +12,12 @@
 
         <TextView
             android:id="@+id/gotoseasonsText"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/default_padding"
-            android:layout_weight="1"
             android:text="@string/seasons"
             android:textSize="@dimen/text_size_medium" >
         </TextView>
-
-        <ImageView
-            android:id="@+id/seasonIndicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_arrow_right" >
-        </ImageView>
     </LinearLayout>
 
     <include layout="@layout/holodivider" />

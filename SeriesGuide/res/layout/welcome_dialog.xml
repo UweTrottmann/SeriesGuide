@@ -31,10 +31,38 @@
             layout="@layout/holodivider" />
 
         <TextView
-            android:id="@+id/trakt_message"
+            android:id="@+id/language_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/divider1"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/welcome_language"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <Spinner
+            android:id="@+id/welcome_setuplanguage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/language_message"
+            android:layout_centerHorizontal="true"
+            android:prompt="@string/welcome_setuplanguage" />
+
+        <include
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/welcome_setuplanguage"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            layout="@layout/holodivider" />
+
+        <TextView
+            android:id="@+id/trakt_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divider2"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
@@ -52,7 +80,7 @@
             android:text="@string/welcome_setuptrakt" />
 
         <include
-            android:id="@+id/divider2"
+            android:id="@+id/divider3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/welcome_setuptrakt"
@@ -64,7 +92,7 @@
             android:id="@+id/welcome_sendusagedata"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/divider2"
+            android:layout_below="@+id/divider3"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"

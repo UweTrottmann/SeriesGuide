@@ -9,6 +9,7 @@ import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
@@ -85,12 +86,9 @@ public class ShowInfoActivity extends BaseActivity {
         TextView firstaired = (TextView) findViewById(R.id.TextViewShowInfoFirstAirdate);
         TextView genres = (TextView) findViewById(R.id.TextViewShowInfoGenres);
         TextView network = (TextView) findViewById(R.id.TextViewShowInfoNetwork);
-        TextView rating = (TextView) findViewById(R.id.value);
         TextView runtime = (TextView) findViewById(R.id.TextViewShowInfoRuntime);
         TextView status = (TextView) findViewById(R.id.TextViewShowInfoStatus);
         ImageView showart = (ImageView) findViewById(R.id.ImageViewShowInfoPoster);
-        View imdbButton = (View) findViewById(R.id.buttonShowInfoIMDB);
-        View tvdbButton = (View) findViewById(R.id.buttonTVDB);
 
         final Series show = DBUtils.getShow(this, seriesid);
         if (show == null) {
@@ -144,16 +142,20 @@ public class ShowInfoActivity extends BaseActivity {
                 + show.getContentRating());
         genres.setText(getString(R.string.show_genres) + " "
                 + Utils.splitAndKitTVDBStrings(show.getGenres()));
+        runtime.setText(getString(R.string.show_runtime) + " " + show.getRuntime() + " "
+                + getString(R.string.show_airtimeunit));
+
+        // TVDb rating
         String ratingText = show.getRating();
         if (ratingText != null && ratingText.length() != 0) {
             RatingBar ratingBar = (RatingBar) findViewById(R.id.bar);
             ratingBar.setProgress((int) (Double.valueOf(ratingText) / 0.1));
+            TextView rating = (TextView) findViewById(R.id.value);
             rating.setText(ratingText + "/10");
         }
-        runtime.setText(getString(R.string.show_runtime) + " " + show.getRuntime() + " "
-                + getString(R.string.show_airtimeunit));
 
         // IMDb button
+        View imdbButton = (View) findViewById(R.id.buttonShowInfoIMDB);
         final String imdbid = show.getImdbId();
         if (imdbButton != null) {
             imdbButton.setOnClickListener(new OnClickListener() {
@@ -179,6 +181,7 @@ public class ShowInfoActivity extends BaseActivity {
         }
 
         // TVDb button
+        View tvdbButton = (View) findViewById(R.id.buttonTVDB);
         final String tvdbId = show.getId();
         if (tvdbButton != null) {
             tvdbButton.setOnClickListener(new OnClickListener() {
@@ -190,6 +193,19 @@ public class ShowInfoActivity extends BaseActivity {
                 }
             });
         }
+
+        findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
+                        show.getSeriesName(), Integer.valueOf(tvdbId));
+
+                newFragment.show(getSupportFragmentManager(), "shouts-dialog");
+            }
+        });
+
+        // trakt ratings
+        new TraktSummaryTask(this, findViewById(R.id.ratingbar)).show(tvdbId).execute();
 
         // Poster
         Bitmap bitmap = ImageCache.getInstance(this).get(show.getPoster());
