@@ -174,6 +174,19 @@ public final class UserService extends TraktApiService {
     public LibraryMoviesLovedBuilder libraryMoviesLoved(String username) {
         return new LibraryMoviesLovedBuilder(this, username);
     }
+    
+    /**
+     * Returns all movies that a user has watched. This method is useful to sync
+     * trakt's data with local media center. Protected users won't return any
+     * data unless you are friends.
+     * 
+     * @param username You can get a username by browsing the website and
+     *            looking at the URL when on a profile page.
+     * @return Builder instance.
+     */
+    public LibraryMoviesWatchedBuilder libraryMoviesWatched(String username) {
+        return new LibraryMoviesWatchedBuilder(this, username);
+    }
 
     /**
      * Returns all shows in a user's library. Each show will indicate how many
@@ -424,7 +437,7 @@ public final class UserService extends TraktApiService {
 
     public static final class LibraryMoviesAllBuilder extends TraktApiBuilder<List<Movie>> {
         private static final String URI = "/user/library/movies/all.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME;
+                + FIELD_USERNAME + "/" + FIELD_EXTENDED;
 
         private LibraryMoviesAllBuilder(UserService service, String username) {
             super(service, new TypeToken<List<Movie>>() {
@@ -432,11 +445,26 @@ public final class UserService extends TraktApiService {
 
             this.field(FIELD_USERNAME, username);
         }
+        
+        /**
+         * Returns complete movie info if set to Extended. Only send this if you
+         * really need the full dump as it doubles the data size being sent
+         * back. Returns only the minimal info (title, year, imdb_id, tmdb_id,
+         * plays, in_collection, unseen) required for media center syncing if
+         * set to min. This sends about half the data.
+         * 
+         * @param ExtendedParam
+         * @return Builder instance
+         */
+        public LibraryMoviesAllBuilder extended(ExtendedParam extended) {
+            this.field(FIELD_EXTENDED, extended.toString());
+            return this;
+        }
     }
 
     public static final class LibraryMoviesCollectionBuilder extends TraktApiBuilder<List<Movie>> {
         private static final String URI = "/user/library/movies/collection.json/" + FIELD_API_KEY
-                + "/" + FIELD_USERNAME;
+                + "/" + FIELD_USERNAME + "/" + FIELD_EXTENDED;
 
         private LibraryMoviesCollectionBuilder(UserService service, String username) {
             super(service, new TypeToken<List<Movie>>() {
@@ -444,11 +472,26 @@ public final class UserService extends TraktApiService {
 
             this.field(FIELD_USERNAME, username);
         }
+        
+        /**
+         * Returns complete movie info if set to Extended. Only send this if you
+         * really need the full dump as it doubles the data size being sent
+         * back. Returns only the minimal info (title, year, imdb_id, tmdb_id)
+         * required for media center syncing if set to min. This sends about
+         * half the data.
+         * 
+         * @param ExtendedParam
+         * @return Builder instance
+         */
+        public LibraryMoviesCollectionBuilder extended(ExtendedParam extended) {
+            this.field(FIELD_EXTENDED, extended.toString());
+            return this;
+        }
     }
 
     public static final class LibraryMoviesHatedBuilder extends TraktApiBuilder<List<Movie>> {
         private static final String URI = "/user/library/movies/hated.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME;
+                + FIELD_USERNAME + "/" + FIELD_EXTENDED;
 
         private LibraryMoviesHatedBuilder(UserService service, String username) {
             super(service, new TypeToken<List<Movie>>() {
@@ -456,11 +499,26 @@ public final class UserService extends TraktApiService {
 
             this.field(FIELD_USERNAME, username);
         }
+        
+        /**
+         * Returns complete movie info if set to Extended. Only send this if you
+         * really need the full dump as it doubles the data size being sent
+         * back. Returns only the minimal info (title, year, imdb_id, tmdb_id)
+         * required for media center syncing if set to min. This sends about
+         * half the data.
+         * 
+         * @param ExtendedParam
+         * @return Builder instance
+         */
+        public LibraryMoviesHatedBuilder extended(ExtendedParam extended) {
+            this.field(FIELD_EXTENDED, extended.toString());
+            return this;
+        }
     }
 
     public static final class LibraryMoviesLovedBuilder extends TraktApiBuilder<List<Movie>> {
         private static final String URI = "/user/library/movies/loved.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME;
+                + FIELD_USERNAME + "/" + FIELD_EXTENDED;
 
         private LibraryMoviesLovedBuilder(UserService service, String username) {
             super(service, new TypeToken<List<Movie>>() {
@@ -468,11 +526,53 @@ public final class UserService extends TraktApiService {
 
             this.field(FIELD_USERNAME, username);
         }
+        
+        /**
+         * Returns complete movie info if set to Extended. Only send this if you
+         * really need the full dump as it doubles the data size being sent
+         * back. Returns only the minimal info (title, year, imdb_id, tmdb_id)
+         * required for media center syncing if set to min. This sends about
+         * half the data.
+         * 
+         * @param ExtendedParam
+         * @return Builder instance
+         */
+        public LibraryMoviesLovedBuilder extended(ExtendedParam extended) {
+            this.field(FIELD_EXTENDED, extended.toString());
+            return this;
+        }
+    }
+    
+    public static final class LibraryMoviesWatchedBuilder extends TraktApiBuilder<List<Movie>> {
+        private static final String URI = "/user/library/movies/watched.json/" + FIELD_API_KEY + "/"
+                + FIELD_USERNAME + "/" + FIELD_EXTENDED;
+
+        private LibraryMoviesWatchedBuilder(UserService service, String username) {
+            super(service, new TypeToken<List<Movie>>() {
+            }, URI);
+
+            this.field(FIELD_USERNAME, username);
+        }
+        
+        /**
+         * Returns complete movie info if set to Extended. Only send this if you
+         * really need the full dump as it doubles the data size being sent
+         * back. Returns only the minimal info (title, year, imdb_id, tmdb_id,
+         * plays) required for media center syncing if set to min. This sends
+         * about half the data.
+         * 
+         * @param ExtendedParam
+         * @return Builder instance
+         */
+        public LibraryMoviesWatchedBuilder extended(ExtendedParam extended) {
+            this.field(FIELD_EXTENDED, extended.toString());
+            return this;
+        }
     }
 
     public static final class LibraryShowsAllBuilder extends TraktApiBuilder<List<TvShow>> {
         private static final String URI = "/user/library/shows/all.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME;
+                + FIELD_USERNAME + "/" + FIELD_EXTENDED;
 
         private LibraryShowsAllBuilder(UserService service, String username) {
             super(service, new TypeToken<List<TvShow>>() {
@@ -480,11 +580,26 @@ public final class UserService extends TraktApiService {
 
             this.field(FIELD_USERNAME, username);
         }
+        
+        /**
+         * Returns complete movie info if set to Extended. Only send this if you
+         * really need the full dump as it doubles the data size being sent
+         * back. Returns only the minimal info (title, year, imdb_id, tvdb_id,
+         * tvrage_id, plays) required for media center syncing if set to min.
+         * This sends about half the data.
+         * 
+         * @param ExtendedParam
+         * @return Builder instance
+         */
+        public LibraryShowsAllBuilder extended(ExtendedParam extended) {
+            this.field(FIELD_EXTENDED, extended.toString());
+            return this;
+        }
     }
 
     public static final class LibraryShowsCollectionBuilder extends TraktApiBuilder<List<TvShow>> {
         private static final String URI = "/user/library/shows/collection.json/" + FIELD_API_KEY
-                + "/" + FIELD_USERNAME;
+                + "/" + FIELD_USERNAME + "/" + FIELD_EXTENDED;
 
         private LibraryShowsCollectionBuilder(UserService service, String username) {
             super(service, new TypeToken<List<TvShow>>() {
@@ -492,11 +607,26 @@ public final class UserService extends TraktApiService {
 
             this.field(FIELD_USERNAME, username);
         }
+        
+        /**
+         * Returns complete movie info if set to Extended. Only send this if you
+         * really need the full dump as it doubles the data size being sent
+         * back. Returns only the minimal info (title, year, imdb_id, tvdb_id,
+         * tvrage_id, seasons) required for media center syncing if set to min.
+         * This sends about half the data.
+         * 
+         * @param ExtendedParam
+         * @return Builder instance
+         */
+        public LibraryShowsCollectionBuilder extended(ExtendedParam extended) {
+            this.field(FIELD_EXTENDED, extended.toString());
+            return this;
+        }
     }
 
     public static final class LibraryShowsHatedBuilder extends TraktApiBuilder<List<TvShow>> {
         private static final String URI = "/user/library/shows/hated.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME;
+                + FIELD_USERNAME + "/" + FIELD_EXTENDED;
 
         private LibraryShowsHatedBuilder(UserService service, String username) {
             super(service, new TypeToken<List<TvShow>>() {
@@ -504,17 +634,47 @@ public final class UserService extends TraktApiService {
 
             this.field(FIELD_USERNAME, username);
         }
+        
+        /**
+         * Returns complete movie info if set to Extended. Only send this if you
+         * really need the full dump as it doubles the data size being sent
+         * back. Returns only the minimal info (title, year, imdb_id, tvdb_id,
+         * tvrage_id) required for media center syncing if set to min. This
+         * sends about half the data.
+         * 
+         * @param ExtendedParam
+         * @return Builder instance
+         */
+        public LibraryShowsHatedBuilder extended(ExtendedParam extended) {
+            this.field(FIELD_EXTENDED, extended.toString());
+            return this;
+        }
     }
 
     public static final class LibraryShowsLovedBuilder extends TraktApiBuilder<List<TvShow>> {
         private static final String URI = "/user/library/shows/loved.json/" + FIELD_API_KEY + "/"
-                + FIELD_USERNAME;
+                + FIELD_USERNAME + "/" + FIELD_EXTENDED;
 
         private LibraryShowsLovedBuilder(UserService service, String username) {
             super(service, new TypeToken<List<TvShow>>() {
             }, URI);
 
             this.field(FIELD_USERNAME, username);
+        }
+        
+        /**
+         * Returns complete movie info if set to Extended. Only send this if you
+         * really need the full dump as it doubles the data size being sent
+         * back. Returns only the minimal info (title, year, imdb_id, tvdb_id,
+         * tvrage_id) required for media center syncing if set to min. This
+         * sends about half the data.
+         * 
+         * @param ExtendedParam
+         * @return Builder instance
+         */
+        public LibraryShowsLovedBuilder extended(ExtendedParam extended) {
+            this.field(FIELD_EXTENDED, extended.toString());
+            return this;
         }
     }
 
