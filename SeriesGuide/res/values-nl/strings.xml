@@ -139,8 +139,6 @@
   <string name="pref_trakt">trakt.TV referenties</string>
   <string name="pref_traktsummary">trakt.tv referenties toevoegen of bewerken</string>
   <string name="pref_traktsync">Synchroniseren met trakt.tv</string>
-  <string name="pref_traktintegrate">trakt.tv integreren</string>
-  <string name="pref_traktintegratesummary">trakt activiteit verkrijgen bij bijwerken</string>
   <string name="donate">Doneren (PayPal)</string>
   <string name="feedback">Reactie verzenden</string>
   <string name="pref_advanced">Geavanceerd</string>

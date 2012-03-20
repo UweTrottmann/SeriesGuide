@@ -127,8 +127,6 @@
   <string name="pref_trakt">trakt.tv بيانات</string>
   <string name="pref_traktsummary">trakt.tv أضف أو عدل بياناتك في موقع</string>
   <string name="pref_traktsync">trakt.tv المزامنة مع</string>
-  <string name="pref_traktintegrate">trakt.tv دمج</string>
-  <string name="pref_traktintegratesummary">الحصول على أنشطتك من موقع تراكت مع التحديث</string>
   <string name="feedback">أرسل ملاحظاتك</string>
   <string name="pref_advanced">خيارات متقدمة</string>
   <string name="clear_cache">مسح ذاكرة التخزين المؤقتة للصور</string>

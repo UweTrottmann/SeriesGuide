@@ -141,8 +141,6 @@
   <string name="pref_trakt">trakt.tv:n käyttäjätiedot</string>
   <string name="pref_traktsummary">Lisää tai muokkaa trakt.tv:n käyttäjätietojasi</string>
   <string name="pref_traktsync">Synkronoi trakt.tv:ssä</string>
-  <string name="pref_traktintegrate">Integroi trakt.tv</string>
-  <string name="pref_traktintegratesummary">Nouda toiminta traktista päivitettäessä</string>
   <string name="donate">Tarjoa drinkki kehittäjälle (Paypal)</string>
   <string name="feedback">Lähetä palautetta</string>
   <string name="pref_advanced">Lisäasetukset</string>
@@ -226,8 +224,10 @@
   <string name="dismiss">Hylkää</string>
   <string name="upcoming_show">%s on tulossa</string>
   <string name="upcoming_episodes">Uusia jaksoja tulossa</string>
+  <string name="upcoming_show_detailed">%1$s kanavalla %2$s</string>
   <string name="upcoming_display">Valitse näyttääksesi tulevat ohjelmat</string>
   <string name="pref_notifications">Ilmoitukset</string>
+  <string name="pref_notificationssummary">Ilmoita pian esitettävistä suosikkiohjelmista</string>
   <string name="download_stable">Lataa SeriesGuide</string>
   <string name="betawarning"><b>Varoitus!</b> Täm\' julkaisu on vain beeta-testaajille! Jos epäröit, lataa vakaa versio alta.</string>
   <string-array name="shsorting">

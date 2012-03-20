@@ -102,8 +102,6 @@
   <string name="pref_trakt">Credenciales trakt.tv</string>
   <string name="pref_traktsummary">Agrega o modifica tus credenciales trakt.tv</string>
   <string name="pref_traktsync">Sincronizar con trakt.tv</string>
-  <string name="pref_traktintegrate">Integrar con trakt.tv</string>
-  <string name="pref_traktintegratesummary">Obtener actividad de trakt en actualización</string>
   <string name="feedback">Enviar comentarios</string>
   <string name="pref_advanced">Avanzado</string>
   <string name="pref_hideimages">Ocultar imágenes</string>

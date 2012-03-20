@@ -132,8 +132,6 @@
   <string name="pref_trakt">trakt.tv bejelentkezési adatok</string>
   <string name="pref_traktsummary">trakt.tv fiók hozzáadása vagy szerkesztése</string>
   <string name="pref_traktsync">Szinkronizálás a trakt.tv-vel</string>
-  <string name="pref_traktintegrate">A trakt.tv használata</string>
-  <string name="pref_traktintegratesummary">Frissítéskor trakt használata is</string>
   <string name="feedback">Visszajelzés küldése</string>
   <string name="pref_advanced">Haladó</string>
   <string name="clear_cache">Képtároló törlése</string>

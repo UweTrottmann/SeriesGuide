@@ -90,7 +90,6 @@
   <string name="pref_trakt">Στοιχεία trakt.tv</string>
   <string name="pref_traktsummary">Προσθέσετε ή επεξεργαστείτε τα στοιχεία του trakt.tv</string>
   <string name="pref_traktsync">Συγχρονισμός με trakt.tv</string>
-  <string name="pref_traktintegrate">Ενσωμάτωση trakt.tv</string>
   <string name="pref_advanced">Για προχωρημένους</string>
   <string name="pref_hideimages">Απόκρυψη εικόνων</string>
   <string name="pref_ganalytics">Google Analytics</string>

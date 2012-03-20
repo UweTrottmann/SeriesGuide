@@ -124,8 +124,6 @@
   <string name="pref_trakt">trakt.tv login-info</string>
   <string name="pref_traktsummary">Tilføj eller ret trakt.tv login-info</string>
   <string name="pref_traktsync">Synkroniser med trakt.tv</string>
-  <string name="pref_traktintegrate">Integrer trakt.tv</string>
-  <string name="pref_traktintegratesummary">Hent trakt aktivitet ved opdatering</string>
   <string name="feedback">Send feedback</string>
   <string name="pref_advanced">Avanceret</string>
   <string name="clear_cache">Nulstil cache til billeder</string>

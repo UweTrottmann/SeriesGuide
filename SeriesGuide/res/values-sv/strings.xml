@@ -6,13 +6,14 @@
   <string name="episode_unkownairdate">okänd</string>
   <string name="episode_iswatched">Sett redan</string>
   <string name="episode_notwatched">Inte sett ännu</string>
-  <string name="specialseason">Special Avsnitt</string>
+  <string name="specialseason">Specialavsnitt</string>
   <string name="search_hint">Sök avsnitt</string>
   <string name="search_title">Matchande avsnitt</string>
   <string name="share_episode">Dela avsnitt</string>
   <string name="share_checkout">Kolla</string>
   <string name="search_description">Avsnitt</string>
   <string name="description_overview">Översikt</string>
+  <string name="description_poster">Visa poster</string>
   <string name="norating">saknas</string>
   <string name="loading">Laddar...</string>
   <string name="sending">Skickar...</string>
@@ -34,7 +35,7 @@
   <string name="updateall_yes">Uppdatera (alla)</string>
   <string name="menu_update_delta">Uppdatera (endast föråldrade)</string>
   <string name="context_updateshow">Uppdatera</string>
-  <string name="context_showinfo">Serie Info</string>
+  <string name="context_showinfo">Program Info</string>
   <string name="context_marknext">Visad nästa avsnitt</string>
   <string name="today">idag</string>
   <string name="now">nu</string>
@@ -47,7 +48,7 @@
   <string name="confirm_delete">Vill du verkligen ta bort serien?</string>
   <string name="delete_show">Ta bort</string>
   <string name="dontdelete_show">Radera ej</string>
-  <string name="no_nextepisode">inget nytt avsnitt hittades</string>
+  <string name="no_nextepisode">nästa avsnitt hittades inte</string>
   <string name="nextepisode">nästa:</string>
   <string name="context_favorite">Lägg till i favoriter</string>
   <string name="context_unfavorite">Ta bort från favoriter</string>
@@ -69,6 +70,8 @@
   <string name="update_full">Uppdatera alla serier…</string>
   <string name="update_success">Uppdatering lyckad.</string>
   <string name="update_offline">Uppdatering misslyckades, kontrollera din internet/Wi-Fi-anslutning.</string>
+  <string name="update_inprogress">En uppdatering pågår, försök igen senare.</string>
+  <string name="arttask_start">Laddar posters...</string>
   <string name="show_airs">sänds</string>
   <string name="show_network">på</string>
   <string name="show_noairtime">Inga sändningstider tillgängliga</string>
@@ -119,8 +122,7 @@
   <string name="pref_trakt">trakt.TV referenser</string>
   <string name="pref_traktsummary">Lägg till eller redigera dina trakt.tv referenser</string>
   <string name="pref_traktsync">Synkronisera med trakt.tv</string>
-  <string name="pref_traktintegrate">Integrera trakt.tv</string>
-  <string name="pref_traktintegratesummary">Hämta trakt verksamhet vid uppdatering</string>
+  <string name="donate">Köp utvecklaren en drink (Paypal)</string>
   <string name="feedback">Skicka feedback</string>
   <string name="pref_advanced">Avancerade</string>
   <string name="clear_cache">Töm bildcache</string>
@@ -129,6 +131,7 @@
   <string name="pref_hideimagessummary">Dölja bilderna för Fotogalleriet (omstart krävs)</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Spårar användningen av funktioner för att förbättra SeriesGuide</string>
+  <string name="sendusagedata">Skicka användningsstatistik till utvecklaren</string>
   <string name="backup_description"><b>Säkerhetskopia</b> skapar en kopia av databasen i en fil med namnet <b>seriesdatabase</b> i mappen nedan.\n\nFör att <b>återställa</b> kontrollera att filen är i mappen nedan.\n\nBara säkerhetskopior med samma eller en lägre databasversion som nedan kan återställas.</string>
   <string name="backup_path"><b>Backup mapp</b></string>
   <string name="backup_version"><b>Databasversion</b></string>
@@ -189,6 +192,7 @@
   <string name="welcome_message"><big>Kom igång</big></string>
   <string name="welcome_text">Välkommen!</string>
   <string name="welcome_setuptrakt">Anslut till trakt</string>
+  <string name="pref_notifications">meddelanden</string>
   <string name="download_stable">Ladda ner SeriesGuide</string>
   <string-array name="shsorting">
     <item>A - Z</item>
@@ -210,11 +214,11 @@
     <item>Äldst först (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>a day</item>
-    <item>3 days</item>
-    <item>a week</item>
-    <item>two weeks</item>
-    <item>a month</item>
+    <item>en dag</item>
+    <item>3 dagar</item>
+    <item>en vecka</item>
+    <item>två veckor</item>
+    <item>en månad</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Alla</item>

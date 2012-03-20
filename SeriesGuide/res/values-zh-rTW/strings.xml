@@ -127,8 +127,6 @@
   <string name="pref_trakt">trakt.tv 憑證</string>
   <string name="pref_traktsummary">新增或編輯您的trakt.tv憑證</string>
   <string name="pref_traktsync">與trakt.tv同步</string>
-  <string name="pref_traktintegrate">整合trakt.tv</string>
-  <string name="pref_traktintegratesummary">更新中獲取trakt的活動</string>
   <string name="feedback">傳送反饋意見</string>
   <string name="pref_advanced">進階</string>
   <string name="clear_cache">清除圖片暫存檔</string>

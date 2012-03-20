@@ -112,8 +112,6 @@
   <string name="pref_trakt">trakt.tv påloggingsinformasjon</string>
   <string name="pref_traktsummary">Legg til eller endre pålogginsinformasjonen for trakt.tv</string>
   <string name="pref_traktsync">Synkroniser med trakt.tv</string>
-  <string name="pref_traktintegrate">Integrer med trakt.tv</string>
-  <string name="pref_traktintegratesummary">Motta trakt aktiviteter ved oppdatering</string>
   <string name="feedback">Gi tilbakemelding</string>
   <string name="pref_advanced">Avansert</string>
   <string name="clear_cache">Slett bildebufferen</string>

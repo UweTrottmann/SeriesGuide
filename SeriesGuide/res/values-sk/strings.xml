@@ -80,7 +80,6 @@
   <string name="pref_sharing">Zdieľanie</string>
   <string name="clearGetGlueCredentials">Odpojiť GetGlue</string>
   <string name="pref_traktsync">Synchronizovať s trakt.tv</string>
-  <string name="pref_traktintegrate">Integrovať trakt.tv</string>
   <string name="pref_advanced">Pokročilé</string>
   <string name="pref_hideimages">Skryť obrázky</string>
   <string name="pref_ganalytics">Google Analytics</string>

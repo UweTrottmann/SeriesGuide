@@ -141,8 +141,6 @@
   <string name="pref_trakt">credenciais trakt.tv</string>
   <string name="pref_traktsummary">Adicionar ou editar suas credenciais trakt.tv</string>
   <string name="pref_traktsync">Sincronizar com trakt.tv</string>
-  <string name="pref_traktintegrate">Integrar ao trakt.tv</string>
-  <string name="pref_traktintegratesummary">Sincronizar com o trakt ao atualizar</string>
   <string name="donate">Pague uma bebida ao dev (Paypal)</string>
   <string name="feedback">Enviar comentários</string>
   <string name="pref_advanced">Avançado</string>

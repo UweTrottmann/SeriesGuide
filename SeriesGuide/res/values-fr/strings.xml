@@ -127,8 +127,6 @@
   <string name="pref_trakt">Informations d\'identification de trakt.tv</string>
   <string name="pref_traktsummary">Ajouter ou modifier vos informations d\'identification sur trakt.tv</string>
   <string name="pref_traktsync">Synchroniser avec trakt.tv</string>
-  <string name="pref_traktintegrate">Intégrer trakt.tv</string>
-  <string name="pref_traktintegratesummary">Synchro trakt pendant la mise à jour</string>
   <string name="feedback">Envoyez vos commentaires</string>
   <string name="pref_advanced">Avancés</string>
   <string name="clear_cache">Vider le cache d\'images</string>

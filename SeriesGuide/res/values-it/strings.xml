@@ -78,7 +78,6 @@
   <string name="pref_trakt">Credenziali Trakt.TV</string>
   <string name="pref_traktsummary">Aggiungi o modifica le credenziali Trakt.tv</string>
   <string name="pref_traktsync">Sincronizzazione con Trakt.tv</string>
-  <string name="pref_traktintegrate">Integrare Trakt.tv</string>
   <string name="pref_advanced">Avanzato</string>
   <string name="pref_hideimages">Nascondi le immagini</string>
   <string name="pref_ganalytics">Google Analytics</string>
