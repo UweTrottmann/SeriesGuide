@@ -285,6 +285,8 @@
     <!-- Welcome dialog -->
     <string name="welcome_message"><big>Get started</big></string>
     <string name="welcome_text">Welcome!</string>
+    <string name="welcome_language">Choose the primary content language you prefer:</string>
+    <string name="welcome_setuplanguage">Choose language</string>
     <string name="welcome_setuptrakt">Connect to trakt</string>
     <string name="welcome_traktmessage">Access your trakt.tv library and friends activity with SeriesGuide:</string>
     <string name="dismiss">Dismiss</string>
@@ -328,46 +330,46 @@
         <item>dvdoldestfirst</item>
     </string-array>
     <string-array name="languages">
+        <item>English</item>
+        <item>čeština</item>
         <item>Dansk</item>
-        <item>Suomeksi</item>
-        <item>Nederlands</item>
         <item>Deutsch</item>
-        <item>Italiano</item>
+        <item>Ελληνικά</item>
         <item>Español</item>
         <item>Français</item>
-        <item>Polski</item>
+        <item>Hrvatski</item>
+        <item>Italiano</item>
         <item>Magyar</item>
-        <item>Ελληνικά</item>
-        <item>Türkçe</item>
+        <item>Nederlands</item>
+        <item>Norsk</item>
+        <item>Polski</item>
         <item>русский язык</item>
         <item>Português</item>
-        <item>čeština</item>
         <item>Slovenski</item>
-        <item>Hrvatski</item>
-        <item>English</item>
+        <item>Suomeksi</item>
         <item>Svenska</item>
-        <item>Norsk</item>
+        <item>Türkçe</item>
     </string-array>
     <string-array name="languageData">
+        <item>en</item>
+        <item>cs</item>
         <item>da</item>
-        <item>fi</item>
-        <item>nl</item>
         <item>de</item>
-        <item>it</item>
+        <item>el</item>
         <item>es</item>
         <item>fr</item>
-        <item>pl</item>
+        <item>hr</item>
+        <item>it</item>
         <item>hu</item>
-        <item>el</item>
-        <item>tr</item>
+        <item>nl</item>
+        <item>no</item>
+        <item>pl</item>
         <item>ru</item>
         <item>pt</item>
-        <item>cs</item>
         <item>sl</item>
-        <item>hr</item>
-        <item>en</item>
+        <item>fi</item>
         <item>sv</item>
-        <item>no</item>
+        <item>tr</item>
     </string-array>
     <string-array name="numberData">
         <item>default</item>
