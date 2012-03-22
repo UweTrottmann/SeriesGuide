@@ -24,6 +24,7 @@ import android.os.AsyncTask;
 import android.os.RemoteException;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -39,6 +40,8 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
     private static final int FAILED_CREDENTIALS = 102;
 
     private static final int FAILED_API = 103;
+
+    private static final String TAG = "TraktSync";
 
     private FragmentActivity mContext;
 
@@ -99,8 +102,10 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             shows = manager.userService().libraryShowsWatched(username).extended(ExtendedParam.Min)
                     .fire();
         } catch (TraktException te) {
+            Log.w(TAG, te);
             return FAILED_API;
         } catch (ApiException e) {
+            Log.w(TAG, e);
             return FAILED_API;
         }
 
@@ -261,8 +266,10 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                     builderUnseen.fire();
                 }
             } catch (TraktException te) {
+                Log.w(TAG, te);
                 return FAILED_API;
             } catch (ApiException e) {
+                Log.w(TAG, e);
                 return FAILED_API;
             }
         }

@@ -35,6 +35,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.InputFilter;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -489,11 +490,13 @@ public class ShareUtils {
 
                 return r;
             } catch (TraktException te) {
+                Log.w(TAG, te);
                 Response r = new Response();
                 r.status = TraktStatus.FAILURE;
                 r.error = mContext.getString(R.string.trakt_generalerror);
                 return r;
             } catch (ApiException e) {
+                Log.w(TAG, e);
                 Response r = new Response();
                 r.status = TraktStatus.FAILURE;
                 r.error = mContext.getString(R.string.trakt_generalerror);
