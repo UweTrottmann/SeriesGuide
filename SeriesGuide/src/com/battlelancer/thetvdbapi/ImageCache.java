@@ -1,19 +1,3 @@
-/* Copyright (c) 2009 Matthias Käppler
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * 
- * Modified for SeriesGuide - Uwe Trottmann 2011
- */
 
 package com.battlelancer.thetvdbapi;
 
@@ -41,35 +25,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * <p>
- * A simple 2-level cache for bitmap images consisting of a small and fast
- * in-memory cache (1st level cache) and a slower but bigger disk cache (2nd
- * level cache). For second level caching, the application's cache directory
- * will be used. Please note that Android may at any point decide to wipe that
- * directory.
- * </p>
- * <p>
- * When pulling from the cache, it will first attempt to load the image from
- * memory. If that fails, it will try to load it from disk. If that succeeds,
- * the image will be put in the 1st level cache and returned. Otherwise it's a
- * cache miss, and the caller is responsible for loading the image from
- * elsewhere (probably the Internet).
- * </p>
- * <p>
- * Pushes to the cache are always write-through (i.e., the image will be stored
- * both on disk and in memory).
- * </p>
- * 
- * @author Matthias Kaeppler
- */
-
-/**
- * Modified to use external storage directory as second level cache.
- * 
- * @author Uwe Trottmann
- */
-
 public class ImageCache {
 
     private static final String THUMB_SUFFIX = "thumb";
@@ -77,8 +32,6 @@ public class ImageCache {
     private int mCachedImageQuality = 98;
 
     private String mSecondLevelCacheDir;
-
-    // private final HashMap<String, Bitmap> mCache;
 
     private static final CompressFormat mCompressedImageFormat = CompressFormat.JPEG;
 
@@ -119,7 +72,6 @@ public class ImageCache {
 
     private ImageCache(Context ctx) {
         this.mCtx = ctx;
-        // this.mCache = new HashMap<String, Bitmap>(HARD_CACHE_CAPACITY);
         this.mSecondLevelCacheDir = Environment.getExternalStorageDirectory().getAbsolutePath()
                 + "/Android/data/" + ctx.getPackageName() + "/files";
         mScale = mCtx.getResources().getDisplayMetrics().density;
