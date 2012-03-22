@@ -33,6 +33,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ShareCompat;
+import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.text.InputFilter;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -156,16 +158,17 @@ public class ShareUtils {
             }
             case OTHER_SERVICES: {
                 // Android apps
+                IntentBuilder ib = ShareCompat.IntentBuilder.from(activity);
+
                 String text = sharestring;
                 if (imdbId.length() != 0) {
                     text += " " + ShowInfoActivity.IMDB_TITLE_URL + imdbId;
                 }
 
-                Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType("text/plain");
-                i.putExtra(Intent.EXTRA_TEXT, text);
-                activity.startActivity(Intent.createChooser(i,
-                        activity.getString(R.string.share_episode)));
+                ib.setText(text);
+                ib.setChooserTitle(R.string.share_episode);
+                ib.createChooserIntent();
+                ib.startChooser();
                 break;
             }
         }
