@@ -80,7 +80,7 @@ public class TheTVDB {
      * a show already exists in your database.
      * 
      * @param showId
-     * @param seenShows TODO
+     * @param seenShows
      * @return true if show and its episodes were added, false if it already
      *         exists
      * @throws IOException
@@ -109,7 +109,7 @@ public class TheTVDB {
 
         // try to find seen episodes from trakt
         for (TvShow tvShow : seenShows) {
-            if (tvShow.tvdbId.equals(showId)) {
+            if (showId.equals(tvShow.tvdbId)) {
                 batch.clear();
 
                 // try to find matching seasons
