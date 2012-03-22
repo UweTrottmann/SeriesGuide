@@ -157,7 +157,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
         // actually update the shows
         for (int i = updateCount.get(); i < mShows.length; i++) {
-            // skip ahead if we get cancelled or connectivity is lost/forbidden
+            // skip ahead if we get cancelled or connectivity is
+            // lost/forbidden
             if (isCancelled()) {
                 resultCode = UPDATE_CANCELLED;
                 break;
@@ -174,11 +175,21 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             publishProgress(i, maxProgress);
 
             for (int itry = 0; itry < 2; itry++) {
-                try {
+                // skip ahead if we get cancelled or connectivity is
+                // lost/forbidden
+                if (isCancelled()) {
+                    resultCode = UPDATE_CANCELLED;
+                    break;
+                }
+                if (!Utils.isNetworkConnected(mAppContext)
+                        || (isAutoUpdateWlanOnly && !Utils.isWifiConnected(mAppContext))) {
+                    resultCode = UPDATE_OFFLINE;
+                    break;
+                }
 
+                try {
                     TheTVDB.updateShow(id, mAppContext);
                     break;
-
                 } catch (SAXException saxe) {
                     if (itry == 1) {
                         // failed twice, give up
