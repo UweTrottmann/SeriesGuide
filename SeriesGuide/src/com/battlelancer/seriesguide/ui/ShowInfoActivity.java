@@ -2,6 +2,8 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
@@ -19,6 +21,8 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ShareCompat;
+import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -30,6 +34,8 @@ public class ShowInfoActivity extends BaseActivity {
     public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
 
     private String seriesid;
+
+    private IntentBuilder mShareIntentBuilder;
 
     /**
      * Google Analytics helper method for easy event tracking.
@@ -63,9 +69,16 @@ public class ShowInfoActivity extends BaseActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getSupportMenuInflater();
+        inflater.inflate(R.menu.showinfo_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
+            case android.R.id.home: {
                 // Navigate to the parent activity instead
                 final Intent intent = new Intent(this, OverviewActivity.class);
                 intent.putExtra(Shows._ID, seriesid);
@@ -73,6 +86,11 @@ public class ShowInfoActivity extends BaseActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.home_enter, R.anim.home_exit);
                 return true;
+            }
+            case R.id.menu_share: {
+                mShareIntentBuilder.startChooser();
+                return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -203,6 +221,14 @@ public class ShowInfoActivity extends BaseActivity {
                 newFragment.show(getSupportFragmentManager(), "shouts-dialog");
             }
         });
+
+        // Share intent
+        mShareIntentBuilder = ShareCompat.IntentBuilder
+                .from(this)
+                .setChooserTitle(R.string.share)
+                .setText(
+                        getString(R.string.share_checkout) + " " + show.getSeriesName() + " "
+                                + ShowInfoActivity.IMDB_TITLE_URL + imdbid);
 
         // trakt ratings
         new TraktSummaryTask(this, findViewById(R.id.ratingbar)).show(tvdbId).execute();
