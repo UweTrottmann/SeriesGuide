@@ -2,9 +2,6 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.getglueapi.GetGlue;
-import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
-import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.ShowInfoActivity;
@@ -35,10 +32,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.app.ShareCompat.IntentBuilder;
-import android.text.InputFilter;
 import android.text.format.DateUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +42,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -108,40 +102,6 @@ public class ShareUtils {
                 .commit();
 
         switch (shareMethod) {
-            case CHECKIN_GETGLUE: {
-                // GetGlue check in
-                if (imdbId.length() != 0) {
-                    showGetGlueDialog(fm, args);
-                } else {
-                    Toast.makeText(activity, activity.getString(R.string.checkin_impossible),
-                            Toast.LENGTH_LONG).show();
-                }
-                break;
-            }
-            case CHECKIN_TRAKT: {
-                // trakt check in
-
-                // DialogFragment.show() will take care of
-                // adding the fragment
-                // in a transaction. We also want to remove
-                // any currently showing
-                // dialog, so make our own transaction and
-                // take care of that here.
-                FragmentTransaction ft = fm.beginTransaction();
-                Fragment prev = fm.findFragmentByTag("progress-dialog");
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-                ProgressDialog newFragment = ProgressDialog.newInstance();
-                newFragment.show(ft, "progress-dialog");
-
-                // start the trakt check in task, add the
-                // dialog as listener
-                args.putInt(ShareItems.TRAKTACTION, TraktAction.CHECKIN_EPISODE.index());
-                new TraktTask(activity, fm, args, null).execute();
-
-                break;
-            }
             case MARKSEEN_TRAKT: {
                 // trakt mark as seen
                 args.putInt(ShareItems.TRAKTACTION, TraktAction.SEEN_EPISODE.index());
@@ -172,80 +132,6 @@ public class ShareUtils {
                 break;
             }
         }
-    }
-
-    public static void showGetGlueDialog(FragmentManager manager, Bundle shareData) {
-        // Create and show the dialog.
-        GetGlueDialogFragment newFragment = GetGlueDialogFragment.newInstance(shareData);
-        FragmentTransaction ft = manager.beginTransaction();
-        newFragment.show(ft, "getgluedialog");
-    }
-
-    public static class GetGlueDialogFragment extends DialogFragment {
-
-        public static GetGlueDialogFragment newInstance(Bundle shareData) {
-            GetGlueDialogFragment f = new GetGlueDialogFragment();
-            f.setArguments(shareData);
-            return f;
-        }
-
-        private EditText input;
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final String episodestring = getArguments().getString(ShareItems.EPISODESTRING);
-            final String imdbId = getArguments().getString(ShareItems.IMDBID);
-            final FragmentActivity activity = getActivity();
-            final SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(getActivity());
-
-            final LinearLayout layout = new LinearLayout(getActivity());
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(16, 16, 16, 16);
-
-            input = new EditText(getActivity());
-            input.setMinLines(3);
-            input.setMaxLines(5);
-            input.setGravity(Gravity.TOP);
-            input.setFilters(new InputFilter[] {
-                new InputFilter.LengthFilter(140)
-            });
-
-            layout.addView(input, layoutParams);
-
-            if (savedInstanceState != null) {
-                input.setText(savedInstanceState.getString("inputtext"));
-            } else {
-                input.setText(episodestring);
-            }
-
-            return new AlertDialog.Builder(getActivity()).setTitle(getString(R.string.comment))
-                    .setView(layout)
-                    .setPositiveButton(R.string.checkin, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            String comment = input.getText().toString();
-
-                            // if we are authenticated go ahead, if not
-                            // authenticate first
-                            if (GetGlue.isAuthenticated(prefs)) {
-                                new CheckInTask(imdbId, comment, activity).execute();
-                            } else {
-                                Intent i = new Intent(activity, PrepareRequestTokenActivity.class);
-                                i.putExtra(ShareUtils.KEY_GETGLUE_IMDBID, imdbId);
-                                i.putExtra(ShareUtils.KEY_GETGLUE_COMMENT, comment);
-                                startActivity(i);
-                            }
-                        }
-                    }).setNegativeButton(android.R.string.cancel, null).create();
-        }
-
-        @Override
-        public void onSaveInstanceState(Bundle outState) {
-            super.onSaveInstanceState(outState);
-            outState.putString("inputtext", input.getText().toString());
-        }
-
     }
 
     public interface ShareItems {
