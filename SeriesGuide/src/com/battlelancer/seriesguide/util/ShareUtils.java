@@ -127,7 +127,7 @@ public class ShareUtils {
 
                 ib.setText(text);
                 ib.setChooserTitle(R.string.share_episode);
-                ib.createChooserIntent();
+                ib.setType("text/plain");
                 ib.startChooser();
                 break;
             }
