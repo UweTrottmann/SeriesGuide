@@ -73,7 +73,7 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
         final int episode = getArguments().getInt(ShareItems.EPISODE);
 
         // get share service enabled settings
-        mGetGlueChecked = prefs.getBoolean(SeriesGuidePreferences.KEY_SHAREWITHTRAKT, false);
+        mGetGlueChecked = prefs.getBoolean(SeriesGuidePreferences.KEY_SHAREWITHGETGLUE, false);
         mTraktChecked = prefs.getBoolean(SeriesGuidePreferences.KEY_SHAREWITHTRAKT, false);
 
         // Message box
