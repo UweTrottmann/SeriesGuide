@@ -107,6 +107,8 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                 }
 
                 mGetGlueChecked = isChecked;
+                prefs.edit().putBoolean(SeriesGuidePreferences.KEY_SHAREWITHGETGLUE, isChecked)
+                        .commit();
                 updateCheckInButtonState();
             }
         });
@@ -127,6 +129,8 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                 }
 
                 mTraktChecked = isChecked;
+                prefs.edit().putBoolean(SeriesGuidePreferences.KEY_SHAREWITHTRAKT, isChecked)
+                        .commit();
                 updateCheckInButtonState();
             }
         });
@@ -143,7 +147,8 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                     if (!GetGlue.isAuthenticated(prefs)) {
                         // cancel if required auth data is missing
                         mToggleGetGlueButton.setChecked(false);
-                        v.setEnabled(false);
+                        mGetGlueChecked = false;
+                        updateCheckInButtonState();
                         return;
                     } else {
                         // check in
@@ -155,7 +160,8 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                     if (!ShareUtils.isTraktCredentialsValid(getSherlockActivity())) {
                         // cancel if required auth data is missing
                         mToggleTraktButton.setChecked(false);
-                        v.setEnabled(false);
+                        mTraktChecked = false;
+                        updateCheckInButtonState();
                         return;
                     } else {
                         // check in
@@ -176,11 +182,6 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                                 tvdbid, season, episode, message).execute();
                     }
                 }
-
-                // save service enabled setting
-                prefs.edit().putBoolean(SeriesGuidePreferences.KEY_SHAREWITHTRAKT, mTraktChecked)
-                        .putBoolean(SeriesGuidePreferences.KEY_SHAREWITHGETGLUE, mGetGlueChecked)
-                        .commit();
 
                 dismiss();
             }
