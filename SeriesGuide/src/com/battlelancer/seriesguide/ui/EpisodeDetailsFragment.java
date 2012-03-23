@@ -129,7 +129,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         int lastShareAction = prefs.getInt(SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
 
         MenuItem shareAction = menu.findItem(R.id.menu_quickshare);
-        if (lastShareAction != -1) {
+        if (lastShareAction > 1) {
             ShareMethod shareMethod = ShareMethod.values()[lastShareAction];
             shareAction.setTitle(shareMethod.titleRes);
             shareAction.setIcon(shareMethod.drawableRes);
@@ -142,12 +142,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_togglemark: {
-                fireTrackerEvent("Toggle watched");
-
-                onToggleWatchState();
-                break;
-            }
             case R.id.menu_quickshare: {
                 final SharedPreferences prefs = PreferenceManager
                         .getDefaultSharedPreferences(getActivity());
@@ -158,16 +152,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 fireTrackerEvent("Quick share (" + shareMethod.name() + ")");
 
                 onShareEpisode(shareMethod, false);
-                break;
-            }
-            case R.id.menu_checkin_getglue: {
-                fireTrackerEvent("Check In (GetGlue)");
-                onShareEpisode(ShareMethod.CHECKIN_GETGLUE, true);
-                break;
-            }
-            case R.id.menu_checkin_trakt: {
-                fireTrackerEvent("Check In (trakt)");
-                onShareEpisode(ShareMethod.CHECKIN_TRAKT, true);
                 break;
             }
             case R.id.menu_markseen_trakt: {
@@ -183,23 +167,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             case R.id.menu_share_others: {
                 fireTrackerEvent("Share (apps)");
                 onShareEpisode(ShareMethod.OTHER_SERVICES, true);
-                break;
-            }
-            case R.id.menu_addevent: {
-                fireTrackerEvent("Add to calendar");
-
-                final Cursor episode = (Cursor) getListAdapter().getItem(0);
-                episode.moveToFirst();
-
-                final String showTitle = episode.getString(EpisodeDetailsQuery.SHOW_TITLE);
-                final String episodestring = ShareUtils.onCreateShareString(getActivity(), episode);
-                final long airtime = episode.getLong(EpisodeDetailsQuery.FIRSTAIREDMS);
-                final String runTime = episode.getString(EpisodeDetailsQuery.SHOW_RUNTIME);
-                ShareUtils.onAddCalendarEvent(getActivity(), showTitle, episodestring, airtime,
-                        runTime);
-
-                // don't close cursor!
-                // episode.close();
                 break;
             }
             default:
@@ -241,7 +208,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         String[] from = new String[] {
                 Episodes.TITLE, Episodes.OVERVIEW, Episodes.FIRSTAIREDMS, Episodes.DVDNUMBER,
                 Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS, Episodes.RATING,
-                Episodes.IMAGE, Shows.TITLE, Episodes.WATCHED, Shows.REF_SHOW_ID
+                Episodes.IMAGE, Shows.TITLE, Episodes.WATCHED, Shows.REF_SHOW_ID, Shows.IMDBID
 
         };
         int[] to = new int[] {
@@ -250,7 +217,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 R.id.TextViewEpisodeDirectors, R.id.TextViewEpisodeGuestStars,
                 R.id.TextViewEpisodeWriters, R.id.ratingbar, R.id.imageContainer,
                 R.id.textViewEpisodeDetailsShowName, R.id.TextViewEpisodeWatchedState,
-                R.id.buttonbar_ref
+                R.id.buttonbar_ref, R.id.buttonbar
         };
 
         mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.episodedetails, null, from, to,
@@ -415,6 +382,43 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         }
                     });
 
+                    return true;
+                }
+                if (columnIndex == EpisodeDetailsQuery.SHOW_IMDBID) {
+                    // check in button
+                    view.findViewById(R.id.checkinButton).setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // display a check-in dialog
+                            CheckInDialogFragment f = CheckInDialogFragment.newInstance();
+                            f.show(getFragmentManager(), "checkin-dialog");
+                        }
+                    });
+
+                    // watched button
+                    view.findViewById(R.id.seenButton).setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            fireTrackerEvent("Toggle watched");
+                            onToggleWatchState();
+                        }
+                    });
+
+                    // calendar button
+                    final String showTitle = episode.getString(EpisodeDetailsQuery.SHOW_TITLE);
+                    final String episodestring = ShareUtils.onCreateShareString(
+                            getSherlockActivity(), episode);
+                    final long airtime = episode.getLong(EpisodeDetailsQuery.FIRSTAIREDMS);
+                    final String runTime = episode.getString(EpisodeDetailsQuery.SHOW_RUNTIME);
+                    view.findViewById(R.id.calendarButton).setOnClickListener(
+                            new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    fireTrackerEvent("Add to calendar");
+                                    ShareUtils.onAddCalendarEvent(getSherlockActivity(), showTitle,
+                                            episodestring, airtime, runTime);
+                                }
+                            });
                     return true;
                 }
                 return false;
