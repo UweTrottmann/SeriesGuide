@@ -214,11 +214,11 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         final boolean isAutoUpdateEnabled = prefs.getBoolean(SeriesGuidePreferences.KEY_AUTOUPDATE,
                 true);
         if (isAutoUpdateEnabled && !TaskManager.getInstance(this).isUpdateTaskRunning(false)) {
-            // allow auto-update if 12 hours have passed
+            // allow auto-update if 15mins have passed since last one
             long currentTime = System.currentTimeMillis();
             final long previousUpdateTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTUPDATE,
                     currentTime);
-            final boolean isTime = currentTime - (previousUpdateTime) > 15 * DateUtils.MINUTE_IN_MILLIS;
+            final boolean isTime = (currentTime - previousUpdateTime) > 15 * DateUtils.MINUTE_IN_MILLIS;
 
             if (isTime) {
                 // allow auto-update only on allowed connection
