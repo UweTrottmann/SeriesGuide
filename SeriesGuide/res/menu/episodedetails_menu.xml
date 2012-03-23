@@ -2,11 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/menu_togglemark"
-        android:icon="@drawable/ic_action_seen"
-        android:showAsAction="ifRoom"
-        android:title="@string/togglewatched"/>
-    <item
         android:id="@+id/menu_quickshare"
         android:icon="@drawable/ic_action_share"
         android:showAsAction="always"
@@ -17,14 +12,6 @@
         android:showAsAction="always"
         android:title="@string/share_episode">
         <menu>
-            <item
-                android:id="@+id/menu_checkin_getglue"
-                android:icon="@drawable/ic_getglue"
-                android:title="@string/menu_checkin_getglue"/>
-            <item
-                android:id="@+id/menu_checkin_trakt"
-                android:icon="@drawable/ic_trakt"
-                android:title="@string/menu_checkin_trakt"/>
             <item
                 android:id="@+id/menu_markseen_trakt"
                 android:icon="@drawable/ic_trakt_seen"
@@ -38,12 +25,6 @@
                 android:icon="@drawable/ic_action_share"
                 android:title="@string/menu_share_others"/>
         </menu>
-    </item>
-    <item
-        android:id="@+id/menu_addevent"
-        android:icon="@drawable/ic_action_calendar"
-        android:showAsAction="ifRoom"
-        android:title="@string/addtocalendar">
     </item>
 
 </menu>

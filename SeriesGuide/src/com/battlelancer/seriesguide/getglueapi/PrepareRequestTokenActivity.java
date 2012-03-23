@@ -135,7 +135,9 @@ public class PrepareRequestTokenActivity extends BaseActivity {
                     Bundle extras = getIntent().getExtras();
                     String comment = extras.getString(ShareUtils.KEY_GETGLUE_COMMENT);
                     String imdbId = extras.getString(ShareUtils.KEY_GETGLUE_IMDBID);
-                    new CheckInTask(imdbId, comment, mContext).execute();
+                    if (comment != null && imdbId != null) {
+                        new CheckInTask(imdbId, comment, mContext).execute();
+                    }
                     break;
                 case AUTH_FAILED:
                     Toast.makeText(getApplicationContext(), getString(R.string.checkinfailed),

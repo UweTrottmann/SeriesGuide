@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ScrollingLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <Button
+        android:id="@+id/pasteEpisode"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/paste_episode" />
+
+    <EditText
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pasteEpisode"
+        android:gravity="top"
+        android:hint="@string/checkin_hint"
+        android:inputType="textMultiLine"
+        android:lines="3"
+        android:maxLength="100" >
+
+        <requestFocus />
+    </EditText>
+
+    <CheckBox
+        android:id="@+id/toggleTrakt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/message"
+        android:layout_marginTop="@dimen/default_padding"
+        android:text="@string/trakt" />
+
+    <CheckBox
+        android:id="@+id/toggleGetGlue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toggleTrakt"
+        android:text="@string/getglue" />
+
+    <Button
+        android:id="@+id/checkinButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/toggleGetGlue"
+        android:layout_alignParentRight="true"
+        android:text="@string/checkin" />
+
+</RelativeLayout>

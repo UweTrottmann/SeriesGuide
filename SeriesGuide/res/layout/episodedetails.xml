@@ -15,7 +15,7 @@
 
     <Button
         android:id="@+id/textViewEpisodeDetailsShowName"
-        style="@style/HoloCompatButton"
+        style="@style/HoloCompatButton.Small"
         android:text="@string/app_name" >
     </Button>
 
