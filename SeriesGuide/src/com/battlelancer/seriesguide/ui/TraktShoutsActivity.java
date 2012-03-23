@@ -10,17 +10,23 @@ import android.os.Bundle;
 
 public class TraktShoutsActivity extends BaseActivity {
 
+    public static Bundle createInitBundle(int showTvdbid, int seasonNumber, int episodeNumber,
+            String title) {
+        Bundle extras = new Bundle();
+        extras.putInt(ShareItems.TVDBID, showTvdbid);
+        extras.putInt(ShareItems.SEASON, seasonNumber);
+        extras.putInt(ShareItems.EPISODE, episodeNumber);
+        extras.putString(ShareItems.SHARESTRING, title);
+        return extras;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singlepane_empty);
 
-        // FIXME I don't like that I had to wrap everything here in a Bundle
-        // again
         Bundle args = getIntent().getExtras();
         String title = args.getString(ShareItems.SHARESTRING);
-        int tvdbId = args.getInt(ShareItems.TVDBID);
-        int episode = args.getInt(ShareItems.EPISODE);
 
         final ActionBar actionBar = getSupportActionBar();
         setTitle(getString(R.string.shouts_for, ""));
@@ -29,6 +35,8 @@ public class TraktShoutsActivity extends BaseActivity {
 
         // embed the shouts fragment dialog
         SherlockDialogFragment newFragment;
+        int tvdbId = args.getInt(ShareItems.TVDBID);
+        int episode = args.getInt(ShareItems.EPISODE);
         if (episode == 0) {
             newFragment = TraktShoutsFragment.newInstance(title, tvdbId);
         } else {

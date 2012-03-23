@@ -83,6 +83,10 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_LANGUAGE = "language";
 
+    public static final String KEY_SHAREWITHTRAKT = "com.battlelancer.seriesguide.sharewithtrakt";
+
+    public static final String KEY_SHAREWITHGETGLUE = "com.battlelancer.seriesguide.sharewithgetglue";
+
     public static final String SUPPORT_MAIL = "seriesguide@battlelancer.com";
 
     public static final String HELP_URL = "http://seriesguide.uwetrottmann.com/help";

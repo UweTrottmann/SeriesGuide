@@ -371,12 +371,30 @@ public class ShareUtils {
         }
 
         /**
+         * Check into an episode. Optionally provide a checkin message.
+         * 
+         * @param tvdbid
+         * @param season
+         * @param episode
+         * @param message
+         * @return TraktTask
+         */
+        public TraktTask checkin(int tvdbid, int season, int episode, String message) {
+            mArgs.putInt(ShareItems.TRAKTACTION, TraktAction.CHECKIN_EPISODE.index);
+            mArgs.putInt(ShareItems.TVDBID, tvdbid);
+            mArgs.putInt(ShareItems.SEASON, season);
+            mArgs.putInt(ShareItems.EPISODE, episode);
+            mArgs.putString(ShareItems.SHARESTRING, message);
+            return this;
+        }
+
+        /**
          * Post a shout for a show.
          * 
          * @param tvdbid
          * @param shout
          * @param isSpoiler
-         * @return
+         * @return TraktTask
          */
         public TraktTask shout(int tvdbid, String shout, boolean isSpoiler) {
             mArgs.putInt(ShareItems.TRAKTACTION, TraktAction.SHOUT.index);
@@ -394,7 +412,7 @@ public class ShareUtils {
          * @param episode
          * @param shout
          * @param isSpoiler
-         * @return
+         * @return TraktTask
          */
         public TraktTask shout(int tvdbid, int season, int episode, String shout, boolean isSpoiler) {
             shout(tvdbid, shout, isSpoiler);

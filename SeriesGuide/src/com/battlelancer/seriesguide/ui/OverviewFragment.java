@@ -386,113 +386,102 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         }.execute();
     }
 
-    /**
-     * Load title, numbers, description, dvdnumber, directors, guesstars,
-     * writers and rating.
-     * 
-     * @param episode
-     */
     protected void onLoadEpisodeDetails(final Cursor episode) {
+        final String episodeTitle = episode.getString(EpisodeQuery.TITLE);
+        final int showTvdbid = episode.getInt(EpisodeQuery.REF_SHOW_ID);
+        final int seasonNumber = episode.getInt(EpisodeQuery.SEASON);
+        final int episodeNumber = episode.getInt(EpisodeQuery.NUMBER);
+
+        // populate share bundle
+        mShareData.putInt(ShareItems.TVDBID, showTvdbid);
+        mShareData.putInt(ShareItems.SEASON, seasonNumber);
+        mShareData.putInt(ShareItems.EPISODE, episodeNumber);
 
         // Episode title
-        TextView episodetitle = (TextView) getActivity().findViewById(R.id.TextViewEpisodeTitle);
-        final String title = episode.getString(EpisodeQuery.TITLE);
-        episodetitle.setText(title);
+        ((TextView) getView().findViewById(R.id.TextViewEpisodeTitle)).setText(episodeTitle);
 
-        // Season and Number
-        TextView numbers = (TextView) getActivity().findViewById(R.id.TextViewEpisodeNumbers);
-
-        // trakt
-        final int showTvdbId = episode.getInt(EpisodeQuery.REF_SHOW_ID);
-        final int season = episode.getInt(EpisodeQuery.SEASON);
-        final int number = episode.getInt(EpisodeQuery.NUMBER);
-        mShareData.putInt(ShareItems.TVDBID, showTvdbId);
-        mShareData.putInt(ShareItems.SEASON, season);
-        mShareData.putInt(ShareItems.EPISODE, number);
-
-        numbers.setText(getString(R.string.season) + " " + episode.getString(EpisodeQuery.SEASON)
-                + " " + getString(R.string.episode) + " " + episode.getString(EpisodeQuery.NUMBER));
+        // Season and episode number
+        ((TextView) getView().findViewById(R.id.TextViewEpisodeNumbers))
+                .setText(getString(R.string.season) + " " + seasonNumber + " "
+                        + getString(R.string.episode) + " " + episodeNumber);
 
         // Check in button
-        getSherlockActivity().findViewById(R.id.checkinButton).setOnClickListener(
-                new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        CheckInDialogFragment f = CheckInDialogFragment.newInstance();
-                        f.show(getFragmentManager(), "checkin-dialog");
-                    }
-                });
+        getView().findViewById(R.id.checkinButton).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckInDialogFragment f = CheckInDialogFragment.newInstance(
+                        mShareData.getString(ShareItems.IMDBID), showTvdbid, seasonNumber,
+                        episodeNumber, mShareData.getString(ShareItems.EPISODESTRING));
+                f.show(getFragmentManager(), "checkin-dialog");
+            }
+        });
 
         // Watched button
-        getSherlockActivity().findViewById(R.id.seenButton).setOnClickListener(
-                new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fireTrackerEvent("Toggle watched");
-                        onMarkWatched();
-                    }
-                });
+        getView().findViewById(R.id.seenButton).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fireTrackerEvent("Toggle watched");
+                onMarkWatched();
+            }
+        });
 
         // Calendar button
-        getSherlockActivity().findViewById(R.id.calendarButton).setOnClickListener(
-                new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fireTrackerEvent("Add to calendar");
-                        ShareUtils.onAddCalendarEvent(getSherlockActivity(), mShow.getSeriesName(),
-                                mShareData.getString(ShareItems.EPISODESTRING), mAirtime,
-                                mShow.getRuntime());
-                    }
-                });
+        getView().findViewById(R.id.calendarButton).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fireTrackerEvent("Add to calendar");
+                ShareUtils.onAddCalendarEvent(getActivity(), mShow.getSeriesName(),
+                        mShareData.getString(ShareItems.EPISODESTRING), mAirtime,
+                        mShow.getRuntime());
+            }
+        });
 
         // Description
-        TextView description = (TextView) getActivity().findViewById(
-                R.id.TextViewEpisodeDescription);
-        description.setText(episode.getString(EpisodeQuery.OVERVIEW));
+        ((TextView) getView().findViewById(R.id.TextViewEpisodeDescription)).setText(episode
+                .getString(EpisodeQuery.OVERVIEW));
 
         // DVD episode number
-        TextView dvdnumber = (TextView) getActivity().findViewById(R.id.textViewEpisodeDVDnumber);
-        dvdnumber.setText(getString(R.string.episode_dvdnumber) + ": "
-                + episode.getString(EpisodeQuery.DVDNUMBER));
+        ((TextView) getView().findViewById(R.id.textViewEpisodeDVDnumber))
+                .setText(getString(R.string.episode_dvdnumber) + ": "
+                        + episode.getString(EpisodeQuery.DVDNUMBER));
 
         // Directors
-        TextView directors = (TextView) getActivity().findViewById(R.id.TextViewEpisodeDirectors);
         String directorsAll = Utils.splitAndKitTVDBStrings(episode
                 .getString(EpisodeQuery.DIRECTORS));
-        directors.setText(getString(R.string.episode_directors) + " " + directorsAll);
+        ((TextView) getView().findViewById(R.id.TextViewEpisodeDirectors))
+                .setText(getString(R.string.episode_directors) + " " + directorsAll);
 
         // Guest stars
-        TextView gueststars = (TextView) getActivity().findViewById(R.id.TextViewEpisodeGuestStars);
-        gueststars.setText(getString(R.string.episode_gueststars) + " "
-                + Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));
+        ((TextView) getView().findViewById(R.id.TextViewEpisodeGuestStars))
+                .setText(getString(R.string.episode_gueststars) + " "
+                        + Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));
 
         // Writers
-        TextView writers = (TextView) getActivity().findViewById(R.id.TextViewEpisodeWriters);
-        writers.setText(getString(R.string.episode_writers) + " "
-                + Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.WRITERS)));
+        ((TextView) getView().findViewById(R.id.TextViewEpisodeWriters))
+                .setText(getString(R.string.episode_writers) + " "
+                        + Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.WRITERS)));
 
         // TVDb rating
-        TextView rating = (TextView) getActivity().findViewById(R.id.value);
         String ratingText = episode.getString(EpisodeQuery.RATING);
         if (ratingText != null && ratingText.length() != 0) {
-            RatingBar ratingBar = (RatingBar) getActivity().findViewById(R.id.bar);
-            ratingBar.setProgress((int) (Double.valueOf(ratingText) / 0.1));
-            rating.setText(ratingText + "/10");
+            ((RatingBar) getView().findViewById(R.id.bar)).setProgress((int) (Double
+                    .valueOf(ratingText) / 0.1));
+            ((TextView) getView().findViewById(R.id.value)).setText(ratingText + "/10");
         }
 
         // trakt rating
-        new TraktSummaryTask(getSherlockActivity(), getView()).episode(showTvdbId, season, number)
-                .execute();
+        new TraktSummaryTask(getSherlockActivity(), getView()).episode(showTvdbid, seasonNumber,
+                episodeNumber).execute();
 
-        // TVDb button
-        getView().findViewById(R.id.buttonShowInfoIMDB).setVisibility(View.GONE);
+        // IMDb and TVDb button
         final String seasonId = episode.getString(EpisodeQuery.REF_SEASON_ID);
         final String episodeId = episode.getString(EpisodeQuery._ID);
+        getView().findViewById(R.id.buttonShowInfoIMDB).setVisibility(View.GONE);
         getView().findViewById(R.id.buttonTVDB).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TVDB_EPISODE_URL_1
-                        + showTvdbId + Constants.TVDB_EPISODE_URL_2 + seasonId
+                        + showTvdbid + Constants.TVDB_EPISODE_URL_2 + seasonId
                         + Constants.TVDB_EPISODE_URL_3 + episodeId));
                 startActivity(i);
             }
@@ -503,16 +492,13 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             @Override
             public void onClick(View v) {
                 if (!mDualPane) {
-                    Intent intent = new Intent();
-                    intent.setClass(getActivity(), TraktShoutsActivity.class);
-                    intent.putExtra(ShareItems.TVDBID, showTvdbId);
-                    intent.putExtra(ShareItems.SEASON, season);
-                    intent.putExtra(ShareItems.EPISODE, number);
-                    intent.putExtra(ShareItems.SHARESTRING, title);
-                    startActivity(intent);
+                    Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
+                    i.putExtras(TraktShoutsActivity.createInitBundle(showTvdbid, seasonNumber,
+                            episodeNumber, episodeTitle));
+                    startActivity(i);
                 } else {
-                    TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(title,
-                            showTvdbId, season, number);
+                    TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(episodeTitle,
+                            showTvdbid, seasonNumber, episodeNumber);
                     newFragment.show(getFragmentManager(), "shouts-dialog");
                 }
             }
