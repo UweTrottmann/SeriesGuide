@@ -4,12 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <Button
+    <TextView
         android:id="@+id/pasteEpisode"
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/paste_episode" />
+        android:background="@drawable/list_selector_holo_dark"
+        android:padding="@dimen/default_padding"
+        android:text="@string/paste_episode"
+        android:textSize="@dimen/text_size_small" />
 
     <EditText
         android:id="@+id/message"
