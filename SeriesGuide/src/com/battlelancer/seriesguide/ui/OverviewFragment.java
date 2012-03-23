@@ -140,7 +140,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         int lastShareAction = prefs.getInt(SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
 
         MenuItem shareAction = menu.findItem(R.id.menu_quickshare);
-        if (lastShareAction != -1) {
+        if (lastShareAction > 1) {
             ShareMethod shareMethod = ShareMethod.values()[lastShareAction];
             shareAction.setTitle(shareMethod.titleRes);
             shareAction.setIcon(shareMethod.drawableRes);
@@ -148,20 +148,11 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             shareAction.setEnabled(false);
             shareAction.setVisible(false);
         }
-
-        if (mEpisodeid == 0) {
-            menu.findItem(R.id.menu_addevent).setVisible(false);
-        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_togglemark:
-                fireTrackerEvent("Toggle watched");
-
-                onMarkWatched();
-                break;
             case R.id.menu_quickshare: {
                 final SharedPreferences prefs = PreferenceManager
                         .getDefaultSharedPreferences(getActivity());
@@ -172,16 +163,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 fireTrackerEvent("Quick share (" + shareMethod.name() + ")");
 
                 onShareEpisode(shareMethod, false);
-                break;
-            }
-            case R.id.menu_checkin_getglue: {
-                fireTrackerEvent("Check In (GetGlue)");
-                onShareEpisode(ShareMethod.CHECKIN_GETGLUE, true);
-                break;
-            }
-            case R.id.menu_checkin_trakt: {
-                fireTrackerEvent("Check In (trakt)");
-                onShareEpisode(ShareMethod.CHECKIN_TRAKT, true);
                 break;
             }
             case R.id.menu_markseen_trakt: {
@@ -197,14 +178,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             case R.id.menu_share_others: {
                 fireTrackerEvent("Share (apps)");
                 onShareEpisode(ShareMethod.OTHER_SERVICES, true);
-                break;
-            }
-            case R.id.menu_addevent: {
-                fireTrackerEvent("Add episode to calendar");
-
-                ShareUtils.onAddCalendarEvent(getActivity(), mShow.getSeriesName(),
-                        mShareData.getString(ShareItems.EPISODESTRING), mAirtime,
-                        mShow.getRuntime());
                 break;
             }
             default:
@@ -439,6 +412,38 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
         numbers.setText(getString(R.string.season) + " " + episode.getString(EpisodeQuery.SEASON)
                 + " " + getString(R.string.episode) + " " + episode.getString(EpisodeQuery.NUMBER));
+
+        // Check in button
+        getSherlockActivity().findViewById(R.id.checkinButton).setOnClickListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CheckInDialogFragment f = CheckInDialogFragment.newInstance();
+                        f.show(getFragmentManager(), "checkin-dialog");
+                    }
+                });
+
+        // Watched button
+        getSherlockActivity().findViewById(R.id.seenButton).setOnClickListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fireTrackerEvent("Toggle watched");
+                        onMarkWatched();
+                    }
+                });
+
+        // Calendar button
+        getSherlockActivity().findViewById(R.id.calendarButton).setOnClickListener(
+                new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fireTrackerEvent("Add to calendar");
+                        ShareUtils.onAddCalendarEvent(getSherlockActivity(), mShow.getSeriesName(),
+                                mShareData.getString(ShareItems.EPISODESTRING), mAirtime,
+                                mShow.getRuntime());
+                    }
+                });
 
         // Description
         TextView description = (TextView) getActivity().findViewById(

@@ -4,7 +4,7 @@
     <LinearLayout
         android:id="@+id/gotoseasons"
         android:layout_width="fill_parent"
-        android:layout_height="48dp"
+        android:layout_height="45dp"
         android:background="@drawable/list_selector_holo_dark"
         android:focusable="true"
         android:gravity="center_vertical"
