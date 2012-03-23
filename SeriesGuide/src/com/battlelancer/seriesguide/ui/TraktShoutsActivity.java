@@ -3,13 +3,12 @@ package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockDialogFragment;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 
 import android.os.Bundle;
 
-public class TraktShoutsActivity extends SherlockFragmentActivity {
+public class TraktShoutsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
