@@ -144,7 +144,7 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                 final String message = mMessageBox.getText().toString();
 
                 if (mGetGlueChecked) {
-                    if (!GetGlue.isAuthenticated(prefs)) {
+                    if (!GetGlue.isAuthenticated(prefs) || imdbid.length() == 0) {
                         // cancel if required auth data is missing
                         mToggleGetGlueButton.setChecked(false);
                         mGetGlueChecked = false;
