@@ -227,8 +227,9 @@ public class ShowInfoActivity extends BaseActivity {
                 .from(this)
                 .setChooserTitle(R.string.share)
                 .setText(
-                        getString(R.string.share_checkout) + " " + show.getSeriesName() + " "
-                                + ShowInfoActivity.IMDB_TITLE_URL + imdbid).setType("text/plain");
+                        getString(R.string.share_checkout) + " \"" + show.getSeriesName()
+                                + "\" via @SeriesGuide " + ShowInfoActivity.IMDB_TITLE_URL + imdbid)
+                .setType("text/plain");
 
         // trakt ratings
         new TraktSummaryTask(this, findViewById(R.id.ratingbar)).show(tvdbId).execute();
