@@ -41,7 +41,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -310,7 +309,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.SHOW_TITLE) {
-                    Button showtitle = (Button) view;
+                    TextView showtitle = (TextView) view;
                     showtitle.setText(episode.getString(EpisodeDetailsQuery.SHOW_TITLE));
                     final int showId = episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID);
                     showtitle.setOnClickListener(new OnClickListener() {
