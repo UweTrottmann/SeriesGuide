@@ -257,8 +257,15 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                 });
 
         // Notifications
-        findPreference(KEY_NOTIFICATIONS_ENABLED).setOnPreferenceClickListener(
-                new OnPreferenceClickListener() {
+        Preference notificationsPref = findPreference(KEY_NOTIFICATIONS_ENABLED);
+        switch (Utils.getChannel(this)) {
+            case STABLE: {
+                notificationsPref.setEnabled(false);
+                notificationsPref.setSummary(R.string.onlyx);
+                break;
+            }
+            default: {
+                notificationsPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
                     @Override
                     public boolean onPreferenceClick(Preference preference) {
@@ -274,6 +281,9 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                         return true;
                     }
                 });
+                break;
+            }
+        }
     }
 
     @Override

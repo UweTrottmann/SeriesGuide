@@ -768,4 +768,26 @@ public class Utils {
         return result;
     }
 
+    public enum SGChannel {
+        STABLE("com.battlelancer.seriesguide"), BETA("com.battlelancer.seriesguide.beta"), X(
+                "com.battlelancer.seriesguide.x");
+
+        String packageName;
+
+        private SGChannel(String packageName) {
+            this.packageName = packageName;
+        }
+    }
+
+    public static SGChannel getChannel(Context context) {
+        String thisPackageName = context.getApplicationContext().getPackageName();
+        if (thisPackageName.equals(SGChannel.BETA.packageName)) {
+            return SGChannel.BETA;
+        }
+        if (thisPackageName.equals(SGChannel.X.packageName)) {
+            return SGChannel.X;
+        }
+        return SGChannel.STABLE;
+    }
+
 }

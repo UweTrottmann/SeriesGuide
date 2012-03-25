@@ -24,6 +24,7 @@
         <item quantity="other">%d votes</item>
     </plurals>
     <string name="offline">No network connectivity. Try again later.</string>
+    <string name="onlyx">Only available in SeriesGuide X</string>
     
     <!-- Shouts -->
     <string name="shouts">Shouts</string>
