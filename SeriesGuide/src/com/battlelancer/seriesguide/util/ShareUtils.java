@@ -542,6 +542,7 @@ public class ShareUtils {
         public static TraktRateDialogFragment newInstance(int tvdbid) {
             TraktRateDialogFragment f = new TraktRateDialogFragment();
             Bundle args = new Bundle();
+            args.putInt(ShareItems.TRAKTACTION, TraktAction.RATE_SHOW.index);
             args.putInt(ShareItems.TVDBID, tvdbid);
             f.setArguments(args);
             return f;
@@ -558,6 +559,7 @@ public class ShareUtils {
         public static TraktRateDialogFragment newInstance(int showTvdbid, int season, int episode) {
             TraktRateDialogFragment f = new TraktRateDialogFragment();
             Bundle args = new Bundle();
+            args.putInt(ShareItems.TRAKTACTION, TraktAction.RATE_EPISODE.index);
             args.putInt(ShareItems.TVDBID, showTvdbid);
             args.putInt(ShareItems.SEASON, season);
             args.putInt(ShareItems.EPISODE, episode);
