@@ -107,7 +107,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (getShowId() != 0) {
+        if (getShowId() == 0) {
             getActivity().finish();
         }
 
@@ -247,7 +247,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     }
 
     private int getShowId() {
-        return getArguments().getInt(Shows._ID);
+        return getArguments().getInt(InitBundle.SHOW_TVDBID);
     }
 
     private void fillShowData() {
