@@ -4,9 +4,9 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
-import com.battlelancer.seriesguide.util.ShareUtils.TraktTask.OnTraktActionCompleteListener;
+import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
@@ -145,12 +145,12 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
 
                 if (episode == 0) {
                     // shout for a show
-                    new ShareUtils.TraktTask(getSherlockActivity(), getFragmentManager(),
+                    new TraktTask(getSherlockActivity(), getFragmentManager(),
                             TraktShoutsFragment.this).shout(tvdbid, shout, isSpoiler).execute();
                 } else {
                     // shout for an episode
                     int season = args.getInt(ShareItems.SEASON);
-                    new ShareUtils.TraktTask(getSherlockActivity(), getFragmentManager(),
+                    new TraktTask(getSherlockActivity(), getFragmentManager(),
                             TraktShoutsFragment.this).shout(tvdbid, season, episode, shout,
                             isSpoiler).execute();
                 }

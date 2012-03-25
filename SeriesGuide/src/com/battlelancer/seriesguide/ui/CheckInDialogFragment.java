@@ -10,7 +10,7 @@ import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
-import com.battlelancer.seriesguide.util.ShareUtils.TraktTask;
+import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
 
 import android.content.Intent;

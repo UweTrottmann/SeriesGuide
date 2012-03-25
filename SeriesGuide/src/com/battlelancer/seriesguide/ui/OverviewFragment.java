@@ -33,8 +33,8 @@ import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
-import com.battlelancer.seriesguide.util.ShareUtils.TraktTask.OnTraktActionCompleteListener;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
+import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
