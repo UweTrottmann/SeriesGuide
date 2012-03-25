@@ -184,7 +184,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Intent i = new Intent(ShowsActivity.this, OverviewActivity.class);
-                i.putExtra(Shows._ID, String.valueOf(id));
+                i.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, (int) id);
                 startActivity(i);
             }
         });

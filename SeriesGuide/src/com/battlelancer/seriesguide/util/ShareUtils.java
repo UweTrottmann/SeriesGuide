@@ -56,45 +56,45 @@ public class ShareUtils {
     public enum ShareMethod {
         // first two kept for compatibility reasons
         CHECKIN_GETGLUE(0, 0, 0),
-    
+
         CHECKIN_TRAKT(1, 0, 0),
-    
+
         MARKSEEN_TRAKT(2, R.string.menu_markseen_trakt, R.drawable.ic_trakt_seen),
-    
+
         RATE_TRAKT(3, R.string.menu_rate_trakt, R.drawable.trakt_love_large),
-    
+
         OTHER_SERVICES(4, R.string.menu_share_others, R.drawable.ic_action_share);
-    
+
         ShareMethod(int index, int titleRes, int drawableRes) {
             this.index = index;
             this.titleRes = titleRes;
             this.drawableRes = drawableRes;
         }
-    
+
         public int index;
-    
+
         public int titleRes;
-    
+
         public int drawableRes;
     }
 
     public interface ShareItems {
         String SEASON = "season";
-    
+
         String IMDBID = "imdbId";
-    
+
         String SHARESTRING = "sharestring";
-    
+
         String EPISODESTRING = "episodestring";
-    
+
         String EPISODE = "episode";
-    
+
         String TVDBID = "tvdbid";
-    
+
         String RATING = "rating";
-    
+
         String TRAKTACTION = "traktaction";
-    
+
         String ISSPOILER = "isspoiler";
     }
 
@@ -111,11 +111,8 @@ public class ShareUtils {
     public static void onShareEpisode(FragmentActivity activity, Bundle args,
             ShareMethod shareMethod, OnTraktActionCompleteListener listener) {
         final FragmentManager fm = activity.getSupportFragmentManager();
-        final String imdbId = args.getString(ShareUtils.ShareItems.IMDBID);
-        final String sharestring = args.getString(ShareUtils.ShareItems.SHARESTRING);
 
-        // save used share method, so we can use it later for the quick share
-        // button
+        // save used share method for the quick share button
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
         prefs.edit().putInt(SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, shareMethod.index)
                 .commit();
@@ -129,17 +126,18 @@ public class ShareUtils {
             }
             case RATE_TRAKT: {
                 // trakt rate
-                args.putInt(ShareItems.TRAKTACTION, TraktAction.RATE_EPISODE.index());
-                TraktRateDialogFragment newFragment = TraktRateDialogFragment.newInstance(args);
-                FragmentTransaction ft = fm.beginTransaction();
-                newFragment.show(ft, "traktratedialog");
+                TraktRateDialogFragment newFragment = TraktRateDialogFragment.newInstance(
+                        args.getInt(ShareItems.TVDBID), args.getInt(ShareItems.SEASON),
+                        args.getInt(ShareItems.EPISODE));
+                newFragment.show(fm, "traktratedialog");
                 break;
             }
             case OTHER_SERVICES: {
                 // Android apps
                 IntentBuilder ib = ShareCompat.IntentBuilder.from(activity);
 
-                String text = sharestring;
+                String text = args.getString(ShareUtils.ShareItems.SHARESTRING);
+                final String imdbId = args.getString(ShareUtils.ShareItems.IMDBID);
                 if (imdbId.length() != 0) {
                     text += " " + ShowInfoActivity.IMDB_TITLE_URL + imdbId;
                 }
@@ -190,7 +188,7 @@ public class ShareUtils {
     }
 
     public enum TraktAction {
-        SEEN_EPISODE(0), RATE_EPISODE(1), CHECKIN_EPISODE(2), SHOUT(3);
+        SEEN_EPISODE(0), RATE_EPISODE(1), CHECKIN_EPISODE(2), SHOUT(3), RATE_SHOW(4);
 
         final int index;
 
@@ -535,9 +533,35 @@ public class ShareUtils {
 
     public static class TraktRateDialogFragment extends DialogFragment {
 
-        public static TraktRateDialogFragment newInstance(Bundle traktData) {
+        /**
+         * Create {@link TraktRateDialogFragment} to rate a show.
+         * 
+         * @param tvdbid
+         * @return TraktRateDialogFragment
+         */
+        public static TraktRateDialogFragment newInstance(int tvdbid) {
             TraktRateDialogFragment f = new TraktRateDialogFragment();
-            f.setArguments(traktData);
+            Bundle args = new Bundle();
+            args.putInt(ShareItems.TVDBID, tvdbid);
+            f.setArguments(args);
+            return f;
+        }
+
+        /**
+         * Create {@link TraktRateDialogFragment} to rate an episode.
+         * 
+         * @param showTvdbid
+         * @param season
+         * @param episode
+         * @return TraktRateDialogFragment
+         */
+        public static TraktRateDialogFragment newInstance(int showTvdbid, int season, int episode) {
+            TraktRateDialogFragment f = new TraktRateDialogFragment();
+            Bundle args = new Bundle();
+            args.putInt(ShareItems.TVDBID, showTvdbid);
+            args.putInt(ShareItems.SEASON, season);
+            args.putInt(ShareItems.EPISODE, episode);
+            f.setArguments(args);
             return f;
         }
 

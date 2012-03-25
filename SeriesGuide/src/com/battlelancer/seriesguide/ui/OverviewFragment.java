@@ -79,6 +79,10 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
     private long mAirtime;
 
+    public interface InitBundle {
+        String SHOW_TVDBID = "tvdbid";
+    }
+
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(getActivity()).trackEvent("Overview", "Click", label, 0);
     }
@@ -103,7 +107,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (getShowId() == null || getShowId().length() == 0) {
+        if (getShowId() != 0) {
             getActivity().finish();
         }
 
@@ -242,12 +246,12 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
     }
 
-    private String getShowId() {
-        return getArguments().getString(Shows._ID);
+    private int getShowId() {
+        return getArguments().getInt(Shows._ID);
     }
 
     private void fillShowData() {
-        mShow = DBUtils.getShow(getActivity(), getShowId());
+        mShow = DBUtils.getShow(getActivity(), String.valueOf(getShowId()));
 
         if (mShow == null) {
             return;
@@ -371,7 +375,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 if (activity == null) {
                     return -1;
                 }
-                mEpisodeid = DBUtils.updateLatestEpisode(activity, getShowId());
+                mEpisodeid = DBUtils.updateLatestEpisode(activity, String.valueOf(getShowId()));
                 return 0;
             }
 
@@ -555,7 +559,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
      */
     private void onShowShowInfo() {
         Intent i = new Intent(getActivity(), ShowInfoActivity.class);
-        i.putExtra(Shows._ID, getShowId());
+        i.putExtra(ShowInfoActivity.InitBundle.SHOW_TVDBID, Integer.valueOf(getShowId()));
         startActivity(i);
     }
 

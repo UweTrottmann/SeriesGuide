@@ -312,14 +312,12 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 if (columnIndex == EpisodeDetailsQuery.SHOW_TITLE) {
                     Button showtitle = (Button) view;
                     showtitle.setText(episode.getString(EpisodeDetailsQuery.SHOW_TITLE));
-                    final String showId = episode.getString(EpisodeDetailsQuery.REF_SHOW_ID);
+                    final int showId = episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID);
                     showtitle.setOnClickListener(new OnClickListener() {
                         public void onClick(View v) {
-                            if (showId != null) {
-                                Intent i = new Intent(getActivity(), OverviewActivity.class);
-                                i.putExtra(Shows._ID, showId);
-                                startActivity(i);
-                            }
+                            Intent i = new Intent(getActivity(), OverviewActivity.class);
+                            i.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, showId);
+                            startActivity(i);
                         }
                     });
 

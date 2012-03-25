@@ -58,12 +58,16 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     private SimpleCursorAdapter mAdapter;
 
-    public static SeasonsFragment newInstance(String showId) {
+    public interface InitBundle {
+        String SHOW_TVDBID = "tvdbid";
+    }
+
+    public static SeasonsFragment newInstance(int showId) {
         SeasonsFragment f = new SeasonsFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
-        args.putString(BaseColumns._ID, showId);
+        args.putInt(InitBundle.SHOW_TVDBID, showId);
         f.setArguments(args);
 
         return f;

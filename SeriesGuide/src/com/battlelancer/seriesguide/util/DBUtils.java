@@ -251,7 +251,7 @@ public class DBUtils {
      * Fetches the row to a given show id and returns the results an Series
      * object. Returns {@code null} if there is no show with that id.
      * 
-     * @param seriesid
+     * @param show tvdb id
      * @return
      */
     public static Series getShow(Context context, String showId) {

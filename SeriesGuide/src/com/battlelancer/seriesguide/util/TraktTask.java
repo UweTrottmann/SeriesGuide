@@ -90,6 +90,38 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     }
 
     /**
+     * Rate an episode.
+     * 
+     * @param showTvdbid
+     * @param season
+     * @param episode
+     * @param rating
+     * @return TraktTask
+     */
+    public TraktTask rateEpisode(int showTvdbid, int season, int episode, Rating rating) {
+        mArgs.putInt(ShareItems.TRAKTACTION, TraktAction.RATE_EPISODE.index);
+        mArgs.putInt(ShareItems.TVDBID, showTvdbid);
+        mArgs.putInt(ShareItems.SEASON, season);
+        mArgs.putInt(ShareItems.EPISODE, episode);
+        mArgs.putString(ShareItems.RATING, rating.toString());
+        return this;
+    }
+
+    /**
+     * Rate a show.
+     * 
+     * @param tvdbid
+     * @param rating
+     * @return TraktTask
+     */
+    public TraktTask rateShow(int tvdbid, Rating rating) {
+        mArgs.putInt(ShareItems.TRAKTACTION, TraktAction.RATE_SHOW.index);
+        mArgs.putInt(ShareItems.TVDBID, tvdbid);
+        mArgs.putString(ShareItems.RATING, rating.toString());
+        return this;
+    }
+
+    /**
      * Post a shout for a show.
      * 
      * @param tvdbid
@@ -201,6 +233,11 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     final Rating rating = Rating.fromValue(mArgs.getString(ShareItems.RATING));
                     r = manager.rateService().episode(tvdbid).season(season).episode(episode)
                             .rating(rating).fire();
+                    break;
+                }
+                case RATE_SHOW: {
+                    final Rating rating = Rating.fromValue(mArgs.getString(ShareItems.RATING));
+                    r = manager.rateService().show(tvdbid).rating(rating).fire();
                     break;
                 }
                 case SHOUT: {
