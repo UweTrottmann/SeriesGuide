@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/list_selector_holo_dark"
                 android:focusable="true"
+                android:nextFocusDown="@+id/checkinButton"
                 android:paddingBottom="@dimen/default_padding" >
 
                 <TextView

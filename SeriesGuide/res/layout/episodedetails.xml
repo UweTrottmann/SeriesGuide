@@ -12,6 +12,9 @@
         android:layout_height="30dp"
         android:layout_marginLeft="@dimen/default_padding"
         android:background="@drawable/list_selector_holo_dark"
+        android:nextFocusDown="@+id/checkinButton"
+        android:nextFocusLeft="@+id/textViewEpisodeDetailsShowName"
+        android:nextFocusRight="@+id/textViewEpisodeDetailsShowName"
         android:text="@string/app_name"
         android:textColor="@color/text_primary"
         android:textSize="@dimen/text_size_small" >
