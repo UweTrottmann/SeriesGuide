@@ -568,6 +568,14 @@ public class ShareUtils {
                                 return null;
                             }
 
+                            // check for connectivity
+                            if (!Utils.isNetworkConnected(context)) {
+                                Response r = new Response();
+                                r.status = TraktStatus.FAILURE;
+                                r.error = context.getString(R.string.offline);
+                                return r;
+                            }
+
                             // use a separate ServiceManager here to avoid
                             // setting wrong credentials
                             final ServiceManager manager = new ServiceManager();
@@ -600,10 +608,13 @@ public class ShareUtils {
                         protected void onPostExecute(Response response) {
                             progressbar.setVisibility(View.GONE);
                             connectbtn.setEnabled(true);
-                            disconnectbtn.setEnabled(true);
 
                             if (response == null) {
                                 status.setText(R.string.trakt_generalerror);
+                                return;
+                            }
+                            if (response.status.equals(TraktStatus.FAILURE)) {
+                                status.setText(response.error);
                                 return;
                             }
 
@@ -646,17 +657,9 @@ public class ShareUtils {
                                         newFragment.show(ft, "progress-dialog");
                                     }
 
-                                    // relaunch the trakt task which called
-                                    // us
+                                    // relaunch the trakt task which called us
                                     new TraktTask(context, fm, args, null).execute();
                                 }
-                            } else if (response.status.equals(TraktStatus.FAILURE)) {
-                                // credentials were wrong or account
-                                // creation failed
-                                status.setText(response.error);
-                            } else {
-                                // unknown error message from trakt
-                                status.setText(R.string.trakt_generalerror);
                             }
                         }
                     };
