@@ -18,6 +18,7 @@
     <string name="norating">n/a</string>
     <string name="loading">Loading&#8230;</string>
     <string name="sending">Sending&#8230;</string>
+    <string name="done">Done</string>
     <plurals name="votes">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>
@@ -266,7 +267,6 @@
     <string name="menu_rate_trakt">Rate (trakt)</string>
     <string name="menu_share_others">Via other apps</string>
 
-    <string name="done">Done</string>
     <string name="traktcheckin_cancel">Cancel it</string>
     <string name="traktcheckin_inprogress">There is already a checkin in progress. Either cancel this checkin or wait %s before you can check in again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
@@ -280,7 +280,7 @@
     <string name="waitplease">A moment, please&#8230;</string>
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
-    <string name="trakt_success">Successfully talked to trakt</string>
+    <string name="trakt_success">trakt action successful</string>
     <string name="trakt_error">Interaction with trakt failed</string>
     <string name="trakt_seen">marked as seen</string>
     <string name="trakt_decryptfail">password could not be decrypted</string>
