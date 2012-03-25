@@ -8,7 +8,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.Series;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktRateDialogFragment;
@@ -81,7 +80,7 @@ public class ShowInfoActivity extends BaseActivity {
             case android.R.id.home: {
                 // Navigate to the parent activity instead
                 final Intent intent = new Intent(this, OverviewActivity.class);
-                intent.putExtra(Shows._ID, getShowId());
+                intent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, getShowId());
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 overridePendingTransition(R.anim.home_enter, R.anim.home_exit);
