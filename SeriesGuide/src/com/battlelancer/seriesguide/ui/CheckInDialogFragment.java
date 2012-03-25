@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktTask;
+import com.battlelancer.seriesguide.util.Utils;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class CheckInDialogFragment extends SherlockDialogFragment {
 
@@ -99,10 +101,17 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     if (!GetGlue.isAuthenticated(prefs)) {
-                        // authenticate already here
-                        Intent i = new Intent(getSherlockActivity(),
-                                PrepareRequestTokenActivity.class);
-                        startActivity(i);
+                        if (!Utils.isNetworkConnected(getActivity())) {
+                            Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_LONG)
+                                    .show();
+                            buttonView.setChecked(false);
+                            return;
+                        } else {
+                            // authenticate already here
+                            Intent i = new Intent(getSherlockActivity(),
+                                    PrepareRequestTokenActivity.class);
+                            startActivity(i);
+                        }
                     }
                 }
 
@@ -141,6 +150,11 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
         mCheckinButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!Utils.isNetworkConnected(getActivity())) {
+                    Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 final String message = mMessageBox.getText().toString();
 
                 if (mGetGlueChecked) {
@@ -152,12 +166,12 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                         return;
                     } else {
                         // check in
-                        new CheckInTask(imdbid, message, getSherlockActivity()).execute();
+                        new CheckInTask(imdbid, message, getActivity()).execute();
                     }
                 }
 
                 if (mTraktChecked) {
-                    if (!ShareUtils.isTraktCredentialsValid(getSherlockActivity())) {
+                    if (!ShareUtils.isTraktCredentialsValid(getActivity())) {
                         // cancel if required auth data is missing
                         mToggleTraktButton.setChecked(false);
                         mTraktChecked = false;
@@ -178,8 +192,8 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                         newFragment.show(ft, "progress-dialog");
 
                         // start the trakt check in task
-                        new TraktTask(getSherlockActivity(), getFragmentManager(), null).checkin(
-                                tvdbid, season, episode, message).execute();
+                        new TraktTask(getActivity(), getFragmentManager(), null).checkin(tvdbid,
+                                season, episode, message).execute();
                     }
                 }
 
