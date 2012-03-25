@@ -559,7 +559,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
      */
     private void onShowShowInfo() {
         Intent i = new Intent(getActivity(), ShowInfoActivity.class);
-        i.putExtra(ShowInfoActivity.InitBundle.SHOW_TVDBID, Integer.valueOf(getShowId()));
+        i.putExtra(ShowInfoActivity.InitBundle.SHOW_TVDBID, getShowId());
         startActivity(i);
     }
 
