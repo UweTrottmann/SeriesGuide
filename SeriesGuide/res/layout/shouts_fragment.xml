@@ -71,6 +71,7 @@
 
         <ImageButton
             android:id="@+id/shoutbutton"
+            style="@style/HoloCompatButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
