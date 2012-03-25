@@ -50,7 +50,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.BaseColumns;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -240,7 +239,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             // the dialog fragment with selected text.
             Intent intent = new Intent();
             intent.setClass(getActivity(), SeasonsActivity.class);
-            intent.putExtra(BaseColumns._ID, getShowId());
+            intent.putExtra(SeasonsFragment.InitBundle.SHOW_TVDBID, getShowId());
             startActivity(intent);
         }
 

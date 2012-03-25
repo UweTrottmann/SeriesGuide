@@ -7,15 +7,12 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.viewpagerindicator.TitlePageIndicator;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -45,42 +42,46 @@ public class EpisodesActivity extends BaseActivity {
 
     private ArrayList<Episode> mEpisodes;
 
+    public interface InitBundle {
+        String SHOW_TVDBID = "show_id";
+
+        String SEASON_TVDBID = "season_id";
+
+        String SEASON_TITLE = "season_title";
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.episodes_multipane);
 
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(true);
-
-        View pagerFragment = findViewById(R.id.pager);
-        mDualPane = pagerFragment != null && pagerFragment.getVisibility() == View.VISIBLE;
-
-        String customTitle = getIntent().getStringExtra(Intent.EXTRA_TITLE);
-        if (customTitle == null) {
-            customTitle = "";
-        }
-
-        final String seriesid = getIntent().getStringExtra(Shows.REF_SHOW_ID);
-        final Series show = DBUtils.getShow(this, seriesid);
-        String posterPath = "";
-        if (show != null) {
-            String showname = show.getSeriesName();
-            actionBar.setTitle(showname);
-            setTitle(showname + " " + customTitle);
-            actionBar.setSubtitle(customTitle);
-
-            posterPath = show.getPoster();
-        } else {
-            // just in case
+        final Series show = DBUtils.getShow(this,
+                String.valueOf(getIntent().getIntExtra(InitBundle.SHOW_TVDBID, 0)));
+        final int seasonId = getIntent().getIntExtra(InitBundle.SEASON_TVDBID, 0);
+        if (show == null || seasonId == 0) {
             finish();
         }
 
+        // setup ActionBar
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        String showname = show.getSeriesName();
+        String seasonTitle = getIntent().getStringExtra(InitBundle.SEASON_TITLE);
+        if (seasonTitle == null) {
+            seasonTitle = "";
+        }
+        setTitle(showname + " " + seasonTitle);
+        actionBar.setTitle(showname);
+        actionBar.setSubtitle(seasonTitle);
+
+        // check for dual pane layout
+        View pagerFragment = findViewById(R.id.pager);
+        mDualPane = pagerFragment != null && pagerFragment.getVisibility() == View.VISIBLE;
+
+        // setup the episode list fragment
         if (savedInstanceState == null) {
-            // build the episode list fragment
-            mEpisodesFragment = onCreatePane();
-            mEpisodesFragment.setArguments(intentToFragmentArguments(getIntent()));
+            mEpisodesFragment = EpisodesFragment.newInstance(seasonId);
 
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_episodes, mEpisodesFragment, "episodes").commit();
@@ -89,14 +90,14 @@ public class EpisodesActivity extends BaseActivity {
                     "episodes");
         }
 
-        // build the episode pager if we are in a multi-pane layout
+        // build the episode pager if we are in a dual-pane layout
         if (mDualPane) {
             // set the pager background
             if (Utils.isFroyoOrHigher()) {
                 // using alpha seems not to work on eclair, so only set
                 // a background on froyo+ then
                 final ImageView background = (ImageView) findViewById(R.id.background);
-                Bitmap bg = ImageCache.getInstance(this).get(posterPath);
+                Bitmap bg = ImageCache.getInstance(this).get(show.getPoster());
                 if (bg != null) {
                     BitmapDrawable drawable = new BitmapDrawable(getResources(), bg);
                     drawable.setAlpha(50);
@@ -106,10 +107,10 @@ public class EpisodesActivity extends BaseActivity {
 
             // set adapters for pager and indicator
             Constants.EpisodeSorting sorting = Utils.getEpisodeSorting(this);
-            String seasonId = getIntent().getStringExtra(Seasons._ID);
 
             Cursor episodeCursor = getContentResolver().query(
-                    Episodes.buildEpisodesOfSeasonWithShowUri(seasonId), new String[] {
+                    Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(seasonId)),
+                    new String[] {
                             Episodes._ID, Episodes.NUMBER, Episodes.SEASON
                     }, null, null, sorting.query());
 
@@ -178,10 +179,6 @@ public class EpisodesActivity extends BaseActivity {
             }
         }
         return ret;
-    }
-
-    protected EpisodesFragment onCreatePane() {
-        return new EpisodesFragment();
     }
 
     /**
