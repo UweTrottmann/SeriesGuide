@@ -109,8 +109,10 @@ public class Utils {
         }
 
         if (time != null) {
-            cal.set(Calendar.HOUR_OF_DAY, time.getHours());
-            cal.set(Calendar.MINUTE, time.getMinutes());
+            Calendar timeCal = Calendar.getInstance();
+            timeCal.setTime(time);
+            cal.set(Calendar.HOUR_OF_DAY, timeCal.get(Calendar.HOUR_OF_DAY));
+            cal.set(Calendar.MINUTE, timeCal.get(Calendar.MINUTE));
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MILLISECOND, 0);
             return cal.getTimeInMillis();

@@ -103,6 +103,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
         AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
