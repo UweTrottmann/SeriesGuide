@@ -261,6 +261,7 @@
     <string name="paste_episode">Paste episode</string>
     <string name="checkinsuccess">GetGlue Check-in successful.</string>
     <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
+    <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
     
     <!-- Share methods -->
     <string name="menu_markseen_trakt">Mark seen (trakt)</string>
