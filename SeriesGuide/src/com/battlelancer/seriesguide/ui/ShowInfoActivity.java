@@ -91,6 +91,7 @@ public class ShowInfoActivity extends BaseActivity {
                 TraktRateDialogFragment newFragment = TraktRateDialogFragment
                         .newInstance(getShowId());
                 newFragment.show(getSupportFragmentManager(), "traktratedialog");
+                return true;
             }
             case R.id.menu_share: {
                 mShareIntentBuilder.startChooser();
