@@ -4,7 +4,6 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.Series;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.DBUtils;
 
 import android.os.Bundle;
@@ -24,8 +23,8 @@ public class SeasonsActivity extends BaseActivity {
         actionBar.setDisplayShowTitleEnabled(true);
 
         Bundle extras = getIntent().getExtras();
-        String seriesid = extras.getString(Shows._ID);
-        final Series show = DBUtils.getShow(this, seriesid);
+        int showId = extras.getInt(SeasonsFragment.InitBundle.SHOW_TVDBID);
+        final Series show = DBUtils.getShow(this, String.valueOf(showId));
         if (show != null) {
             String showname = show.getSeriesName();
             actionBar.setTitle(showname);
@@ -36,8 +35,7 @@ public class SeasonsActivity extends BaseActivity {
         }
 
         if (savedInstanceState == null) {
-            mFragment = new SeasonsFragment();
-            mFragment.setArguments(getIntent().getExtras());
+            mFragment = SeasonsFragment.newInstance(showId);
 
             getSupportFragmentManager().beginTransaction().replace(R.id.root_container, mFragment)
                     .commit();

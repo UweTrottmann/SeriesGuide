@@ -267,7 +267,7 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     private String getShowId() {
-        return getArguments().getString(Shows._ID);
+        return getArguments().getString(InitBundle.SHOW_TVDBID);
     }
 
     private void showEpisodes(int position, String seasonid) {
