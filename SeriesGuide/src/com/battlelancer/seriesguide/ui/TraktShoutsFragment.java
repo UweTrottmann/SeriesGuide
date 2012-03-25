@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
@@ -178,6 +179,8 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        AnalyticsUtils.getInstance(getActivity()).trackPageView("/Shouts");
 
         mAdapter = new TraktShoutsAdapter(getActivity());
         setListAdapter(mAdapter);

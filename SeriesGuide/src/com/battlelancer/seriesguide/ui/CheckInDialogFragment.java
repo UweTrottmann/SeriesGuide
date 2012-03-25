@@ -6,6 +6,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
 import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
+import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
@@ -59,6 +60,8 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(STYLE_NORMAL, R.style.Theme_Sherlock_Dialog);
+
+        AnalyticsUtils.getInstance(getActivity()).trackPageView("/CheckInDialog");
     }
 
     @Override
