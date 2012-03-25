@@ -13,6 +13,7 @@ import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.enumerations.Rating;
+import com.jakewharton.trakt.services.ShowService.CheckinBuilder;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -168,8 +169,15 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
             switch (mAction) {
                 case CHECKIN_EPISODE: {
-                    r = manager.showService().checkin(tvdbid).season(season).episode(episode)
-                            .fire();
+                    final String message = mArgs.getString(ShareItems.SHARESTRING);
+
+                    final CheckinBuilder checkinBuilder = manager.showService().checkin(tvdbid)
+                            .season(season).episode(episode);
+                    if (message != null && message.length() != 0) {
+                        checkinBuilder.message(message);
+                    }
+                    r = checkinBuilder.fire();
+
                     break;
                 }
                 case SEEN_EPISODE: {
