@@ -133,9 +133,9 @@ public class PrepareRequestTokenActivity extends BaseActivity {
             switch (result) {
                 case AUTH_SUCCESS:
                     Bundle extras = getIntent().getExtras();
-                    String comment = extras.getString(ShareUtils.KEY_GETGLUE_COMMENT);
-                    String imdbId = extras.getString(ShareUtils.KEY_GETGLUE_IMDBID);
-                    if (comment != null && imdbId != null) {
+                    if (extras != null) {
+                        String comment = extras.getString(ShareUtils.KEY_GETGLUE_COMMENT);
+                        String imdbId = extras.getString(ShareUtils.KEY_GETGLUE_IMDBID);
                         new CheckInTask(imdbId, comment, mContext).execute();
                     }
                     break;
