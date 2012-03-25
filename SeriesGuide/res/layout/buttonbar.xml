@@ -14,16 +14,23 @@
 
     <ImageButton
         android:id="@+id/seenButton"
-        style="@style/HoloCompatButton"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/inline_padding"
+        android:layout_marginRight="@dimen/inline_padding"
+        android:background="@drawable/list_selector_holo_dark"
+        android:paddingLeft="@dimen/inline_padding"
+        android:paddingRight="@dimen/inline_padding"
         android:src="@drawable/ic_action_seen" />
 
     <ImageButton
         android:id="@+id/calendarButton"
-        style="@style/HoloCompatButton"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/inline_padding"
+        android:background="@drawable/list_selector_holo_dark"
+        android:paddingLeft="@dimen/inline_padding"
+        android:paddingRight="@dimen/inline_padding"
         android:src="@drawable/ic_action_calendar" />
 
 </LinearLayout>
