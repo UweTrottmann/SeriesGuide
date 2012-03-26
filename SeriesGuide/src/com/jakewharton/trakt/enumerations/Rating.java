@@ -6,7 +6,8 @@ import com.jakewharton.trakt.TraktEnumeration;
 
 public enum Rating implements TraktEnumeration {
     Love("love"),
-    Hate("hate");
+    Hate("hate"),
+    Unrate("unrate");
 
     private final String value;
 
