@@ -429,26 +429,9 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     protected void onLoadImage(String imagePath, FrameLayout container) {
-        if (imagePath.length() != 0) {
-            final ImageView imageView = (ImageView) container
-                    .findViewById(R.id.ImageViewEpisodeImage);
-            final Bitmap bitmap = mImageCache.get(imagePath);
-            if (bitmap != null) {
-                // image is in cache
-                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageView.setImageBitmap(bitmap);
-            } else {
-                if (mArtTask == null) {
-                    mArtTask = (FetchArtTask) new FetchArtTask(imagePath, imageView, getActivity())
-                            .execute();
-                } else if (mArtTask != null && mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
-                    mArtTask = (FetchArtTask) new FetchArtTask(imagePath, imageView, getActivity())
-                            .execute();
-                }
-            }
-        } else {
-            // no image available
-            container.setVisibility(View.GONE);
+        if (mArtTask == null || mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
+            mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity())
+                    .execute();
         }
     }
 

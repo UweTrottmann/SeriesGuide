@@ -72,7 +72,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
     protected long mEpisodeid;
 
-    private FetchArtTask artTask;
+    private FetchArtTask mArtTask;
 
     final private Bundle mShareData = new Bundle();
 
@@ -529,27 +529,9 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     protected void onLoadImage(String imagePath) {
         final FrameLayout container = (FrameLayout) getActivity().findViewById(R.id.imageContainer);
 
-        if (imagePath.length() != 0) {
-            container.setVisibility(View.VISIBLE);
-            final ImageView imageView = (ImageView) container
-                    .findViewById(R.id.ImageViewEpisodeImage);
-            final Bitmap bitmap = imageCache.get(imagePath);
-            if (bitmap != null) {
-                // image is in cache
-                imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                imageView.setImageBitmap(bitmap);
-            } else {
-                if (artTask == null) {
-                    artTask = (FetchArtTask) new FetchArtTask(imagePath, imageView, getActivity())
-                            .execute();
-                } else if (artTask != null && artTask.getStatus() == AsyncTask.Status.FINISHED) {
-                    artTask = (FetchArtTask) new FetchArtTask(imagePath, imageView, getActivity())
-                            .execute();
-                }
-            }
-        } else {
-            // no image available
-            container.setVisibility(View.GONE);
+        if (mArtTask == null || mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
+            mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity())
+                    .execute();
         }
     }
 
