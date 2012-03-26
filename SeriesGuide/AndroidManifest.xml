@@ -159,7 +159,7 @@
         <!-- Content provider -->
         <provider
             android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider"
-            android:authorities="com.battlelancer.seriesguide" >
+            android:authorities="com.battlelancer.seriesguide.beta.provider" >
         </provider>
 
         <!-- Notification service -->
