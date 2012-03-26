@@ -576,7 +576,7 @@ public class TheTVDB {
         ImageCache imageCache = ImageCache.getInstance(context);
         boolean resultCode = true;
 
-        if (fileName.length() != 0 && !imageCache.contains(fileName)) {
+        if (fileName.length() != 0 && !imageCache.exists(fileName)) {
             String imageUrl;
             if (isPoster) {
                 // the cached version is a lot smaller, but still big enough for

@@ -26,6 +26,8 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
 
     private ImageCache mImageCache;
 
+    private boolean mAnimate;
+
     public FetchArtTask(String path, View container, Context context) {
         mPath = path;
         mContainer = container;
@@ -37,8 +39,12 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
     protected void onPreExecute() {
         mImageView = (ImageView) mContainer.findViewById(R.id.ImageViewEpisodeImage);
         mProgressContainer = mContainer.findViewById(R.id.progress_container);
-        mProgressContainer.setVisibility(View.VISIBLE);
-        mImageView.setVisibility(View.GONE);
+
+        // only make progress container visible if we will do long running op
+        if (!mImageCache.isCached(mPath)) {
+            mProgressContainer.setVisibility(View.VISIBLE);
+            mImageView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -51,8 +57,8 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
 
             final Bitmap bitmap = mImageCache.get(mPath);
             if (bitmap != null) {
-
                 // image is in cache
+                mAnimate = false;
                 return bitmap;
 
             } else {
@@ -63,6 +69,7 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
 
                 // download image from TVDb
                 if (TheTVDB.fetchArt(mPath, false, mContext)) {
+                    mAnimate = true;
                     return mImageCache.get(mPath);
                 }
 
@@ -79,10 +86,15 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
             mImageView.setImageBitmap(bitmap);
 
             // make image view visible
-            mProgressContainer.startAnimation(AnimationUtils.loadAnimation(mContext,
-                    android.R.anim.fade_out));
-            mImageView.startAnimation(AnimationUtils
-                    .loadAnimation(mContext, android.R.anim.fade_in));
+            if (mAnimate) {
+                mProgressContainer.startAnimation(AnimationUtils.loadAnimation(mContext,
+                        android.R.anim.fade_out));
+                mImageView.startAnimation(AnimationUtils.loadAnimation(mContext,
+                        android.R.anim.fade_in));
+            } else {
+                mProgressContainer.clearAnimation();
+                mImageView.clearAnimation();
+            }
             mProgressContainer.setVisibility(View.GONE);
             mImageView.setVisibility(View.VISIBLE);
         } else {

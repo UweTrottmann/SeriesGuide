@@ -130,18 +130,23 @@ public class ImageCache {
     }
 
     /**
-     * Returns whether this image exists in the cache or on disk already.
+     * Returns whether this image exists in cache or on disk already.
      * 
      * @param imageUrl
      * @return
      */
-    public boolean contains(String imageUrl) {
-        if (mHardBitmapCache.containsKey(imageUrl) || sSoftBitmapCache.containsKey(imageUrl)) {
-            return true;
-        } else {
-            File imageFile = getImageFile(imageUrl);
-            return imageFile.exists();
-        }
+    public boolean exists(String imageUrl) {
+        return isCached(imageUrl) || getImageFile(imageUrl).exists();
+    }
+
+    /**
+     * Returns whether this image exists in cache already.
+     * 
+     * @param imageUrl
+     * @return
+     */
+    public boolean isCached(String imageUrl) {
+        return mHardBitmapCache.containsKey(imageUrl) || sSoftBitmapCache.containsKey(imageUrl);
     }
 
     public Bitmap get(String key) {
