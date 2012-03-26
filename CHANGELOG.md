@@ -21,7 +21,7 @@ Version 2.6 *(in development)*
 
 * Rate and share shows.
 * Unified check in dialog.
-* New 'collected' property for episodes. Only on detail pages for now.
+* New 'collected' property for episodes. Only on detail pages for now. (Database upgrade!)
 * Inline button bar.
 * Fix Auto-Update not working until first manual update.
 * Crash fixes, other minor improvements and changes.
