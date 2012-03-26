@@ -47,6 +47,8 @@ public class Series {
 
     private long nextEpisode;
 
+    public boolean isFavorite;
+
     public String getId() {
         return id;
     }

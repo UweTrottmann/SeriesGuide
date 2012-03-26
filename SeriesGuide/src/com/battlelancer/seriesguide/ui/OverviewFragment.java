@@ -277,6 +277,11 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             status.setText(getString(R.string.show_isnotalive));
         }
 
+        // Favorite state
+        if (mShow.isFavorite) {
+            getView().findViewById(R.id.favoriteLabel).setVisibility(View.VISIBLE);
+        }
+
         // Poster
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ECLAIR_MR1) {
             // using alpha seems not to work on eclair, so only set a

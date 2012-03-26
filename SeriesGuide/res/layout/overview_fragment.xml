@@ -33,8 +33,9 @@
                 <TextView
                     android:id="@+id/seriesname"
                     style="@style/Header"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/favoriteLabel"
                     android:ellipsize="marquee"
                     android:text="Loading" />
 
@@ -56,6 +57,16 @@
                     android:layout_alignParentRight="true"
                     android:layout_below="@id/seriesname"
                     android:text="Continuing" />
+
+                <ImageView
+                    android:id="@+id/favoriteLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:contentDescription="@string/favorited"
+                    android:src="@drawable/ic_favorited"
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <include layout="@layout/holodivider" />
