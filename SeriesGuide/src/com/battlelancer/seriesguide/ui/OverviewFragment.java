@@ -56,6 +56,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -77,6 +78,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     final private Bundle mShareData = new Bundle();
 
     private long mAirtime;
+
+    private boolean mCollected;
 
     public interface InitBundle {
         String SHOW_TVDBID = "tvdbid";
@@ -420,11 +423,28 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         });
 
         // Watched button
-        getView().findViewById(R.id.seenButton).setOnClickListener(new OnClickListener() {
+        getView().findViewById(R.id.watchedButton).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 fireTrackerEvent("Toggle watched");
                 onMarkWatched();
+            }
+        });
+
+        // Collected button
+        mCollected = episode.getInt(EpisodeQuery.COLLECTED) == 1 ? true : false;
+
+        ImageButton collectedButton = (ImageButton) getView().findViewById(R.id.collectedButton);
+        collectedButton.setImageResource(mCollected ? R.drawable.ic_collected
+                : R.drawable.ic_action_collect);
+        collectedButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fireTrackerEvent("Toggle collected");
+                mCollected = !mCollected;
+                ((ImageButton) v).setImageResource(mCollected ? R.drawable.ic_collected
+                        : R.drawable.ic_action_collect);
+                DBUtils.collectEpisode(getActivity(), String.valueOf(mEpisodeid), mCollected);
             }
         });
 
@@ -557,7 +577,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 Episodes._ID, Shows.REF_SHOW_ID, Episodes.OVERVIEW, Episodes.NUMBER,
                 Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIREDMS, Episodes.DIRECTORS,
                 Episodes.GUESTSTARS, Episodes.WRITERS, Episodes.RATING, Episodes.IMAGE,
-                Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID
+                Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID, Episodes.COLLECTED
         };
 
         int _ID = 0;
@@ -589,5 +609,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         int TITLE = 13;
 
         int REF_SEASON_ID = 14;
+
+        int COLLECTED = 15;
     }
 }

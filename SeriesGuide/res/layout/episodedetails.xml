@@ -31,28 +31,12 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/episode_airtime"
         style="@style/Subtitle"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/episode_airtime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name" />
-
-        <TextView
-            android:id="@+id/TextViewEpisodeWatchedState"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:lines="1"
-            android:paddingLeft="@dimen/default_padding"
-            android:scrollHorizontally="true"
-            android:text="@string/app_name" />
-    </LinearLayout>
+        android:text="@string/app_name" />
 
     <include
         android:layout_width="match_parent"

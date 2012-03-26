@@ -70,6 +70,8 @@
     <string name="mark_all">Watched all</string>
     <string name="unmark_all">Watched none</string>
     <string name="mark_untilhere">Watched all previously aired</string>
+    <string name="collect">Collected episode</string>
+    <string name="uncollect">Not yet collected episode</string>
 
     <!-- SeriesGuide mainscreen -->
     <string name="shows_empty">No shows here.</string>

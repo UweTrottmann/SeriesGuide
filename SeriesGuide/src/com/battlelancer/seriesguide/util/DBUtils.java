@@ -183,6 +183,25 @@ public class DBUtils {
     }
 
     /**
+     * Updates the {@link Episodes} COLLECTED column with the given value.
+     * 
+     * @param rowid
+     * @param state
+     */
+    public static void collectEpisode(Context context, String episodeId, boolean isCollected) {
+        if (context == null) {
+            return;
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(Episodes.COLLECTED, isCollected);
+
+        context.getContentResolver()
+                .update(Episodes.buildEpisodeUri(episodeId), values, null, null);
+        context.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
+    }
+
+    /**
      * Marks the next episode (if there is one) of this show as watched.
      * 
      * @param seriesid

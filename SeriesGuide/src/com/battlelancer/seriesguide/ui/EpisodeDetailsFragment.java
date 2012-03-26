@@ -25,7 +25,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -42,6 +41,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -60,7 +60,9 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     private SimpleCursorAdapter mAdapter;
 
-    protected boolean isWatched;
+    protected boolean mWatched;
+
+    protected boolean mCollected;
 
     public static EpisodeDetailsFragment newInstance(String episodeId, boolean isShowingPoster) {
         EpisodeDetailsFragment f = new EpisodeDetailsFragment();
@@ -207,7 +209,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         String[] from = new String[] {
                 Episodes.TITLE, Episodes.OVERVIEW, Episodes.FIRSTAIREDMS, Episodes.DVDNUMBER,
                 Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS, Episodes.RATING,
-                Episodes.IMAGE, Shows.TITLE, Episodes.WATCHED, Shows.REF_SHOW_ID
+                Episodes.IMAGE, Shows.TITLE, Episodes.WATCHED, Episodes.COLLECTED,
+                Shows.REF_SHOW_ID
 
         };
         int[] to = new int[] {
@@ -215,7 +218,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 R.id.episodedetails_root, R.id.textViewEpisodeDVDnumber,
                 R.id.TextViewEpisodeDirectors, R.id.TextViewEpisodeGuestStars,
                 R.id.TextViewEpisodeWriters, R.id.ratingbar, R.id.imageContainer,
-                R.id.textViewEpisodeDetailsShowName, R.id.TextViewEpisodeWatchedState,
+                R.id.textViewEpisodeDetailsShowName, R.id.watchedButton, R.id.collectedButton,
                 R.id.episodedetails_root
         };
 
@@ -225,11 +228,37 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
             public boolean setViewValue(View view, Cursor episode, int columnIndex) {
                 if (columnIndex == EpisodeDetailsQuery.WATCHED) {
-                    TextView watchedState = (TextView) view;
-                    isWatched = episode.getInt(EpisodeDetailsQuery.WATCHED) == 1 ? true : false;
-                    watchedState.setText(isWatched ? getString(R.string.episode_iswatched)
-                            : getString(R.string.episode_notwatched));
-                    watchedState.setTextColor(isWatched ? Color.GREEN : Color.GRAY);
+                    mWatched = episode.getInt(EpisodeDetailsQuery.WATCHED) == 1 ? true : false;
+
+                    // Watched button
+                    ImageButton seenButton = (ImageButton) view;
+                    seenButton.setImageResource(mWatched ? R.drawable.ic_watched
+                            : R.drawable.ic_action_watched);
+                    seenButton.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            fireTrackerEvent("Toggle watched");
+                            onToggleWatched();
+                        }
+                    });
+
+                    return true;
+                }
+                if (columnIndex == EpisodeDetailsQuery.COLLECTED) {
+                    mCollected = episode.getInt(EpisodeDetailsQuery.COLLECTED) == 1 ? true : false;
+
+                    // Collected button
+                    ImageButton seenButton = (ImageButton) view;
+                    seenButton.setImageResource(mCollected ? R.drawable.ic_collected
+                            : R.drawable.ic_action_collect);
+                    seenButton.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            fireTrackerEvent("Toggle collected");
+                            onToggleCollected();
+                        }
+                    });
+
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.FIRSTAIREDMS) {
@@ -393,15 +422,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         }
                     });
 
-                    // Watched button
-                    view.findViewById(R.id.seenButton).setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            fireTrackerEvent("Toggle watched");
-                            onToggleWatchState();
-                        }
-                    });
-
                     // Calendar button
                     final String showTitle = episode.getString(EpisodeDetailsQuery.SHOW_TITLE);
                     final long airtime = episode.getLong(EpisodeDetailsQuery.FIRSTAIREDMS);
@@ -435,9 +455,15 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         }
     }
 
-    private void onToggleWatchState() {
-        DBUtils.markEpisode(getActivity(), getEpisodeId(), !isWatched);
-        isWatched = !isWatched;
+    private void onToggleWatched() {
+        mWatched = !mWatched;
+        DBUtils.markEpisode(getActivity(), getEpisodeId(), mWatched);
+        getLoaderManager().restartLoader(EPISODE_LOADER, null, this);
+    }
+
+    private void onToggleCollected() {
+        mCollected = !mCollected;
+        DBUtils.collectEpisode(getActivity(), getEpisodeId(), mCollected);
         getLoaderManager().restartLoader(EPISODE_LOADER, null, this);
     }
 
@@ -449,7 +475,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
                 Tables.EPISODES + "." + Episodes.RATING, Episodes.IMAGE, Episodes.DVDNUMBER,
                 Episodes.TITLE, Shows.TITLE, Shows.IMDBID, Shows.RUNTIME, Shows.POSTER,
-                Seasons.REF_SEASON_ID
+                Seasons.REF_SEASON_ID, Episodes.COLLECTED
         };
 
         int _ID = 0;
@@ -489,6 +515,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         int SHOW_POSTER = 17;
 
         int REF_SEASON_ID = 18;
+
+        int COLLECTED = 19;
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
