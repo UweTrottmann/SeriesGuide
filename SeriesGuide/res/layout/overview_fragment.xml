@@ -27,13 +27,15 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/list_selector_holo_dark"
                 android:focusable="true"
+                android:nextFocusDown="@+id/checkinButton"
                 android:paddingBottom="@dimen/default_padding" >
 
                 <TextView
                     android:id="@+id/seriesname"
                     style="@style/Header"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/favoriteLabel"
                     android:ellipsize="marquee"
                     android:text="Loading" />
 
@@ -55,6 +57,16 @@
                     android:layout_alignParentRight="true"
                     android:layout_below="@id/seriesname"
                     android:text="Continuing" />
+
+                <ImageView
+                    android:id="@+id/favoriteLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:contentDescription="@string/favorited"
+                    android:src="@drawable/ic_favorited"
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <include layout="@layout/holodivider" />
@@ -69,7 +81,10 @@
                     android:id="@+id/nextheader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/default_padding"
+                    android:layout_marginBottom="@dimen/inline_padding"
+                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_marginTop="@dimen/default_padding"
                     android:text="Loading..." >
                 </TextView>
 

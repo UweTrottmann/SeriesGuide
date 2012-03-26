@@ -9,6 +9,8 @@ import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.seriesguide.util.Utils.SGChannel;
+import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.app.AlarmManager;
 import android.app.IntentService;
@@ -20,13 +22,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.text.format.DateUtils;
 
 public class NotificationService extends IntentService {
 
     private static final String[] PROJECTION = new String[] {
             Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.FIRSTAIREDMS,
-            Shows.TITLE, Shows.NETWORK, Episodes.NUMBER, Episodes.SEASON
+            Shows.TITLE, Shows.NETWORK, Episodes.NUMBER, Episodes.SEASON, Shows.POSTER
     };
 
     // by airdate, then by show, then lowest number first
@@ -51,6 +54,8 @@ public class NotificationService extends IntentService {
         int NUMBER = 5;
 
         int SEASON = 6;
+
+        int POSTER = 7;
     }
 
     public NotificationService() {
@@ -60,7 +65,8 @@ public class NotificationService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        if (!prefs.getBoolean(SeriesGuidePreferences.KEY_NOTIFICATIONS_ENABLED, true)) {
+        if (!prefs.getBoolean(SeriesGuidePreferences.KEY_NOTIFICATIONS_ENABLED, true)
+                || Utils.getChannel(this) == SGChannel.STABLE) {
             // cancel any pending alarm
             AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent i = new Intent(this, OnAlarmReceiver.class);
@@ -91,21 +97,21 @@ public class NotificationService extends IntentService {
         }
 
         if (count != 0) {
-            NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-            int icon = R.drawable.ic_notification;
             Context context = getApplicationContext();
             CharSequence tickerText = "";
             CharSequence contentTitle = "";
             CharSequence contentText = "";
             PendingIntent contentIntent = null;
 
+            NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
+
             if (count == 1) {
                 // notify in detail about one episode
                 upcomingEpisodes.moveToFirst();
                 String showTitle = upcomingEpisodes.getString(NotificationQuery.SHOW_TITLE);
                 String airs = Utils.formatToTimeAndDay(
-                        upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS), this)[2];
+                        upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS), this)[0];
                 String network = upcomingEpisodes.getString(NotificationQuery.NETWORK);
 
                 tickerText = getString(R.string.upcoming_show, showTitle);
@@ -122,6 +128,8 @@ public class NotificationService extends IntentService {
                         upcomingEpisodes.getString(NotificationQuery._ID));
                 contentIntent = PendingIntent.getActivity(context, 2, notificationIntent, 0);
 
+                String posterPath = upcomingEpisodes.getString(NotificationQuery.POSTER);
+                nb.setLargeIcon(ImageCache.getInstance(context).getThumb(posterPath, false));
             } else if (count > 1) {
                 // notify about multiple episodes
                 tickerText = getString(R.string.upcoming_episodes);
@@ -131,17 +139,21 @@ public class NotificationService extends IntentService {
 
                 Intent notificationIntent = new Intent(context, UpcomingRecentActivity.class);
                 contentIntent = PendingIntent.getActivity(context, 3, notificationIntent, 0);
+
             }
 
-            Notification notification = new Notification(icon, tickerText,
-                    System.currentTimeMillis());
-            notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
-            notification.flags |= Notification.FLAG_AUTO_CANCEL;
-            notification.defaults |= Notification.DEFAULT_LIGHTS;
-            notification.defaults |= Notification.DEFAULT_SOUND;
+            nb.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS);
+            nb.setWhen(System.currentTimeMillis());
+            nb.setAutoCancel(true);
+            nb.setTicker(tickerText);
+            nb.setContentTitle(contentTitle);
+            nb.setContentText(contentText);
+            nb.setContentIntent(contentIntent);
+            nb.setSmallIcon(R.drawable.ic_notification);
 
             // use string resource id, always unique within app
-            nm.notify(R.string.upcoming_show, notification);
+            NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            nm.notify(R.string.upcoming_show, nb.getNotification());
         }
 
         // set an alarm to wake us up later to notify about future episodes

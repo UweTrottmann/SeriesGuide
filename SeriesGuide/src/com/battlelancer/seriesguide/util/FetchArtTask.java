@@ -8,12 +8,11 @@ import com.battlelancer.thetvdbapi.TheTVDB;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-public class FetchArtTask extends AsyncTask<Void, Void, Integer> {
-    private static final int SUCCESS = 0;
-
-    private static final int ERROR = 1;
+public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
 
     private String mPath;
 
@@ -21,50 +20,85 @@ public class FetchArtTask extends AsyncTask<Void, Void, Integer> {
 
     private Context mContext;
 
-    public FetchArtTask(String path, ImageView imageView, Context context) {
+    private View mProgressContainer;
+
+    private View mContainer;
+
+    private ImageCache mImageCache;
+
+    private boolean mAnimate;
+
+    public FetchArtTask(String path, View container, Context context) {
         mPath = path;
-        mImageView = imageView;
+        mContainer = container;
         mContext = context;
+        mImageCache = ImageCache.getInstance(context);
     }
 
     @Override
     protected void onPreExecute() {
-        mImageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-        mImageView.setImageResource(R.drawable.ic_action_refresh);
+        mImageView = (ImageView) mContainer.findViewById(R.id.ImageViewEpisodeImage);
+        mProgressContainer = mContainer.findViewById(R.id.progress_container);
+
+        // only make progress container visible if we will do long running op
+        if (!mImageCache.isCached(mPath)) {
+            mProgressContainer.setVisibility(View.VISIBLE);
+            mImageView.setVisibility(View.GONE);
+        }
     }
 
     @Override
-    protected Integer doInBackground(Void... params) {
-        int resultCode;
-
+    protected Bitmap doInBackground(Void... params) {
         if (isCancelled()) {
             return null;
         }
 
-        if (TheTVDB.fetchArt(mPath, false, mContext)) {
-            resultCode = SUCCESS;
-        } else {
-            resultCode = ERROR;
+        if (mPath.length() != 0) {
+
+            final Bitmap bitmap = mImageCache.get(mPath);
+            if (bitmap != null) {
+                // image is in cache
+                mAnimate = false;
+                return bitmap;
+
+            } else {
+
+                if (isCancelled()) {
+                    return null;
+                }
+
+                // download image from TVDb
+                if (TheTVDB.fetchArt(mPath, false, mContext)) {
+                    mAnimate = true;
+                    return mImageCache.get(mPath);
+                }
+
+            }
         }
 
-        return resultCode;
+        return null;
     }
 
     @Override
-    protected void onPostExecute(Integer resultCode) {
-        switch (resultCode) {
-            case SUCCESS:
-                Bitmap bitmap = ImageCache.getInstance(mContext).get(mPath);
-                if (bitmap != null) {
-                    mImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                    mImageView.setImageBitmap(bitmap);
-                    return;
-                }
-                // no break because image could be null (got deleted, ...)
-            default:
-                // fallback
-                mImageView.setImageResource(R.drawable.show_generic);
-                break;
+    protected void onPostExecute(Bitmap bitmap) {
+        if (bitmap != null) {
+            mImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            mImageView.setImageBitmap(bitmap);
+
+            // make image view visible
+            if (mAnimate) {
+                mProgressContainer.startAnimation(AnimationUtils.loadAnimation(mContext,
+                        android.R.anim.fade_out));
+                mImageView.startAnimation(AnimationUtils.loadAnimation(mContext,
+                        android.R.anim.fade_in));
+            } else {
+                mProgressContainer.clearAnimation();
+                mImageView.clearAnimation();
+            }
+            mProgressContainer.setVisibility(View.GONE);
+            mImageView.setVisibility(View.VISIBLE);
+        } else {
+            mContainer.setVisibility(View.GONE);
         }
     }
 }

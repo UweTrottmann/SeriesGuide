@@ -9,7 +9,6 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
@@ -58,12 +57,16 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     private SimpleCursorAdapter mAdapter;
 
-    public static SeasonsFragment newInstance(String showId) {
+    public interface InitBundle {
+        String SHOW_TVDBID = "tvdbid";
+    }
+
+    public static SeasonsFragment newInstance(int showId) {
         SeasonsFragment f = new SeasonsFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
-        args.putString(BaseColumns._ID, showId);
+        args.putInt(InitBundle.SHOW_TVDBID, showId);
         f.setArguments(args);
 
         return f;
@@ -171,7 +174,16 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        showEpisodes(position, String.valueOf(id));
+        Intent intent = new Intent(getActivity(), EpisodesActivity.class);
+
+        Cursor item = (Cursor) (getListView().getItemAtPosition(position));
+        String season = item.getString(item.getColumnIndexOrThrow(Seasons.COMBINED));
+        season = Utils.getSeasonString(getActivity(), season);
+        intent.putExtra(EpisodesActivity.InitBundle.SEASON_TITLE, season);
+        intent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, (int) id);
+        intent.putExtra(EpisodesActivity.InitBundle.SHOW_TVDBID, getShowId());
+
+        startActivity(intent);
     }
 
     private void fillData() {
@@ -262,22 +274,8 @@ public class SeasonsFragment extends SherlockListFragment implements
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
-    private String getShowId() {
-        return getArguments().getString(Shows._ID);
-    }
-
-    private void showEpisodes(int position, String seasonid) {
-        Intent intent = new Intent();
-        intent.setClass(getActivity(), EpisodesActivity.class);
-        intent.putExtra(Seasons._ID, seasonid);
-        intent.putExtra(Shows.REF_SHOW_ID, getShowId());
-
-        Cursor item = (Cursor) (getListView().getItemAtPosition(position));
-        String season = item.getString(item.getColumnIndexOrThrow(Seasons.COMBINED));
-        season = Utils.getSeasonString(getActivity(), season);
-
-        intent.putExtra(Intent.EXTRA_TITLE, season);
-        startActivity(intent);
+    private int getShowId() {
+        return getArguments().getInt(InitBundle.SHOW_TVDBID);
     }
 
     /**
@@ -289,7 +287,8 @@ public class SeasonsFragment extends SherlockListFragment implements
      */
     private void markSeasonEpisodes(long seasonid, boolean state) {
         DBUtils.markSeasonEpisodes(getActivity(), String.valueOf(seasonid), state);
-        Thread t = new UpdateUnwatchThread(getShowId(), String.valueOf(seasonid), true);
+        Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()), String.valueOf(seasonid),
+                true);
         t.start();
     }
 
@@ -303,8 +302,8 @@ public class SeasonsFragment extends SherlockListFragment implements
     private void markAllEpisodes(boolean state) {
         ContentValues values = new ContentValues();
         values.put(Episodes.WATCHED, state);
-        getActivity().getContentResolver().update(Episodes.buildEpisodesOfShowUri(getShowId()),
-                values, null, null);
+        getActivity().getContentResolver().update(
+                Episodes.buildEpisodesOfShowUri(String.valueOf(getShowId())), values, null, null);
         updateUnwatchedCounts(true);
     }
 
@@ -313,7 +312,7 @@ public class SeasonsFragment extends SherlockListFragment implements
      * the list afterwards.
      */
     protected void updateUnwatchedCounts(boolean updateOverview) {
-        Thread t = new UpdateUnwatchThread(getShowId(), updateOverview);
+        Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()), updateOverview);
         t.start();
     }
 
@@ -380,8 +379,8 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-        return new CursorLoader(getActivity(), Seasons.buildSeasonsOfShowUri(getShowId()),
-                SeasonsQuery.PROJECTION, null, null, sorting.query());
+        return new CursorLoader(getActivity(), Seasons.buildSeasonsOfShowUri(String
+                .valueOf(getShowId())), SeasonsQuery.PROJECTION, null, null, sorting.query());
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {

@@ -183,6 +183,25 @@ public class DBUtils {
     }
 
     /**
+     * Updates the {@link Episodes} COLLECTED column with the given value.
+     * 
+     * @param rowid
+     * @param state
+     */
+    public static void collectEpisode(Context context, String episodeId, boolean isCollected) {
+        if (context == null) {
+            return;
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(Episodes.COLLECTED, isCollected);
+
+        context.getContentResolver()
+                .update(Episodes.buildEpisodeUri(episodeId), values, null, null);
+        context.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
+    }
+
+    /**
      * Marks the next episode (if there is one) of this show as watched.
      * 
      * @param seriesid
@@ -251,7 +270,7 @@ public class DBUtils {
      * Fetches the row to a given show id and returns the results an Series
      * object. Returns {@code null} if there is no show with that id.
      * 
-     * @param seriesid
+     * @param show tvdb id
      * @return
      */
     public static Series getShow(Context context, String showId) {
@@ -278,6 +297,8 @@ public class DBUtils {
             show.setStatus(details.getInt(details.getColumnIndexOrThrow(Shows.STATUS)));
             show.setImdbId(details.getString(details.getColumnIndexOrThrow(Shows.IMDBID)));
             show.setNextEpisode(details.getLong(details.getColumnIndexOrThrow(Shows.NEXTEPISODE)));
+            show.isFavorite = details.getInt(details.getColumnIndexOrThrow(Shows.FAVORITE)) == 1 ? true
+                    : false;
         } else {
             show = null;
         }

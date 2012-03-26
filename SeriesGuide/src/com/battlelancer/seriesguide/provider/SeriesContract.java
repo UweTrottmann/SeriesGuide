@@ -116,6 +116,11 @@ public class SeriesContract {
         String TITLE = "episodetitle";
 
         String FIRSTAIREDMS = "episode_firstairedms";
+
+        /**
+         * Whether an episode has been collected in digital, physical form.
+         */
+        String COLLECTED = "episode_collected";
     }
 
     interface EpisodeSearchColumns {

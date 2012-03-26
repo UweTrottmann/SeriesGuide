@@ -17,7 +17,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:visibility="visible" >
+                android:visibility="gone" >
 
                 <ProgressBar
                     android:layout_width="wrap_content"
@@ -71,6 +71,7 @@
 
         <ImageButton
             android:id="@+id/shoutbutton"
+            style="@style/HoloCompatButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

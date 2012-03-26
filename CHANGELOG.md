@@ -8,7 +8,25 @@ All dates are European Central timezone.
 Version 2.6 *(in development)*
 --------------------------------
 
+* Exclusive SeriesGuide X feature: Notifications for favorite shows.
+* Display correct time for non-US users, fix summer time issues. (All shows will update as a result of this).
+* Unified check in dialog.
+* New 'collected' property for episodes.
+* Fix Auto-Update not working until first manual update.
+* Many minor improvements.
+
 ### Detailed changes:
+
+#### 2.6.4beta (2012-03-26)
+
+* Rate and share shows.
+* Unified check in dialog.
+* New 'collected' property for episodes. Only on detail pages for now.
+* Inline button bar.
+* Fix Auto-Update not working until first manual update.
+* Crash fixes, other minor improvements and changes.
+* Better error log output.
+* Icon updates.
 
 #### 2.6.2beta/2.6.3beta (2012-03-20)
 

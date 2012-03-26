@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -30,6 +31,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class GetGlue {
+
+    private static final String TAG = "GetGlue";
 
     private static final String GETGLUE_APIPATH_V2 = "http://api.getglue.com/v2/";
 
@@ -98,7 +101,7 @@ public class GetGlue {
             try {
                 mComment = URLEncoder.encode(mComment, "UTF-8");
             } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+                Log.w(TAG, e);
                 mComment = e.getMessage();
                 return CHECKIN_FAILED;
             }
@@ -119,10 +122,13 @@ public class GetGlue {
             try {
                 consumer.sign(request);
             } catch (OAuthMessageSignerException e) {
+                Log.w(TAG, e);
                 return CHECKIN_FAILED;
             } catch (OAuthExpectationFailedException e) {
+                Log.w(TAG, e);
                 return CHECKIN_FAILED;
             } catch (OAuthCommunicationException e) {
+                Log.w(TAG, e);
                 return CHECKIN_FAILED;
             }
 
@@ -134,7 +140,9 @@ public class GetGlue {
                     return CHECKIN_SUCCESSFUL;
                 }
             } catch (ClientProtocolException e) {
+                Log.w(TAG, e);
             } catch (IOException e) {
+                Log.w(TAG, e);
             }
 
             return CHECKIN_FAILED;

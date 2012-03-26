@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_rate_trakt"
+        android:icon="@drawable/trakt_love_large"
+        android:showAsAction="always"
+        android:title="@string/menu_rate_trakt"/>
+    <item
+        android:id="@+id/menu_share"
+        android:actionProviderClass="com.actionbarsherlock.widget.ShareActionProvider"
+        android:showAsAction="always"
+        android:title="@string/share"/>
+
+</menu>

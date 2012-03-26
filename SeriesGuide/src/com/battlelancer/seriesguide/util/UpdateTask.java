@@ -32,6 +32,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -85,25 +86,31 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         String ns = Context.NOTIFICATION_SERVICE;
         mNotificationManager = (NotificationManager) mAppContext.getSystemService(ns);
 
-        int icon = R.drawable.ic_notification;
-        CharSequence tickerText = mAppContext.getString(R.string.update_notification);
-        long when = System.currentTimeMillis();
+        final int icon = R.drawable.ic_notification;
 
-        mNotification = new Notification(icon, tickerText, when);
-        mNotification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR
-                | Notification.FLAG_ONLY_ALERT_ONCE;
+        // no clear flag?
+        NotificationCompat.Builder nb = new NotificationCompat.Builder(mAppContext);
+        nb.setOngoing(true);
+        nb.setOnlyAlertOnce(true);
+        nb.setSmallIcon(icon);
+        nb.setTicker(mAppContext.getString(R.string.update_notification));
+        nb.setWhen(System.currentTimeMillis());
 
+        // content view
         RemoteViews contentView = new RemoteViews(mAppContext.getPackageName(),
                 R.layout.update_notification);
         contentView.setImageViewResource(R.id.image, icon);
         contentView.setTextViewText(R.id.text, mAppContext.getString(R.string.update_notification));
         contentView.setProgressBar(R.id.progressbar, 0, 0, true);
-        mNotification.contentView = contentView;
+        nb.setContent(contentView);
 
+        // content intent
         Intent notificationIntent = new Intent(mAppContext, ShowsActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(mAppContext, 0, notificationIntent,
                 0);
-        mNotification.contentIntent = contentIntent;
+        nb.setContentIntent(contentIntent);
+
+        mNotification = nb.getNotification();
 
         mNotificationManager.notify(UPDATE_NOTIFICATION_ID, mNotification);
     }
@@ -150,7 +157,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
         // actually update the shows
         for (int i = updateCount.get(); i < mShows.length; i++) {
-            // skip ahead if we get cancelled or connectivity is lost/forbidden
+            // skip ahead if we get cancelled or connectivity is
+            // lost/forbidden
             if (isCancelled()) {
                 resultCode = UPDATE_CANCELLED;
                 break;
@@ -167,11 +175,21 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             publishProgress(i, maxProgress);
 
             for (int itry = 0; itry < 2; itry++) {
-                try {
+                // skip ahead if we get cancelled or connectivity is
+                // lost/forbidden
+                if (isCancelled()) {
+                    resultCode = UPDATE_CANCELLED;
+                    break;
+                }
+                if (!Utils.isNetworkConnected(mAppContext)
+                        || (isAutoUpdateWlanOnly && !Utils.isWifiConnected(mAppContext))) {
+                    resultCode = UPDATE_OFFLINE;
+                    break;
+                }
 
+                try {
                     TheTVDB.updateShow(id, mAppContext);
                     break;
-
                 } catch (SAXException saxe) {
                     if (itry == 1) {
                         // failed twice, give up

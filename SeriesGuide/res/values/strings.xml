@@ -18,11 +18,13 @@
     <string name="norating">n/a</string>
     <string name="loading">Loading&#8230;</string>
     <string name="sending">Sending&#8230;</string>
+    <string name="done">Done</string>
     <plurals name="votes">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>
     </plurals>
     <string name="offline">No network connectivity. Try again later.</string>
+    <string name="onlyx">Only available in SeriesGuide X</string>
     
     <!-- Shouts -->
     <string name="shouts">Shouts</string>
@@ -68,6 +70,8 @@
     <string name="mark_all">Watched all</string>
     <string name="unmark_all">Watched none</string>
     <string name="mark_untilhere">Watched all previously aired</string>
+    <string name="collect">Collected episode</string>
+    <string name="uncollect">Not yet collected episode</string>
 
     <!-- SeriesGuide mainscreen -->
     <string name="shows_empty">No shows here.</string>
@@ -254,22 +258,22 @@
     <string name="cancel">Cancel</string>
     <string name="share">Share</string>
     
+    <!-- Check Ins -->
+    <string name="checkin">Check in</string>
+    <string name="checkin_hint">Type a message (optional)</string>
+    <string name="paste_episode">Paste episode</string>
+    <string name="checkinsuccess">GetGlue Check-in successful.</string>
+    <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
+    <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
+    
     <!-- Share methods -->
-    <string name="menu_checkin_getglue">Check In (GetGlue)</string>
-    <string name="menu_checkin_trakt">Check In (trakt)</string>
     <string name="menu_markseen_trakt">Mark seen (trakt)</string>
     <string name="menu_rate_trakt">Rate (trakt)</string>
     <string name="menu_share_others">Via other apps</string>
 
-    <string name="done">Done</string>
-    <string name="checkin">Check In</string>
-    <string name="comment">Check In Comment</string>
-    <string name="checkinsuccess">Check In successful.</string>
-    <string name="checkin_impossible">Can not check into this show.</string>
     <string name="traktcheckin_cancel">Cancel it</string>
     <string name="traktcheckin_inprogress">There is already a checkin in progress. Either cancel this checkin or wait %s before you can check in again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
-    <string name="checkinfailed">Check-In failed. Try disconnecting GetGlue.</string>
     <string name="oauthmessage">Authenticating SeriesGuide with GetGlue&#8230;</string>
     <string name="addtocalendar">Add to calendar</string>
     <string name="addtocalendar_failed">Can not create a calendar event.</string>
@@ -280,7 +284,7 @@
     <string name="waitplease">A moment, please&#8230;</string>
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
-    <string name="trakt_success">Successfully talked to trakt</string>
+    <string name="trakt_success">trakt action successful</string>
     <string name="trakt_error">Interaction with trakt failed</string>
     <string name="trakt_seen">marked as seen</string>
     <string name="trakt_decryptfail">password could not be decrypted</string>
@@ -327,6 +331,7 @@
     <string name="imdb">IMDb</string>
     <string name="tvdb">TVDb</string>
     <string name="trakt">trakt.tv</string>
+    <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
     <string name="betamessage"><b>Hello!</b>\nNow supporting trakt shouts and displaying trakt ratings.\n\nQuick fix for jean-luc.\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>

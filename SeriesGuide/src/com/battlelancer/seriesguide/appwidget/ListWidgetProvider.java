@@ -50,6 +50,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // update each of the widgets with the remote adapter

@@ -9,7 +9,6 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
@@ -61,15 +60,23 @@ public class EpisodesFragment extends SherlockListFragment implements
 
     private SimpleCursorAdapter mAdapter;
 
-    public void fireTrackerEvent(String label) {
-        AnalyticsUtils.getInstance(getActivity()).trackEvent("Episodes", "Click", label, 0);
+    public interface InitBundle {
+
+        String SEASON_TVDBID = "season_tvdbid";
+
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public static EpisodesFragment newInstance(int seasonTvdbId) {
+        EpisodesFragment f = new EpisodesFragment();
+        Bundle args = new Bundle();
+        args.putInt(InitBundle.SEASON_TVDBID, seasonTvdbId);
+        f.setArguments(args);
 
-        AnalyticsUtils.getInstance(getActivity()).trackPageView("/Episodes");
+        return f;
+    }
+
+    public void fireTrackerEvent(String label) {
+        AnalyticsUtils.getInstance(getActivity()).trackEvent("Episodes", "Click", label, 0);
     }
 
     @Override
@@ -80,6 +87,8 @@ public class EpisodesFragment extends SherlockListFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        AnalyticsUtils.getInstance(getActivity()).trackPageView("/Episodes");
 
         updatePreferences();
 
@@ -230,7 +239,8 @@ public class EpisodesFragment extends SherlockListFragment implements
                 getActivity().getContentResolver().delete(
                         Episodes.buildEpisodeUri(String.valueOf(info.id)), null, null);
                 getActivity().getContentResolver().notifyChange(
-                        Episodes.buildEpisodesOfSeasonWithShowUri(getSeasonId()), null);
+                        Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(getSeasonId())),
+                        null);
                 return true;
         }
         return super.onContextItemSelected(item);
@@ -283,8 +293,8 @@ public class EpisodesFragment extends SherlockListFragment implements
         showDetails(position);
     }
 
-    public String getSeasonId() {
-        return getArguments().getString(Seasons._ID);
+    public int getSeasonId() {
+        return getArguments().getInt(InitBundle.SEASON_TVDBID);
     }
 
     private void markEpisode(final String episodeId, final boolean state) {
@@ -303,7 +313,7 @@ public class EpisodesFragment extends SherlockListFragment implements
         if (activity != null) {
             new Thread(new Runnable() {
                 public void run() {
-                    DBUtils.markSeasonEpisodes(activity, getSeasonId(), state);
+                    DBUtils.markSeasonEpisodes(activity, String.valueOf(getSeasonId()), state);
                     activity.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
                 }
             }).start();
@@ -326,9 +336,8 @@ public class EpisodesFragment extends SherlockListFragment implements
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-        return new CursorLoader(getActivity(),
-                Episodes.buildEpisodesOfSeasonWithShowUri(getSeasonId()), EpisodesQuery.PROJECTION,
-                null, null, sorting.query());
+        return new CursorLoader(getActivity(), Episodes.buildEpisodesOfSeasonWithShowUri(String
+                .valueOf(getSeasonId())), EpisodesQuery.PROJECTION, null, null, sorting.query());
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {

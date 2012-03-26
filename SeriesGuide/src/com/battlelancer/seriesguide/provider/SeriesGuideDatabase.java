@@ -46,7 +46,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_NEXTAIRDATEMS = 25;
 
-    public static final int DATABASE_VERSION = DBVER_NEXTAIRDATEMS;
+    public static final int DBVER_COLLECTED = 26;
+
+    public static final int DATABASE_VERSION = DBVER_COLLECTED;
 
     public interface Tables {
         String SHOWS = "series";
@@ -103,7 +105,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             + " TEXT DEFAULT ''," + EpisodesColumns.GUESTSTARS + " TEXT DEFAULT '',"
             + EpisodesColumns.WRITERS + " TEXT DEFAULT ''," + EpisodesColumns.IMAGE
             + " TEXT DEFAULT ''," + EpisodesColumns.FIRSTAIREDMS + " INTEGER DEFAULT -1,"
-            + EpisodesColumns.RATING + " TEXT DEFAULT '');";
+            + EpisodesColumns.COLLECTED + " INTEGER DEFAULT 0," + EpisodesColumns.RATING
+            + " TEXT DEFAULT '');";
 
     private static final String CREATE_SEARCH_TABLE = "CREATE VIRTUAL TABLE "
             + Tables.EPISODES_SEARCH + " USING FTS3(" + EpisodeSearchColumns.TITLE + " TEXT,"
@@ -174,6 +177,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 24:
                 upgradeToTwentyFive(db);
                 version = 25;
+            case 25:
+                upgradeToTwentySix(db);
+                version = 26;
         }
 
         // drop all tables if version is not right
@@ -188,6 +194,17 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             onCreate(db);
         }
+    }
+
+    /**
+     * Add a {@link Episodes} column for storing whether an episode was
+     * collected in digital or physical form.
+     * 
+     * @param db
+     */
+    private void upgradeToTwentySix(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN " + EpisodesColumns.COLLECTED
+                + " INTEGER DEFAULT 0;");
     }
 
     /**

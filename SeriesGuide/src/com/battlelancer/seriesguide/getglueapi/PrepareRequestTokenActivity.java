@@ -3,9 +3,7 @@ package com.battlelancer.seriesguide.getglueapi;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
 import com.battlelancer.seriesguide.ui.BaseActivity;
-import com.battlelancer.seriesguide.util.ShareUtils;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
@@ -16,7 +14,6 @@ import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 import oauth.signpost.exception.OAuthNotAuthorizedException;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -70,7 +67,8 @@ public class PrepareRequestTokenActivity extends BaseActivity {
         if (uri != null && uri.getScheme().equals(GetGlue.OAUTH_CALLBACK_SCHEME)) {
             Log.i(TAG, "Callback received, retrieving Access Token");
 
-            new RetrieveAccessTokenTask(mConsumer, mProvider, this).execute(uri);
+            new RetrieveAccessTokenTask(mConsumer, mProvider,
+                    PreferenceManager.getDefaultSharedPreferences(this)).execute(uri);
 
             finish();
         }
@@ -88,14 +86,11 @@ public class PrepareRequestTokenActivity extends BaseActivity {
 
         private OAuthConsumer mConsumer;
 
-        private Context mContext;
-
         public RetrieveAccessTokenTask(OAuthConsumer consumer, OAuthProvider provider,
-                Context context) {
-            mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+                SharedPreferences prefs) {
+            mPrefs = prefs;
             mProvider = provider;
             mConsumer = consumer;
-            mContext = context;
         }
 
         /**
@@ -132,13 +127,9 @@ public class PrepareRequestTokenActivity extends BaseActivity {
         protected void onPostExecute(Integer result) {
             switch (result) {
                 case AUTH_SUCCESS:
-                    Bundle extras = getIntent().getExtras();
-                    String comment = extras.getString(ShareUtils.KEY_GETGLUE_COMMENT);
-                    String imdbId = extras.getString(ShareUtils.KEY_GETGLUE_IMDBID);
-                    new CheckInTask(imdbId, comment, mContext).execute();
                     break;
                 case AUTH_FAILED:
-                    Toast.makeText(getApplicationContext(), getString(R.string.checkinfailed),
+                    Toast.makeText(getApplicationContext(), getString(R.string.getglue_authfailed),
                             Toast.LENGTH_LONG).show();
                     break;
             }

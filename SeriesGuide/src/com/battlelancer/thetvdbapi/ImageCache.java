@@ -1,19 +1,3 @@
-/* Copyright (c) 2009 Matthias Käppler
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * 
- * Modified for SeriesGuide - Uwe Trottmann 2011
- */
 
 package com.battlelancer.thetvdbapi;
 
@@ -35,38 +19,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-
-/**
- * <p>
- * A simple 2-level cache for bitmap images consisting of a small and fast
- * in-memory cache (1st level cache) and a slower but bigger disk cache (2nd
- * level cache). For second level caching, the application's cache directory
- * will be used. Please note that Android may at any point decide to wipe that
- * directory.
- * </p>
- * <p>
- * When pulling from the cache, it will first attempt to load the image from
- * memory. If that fails, it will try to load it from disk. If that succeeds,
- * the image will be put in the 1st level cache and returned. Otherwise it's a
- * cache miss, and the caller is responsible for loading the image from
- * elsewhere (probably the Internet).
- * </p>
- * <p>
- * Pushes to the cache are always write-through (i.e., the image will be stored
- * both on disk and in memory).
- * </p>
- * 
- * @author Matthias Kaeppler
- */
-
-/**
- * Modified to use external storage directory as second level cache.
- * 
- * @author Uwe Trottmann
- */
+import java.util.LinkedHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ImageCache {
 
@@ -75,8 +32,6 @@ public class ImageCache {
     private int mCachedImageQuality = 98;
 
     private String mSecondLevelCacheDir;
-
-    private final Map<String, Bitmap> mCache;
 
     private static final CompressFormat mCompressedImageFormat = CompressFormat.JPEG;
 
@@ -94,9 +49,29 @@ public class ImageCache {
 
     private static final String TAG = "ImageCache";
 
+    private static final int HARD_CACHE_CAPACITY = 20;
+
+    @SuppressWarnings("serial")
+    private final HashMap<String, Bitmap> mHardBitmapCache = new LinkedHashMap<String, Bitmap>(
+            HARD_CACHE_CAPACITY / 2, 0.75f, true) {
+        @Override
+        protected boolean removeEldestEntry(LinkedHashMap.Entry<String, Bitmap> eldest) {
+            if (size() > HARD_CACHE_CAPACITY) {
+                // Entries push-out of hard reference cache are transferred to
+                // soft reference cache
+                sSoftBitmapCache.put(eldest.getKey(), new SoftReference<Bitmap>(eldest.getValue()));
+                return true;
+            } else
+                return false;
+        }
+    };
+
+    // Soft cache for bitmaps kicked out of hard cache
+    private final static ConcurrentHashMap<String, SoftReference<Bitmap>> sSoftBitmapCache = new ConcurrentHashMap<String, SoftReference<Bitmap>>(
+            HARD_CACHE_CAPACITY / 2);
+
     private ImageCache(Context ctx) {
         this.mCtx = ctx;
-        this.mCache = new HashMap<String, Bitmap>(50);
         this.mSecondLevelCacheDir = Environment.getExternalStorageDirectory().getAbsolutePath()
                 + "/Android/data/" + ctx.getPackageName() + "/files";
         mScale = mCtx.getResources().getDisplayMetrics().density;
@@ -155,31 +130,51 @@ public class ImageCache {
     }
 
     /**
-     * Returns wether this image exists in the cache or on disk already.
+     * Returns whether this image exists in cache or on disk already.
      * 
      * @param imageUrl
      * @return
      */
-    public boolean contains(String imageUrl) {
-        if (mCache.containsKey(imageUrl)) {
-            return true;
-        } else {
-            File imageFile = getImageFile(imageUrl);
-            return imageFile.exists();
-        }
+    public boolean exists(String imageUrl) {
+        return isCached(imageUrl) || getImageFile(imageUrl).exists();
     }
 
-    public Bitmap get(Object key) {
+    /**
+     * Returns whether this image exists in cache already.
+     * 
+     * @param imageUrl
+     * @return
+     */
+    public boolean isCached(String imageUrl) {
+        return mHardBitmapCache.containsKey(imageUrl) || sSoftBitmapCache.containsKey(imageUrl);
+    }
+
+    public Bitmap get(String key) {
         return getIfNotBusy(key, false);
     }
 
-    public synchronized Bitmap getIfNotBusy(Object key, boolean isBusy) {
-        String imageUrl = (String) key;
-        Bitmap bitmapRef = mCache.get(imageUrl);
+    public Bitmap getIfNotBusy(String imageUrl, boolean isBusy) {
+        synchronized (mHardBitmapCache) {
+            final Bitmap bitmap = mHardBitmapCache.get(imageUrl);
+            if (bitmap != null) {
+                // 1st level cache hit (memory)
+                // Move element to first position, so that it is removed last
+                mHardBitmapCache.remove(imageUrl);
+                mHardBitmapCache.put(imageUrl, bitmap);
+                return bitmap;
+            }
+        }
 
-        if (bitmapRef != null) {
-            // 1st level cache hit (memory)
-            return bitmapRef;
+        SoftReference<Bitmap> bitmapReference = sSoftBitmapCache.get(imageUrl);
+        if (bitmapReference != null) {
+            final Bitmap bitmap = bitmapReference.get();
+            if (bitmap != null) {
+                // Bitmap found in soft cache
+                return bitmap;
+            } else {
+                // Soft reference has been Garbage Collected
+                sSoftBitmapCache.remove(imageUrl);
+            }
         }
 
         // if the caller is busy doing other work, don't load from disk
@@ -190,17 +185,19 @@ public class ImageCache {
         File imageFile = getImageFile(imageUrl);
         if (imageFile.exists()) {
             // 2nd level cache hit (disk)
-            Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+            final Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
             if (bitmap == null) {
                 // treat decoding errors as a cache miss
                 return null;
             }
 
-            mCache.put(imageUrl, bitmap);
+            synchronized (mHardBitmapCache) {
+                mHardBitmapCache.put(imageUrl, bitmap);
+            }
             return bitmap;
         }
 
-        // cache miss
+        // bitmap could not be found anywhere
         return null;
     }
 
@@ -257,7 +254,9 @@ public class ImageCache {
                 bitmap.compress(mCompressedImageFormat, mCachedImageQuality, ostream);
                 ostream.close();
 
-                mCache.put(imageUrl, bitmap);
+                synchronized (mHardBitmapCache) {
+                    mHardBitmapCache.put(imageUrl, bitmap);
+                }
 
                 return bitmap;
             } catch (FileNotFoundException e) {
@@ -288,7 +287,8 @@ public class ImageCache {
     }
 
     public void clear() {
-        mCache.clear();
+        mHardBitmapCache.clear();
+        sSoftBitmapCache.clear();
     }
 
     public void clearExternal() {

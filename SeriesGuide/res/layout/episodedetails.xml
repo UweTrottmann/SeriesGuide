@@ -7,40 +7,36 @@
     android:orientation="vertical" >
 
     <TextView
+        android:id="@+id/textViewEpisodeDetailsShowName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_padding"
+        android:background="@drawable/list_selector_holo_dark"
+        android:clickable="true"
+        android:focusable="true"
+        android:nextFocusDown="@+id/checkinButton"
+        android:nextFocusLeft="@+id/textViewEpisodeDetailsShowName"
+        android:nextFocusRight="@+id/textViewEpisodeDetailsShowName"
+        android:paddingBottom="@dimen/default_padding"
+        android:paddingTop="@dimen/default_padding"
+        android:text="@string/app_name"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/text_size_small" >
+    </TextView>
+
+    <TextView
         android:id="@+id/TextViewEpisodeTitle"
         style="@style/Header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/app_name" />
 
-    <Button
-        android:id="@+id/textViewEpisodeDetailsShowName"
-        style="@style/HoloCompatButton"
-        android:text="@string/app_name" >
-    </Button>
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/episode_airtime"
         style="@style/Subtitle"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/episode_airtime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name" />
-
-        <TextView
-            android:id="@+id/TextViewEpisodeWatchedState"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:lines="1"
-            android:paddingLeft="@dimen/default_padding"
-            android:scrollHorizontally="true"
-            android:text="@string/app_name" />
-    </LinearLayout>
+        android:text="@string/app_name" />
 
     <include
         android:layout_width="match_parent"

@@ -7,7 +7,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.util.ActivityHelper;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
@@ -23,6 +22,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NavUtils;
 import android.text.util.Linkify;
 import android.view.KeyEvent;
 import android.widget.ScrollView;
@@ -83,6 +83,10 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_LANGUAGE = "language";
 
+    public static final String KEY_SHAREWITHTRAKT = "com.battlelancer.seriesguide.sharewithtrakt";
+
+    public static final String KEY_SHAREWITHGETGLUE = "com.battlelancer.seriesguide.sharewithgetglue";
+
     public static final String SUPPORT_MAIL = "seriesguide@battlelancer.com";
 
     public static final String HELP_URL = "http://seriesguide.uwetrottmann.com/help";
@@ -93,14 +97,13 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     private static final String PAYPAL_DONATE_URL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VVBLMQBSBU74L";
 
-    private final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
-
     private static final String TAG = "SeriesGuidePreferences";
 
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -254,8 +257,15 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                 });
 
         // Notifications
-        findPreference(KEY_NOTIFICATIONS_ENABLED).setOnPreferenceClickListener(
-                new OnPreferenceClickListener() {
+        Preference notificationsPref = findPreference(KEY_NOTIFICATIONS_ENABLED);
+        switch (Utils.getChannel(this)) {
+            case STABLE: {
+                notificationsPref.setEnabled(false);
+                notificationsPref.setSummary(R.string.onlyx);
+                break;
+            }
+            default: {
+                notificationsPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
                     @Override
                     public boolean onPreferenceClick(Preference preference) {
@@ -271,6 +281,9 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                         return true;
                     }
                 });
+                break;
+            }
+        }
     }
 
     @Override
@@ -301,13 +314,21 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     @Override
     public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-        return mActivityHelper.onKeyLongPress(keyCode, event);
+        // always navigate back to the home activity
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            NavUtils.navigateUpTo(this,
+                    new Intent(Intent.ACTION_MAIN).setClass(this, ShowsActivity.class));
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mActivityHelper.onOptionsItemSelected(item)) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

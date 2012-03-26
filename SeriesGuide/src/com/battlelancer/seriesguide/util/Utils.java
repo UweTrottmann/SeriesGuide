@@ -109,8 +109,10 @@ public class Utils {
         }
 
         if (time != null) {
-            cal.set(Calendar.HOUR_OF_DAY, time.getHours());
-            cal.set(Calendar.MINUTE, time.getMinutes());
+            Calendar timeCal = Calendar.getInstance();
+            timeCal.setTime(time);
+            cal.set(Calendar.HOUR_OF_DAY, timeCal.get(Calendar.HOUR_OF_DAY));
+            cal.set(Calendar.MINUTE, timeCal.get(Calendar.MINUTE));
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MILLISECOND, 0);
             return cal.getTimeInMillis();
@@ -764,6 +766,28 @@ public class Utils {
             result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
         }
         return result;
+    }
+
+    public enum SGChannel {
+        STABLE("com.battlelancer.seriesguide"), BETA("com.battlelancer.seriesguide.beta"), X(
+                "com.battlelancer.seriesguide.x");
+
+        String packageName;
+
+        private SGChannel(String packageName) {
+            this.packageName = packageName;
+        }
+    }
+
+    public static SGChannel getChannel(Context context) {
+        String thisPackageName = context.getApplicationContext().getPackageName();
+        if (thisPackageName.equals(SGChannel.BETA.packageName)) {
+            return SGChannel.BETA;
+        }
+        if (thisPackageName.equals(SGChannel.X.packageName)) {
+            return SGChannel.X;
+        }
+        return SGChannel.STABLE;
     }
 
 }

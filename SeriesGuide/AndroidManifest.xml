@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    android:installLocation="auto"
     package="com.battlelancer.seriesguide.beta"
+    android:installLocation="auto"
     android:versionCode="158"
     android:versionName="2.6.3beta" >
 
@@ -47,15 +47,24 @@
         <activity
             android:name="com.battlelancer.seriesguide.ui.SeriesGuidePreferences"
             android:label="@string/preferences" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity
             android:name="com.battlelancer.seriesguide.ui.BackupDeleteActivity"
             android:label="@string/backup" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.ShowInfoActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity
             android:name="com.battlelancer.seriesguide.ui.SearchActivity"
@@ -67,8 +76,103 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
+        <activity
+            android:name="com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity"
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="getgluecallback"
+                    android:scheme="sgoauth" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.SeasonsActivity" >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.EpisodesActivity" >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.OverviewActivity" >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.EpisodeDetailsActivity" >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.TraktSyncActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.UpcomingRecentActivity" >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.AddActivity"
+            android:label="@string/add_show" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.TraktShoutsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
 
+        <!-- Content provider -->
+        <provider
+            android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider"
+            android:authorities="com.battlelancer.seriesguide" >
+        </provider>
+
+        <!-- Notification service -->
+        <service android:name="com.battlelancer.seriesguide.service.NotificationService" >
+        </service>
+
+        <receiver android:name="com.battlelancer.seriesguide.service.OnAlarmReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Widgets -->
         <receiver
             android:name="com.battlelancer.seriesguide.appwidget.ListWidgetProvider"
             android:label="@string/widget_label" >
@@ -139,73 +243,6 @@
             android:name="com.battlelancer.seriesguide.appwidget.AppWidgetLarge$UpdateServiceLarge"
             android:enabled="@bool/isFroyoOrLower" >
         </service>
-
-        <activity
-            android:name="com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity"
-            android:launchMode="singleTask" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="getgluecallback"
-                    android:scheme="sgoauth" />
-            </intent-filter>
-        </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.SeasonsActivity" >
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-        </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.EpisodesActivity" >
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-        </activity>
-
-        <provider
-            android:authorities="com.battlelancer.seriesguide.beta.provider"
-            android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider" >
-        </provider>
-
-        <activity
-            android:name="com.battlelancer.seriesguide.ui.OverviewActivity"
-            android:uiOptions="splitActionBarWhenNarrow" >
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-        </activity>
-        <activity
-            android:name="com.battlelancer.seriesguide.ui.EpisodeDetailsActivity"
-            android:uiOptions="splitActionBarWhenNarrow" >
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-        </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.TraktSyncActivity" >
-        </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.UpcomingRecentActivity" >
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-        </activity>
-        <activity
-            android:name="com.battlelancer.seriesguide.ui.AddActivity"
-            android:label="@string/add_show" >
-        </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.TraktShoutsActivity" >
-        </activity>
-
-        <service android:name="com.battlelancer.seriesguide.service.NotificationService" >
-        </service>
-
-        <receiver android:name="com.battlelancer.seriesguide.service.OnAlarmReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>
