@@ -75,6 +75,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
     private FetchArtTask mArtTask;
 
+    private TraktSummaryTask mTraktTask;
+
     final private Bundle mShareData = new Bundle();
 
     private long mAirtime;
@@ -133,6 +135,19 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     public void onResume() {
         super.onResume();
         onLoadEpisode();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mArtTask != null) {
+            mArtTask.cancel(true);
+            mArtTask = null;
+        }
+        if (mTraktTask != null) {
+            mTraktTask.cancel(true);
+            mTraktTask = null;
+        }
     }
 
     @Override
@@ -345,14 +360,10 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 nextheader.setText(dayAndTime[2] + " (" + dayAndTime[1] + "):");
             }
 
-            onLoadEpisodeDetails(episode);
-
             // create share string
             episodestring = ShareUtils.onCreateShareString(context, episode);
 
-            // Episode image
-            String imagePath = episode.getString(EpisodeQuery.IMAGE);
-            onLoadImage(imagePath);
+            onLoadEpisodeDetails(episode);
 
             episode.close();
         } else {
@@ -497,10 +508,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             ((TextView) getView().findViewById(R.id.value)).setText(ratingText + "/10");
         }
 
-        // trakt rating
-        new TraktSummaryTask(getSherlockActivity(), getView()).episode(showTvdbid, seasonNumber,
-                episodeNumber).execute();
-
         // IMDb and TVDb button
         final String seasonId = episode.getString(EpisodeQuery.REF_SEASON_ID);
         final String episodeId = episode.getString(EpisodeQuery._ID);
@@ -531,6 +538,15 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 }
             }
         });
+
+        // Episode image
+        String imagePath = episode.getString(EpisodeQuery.IMAGE);
+        onLoadImage(imagePath);
+
+        // // trakt rating
+        mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView()).episode(showTvdbid,
+                seasonNumber, episodeNumber);
+        mTraktTask.execute();
     }
 
     private void onMarkWatched() {
