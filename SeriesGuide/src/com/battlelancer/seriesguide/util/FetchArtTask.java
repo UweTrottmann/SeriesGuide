@@ -80,6 +80,11 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
     }
 
     @Override
+    protected void onCancelled(Bitmap result) {
+        releaseReferences();
+    }
+
+    @Override
     protected void onPostExecute(Bitmap bitmap) {
         if (bitmap != null) {
             mImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
@@ -100,5 +105,15 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
         } else {
             mContainer.setVisibility(View.GONE);
         }
+
+        releaseReferences();
+    }
+
+    private void releaseReferences() {
+        mContext = null;
+        mContainer = null;
+        mProgressContainer = null;
+        mImageView = null;
+        mImageCache = null;
     }
 }

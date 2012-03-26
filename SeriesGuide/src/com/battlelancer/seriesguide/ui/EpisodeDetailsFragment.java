@@ -58,6 +58,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     private FetchArtTask mArtTask;
 
+    private TraktSummaryTask mTraktTask;
+
     private SimpleCursorAdapter mAdapter;
 
     protected boolean mWatched;
@@ -114,9 +116,13 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mArtTask != null && mArtTask.getStatus() == AsyncTask.Status.RUNNING) {
+        if (mArtTask != null) {
             mArtTask.cancel(true);
             mArtTask = null;
+        }
+        if (mTraktTask != null) {
+            mTraktTask.cancel(true);
+            mTraktTask = null;
         }
     }
 
@@ -324,10 +330,11 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     }
 
                     // trakt rating
-                    new TraktSummaryTask(getSherlockActivity(), rating).episode(
+                    mTraktTask = new TraktSummaryTask(getSherlockActivity(), rating).episode(
                             episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID),
                             episode.getInt(EpisodeDetailsQuery.SEASON),
-                            episode.getInt(EpisodeDetailsQuery.NUMBER)).execute();
+                            episode.getInt(EpisodeDetailsQuery.NUMBER));
+                    mTraktTask.execute();
 
                     return true;
                 }

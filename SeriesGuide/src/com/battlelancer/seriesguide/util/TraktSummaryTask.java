@@ -100,6 +100,10 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
                 || (!isOnlyWifiAllowed && Utils.isNetworkConnected(mContext))) {
 
             try {
+                if (isCancelled()) {
+                    return null;
+                }
+
                 // decide whether we have a show or an episode
                 if (mTvdbIdString != null) {
                     // get the shows summary from trakt
@@ -135,6 +139,11 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
     }
 
     @Override
+    protected void onCancelled(Ratings result) {
+        releaseReferences();
+    }
+
+    @Override
     protected void onPostExecute(Ratings ratings) {
         // set the final rating values
         if (ratings != null && mTraktLoves != null && mTraktVotes != null) {
@@ -142,6 +151,15 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
             mTraktVotes.setText(mContext.getResources().getQuantityString(R.plurals.votes,
                     ratings.votes, ratings.votes));
         }
+
+        releaseReferences();
+    }
+
+    private void releaseReferences() {
+        mContext = null;
+        mTraktLoves = null;
+        mTraktVotes = null;
+        mView = null;
     }
 
 }
