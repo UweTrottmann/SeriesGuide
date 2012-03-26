@@ -32,7 +32,6 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -86,15 +85,13 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         String ns = Context.NOTIFICATION_SERVICE;
         mNotificationManager = (NotificationManager) mAppContext.getSystemService(ns);
 
+        CharSequence tickerText = mAppContext.getString(R.string.update_notification);
+        long when = System.currentTimeMillis();
         final int icon = R.drawable.ic_notification;
 
-        // no clear flag?
-        NotificationCompat.Builder nb = new NotificationCompat.Builder(mAppContext);
-        nb.setOngoing(true);
-        nb.setOnlyAlertOnce(true);
-        nb.setSmallIcon(icon);
-        nb.setTicker(mAppContext.getString(R.string.update_notification));
-        nb.setWhen(System.currentTimeMillis());
+        mNotification = new Notification(icon, tickerText, when);
+        mNotification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR
+                | Notification.FLAG_ONLY_ALERT_ONCE;
 
         // content view
         RemoteViews contentView = new RemoteViews(mAppContext.getPackageName(),
@@ -102,15 +99,13 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         contentView.setImageViewResource(R.id.image, icon);
         contentView.setTextViewText(R.id.text, mAppContext.getString(R.string.update_notification));
         contentView.setProgressBar(R.id.progressbar, 0, 0, true);
-        nb.setContent(contentView);
+        mNotification.contentView = contentView;
 
         // content intent
         Intent notificationIntent = new Intent(mAppContext, ShowsActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(mAppContext, 0, notificationIntent,
                 0);
-        nb.setContentIntent(contentIntent);
-
-        mNotification = nb.getNotification();
+        mNotification.contentIntent = contentIntent;
 
         mNotificationManager.notify(UPDATE_NOTIFICATION_ID, mNotification);
     }
