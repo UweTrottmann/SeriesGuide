@@ -14,6 +14,7 @@
   <string name="search_description">Επεισόδια</string>
   <string name="description_overview">Επισκόπηση</string>
   <string name="norating">n/a</string>
+  <string name="done">Ολοκληρώθηκε</string>
   <string name="episode_firstaired">Ημερομηνία πρώτης προβολής:</string>
   <string name="episode_dvdnumber">Επεισόδιο DVD</string>
   <string name="show_actors">Ηθοποιοί:</string>
@@ -109,9 +110,6 @@
   <string name="seasons">Σεζόν</string>
   <string name="cancel">Άκυρο</string>
   <string name="share">Κοινή χρήση</string>
-  <string name="done">Ολοκληρώθηκε</string>
-  <string name="checkin">Check In</string>
-  <string name="comment">Check In του σχολίου</string>
   <string name="traktcheckin_cancel">Ακυρώσετε</string>
   <string name="addtocalendar">Προσθήκη στο ημερολόγιο</string>
   <string name="username">Όνομα χρήστη</string>

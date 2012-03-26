@@ -14,6 +14,7 @@
   <string name="search_description">Епизоди</string>
   <string name="description_overview">Общ преглед</string>
   <string name="norating">няма</string>
+  <string name="done">Готово</string>
   <string name="episode_firstaired">Дата на излизане</string>
   <string name="episode_dvdnumber">DVD Епизоди</string>
   <string name="show_actors">Актьори:</string>
@@ -156,9 +157,6 @@
   <string name="share">Сподели</string>
   <string name="menu_rate_trakt">Оцени (trakt)</string>
   <string name="menu_share_others">Чрез други приложения</string>
-  <string name="done">Готово</string>
-  <string name="checkin">Вписване</string>
-  <string name="comment">Впиши се в Коментари</string>
   <string name="traktcheckin_cancel">Прекратете</string>
   <string name="traktcheckin_wait">Ще изчакам</string>
   <string name="addtocalendar">Добавяне в календара</string>
@@ -166,7 +164,6 @@
   <string name="username">Потребител</string>
   <string name="email">Електронна поща</string>
   <string name="password">Парола</string>
-  <string name="trakt_success">Успешно свързан с trakt</string>
   <string name="trakt_error">Свързването с trakt е неуспешно</string>
   <string name="trakt_seen">маркирай като гледан</string>
   <string name="trakt_decryptfail">паролата не може да се дешифрира</string>

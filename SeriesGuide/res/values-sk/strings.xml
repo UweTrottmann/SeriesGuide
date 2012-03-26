@@ -14,6 +14,7 @@
   <string name="search_description">Epizódy</string>
   <string name="description_overview">Prehľad</string>
   <string name="norating">nedostupné</string>
+  <string name="done">Hotovo</string>
   <string name="episode_firstaired">Dátum vysielania:</string>
   <string name="episode_dvdnumber">DVD epizóda</string>
   <string name="show_actors">Hrajú:</string>
@@ -94,7 +95,6 @@
   <string name="seasons">Série</string>
   <string name="cancel">Zrušiť</string>
   <string name="share">Zdieľať</string>
-  <string name="done">Hotovo</string>
   <string name="addtocalendar">Pridať do kalendára</string>
   <string name="username">Užívateľské meno</string>
   <string name="email">E-mail</string>

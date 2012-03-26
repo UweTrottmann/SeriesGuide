@@ -17,6 +17,7 @@
   <string name="norating">n/a</string>
   <string name="loading">Carregando...</string>
   <string name="sending">Enviando...</string>
+  <string name="done">Feito</string>
   <string name="episode_firstaired">Data de exibição:</string>
   <string name="episode_dvdnumber">Episódio de DVD</string>
   <string name="show_actors">Atores:</string>
@@ -182,20 +183,12 @@
   <string name="seasons">Temporadas</string>
   <string name="cancel">Cancelar</string>
   <string name="share">Compartilhar</string>
-  <string name="menu_checkin_getglue">Check-in (GetGlue)</string>
-  <string name="menu_checkin_trakt">Check-in (trakt)</string>
   <string name="menu_markseen_trakt">Marcar como visto (trakt)</string>
   <string name="menu_rate_trakt">Votar (trakt)</string>
   <string name="menu_share_others">Por outros aplicativos</string>
-  <string name="done">Feito</string>
-  <string name="checkin">Marcar</string>
-  <string name="comment">Comentário</string>
-  <string name="checkinsuccess">Marcação bem sucedida.</string>
-  <string name="checkin_impossible">Não foi possível marcar essa série.</string>
   <string name="traktcheckin_cancel">Cancele isso</string>
   <string name="traktcheckin_inprogress">Já foi marcado como vendo. Cancele a marcação ou espere %s antes de poder marcar como vendo novamente.</string>
   <string name="traktcheckin_wait">Vou esperar</string>
-  <string name="checkinfailed">O check-in falhou. Tente desconectar do GetGlue.</string>
   <string name="oauthmessage">Autenticando SeriesGuide com GetGlue...</string>
   <string name="addtocalendar">Adicionar ao calendário</string>
   <string name="addtocalendar_failed">Não é possível criar um evento de calendário.</string>
@@ -205,7 +198,6 @@
   <string name="waitplease">Um momento, por favor …</string>
   <string name="connect">Conecte-se</string>
   <string name="disconnect">Desconectar-se</string>
-  <string name="trakt_success">Integrado ao trakt com sucesso</string>
   <string name="trakt_error">Interação com o trakt falhou</string>
   <string name="trakt_seen">marcar como visto</string>
   <string name="trakt_decryptfail">senha não pode ser descriptografada</string>

@@ -14,6 +14,7 @@
   <string name="search_description">Episoder</string>
   <string name="description_overview">Oversigt</string>
   <string name="norating">ikke tilgængelig</string>
+  <string name="done">Udført</string>
   <string name="episode_firstaired">Sendt første gang:</string>
   <string name="episode_dvdnumber">DVD Episode</string>
   <string name="show_actors">Skuespillere:</string>
@@ -158,16 +159,9 @@
   <string name="seasons">Sæsoner</string>
   <string name="cancel">Annuller</string>
   <string name="share">Del</string>
-  <string name="menu_checkin_getglue">Check In (GetGlue)</string>
-  <string name="menu_checkin_trakt">Check In (trakt)</string>
   <string name="menu_markseen_trakt">Markér som set (trakt)</string>
   <string name="menu_rate_trakt">Vurder (trakt)</string>
   <string name="menu_share_others">Via andre apps</string>
-  <string name="done">Udført</string>
-  <string name="checkin">Check In</string>
-  <string name="comment">Check In kommentar</string>
-  <string name="checkinsuccess">Check In lykkedes.</string>
-  <string name="checkin_impossible">Check In mislykkedes ved denne tv-serie.</string>
   <string name="traktcheckin_cancel">Afbryd</string>
   <string name="traktcheckin_inprogress">Checkin kører allerede. Afbryd dette checkin eller vent %s før du kan lave nyt checkin.</string>
   <string name="traktcheckin_wait">Jeg venter</string>
@@ -176,7 +170,6 @@
   <string name="username">Brugernavn</string>
   <string name="email">Email</string>
   <string name="password">Adgangskode</string>
-  <string name="trakt_success">Det lykkedes at kommunikere med trakt</string>
   <string name="trakt_error">Kommunikation med trakt mislykkedes</string>
   <string name="trakt_seen">markér som set</string>
   <string name="trakt_decryptfail">Adgangskoden kunne ikke dekrypteres</string>

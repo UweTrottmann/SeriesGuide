@@ -14,6 +14,7 @@
   <string name="search_description">Epizode</string>
   <string name="description_overview">Pregled</string>
   <string name="norating">nedostupno</string>
+  <string name="done">Gotovo</string>
   <string name="episode_firstaired">Datum prvog emitiranja:</string>
   <string name="episode_dvdnumber">DVD Epizoda</string>
   <string name="show_actors">Glumci:</string>
@@ -116,9 +117,6 @@
   <string name="seasons">Sezone</string>
   <string name="cancel">Odustani</string>
   <string name="share">Dijeli</string>
-  <string name="done">Gotovo</string>
-  <string name="checkin">Check In</string>
-  <string name="comment">Komentiraj Check In</string>
   <string name="traktcheckin_cancel">Otkaži</string>
   <string name="traktcheckin_inprogress">Check In je u tijeku. Otkažite taj proces ili pričekajte %s prije nego što ponovno napravite Check In.</string>
   <string name="traktcheckin_wait">Pričekat ću</string>
@@ -126,7 +124,6 @@
   <string name="username">Korisničko ime</string>
   <string name="email">Email</string>
   <string name="password">Lozinka</string>
-  <string name="trakt_success">Uspješno komunicirao sa trakt.tv</string>
   <string name="trakt_error">Komunikacija sa trakt.tv nije uspješna</string>
   <string name="trakt_seen">Označeno kao pogledano</string>
   <string name="trakt_decryptfail">lozinka nemože biti dešifrirana</string>

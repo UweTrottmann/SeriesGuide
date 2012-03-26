@@ -12,6 +12,7 @@
   <string name="share_episode">Condividi episodio</string>
   <string name="share_checkout">Check-out</string>
   <string name="search_description">Episodi</string>
+  <string name="done">Fatto</string>
   <string name="episode_firstaired">Ora messa in onda:</string>
   <string name="episode_dvdnumber">Episodio su DVD</string>
   <string name="show_actors">Attori:</string>
@@ -91,9 +92,6 @@
   <string name="seasons">Stagioni</string>
   <string name="cancel">Annulla</string>
   <string name="share">Condividi</string>
-  <string name="done">Fatto</string>
-  <string name="checkin">Check-In</string>
-  <string name="comment">Check-In commento</string>
   <string name="addtocalendar">Aggiungi al calendario</string>
   <string name="username">Nome utente</string>
   <string name="email">E-mail</string>

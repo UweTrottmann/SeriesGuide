@@ -14,6 +14,7 @@
   <string name="search_description">Episodes</string>
   <string name="description_overview">Aperçu</string>
   <string name="norating">s/o</string>
+  <string name="done">acceptez</string>
   <string name="episode_firstaired">Date de diffusion:</string>
   <string name="episode_dvdnumber">Episode DVD</string>
   <string name="show_actors">Acteurs:</string>
@@ -162,16 +163,9 @@
   <string name="seasons">Saisons</string>
   <string name="cancel">Annuler</string>
   <string name="share">Partagez</string>
-  <string name="menu_checkin_getglue">Vérification (GetGlue)</string>
-  <string name="menu_checkin_trakt">Vérification (trakt)</string>
   <string name="menu_markseen_trakt">Marquer comme vu (trakt)</string>
   <string name="menu_rate_trakt">Noter (trakt)</string>
   <string name="menu_share_others">Via d\'autres applis</string>
-  <string name="done">acceptez</string>
-  <string name="checkin">Enregistrement</string>
-  <string name="comment">Enregistrement Commentaire</string>
-  <string name="checkinsuccess">Vérification effectuée.</string>
-  <string name="checkin_impossible">Impossible de vérifier cette série.</string>
   <string name="traktcheckin_cancel">Annuler</string>
   <string name="traktcheckin_inprogress">Il y a déjà une synchro en cours. Annulez celle-ci où attendez encore %s avant de tenter une nouvelle synchro.</string>
   <string name="traktcheckin_wait">j\'attends</string>
@@ -180,7 +174,6 @@
   <string name="username">Nom d\'utilisateur</string>
   <string name="email">E-mail</string>
   <string name="password">Mot de passe</string>
-  <string name="trakt_success">Communication avec trakt établie</string>
   <string name="trakt_error">Échec d\'interaction avec trakt</string>
   <string name="trakt_seen">marqué comme vu</string>
   <string name="trakt_decryptfail">le mot de passe n\'a pas pu être décrypté</string>

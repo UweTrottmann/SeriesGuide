@@ -14,6 +14,7 @@
   <string name="search_description">集數</string>
   <string name="description_overview">簡介</string>
   <string name="norating">無</string>
+  <string name="done">完成</string>
   <string name="episode_firstaired">預定播出日:</string>
   <string name="episode_dvdnumber">DVD集數</string>
   <string name="show_actors">演員:</string>
@@ -162,16 +163,9 @@
   <string name="seasons">季數</string>
   <string name="cancel">取消</string>
   <string name="share">分享</string>
-  <string name="menu_checkin_getglue">登入(GetGlue)</string>
-  <string name="menu_checkin_trakt">登入(trakt)</string>
   <string name="menu_markseen_trakt">標示為已觀賞(trakt)</string>
   <string name="menu_rate_trakt">等級(trakt)</string>
   <string name="menu_share_others">透過其他應用程式。</string>
-  <string name="done">完成</string>
-  <string name="checkin">登入</string>
-  <string name="comment">輸入評論</string>
-  <string name="checkinsuccess">登入成功。</string>
-  <string name="checkin_impossible">無法登入此影集。</string>
   <string name="traktcheckin_cancel">取消它</string>
   <string name="traktcheckin_inprogress">正在登入中。取消此次登入或等待%s以便再次登入。</string>
   <string name="traktcheckin_wait">等待</string>
@@ -180,7 +174,6 @@
   <string name="username">帳號</string>
   <string name="email">電子信箱</string>
   <string name="password">密碼</string>
-  <string name="trakt_success">連結trakt成功</string>
   <string name="trakt_error">與trakt的互動失敗</string>
   <string name="trakt_seen">標示為已觀看</string>
   <string name="trakt_decryptfail">無法解密密碼</string>

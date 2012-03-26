@@ -17,6 +17,14 @@
   <string name="norating">puuttuu</string>
   <string name="loading">Ladataan…</string>
   <string name="sending">Lähetetään…</string>
+  <string name="done">Valmis</string>
+  <string name="offline">Ei verkkoyhteyttä. Yritä myöhemmin uudelleen.</string>
+  <string name="shouts">Huudahdukset</string>
+  <string name="shout_hint">Kirjoita huudahdus (englanniksi)</string>
+  <string name="shout">Huudahdus!</string>
+  <string name="isspoiler">Juonipaljastusvaroitus!</string>
+  <string name="no_shouts">Huudahda ensimmäisenä!</string>
+  <string name="shouts_for">Huudahdukset ohjelmalle %s</string>
   <string name="episode_firstaired">Esityspäivä:</string>
   <string name="episode_dvdnumber">DVD-jakso</string>
   <string name="show_actors">Näyttelijät:</string>
@@ -182,20 +190,12 @@
   <string name="seasons">Kaudet</string>
   <string name="cancel">Peruuta</string>
   <string name="share">Jaa</string>
-  <string name="menu_checkin_getglue">Kuittaa (GetGlue)</string>
-  <string name="menu_checkin_trakt">Kuittaa (trakt)</string>
   <string name="menu_markseen_trakt">Merkitse katsotuksi (trakt)</string>
   <string name="menu_rate_trakt">Arvostele (trakt)</string>
   <string name="menu_share_others">Muulla sovelluksella</string>
-  <string name="done">Valmis</string>
-  <string name="checkin">Kuittaa</string>
-  <string name="comment">Kirjauskommentti</string>
-  <string name="checkinsuccess">Kuittaaminen onnistui.</string>
-  <string name="checkin_impossible">Tähän ohjelmaan ei voi kuitata.</string>
   <string name="traktcheckin_cancel">Peruuta se</string>
   <string name="traktcheckin_inprogress">Kuittaaminen on jo käynnissä. Joko peruuta tämä kuittaaminen tai odota %s ennen kuin voit kuittaat uudelleen.</string>
   <string name="traktcheckin_wait">Odotetaan</string>
-  <string name="checkinfailed">Kuittaus epäonnistui. Yritä irrottautua GetGluesta.</string>
   <string name="oauthmessage">Todennetaan SeriesGuide palveluun GetGlue…</string>
   <string name="addtocalendar">Lisää kalenteriin</string>
   <string name="addtocalendar_failed">Ei voitu luoda kalenteritapahtumaa.</string>
@@ -205,7 +205,6 @@
   <string name="waitplease">Hetkinen, olkaa hyvä…</string>
   <string name="connect">Yhdistä</string>
   <string name="disconnect">Katkaise yhteys</string>
-  <string name="trakt_success">Onnistuneesti välitetty traktille</string>
   <string name="trakt_error">Vuorovaikutus traktin kanssa epäonnistui</string>
   <string name="trakt_seen">merkitty katsotuksi</string>
   <string name="trakt_decryptfail">Salasanaa ei voitu purkaa</string>
@@ -219,6 +218,8 @@
   <string name="trakt_syncunseen">Synkronoi katsomattomat jaksot</string>
   <string name="welcome_message"><big>Käytön aloittaminen</big></string>
   <string name="welcome_text">Tervetuloa!</string>
+  <string name="welcome_language">Valitse ensisijainen kieli sisällölle:</string>
+  <string name="welcome_setuplanguage">Valitse kieli</string>
   <string name="welcome_setuptrakt">Yhdistä traktiin</string>
   <string name="welcome_traktmessage">Pääse käsiksi trakt.tv:n kirjastoosi ja ystäviesi toimintaan SeriesGuidella:</string>
   <string name="dismiss">Hylkää</string>
@@ -229,7 +230,7 @@
   <string name="pref_notifications">Ilmoitukset</string>
   <string name="pref_notificationssummary">Ilmoita pian esitettävistä suosikkiohjelmista</string>
   <string name="download_stable">Lataa SeriesGuide</string>
-  <string name="betawarning"><b>Varoitus!</b> Täm\' julkaisu on vain beeta-testaajille! Jos epäröit, lataa vakaa versio alta.</string>
+  <string name="betawarning"><b>Varoitus!</b> Tämä julkaisu on vain beeta-testaajille! Jos epäröit, lataa vakaa versio alta.</string>
   <string-array name="shsorting">
     <item>A - Ö</item>
     <item>Seuraava jakso</item>
@@ -262,4 +263,8 @@
     <item>Katsomattomat/Tulevat</item>
     <item>Piilotetut</item>
   </string-array>
+  <plurals name="votes">
+    <item quantity="one">%d ääni</item>
+    <item quantity="other">%d ääntä</item>
+  </plurals>
 </resources>

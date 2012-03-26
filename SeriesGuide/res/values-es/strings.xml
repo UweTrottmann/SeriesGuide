@@ -14,6 +14,7 @@
   <string name="search_description">Episodios</string>
   <string name="description_overview">Reseña</string>
   <string name="norating">n/a</string>
+  <string name="done">Hecho</string>
   <string name="episode_firstaired">Fecha de estreno:</string>
   <string name="episode_dvdnumber">Episodio de DVD</string>
   <string name="show_actors">Actores:</string>
@@ -124,7 +125,6 @@
   <string name="seasons">Temporadas</string>
   <string name="cancel">Cancelar</string>
   <string name="share">Compartir</string>
-  <string name="done">Hecho</string>
   <string name="traktcheckin_cancel">Cancelar</string>
   <string name="traktcheckin_inprogress">Hay ya un registro en curso. Cancelar este registro o esperar %s antes de registrar de nuevo.</string>
   <string name="traktcheckin_wait">﻿Esperaré</string>
@@ -132,7 +132,6 @@
   <string name="username">Usuario</string>
   <string name="email">Correo electrónico</string>
   <string name="password">Contraseña</string>
-  <string name="trakt_success">Hablé con éxito con trakt</string>
   <string name="trakt_error">Interacción con trakt falló</string>
   <string name="trakt_seen">marcado como visto</string>
   <string name="trakt_decryptfail">no se pudo descifrar la contraseña</string>

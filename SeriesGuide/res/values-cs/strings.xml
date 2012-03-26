@@ -13,6 +13,7 @@
   <string name="search_description">Epizody</string>
   <string name="description_overview">Přehled</string>
   <string name="norating">n/a</string>
+  <string name="done">Hotovo</string>
   <string name="episode_firstaired">Datum vysílání:</string>
   <string name="episode_dvdnumber">DVD epizody</string>
   <string name="show_actors">Hrají:</string>
@@ -93,7 +94,6 @@
   <string name="seasons">Sezóny</string>
   <string name="cancel">Zrušit</string>
   <string name="share">Sdílet</string>
-  <string name="done">Hotovo</string>
   <string name="addtocalendar">Přidat do kalendáře</string>
   <string name="username">Uživatelské jméno</string>
   <string name="email">E-mail</string>

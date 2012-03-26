@@ -14,6 +14,7 @@
   <string name="search_description">Bölümler</string>
   <string name="description_overview">Genel</string>
   <string name="norating">Geçersiz</string>
+  <string name="done">Tamamlandı</string>
   <string name="episode_firstaired">Tarih:</string>
   <string name="episode_dvdnumber">DVD Bölümü</string>
   <string name="show_actors">Oyuncular:</string>
@@ -104,9 +105,6 @@
   <string name="seasons">Sezon</string>
   <string name="cancel">Vazgeç</string>
   <string name="share">Paylaş</string>
-  <string name="done">Tamamlandı</string>
-  <string name="checkin">Check In yapın</string>
-  <string name="comment">Check In Yorumu</string>
   <string name="addtocalendar">Takvime ekle</string>
   <string name="username">kullanıcı adı</string>
   <string name="email">E-posta</string>

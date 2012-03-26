@@ -14,6 +14,7 @@
   <string name="search_description">Episódios</string>
   <string name="description_overview">Visão geral</string>
   <string name="norating">n/a</string>
+  <string name="done">Concluído</string>
   <string name="episode_firstaired">Data de exibição:</string>
   <string name="episode_dvdnumber">Episódio de DVD</string>
   <string name="show_actors">Actores:</string>
@@ -104,9 +105,6 @@
   <string name="seasons">Temporadas</string>
   <string name="cancel">Cancelar</string>
   <string name="share">Partilhar</string>
-  <string name="done">Concluído</string>
-  <string name="checkin">Check In</string>
-  <string name="comment">Check Inn Comentário</string>
   <string name="addtocalendar">Adicionar ao calendário</string>
   <string name="username">Utilizador</string>
   <string name="email">E-mail</string>

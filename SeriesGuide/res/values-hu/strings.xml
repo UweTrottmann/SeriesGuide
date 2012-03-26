@@ -16,6 +16,7 @@
   <string name="norating">n/a</string>
   <string name="loading">Betöltés…</string>
   <string name="sending">Küldés…</string>
+  <string name="done">Kész</string>
   <string name="episode_firstaired">Vetítés:</string>
   <string name="episode_dvdnumber">DVD epizód</string>
   <string name="show_actors">Szereplők:</string>
@@ -168,16 +169,9 @@
   <string name="seasons">Évadok</string>
   <string name="cancel">Mégse</string>
   <string name="share">Megosztás</string>
-  <string name="menu_checkin_getglue">Elküldöm (GetGlue)</string>
-  <string name="menu_checkin_trakt">Elküldöm (trakt)</string>
   <string name="menu_markseen_trakt">Láttam (trakt)</string>
   <string name="menu_rate_trakt">Értékelem (trakt)</string>
   <string name="menu_share_others">Más alkalmazásokkal</string>
-  <string name="done">Kész</string>
-  <string name="checkin">Bejelentkezés</string>
-  <string name="comment">Bejelentkezés Megjegyzés</string>
-  <string name="checkinsuccess">Bejelentkezés sikerült.</string>
-  <string name="checkin_impossible">Ehhez a sorozathoz nem lehet bejelentkezni.</string>
   <string name="traktcheckin_cancel">Megszakít</string>
   <string name="traktcheckin_inprogress">Már folyamatban van egy csekkolás. Megszakíthatod, vagy várhatsz %s, mielőtt újra csekkolhatsz.</string>
   <string name="traktcheckin_wait">Várok</string>
@@ -186,7 +180,6 @@
   <string name="username">Felhasználónév</string>
   <string name="email">E-mail</string>
   <string name="password">Jelszó</string>
-  <string name="trakt_success">Kapcsolódva a trakt.tv-hez</string>
   <string name="trakt_error">trakt.tv kapcsolódási hiba</string>
   <string name="trakt_seen">látottként jelölt</string>
   <string name="trakt_decryptfail">jelszó dekódolása nem sikerült</string>

@@ -15,6 +15,7 @@
   <string name="description_overview">Oversikt</string>
   <string name="description_poster">Vis plakat</string>
   <string name="norating">n/a</string>
+  <string name="done">Ferdig</string>
   <string name="episode_firstaired">Sende dato:</string>
   <string name="episode_dvdnumber">DVD Episode</string>
   <string name="show_actors">Skuespillere:</string>
@@ -144,12 +145,7 @@
   <string name="seasons">Sesonger</string>
   <string name="cancel">Avbryt</string>
   <string name="share">Del</string>
-  <string name="menu_checkin_getglue">Sjekk inn (GetGlue)</string>
-  <string name="menu_checkin_trakt">Sjekk inn (trakt)</string>
   <string name="menu_markseen_trakt">Marker som sett (trakt)</string>
-  <string name="done">Ferdig</string>
-  <string name="checkin">Sjekk inn</string>
-  <string name="comment">Sjekk inn Kommentar</string>
   <string name="traktcheckin_cancel">Avbryt den</string>
   <string name="traktcheckin_inprogress">Det pågår allerde en innsjekking. Enten avbryte denne innsjekkingen eller vent %s før du kan sjekke inn på nytt.</string>
   <string name="traktcheckin_wait">Jeg venter</string>

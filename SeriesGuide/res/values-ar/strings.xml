@@ -14,6 +14,7 @@
   <string name="search_description">الحلقات</string>
   <string name="description_overview">نظرة عامة</string>
   <string name="norating">لا يوجد</string>
+  <string name="done">تم</string>
   <string name="episode_firstaired">:موعد العرض</string>
   <string name="episode_dvdnumber">حلقة دي في دي</string>
   <string name="show_actors">:الممثلون</string>
@@ -159,16 +160,9 @@
   <string name="seasons">المواسم</string>
   <string name="cancel">إلغاء الأمر</string>
   <string name="share">شارك</string>
-  <string name="menu_checkin_getglue">(أكتب تعليق (موقع جيت جلو</string>
-  <string name="menu_checkin_trakt">(أكتب تعليق (تراكت</string>
   <string name="menu_markseen_trakt">(ضع علامة كمُشَاهد (تراكت</string>
   <string name="menu_rate_trakt">(قيّم (موقع تراكت</string>
   <string name="menu_share_others">عبر تطبيقات أخرى</string>
-  <string name="done">تم</string>
-  <string name="checkin">تحقق</string>
-  <string name="comment">التحقق بوضع تعليق</string>
-  <string name="checkinsuccess">التحقق نجح.</string>
-  <string name="checkin_impossible">لا يمكن وضع تعليق لهذا المسلسل</string>
   <string name="traktcheckin_cancel">إلغاء</string>
   <string name="traktcheckin_inprogress">قبل التحقق مرة أخرى %s هناك تحقق قائم حالياً. الرجاء إلغاء التحقق القائم أو إنتظر</string>
   <string name="traktcheckin_wait">سأنتظر</string>
@@ -177,7 +171,6 @@
   <string name="username">اسم المستخدم</string>
   <string name="email">البريد الإلكتروني</string>
   <string name="password">كلمة المرور</string>
-  <string name="trakt_success">تم الإتصال بموقع تراكت بنجاح</string>
   <string name="trakt_error">فشل الاتصال مع موقع تراكت</string>
   <string name="trakt_seen">وضع علامة كمُشَاهد</string>
   <string name="trakt_decryptfail">لا يمكن فك تشفير كلمة المرور</string>

@@ -14,6 +14,7 @@
   <string name="search_description">Эпизоды</string>
   <string name="description_overview">Обзор</string>
   <string name="norating">нет данных</string>
+  <string name="done">Выполнено</string>
   <string name="episode_firstaired">Эфир:</string>
   <string name="episode_dvdnumber">DVD эпизод</string>
   <string name="show_actors">Актеры:</string>
@@ -93,8 +94,6 @@
   <string name="seasons">Сезоны</string>
   <string name="cancel">Отмена</string>
   <string name="share">Поделиться</string>
-  <string name="done">Выполнено</string>
-  <string name="checkin">Войти</string>
   <string name="addtocalendar">Добавить в календарь</string>
   <string name="username">Имя пользователя</string>
   <string name="email">Электронная почта</string>

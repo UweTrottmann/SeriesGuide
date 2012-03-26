@@ -17,6 +17,7 @@
   <string name="norating">n/a</string>
   <string name="loading">Lädt…</string>
   <string name="sending">Senden…</string>
+  <string name="done">Erledigt</string>
   <string name="offline">Keine Netzwerkverbindung. Versuchen Sie es später erneut.</string>
   <string name="shouts">Shouts</string>
   <string name="shout_hint">Shout eingeben (in Englisch)</string>
@@ -189,20 +190,12 @@
   <string name="seasons">Staffeln</string>
   <string name="cancel">Abbrechen</string>
   <string name="share">Empfehlen</string>
-  <string name="menu_checkin_getglue">Check-In (GetGlue)</string>
-  <string name="menu_checkin_trakt">Check-In (trakt)</string>
   <string name="menu_markseen_trakt">Gesehen markieren (trakt)</string>
   <string name="menu_rate_trakt">Bewerten (trakt)</string>
   <string name="menu_share_others">Über andere Apps</string>
-  <string name="done">Erledigt</string>
-  <string name="checkin">Check-In</string>
-  <string name="comment">Check-In Kommentar</string>
-  <string name="checkinsuccess">Check-In erfolgreich.</string>
-  <string name="checkin_impossible">Check-In für diese Serie nicht möglich.</string>
   <string name="traktcheckin_cancel">Breche ab</string>
   <string name="traktcheckin_inprogress">Es ist bereits ein Check-In aktiv. Brechen Sie Ihn ab oder warten Sie %s bevor Sie wieder einchecken können.</string>
   <string name="traktcheckin_wait">Ich warte</string>
-  <string name="checkinfailed">Check-In fehlgeschlagen. Versuchen Sie sich von GetGlue abzumelden.</string>
   <string name="oauthmessage">Authentifiziere SeriesGuide bei GetGlue…</string>
   <string name="addtocalendar">Zum Kalender hinzufügen</string>
   <string name="addtocalendar_failed">Kann kein Kalenderereignis erstellen.</string>
@@ -212,7 +205,6 @@
   <string name="waitplease">Einen Augenblick, bitte…</string>
   <string name="connect">Verbinden</string>
   <string name="disconnect">Trennen</string>
-  <string name="trakt_success">Erfolgreich mit trakt kommuniziert</string>
   <string name="trakt_error">Interaktion mit trakt ist fehlgeschlagen</string>
   <string name="trakt_seen">als gesehen markiert</string>
   <string name="trakt_decryptfail">Kennwort konnte nicht entschlüsselt werden</string>

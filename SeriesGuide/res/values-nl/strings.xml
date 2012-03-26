@@ -16,6 +16,7 @@
   <string name="norating">n/a</string>
   <string name="loading">Laden…</string>
   <string name="sending">Verzenden…</string>
+  <string name="done">Gereed</string>
   <string name="episode_firstaired">Uitzenddatum:</string>
   <string name="episode_dvdnumber">DVD aflevering</string>
   <string name="show_actors">Acteurs:</string>
@@ -178,16 +179,9 @@
   <string name="seasons">Seizoenen</string>
   <string name="cancel">Annuleren</string>
   <string name="share">Delen</string>
-  <string name="menu_checkin_getglue">Aanmelden (GetGlue)</string>
-  <string name="menu_checkin_trakt">Aanmelden (trakt)</string>
   <string name="menu_markseen_trakt">Bekeken markeren (trakt)</string>
   <string name="menu_rate_trakt">Beoordelen (trakt)</string>
   <string name="menu_share_others">Via andere apps</string>
-  <string name="done">Gereed</string>
-  <string name="checkin">Aanmelden</string>
-  <string name="comment">Aanmelden commentaar</string>
-  <string name="checkinsuccess">Aanmelden succesvol.</string>
-  <string name="checkin_impossible">Kan niet aanmelden bij deze serie.</string>
   <string name="traktcheckin_cancel">Annuleren</string>
   <string name="traktcheckin_inprogress">Er is al een aanmelding gaande. Annuleer deze aanmelding of wacht %s om opnieuw aan te melden.</string>
   <string name="traktcheckin_wait">Wachten</string>
@@ -197,7 +191,6 @@
   <string name="username">Gebruikersnaam</string>
   <string name="email">E-mail</string>
   <string name="password">Wachtwoord</string>
-  <string name="trakt_success">Succesvol gecommuniceerd met trakt</string>
   <string name="trakt_error">Communicatie met trakt is mislukt</string>
   <string name="trakt_seen">als bekeken markeren</string>
   <string name="trakt_decryptfail">wachtwoord kon niet worden gedecodeerd</string>
