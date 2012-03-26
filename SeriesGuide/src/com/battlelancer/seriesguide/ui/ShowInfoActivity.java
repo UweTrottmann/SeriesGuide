@@ -5,6 +5,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.widget.ShareActionProvider;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.Series;
@@ -71,6 +72,12 @@ public class ShowInfoActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getSupportMenuInflater();
         inflater.inflate(R.menu.showinfo_menu, menu);
+
+        MenuItem shareItem = menu.findItem(R.id.menu_share);
+        ShareActionProvider shareActionProvider = (ShareActionProvider) shareItem
+                .getActionProvider();
+        shareActionProvider.setShareIntent(mShareIntentBuilder.getIntent());
+
         return true;
     }
 
@@ -90,10 +97,6 @@ public class ShowInfoActivity extends BaseActivity {
                 TraktRateDialogFragment newFragment = TraktRateDialogFragment
                         .newInstance(getShowId());
                 newFragment.show(getSupportFragmentManager(), "traktratedialog");
-                return true;
-            }
-            case R.id.menu_share: {
-                mShareIntentBuilder.startChooser();
                 return true;
             }
         }

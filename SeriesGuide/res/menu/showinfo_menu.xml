@@ -8,7 +8,7 @@
         android:title="@string/menu_rate_trakt"/>
     <item
         android:id="@+id/menu_share"
-        android:icon="@drawable/ic_action_share"
+        android:actionProviderClass="com.actionbarsherlock.widget.ShareActionProvider"
         android:showAsAction="always"
         android:title="@string/share"/>
 
