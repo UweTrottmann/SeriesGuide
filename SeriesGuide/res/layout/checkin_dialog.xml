@@ -35,6 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/message"
         android:layout_marginTop="@dimen/default_padding"
+        android:drawableLeft="@drawable/ic_trakt"
+        android:drawablePadding="@dimen/inline_padding"
         android:text="@string/trakt" />
 
     <CheckBox
@@ -42,8 +44,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toggleTrakt"
-        android:text="@string/getglue"
-        android:nextFocusDown="@+id/checkinButton" />
+        android:drawableLeft="@drawable/ic_getglue"
+        android:drawablePadding="@dimen/inline_padding"
+        android:nextFocusDown="@+id/checkinButton"
+        android:text="@string/getglue" />
 
     <Button
         android:id="@+id/checkinButton"
