@@ -30,6 +30,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,8 @@ import java.util.List;
 
 public class TraktFriendsFragment extends ListFragment implements
         LoaderManager.LoaderCallbacks<List<UserProfile>> {
+
+    public static final String TAG = "TraktFriendsFragment";
 
     private TraktFriendsAdapter mAdapter;
 
@@ -165,7 +168,7 @@ public class TraktFriendsFragment extends ListFragment implements
                 try {
                     manager = Utils.getServiceManagerWithAuth(getContext(), false);
                 } catch (Exception e) {
-                    // TODO
+                    Log.w(TAG, "Could not get trakt service manager", e);
                     return null;
                 }
 
@@ -214,17 +217,14 @@ public class TraktFriendsFragment extends ListFragment implements
                     }
 
                     return friendsActivity;
-                } catch (TraktException te) {
-                    // TODO
-                    return null;
-                } catch (ApiException ae) {
-                    // TODO
-                    return null;
+                } catch (TraktException e) {
+                    Log.w(TAG, e);
+                } catch (ApiException e) {
+                    Log.w(TAG, e);
                 }
-            } else {
-                // TODO
-                return null;
             }
+
+            return null;
         }
 
         /**
@@ -354,7 +354,6 @@ public class TraktFriendsFragment extends ListFragment implements
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            // TODO refactor!
             // Bind the data efficiently with the holder.
             UserProfile friend = getItem(position);
 
