@@ -2,6 +2,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.Episode;
@@ -45,75 +46,73 @@ public class EpisodeDetailsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.episode_pager);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
 
         List<Episode> episodes = new ArrayList<Episode>();
         String episodeId = getIntent().getExtras().getString(InitBundle.EPISODE_ID);
         int startPosition = 0;
 
         // Lookup show and season of episode
-        Cursor episode = getContentResolver().query(Episodes.buildEpisodeWithShowUri(episodeId),
-                new String[] {
-                        Seasons.REF_SEASON_ID, Shows.POSTER, Shows.TITLE, Episodes.SEASON
+        final Cursor episode = getContentResolver().query(
+                Episodes.buildEpisodeWithShowUri(episodeId), new String[] {
+                        Seasons.REF_SEASON_ID, Shows.POSTER
                 }, null, null, null);
 
-        if (episode != null && episode.moveToFirst()) {
-            // display show name as title, season as subtitle
-            setTitle(episode.getString(2));
-            actionBar.setTitle(episode.getString(2));
-            actionBar.setSubtitle(Utils.getSeasonString(this, episode.getString(3)));
-
-            // set show poster as background
-            String posterPath = episode.getString(1);
-            if (Utils.isFroyoOrHigher()) {
-                // using alpha seems not to work on eclair, so only set
-                // a background on froyo+ then
-                final ImageView background = (ImageView) findViewById(R.id.background);
-                Bitmap bg = ImageCache.getInstance(this).get(posterPath);
-                if (bg != null) {
-                    BitmapDrawable drawable = new BitmapDrawable(getResources(), bg);
-                    drawable.setAlpha(50);
-                    background.setImageDrawable(drawable);
-                }
-            }
-
-            // get episode sorting
-            Constants.EpisodeSorting sorting = Utils.getEpisodeSorting(this);
-
-            // lookup episodes of season
-            String seasonId = episode.getString(0);
-            Cursor episodeCursor = getContentResolver().query(
-                    Episodes.buildEpisodesOfSeasonUri(seasonId), new String[] {
-                            Episodes._ID, Episodes.NUMBER, Episodes.SEASON
-                    }, null, null, sorting.query());
-
-            if (episodeCursor != null) {
-                int i = 0;
-                while (episodeCursor.moveToNext()) {
-                    Episode ep = new Episode();
-                    String curEpisodeId = episodeCursor.getString(0);
-                    // look for episode to show initially
-                    if (curEpisodeId.equalsIgnoreCase(episodeId)) {
-                        startPosition = i;
-                    }
-                    ep.setId(curEpisodeId);
-                    ep.setNumber(episodeCursor.getString(1));
-                    ep.setSeason(episodeCursor.getString(2));
-                    episodes.add(ep);
-                    i++;
-                }
-            }
-
-            episodeCursor.close();
-            episode.close();
+        if (episode == null || !episode.moveToFirst()) {
+            // nothing to display
+            finish();
         }
 
-        SharedPreferences prefs = PreferenceManager
+        // set show poster as background
+        final String posterPath = episode.getString(1);
+        if (Utils.isFroyoOrHigher()) {
+            // using alpha seems not to work on eclair, so only set
+            // a background on froyo+ then
+            final ImageView background = (ImageView) findViewById(R.id.background);
+            Bitmap bg = ImageCache.getInstance(this).get(posterPath);
+            if (bg != null) {
+                BitmapDrawable drawable = new BitmapDrawable(getResources(), bg);
+                drawable.setAlpha(50);
+                background.setImageDrawable(drawable);
+            }
+        }
+
+        // lookup episodes of season
+        final String seasonId = episode.getString(0);
+        Constants.EpisodeSorting sorting = Utils.getEpisodeSorting(this);
+
+        Cursor episodeCursor = getContentResolver().query(
+                Episodes.buildEpisodesOfSeasonUri(seasonId), new String[] {
+                        Episodes._ID, Episodes.NUMBER, Episodes.SEASON
+                }, null, null, sorting.query());
+
+        if (episodeCursor != null) {
+            int i = 0;
+            while (episodeCursor.moveToNext()) {
+                Episode ep = new Episode();
+                String curEpisodeId = episodeCursor.getString(0);
+                // look for episode to show initially
+                if (curEpisodeId.equals(episodeId)) {
+                    startPosition = i;
+                }
+                ep.setId(curEpisodeId);
+                ep.setNumber(episodeCursor.getString(1));
+                ep.setSeason(episodeCursor.getString(2));
+                episodes.add(ep);
+                i++;
+            }
+            episodeCursor.close();
+        }
+
+        episode.close();
+
+        final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
 
         mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), episodes, prefs);
