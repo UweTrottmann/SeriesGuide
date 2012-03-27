@@ -297,8 +297,6 @@ public class DBUtils {
             show.setStatus(details.getInt(details.getColumnIndexOrThrow(Shows.STATUS)));
             show.setImdbId(details.getString(details.getColumnIndexOrThrow(Shows.IMDBID)));
             show.setNextEpisode(details.getLong(details.getColumnIndexOrThrow(Shows.NEXTEPISODE)));
-            show.isFavorite = details.getInt(details.getColumnIndexOrThrow(Shows.FAVORITE)) == 1 ? true
-                    : false;
         } else {
             show = null;
         }
