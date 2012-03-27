@@ -169,6 +169,10 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             shareAction.setEnabled(false);
             shareAction.setVisible(false);
         }
+
+        if (mDualPane) {
+            menu.findItem(R.id.menu_seasons).setVisible(false);
+        }
     }
 
     @Override
@@ -184,25 +188,27 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 fireTrackerEvent("Quick share (" + shareMethod.name() + ")");
 
                 onShareEpisode(shareMethod, false);
-                break;
+                return true;
             }
             case R.id.menu_markseen_trakt: {
                 fireTrackerEvent("Mark seen (trakt)");
                 onShareEpisode(ShareMethod.MARKSEEN_TRAKT, true);
-                break;
+                return true;
             }
             case R.id.menu_rate_trakt: {
                 fireTrackerEvent("Rate (trakt)");
                 onShareEpisode(ShareMethod.RATE_TRAKT, true);
-                break;
+                return true;
             }
             case R.id.menu_share_others: {
                 fireTrackerEvent("Share (apps)");
                 onShareEpisode(ShareMethod.OTHER_SERVICES, true);
-                break;
+                return true;
             }
-            default:
-                break;
+            case R.id.menu_seasons: {
+                showSeasons();
+                return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -224,15 +230,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 onShowShowInfo();
             }
         });
-        View v = fragmentView.findViewById(R.id.gotoseasons);
-        if (v != null) {
-            v.setOnClickListener(new OnClickListener() {
-
-                public void onClick(View v) {
-                    showSeasons();
-                }
-            });
-        }
     }
 
     private void showSeasons() {
