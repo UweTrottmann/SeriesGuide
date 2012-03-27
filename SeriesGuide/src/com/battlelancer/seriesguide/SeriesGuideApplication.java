@@ -15,7 +15,6 @@ public class SeriesGuideApplication extends Application {
         // already create an instance of ImageCache
         ImageCache.getInstance(getApplicationContext());
 
-        // TODO maybe do this every time a show is added
         Utils.runNotificationService(this);
     }
 
