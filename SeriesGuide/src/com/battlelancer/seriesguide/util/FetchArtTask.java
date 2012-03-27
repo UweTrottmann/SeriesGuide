@@ -87,7 +87,6 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
     @Override
     protected void onPostExecute(Bitmap bitmap) {
         if (bitmap != null) {
-            mImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             mImageView.setImageBitmap(bitmap);
 
             // make image view visible
