@@ -316,7 +316,6 @@ public class ShareUtils {
                             final ServiceManager manager = new ServiceManager();
                             manager.setApiKey(traktApiKey);
                             manager.setAuthentication(username, passwordHash);
-                            // TODO test the hell out of SSL API
                             manager.setUseSsl(true);
 
                             Response response = null;

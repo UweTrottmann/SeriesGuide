@@ -339,7 +339,7 @@ public class Utils {
      * automatic offsets based on time zone.
      * 
      * @param prefs
-     * @param isCurrentTime TODO
+     * @param isCurrentTime
      * @return
      */
     public static long convertToFakeTime(long time, SharedPreferences prefs, boolean isCurrentTime) {
