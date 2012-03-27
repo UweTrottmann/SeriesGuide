@@ -28,15 +28,6 @@ public class SearchActivity extends SherlockListActivity {
 
     private static final String TAG = "SearchActivity";
 
-    /**
-     * Google Analytics helper method for easy event tracking.
-     * 
-     * @param label
-     */
-    public void fireTrackerEvent(String label) {
-        AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,8 +150,6 @@ public class SearchActivity extends SherlockListActivity {
                 overridePendingTransition(R.anim.home_enter, R.anim.home_exit);
                 return true;
             case R.id.menu_search:
-                fireTrackerEvent("Search");
-
                 onSearchRequested();
                 return true;
         }
