@@ -51,6 +51,16 @@
         <item name="android:layout_marginRight">@dimen/default_padding</item>
     </style>
 
+    <style name="Label">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:layout_marginLeft">@dimen/default_padding</item>
+        <item name="android:layout_marginRight">@dimen/default_padding</item>
+        <item name="android:layout_marginBottom">@dimen/inline_padding</item>
+        <item name="android:layout_marginTop">@dimen/inline_padding</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="ScrollingLayout">
         <item name="android:paddingBottom">@dimen/default_padding</item>
         <item name="android:paddingLeft">@dimen/layout_padding</item>
@@ -74,7 +84,8 @@
         <item name="android:background">@drawable/btn_default_holo_dark</item>
         <item name="android:textColor">@color/button_text</item>
     </style>
-    <style name="HoloCompatButton.Small">
+
+    <style name="HoloCompatButton.Small">
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:layout_width">wrap_content</item>

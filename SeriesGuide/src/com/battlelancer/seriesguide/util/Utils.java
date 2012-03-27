@@ -23,7 +23,9 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -788,6 +790,15 @@ public class Utils {
             return SGChannel.X;
         }
         return SGChannel.STABLE;
+    }
+
+    public static void setValueOrPlaceholder(View view, final String value) {
+        TextView field = (TextView) view;
+        if (value == null || value.length() == 0) {
+            field.setText(R.string.episode_unkownairdate);
+        } else {
+            field.setText(value);
+        }
     }
 
 }

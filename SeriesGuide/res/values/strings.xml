@@ -35,17 +35,17 @@
     <string name="shouts_for">Shouts for %s</string>
 
     <!-- Metadata -->
-    <string name="episode_firstaired">Airdate:</string>
+    <string name="episode_firstaired">Airdate</string>
     <string name="episode_dvdnumber">DVD Episode</string>
-    <string name="show_actors">Actors:</string>
-    <string name="show_firstaired">First Aired:</string>
-    <string name="show_genres">Genres:</string>
-    <string name="rating">Rating:</string>
-    <string name="show_runtime">Runtime:</string>
-    <string name="show_contentrating">Content Rating:</string>
-    <string name="episode_directors">Directors:</string>
-    <string name="episode_gueststars">Guest Stars:</string>
-    <string name="episode_writers">Writers:</string>
+    <string name="show_actors">Actors</string>
+    <string name="show_firstaired">First Aired</string>
+    <string name="show_genres">Genres</string>
+    <string name="rating">Rating</string>
+    <string name="show_runtime">Runtime</string>
+    <string name="show_contentrating">Content Rating</string>
+    <string name="episode_directors">Directors</string>
+    <string name="episode_gueststars">Guest Stars</string>
+    <string name="episode_writers">Writers</string>
     <string name="show_airtimeunit">min</string>
     <string name="show_isalive">Continuing</string>
     <string name="show_isnotalive">Ended</string>

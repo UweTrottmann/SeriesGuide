@@ -275,47 +275,43 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     // First airdate
                     final long airtime = episode.getLong(EpisodeDetailsQuery.FIRSTAIREDMS);
                     if (airtime != -1) {
-                        airdateText.setText(getString(R.string.episode_firstaired) + " "
-                                + Utils.formatToDate(airtime, getActivity()));
+                        airdateText.setText(Utils.formatToDate(airtime, getActivity()));
                         String[] dayAndTime = Utils.formatToTimeAndDay(airtime, getActivity());
                         airtimeText.setText(dayAndTime[2] + " (" + dayAndTime[1] + ")");
                     } else {
-                        airdateText.setText(getString(R.string.episode_firstaired) + " "
-                                + getString(R.string.episode_unkownairdate));
+                        airdateText.setText(getString(R.string.episode_unkownairdate));
                         airtimeText.setText("");
                     }
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.DVDNUMBER) {
-                    TextView dvdnumber = (TextView) view;
-                    dvdnumber.setText(getString(R.string.episode_dvdnumber) + ": "
-                            + episode.getString(EpisodeDetailsQuery.DVDNUMBER));
+                    // DVD episode number
+                    final String value = episode.getString(EpisodeDetailsQuery.DVDNUMBER);
+                    Utils.setValueOrPlaceholder(view, value);
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.DIRECTORS) {
                     // Directors
-                    TextView directors = (TextView) view;
-                    String directorsAll = Utils.splitAndKitTVDBStrings(episode
+                    final String value = Utils.splitAndKitTVDBStrings(episode
                             .getString(EpisodeDetailsQuery.DIRECTORS));
-                    directors.setText(getString(R.string.episode_directors) + " " + directorsAll);
+                    Utils.setValueOrPlaceholder(view, value);
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.GUESTSTARS) {
                     // Guest stars
-                    TextView gueststars = (TextView) view;
-                    gueststars.setText(getString(R.string.episode_gueststars)
-                            + " "
-                            + Utils.splitAndKitTVDBStrings(episode
-                                    .getString(EpisodeDetailsQuery.GUESTSTARS)));
+                    // don't display an unknown label if there are none, because
+                    // then there are none
+                    final String value = Utils.splitAndKitTVDBStrings(episode
+                            .getString(EpisodeDetailsQuery.GUESTSTARS));
+                    TextView field = (TextView) view;
+                    field.setText(value);
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.WRITERS) {
                     // Writers
-                    TextView writers = (TextView) view;
-                    writers.setText(getString(R.string.episode_writers)
-                            + " "
-                            + Utils.splitAndKitTVDBStrings(episode
-                                    .getString(EpisodeDetailsQuery.WRITERS)));
+                    final String value = Utils.splitAndKitTVDBStrings(episode
+                            .getString(EpisodeDetailsQuery.WRITERS));
+                    Utils.setValueOrPlaceholder(view, value);
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.RATING) {

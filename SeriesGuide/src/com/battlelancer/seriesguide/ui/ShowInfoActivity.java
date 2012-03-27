@@ -85,12 +85,7 @@ public class ShowInfoActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: {
-                // Navigate to the parent activity instead
-                final Intent intent = new Intent(this, OverviewActivity.class);
-                intent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, getShowId());
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                overridePendingTransition(R.anim.home_enter, R.anim.home_exit);
+                navigateToOverview(getShowId());
                 return true;
             }
             case R.id.menu_rate_trakt: {
@@ -110,13 +105,8 @@ public class ShowInfoActivity extends BaseActivity {
     private void fillData() {
         TextView seriesname = (TextView) findViewById(R.id.title);
         TextView overview = (TextView) findViewById(R.id.TextViewShowInfoOverview);
-        TextView actors = (TextView) findViewById(R.id.TextViewShowInfoActors);
         TextView airstime = (TextView) findViewById(R.id.TextViewShowInfoAirtime);
-        TextView contentrating = (TextView) findViewById(R.id.TextViewShowInfoContentRating);
-        TextView firstaired = (TextView) findViewById(R.id.TextViewShowInfoFirstAirdate);
-        TextView genres = (TextView) findViewById(R.id.TextViewShowInfoGenres);
         TextView network = (TextView) findViewById(R.id.TextViewShowInfoNetwork);
-        TextView runtime = (TextView) findViewById(R.id.TextViewShowInfoRuntime);
         TextView status = (TextView) findViewById(R.id.TextViewShowInfoStatus);
         ImageView showart = (ImageView) findViewById(R.id.ImageViewShowInfoPoster);
 
@@ -162,18 +152,18 @@ public class ShowInfoActivity extends BaseActivity {
 
         // first airdate
         long airtime = Utils.buildEpisodeAirtime(show.getFirstAired(), show.getAirsTime());
-        firstaired.setText(getString(R.string.show_firstaired) + " "
-                + Utils.formatToDate(airtime, this));
+        Utils.setValueOrPlaceholder(findViewById(R.id.TextViewShowInfoFirstAirdate),
+                Utils.formatToDate(airtime, this));
 
         // Others
-        actors.setText(getString(R.string.show_actors) + " "
-                + Utils.splitAndKitTVDBStrings(show.getActors()));
-        contentrating.setText(getString(R.string.show_contentrating) + " "
-                + show.getContentRating());
-        genres.setText(getString(R.string.show_genres) + " "
-                + Utils.splitAndKitTVDBStrings(show.getGenres()));
-        runtime.setText(getString(R.string.show_runtime) + " " + show.getRuntime() + " "
-                + getString(R.string.show_airtimeunit));
+        Utils.setValueOrPlaceholder(findViewById(R.id.TextViewShowInfoActors),
+                Utils.splitAndKitTVDBStrings(show.getActors()));
+        Utils.setValueOrPlaceholder(findViewById(R.id.TextViewShowInfoContentRating),
+                show.getContentRating());
+        Utils.setValueOrPlaceholder(findViewById(R.id.TextViewShowInfoGenres),
+                Utils.splitAndKitTVDBStrings(show.getGenres()));
+        Utils.setValueOrPlaceholder(findViewById(R.id.TextViewShowInfoRuntime), show.getRuntime()
+                + " " + getString(R.string.show_airtimeunit));
 
         // TVDb rating
         String ratingText = show.getRating();
@@ -224,6 +214,7 @@ public class ShowInfoActivity extends BaseActivity {
             });
         }
 
+        // Shout button
         findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -243,9 +234,6 @@ public class ShowInfoActivity extends BaseActivity {
                                 + "\" via @SeriesGuide " + ShowInfoActivity.IMDB_TITLE_URL + imdbid)
                 .setType("text/plain");
 
-        // trakt ratings
-        new TraktSummaryTask(this, findViewById(R.id.ratingbar)).show(tvdbId).execute();
-
         // Poster
         Bitmap bitmap = ImageCache.getInstance(this).get(show.getPoster());
         if (bitmap != null) {
@@ -253,5 +241,8 @@ public class ShowInfoActivity extends BaseActivity {
         } else {
             showart.setImageBitmap(null);
         }
+
+        // trakt ratings
+        new TraktSummaryTask(this, findViewById(R.id.ratingbar)).show(tvdbId).execute();
     }
 }

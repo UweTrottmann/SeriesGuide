@@ -20,6 +20,8 @@ package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.Utils;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -93,5 +95,20 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
         intent.putExtras(arguments);
         intent.removeExtra("_uri");
         return intent;
+    }
+
+    /**
+     * Navigate to the overview activity of the given show.
+     * 
+     * @param showId
+     */
+    protected void navigateToOverview(int showId) {
+        final Intent intent = new Intent(this, OverviewActivity.class);
+        intent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, showId);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        if (!Utils.isHoneycombOrHigher()) {
+            overridePendingTransition(R.anim.home_enter, R.anim.home_exit);
+        }
     }
 }

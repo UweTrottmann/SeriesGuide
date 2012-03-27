@@ -477,25 +477,22 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 .getString(EpisodeQuery.OVERVIEW));
 
         // DVD episode number
-        ((TextView) getView().findViewById(R.id.textViewEpisodeDVDnumber))
-                .setText(getString(R.string.episode_dvdnumber) + ": "
-                        + episode.getString(EpisodeQuery.DVDNUMBER));
+        Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewEpisodeDVDnumber),
+                episode.getString(EpisodeQuery.DVDNUMBER));
 
         // Directors
-        String directorsAll = Utils.splitAndKitTVDBStrings(episode
-                .getString(EpisodeQuery.DIRECTORS));
-        ((TextView) getView().findViewById(R.id.TextViewEpisodeDirectors))
-                .setText(getString(R.string.episode_directors) + " " + directorsAll);
+        Utils.setValueOrPlaceholder(getView().findViewById(R.id.TextViewEpisodeDirectors),
+                Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.DIRECTORS)));
 
         // Guest stars
-        ((TextView) getView().findViewById(R.id.TextViewEpisodeGuestStars))
-                .setText(getString(R.string.episode_gueststars) + " "
-                        + Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));
+        // don't display an unknown string if there are no gueststars, because
+        // then there are none
+        ((TextView) getView().findViewById(R.id.TextViewEpisodeGuestStars)).setText(Utils
+                .splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));
 
         // Writers
-        ((TextView) getView().findViewById(R.id.TextViewEpisodeWriters))
-                .setText(getString(R.string.episode_writers) + " "
-                        + Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.WRITERS)));
+        Utils.setValueOrPlaceholder(getView().findViewById(R.id.TextViewEpisodeWriters),
+                Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.WRITERS)));
 
         // TVDb rating
         String ratingText = episode.getString(EpisodeQuery.RATING);
