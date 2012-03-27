@@ -10,7 +10,7 @@
         style="@style/ListHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Special Episodes" />
+        android:text="@string/season" />
 
     <LinearLayout
         android:id="@+id/seasonProgress"
@@ -39,6 +39,9 @@
         android:id="@+id/TextViewSeasonListWatchCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="20 episodes not watched" />
+        android:text="@string/episode_notwatched"
+        android:textAllCaps="true"
+        android:textSize="@dimen/text_size_xsmall"
+        android:textStyle="bold" />
 
 </LinearLayout>
