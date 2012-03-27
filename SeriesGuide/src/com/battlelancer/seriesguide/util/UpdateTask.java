@@ -32,6 +32,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -40,6 +41,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
+
+    private static final String TAG = "UpdateTask";
 
     private static final int UPDATE_SUCCESS = 100;
 
@@ -79,6 +82,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         mFailedShows = failedShows;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void onPreExecute() {
         // create a notification (holy crap is that a lot of code)
@@ -185,9 +189,10 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 try {
                     TheTVDB.updateShow(id, mAppContext);
                     break;
-                } catch (SAXException saxe) {
+                } catch (SAXException e) {
                     if (itry == 1) {
                         // failed twice, give up
+                        fireTrackerEvent(e.getMessage());
                         resultCode = UPDATE_ERROR;
                         addFailedShow(mCurrentShowName);
                     }
@@ -246,6 +251,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             try {
                 manager = Utils.getServiceManagerWithAuth(mAppContext, false);
             } catch (Exception e) {
+                fireTrackerEvent(e.getMessage());
+                Log.w(TAG, e.getMessage(), e);
                 return UPDATE_ERROR;
             }
 
@@ -258,9 +265,13 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                         .types(ActivityType.Episode)
                         .actions(ActivityAction.Checkin, ActivityAction.Seen,
                                 ActivityAction.Scrobble).timestamp(startTimeTrakt).fire();
-            } catch (TraktException te) {
+            } catch (TraktException e) {
+                fireTrackerEvent(e.getMessage());
+                Log.w(TAG, e.getMessage(), e);
                 return UPDATE_ERROR;
-            } catch (ApiException ae) {
+            } catch (ApiException e) {
+                fireTrackerEvent(e.getMessage());
+                Log.w(TAG, e.getMessage(), e);
                 return UPDATE_ERROR;
             }
 
@@ -295,10 +306,12 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                         .applyBatch(SeriesContract.CONTENT_AUTHORITY, batch);
             } catch (RemoteException e) {
                 // Failed binder transactions aren't recoverable
+                fireTrackerEvent(e.getMessage());
                 throw new RuntimeException("Problem applying batch operation", e);
             } catch (OperationApplicationException e) {
                 // Failures like constraint violation aren't
                 // recoverable
+                fireTrackerEvent(e.getMessage());
                 throw new RuntimeException("Problem applying batch operation", e);
             }
 
@@ -328,23 +341,18 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         int length = 0;
         switch (result) {
             case UPDATE_SUCCESS:
-                AnalyticsUtils.getInstance(mAppContext).trackEvent("Shows", "Update Task",
-                        "Success", 0);
+                fireTrackerEvent("Success");
 
                 message = mAppContext.getString(R.string.update_success);
                 length = Toast.LENGTH_SHORT;
 
                 break;
             case UPDATE_ERROR:
-                AnalyticsUtils.getInstance(mAppContext).trackEvent("Shows", "Update Task",
-                        "SAX error", 0);
-
                 message = mAppContext.getString(R.string.update_saxerror);
                 length = Toast.LENGTH_LONG;
                 break;
             case UPDATE_OFFLINE:
-                AnalyticsUtils.getInstance(mAppContext).trackEvent("Shows", "Update Task",
-                        "Offline", 0);
+                fireTrackerEvent("Offline");
 
                 message = mAppContext.getString(R.string.update_offline);
                 length = Toast.LENGTH_LONG;
@@ -403,6 +411,10 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[] {
                         String.valueOf(episode.number), String.valueOf(episode.season)
                 }).withValue(Episodes.WATCHED, true).build());
+    }
+
+    private void fireTrackerEvent(String message) {
+        AnalyticsUtils.getInstance(mAppContext).trackEvent(TAG, "Update result", message, 0);
     }
 
 }
