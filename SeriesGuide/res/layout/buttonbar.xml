@@ -17,36 +17,31 @@
         android:id="@+id/watchedButton"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/inline_padding"
-        android:layout_marginRight="@dimen/inline_padding"
         android:background="@drawable/list_selector_holo_dark"
         android:contentDescription="@string/togglewatched"
-        android:paddingLeft="@dimen/inline_padding"
-        android:paddingRight="@dimen/inline_padding"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
         android:src="@drawable/ic_action_watched" />
 
     <ImageButton
         android:id="@+id/collectedButton"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/inline_padding"
-        android:layout_marginRight="@dimen/inline_padding"
         android:background="@drawable/list_selector_holo_dark"
         android:contentDescription="@string/collect"
-        android:paddingLeft="@dimen/inline_padding"
-        android:paddingRight="@dimen/inline_padding"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
         android:src="@drawable/ic_action_collect" />
 
     <ImageButton
         android:id="@+id/calendarButton"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/inline_padding"
         android:background="@drawable/list_selector_holo_dark"
         android:contentDescription="@string/addtocalendar"
         android:nextFocusRight="@+id/checkinButton"
-        android:paddingLeft="@dimen/inline_padding"
-        android:paddingRight="@dimen/inline_padding"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
         android:src="@drawable/ic_action_calendar" />
 
 </LinearLayout>
