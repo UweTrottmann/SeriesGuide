@@ -221,7 +221,7 @@ public class BackupDeleteActivity extends BaseActivity {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Log.e(TAG, e.getMessage(), e);
                 }
 
                 // tell user something might have gone wrong if there are no
@@ -238,6 +238,7 @@ public class BackupDeleteActivity extends BaseActivity {
                         shows.close();
                     }
                 } catch (SQLiteException e) {
+                    Log.e(TAG, e.getMessage(), e);
                     return e.getMessage();
                 }
 
@@ -284,15 +285,9 @@ public class BackupDeleteActivity extends BaseActivity {
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface arg0, int arg1) {
                                         if (Utils.isExtStorageAvailable()) {
-                                            // track event
-                                            fireTrackerEvent("Do Backup");
-
                                             mExportTask = new ExportDatabaseTask();
                                             mExportTask.execute();
                                         } else {
-                                            // track event
-                                            fireTrackerEvent("Don't Backup");
-
                                             Toast.makeText(BackupDeleteActivity.this,
                                                     getString(R.string.backup_failed_nosd),
                                                     Toast.LENGTH_SHORT).show();
@@ -306,15 +301,9 @@ public class BackupDeleteActivity extends BaseActivity {
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface arg0, int arg1) {
                                         if (Utils.isExtStorageAvailable()) {
-                                            // track event
-                                            fireTrackerEvent("Do Import");
-
                                             mImportTask = new ImportDatabaseTask();
                                             mImportTask.execute();
                                         } else {
-                                            // track event
-                                            fireTrackerEvent("Don't Import");
-
                                             Toast.makeText(BackupDeleteActivity.this,
                                                     getString(R.string.import_failed_nosd),
                                                     Toast.LENGTH_SHORT).show();
