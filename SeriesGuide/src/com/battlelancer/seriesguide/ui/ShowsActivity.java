@@ -111,7 +111,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final int VER_TRAKT_SEC_CHANGES = 129;
 
-    private static final int VER_SUMMERTIME_FIX = 151;
+    private static final int VER_SUMMERTIME_FIX = 136;
 
     private Bundle mSavedState;
 
