@@ -47,6 +47,11 @@ Version 2.6 *(in development)*
 * Greatly improved time zone and summer time handling: update your shows!
 * Notifications about upcoming favorite shows, enabled by default
 
+Version 2.5.1 *(2012-03-28)*
+--------------------------------
+
+* Display correct time for non-US users, fix summer time issues. (All shows will update as a result of this).
+
 Version 2.5 *(2012-03-08)*
 --------------------------------
 
