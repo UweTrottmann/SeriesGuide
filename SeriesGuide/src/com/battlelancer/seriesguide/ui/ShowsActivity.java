@@ -885,7 +885,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private interface ShowsQuery {
         String[] PROJECTION = {
                 BaseColumns._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
-                Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT
+                Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
+                Shows.FAVORITE
         };
 
         // int _ID = 0;
@@ -905,6 +906,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         int STATUS = 7;
 
         int NEXTAIRDATETEXT = 8;
+
+        int FAVORITE = 9;
     }
 
     private class SlowAdapter extends SimpleCursorAdapter {
@@ -947,6 +950,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 viewHolder.airsTime = (TextView) convertView
                         .findViewById(R.id.TextViewShowListAirtime);
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.showposter);
+                viewHolder.favorited = convertView.findViewById(R.id.favoritedLabel);
+                viewHolder.collected = convertView.findViewById(R.id.collectedLabel);
 
                 convertView.setTag(viewHolder);
             } else {
@@ -956,6 +961,9 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             // set text properties immediately
             viewHolder.name.setText(mCursor.getString(ShowsQuery.TITLE));
             viewHolder.network.setText(mCursor.getString(ShowsQuery.NETWORK));
+
+            boolean isFavorited = mCursor.getInt(ShowsQuery.FAVORITE) == 1;
+            viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
 
             // next episode info
             String fieldValue = mCursor.getString(ShowsQuery.NEXTTEXT);
@@ -1018,6 +1026,10 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         public TextView airsTime;
 
         public ImageView poster;
+
+        public View favorited;
+
+        public View collected;
     }
 
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
