@@ -40,6 +40,18 @@ import java.util.TimeZone;
 
 public class Utils {
 
+    private static final String TIMEZONE_ALWAYS_PST = "GMT-08:00";
+
+    private static final String TIMEZONE_US_ARIZONA = "America/Phoenix";
+
+    private static final String TIMEZONE_US_EASTERN = "America/New_York";
+
+    private static final String TIMEZONE_US_CENTRAL = "America/Chicago";
+
+    private static final String TIMEZONE_US_PACIFIC = "America/Los_Angeles";
+
+    private static final String TIMEZONE_US_MOUNTAIN = "America/Denver";
+
     private static final int DEFAULT_BUFFER_SIZE = 8192;
 
     private static ServiceManager sServiceManagerWithAuthInstance;
@@ -59,14 +71,15 @@ public class Utils {
             Locale.US);
 
     /**
-     * Parse a shows TVDb air time value to a ms value.
+     * Parse a shows TVDb air time value to a ms value in Pacific Standard Time
+     * (always without daylight saving).
      * 
      * @param tvdbTimeString
      * @return
      */
     public static long parseTimeToMilliseconds(String tvdbTimeString) {
         Date time = null;
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_ALWAYS_PST));
 
         // try parsing with three different formats, most of the time the first
         // should match
@@ -121,10 +134,8 @@ public class Utils {
             };
         }
 
-        final TimeZone pacificTimeZone = TimeZone.getTimeZone("America/Los_Angeles");
+        final TimeZone pacificTimeZone = TimeZone.getTimeZone(TIMEZONE_US_PACIFIC);
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        final boolean useUserTimeZone = prefs.getBoolean(
-                SeriesGuidePreferences.KEY_USE_MY_TIMEZONE, false);
 
         // set calendar time and day on Pacific cal
         final Calendar cal = Calendar.getInstance(pacificTimeZone);
@@ -139,21 +150,15 @@ public class Utils {
             }
         }
 
-        setOffsets(prefs, cal);
+        setOffsets(prefs, cal, milliseconds);
 
         // create time string
         final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
         final SimpleDateFormat dayFormat = new SimpleDateFormat("E");
         final Date date = cal.getTime();
 
-        if (useUserTimeZone) {
-            timeFormat.setTimeZone(TimeZone.getDefault());
-            dayFormat.setTimeZone(TimeZone.getDefault());
-        } else {
-            // assume we are US Pacific based
-            timeFormat.setTimeZone(pacificTimeZone);
-            dayFormat.setTimeZone(pacificTimeZone);
-        }
+        timeFormat.setTimeZone(TimeZone.getDefault());
+        dayFormat.setTimeZone(TimeZone.getDefault());
 
         String day = "";
         if (dayIndex == 0) {
@@ -263,51 +268,100 @@ public class Utils {
      * @return
      */
     public static Calendar getAirtimeCalendar(long airtime, final SharedPreferences prefs) {
-        final boolean useUserTimeZone = prefs.getBoolean(
-                SeriesGuidePreferences.KEY_USE_MY_TIMEZONE, false);
-
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(airtime);
 
-        if (!useUserTimeZone) {
-            // assume we are US located
-            Calendar real = Calendar.getInstance(TimeZone.getTimeZone("America/Los_Angeles"));
-            real.setTimeInMillis(airtime);
-
-            // and airtime is not in LA but local time
-            cal.set(real.get(Calendar.YEAR), real.get(Calendar.MONTH),
-                    real.get(Calendar.DAY_OF_MONTH), real.get(Calendar.HOUR_OF_DAY),
-                    real.get(Calendar.MINUTE), real.get(Calendar.SECOND));
-            cal.set(Calendar.MILLISECOND, real.get(Calendar.MILLISECOND));
-        }
-
-        setOffsets(prefs, cal);
+        setOffsets(prefs, cal, airtime);
 
         return cal;
     }
 
     /**
-     * Add user set manual offset and/or auto-offset if we are in US Central
-     * time zone.
+     * Add user set manual offset and auto-offset for US time zones.
      * 
      * @param prefs
      * @param cal
      */
-    private static void setOffsets(final SharedPreferences prefs, Calendar cal) {
-        // add user-set hour offset
+    private static void setOffsets(SharedPreferences prefs, Calendar cal, long airtime) {
+        boolean pacificInDaylight = TimeZone.getTimeZone(TIMEZONE_US_PACIFIC).inDaylightTime(
+                new Date(airtime));
+
+        // get user-set hour offset
         int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
+        TimeZone userTimeZone = TimeZone.getDefault();
+
+        if (userTimeZone.getID().equals(TIMEZONE_US_MOUNTAIN)) {
+            offset -= 1;
+        } else if (userTimeZone.getID().equals(TIMEZONE_US_CENTRAL)) {
+            // for US Central subtract one hour more
+            // shows always air an hour earlier
+            offset -= 3;
+        } else if (userTimeZone.getID().equals(TIMEZONE_US_EASTERN)) {
+            offset -= 3;
+        } else if (userTimeZone.getID().equals(TIMEZONE_US_ARIZONA)) {
+            // Arizona has no daylight saving, correct for that
+            // airtime might not be correct, yet, but the best we can do for now
+            if (!pacificInDaylight) {
+                offset -= 1;
+            }
+        }
+
+        // we store all time values in GMT+08:00 (always Pacific Standard Time)
+        // correct that if Pacific is in daylight savings
+        if (pacificInDaylight) {
+            offset -= 1;
+        }
+
         if (offset != 0) {
             cal.add(Calendar.HOUR_OF_DAY, offset);
         }
-        // check for US Central and automagically subtract one hour
-        if (TimeZone.getDefault().getRawOffset() == TimeZone.getTimeZone("US/Central")
-                .getRawOffset()) {
-            cal.add(Calendar.HOUR_OF_DAY, -1);
+    }
+
+    /**
+     * To correctly display and calculate upcoming episodes we need to modify
+     * the current time to be later/earlier. Also respecting user-set offsets.
+     * 
+     * @param prefs
+     * @return
+     */
+    public static long getFakeCurrentTime(SharedPreferences prefs) {
+        boolean pacificInDaylight = TimeZone.getTimeZone(TIMEZONE_US_PACIFIC).inDaylightTime(
+                new Date());
+        long now = System.currentTimeMillis();
+
+        int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
+        TimeZone userTimeZone = TimeZone.getDefault();
+        if (userTimeZone.getID().equals(TIMEZONE_US_MOUNTAIN)) {
+            // Mountain Time
+            offset -= 1;
+        } else if (userTimeZone.getID().equals(TIMEZONE_US_CENTRAL)) {
+            // for US Central subtract one hour more
+            // shows always air an hour earlier
+            offset -= 3;
+        } else if (userTimeZone.getID().equals(TIMEZONE_US_EASTERN)) {
+            // Eastern Time
+            offset -= 3;
+        } else if (userTimeZone.getID().equals(TIMEZONE_US_ARIZONA)) {
+            // Arizona has no daylight saving, correct for that
+            if (!pacificInDaylight) {
+                offset -= 1;
+            }
         }
+
+        if (pacificInDaylight) {
+            offset -= 1;
+        }
+
+        if (offset != 0) {
+            // invert offset so we add to current time instead of subtracting
+            now -= (offset * DateUtils.HOUR_IN_MILLIS);
+        }
+
+        return now;
     }
 
     public static long buildEpisodeAirtime(String tvdbDateString, long airtime) {
-        TimeZone pacific = TimeZone.getTimeZone("America/Los_Angeles");
+        TimeZone pacific = TimeZone.getTimeZone(TIMEZONE_ALWAYS_PST);
         SimpleDateFormat tvdbDateFormat = Constants.theTVDBDateFormat;
         tvdbDateFormat.setTimeZone(pacific);
 
