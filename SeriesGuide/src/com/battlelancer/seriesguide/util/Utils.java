@@ -142,41 +142,58 @@ public class Utils {
             };
         }
 
-        final TimeZone pacificTimeZone = TimeZone.getTimeZone(TIMEZONE_US_PACIFIC);
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-        // set calendar time and day on Pacific cal
-        final Calendar cal = Calendar.getInstance(pacificTimeZone);
+        // set calendar time and day on always PST calendar
+        // this is a workaround so we can convert the air day to a another time
+        // zone without actually having a date
+        final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_ALWAYS_PST));
+        final int year = cal.get(Calendar.YEAR);
+        final int month = cal.get(Calendar.MONTH);
+        final int day = cal.get(Calendar.DAY_OF_MONTH);
         cal.setTimeInMillis(milliseconds);
+        // set the date back to today
+        cal.set(year, month, day);
 
         // determine the shows common air day (Mo through Sun or daily)
         int dayIndex = -1;
         if (dayofweek != null) {
             dayIndex = getDayOfWeek(dayofweek);
             if (dayIndex > 0) {
-                cal.set(Calendar.DAY_OF_WEEK, dayIndex);
+                int today = cal.get(Calendar.DAY_OF_WEEK);
+                // make sure we always assume a day which is today or later
+                if (dayIndex - today < 0) {
+                    // we have a day before today
+                    cal.add(Calendar.DAY_OF_WEEK, (7 - today) + dayIndex);
+                } else {
+                    // we have today or in the future
+                    cal.set(Calendar.DAY_OF_WEEK, dayIndex);
+                }
             }
         }
 
-        setOffsets(prefs, cal, milliseconds);
+        // convert time to local, including the day
+        final Calendar localCal = Calendar.getInstance();
+        localCal.setTimeInMillis(cal.getTimeInMillis());
+
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        setOffsets(prefs, localCal, milliseconds);
 
         // create time string
         final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
         final SimpleDateFormat dayFormat = new SimpleDateFormat("E");
-        final Date date = cal.getTime();
+        final Date date = localCal.getTime();
 
         timeFormat.setTimeZone(TimeZone.getDefault());
         dayFormat.setTimeZone(TimeZone.getDefault());
 
-        String day = "";
+        String daystring = "";
         if (dayIndex == 0) {
-            day = context.getString(R.string.daily);
+            daystring = context.getString(R.string.daily);
         } else if (dayIndex != -1) {
-            day = dayFormat.format(date);
+            daystring = dayFormat.format(date);
         }
 
         return new String[] {
-                timeFormat.format(date), day
+                timeFormat.format(date), daystring
         };
     }
 
