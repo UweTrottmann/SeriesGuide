@@ -37,9 +37,14 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
 
     @Override
     protected void onPreExecute() {
+        // immediately hide container if there is no image
+        if (mPath.length() == 0) {
+            mContainer.setVisibility(View.GONE);
+            return;
+        }
+
         mImageView = (ImageView) mContainer.findViewById(R.id.ImageViewEpisodeImage);
         mProgressContainer = mContainer.findViewById(R.id.progress_container);
-
         // only make progress container visible if we will do long running op
         if (!mImageCache.isCached(mPath)) {
             mProgressContainer.setVisibility(View.VISIBLE);
