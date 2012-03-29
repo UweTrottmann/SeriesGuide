@@ -1,7 +1,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
@@ -38,58 +37,67 @@ public class DBUtils {
      */
     public static final String UNKNOWN_NEXT_AIR_DATE = "9223372036854775807";
 
+    interface UnwatchedQuery {
+        static final String[] PROJECTION = new String[] {
+            Episodes._ID
+        };
+
+        static final String NOAIRDATE_SELECTION = Episodes.WATCHED + "=? AND "
+                + Episodes.FIRSTAIREDMS + "=?";
+
+        static final String FUTURE_SELECTION = Episodes.WATCHED + "=? AND " + Episodes.FIRSTAIREDMS
+                + ">?";
+
+        static final String AIRED_SELECTION = Episodes.WATCHED + "=? AND " + Episodes.FIRSTAIREDMS
+                + " !=? AND " + Episodes.FIRSTAIREDMS + "<=?";
+    }
+
     /**
      * Looks up the episodes of a given season and stores the count of already
      * aired, but not watched ones in the seasons watchcount.
      * 
+     * @param context
      * @param seasonid
+     * @param prefs
      */
-    public static void updateUnwatchedCount(Context context, String seasonid) {
-        ContentResolver resolver = context.getContentResolver();
-        Date date = new Date();
-        String today = Constants.theTVDBDateFormat.format(date);
-        Uri episodesOfSeasonUri = Episodes.buildEpisodesOfSeasonUri(seasonid);
+    public static void updateUnwatchedCount(Context context, String seasonid,
+            SharedPreferences prefs) {
+        final ContentResolver resolver = context.getContentResolver();
+        final String fakenow = String.valueOf(Utils.getFakeCurrentTime(prefs));
+        final Uri episodesOfSeasonUri = Episodes.buildEpisodesOfSeasonUri(seasonid);
 
         // all a seasons episodes
-        Cursor total = resolver.query(episodesOfSeasonUri, new String[] {
+        final Cursor total = resolver.query(episodesOfSeasonUri, new String[] {
             Episodes._ID
         }, null, null, null);
         final int totalcount = total.getCount();
         total.close();
 
         // unwatched, aired episodes
-        String selection = Episodes.WATCHED + "=? AND " + Episodes.FIRSTAIRED + " like '%-%'"
-                + " AND " + Episodes.FIRSTAIRED + "<=?";
-        Cursor unwatched = resolver.query(episodesOfSeasonUri, new String[] {
-            Episodes._ID
-        }, selection, new String[] {
-                "0", today
-        }, null);
+        final Cursor unwatched = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
+                UnwatchedQuery.AIRED_SELECTION, new String[] {
+                        "0", "-1", fakenow
+                }, null);
         final int count = unwatched.getCount();
         unwatched.close();
 
         // unwatched, aired in the future episodes
-        selection = Episodes.WATCHED + "=? AND " + Episodes.FIRSTAIRED + ">?";
-        Cursor unaired = resolver.query(episodesOfSeasonUri, new String[] {
-            Episodes._ID
-        }, selection, new String[] {
-                "0", today
-        }, null);
+        final Cursor unaired = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
+                UnwatchedQuery.FUTURE_SELECTION, new String[] {
+                        "0", fakenow
+                }, null);
         final int unaired_count = unaired.getCount();
         unaired.close();
 
         // unwatched, no airdate
-        selection = Episodes.WATCHED + "=? AND " + Episodes.FIRSTAIRED + "=?";
-        Cursor noairdate = resolver.query(episodesOfSeasonUri, new String[] {
-            Episodes._ID
-        }, selection, new String[] {
-                "0", ""
-        }, null);
-
+        final Cursor noairdate = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
+                UnwatchedQuery.NOAIRDATE_SELECTION, new String[] {
+                        "0", "-1"
+                }, null);
         final int noairdate_count = noairdate.getCount();
         noairdate.close();
 
-        ContentValues update = new ContentValues();
+        final ContentValues update = new ContentValues();
         update.put(Seasons.WATCHCOUNT, count);
         update.put(Seasons.UNAIREDCOUNT, unaired_count);
         update.put(Seasons.NOAIRDATECOUNT, noairdate_count);

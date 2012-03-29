@@ -340,9 +340,11 @@ public class SeasonsFragment extends SherlockListFragment implements
                 return;
             }
 
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
             if (mSeasonId != null) {
                 // update one season
-                DBUtils.updateUnwatchedCount(context, mSeasonId);
+                DBUtils.updateUnwatchedCount(context, mSeasonId, prefs);
             } else {
                 // update all seasons of this show
                 final Cursor seasons = context.getContentResolver().query(
@@ -351,12 +353,14 @@ public class SeasonsFragment extends SherlockListFragment implements
                         }, null, null, null);
                 while (seasons.moveToNext()) {
                     String seasonId = seasons.getString(0);
-                    DBUtils.updateUnwatchedCount(context, seasonId);
+                    DBUtils.updateUnwatchedCount(context, seasonId, prefs);
+
+                    notifyContentProvider(context);
                 }
                 seasons.close();
             }
 
-            context.getContentResolver().notifyChange(Seasons.buildSeasonsOfShowUri(mShowId), null);
+            notifyContentProvider(context);
 
             if (mUpdateOverview) {
                 OverviewFragment overview = (OverviewFragment) context.getSupportFragmentManager()
@@ -365,6 +369,10 @@ public class SeasonsFragment extends SherlockListFragment implements
                     overview.onLoadEpisode();
                 }
             }
+        }
+
+        private void notifyContentProvider(final FragmentActivity context) {
+            context.getContentResolver().notifyChange(Seasons.buildSeasonsOfShowUri(mShowId), null);
         }
     }
 
