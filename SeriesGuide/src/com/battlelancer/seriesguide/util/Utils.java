@@ -23,6 +23,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,6 +46,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 public class Utils {
+
+    private static final String TAG = "Utils";
 
     private static final String TIMEZONE_ALWAYS_PST = "GMT-08:00";
 
@@ -773,10 +776,11 @@ public class Utils {
         MessageDigest md = null;
         try {
             md = MessageDigest.getInstance("SHA-1");
+            return Utils.byteArrayToHexString(md.digest(convertme));
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            Log.w(TAG, "Could not get SHA-1 message digest instance", e);
         }
-        return Utils.byteArrayToHexString(md.digest(convertme));
+        return null;
     }
 
     public static String byteArrayToHexString(byte[] b) {

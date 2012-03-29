@@ -297,9 +297,8 @@ public class ShareUtils {
 
                         @Override
                         protected Response doInBackground(String... params) {
-                            // SHA of any password is always non-empty, so only
-                            // check for an empty username
-                            if (username.length() == 0) {
+                            // check if we have any usable data
+                            if (username.length() == 0 || passwordHash == null) {
                                 return null;
                             }
 
