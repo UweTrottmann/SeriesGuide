@@ -5,7 +5,7 @@
         <item name="vpiCirclePageIndicatorStyle">@style/Widget.CirclePageIndicator</item>
         <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
-        <item name="vpiTabTextStyle">@style/Widget.TabPageIndicator.Text</item>
+        <item name="vpiTabTextStyle">@style/CustomTabPageIndicatorText</item>
     </style>
 
     <style name="Header">
@@ -29,6 +29,14 @@
         <item name="textColor">@color/text_primary</item>
         <item name="selectedColor">@color/text_primary</item>
         <item name="selectedBold">true</item>
+    </style>
+
+    <style name="CustomTabPageIndicatorText">
+        <item name="android:textAppearance">@style/TextAppearance.TabPageIndicator</item>
+        <item name="android:textColor">@color/vpi__dark_theme</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:maxLines">1</item>
     </style>
 
     <style name="Airdata">

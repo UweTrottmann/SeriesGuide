@@ -82,13 +82,13 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
         public String getTitle(int position) {
             switch (position) {
                 case 1:
-                    return mContext.getString(R.string.trending);
+                    return mContext.getString(R.string.trending).toUpperCase();
                 case 2:
-                    return mContext.getString(R.string.recommended);
+                    return mContext.getString(R.string.recommended).toUpperCase();
                 case 3:
-                    return mContext.getString(R.string.library);
+                    return mContext.getString(R.string.library).toUpperCase();
                 default:
-                    return mContext.getString(R.string.search_button);
+                    return mContext.getString(R.string.search_button).toUpperCase();
             }
         }
 
