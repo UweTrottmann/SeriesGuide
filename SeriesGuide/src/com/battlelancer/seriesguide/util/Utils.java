@@ -773,22 +773,20 @@ public class Utils {
     }
 
     public static String toSHA1(byte[] convertme) {
-        MessageDigest md = null;
         try {
-            md = MessageDigest.getInstance("SHA-1");
-            return Utils.byteArrayToHexString(md.digest(convertme));
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            byte[] b = md.digest(convertme);
+
+            String result = "";
+            for (int i = 0; i < b.length; i++) {
+                result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
+            }
+
+            return result;
         } catch (NoSuchAlgorithmException e) {
             Log.w(TAG, "Could not get SHA-1 message digest instance", e);
         }
         return null;
-    }
-
-    public static String byteArrayToHexString(byte[] b) {
-        String result = "";
-        for (int i = 0; i < b.length; i++) {
-            result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
-        }
-        return result;
     }
 
     public enum SGChannel {
