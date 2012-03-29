@@ -192,7 +192,7 @@ public class SeasonsFragment extends SherlockListFragment implements
         };
         int[] to = new int[] {
                 R.id.TextViewSeasonListTitle, R.id.TextViewSeasonListWatchCount,
-                R.id.seasonProgress
+                R.id.season_row_root
         };
 
         mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.season_row, null, from, to,
