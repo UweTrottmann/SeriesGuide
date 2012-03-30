@@ -22,7 +22,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class ChangesDialogFragment extends DialogFragment {
-    private static final String MARKETLINK_HTTP = "http://market.android.com/details?id=com.battlelancer.seriesguide";
+    private static final String MARKETLINK_HTTP = "http://play.google.com/store/apps/details?id=com.battlelancer.seriesguide";
 
     private static final String MARKETLINK_APP = "market://details?id=com.battlelancer.seriesguide";
 
