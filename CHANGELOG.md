@@ -17,6 +17,12 @@ Version 2.6 *(in development)*
 
 ### Detailed changes:
 
+#### 2.6.5beta (2012-03-30)
+
+* Searching from overview lists only episodes of the displayed show (suggestions are still for all shows).
+* Design refinements.
+* Better log output.
+
 #### 2.6.4beta (2012-03-26)
 
 * Rate and share shows.
