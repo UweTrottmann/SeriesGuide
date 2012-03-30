@@ -19,7 +19,7 @@ public class SearchActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_activity);
+        setContentView(R.layout.search);
         handleIntent(getIntent());
 
         final ActionBar actionBar = getSupportActionBar();
