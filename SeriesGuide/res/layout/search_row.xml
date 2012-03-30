@@ -9,7 +9,11 @@
         android:id="@+id/TextViewSearchSeriesName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Really, Really, Really, Really, Really Long Series Name" >
+        android:layout_marginBottom="@dimen/inline_padding"
+        android:text="@string/app_name"
+        android:textAllCaps="true"
+        android:textSize="@dimen/text_size_xsmall"
+        android:textStyle="bold" >
     </TextView>
 
     <TextView
@@ -17,7 +21,8 @@
         style="@style/ListHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is it! Really, really, really long title" >
+        android:layout_marginBottom="@dimen/inline_padding"
+        android:text="@string/app_name" >
     </TextView>
 
     <RelativeLayout

@@ -3,6 +3,8 @@ package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.Series;
+import com.battlelancer.seriesguide.util.DBUtils;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,5 +30,22 @@ public class OverviewActivity extends BaseActivity {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_overview, mFragment).commit();
         }
+    }
+
+    @Override
+    public boolean onSearchRequested() {
+        // refine search with the show's title
+        int showId = getIntent().getExtras().getInt(OverviewFragment.InitBundle.SHOW_TVDBID);
+        if (showId == 0) {
+            return false;
+        }
+
+        final Series show = DBUtils.getShow(this, String.valueOf(showId));
+        final String showTitle = show.getSeriesName();
+
+        Bundle args = new Bundle();
+        args.putString(SearchFragment.InitBundle.SHOW_TITLE, showTitle);
+        startSearch(null, false, args, false);
+        return true;
     }
 }

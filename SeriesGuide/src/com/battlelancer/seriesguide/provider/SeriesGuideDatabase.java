@@ -1,12 +1,14 @@
 
 package com.battlelancer.seriesguide.provider;
 
+import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearchColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodesColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesContract.ShowsColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.Utils;
 
 import android.app.SearchManager;
@@ -376,35 +378,94 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         }
     }
 
-    public static Cursor search(String query, SQLiteDatabase db) {
-        /*
-         * select
-         * _id,episodetitle,episodedescription,number,season,watched,seriestitle
-         * from ((select _id as sid,seriestitle from series) join (select
-         * _id,episodedescription,series_id,episodetitle,number,season,watched
-         * from (select rowid,snippet(searchtable) as episodedescription from
-         * searchtable where searchtable match 'pilot') join (select
-         * _id,series_id,episodetitle,number,season,watched from episodes) on
-         * _id=rowid) on sid=series_id)
-         */
-        return db.rawQuery("select _id," + Episodes.TITLE + "," + Episodes.OVERVIEW + ","
-                + Episodes.NUMBER + "," + Episodes.SEASON + "," + Episodes.WATCHED + ","
-                + Shows.TITLE + " from ((select _id as sid," + Shows.TITLE + " from "
-                + Tables.SHOWS + ")" + " join " + "(select _id," + Episodes.TITLE + ","
-                + Episodes.OVERVIEW + "," + Episodes.NUMBER + "," + Episodes.SEASON + ","
-                + Episodes.WATCHED + "," + Shows.REF_SHOW_ID + " from " + "(select docid,snippet("
-                + Tables.EPISODES_SEARCH + ",'<b>','</b>','...') as " + Episodes.OVERVIEW
-                + " from " + Tables.EPISODES_SEARCH + " where " + Tables.EPISODES_SEARCH
-                + " match " + "?)" + " join " + "(select _id," + Episodes.TITLE + ","
-                + Episodes.NUMBER + "," + Episodes.SEASON + "," + Episodes.WATCHED + ","
-                + Shows.REF_SHOW_ID + " from episodes)" + "on _id=docid)" + "on sid="
-                + Shows.REF_SHOW_ID + ")", new String[] {
-            "\"" + query + "*\""
-        });
+    public static Cursor search(String selection, String[] selectionArgs, SQLiteDatabase db) {
+        // select
+        // _id,episodetitle,episodedescription,number,season,watched,seriestitle
+        // from (
+        // (select _id as sid,seriestitle from series)
+        // join
+        // (select
+        // _id,episodedescription,series_id,episodetitle,number,season,watched
+        // from(select rowid,snippet(searchtable) as episodedescription from
+        // searchtable where searchtable match 'QUERY')
+        // join (select
+        // _id,series_id,episodetitle,number,season,watched from episodes)
+        // on _id=rowid)
+        // on sid=series_id)
+
+        StringBuilder query = new StringBuilder();
+        // select final result columns
+        query.append("SELECT ");
+        query.append(Episodes._ID).append(",");
+        query.append(Episodes.TITLE).append(",");
+        query.append(Episodes.OVERVIEW).append(",");
+        query.append(Episodes.NUMBER).append(",");
+        query.append(Episodes.SEASON).append(",");
+        query.append(Episodes.WATCHED).append(",");
+        query.append(Shows.TITLE);
+
+        query.append(" FROM ");
+        query.append("(");
+
+        // join all shows...
+        query.append("(");
+        query.append("SELECT ").append(BaseColumns._ID).append(" as sid,").append(Shows.TITLE);
+        query.append(" FROM ").append(Tables.SHOWS);
+        query.append(")");
+
+        query.append(" JOIN ");
+
+        // ...with matching episodes
+        query.append("(");
+        query.append("SELECT ");
+        query.append(Episodes._ID).append(",");
+        query.append(Episodes.TITLE).append(",");
+        query.append(Episodes.OVERVIEW).append(",");
+        query.append(Episodes.NUMBER).append(",");
+        query.append(Episodes.SEASON).append(",");
+        query.append(Episodes.WATCHED).append(",");
+        query.append(Shows.REF_SHOW_ID);
+        query.append(" FROM ");
+        // join searchtable results...
+        query.append("(");
+        query.append("SELECT ");
+        query.append(EpisodeSearch._DOCID).append(",");
+        query.append("snippet(" + Tables.EPISODES_SEARCH + ",'<b>','</b>','...')").append(" AS ")
+                .append(Episodes.OVERVIEW);
+        query.append(" FROM ").append(Tables.EPISODES_SEARCH);
+        query.append(" WHERE ").append(Tables.EPISODES_SEARCH).append(" MATCH ?");
+        query.append(")");
+        query.append(" JOIN ");
+        // ...with episodes table
+        query.append("(");
+        query.append("SELECT ");
+        query.append(Episodes._ID).append(",");
+        query.append(Episodes.TITLE).append(",");
+        query.append(Episodes.NUMBER).append(",");
+        query.append(Episodes.SEASON).append(",");
+        query.append(Episodes.WATCHED).append(",");
+        query.append(Shows.REF_SHOW_ID);
+        query.append(" FROM ").append(Tables.EPISODES);
+        query.append(")");
+        query.append(" ON ").append(Episodes._ID).append("=").append(EpisodeSearch._DOCID);
+
+        query.append(")");
+        query.append(" ON ").append("sid=").append(Shows.REF_SHOW_ID);
+        query.append(")");
+
+        // append given selection
+        if (selection != null) {
+            query.append(" WHERE ");
+            query.append("(").append(selection).append(")");
+        }
+        // search for anything starting with the given search term
+        selectionArgs[0] = "\"" + selectionArgs[0] + "*\"";
+
+        return db.rawQuery(query.toString(), selectionArgs);
     }
 
-    public static Cursor getSuggestions(String query, SQLiteDatabase db) {
-        return db.rawQuery("select _id," + Episodes.TITLE + " as "
+    public static Cursor getSuggestions(String searchterm, SQLiteDatabase db) {
+        StringBuilder query = new StringBuilder("select _id," + Episodes.TITLE + " as "
                 + SearchManager.SUGGEST_COLUMN_TEXT_1 + "," + Shows.TITLE + " as "
                 + SearchManager.SUGGEST_COLUMN_TEXT_2 + "," + "_id as "
                 + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID + " from ((select _id as sid,"
@@ -412,9 +473,12 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + Episodes.TITLE + "," + Shows.REF_SHOW_ID + " from " + "(select docid" + " from "
                 + Tables.EPISODES_SEARCH + " where " + Tables.EPISODES_SEARCH + " match " + "?)"
                 + " join " + "(select _id," + Episodes.TITLE + "," + Shows.REF_SHOW_ID
-                + " from episodes)" + "on _id=docid)" + "on sid=" + Shows.REF_SHOW_ID + ")",
-                new String[] {
-                    "\"" + query + "*\""
-                });
+                + " from episodes)" + "on _id=docid)" + "on sid=" + Shows.REF_SHOW_ID + ")");
+
+        // search for anything starting with the given search term
+        return db.rawQuery(query.toString(), new String[] {
+            "\"" + searchterm + "*\""
+        });
     }
+
 }

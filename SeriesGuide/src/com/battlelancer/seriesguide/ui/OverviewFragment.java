@@ -201,6 +201,10 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 onShareEpisode(ShareMethod.OTHER_SERVICES, true);
                 return true;
             }
+            case R.id.menu_search: {
+                getActivity().onSearchRequested();
+                return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }

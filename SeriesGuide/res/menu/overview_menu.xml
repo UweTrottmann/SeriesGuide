@@ -2,9 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@+id/menu_search"
+        android:icon="@drawable/ic_action_search"
+        android:showAsAction="always"
+        android:title="@string/search_hint"/>
+    <item
         android:id="@+id/menu_quickshare"
         android:icon="@drawable/ic_action_share"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:title="@string/share_episode"/>
     <item
         android:id="@+id/menu_shareepisode"
