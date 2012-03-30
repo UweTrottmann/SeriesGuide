@@ -334,7 +334,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage"><b>Greetings!</b>\nEnjoy the new unified check in dialog (trakt sharing options coming soon)!\n\nAlso rate and share shows.\n\nIntroducing a \'collected\' flag for episodes (not synced witht trakt, yet).\n\nNew icons!\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>
+    <string name="betamessage"><b>Greetings!</b>\nStill enjoying the new unified check in dialog (trakt sharing options coming soon)?\n\nSearch in show overview.\n\nBetter log output for nailing down bugs.\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
