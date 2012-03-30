@@ -60,6 +60,8 @@
 
             <include layout="@layout/holodivider" />
 
+            <include layout="@layout/gotoseasons" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
