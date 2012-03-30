@@ -2,7 +2,7 @@
 package com.battlelancer.seriesguide.getglueapi;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 
 import oauth.signpost.OAuthConsumer;
