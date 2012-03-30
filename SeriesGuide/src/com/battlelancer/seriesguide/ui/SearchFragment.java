@@ -88,11 +88,11 @@ public class SearchFragment extends SherlockListFragment implements LoaderCallba
         });
         setListAdapter(mAdapter);
 
-        onPerformSearch(getArguments());
+        getLoaderManager().initLoader(LOADER_ID, getArguments(), this);
     }
 
     public void onPerformSearch(Bundle args) {
-        getLoaderManager().initLoader(LOADER_ID, args, this);
+        getLoaderManager().restartLoader(LOADER_ID, args, this);
     }
 
     @Override
