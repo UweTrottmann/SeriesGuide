@@ -142,7 +142,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         int lastShareAction = prefs.getInt(SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
 
         MenuItem shareAction = menu.findItem(R.id.menu_quickshare);
-        if (lastShareAction > 1) {
+        if (lastShareAction > 2) {
             ShareMethod shareMethod = ShareMethod.values()[lastShareAction];
             shareAction.setTitle(shareMethod.titleRes);
             shareAction.setIcon(shareMethod.drawableRes);
@@ -165,11 +165,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 fireTrackerEvent("Quick share (" + shareMethod.name() + ")");
 
                 onShareEpisode(shareMethod, false);
-                return true;
-            }
-            case R.id.menu_markseen_trakt: {
-                fireTrackerEvent("Mark seen (trakt)");
-                onShareEpisode(ShareMethod.MARKSEEN_TRAKT, true);
                 return true;
             }
             case R.id.menu_rate_trakt: {

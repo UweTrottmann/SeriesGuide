@@ -181,7 +181,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         int lastShareAction = prefs.getInt(SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
 
         MenuItem shareAction = menu.findItem(R.id.menu_quickshare);
-        if (lastShareAction > 1) {
+        if (lastShareAction > 2) {
             ShareMethod shareMethod = ShareMethod.values()[lastShareAction];
             shareAction.setTitle(shareMethod.titleRes);
             shareAction.setIcon(shareMethod.drawableRes);
@@ -204,11 +204,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 fireTrackerEvent("Quick share (" + shareMethod.name() + ")");
 
                 onShareEpisode(shareMethod, false);
-                return true;
-            }
-            case R.id.menu_markseen_trakt: {
-                fireTrackerEvent("Mark seen (trakt)");
-                onShareEpisode(ShareMethod.MARKSEEN_TRAKT, true);
                 return true;
             }
             case R.id.menu_rate_trakt: {
@@ -533,6 +528,15 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         mTraktTask.execute();
     }
 
+    protected void onLoadImage(String imagePath) {
+        final FrameLayout container = (FrameLayout) getActivity().findViewById(R.id.imageContainer);
+
+        if (mArtTask == null || mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
+            mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity())
+                    .execute();
+        }
+    }
+
     private void onMarkWatched() {
         DBUtils.markEpisode(getActivity(), String.valueOf(mEpisodeId), true);
         DBUtils.markSeenOnTrakt(getActivity(), getShowId(), mSeasonNumber, mEpisodeNumber, true);
@@ -556,15 +560,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 R.id.fragment_seasons);
         if (seasons != null) {
             seasons.updateUnwatchedCounts(false);
-        }
-    }
-
-    protected void onLoadImage(String imagePath) {
-        final FrameLayout container = (FrameLayout) getActivity().findViewById(R.id.imageContainer);
-
-        if (mArtTask == null || mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity())
-                    .execute();
         }
     }
 

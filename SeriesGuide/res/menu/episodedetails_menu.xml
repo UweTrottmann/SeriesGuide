@@ -13,10 +13,6 @@
         android:title="@string/share_episode">
         <menu>
             <item
-                android:id="@+id/menu_markseen_trakt"
-                android:icon="@drawable/ic_trakt_seen"
-                android:title="@string/menu_markseen_trakt"/>
-            <item
                 android:id="@+id/menu_rate_trakt"
                 android:icon="@drawable/trakt_love_large"
                 android:title="@string/menu_rate_trakt"/>
