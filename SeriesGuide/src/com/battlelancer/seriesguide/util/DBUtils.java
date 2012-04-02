@@ -198,22 +198,39 @@ public class DBUtils {
         context.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
     }
 
-    public enum TraktAction {
-        WATCHED, LIBRARY
-    }
-
     /**
-     * Mark an episode as seen/unseen or collected/not collected on trakt using
-     * an AsyncTask.
+     * Mark an episode as seen/unseen on trakt using an AsyncTask.
      * 
      * @param context
      * @param tvdbId
      * @param season
      * @param episode
-     * @param isAdd
-     * @param actiontype
+     * @param isSeen
      */
-    public static void markEpisodeOnTrakt(final Context context, final int tvdbId,
+    public static void markSeenOnTrakt(final Context context, final int tvdbId, final int season,
+            final int episode, final boolean isSeen) {
+        markEpisodeOnTrakt(context, tvdbId, season, episode, isSeen, TraktAction.WATCHED);
+    }
+
+    /**
+     * Mark an episode as collected/not collected on trakt using an AsyncTask.
+     * 
+     * @param context
+     * @param tvdbId
+     * @param season
+     * @param episode
+     * @param isCollected
+     */
+    public static void markCollectedOnTrakt(final Context context, final int tvdbId,
+            final int season, final int episode, final boolean isCollected) {
+        markEpisodeOnTrakt(context, tvdbId, season, episode, isCollected, TraktAction.LIBRARY);
+    }
+
+    private enum TraktAction {
+        WATCHED, LIBRARY
+    }
+
+    private static void markEpisodeOnTrakt(final Context context, final int tvdbId,
             final int season, final int episode, final boolean isAdd, final TraktAction actiontype) {
         // check for valid credentials here, not worth building up a whole
         // AsyncTask to do that
