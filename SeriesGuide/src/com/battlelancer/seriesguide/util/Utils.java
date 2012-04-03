@@ -47,6 +47,8 @@ import java.util.TimeZone;
 
 public class Utils {
 
+    private static final String TIMEZONE_AMERICA_PREFIX = "America/";
+
     private static final String TAG = "Utils";
 
     private static final String TIMEZONE_ALWAYS_PST = "GMT-08:00";
@@ -54,6 +56,8 @@ public class Utils {
     private static final String TIMEZONE_US_ARIZONA = "America/Phoenix";
 
     private static final String TIMEZONE_US_EASTERN = "America/New_York";
+
+    private static final Object TIMEZONE_US_EASTERN_DETROIT = "America/Detroit";
 
     private static final String TIMEZONE_US_CENTRAL = "America/Chicago";
 
@@ -316,21 +320,24 @@ public class Utils {
 
         // get user-set hour offset
         int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
-        TimeZone userTimeZone = TimeZone.getDefault();
+        final String tzId = TimeZone.getDefault().getID();
 
-        if (userTimeZone.getID().equals(TIMEZONE_US_MOUNTAIN)) {
-            offset -= 1;
-        } else if (userTimeZone.getID().equals(TIMEZONE_US_CENTRAL)) {
-            // for US Central subtract one hour more
-            // shows always air an hour earlier
-            offset -= 3;
-        } else if (userTimeZone.getID().equals(TIMEZONE_US_EASTERN)) {
-            offset -= 3;
-        } else if (userTimeZone.getID().equals(TIMEZONE_US_ARIZONA)) {
-            // Arizona has no daylight saving, correct for that
-            // airtime might not be correct, yet, but the best we can do for now
-            if (!pacificInDaylight) {
+        if (tzId.startsWith(TIMEZONE_AMERICA_PREFIX, 0)) {
+            if (tzId.equals(TIMEZONE_US_MOUNTAIN)) {
                 offset -= 1;
+            } else if (tzId.equals(TIMEZONE_US_CENTRAL)) {
+                // for US Central subtract one hour more
+                // shows always air an hour earlier
+                offset -= 3;
+            } else if (tzId.equals(TIMEZONE_US_EASTERN) || tzId.equals(TIMEZONE_US_EASTERN_DETROIT)) {
+                offset -= 3;
+            } else if (tzId.equals(TIMEZONE_US_ARIZONA)) {
+                // Arizona has no daylight saving, correct for that
+                // airtime might not be correct, yet, but the best we can do for
+                // now
+                if (!pacificInDaylight) {
+                    offset -= 1;
+                }
             }
         }
 
@@ -369,21 +376,24 @@ public class Utils {
                 new Date(time));
 
         int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
-        TimeZone userTimeZone = TimeZone.getDefault();
-        if (userTimeZone.getID().equals(TIMEZONE_US_MOUNTAIN)) {
-            // Mountain Time
-            offset -= 1;
-        } else if (userTimeZone.getID().equals(TIMEZONE_US_CENTRAL)) {
-            // for US Central subtract one hour more
-            // shows always air an hour earlier
-            offset -= 3;
-        } else if (userTimeZone.getID().equals(TIMEZONE_US_EASTERN)) {
-            // Eastern Time
-            offset -= 3;
-        } else if (userTimeZone.getID().equals(TIMEZONE_US_ARIZONA)) {
-            // Arizona has no daylight saving, correct for that
-            if (!pacificInDaylight) {
+        final String tzId = TimeZone.getDefault().getID();
+
+        if (tzId.startsWith(TIMEZONE_AMERICA_PREFIX, 0)) {
+            if (tzId.equals(TIMEZONE_US_MOUNTAIN)) {
+                // Mountain Time
                 offset -= 1;
+            } else if (tzId.equals(TIMEZONE_US_CENTRAL)) {
+                // for US Central subtract one hour more
+                // shows always air an hour earlier
+                offset -= 3;
+            } else if (tzId.equals(TIMEZONE_US_EASTERN) || tzId.equals(TIMEZONE_US_EASTERN_DETROIT)) {
+                // Eastern Time
+                offset -= 3;
+            } else if (tzId.equals(TIMEZONE_US_ARIZONA)) {
+                // Arizona has no daylight saving, correct for that
+                if (!pacificInDaylight) {
+                    offset -= 1;
+                }
             }
         }
 
