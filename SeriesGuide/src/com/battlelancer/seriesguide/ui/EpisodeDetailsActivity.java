@@ -151,8 +151,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
         @Override
         public String getTitle(int position) {
             Episode episode = mEpisodes.get(position);
-            return Utils.getEpisodeNumber(mPrefs, String.valueOf(episode.seasonNumber),
-                    String.valueOf(episode.episodeNumber));
+            return Utils.getEpisodeNumber(mPrefs, episode.seasonNumber, episode.episodeNumber);
         }
 
     }

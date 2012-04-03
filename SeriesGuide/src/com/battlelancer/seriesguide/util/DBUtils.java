@@ -202,28 +202,30 @@ public class DBUtils {
      * Mark an episode as seen/unseen on trakt using an AsyncTask.
      * 
      * @param context
-     * @param tvdbId
-     * @param season
-     * @param episode
+     * @param showId
+     * @param seasonNumber
+     * @param episodeNumber
      * @param isSeen
      */
-    public static void markSeenOnTrakt(final Context context, final int tvdbId, final int season,
-            final int episode, final boolean isSeen) {
-        markEpisodeOnTrakt(context, tvdbId, season, episode, isSeen, TraktAction.WATCHED);
+    public static void markSeenOnTrakt(final Context context, int showId, int seasonNumber,
+            int episodeNumber, boolean isSeen) {
+        markEpisodeOnTrakt(context, showId, seasonNumber, episodeNumber, isSeen,
+                TraktAction.WATCHED);
     }
 
     /**
      * Mark an episode as collected/not collected on trakt using an AsyncTask.
      * 
      * @param context
-     * @param tvdbId
-     * @param season
-     * @param episode
+     * @param showId
+     * @param seasonNumber
+     * @param episodeNumber
      * @param isCollected
      */
-    public static void markCollectedOnTrakt(final Context context, final int tvdbId,
-            final int season, final int episode, final boolean isCollected) {
-        markEpisodeOnTrakt(context, tvdbId, season, episode, isCollected, TraktAction.LIBRARY);
+    public static void markCollectedOnTrakt(final Context context, int showId, int seasonNumber,
+            int episodeNumber, boolean isCollected) {
+        markEpisodeOnTrakt(context, showId, seasonNumber, episodeNumber, isCollected,
+                TraktAction.LIBRARY);
     }
 
     private enum TraktAction {
@@ -696,8 +698,8 @@ public class DBUtils {
             unwatched.moveToFirst();
 
             // nexttext (0x12 Episode)
-            final String season = unwatched.getString(NextEpisodeQuery.SEASON);
-            final String number = unwatched.getString(NextEpisodeQuery.NUMBER);
+            final int season = unwatched.getInt(NextEpisodeQuery.SEASON);
+            final int number = unwatched.getInt(NextEpisodeQuery.NUMBER);
             final String title = unwatched.getString(NextEpisodeQuery.TITLE);
             final String nextEpisodeString = Utils.getNextEpisodeString(prefs, season, number,
                     title);

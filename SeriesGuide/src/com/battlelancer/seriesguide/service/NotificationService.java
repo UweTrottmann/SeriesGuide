@@ -119,8 +119,8 @@ public class NotificationService extends IntentService {
                         + " "
                         + Utils.getEpisodeNumber(
                                 PreferenceManager.getDefaultSharedPreferences(this),
-                                upcomingEpisodes.getString(NotificationQuery.SEASON),
-                                upcomingEpisodes.getString(NotificationQuery.NUMBER));
+                                upcomingEpisodes.getInt(NotificationQuery.SEASON),
+                                upcomingEpisodes.getInt(NotificationQuery.NUMBER));
                 contentText = getString(R.string.upcoming_show_detailed, airs, network);
 
                 Intent notificationIntent = new Intent(context, EpisodeDetailsActivity.class);

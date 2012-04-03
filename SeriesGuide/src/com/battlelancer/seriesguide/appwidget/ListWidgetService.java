@@ -67,12 +67,12 @@ public class ListWidgetService extends RemoteViewsService {
             RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.appwidget_row);
 
             // episode description
-            String season = mUpcomingEpisodes.getString(UpcomingQuery.SEASON);
-            String number = mUpcomingEpisodes.getString(UpcomingQuery.NUMBER);
+            int seasonNumber = mUpcomingEpisodes.getInt(UpcomingQuery.SEASON);
+            int episodeNumber = mUpcomingEpisodes.getInt(UpcomingQuery.NUMBER);
             String title = mUpcomingEpisodes.getString(UpcomingQuery.TITLE);
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
             rv.setTextViewText(R.id.textViewWidgetEpisode,
-                    Utils.getNextEpisodeString(prefs, season, number, title));
+                    Utils.getNextEpisodeString(prefs, seasonNumber, episodeNumber, title));
 
             // relative airtime
             long airtime = mUpcomingEpisodes.getLong(UpcomingQuery.FIRSTAIREDMS);

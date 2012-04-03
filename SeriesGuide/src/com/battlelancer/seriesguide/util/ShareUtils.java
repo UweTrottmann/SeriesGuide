@@ -146,8 +146,8 @@ public class ShareUtils {
     }
 
     public static String onCreateShareString(Context context, final Cursor episode) {
-        String season = episode.getString(episode.getColumnIndexOrThrow(Episodes.SEASON));
-        String number = episode.getString(episode.getColumnIndexOrThrow(Episodes.NUMBER));
+        int season = episode.getInt(episode.getColumnIndexOrThrow(Episodes.SEASON));
+        int number = episode.getInt(episode.getColumnIndexOrThrow(Episodes.NUMBER));
         String title = episode.getString(episode.getColumnIndexOrThrow(Episodes.TITLE));
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return Utils.getNextEpisodeString(prefs, season, number, title);

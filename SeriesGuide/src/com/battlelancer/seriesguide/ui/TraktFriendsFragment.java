@@ -369,8 +369,7 @@ public class TraktFriendsFragment extends ListFragment implements
                     case Episode:
                         show = watching.show.title;
                         String episodenumber = Utils.getEpisodeNumber(mPrefs,
-                                String.valueOf(watching.episode.season),
-                                String.valueOf(watching.episode.number));
+                                watching.episode.season, watching.episode.number);
                         episode = episodenumber + " " + watching.episode.title;
                         timestamp = getContext().getString(R.string.now);
                         holder.timestamp.setTextColor(Color.RED);
@@ -390,8 +389,7 @@ public class TraktFriendsFragment extends ListFragment implements
                 if (latestShow != null) {
                     show = latestShow.show.title;
                     String episodenumber = Utils.getEpisodeNumber(mPrefs,
-                            String.valueOf(latestShow.episode.season),
-                            String.valueOf(latestShow.episode.number));
+                            latestShow.episode.season, latestShow.episode.number);
                     episode = episodenumber + " " + latestShow.episode.title;
                     timestamp = (String) DateUtils.getRelativeTimeSpanString(
                             latestShow.watched.getTime(), System.currentTimeMillis(),

@@ -357,20 +357,24 @@ public class UpcomingFragment extends ListFragment implements
 
             // watched box
             // save rowid to hand over to OnClick event listener
-            final String rowid = mCursor.getString(UpcomingQuery._ID);
+            final int showId = mCursor.getInt(UpcomingQuery.REF_SHOW_ID);
+            final int seasonNumber = mCursor.getInt(UpcomingQuery.SEASON);
+            final String episodeId = mCursor.getString(UpcomingQuery._ID);
+            final int episodeNumber = mCursor.getInt(UpcomingQuery.NUMBER);
             viewHolder.watchedBox.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-                    ((WatchedBox) v).toggle();
-                    DBUtils.markEpisode(getActivity(), rowid, ((WatchedBox) v).isChecked());
+                    WatchedBox checkBox = (WatchedBox) v;
+                    checkBox.toggle();
+                    DBUtils.markEpisode(getActivity(), episodeId, checkBox.isChecked());
+                    DBUtils.markSeenOnTrakt(getActivity(), showId, seasonNumber, episodeNumber,
+                            checkBox.isChecked());
                 }
             });
             viewHolder.watchedBox.setChecked(mCursor.getInt(UpcomingQuery.WATCHED) > 0);
 
             // season and episode number
-            String episodeNumber = Utils.getEpisodeNumber(mPrefs,
-                    mCursor.getString(UpcomingQuery.SEASON),
-                    mCursor.getString(UpcomingQuery.NUMBER));
-            viewHolder.number.setText(episodeNumber);
+            String number = Utils.getEpisodeNumber(mPrefs, seasonNumber, episodeNumber);
+            viewHolder.number.setText(number);
 
             // airdate
             long airtime = mCursor.getLong(UpcomingQuery.FIRSTAIREDMS);
