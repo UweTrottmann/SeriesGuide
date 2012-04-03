@@ -116,8 +116,11 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
                     // look if the episode summary is cached
                     String key = String.valueOf(mTvdbId) + String.valueOf(mSeason)
                             + String.valueOf(mEpisode);
-                    TvEntity entity = sHardEntityCache.remove(key);
 
+                    TvEntity entity;
+                    synchronized (sHardEntityCache) {
+                        entity = sHardEntityCache.remove(key);
+                    }
                     // on cache miss load the summary from trakt
                     if (entity == null) {
                         entity = Utils.getServiceManager(mContext).showService()
@@ -125,7 +128,9 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
                     }
 
                     if (entity != null) {
-                        sHardEntityCache.put(key, entity);
+                        synchronized (sHardEntityCache) {
+                            sHardEntityCache.put(key, entity);
+                        }
                         return entity.episode.ratings;
                     }
                 }
