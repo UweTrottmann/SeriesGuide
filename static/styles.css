@@ -64,6 +64,15 @@ margin-top:80px;
 margin-bottom:50px;
 }
 
+#credits {
+font-size:0.75em;
+color:#666666;
+}
+
+#credits a {
+color:#666666;	
+}
+
 p.right {
 float:right;
 }
