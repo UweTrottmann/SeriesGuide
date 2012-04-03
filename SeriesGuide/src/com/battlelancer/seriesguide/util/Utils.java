@@ -452,31 +452,34 @@ public class Utils {
      * Returns the episode number formatted according to the users preference
      * (e.g. '1x01', 'S01E01', ...).
      */
-    public static String getEpisodeNumber(SharedPreferences prefs, String season, String episode) {
+    public static String getEpisodeNumber(SharedPreferences prefs, String seasonNumber,
+            String episodeNumber) {
         String format = prefs.getString(SeriesGuidePreferences.KEY_NUMBERFORMAT,
                 SeriesGuidePreferences.NUMBERFORMAT_DEFAULT);
+        String result;
         if (format.equals(SeriesGuidePreferences.NUMBERFORMAT_DEFAULT)) {
             // 1x01 format
-            season += "x";
+            result = seasonNumber + "x";
         } else {
             // S01E01 format
             // make season number always two chars long
-            if (season.length() == 1) {
-                season = "0" + season;
+            if (seasonNumber.length() == 1) {
+                seasonNumber = "0" + seasonNumber;
             }
-            if (format.equals(SeriesGuidePreferences.NUMBERFORMAT_ENGLISHLOWER))
-                season = "s" + season + "e";
-            else
-                season = "S" + season + "E";
+            if (format.equals(SeriesGuidePreferences.NUMBERFORMAT_ENGLISHLOWER)) {
+                result = "s" + seasonNumber + "e";
+            } else {
+                result = "S" + seasonNumber + "E";
+            }
         }
 
         // make episode number always two chars long
-        if (episode.length() == 1) {
-            season += "0";
+        if (episodeNumber.length() == 1) {
+            result += "0";
         }
 
-        season += episode;
-        return season;
+        result += episodeNumber;
+        return result;
     }
 
     /**
@@ -718,20 +721,19 @@ public class Utils {
     }
 
     /**
-     * Put the TVDb season string in, get a full 'Season X' or 'Special
+     * Put the TVDb season number in, get a full 'Season X' or 'Special
      * Episodes' string out.
      * 
      * @param context
-     * @param season
+     * @param seasonNumber
      * @return
      */
-    public static String getSeasonString(Context context, String season) {
-        if (season.equals("0") || season.length() == 0) {
-            season = context.getString(R.string.specialseason);
+    public static String getSeasonString(Context context, int seasonNumber) {
+        if (seasonNumber == 0) {
+            return context.getString(R.string.specialseason);
         } else {
-            season = context.getString(R.string.season) + " " + season;
+            return context.getString(R.string.season) + " " + seasonNumber;
         }
-        return season;
     }
 
     /**

@@ -72,12 +72,27 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     protected int mEpisodeNumber;
 
-    public static EpisodeDetailsFragment newInstance(String episodeId, boolean isShowingPoster) {
+    /**
+     * Data which has to be passed when creating this fragment.
+     */
+    public interface InitBundle {
+        /**
+         * Integer extra.
+         */
+        String EPISODE_TVDBID = "episode_tvdbid";
+
+        /**
+         * Boolean extra.
+         */
+        String IS_POSTERBACKGROUND = "showposter";
+    }
+
+    public static EpisodeDetailsFragment newInstance(int episodeId, boolean isShowingPoster) {
         EpisodeDetailsFragment f = new EpisodeDetailsFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
-        args.putString(Episodes._ID, episodeId);
+        args.putInt(InitBundle.EPISODE_TVDBID, episodeId);
         args.putBoolean("showposter", isShowingPoster);
         f.setArguments(args);
 
@@ -446,8 +461,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         setListAdapter(mAdapter);
     }
 
-    public String getEpisodeId() {
-        return getArguments().getString(Episodes._ID);
+    public int getEpisodeId() {
+        return getArguments().getInt(InitBundle.EPISODE_TVDBID);
     }
 
     protected void onLoadImage(String imagePath, FrameLayout container) {
@@ -459,14 +474,14 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     private void onToggleWatched() {
         mWatched = !mWatched;
-        DBUtils.markEpisode(getActivity(), getEpisodeId(), mWatched);
+        DBUtils.markEpisode(getActivity(), String.valueOf(getEpisodeId()), mWatched);
         DBUtils.markSeenOnTrakt(getActivity(), mShowId, mSeasonNumber, mEpisodeNumber, mWatched);
         getLoaderManager().restartLoader(EPISODE_LOADER, null, this);
     }
 
     private void onToggleCollected() {
         mCollected = !mCollected;
-        DBUtils.collectEpisode(getActivity(), getEpisodeId(), mCollected);
+        DBUtils.collectEpisode(getActivity(), String.valueOf(getEpisodeId()), mCollected);
         DBUtils.markCollectedOnTrakt(getActivity(), mShowId, mSeasonNumber, mEpisodeNumber,
                 mCollected);
         getLoaderManager().restartLoader(EPISODE_LOADER, null, this);
@@ -525,8 +540,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-        return new CursorLoader(getActivity(), Episodes.buildEpisodeWithShowUri(getEpisodeId()),
-                EpisodeDetailsQuery.PROJECTION, null, null, null);
+        return new CursorLoader(getActivity(), Episodes.buildEpisodeWithShowUri(String
+                .valueOf(getEpisodeId())), EpisodeDetailsQuery.PROJECTION, null, null, null);
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {

@@ -176,16 +176,15 @@ public class UpcomingFragment extends ListFragment implements
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        showDetails(String.valueOf(id));
+        showDetails((int) id);
     }
 
-    private void showDetails(String episodeId) {
+    private void showDetails(int episodeId) {
         if (mDualPane) {
             // Check if fragment is shown, create new if needed.
             EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
                     .findFragmentById(R.id.fragment_details);
-            if (detailsFragment == null
-                    || !detailsFragment.getEpisodeId().equalsIgnoreCase(episodeId)) {
+            if (detailsFragment == null || detailsFragment.getEpisodeId() != episodeId) {
                 // Make new fragment to show this selection.
                 detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true);
 
@@ -200,7 +199,7 @@ public class UpcomingFragment extends ListFragment implements
         } else {
             Intent intent = new Intent();
             intent.setClass(getActivity(), EpisodeDetailsActivity.class);
-            intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_ID, episodeId);
+            intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, episodeId);
             startActivity(intent);
         }
     }

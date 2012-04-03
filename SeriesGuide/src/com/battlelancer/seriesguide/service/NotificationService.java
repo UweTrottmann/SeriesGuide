@@ -124,8 +124,8 @@ public class NotificationService extends IntentService {
                 contentText = getString(R.string.upcoming_show_detailed, airs, network);
 
                 Intent notificationIntent = new Intent(context, EpisodeDetailsActivity.class);
-                notificationIntent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_ID,
-                        upcomingEpisodes.getString(NotificationQuery._ID));
+                notificationIntent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID,
+                        upcomingEpisodes.getInt(NotificationQuery._ID));
                 contentIntent = PendingIntent.getActivity(context, 2, notificationIntent, 0);
 
                 String posterPath = upcomingEpisodes.getString(NotificationQuery.POSTER);

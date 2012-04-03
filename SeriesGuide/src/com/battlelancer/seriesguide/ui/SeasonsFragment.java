@@ -11,7 +11,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.Utils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -57,8 +56,11 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     private SimpleCursorAdapter mAdapter;
 
+    /**
+     * All values have to be integer.
+     */
     public interface InitBundle {
-        String SHOW_TVDBID = "tvdbid";
+        String SHOW_TVDBID = "show_tvdbid";
     }
 
     public static SeasonsFragment newInstance(int showId) {
@@ -176,12 +178,11 @@ public class SeasonsFragment extends SherlockListFragment implements
     public void onListItemClick(ListView l, View v, int position, long id) {
         Intent intent = new Intent(getActivity(), EpisodesActivity.class);
 
-        Cursor item = (Cursor) (getListView().getItemAtPosition(position));
-        String season = item.getString(item.getColumnIndexOrThrow(Seasons.COMBINED));
-        season = Utils.getSeasonString(getActivity(), season);
-        intent.putExtra(EpisodesActivity.InitBundle.SEASON_TITLE, season);
-        intent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, (int) id);
+        final Cursor item = (Cursor) (getListView().getItemAtPosition(position));
+        final int seasonNumber = item.getInt(SeasonsQuery.COMBINED);
         intent.putExtra(EpisodesActivity.InitBundle.SHOW_TVDBID, getShowId());
+        intent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, (int) id);
+        intent.putExtra(EpisodesActivity.InitBundle.SEASON_NUMBER, seasonNumber);
 
         startActivity(intent);
     }

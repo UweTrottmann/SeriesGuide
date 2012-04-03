@@ -87,8 +87,11 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
     private int mEpisodeNumber;
 
+    /**
+     * All values have to be integer.
+     */
     public interface InitBundle {
-        String SHOW_TVDBID = "tvdbid";
+        String SHOW_TVDBID = "show_tvdbid";
     }
 
     public void fireTrackerEvent(String label) {

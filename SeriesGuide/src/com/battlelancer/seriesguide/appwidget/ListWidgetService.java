@@ -106,8 +106,8 @@ public class ListWidgetService extends RemoteViewsService {
 
             // Set the fill-in intent for the list items
             Bundle extras = new Bundle();
-            extras.putString(EpisodeDetailsActivity.InitBundle.EPISODE_ID,
-                    mUpcomingEpisodes.getString(UpcomingQuery._ID));
+            extras.putInt(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID,
+                    mUpcomingEpisodes.getInt(UpcomingQuery._ID));
             Intent fillInIntent = new Intent();
             fillInIntent.putExtras(extras);
             rv.setOnClickFillInIntent(R.id.appwidget_row, fillInIntent);
