@@ -54,16 +54,9 @@ public class ShareUtils {
     protected static final String TAG = "ShareUtils";
 
     public enum ShareMethod {
-        // first three kept for compatibility reasons
-        CHECKIN_GETGLUE(0, 0, 0),
+        RATE_TRAKT(0, R.string.menu_rate_trakt, R.drawable.trakt_love_large),
 
-        CHECKIN_TRAKT(1, 0, 0),
-
-        MARKSEEN_TRAKT(2, 0, 0),
-
-        RATE_TRAKT(3, R.string.menu_rate_trakt, R.drawable.trakt_love_large),
-
-        OTHER_SERVICES(4, R.string.menu_share_others, R.drawable.ic_action_share);
+        OTHER_SERVICES(1, R.string.menu_share_others, R.drawable.ic_action_share);
 
         ShareMethod(int index, int titleRes, int drawableRes) {
             this.index = index;
@@ -111,11 +104,6 @@ public class ShareUtils {
     public static void onShareEpisode(FragmentActivity activity, Bundle args,
             ShareMethod shareMethod, OnTraktActionCompleteListener listener) {
         final FragmentManager fm = activity.getSupportFragmentManager();
-
-        // save used share method for the quick share button
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-        prefs.edit().putInt(SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, shareMethod.index)
-                .commit();
 
         switch (shareMethod) {
             case RATE_TRAKT: {

@@ -40,7 +40,6 @@ import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -49,7 +48,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -177,36 +175,13 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.overview_menu, menu);
-
-        // use an appropriate quick share button
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getSherlockActivity());
-        int lastShareAction = prefs.getInt(SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
-
-        MenuItem shareAction = menu.findItem(R.id.menu_quickshare);
-        if (lastShareAction > 2) {
-            ShareMethod shareMethod = ShareMethod.values()[lastShareAction];
-            shareAction.setTitle(shareMethod.titleRes);
-            shareAction.setIcon(shareMethod.drawableRes);
-        } else {
-            shareAction.setEnabled(false);
-            shareAction.setVisible(false);
-        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_quickshare: {
-                final SharedPreferences prefs = PreferenceManager
-                        .getDefaultSharedPreferences(getActivity());
-                int shareMethodIndex = prefs.getInt(
-                        SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
-                ShareMethod shareMethod = ShareMethod.values()[shareMethodIndex];
-
-                fireTrackerEvent("Quick share (" + shareMethod.name() + ")");
-
-                onShareEpisode(shareMethod, false);
+            case R.id.menu_search: {
+                getActivity().onSearchRequested();
                 return true;
             }
             case R.id.menu_rate_trakt: {
@@ -214,13 +189,9 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 onShareEpisode(ShareMethod.RATE_TRAKT, true);
                 return true;
             }
-            case R.id.menu_share_others: {
+            case R.id.menu_share: {
                 fireTrackerEvent("Share (apps)");
                 onShareEpisode(ShareMethod.OTHER_SERVICES, true);
-                return true;
-            }
-            case R.id.menu_search: {
-                getActivity().onSearchRequested();
                 return true;
             }
         }

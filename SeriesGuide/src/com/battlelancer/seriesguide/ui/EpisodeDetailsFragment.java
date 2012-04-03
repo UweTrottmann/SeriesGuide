@@ -22,7 +22,6 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -30,7 +29,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -151,43 +149,17 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.episodedetails_menu, menu);
-
-        // use an appropriate quick share button
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        int lastShareAction = prefs.getInt(SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
-
-        MenuItem shareAction = menu.findItem(R.id.menu_quickshare);
-        if (lastShareAction > 2) {
-            ShareMethod shareMethod = ShareMethod.values()[lastShareAction];
-            shareAction.setTitle(shareMethod.titleRes);
-            shareAction.setIcon(shareMethod.drawableRes);
-        } else {
-            shareAction.setEnabled(false);
-            shareAction.setVisible(false);
-        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_quickshare: {
-                final SharedPreferences prefs = PreferenceManager
-                        .getDefaultSharedPreferences(getActivity());
-                int shareMethodIndex = prefs.getInt(
-                        SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
-                ShareMethod shareMethod = ShareMethod.values()[shareMethodIndex];
-
-                fireTrackerEvent("Quick share (" + shareMethod.name() + ")");
-
-                onShareEpisode(shareMethod, false);
-                return true;
-            }
             case R.id.menu_rate_trakt: {
                 fireTrackerEvent("Rate (trakt)");
                 onShareEpisode(ShareMethod.RATE_TRAKT, true);
                 return true;
             }
-            case R.id.menu_share_others: {
+            case R.id.menu_share: {
                 fireTrackerEvent("Share (apps)");
                 onShareEpisode(ShareMethod.OTHER_SERVICES, true);
                 return true;
