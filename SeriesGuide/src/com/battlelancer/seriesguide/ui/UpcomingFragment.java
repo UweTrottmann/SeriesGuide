@@ -134,15 +134,24 @@ public class UpcomingFragment extends ListFragment implements
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
-            case MARK_WATCHED_ID:
-                DBUtils.markEpisode(getActivity(), String.valueOf(info.id), true);
+            case MARK_WATCHED_ID: {
+                onMarkEpisode(info, true);
                 return true;
-
-            case MARK_UNWATCHED_ID:
-                DBUtils.markEpisode(getActivity(), String.valueOf(info.id), false);
+            }
+            case MARK_UNWATCHED_ID: {
+                onMarkEpisode(info, false);
                 return true;
+            }
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void onMarkEpisode(AdapterContextMenuInfo info, boolean isWatched) {
+        DBUtils.markEpisode(getActivity(), String.valueOf(info.id), isWatched);
+
+        Cursor items = (Cursor) mAdapter.getItem(info.position);
+        DBUtils.markSeenOnTrakt(getActivity(), items.getInt(UpcomingQuery.REF_SHOW_ID),
+                items.getInt(UpcomingQuery.SEASON), items.getInt(UpcomingQuery.NUMBER), isWatched);
     }
 
     private void setupAdapter() {
@@ -253,7 +262,7 @@ public class UpcomingFragment extends ListFragment implements
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
                 Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIREDMS, Shows.TITLE,
-                Shows.AIRSTIME, Shows.NETWORK, Shows.POSTER
+                Shows.AIRSTIME, Shows.NETWORK, Shows.POSTER, Shows.REF_SHOW_ID
         };
 
         String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND " + Shows.HIDDEN + "=?";
@@ -287,6 +296,8 @@ public class UpcomingFragment extends ListFragment implements
         int SHOW_NETWORK = 8;
 
         int SHOW_POSTER = 9;
+
+        int REF_SHOW_ID = 10;
     }
 
     private class SlowAdapter extends SimpleCursorAdapter {
