@@ -297,22 +297,50 @@ public class DBUtils {
             }
 
             protected void onPostExecute(Integer result) {
+                int message = 0;
+                switch (actiontype) {
+                    case WATCHED:
+                        if (isAdd) {
+                            message = R.string.trakt_seen;
+                        } else {
+                            message = R.string.trakt_notseen;
+                        }
+                        break;
+                    case LIBRARY:
+                        if (isAdd) {
+                            message = R.string.trakt_collected;
+                        } else {
+                            message = R.string.trakt_notcollected;
+                        }
+                        break;
+                }
+
+                int status = 0;
+                int duration = 0;
                 switch (result) {
                     case SUCCESS: {
-                        Toast.makeText(context, R.string.trakt_submitsuccess, Toast.LENGTH_SHORT)
-                                .show();
+                        status = R.string.trakt_submitsuccess;
+                        duration = Toast.LENGTH_SHORT;
                         break;
                     }
                     case FAILED: {
-                        Toast.makeText(context, R.string.trakt_submitfailed, Toast.LENGTH_LONG)
-                                .show();
+                        status = R.string.trakt_submitfailed;
+                        duration = Toast.LENGTH_LONG;
                         break;
                     }
                     case OFFLINE: {
-                        Toast.makeText(context, R.string.offline, Toast.LENGTH_LONG).show();
+                        status = R.string.offline;
+                        duration = Toast.LENGTH_LONG;
                         break;
                     }
                 }
+
+                final SharedPreferences prefs = PreferenceManager
+                        .getDefaultSharedPreferences(context);
+                final String number = Utils.getEpisodeNumber(prefs, season, episode);
+                Toast.makeText(context,
+                        context.getString(message, number) + " " + context.getString(status),
+                        duration).show();
             }
 
             private void fireTrackerEvent(String message) {
