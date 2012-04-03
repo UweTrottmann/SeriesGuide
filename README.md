@@ -3,7 +3,7 @@ SeriesGuide Show Manager
 
 This GitHub repository hosts the code for the Android app SeriesGuide.
 
-For more information have a look at http://seriesguide.uwetrottmann.com
+For more information have a look at http://seriesgui.de
 
 Branch structure
 ----------------
