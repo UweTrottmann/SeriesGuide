@@ -8,7 +8,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.EpisodesColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesContract.ShowsColumns;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.Utils;
 
 import android.app.SearchManager;
@@ -458,6 +457,13 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             query.append(" WHERE ");
             query.append("(").append(selection).append(")");
         }
+
+        // ordering
+        query.append(" ORDER BY ");
+        query.append(Shows.TITLE).append(" ASC,");
+        query.append(Episodes.SEASON).append(" ASC,");
+        query.append(Episodes.NUMBER).append(" ASC");
+
         // search for anything starting with the given search term
         selectionArgs[0] = "\"" + selectionArgs[0] + "*\"";
 
