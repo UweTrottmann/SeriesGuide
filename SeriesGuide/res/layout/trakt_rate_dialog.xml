@@ -14,9 +14,9 @@
         android:background="@drawable/list_selector_holo_dark"
         android:drawablePadding="4dp"
         android:drawableTop="@drawable/trakt_love_large"
-        android:paddingBottom="@dimen/default_padding"
-        android:paddingTop="@dimen/default_padding"
+        android:padding="@dimen/default_padding"
         android:text="@string/love"
+        android:textColor="@color/text_primary"
         android:textSize="@dimen/text_size_xmedium" >
     </Button>
 
@@ -28,9 +28,9 @@
         android:background="@drawable/list_selector_holo_dark"
         android:drawablePadding="4dp"
         android:drawableTop="@drawable/trakt_hate_large"
-        android:paddingBottom="@dimen/default_padding"
-        android:paddingTop="@dimen/default_padding"
+        android:padding="@dimen/default_padding"
         android:text="@string/hate"
+        android:textColor="@color/text_primary"
         android:textSize="@dimen/text_size_xmedium" >
     </Button>
 
