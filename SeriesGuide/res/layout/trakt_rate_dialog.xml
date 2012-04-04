@@ -10,22 +10,28 @@
         android:id="@+id/totallyninja"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="4dp"
         android:layout_weight="1"
+        android:background="@drawable/list_selector_holo_dark"
         android:drawablePadding="4dp"
         android:drawableTop="@drawable/trakt_love_large"
-        android:text="@string/love" >
+        android:paddingBottom="@dimen/default_padding"
+        android:paddingTop="@dimen/default_padding"
+        android:text="@string/love"
+        android:textSize="@dimen/text_size_xmedium" >
     </Button>
 
     <Button
         android:id="@+id/weaksauce"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
         android:layout_weight="1"
+        android:background="@drawable/list_selector_holo_dark"
         android:drawablePadding="4dp"
         android:drawableTop="@drawable/trakt_hate_large"
-        android:text="@string/hate" >
+        android:paddingBottom="@dimen/default_padding"
+        android:paddingTop="@dimen/default_padding"
+        android:text="@string/hate"
+        android:textSize="@dimen/text_size_xmedium" >
     </Button>
 
 </LinearLayout>
