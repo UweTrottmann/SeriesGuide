@@ -124,12 +124,12 @@ public class AppWidget extends AppWidgetProvider {
 
                     RemoteViews item = new RemoteViews(context.getPackageName(), itemLayout);
                     // upcoming episode
-                    String season = upcomingEpisodes.getString(UpcomingQuery.SEASON);
-                    String number = upcomingEpisodes.getString(UpcomingQuery.NUMBER);
+                    int seasonNumber = upcomingEpisodes.getInt(UpcomingQuery.SEASON);
+                    int episodeNumber = upcomingEpisodes.getInt(UpcomingQuery.NUMBER);
                     String title = upcomingEpisodes.getString(UpcomingQuery.TITLE);
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
                     item.setTextViewText(R.id.textViewWidgetEpisode,
-                            Utils.getNextEpisodeString(prefs, season, number, title));
+                            Utils.getNextEpisodeString(prefs, seasonNumber, episodeNumber, title));
 
                     // relative airtime
                     long airtime = upcomingEpisodes.getLong(UpcomingQuery.FIRSTAIREDMS);

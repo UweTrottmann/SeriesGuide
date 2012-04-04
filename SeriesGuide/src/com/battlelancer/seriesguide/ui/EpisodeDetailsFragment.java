@@ -22,7 +22,6 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -30,7 +29,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -66,12 +64,33 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     protected boolean mCollected;
 
-    public static EpisodeDetailsFragment newInstance(String episodeId, boolean isShowingPoster) {
+    protected int mShowId;
+
+    protected int mSeasonNumber;
+
+    protected int mEpisodeNumber;
+
+    /**
+     * Data which has to be passed when creating this fragment.
+     */
+    public interface InitBundle {
+        /**
+         * Integer extra.
+         */
+        String EPISODE_TVDBID = "episode_tvdbid";
+
+        /**
+         * Boolean extra.
+         */
+        String IS_POSTERBACKGROUND = "showposter";
+    }
+
+    public static EpisodeDetailsFragment newInstance(int episodeId, boolean isShowingPoster) {
         EpisodeDetailsFragment f = new EpisodeDetailsFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
-        args.putString(Episodes._ID, episodeId);
+        args.putInt(InitBundle.EPISODE_TVDBID, episodeId);
         args.putBoolean("showposter", isShowingPoster);
         f.setArguments(args);
 
@@ -130,48 +149,17 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.episodedetails_menu, menu);
-
-        // use an appropriate quick share button
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        int lastShareAction = prefs.getInt(SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
-
-        MenuItem shareAction = menu.findItem(R.id.menu_quickshare);
-        if (lastShareAction > 1) {
-            ShareMethod shareMethod = ShareMethod.values()[lastShareAction];
-            shareAction.setTitle(shareMethod.titleRes);
-            shareAction.setIcon(shareMethod.drawableRes);
-        } else {
-            shareAction.setEnabled(false);
-            shareAction.setVisible(false);
-        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_quickshare: {
-                final SharedPreferences prefs = PreferenceManager
-                        .getDefaultSharedPreferences(getActivity());
-                int shareMethodIndex = prefs.getInt(
-                        SeriesGuidePreferences.KEY_LAST_USED_SHARE_METHOD, -1);
-                ShareMethod shareMethod = ShareMethod.values()[shareMethodIndex];
-
-                fireTrackerEvent("Quick share (" + shareMethod.name() + ")");
-
-                onShareEpisode(shareMethod, false);
-                return true;
-            }
-            case R.id.menu_markseen_trakt: {
-                fireTrackerEvent("Mark seen (trakt)");
-                onShareEpisode(ShareMethod.MARKSEEN_TRAKT, true);
-                return true;
-            }
             case R.id.menu_rate_trakt: {
                 fireTrackerEvent("Rate (trakt)");
                 onShareEpisode(ShareMethod.RATE_TRAKT, true);
                 return true;
             }
-            case R.id.menu_share_others: {
+            case R.id.menu_share: {
                 fireTrackerEvent("Share (apps)");
                 onShareEpisode(ShareMethod.OTHER_SERVICES, true);
                 return true;
@@ -368,11 +356,11 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.REF_SHOW_ID) {
-                    final int showTvdbid = episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID);
+                    mShowId = episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID);
                     final String seasonTvdbid = episode
                             .getString(EpisodeDetailsQuery.REF_SEASON_ID);
-                    final int seasonNumber = episode.getInt(EpisodeDetailsQuery.SEASON);
-                    final int episodeNumber = episode.getInt(EpisodeDetailsQuery.NUMBER);
+                    mSeasonNumber = episode.getInt(EpisodeDetailsQuery.SEASON);
+                    mEpisodeNumber = episode.getInt(EpisodeDetailsQuery.NUMBER);
                     final String episodeString = ShareUtils.onCreateShareString(
                             getSherlockActivity(), episode);
 
@@ -382,7 +370,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         @Override
                         public void onClick(View v) {
                             Intent i = new Intent(Intent.ACTION_VIEW, Uri
-                                    .parse(Constants.TVDB_EPISODE_URL_1 + showTvdbid
+                                    .parse(Constants.TVDB_EPISODE_URL_1 + mShowId
                                             + Constants.TVDB_EPISODE_URL_2 + seasonTvdbid
                                             + Constants.TVDB_EPISODE_URL_3 + getEpisodeId()));
                             startActivity(i);
@@ -397,14 +385,14 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                             // see if we are attached to a single-pane activity
                             if (getSherlockActivity() instanceof EpisodeDetailsActivity) {
                                 Intent intent = new Intent(getActivity(), TraktShoutsActivity.class);
-                                intent.putExtras(TraktShoutsActivity.createInitBundle(showTvdbid,
-                                        seasonNumber, episodeNumber, episodeTitle));
+                                intent.putExtras(TraktShoutsActivity.createInitBundle(mShowId,
+                                        mSeasonNumber, mEpisodeNumber, episodeTitle));
                                 startActivity(intent);
                             } else {
                                 // in a multi-pane layout show the shouts in a
                                 // dialog
                                 TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
-                                        episodeTitle, showTvdbid, seasonNumber, episodeNumber);
+                                        episodeTitle, mShowId, mSeasonNumber, mEpisodeNumber);
 
                                 newFragment.show(getFragmentManager(), "shouts-dialog");
                             }
@@ -418,7 +406,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         public void onClick(View v) {
                             // display a check-in dialog
                             CheckInDialogFragment f = CheckInDialogFragment.newInstance(showImdbid,
-                                    showTvdbid, seasonNumber, episodeNumber, episodeString);
+                                    mShowId, mSeasonNumber, mEpisodeNumber, episodeString);
                             f.show(getFragmentManager(), "checkin-dialog");
                         }
                     });
@@ -445,8 +433,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         setListAdapter(mAdapter);
     }
 
-    public String getEpisodeId() {
-        return getArguments().getString(Episodes._ID);
+    public int getEpisodeId() {
+        return getArguments().getInt(InitBundle.EPISODE_TVDBID);
     }
 
     protected void onLoadImage(String imagePath, FrameLayout container) {
@@ -458,13 +446,16 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     private void onToggleWatched() {
         mWatched = !mWatched;
-        DBUtils.markEpisode(getActivity(), getEpisodeId(), mWatched);
+        DBUtils.markEpisode(getActivity(), String.valueOf(getEpisodeId()), mWatched);
+        DBUtils.markSeenOnTrakt(getActivity(), mShowId, mSeasonNumber, mEpisodeNumber, mWatched);
         getLoaderManager().restartLoader(EPISODE_LOADER, null, this);
     }
 
     private void onToggleCollected() {
         mCollected = !mCollected;
-        DBUtils.collectEpisode(getActivity(), getEpisodeId(), mCollected);
+        DBUtils.collectEpisode(getActivity(), String.valueOf(getEpisodeId()), mCollected);
+        DBUtils.markCollectedOnTrakt(getActivity(), mShowId, mSeasonNumber, mEpisodeNumber,
+                mCollected);
         getLoaderManager().restartLoader(EPISODE_LOADER, null, this);
     }
 
@@ -521,8 +512,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-        return new CursorLoader(getActivity(), Episodes.buildEpisodeWithShowUri(getEpisodeId()),
-                EpisodeDetailsQuery.PROJECTION, null, null, null);
+        return new CursorLoader(getActivity(), Episodes.buildEpisodeWithShowUri(String
+                .valueOf(getEpisodeId())), EpisodeDetailsQuery.PROJECTION, null, null, null);
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {

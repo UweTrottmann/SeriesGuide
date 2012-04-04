@@ -451,42 +451,45 @@ public class Utils {
      * Returns a string in format "1x01 title" or "S1E01 title" dependent on a
      * user preference.
      */
-    public static String getNextEpisodeString(SharedPreferences prefs, String season,
-            String episode, String title) {
-        season = getEpisodeNumber(prefs, season, episode);
-        season += " " + title;
-        return season;
+    public static String getNextEpisodeString(SharedPreferences prefs, int season, int episode,
+            String title) {
+        String result = getEpisodeNumber(prefs, season, episode);
+        result += " " + title;
+        return result;
     }
 
     /**
      * Returns the episode number formatted according to the users preference
      * (e.g. '1x01', 'S01E01', ...).
      */
-    public static String getEpisodeNumber(SharedPreferences prefs, String season, String episode) {
+    public static String getEpisodeNumber(SharedPreferences prefs, int seasonNumber,
+            int episodeNumber) {
         String format = prefs.getString(SeriesGuidePreferences.KEY_NUMBERFORMAT,
                 SeriesGuidePreferences.NUMBERFORMAT_DEFAULT);
+        String result = String.valueOf(seasonNumber);
         if (format.equals(SeriesGuidePreferences.NUMBERFORMAT_DEFAULT)) {
             // 1x01 format
-            season += "x";
+            result += "x";
         } else {
             // S01E01 format
             // make season number always two chars long
-            if (season.length() == 1) {
-                season = "0" + season;
+            if (seasonNumber < 10) {
+                result = "0" + result;
             }
-            if (format.equals(SeriesGuidePreferences.NUMBERFORMAT_ENGLISHLOWER))
-                season = "s" + season + "e";
-            else
-                season = "S" + season + "E";
+            if (format.equals(SeriesGuidePreferences.NUMBERFORMAT_ENGLISHLOWER)) {
+                result = "s" + result + "e";
+            } else {
+                result = "S" + result + "E";
+            }
         }
 
         // make episode number always two chars long
-        if (episode.length() == 1) {
-            season += "0";
+        if (episodeNumber < 10) {
+            result += "0";
         }
 
-        season += episode;
-        return season;
+        result += episodeNumber;
+        return result;
     }
 
     /**
@@ -728,20 +731,19 @@ public class Utils {
     }
 
     /**
-     * Put the TVDb season string in, get a full 'Season X' or 'Special
+     * Put the TVDb season number in, get a full 'Season X' or 'Special
      * Episodes' string out.
      * 
      * @param context
-     * @param season
+     * @param seasonNumber
      * @return
      */
-    public static String getSeasonString(Context context, String season) {
-        if (season.equals("0") || season.length() == 0) {
-            season = context.getString(R.string.specialseason);
+    public static String getSeasonString(Context context, int seasonNumber) {
+        if (seasonNumber == 0) {
+            return context.getString(R.string.specialseason);
         } else {
-            season = context.getString(R.string.season) + " " + season;
+            return context.getString(R.string.season) + " " + seasonNumber;
         }
-        return season;
     }
 
     /**

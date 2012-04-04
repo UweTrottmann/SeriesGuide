@@ -2,29 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/menu_quickshare"
-        android:icon="@drawable/ic_action_share"
-        android:showAsAction="always"
-        android:title="@string/share_episode"/>
+        android:id="@+id/menu_rate_trakt"
+        android:icon="@drawable/trakt_love_large"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_rate_trakt"/>
     <item
-        android:id="@+id/menu_shareepisode"
-        android:icon="@drawable/ic_menu_share_holo_dark"
-        android:showAsAction="always"
-        android:title="@string/share_episode">
-        <menu>
-            <item
-                android:id="@+id/menu_markseen_trakt"
-                android:icon="@drawable/ic_trakt_seen"
-                android:title="@string/menu_markseen_trakt"/>
-            <item
-                android:id="@+id/menu_rate_trakt"
-                android:icon="@drawable/trakt_love_large"
-                android:title="@string/menu_rate_trakt"/>
-            <item
-                android:id="@+id/menu_share_others"
-                android:icon="@drawable/ic_action_share"
-                android:title="@string/menu_share_others"/>
-        </menu>
-    </item>
+        android:id="@+id/menu_share"
+        android:icon="@drawable/ic_action_share"
+        android:showAsAction="ifRoom"
+        android:title="@string/share_episode"/>
 
 </menu>

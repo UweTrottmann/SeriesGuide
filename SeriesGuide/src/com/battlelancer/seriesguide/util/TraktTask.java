@@ -2,7 +2,6 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktAction;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktCancelCheckinDialogFragment;
@@ -15,7 +14,6 @@ import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.jakewharton.trakt.services.ShowService.CheckinBuilder;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -210,23 +208,6 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     }
                     r = checkinBuilder.fire();
 
-                    break;
-                }
-                case SEEN_EPISODE: {
-                    manager.showService().episodeSeen(tvdbid).episode(season, episode).fire();
-                    r = new Response();
-                    r.status = TraktStatus.SUCCESS;
-                    r.message = mContext.getString(R.string.trakt_seen);
-
-                    // immediately mark episode as seen locally
-                    ContentValues values = new ContentValues();
-                    values.put(Episodes.WATCHED, true);
-                    mContext.getContentResolver().update(
-                            Episodes.buildEpisodesOfShowUri(String.valueOf(tvdbid)), values,
-                            Episodes.SEASON + "=? AND " + Episodes.NUMBER + "=?", new String[] {
-                                    String.valueOf(season), String.valueOf(episode)
-                            });
-                    mContext.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
                     break;
                 }
                 case RATE_EPISODE: {

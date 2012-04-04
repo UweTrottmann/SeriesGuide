@@ -72,6 +72,12 @@
     <string name="mark_untilhere">Watched all previously aired</string>
     <string name="collect">Collected episode</string>
     <string name="uncollect">Not yet collected episode</string>
+    <string name="trakt_submitfailed">Not submitted to trakt. Try again later.</string>
+    <string name="trakt_submitsuccess">Submitted to trakt.</string>
+    <string name="trakt_seen">%s seen.</string>
+    <string name="trakt_notseen">%s not seen.</string>
+    <string name="trakt_collected">%s collected.</string>
+    <string name="trakt_notcollected">%s not collected.</string>
 
     <!-- SeriesGuide mainscreen -->
     <string name="shows_empty">No shows here.</string>
@@ -286,7 +292,6 @@
     <string name="disconnect">Disconnect</string>
     <string name="trakt_success">trakt action successful</string>
     <string name="trakt_error">Interaction with trakt failed</string>
-    <string name="trakt_seen">marked as seen</string>
     <string name="trakt_decryptfail">password could not be decrypted</string>
     <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
     <string name="love">Totally ninja!</string>

@@ -111,9 +111,7 @@ public class TraktFriendsFragment extends ListFragment implements
                 // display the episode details if we have a match
                 episodeidquery.moveToFirst();
 
-                String episodeId;
-                episodeId = episodeidquery.getString(0);
-
+                int episodeId = episodeidquery.getInt(0);
                 showDetails(episodeId);
             } else {
                 // offer to add the show if it's not in the show database yet
@@ -128,13 +126,12 @@ public class TraktFriendsFragment extends ListFragment implements
         }
     }
 
-    private void showDetails(String episodeId) {
+    private void showDetails(int episodeId) {
         if (mDualPane) {
             // Check if fragment is shown, create new if needed.
             EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
                     .findFragmentById(R.id.fragment_details);
-            if (detailsFragment == null
-                    || !detailsFragment.getEpisodeId().equalsIgnoreCase(episodeId)) {
+            if (detailsFragment == null || detailsFragment.getEpisodeId() != episodeId) {
                 // Make new fragment to show this selection.
                 detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true);
 
@@ -148,7 +145,7 @@ public class TraktFriendsFragment extends ListFragment implements
         } else {
             Intent intent = new Intent();
             intent.setClass(getActivity(), EpisodeDetailsActivity.class);
-            intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_ID, episodeId);
+            intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, episodeId);
             startActivity(intent);
         }
     }
@@ -372,8 +369,7 @@ public class TraktFriendsFragment extends ListFragment implements
                     case Episode:
                         show = watching.show.title;
                         String episodenumber = Utils.getEpisodeNumber(mPrefs,
-                                String.valueOf(watching.episode.season),
-                                String.valueOf(watching.episode.number));
+                                watching.episode.season, watching.episode.number);
                         episode = episodenumber + " " + watching.episode.title;
                         timestamp = getContext().getString(R.string.now);
                         holder.timestamp.setTextColor(Color.RED);
@@ -393,8 +389,7 @@ public class TraktFriendsFragment extends ListFragment implements
                 if (latestShow != null) {
                     show = latestShow.show.title;
                     String episodenumber = Utils.getEpisodeNumber(mPrefs,
-                            String.valueOf(latestShow.episode.season),
-                            String.valueOf(latestShow.episode.number));
+                            latestShow.episode.season, latestShow.episode.number);
                     episode = episodenumber + " " + latestShow.episode.title;
                     timestamp = (String) DateUtils.getRelativeTimeSpanString(
                             latestShow.watched.getTime(), System.currentTimeMillis(),

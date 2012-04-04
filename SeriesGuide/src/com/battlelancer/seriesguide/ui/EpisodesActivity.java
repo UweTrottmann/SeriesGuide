@@ -42,12 +42,15 @@ public class EpisodesActivity extends BaseActivity {
 
     private ArrayList<Episode> mEpisodes;
 
+    /**
+     * All values have to be integer.
+     */
     public interface InitBundle {
-        String SHOW_TVDBID = "show_id";
+        String SHOW_TVDBID = "show_tvdbid";
 
-        String SEASON_TVDBID = "season_id";
+        String SEASON_TVDBID = "season_tvdbid";
 
-        String SEASON_TITLE = "season_title";
+        String SEASON_NUMBER = "season_number";
     }
 
     @Override
@@ -55,8 +58,8 @@ public class EpisodesActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.episodes_multipane);
 
-        final Series show = DBUtils.getShow(this,
-                String.valueOf(getIntent().getIntExtra(InitBundle.SHOW_TVDBID, 0)));
+        final int showId = getIntent().getIntExtra(InitBundle.SHOW_TVDBID, 0);
+        final Series show = DBUtils.getShow(this, String.valueOf(showId));
         final int seasonId = getIntent().getIntExtra(InitBundle.SEASON_TVDBID, 0);
         if (show == null || seasonId == 0) {
             finish();
@@ -67,10 +70,9 @@ public class EpisodesActivity extends BaseActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
         String showname = show.getSeriesName();
-        String seasonTitle = getIntent().getStringExtra(InitBundle.SEASON_TITLE);
-        if (seasonTitle == null) {
-            seasonTitle = "";
-        }
+
+        final int seasonNumber = getIntent().getIntExtra(InitBundle.SEASON_NUMBER, -1);
+        final String seasonTitle = Utils.getSeasonString(this, seasonNumber);
         setTitle(showname + " " + seasonTitle);
         actionBar.setTitle(showname);
         actionBar.setSubtitle(seasonTitle);
@@ -81,8 +83,7 @@ public class EpisodesActivity extends BaseActivity {
 
         // setup the episode list fragment
         if (savedInstanceState == null) {
-            mEpisodesFragment = EpisodesFragment.newInstance(seasonId);
-
+            mEpisodesFragment = EpisodesFragment.newInstance(showId, seasonId, seasonNumber);
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_episodes, mEpisodesFragment, "episodes").commit();
         } else {
@@ -111,24 +112,24 @@ public class EpisodesActivity extends BaseActivity {
             Cursor episodeCursor = getContentResolver().query(
                     Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(seasonId)),
                     new String[] {
-                            Episodes._ID, Episodes.NUMBER, Episodes.SEASON
+                            Episodes._ID, Episodes.NUMBER
                     }, null, null, sorting.query());
 
             mEpisodes = new ArrayList<Episode>();
             if (episodeCursor != null) {
                 while (episodeCursor.moveToNext()) {
                     Episode ep = new Episode();
-                    ep.setId(episodeCursor.getString(0));
-                    ep.setNumber(episodeCursor.getString(1));
-                    ep.setSeason(episodeCursor.getString(2));
+                    ep.episodeId = episodeCursor.getInt(0);
+                    ep.episodeNumber = episodeCursor.getInt(1);
+                    ep.seasonNumber = seasonNumber;
                     mEpisodes.add(ep);
                 }
             }
 
-            SharedPreferences prefs = PreferenceManager
+            final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(getApplicationContext());
-            mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), mEpisodes, prefs);
 
+            mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), mEpisodes, prefs);
             mPager = (ViewPager) pagerFragment;
             mPager.setAdapter(mAdapter);
 
@@ -186,12 +187,12 @@ public class EpisodesActivity extends BaseActivity {
      * 
      * @param episodeId
      */
-    public void onChangePage(String episodeId) {
+    public void onChangePage(int episodeId) {
         if (mDualPane) {
             // get the index of the given episode in the pager
             int i = 0;
             for (; i < mEpisodes.size(); i++) {
-                if (mEpisodes.get(i).getId().equalsIgnoreCase(episodeId)) {
+                if (mEpisodes.get(i).episodeId == episodeId) {
                     break;
                 }
             }
