@@ -3,17 +3,18 @@
 Changelog
 =========
 
-All dates are European Central timezone.
+All dates are in the European Central timezone.
 
 Version 2.6 *(in development)*
 --------------------------------
 
-* Exclusive SeriesGuide X feature: Notifications for favorite shows.
-* Display correct time for non-US users, fix summer time issues. (All shows will update as a result of this).
-* Unified check in dialog.
-* New 'collected' property for episodes.
-* Fix Auto-Update not working until first manual update.
-* Many minor improvements.
+* Exclusive SeriesGuide X feature: Notifications for favorite/starred shows.
+* Support for trakt.tv shouts
+* Unified trakt.tv and GetGlue check in dialog.
+* Mark episodes as 'collected' (e.g. if you got them on DVD, downloaded them, ...).
+* Marking single episodes as seen/collected is submitted to trakt if you setup your trakt account.
+* Search only through episodes inside a show in Overview.
+* Fixes, improvements and design refinements.
 
 ### Detailed changes:
 
