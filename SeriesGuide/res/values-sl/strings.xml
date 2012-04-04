@@ -10,14 +10,7 @@
   <string name="search_title">Ujemanje epizode</string>
   <string name="share_episode">Deli epizodo</string>
   <string name="share_checkout">Preveri</string>
-  <string name="episode_firstaired">datum predvajanja: </string>
   <string name="episode_dvdnumber">DVD epizoda</string>
-  <string name="show_actors">Igralci:</string>
-  <string name="show_firstaired">Prvič predvajana:</string>
-  <string name="show_genres">Zvrsti:</string>
-  <string name="rating">Ocena:</string>
-  <string name="episode_directors">Režiserji:</string>
-  <string name="episode_writers">Pisatelji:</string>
   <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Se nadaljuje...</string>
   <string name="show_isnotalive">Končala</string>

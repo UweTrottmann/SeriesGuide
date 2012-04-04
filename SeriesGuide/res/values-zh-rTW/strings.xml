@@ -15,17 +15,7 @@
   <string name="description_overview">簡介</string>
   <string name="norating">無</string>
   <string name="done">完成</string>
-  <string name="episode_firstaired">預定播出日:</string>
   <string name="episode_dvdnumber">DVD集數</string>
-  <string name="show_actors">演員:</string>
-  <string name="show_firstaired">首播日:</string>
-  <string name="show_genres">類型:</string>
-  <string name="rating">評價:</string>
-  <string name="show_runtime">片長：</string>
-  <string name="show_contentrating">內容評價：</string>
-  <string name="episode_directors">導演:</string>
-  <string name="episode_gueststars">客串:</string>
-  <string name="episode_writers">編劇：</string>
   <string name="show_airtimeunit">分</string>
   <string name="show_isalive">待續</string>
   <string name="show_isnotalive">已完結</string>
@@ -175,7 +165,6 @@
   <string name="email">電子信箱</string>
   <string name="password">密碼</string>
   <string name="trakt_error">與trakt的互動失敗</string>
-  <string name="trakt_seen">標示為已觀看</string>
   <string name="trakt_decryptfail">無法解密密碼</string>
   <string name="trakt_generalerror">發生錯誤。請檢查您的憑證並再試一次。</string>
   <string name="love">太讚啦!</string>

@@ -15,17 +15,7 @@
   <string name="description_overview">Visão geral</string>
   <string name="norating">n/a</string>
   <string name="done">Concluído</string>
-  <string name="episode_firstaired">Data de exibição:</string>
   <string name="episode_dvdnumber">Episódio de DVD</string>
-  <string name="show_actors">Actores:</string>
-  <string name="show_firstaired">Exibiu pela primeira vez:</string>
-  <string name="show_genres">Géneros:</string>
-  <string name="rating">Classificação:</string>
-  <string name="show_runtime">Duração:</string>
-  <string name="show_contentrating">Classificação de conteúdo:</string>
-  <string name="episode_directors">Directores:</string>
-  <string name="episode_gueststars">Estrelas convidadas:</string>
-  <string name="episode_writers">Escritores:</string>
   <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Em exibição</string>
   <string name="show_isnotalive">Terminou</string>

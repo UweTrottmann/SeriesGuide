@@ -15,17 +15,7 @@
   <string name="description_overview">Genel</string>
   <string name="norating">Geçersiz</string>
   <string name="done">Tamamlandı</string>
-  <string name="episode_firstaired">Tarih:</string>
   <string name="episode_dvdnumber">DVD Bölümü</string>
-  <string name="show_actors">Oyuncular:</string>
-  <string name="show_firstaired">Yayın Tarihi:</string>
-  <string name="show_genres">Tür:</string>
-  <string name="rating">Puan:</string>
-  <string name="show_runtime">Süre:</string>
-  <string name="show_contentrating">İçerik Derecesi:</string>
-  <string name="episode_directors">Yönetmenler:</string>
-  <string name="episode_gueststars">Konuk Oyuncular:</string>
-  <string name="episode_writers">Yazarlar:</string>
   <string name="show_airtimeunit">dk</string>
   <string name="show_isalive">Devam ediyor</string>
   <string name="show_isnotalive">Sona erdi</string>

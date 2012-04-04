@@ -25,17 +25,7 @@
   <string name="isspoiler">Varning för spoiler!</string>
   <string name="no_shouts">Bli först att ropa!</string>
   <string name="shouts_for">Rop för %s</string>
-  <string name="episode_firstaired">Sändningsdatum:</string>
   <string name="episode_dvdnumber">DVD-avsnitt</string>
-  <string name="show_actors">Skådespelare:</string>
-  <string name="show_firstaired">Sändes först:</string>
-  <string name="show_genres">Genrer:</string>
-  <string name="rating">Betyg:</string>
-  <string name="show_runtime">Längd:</string>
-  <string name="show_contentrating">Innehållsklassificering:</string>
-  <string name="episode_directors">Regissörer:</string>
-  <string name="episode_gueststars">Gästskådespelare:</string>
-  <string name="episode_writers">Författare:</string>
   <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Fortsätter</string>
   <string name="show_isnotalive">Avslutad</string>
@@ -206,7 +196,6 @@
   <string name="connect">Anslut</string>
   <string name="disconnect">Koppla ner</string>
   <string name="trakt_error">Interaktion med trakt misslyckades</string>
-  <string name="trakt_seen">markerat som sett</string>
   <string name="trakt_decryptfail">lösenordet kunde inte avkrypteras</string>
   <string name="trakt_generalerror">Någonting gick fel. Kontrollera dina uppgifter och försök igen.</string>
   <string name="love">Helt ninja!</string>

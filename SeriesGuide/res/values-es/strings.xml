@@ -15,17 +15,7 @@
   <string name="description_overview">Reseña</string>
   <string name="norating">n/a</string>
   <string name="done">Hecho</string>
-  <string name="episode_firstaired">Fecha de estreno:</string>
   <string name="episode_dvdnumber">Episodio de DVD</string>
-  <string name="show_actors">Actores:</string>
-  <string name="show_firstaired">Emitió por primera vez:</string>
-  <string name="show_genres">Géneros:</string>
-  <string name="rating">Valoración:</string>
-  <string name="show_runtime">Duración:</string>
-  <string name="show_contentrating">Valoración de contenido:</string>
-  <string name="episode_directors">Directores:</string>
-  <string name="episode_gueststars">Artistas invitados:</string>
-  <string name="episode_writers">Escritores:</string>
   <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Continuando</string>
   <string name="show_isnotalive">Terminó</string>
@@ -133,7 +123,6 @@
   <string name="email">Correo electrónico</string>
   <string name="password">Contraseña</string>
   <string name="trakt_error">Interacción con trakt falló</string>
-  <string name="trakt_seen">marcado como visto</string>
   <string name="trakt_decryptfail">no se pudo descifrar la contraseña</string>
   <string name="trakt_generalerror">Algo salió mal. Comprueba tus datos y prueba otra vez.</string>
   <string name="love">¡Una pasada!</string>

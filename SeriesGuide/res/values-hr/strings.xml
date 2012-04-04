@@ -15,17 +15,7 @@
   <string name="description_overview">Pregled</string>
   <string name="norating">nedostupno</string>
   <string name="done">Gotovo</string>
-  <string name="episode_firstaired">Datum prvog emitiranja:</string>
   <string name="episode_dvdnumber">DVD Epizoda</string>
-  <string name="show_actors">Glumci:</string>
-  <string name="show_firstaired">Prvi put emitirana:</string>
-  <string name="show_genres">Žanr:</string>
-  <string name="rating">Ocijena:</string>
-  <string name="show_runtime">Trajanje:</string>
-  <string name="show_contentrating">Ocjena sadržaja:</string>
-  <string name="episode_directors">Redatelji:</string>
-  <string name="episode_gueststars">Gostujući glumci:</string>
-  <string name="episode_writers">Scenaristi:</string>
   <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Nastavlja se</string>
   <string name="show_isnotalive">Završeno</string>
@@ -125,7 +115,6 @@
   <string name="email">Email</string>
   <string name="password">Lozinka</string>
   <string name="trakt_error">Komunikacija sa trakt.tv nije uspješna</string>
-  <string name="trakt_seen">Označeno kao pogledano</string>
   <string name="trakt_decryptfail">lozinka nemože biti dešifrirana</string>
   <string name="trakt_generalerror">Nešto je pošlo po krivu. Molimo provjerite podatke i pokušajte ponovno.</string>
   <string name="love">Odlično :)</string>

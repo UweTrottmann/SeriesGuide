@@ -16,17 +16,7 @@
   <string name="description_poster">Vis plakat</string>
   <string name="norating">n/a</string>
   <string name="done">Ferdig</string>
-  <string name="episode_firstaired">Sende dato:</string>
   <string name="episode_dvdnumber">DVD Episode</string>
-  <string name="show_actors">Skuespillere:</string>
-  <string name="show_firstaired">Først sendt:</string>
-  <string name="show_genres">Sjangere:</string>
-  <string name="rating">Vurdering:</string>
-  <string name="show_runtime">Lengde:</string>
-  <string name="show_contentrating">Sensur:</string>
-  <string name="episode_directors">Regissører:</string>
-  <string name="episode_gueststars">Gjeste stjerner:</string>
-  <string name="episode_writers">Forfattere:</string>
   <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Fortsetter</string>
   <string name="show_isnotalive">Avsluttet</string>
@@ -156,7 +146,6 @@
   <string name="connect">Koble til</string>
   <string name="disconnect">Koble fra</string>
   <string name="trakt_error">Interaksjonen med trakt mislyktes</string>
-  <string name="trakt_seen">markert som sett</string>
   <string name="trakt_decryptfail">passordet kunne ikke dekrypteres</string>
   <string name="trakt_generalerror">Noe gikk galt. Kontroller påloggingsinformasjonen og prøv på nytt.</string>
   <string name="love">Helt ninja!</string>

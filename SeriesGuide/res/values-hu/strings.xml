@@ -17,17 +17,7 @@
   <string name="loading">Betöltés…</string>
   <string name="sending">Küldés…</string>
   <string name="done">Kész</string>
-  <string name="episode_firstaired">Vetítés:</string>
   <string name="episode_dvdnumber">DVD epizód</string>
-  <string name="show_actors">Szereplők:</string>
-  <string name="show_firstaired">Első vetítés:</string>
-  <string name="show_genres">Műfajok:</string>
-  <string name="rating">Értékelés:</string>
-  <string name="show_runtime">Hossz:</string>
-  <string name="show_contentrating">Besorolás:</string>
-  <string name="episode_directors">Rendezők:</string>
-  <string name="episode_gueststars">Vendégszereplők:</string>
-  <string name="episode_writers">Írók:</string>
   <string name="show_airtimeunit">perc</string>
   <string name="show_isalive">Még fut</string>
   <string name="show_isnotalive">Véget ért</string>
@@ -181,7 +171,6 @@
   <string name="email">E-mail</string>
   <string name="password">Jelszó</string>
   <string name="trakt_error">trakt.tv kapcsolódási hiba</string>
-  <string name="trakt_seen">látottként jelölt</string>
   <string name="trakt_decryptfail">jelszó dekódolása nem sikerült</string>
   <string name="trakt_generalerror">Hiba történt. Ellenőrizd a bejelentkezési adataid és próbáld újra!</string>
   <string name="love">Totally ninja!</string>

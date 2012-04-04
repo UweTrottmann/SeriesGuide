@@ -18,17 +18,7 @@
   <string name="loading">Carregando...</string>
   <string name="sending">Enviando...</string>
   <string name="done">Feito</string>
-  <string name="episode_firstaired">Data de exibição:</string>
   <string name="episode_dvdnumber">Episódio de DVD</string>
-  <string name="show_actors">Atores:</string>
-  <string name="show_firstaired">Primeira Exibição:</string>
-  <string name="show_genres">Gêneros:</string>
-  <string name="rating">Avaliação:</string>
-  <string name="show_runtime">Duração:</string>
-  <string name="show_contentrating">Classificação:</string>
-  <string name="episode_directors">Diretores:</string>
-  <string name="episode_gueststars">Estrelas Convidadas:</string>
-  <string name="episode_writers">Autores:</string>
   <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Em exibição</string>
   <string name="show_isnotalive">Finalizada</string>
@@ -199,7 +189,6 @@
   <string name="connect">Conecte-se</string>
   <string name="disconnect">Desconectar-se</string>
   <string name="trakt_error">Interação com o trakt falhou</string>
-  <string name="trakt_seen">marcar como visto</string>
   <string name="trakt_decryptfail">senha não pode ser descriptografada</string>
   <string name="trakt_generalerror">Algo deu errado. Por favor, verifique suas credenciais e tente novamente.</string>
   <string name="love">Muito Bom!</string>

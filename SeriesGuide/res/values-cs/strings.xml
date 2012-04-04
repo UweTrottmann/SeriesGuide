@@ -14,17 +14,7 @@
   <string name="description_overview">Přehled</string>
   <string name="norating">n/a</string>
   <string name="done">Hotovo</string>
-  <string name="episode_firstaired">Datum vysílání:</string>
   <string name="episode_dvdnumber">DVD epizody</string>
-  <string name="show_actors">Hrají:</string>
-  <string name="show_firstaired">Poprvé vysíláno:</string>
-  <string name="show_genres">Žánry:</string>
-  <string name="rating">Hodnocení:</string>
-  <string name="show_runtime">Délka:</string>
-  <string name="show_contentrating">Hodnocení obsahu:</string>
-  <string name="episode_directors">Režiséři:</string>
-  <string name="episode_gueststars">Hostující herci:</string>
-  <string name="episode_writers">Scénář:</string>
   <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Pokračuje</string>
   <string name="show_isnotalive">Ukončeno</string>

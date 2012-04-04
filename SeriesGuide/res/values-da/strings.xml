@@ -15,17 +15,7 @@
   <string name="description_overview">Oversigt</string>
   <string name="norating">ikke tilgængelig</string>
   <string name="done">Udført</string>
-  <string name="episode_firstaired">Sendt første gang:</string>
   <string name="episode_dvdnumber">DVD Episode</string>
-  <string name="show_actors">Skuespillere:</string>
-  <string name="show_firstaired">Sendt første gang:</string>
-  <string name="show_genres">Genrer:</string>
-  <string name="rating">Bedømmelse:</string>
-  <string name="show_runtime">Længde:</string>
-  <string name="show_contentrating">Indholdsklassifikation:</string>
-  <string name="episode_directors">Instruktører:</string>
-  <string name="episode_gueststars">Gæstestjerner:</string>
-  <string name="episode_writers">Forfattere:</string>
   <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Fortsætter</string>
   <string name="show_isnotalive">Afsluttet</string>
@@ -171,7 +161,6 @@
   <string name="email">Email</string>
   <string name="password">Adgangskode</string>
   <string name="trakt_error">Kommunikation med trakt mislykkedes</string>
-  <string name="trakt_seen">markér som set</string>
   <string name="trakt_decryptfail">Adgangskoden kunne ikke dekrypteres</string>
   <string name="trakt_generalerror">Noget gik galt. Tjek dit login-info og prøv igen.</string>
   <string name="love">Totalt ninja!</string>

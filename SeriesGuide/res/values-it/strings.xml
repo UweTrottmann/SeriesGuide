@@ -13,14 +13,7 @@
   <string name="share_checkout">Check-out</string>
   <string name="search_description">Episodi</string>
   <string name="done">Fatto</string>
-  <string name="episode_firstaired">Ora messa in onda:</string>
   <string name="episode_dvdnumber">Episodio su DVD</string>
-  <string name="show_actors">Attori:</string>
-  <string name="show_firstaired">Per la prima volta in onda:</string>
-  <string name="show_genres">Genere:</string>
-  <string name="rating">Valutazione:</string>
-  <string name="show_runtime">Durata:</string>
-  <string name="show_contentrating">Classificazione dei contenuti:</string>
   <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Continua</string>
   <string name="show_isnotalive">Conclusa</string>

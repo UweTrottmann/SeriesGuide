@@ -15,17 +15,7 @@
   <string name="description_overview">Общ преглед</string>
   <string name="norating">няма</string>
   <string name="done">Готово</string>
-  <string name="episode_firstaired">Дата на излизане</string>
   <string name="episode_dvdnumber">DVD Епизоди</string>
-  <string name="show_actors">Актьори:</string>
-  <string name="show_firstaired">Първоначална дата на излъчване:</string>
-  <string name="show_genres">Жанрове:</string>
-  <string name="rating">Рейтинг:</string>
-  <string name="show_runtime">Времетраене:</string>
-  <string name="show_contentrating">Оценка на съдържанието:</string>
-  <string name="episode_directors">Режисьори:</string>
-  <string name="episode_gueststars">Гост-звезди:</string>
-  <string name="episode_writers">Сценаристи:</string>
   <string name="show_airtimeunit">мин.</string>
   <string name="show_isalive">Продължение</string>
   <string name="show_isnotalive">Завършен</string>
@@ -165,7 +155,6 @@
   <string name="email">Електронна поща</string>
   <string name="password">Парола</string>
   <string name="trakt_error">Свързването с trakt е неуспешно</string>
-  <string name="trakt_seen">маркирай като гледан</string>
   <string name="trakt_decryptfail">паролата не може да се дешифрира</string>
   <string name="trakt_generalerror">Нещо се обърка. Моля проверете данните за достъп и опитайте отново.</string>
   <string name="love">Пълна нинджа!</string>

@@ -13,21 +13,19 @@
   <string name="share_checkout">Afmelden</string>
   <string name="search_description">Afleveringen</string>
   <string name="description_overview">Overzicht</string>
+  <string name="description_poster">Affiche weergeven</string>
   <string name="norating">n/a</string>
   <string name="loading">Laden…</string>
   <string name="sending">Verzenden…</string>
   <string name="done">Gereed</string>
-  <string name="episode_firstaired">Uitzenddatum:</string>
+  <string name="onlyx">Alleen beschikbaar in Series Guide X</string>
+  <string name="shouts">Shouts</string>
+  <string name="shout_hint">Voer een shout in (in het Engels)</string>
+  <string name="shout">Shout!</string>
+  <string name="isspoiler">Spoiler waarschuwing!</string>
+  <string name="no_shouts">Wees de eerste die shout!</string>
+  <string name="shouts_for">Shouts voor %s</string>
   <string name="episode_dvdnumber">DVD aflevering</string>
-  <string name="show_actors">Acteurs:</string>
-  <string name="show_firstaired">Eerste uitzending:</string>
-  <string name="show_genres">Genres:</string>
-  <string name="rating">Beoordeling:</string>
-  <string name="show_runtime">Duur:</string>
-  <string name="show_contentrating">Kijkwijzer:</string>
-  <string name="episode_directors">Regisseurs:</string>
-  <string name="episode_gueststars">Gastacteurs:</string>
-  <string name="episode_writers">Schrijvers:</string>
   <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Lopende serie</string>
   <string name="show_isnotalive">Afgelopen</string>
@@ -45,6 +43,8 @@
   <string name="mark_all">Alles bekeken</string>
   <string name="unmark_all">Niets bekeken</string>
   <string name="mark_untilhere">Alle eerder uitgezonden bekijken</string>
+  <string name="collect">Verzamelde aflevering</string>
+  <string name="uncollect">Nog niet verzamelde aflevering</string>
   <string name="shows_empty">Geen series.</string>
   <string name="confirm_delete">Dit programma werkelijk verwijderen?</string>
   <string name="delete_show">Verwijderen</string>
@@ -75,6 +75,7 @@
   <string name="update_success">Bijwerken succesvol voltooid.</string>
   <string name="update_offline">Bijwerken is mislukt, controleer de internet/Wi-Fi verbinding.</string>
   <string name="update_saxerror">Bijwerken is mislukt, probeer het later opnieuw.</string>
+  <string name="update_inprogress">Er wordt een update uitgevoerd, probeer het later opnieuw.</string>
   <string name="update_rebuildsearch">Zoeken afleveringen vernieuwen…</string>
   <string name="update_traktactivity">trakt activiteit laden…</string>
   <string name="menu_updateart">Affiches laden</string>
@@ -150,6 +151,8 @@
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Het gebruik van functies volgen om SeriesGuide te helpen te verbeteren</string>
   <string name="sendusagedata">Gebruikersstatistieken naar ontwikkelaar versturen</string>
+  <string name="pref_upcominglimit">Toekomstige series over…</string>
+  <string name="pref_upcominglimitsummary">Hoe ver in de toekomst de toekomstige series weergeven</string>
   <string name="backup_description"><b>Backup</b> maakt een kopie van het gegevensbestand in een bestand genaamd <b>seriesdatabase</b> in onderstaande map.\n\nWees er zeker van dat dit bestand in onderstaande map aanwezig is om te <b>Herstellen</b>.\n\nAlleen back-ups gemaakt met dezelfde of eerdere gegevensbestand versie als onderstaand kunnen worden hersteld.</string>
   <string name="backup_path"><b>Back-up map</b></string>
   <string name="backup_version"><b>Gegevensbestand versie</b></string>
@@ -179,6 +182,12 @@
   <string name="seasons">Seizoenen</string>
   <string name="cancel">Annuleren</string>
   <string name="share">Delen</string>
+  <string name="checkin">Aanmelden</string>
+  <string name="checkin_hint">Voer een bericht in (optioneel)</string>
+  <string name="paste_episode">Aflevering plakken</string>
+  <string name="checkinsuccess">GetGlue aanmelding succesvol.</string>
+  <string name="checkinfailed">GetGlue aanmelding mislukt. Probeer de GetGlue verbinding te verbreken.</string>
+  <string name="getglue_authfailed">GetGlue authenticatie mislukt. Probeer het later opnieuw.</string>
   <string name="menu_markseen_trakt">Bekeken markeren (trakt)</string>
   <string name="menu_rate_trakt">Beoordelen (trakt)</string>
   <string name="menu_share_others">Via andere apps</string>
@@ -191,8 +200,11 @@
   <string name="username">Gebruikersnaam</string>
   <string name="email">E-mail</string>
   <string name="password">Wachtwoord</string>
+  <string name="waitplease">Een ogenblok geduld a.u.b.…</string>
+  <string name="connect">Verbinden</string>
+  <string name="disconnect">Verbreken</string>
+  <string name="trakt_success">trakt actie succesvol</string>
   <string name="trakt_error">Communicatie met trakt is mislukt</string>
-  <string name="trakt_seen">als bekeken markeren</string>
   <string name="trakt_decryptfail">wachtwoord kon niet worden gedecodeerd</string>
   <string name="trakt_generalerror">Er ging iets fout. Controleer uw referenties en probeer het opnieuw.</string>
   <string name="love">Zeer goed!</string>
@@ -204,10 +216,19 @@
   <string name="trakt_syncunseen">Synchroniseren onbekeken afleveringen</string>
   <string name="welcome_message"><big>Aan de slag</big></string>
   <string name="welcome_text">Welkom!</string>
+  <string name="welcome_language">Selecteer de voorkeurstaal voor de inhoud:</string>
+  <string name="welcome_setuplanguage">Selecteer taal</string>
   <string name="welcome_setuptrakt">Verbinden met trakt</string>
   <string name="welcome_traktmessage">trakt.tv bibliotheek en vrienden activiteit benaderen met SeriesGuide:</string>
   <string name="dismiss">Afwijzen</string>
+  <string name="upcoming_show">%s verschijnt binnenkort</string>
+  <string name="upcoming_episodes">Nieuwe afleveringen verschijnen binnenkort</string>
+  <string name="upcoming_show_detailed">%1$s op %2$s</string>
+  <string name="upcoming_display">Selecteer om toekomstige series weer te geven</string>
+  <string name="pref_notifications">Meldingen</string>
+  <string name="pref_notificationssummary">Favoriete series die binnenkort worden uitgezonden melden</string>
   <string name="download_stable">SeriesGuide downloaden</string>
+  <string name="betawarning"><b>Let op!</b> Deze versie is uitsluitend voor beta testers! Bij twijfel de stabiele versie hieronder gebruiken.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Volgende aflevering</item>
@@ -228,11 +249,11 @@
     <item>Oudste eerst (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>a day</item>
-    <item>3 days</item>
-    <item>a week</item>
-    <item>two weeks</item>
-    <item>a month</item>
+    <item>een dag</item>
+    <item>3 dagen</item>
+    <item>een week</item>
+    <item>twee weken</item>
+    <item>een maand</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Alle</item>
@@ -240,4 +261,8 @@
     <item>Niet bekeken/Aankomende</item>
     <item>Verborgen</item>
   </string-array>
+  <plurals name="votes">
+    <item quantity="one">%d stem</item>
+    <item quantity="other">%d stemmen</item>
+  </plurals>
 </resources>

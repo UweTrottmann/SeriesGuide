@@ -15,17 +15,7 @@
   <string name="description_overview">Επισκόπηση</string>
   <string name="norating">n/a</string>
   <string name="done">Ολοκληρώθηκε</string>
-  <string name="episode_firstaired">Ημερομηνία πρώτης προβολής:</string>
   <string name="episode_dvdnumber">Επεισόδιο DVD</string>
-  <string name="show_actors">Ηθοποιοί:</string>
-  <string name="show_firstaired">Πρώτη προβολή:</string>
-  <string name="show_genres">Είδη:</string>
-  <string name="rating">Βαθμολογία:</string>
-  <string name="show_runtime">Διάρκεια:</string>
-  <string name="show_contentrating">Χαρακτηρισμός περιεχομένου:</string>
-  <string name="episode_directors">Σκηνοθέτες:</string>
-  <string name="episode_gueststars">Guest Stars:</string>
-  <string name="episode_writers">Συγγραφείς:</string>
   <string name="show_airtimeunit">λεπτά</string>
   <string name="show_isalive">Συνεχίζεται</string>
   <string name="show_isnotalive">Σταμάτησε</string>
