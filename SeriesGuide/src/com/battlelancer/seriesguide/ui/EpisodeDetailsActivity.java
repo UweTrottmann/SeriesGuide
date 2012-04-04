@@ -4,7 +4,7 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;

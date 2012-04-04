@@ -28,7 +28,7 @@ Version 2.6 *(in development)*
 
 * Rate and share shows.
 * Unified check in dialog.
-* New 'collected' property for episodes. Only on detail pages for now.
+* New 'collected' property for episodes. Only on detail pages for now. (Database upgrade!)
 * Inline button bar.
 * Fix Auto-Update not working until first manual update.
 * Crash fixes, other minor improvements and changes.
@@ -42,6 +42,7 @@ Version 2.6 *(in development)*
 * Content language chooser in welcome dialog.
 * Crash fixes, other minor improvements and changes.
 * Better offline handling.
+* Quick fix for jean-luc.
 
 #### 2.6.1beta (2012-03-15)
 
@@ -131,6 +132,7 @@ Version 2.5 *(2012-03-08)*
 * Don't use beta icon for stable release (only devices with extra high resolution displays were affected).
 * Hide text of some action bar buttons.
 * Support for 'Daily' air day.
+* Latest translations from crowdin, now with Arabic by mohd55 and Hungarian by devilinside.
 
 #### 2.5beta/2.5.1beta (2012-01-13):
  

@@ -1,7 +1,7 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktAction;
 import com.battlelancer.seriesguide.util.ShareUtils.TraktCancelCheckinDialogFragment;

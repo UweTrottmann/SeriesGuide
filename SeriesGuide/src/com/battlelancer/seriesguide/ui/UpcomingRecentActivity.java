@@ -5,7 +5,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.InitBundle;

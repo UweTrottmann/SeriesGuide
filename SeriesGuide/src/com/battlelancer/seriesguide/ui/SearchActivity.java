@@ -4,7 +4,7 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 
 import android.app.SearchManager;

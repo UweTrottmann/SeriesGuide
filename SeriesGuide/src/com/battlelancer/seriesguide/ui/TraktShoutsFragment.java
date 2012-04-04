@@ -2,7 +2,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
-import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
