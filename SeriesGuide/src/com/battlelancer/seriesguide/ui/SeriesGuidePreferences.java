@@ -87,9 +87,9 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_SHAREWITHGETGLUE = "com.battlelancer.seriesguide.sharewithgetglue";
 
-    public static final String SUPPORT_MAIL = "seriesguide@battlelancer.com";
+    public static final String SUPPORT_MAIL = "support@seriesgui.de";
 
-    public static final String HELP_URL = "http://seriesguide.uwetrottmann.com/help";
+    public static final String HELP_URL = "http://seriesgui.de/help";
 
     protected static final int ABOUT_DIALOG = 0;
 
