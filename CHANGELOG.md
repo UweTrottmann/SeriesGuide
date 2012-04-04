@@ -18,6 +18,11 @@ Version 2.6 *(in development)*
 
 ### Detailed changes:
 
+#### 2.6.6beta (2012-04-04)
+
+* Marking single episodes as seen/collected is submitted to trakt if you setup your trakt account.
+* Sort search results by show, season and episode.
+
 #### 2.6.5beta (2012-03-30)
 
 * Searching from overview lists only episodes of the displayed show (suggestions are still for all shows).
