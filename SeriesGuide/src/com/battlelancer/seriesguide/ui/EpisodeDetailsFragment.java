@@ -170,29 +170,30 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     private void onShareEpisode(ShareMethod shareMethod, boolean isInvalidateOptionsMenu) {
         final Cursor episode = (Cursor) getListAdapter().getItem(0);
-        episode.moveToFirst();
+        if (episode != null && episode.moveToFirst()) {
+            Bundle shareData = new Bundle();
+            String episodestring = ShareUtils.onCreateShareString(getActivity(), episode);
+            String sharestring = getString(R.string.share_checkout);
+            sharestring += " \"" + episode.getString(EpisodeDetailsQuery.SHOW_TITLE);
+            sharestring += " - " + episodestring + "\" via @SeriesGuide";
+            shareData.putString(ShareItems.EPISODESTRING, episodestring);
+            shareData.putString(ShareItems.SHARESTRING, sharestring);
+            shareData.putString(ShareItems.IMDBID,
+                    episode.getString(EpisodeDetailsQuery.SHOW_IMDBID));
+            shareData.putInt(ShareItems.EPISODE, episode.getInt(EpisodeDetailsQuery.NUMBER));
+            shareData.putInt(ShareItems.SEASON, episode.getInt(EpisodeDetailsQuery.SEASON));
+            shareData.putInt(ShareItems.TVDBID, episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID));
 
-        Bundle shareData = new Bundle();
-        String episodestring = ShareUtils.onCreateShareString(getActivity(), episode);
-        String sharestring = getString(R.string.share_checkout);
-        sharestring += " \"" + episode.getString(EpisodeDetailsQuery.SHOW_TITLE);
-        sharestring += " - " + episodestring + "\" via @SeriesGuide";
-        shareData.putString(ShareItems.EPISODESTRING, episodestring);
-        shareData.putString(ShareItems.SHARESTRING, sharestring);
-        shareData.putString(ShareItems.IMDBID, episode.getString(EpisodeDetailsQuery.SHOW_IMDBID));
-        shareData.putInt(ShareItems.EPISODE, episode.getInt(EpisodeDetailsQuery.NUMBER));
-        shareData.putInt(ShareItems.SEASON, episode.getInt(EpisodeDetailsQuery.SEASON));
-        shareData.putInt(ShareItems.TVDBID, episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID));
+            // don't close cursor!
+            // episode.close();
 
-        // don't close cursor!
-        // episode.close();
+            ShareUtils.onShareEpisode(getActivity(), shareData, shareMethod, null);
 
-        ShareUtils.onShareEpisode(getActivity(), shareData, shareMethod, null);
-
-        if (isInvalidateOptionsMenu) {
-            // invalidate the options menu so a potentially new
-            // quick share action is displayed
-            getSherlockActivity().invalidateOptionsMenu();
+            if (isInvalidateOptionsMenu) {
+                // invalidate the options menu so a potentially new
+                // quick share action is displayed
+                getSherlockActivity().invalidateOptionsMenu();
+            }
         }
     }
 
