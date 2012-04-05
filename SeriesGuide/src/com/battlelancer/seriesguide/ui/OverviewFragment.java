@@ -502,7 +502,11 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         // trakt rating
         mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView()).episode(getShowId(),
                 mSeasonNumber, mEpisodeNumber);
-        mTraktTask.execute();
+        if (Utils.isHoneycombOrHigher()) {
+            mTraktTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            mTraktTask.execute();
+        }
     }
 
     protected void onLoadImage(String imagePath) {

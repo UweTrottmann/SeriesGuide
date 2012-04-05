@@ -317,7 +317,11 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                             episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID),
                             episode.getInt(EpisodeDetailsQuery.SEASON),
                             episode.getInt(EpisodeDetailsQuery.NUMBER));
-                    mTraktTask.execute();
+                    if (Utils.isHoneycombOrHigher()) {
+                        mTraktTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    } else {
+                        mTraktTask.execute();
+                    }
 
                     return true;
                 }
