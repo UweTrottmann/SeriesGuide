@@ -192,8 +192,17 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
         } else {
             setListShown(false);
             getLoaderManager().initLoader(0, getArguments(), this);
+            mHandler.postDelayed(mUpdateShoutsRunnable, DateUtils.MINUTE_IN_MILLIS);
         }
     }
+
+    private Runnable mUpdateShoutsRunnable = new Runnable() {
+        @Override
+        public void run() {
+            getLoaderManager().restartLoader(0, getArguments(), TraktShoutsFragment.this);
+            mHandler.postDelayed(mUpdateShoutsRunnable, DateUtils.MINUTE_IN_MILLIS);
+        }
+    };
 
     /**
      * Detach from list view.
@@ -201,6 +210,7 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
     @Override
     public void onDestroyView() {
         mHandler.removeCallbacks(mRequestFocus);
+        mHandler.removeCallbacks(mUpdateShoutsRunnable);
         mList = null;
         mListShown = false;
         mEmptyView = mProgressContainer = mListContainer = null;
