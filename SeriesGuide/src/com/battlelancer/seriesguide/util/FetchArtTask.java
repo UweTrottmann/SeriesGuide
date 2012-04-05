@@ -41,6 +41,8 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
         if (mPath.length() == 0) {
             mContainer.setVisibility(View.GONE);
             return;
+        } else {
+            mContainer.setVisibility(View.VISIBLE);
         }
 
         mImageView = (ImageView) mContainer.findViewById(R.id.ImageViewEpisodeImage);
