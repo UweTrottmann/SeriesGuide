@@ -144,7 +144,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
     }
 
     @Override
-    protected void onCancelled(Ratings result) {
+    protected void onCancelled() {
         releaseReferences();
     }
 

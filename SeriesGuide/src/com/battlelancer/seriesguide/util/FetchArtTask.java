@@ -85,7 +85,7 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
     }
 
     @Override
-    protected void onCancelled(Bitmap result) {
+    protected void onCancelled() {
         releaseReferences();
     }
 
