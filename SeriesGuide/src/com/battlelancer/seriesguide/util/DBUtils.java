@@ -371,24 +371,41 @@ public class DBUtils {
     }
 
     /**
-     * Marks the next episode (if there is one) of this show as watched.
+     * Marks the next episode (if there is one) of the given show as watched.
+     * Submits it to trakt if possible.
      * 
-     * @param seriesid
+     * @param showId
      */
-    public static void markNextEpisode(Context context, long seriesid) {
+    public static void markNextEpisode(Context context, long showId) {
+        // get id of next episode
         Cursor show = context.getContentResolver().query(
-                Shows.buildShowUri(String.valueOf(seriesid)), new String[] {
+                Shows.buildShowUri(String.valueOf(showId)), new String[] {
                     Shows.NEXTEPISODE
                 }, null, null, null);
-        show.moveToFirst();
-        ContentValues values = new ContentValues();
-        values.put(Episodes.WATCHED, true);
-        String episodeid = show.getString(show.getColumnIndexOrThrow(Shows.NEXTEPISODE));
-        if (episodeid.length() != 0) {
-            context.getContentResolver().update(Episodes.buildEpisodeUri(episodeid), values, null,
-                    null);
+
+        if (show != null && show.moveToFirst()) {
+            final String episodeId = show.getString(0);
+            show.close();
+
+            if (episodeId.length() != 0) {
+                // mark it as watched
+                ContentValues values = new ContentValues();
+                values.put(Episodes.WATCHED, true);
+                context.getContentResolver().update(Episodes.buildEpisodeUri(episodeId), values,
+                        null, null);
+
+                // submit that to trakt
+                Cursor episode = context.getContentResolver().query(
+                        Episodes.buildEpisodeUri(episodeId), new String[] {
+                                Episodes.SEASON, Episodes.NUMBER, Shows.REF_SHOW_ID
+                        }, null, null, null);
+                if (episode != null && episode.moveToFirst()) {
+                    DBUtils.markSeenOnTrakt(context, episode.getInt(2), episode.getInt(0),
+                            episode.getInt(1), true);
+                    episode.close();
+                }
+            }
         }
-        show.close();
     }
 
     /**
