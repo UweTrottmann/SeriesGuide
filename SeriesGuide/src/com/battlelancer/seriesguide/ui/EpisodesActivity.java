@@ -20,6 +20,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
@@ -84,8 +85,13 @@ public class EpisodesActivity extends BaseActivity {
         // setup the episode list fragment
         if (savedInstanceState == null) {
             mEpisodesFragment = EpisodesFragment.newInstance(showId, seasonId, seasonNumber);
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_episodes, mEpisodesFragment, "episodes").commit();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            if (mDualPane) {
+                // only animate enter in a dual pane layout
+                ft.setCustomAnimations(R.anim.fragment_slide_left_enter,
+                        R.anim.fragment_slide_left_exit);
+            }
+            ft.add(R.id.fragment_episodes, mEpisodesFragment, "episodes").commit();
         } else {
             mEpisodesFragment = (EpisodesFragment) getSupportFragmentManager().findFragmentByTag(
                     "episodes");
@@ -200,5 +206,12 @@ public class EpisodesActivity extends BaseActivity {
             // switch to the page immediately
             mPager.setCurrentItem(i, false);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.fragment_slide_right_enter,
+                R.anim.fragment_slide_right_exit);
     }
 }

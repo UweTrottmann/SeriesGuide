@@ -183,8 +183,9 @@ public class SeasonsFragment extends SherlockListFragment implements
         intent.putExtra(EpisodesActivity.InitBundle.SHOW_TVDBID, getShowId());
         intent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, (int) id);
         intent.putExtra(EpisodesActivity.InitBundle.SEASON_NUMBER, seasonNumber);
-
         startActivity(intent);
+        getSherlockActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
+                R.anim.fragment_slide_left_exit);
     }
 
     private void fillData() {

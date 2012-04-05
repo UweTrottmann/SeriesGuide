@@ -124,6 +124,13 @@ public class EpisodeDetailsActivity extends BaseActivity {
         indicator.setViewPager(mPager, startPosition);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.fragment_slide_right_enter,
+                R.anim.fragment_slide_right_exit);
+    }
+
     public static class EpisodePagerAdapter extends FragmentStatePagerAdapter implements
             TitleProvider {
 

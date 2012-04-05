@@ -138,15 +138,17 @@ public class TraktFriendsFragment extends ListFragment implements
                 // Execute a transaction, replacing any existing
                 // fragment with this one inside the frame.
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_details, detailsFragment, "fragmentDetails");
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
+                ft.setCustomAnimations(R.anim.fragment_slide_right_enter,
+                        R.anim.fragment_slide_right_exit);
+                ft.replace(R.id.fragment_details, detailsFragment, "fragmentDetails").commit();
             }
         } else {
             Intent intent = new Intent();
             intent.setClass(getActivity(), EpisodeDetailsActivity.class);
             intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, episodeId);
             startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
+                    R.anim.fragment_slide_left_exit);
         }
     }
 

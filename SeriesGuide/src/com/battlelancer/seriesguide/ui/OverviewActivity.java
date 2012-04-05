@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 
 public class OverviewActivity extends BaseActivity {
 
@@ -27,8 +28,9 @@ public class OverviewActivity extends BaseActivity {
             mFragment = new OverviewFragment();
             mFragment.setArguments(getIntent().getExtras());
 
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_overview, mFragment).commit();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+            ft.replace(R.id.fragment_overview, mFragment).commit();
         }
     }
 
