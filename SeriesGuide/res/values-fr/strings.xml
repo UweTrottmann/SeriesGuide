@@ -35,6 +35,7 @@
   <string name="show_runtime">Durée</string>
   <string name="show_contentrating">Classification</string>
   <string name="episode_directors">Réalisateurs</string>
+  <string name="episode_gueststars">Invités exceptionnels</string>
   <string name="episode_writers">Scénaristes</string>
   <string name="show_airtimeunit">min</string>
   <string name="show_isalive">En cours</string>
@@ -53,6 +54,14 @@
   <string name="mark_all">Tous vus</string>
   <string name="unmark_all">Vus aucun</string>
   <string name="mark_untilhere">Précédemment diffusés déjà vus</string>
+  <string name="collect">Épisode collecté</string>
+  <string name="uncollect">Épisode pas encore collecté</string>
+  <string name="trakt_submitfailed">Envoi à trakt échoué. Essayez plus tard.</string>
+  <string name="trakt_submitsuccess">Envoyée à trakt.</string>
+  <string name="trakt_seen">%s vues.</string>
+  <string name="trakt_notseen">%s non vues.</string>
+  <string name="trakt_collected">%s rapatriées.</string>
+  <string name="trakt_notcollected">%s non rapatriées.</string>
   <string name="shows_empty">Pas de séries.</string>
   <string name="confirm_delete">Voulez-vous vraiment supprimer cette série?</string>
   <string name="delete_show">Supprimer</string>
@@ -149,7 +158,7 @@
   <string name="pref_trakt">Informations d\'identification de trakt.tv</string>
   <string name="pref_traktsummary">Ajouter ou modifier vos informations d\'identification sur trakt.tv</string>
   <string name="pref_traktsync">Synchroniser avec trakt.tv</string>
-  <string name="donate">Acheter un verre au dév (Paypal)</string>
+  <string name="donate">Offrir un verre au dév (Paypal)</string>
   <string name="feedback">Envoyez vos commentaires</string>
   <string name="pref_advanced">Avancés</string>
   <string name="clear_cache">Vider le cache d\'images</string>
@@ -190,10 +199,12 @@
   <string name="seasons">Saisons</string>
   <string name="cancel">Annuler</string>
   <string name="share">Partagez</string>
+  <string name="checkin">Check in</string>
   <string name="checkin_hint">Écrivez un message (optionnel)</string>
   <string name="paste_episode">Ancien épisode</string>
+  <string name="checkinsuccess">GetGlue Check-in successful.</string>
   <string name="checkinfailed">GetGlue Check-in a échoué. Essayer de déconnecter GetGlue.</string>
-  <string name="getglue_authfailed">GetGlue Check-in a échoué. Essayer de déconnecter GetGlue.</string>
+  <string name="getglue_authfailed">Authentification à GetGlue échouée. Réessayez plus tard.</string>
   <string name="menu_markseen_trakt">Marquer comme vu (trakt)</string>
   <string name="menu_rate_trakt">Noter (trakt)</string>
   <string name="menu_share_others">Via d\'autres applis</string>
@@ -207,8 +218,8 @@
   <string name="email">E-mail</string>
   <string name="password">Mot de passe</string>
   <string name="waitplease">Veuillez patienter...</string>
-  <string name="connect">Connecter</string>
-  <string name="disconnect">Déconnecter</string>
+  <string name="connect">Se connecter</string>
+  <string name="disconnect">Se déconnecter</string>
   <string name="trakt_success">action trakt réussie</string>
   <string name="trakt_error">Échec d\'interaction avec trakt</string>
   <string name="trakt_decryptfail">le mot de passe n\'a pas pu être décrypté</string>
@@ -229,6 +240,7 @@
   <string name="dismiss">Passer</string>
   <string name="upcoming_show">%s arrive bientôt</string>
   <string name="upcoming_episodes">De nouveaux épisodes arrivent</string>
+  <string name="upcoming_show_detailed">%1$s on %2$s</string>
   <string name="upcoming_display">Afficher les épisodes à venir</string>
   <string name="pref_notifications">Notifications</string>
   <string name="pref_notificationssummary">Notification à propos séries favorites bientôt diffusées</string>

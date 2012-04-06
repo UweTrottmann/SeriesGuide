@@ -56,6 +56,12 @@
   <string name="mark_untilhere">Oznacz wcześniej wyemitowane odcinki jako obejrzane</string>
   <string name="collect">Odcinek jest w kolekcji</string>
   <string name="uncollect">Odcinka nie ma w kolekcji</string>
+  <string name="trakt_submitfailed">Not submitted to trakt. Try again later.</string>
+  <string name="trakt_submitsuccess">Submitted to trakt.</string>
+  <string name="trakt_seen">%s seen.</string>
+  <string name="trakt_notseen">%s not seen.</string>
+  <string name="trakt_collected">%s collected.</string>
+  <string name="trakt_notcollected">%s not collected.</string>
   <string name="shows_empty">Brak seriali.</string>
   <string name="confirm_delete">Czy na pewno usunąć ten serial?</string>
   <string name="delete_show">Usuń</string>
@@ -97,7 +103,7 @@
   <string name="show_network">w</string>
   <string name="show_noairtime">Brak dostępnego czasu emisji</string>
   <string name="show_noimdbentry">Nie znaleziono strony IMDB.</string>
-  <string name="season_watchcount">nie obejrzanych</string>
+  <string name="season_watchcount">nieobejrzanych</string>
   <string name="season_allwatched">Wszystkie odcinki obejrzane</string>
   <string name="season_onenotwatched">odcinek nie obejrzany</string>
   <string name="season_unaired">Nie emitowany w TV</string>

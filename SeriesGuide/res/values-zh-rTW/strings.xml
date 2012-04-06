@@ -13,9 +13,30 @@
   <string name="share_checkout">登出</string>
   <string name="search_description">集數</string>
   <string name="description_overview">簡介</string>
+  <string name="description_poster">Show poster</string>
   <string name="norating">無</string>
+  <string name="loading">Loading…</string>
+  <string name="sending">Sending…</string>
   <string name="done">完成</string>
+  <string name="offline">No network connectivity. Try again later.</string>
+  <string name="onlyx">Only available in SeriesGuide X</string>
+  <string name="shouts">Shouts</string>
+  <string name="shout_hint">Type a shout (in English)</string>
+  <string name="shout">Shout!</string>
+  <string name="isspoiler">Spoiler alert!</string>
+  <string name="no_shouts">Be the first to shout!</string>
+  <string name="shouts_for">Shouts for %s</string>
+  <string name="episode_firstaired">Airdate</string>
   <string name="episode_dvdnumber">DVD集數</string>
+  <string name="show_actors">Actors</string>
+  <string name="show_firstaired">First Aired</string>
+  <string name="show_genres">Genres</string>
+  <string name="rating">Rating</string>
+  <string name="show_runtime">Runtime</string>
+  <string name="show_contentrating">Content Rating</string>
+  <string name="episode_directors">Directors</string>
+  <string name="episode_gueststars">Guest Stars</string>
+  <string name="episode_writers">Writers</string>
   <string name="show_airtimeunit">分</string>
   <string name="show_isalive">待續</string>
   <string name="show_isnotalive">已完結</string>
@@ -33,6 +54,14 @@
   <string name="mark_all">全部已觀看</string>
   <string name="unmark_all">全部未觀看</string>
   <string name="mark_untilhere">觀看所有已播出</string>
+  <string name="collect">Collected episode</string>
+  <string name="uncollect">Not yet collected episode</string>
+  <string name="trakt_submitfailed">Not submitted to trakt. Try again later.</string>
+  <string name="trakt_submitsuccess">Submitted to trakt.</string>
+  <string name="trakt_seen">%s seen.</string>
+  <string name="trakt_notseen">%s not seen.</string>
+  <string name="trakt_collected">%s collected.</string>
+  <string name="trakt_notcollected">%s not collected.</string>
   <string name="shows_empty">這裡沒有影集。</string>
   <string name="confirm_delete">是否確定刪除該影集?</string>
   <string name="delete_show">刪除</string>
@@ -56,11 +85,19 @@
   <string name="norecent">沒有最近的影集。</string>
   <string name="only_favorites">僅我的最愛</string>
   <string name="togglewatched">切換已觀看</string>
+  <string name="update_notification">Updating your shows…</string>
+  <string name="update_single">Updating show…</string>
+  <string name="update_delta">Updating outdated shows…</string>
+  <string name="update_full">Updating all shows…</string>
   <string name="update_success">更新成功。</string>
   <string name="update_offline">更新失敗，請檢查你的網路/Wi-Fi設定。</string>
   <string name="update_saxerror">更新失敗，請稍後再試。</string>
+  <string name="update_inprogress">An update is in progress, try again later.</string>
+  <string name="update_rebuildsearch">Refreshing episode search…</string>
+  <string name="update_traktactivity">Loading trakt activity…</string>
   <string name="menu_updateart">載入海報</string>
   <string name="arttask_incomplete">部分海報並未載入，請稍後再試。</string>
+  <string name="arttask_start">Loading posters…</string>
   <string name="arttask_nosdcard">載入海報須額外的儲存空間(SD card)。</string>
   <string name="show_airs">播出時間</string>
   <string name="show_network">on</string>
@@ -92,12 +129,15 @@
   <string name="pref_showlist">影集清單</string>
   <string name="help">說明</string>
   <string name="preferences">設定</string>
+  <string name="pref_showsorting">Sort shows by…</string>
   <string name="pref_onlyfuture">無已播出集數</string>
   <string name="pref_onlyfuturesummary">\"下集:\"永遠不顯示已播出集數</string>
   <string name="pref_onlyseasoneps">無特集</string>
   <string name="pref_onlyseasonepssummary">\"下集:\"永遠不顯示特集</string>
   <string name="pref_content">內容</string>
+  <string name="pref_seasonsorting">Sort seasons by…</string>
   <string name="pref_sortingsummary">說明如何按季排序</string>
+  <string name="pref_episodesorting">Sort episodes by…</string>
   <string name="pref_epsortingsummary">說明如何按集排序</string>
   <string name="backup">備份/還原</string>
   <string name="backup_summary">備份或還原你的影集</string>
@@ -118,6 +158,7 @@
   <string name="pref_trakt">trakt.tv 憑證</string>
   <string name="pref_traktsummary">新增或編輯您的trakt.tv憑證</string>
   <string name="pref_traktsync">與trakt.tv同步</string>
+  <string name="donate">Buy the dev a drink (Paypal)</string>
   <string name="feedback">傳送反饋意見</string>
   <string name="pref_advanced">進階</string>
   <string name="clear_cache">清除圖片暫存檔</string>
@@ -126,12 +167,17 @@
   <string name="pref_hideimagessummary">在相簿中隱藏圖片(需重新開機)</string>
   <string name="pref_ganalytics">Google Analytics (分析)</string>
   <string name="pref_ganalyticssummary">紀錄追蹤功能以改善SeriesGuide和使用者的使用體驗</string>
+  <string name="sendusagedata">Send the developer usage statistics</string>
+  <string name="pref_upcominglimit">Upcoming shows within…</string>
+  <string name="pref_upcominglimitsummary">How far in the future to display upcoming shows</string>
   <string name="backup_description"><b>備份</b>在下列資料夾中建立您影集資料庫的備份並命名為<b>檔案資料庫</b>。\n\n若進行<b>還原</b>時請確保資料在以下的資料夾中。\n\n只有與資料庫相同或更低版本的備份檔可以被還原。</string>
   <string name="backup_path"><b>備份資料夾</b></string>
   <string name="backup_version"><b>資料庫版本</b></string>
   <string name="backup_failed_nosd">無法備份。備份資料夾不存在。</string>
+  <string name="backup_inprogress">Backing up database…</string>
   <string name="backup_success">備份成功。</string>
   <string name="backup_failed">備份失敗。</string>
+  <string name="import_inprogress">Restoring database…</string>
   <string name="import_failed_nosd">無法還原備份。備份資料夾不存在。</string>
   <string name="import_failed_nofile">無備份檔。</string>
   <string name="import_failed_noread">無法讀取備份檔。</string>
@@ -153,17 +199,28 @@
   <string name="seasons">季數</string>
   <string name="cancel">取消</string>
   <string name="share">分享</string>
+  <string name="checkin">Check in</string>
+  <string name="checkin_hint">Type a message (optional)</string>
+  <string name="paste_episode">Paste episode</string>
+  <string name="checkinsuccess">GetGlue Check-in successful.</string>
+  <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
+  <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
   <string name="menu_markseen_trakt">標示為已觀賞(trakt)</string>
   <string name="menu_rate_trakt">等級(trakt)</string>
   <string name="menu_share_others">透過其他應用程式。</string>
   <string name="traktcheckin_cancel">取消它</string>
   <string name="traktcheckin_inprogress">正在登入中。取消此次登入或等待%s以便再次登入。</string>
   <string name="traktcheckin_wait">等待</string>
+  <string name="oauthmessage">Authenticating SeriesGuide with GetGlue…</string>
   <string name="addtocalendar">新增至行事曆</string>
   <string name="addtocalendar_failed">無法建立行事曆事件。</string>
   <string name="username">帳號</string>
   <string name="email">電子信箱</string>
   <string name="password">密碼</string>
+  <string name="waitplease">A moment, please…</string>
+  <string name="connect">Connect</string>
+  <string name="disconnect">Disconnect</string>
+  <string name="trakt_success">trakt action successful</string>
   <string name="trakt_error">與trakt的互動失敗</string>
   <string name="trakt_decryptfail">無法解密密碼</string>
   <string name="trakt_generalerror">發生錯誤。請檢查您的憑證並再試一次。</string>
@@ -175,7 +232,20 @@
   <string name="trakt_synctotrakt">同步至trakt.tv</string>
   <string name="trakt_syncunseen">同步未看的集數</string>
   <string name="welcome_message"><big>新手上路</big></string>
+  <string name="welcome_text">Welcome!</string>
+  <string name="welcome_language">Choose the primary content language:</string>
+  <string name="welcome_setuplanguage">Choose language</string>
+  <string name="welcome_setuptrakt">Connect to trakt</string>
+  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity with SeriesGuide:</string>
+  <string name="dismiss">Dismiss</string>
+  <string name="upcoming_show">%s is coming up</string>
+  <string name="upcoming_episodes">New episodes are coming up</string>
+  <string name="upcoming_show_detailed">%1$s on %2$s</string>
+  <string name="upcoming_display">Select to display upcoming shows</string>
+  <string name="pref_notifications">Notifications</string>
+  <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
   <string name="download_stable">下載 SeriesGuide</string>
+  <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>下一集</item>
@@ -208,4 +278,8 @@
     <item>尚未觀賞/即將播出</item>
     <item>隱藏</item>
   </string-array>
+  <plurals name="votes">
+    <item quantity="one">%d vote</item>
+    <item quantity="other">%d votes</item>
+  </plurals>
 </resources>
