@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.app.ShareCompat.IntentBuilder;
@@ -243,6 +244,12 @@ public class ShowInfoActivity extends BaseActivity {
         }
 
         // trakt ratings
-        new TraktSummaryTask(this, findViewById(R.id.ratingbar)).show(tvdbId).execute();
+        TraktSummaryTask task = new TraktSummaryTask(this, findViewById(R.id.ratingbar))
+                .show(tvdbId);
+        if (Utils.isHoneycombOrHigher()) {
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            task.execute();
+        }
     }
 }

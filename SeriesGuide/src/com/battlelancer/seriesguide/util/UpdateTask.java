@@ -252,7 +252,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 manager = Utils.getServiceManagerWithAuth(mAppContext, false);
             } catch (Exception e) {
                 fireTrackerEvent(e.getMessage());
-                Log.w(TAG, e.getMessage(), e);
+                Log.w(TAG, e);
                 return UPDATE_ERROR;
             }
 
@@ -264,14 +264,15 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                         .user(Utils.getTraktUsername(mAppContext))
                         .types(ActivityType.Episode)
                         .actions(ActivityAction.Checkin, ActivityAction.Seen,
-                                ActivityAction.Scrobble).timestamp(startTimeTrakt).fire();
+                                ActivityAction.Scrobble, ActivityAction.Collection)
+                        .timestamp(startTimeTrakt).fire();
             } catch (TraktException e) {
                 fireTrackerEvent(e.getMessage());
-                Log.w(TAG, e.getMessage(), e);
+                Log.w(TAG, e);
                 return UPDATE_ERROR;
             } catch (ApiException e) {
                 fireTrackerEvent(e.getMessage());
-                Log.w(TAG, e.getMessage(), e);
+                Log.w(TAG, e);
                 return UPDATE_ERROR;
             }
 
@@ -282,18 +283,26 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 if (item.action != null && item.show != null) {
                     switch (item.action) {
                         case Seen: {
+                            // seen uses an array of episodes
                             List<TvShowEpisode> episodes = item.episodes;
-                            String showTvdbId = item.show.tvdbId;
                             for (TvShowEpisode episode : episodes) {
-                                addEpisodeOp(batch, episode, showTvdbId);
+                                addEpisodeSeenOp(batch, episode, item.show.tvdbId);
                             }
                             break;
                         }
                         case Checkin:
                         case Scrobble: {
+                            // checkin and scrobble use a single episode
                             TvShowEpisode episode = item.episode;
-                            String showTvdbId = item.show.tvdbId;
-                            addEpisodeOp(batch, episode, showTvdbId);
+                            addEpisodeSeenOp(batch, episode, item.show.tvdbId);
+                            break;
+                        }
+                        case Collection: {
+                            // collection uses an array of episodes
+                            List<TvShowEpisode> episodes = item.episodes;
+                            for (TvShowEpisode episode : episodes) {
+                                addEpisodeCollectedOp(batch, episode, item.show.tvdbId);
+                            }
                             break;
                         }
                     }
@@ -405,12 +414,20 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         mFailedShows += seriesName;
     }
 
-    private static void addEpisodeOp(final ArrayList<ContentProviderOperation> batch,
+    private static void addEpisodeSeenOp(final ArrayList<ContentProviderOperation> batch,
             TvShowEpisode episode, String showTvdbId) {
         batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodesOfShowUri(showTvdbId))
                 .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[] {
                         String.valueOf(episode.number), String.valueOf(episode.season)
                 }).withValue(Episodes.WATCHED, true).build());
+    }
+
+    private static void addEpisodeCollectedOp(ArrayList<ContentProviderOperation> batch,
+            TvShowEpisode episode, String showTvdbId) {
+        batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodesOfShowUri(showTvdbId))
+                .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[] {
+                        String.valueOf(episode.number), String.valueOf(episode.season)
+                }).withValue(Episodes.COLLECTED, true).build());
     }
 
     private void fireTrackerEvent(String message) {

@@ -212,6 +212,8 @@ public class EpisodesFragment extends SherlockListFragment implements
             intent.setClass(getActivity(), EpisodeDetailsActivity.class);
             intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, (int) episodeId);
             startActivity(intent);
+            getSherlockActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
+                    R.anim.fragment_slide_left_exit);
         }
     }
 

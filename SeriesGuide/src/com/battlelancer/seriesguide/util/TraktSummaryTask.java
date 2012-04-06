@@ -23,7 +23,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
 
     private static final int HARD_CACHE_CAPACITY = 10;
 
-    // Hard cache, with a fixed maximum capacity and a life duration
+    // Hard cache, with a fixed maximum capacity
     @SuppressWarnings("serial")
     private final static HashMap<String, TvEntity> sHardEntityCache = new LinkedHashMap<String, TvEntity>(
             HARD_CACHE_CAPACITY / 2, 0.75f, true) {
@@ -92,59 +92,64 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
 
     @Override
     protected Ratings doInBackground(Void... params) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-        final boolean isOnlyWifiAllowed = prefs.getBoolean(
-                SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
 
-        if ((isOnlyWifiAllowed && Utils.isWifiConnected(mContext))
-                || (!isOnlyWifiAllowed && Utils.isNetworkConnected(mContext))) {
+        if (isCancelled()) {
+            return null;
+        }
 
-            try {
-                if (isCancelled()) {
-                    return null;
-                }
-
-                // decide whether we have a show or an episode
-                if (mTvdbIdString != null) {
+        try {
+            // decide whether we have a show or an episode
+            if (mTvdbIdString != null) {
+                if (isNetworkAvailable()) {
                     // get the shows summary from trakt
                     TvShow entity = Utils.getServiceManager(mContext).showService()
                             .summary(mTvdbIdString).fire();
                     if (entity != null) {
                         return entity.ratings;
                     }
-                } else {
-                    // look if the episode summary is cached
-                    String key = String.valueOf(mTvdbId) + String.valueOf(mSeason)
-                            + String.valueOf(mEpisode);
-
-                    TvEntity entity;
-                    synchronized (sHardEntityCache) {
-                        entity = sHardEntityCache.remove(key);
-                    }
-                    // on cache miss load the summary from trakt
-                    if (entity == null) {
-                        entity = Utils.getServiceManager(mContext).showService()
-                                .episodeSummary(mTvdbId, mSeason, mEpisode).fire();
-                    }
-
-                    if (entity != null) {
-                        synchronized (sHardEntityCache) {
-                            sHardEntityCache.put(key, entity);
-                        }
-                        return entity.episode.ratings;
-                    }
                 }
-            } catch (TraktException te) {
-                return null;
-            } catch (ApiException e) {
-                return null;
+            } else {
+                // look if the episode summary is cached
+                String key = String.valueOf(mTvdbId) + String.valueOf(mSeason)
+                        + String.valueOf(mEpisode);
+
+                TvEntity entity;
+                synchronized (sHardEntityCache) {
+                    entity = sHardEntityCache.remove(key);
+                }
+
+                // on cache miss load the summary from trakt
+                if (entity == null && isNetworkAvailable()) {
+                    entity = Utils.getServiceManager(mContext).showService()
+                            .episodeSummary(mTvdbId, mSeason, mEpisode).fire();
+                }
+
+                if (entity != null) {
+                    synchronized (sHardEntityCache) {
+                        sHardEntityCache.put(key, entity);
+                    }
+                    return entity.episode.ratings;
+                }
             }
+        } catch (TraktException te) {
+            return null;
+        } catch (ApiException e) {
+            return null;
         }
+
         return null;
     }
 
+    private boolean isNetworkAvailable() {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        final boolean isOnlyWifiAllowed = prefs.getBoolean(
+                SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
+        return (isOnlyWifiAllowed && Utils.isWifiConnected(mContext))
+                || (!isOnlyWifiAllowed && Utils.isNetworkConnected(mContext));
+    }
+
     @Override
-    protected void onCancelled(Ratings result) {
+    protected void onCancelled() {
         releaseReferences();
     }
 

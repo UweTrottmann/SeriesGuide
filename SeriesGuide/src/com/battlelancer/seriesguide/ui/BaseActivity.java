@@ -21,7 +21,6 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.util.Utils;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -40,6 +39,8 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             NavUtils.navigateUpTo(this,
                     new Intent(Intent.ACTION_MAIN).setClass(this, ShowsActivity.class));
+            overridePendingTransition(R.anim.fragment_slide_right_enter,
+                    R.anim.fragment_slide_right_exit);
             return true;
         }
         return false;
@@ -50,6 +51,8 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
+                overridePendingTransition(R.anim.fragment_slide_right_enter,
+                        R.anim.fragment_slide_right_exit);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -107,8 +110,5 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
         intent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, showId);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-        if (!Utils.isHoneycombOrHigher()) {
-            overridePendingTransition(R.anim.home_enter, R.anim.home_exit);
-        }
     }
 }

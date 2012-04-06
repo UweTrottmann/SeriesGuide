@@ -73,12 +73,6 @@ public class SearchActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                final Intent intent = new Intent(this, ShowsActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                overridePendingTransition(R.anim.home_enter, R.anim.home_exit);
-                return true;
             case R.id.menu_search:
                 onSearchRequested();
                 return true;

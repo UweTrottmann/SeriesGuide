@@ -9,11 +9,11 @@ Version 2.6 *(in development)*
 --------------------------------
 
 * Exclusive SeriesGuide X feature: Notifications for favorite/starred shows.
-* Support for trakt.tv shouts
-* Unified trakt.tv and GetGlue check in dialog.
-* Mark episodes as 'collected' (e.g. if you got them on DVD, downloaded them, ...).
-* Marking single episodes as seen/collected is submitted to trakt if you setup your trakt account.
-* Search only through episodes inside a show in Overview.
+* Trakt.tv shouts: episode airing right now? Open Shouts and discuss it with other people.
+* One button to rule, ahem, check into trakt.tv and GetGlue.
+* Want to watch, but do not have the episode, yet? Mark episodes as 'collected' to keep track of your library.
+* With a trakt account marking single episodes as seen/collected is submitted to trakt. Other devices will sync automagically.
+* Search through a show's episodes inside its Overview screen.
 * Fixes, improvements and design refinements.
 
 ### Detailed changes:

@@ -220,8 +220,9 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 // Execute a transaction, replacing any existing
                 // fragment with this one inside the frame.
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.setCustomAnimations(R.anim.fragment_slide_left_enter,
+                        R.anim.fragment_slide_left_exit);
                 ft.replace(R.id.fragment_seasons, seasons);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.commit();
             }
         } else {
@@ -231,6 +232,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             intent.setClass(getActivity(), SeasonsActivity.class);
             intent.putExtra(SeasonsFragment.InitBundle.SHOW_TVDBID, getShowId());
             startActivity(intent);
+            getSherlockActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
+                    R.anim.fragment_slide_left_exit);
         }
 
     }
@@ -499,7 +502,11 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         // trakt rating
         mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView()).episode(getShowId(),
                 mSeasonNumber, mEpisodeNumber);
-        mTraktTask.execute();
+        if (Utils.isHoneycombOrHigher()) {
+            mTraktTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            mTraktTask.execute();
+        }
     }
 
     protected void onLoadImage(String imagePath) {

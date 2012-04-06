@@ -136,7 +136,8 @@ public class ImageCache {
      * @return
      */
     public boolean exists(String imageUrl) {
-        return isCached(imageUrl) || getImageFile(imageUrl).exists();
+        return isCached(imageUrl) || sSoftBitmapCache.containsKey(imageUrl)
+                || getImageFile(imageUrl).exists();
     }
 
     /**
@@ -146,7 +147,7 @@ public class ImageCache {
      * @return
      */
     public boolean isCached(String imageUrl) {
-        return mHardBitmapCache.containsKey(imageUrl) || sSoftBitmapCache.containsKey(imageUrl);
+        return mHardBitmapCache.containsKey(imageUrl);
     }
 
     public Bitmap get(String key) {
