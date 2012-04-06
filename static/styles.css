@@ -27,6 +27,10 @@ color:#2B9BC3;
 text-decoration:underline;
 }
 
+.navbar .nav > li > a {
+font-weight: bold;
+}
+
 .spacer {
 height:50px;
 }
@@ -37,6 +41,7 @@ height:80px;
 
 .well {
 background:#111111;
+color: #ffffff;
 }
 
 .share-button {
