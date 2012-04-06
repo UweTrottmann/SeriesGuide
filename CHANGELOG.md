@@ -5,7 +5,7 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 2.6 *(in development)*
+Version 2.6 *(2012-04-06)*
 --------------------------------
 
 * Exclusive SeriesGuide X feature: Notifications for favorite/starred shows.
@@ -17,6 +17,12 @@ Version 2.6 *(in development)*
 * Fixes, improvements and design refinements.
 
 ### Detailed changes:
+
+#### 2.6.7beta (2012-04-06)
+
+* Update fetches recently collected episodes.
+* Shouts refresh automatically every 60 seconds. May the next Game of Thrones come :)
+* Some animations.
 
 #### 2.6.6beta (2012-04-04)
 
