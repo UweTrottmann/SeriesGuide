@@ -1,17 +1,18 @@
 body {
 font-family: 'Open Sans', sans-serif;
 text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
-background: #000000;
-color:#ffffff;
+background: #fff;
+color:#333;
 }
 
 h1, h2, h3, h4, h5, h6 {
 font-weight: normal;
-color:#ffffff;
+color:#333;
 }
 
 p {
 font-family: 'Open Sans', sans-serif;
+font-size: 14px;
 }
 
 a {
