@@ -17,17 +17,26 @@
   <string name="norating">n/a</string>
   <string name="loading">Lädt…</string>
   <string name="sending">Senden…</string>
-  <string name="episode_firstaired">Ausstrahlung:</string>
+  <string name="done">Erledigt</string>
+  <string name="offline">Keine Netzwerkverbindung. Versuchen Sie es später erneut.</string>
+  <string name="onlyx">Nur verfügbar in SeriesGuide X</string>
+  <string name="shouts">Shouts</string>
+  <string name="shout_hint">Shout eingeben (in Englisch)</string>
+  <string name="shout">Shout!</string>
+  <string name="isspoiler">Spoiler-Warnung!</string>
+  <string name="no_shouts">Schreibe den ersten Shout!</string>
+  <string name="shouts_for">Shouts für %s</string>
+  <string name="episode_firstaired">Ausstrahlung</string>
   <string name="episode_dvdnumber">DVD Folge</string>
-  <string name="show_actors">Schauspieler:</string>
-  <string name="show_firstaired">Lief zuerst:</string>
-  <string name="show_genres">Genres:</string>
-  <string name="rating">Bewertung:</string>
-  <string name="show_runtime">Laufzeit:</string>
-  <string name="show_contentrating">Alterskennzeichnung:</string>
-  <string name="episode_directors">Regisseure:</string>
-  <string name="episode_gueststars">Gastschauspieler:</string>
-  <string name="episode_writers">Autoren:</string>
+  <string name="show_actors">Schauspieler</string>
+  <string name="show_firstaired">Erste Ausstrahlung</string>
+  <string name="show_genres">Genres</string>
+  <string name="rating">Bewertung</string>
+  <string name="show_runtime">Laufzeit</string>
+  <string name="show_contentrating">Inhaltsklassifikation</string>
+  <string name="episode_directors">Regisseure</string>
+  <string name="episode_gueststars">Gastschauspieler</string>
+  <string name="episode_writers">Autoren</string>
   <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Wird fortgesetzt</string>
   <string name="show_isnotalive">Endete</string>
@@ -45,6 +54,14 @@
   <string name="mark_all">Alle gesehen</string>
   <string name="unmark_all">Keine gesehen</string>
   <string name="mark_untilhere">Alle bisher gesendeten gesehen</string>
+  <string name="collect">Gesammelte Folge</string>
+  <string name="uncollect">Noch nicht gesammelte Folge</string>
+  <string name="trakt_submitfailed">Nicht an trakt übermittelt. Versuchen Sie es später erneut.</string>
+  <string name="trakt_submitsuccess">An trakt übermittelt.</string>
+  <string name="trakt_seen">%s gesehen.</string>
+  <string name="trakt_notseen">%s nicht gesehen.</string>
+  <string name="trakt_collected">%s gesammelt.</string>
+  <string name="trakt_notcollected">%s nicht gesammelt.</string>
   <string name="shows_empty">Hier sind keine Serien.</string>
   <string name="confirm_delete">Soll diese Serie wirklich gelöscht werden?</string>
   <string name="delete_show">Löschen</string>
@@ -128,8 +145,6 @@
   <string name="pref_languagesummary">Übersetzungen sind nicht für jede Serie verfügbar</string>
   <string name="pref_number">Zahlenformat</string>
   <string name="pref_numbersummary">Wählen Sie zwischen 1x01, S01E01 und s01e01</string>
-  <string name="pref_usetz">Meine Zeitzone verwenden</string>
-  <string name="pref_usetzsummary">Zeit-Verschiebung in meine Zeitzone</string>
   <string name="pref_offset">Manuelle Zeit-Verschiebung</string>
   <string name="pref_offsetsummary">Zeit um eine gewisse Anzahl an Stunden verschieben</string>
   <string name="pref_autoupdate">Auto-Aktualisierung aktivieren</string>
@@ -143,8 +158,6 @@
   <string name="pref_trakt">trakt.tv Anmeldeinformationen</string>
   <string name="pref_traktsummary">Hinzufügen oder Bearbeiten Ihrer trakt.tv Anmeldeinformationen</string>
   <string name="pref_traktsync">Synchronisieren mit trakt.tv</string>
-  <string name="pref_traktintegrate">trakt.tv integrieren</string>
-  <string name="pref_traktintegratesummary">trakt-Aktivität bei Aktualisierung holen</string>
   <string name="donate">Dem Entw. ein Getränk kaufen (Paypal)</string>
   <string name="feedback">Feedback senden</string>
   <string name="pref_advanced">Fortgeschritten</string>
@@ -186,20 +199,18 @@
   <string name="seasons">Staffeln</string>
   <string name="cancel">Abbrechen</string>
   <string name="share">Empfehlen</string>
-  <string name="menu_checkin_getglue">Check-In (GetGlue)</string>
-  <string name="menu_checkin_trakt">Check-In (trakt)</string>
+  <string name="checkin">Einchecken</string>
+  <string name="checkin_hint">Geben Sie eine Nachricht ein (optional)</string>
+  <string name="paste_episode">Folge einfügen</string>
+  <string name="checkinsuccess">GetGlue-Einchecken erfolgreich.</string>
+  <string name="checkinfailed">GetGlue-Einchecken fehlgeschlagen. Versuchen Sie GetGlue zu trennen.</string>
+  <string name="getglue_authfailed">GetGlue-Authentifizierung fehlgeschlagen. Versuchen Sie es später erneut.</string>
   <string name="menu_markseen_trakt">Gesehen markieren (trakt)</string>
   <string name="menu_rate_trakt">Bewerten (trakt)</string>
   <string name="menu_share_others">Über andere Apps</string>
-  <string name="done">Erledigt</string>
-  <string name="checkin">Check-In</string>
-  <string name="comment">Check-In Kommentar</string>
-  <string name="checkinsuccess">Check-In erfolgreich.</string>
-  <string name="checkin_impossible">Check-In für diese Serie nicht möglich.</string>
   <string name="traktcheckin_cancel">Breche ab</string>
   <string name="traktcheckin_inprogress">Es ist bereits ein Check-In aktiv. Brechen Sie Ihn ab oder warten Sie %s bevor Sie wieder einchecken können.</string>
   <string name="traktcheckin_wait">Ich warte</string>
-  <string name="checkinfailed">Check-In fehlgeschlagen. Versuchen Sie sich von GetGlue abzumelden.</string>
   <string name="oauthmessage">Authentifiziere SeriesGuide bei GetGlue…</string>
   <string name="addtocalendar">Zum Kalender hinzufügen</string>
   <string name="addtocalendar_failed">Kann kein Kalenderereignis erstellen.</string>
@@ -209,9 +220,8 @@
   <string name="waitplease">Einen Augenblick, bitte…</string>
   <string name="connect">Verbinden</string>
   <string name="disconnect">Trennen</string>
-  <string name="trakt_success">Erfolgreich mit trakt kommuniziert</string>
+  <string name="trakt_success">trakt-Aktion erfolgreich</string>
   <string name="trakt_error">Interaktion mit trakt ist fehlgeschlagen</string>
-  <string name="trakt_seen">als gesehen markiert</string>
   <string name="trakt_decryptfail">Kennwort konnte nicht entschlüsselt werden</string>
   <string name="trakt_generalerror">Etwas ist schief gelaufen. Bitte überprüfen Sie Ihre Anmeldeinformationen und versuchen Sie es erneut.</string>
   <string name="love">Absolut top!</string>
@@ -223,11 +233,19 @@
   <string name="trakt_syncunseen">Ungesehene Folgen synchronisieren</string>
   <string name="welcome_message"><big>Erste Schritte</big></string>
   <string name="welcome_text">Willkommen!</string>
+  <string name="welcome_language">Wählen Sie die primäre Sprache für Inhalte:</string>
+  <string name="welcome_setuplanguage">Sprache auswählen</string>
   <string name="welcome_setuptrakt">Mit trakt verbinden</string>
   <string name="welcome_traktmessage">Greifen Sie mit SeriesGuide auf Ihre trakt.tv Bibliothek und Aktivität von Freunden zu:</string>
   <string name="dismiss">Schließen</string>
+  <string name="upcoming_show">In Kürze läuft %s</string>
+  <string name="upcoming_episodes">Neue Folgen laufen in Kürze</string>
+  <string name="upcoming_show_detailed">%1$s auf %2$s</string>
+  <string name="upcoming_display">Auswählen um kommende Serien anzuzeigen</string>
+  <string name="pref_notifications">Benachrichtigungen</string>
+  <string name="pref_notificationssummary">Benachr. über in Kürze laufende Favoriten</string>
   <string name="download_stable">SeriesGuide herunterladen</string>
-  <string name="betawarning">Diese Version ist nur für Beta-Tester! Im Zweifelsfall laden Sie unten die stabile Version.\n\nWenn Sie beim Testen helfen möchten, werfen Sie einen Blick auf die <a href="http://git.io/sgbetachanges">jüngsten Änderungen</a>.\n\nBitte berichten Sie jeden Absturz, probieren Sie alles aus und senden Sie Feedback.</string>
+  <string name="betawarning"><b>Achtung!</b> Diese Version ist für nur Beta-Tester! Laden Sie im Zweifel unten die stabile Version.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Nächste Folge</item>
@@ -260,4 +278,8 @@
     <item>Ungesehene/Zukünftige</item>
     <item>Ausgeblendete</item>
   </string-array>
+  <plurals name="votes">
+    <item quantity="one">%d Stimme</item>
+    <item quantity="other">%d Stimmen</item>
+  </plurals>
 </resources>

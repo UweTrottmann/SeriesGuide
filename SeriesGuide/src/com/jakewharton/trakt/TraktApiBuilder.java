@@ -411,6 +411,11 @@ public abstract class TraktApiBuilder<T> extends ApiBuilder {
         this.postBody.add(name, value);
         return this;
     }
+	
+    protected final TraktApiBuilder<T> postParameter(String name, boolean value) {
+        this.postBody.addProperty(name, value);
+        return this;
+    }
 
     /**
      * Convert a {@link Date} to its Unix timestamp equivalent.

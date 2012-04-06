@@ -4,11 +4,13 @@ package com.battlelancer.seriesguide.util;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.jakewharton.trakt.ServiceManager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -21,7 +23,10 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,6 +35,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,11 +47,17 @@ import java.util.TimeZone;
 
 public class Utils {
 
+    private static final String TIMEZONE_AMERICA_PREFIX = "America/";
+
+    private static final String TAG = "Utils";
+
     private static final String TIMEZONE_ALWAYS_PST = "GMT-08:00";
 
     private static final String TIMEZONE_US_ARIZONA = "America/Phoenix";
 
     private static final String TIMEZONE_US_EASTERN = "America/New_York";
+
+    private static final Object TIMEZONE_US_EASTERN_DETROIT = "America/Detroit";
 
     private static final String TIMEZONE_US_CENTRAL = "America/Chicago";
 
@@ -105,8 +118,10 @@ public class Utils {
         }
 
         if (time != null) {
-            cal.set(Calendar.HOUR_OF_DAY, time.getHours());
-            cal.set(Calendar.MINUTE, time.getMinutes());
+            Calendar timeCal = Calendar.getInstance();
+            timeCal.setTime(time);
+            cal.set(Calendar.HOUR_OF_DAY, timeCal.get(Calendar.HOUR_OF_DAY));
+            cal.set(Calendar.MINUTE, timeCal.get(Calendar.MINUTE));
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MILLISECOND, 0);
             return cal.getTimeInMillis();
@@ -134,41 +149,58 @@ public class Utils {
             };
         }
 
-        final TimeZone pacificTimeZone = TimeZone.getTimeZone(TIMEZONE_US_PACIFIC);
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-
-        // set calendar time and day on Pacific cal
-        final Calendar cal = Calendar.getInstance(pacificTimeZone);
+        // set calendar time and day on always PST calendar
+        // this is a workaround so we can convert the air day to a another time
+        // zone without actually having a date
+        final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone(TIMEZONE_ALWAYS_PST));
+        final int year = cal.get(Calendar.YEAR);
+        final int month = cal.get(Calendar.MONTH);
+        final int day = cal.get(Calendar.DAY_OF_MONTH);
         cal.setTimeInMillis(milliseconds);
+        // set the date back to today
+        cal.set(year, month, day);
 
         // determine the shows common air day (Mo through Sun or daily)
         int dayIndex = -1;
         if (dayofweek != null) {
             dayIndex = getDayOfWeek(dayofweek);
             if (dayIndex > 0) {
-                cal.set(Calendar.DAY_OF_WEEK, dayIndex);
+                int today = cal.get(Calendar.DAY_OF_WEEK);
+                // make sure we always assume a day which is today or later
+                if (dayIndex - today < 0) {
+                    // we have a day before today
+                    cal.add(Calendar.DAY_OF_WEEK, (7 - today) + dayIndex);
+                } else {
+                    // we have today or in the future
+                    cal.set(Calendar.DAY_OF_WEEK, dayIndex);
+                }
             }
         }
 
-        setOffsets(prefs, cal, milliseconds);
+        // convert time to local, including the day
+        final Calendar localCal = Calendar.getInstance();
+        localCal.setTimeInMillis(cal.getTimeInMillis());
+
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        setOffsets(prefs, localCal, milliseconds);
 
         // create time string
         final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
         final SimpleDateFormat dayFormat = new SimpleDateFormat("E");
-        final Date date = cal.getTime();
+        final Date date = localCal.getTime();
 
         timeFormat.setTimeZone(TimeZone.getDefault());
         dayFormat.setTimeZone(TimeZone.getDefault());
 
-        String day = "";
+        String daystring = "";
         if (dayIndex == 0) {
-            day = context.getString(R.string.daily);
+            daystring = context.getString(R.string.daily);
         } else if (dayIndex != -1) {
-            day = dayFormat.format(date);
+            daystring = dayFormat.format(date);
         }
 
         return new String[] {
-                timeFormat.format(date), day
+                timeFormat.format(date), daystring
         };
     }
 
@@ -288,21 +320,24 @@ public class Utils {
 
         // get user-set hour offset
         int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
-        TimeZone userTimeZone = TimeZone.getDefault();
+        final String tzId = TimeZone.getDefault().getID();
 
-        if (userTimeZone.getID().equals(TIMEZONE_US_MOUNTAIN)) {
-            offset -= 1;
-        } else if (userTimeZone.getID().equals(TIMEZONE_US_CENTRAL)) {
-            // for US Central subtract one hour more
-            // shows always air an hour earlier
-            offset -= 3;
-        } else if (userTimeZone.getID().equals(TIMEZONE_US_EASTERN)) {
-            offset -= 3;
-        } else if (userTimeZone.getID().equals(TIMEZONE_US_ARIZONA)) {
-            // Arizona has no daylight saving, correct for that
-            // airtime might not be correct, yet, but the best we can do for now
-            if (!pacificInDaylight) {
+        if (tzId.startsWith(TIMEZONE_AMERICA_PREFIX, 0)) {
+            if (tzId.equals(TIMEZONE_US_MOUNTAIN)) {
                 offset -= 1;
+            } else if (tzId.equals(TIMEZONE_US_CENTRAL)) {
+                // for US Central subtract one hour more
+                // shows always air an hour earlier
+                offset -= 3;
+            } else if (tzId.equals(TIMEZONE_US_EASTERN) || tzId.equals(TIMEZONE_US_EASTERN_DETROIT)) {
+                offset -= 3;
+            } else if (tzId.equals(TIMEZONE_US_ARIZONA)) {
+                // Arizona has no daylight saving, correct for that
+                // airtime might not be correct, yet, but the best we can do for
+                // now
+                if (!pacificInDaylight) {
+                    offset -= 1;
+                }
             }
         }
 
@@ -325,26 +360,40 @@ public class Utils {
      * @return
      */
     public static long getFakeCurrentTime(SharedPreferences prefs) {
+        return convertToFakeTime(System.currentTimeMillis(), prefs, true);
+    }
+
+    /**
+     * Modify a time to be earlier/later respecting user-set offsets and
+     * automatic offsets based on time zone.
+     * 
+     * @param prefs
+     * @param isCurrentTime
+     * @return
+     */
+    public static long convertToFakeTime(long time, SharedPreferences prefs, boolean isCurrentTime) {
         boolean pacificInDaylight = TimeZone.getTimeZone(TIMEZONE_US_PACIFIC).inDaylightTime(
-                new Date());
-        long now = System.currentTimeMillis();
+                new Date(time));
 
         int offset = Integer.valueOf(prefs.getString(SeriesGuidePreferences.KEY_OFFSET, "0"));
-        TimeZone userTimeZone = TimeZone.getDefault();
-        if (userTimeZone.getID().equals(TIMEZONE_US_MOUNTAIN)) {
-            // Mountain Time
-            offset -= 1;
-        } else if (userTimeZone.getID().equals(TIMEZONE_US_CENTRAL)) {
-            // for US Central subtract one hour more
-            // shows always air an hour earlier
-            offset -= 3;
-        } else if (userTimeZone.getID().equals(TIMEZONE_US_EASTERN)) {
-            // Eastern Time
-            offset -= 3;
-        } else if (userTimeZone.getID().equals(TIMEZONE_US_ARIZONA)) {
-            // Arizona has no daylight saving, correct for that
-            if (!pacificInDaylight) {
+        final String tzId = TimeZone.getDefault().getID();
+
+        if (tzId.startsWith(TIMEZONE_AMERICA_PREFIX, 0)) {
+            if (tzId.equals(TIMEZONE_US_MOUNTAIN)) {
+                // Mountain Time
                 offset -= 1;
+            } else if (tzId.equals(TIMEZONE_US_CENTRAL)) {
+                // for US Central subtract one hour more
+                // shows always air an hour earlier
+                offset -= 3;
+            } else if (tzId.equals(TIMEZONE_US_EASTERN) || tzId.equals(TIMEZONE_US_EASTERN_DETROIT)) {
+                // Eastern Time
+                offset -= 3;
+            } else if (tzId.equals(TIMEZONE_US_ARIZONA)) {
+                // Arizona has no daylight saving, correct for that
+                if (!pacificInDaylight) {
+                    offset -= 1;
+                }
             }
         }
 
@@ -353,11 +402,16 @@ public class Utils {
         }
 
         if (offset != 0) {
-            // invert offset so we add to current time instead of subtracting
-            now -= (offset * DateUtils.HOUR_IN_MILLIS);
+            if (isCurrentTime) {
+                // invert offset if we modify the current time
+                time -= (offset * DateUtils.HOUR_IN_MILLIS);
+            } else {
+                // add offset if we modify an episodes air time
+                time += (offset * DateUtils.HOUR_IN_MILLIS);
+            }
         }
 
-        return now;
+        return time;
     }
 
     public static long buildEpisodeAirtime(String tvdbDateString, long airtime) {
@@ -397,42 +451,45 @@ public class Utils {
      * Returns a string in format "1x01 title" or "S1E01 title" dependent on a
      * user preference.
      */
-    public static String getNextEpisodeString(SharedPreferences prefs, String season,
-            String episode, String title) {
-        season = getEpisodeNumber(prefs, season, episode);
-        season += " " + title;
-        return season;
+    public static String getNextEpisodeString(SharedPreferences prefs, int season, int episode,
+            String title) {
+        String result = getEpisodeNumber(prefs, season, episode);
+        result += " " + title;
+        return result;
     }
 
     /**
      * Returns the episode number formatted according to the users preference
      * (e.g. '1x01', 'S01E01', ...).
      */
-    public static String getEpisodeNumber(SharedPreferences prefs, String season, String episode) {
+    public static String getEpisodeNumber(SharedPreferences prefs, int seasonNumber,
+            int episodeNumber) {
         String format = prefs.getString(SeriesGuidePreferences.KEY_NUMBERFORMAT,
                 SeriesGuidePreferences.NUMBERFORMAT_DEFAULT);
+        String result = String.valueOf(seasonNumber);
         if (format.equals(SeriesGuidePreferences.NUMBERFORMAT_DEFAULT)) {
             // 1x01 format
-            season += "x";
+            result += "x";
         } else {
             // S01E01 format
             // make season number always two chars long
-            if (season.length() == 1) {
-                season = "0" + season;
+            if (seasonNumber < 10) {
+                result = "0" + result;
             }
-            if (format.equals(SeriesGuidePreferences.NUMBERFORMAT_ENGLISHLOWER))
-                season = "s" + season + "e";
-            else
-                season = "S" + season + "E";
+            if (format.equals(SeriesGuidePreferences.NUMBERFORMAT_ENGLISHLOWER)) {
+                result = "s" + result + "e";
+            } else {
+                result = "S" + result + "E";
+            }
         }
 
         // make episode number always two chars long
-        if (episode.length() == 1) {
-            season += "0";
+        if (episodeNumber < 10) {
+            result += "0";
         }
 
-        season += episode;
-        return season;
+        result += episodeNumber;
+        return result;
     }
 
     /**
@@ -674,20 +731,19 @@ public class Utils {
     }
 
     /**
-     * Put the TVDb season string in, get a full 'Season X' or 'Special
+     * Put the TVDb season number in, get a full 'Season X' or 'Special
      * Episodes' string out.
      * 
      * @param context
-     * @param season
+     * @param seasonNumber
      * @return
      */
-    public static String getSeasonString(Context context, String season) {
-        if (season.equals("0") || season.length() == 0) {
-            season = context.getString(R.string.specialseason);
+    public static String getSeasonString(Context context, int seasonNumber) {
+        if (seasonNumber == 0) {
+            return context.getString(R.string.specialseason);
         } else {
-            season = context.getString(R.string.season) + " " + season;
+            return context.getString(R.string.season) + " " + seasonNumber;
         }
-        return season;
     }
 
     /**
@@ -714,6 +770,65 @@ public class Utils {
             poster.setImageResource(R.drawable.show_generic);
             // Non-null tag means the view still needs to load it's data
             poster.setTag(path);
+        }
+    }
+
+    /**
+     * Run the notification service to display and (re)schedule upcoming episode
+     * alarms.
+     * 
+     * @param context
+     */
+    public static void runNotificationService(Context context) {
+        Intent i = new Intent(context, NotificationService.class);
+        context.startService(i);
+    }
+
+    public static String toSHA1(byte[] convertme) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-1");
+            byte[] b = md.digest(convertme);
+
+            String result = "";
+            for (int i = 0; i < b.length; i++) {
+                result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
+            }
+
+            return result;
+        } catch (NoSuchAlgorithmException e) {
+            Log.w(TAG, "Could not get SHA-1 message digest instance", e);
+        }
+        return null;
+    }
+
+    public enum SGChannel {
+        STABLE("com.battlelancer.seriesguide"), BETA("com.battlelancer.seriesguide.beta"), X(
+                "com.battlelancer.seriesguide.x");
+
+        String packageName;
+
+        private SGChannel(String packageName) {
+            this.packageName = packageName;
+        }
+    }
+
+    public static SGChannel getChannel(Context context) {
+        String thisPackageName = context.getApplicationContext().getPackageName();
+        if (thisPackageName.equals(SGChannel.BETA.packageName)) {
+            return SGChannel.BETA;
+        }
+        if (thisPackageName.equals(SGChannel.X.packageName)) {
+            return SGChannel.X;
+        }
+        return SGChannel.STABLE;
+    }
+
+    public static void setValueOrPlaceholder(View view, final String value) {
+        TextView field = (TextView) view;
+        if (value == null || value.length() == 0) {
+            field.setText(R.string.episode_unkownairdate);
+        } else {
+            field.setText(value);
         }
     }
 

@@ -32,6 +32,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -40,6 +41,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
+
+    private static final String TAG = "UpdateTask";
 
     private static final int UPDATE_SUCCESS = 100;
 
@@ -79,20 +82,22 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         mFailedShows = failedShows;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void onPreExecute() {
         // create a notification (holy crap is that a lot of code)
         String ns = Context.NOTIFICATION_SERVICE;
         mNotificationManager = (NotificationManager) mAppContext.getSystemService(ns);
 
-        int icon = R.drawable.ic_notification;
         CharSequence tickerText = mAppContext.getString(R.string.update_notification);
         long when = System.currentTimeMillis();
+        final int icon = R.drawable.ic_notification;
 
         mNotification = new Notification(icon, tickerText, when);
         mNotification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR
                 | Notification.FLAG_ONLY_ALERT_ONCE;
 
+        // content view
         RemoteViews contentView = new RemoteViews(mAppContext.getPackageName(),
                 R.layout.update_notification);
         contentView.setImageViewResource(R.id.image, icon);
@@ -100,6 +105,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         contentView.setProgressBar(R.id.progressbar, 0, 0, true);
         mNotification.contentView = contentView;
 
+        // content intent
         Intent notificationIntent = new Intent(mAppContext, ShowsActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(mAppContext, 0, notificationIntent,
                 0);
@@ -150,7 +156,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
         // actually update the shows
         for (int i = updateCount.get(); i < mShows.length; i++) {
-            // skip ahead if we get cancelled or connectivity is lost/forbidden
+            // skip ahead if we get cancelled or connectivity is
+            // lost/forbidden
             if (isCancelled()) {
                 resultCode = UPDATE_CANCELLED;
                 break;
@@ -167,14 +174,25 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             publishProgress(i, maxProgress);
 
             for (int itry = 0; itry < 2; itry++) {
-                try {
+                // skip ahead if we get cancelled or connectivity is
+                // lost/forbidden
+                if (isCancelled()) {
+                    resultCode = UPDATE_CANCELLED;
+                    break;
+                }
+                if (!Utils.isNetworkConnected(mAppContext)
+                        || (isAutoUpdateWlanOnly && !Utils.isWifiConnected(mAppContext))) {
+                    resultCode = UPDATE_OFFLINE;
+                    break;
+                }
 
+                try {
                     TheTVDB.updateShow(id, mAppContext);
                     break;
-
-                } catch (SAXException saxe) {
+                } catch (SAXException e) {
                     if (itry == 1) {
                         // failed twice, give up
+                        fireTrackerEvent(e.getMessage());
                         resultCode = UPDATE_ERROR;
                         addFailedShow(mCurrentShowName);
                     }
@@ -213,10 +231,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
     private int getTraktActivity(SharedPreferences prefs, int maxProgress, long currentTime,
             boolean isAutoUpdateWlanOnly) {
-        final boolean isTraktSyncEnabled = prefs.getBoolean(
-                SeriesGuidePreferences.KEY_INTEGRATETRAKT, true);
-
-        if (isTraktSyncEnabled && ShareUtils.isTraktCredentialsValid(mAppContext)) {
+        if (ShareUtils.isTraktCredentialsValid(mAppContext)) {
             // return if we get cancelled or connectivity is lost/forbidden
             if (isCancelled()) {
                 return UPDATE_CANCELLED;
@@ -236,6 +251,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             try {
                 manager = Utils.getServiceManagerWithAuth(mAppContext, false);
             } catch (Exception e) {
+                fireTrackerEvent(e.getMessage());
+                Log.w(TAG, e);
                 return UPDATE_ERROR;
             }
 
@@ -247,10 +264,15 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                         .user(Utils.getTraktUsername(mAppContext))
                         .types(ActivityType.Episode)
                         .actions(ActivityAction.Checkin, ActivityAction.Seen,
-                                ActivityAction.Scrobble).timestamp(startTimeTrakt).fire();
-            } catch (TraktException te) {
+                                ActivityAction.Scrobble, ActivityAction.Collection)
+                        .timestamp(startTimeTrakt).fire();
+            } catch (TraktException e) {
+                fireTrackerEvent(e.getMessage());
+                Log.w(TAG, e);
                 return UPDATE_ERROR;
-            } catch (ApiException ae) {
+            } catch (ApiException e) {
+                fireTrackerEvent(e.getMessage());
+                Log.w(TAG, e);
                 return UPDATE_ERROR;
             }
 
@@ -258,21 +280,29 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
             for (ActivityItem item : activity.activity) {
                 // check for null (potential fix for reported crash)
-                if (item.show != null) {
+                if (item.action != null && item.show != null) {
                     switch (item.action) {
                         case Seen: {
+                            // seen uses an array of episodes
                             List<TvShowEpisode> episodes = item.episodes;
-                            String showTvdbId = item.show.tvdbId;
                             for (TvShowEpisode episode : episodes) {
-                                addEpisodeOp(batch, episode, showTvdbId);
+                                addEpisodeSeenOp(batch, episode, item.show.tvdbId);
                             }
                             break;
                         }
                         case Checkin:
                         case Scrobble: {
+                            // checkin and scrobble use a single episode
                             TvShowEpisode episode = item.episode;
-                            String showTvdbId = item.show.tvdbId;
-                            addEpisodeOp(batch, episode, showTvdbId);
+                            addEpisodeSeenOp(batch, episode, item.show.tvdbId);
+                            break;
+                        }
+                        case Collection: {
+                            // collection uses an array of episodes
+                            List<TvShowEpisode> episodes = item.episodes;
+                            for (TvShowEpisode episode : episodes) {
+                                addEpisodeCollectedOp(batch, episode, item.show.tvdbId);
+                            }
                             break;
                         }
                     }
@@ -285,10 +315,12 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                         .applyBatch(SeriesContract.CONTENT_AUTHORITY, batch);
             } catch (RemoteException e) {
                 // Failed binder transactions aren't recoverable
+                fireTrackerEvent(e.getMessage());
                 throw new RuntimeException("Problem applying batch operation", e);
             } catch (OperationApplicationException e) {
                 // Failures like constraint violation aren't
                 // recoverable
+                fireTrackerEvent(e.getMessage());
                 throw new RuntimeException("Problem applying batch operation", e);
             }
 
@@ -318,23 +350,18 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         int length = 0;
         switch (result) {
             case UPDATE_SUCCESS:
-                AnalyticsUtils.getInstance(mAppContext).trackEvent("Shows", "Update Task",
-                        "Success", 0);
+                fireTrackerEvent("Success");
 
                 message = mAppContext.getString(R.string.update_success);
                 length = Toast.LENGTH_SHORT;
 
                 break;
             case UPDATE_ERROR:
-                AnalyticsUtils.getInstance(mAppContext).trackEvent("Shows", "Update Task",
-                        "SAX error", 0);
-
                 message = mAppContext.getString(R.string.update_saxerror);
                 length = Toast.LENGTH_LONG;
                 break;
             case UPDATE_OFFLINE:
-                AnalyticsUtils.getInstance(mAppContext).trackEvent("Shows", "Update Task",
-                        "Offline", 0);
+                fireTrackerEvent("Offline");
 
                 message = mAppContext.getString(R.string.update_offline);
                 length = Toast.LENGTH_LONG;
@@ -387,12 +414,24 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         mFailedShows += seriesName;
     }
 
-    private static void addEpisodeOp(final ArrayList<ContentProviderOperation> batch,
+    private static void addEpisodeSeenOp(final ArrayList<ContentProviderOperation> batch,
             TvShowEpisode episode, String showTvdbId) {
         batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodesOfShowUri(showTvdbId))
                 .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[] {
                         String.valueOf(episode.number), String.valueOf(episode.season)
                 }).withValue(Episodes.WATCHED, true).build());
+    }
+
+    private static void addEpisodeCollectedOp(ArrayList<ContentProviderOperation> batch,
+            TvShowEpisode episode, String showTvdbId) {
+        batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodesOfShowUri(showTvdbId))
+                .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[] {
+                        String.valueOf(episode.number), String.valueOf(episode.season)
+                }).withValue(Episodes.COLLECTED, true).build());
+    }
+
+    private void fireTrackerEvent(String message) {
+        AnalyticsUtils.getInstance(mAppContext).trackEvent(TAG, "Update result", message, 0);
     }
 
 }

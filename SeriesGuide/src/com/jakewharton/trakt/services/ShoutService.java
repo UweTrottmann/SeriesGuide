@@ -108,6 +108,7 @@ public class ShoutService extends TraktApiService {
         private static final String POST_SEASON = "season";
         private static final String POST_EPISODE = "episode";
         private static final String POST_SHOUT = "shout";
+        private static final String POST_SPOILER = "spoiler";
 
         private static final String URI = "/shout/episode/" + FIELD_API_KEY;
 
@@ -191,6 +192,17 @@ public class ShoutService extends TraktApiService {
             this.postParameter(POST_SHOUT, shout);
             return this;
         }
+        
+        /**
+         * Shout contains a spoiler
+         *
+         * @param spoiler Value.
+         * @return Builder instance.
+         */
+        public EpisodeBuilder spoiler(boolean spoiler) {
+            this.postParameter(POST_SPOILER, spoiler);
+            return this;
+        }
     }
     public static final class MovieBuilder extends TraktApiBuilder<Response> {
         private static final String POST_IMDB_ID = "imdb_id";
@@ -198,6 +210,7 @@ public class ShoutService extends TraktApiService {
         private static final String POST_TITLE = "title";
         private static final String POST_YEAR = "year";
         private static final String POST_SHOUT = "shout";
+        private static final String POST_SPOILER = "spoiler";
 
         private static final String URI = "/shout/movie/" + FIELD_API_KEY;
 
@@ -259,6 +272,17 @@ public class ShoutService extends TraktApiService {
             this.postParameter(POST_SHOUT, shout);
             return this;
         }
+        
+        /**
+         * Shout contains a spoiler
+         *
+         * @param spoiler Value.
+         * @return Builder instance.
+         */
+        public MovieBuilder spoiler(boolean spoiler) {
+            this.postParameter(POST_SPOILER, spoiler);
+            return this;
+        }
     }
     public static final class ShowBuilder extends TraktApiBuilder<Response> {
         private static final String POST_IMDB_ID = "imdb_id";
@@ -266,6 +290,7 @@ public class ShoutService extends TraktApiService {
         private static final String POST_TITLE = "title";
         private static final String POST_YEAR = "year";
         private static final String POST_SHOUT = "shout";
+        private static final String POST_SPOILER = "spoiler";
 
         private static final String URI = "/shout/show/" + FIELD_API_KEY;
 
@@ -325,6 +350,18 @@ public class ShoutService extends TraktApiService {
          */
         public ShowBuilder shout(String shout) {
             this.postParameter(POST_SHOUT, shout);
+            return this;
+        }
+        
+        
+        /**
+         * Shout contains a spoiler
+         *
+         * @param spoiler Value.
+         * @return Builder instance.
+         */
+        public ShowBuilder spoiler(boolean spoiler) {
+            this.postParameter(POST_SPOILER, spoiler);
             return this;
         }
     }

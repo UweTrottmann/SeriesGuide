@@ -9,8 +9,6 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -61,15 +59,33 @@ public class EpisodesFragment extends SherlockListFragment implements
 
     private SimpleCursorAdapter mAdapter;
 
-    public void fireTrackerEvent(String label) {
-        AnalyticsUtils.getInstance(getActivity()).trackEvent("Episodes", "Click", label, 0);
+    /**
+     * All values have to be integer.
+     */
+    public interface InitBundle {
+
+        String SHOW_TVDBID = "show_tvdbid";
+
+        String SEASON_TVDBID = "season_tvdbid";
+
+        String SEASON_NUMBER = "season_number";
+
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public static EpisodesFragment newInstance(int showId, int seasonId, int seasonNumber) {
+        EpisodesFragment f = new EpisodesFragment();
 
-        AnalyticsUtils.getInstance(getActivity()).trackPageView("/Episodes");
+        Bundle args = new Bundle();
+        args.putInt(InitBundle.SHOW_TVDBID, showId);
+        args.putInt(InitBundle.SEASON_TVDBID, seasonId);
+        args.putInt(InitBundle.SEASON_NUMBER, seasonNumber);
+        f.setArguments(args);
+
+        return f;
+    }
+
+    public void fireTrackerEvent(String label) {
+        AnalyticsUtils.getInstance(getActivity()).trackEvent("Episodes", "Click", label, 0);
     }
 
     @Override
@@ -80,6 +96,8 @@ public class EpisodesFragment extends SherlockListFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        AnalyticsUtils.getInstance(getActivity()).trackPageView("/Episodes");
 
         updatePreferences();
 
@@ -108,19 +126,17 @@ public class EpisodesFragment extends SherlockListFragment implements
                 // yes
                 if (columnIndex == EpisodesQuery.WATCHED) {
                     WatchedBox wb = (WatchedBox) view;
+                    wb.setChecked(cursor.getInt(columnIndex) > 0);
 
-                    // save rowid to hand over to OnClick event listener
-                    final String rowid = cursor.getString(EpisodesQuery._ID);
-
+                    final String episodeId = cursor.getString(EpisodesQuery._ID);
+                    final int episodeNumber = cursor.getInt(EpisodesQuery.NUMBER);
                     wb.setOnClickListener(new OnClickListener() {
 
                         public void onClick(View v) {
                             ((WatchedBox) v).toggle();
-                            markEpisode(rowid, ((WatchedBox) v).isChecked());
+                            onMarkEpisode(episodeId, episodeNumber, ((WatchedBox) v).isChecked());
                         }
                     });
-
-                    wb.setChecked(cursor.getInt(columnIndex) > 0);
 
                     return true;
                 } else if (columnIndex == EpisodesQuery.NUMBER) {
@@ -158,6 +174,18 @@ public class EpisodesFragment extends SherlockListFragment implements
         setHasOptionsMenu(true);
     }
 
+    private int getShowId() {
+        return getArguments().getInt(InitBundle.SHOW_TVDBID);
+    }
+
+    private int getSeasonId() {
+        return getArguments().getInt(InitBundle.SEASON_TVDBID);
+    }
+
+    private int getSeasonNumber() {
+        return getArguments().getInt(InitBundle.SEASON_NUMBER);
+    }
+
     /**
      * Convenience method for showDetails(episodeId) which looks up the episode
      * id in the list view at the given position.
@@ -165,9 +193,8 @@ public class EpisodesFragment extends SherlockListFragment implements
      * @param position
      */
     private void showDetails(int position) {
-        String episodeId = String.valueOf(getListView().getItemIdAtPosition(position));
         getListView().setItemChecked(position, true);
-        showDetails(episodeId);
+        showDetails(getListView().getItemIdAtPosition(position));
     }
 
     /**
@@ -176,15 +203,17 @@ public class EpisodesFragment extends SherlockListFragment implements
      * 
      * @param episodeId
      */
-    private void showDetails(String episodeId) {
+    private void showDetails(long episodeId) {
         if (mDualPane) {
             EpisodesActivity activity = (EpisodesActivity) getActivity();
-            activity.onChangePage(episodeId);
+            activity.onChangePage((int) episodeId);
         } else {
             Intent intent = new Intent();
             intent.setClass(getActivity(), EpisodeDetailsActivity.class);
-            intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_ID, episodeId);
+            intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, (int) episodeId);
             startActivity(intent);
+            getSherlockActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
+                    R.anim.fragment_slide_left_exit);
         }
     }
 
@@ -216,21 +245,26 @@ public class EpisodesFragment extends SherlockListFragment implements
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
-            case MARK_WATCHED_ID:
-                markEpisode(String.valueOf(info.id), true);
+            case MARK_WATCHED_ID: {
+                final Cursor items = (Cursor) mAdapter.getItem(info.position);
+                onMarkEpisode(String.valueOf(info.id), items.getInt(EpisodesQuery.NUMBER), true);
                 return true;
-            case MARK_UNWATCHED_ID:
-                markEpisode(String.valueOf(info.id), false);
+            }
+            case MARK_UNWATCHED_ID: {
+                final Cursor items = (Cursor) mAdapter.getItem(info.position);
+                onMarkEpisode(String.valueOf(info.id), items.getInt(EpisodesQuery.NUMBER), false);
                 return true;
+            }
             case MARK_UNTILHERE_ID: {
-                markUntilHere(String.valueOf(info.id));
+                onMarkUntilHere(String.valueOf(info.id));
                 return true;
             }
             case DELETE_EPISODE_ID:
                 getActivity().getContentResolver().delete(
                         Episodes.buildEpisodeUri(String.valueOf(info.id)), null, null);
                 getActivity().getContentResolver().notifyChange(
-                        Episodes.buildEpisodesOfSeasonWithShowUri(getSeasonId()), null);
+                        Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(getSeasonId())),
+                        null);
                 return true;
         }
         return super.onContextItemSelected(item);
@@ -257,12 +291,12 @@ public class EpisodesFragment extends SherlockListFragment implements
             case R.id.mark_all:
                 fireTrackerEvent("Mark all episodes");
 
-                markAllEpisodes(true);
+                onMarkAllEpisodes(true);
                 return true;
             case R.id.unmark_all:
                 fireTrackerEvent("Unmark all episodes");
 
-                markAllEpisodes(false);
+                onMarkAllEpisodes(false);
                 return true;
             case R.id.menu_epsorting:
                 fireTrackerEvent("Sort episodes");
@@ -283,11 +317,7 @@ public class EpisodesFragment extends SherlockListFragment implements
         showDetails(position);
     }
 
-    public String getSeasonId() {
-        return getArguments().getString(Seasons._ID);
-    }
-
-    private void markEpisode(final String episodeId, final boolean state) {
+    private void onMarkEpisode(final String episodeId, int episodeNumber, final boolean state) {
         final Activity activity = getActivity();
         if (activity != null) {
             new Thread(new Runnable() {
@@ -296,21 +326,22 @@ public class EpisodesFragment extends SherlockListFragment implements
                 }
             }).start();
         }
+        DBUtils.markSeenOnTrakt(activity, getShowId(), getSeasonNumber(), episodeNumber, state);
     }
 
-    private void markAllEpisodes(final boolean state) {
+    private void onMarkAllEpisodes(final boolean state) {
         final Activity activity = getActivity();
         if (activity != null) {
             new Thread(new Runnable() {
                 public void run() {
-                    DBUtils.markSeasonEpisodes(activity, getSeasonId(), state);
+                    DBUtils.markSeasonEpisodes(activity, String.valueOf(getSeasonId()), state);
                     activity.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
                 }
             }).start();
         }
     }
 
-    private void markUntilHere(final String episodeId) {
+    private void onMarkUntilHere(final String episodeId) {
         final Activity activity = getActivity();
         if (activity != null) {
             new Thread(new Runnable() {
@@ -326,9 +357,8 @@ public class EpisodesFragment extends SherlockListFragment implements
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-        return new CursorLoader(getActivity(),
-                Episodes.buildEpisodesOfSeasonWithShowUri(getSeasonId()), EpisodesQuery.PROJECTION,
-                null, null, sorting.query());
+        return new CursorLoader(getActivity(), Episodes.buildEpisodesOfSeasonWithShowUri(String
+                .valueOf(getSeasonId())), EpisodesQuery.PROJECTION, null, null, sorting.query());
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
@@ -342,7 +372,7 @@ public class EpisodesFragment extends SherlockListFragment implements
     interface EpisodesQuery {
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.WATCHED, Episodes.TITLE,
-                Episodes.NUMBER, Episodes.FIRSTAIREDMS, Episodes.DVDNUMBER, Shows.AIRSTIME
+                Episodes.NUMBER, Episodes.FIRSTAIREDMS, Episodes.DVDNUMBER
         };
 
         int _ID = 0;
@@ -357,7 +387,6 @@ public class EpisodesFragment extends SherlockListFragment implements
 
         int DVDNUMBER = 5;
 
-        int SHOW_AIRSTIME = 6;
     }
 
     public static class SortDialogFragment extends DialogFragment {

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/buttonbar"
+    android:layout_width="wrap_content"
+    android:layout_height="48dp"
+    android:layout_marginBottom="@dimen/default_padding" >
+
+    <Button
+        android:id="@+id/checkinButton"
+        style="@style/HoloCompatButton"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:nextFocusLeft="@+id/calendarButton"
+        android:text="@string/checkin" />
+
+    <ImageButton
+        android:id="@+id/watchedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/list_selector_holo_dark"
+        android:contentDescription="@string/togglewatched"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:src="@drawable/ic_action_watched" />
+
+    <ImageButton
+        android:id="@+id/collectedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/list_selector_holo_dark"
+        android:contentDescription="@string/collect"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:src="@drawable/ic_action_collect" />
+
+    <ImageButton
+        android:id="@+id/calendarButton"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/list_selector_holo_dark"
+        android:contentDescription="@string/addtocalendar"
+        android:nextFocusRight="@+id/checkinButton"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:src="@drawable/ic_action_calendar" />
+
+</LinearLayout>

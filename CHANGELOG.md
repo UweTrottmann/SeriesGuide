@@ -5,6 +5,67 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 2.6 *(2012-04-06)*
+--------------------------------
+
+* Exclusive SeriesGuide X feature: Notifications for favorite/starred shows.
+* Trakt.tv shouts: episode airing right now? Open Shouts and discuss it with other people.
+* One button to rule, ahem, check into trakt.tv and GetGlue.
+* Want to watch, but do not have the episode, yet? Mark episodes as 'collected' to keep track of your library.
+* With a trakt account marking single episodes as seen/collected is submitted to trakt. Other devices will sync automagically.
+* Search through a show's episodes inside its Overview screen.
+* Fixes, improvements and design refinements.
+
+### Detailed changes:
+
+#### 2.6.7beta (2012-04-06)
+
+* Update fetches recently collected episodes.
+* Shouts refresh automatically every 60 seconds. May the next Game of Thrones come :)
+* Some animations.
+
+#### 2.6.6beta (2012-04-04)
+
+* Marking single episodes as seen/collected is submitted to trakt if you setup your trakt account.
+* Sort search results by show, season and episode.
+
+#### 2.6.5beta (2012-03-30)
+
+* Searching from overview lists only episodes of the displayed show (suggestions are still for all shows).
+* Design refinements.
+* Better log output.
+
+#### 2.6.4beta (2012-03-26)
+
+* Rate and share shows.
+* Unified check in dialog.
+* New 'collected' property for episodes. Only on detail pages for now. (Database upgrade!)
+* Inline button bar.
+* Fix Auto-Update not working until first manual update.
+* Crash fixes, other minor improvements and changes.
+* Better error log output.
+* Icon updates.
+
+#### 2.6.2beta/2.6.3beta (2012-03-20)
+
+* Support for trakt.tv shouts.
+* Display ratings (Loves) from trakt.tv.
+* Content language chooser in welcome dialog.
+* Crash fixes, other minor improvements and changes.
+* Better offline handling.
+* Quick fix for jean-luc.
+
+#### 2.6.1beta (2012-03-15)
+
+* Notifications should now work correctly, are restored on reboot
+* Mark episodes seen immediately when marking seen on trakt
+* Some minor improvements.
+
+#### 2.6beta (2012-03-11)
+
+* Greatly improved time zone and summer time handling: update your shows!
+* Notifications about upcoming favorite shows, enabled by default
+
 Version 2.5.1 *(2012-03-28)*
 --------------------------------
 

@@ -16,7 +16,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class OAuthRequestTokenTask extends AsyncTask<Void, Void, String> {
-    final String TAG = getClass().getName();
+    final String TAG = "OAuthRequestTokenTask";
 
     private Context mContext;
 
@@ -46,12 +46,16 @@ public class OAuthRequestTokenTask extends AsyncTask<Void, Void, String> {
                             | Intent.FLAG_FROM_BACKGROUND);
             mContext.startActivity(intent);
         } catch (OAuthMessageSignerException e) {
+            Log.w(TAG, e);
             return e.getMessage();
         } catch (OAuthNotAuthorizedException e) {
+            Log.w(TAG, e);
             return e.getMessage();
         } catch (OAuthExpectationFailedException e) {
+            Log.w(TAG, e);
             return e.getMessage();
         } catch (OAuthCommunicationException e) {
+            Log.w(TAG, e);
             return e.getMessage();
         }
         return null;

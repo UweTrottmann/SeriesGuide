@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.getglueapi;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.Utils;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
@@ -22,6 +23,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -29,6 +31,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class GetGlue {
+
+    private static final String TAG = "GetGlue";
 
     private static final String GETGLUE_APIPATH_V2 = "http://api.getglue.com/v2/";
 
@@ -70,6 +74,8 @@ public class GetGlue {
 
         private static final int CHECKIN_FAILED = 1;
 
+        private static final int CHECKIN_OFFLINE = 2;
+
         private String mImdbId;
 
         private String mComment;
@@ -87,11 +93,15 @@ public class GetGlue {
 
         @Override
         protected Integer doInBackground(Void... params) {
+            if (!Utils.isNetworkConnected(mContext)) {
+                return CHECKIN_OFFLINE;
+            }
+
             final Resources res = mContext.getResources();
             try {
                 mComment = URLEncoder.encode(mComment, "UTF-8");
             } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+                Log.w(TAG, e);
                 mComment = e.getMessage();
                 return CHECKIN_FAILED;
             }
@@ -112,10 +122,13 @@ public class GetGlue {
             try {
                 consumer.sign(request);
             } catch (OAuthMessageSignerException e) {
+                Log.w(TAG, e);
                 return CHECKIN_FAILED;
             } catch (OAuthExpectationFailedException e) {
+                Log.w(TAG, e);
                 return CHECKIN_FAILED;
             } catch (OAuthCommunicationException e) {
+                Log.w(TAG, e);
                 return CHECKIN_FAILED;
             }
 
@@ -127,7 +140,9 @@ public class GetGlue {
                     return CHECKIN_SUCCESSFUL;
                 }
             } catch (ClientProtocolException e) {
+                Log.w(TAG, e);
             } catch (IOException e) {
+                Log.w(TAG, e);
             }
 
             return CHECKIN_FAILED;
@@ -147,6 +162,8 @@ public class GetGlue {
                     AnalyticsUtils.getInstance(mContext).trackEvent("Sharing", "GetGlue", mComment,
                             0);
                     break;
+                case CHECKIN_OFFLINE:
+                    Toast.makeText(mContext, R.string.offline, Toast.LENGTH_LONG).show();
             }
         }
 

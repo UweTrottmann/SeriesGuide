@@ -172,7 +172,7 @@ public class RateService extends TraktApiService {
         }
     }
     public static final class ShowBuilder extends TraktApiBuilder<RatingResponse> {
-        private static final String POST_TVDB_ID = "imdb_id";
+        private static final String POST_TVDB_ID = "tvdb_id";
         private static final String POST_TITLE = "title";
         private static final String POST_YEAR = "year";
         private static final String POST_RATING = "rating";

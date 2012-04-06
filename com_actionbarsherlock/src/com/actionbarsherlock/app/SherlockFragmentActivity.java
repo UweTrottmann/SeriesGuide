@@ -138,7 +138,7 @@ public abstract class SherlockFragmentActivity extends FragmentActivity implemen
         getSherlock().dispatchInvalidateOptionsMenu();
     }
 
-    protected void supportInvalidateOptionsMenu() {
+    public void supportInvalidateOptionsMenu() {
         if (DEBUG) Log.d(TAG, "[supportInvalidateOptionsMenu]");
 
         invalidateOptionsMenu();
@@ -276,13 +276,13 @@ public abstract class SherlockFragmentActivity extends FragmentActivity implemen
         if (DEBUG) Log.d(TAG, "[onMenuItemSelected] featureId: " + featureId + ", item: " + item);
 
         if (featureId == Window.FEATURE_OPTIONS_PANEL) {
-            boolean result = onOptionsItemSelected(item);
+            if (onOptionsItemSelected(item)) {
+                return true;
+            }
 
             //Dispatch to parent panel selection for fragment dispatching
             if (DEBUG) Log.d(TAG, "[onMenuItemSelected] dispatching to native with mule");
-            result |= super.onMenuItemSelected(featureId, new MenuItemMule(item));
-
-            return result;
+            return super.onMenuItemSelected(featureId, new MenuItemMule(item));
         }
         return false;
     }

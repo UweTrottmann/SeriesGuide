@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout style="@style/Dialog" >
+
+        <FrameLayout
+            android:id="@+id/shouts_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/labelRefresh" >
+
+            <LinearLayout
+                android:id="@+id/progress_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/list_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <ListView
+                    android:id="@+android:id/list"
+                    style="@style/ScrollingLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="@bool/gridClipToPadding"
+                    android:divider="@drawable/divider_horizontal_holo_dark"
+                    android:listSelector="@drawable/list_selector_holo_dark" >
+                </ListView>
+
+                <TextView
+                    android:id="@+android:id/empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/no_shouts" />
+            </FrameLayout>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/labelRefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/divider"
+            android:layout_centerHorizontal="true"
+            android:text="@string/autorefresh"
+            android:textSize="@dimen/text_size_xsmall" />
+
+        <include
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/shouttext"
+            layout="@layout/holodivider" />
+
+        <EditText
+            android:id="@+id/shouttext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/checkIsSpoiler"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/layout_padding"
+            android:layout_marginRight="@dimen/inline_padding"
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_toLeftOf="@+id/shoutbutton"
+            android:gravity="top"
+            android:hint="@string/shout_hint"
+            android:maxLength="2000"
+            android:maxLines="3" />
+
+        <ImageButton
+            android:id="@+id/shoutbutton"
+            style="@style/HoloCompatButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/shouttext"
+            android:layout_marginRight="@dimen/layout_padding"
+            android:contentDescription="@string/shout"
+            android:src="@drawable/ic_menu_send" />
+
+        <CheckBox
+            android:id="@+id/checkIsSpoiler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="@dimen/layout_padding"
+            android:layout_marginLeft="@dimen/layout_padding"
+            android:layout_marginRight="@dimen/layout_padding"
+            android:text="@string/isspoiler" />
+    </RelativeLayout>
+
+</FrameLayout>

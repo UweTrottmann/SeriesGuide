@@ -2,13 +2,17 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.widget.ShareActionProvider;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.Series;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ShareUtils.TraktRateDialogFragment;
+import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
@@ -17,7 +21,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ShareCompat;
+import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -28,7 +35,11 @@ import android.widget.Toast;
 public class ShowInfoActivity extends BaseActivity {
     public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
 
-    private String seriesid;
+    private IntentBuilder mShareIntentBuilder;
+
+    public interface InitBundle {
+        String SHOW_TVDBID = "tvdbid";
+    }
 
     /**
      * Google Analytics helper method for easy event tracking.
@@ -49,9 +60,6 @@ public class ShowInfoActivity extends BaseActivity {
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        Bundle extras = getIntent().getExtras();
-        seriesid = extras.getString(Shows._ID);
-
         fillData();
     }
 
@@ -62,37 +70,48 @@ public class ShowInfoActivity extends BaseActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getSupportMenuInflater();
+        inflater.inflate(R.menu.showinfo_menu, menu);
+
+        MenuItem shareItem = menu.findItem(R.id.menu_share);
+        ShareActionProvider shareActionProvider = (ShareActionProvider) shareItem
+                .getActionProvider();
+        shareActionProvider.setShareIntent(mShareIntentBuilder.getIntent());
+
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
-                // Navigate to the parent activity instead
-                final Intent intent = new Intent(this, OverviewActivity.class);
-                intent.putExtra(Shows._ID, seriesid);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                overridePendingTransition(R.anim.home_enter, R.anim.home_exit);
+            case android.R.id.home: {
+                navigateToOverview(getShowId());
                 return true;
+            }
+            case R.id.menu_rate_trakt: {
+                TraktRateDialogFragment newFragment = TraktRateDialogFragment
+                        .newInstance(getShowId());
+                newFragment.show(getSupportFragmentManager(), "traktratedialog");
+                return true;
+            }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    protected int getShowId() {
+        return getIntent().getExtras().getInt(InitBundle.SHOW_TVDBID);
     }
 
     private void fillData() {
         TextView seriesname = (TextView) findViewById(R.id.title);
         TextView overview = (TextView) findViewById(R.id.TextViewShowInfoOverview);
-        TextView actors = (TextView) findViewById(R.id.TextViewShowInfoActors);
         TextView airstime = (TextView) findViewById(R.id.TextViewShowInfoAirtime);
-        TextView contentrating = (TextView) findViewById(R.id.TextViewShowInfoContentRating);
-        TextView firstaired = (TextView) findViewById(R.id.TextViewShowInfoFirstAirdate);
-        TextView genres = (TextView) findViewById(R.id.TextViewShowInfoGenres);
         TextView network = (TextView) findViewById(R.id.TextViewShowInfoNetwork);
-        TextView rating = (TextView) findViewById(R.id.value);
-        TextView runtime = (TextView) findViewById(R.id.TextViewShowInfoRuntime);
         TextView status = (TextView) findViewById(R.id.TextViewShowInfoStatus);
         ImageView showart = (ImageView) findViewById(R.id.ImageViewShowInfoPoster);
-        View imdbButton = (View) findViewById(R.id.buttonShowInfoIMDB);
-        View tvdbButton = (View) findViewById(R.id.buttonTVDB);
 
-        final Series show = DBUtils.getShow(this, seriesid);
+        final Series show = DBUtils.getShow(this, String.valueOf(getShowId()));
         if (show == null) {
             finish();
         }
@@ -134,26 +153,30 @@ public class ShowInfoActivity extends BaseActivity {
 
         // first airdate
         long airtime = Utils.buildEpisodeAirtime(show.getFirstAired(), show.getAirsTime());
-        firstaired.setText(getString(R.string.show_firstaired) + " "
-                + Utils.formatToDate(airtime, this));
+        Utils.setValueOrPlaceholder(findViewById(R.id.TextViewShowInfoFirstAirdate),
+                Utils.formatToDate(airtime, this));
 
         // Others
-        actors.setText(getString(R.string.show_actors) + " "
-                + Utils.splitAndKitTVDBStrings(show.getActors()));
-        contentrating.setText(getString(R.string.show_contentrating) + " "
-                + show.getContentRating());
-        genres.setText(getString(R.string.show_genres) + " "
-                + Utils.splitAndKitTVDBStrings(show.getGenres()));
+        Utils.setValueOrPlaceholder(findViewById(R.id.TextViewShowInfoActors),
+                Utils.splitAndKitTVDBStrings(show.getActors()));
+        Utils.setValueOrPlaceholder(findViewById(R.id.TextViewShowInfoContentRating),
+                show.getContentRating());
+        Utils.setValueOrPlaceholder(findViewById(R.id.TextViewShowInfoGenres),
+                Utils.splitAndKitTVDBStrings(show.getGenres()));
+        Utils.setValueOrPlaceholder(findViewById(R.id.TextViewShowInfoRuntime), show.getRuntime()
+                + " " + getString(R.string.show_airtimeunit));
+
+        // TVDb rating
         String ratingText = show.getRating();
         if (ratingText != null && ratingText.length() != 0) {
             RatingBar ratingBar = (RatingBar) findViewById(R.id.bar);
             ratingBar.setProgress((int) (Double.valueOf(ratingText) / 0.1));
+            TextView rating = (TextView) findViewById(R.id.value);
             rating.setText(ratingText + "/10");
         }
-        runtime.setText(getString(R.string.show_runtime) + " " + show.getRuntime() + " "
-                + getString(R.string.show_airtimeunit));
 
         // IMDb button
+        View imdbButton = (View) findViewById(R.id.buttonShowInfoIMDB);
         final String imdbid = show.getImdbId();
         if (imdbButton != null) {
             imdbButton.setOnClickListener(new OnClickListener() {
@@ -179,6 +202,7 @@ public class ShowInfoActivity extends BaseActivity {
         }
 
         // TVDb button
+        View tvdbButton = (View) findViewById(R.id.buttonTVDB);
         final String tvdbId = show.getId();
         if (tvdbButton != null) {
             tvdbButton.setOnClickListener(new OnClickListener() {
@@ -191,12 +215,41 @@ public class ShowInfoActivity extends BaseActivity {
             });
         }
 
+        // Shout button
+        findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
+                        show.getSeriesName(), Integer.valueOf(tvdbId));
+
+                newFragment.show(getSupportFragmentManager(), "shouts-dialog");
+            }
+        });
+
+        // Share intent
+        mShareIntentBuilder = ShareCompat.IntentBuilder
+                .from(this)
+                .setChooserTitle(R.string.share)
+                .setText(
+                        getString(R.string.share_checkout) + " \"" + show.getSeriesName()
+                                + "\" via @SeriesGuide " + ShowInfoActivity.IMDB_TITLE_URL + imdbid)
+                .setType("text/plain");
+
         // Poster
         Bitmap bitmap = ImageCache.getInstance(this).get(show.getPoster());
         if (bitmap != null) {
             showart.setImageBitmap(bitmap);
         } else {
             showart.setImageBitmap(null);
+        }
+
+        // trakt ratings
+        TraktSummaryTask task = new TraktSummaryTask(this, findViewById(R.id.ratingbar))
+                .show(tvdbId);
+        if (Utils.isHoneycombOrHigher()) {
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            task.execute();
         }
     }
 }

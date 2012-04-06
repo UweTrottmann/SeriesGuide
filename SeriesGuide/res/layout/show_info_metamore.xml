@@ -10,28 +10,58 @@
     </include>
 
     <TextView
-        android:id="@+id/TextViewShowInfoGenres"
-        style="@style/SmallItems.WithSideMargins"
+        android:id="@+id/labelGenres"
+        style="@style/Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/show_genres" />
 
     <TextView
-        android:id="@+id/TextViewShowInfoActors"
-        style="@style/SmallItems.WithSideMargins"
+        android:id="@+id/TextViewShowInfoGenres"
+        style="@style/SmallItems.WithSideMargins" />
+
+    <TextView
+        android:id="@+id/labelActors"
+        style="@style/Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/show_actors" />
 
     <TextView
-        android:id="@+id/TextViewShowInfoContentRating"
-        style="@style/SmallItems.WithSideMargins"
+        android:id="@+id/TextViewShowInfoActors"
+        style="@style/SmallItems.WithSideMargins" />
+
+    <TextView
+        android:id="@+id/labelContentRating"
+        style="@style/Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/show_contentrating" />
 
     <TextView
-        android:id="@+id/TextViewShowInfoRuntime"
-        style="@style/SmallItems.WithSideMargins"
+        android:id="@+id/TextViewShowInfoContentRating"
+        style="@style/SmallItems.WithSideMargins" />
+
+    <TextView
+        android:id="@+id/labelRuntime"
+        style="@style/Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/show_runtime" />
 
     <TextView
-        android:id="@+id/TextViewShowInfoFirstAirdate"
-        style="@style/SmallItems.WithSideMargins"
+        android:id="@+id/TextViewShowInfoRuntime"
+        style="@style/SmallItems.WithSideMargins" />
+
+    <TextView
+        android:id="@+id/labelFirstAirdate"
+        style="@style/Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/show_firstaired" />
+
+    <TextView
+        android:id="@+id/TextViewShowInfoFirstAirdate"
+        style="@style/SmallItems.WithSideMargins" />
 
 </merge>

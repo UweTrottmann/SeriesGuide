@@ -5,7 +5,7 @@
         <item name="vpiCirclePageIndicatorStyle">@style/Widget.CirclePageIndicator</item>
         <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
-        <item name="vpiTabTextStyle">@style/Widget.TabPageIndicator.Text</item>
+        <item name="vpiTabTextStyle">@style/CustomTabPageIndicatorText</item>
     </style>
 
     <style name="Header">
@@ -31,6 +31,14 @@
         <item name="selectedBold">true</item>
     </style>
 
+    <style name="CustomTabPageIndicatorText">
+        <item name="android:textAppearance">@style/TextAppearance.TabPageIndicator</item>
+        <item name="android:textColor">@color/vpi__dark_theme</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
     <style name="Airdata">
         <item name="android:textSize">@dimen/text_size_xsmall</item>
         <item name="android:textColor">@color/text_dim</item>
@@ -49,6 +57,15 @@
     <style name="SmallItems.WithSideMargins">
         <item name="android:layout_marginLeft">@dimen/default_padding</item>
         <item name="android:layout_marginRight">@dimen/default_padding</item>
+    </style>
+
+    <style name="Label">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:layout_marginLeft">@dimen/default_padding</item>
+        <item name="android:layout_marginRight">@dimen/default_padding</item>
+        <item name="android:layout_marginTop">@dimen/inline_padding</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="ScrollingLayout">
@@ -73,6 +90,9 @@
     <style name="HoloCompatButton">
         <item name="android:background">@drawable/btn_default_holo_dark</item>
         <item name="android:textColor">@color/button_text</item>
+    </style>
+
+    <style name="HoloCompatButton.Small">
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:layout_width">wrap_content</item>
@@ -101,6 +121,11 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_gravity">fill</item>
+    </style>
+
+    <style name="Dialog">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
     </style>
 
 </resources>

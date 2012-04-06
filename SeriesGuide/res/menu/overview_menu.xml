@@ -2,48 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/menu_togglemark"
-        android:icon="@drawable/ic_action_seen"
+        android:id="@+id/menu_search"
+        android:icon="@drawable/ic_action_search"
         android:showAsAction="ifRoom"
-        android:title="@string/mark_episode"/>
+        android:title="@string/search_hint"/>
     <item
-        android:id="@+id/menu_quickshare"
+        android:id="@+id/menu_rate_trakt"
+        android:icon="@drawable/trakt_love_large"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_rate_trakt"/>
+    <item
+        android:id="@+id/menu_share"
         android:icon="@drawable/ic_action_share"
-        android:showAsAction="always"
-        android:title="@string/share_episode"/>
-    <item
-        android:id="@+id/menu_shareepisode"
-        android:icon="@drawable/ic_menu_share_holo_dark"
-        android:showAsAction="always"
-        android:title="@string/share_episode">
-        <menu>
-            <item
-                android:id="@+id/menu_checkin_getglue"
-                android:icon="@drawable/ic_getglue"
-                android:title="@string/menu_checkin_getglue"/>
-            <item
-                android:id="@+id/menu_checkin_trakt"
-                android:icon="@drawable/ic_trakt"
-                android:title="@string/menu_checkin_trakt"/>
-            <item
-                android:id="@+id/menu_markseen_trakt"
-                android:icon="@drawable/ic_trakt_seen"
-                android:title="@string/menu_markseen_trakt"/>
-            <item
-                android:id="@+id/menu_rate_trakt"
-                android:icon="@drawable/trakt_love_large"
-                android:title="@string/menu_rate_trakt"/>
-            <item
-                android:id="@+id/menu_share_others"
-                android:icon="@drawable/ic_action_share"
-                android:title="@string/menu_share_others"/>
-        </menu>
-    </item>
-    <item
-        android:id="@+id/menu_addevent"
-        android:icon="@drawable/ic_action_calendar"
         android:showAsAction="ifRoom"
-        android:title="@string/addtocalendar">
-    </item>
+        android:title="@string/share_episode"/>
 
 </menu>

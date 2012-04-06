@@ -20,39 +20,42 @@ package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.util.ActivityHelper;
+import com.battlelancer.seriesguide.R;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.KeyEvent;
 
 /**
- * A base activity that defers common functionality across app activities to an
- * {@link ActivityHelper}.
+ * A base activity that has some common functionality across app activities.
  */
 public abstract class BaseActivity extends SherlockFragmentActivity {
-    final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
     @Override
     public boolean onKeyLongPress(int keyCode, KeyEvent event) {
-        return mActivityHelper.onKeyLongPress(keyCode, event)
-                || super.onKeyLongPress(keyCode, event);
+        // always navigate back to the home activity
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            NavUtils.navigateUpTo(this,
+                    new Intent(Intent.ACTION_MAIN).setClass(this, ShowsActivity.class));
+            overridePendingTransition(R.anim.fragment_slide_right_enter,
+                    R.anim.fragment_slide_right_exit);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (getActivityHelper().onOptionsItemSelected(item)) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                overridePendingTransition(R.anim.fragment_slide_right_enter,
+                        R.anim.fragment_slide_right_exit);
+                return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Returns the {@link ActivityHelper} object associated with this activity.
-     */
-    protected ActivityHelper getActivityHelper() {
-        return mActivityHelper;
     }
 
     /**
@@ -95,5 +98,17 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
         intent.putExtras(arguments);
         intent.removeExtra("_uri");
         return intent;
+    }
+
+    /**
+     * Navigate to the overview activity of the given show.
+     * 
+     * @param showId
+     */
+    protected void navigateToOverview(int showId) {
+        final Intent intent = new Intent(this, OverviewActivity.class);
+        intent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, showId);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }

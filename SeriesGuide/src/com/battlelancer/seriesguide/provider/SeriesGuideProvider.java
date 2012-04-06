@@ -227,7 +227,7 @@ public class SeriesGuideProvider extends ContentProvider {
                     throw new IllegalArgumentException(
                             "selectionArgs must be provided for the Uri: " + uri);
                 }
-                return SeriesGuideDatabase.search(selectionArgs[0], db);
+                return SeriesGuideDatabase.search(selection, selectionArgs, db);
             }
             case SEARCH_SUGGEST: {
                 if (selectionArgs == null) {

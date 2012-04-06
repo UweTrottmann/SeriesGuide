@@ -9,10 +9,8 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.Utils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -58,12 +56,19 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     private SimpleCursorAdapter mAdapter;
 
-    public static SeasonsFragment newInstance(String showId) {
+    /**
+     * All values have to be integer.
+     */
+    public interface InitBundle {
+        String SHOW_TVDBID = "show_tvdbid";
+    }
+
+    public static SeasonsFragment newInstance(int showId) {
         SeasonsFragment f = new SeasonsFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
-        args.putString(BaseColumns._ID, showId);
+        args.putInt(InitBundle.SHOW_TVDBID, showId);
         f.setArguments(args);
 
         return f;
@@ -171,7 +176,16 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        showEpisodes(position, String.valueOf(id));
+        Intent intent = new Intent(getActivity(), EpisodesActivity.class);
+
+        final Cursor item = (Cursor) (getListView().getItemAtPosition(position));
+        final int seasonNumber = item.getInt(SeasonsQuery.COMBINED);
+        intent.putExtra(EpisodesActivity.InitBundle.SHOW_TVDBID, getShowId());
+        intent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, (int) id);
+        intent.putExtra(EpisodesActivity.InitBundle.SEASON_NUMBER, seasonNumber);
+        startActivity(intent);
+        getSherlockActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
+                R.anim.fragment_slide_left_exit);
     }
 
     private void fillData() {
@@ -180,7 +194,7 @@ public class SeasonsFragment extends SherlockListFragment implements
         };
         int[] to = new int[] {
                 R.id.TextViewSeasonListTitle, R.id.TextViewSeasonListWatchCount,
-                R.id.seasonProgress
+                R.id.season_row_root
         };
 
         mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.season_row, null, from, to,
@@ -262,22 +276,8 @@ public class SeasonsFragment extends SherlockListFragment implements
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
-    private String getShowId() {
-        return getArguments().getString(Shows._ID);
-    }
-
-    private void showEpisodes(int position, String seasonid) {
-        Intent intent = new Intent();
-        intent.setClass(getActivity(), EpisodesActivity.class);
-        intent.putExtra(Seasons._ID, seasonid);
-        intent.putExtra(Shows.REF_SHOW_ID, getShowId());
-
-        Cursor item = (Cursor) (getListView().getItemAtPosition(position));
-        String season = item.getString(item.getColumnIndexOrThrow(Seasons.COMBINED));
-        season = Utils.getSeasonString(getActivity(), season);
-
-        intent.putExtra(Intent.EXTRA_TITLE, season);
-        startActivity(intent);
+    private int getShowId() {
+        return getArguments().getInt(InitBundle.SHOW_TVDBID);
     }
 
     /**
@@ -289,7 +289,8 @@ public class SeasonsFragment extends SherlockListFragment implements
      */
     private void markSeasonEpisodes(long seasonid, boolean state) {
         DBUtils.markSeasonEpisodes(getActivity(), String.valueOf(seasonid), state);
-        Thread t = new UpdateUnwatchThread(getShowId(), String.valueOf(seasonid), true);
+        Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()), String.valueOf(seasonid),
+                true);
         t.start();
     }
 
@@ -303,8 +304,8 @@ public class SeasonsFragment extends SherlockListFragment implements
     private void markAllEpisodes(boolean state) {
         ContentValues values = new ContentValues();
         values.put(Episodes.WATCHED, state);
-        getActivity().getContentResolver().update(Episodes.buildEpisodesOfShowUri(getShowId()),
-                values, null, null);
+        getActivity().getContentResolver().update(
+                Episodes.buildEpisodesOfShowUri(String.valueOf(getShowId())), values, null, null);
         updateUnwatchedCounts(true);
     }
 
@@ -313,7 +314,7 @@ public class SeasonsFragment extends SherlockListFragment implements
      * the list afterwards.
      */
     protected void updateUnwatchedCounts(boolean updateOverview) {
-        Thread t = new UpdateUnwatchThread(getShowId(), updateOverview);
+        Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()), updateOverview);
         t.start();
     }
 
@@ -341,9 +342,11 @@ public class SeasonsFragment extends SherlockListFragment implements
                 return;
             }
 
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
             if (mSeasonId != null) {
                 // update one season
-                DBUtils.updateUnwatchedCount(context, mSeasonId);
+                DBUtils.updateUnwatchedCount(context, mSeasonId, prefs);
             } else {
                 // update all seasons of this show
                 final Cursor seasons = context.getContentResolver().query(
@@ -352,12 +355,14 @@ public class SeasonsFragment extends SherlockListFragment implements
                         }, null, null, null);
                 while (seasons.moveToNext()) {
                     String seasonId = seasons.getString(0);
-                    DBUtils.updateUnwatchedCount(context, seasonId);
+                    DBUtils.updateUnwatchedCount(context, seasonId, prefs);
+
+                    notifyContentProvider(context);
                 }
                 seasons.close();
             }
 
-            context.getContentResolver().notifyChange(Seasons.buildSeasonsOfShowUri(mShowId), null);
+            notifyContentProvider(context);
 
             if (mUpdateOverview) {
                 OverviewFragment overview = (OverviewFragment) context.getSupportFragmentManager()
@@ -366,6 +371,10 @@ public class SeasonsFragment extends SherlockListFragment implements
                     overview.onLoadEpisode();
                 }
             }
+        }
+
+        private void notifyContentProvider(final FragmentActivity context) {
+            context.getContentResolver().notifyChange(Seasons.buildSeasonsOfShowUri(mShowId), null);
         }
     }
 
@@ -380,8 +389,8 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-        return new CursorLoader(getActivity(), Seasons.buildSeasonsOfShowUri(getShowId()),
-                SeasonsQuery.PROJECTION, null, null, sorting.query());
+        return new CursorLoader(getActivity(), Seasons.buildSeasonsOfShowUri(String
+                .valueOf(getShowId())), SeasonsQuery.PROJECTION, null, null, sorting.query());
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {

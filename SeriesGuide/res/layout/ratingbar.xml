@@ -7,14 +7,23 @@
     android:layout_marginLeft="@dimen/default_padding"
     android:layout_marginRight="@dimen/default_padding" >
 
+    <TextView
+        android:id="@+id/tvdblabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="@dimen/inline_padding"
+        android:text="@string/tvdb"
+        android:textSize="@dimen/text_size_xmedium" />
+
     <RatingBar
         android:id="@+id/bar"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/tvdblabel"
         android:isIndicator="true"
         android:numStars="10"
         android:rating="0"
@@ -30,5 +39,47 @@
         android:layout_toRightOf="@id/bar"
         android:text="@string/norating"
         android:textSize="@dimen/text_size_xmedium" />
+
+    <LinearLayout
+        android:id="@+id/traktrating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bar"
+        android:layout_marginTop="@dimen/default_padding" >
+
+        <TextView
+            android:id="@+id/traktlabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/inline_padding"
+            android:text="@string/trakt"
+            android:textSize="@dimen/text_size_xmedium" />
+
+        <TextView
+            android:id="@+id/traktvalue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/inline_padding"
+            android:paddingBottom="2dp"
+            android:text="@string/notraktrating"
+            android:textSize="@dimen/text_size_xlarge" />
+
+        <ImageView
+            android:id="@+id/traktlove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/trakt_love_large" />
+
+        <TextView
+            android:id="@+id/traktvotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/inline_padding"
+            android:textSize="@dimen/text_size_xmedium" />
+    </LinearLayout>
 
 </RelativeLayout>

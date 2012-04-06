@@ -24,6 +24,7 @@ import android.os.AsyncTask;
 import android.os.RemoteException;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -39,6 +40,8 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
     private static final int FAILED_CREDENTIALS = 102;
 
     private static final int FAILED_API = 103;
+
+    private static final String TAG = "TraktSync";
 
     private FragmentActivity mContext;
 
@@ -98,9 +101,13 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             // get watched episodes from trakt
             shows = manager.userService().libraryShowsWatched(username).extended(ExtendedParam.Min)
                     .fire();
-        } catch (TraktException te) {
+        } catch (TraktException e) {
+            fireTrackerEventToSeriesGuide(e.getMessage());
+            Log.w(TAG, e);
             return FAILED_API;
         } catch (ApiException e) {
+            fireTrackerEventToSeriesGuide(e.getMessage());
+            Log.w(TAG, e);
             return FAILED_API;
         }
 
@@ -168,10 +175,12 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                                 batch);
                     } catch (RemoteException e) {
                         // Failed binder transactions aren't recoverable
+                        fireTrackerEventToSeriesGuide(e.getMessage());
                         throw new RuntimeException("Problem applying batch operation", e);
                     } catch (OperationApplicationException e) {
                         // Failures like constraint violation aren't
                         // recoverable
+                        fireTrackerEventToSeriesGuide(e.getMessage());
                         throw new RuntimeException("Problem applying batch operation", e);
                     }
 
@@ -260,9 +269,13 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                 if (mIsSyncingUnseen && builderUnseen != null) {
                     builderUnseen.fire();
                 }
-            } catch (TraktException te) {
+            } catch (TraktException e) {
+                fireTrackerEventToTrakt(e.getMessage());
+                Log.w(TAG, e);
                 return FAILED_API;
             } catch (ApiException e) {
+                fireTrackerEventToTrakt(e.getMessage());
+                Log.w(TAG, e);
                 return FAILED_API;
             }
         }
@@ -308,6 +321,14 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
         Toast.makeText(mContext, message, duration).show();
         restoreViewStates();
+    }
+
+    private void fireTrackerEventToTrakt(String message) {
+        AnalyticsUtils.getInstance(mContext).trackEvent(TAG, "SyncTo result", message, 0);
+    }
+
+    private void fireTrackerEventToSeriesGuide(String message) {
+        AnalyticsUtils.getInstance(mContext).trackEvent(TAG, "SyncFrom result", message, 0);
     }
 
     private void restoreViewStates() {

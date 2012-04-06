@@ -67,12 +67,12 @@ public class ListWidgetService extends RemoteViewsService {
             RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.appwidget_row);
 
             // episode description
-            String season = mUpcomingEpisodes.getString(UpcomingQuery.SEASON);
-            String number = mUpcomingEpisodes.getString(UpcomingQuery.NUMBER);
+            int seasonNumber = mUpcomingEpisodes.getInt(UpcomingQuery.SEASON);
+            int episodeNumber = mUpcomingEpisodes.getInt(UpcomingQuery.NUMBER);
             String title = mUpcomingEpisodes.getString(UpcomingQuery.TITLE);
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
             rv.setTextViewText(R.id.textViewWidgetEpisode,
-                    Utils.getNextEpisodeString(prefs, season, number, title));
+                    Utils.getNextEpisodeString(prefs, seasonNumber, episodeNumber, title));
 
             // relative airtime
             long airtime = mUpcomingEpisodes.getLong(UpcomingQuery.FIRSTAIREDMS);
@@ -106,8 +106,8 @@ public class ListWidgetService extends RemoteViewsService {
 
             // Set the fill-in intent for the list items
             Bundle extras = new Bundle();
-            extras.putString(EpisodeDetailsActivity.InitBundle.EPISODE_ID,
-                    mUpcomingEpisodes.getString(UpcomingQuery._ID));
+            extras.putInt(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID,
+                    mUpcomingEpisodes.getInt(UpcomingQuery._ID));
             Intent fillInIntent = new Intent();
             fillInIntent.putExtras(extras);
             rv.setOnClickFillInIntent(R.id.appwidget_row, fillInIntent);

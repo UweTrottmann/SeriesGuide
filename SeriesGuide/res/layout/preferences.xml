@@ -25,6 +25,12 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_content" >
+        
+        <CheckBoxPreference
+            android:defaultValue="True"
+            android:key="com.battlelancer.seriesguide.notifications"
+            android:summary="@string/pref_notificationssummary"
+            android:title="@string/pref_notifications" />
 
         <ListPreference
             android:defaultValue="latestfirst"
@@ -88,12 +94,6 @@
         <Preference
             android:key="com.battlelancer.seriesguide.trakt"
             android:title="@string/trakt" />
-
-        <CheckBoxPreference
-            android:defaultValue="True"
-            android:key="com.battlelancer.seriesguide.traktintegration"
-            android:summary="@string/pref_traktintegratesummary"
-            android:title="@string/pref_traktintegrate" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_more" >

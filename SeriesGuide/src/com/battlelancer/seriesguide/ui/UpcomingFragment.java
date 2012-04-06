@@ -134,15 +134,24 @@ public class UpcomingFragment extends ListFragment implements
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
-            case MARK_WATCHED_ID:
-                DBUtils.markEpisode(getActivity(), String.valueOf(info.id), true);
+            case MARK_WATCHED_ID: {
+                onMarkEpisode(info, true);
                 return true;
-
-            case MARK_UNWATCHED_ID:
-                DBUtils.markEpisode(getActivity(), String.valueOf(info.id), false);
+            }
+            case MARK_UNWATCHED_ID: {
+                onMarkEpisode(info, false);
                 return true;
+            }
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void onMarkEpisode(AdapterContextMenuInfo info, boolean isWatched) {
+        DBUtils.markEpisode(getActivity(), String.valueOf(info.id), isWatched);
+
+        Cursor items = (Cursor) mAdapter.getItem(info.position);
+        DBUtils.markSeenOnTrakt(getActivity(), items.getInt(UpcomingQuery.REF_SHOW_ID),
+                items.getInt(UpcomingQuery.SEASON), items.getInt(UpcomingQuery.NUMBER), isWatched);
     }
 
     private void setupAdapter() {
@@ -176,32 +185,33 @@ public class UpcomingFragment extends ListFragment implements
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        showDetails(String.valueOf(id));
+        showDetails((int) id);
     }
 
-    private void showDetails(String episodeId) {
+    private void showDetails(int episodeId) {
         if (mDualPane) {
             // Check if fragment is shown, create new if needed.
             EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
                     .findFragmentById(R.id.fragment_details);
-            if (detailsFragment == null
-                    || !detailsFragment.getEpisodeId().equalsIgnoreCase(episodeId)) {
+            if (detailsFragment == null || detailsFragment.getEpisodeId() != episodeId) {
                 // Make new fragment to show this selection.
                 detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true);
 
                 // Execute a transaction, replacing any existing
                 // fragment with this one inside the frame.
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_details, detailsFragment, "fragmentDetails");
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
+                ft.setCustomAnimations(R.anim.fragment_slide_right_enter,
+                        R.anim.fragment_slide_right_exit);
+                ft.replace(R.id.fragment_details, detailsFragment, "fragmentDetails").commit();
             }
 
         } else {
             Intent intent = new Intent();
             intent.setClass(getActivity(), EpisodeDetailsActivity.class);
-            intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_ID, episodeId);
+            intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, episodeId);
             startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
+                    R.anim.fragment_slide_left_exit);
         }
     }
 
@@ -254,7 +264,7 @@ public class UpcomingFragment extends ListFragment implements
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
                 Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIREDMS, Shows.TITLE,
-                Shows.AIRSTIME, Shows.NETWORK, Shows.POSTER
+                Shows.AIRSTIME, Shows.NETWORK, Shows.POSTER, Shows.REF_SHOW_ID
         };
 
         String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND " + Shows.HIDDEN + "=?";
@@ -288,6 +298,8 @@ public class UpcomingFragment extends ListFragment implements
         int SHOW_NETWORK = 8;
 
         int SHOW_POSTER = 9;
+
+        int REF_SHOW_ID = 10;
     }
 
     private class SlowAdapter extends SimpleCursorAdapter {
@@ -347,20 +359,24 @@ public class UpcomingFragment extends ListFragment implements
 
             // watched box
             // save rowid to hand over to OnClick event listener
-            final String rowid = mCursor.getString(UpcomingQuery._ID);
+            final int showId = mCursor.getInt(UpcomingQuery.REF_SHOW_ID);
+            final int seasonNumber = mCursor.getInt(UpcomingQuery.SEASON);
+            final String episodeId = mCursor.getString(UpcomingQuery._ID);
+            final int episodeNumber = mCursor.getInt(UpcomingQuery.NUMBER);
             viewHolder.watchedBox.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-                    ((WatchedBox) v).toggle();
-                    DBUtils.markEpisode(getActivity(), rowid, ((WatchedBox) v).isChecked());
+                    WatchedBox checkBox = (WatchedBox) v;
+                    checkBox.toggle();
+                    DBUtils.markEpisode(getActivity(), episodeId, checkBox.isChecked());
+                    DBUtils.markSeenOnTrakt(getActivity(), showId, seasonNumber, episodeNumber,
+                            checkBox.isChecked());
                 }
             });
             viewHolder.watchedBox.setChecked(mCursor.getInt(UpcomingQuery.WATCHED) > 0);
 
             // season and episode number
-            String episodeNumber = Utils.getEpisodeNumber(mPrefs,
-                    mCursor.getString(UpcomingQuery.SEASON),
-                    mCursor.getString(UpcomingQuery.NUMBER));
-            viewHolder.number.setText(episodeNumber);
+            String number = Utils.getEpisodeNumber(mPrefs, seasonNumber, episodeNumber);
+            viewHolder.number.setText(number);
 
             // airdate
             long airtime = mCursor.getLong(UpcomingQuery.FIRSTAIREDMS);

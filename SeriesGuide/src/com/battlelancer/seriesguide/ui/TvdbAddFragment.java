@@ -4,6 +4,7 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
 import org.xml.sax.SAXException;
@@ -85,6 +86,12 @@ public class TvdbAddFragment extends AddFragment {
     }
 
     protected void search() {
+        // nag about no connectivity
+        if (!Utils.isNetworkConnected(getSherlockActivity())) {
+            Toast.makeText(getSherlockActivity(), R.string.offline, Toast.LENGTH_LONG).show();
+            return;
+        }
+
         String query = mSearchBox.getText().toString().trim();
         if (query.length() == 0) {
             return;

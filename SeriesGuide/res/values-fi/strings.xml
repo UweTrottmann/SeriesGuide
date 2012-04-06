@@ -17,17 +17,26 @@
   <string name="norating">puuttuu</string>
   <string name="loading">Ladataan…</string>
   <string name="sending">Lähetetään…</string>
-  <string name="episode_firstaired">Esityspäivä:</string>
+  <string name="done">Valmis</string>
+  <string name="offline">Ei verkkoyhteyttä. Yritä myöhemmin uudelleen.</string>
+  <string name="onlyx">Saatavilla vain SeriesGuide X:ssä</string>
+  <string name="shouts">Huudahdukset</string>
+  <string name="shout_hint">Kirjoita huudahdus (englanniksi)</string>
+  <string name="shout">Huudahdus!</string>
+  <string name="isspoiler">Juonipaljastusvaroitus!</string>
+  <string name="no_shouts">Huudahda ensimmäisenä!</string>
+  <string name="shouts_for">Huudahdukset ohjelmalle %s</string>
+  <string name="episode_firstaired">Esityspäivä</string>
   <string name="episode_dvdnumber">DVD-jakso</string>
-  <string name="show_actors">Näyttelijät:</string>
-  <string name="show_firstaired">Ensiesitys:</string>
-  <string name="show_genres">Lajityypit:</string>
-  <string name="rating">Arvosana:</string>
-  <string name="show_runtime">Kesto:</string>
-  <string name="show_contentrating">Ikäsuositus:</string>
-  <string name="episode_directors">Ohjaajat:</string>
-  <string name="episode_gueststars">Vierailevat tähdet:</string>
-  <string name="episode_writers">Kirjoittajat:</string>
+  <string name="show_actors">Näyttelijät</string>
+  <string name="show_firstaired">Ensiesitys</string>
+  <string name="show_genres">Genret</string>
+  <string name="rating">Luokitus</string>
+  <string name="show_runtime">Kesto</string>
+  <string name="show_contentrating">Sisällön luokitus</string>
+  <string name="episode_directors">Ohjaajat</string>
+  <string name="episode_gueststars">Vierailevat tähdet</string>
+  <string name="episode_writers">Kirjoittajat</string>
   <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Jatkuu</string>
   <string name="show_isnotalive">Päättynyt</string>
@@ -45,6 +54,14 @@
   <string name="mark_all">Kaikki katsottu</string>
   <string name="unmark_all">Kaikki katsomattomia</string>
   <string name="mark_untilhere">Kaikki aiemmin esitetyt katsottu</string>
+  <string name="collect">Kerätty jakso</string>
+  <string name="uncollect">Vielä keräämätön jakso</string>
+  <string name="trakt_submitfailed">Ei lähetetty traktiin. Yritä myöhemmin uudelleen.</string>
+  <string name="trakt_submitsuccess">Lähetetty traktiin.</string>
+  <string name="trakt_seen">%s katsottu.</string>
+  <string name="trakt_notseen">%s ei ole katsottu.</string>
+  <string name="trakt_collected">%s kerätty.</string>
+  <string name="trakt_notcollected">%s ei ole kerätty.</string>
   <string name="shows_empty">Ei ohjelmia täällä.</string>
   <string name="confirm_delete">Haluatko varmasti poistää tämän ohjelman?</string>
   <string name="delete_show">Poista</string>
@@ -128,8 +145,6 @@
   <string name="pref_languagesummary">Käännöksiä ei ole saatavilla kaikille ohjelmille</string>
   <string name="pref_number">Lukumuoto</string>
   <string name="pref_numbersummary">Valitse 1x01, S01E01 tai s01e01</string>
-  <string name="pref_usetz">Käytä aikavyöhykettäsi</string>
-  <string name="pref_usetzsummary">Asettaa ajan aikavyöhykkeellesi (Yhdysvaltojen ulkopuolisille)</string>
   <string name="pref_offset">Manuaalinen ajansiirto</string>
   <string name="pref_offsetsummary">Siirrä esityspäiviä tietyllä tuntimäärällä</string>
   <string name="pref_autoupdate">Ota automaattiset päivitykset käyttöön</string>
@@ -143,8 +158,6 @@
   <string name="pref_trakt">trakt.tv:n käyttäjätiedot</string>
   <string name="pref_traktsummary">Lisää tai muokkaa trakt.tv:n käyttäjätietojasi</string>
   <string name="pref_traktsync">Synkronoi trakt.tv:ssä</string>
-  <string name="pref_traktintegrate">Integroi trakt.tv</string>
-  <string name="pref_traktintegratesummary">Nouda toiminta traktista päivitettäessä</string>
   <string name="donate">Tarjoa drinkki kehittäjälle (Paypal)</string>
   <string name="feedback">Lähetä palautetta</string>
   <string name="pref_advanced">Lisäasetukset</string>
@@ -186,18 +199,17 @@
   <string name="seasons">Kaudet</string>
   <string name="cancel">Peruuta</string>
   <string name="share">Jaa</string>
-  <string name="menu_checkin_getglue">Kuittaa (GetGlue)</string>
-  <string name="menu_checkin_trakt">Kuittaa (trakt)</string>
+  <string name="checkin">Kirjaus</string>
+  <string name="checkin_hint">Kirjoita viesti (valinnainen)</string>
+  <string name="paste_episode">Liitä jakso</string>
+  <string name="checkinsuccess">GetGluen kirjaus onnistui.</string>
+  <string name="checkinfailed">GetGluen kirjaus epäonnistui. Yritä irrottautua GetGluesta.</string>
+  <string name="getglue_authfailed">GetGluen todentaminen epäonnistui. Yritä myöhemmin uudelleen.</string>
   <string name="menu_markseen_trakt">Merkitse katsotuksi (trakt)</string>
   <string name="menu_rate_trakt">Arvostele (trakt)</string>
   <string name="menu_share_others">Muulla sovelluksella</string>
-  <string name="done">Valmis</string>
-  <string name="checkin">Kuittaa</string>
-  <string name="comment">Kirjauskommentti</string>
-  <string name="checkinsuccess">Kuittaaminen onnistui.</string>
-  <string name="checkin_impossible">Tähän ohjelmaan ei voi kuitata.</string>
   <string name="traktcheckin_cancel">Peruuta se</string>
-  <string name="traktcheckin_inprogress">Kuittaaminen on jo käynnissä. Joko peruuta tämä kuittaaminen tai odota %s ennen kuin voit kuittaat uudelleen.</string>
+  <string name="traktcheckin_inprogress">Kuittaaminen on jo käynnissä. Joko peruuta tämä kuittaaminen tai odota %s ennen kuin voit kuitata uudelleen.</string>
   <string name="traktcheckin_wait">Odotetaan</string>
   <string name="oauthmessage">Todennetaan SeriesGuide palveluun GetGlue…</string>
   <string name="addtocalendar">Lisää kalenteriin</string>
@@ -208,9 +220,8 @@
   <string name="waitplease">Hetkinen, olkaa hyvä…</string>
   <string name="connect">Yhdistä</string>
   <string name="disconnect">Katkaise yhteys</string>
-  <string name="trakt_success">Onnistuneesti välitetty traktille</string>
+  <string name="trakt_success">trakt-toiminta onnistui</string>
   <string name="trakt_error">Vuorovaikutus traktin kanssa epäonnistui</string>
-  <string name="trakt_seen">merkitty katsotuksi</string>
   <string name="trakt_decryptfail">Salasanaa ei voitu purkaa</string>
   <string name="trakt_generalerror">Jokin meni pieleen. Tarkista käyttäjätietosi ja yritä uudelleen.</string>
   <string name="love">Maailman parasta!</string>
@@ -222,11 +233,19 @@
   <string name="trakt_syncunseen">Synkronoi katsomattomat jaksot</string>
   <string name="welcome_message"><big>Käytön aloittaminen</big></string>
   <string name="welcome_text">Tervetuloa!</string>
+  <string name="welcome_language">Valitse ensisijainen kieli sisällölle:</string>
+  <string name="welcome_setuplanguage">Valitse kieli</string>
   <string name="welcome_setuptrakt">Yhdistä traktiin</string>
   <string name="welcome_traktmessage">Pääse käsiksi trakt.tv:n kirjastoosi ja ystäviesi toimintaan SeriesGuidella:</string>
   <string name="dismiss">Hylkää</string>
+  <string name="upcoming_show">%s on tulossa</string>
+  <string name="upcoming_episodes">Uusia jaksoja tulossa</string>
+  <string name="upcoming_show_detailed">%1$s kanavalla %2$s</string>
+  <string name="upcoming_display">Valitse näyttääksesi tulevat ohjelmat</string>
+  <string name="pref_notifications">Ilmoitukset</string>
+  <string name="pref_notificationssummary">Ilmoita pian esitettävistä suosikkiohjelmista</string>
   <string name="download_stable">Lataa SeriesGuide</string>
-  <string name="betawarning">Tämä julkaisu on vain beeta-testaajille! Jos olet epävarma, lataa vakaaversio alhaalta.\n\nJos haluat auttaa testaamisessa, katso <a href="http://git.io/sgbetachanges">viimeisimmät muutokset</a>.\n\n Ilmoita jokaisesta kaatumisesta, kokeile kaikkea ja lähetä palautetta.</string>
+  <string name="betawarning"><b>Varoitus!</b> Tämä julkaisu on vain beeta-testaajille! Jos epäröit, lataa vakaa versio alta.</string>
   <string-array name="shsorting">
     <item>A - Ö</item>
     <item>Seuraava jakso</item>
@@ -259,4 +278,8 @@
     <item>Katsomattomat/Tulevat</item>
     <item>Piilotetut</item>
   </string-array>
+  <plurals name="votes">
+    <item quantity="one">%d ääni</item>
+    <item quantity="other">%d ääntä</item>
+  </plurals>
 </resources>

@@ -50,6 +50,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // update each of the widgets with the remote adapter
@@ -81,7 +82,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
 
             // Create intents for items to launch an EpisodeDetailsActivity
             Intent itemIntent = new Intent(context, EpisodeDetailsActivity.class);
-            PendingIntent pendingIntentTemplate = PendingIntent.getActivity(context, 0, itemIntent,
+            PendingIntent pendingIntentTemplate = PendingIntent.getActivity(context, 1, itemIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT);
             rv.setPendingIntentTemplate(R.id.list_view, pendingIntentTemplate);
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/season_row_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:padding="@dimen/default_padding" >
 
     <TextView
@@ -10,35 +10,36 @@
         style="@style/ListHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Special Episodes" />
+        android:text="@string/season" />
 
-    <LinearLayout
-        android:id="@+id/seasonProgress"
+    <ProgressBar
+        android:id="@+id/seasonProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TextViewSeasonListTitle"
+        android:progressDrawable="@drawable/progress_horizontal_holo_dark" >
+    </ProgressBar>
 
-        <ProgressBar
-            android:id="@+id/seasonProgressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:progressDrawable="@drawable/progress_horizontal_holo_dark" >
-        </ProgressBar>
-
-        <TextView
-            android:id="@+id/seasonProgressText"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_padding"
-            android:text="n/a" >
-        </TextView>
-    </LinearLayout>
+    <TextView
+        android:id="@+id/seasonProgressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/seasonProgressBar"
+        android:layout_marginLeft="@dimen/default_padding"
+        android:text="n/a"
+        android:textSize="@dimen/text_size_xsmall" >
+    </TextView>
 
     <TextView
         android:id="@+id/TextViewSeasonListWatchCount"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="20 episodes not watched" />
+        android:layout_below="@+id/seasonProgressBar"
+        android:layout_toLeftOf="@+id/seasonProgressText"
+        android:text="@string/episode_notwatched"
+        android:textAllCaps="true"
+        android:textSize="@dimen/text_size_xsmall" />
 
-</LinearLayout>
+</RelativeLayout>

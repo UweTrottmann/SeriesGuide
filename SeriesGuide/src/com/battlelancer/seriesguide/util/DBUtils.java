@@ -1,7 +1,7 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
@@ -11,6 +11,10 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.thetvdbapi.ImageCache;
+import com.jakewharton.apibuilder.ApiException;
+import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.TraktException;
+import com.jakewharton.trakt.services.ShowService;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
@@ -20,9 +24,12 @@ import android.content.OperationApplicationException;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,58 +45,67 @@ public class DBUtils {
      */
     public static final String UNKNOWN_NEXT_AIR_DATE = "9223372036854775807";
 
+    interface UnwatchedQuery {
+        static final String[] PROJECTION = new String[] {
+            Episodes._ID
+        };
+
+        static final String NOAIRDATE_SELECTION = Episodes.WATCHED + "=? AND "
+                + Episodes.FIRSTAIREDMS + "=?";
+
+        static final String FUTURE_SELECTION = Episodes.WATCHED + "=? AND " + Episodes.FIRSTAIREDMS
+                + ">?";
+
+        static final String AIRED_SELECTION = Episodes.WATCHED + "=? AND " + Episodes.FIRSTAIREDMS
+                + " !=? AND " + Episodes.FIRSTAIREDMS + "<=?";
+    }
+
     /**
      * Looks up the episodes of a given season and stores the count of already
      * aired, but not watched ones in the seasons watchcount.
      * 
+     * @param context
      * @param seasonid
+     * @param prefs
      */
-    public static void updateUnwatchedCount(Context context, String seasonid) {
-        ContentResolver resolver = context.getContentResolver();
-        Date date = new Date();
-        String today = Constants.theTVDBDateFormat.format(date);
-        Uri episodesOfSeasonUri = Episodes.buildEpisodesOfSeasonUri(seasonid);
+    public static void updateUnwatchedCount(Context context, String seasonid,
+            SharedPreferences prefs) {
+        final ContentResolver resolver = context.getContentResolver();
+        final String fakenow = String.valueOf(Utils.getFakeCurrentTime(prefs));
+        final Uri episodesOfSeasonUri = Episodes.buildEpisodesOfSeasonUri(seasonid);
 
         // all a seasons episodes
-        Cursor total = resolver.query(episodesOfSeasonUri, new String[] {
+        final Cursor total = resolver.query(episodesOfSeasonUri, new String[] {
             Episodes._ID
         }, null, null, null);
         final int totalcount = total.getCount();
         total.close();
 
         // unwatched, aired episodes
-        String selection = Episodes.WATCHED + "=? AND " + Episodes.FIRSTAIRED + " like '%-%'"
-                + " AND " + Episodes.FIRSTAIRED + "<=?";
-        Cursor unwatched = resolver.query(episodesOfSeasonUri, new String[] {
-            Episodes._ID
-        }, selection, new String[] {
-                "0", today
-        }, null);
+        final Cursor unwatched = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
+                UnwatchedQuery.AIRED_SELECTION, new String[] {
+                        "0", "-1", fakenow
+                }, null);
         final int count = unwatched.getCount();
         unwatched.close();
 
         // unwatched, aired in the future episodes
-        selection = Episodes.WATCHED + "=? AND " + Episodes.FIRSTAIRED + ">?";
-        Cursor unaired = resolver.query(episodesOfSeasonUri, new String[] {
-            Episodes._ID
-        }, selection, new String[] {
-                "0", today
-        }, null);
+        final Cursor unaired = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
+                UnwatchedQuery.FUTURE_SELECTION, new String[] {
+                        "0", fakenow
+                }, null);
         final int unaired_count = unaired.getCount();
         unaired.close();
 
         // unwatched, no airdate
-        selection = Episodes.WATCHED + "=? AND " + Episodes.FIRSTAIRED + "=?";
-        Cursor noairdate = resolver.query(episodesOfSeasonUri, new String[] {
-            Episodes._ID
-        }, selection, new String[] {
-                "0", ""
-        }, null);
-
+        final Cursor noairdate = resolver.query(episodesOfSeasonUri, UnwatchedQuery.PROJECTION,
+                UnwatchedQuery.NOAIRDATE_SELECTION, new String[] {
+                        "0", "-1"
+                }, null);
         final int noairdate_count = noairdate.getCount();
         noairdate.close();
 
-        ContentValues update = new ContentValues();
+        final ContentValues update = new ContentValues();
         update.put(Seasons.WATCHCOUNT, count);
         update.put(Seasons.UNAIREDCOUNT, unaired_count);
         update.put(Seasons.NOAIRDATECOUNT, noairdate_count);
@@ -183,24 +199,213 @@ public class DBUtils {
     }
 
     /**
-     * Marks the next episode (if there is one) of this show as watched.
+     * Mark an episode as seen/unseen on trakt using an AsyncTask.
      * 
-     * @param seriesid
+     * @param context
+     * @param showId
+     * @param seasonNumber
+     * @param episodeNumber
+     * @param isSeen
      */
-    public static void markNextEpisode(Context context, long seriesid) {
+    public static void markSeenOnTrakt(final Context context, int showId, int seasonNumber,
+            int episodeNumber, boolean isSeen) {
+        markEpisodeOnTrakt(context, showId, seasonNumber, episodeNumber, isSeen,
+                TraktAction.WATCHED);
+    }
+
+    /**
+     * Mark an episode as collected/not collected on trakt using an AsyncTask.
+     * 
+     * @param context
+     * @param showId
+     * @param seasonNumber
+     * @param episodeNumber
+     * @param isCollected
+     */
+    public static void markCollectedOnTrakt(final Context context, int showId, int seasonNumber,
+            int episodeNumber, boolean isCollected) {
+        markEpisodeOnTrakt(context, showId, seasonNumber, episodeNumber, isCollected,
+                TraktAction.LIBRARY);
+    }
+
+    private enum TraktAction {
+        WATCHED, LIBRARY
+    }
+
+    private static void markEpisodeOnTrakt(final Context context, final int tvdbId,
+            final int season, final int episode, final boolean isAdd, final TraktAction actiontype) {
+        // check for valid credentials here, not worth building up a whole
+        // AsyncTask to do that
+        if (!ShareUtils.isTraktCredentialsValid(context)) {
+            return;
+        }
+
+        new AsyncTask<Void, Void, Integer>() {
+            private static final int FAILED = -1;
+
+            private static final int OFFLINE = -2;
+
+            private static final int SUCCESS = 0;
+
+            @Override
+            protected Integer doInBackground(Void... params) {
+                // check for network connection
+                if (!Utils.isNetworkConnected(context)) {
+                    return OFFLINE;
+                }
+
+                try {
+                    ServiceManager manager = Utils.getServiceManagerWithAuth(context, false);
+                    ShowService showService = manager.showService();
+
+                    switch (actiontype) {
+                        case WATCHED: {
+                            if (isAdd) {
+                                showService.episodeSeen(tvdbId).episode(season, episode).fire();
+                            } else {
+                                showService.episodeUnseen(tvdbId).episode(season, episode).fire();
+                            }
+                            break;
+                        }
+                        case LIBRARY: {
+                            if (isAdd) {
+                                showService.episodeLibrary(tvdbId).episode(season, episode).fire();
+                            } else {
+                                showService.episodeUnlibrary(tvdbId).episode(season, episode)
+                                        .fire();
+                            }
+                            break;
+                        }
+                    }
+
+                } catch (TraktException e) {
+                    fireTrackerEvent(e.getMessage());
+                    Log.w(ShareUtils.TAG, e);
+                    return FAILED;
+                } catch (ApiException e) {
+                    fireTrackerEvent(e.getMessage());
+                    Log.w(ShareUtils.TAG, e);
+                    return FAILED;
+                } catch (Exception e) {
+                    // password could likely not be decrypted
+                    fireTrackerEvent(e.getMessage());
+                    Log.w(ShareUtils.TAG, e);
+                    return FAILED;
+                }
+
+                return SUCCESS;
+            }
+
+            protected void onPostExecute(Integer result) {
+                int message = 0;
+                switch (actiontype) {
+                    case WATCHED:
+                        if (isAdd) {
+                            message = R.string.trakt_seen;
+                        } else {
+                            message = R.string.trakt_notseen;
+                        }
+                        break;
+                    case LIBRARY:
+                        if (isAdd) {
+                            message = R.string.trakt_collected;
+                        } else {
+                            message = R.string.trakt_notcollected;
+                        }
+                        break;
+                }
+
+                int status = 0;
+                int duration = 0;
+                switch (result) {
+                    case SUCCESS: {
+                        status = R.string.trakt_submitsuccess;
+                        duration = Toast.LENGTH_SHORT;
+                        break;
+                    }
+                    case FAILED: {
+                        status = R.string.trakt_submitfailed;
+                        duration = Toast.LENGTH_LONG;
+                        break;
+                    }
+                    case OFFLINE: {
+                        status = R.string.offline;
+                        duration = Toast.LENGTH_LONG;
+                        break;
+                    }
+                }
+
+                final SharedPreferences prefs = PreferenceManager
+                        .getDefaultSharedPreferences(context);
+                final String number = Utils.getEpisodeNumber(prefs, season, episode);
+                Toast.makeText(context,
+                        context.getString(message, number) + " " + context.getString(status),
+                        duration).show();
+            }
+
+            private void fireTrackerEvent(String message) {
+                AnalyticsUtils.getInstance(context).trackEvent("MarkTask", "Mark result", message,
+                        0);
+            }
+
+        }.execute();
+    }
+
+    /**
+     * Updates the {@link Episodes} COLLECTED column with the given value.
+     * 
+     * @param rowid
+     * @param state
+     */
+    public static void collectEpisode(Context context, String episodeId, boolean isCollected) {
+        if (context == null) {
+            return;
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(Episodes.COLLECTED, isCollected);
+
+        context.getContentResolver()
+                .update(Episodes.buildEpisodeUri(episodeId), values, null, null);
+        context.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
+    }
+
+    /**
+     * Marks the next episode (if there is one) of the given show as watched.
+     * Submits it to trakt if possible.
+     * 
+     * @param showId
+     */
+    public static void markNextEpisode(Context context, long showId) {
+        // get id of next episode
         Cursor show = context.getContentResolver().query(
-                Shows.buildShowUri(String.valueOf(seriesid)), new String[] {
+                Shows.buildShowUri(String.valueOf(showId)), new String[] {
                     Shows.NEXTEPISODE
                 }, null, null, null);
-        show.moveToFirst();
-        ContentValues values = new ContentValues();
-        values.put(Episodes.WATCHED, true);
-        String episodeid = show.getString(show.getColumnIndexOrThrow(Shows.NEXTEPISODE));
-        if (episodeid.length() != 0) {
-            context.getContentResolver().update(Episodes.buildEpisodeUri(episodeid), values, null,
-                    null);
+
+        if (show != null && show.moveToFirst()) {
+            final String episodeId = show.getString(0);
+            show.close();
+
+            if (episodeId.length() != 0) {
+                // mark it as watched
+                ContentValues values = new ContentValues();
+                values.put(Episodes.WATCHED, true);
+                context.getContentResolver().update(Episodes.buildEpisodeUri(episodeId), values,
+                        null, null);
+
+                // submit that to trakt
+                Cursor episode = context.getContentResolver().query(
+                        Episodes.buildEpisodeUri(episodeId), new String[] {
+                                Episodes.SEASON, Episodes.NUMBER, Shows.REF_SHOW_ID
+                        }, null, null, null);
+                if (episode != null && episode.moveToFirst()) {
+                    DBUtils.markSeenOnTrakt(context, episode.getInt(2), episode.getInt(0),
+                            episode.getInt(1), true);
+                    episode.close();
+                }
+            }
         }
-        show.close();
     }
 
     /**
@@ -251,7 +456,7 @@ public class DBUtils {
      * Fetches the row to a given show id and returns the results an Series
      * object. Returns {@code null} if there is no show with that id.
      * 
-     * @param seriesid
+     * @param show tvdb id
      * @return
      */
     public static Series getShow(Context context, String showId) {
@@ -538,8 +743,8 @@ public class DBUtils {
             unwatched.moveToFirst();
 
             // nexttext (0x12 Episode)
-            final String season = unwatched.getString(NextEpisodeQuery.SEASON);
-            final String number = unwatched.getString(NextEpisodeQuery.NUMBER);
+            final int season = unwatched.getInt(NextEpisodeQuery.SEASON);
+            final int number = unwatched.getInt(NextEpisodeQuery.NUMBER);
             final String title = unwatched.getString(NextEpisodeQuery.TITLE);
             final String nextEpisodeString = Utils.getNextEpisodeString(prefs, season, number,
                     title);
