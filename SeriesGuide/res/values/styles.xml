@@ -8,11 +8,19 @@
         <item name="vpiTabTextStyle">@style/CustomTabPageIndicatorText</item>
         <item name="actionBarStyle">@style/ActionBar</item>
         <item name="android:actionBarStyle">@style/ActionBar</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="actionBarItemBackground">@drawable/list_selector_holo_dark</item>
+        <item name="android:actionBarItemBackground">@drawable/list_selector_holo_dark</item>
     </style>
 
     <style name="ActionBar" parent="Widget.Sherlock.ActionBar">
         <item name="background">@drawable/ab_background</item>
         <item name="android:background">@drawable/ab_background</item>
+    </style>
+    
+    <style name="DropDownListView" parent="Widget.Sherlock.ListView.DropDown">
+        <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
     </style>
 
     <style name="Header">
