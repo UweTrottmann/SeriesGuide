@@ -19,5 +19,6 @@
     <color name="transparent">#00000000</color>
     <color name="text_primary">#fff1f1f1</color>
     <color name="text_dim">#ff808080</color>
+    <color name="accent_primary">#ff0060B5</color>
 
 </resources>
