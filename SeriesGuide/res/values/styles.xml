@@ -2,11 +2,13 @@
 <resources>
 
     <style name="SeriesGuideTheme" parent="Theme.Sherlock.ForceOverflow">
-        <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
+        <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator</item>
-        <item name="vpiTabTextStyle">@style/CustomTabPageIndicatorText</item>
+        <item name="vpiTabTextStyle">@style/TabPageIndicatorText</item>
         <item name="actionBarStyle">@style/ActionBar</item>
         <item name="android:actionBarStyle">@style/ActionBar</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
         <item name="dropDownListViewStyle">@style/DropDownListView</item>
         <item name="actionBarItemBackground">@drawable/list_selector_holo_dark</item>
@@ -18,23 +20,18 @@
         <item name="android:background">@drawable/ab_background</item>
     </style>
 
+    <style name="ActionBarTabStyle" parent="Widget.Sherlock.ActionBar.TabBar">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@drawable/tab_indicator</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:paddingRight">16dip</item>
+    </style>
+
     <style name="DropDownListView" parent="Widget.Sherlock.ListView.DropDown">
         <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
     </style>
 
-    <style name="Header">
-        <item name="android:textSize">@dimen/text_size_xlarge</item>
-        <item name="android:textColor">@color/text_primary</item>
-        <item name="android:layout_marginLeft">@dimen/default_padding</item>
-        <item name="android:layout_marginRight">@dimen/default_padding</item>
-    </style>
-
-    <style name="ListHeader">
-        <item name="android:textSize">@dimen/text_size_medium</item>
-        <item name="android:textColor">@color/text_primary</item>
-    </style>
-
-    <style name="CustomTitlePageIndicator">
+    <style name="TitlePageIndicator">
         <item name="android:background">@android:color/transparent</item>
         <item name="footerColor">@color/accent_primary</item>
         <item name="footerLineHeight">2dp</item>
@@ -54,12 +51,24 @@
         <item name="android:paddingBottom">12dp</item>
     </style>
 
-    <style name="CustomTabPageIndicatorText">
+    <style name="TabPageIndicatorText">
         <item name="android:textAppearance">@style/TextAppearance.TabPageIndicator</item>
         <item name="android:textColor">@color/vpi__dark_theme</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Header">
+        <item name="android:textSize">@dimen/text_size_xlarge</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:layout_marginLeft">@dimen/default_padding</item>
+        <item name="android:layout_marginRight">@dimen/default_padding</item>
+    </style>
+
+    <style name="ListHeader">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textColor">@color/text_primary</item>
     </style>
 
     <style name="Airdata">
