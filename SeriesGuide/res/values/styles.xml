@@ -2,9 +2,8 @@
 <resources>
 
     <style name="SeriesGuideTheme" parent="Theme.Sherlock.ForceOverflow">
-        <item name="vpiCirclePageIndicatorStyle">@style/Widget.CirclePageIndicator</item>
         <item name="vpiTitlePageIndicatorStyle">@style/CustomTitlePageIndicator</item>
-        <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
+        <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator</item>
         <item name="vpiTabTextStyle">@style/CustomTabPageIndicatorText</item>
         <item name="actionBarStyle">@style/ActionBar</item>
         <item name="android:actionBarStyle">@style/ActionBar</item>
@@ -18,7 +17,7 @@
         <item name="background">@drawable/ab_background</item>
         <item name="android:background">@drawable/ab_background</item>
     </style>
-    
+
     <style name="DropDownListView" parent="Widget.Sherlock.ListView.DropDown">
         <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
     </style>
@@ -44,6 +43,15 @@
         <item name="textColor">@color/text_primary</item>
         <item name="selectedColor">@color/text_primary</item>
         <item name="selectedBold">true</item>
+    </style>
+
+    <style name="TabPageIndicator">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@drawable/tab_indicator</item>
+        <item name="android:paddingLeft">22dip</item>
+        <item name="android:paddingRight">22dip</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
     </style>
 
     <style name="CustomTabPageIndicatorText">
