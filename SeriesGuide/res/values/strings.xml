@@ -340,7 +340,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage"><b>This is 2.6</b>\nUpdate fetches recently collected episodes.\n\nShouts refresh automatically every 60 seconds. May the next Game of Thrones come :)\n\nSome animations.\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>
+    <string name="betamessage"><b>Oh no, I don\'t like it</b>\nAll this update has is a new tone of colors for SeriesGuide. Lame.\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
