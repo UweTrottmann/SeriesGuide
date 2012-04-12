@@ -16,8 +16,8 @@
     </style>
 
     <style name="ActionBar" parent="Widget.Sherlock.ActionBar">
-        <item name="background">@drawable/ab_background</item>
-        <item name="android:background">@drawable/ab_background</item>
+        <item name="background">@drawable/sg_actionbar_background</item>
+        <item name="android:background">@drawable/sg_actionbar_background</item>
     </style>
 
     <style name="ActionBarTabStyle" parent="Widget.Sherlock.ActionBar.TabBar">
