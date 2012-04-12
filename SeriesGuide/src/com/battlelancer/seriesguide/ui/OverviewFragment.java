@@ -512,10 +512,12 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     protected void onLoadImage(String imagePath) {
         final FrameLayout container = (FrameLayout) getActivity().findViewById(R.id.imageContainer);
 
-        if (mArtTask == null || mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity())
-                    .execute();
+        // clean up a previous task
+        if (mArtTask != null) {
+            mArtTask.cancel(true);
+            mArtTask = null;
         }
+        mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity()).execute();
     }
 
     private void onMarkWatched() {

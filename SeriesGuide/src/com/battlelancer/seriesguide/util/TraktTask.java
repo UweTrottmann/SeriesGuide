@@ -25,6 +25,8 @@ import android.widget.Toast;
 
 public class TraktTask extends AsyncTask<Void, Void, Response> {
 
+    private static final String TAG = "TraktTask";
+
     private Bundle mArgs;
 
     private final Context mContext;
@@ -236,13 +238,15 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
             }
 
             return r;
-        } catch (TraktException te) {
-            Log.w(ShareUtils.TAG, te);
+        } catch (TraktException e) {
+            fireTrackerEvent(e.getMessage());
+            Log.w(ShareUtils.TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.trakt_generalerror);
             return r;
         } catch (ApiException e) {
+            fireTrackerEvent(e.getMessage());
             Log.w(ShareUtils.TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
@@ -308,5 +312,9 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 mListener.onTraktActionComplete(true);
             }
         }
+    }
+
+    private void fireTrackerEvent(String message) {
+        AnalyticsUtils.getInstance(mContext).trackEvent(TAG, "Update result", message, 0);
     }
 }

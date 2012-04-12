@@ -4,22 +4,17 @@ package com.battlelancer.seriesguide;
 import com.battlelancer.seriesguide.beta.R;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.view.KeyEvent;
 import android.widget.ImageView;
 
 public class WatchedBox extends ImageView {
 
     private boolean checked;
 
-    private boolean hasFocus;
-
     public WatchedBox(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.checked = false;
-        this.hasFocus = false;
-        this.setImageResource(R.drawable.btn_check_on_disabled_holo_dark);
+        this.setImageResource(R.drawable.ic_action_watched);
     }
 
     public boolean isChecked() {
@@ -38,34 +33,9 @@ public class WatchedBox extends ImageView {
 
     private void updateStateImage() {
         if (checked) {
-            if (hasFocus) {
-                this.setImageResource(R.drawable.btn_check_on_focused_holo_dark);
-            } else {
-                this.setImageResource(R.drawable.btn_check_on_holo_dark);
-            }
+            this.setImageResource(R.drawable.ic_watched);
         } else {
-            if (hasFocus) {
-                this.setImageResource(R.drawable.btn_check_on_disabled_focused_holo_dark);
-            } else {
-                this.setImageResource(R.drawable.btn_check_on_disabled_holo_dark);
-            }
+            this.setImageResource(R.drawable.ic_action_watched);
         }
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (super.onKeyDown(keyCode, event)) {
-            this.setImageResource(R.drawable.btn_check_on_pressed_holo_dark);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    protected void onFocusChanged(boolean gainFocus, int direction, Rect previouslyFocusedRect) {
-        super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
-        this.hasFocus = gainFocus;
-        updateStateImage();
     }
 }
