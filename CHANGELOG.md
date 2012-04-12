@@ -18,6 +18,10 @@ Version 2.6 *(2012-04-06)*
 
 ### Detailed changes:
 
+#### 2.6.8beta (2012-04-12)
+
+* I found my fancy color pen and redrew some lines. Lame.
+
 #### 2.6.7beta (2012-04-06)
 
 * Update fetches recently collected episodes.
