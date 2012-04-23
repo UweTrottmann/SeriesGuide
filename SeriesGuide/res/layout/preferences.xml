@@ -25,7 +25,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_content" >
-        
+
         <CheckBoxPreference
             android:defaultValue="True"
             android:key="com.battlelancer.seriesguide.notifications"
@@ -117,6 +117,14 @@
             android:key="backup"
             android:summary="@string/backup_summary"
             android:title="@string/backup" />
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/themeSelection"
+            android:entryValues="@array/themeSelectionData"
+            android:key="com.battlelancer.seriesguide.theme"
+            android:summary="@string/pref_themesummary"
+            android:title="@string/pref_theme" />
 
         <Preference
             android:key="clearCache"

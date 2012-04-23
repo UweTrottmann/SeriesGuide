@@ -39,7 +39,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="@bool/gridClipToPadding"
             android:divider="@null"
-            android:listSelector="@drawable/list_selector_holo_dark"
+            android:listSelector="?custom_list_selector"
             android:paddingLeft="5dp"
             android:paddingRight="5dp" />
 

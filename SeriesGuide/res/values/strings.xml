@@ -326,6 +326,14 @@
     <string name="upcoming_display">Select to display upcoming shows</string>
     <string name="pref_notifications">Notifications</string>
     <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
+    
+    <!-- Theme switching -->
+    <string name="pref_theme">App Theme</string>
+    <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
+    <string-array name="themeSelection">
+        <item>SeriesGuide Theme</item>
+        <item>ICS Base Theme</item>
+    </string-array>
 
     <!-- strings for BETA release -->
     <string name="download_stable">Download SeriesGuide</string>
@@ -475,6 +483,10 @@
         <item>7</item>
         <item>14</item>
         <item>30</item>
+    </string-array>
+    <string-array name="themeSelectionData">
+        <item>0</item>
+        <item>1</item>
     </string-array>
 
 </resources>
