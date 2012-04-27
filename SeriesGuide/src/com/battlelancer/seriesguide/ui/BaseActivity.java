@@ -34,6 +34,13 @@ import android.view.KeyEvent;
 public abstract class BaseActivity extends SherlockFragmentActivity {
 
     @Override
+    protected void onCreate(Bundle arg0) {
+        // set a theme based on user preference
+        setTheme(SeriesGuidePreferences.THEME);
+        super.onCreate(arg0);
+    }
+
+    @Override
     public boolean onKeyLongPress(int keyCode, KeyEvent event) {
         // always navigate back to the home activity
         if (keyCode == KeyEvent.KEYCODE_BACK) {

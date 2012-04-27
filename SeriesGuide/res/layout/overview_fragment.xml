@@ -25,7 +25,7 @@
                 android:id="@+id/showinfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/list_selector_holo_dark"
+                android:background="?custom_list_selector"
                 android:focusable="true"
                 android:nextFocusDown="@+id/checkinButton"
                 android:paddingBottom="@dimen/default_padding" >

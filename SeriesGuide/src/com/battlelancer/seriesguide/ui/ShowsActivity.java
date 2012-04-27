@@ -41,6 +41,7 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.text.format.DateUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -543,6 +544,16 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 return super.onOptionsItemSelected(item);
             }
         }
+    }
+
+    @Override
+    public boolean onKeyLongPress(int keyCode, KeyEvent event) {
+        // always navigate back to the home activity
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // do nothing as we are already on top
+            return true;
+        }
+        return false;
     }
 
     private void performUpdateTask(boolean isFullUpdate, String showId) {

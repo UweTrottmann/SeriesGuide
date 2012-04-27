@@ -5,6 +5,20 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 2.6.1 *(in development)*
+--------------------------------
+
+* New theme. Old ICS Base theme accessible via settings.
+
+#### 2.6.9beta
+
+* Darker watched and collected icons.
+* Brought back ICS default theme via settings switch.
+
+#### 2.6.8beta (2012-04-12)
+
+* I found my fancy color pen and redrew some lines. Lame.
+
 Version 2.6 *(2012-04-06)*
 --------------------------------
 
@@ -17,10 +31,6 @@ Version 2.6 *(2012-04-06)*
 * Fixes, improvements and design refinements.
 
 ### Detailed changes:
-
-#### 2.6.8beta (2012-04-12)
-
-* I found my fancy color pen and redrew some lines. Lame.
 
 #### 2.6.7beta (2012-04-06)
 

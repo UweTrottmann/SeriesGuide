@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- SeriesGuides default theme -->
     <style name="SeriesGuideTheme" parent="Theme.Sherlock.ForceOverflow">
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator</item>
@@ -11,8 +12,17 @@
         <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
         <item name="dropDownListViewStyle">@style/DropDownListView</item>
-        <item name="actionBarItemBackground">@drawable/list_selector_holo_dark</item>
-        <item name="android:actionBarItemBackground">@drawable/list_selector_holo_dark</item>
+        <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
+        <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
+        <item name="custom_list_selector">@drawable/list_selector_sg</item>
+    </style>
+
+    <!-- An ICS base theme using default styles from ABS -->
+    <style name="ICSBaseTheme" parent="Theme.Sherlock.ForceOverflow">
+        <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.ICS</item>
+        <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
+        <item name="vpiTabTextStyle">@style/TabPageIndicatorText</item>
+        <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
     </style>
 
     <style name="ActionBar" parent="Widget.Sherlock.ActionBar">
@@ -28,7 +38,7 @@
     </style>
 
     <style name="DropDownListView" parent="Widget.Sherlock.ListView.DropDown">
-        <item name="android:listSelector">@drawable/list_selector_holo_dark</item>
+        <item name="android:listSelector">?custom_list_selector</item>
     </style>
 
     <style name="TitlePageIndicator">
@@ -40,6 +50,10 @@
         <item name="textColor">@color/text_primary</item>
         <item name="selectedColor">@color/text_primary</item>
         <item name="selectedBold">true</item>
+    </style>
+
+    <style name="TitlePageIndicator.ICS" parent="TitlePageIndicator">
+        <item name="footerColor">#33B5E5</item>
     </style>
 
     <style name="TabPageIndicator">

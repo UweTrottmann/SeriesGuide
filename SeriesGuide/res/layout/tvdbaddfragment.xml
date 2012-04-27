@@ -46,7 +46,7 @@
             android:layout_weight="1"
             android:clipToPadding="@bool/gridClipToPadding"
             android:divider="@drawable/divider_horizontal_holo_dark"
-            android:listSelector="@drawable/list_selector_holo_dark"
+            android:listSelector="?custom_list_selector"
             android:paddingBottom="@dimen/default_padding"
             android:paddingTop="@dimen/inline_padding" />
     </LinearLayout>
