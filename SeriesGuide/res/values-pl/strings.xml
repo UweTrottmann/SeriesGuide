@@ -26,6 +26,7 @@
   <string name="isspoiler">Ostrzeżenie o spojlerach!</string>
   <string name="no_shouts">Krzycz jako pierwszy!</string>
   <string name="shouts_for">Krzyków: %s</string>
+  <string name="autorefresh">Refreshing automagically</string>
   <string name="episode_firstaired">Data emisji</string>
   <string name="episode_dvdnumber">Odcinek na DVD</string>
   <string name="show_actors">Obsada</string>
@@ -244,6 +245,8 @@
   <string name="upcoming_display">Wyświetl informacje o nadchodzących odcinkach</string>
   <string name="pref_notifications">Powiadomienia</string>
   <string name="pref_notificationssummary">Powiadamiaj o nadchodzących emisjach ulubionych seriali</string>
+  <string name="pref_theme">App Theme</string>
+  <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
   <string name="download_stable">Pobierz SeriesGuide</string>
   <string name="betawarning"><b>Uwaga!</b> To wydanie jest tylko dla beta testerów! Wersję stabilną można pobrać poniżej.</string>
   <string-array name="shsorting">
@@ -277,6 +280,10 @@
     <item>Ulubione</item>
     <item>Nieobejrzane/nadchodzące</item>
     <item>Ukryte</item>
+  </string-array>
+  <string-array name="themeSelection">
+    <item>SeriesGuide Theme</item>
+    <item>ICS Base Theme</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">głosy: %d</item>

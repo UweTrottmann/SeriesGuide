@@ -26,6 +26,7 @@
   <string name="isspoiler">Spoiler!</string>
   <string name="no_shouts">Seja o primeiro a gritar!</string>
   <string name="shouts_for">Gritos para %s</string>
+  <string name="autorefresh">Refreshing automagically</string>
   <string name="episode_firstaired">Exibição</string>
   <string name="episode_dvdnumber">Episódio de DVD</string>
   <string name="show_actors">Atores</string>
@@ -244,6 +245,8 @@
   <string name="upcoming_display">Exibir próximas exibições</string>
   <string name="pref_notifications">Notificações</string>
   <string name="pref_notificationssummary">Notifique as exibições próximas dos favoritos</string>
+  <string name="pref_theme">App Theme</string>
+  <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
   <string name="download_stable">Baixar SeriesGuide</string>
   <string name="betawarning"><b>Atenção!</b> Esta versão é para beta testers! Se você estiver em dúvida baixe a versão estável abaixo.</string>
   <string-array name="shsorting">
@@ -277,6 +280,10 @@
     <item>Favoritos</item>
     <item>Não visto/Próximo</item>
     <item>Oculto</item>
+  </string-array>
+  <string-array name="themeSelection">
+    <item>SeriesGuide Theme</item>
+    <item>ICS Base Theme</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d votado</item>

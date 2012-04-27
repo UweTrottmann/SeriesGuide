@@ -26,6 +26,7 @@
   <string name="isspoiler">Juonipaljastusvaroitus!</string>
   <string name="no_shouts">Huudahda ensimmäisenä!</string>
   <string name="shouts_for">Huudahdukset ohjelmalle %s</string>
+  <string name="autorefresh">Refreshing automagically</string>
   <string name="episode_firstaired">Esityspäivä</string>
   <string name="episode_dvdnumber">DVD-jakso</string>
   <string name="show_actors">Näyttelijät</string>
@@ -244,6 +245,8 @@
   <string name="upcoming_display">Valitse näyttääksesi tulevat ohjelmat</string>
   <string name="pref_notifications">Ilmoitukset</string>
   <string name="pref_notificationssummary">Ilmoita pian esitettävistä suosikkiohjelmista</string>
+  <string name="pref_theme">App Theme</string>
+  <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
   <string name="download_stable">Lataa SeriesGuide</string>
   <string name="betawarning"><b>Varoitus!</b> Tämä julkaisu on vain beeta-testaajille! Jos epäröit, lataa vakaa versio alta.</string>
   <string-array name="shsorting">
@@ -277,6 +280,10 @@
     <item>Suosikit</item>
     <item>Katsomattomat/Tulevat</item>
     <item>Piilotetut</item>
+  </string-array>
+  <string-array name="themeSelection">
+    <item>SeriesGuide Theme</item>
+    <item>ICS Base Theme</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d ääni</item>
