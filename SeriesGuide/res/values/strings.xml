@@ -348,7 +348,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage"><b>Oh no, I don\'t like it</b>\nAll this update has is a new tone of colors for SeriesGuide. Lame.\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>
+    <string name="betamessage"><b>Back to the future</b>\nIf you really do not like the new colors, change back to the ICS default theme in settings.\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
