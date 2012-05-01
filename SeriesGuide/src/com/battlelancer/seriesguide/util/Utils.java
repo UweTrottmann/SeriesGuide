@@ -832,4 +832,22 @@ public class Utils {
         }
     }
 
+    /**
+     * Sets the global app theme variable. Applied by all activities once they
+     * are created.
+     * 
+     * @param themeIndex
+     */
+    public static synchronized void updateTheme(String themeIndex) {
+        int theme = Integer.valueOf((String) themeIndex);
+        switch (theme) {
+            case 1:
+                SeriesGuidePreferences.THEME = R.style.ICSBaseTheme;
+                break;
+            default:
+                SeriesGuidePreferences.THEME = R.style.SeriesGuideTheme;
+                break;
+        }
+    }
+
 }
