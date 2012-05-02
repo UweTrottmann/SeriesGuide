@@ -278,8 +278,8 @@
     <string name="menu_rate_trakt">Rate (trakt)</string>
     <string name="menu_share_others">Via other apps</string>
 
-    <string name="traktcheckin_cancel">Cancel it</string>
-    <string name="traktcheckin_inprogress">There is already a checkin in progress. Either cancel this checkin or wait %s before you can check in again.</string>
+    <string name="traktcheckin_cancel">Override</string>
+    <string name="traktcheckin_inprogress">You are already checked into another episode. Either override the previous checkin or wait %s and try again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
     <string name="oauthmessage">Authenticating SeriesGuide with GetGlue&#8230;</string>
     <string name="addtocalendar">Add to calendar</string>
