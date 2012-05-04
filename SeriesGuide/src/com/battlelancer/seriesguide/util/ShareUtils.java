@@ -562,7 +562,7 @@ public class ShareUtils {
             totallyNinja.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View v) {
-                    final Rating rating = Rating.Love;
+                    final Rating rating = Rating.TotallyNinja;
                     getArguments().putString(ShareItems.RATING, rating.toString());
                     new TraktTask(context, getFragmentManager(), getArguments(), null).execute();
                     dismiss();
@@ -572,7 +572,7 @@ public class ShareUtils {
             weakSauce.setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View v) {
-                    final Rating rating = Rating.Hate;
+                    final Rating rating = Rating.WeakSauce;
                     getArguments().putString(ShareItems.RATING, rating.toString());
                     new TraktTask(context, getFragmentManager(), getArguments(), null).execute();
                     dismiss();
