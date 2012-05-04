@@ -174,4 +174,14 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <!-- Rating -->
+    <style name="RatingButton">
+        <item name="android:background">?custom_list_selector</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:padding">@dimen/default_padding</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_size_xmedium</item>
+        <item name="android:drawableLeft">@drawable/trakt_heart</item>
+    </style>
+
 </resources>

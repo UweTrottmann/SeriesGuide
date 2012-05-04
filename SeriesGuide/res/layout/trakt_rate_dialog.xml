@@ -1,37 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/LinearLayout1"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:padding="16dp" >
+    android:layout_height="match_parent" >
 
-    <Button
-        android:id="@+id/totallyninja"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="?custom_list_selector"
-        android:drawablePadding="4dp"
-        android:drawableTop="@drawable/trakt_love_large"
-        android:padding="@dimen/default_padding"
-        android:text="@string/love"
-        android:textColor="@color/text_primary"
-        android:textSize="@dimen/text_size_xmedium" >
-    </Button>
+        android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/weaksauce"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="?custom_list_selector"
-        android:drawablePadding="4dp"
-        android:drawableTop="@drawable/trakt_hate_large"
-        android:padding="@dimen/default_padding"
-        android:text="@string/hate"
-        android:textColor="@color/text_primary"
-        android:textSize="@dimen/text_size_xmedium" >
-    </Button>
+        <Button
+            android:id="@+id/totallyninja"
+            style="@style/RatingButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#7F0707"
+            android:text="@string/love" >
+        </Button>
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/advanced_ratings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible" >
+
+            <Button
+                android:id="@+id/rating9"
+                style="@style/RatingButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#7B0C0B"
+                android:text="@string/rating9" >
+            </Button>
+
+            <Button
+                android:id="@+id/rating8"
+                style="@style/RatingButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#751212"
+                android:text="@string/rating8" >
+            </Button>
+
+            <Button
+                android:id="@+id/rating7"
+                style="@style/RatingButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#6D191A"
+                android:text="@string/rating7" >
+            </Button>
+
+            <Button
+                android:id="@+id/rating6"
+                style="@style/RatingButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#662221"
+                android:text="@string/rating6" >
+            </Button>
+
+            <Button
+                android:id="@+id/rating5"
+                style="@style/RatingButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#5D292A"
+                android:text="@string/rating5" >
+            </Button>
+
+            <Button
+                android:id="@+id/rating4"
+                style="@style/RatingButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#553232"
+                android:text="@string/rating4" >
+            </Button>
+
+            <Button
+                android:id="@+id/rating3"
+                style="@style/RatingButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#4E393A"
+                android:text="@string/rating3" >
+            </Button>
+
+            <Button
+                android:id="@+id/rating2"
+                style="@style/RatingButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#494040"
+                android:text="@string/rating2" >
+            </Button>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/weaksauce"
+            style="@style/RatingButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#444444"
+            android:text="@string/hate" >
+        </Button>
+    </LinearLayout>
+
+</ScrollView>
