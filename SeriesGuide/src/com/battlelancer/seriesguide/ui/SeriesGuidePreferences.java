@@ -298,15 +298,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 if (preference.getKey().equals(KEY_THEME)) {
-                    int theme = Integer.valueOf((String) newValue);
-                    switch (theme) {
-                        case 1:
-                            SeriesGuidePreferences.THEME = R.style.ICSBaseTheme;
-                            break;
-                        default:
-                            SeriesGuidePreferences.THEME = R.style.SeriesGuideTheme;
-                            break;
-                    }
+                    Utils.updateTheme((String) newValue);
                 }
                 return true;
             }

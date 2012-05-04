@@ -34,6 +34,18 @@
     <string name="no_shouts">Be the first to shout!</string>
     <string name="shouts_for">Shouts for %s</string>
     <string name="autorefresh">Refreshing automagically</string>
+    
+    <!-- Trakt ratings -->
+    <string name="love">Totally ninja!</string>
+    <string name="hate">Weak Sauce :(</string>
+    <string name="rating2">Terrible</string>
+    <string name="rating3">Bad</string>
+    <string name="rating4">Poor</string>
+    <string name="rating5">Meh</string>
+    <string name="rating6">Fair</string>
+    <string name="rating7">Good</string>
+    <string name="rating8">Great</string>
+    <string name="rating9">Superb</string>
 
     <!-- Metadata -->
     <string name="episode_firstaired">Airdate</string>
@@ -278,8 +290,8 @@
     <string name="menu_rate_trakt">Rate (trakt)</string>
     <string name="menu_share_others">Via other apps</string>
 
-    <string name="traktcheckin_cancel">Cancel it</string>
-    <string name="traktcheckin_inprogress">There is already a checkin in progress. Either cancel this checkin or wait %s before you can check in again.</string>
+    <string name="traktcheckin_cancel">Override</string>
+    <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous checkin or wait %s and try again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
     <string name="oauthmessage">Authenticating SeriesGuide with GetGlue&#8230;</string>
     <string name="addtocalendar">Add to calendar</string>
@@ -295,8 +307,6 @@
     <string name="trakt_error">Interaction with trakt failed</string>
     <string name="trakt_decryptfail">password could not be decrypted</string>
     <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
-    <string name="love">Totally ninja!</string>
-    <string name="hate">Weak Sauce :(</string>
     <string name="trakt_createaccount">Create new account</string>
     <string name="trakt_experimental">Only shows added to SeriesGuide are synced. \'Sync to SeriesGuide\' fetches watched episodes from trakt. \'Sync to trakt\' transmits watched episodes from SeriesGuide to trakt.</string>
     <string name="trakt_synctodevice">Sync to SeriesGuide</string>

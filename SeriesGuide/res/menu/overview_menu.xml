@@ -8,7 +8,7 @@
         android:title="@string/search_hint"/>
     <item
         android:id="@+id/menu_rate_trakt"
-        android:icon="@drawable/trakt_love_large"
+        android:icon="@drawable/trakt_heart"
         android:showAsAction="ifRoom"
         android:title="@string/menu_rate_trakt"/>
     <item
