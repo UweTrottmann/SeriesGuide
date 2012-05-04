@@ -556,26 +556,57 @@ public class ShareUtils {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final View layout = inflater.inflate(R.layout.trakt_rate_dialog, null);
-            final Button totallyNinja = (Button) layout.findViewById(R.id.totallyninja);
-            final Button weakSauce = (Button) layout.findViewById(R.id.weaksauce);
 
-            totallyNinja.setOnClickListener(new View.OnClickListener() {
-
+            layout.findViewById(R.id.totallyninja).setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    final Rating rating = Rating.TotallyNinja;
-                    getArguments().putString(ShareItems.RATING, rating.toString());
-                    new TraktTask(context, getFragmentManager(), getArguments(), null).execute();
-                    dismiss();
+                    onRate(Rating.TotallyNinja, context);
+                }
+            });
+            layout.findViewById(R.id.weaksauce).setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    onRate(Rating.WeakSauce, context);
                 }
             });
 
-            weakSauce.setOnClickListener(new View.OnClickListener() {
-
+            // advanced rating steps
+            layout.findViewById(R.id.rating2).setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    final Rating rating = Rating.WeakSauce;
-                    getArguments().putString(ShareItems.RATING, rating.toString());
-                    new TraktTask(context, getFragmentManager(), getArguments(), null).execute();
-                    dismiss();
+                    onRate(Rating.Terrible, context);
+                }
+            });
+            layout.findViewById(R.id.rating3).setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    onRate(Rating.Bad, context);
+                }
+            });
+            layout.findViewById(R.id.rating4).setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    onRate(Rating.Poor, context);
+                }
+            });
+            layout.findViewById(R.id.rating5).setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    onRate(Rating.Meh, context);
+                }
+            });
+            layout.findViewById(R.id.rating6).setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    onRate(Rating.Fair, context);
+                }
+            });
+            layout.findViewById(R.id.rating7).setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    onRate(Rating.Good, context);
+                }
+            });
+            layout.findViewById(R.id.rating8).setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    onRate(Rating.Great, context);
+                }
+            });
+            layout.findViewById(R.id.rating9).setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    onRate(Rating.Superb, context);
                 }
             });
 
@@ -584,6 +615,12 @@ public class ShareUtils {
             builder.setNegativeButton(android.R.string.cancel, null);
 
             return builder.create();
+        }
+
+        private void onRate(Rating rating, Context context) {
+            getArguments().putString(ShareItems.RATING, rating.toString());
+            new TraktTask(context, getFragmentManager(), getArguments(), null).execute();
+            dismiss();
         }
     }
 
