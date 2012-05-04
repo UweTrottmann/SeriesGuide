@@ -358,7 +358,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage"><b>Back to the future</b>\nIf you really do not like the new colors, change back to the ICS default theme in settings.\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>
+    <string name="betamessage"><b>Advanced trakt ratings</b>\n- Support the new trakt 10-heart ratings. Basic Love/Hate rating and UI feedback will come back later.\n\n- Honor theme preference through restarts.\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
