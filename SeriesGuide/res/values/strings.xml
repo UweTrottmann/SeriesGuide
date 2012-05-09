@@ -34,6 +34,18 @@
     <string name="no_shouts">Be the first to shout!</string>
     <string name="shouts_for">Shouts for %s</string>
     <string name="autorefresh">Refreshing automagically</string>
+    
+    <!-- Trakt ratings -->
+    <string name="love">Totally ninja!</string>
+    <string name="hate">Weak Sauce :(</string>
+    <string name="rating2">Terrible</string>
+    <string name="rating3">Bad</string>
+    <string name="rating4">Poor</string>
+    <string name="rating5">Meh</string>
+    <string name="rating6">Fair</string>
+    <string name="rating7">Good</string>
+    <string name="rating8">Great</string>
+    <string name="rating9">Superb</string>
 
     <!-- Metadata -->
     <string name="episode_firstaired">Airdate</string>
@@ -278,8 +290,8 @@
     <string name="menu_rate_trakt">Rate (trakt)</string>
     <string name="menu_share_others">Via other apps</string>
 
-    <string name="traktcheckin_cancel">Cancel it</string>
-    <string name="traktcheckin_inprogress">There is already a checkin in progress. Either cancel this checkin or wait %s before you can check in again.</string>
+    <string name="traktcheckin_cancel">Override</string>
+    <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous checkin or wait %s and try again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
     <string name="oauthmessage">Authenticating SeriesGuide with GetGlue&#8230;</string>
     <string name="addtocalendar">Add to calendar</string>
@@ -295,8 +307,6 @@
     <string name="trakt_error">Interaction with trakt failed</string>
     <string name="trakt_decryptfail">password could not be decrypted</string>
     <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
-    <string name="love">Totally ninja!</string>
-    <string name="hate">Weak Sauce :(</string>
     <string name="trakt_createaccount">Create new account</string>
     <string name="trakt_experimental">Only shows added to SeriesGuide are synced. \'Sync to SeriesGuide\' fetches watched episodes from trakt. \'Sync to trakt\' transmits watched episodes from SeriesGuide to trakt.</string>
     <string name="trakt_synctodevice">Sync to SeriesGuide</string>
@@ -326,6 +336,14 @@
     <string name="upcoming_display">Select to display upcoming shows</string>
     <string name="pref_notifications">Notifications</string>
     <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
+    
+    <!-- Theme switching -->
+    <string name="pref_theme">App Theme</string>
+    <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
+    <string-array name="themeSelection">
+        <item>SeriesGuide Theme</item>
+        <item>ICS Base Theme</item>
+    </string-array>
 
     <!-- strings for BETA release -->
     <string name="download_stable">Download SeriesGuide</string>
@@ -340,7 +358,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage"><b>This is 2.6</b>\nUpdate fetches recently collected episodes.\n\nShouts refresh automatically every 60 seconds. May the next Game of Thrones come :)\n\nSome animations.\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>
+    <string name="betamessage"><b>Advanced trakt ratings</b>\n- Support the new trakt 10-heart ratings. Basic Love/Hate rating and UI feedback will come back later.\n\n- Honor theme preference through restarts.\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
@@ -475,6 +493,10 @@
         <item>7</item>
         <item>14</item>
         <item>30</item>
+    </string-array>
+    <string-array name="themeSelectionData">
+        <item>0</item>
+        <item>1</item>
     </string-array>
 
 </resources>

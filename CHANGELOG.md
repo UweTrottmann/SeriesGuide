@@ -5,6 +5,28 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 2.6.1 *(in development)*
+--------------------------------
+
+* New theme. Old ICS Base theme accessible via settings.
+* Support for trakt advanced 10-heart ratings.
+
+### Detailed changes:
+
+#### 2.6.10beta (2012-05-04)
+
+* New trakt 10-heart rating system. No visual feedback on buttons, no auto-detection if user uses basic or advanced ratings (defaults to advanced).
+* Honor theme setting through restarts (thanks Roman).
+
+#### 2.6.9beta (2012-04-27)
+
+* Darker watched and collected icons.
+* Brought back ICS default theme via settings switch.
+
+#### 2.6.8beta (2012-04-12)
+
+* I found my fancy color pen and redrew some lines. Lame.
+
 Version 2.6 *(2012-04-06)*
 --------------------------------
 

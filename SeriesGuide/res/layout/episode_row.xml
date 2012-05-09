@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:background="@drawable/list_selector_holo_dark"
+            android:background="?custom_list_selector"
             android:padding="16dp" />
 
         <TextView

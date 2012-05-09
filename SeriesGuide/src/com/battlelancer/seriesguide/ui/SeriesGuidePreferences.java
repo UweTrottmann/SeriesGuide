@@ -90,6 +90,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_SHAREWITHGETGLUE = "com.battlelancer.seriesguide.sharewithgetglue";
 
+    public static final String KEY_THEME = "com.battlelancer.seriesguide.theme";
+
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
 
     public static final String HELP_URL = "http://seriesgui.de/help";
@@ -102,6 +104,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     private static final String TAG = "SeriesGuidePreferences";
 
+    public static int THEME = R.style.SeriesGuideTheme;
+
     public void fireTrackerEvent(String label) {
         AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
     }
@@ -109,6 +113,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
     @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(SeriesGuidePreferences.THEME);
         super.onCreate(savedInstanceState);
 
         final SeriesGuidePreferences activity = this;
@@ -287,6 +292,17 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                 break;
             }
         }
+
+        // Theme switcher
+        findPreference(KEY_THEME).setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                if (preference.getKey().equals(KEY_THEME)) {
+                    Utils.updateTheme((String) newValue);
+                }
+                return true;
+            }
+        });
     }
 
     @Override

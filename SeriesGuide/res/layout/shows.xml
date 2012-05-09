@@ -18,7 +18,7 @@
         android:columnWidth="@dimen/showgrid_columnWidth"
         android:gravity="center"
         android:horizontalSpacing="@dimen/showgrid_spacing"
-        android:listSelector="@drawable/list_selector_holo_dark"
+        android:listSelector="?custom_list_selector"
         android:numColumns="auto_fit"
         android:padding="@dimen/showgrid_padding"
         android:stretchMode="columnWidth"

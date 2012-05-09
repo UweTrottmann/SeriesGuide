@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:clipToPadding="@bool/gridClipToPadding"
         android:divider="@drawable/divider_horizontal_holo_dark"
-        android:listSelector="@drawable/list_selector_holo_dark" />
+        android:listSelector="?custom_list_selector" />
 
     <ProgressBar
         android:id="@android:id/empty"
