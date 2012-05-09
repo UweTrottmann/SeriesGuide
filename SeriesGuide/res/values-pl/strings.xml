@@ -26,7 +26,17 @@
   <string name="isspoiler">Ostrzeżenie o spojlerach!</string>
   <string name="no_shouts">Krzycz jako pierwszy!</string>
   <string name="shouts_for">Krzyków: %s</string>
-  <string name="autorefresh">Refreshing automagically</string>
+  <string name="autorefresh">Odświeżanie automagicznie ;)</string>
+  <string name="love">Uwielbiam to!</string>
+  <string name="hate">Słaby :(</string>
+  <string name="rating2">Terrible</string>
+  <string name="rating3">Bad</string>
+  <string name="rating4">Poor</string>
+  <string name="rating5">Meh</string>
+  <string name="rating6">Fair</string>
+  <string name="rating7">Good</string>
+  <string name="rating8">Great</string>
+  <string name="rating9">Superb</string>
   <string name="episode_firstaired">Data emisji</string>
   <string name="episode_dvdnumber">Odcinek na DVD</string>
   <string name="show_actors">Obsada</string>
@@ -209,8 +219,8 @@
   <string name="menu_markseen_trakt">Oznacz jako obejrzane (trakt)</string>
   <string name="menu_rate_trakt">Oceń (trakt)</string>
   <string name="menu_share_others">za pomocą innych aplikacji</string>
-  <string name="traktcheckin_cancel">Anuluj</string>
-  <string name="traktcheckin_inprogress">Sprawdzanie jest w toku. Anuluj obecne sprawdzanie lub poczekaj %s przed kolejnym sprawdzaniem.</string>
+  <string name="traktcheckin_cancel">Override</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous checkin or wait %s and try again.</string>
   <string name="traktcheckin_wait">Poczekam</string>
   <string name="oauthmessage">Logowanie SeriesGuide z GetGlue…</string>
   <string name="addtocalendar">Dodaj do kalendarza</string>
@@ -225,8 +235,6 @@
   <string name="trakt_error">Komunikacja z trakt.tv zakończona niepowodzeniem</string>
   <string name="trakt_decryptfail">Hasło nie może zostać zdekodowane</string>
   <string name="trakt_generalerror">Coś poszło nie tak. Prosimy o sprawdzenie poświadczeń i ponowną próbę.</string>
-  <string name="love">Uwielbiam to!</string>
-  <string name="hate">Słaby :(</string>
   <string name="trakt_createaccount">Utwórz nowe konto</string>
   <string name="trakt_experimental">Tylko seriale dodane do SeriesGuide są synchronizowane. \"Synchronizuj do SeriesGuide\" pobiera obejrzane odcinki z trakt. \"Synchronizuj do trakt\" wysyła obejrzane odcinki z SeriesGuide do trakt.</string>
   <string name="trakt_synctodevice">Synchronizuj do SeriesGuide</string>
@@ -245,8 +253,8 @@
   <string name="upcoming_display">Wyświetl informacje o nadchodzących odcinkach</string>
   <string name="pref_notifications">Powiadomienia</string>
   <string name="pref_notificationssummary">Powiadamiaj o nadchodzących emisjach ulubionych seriali</string>
-  <string name="pref_theme">App Theme</string>
-  <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
+  <string name="pref_theme">Schemat kolorów</string>
+  <string name="pref_themesummary">Wybierz schemat kolorów SeriesGuide</string>
   <string name="download_stable">Pobierz SeriesGuide</string>
   <string name="betawarning"><b>Uwaga!</b> To wydanie jest tylko dla beta testerów! Wersję stabilną można pobrać poniżej.</string>
   <string-array name="shsorting">
@@ -282,8 +290,8 @@
     <item>Ukryte</item>
   </string-array>
   <string-array name="themeSelection">
-    <item>SeriesGuide Theme</item>
-    <item>ICS Base Theme</item>
+    <item>Schemat SeriesGuide</item>
+    <item>Schemat ICS</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">głosy: %d</item>

@@ -27,6 +27,16 @@
   <string name="no_shouts">Be the first to shout!</string>
   <string name="shouts_for">Shouts for %s</string>
   <string name="autorefresh">Refreshing automagically</string>
+  <string name="love">Супер!</string>
+  <string name="hate">Weak Sauce :(</string>
+  <string name="rating2">Terrible</string>
+  <string name="rating3">Bad</string>
+  <string name="rating4">Poor</string>
+  <string name="rating5">Meh</string>
+  <string name="rating6">Fair</string>
+  <string name="rating7">Good</string>
+  <string name="rating8">Great</string>
+  <string name="rating9">Superb</string>
   <string name="episode_firstaired">Дата показа</string>
   <string name="episode_dvdnumber">DVD эпизод</string>
   <string name="show_actors">Актеры</string>
@@ -209,8 +219,8 @@
   <string name="menu_markseen_trakt">Mark seen (trakt)</string>
   <string name="menu_rate_trakt">Rate (trakt)</string>
   <string name="menu_share_others">C помощью других приложений</string>
-  <string name="traktcheckin_cancel">Отменить</string>
-  <string name="traktcheckin_inprogress">There is already a checkin in progress. Either cancel this checkin or wait %s before you can check in again.</string>
+  <string name="traktcheckin_cancel">Override</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous checkin or wait %s and try again.</string>
   <string name="traktcheckin_wait">I\'ll wait</string>
   <string name="oauthmessage">Authenticating SeriesGuide with GetGlue…</string>
   <string name="addtocalendar">Добавить в календарь</string>
@@ -225,8 +235,6 @@
   <string name="trakt_error">Interaction with trakt failed</string>
   <string name="trakt_decryptfail">не удалось расшифровать пароль</string>
   <string name="trakt_generalerror">Что-то пошло не так. Пожалуйста, проверьте ваши данные и повторите попытку.</string>
-  <string name="love">Супер!</string>
-  <string name="hate">Weak Sauce :(</string>
   <string name="trakt_createaccount">Создать новую учетную запись</string>
   <string name="trakt_experimental">Only shows added to SeriesGuide are synced. \'Sync to SeriesGuide\' fetches watched episodes from trakt. \'Sync to trakt\' transmits watched episodes from SeriesGuide to trakt.</string>
   <string name="trakt_synctodevice">Синхронизация с SeriesGuide</string>

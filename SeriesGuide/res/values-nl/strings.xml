@@ -26,7 +26,17 @@
   <string name="isspoiler">Spoiler waarschuwing!</string>
   <string name="no_shouts">Wees de eerste die shout!</string>
   <string name="shouts_for">Shouts voor %s</string>
-  <string name="autorefresh">Refreshing automagically</string>
+  <string name="autorefresh">Automatisch verversen</string>
+  <string name="love">Zeer goed!</string>
+  <string name="hate">Zwak</string>
+  <string name="rating2">Terrible</string>
+  <string name="rating3">Bad</string>
+  <string name="rating4">Poor</string>
+  <string name="rating5">Meh</string>
+  <string name="rating6">Fair</string>
+  <string name="rating7">Good</string>
+  <string name="rating8">Great</string>
+  <string name="rating9">Superb</string>
   <string name="episode_firstaired">uitzend datum</string>
   <string name="episode_dvdnumber">DVD aflevering</string>
   <string name="show_actors">Acteurs</string>
@@ -90,7 +100,7 @@
   <string name="update_single">Serie bijwerken…</string>
   <string name="update_delta">Verouderde series bijwerken…</string>
   <string name="update_full">Alle series bijwerken…</string>
-  <string name="update_success">Bijwerken succesvol voltooid.</string>
+  <string name="update_success">Bijwerken succesvol.</string>
   <string name="update_offline">Bijwerken is mislukt, controleer de internet/Wi-Fi verbinding.</string>
   <string name="update_saxerror">Bijwerken is mislukt, probeer het later opnieuw.</string>
   <string name="update_inprogress">Er wordt een update uitgevoerd, probeer het later opnieuw.</string>
@@ -144,7 +154,7 @@
   <string name="backup_summary">Back-up maken/herstellen van series</string>
   <string name="pref_language">Taal van de inhoud</string>
   <string name="pref_languagesummary">Vertaling is niet voor elke serie beschikbaar</string>
-  <string name="pref_number">Nummering instellen</string>
+  <string name="pref_number">Nummer opmaak</string>
   <string name="pref_numbersummary">Kies tussen 1x01, S01E01 of s01e01</string>
   <string name="pref_offset">Handmatige aanpassing tijdzone</string>
   <string name="pref_offsetsummary">Uitzenddatums aanpassen met een vast aantal uren</string>
@@ -180,17 +190,17 @@
   <string name="backup_failed">Maken back-up mislukt.</string>
   <string name="import_inprogress">Gegevensbestand herstellen…</string>
   <string name="import_failed_nosd">Back-up herstellen niet mogelijk. De back-up map is niet beschikbaar.</string>
-  <string name="import_failed_nofile">Er is geen back-upbestand.</string>
-  <string name="import_failed_noread">Het back-upbestand is niet leesbaar.</string>
-  <string name="dbupgradefailed">Deze back-up kan te oud of leeg zijn. Opmerking: Back-ups van voor versie 2.0 eerst in een 1.9.x versie importeren.</string>
+  <string name="import_failed_nofile">Er is geen back-up bestand.</string>
+  <string name="import_failed_noread">Het back-up bestand is niet leesbaar.</string>
+  <string name="dbupgradefailed">Deze back-up kan te oud zijn of niet bestaan. Opmerking: Back-ups van voor versie 2.0 eerst in een 1.9.x versie importeren.</string>
   <string name="import_success">Back-up met succes hersteld.</string>
   <string name="import_failed">Herstellen van de back-up mislukt.</string>
   <string name="backup_button">Back-up</string>
   <string name="import_button">Herstellen</string>
-  <string name="backup_question">Dit overschrijft het huidige back-upbestand in de back-upmap!</string>
+  <string name="backup_question">Dit overschrijft het huidige back-up bestand in de back-up map!</string>
   <string name="backup_yes">Back-up</string>
   <string name="backup_no">Geen back-up maken</string>
-  <string name="import_question">De huidige serieslijst zal verloren gaan! Zorg ervoor dat het back-upbestand in de back-up map aanwezig is.</string>
+  <string name="import_question">De huidige serieslijst zal verloren gaan! Zorg ervoor dat het back-up bestand in de back-up map aanwezig is.</string>
   <string name="import_yes">Herstellen</string>
   <string name="import_no">Niet herstellen</string>
   <string name="widget_label">Komende afleveringen</string>
@@ -209,8 +219,8 @@
   <string name="menu_markseen_trakt">Bekeken markeren (trakt)</string>
   <string name="menu_rate_trakt">Beoordelen (trakt)</string>
   <string name="menu_share_others">Via andere apps</string>
-  <string name="traktcheckin_cancel">Annuleren</string>
-  <string name="traktcheckin_inprogress">Er is al een aanmelding gaande. Annuleer deze aanmelding of wacht %s om opnieuw aan te melden.</string>
+  <string name="traktcheckin_cancel">Override</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous checkin or wait %s and try again.</string>
   <string name="traktcheckin_wait">Wachten</string>
   <string name="oauthmessage">SeriesGuide met GetGlue authenticeren…</string>
   <string name="addtocalendar">Aan agenda toevoegen</string>
@@ -225,8 +235,6 @@
   <string name="trakt_error">Communicatie met trakt is mislukt</string>
   <string name="trakt_decryptfail">wachtwoord kon niet worden gedecodeerd</string>
   <string name="trakt_generalerror">Er ging iets fout. Controleer uw referenties en probeer het opnieuw.</string>
-  <string name="love">Zeer goed!</string>
-  <string name="hate">Zwak</string>
   <string name="trakt_createaccount">Nieuw account aanmaken</string>
   <string name="trakt_experimental">Uitsluitend series die zijn toegevoegd aan SeriesGuide worden gesynchroniseerd. \'Met SeriesGuide synchroniseren\' betreffen bekeken afleveringen van trakt. \'Met trakt synchroniseren\' verzend bekeken afleveringen van SeriesGuide naar trakt.</string>
   <string name="trakt_synctodevice">Synchroniseren naar SeriesGuide</string>
@@ -245,8 +253,8 @@
   <string name="upcoming_display">Selecteer om toekomstige series weer te geven</string>
   <string name="pref_notifications">Meldingen</string>
   <string name="pref_notificationssummary">Favoriete series die binnenkort worden uitgezonden melden</string>
-  <string name="pref_theme">App Theme</string>
-  <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
+  <string name="pref_theme">Applicatie thema</string>
+  <string name="pref_themesummary">Kies welke kleuren gebruikt worden in SeriesGuide</string>
   <string name="download_stable">SeriesGuide downloaden</string>
   <string name="betawarning"><b>Let op!</b> Deze versie is uitsluitend voor beta testers! Bij twijfel de stabiele versie hieronder gebruiken.</string>
   <string-array name="shsorting">
@@ -282,8 +290,8 @@
     <item>Verborgen</item>
   </string-array>
   <string-array name="themeSelection">
-    <item>SeriesGuide Theme</item>
-    <item>ICS Base Theme</item>
+    <item>SeriesGuide thema</item>
+    <item>ICS Thema</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d stem</item>

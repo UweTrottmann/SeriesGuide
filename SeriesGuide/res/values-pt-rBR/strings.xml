@@ -27,6 +27,16 @@
   <string name="no_shouts">Seja o primeiro a gritar!</string>
   <string name="shouts_for">Gritos para %s</string>
   <string name="autorefresh">Refreshing automagically</string>
+  <string name="love">Excelente!</string>
+  <string name="hate">Fraco :(</string>
+  <string name="rating2">Terrible</string>
+  <string name="rating3">Bad</string>
+  <string name="rating4">Poor</string>
+  <string name="rating5">Meh</string>
+  <string name="rating6">Fair</string>
+  <string name="rating7">Good</string>
+  <string name="rating8">Great</string>
+  <string name="rating9">Superb</string>
   <string name="episode_firstaired">Exibição</string>
   <string name="episode_dvdnumber">Episódio de DVD</string>
   <string name="show_actors">Atores</string>
@@ -209,8 +219,8 @@
   <string name="menu_markseen_trakt">Marcar como visto (trakt)</string>
   <string name="menu_rate_trakt">Votar (trakt)</string>
   <string name="menu_share_others">Por outros aplicativos</string>
-  <string name="traktcheckin_cancel">Cancele isso</string>
-  <string name="traktcheckin_inprogress">Há um check-in neste momento. Cancele-o ou espere %s antes de dar outro check-in.</string>
+  <string name="traktcheckin_cancel">Override</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous checkin or wait %s and try again.</string>
   <string name="traktcheckin_wait">Vou esperar</string>
   <string name="oauthmessage">Autenticando SeriesGuide com GetGlue...</string>
   <string name="addtocalendar">Adicionar ao calendário</string>
@@ -225,8 +235,6 @@
   <string name="trakt_error">Interação com o trakt falhou</string>
   <string name="trakt_decryptfail">senha não pôde ser descriptografada</string>
   <string name="trakt_generalerror">Algo deu errado. Por favor, verifique suas credenciais e tente novamente.</string>
-  <string name="love">Excelente!</string>
-  <string name="hate">Fraco :(</string>
   <string name="trakt_createaccount">Criar nova conta</string>
   <string name="trakt_experimental">Somente as séries adicionadas ao SeriesGuide são sincronizadas. \'Sincronizar para SeriesGuide\' busca no trakt os episódios vistos. \'Sincronizar para trakt\' transmite os episódios vistos do SeriesGuide para o trakt.</string>
   <string name="trakt_synctodevice">Sincronizar para o SeriesGuide</string>
