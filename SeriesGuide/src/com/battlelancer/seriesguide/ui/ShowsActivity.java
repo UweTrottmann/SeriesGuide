@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -34,6 +35,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -87,8 +89,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private static final int CONTEXT_UNHIDE = 207;
 
     private static final int CONFIRM_DELETE_DIALOG = 304;
-
-    private static final int SORT_DIALOG = 306;
 
     private static final int LOADER_ID = 900;
 
@@ -325,26 +325,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                                 }).start();
                             }
                         }).setNegativeButton(getString(R.string.dontdelete_show), null).create();
-            case SORT_DIALOG:
-                final CharSequence[] items = getResources().getStringArray(R.array.shsorting);
-
-                return new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.pref_showsorting))
-                        .setSingleChoiceItems(items, mSorting.index(),
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int item) {
-                                        SharedPreferences.Editor prefEditor = PreferenceManager
-                                                .getDefaultSharedPreferences(
-                                                        getApplicationContext()).edit();
-                                        prefEditor
-                                                .putString(
-                                                        SeriesGuidePreferences.KEY_SHOWSSORTORDER,
-                                                        (getResources()
-                                                                .getStringArray(R.array.shsortingData))[item]);
-                                        prefEditor.commit();
-                                        removeDialog(SORT_DIALOG);
-                                    }
-                                }).create();
         }
         return null;
     }
@@ -486,7 +466,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case R.id.menu_showsortby:
                 fireTrackerEvent("Sort shows");
 
-                showDialog(SORT_DIALOG);
+                showSortDialog();
                 return true;
             case R.id.menu_updateart:
                 fireTrackerEvent("Fetch missing posters");
@@ -544,6 +524,14 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 return super.onOptionsItemSelected(item);
             }
         }
+    }
+
+    private void showSortDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        SortDialogFragment sortDialog = SortDialogFragment.newInstance(R.array.shsorting,
+                R.array.shsortingData, mSorting.index(), SeriesGuidePreferences.KEY_SHOWSSORTORDER,
+                R.string.pref_showsorting);
+        sortDialog.show(fm, "fragment_sort");
     }
 
     @Override
