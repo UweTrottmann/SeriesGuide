@@ -10,21 +10,19 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -53,7 +51,7 @@ public class EpisodesFragment extends SherlockListFragment implements
 
     private static final int EPISODES_LOADER = 4;
 
-    private Constants.EpisodeSorting sorting;
+    private Constants.EpisodeSorting mSorting;
 
     private boolean mDualPane;
 
@@ -100,6 +98,11 @@ public class EpisodesFragment extends SherlockListFragment implements
         AnalyticsUtils.getInstance(getActivity()).trackPageView("/Episodes");
 
         updatePreferences();
+
+        // listen to changes to the sorting preference
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+        prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
 
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
@@ -224,6 +227,16 @@ public class EpisodesFragment extends SherlockListFragment implements
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        // stop listening to sort pref changes
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+        prefs.unregisterOnSharedPreferenceChangeListener(mPrefsListener);
+    }
+
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
@@ -281,7 +294,7 @@ public class EpisodesFragment extends SherlockListFragment implements
         if (android.os.Build.VERSION.SDK_INT >= 11) {
             final CharSequence[] items = getResources().getStringArray(R.array.epsorting);
             menu.findItem(R.id.menu_epsorting).setTitle(
-                    getString(R.string.sort) + ": " + items[sorting.index()]);
+                    getString(R.string.sort) + ": " + items[mSorting.index()]);
         }
     }
 
@@ -301,11 +314,7 @@ public class EpisodesFragment extends SherlockListFragment implements
             case R.id.menu_epsorting:
                 fireTrackerEvent("Sort episodes");
 
-                // Create and show the dialog.
-                SortDialogFragment newFragment = SortDialogFragment.newInstance(sorting.index(),
-                        R.array.epsorting);
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                newFragment.show(ft, "sortEpisodesDialog");
+                showSortDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -353,12 +362,12 @@ public class EpisodesFragment extends SherlockListFragment implements
     }
 
     private void updatePreferences() {
-        sorting = Utils.getEpisodeSorting(getActivity());
+        mSorting = Utils.getEpisodeSorting(getActivity());
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
         return new CursorLoader(getActivity(), Episodes.buildEpisodesOfSeasonWithShowUri(String
-                .valueOf(getSeasonId())), EpisodesQuery.PROJECTION, null, null, sorting.query());
+                .valueOf(getSeasonId())), EpisodesQuery.PROJECTION, null, null, mSorting.query());
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
@@ -389,60 +398,42 @@ public class EpisodesFragment extends SherlockListFragment implements
 
     }
 
-    public static class SortDialogFragment extends DialogFragment {
-
-        /**
-         * Creates a new sorting {@link DialogFragment} with posibilities of
-         * {@code sortingArray} and selected value set to {@code index}.
-         * 
-         * @param index
-         * @param sortingArray
-         * @return
-         */
-        public static SortDialogFragment newInstance(int index, int sortingArray) {
-            SortDialogFragment f = new SortDialogFragment();
-            Bundle args = new Bundle();
-            args.putInt("index", index);
-            args.putInt("sortingarray", sortingArray);
-            f.setArguments(args);
-            return f;
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final CharSequence[] items = getResources().getStringArray(
-                    getArguments().getInt("sortingarray"));
-
-            return new AlertDialog.Builder(getActivity())
-                    .setTitle(getString(R.string.pref_episodesorting))
-                    .setSingleChoiceItems(items, getArguments().getInt("index"),
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int item) {
-                                    EpisodesFragment f = (EpisodesFragment) getFragmentManager()
-                                            .findFragmentById(R.id.fragment_episodes);
-                                    if (f == null) {
-                                        f = (EpisodesFragment) getFragmentManager()
-                                                .findFragmentById(R.id.root_container);
-                                    }
-                                    f.updateSorting(item);
-                                    dismiss();
-                                }
-                            }).create();
-        }
+    private void showSortDialog() {
+        FragmentManager fm = getFragmentManager();
+        SortDialogFragment sortDialog = SortDialogFragment.newInstance(R.array.epsorting,
+                R.array.epsortingData, mSorting.index(),
+                SeriesGuidePreferences.KEY_EPISODE_SORT_ORDER, R.string.pref_episodesorting);
+        sortDialog.show(fm, "fragment_sort");
     }
 
-    private void updateSorting(int item) {
-        sorting = (Constants.EpisodeSorting.values())[item];
-        AnalyticsUtils.getInstance(getActivity()).trackEvent("Episodes", "Sorting", sorting.name(),
-                0);
+    private final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
 
-        SharedPreferences.Editor prefEditor = PreferenceManager.getDefaultSharedPreferences(
-                getActivity()).edit();
-        prefEditor.putString("episodeSorting",
-                (getResources().getStringArray(R.array.epsortingData))[item]);
-        prefEditor.commit();
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (key.equals(SeriesGuidePreferences.KEY_EPISODE_SORT_ORDER)) {
+                updateSorting(sharedPreferences);
+            }
+        }
+    };
+
+    private void updateSorting(SharedPreferences prefs) {
+        String sortOrder = prefs.getString(SeriesGuidePreferences.KEY_EPISODE_SORT_ORDER, null);
+        final String[] itemData = getResources().getStringArray(R.array.epsortingData);
+
+        if (sortOrder == null) {
+            // [1] is oldest first
+            sortOrder = itemData[1];
+        }
+        for (int i = 0; i < itemData.length; i++) {
+            if (itemData[i].equals(sortOrder)) {
+                mSorting = (Constants.EpisodeSorting.values())[i];
+                break;
+            }
+        }
+
+        AnalyticsUtils.getInstance(getActivity()).trackEvent("Episodes", "Sorting",
+                mSorting.name(), 0);
+
         getLoaderManager().restartLoader(EPISODES_LOADER, null, EpisodesFragment.this);
-
         getSherlockActivity().invalidateOptionsMenu();
     }
 
