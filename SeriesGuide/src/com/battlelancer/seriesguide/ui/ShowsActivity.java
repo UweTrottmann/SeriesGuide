@@ -529,8 +529,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private void showSortDialog() {
         FragmentManager fm = getSupportFragmentManager();
         SortDialogFragment sortDialog = SortDialogFragment.newInstance(R.array.shsorting,
-                R.array.shsortingData, mSorting.index(), SeriesGuidePreferences.KEY_SHOWSSORTORDER,
-                R.string.pref_showsorting);
+                R.array.shsortingData, mSorting.index(),
+                SeriesGuidePreferences.KEY_SHOW_SORT_ORDER, R.string.pref_showsorting);
         sortDialog.show(fm, "fragment_sort");
     }
 
@@ -724,7 +724,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             boolean isAffectingChange = false;
 
-            if (key.equals(SeriesGuidePreferences.KEY_SHOWSSORTORDER)) {
+            if (key.equals(SeriesGuidePreferences.KEY_SHOW_SORT_ORDER)) {
                 updateSorting(sharedPreferences);
                 isAffectingChange = true;
             } else if (key.equals(SeriesGuidePreferences.KEY_UPCOMING_LIMIT)) {
@@ -789,7 +789,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     private boolean updateSorting(SharedPreferences prefs) {
         final Constants.ShowSorting oldSorting = mSorting;
         final CharSequence[] items = getResources().getStringArray(R.array.shsortingData);
-        final String sortsetting = prefs.getString(SeriesGuidePreferences.KEY_SHOWSSORTORDER,
+        final String sortsetting = prefs.getString(SeriesGuidePreferences.KEY_SHOW_SORT_ORDER,
                 "alphabetic");
 
         for (int i = 0; i < items.length; i++) {
