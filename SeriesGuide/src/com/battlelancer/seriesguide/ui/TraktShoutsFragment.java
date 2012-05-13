@@ -522,8 +522,6 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
      * Custom ArrayAdapter which binds {@link Shout} items to views using the
      * ViewHolder pattern and downloads avatars using the
      * {@link ImageDownloader}.
-     * 
-     * @author Aeon
      */
     private static class TraktShoutsAdapter extends ArrayAdapter<Shout> {
         private final ImageDownloader mImageDownloader;
