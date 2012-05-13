@@ -1022,7 +1022,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         }
     }
 
-    public final class ViewHolder {
+    static class ViewHolder {
 
         public TextView name;
 
