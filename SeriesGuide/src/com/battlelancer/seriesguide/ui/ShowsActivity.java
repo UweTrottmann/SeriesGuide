@@ -719,7 +719,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         onNavigationItemSelected(filterId, filterId);
     }
 
-    final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
+    private final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
 
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             boolean isAffectingChange = false;
