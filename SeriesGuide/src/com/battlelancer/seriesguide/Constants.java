@@ -14,18 +14,31 @@ public class Constants {
     public static final SimpleDateFormat theTVDBDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public static enum EpisodeSorting {
-        LATEST_FIRST(0, Episodes.NUMBER + " desc"), OLDEST_FIRST(1, Episodes.NUMBER + " asc"), UNWATCHED_FIRST(
-                2, Episodes.WATCHED + " asc," + Episodes.NUMBER + " asc"), ALPHABETICAL_ASC(3,
-                Episodes.TITLE + " asc"), ALPHABETICAL_DESC(4, Episodes.TITLE + " desc"), DVDLATEST_FIRST(
-                5, Episodes.DVDNUMBER + " desc," + Episodes.NUMBER + " desc"), DVDOLDEST_FIRST(6,
-                Episodes.DVDNUMBER + " asc," + Episodes.NUMBER + " asc");
+        LATEST_FIRST(0, "latestfirst", Episodes.NUMBER + " desc"),
+
+        OLDEST_FIRST(1, "oldestfirst", Episodes.NUMBER + " asc"),
+
+        UNWATCHED_FIRST(2, "unwatchedfirst", Episodes.WATCHED + " asc," + Episodes.NUMBER + " asc"),
+
+        ALPHABETICAL_ASC(3, "atoz", Episodes.TITLE + " asc"),
+
+        ALPHABETICAL_DESC(4, "ztoa", Episodes.TITLE + " desc"),
+
+        DVDLATEST_FIRST(5, "dvdlatestfirst", Episodes.DVDNUMBER + " desc," + Episodes.NUMBER
+                + " desc"),
+
+        DVDOLDEST_FIRST(6, "dvdoldestfirst", Episodes.DVDNUMBER + " asc," + Episodes.NUMBER
+                + " asc");
 
         private final int index;
 
+        private final String value;
+
         private final String query;
 
-        EpisodeSorting(int index, String query) {
+        EpisodeSorting(int index, String value, String query) {
             this.index = index;
+            this.value = value;
             this.query = query;
         }
 
@@ -33,14 +46,31 @@ public class Constants {
             return index;
         }
 
+        public String value() {
+            return value;
+        }
+
         public String query() {
             return query;
+        }
+
+        private static final Map<String, EpisodeSorting> STRING_MAPPING = new HashMap<String, EpisodeSorting>();
+
+        static {
+            for (EpisodeSorting via : EpisodeSorting.values()) {
+                STRING_MAPPING.put(via.toString().toUpperCase(), via);
+            }
+        }
+
+        public static EpisodeSorting fromValue(String value) {
+            return STRING_MAPPING.get(value.toUpperCase());
         }
     }
 
     public static enum SeasonSorting {
-        LATEST_FIRST(0, "latestfirst", Seasons.COMBINED + " desc"), OLDEST_FIRST(1, "oldestfirst",
-                Seasons.COMBINED + " asc");
+        LATEST_FIRST(0, "latestfirst", Seasons.COMBINED + " desc"),
+
+        OLDEST_FIRST(1, "oldestfirst", Seasons.COMBINED + " asc");
 
         private final int index;
 
@@ -80,11 +110,15 @@ public class Constants {
     }
 
     public static enum ShowSorting {
-        ALPHABETIC(0, "alphabetic", Shows.TITLE + " asc"), UPCOMING(1, "upcoming",
-                Shows.NEXTAIRDATEMS + " asc," + Shows.AIRSTIME + " asc," + Shows.TITLE + " asc"), FAVORITES_FIRST(
-                2, "favorites", Shows.FAVORITE + " desc," + Shows.TITLE + " asc"), FAVORITES_UPCOMING(
-                3, "favoritesupcoming", Shows.FAVORITE + " desc," + Shows.NEXTAIRDATEMS + " asc,"
-                        + Shows.AIRSTIME + " asc," + Shows.TITLE + " asc");
+        ALPHABETIC(0, "alphabetic", Shows.TITLE + " asc"),
+
+        UPCOMING(1, "upcoming", Shows.NEXTAIRDATEMS + " asc," + Shows.AIRSTIME + " asc,"
+                + Shows.TITLE + " asc"),
+
+        FAVORITES_FIRST(2, "favorites", Shows.FAVORITE + " desc," + Shows.TITLE + " asc"),
+
+        FAVORITES_UPCOMING(3, "favoritesupcoming", Shows.FAVORITE + " desc," + Shows.NEXTAIRDATEMS
+                + " asc," + Shows.AIRSTIME + " asc," + Shows.TITLE + " asc");
 
         private final int index;
 
