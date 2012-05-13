@@ -54,6 +54,11 @@ public class Constants {
             return query;
         }
 
+        @Override
+        public String toString() {
+            return this.value;
+        }
+
         private static final Map<String, EpisodeSorting> STRING_MAPPING = new HashMap<String, EpisodeSorting>();
 
         static {
@@ -94,6 +99,11 @@ public class Constants {
 
         public String query() {
             return query;
+        }
+
+        @Override
+        public String toString() {
+            return this.value;
         }
 
         private static final Map<String, SeasonSorting> STRING_MAPPING = new HashMap<String, SeasonSorting>();
