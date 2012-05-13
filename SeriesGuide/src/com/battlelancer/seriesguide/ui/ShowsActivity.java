@@ -4,7 +4,6 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract;
@@ -36,6 +35,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -89,8 +89,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final int CONTEXT_UNHIDE = 207;
 
-    private static final int CONFIRM_DELETE_DIALOG = 304;
-
     private static final int LOADER_ID = 900;
 
     // Background Task States
@@ -121,9 +119,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private SlowAdapter mAdapter;
 
-    private Constants.ShowSorting mSorting;
-
-    private long mToDeleteId;
+    private ShowSorting mSorting;
 
     private boolean mIsPreventLoaderRestart;
 
@@ -301,33 +297,54 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         }
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case CONFIRM_DELETE_DIALOG:
-                return new AlertDialog.Builder(this).setMessage(getString(R.string.confirm_delete))
-                        .setPositiveButton(getString(R.string.delete_show), new OnClickListener() {
+    private void showDeleteDialog(long showId) {
+        FragmentManager fm = getSupportFragmentManager();
+        ConfirmDeleteDialogFragment deleteDialog = ConfirmDeleteDialogFragment.newInstance(String
+                .valueOf(showId));
+        deleteDialog.show(fm, "fragment_delete");
+    }
 
-                            public void onClick(DialogInterface dialog, int which) {
+    public static class ConfirmDeleteDialogFragment extends DialogFragment {
 
-                                final ProgressDialog progress = new ProgressDialog(
-                                        ShowsActivity.this);
-                                progress.setCancelable(false);
-                                progress.show();
+        /**
+         * Dialog to confirm the removal of a show from the database.
+         * 
+         * @param showId The show to remove.
+         * @return
+         */
+        public static ConfirmDeleteDialogFragment newInstance(String showId) {
+            ConfirmDeleteDialogFragment f = new ConfirmDeleteDialogFragment();
 
-                                new Thread(new Runnable() {
-                                    public void run() {
-                                        DBUtils.deleteShow(getApplicationContext(),
-                                                String.valueOf(mToDeleteId));
-                                        if (progress.isShowing()) {
-                                            progress.dismiss();
-                                        }
-                                    }
-                                }).start();
-                            }
-                        }).setNegativeButton(getString(R.string.dontdelete_show), null).create();
+            Bundle args = new Bundle();
+            args.putString("showid", showId);
+
+            return f;
         }
-        return null;
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            return new AlertDialog.Builder(getActivity())
+                    .setMessage(getString(R.string.confirm_delete))
+                    .setPositiveButton(getString(R.string.delete_show), new OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            final ProgressDialog progress = new ProgressDialog(getActivity());
+                            progress.setCancelable(false);
+                            progress.show();
+
+                            new Thread(new Runnable() {
+                                public void run() {
+                                    DBUtils.deleteShow(getActivity(),
+                                            getArguments().getString("showid"));
+                                    if (progress.isShowing()) {
+                                        progress.dismiss();
+                                    }
+                                }
+                            }).start();
+                        }
+                    }).setNegativeButton(getString(R.string.dontdelete_show), null).create();
+        }
     }
 
     @Override
@@ -409,8 +426,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 fireTrackerEvent("Delete show");
 
                 if (!TaskManager.getInstance(this).isUpdateTaskRunning(true)) {
-                    mToDeleteId = info.id;
-                    showDialog(CONFIRM_DELETE_DIALOG);
+                    showDeleteDialog(info.id);
                 }
                 return true;
             case CONTEXT_UPDATESHOW_ID:
