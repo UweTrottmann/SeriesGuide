@@ -521,7 +521,8 @@ public class Utils {
         String[] epsortingData = context.getResources().getStringArray(R.array.epsortingData);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
                 .getApplicationContext());
-        String currentPref = prefs.getString("episodeSorting", epsortingData[1]);
+        String currentPref = prefs.getString(SeriesGuidePreferences.KEY_EPISODE_SORT_ORDER,
+                epsortingData[1]);
 
         Constants.EpisodeSorting sorting;
         if (currentPref.equals(epsortingData[0])) {
