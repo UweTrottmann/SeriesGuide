@@ -5,6 +5,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -781,28 +782,25 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     }
 
     /**
-     * Fetch the sorting preference and store it in this class.
+     * Fetches the sorting preference and stores it in {@code mSorting}.
      * 
      * @param prefs
      * @return Returns true if the value changed, false otherwise.
      */
     private boolean updateSorting(SharedPreferences prefs) {
-        final Constants.ShowSorting oldSorting = mSorting;
-        final CharSequence[] items = getResources().getStringArray(R.array.shsortingData);
-        final String sortsetting = prefs.getString(SeriesGuidePreferences.KEY_SHOW_SORT_ORDER,
-                "alphabetic");
+        final ShowSorting oldSorting = mSorting;
 
-        for (int i = 0; i < items.length; i++) {
-            if (sortsetting.equals(items[i])) {
-                mSorting = Constants.ShowSorting.values()[i];
-                break;
-            }
+        mSorting = ShowSorting.fromValue(prefs.getString(
+                SeriesGuidePreferences.KEY_SHOW_SORT_ORDER, ShowSorting.ALPHABETIC.value()));
+
+        if (oldSorting != mSorting) {
+            AnalyticsUtils.getInstance(ShowsActivity.this).trackEvent("Shows", "Sorting",
+                    mSorting.name(), 0);
+
+            return true;
+        } else {
+            return false;
         }
-
-        AnalyticsUtils.getInstance(ShowsActivity.this).trackEvent("Shows", "Sorting",
-                mSorting.name(), 0);
-
-        return oldSorting != mSorting;
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {

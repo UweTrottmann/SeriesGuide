@@ -6,6 +6,8 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Constants {
 
@@ -58,18 +60,21 @@ public class Constants {
     }
 
     public static enum ShowSorting {
-        ALPHABETIC(0, Shows.TITLE + " asc"), UPCOMING(1, Shows.NEXTAIRDATEMS + " asc,"
-                + Shows.AIRSTIME + " asc," + Shows.TITLE + " asc"), FAVORITES_FIRST(2,
-                Shows.FAVORITE + " desc," + Shows.TITLE + " asc"), FAVORITES_UPCOMING(3,
-                Shows.FAVORITE + " desc," + Shows.NEXTAIRDATEMS + " asc," + Shows.AIRSTIME
-                        + " asc," + Shows.TITLE + " asc");
+        ALPHABETIC(0, "alphabetic", Shows.TITLE + " asc"), UPCOMING(1, "upcoming",
+                Shows.NEXTAIRDATEMS + " asc," + Shows.AIRSTIME + " asc," + Shows.TITLE + " asc"), FAVORITES_FIRST(
+                2, "favorites", Shows.FAVORITE + " desc," + Shows.TITLE + " asc"), FAVORITES_UPCOMING(
+                3, "favoritesupcoming", Shows.FAVORITE + " desc," + Shows.NEXTAIRDATEMS + " asc,"
+                        + Shows.AIRSTIME + " asc," + Shows.TITLE + " asc");
 
         private final int index;
 
+        private final String value;
+
         private final String query;
 
-        ShowSorting(int index, String query) {
+        ShowSorting(int index, String value, String query) {
             this.index = index;
+            this.value = value;
             this.query = query;
         }
 
@@ -77,8 +82,29 @@ public class Constants {
             return index;
         }
 
+        public String value() {
+            return value;
+        }
+
         public String query() {
             return query;
+        }
+
+        @Override
+        public String toString() {
+            return this.value;
+        }
+
+        private static final Map<String, ShowSorting> STRING_MAPPING = new HashMap<String, ShowSorting>();
+
+        static {
+            for (ShowSorting via : ShowSorting.values()) {
+                STRING_MAPPING.put(via.toString().toUpperCase(), via);
+            }
+        }
+
+        public static ShowSorting fromValue(String value) {
+            return STRING_MAPPING.get(value.toUpperCase());
         }
     }
 
