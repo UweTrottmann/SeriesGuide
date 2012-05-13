@@ -809,7 +809,7 @@ public class Utils {
     public static void setValueOrPlaceholder(View view, final String value) {
         TextView field = (TextView) view;
         if (value == null || value.length() == 0) {
-            field.setText(R.string.episode_unkownairdate);
+            field.setText(R.string.unknown);
         } else {
             field.setText(value);
         }

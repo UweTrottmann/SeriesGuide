@@ -161,7 +161,7 @@ public class EpisodesFragment extends SherlockListFragment implements
                         tv.setText(Utils.formatToTimeAndDay(airtime, getActivity())[2]);
                     } else {
                         tv.setText(getString(R.string.episode_firstaired) + " "
-                                + getString(R.string.episode_unkownairdate));
+                                + getString(R.string.unknown));
                     }
                     return true;
                 }

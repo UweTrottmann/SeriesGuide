@@ -4,7 +4,7 @@
     <!-- Generic -->
     <string name="episode">Episode</string>
     <string name="season">Season</string>
-    <string name="episode_unkownairdate">unknown</string>
+    <string name="unknown">unknown</string>
     <string name="episode_iswatched">Watched already</string>
     <string name="episode_notwatched">Not watched yet</string>
     <string name="specialseason">Special Episodes</string>
@@ -94,7 +94,7 @@
 
     <!-- SeriesGuide mainscreen -->
     <string name="shows_empty">No shows here.</string>
-    <string name="confirm_delete">Do you really want to remove that show?</string>
+    <string name="confirm_delete">Do you really want to remove %s?</string>
     <string name="delete_show">Remove</string>
     <string name="dontdelete_show">Don\'t remove</string>
     <string name="no_nextepisode">no next episode found</string>

@@ -266,7 +266,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         String[] dayAndTime = Utils.formatToTimeAndDay(airtime, getActivity());
                         airtimeText.setText(dayAndTime[2] + " (" + dayAndTime[1] + ")");
                     } else {
-                        airdateText.setText(getString(R.string.episode_unkownairdate));
+                        airdateText.setText(getString(R.string.unknown));
                         airtimeText.setText("");
                     }
                     return true;

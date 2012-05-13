@@ -317,14 +317,29 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
             Bundle args = new Bundle();
             args.putString("showid", showId);
+            f.setArguments(args);
 
             return f;
         }
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final String showId = getArguments().getString("showid");
+
+            final Cursor show = getActivity().getContentResolver().query(
+                    Shows.buildShowUri(showId), new String[] {
+                        Shows.TITLE
+                    }, null, null, null);
+
+            String showName = getString(R.string.unknown);
+            if (show != null && show.moveToFirst()) {
+                showName = show.getString(0);
+            }
+
+            show.close();
+
             return new AlertDialog.Builder(getActivity())
-                    .setMessage(getString(R.string.confirm_delete))
+                    .setMessage(getString(R.string.confirm_delete, showName))
                     .setPositiveButton(getString(R.string.delete_show), new OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int which) {
