@@ -378,21 +378,17 @@ public class UpcomingFragment extends ListFragment implements
             String number = Utils.getEpisodeNumber(mPrefs, seasonNumber, episodeNumber);
             viewHolder.number.setText(number);
 
-            // airdate
+            // airdate and time
             long airtime = mCursor.getLong(UpcomingQuery.FIRSTAIREDMS);
+            String network = "";
             if (airtime != -1) {
-                viewHolder.airdate.setText(Utils.formatToTimeAndDay(airtime, mContext)[2]);
+                String[] timeAndDay = Utils.formatToTimeAndDay(airtime, mContext);
+                viewHolder.airdate.setText(timeAndDay[2]);
+                network = timeAndDay[1] + " " + timeAndDay[0] + " ";
             } else {
                 viewHolder.airdate.setText("");
             }
 
-            // network
-            String network = "";
-            // add airtime
-            if (airtime != -1) {
-                String[] timeAndDay = Utils.formatToTimeAndDay(airtime, mContext);
-                network += timeAndDay[1] + " " + timeAndDay[0] + " ";
-            }
             // add network
             String value = mCursor.getString(UpcomingQuery.SHOW_NETWORK);
             if (value.length() != 0) {
