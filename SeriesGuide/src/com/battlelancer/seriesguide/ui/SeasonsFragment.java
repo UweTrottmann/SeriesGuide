@@ -391,12 +391,8 @@ public class SeasonsFragment extends SherlockListFragment implements
     private void updatePreferences() {
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
-        if (prefs.getString(SeriesGuidePreferences.KEY_SEASON_SORT_ORDER, "latestfirst").equals(
-                "latestfirst")) {
-            mSorting = Constants.SeasonSorting.LATEST_FIRST;
-        } else {
-            mSorting = Constants.SeasonSorting.OLDEST_FIRST;
-        }
+        mSorting = SeasonSorting.fromValue(prefs.getString(
+                SeriesGuidePreferences.KEY_SEASON_SORT_ORDER, SeasonSorting.LATEST_FIRST.value()));
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
