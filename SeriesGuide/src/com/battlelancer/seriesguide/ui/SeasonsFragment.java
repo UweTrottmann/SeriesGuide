@@ -6,6 +6,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.Constants.SeasonSorting;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
@@ -453,19 +454,8 @@ public class SeasonsFragment extends SherlockListFragment implements
     };
 
     private void updateSorting(SharedPreferences prefs) {
-        String sortOrder = prefs.getString(SeriesGuidePreferences.KEY_SEASON_SORT_ORDER, null);
-        final String[] itemData = getResources().getStringArray(R.array.sesortingData);
-
-        if (sortOrder == null) {
-            // [0] is latest first
-            sortOrder = itemData[0];
-        }
-        for (int i = 0; i < itemData.length; i++) {
-            if (itemData[i].equals(sortOrder)) {
-                mSorting = (Constants.SeasonSorting.values())[i];
-                break;
-            }
-        }
+        mSorting = SeasonSorting.fromValue(prefs.getString(
+                SeriesGuidePreferences.KEY_SEASON_SORT_ORDER, SeasonSorting.LATEST_FIRST.value()));
 
         AnalyticsUtils.getInstance(getActivity()).trackEvent("Seasons", "Sorting", mSorting.name(),
                 0);

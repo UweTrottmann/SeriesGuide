@@ -39,14 +39,18 @@ public class Constants {
     }
 
     public static enum SeasonSorting {
-        LATEST_FIRST(0, Seasons.COMBINED + " desc"), OLDEST_FIRST(1, Seasons.COMBINED + " asc");
+        LATEST_FIRST(0, "latestfirst", Seasons.COMBINED + " desc"), OLDEST_FIRST(1, "oldestfirst",
+                Seasons.COMBINED + " asc");
 
         private final int index;
 
+        private final String value;
+
         private final String query;
 
-        SeasonSorting(int index, String query) {
+        SeasonSorting(int index, String value, String query) {
             this.index = index;
+            this.value = value;
             this.query = query;
         }
 
@@ -54,8 +58,24 @@ public class Constants {
             return index;
         }
 
+        public String value() {
+            return value;
+        }
+
         public String query() {
             return query;
+        }
+
+        private static final Map<String, SeasonSorting> STRING_MAPPING = new HashMap<String, SeasonSorting>();
+
+        static {
+            for (SeasonSorting via : SeasonSorting.values()) {
+                STRING_MAPPING.put(via.toString().toUpperCase(), via);
+            }
+        }
+
+        public static SeasonSorting fromValue(String value) {
+            return STRING_MAPPING.get(value.toUpperCase());
         }
     }
 
