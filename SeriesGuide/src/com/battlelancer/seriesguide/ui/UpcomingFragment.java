@@ -417,7 +417,7 @@ public class UpcomingFragment extends ListFragment implements
         }
     }
 
-    public final class ViewHolder {
+    static class ViewHolder {
 
         public TextView show;
 
