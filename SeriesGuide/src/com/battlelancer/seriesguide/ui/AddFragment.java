@@ -49,7 +49,7 @@ public class AddFragment extends SherlockListFragment {
         setListAdapter(mAdapter);
     }
 
-    public class AddAdapter extends ArrayAdapter<SearchResult> {
+    protected static class AddAdapter extends ArrayAdapter<SearchResult> {
 
         private LayoutInflater mLayoutInflater;
 
@@ -91,14 +91,14 @@ public class AddFragment extends SherlockListFragment {
 
             return convertView;
         }
-    }
 
-    public final class ViewHolder {
+        static class ViewHolder {
 
-        public TextView title;
+            public TextView title;
 
-        public TextView description;
+            public TextView description;
 
-        public ImageView poster;
+            public ImageView poster;
+        }
     }
 }
