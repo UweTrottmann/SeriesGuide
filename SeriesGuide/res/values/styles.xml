@@ -5,7 +5,6 @@
     <style name="SeriesGuideTheme" parent="Theme.Sherlock.ForceOverflow">
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator</item>
-        <item name="vpiTabTextStyle">@style/TabPageIndicatorText</item>
         <item name="actionBarStyle">@style/ActionBar</item>
         <item name="android:actionBarStyle">@style/ActionBar</item>
         <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
@@ -21,7 +20,6 @@
     <style name="ICSBaseTheme" parent="Theme.Sherlock.ForceOverflow">
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.ICS</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
-        <item name="vpiTabTextStyle">@style/TabPageIndicatorText</item>
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
     </style>
 
@@ -47,30 +45,30 @@
         <item name="footerLineHeight">2dp</item>
         <item name="footerIndicatorHeight">5dp</item>
         <item name="footerIndicatorStyle">underline</item>
-        <item name="textColor">@color/text_primary</item>
+        <item name="android:textColor">@color/text_primary</item>
         <item name="selectedColor">@color/text_primary</item>
         <item name="selectedBold">true</item>
     </style>
-
+    
     <style name="TitlePageIndicator.ICS" parent="TitlePageIndicator">
         <item name="footerColor">#33B5E5</item>
     </style>
 
-    <style name="TabPageIndicator">
+    <style name="TabPageIndicator" parent="Widget.TabPageIndicator">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:background">@drawable/tab_indicator</item>
         <item name="android:paddingLeft">22dip</item>
         <item name="android:paddingRight">22dip</item>
         <item name="android:paddingTop">12dp</item>
         <item name="android:paddingBottom">12dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.TabPageIndicator</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:maxLines">1</item>
     </style>
 
-    <style name="TabPageIndicatorText">
-        <item name="android:textAppearance">@style/TextAppearance.TabPageIndicator</item>
-        <item name="android:textColor">@color/vpi__dark_theme</item>
-        <item name="android:textSize">12sp</item>
+    <style name="TextAppearance.TabPageIndicator" parent="Widget">
         <item name="android:textStyle">bold</item>
-        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/vpi__dark_theme</item>
     </style>
 
     <style name="Header">

@@ -12,7 +12,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.viewpagerindicator.TitlePageIndicator;
-import com.viewpagerindicator.TitleProvider;
 
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -131,8 +130,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
                 R.anim.fragment_slide_right_exit);
     }
 
-    public static class EpisodePagerAdapter extends FragmentStatePagerAdapter implements
-            TitleProvider {
+    public static class EpisodePagerAdapter extends FragmentStatePagerAdapter {
 
         private List<Episode> mEpisodes;
 
@@ -156,7 +154,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
         }
 
         @Override
-        public String getTitle(int position) {
+        public CharSequence getPageTitle(int position) {
             Episode episode = mEpisodes.get(position);
             return Utils.getEpisodeNumber(mPrefs, episode.seasonNumber, episode.episodeNumber);
         }
