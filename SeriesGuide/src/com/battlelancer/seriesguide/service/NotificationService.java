@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.text.format.DateUtils;
@@ -142,7 +143,24 @@ public class NotificationService extends IntentService {
 
             }
 
-            nb.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS);
+            // notification sound
+            final String ringtoneUri = prefs.getString(SeriesGuidePreferences.KEY_RINGTONE,
+                    "content://settings/system/notification_sound");
+            // If the string is empty, the user chose silent. So only set a
+            // sound if necessary.
+            if (ringtoneUri.length() != 0) {
+                nb.setSound(Uri.parse(ringtoneUri));
+            }
+
+            // vibration
+            final boolean isVibrating = prefs.getBoolean(SeriesGuidePreferences.KEY_VIBRATE, false);
+            if (isVibrating) {
+                nb.setVibrate(new long[] {
+                        0, 100, 200, 100, 100, 100
+                });
+            }
+
+            nb.setDefaults(Notification.DEFAULT_LIGHTS);
             nb.setWhen(System.currentTimeMillis());
             nb.setAutoCancel(true);
             nb.setTicker(tickerText);

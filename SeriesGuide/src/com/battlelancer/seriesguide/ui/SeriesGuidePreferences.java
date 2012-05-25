@@ -88,6 +88,10 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_NOTIFICATIONS_ENABLED = "com.battlelancer.seriesguide.notifications";
 
+    public static final String KEY_VIBRATE = "com.battlelancer.seriesguide.notifications.vibrate";
+
+    public static final String KEY_RINGTONE = "com.battlelancer.seriesguide.notifications.ringtone";
+
     public static final String KEY_LANGUAGE = "language";
 
     public static final String KEY_SHAREWITHTRAKT = "com.battlelancer.seriesguide.sharewithtrakt";
