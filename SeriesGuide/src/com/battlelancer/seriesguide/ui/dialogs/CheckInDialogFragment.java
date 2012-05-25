@@ -8,7 +8,6 @@ import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
 import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
-import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
@@ -131,7 +130,7 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if (!ShareUtils.isTraktCredentialsValid(getSherlockActivity())) {
+                    if (!Utils.isTraktCredentialsValid(getSherlockActivity())) {
                         // authenticate already here
                         TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
                                 .newInstance();
@@ -173,7 +172,7 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                 }
 
                 if (mTraktChecked) {
-                    if (!ShareUtils.isTraktCredentialsValid(getActivity())) {
+                    if (!Utils.isTraktCredentialsValid(getActivity())) {
                         // cancel if required auth data is missing
                         mToggleTraktButton.setChecked(false);
                         mTraktChecked = false;

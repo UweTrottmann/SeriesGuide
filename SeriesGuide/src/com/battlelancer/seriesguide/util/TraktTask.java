@@ -168,7 +168,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         }
 
         // check for valid credentials
-        if (!ShareUtils.isTraktCredentialsValid(mContext)) {
+        if (!Utils.isTraktCredentialsValid(mContext)) {
             // return null so a credentials dialog is displayed
             // it will call us again with valid credentials
             return null;

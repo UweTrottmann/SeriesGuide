@@ -833,4 +833,13 @@ public class Utils {
         }
     }
 
+    public static boolean isTraktCredentialsValid(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
+                .getApplicationContext());
+        String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+        String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
+    
+        return (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase(""));
+    }
+
 }

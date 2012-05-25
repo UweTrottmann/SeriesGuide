@@ -236,7 +236,7 @@ public class DBUtils {
             final int season, final int episode, final boolean isAdd, final TraktAction actiontype) {
         // check for valid credentials here, not worth building up a whole
         // AsyncTask to do that
-        if (!ShareUtils.isTraktCredentialsValid(context)) {
+        if (!Utils.isTraktCredentialsValid(context)) {
             return;
         }
 

@@ -6,8 +6,8 @@ import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
-import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.Utils;
 import com.viewpagerindicator.TabPageIndicator;
 
 import android.content.Context;
@@ -67,7 +67,7 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
 
         @Override
         public int getCount() {
-            final boolean isValidCredentials = ShareUtils.isTraktCredentialsValid(mContext);
+            final boolean isValidCredentials = Utils.isTraktCredentialsValid(mContext);
             if (isValidCredentials) {
                 // show trakt recommended and libraried shows, too
                 return 4;

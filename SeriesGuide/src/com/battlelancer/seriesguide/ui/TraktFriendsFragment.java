@@ -6,7 +6,6 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
@@ -163,7 +162,7 @@ public class TraktFriendsFragment extends ListFragment implements
 
         @Override
         public List<UserProfile> loadInBackground() {
-            if (ShareUtils.isTraktCredentialsValid(getContext())) {
+            if (Utils.isTraktCredentialsValid(getContext())) {
                 ServiceManager manager = null;
                 try {
                     manager = Utils.getServiceManagerWithAuth(getContext(), false);

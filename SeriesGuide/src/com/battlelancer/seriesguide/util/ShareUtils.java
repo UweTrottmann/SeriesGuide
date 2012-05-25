@@ -3,7 +3,6 @@ package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.ShowInfoActivity;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
@@ -178,14 +177,5 @@ public class ShareUtils {
             View v = inflater.inflate(R.layout.progress_dialog, container, false);
             return v;
         }
-    }
-
-    public static boolean isTraktCredentialsValid(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                .getApplicationContext());
-        String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
-        String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
-
-        return (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase(""));
     }
 }

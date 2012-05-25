@@ -74,7 +74,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected Integer doInBackground(Void... params) {
-        if (!ShareUtils.isTraktCredentialsValid(mContext)) {
+        if (!Utils.isTraktCredentialsValid(mContext)) {
             return FAILED_CREDENTIALS;
         }
 
