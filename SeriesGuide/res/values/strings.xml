@@ -4,7 +4,7 @@
     <!-- Generic -->
     <string name="episode">Episode</string>
     <string name="season">Season</string>
-    <string name="episode_unkownairdate">unknown</string>
+    <string name="unknown">unknown</string>
     <string name="episode_iswatched">Watched already</string>
     <string name="episode_notwatched">Not watched yet</string>
     <string name="specialseason">Special Episodes</string>
@@ -16,16 +16,18 @@
     <string name="description_overview">Overview</string>
     <string name="description_poster">Show poster</string>
     <string name="norating">n/a</string>
-    <string name="loading">Loading&#8230;</string>
-    <string name="sending">Sending&#8230;</string>
+    <string name="loading">Loading…</string>
+    <string name="sending">Sending…</string>
     <string name="done">Done</string>
+
     <plurals name="votes">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>
     </plurals>
+
     <string name="offline">No network connectivity. Try again later.</string>
     <string name="onlyx">Only available in SeriesGuide X</string>
-    
+
     <!-- Shouts -->
     <string name="shouts">Shouts</string>
     <string name="shout_hint">Type a shout (in English)</string>
@@ -34,7 +36,7 @@
     <string name="no_shouts">Be the first to shout!</string>
     <string name="shouts_for">Shouts for %s</string>
     <string name="autorefresh">Refreshing automagically</string>
-    
+
     <!-- Trakt ratings -->
     <string name="love">Totally ninja!</string>
     <string name="hate">Weak Sauce :(</string>
@@ -65,7 +67,6 @@
 
     <!-- Menu options -->
     <string name="sort">Sort by</string>
-    
     <string name="updateall_yes">Update (all)</string>
     <string name="menu_update_delta">Update (outdated only)</string>
     <string name="context_updateshow">Update</string>
@@ -94,7 +95,7 @@
 
     <!-- SeriesGuide mainscreen -->
     <string name="shows_empty">No shows here.</string>
-    <string name="confirm_delete">Do you really want to remove that show?</string>
+    <string name="confirm_delete">Do you really want to remove %s?</string>
     <string name="delete_show">Remove</string>
     <string name="dontdelete_show">Don\'t remove</string>
     <string name="no_nextepisode">no next episode found</string>
@@ -107,7 +108,7 @@
     <string name="context_unhide">Un-Hide</string>
     <string name="hidden">Hidden show</string>
     <string name="unhidden">Un-Hidden show</string>
-    
+
     <!-- Activity -->
     <string name="activity">Activity</string>
     <string name="upcoming">Upcoming</string>
@@ -120,21 +121,21 @@
     <string name="togglewatched">Toggle watched</string>
 
     <!-- Updating -->
-    <string name="update_notification">Updating your shows&#8230;</string>
-    <string name="update_single">Updating show&#8230;</string>
-    <string name="update_delta">Updating outdated shows&#8230;</string>
-    <string name="update_full">Updating all shows&#8230;</string>
+    <string name="update_notification">Updating your shows…</string>
+    <string name="update_single">Updating show…</string>
+    <string name="update_delta">Updating outdated shows…</string>
+    <string name="update_full">Updating all shows…</string>
     <string name="update_success">Update successful.</string>
     <string name="update_offline">Updating failed, check your internet/Wi-Fi connection.</string>
     <string name="update_saxerror">Updating failed, try again later.</string>
     <string name="update_inprogress">An update is in progress, try again later.</string>
-    <string name="update_rebuildsearch">Refreshing episode search&#8230;</string>
-    <string name="update_traktactivity">Loading trakt activity&#8230;</string>
-    
+    <string name="update_rebuildsearch">Refreshing episode search…</string>
+    <string name="update_traktactivity">Loading trakt activity…</string>
+
     <!-- Loading posters -->
     <string name="menu_updateart">Load posters</string>
     <string name="arttask_incomplete">Some posters did not load, try again later.</string>
-    <string name="arttask_start">Loading posters&#8230;</string>
+    <string name="arttask_start">Loading posters…</string>
     <string name="arttask_nosdcard">Loading posters requires external storage (SD card).</string>
 
     <!-- Show info -->
@@ -174,15 +175,15 @@
     <string name="pref_showlist">Show list</string>
     <string name="help">Help</string>
     <string name="preferences">Settings</string>
-    <string name="pref_showsorting">Sort shows by&#8230;</string>
+    <string name="pref_showsorting">Sort shows by…</string>
     <string name="pref_onlyfuture">No aired episodes</string>
     <string name="pref_onlyfuturesummary">\"next:\" never shows already aired episodes</string>
     <string name="pref_onlyseasoneps">No special episodes</string>
     <string name="pref_onlyseasonepssummary">\"next:\" never shows special episodes</string>
     <string name="pref_content">Content</string>
-    <string name="pref_seasonsorting">Sort seasons by&#8230;</string>
+    <string name="pref_seasonsorting">Sort seasons by…</string>
     <string name="pref_sortingsummary">Specify how to sort seasons</string>
-    <string name="pref_episodesorting">Sort episodes by&#8230;</string>
+    <string name="pref_episodesorting">Sort episodes by…</string>
     <string name="pref_epsortingsummary">Specify how to sort episodes</string>
     <string name="backup">Backup/Restore</string>
     <string name="backup_summary">Backup or restore your shows</string>
@@ -213,7 +214,7 @@
     <string name="pref_ganalytics">Google Analytics</string>
     <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
     <string name="sendusagedata">Send the developer usage statistics</string>
-    
+
     <string-array name="shsorting">
         <item>A - Z</item>
         <item>Next episode</item>
@@ -233,9 +234,10 @@
         <item>Latest first (DVD)</item>
         <item>Oldest first (DVD)</item>
     </string-array>
-    
-    <string name="pref_upcominglimit">Upcoming shows within&#8230;</string>
+
+    <string name="pref_upcominglimit">Upcoming shows within…</string>
     <string name="pref_upcominglimitsummary">How far in the future to display upcoming shows</string>
+
     <string-array name="upcominglimit">
         <item>a day</item>
         <item>3 days</item>
@@ -249,10 +251,10 @@
     <string name="backup_path"><b>Backup folder</b></string>
     <string name="backup_version"><b>Database version</b></string>
     <string name="backup_failed_nosd">Can\'t backup. The backup folder is not available.</string>
-    <string name="backup_inprogress">Backing up database&#8230;</string>
+    <string name="backup_inprogress">Backing up database…</string>
     <string name="backup_success">Backup successful.</string>
     <string name="backup_failed">Backup failed.</string>
-    <string name="import_inprogress">Restoring database&#8230;</string>
+    <string name="import_inprogress">Restoring database…</string>
     <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
     <string name="import_failed_nofile">There is no backup file.</string>
     <string name="import_failed_noread">The backup file is not readable.</string>
@@ -267,7 +269,7 @@
     <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
     <string name="import_yes">Restore</string>
     <string name="import_no">Don\'t Restore</string>
-    
+
     <!-- Misc -->
     <string name="widget_label">Next episodes</string>
     <string name="smallwidget">Next episodes (small)</string>
@@ -276,7 +278,7 @@
     <string name="seasons">Seasons</string>
     <string name="cancel">Cancel</string>
     <string name="share">Share</string>
-    
+
     <!-- Check Ins -->
     <string name="checkin">Check in</string>
     <string name="checkin_hint">Type a message (optional)</string>
@@ -284,23 +286,21 @@
     <string name="checkinsuccess">GetGlue Check-in successful.</string>
     <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
     <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
-    
+
     <!-- Share methods -->
     <string name="menu_markseen_trakt">Mark seen (trakt)</string>
     <string name="menu_rate_trakt">Rate (trakt)</string>
     <string name="menu_share_others">Via other apps</string>
-
     <string name="traktcheckin_cancel">Override</string>
     <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous checkin or wait %s and try again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
-    <string name="oauthmessage">Authenticating SeriesGuide with GetGlue&#8230;</string>
+    <string name="oauthmessage">Authenticating SeriesGuide with GetGlue…</string>
     <string name="addtocalendar">Add to calendar</string>
     <string name="addtocalendar_failed">Can not create a calendar event.</string>
-    
-    <string name="username">Username</string> 
+    <string name="username">Username</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
-    <string name="waitplease">A moment, please&#8230;</string>
+    <string name="waitplease">A moment, please…</string>
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
     <string name="trakt_success">trakt action successful</string>
@@ -328,7 +328,7 @@
         <item>Unseen/Upcoming</item>
         <item>Hidden</item>
     </string-array>
-    
+
     <!-- Notifications -->
     <string name="upcoming_show">%s is coming up</string>
     <string name="upcoming_episodes">New episodes are coming up</string>
@@ -336,10 +336,14 @@
     <string name="upcoming_display">Select to display upcoming shows</string>
     <string name="pref_notifications">Notifications</string>
     <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
-    
+    <string name="pref_ringtone">Ringtone</string>
+    <string name="pref_vibrate">Vibrate</string>
+    <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
+
     <!-- Theme switching -->
     <string name="pref_theme">App Theme</string>
     <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
+
     <string-array name="themeSelection">
         <item>SeriesGuide Theme</item>
         <item>ICS Base Theme</item>

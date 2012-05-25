@@ -6,27 +6,26 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.Constants.SeasonSorting;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
+import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -52,7 +51,7 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     private static final int LOADER_ID = 1;
 
-    private Constants.SeasonSorting sorting;
+    private Constants.SeasonSorting mSorting;
 
     private SimpleCursorAdapter mAdapter;
 
@@ -95,6 +94,11 @@ public class SeasonsFragment extends SherlockListFragment implements
 
         updatePreferences();
 
+        // listen to changes to the sorting preference
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+        prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
+
         // populate list
         fillData();
 
@@ -107,6 +111,16 @@ public class SeasonsFragment extends SherlockListFragment implements
         super.onResume();
         updatePreferences();
         updateUnwatchedCounts(false);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        // stop listening to sort pref changes
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+        prefs.unregisterOnSharedPreferenceChangeListener(mPrefsListener);
     }
 
     @Override
@@ -143,7 +157,7 @@ public class SeasonsFragment extends SherlockListFragment implements
         if (Build.VERSION.SDK_INT >= 11) {
             final CharSequence[] items = getResources().getStringArray(R.array.sesorting);
             menu.findItem(R.id.menu_sesortby).setTitle(
-                    getString(R.string.sort) + ": " + items[sorting.index()]);
+                    getString(R.string.sort) + ": " + items[mSorting.index()]);
         }
     }
 
@@ -163,11 +177,7 @@ public class SeasonsFragment extends SherlockListFragment implements
             case R.id.menu_sesortby:
                 fireTrackerEvent("Sort seasons");
 
-                // Create and show the dialog.
-                SortDialogFragment newFragment = SortDialogFragment.newInstance(sorting.index(),
-                        R.array.sesorting);
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                newFragment.show(ft, "sortSeasonsDialog");
+                showSortDialog();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -379,18 +389,15 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     private void updatePreferences() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity()
-                .getApplicationContext());
-        if (prefs.getString("seasonSorting", "latestfirst").equals("latestfirst")) {
-            sorting = Constants.SeasonSorting.LATEST_FIRST;
-        } else {
-            sorting = Constants.SeasonSorting.OLDEST_FIRST;
-        }
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+        mSorting = SeasonSorting.fromValue(prefs.getString(
+                SeriesGuidePreferences.KEY_SEASON_SORT_ORDER, SeasonSorting.LATEST_FIRST.value()));
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
         return new CursorLoader(getActivity(), Seasons.buildSeasonsOfShowUri(String
-                .valueOf(getShowId())), SeasonsQuery.PROJECTION, null, null, sorting.query());
+                .valueOf(getShowId())), SeasonsQuery.PROJECTION, null, null, mSorting.query());
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -425,60 +432,32 @@ public class SeasonsFragment extends SherlockListFragment implements
         int TOTALCOUNT = 5;
     }
 
-    public static class SortDialogFragment extends DialogFragment {
-
-        /**
-         * Creates a new sorting {@link DialogFragment} with posibilities of
-         * {@code sortingArray} and selected value set to {@code index}.
-         * 
-         * @param index
-         * @param sortingArray
-         * @return
-         */
-        public static SortDialogFragment newInstance(int index, int sortingArray) {
-            SortDialogFragment f = new SortDialogFragment();
-            Bundle args = new Bundle();
-            args.putInt("index", index);
-            args.putInt("sortingarray", sortingArray);
-            f.setArguments(args);
-            return f;
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final CharSequence[] items = getResources().getStringArray(
-                    getArguments().getInt("sortingarray"));
-
-            return new AlertDialog.Builder(getActivity())
-                    .setTitle(getString(R.string.pref_seasonsorting))
-                    .setSingleChoiceItems(items, getArguments().getInt("index"),
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int item) {
-                                    SeasonsFragment f = (SeasonsFragment) getFragmentManager()
-                                            .findFragmentById(R.id.fragment_seasons);
-                                    if (f == null) {
-                                        f = (SeasonsFragment) getFragmentManager()
-                                                .findFragmentById(R.id.root_container);
-                                    }
-                                    f.updateSorting(item);
-                                    dismiss();
-                                }
-                            }).create();
-        }
+    private void showSortDialog() {
+        FragmentManager fm = getFragmentManager();
+        SortDialogFragment sortDialog = SortDialogFragment.newInstance(R.array.sesorting,
+                R.array.sesortingData, mSorting.index(),
+                SeriesGuidePreferences.KEY_SEASON_SORT_ORDER, R.string.pref_seasonsorting);
+        sortDialog.show(fm, "fragment_sort");
     }
 
-    private void updateSorting(int item) {
-        sorting = (Constants.SeasonSorting.values())[item];
-        AnalyticsUtils.getInstance(getActivity()).trackEvent("Seasons", "Sorting", sorting.name(),
+    private final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
+
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (key.equals(SeriesGuidePreferences.KEY_SEASON_SORT_ORDER)) {
+                updateSorting(sharedPreferences);
+            }
+        }
+    };
+
+    private void updateSorting(SharedPreferences prefs) {
+        mSorting = SeasonSorting.fromValue(prefs.getString(
+                SeriesGuidePreferences.KEY_SEASON_SORT_ORDER, SeasonSorting.LATEST_FIRST.value()));
+
+        AnalyticsUtils.getInstance(getActivity()).trackEvent("Seasons", "Sorting", mSorting.name(),
                 0);
 
-        SharedPreferences.Editor prefEditor = PreferenceManager.getDefaultSharedPreferences(
-                getActivity()).edit();
-        prefEditor.putString("seasonSorting",
-                (getResources().getStringArray(R.array.sesortingData))[item]);
-        prefEditor.commit();
+        // restart loader and update menu description
         getLoaderManager().restartLoader(LOADER_ID, null, SeasonsFragment.this);
-
         getSherlockActivity().invalidateOptionsMenu();
     }
 }

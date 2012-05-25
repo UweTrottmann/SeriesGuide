@@ -7,11 +7,11 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.ui.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.InitBundle;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
-import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -65,7 +65,7 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
         mTabsAdapter.addTab(recentTab, UpcomingFragment.class, argsRecent);
 
         // trakt friends tab
-        final boolean isTraktSetup = ShareUtils.isTraktCredentialsValid(this);
+        final boolean isTraktSetup = Utils.isTraktCredentialsValid(this);
         if (isTraktSetup) {
             ActionBar.Tab friendsTab = actionBar.newTab().setText(R.string.friends);
             mTabsAdapter.addTab(friendsTab, TraktFriendsFragment.class, null);

@@ -18,6 +18,7 @@
         android:name="android.hardware.touchscreen"
         android:required="false" >
     </uses-feature>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:name="com.battlelancer.seriesguide.SeriesGuideApplication"

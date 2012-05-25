@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FetchArtTask;
@@ -266,7 +267,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         String[] dayAndTime = Utils.formatToTimeAndDay(airtime, getActivity());
                         airtimeText.setText(dayAndTime[2] + " (" + dayAndTime[1] + ")");
                     } else {
-                        airdateText.setText(getString(R.string.episode_unkownairdate));
+                        airdateText.setText(getString(R.string.unknown));
                         airtimeText.setText("");
                     }
                     return true;

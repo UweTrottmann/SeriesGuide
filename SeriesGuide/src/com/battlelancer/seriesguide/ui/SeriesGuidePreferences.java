@@ -51,7 +51,11 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_DATABASEIMPORTED = "com.battlelancer.seriesguide.dbimported";
 
-    public static final String KEY_SHOWSSORTORDER = "showSorting";
+    public static final String KEY_SHOW_SORT_ORDER = "showSorting";
+
+    public static final String KEY_SEASON_SORT_ORDER = "seasonSorting";
+
+    public static final String KEY_EPISODE_SORT_ORDER = "episodeSorting";
 
     public static final String KEY_SHOWFILTER = "com.battlelancer.seriesguide.showfilter";
 
@@ -83,6 +87,10 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
     public static final String KEY_UPCOMING_LIMIT = "com.battlelancer.seriesguide.upcominglimit";
 
     public static final String KEY_NOTIFICATIONS_ENABLED = "com.battlelancer.seriesguide.notifications";
+
+    public static final String KEY_VIBRATE = "com.battlelancer.seriesguide.notifications.vibrate";
+
+    public static final String KEY_RINGTONE = "com.battlelancer.seriesguide.notifications.ringtone";
 
     public static final String KEY_LANGUAGE = "language";
 

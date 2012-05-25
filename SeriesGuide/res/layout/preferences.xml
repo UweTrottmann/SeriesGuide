@@ -32,6 +32,20 @@
             android:summary="@string/pref_notificationssummary"
             android:title="@string/pref_notifications" />
 
+        <CheckBoxPreference
+            android:defaultValue="False"
+            android:key="com.battlelancer.seriesguide.notifications.vibrate"
+            android:summary="@string/pref_vibratesummary"
+            android:title="@string/pref_vibrate" />
+
+        <RingtonePreference
+            android:defaultValue="content://settings/system/notification_sound"
+            android:key="com.battlelancer.seriesguide.notifications.ringtone"
+            android:ringtoneType="notification"
+            android:showDefault="true"
+            android:showSilent="true"
+            android:title="@string/pref_ringtone" />
+
         <ListPreference
             android:defaultValue="latestfirst"
             android:entries="@array/sesorting"

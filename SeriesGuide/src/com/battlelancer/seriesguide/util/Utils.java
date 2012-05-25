@@ -2,6 +2,7 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.Constants.EpisodeSorting;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
@@ -517,30 +518,12 @@ public class Utils {
      * @param context
      * @return a EpisodeSorting enum set to the current sorting
      */
-    public static Constants.EpisodeSorting getEpisodeSorting(Context context) {
-        String[] epsortingData = context.getResources().getStringArray(R.array.epsortingData);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                .getApplicationContext());
-        String currentPref = prefs.getString("episodeSorting", epsortingData[1]);
+    public static EpisodeSorting getEpisodeSorting(Context context) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String currentPref = prefs.getString(SeriesGuidePreferences.KEY_EPISODE_SORT_ORDER,
+                EpisodeSorting.OLDEST_FIRST.value());
 
-        Constants.EpisodeSorting sorting;
-        if (currentPref.equals(epsortingData[0])) {
-            sorting = Constants.EpisodeSorting.LATEST_FIRST;
-        } else if (currentPref.equals(epsortingData[1])) {
-            sorting = Constants.EpisodeSorting.OLDEST_FIRST;
-        } else if (currentPref.equals(epsortingData[2])) {
-            sorting = Constants.EpisodeSorting.UNWATCHED_FIRST;
-        } else if (currentPref.equals(epsortingData[3])) {
-            sorting = Constants.EpisodeSorting.ALPHABETICAL_ASC;
-        } else if (currentPref.equals(epsortingData[4])) {
-            sorting = Constants.EpisodeSorting.ALPHABETICAL_DESC;
-        } else if (currentPref.equals(epsortingData[5])) {
-            sorting = Constants.EpisodeSorting.DVDLATEST_FIRST;
-        } else {
-            sorting = Constants.EpisodeSorting.DVDOLDEST_FIRST;
-        }
-
-        return sorting;
+        return EpisodeSorting.fromValue(currentPref);
     }
 
     public static boolean isHoneycombOrHigher() {
@@ -826,7 +809,7 @@ public class Utils {
     public static void setValueOrPlaceholder(View view, final String value) {
         TextView field = (TextView) view;
         if (value == null || value.length() == 0) {
-            field.setText(R.string.episode_unkownairdate);
+            field.setText(R.string.unknown);
         } else {
             field.setText(value);
         }
@@ -848,6 +831,15 @@ public class Utils {
                 SeriesGuidePreferences.THEME = R.style.SeriesGuideTheme;
                 break;
         }
+    }
+
+    public static boolean isTraktCredentialsValid(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
+                .getApplicationContext());
+        String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+        String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
+    
+        return (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase(""));
     }
 
 }

@@ -2,11 +2,11 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.enums.TraktStatus;
+import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
-import com.battlelancer.seriesguide.util.ShareUtils.TraktAction;
-import com.battlelancer.seriesguide.util.ShareUtils.TraktCancelCheckinDialogFragment;
-import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
-import com.battlelancer.seriesguide.util.ShareUtils.TraktStatus;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -168,7 +168,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         }
 
         // check for valid credentials
-        if (!ShareUtils.isTraktCredentialsValid(mContext)) {
+        if (!Utils.isTraktCredentialsValid(mContext)) {
             // return null so a credentials dialog is displayed
             // it will call us again with valid credentials
             return null;
