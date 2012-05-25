@@ -365,21 +365,30 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     protected void onLoadEpisode() {
         new AsyncTask<Void, Void, Integer>() {
 
+            private final static int SUCCESS = 1;
+
+            private final static int ABORT = -1;
+
             private SherlockFragmentActivity activity;
 
             @Override
             protected Integer doInBackground(Void... params) {
                 activity = getSherlockActivity();
                 if (activity == null) {
-                    return -1;
+                    return ABORT;
                 }
+
                 mEpisodeId = DBUtils.updateLatestEpisode(activity, String.valueOf(getShowId()));
-                return 0;
+
+                return SUCCESS;
             }
 
             @Override
             protected void onPostExecute(Integer result) {
-                if (result == 0 && isAdded()) {
+                // TODO do not reload all information every time, we would only
+                // need to load the new collected flag status and relative time
+                // (maybe ratings, too)
+                if (result == SUCCESS && isAdded()) {
                     activity.invalidateOptionsMenu();
                     fillEpisodeData();
                 }
