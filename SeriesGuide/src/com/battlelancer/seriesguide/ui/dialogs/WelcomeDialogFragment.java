@@ -4,7 +4,6 @@ package com.battlelancer.seriesguide.ui.dialogs;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
-import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
