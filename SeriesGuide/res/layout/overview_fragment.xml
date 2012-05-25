@@ -12,6 +12,12 @@
         android:scaleType="centerCrop" >
     </ImageView>
 
+    <include
+        android:id="@+id/progress_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/progress_container" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent" >

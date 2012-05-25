@@ -349,10 +349,14 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         }
 
         // animate view into visibility
-        View overviewContainer = context.findViewById(R.id.overview_container);
+        final View overviewContainer = context.findViewById(R.id.overview_container);
         if (overviewContainer.getVisibility() == View.GONE) {
+            final View progressContainer = context.findViewById(R.id.progress_container);
+            progressContainer.startAnimation(AnimationUtils.loadAnimation(context,
+                    android.R.anim.fade_out));
             overviewContainer.startAnimation(AnimationUtils.loadAnimation(context,
                     android.R.anim.fade_in));
+            progressContainer.setVisibility(View.GONE);
             overviewContainer.setVisibility(View.VISIBLE);
         }
 
