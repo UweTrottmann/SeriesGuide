@@ -205,22 +205,29 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     protected void onStart() {
         super.onStart();
         AnalyticsUtils.getInstance(this).trackPageView("/Shows");
+        onAutoUpdate();
+    }
 
+    /**
+     * Try to launch an delta-update task if certain conditions are met.
+     */
+    private void onAutoUpdate() {
+        // try to run auto-update
         if (Utils.isNetworkConnected(this)) {
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(getApplicationContext());
 
-            // auto-update only on allowed connection
-            final boolean isAutoUpdateWlanOnly = prefs.getBoolean(
-                    SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
-            if (!isAutoUpdateWlanOnly || Utils.isWifiConnected(this)) {
+            // check if auto-update is actually enabled
+            final boolean isAutoUpdateEnabled = prefs.getBoolean(
+                    SeriesGuidePreferences.KEY_AUTOUPDATE, true);
+            if (isAutoUpdateEnabled) {
 
-                // auto-update
-                final boolean isAutoUpdateEnabled = prefs.getBoolean(
-                        SeriesGuidePreferences.KEY_AUTOUPDATE, true);
-                if (isAutoUpdateEnabled) {
+                // check if wifi is required, abort if necessary
+                final boolean isWifiOnly = prefs.getBoolean(
+                        SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
+                if (!isWifiOnly || Utils.isWifiConnected(this)) {
 
-                    // auto-update if at least 15mins have passed since last one
+                    // only update if at least 15mins have passed since last one
                     long now = System.currentTimeMillis();
                     final long previousUpdateTime = prefs.getLong(
                             SeriesGuidePreferences.KEY_LASTUPDATE, 0);
