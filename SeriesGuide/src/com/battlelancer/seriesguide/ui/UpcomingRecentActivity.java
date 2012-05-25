@@ -7,9 +7,9 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.ui.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.InitBundle;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
+import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 

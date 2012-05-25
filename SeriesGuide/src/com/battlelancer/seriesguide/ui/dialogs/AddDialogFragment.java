@@ -1,5 +1,5 @@
 
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.dialogs;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;

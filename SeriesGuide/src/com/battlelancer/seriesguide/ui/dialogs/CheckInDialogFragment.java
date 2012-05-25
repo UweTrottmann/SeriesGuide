@@ -1,11 +1,12 @@
 
-package com.battlelancer.seriesguide.ui;
+package com.battlelancer.seriesguide.ui.dialogs;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
 import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
