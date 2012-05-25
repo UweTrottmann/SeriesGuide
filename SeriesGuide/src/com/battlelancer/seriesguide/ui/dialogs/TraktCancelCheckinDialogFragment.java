@@ -1,11 +1,11 @@
+
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.enums.TraktStatus;
-import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -95,10 +95,9 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                     protected void onPostExecute(Response r) {
                         if (r.status.equalsIgnoreCase(TraktStatus.SUCCESS)) {
                             // all good
-                            Toast.makeText(
-                                    context,
-                                    context.getString(R.string.trakt_success) + ": "
-                                            + r.message, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,
+                                    context.getString(R.string.trakt_success) + ": " + r.message,
+                                    Toast.LENGTH_SHORT).show();
 
                             // relaunch the trakt task which called us to
                             // try the check in again
