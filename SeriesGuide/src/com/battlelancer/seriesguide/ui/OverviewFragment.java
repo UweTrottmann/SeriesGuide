@@ -54,6 +54,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -345,6 +346,14 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             numbers.setVisibility(View.GONE);
             LinearLayout episodemeta = (LinearLayout) context.findViewById(R.id.episodemeta);
             episodemeta.setVisibility(View.GONE);
+        }
+
+        // animate view into visibility
+        View overviewContainer = context.findViewById(R.id.overview_container);
+        if (overviewContainer.getVisibility() == View.GONE) {
+            overviewContainer.startAnimation(AnimationUtils.loadAnimation(context,
+                    android.R.anim.fade_in));
+            overviewContainer.setVisibility(View.VISIBLE);
         }
 
         // finish share string

@@ -8,6 +8,7 @@
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="@string/description_poster"
         android:scaleType="centerCrop" >
     </ImageView>
 
@@ -16,10 +17,12 @@
         android:layout_height="match_parent" >
 
         <LinearLayout
+            android:id="@+id/overview_container"
             style="@style/ScrollingLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:visibility="gone" >
 
             <RelativeLayout
                 android:id="@+id/showinfo"
