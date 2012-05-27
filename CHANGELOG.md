@@ -8,24 +8,24 @@ All dates are in the European Central timezone.
 Version 2.6.2 *(in development)*
 --------------------------------
 
-FEATURE Add notification settings for vibrating (thus requiring new VIBRATE permission) and ringtone selection.
+* FEATURE Add notification settings for vibrating (thus requiring new VIBRATE permission) and ringtone selection.
 
 ### Detailed changes:
 
 #### 2.6.11beta (2012-05-27)
 
-FEATURE Add notification settings for vibrating (thus requiring new VIBRATE permission) and ringtone selection.
-TWEAK Nicer loading behavior in shows overview screens.
-TWEAK No initial notification toast when auto-updating.
-TWEAK A lot of code cleanup and restructuring, see commit logs.
-FIX Updated to ActionBarSherlock 4.1
-FIX Updated to ViewPagerIndicator 2.3.1
+* FEATURE Add notification settings for vibrating (thus requiring new VIBRATE permission) and ringtone selection.
+* TWEAK Nicer loading behavior in shows overview screens.
+* TWEAK No initial notification toast when auto-updating.
+* TWEAK A lot of code cleanup and restructuring, see commit logs.
+* FIX Updated to ActionBarSherlock 4.1
+* FIX Updated to ViewPagerIndicator 2.3.1
 
 Version 2.6.1 *(2012-05-04)*
 --------------------------------
 
-FEATURE New theme. Old ICS Base theme accessible via settings.
-FEATURE Support for trakt advanced 10-heart ratings.
+* FEATURE New theme. Old ICS Base theme accessible via settings.
+* FEATURE Support for trakt advanced 10-heart ratings.
 
 ### Detailed changes:
 
