@@ -2,8 +2,8 @@ package com.battlelancer.seriesguide.ui.dialogs;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.TraktTask;
 import com.jakewharton.trakt.enumerations.Rating;
 
 import android.app.AlertDialog;
