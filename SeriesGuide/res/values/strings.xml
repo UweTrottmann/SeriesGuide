@@ -362,7 +362,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage"><b>Advanced trakt ratings</b>\n- Support the new trakt 10-heart ratings. Basic Love/Hate rating and UI feedback will come back later.\n\n- Honor theme preference through restarts.\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>
+    <string name="betamessage"><b>A little cleanup</b>\n- Notification settings for ringtone and vibration.\n\n- Nicer loading in overview screen.\n\n- Various other small things.\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
