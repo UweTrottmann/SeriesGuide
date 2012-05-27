@@ -3,7 +3,7 @@
 <resources>
   <string name="episode">Епизод</string>
   <string name="season">Сезон</string>
-  <string name="episode_unkownairdate">Неизветна</string>
+  <string name="unknown">unknown</string>
   <string name="episode_iswatched">Вече е гледан</string>
   <string name="episode_notwatched">Все още не е гледан</string>
   <string name="specialseason">Специални епизоди</string>
@@ -74,7 +74,7 @@
   <string name="trakt_collected">%s collected.</string>
   <string name="trakt_notcollected">%s not collected.</string>
   <string name="shows_empty">Няма предавания тук.</string>
-  <string name="confirm_delete">Наистина ли желаете да премахнете този сериал?</string>
+  <string name="confirm_delete">Do you really want to remove %s?</string>
   <string name="delete_show">Премахване</string>
   <string name="dontdelete_show">Не изтривайте</string>
   <string name="no_nextepisode">Не може да бъде намерен нов епизод</string>
@@ -253,6 +253,9 @@
   <string name="upcoming_display">Select to display upcoming shows</string>
   <string name="pref_notifications">Notifications</string>
   <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
+  <string name="pref_ringtone">Ringtone</string>
+  <string name="pref_vibrate">Vibrate</string>
+  <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">App Theme</string>
   <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
   <string name="download_stable">Изтегляне на SeriesGuide</string>

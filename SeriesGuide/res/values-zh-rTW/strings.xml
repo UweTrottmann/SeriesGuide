@@ -3,7 +3,7 @@
 <resources>
   <string name="episode">集數</string>
   <string name="season">季</string>
-  <string name="episode_unkownairdate">未知</string>
+  <string name="unknown">unknown</string>
   <string name="episode_iswatched">已觀賞</string>
   <string name="episode_notwatched">尚未觀賞</string>
   <string name="specialseason">特集</string>
@@ -74,7 +74,7 @@
   <string name="trakt_collected">%s collected.</string>
   <string name="trakt_notcollected">%s not collected.</string>
   <string name="shows_empty">這裡沒有影集。</string>
-  <string name="confirm_delete">是否確定刪除該影集?</string>
+  <string name="confirm_delete">Do you really want to remove %s?</string>
   <string name="delete_show">刪除</string>
   <string name="dontdelete_show">請勿移除</string>
   <string name="no_nextepisode">找無下一集</string>
@@ -253,6 +253,9 @@
   <string name="upcoming_display">Select to display upcoming shows</string>
   <string name="pref_notifications">Notifications</string>
   <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
+  <string name="pref_ringtone">Ringtone</string>
+  <string name="pref_vibrate">Vibrate</string>
+  <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">App Theme</string>
   <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
   <string name="download_stable">下載 SeriesGuide</string>

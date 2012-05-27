@@ -3,7 +3,7 @@
 <resources>
   <string name="episode">Episodio</string>
   <string name="season">Stagione</string>
-  <string name="episode_unkownairdate">sconosciuto</string>
+  <string name="unknown">unknown</string>
   <string name="episode_iswatched">Già visto</string>
   <string name="episode_notwatched">Non ancora visto</string>
   <string name="specialseason">Episodi Speciali</string>
@@ -74,7 +74,7 @@
   <string name="trakt_collected">%s collected.</string>
   <string name="trakt_notcollected">%s not collected.</string>
   <string name="shows_empty">No shows here.</string>
-  <string name="confirm_delete">Vuoi davvero rimuovere questa serie?</string>
+  <string name="confirm_delete">Do you really want to remove %s?</string>
   <string name="delete_show">Rimuovere</string>
   <string name="dontdelete_show">Non rimuovere</string>
   <string name="no_nextepisode">nessun prossimo episodio trovato</string>
@@ -253,6 +253,9 @@
   <string name="upcoming_display">Select to display upcoming shows</string>
   <string name="pref_notifications">Notifications</string>
   <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
+  <string name="pref_ringtone">Ringtone</string>
+  <string name="pref_vibrate">Vibrate</string>
+  <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">App Theme</string>
   <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
   <string name="download_stable">Download SeriesGuide</string>

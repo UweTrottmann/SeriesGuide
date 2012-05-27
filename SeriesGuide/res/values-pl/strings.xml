@@ -3,7 +3,7 @@
 <resources>
   <string name="episode">Odcinek</string>
   <string name="season">Sezon</string>
-  <string name="episode_unkownairdate">nieznana</string>
+  <string name="unknown">unknown</string>
   <string name="episode_iswatched">Obejrzany</string>
   <string name="episode_notwatched">Nieobejrzany</string>
   <string name="specialseason">Odcinki specjalne</string>
@@ -29,14 +29,14 @@
   <string name="autorefresh">Odświeżanie automagicznie ;)</string>
   <string name="love">Uwielbiam to!</string>
   <string name="hate">Słaby :(</string>
-  <string name="rating2">Terrible</string>
-  <string name="rating3">Bad</string>
-  <string name="rating4">Poor</string>
-  <string name="rating5">Meh</string>
-  <string name="rating6">Fair</string>
-  <string name="rating7">Good</string>
-  <string name="rating8">Great</string>
-  <string name="rating9">Superb</string>
+  <string name="rating2">Potworny</string>
+  <string name="rating3">Zły</string>
+  <string name="rating4">Słaby</string>
+  <string name="rating5">Nie bardzo</string>
+  <string name="rating6">Może być</string>
+  <string name="rating7">Dobry</string>
+  <string name="rating8">Świetny</string>
+  <string name="rating9">Niesamowity</string>
   <string name="episode_firstaired">Data emisji</string>
   <string name="episode_dvdnumber">Odcinek na DVD</string>
   <string name="show_actors">Obsada</string>
@@ -74,7 +74,7 @@
   <string name="trakt_collected">%s w kolekcji.</string>
   <string name="trakt_notcollected">%s - brak w kolekcji.</string>
   <string name="shows_empty">Brak seriali.</string>
-  <string name="confirm_delete">Czy na pewno usunąć ten serial?</string>
+  <string name="confirm_delete">Do you really want to remove %s?</string>
   <string name="delete_show">Usuń</string>
   <string name="dontdelete_show">Nie usuwaj</string>
   <string name="no_nextepisode">nie znaleziono nowych odcinków</string>
@@ -219,7 +219,7 @@
   <string name="menu_markseen_trakt">Oznacz jako obejrzane (trakt)</string>
   <string name="menu_rate_trakt">Oceń (trakt)</string>
   <string name="menu_share_others">za pomocą innych aplikacji</string>
-  <string name="traktcheckin_cancel">Override</string>
+  <string name="traktcheckin_cancel">Zastąp</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous checkin or wait %s and try again.</string>
   <string name="traktcheckin_wait">Poczekam</string>
   <string name="oauthmessage">Logowanie SeriesGuide z GetGlue…</string>
@@ -253,6 +253,9 @@
   <string name="upcoming_display">Wyświetl informacje o nadchodzących odcinkach</string>
   <string name="pref_notifications">Powiadomienia</string>
   <string name="pref_notificationssummary">Powiadamiaj o nadchodzących emisjach ulubionych seriali</string>
+  <string name="pref_ringtone">Ringtone</string>
+  <string name="pref_vibrate">Vibrate</string>
+  <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">Schemat kolorów</string>
   <string name="pref_themesummary">Wybierz schemat kolorów SeriesGuide</string>
   <string name="download_stable">Pobierz SeriesGuide</string>

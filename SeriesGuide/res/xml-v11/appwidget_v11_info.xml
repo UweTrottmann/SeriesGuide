@@ -5,4 +5,5 @@
     android:minWidth="250dp"
     android:previewImage="@drawable/next_episodes_ori_portrait"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="0" ></appwidget-provider>
+    android:updatePeriodMillis="0" >
+</appwidget-provider>

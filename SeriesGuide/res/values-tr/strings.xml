@@ -3,7 +3,7 @@
 <resources>
   <string name="episode">Bölüm</string>
   <string name="season">Sezon</string>
-  <string name="episode_unkownairdate">bilinmeyen</string>
+  <string name="unknown">unknown</string>
   <string name="episode_iswatched">İzlendi</string>
   <string name="episode_notwatched">İzlenmedi</string>
   <string name="specialseason">Özel Bölümler</string>
@@ -74,7 +74,7 @@
   <string name="trakt_collected">%s collected.</string>
   <string name="trakt_notcollected">%s not collected.</string>
   <string name="shows_empty">Burada gösterilecek yok.</string>
-  <string name="confirm_delete">Bu diziyi kaldırmak istediğinizden emin misiniz?</string>
+  <string name="confirm_delete">Do you really want to remove %s?</string>
   <string name="delete_show">Kaldır</string>
   <string name="dontdelete_show">Kaldırma</string>
   <string name="no_nextepisode">sonraki bölüm bulunamadı</string>
@@ -253,6 +253,9 @@
   <string name="upcoming_display">Gelecek bölümleri görüntülemek için seçin</string>
   <string name="pref_notifications">Bildirimler</string>
   <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
+  <string name="pref_ringtone">Ringtone</string>
+  <string name="pref_vibrate">Vibrate</string>
+  <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">Uygulama teması</string>
   <string name="pref_themesummary">SeriesGuide\'nin hangi renkte olacağına karar verin</string>
   <string name="download_stable">SeriesGuide indir</string>

@@ -3,7 +3,7 @@
 <resources>
   <string name="episode">Aflevering</string>
   <string name="season">Seizoen</string>
-  <string name="episode_unkownairdate">onbekend</string>
+  <string name="unknown">unknown</string>
   <string name="episode_iswatched">Al bekeken</string>
   <string name="episode_notwatched">Nog niet bekeken</string>
   <string name="specialseason">Speciale afleveringen</string>
@@ -29,14 +29,14 @@
   <string name="autorefresh">Automatisch verversen</string>
   <string name="love">Zeer goed!</string>
   <string name="hate">Zwak</string>
-  <string name="rating2">Terrible</string>
-  <string name="rating3">Bad</string>
-  <string name="rating4">Poor</string>
-  <string name="rating5">Meh</string>
-  <string name="rating6">Fair</string>
-  <string name="rating7">Good</string>
-  <string name="rating8">Great</string>
-  <string name="rating9">Superb</string>
+  <string name="rating2">Verschrikkelijk</string>
+  <string name="rating3">Slecht</string>
+  <string name="rating4">Zwak</string>
+  <string name="rating5">Matig</string>
+  <string name="rating6">Redelijk</string>
+  <string name="rating7">Goed</string>
+  <string name="rating8">Geweldig</string>
+  <string name="rating9">Uitmuntend</string>
   <string name="episode_firstaired">uitzend datum</string>
   <string name="episode_dvdnumber">DVD aflevering</string>
   <string name="show_actors">Acteurs</string>
@@ -74,7 +74,7 @@
   <string name="trakt_collected">%s verzameld.</string>
   <string name="trakt_notcollected">%s niet verzameld.</string>
   <string name="shows_empty">Geen series.</string>
-  <string name="confirm_delete">Dit programma werkelijk verwijderen?</string>
+  <string name="confirm_delete">Do you really want to remove %s?</string>
   <string name="delete_show">Verwijderen</string>
   <string name="dontdelete_show">Niet verwijderen</string>
   <string name="no_nextepisode">Geen volgende aflevering gevonden.</string>
@@ -219,8 +219,8 @@
   <string name="menu_markseen_trakt">Bekeken markeren (trakt)</string>
   <string name="menu_rate_trakt">Beoordelen (trakt)</string>
   <string name="menu_share_others">Via andere apps</string>
-  <string name="traktcheckin_cancel">Override</string>
-  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous checkin or wait %s and try again.</string>
+  <string name="traktcheckin_cancel">Overschrijven</string>
+  <string name="traktcheckin_inprogress">Er is al aangemeld bij een andere aflevering of serie. Overschrijf de vorige aanmelding of wacht %s en probeer het opnieuw.</string>
   <string name="traktcheckin_wait">Wachten</string>
   <string name="oauthmessage">SeriesGuide met GetGlue authenticeren…</string>
   <string name="addtocalendar">Aan agenda toevoegen</string>
@@ -253,6 +253,9 @@
   <string name="upcoming_display">Selecteer om toekomstige series weer te geven</string>
   <string name="pref_notifications">Meldingen</string>
   <string name="pref_notificationssummary">Favoriete series die binnenkort worden uitgezonden melden</string>
+  <string name="pref_ringtone">Ringtone</string>
+  <string name="pref_vibrate">Vibrate</string>
+  <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">Applicatie thema</string>
   <string name="pref_themesummary">Kies welke kleuren gebruikt worden in SeriesGuide</string>
   <string name="download_stable">SeriesGuide downloaden</string>

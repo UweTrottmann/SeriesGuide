@@ -3,7 +3,7 @@
 <resources>
   <string name="episode">Episódio</string>
   <string name="season">Temporada</string>
-  <string name="episode_unkownairdate">desconhecido</string>
+  <string name="unknown">unknown</string>
   <string name="episode_iswatched">Já assistido</string>
   <string name="episode_notwatched">Ainda não assistido</string>
   <string name="specialseason">Episódios Especiais</string>
@@ -74,7 +74,7 @@
   <string name="trakt_collected">%s colecionado.</string>
   <string name="trakt_notcollected">%s não colecionado.</string>
   <string name="shows_empty">Nenhuma série aqui.</string>
-  <string name="confirm_delete">Você quer mesmo remover essa série?</string>
+  <string name="confirm_delete">Do you really want to remove %s?</string>
   <string name="delete_show">Remover</string>
   <string name="dontdelete_show">Não remover</string>
   <string name="no_nextepisode">nenhum próximo episódio encontrado</string>
@@ -220,7 +220,7 @@
   <string name="menu_rate_trakt">Votar (trakt)</string>
   <string name="menu_share_others">Por outros aplicativos</string>
   <string name="traktcheckin_cancel">Override</string>
-  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous checkin or wait %s and try again.</string>
+  <string name="traktcheckin_inprogress">Já se encontra a visualizar outro episódio ou filme. Pode cancelar a outra visualização ou aguardar %s e tentar novamente.</string>
   <string name="traktcheckin_wait">Vou esperar</string>
   <string name="oauthmessage">Autenticando SeriesGuide com GetGlue...</string>
   <string name="addtocalendar">Adicionar ao calendário</string>
@@ -253,6 +253,9 @@
   <string name="upcoming_display">Exibir próximas exibições</string>
   <string name="pref_notifications">Notificações</string>
   <string name="pref_notificationssummary">Notifique as exibições próximas dos favoritos</string>
+  <string name="pref_ringtone">Ringtone</string>
+  <string name="pref_vibrate">Vibrate</string>
+  <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">App Theme</string>
   <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
   <string name="download_stable">Baixar SeriesGuide</string>

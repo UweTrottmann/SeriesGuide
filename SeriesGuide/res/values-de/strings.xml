@@ -3,7 +3,7 @@
 <resources>
   <string name="episode">Folge</string>
   <string name="season">Staffel</string>
-  <string name="episode_unkownairdate">unbekannt</string>
+  <string name="unknown">unbekannt</string>
   <string name="episode_iswatched">Bereits gesehen</string>
   <string name="episode_notwatched">Noch nicht gesehen</string>
   <string name="specialseason">Special Episodes</string>
@@ -74,7 +74,7 @@
   <string name="trakt_collected">%s gesammelt.</string>
   <string name="trakt_notcollected">%s nicht gesammelt.</string>
   <string name="shows_empty">Hier sind keine Serien.</string>
-  <string name="confirm_delete">Soll diese Serie wirklich gelöscht werden?</string>
+  <string name="confirm_delete">Wollen Sie %s wirklich entfernen?</string>
   <string name="delete_show">Löschen</string>
   <string name="dontdelete_show">Nicht löschen</string>
   <string name="no_nextepisode">keine weitere Folge gefunden</string>
@@ -253,6 +253,9 @@
   <string name="upcoming_display">Auswählen um kommende Serien anzuzeigen</string>
   <string name="pref_notifications">Benachrichtigungen</string>
   <string name="pref_notificationssummary">Benachr. über in Kürze laufende Favoriten</string>
+  <string name="pref_ringtone">Klingelton</string>
+  <string name="pref_vibrate">Vibrieren</string>
+  <string name="pref_vibratesummary">Bei Anzeige einer Benachrichtigung vibrieren</string>
   <string name="pref_theme">App Design</string>
   <string name="pref_themesummary">Festlegen, wie SeriesGuide eingefärbt wird</string>
   <string name="download_stable">SeriesGuide herunterladen</string>
