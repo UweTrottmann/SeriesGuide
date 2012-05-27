@@ -54,6 +54,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -347,6 +348,18 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             episodemeta.setVisibility(View.GONE);
         }
 
+        // animate view into visibility
+        final View overviewContainer = context.findViewById(R.id.overview_container);
+        if (overviewContainer.getVisibility() == View.GONE) {
+            final View progressContainer = context.findViewById(R.id.progress_container);
+            progressContainer.startAnimation(AnimationUtils.loadAnimation(context,
+                    android.R.anim.fade_out));
+            overviewContainer.startAnimation(AnimationUtils.loadAnimation(context,
+                    android.R.anim.fade_in));
+            progressContainer.setVisibility(View.GONE);
+            overviewContainer.setVisibility(View.VISIBLE);
+        }
+
         // finish share string
         sharestring += " - " + episodestring + "\" via @SeriesGuide";
         mShareData.putString(ShareItems.SHARESTRING, sharestring);
@@ -356,21 +369,30 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     protected void onLoadEpisode() {
         new AsyncTask<Void, Void, Integer>() {
 
+            private final static int SUCCESS = 1;
+
+            private final static int ABORT = -1;
+
             private SherlockFragmentActivity activity;
 
             @Override
             protected Integer doInBackground(Void... params) {
                 activity = getSherlockActivity();
                 if (activity == null) {
-                    return -1;
+                    return ABORT;
                 }
+
                 mEpisodeId = DBUtils.updateLatestEpisode(activity, String.valueOf(getShowId()));
-                return 0;
+
+                return SUCCESS;
             }
 
             @Override
             protected void onPostExecute(Integer result) {
-                if (result == 0 && isAdded()) {
+                // TODO do not reload all information every time, we would only
+                // need to load the new collected flag status and relative time
+                // (maybe ratings, too)
+                if (result == SUCCESS && isAdded()) {
                     activity.invalidateOptionsMenu();
                     fillEpisodeData();
                 }

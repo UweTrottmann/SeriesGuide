@@ -26,8 +26,6 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
 
     private ImageCache mImageCache;
 
-    private boolean mAnimate;
-
     public FetchArtTask(String path, View container, Context context) {
         mPath = path;
         mContainer = container;
@@ -65,7 +63,6 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
             final Bitmap bitmap = mImageCache.get(mPath);
             if (bitmap != null) {
                 // image is in cache
-                mAnimate = false;
                 return bitmap;
 
             } else {
@@ -76,7 +73,6 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
 
                 // download image from TVDb
                 if (TheTVDB.fetchArt(mPath, false, mContext)) {
-                    mAnimate = true;
                     return mImageCache.get(mPath);
                 }
 
@@ -97,17 +93,14 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
             mImageView.setImageBitmap(bitmap);
 
             // make image view visible
-            if (mAnimate) {
+            if (mImageView.getVisibility() == View.GONE) {
                 mProgressContainer.startAnimation(AnimationUtils.loadAnimation(mContext,
                         android.R.anim.fade_out));
                 mImageView.startAnimation(AnimationUtils.loadAnimation(mContext,
                         android.R.anim.fade_in));
-            } else {
-                mProgressContainer.clearAnimation();
-                mImageView.clearAnimation();
+                mProgressContainer.setVisibility(View.GONE);
+                mImageView.setVisibility(View.VISIBLE);
             }
-            mProgressContainer.setVisibility(View.GONE);
-            mImageView.setVisibility(View.VISIBLE);
         } else {
             mContainer.setVisibility(View.GONE);
         }

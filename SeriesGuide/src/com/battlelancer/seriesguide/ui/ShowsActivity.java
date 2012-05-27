@@ -230,7 +230,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                     final boolean isTime = (now - previousUpdateTime) > 15 * DateUtils.MINUTE_IN_MILLIS;
 
                     if (isTime && !TaskManager.getInstance(this).isUpdateTaskRunning(false)) {
-                        performUpdateTask(false, null);
+                        TaskManager.getInstance(this)
+                                .tryUpdateTask(new UpdateTask(false, this), -1);
                     }
                 }
             }
