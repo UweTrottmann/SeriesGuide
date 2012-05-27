@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.Utils;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -38,6 +39,7 @@ public class AddFragment extends SherlockListFragment {
         AddDialogFragment.showAddDialog(result, getFragmentManager());
     }
 
+    @TargetApi(11)
     protected void setSearchResults(List<SearchResult> searchResults) {
         mAdapter.clear();
         if (Utils.isHoneycombOrHigher()) {

@@ -5,6 +5,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 
+import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -17,6 +18,7 @@ import android.os.SystemClock;
 import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 
+@TargetApi(11)
 public class ListWidgetProvider extends AppWidgetProvider {
 
     public static final String UPDATE = "com.battlelancer.seriesguide.appwidget.UPDATE";

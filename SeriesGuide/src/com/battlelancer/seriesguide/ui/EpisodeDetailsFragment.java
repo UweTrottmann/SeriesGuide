@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -220,6 +221,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 0);
         mAdapter.setViewBinder(new ViewBinder() {
 
+            @TargetApi(11)
             public boolean setViewValue(View view, Cursor episode, int columnIndex) {
                 if (columnIndex == EpisodeDetailsQuery.WATCHED) {
                     mWatched = episode.getInt(EpisodeDetailsQuery.WATCHED) == 1 ? true : false;
