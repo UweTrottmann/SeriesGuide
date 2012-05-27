@@ -23,7 +23,6 @@
     <application
         android:name="com.battlelancer.seriesguide.SeriesGuideApplication"
         android:backupAgent="com.battlelancer.seriesguide.PrefBackupHelper"
-        android:debuggable="false"
         android:hardwareAccelerated="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
