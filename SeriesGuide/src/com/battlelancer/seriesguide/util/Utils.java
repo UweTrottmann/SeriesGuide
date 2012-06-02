@@ -526,6 +526,10 @@ public class Utils {
         return EpisodeSorting.fromValue(currentPref);
     }
 
+    public static boolean isICSOrHigher() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
+    }
+
     public static boolean isHoneycombOrHigher() {
         // Can use static final constants like HONEYCOMB, declared in later
         // versions
@@ -838,7 +842,7 @@ public class Utils {
                 .getApplicationContext());
         String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
         String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
-    
+
         return (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase(""));
     }
 
