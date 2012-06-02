@@ -526,6 +526,10 @@ public class Utils {
         return EpisodeSorting.fromValue(currentPref);
     }
 
+    public static boolean isICSOrHigher() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
+    }
+
     public static boolean isHoneycombOrHigher() {
         // Can use static final constants like HONEYCOMB, declared in later
         // versions
@@ -806,6 +810,20 @@ public class Utils {
         return SGChannel.STABLE;
     }
 
+    /**
+     * Used to make some features only available to supporters.
+     * 
+     * @param context
+     * @return
+     */
+    public static boolean isSupporterChannel(Context context) {
+        if (getChannel(context) != SGChannel.STABLE) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static void setValueOrPlaceholder(View view, final String value) {
         TextView field = (TextView) view;
         if (value == null || value.length() == 0) {
@@ -838,7 +856,7 @@ public class Utils {
                 .getApplicationContext());
         String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
         String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
-    
+
         return (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase(""));
     }
 

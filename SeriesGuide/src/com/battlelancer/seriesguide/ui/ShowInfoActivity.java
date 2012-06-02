@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
+import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -103,6 +104,7 @@ public class ShowInfoActivity extends BaseActivity {
         return getIntent().getExtras().getInt(InitBundle.SHOW_TVDBID);
     }
 
+    @TargetApi(11)
     private void fillData() {
         TextView seriesname = (TextView) findViewById(R.id.title);
         TextView overview = (TextView) findViewById(R.id.TextViewShowInfoOverview);

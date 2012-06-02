@@ -108,8 +108,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     private static final String TRANSLATIONS_URL = "http://crowdin.net/project/seriesguide-translations/invite";
 
-    private static final String PAYPAL_DONATE_URL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VVBLMQBSBU74L";
-
     private static final String TAG = "SeriesGuidePreferences";
 
     public static int THEME = R.style.SeriesGuideTheme;
@@ -256,21 +254,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                 return true;
             }
         });
-
-        // Donate
-        findPreference("com.battlelancer.seriesguide.donate").setOnPreferenceClickListener(
-                new OnPreferenceClickListener() {
-
-                    public boolean onPreferenceClick(Preference preference) {
-                        // track event
-                        fireTrackerEvent("Donate");
-
-                        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
-                                .parse(PAYPAL_DONATE_URL));
-                        startActivity(myIntent);
-                        return true;
-                    }
-                });
 
         // Notifications
         Preference notificationsPref = findPreference(KEY_NOTIFICATIONS_ENABLED);

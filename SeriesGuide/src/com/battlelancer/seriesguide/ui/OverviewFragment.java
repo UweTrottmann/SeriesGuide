@@ -39,6 +39,7 @@ import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -401,6 +402,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         }.execute();
     }
 
+    @TargetApi(11)
     protected void onLoadEpisodeDetails(final Cursor episode) {
         mSeasonNumber = episode.getInt(EpisodeQuery.SEASON);
         mEpisodeNumber = episode.getInt(EpisodeQuery.NUMBER);

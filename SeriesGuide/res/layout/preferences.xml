@@ -47,22 +47,6 @@
             android:title="@string/pref_ringtone" />
 
         <ListPreference
-            android:defaultValue="latestfirst"
-            android:entries="@array/sesorting"
-            android:entryValues="@array/sesortingData"
-            android:key="seasonSorting"
-            android:summary="@string/pref_sortingsummary"
-            android:title="@string/pref_seasonsorting" />
-
-        <ListPreference
-            android:defaultValue="oldestfirst"
-            android:entries="@array/epsorting"
-            android:entryValues="@array/epsortingData"
-            android:key="episodeSorting"
-            android:summary="@string/pref_epsortingsummary"
-            android:title="@string/pref_episodesorting" />
-
-        <ListPreference
             android:defaultValue="en"
             android:entries="@array/languages"
             android:entryValues="@array/languageData"
@@ -115,10 +99,6 @@
         <Preference
             android:key="aboutPref"
             android:title="@string/about" />
-
-        <Preference
-            android:key="com.battlelancer.seriesguide.donate"
-            android:title="@string/donate" />
 
         <Preference
             android:key="com.battlelancer.seriesguide.helpTranslate"

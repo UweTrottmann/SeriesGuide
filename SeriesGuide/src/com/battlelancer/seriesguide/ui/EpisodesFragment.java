@@ -16,6 +16,7 @@ import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -428,6 +429,7 @@ public class EpisodesFragment extends SherlockListFragment implements
         getSherlockActivity().invalidateOptionsMenu();
     }
 
+    @TargetApi(8)
     public void setItemChecked(int position) {
         final ListView list = getListView();
         list.setItemChecked(position, true);

@@ -7,13 +7,13 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.ui.UpcomingFragment.InitBundle;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -29,6 +29,10 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
     ViewPager mViewPager;
 
     TabsAdapter mTabsAdapter;
+
+    public interface InitBundle {
+        String SELECTED_TAB = "selectedtab";
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,20 +52,21 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
         mTabsAdapter = new TabsAdapter(this, actionBar, mViewPager);
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
-        argsUpcoming.putString(InitBundle.QUERY, UpcomingQuery.QUERY_UPCOMING);
-        argsUpcoming.putString(InitBundle.SORTORDER, UpcomingQuery.SORTING_UPCOMING);
-        argsUpcoming.putString(InitBundle.ANALYTICS_TAG, "/Upcoming");
-        argsUpcoming.putInt(InitBundle.LOADER_ID, 10);
-        argsUpcoming.putInt(InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
+        argsUpcoming.putString(UpcomingFragment.InitBundle.QUERY, UpcomingQuery.QUERY_UPCOMING);
+        argsUpcoming.putString(UpcomingFragment.InitBundle.SORTORDER,
+                UpcomingQuery.SORTING_UPCOMING);
+        argsUpcoming.putString(UpcomingFragment.InitBundle.ANALYTICS_TAG, "/Upcoming");
+        argsUpcoming.putInt(UpcomingFragment.InitBundle.LOADER_ID, 10);
+        argsUpcoming.putInt(UpcomingFragment.InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
         mTabsAdapter.addTab(upcomingTab, UpcomingFragment.class, argsUpcoming);
 
         // recent tab
         final Bundle argsRecent = new Bundle();
-        argsRecent.putString(InitBundle.QUERY, UpcomingQuery.QUERY_RECENT);
-        argsRecent.putString(InitBundle.SORTORDER, UpcomingQuery.SORTING_RECENT);
-        argsRecent.putString(InitBundle.ANALYTICS_TAG, "/Recent");
-        argsRecent.putInt(InitBundle.LOADER_ID, 20);
-        argsRecent.putInt(InitBundle.EMPTY_STRING_ID, R.string.norecent);
+        argsRecent.putString(UpcomingFragment.InitBundle.QUERY, UpcomingQuery.QUERY_RECENT);
+        argsRecent.putString(UpcomingFragment.InitBundle.SORTORDER, UpcomingQuery.SORTING_RECENT);
+        argsRecent.putString(UpcomingFragment.InitBundle.ANALYTICS_TAG, "/Recent");
+        argsRecent.putInt(UpcomingFragment.InitBundle.LOADER_ID, 20);
+        argsRecent.putInt(UpcomingFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);
         mTabsAdapter.addTab(recentTab, UpcomingFragment.class, argsRecent);
 
         // trakt friends tab
@@ -71,9 +76,18 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
             mTabsAdapter.addTab(friendsTab, TraktFriendsFragment.class, null);
         }
 
+        // set starting tab
+        int selection = 0;
         if (savedInstanceState != null) {
-            actionBar.setSelectedNavigationItem(savedInstanceState.getInt("index"));
+            selection = savedInstanceState.getInt("index");
+        } else {
+            Intent intent = getIntent();
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                selection = extras.getInt(InitBundle.SELECTED_TAB, 0);
+            }
         }
+        actionBar.setSelectedNavigationItem(selection);
     }
 
     @Override

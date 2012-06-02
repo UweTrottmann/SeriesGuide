@@ -273,6 +273,8 @@ public class UpcomingFragment extends ListFragment implements
 
         String SELECTION_ONLYFAVORITES = " AND " + Shows.FAVORITE + "=?";
 
+        String SELECTION_ONLYUNWATCHED = " AND " + Episodes.WATCHED + "=0";
+
         String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC,"
                 + Episodes.NUMBER + " ASC";
 
