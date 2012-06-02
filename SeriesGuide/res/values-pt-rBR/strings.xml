@@ -42,7 +42,6 @@
   <string name="show_actors">Atores</string>
   <string name="show_firstaired">Primeira Exibição</string>
   <string name="show_genres">Gênero</string>
-  <string name="rating">Nota</string>
   <string name="show_runtime">Duração</string>
   <string name="show_contentrating">Classificação</string>
   <string name="episode_directors">Diretores</string>
@@ -147,9 +146,7 @@
   <string name="pref_onlyseasonepssummary">\"Próximo:\" não mostrar episódios especiais</string>
   <string name="pref_content">Conteúdo</string>
   <string name="pref_seasonsorting">Classificar temporadas por...</string>
-  <string name="pref_sortingsummary">Especifique como ordenar temporadas</string>
   <string name="pref_episodesorting">Classificar episódios por...</string>
-  <string name="pref_epsortingsummary">Especifique como ordenar episódios</string>
   <string name="backup">Backup/Restauração</string>
   <string name="backup_summary">Fazer backup ou restaurar as suas séries</string>
   <string name="pref_language">Idioma do conteúdo</string>
@@ -162,14 +159,13 @@
   <string name="pref_autoupdatesummary">Atualizar quando iniciar o SeriesGuide</string>
   <string name="pref_updatewifionly">Atualizar apenas com Wi-Fi</string>
   <string name="about">Sobre o SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - desenvolvido por Uwe Trottmann.\n\nPor favor consulte o link abaixo para todas as pessoas e recursos que ajudaram a conduzir esse projeto.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">Compartilhamento</string>
   <string name="clearGetGlueCredentials">Desconectar do GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Apagar sua conexão com o GetGlue</string>
   <string name="pref_trakt">credenciais trakt.tv</string>
   <string name="pref_traktsummary">Adicionar ou editar suas credenciais trakt.tv</string>
   <string name="pref_traktsync">Sincronizar com trakt.tv</string>
-  <string name="donate">Pague uma bebida ao dev (Paypal)</string>
   <string name="feedback">Enviar comentários</string>
   <string name="pref_advanced">Avançado</string>
   <string name="clear_cache">Apagar cache de imagens</string>
@@ -203,10 +199,6 @@
   <string name="import_question">A lista atual de séries será perdida! Esteja certo que o arquivo backup está dentro da pasta de backup.</string>
   <string name="import_yes">Restaurar</string>
   <string name="import_no">Não Restaurar</string>
-  <string name="widget_label">Próximos episódios</string>
-  <string name="smallwidget">Próximos episódios (pequeno)</string>
-  <string name="bigwidget">Próximos episódios (médio)</string>
-  <string name="largewidget">Próximos episódios (grande)</string>
   <string name="seasons">Temporadas</string>
   <string name="cancel">Cancelar</string>
   <string name="share">Compartilhar</string>
@@ -216,7 +208,6 @@
   <string name="checkinsuccess">Check-in no GetGlue com sucesso.</string>
   <string name="checkinfailed">Check-in do GetGlue falhou. Tente desconectar do GetGlue.</string>
   <string name="getglue_authfailed">Autenticação com GetGlue falhou. Tente novamente.</string>
-  <string name="menu_markseen_trakt">Marcar como visto (trakt)</string>
   <string name="menu_rate_trakt">Votar (trakt)</string>
   <string name="menu_share_others">Por outros aplicativos</string>
   <string name="traktcheckin_cancel">Override</string>
@@ -258,6 +249,13 @@
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">App Theme</string>
   <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
+  <string name="choose_list">Choose activity list</string>
+  <string name="hide_watched">Hide watched episodes</string>
+  <string name="add_widget">Add widget</string>
+  <string name="widget_label">SeriesGuide</string>
+  <string name="smallwidget">SeriesGuide (small)</string>
+  <string name="bigwidget">SeriesGuide (middle)</string>
+  <string name="largewidget">SeriesGuide (large)</string>
   <string name="download_stable">Baixar SeriesGuide</string>
   <string name="betawarning"><b>Atenção!</b> Esta versão é para beta testers! Se você estiver em dúvida baixe a versão estável abaixo.</string>
   <string-array name="shsorting">

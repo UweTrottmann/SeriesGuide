@@ -42,7 +42,6 @@
   <string name="show_actors">Actors</string>
   <string name="show_firstaired">First Aired</string>
   <string name="show_genres">Genres</string>
-  <string name="rating">Rating</string>
   <string name="show_runtime">Runtime</string>
   <string name="show_contentrating">Content Rating</string>
   <string name="episode_directors">Directors</string>
@@ -147,9 +146,7 @@
   <string name="pref_onlyseasonepssummary">\"следващ:\" никога не показва специални епизоди</string>
   <string name="pref_content">Съдържание</string>
   <string name="pref_seasonsorting">Sort seasons by…</string>
-  <string name="pref_sortingsummary">Укажете сортиране на сезоните</string>
   <string name="pref_episodesorting">Sort episodes by…</string>
-  <string name="pref_epsortingsummary">Укажете сортирането на епизодите</string>
   <string name="backup">Архивиране/Възстановяване</string>
   <string name="backup_summary">Архивиране или възстановяване на вашите сериали</string>
   <string name="pref_language">Content language</string>
@@ -162,14 +159,13 @@
   <string name="pref_autoupdatesummary">Периодично актуализиране на вашите предавания при стартиране на SeriesGuide</string>
   <string name="pref_updatewifionly">Актуализиране само през Wi-Fi</string>
   <string name="about">Относно SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - разработено от Uwe Trottmann.\n\nМоля, вижте линка по-долу за пълен списък на хората и ресурсите които подпомагат този проект.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">Споделяне</string>
   <string name="clearGetGlueCredentials">Прекъсни GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Прекъсване на връзката с GetGlue</string>
   <string name="pref_trakt">идентификационни данни за trakt.tv</string>
   <string name="pref_traktsummary">Добавяне или редактиране на вашите идентификационни данни за trakt.tv</string>
   <string name="pref_traktsync">Синхронизирай с trakt.tv</string>
-  <string name="donate">Buy the dev a drink (Paypal)</string>
   <string name="feedback">Обратна връзка</string>
   <string name="pref_advanced">Разширени</string>
   <string name="clear_cache">Изчисти кеша на изображенията</string>
@@ -203,10 +199,6 @@
   <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
   <string name="import_yes">Възстановяване</string>
   <string name="import_no">Не възстановявай</string>
-  <string name="widget_label">Следващи епизоди</string>
-  <string name="smallwidget">Нови епизоди (малък)</string>
-  <string name="bigwidget">Нови епизоди (среден)</string>
-  <string name="largewidget">Нови епизоди (голям)</string>
   <string name="seasons">Сезони</string>
   <string name="cancel">Отказ</string>
   <string name="share">Сподели</string>
@@ -216,7 +208,6 @@
   <string name="checkinsuccess">GetGlue Check-in successful.</string>
   <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
   <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
-  <string name="menu_markseen_trakt">Mark seen (trakt)</string>
   <string name="menu_rate_trakt">Оцени (trakt)</string>
   <string name="menu_share_others">Чрез други приложения</string>
   <string name="traktcheckin_cancel">Override</string>
@@ -258,6 +249,13 @@
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">App Theme</string>
   <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
+  <string name="choose_list">Choose activity list</string>
+  <string name="hide_watched">Hide watched episodes</string>
+  <string name="add_widget">Add widget</string>
+  <string name="widget_label">SeriesGuide</string>
+  <string name="smallwidget">SeriesGuide (small)</string>
+  <string name="bigwidget">SeriesGuide (middle)</string>
+  <string name="largewidget">SeriesGuide (large)</string>
   <string name="download_stable">Изтегляне на SeriesGuide</string>
   <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
   <string-array name="shsorting">

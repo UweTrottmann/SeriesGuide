@@ -3,7 +3,7 @@
 <resources>
   <string name="episode">Jakso</string>
   <string name="season">Kausi</string>
-  <string name="unknown">unknown</string>
+  <string name="unknown">tuntematon</string>
   <string name="episode_iswatched">Katsottu</string>
   <string name="episode_notwatched">Katsomaton</string>
   <string name="specialseason">Erikoisjaksot</string>
@@ -42,7 +42,6 @@
   <string name="show_actors">Näyttelijät</string>
   <string name="show_firstaired">Ensiesitys</string>
   <string name="show_genres">Genret</string>
-  <string name="rating">Luokitus</string>
   <string name="show_runtime">Kesto</string>
   <string name="show_contentrating">Sisällön luokitus</string>
   <string name="episode_directors">Ohjaajat</string>
@@ -74,7 +73,7 @@
   <string name="trakt_collected">%s kerätty.</string>
   <string name="trakt_notcollected">%s ei ole kerätty.</string>
   <string name="shows_empty">Ei ohjelmia täällä.</string>
-  <string name="confirm_delete">Do you really want to remove %s?</string>
+  <string name="confirm_delete">Haluatko todella poistaa %s?</string>
   <string name="delete_show">Poista</string>
   <string name="dontdelete_show">Älä poista</string>
   <string name="no_nextepisode">seuraavaa jaksoa ei löynyt</string>
@@ -147,9 +146,7 @@
   <string name="pref_onlyseasonepssummary">\"seuraava:\" älä koskaan näytä erikoisjaksoja</string>
   <string name="pref_content">Sisältö</string>
   <string name="pref_seasonsorting">Lajittele kaudet…</string>
-  <string name="pref_sortingsummary">Määrittele kausien lajittelu</string>
   <string name="pref_episodesorting">Lajittele jaksot…</string>
-  <string name="pref_epsortingsummary">Määrittele jaksojen lajittelu</string>
   <string name="backup">Varmuuskopioi/Palauta</string>
   <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
   <string name="pref_language">Sisällön kieli</string>
@@ -162,14 +159,13 @@
   <string name="pref_autoupdatesummary">Päivitä ohjelmasi ajoittain SeriesGuiden käynnistyessä</string>
   <string name="pref_updatewifionly">Päivitä vain Wi-Fi-verkossa</string>
   <string name="about">Tietoja SeriesGuidesta</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - kehittänyt Uwe Trottmann.\n\nAlla olevasta linkistä löydät tiedot ihmisistä ja resursseista, jotka ovat auttaneet tätä projektia.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">Jakaminen</string>
   <string name="clearGetGlueCredentials">Irrottaudu GetGluesta</string>
   <string name="clearGetGlueCredentialssummary">Poista GetGLue-yhteytesi</string>
   <string name="pref_trakt">trakt.tv:n käyttäjätiedot</string>
   <string name="pref_traktsummary">Lisää tai muokkaa trakt.tv:n käyttäjätietojasi</string>
   <string name="pref_traktsync">Synkronoi trakt.tv:ssä</string>
-  <string name="donate">Tarjoa drinkki kehittäjälle (Paypal)</string>
   <string name="feedback">Lähetä palautetta</string>
   <string name="pref_advanced">Lisäasetukset</string>
   <string name="clear_cache">Tyhjennä kuvavälimuisti</string>
@@ -203,10 +199,6 @@
   <string name="import_question">Nykyinen ohjelmalista menetetään! Varmista, että varmuuskopiotiedosto on varmuuskopiokansiossa.</string>
   <string name="import_yes">Palauta</string>
   <string name="import_no">Älä palauta</string>
-  <string name="widget_label">Seuraavat jaksot</string>
-  <string name="smallwidget">Seuraavat jaksot (pieni)</string>
-  <string name="bigwidget">Seuraavat jaksot (keskisuuri)</string>
-  <string name="largewidget">Seuraavat jaksot (suuri)</string>
   <string name="seasons">Kaudet</string>
   <string name="cancel">Peruuta</string>
   <string name="share">Jaa</string>
@@ -216,7 +208,6 @@
   <string name="checkinsuccess">GetGluen kirjaus onnistui.</string>
   <string name="checkinfailed">GetGluen kirjaus epäonnistui. Yritä irrottautua GetGluesta.</string>
   <string name="getglue_authfailed">GetGluen todentaminen epäonnistui. Yritä myöhemmin uudelleen.</string>
-  <string name="menu_markseen_trakt">Merkitse katsotuksi (trakt)</string>
   <string name="menu_rate_trakt">Arvostele (trakt)</string>
   <string name="menu_share_others">Muulla sovelluksella</string>
   <string name="traktcheckin_cancel">Korvaa</string>
@@ -253,11 +244,18 @@
   <string name="upcoming_display">Valitse näyttääksesi tulevat ohjelmat</string>
   <string name="pref_notifications">Ilmoitukset</string>
   <string name="pref_notificationssummary">Ilmoita pian esitettävistä suosikkiohjelmista</string>
-  <string name="pref_ringtone">Ringtone</string>
-  <string name="pref_vibrate">Vibrate</string>
+  <string name="pref_ringtone">Soittoääni</string>
+  <string name="pref_vibrate">Värinä</string>
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">Sovelluksen teema</string>
   <string name="pref_themesummary">Valitse SeriesGuiden väritys</string>
+  <string name="choose_list">Choose activity list</string>
+  <string name="hide_watched">Hide watched episodes</string>
+  <string name="add_widget">Add widget</string>
+  <string name="widget_label">SeriesGuide</string>
+  <string name="smallwidget">SeriesGuide (small)</string>
+  <string name="bigwidget">SeriesGuide (middle)</string>
+  <string name="largewidget">SeriesGuide (large)</string>
   <string name="download_stable">Lataa SeriesGuide</string>
   <string name="betawarning"><b>Varoitus!</b> Tämä julkaisu on vain beeta-testaajille! Jos epäröit, lataa vakaa versio alta.</string>
   <string-array name="shsorting">

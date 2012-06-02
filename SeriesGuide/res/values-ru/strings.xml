@@ -42,7 +42,6 @@
   <string name="show_actors">Актеры</string>
   <string name="show_firstaired">First Aired</string>
   <string name="show_genres">Genres</string>
-  <string name="rating">Rating</string>
   <string name="show_runtime">Runtime</string>
   <string name="show_contentrating">Content Rating</string>
   <string name="episode_directors">Directors</string>
@@ -147,9 +146,7 @@
   <string name="pref_onlyseasonepssummary">\"next:\" никогда не показывать особые эпизоды</string>
   <string name="pref_content">Содержание</string>
   <string name="pref_seasonsorting">Sort seasons by…</string>
-  <string name="pref_sortingsummary">Укажите способ сортировки сезонов</string>
   <string name="pref_episodesorting">Sort episodes by…</string>
-  <string name="pref_epsortingsummary">Укажите способ сортировки эпизодов</string>
   <string name="backup">Резервное копирование/восстановление</string>
   <string name="backup_summary">Резервное копирование или восстановление ваших сериалов</string>
   <string name="pref_language">Язык содержимого</string>
@@ -162,14 +159,13 @@
   <string name="pref_autoupdatesummary">Периодически обновлять ваши сериалы при запуске SeriesGuide</string>
   <string name="pref_updatewifionly">Обновление только через Wi-Fi</string>
   <string name="about">О SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">Поделиться</string>
   <string name="clearGetGlueCredentials">Отключить GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Clear your connection to GetGlue</string>
   <string name="pref_trakt">учетные данные trakt.tv</string>
   <string name="pref_traktsummary">Добавить или изменить учетные данные trakt.tv</string>
   <string name="pref_traktsync">Синхронизировать с trakt.tv</string>
-  <string name="donate">Buy the dev a drink (Paypal)</string>
   <string name="feedback">Отправить отзыв</string>
   <string name="pref_advanced">Расширенный</string>
   <string name="clear_cache">Очистить кэш изображений</string>
@@ -203,10 +199,6 @@
   <string name="import_question">Текущий список сериалов будут потерян! Убедитесь, что файл резервной копии находится в папке резервного копирования.</string>
   <string name="import_yes">Восстановление</string>
   <string name="import_no">Не востановлять</string>
-  <string name="widget_label">Следующие эпизоды</string>
-  <string name="smallwidget">Следующие эпизоды (маленький)</string>
-  <string name="bigwidget">Следующие эпизоды (средний)</string>
-  <string name="largewidget">Следующие эпизоды (большой)</string>
   <string name="seasons">Сезоны</string>
   <string name="cancel">Отмена</string>
   <string name="share">Поделиться</string>
@@ -216,7 +208,6 @@
   <string name="checkinsuccess">GetGlue Check-in successful.</string>
   <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
   <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
-  <string name="menu_markseen_trakt">Mark seen (trakt)</string>
   <string name="menu_rate_trakt">Rate (trakt)</string>
   <string name="menu_share_others">C помощью других приложений</string>
   <string name="traktcheckin_cancel">Override</string>
@@ -258,6 +249,13 @@
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">App Theme</string>
   <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
+  <string name="choose_list">Choose activity list</string>
+  <string name="hide_watched">Hide watched episodes</string>
+  <string name="add_widget">Add widget</string>
+  <string name="widget_label">SeriesGuide</string>
+  <string name="smallwidget">SeriesGuide (small)</string>
+  <string name="bigwidget">SeriesGuide (middle)</string>
+  <string name="largewidget">SeriesGuide (large)</string>
   <string name="download_stable">Скачать SeriesGuide</string>
   <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
   <string-array name="shsorting">

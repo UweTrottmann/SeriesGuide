@@ -3,7 +3,7 @@
 <resources>
   <string name="episode">Επεισόδιο</string>
   <string name="season">Σεζόν</string>
-  <string name="unknown">unknown</string>
+  <string name="unknown">άγνωστο</string>
   <string name="episode_iswatched">Έχει παρακολουθηθεί</string>
   <string name="episode_notwatched">Δεν έχει παρακολουθηθεί</string>
   <string name="specialseason">Ειδικά Επεισόδια</string>
@@ -42,7 +42,6 @@
   <string name="show_actors">Ηθοποιοί</string>
   <string name="show_firstaired">Πρώτη προβολή</string>
   <string name="show_genres">Είδη</string>
-  <string name="rating">Βαθμολογία</string>
   <string name="show_runtime">Διάρκεια</string>
   <string name="show_contentrating">Αξιολόγηση περιεχομένου</string>
   <string name="episode_directors">Σκηνοθέτες</string>
@@ -53,7 +52,7 @@
   <string name="show_isnotalive">Σταμάτησε</string>
   <string name="sort">Ταξινόμηση κατά</string>
   <string name="updateall_yes">Ενημέρωση (όλα)</string>
-  <string name="menu_update_delta">Ενημέρωση (ξεπερασμένο μόνο)</string>
+  <string name="menu_update_delta">Ενημέρωση (παλιά μόνο)</string>
   <string name="context_updateshow">Ενημέρωση</string>
   <string name="context_showinfo">Εμφάνιση πληροφοριών</string>
   <string name="context_marknext">Το επόμενο επεισόδιο έχει παρακολουθηθεί</string>
@@ -74,14 +73,14 @@
   <string name="trakt_collected">%s εντός συλλογής.</string>
   <string name="trakt_notcollected">%s εκτός συλλογής.</string>
   <string name="shows_empty">Δεν υπάρχουν σειρές εδώ.</string>
-  <string name="confirm_delete">Do you really want to remove %s?</string>
+  <string name="confirm_delete">Θέλετε πράγματι να αφαιρέσετε %s?</string>
   <string name="delete_show">Αφαίρεση</string>
   <string name="dontdelete_show">Να μην αφαιρεθεί</string>
   <string name="no_nextepisode">Δεν βρέθηκε επόμενο επεισόδιο</string>
   <string name="nextepisode">Επόμενο:</string>
   <string name="context_favorite">Προσθήκη στα Αγαπημένα</string>
   <string name="context_unfavorite">Κατάργηση από τα Αγαπημένα</string>
-  <string name="favorited">Προσθήκη στα Αγαπημένα</string>
+  <string name="favorited">Προστέθηκε στα αγαπημένα</string>
   <string name="unfavorited">Αφαιρέθηκε από τα αγαπημένα</string>
   <string name="context_hide">Απόκρυψη</string>
   <string name="context_unhide">Εμφάνιση</string>
@@ -98,7 +97,7 @@
   <string name="togglewatched">Εναλλαγή παρακολουθημένων</string>
   <string name="update_notification">Ενημέρωση των σειρών σας…</string>
   <string name="update_single">Ενημέρωση σειράς…</string>
-  <string name="update_delta">Ενημέρωση ξεπερασμένων σειρών…</string>
+  <string name="update_delta">Ενημέρωση παλιών σειρών…</string>
   <string name="update_full">Ενημέρωση όλων των σειρών…</string>
   <string name="update_success">Επιτυχής ενημέρωση.</string>
   <string name="update_offline">Η ενημέρωση απέτυχε, ελέγξτε την σύνδεσή σας στο internet/Wi-Fi.</string>
@@ -128,7 +127,7 @@
   <string name="dont_add_show">Να μην γίνει προσθήκη</string>
   <string name="add_started">Θα εμφανιστεί στην λίστα σας σύντομα.</string>
   <string name="add_success">Προστέθηκε με επιτυχία.</string>
-  <string name="add_error_begin">Δεν είναι δυνατή η προσθήκη \ "</string>
+  <string name="add_error_begin">Δεν είναι δυνατή η προσθήκη \"</string>
   <string name="add_error_end">\".</string>
   <string name="add_already_exists">Βρίσκεται ήδη στη λίστα σας.</string>
   <string name="trending">Τάσεις</string>
@@ -147,9 +146,7 @@
   <string name="pref_onlyseasonepssummary">\"Επόμενο:\" να μην εμφανίζονται τα ειδικά επεισόδια</string>
   <string name="pref_content">Περιεχόμενο</string>
   <string name="pref_seasonsorting">Ταξινόμηση σεζόν κατά…</string>
-  <string name="pref_sortingsummary">Καθορίστε τον τρόπο ταξινόμησης των σεζόν</string>
   <string name="pref_episodesorting">Ταξινόμηση επεισοδίων κατά…</string>
-  <string name="pref_epsortingsummary">Καθορίστε τον τρόπο ταξινόμησης των επεισοδίων</string>
   <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>
   <string name="backup_summary">Δημιουργία αντιγράφου ασφαλείας ή επαναφορά των σειρών</string>
   <string name="pref_language">Γλώσσα περιεχομένου</string>
@@ -162,14 +159,13 @@
   <string name="pref_autoupdatesummary">Περιοδική ενημέρωση των σειρών σας κατά την έναρξη του SeriesGuide</string>
   <string name="pref_updatewifionly">Ενημέρωση μέσω Wi-Fi μόνο</string>
   <string name="about">Σχετικά με το SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - αναπτύχθηκε από τον Uwe Trottmann.\n\nΠαρακαλώ δείτε τον παρακάτω σύνδεσμο για όλα τα άτομα και τους πόρους που συνεισφέρουν σ\'αυτό το project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">Κοινή χρήση</string>
   <string name="clearGetGlueCredentials">Αποσύνδεση GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Καθαρισμός της σύνδεσής σας στο GetGlue</string>
   <string name="pref_trakt">Στοιχεία trakt.tv</string>
   <string name="pref_traktsummary">Προσθέστε ή επεξεργαστείτε τα στοιχεία του trakt.tv</string>
   <string name="pref_traktsync">Συγχρονισμός με trakt.tv</string>
-  <string name="donate">Κέρνα ποτό τον δημιουργό (Paypal)</string>
   <string name="feedback">Αποστολή σχολίων</string>
   <string name="pref_advanced">Για προχωρημένους</string>
   <string name="clear_cache">Καθαρισμός προσωρινής μνήμης εικόνων</string>
@@ -203,10 +199,6 @@
   <string name="import_question">Η τρέχουσα λίστα σειρών θα χαθεί! Βεβαιωθείτε ότι το αρχείο αντίγραφου ασφαλείας βρίσκεται μέσα στον φάκελο αντιγράφων ασφαλείας.</string>
   <string name="import_yes">Επαναφορά</string>
   <string name="import_no">Να μην γίνει Επαναφορά</string>
-  <string name="widget_label">Επόμενα επεισόδια</string>
-  <string name="smallwidget">Επόμενο επεισόδιο (μικρό)</string>
-  <string name="bigwidget">Επόμενα επεισόδια (μεσαίο)</string>
-  <string name="largewidget">Επόμενα επεισόδια (μεγάλο)</string>
   <string name="seasons">Σεζόν</string>
   <string name="cancel">Άκυρο</string>
   <string name="share">Κοινή χρήση</string>
@@ -216,7 +208,6 @@
   <string name="checkinsuccess">Επιτυχές Check-in στο GetGlue.</string>
   <string name="checkinfailed">Αποτυχία Check-in στο GetGlue. Δοκιμάστε να αποσυνδέσετε το GetGlue.</string>
   <string name="getglue_authfailed">Αποτυχία ταυτοποίησης στο GetGlue. Δοκιμάστε ξανά αργότερα.</string>
-  <string name="menu_markseen_trakt">Σημείωση παρακολουθημένων (trakt)</string>
   <string name="menu_rate_trakt">Αξιολόγηση (trakt)</string>
   <string name="menu_share_others">Μέσω άλλων εφαρμογών</string>
   <string name="traktcheckin_cancel">Παράκαμψη</string>
@@ -253,11 +244,18 @@
   <string name="upcoming_display">Επιλέξτε, για να εμφανίσετε τις επερχόμενες σειρές</string>
   <string name="pref_notifications">Ειδοποιήσεις</string>
   <string name="pref_notificationssummary">Ειδοποίηση για αγαπημένες σειρές που θα προβληθούν σύντομα</string>
-  <string name="pref_ringtone">Ringtone</string>
-  <string name="pref_vibrate">Vibrate</string>
-  <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
+  <string name="pref_ringtone">Ήχος κλήσης</string>
+  <string name="pref_vibrate">Δόνηση</string>
+  <string name="pref_vibratesummary">Δόνηση και κατά την εμφάνιση ειδοποίησης</string>
   <string name="pref_theme">Θέμα εφαρμογής</string>
   <string name="pref_themesummary">Επιλέξτε τον χρωματισμό του SeriesGuide</string>
+  <string name="choose_list">Choose activity list</string>
+  <string name="hide_watched">Hide watched episodes</string>
+  <string name="add_widget">Add widget</string>
+  <string name="widget_label">SeriesGuide</string>
+  <string name="smallwidget">SeriesGuide (small)</string>
+  <string name="bigwidget">SeriesGuide (middle)</string>
+  <string name="largewidget">SeriesGuide (large)</string>
   <string name="download_stable">Λήψη SeriesGuide</string>
   <string name="betawarning"><b>Ειδοποίηση!</b> Αυτή η έκδοση είναι μόνο για τους beta testers! Εάν έχετε αμφιβολίες, κατεβάστε την παρακάτω σταθερή έκδοση.</string>
   <string-array name="shsorting">

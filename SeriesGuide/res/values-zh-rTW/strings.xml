@@ -42,7 +42,6 @@
   <string name="show_actors">Actors</string>
   <string name="show_firstaired">First Aired</string>
   <string name="show_genres">Genres</string>
-  <string name="rating">Rating</string>
   <string name="show_runtime">Runtime</string>
   <string name="show_contentrating">Content Rating</string>
   <string name="episode_directors">Directors</string>
@@ -147,9 +146,7 @@
   <string name="pref_onlyseasonepssummary">\"下集:\"永遠不顯示特集</string>
   <string name="pref_content">內容</string>
   <string name="pref_seasonsorting">Sort seasons by…</string>
-  <string name="pref_sortingsummary">說明如何按季排序</string>
   <string name="pref_episodesorting">Sort episodes by…</string>
-  <string name="pref_epsortingsummary">說明如何按集排序</string>
   <string name="backup">備份/還原</string>
   <string name="backup_summary">備份或還原你的影集</string>
   <string name="pref_language">內容語言</string>
@@ -162,14 +159,13 @@
   <string name="pref_autoupdatesummary">當執行SeriesGuide時，定期更新您的影集</string>
   <string name="pref_updatewifionly">僅透過Wi-Fi更新</string>
   <string name="about">關於 SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - 由Uwe Trottmann所開發。\n\n所有參與協助此專案的人員與資源請參考以下連結。\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">分享</string>
   <string name="clearGetGlueCredentials">中斷GetGlue的連線</string>
   <string name="clearGetGlueCredentialssummary">清除GetGlue的連線資料</string>
   <string name="pref_trakt">trakt.tv 憑證</string>
   <string name="pref_traktsummary">新增或編輯您的trakt.tv憑證</string>
   <string name="pref_traktsync">與trakt.tv同步</string>
-  <string name="donate">Buy the dev a drink (Paypal)</string>
   <string name="feedback">傳送反饋意見</string>
   <string name="pref_advanced">進階</string>
   <string name="clear_cache">清除圖片暫存檔</string>
@@ -203,10 +199,6 @@
   <string name="import_question">目前的影集清單將被清空!請確認備份檔已存在備份夾中。</string>
   <string name="import_yes">還原</string>
   <string name="import_no">不要還原</string>
-  <string name="widget_label">下集</string>
-  <string name="smallwidget">下集(小)</string>
-  <string name="bigwidget">下集(中)</string>
-  <string name="largewidget">下集(大)</string>
   <string name="seasons">季數</string>
   <string name="cancel">取消</string>
   <string name="share">分享</string>
@@ -216,7 +208,6 @@
   <string name="checkinsuccess">GetGlue Check-in successful.</string>
   <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
   <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
-  <string name="menu_markseen_trakt">標示為已觀賞(trakt)</string>
   <string name="menu_rate_trakt">等級(trakt)</string>
   <string name="menu_share_others">透過其他應用程式。</string>
   <string name="traktcheckin_cancel">Override</string>
@@ -258,6 +249,13 @@
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">App Theme</string>
   <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
+  <string name="choose_list">Choose activity list</string>
+  <string name="hide_watched">Hide watched episodes</string>
+  <string name="add_widget">Add widget</string>
+  <string name="widget_label">SeriesGuide</string>
+  <string name="smallwidget">SeriesGuide (small)</string>
+  <string name="bigwidget">SeriesGuide (middle)</string>
+  <string name="largewidget">SeriesGuide (large)</string>
   <string name="download_stable">下載 SeriesGuide</string>
   <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
   <string-array name="shsorting">

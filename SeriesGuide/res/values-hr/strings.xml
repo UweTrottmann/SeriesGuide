@@ -42,7 +42,6 @@
   <string name="show_actors">Glumci</string>
   <string name="show_firstaired">First Aired</string>
   <string name="show_genres">Genres</string>
-  <string name="rating">Rating</string>
   <string name="show_runtime">Runtime</string>
   <string name="show_contentrating">Content Rating</string>
   <string name="episode_directors">Directors</string>
@@ -147,9 +146,7 @@
   <string name="pref_onlyseasonepssummary">\" ne prikazuje posebne epizode</string>
   <string name="pref_content">Sadržaj</string>
   <string name="pref_seasonsorting">Sort seasons by…</string>
-  <string name="pref_sortingsummary">Specify how to sort seasons</string>
   <string name="pref_episodesorting">Sort episodes by…</string>
-  <string name="pref_epsortingsummary">Specify how to sort episodes</string>
   <string name="backup">Pričuvna kopija/Vraćanje pričuvne kopije</string>
   <string name="backup_summary">Napravi ili vrati pričuvnu kopiju vaših serija</string>
   <string name="pref_language">Content language</string>
@@ -162,14 +159,13 @@
   <string name="pref_autoupdatesummary">Periodically update your shows when starting SeriesGuide</string>
   <string name="pref_updatewifionly">Update over Wi-Fi only</string>
   <string name="about">O SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - razvoj Uwe Trottmann.\n\nNa sljedećem linku pogledajte tko je sve sudjelovao na izgradnji ovog projekta.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">Dijeljenje</string>
   <string name="clearGetGlueCredentials">Odjavi se sa GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Clear your connection to GetGlue</string>
   <string name="pref_trakt">trakt.tv podaci</string>
   <string name="pref_traktsummary">Dodaj ili uredi svoje trakt.tv podatke</string>
   <string name="pref_traktsync">Sinkroniziraj sa trakt.tv</string>
-  <string name="donate">Buy the dev a drink (Paypal)</string>
   <string name="feedback">Pošaljite povratnu informaciju</string>
   <string name="pref_advanced">Napredno</string>
   <string name="clear_cache">Clear image caches</string>
@@ -203,10 +199,6 @@
   <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
   <string name="import_yes">Vrati kopiju</string>
   <string name="import_no">Odustani</string>
-  <string name="widget_label">Sljedeća epizoda</string>
-  <string name="smallwidget">Sljedeća epizoda (mala)</string>
-  <string name="bigwidget">Sljedeća epizoda (srednja)</string>
-  <string name="largewidget">Sljedeća epizoda (velika)</string>
   <string name="seasons">Sezone</string>
   <string name="cancel">Odustani</string>
   <string name="share">Dijeli</string>
@@ -216,7 +208,6 @@
   <string name="checkinsuccess">GetGlue Check-in successful.</string>
   <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
   <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
-  <string name="menu_markseen_trakt">Mark seen (trakt)</string>
   <string name="menu_rate_trakt">Rate (trakt)</string>
   <string name="menu_share_others">Via other apps</string>
   <string name="traktcheckin_cancel">Override</string>
@@ -258,6 +249,13 @@
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">App Theme</string>
   <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
+  <string name="choose_list">Choose activity list</string>
+  <string name="hide_watched">Hide watched episodes</string>
+  <string name="add_widget">Add widget</string>
+  <string name="widget_label">SeriesGuide</string>
+  <string name="smallwidget">SeriesGuide (small)</string>
+  <string name="bigwidget">SeriesGuide (middle)</string>
+  <string name="largewidget">SeriesGuide (large)</string>
   <string name="download_stable">Skini SeriesGuide</string>
   <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
   <string-array name="shsorting">

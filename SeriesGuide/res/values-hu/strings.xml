@@ -3,7 +3,7 @@
 <resources>
   <string name="episode">Epizód</string>
   <string name="season">Évad</string>
-  <string name="unknown">unknown</string>
+  <string name="unknown">ismeretlen</string>
   <string name="episode_iswatched">Már láttam</string>
   <string name="episode_notwatched">Még nem láttam</string>
   <string name="specialseason">Extra epizódok</string>
@@ -18,8 +18,8 @@
   <string name="loading">Betöltés…</string>
   <string name="sending">Küldés…</string>
   <string name="done">Kész</string>
-  <string name="offline">No network connectivity. Try again later.</string>
-  <string name="onlyx">Only available in SeriesGuide X</string>
+  <string name="offline">Nincs hálózati kapcsolat. Próbálja meg később.</string>
+  <string name="onlyx">Csak a SeriesGuide X-ben elérhető</string>
   <string name="shouts">Shouts</string>
   <string name="shout_hint">Type a shout (in English)</string>
   <string name="shout">Shout!</string>
@@ -29,25 +29,24 @@
   <string name="autorefresh">Refreshing automagically</string>
   <string name="love">Totally ninja!</string>
   <string name="hate">Weak Sauce :(</string>
-  <string name="rating2">Terrible</string>
-  <string name="rating3">Bad</string>
-  <string name="rating4">Poor</string>
-  <string name="rating5">Meh</string>
-  <string name="rating6">Fair</string>
-  <string name="rating7">Good</string>
-  <string name="rating8">Great</string>
-  <string name="rating9">Superb</string>
-  <string name="episode_firstaired">Airdate</string>
+  <string name="rating2">Szörnyű</string>
+  <string name="rating3">Rossz</string>
+  <string name="rating4">Gyenge</string>
+  <string name="rating5">Elmegy</string>
+  <string name="rating6">Egész jó</string>
+  <string name="rating7">Jó</string>
+  <string name="rating8">Nagyon jó</string>
+  <string name="rating9">Nagyszerű</string>
+  <string name="episode_firstaired">Sugárzás</string>
   <string name="episode_dvdnumber">DVD epizód</string>
-  <string name="show_actors">Actors</string>
-  <string name="show_firstaired">First Aired</string>
-  <string name="show_genres">Genres</string>
-  <string name="rating">Rating</string>
-  <string name="show_runtime">Runtime</string>
-  <string name="show_contentrating">Content Rating</string>
-  <string name="episode_directors">Directors</string>
-  <string name="episode_gueststars">Guest Stars</string>
-  <string name="episode_writers">Writers</string>
+  <string name="show_actors">Szereplők</string>
+  <string name="show_firstaired">Első sugárzás ideje</string>
+  <string name="show_genres">Műfaj</string>
+  <string name="show_runtime">Hossz</string>
+  <string name="show_contentrating">Korhatár besorolás</string>
+  <string name="episode_directors">Rendezte</string>
+  <string name="episode_gueststars">Sztárvendég</string>
+  <string name="episode_writers">Írta</string>
   <string name="show_airtimeunit">perc</string>
   <string name="show_isalive">Még fut</string>
   <string name="show_isnotalive">Véget ért</string>
@@ -67,14 +66,14 @@
   <string name="mark_untilhere">Minden korábban vetített megnézve</string>
   <string name="collect">Collected episode</string>
   <string name="uncollect">Not yet collected episode</string>
-  <string name="trakt_submitfailed">Not submitted to trakt. Try again later.</string>
-  <string name="trakt_submitsuccess">Submitted to trakt.</string>
-  <string name="trakt_seen">%s seen.</string>
-  <string name="trakt_notseen">%s not seen.</string>
-  <string name="trakt_collected">%s collected.</string>
-  <string name="trakt_notcollected">%s not collected.</string>
+  <string name="trakt_submitfailed">Adatküldés a trakt-nak nem sikerült. Próbálja meg később.</string>
+  <string name="trakt_submitsuccess">Adatok elküldve a trakt-nak.</string>
+  <string name="trakt_seen">A(z) %s-t láttam.</string>
+  <string name="trakt_notseen">A(z) %s-t nem láttam.</string>
+  <string name="trakt_collected">%s a gyűjteménybe.</string>
+  <string name="trakt_notcollected">%s kivéve a gyűjteményből.</string>
   <string name="shows_empty">Nincsenek sorozatok.</string>
-  <string name="confirm_delete">Do you really want to remove %s?</string>
+  <string name="confirm_delete">Biztosan törli a következőt: %s?</string>
   <string name="delete_show">Törlés</string>
   <string name="dontdelete_show">Mégse</string>
   <string name="no_nextepisode">nem található köv. rész</string>
@@ -96,7 +95,7 @@
   <string name="norecent">Nincsenek mostanában vetített epizódok.</string>
   <string name="only_favorites">Csak Kedvencek</string>
   <string name="togglewatched">Láttam igen/nem</string>
-  <string name="update_notification">Updating your shows…</string>
+  <string name="update_notification">Sorozatok frissítése…</string>
   <string name="update_single">Sorozat frissítése…</string>
   <string name="update_delta">Updating outdated shows…</string>
   <string name="update_full">Minden sorozat frissítése…</string>
@@ -140,18 +139,16 @@
   <string name="pref_showlist">Lista megjelenítése</string>
   <string name="help">Súgó</string>
   <string name="preferences">Beállítások</string>
-  <string name="pref_showsorting">Sort shows by…</string>
+  <string name="pref_showsorting">Sorozatok rendezése</string>
   <string name="pref_onlyfuture">Leadott epizódok nélkül</string>
   <string name="pref_onlyfuturesummary">A \"következő:\" nem mutatja a már sugárzott epizódokat</string>
   <string name="pref_onlyseasoneps">Extra epizódok elrejtése</string>
   <string name="pref_onlyseasonepssummary">A \"következő:\" soha ne mutassa az extra epizódokat</string>
   <string name="pref_content">Tartalom</string>
-  <string name="pref_seasonsorting">Sort seasons by…</string>
-  <string name="pref_sortingsummary">Milyen időrendben legyenek az évadok</string>
-  <string name="pref_episodesorting">Sort episodes by…</string>
-  <string name="pref_epsortingsummary">Milyen sorrendben legyenek az epizódok</string>
-  <string name="backup">Biztonsági másolat/visszaállítás</string>
-  <string name="backup_summary">Biztonsági mentés készítése a sorozatokról, illetve adatbázis visszaállítása</string>
+  <string name="pref_seasonsorting">Évadok rendezése</string>
+  <string name="pref_episodesorting">Epizódok rendezése</string>
+  <string name="backup">Biztonsági másolat</string>
+  <string name="backup_summary">Biztonsági mentés készítése a sorozatokról, vagy visszaállítás</string>
   <string name="pref_language">Tartalom nyelve</string>
   <string name="pref_languagesummary">A fordítás nem mindegyik sorozathoz áll rendelkezésre</string>
   <string name="pref_number">Számozás formátuma</string>
@@ -162,14 +159,13 @@
   <string name="pref_autoupdatesummary">Időszakosan frissíti a sorozatokat a SeriesGuide indításakor</string>
   <string name="pref_updatewifionly">Frissítés csak Wi-Fi hálózaton keresztül</string>
   <string name="about">A SeriesGuide-ról</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - fejlesztő: Uwe Trottmann.\n\nAz alábbi linken találhatóak a projektet segítők és külső források.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">Megosztás</string>
   <string name="clearGetGlueCredentials">GetGlue kapcsolat megszakítása</string>
   <string name="clearGetGlueCredentialssummary">GetGlue kapcsolat törlése</string>
   <string name="pref_trakt">trakt.tv bejelentkezési adatok</string>
   <string name="pref_traktsummary">trakt.tv fiók hozzáadása vagy szerkesztése</string>
   <string name="pref_traktsync">Szinkronizálás a trakt.tv-vel</string>
-  <string name="donate">Buy the dev a drink (Paypal)</string>
   <string name="feedback">Visszajelzés küldése</string>
   <string name="pref_advanced">Haladó</string>
   <string name="clear_cache">Képtároló törlése</string>
@@ -181,12 +177,12 @@
   <string name="sendusagedata">Send the developer usage statistics</string>
   <string name="pref_upcominglimit">Upcoming shows within…</string>
   <string name="pref_upcominglimitsummary">How far in the future to display upcoming shows</string>
-  <string name="backup_description">A <b>Bizt. másolat</b> gombbal elmentheti a sorozatok adatbázisát <b>seriesdatabase</b> fájlnévvel a lenti mappába.\n\nA <b>Visszaállítás</b> gombbal a lent látható, vagy annál alacsonyabb verziójú adatbázis állítható vissza a biztonsági másolat mappából.</string>
+  <string name="backup_description">A <b>Mentés</b> gombbal elmentheti a sorozatok adatbázisát <b>seriesdatabase</b> fájlnévvel a lenti mappába.\n\nA <b>Visszaállítás</b> gombbal a lent látható, vagy annál alacsonyabb verziójú adatbázis állítható vissza a biztonsági másolat mappából.</string>
   <string name="backup_path"><b>Biztonsági másolat mappa</b></string>
   <string name="backup_version"><b>Adatbázis verzió</b></string>
   <string name="backup_failed_nosd">Nem lehet menteni. A mentési mappa nem elérhető.</string>
-  <string name="backup_inprogress">Backing up database…</string>
-  <string name="backup_success">Mentés sikerült.</string>
+  <string name="backup_inprogress">Adatbázis mentése…</string>
+  <string name="backup_success">A mentés sikerült.</string>
   <string name="backup_failed">A mentés nem sikerült.</string>
   <string name="import_inprogress">Adatbázis visszaállítása…</string>
   <string name="import_failed_nosd">Nem lehet visszaállítani. A mentési mappa nem elérhető.</string>
@@ -195,7 +191,7 @@
   <string name="dbupgradefailed">A mentés esetleg túl régi vagy üres. A 2.0 verzió előtti mentéseket az 1.9.x verziójú programba kell importálni, majd menteni.</string>
   <string name="import_success">Adatok visszaállítása sikerült.</string>
   <string name="import_failed">Adatok visszaállítása nem sikerült.</string>
-  <string name="backup_button">Bizt. másolat</string>
+  <string name="backup_button">Mentés</string>
   <string name="import_button">Visszaállítás</string>
   <string name="backup_question">Ez felülírja a jelenlegi biztonsági másolat fájlt!</string>
   <string name="backup_yes">Mentés</string>
@@ -203,32 +199,27 @@
   <string name="import_question">A jelenlegi sorozatlista törlődik. Győződj meg róla, hogy a biztonsági másolat a megfelelő mappában van!</string>
   <string name="import_yes">Visszaállítás</string>
   <string name="import_no">Mégse</string>
-  <string name="widget_label">Következő epizódok</string>
-  <string name="smallwidget">Következő epizódok (kicsi)</string>
-  <string name="bigwidget">Következő epizódok (közepes)</string>
-  <string name="largewidget">Következő epizódok (nagy)</string>
   <string name="seasons">Évadok</string>
   <string name="cancel">Mégse</string>
   <string name="share">Megosztás</string>
   <string name="checkin">Check in</string>
-  <string name="checkin_hint">Type a message (optional)</string>
-  <string name="paste_episode">Paste episode</string>
+  <string name="checkin_hint">Írjon üzenetet(nem kötelező)</string>
+  <string name="paste_episode">Epizód beillesztése</string>
   <string name="checkinsuccess">GetGlue Check-in successful.</string>
   <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
-  <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
-  <string name="menu_markseen_trakt">Láttam (trakt)</string>
+  <string name="getglue_authfailed">A GetGlue azonosítás nem sikerült. Próbálja meg később.</string>
   <string name="menu_rate_trakt">Értékelem (trakt)</string>
   <string name="menu_share_others">Más alkalmazásokkal</string>
   <string name="traktcheckin_cancel">Override</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous checkin or wait %s and try again.</string>
   <string name="traktcheckin_wait">Várok</string>
-  <string name="oauthmessage">Authenticating SeriesGuide with GetGlue…</string>
+  <string name="oauthmessage">SeriesGuide azonosítása a GetGlue-val</string>
   <string name="addtocalendar">Hozzáadás naptárhoz</string>
   <string name="addtocalendar_failed">Nem sikerült az esemény létrehozása.</string>
   <string name="username">Felhasználónév</string>
   <string name="email">E-mail</string>
   <string name="password">Jelszó</string>
-  <string name="waitplease">A moment, please…</string>
+  <string name="waitplease">Kis türelmet…</string>
   <string name="connect">Connect</string>
   <string name="disconnect">Disconnect</string>
   <string name="trakt_success">trakt action successful</string>
@@ -242,22 +233,29 @@
   <string name="trakt_syncunseen">Meg nem nézett epizódokat is</string>
   <string name="welcome_message"><big>Kezdjük el</big></string>
   <string name="welcome_text">Welcome!</string>
-  <string name="welcome_language">Choose the primary content language:</string>
-  <string name="welcome_setuplanguage">Choose language</string>
-  <string name="welcome_setuptrakt">Connect to trakt</string>
+  <string name="welcome_language">Válassza ki a tartalmak elsődleges nyelvét:</string>
+  <string name="welcome_setuplanguage">Válasszon nyelvet</string>
+  <string name="welcome_setuptrakt">Kapcsolódás a trakt–hoz</string>
   <string name="welcome_traktmessage">Access your trakt.tv library and friends activity with SeriesGuide:</string>
   <string name="dismiss">Dismiss</string>
   <string name="upcoming_show">%s is coming up</string>
   <string name="upcoming_episodes">New episodes are coming up</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>
   <string name="upcoming_display">Select to display upcoming shows</string>
-  <string name="pref_notifications">Notifications</string>
+  <string name="pref_notifications">Értesítések</string>
   <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
-  <string name="pref_ringtone">Ringtone</string>
+  <string name="pref_ringtone">Csengőhang</string>
   <string name="pref_vibrate">Vibrate</string>
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
-  <string name="pref_theme">App Theme</string>
-  <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
+  <string name="pref_theme">Alkalmazás téma</string>
+  <string name="pref_themesummary">A SeriesGuide kezelőfelületének színeit állítja be</string>
+  <string name="choose_list">Choose activity list</string>
+  <string name="hide_watched">Hide watched episodes</string>
+  <string name="add_widget">Add widget</string>
+  <string name="widget_label">SeriesGuide</string>
+  <string name="smallwidget">SeriesGuide (small)</string>
+  <string name="bigwidget">SeriesGuide (middle)</string>
+  <string name="largewidget">SeriesGuide (large)</string>
   <string name="download_stable">A SeriesGuide letöltése</string>
   <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
   <string-array name="shsorting">
@@ -280,11 +278,11 @@
     <item>Régebbiek előre (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>a day</item>
-    <item>3 days</item>
-    <item>a week</item>
-    <item>two weeks</item>
-    <item>a month</item>
+    <item>egy nap</item>
+    <item>három nap</item>
+    <item>egy hét</item>
+    <item>két hét</item>
+    <item>egy hónap</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Mind</item>
@@ -293,11 +291,11 @@
     <item>Rejtett</item>
   </string-array>
   <string-array name="themeSelection">
-    <item>SeriesGuide Theme</item>
-    <item>ICS Base Theme</item>
+    <item>SeriesGuide téma</item>
+    <item>ICS alap téma</item>
   </string-array>
   <plurals name="votes">
-    <item quantity="one">%d vote</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="one">%d szavazat</item>
+    <item quantity="other">%d szavazat</item>
   </plurals>
 </resources>

@@ -42,7 +42,6 @@
   <string name="show_actors">Herci</string>
   <string name="show_firstaired">Poprvé vysíláno</string>
   <string name="show_genres">Žánr</string>
-  <string name="rating">Hodnocení</string>
   <string name="show_runtime">Délka</string>
   <string name="show_contentrating">Hodnocení obsahu</string>
   <string name="episode_directors">Režie</string>
@@ -147,9 +146,7 @@
   <string name="pref_onlyseasonepssummary">\"další:\" nezobrazovat bonusové díly</string>
   <string name="pref_content">Obsah</string>
   <string name="pref_seasonsorting">Řadit série dle…</string>
-  <string name="pref_sortingsummary">Zvolte, jak řadit série</string>
   <string name="pref_episodesorting">Řadit díly dle…</string>
-  <string name="pref_epsortingsummary">Zvolte, jak řadit díly</string>
   <string name="backup">Zálohování/obnovení</string>
   <string name="backup_summary">Zálohování a obnovení Vašich pořadů</string>
   <string name="pref_language">Jazyk obsahu</string>
@@ -162,14 +159,13 @@
   <string name="pref_autoupdatesummary">Po spuštění SeriesGuide průběžně aktualizuje Vaše pořady</string>
   <string name="pref_updatewifionly">Aktualizovat jen skrze Wi-Fi</string>
   <string name="about">O SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - vytvořeno Uwe Trottmannem.\n\nSeznamte se i s ostatními členy týmu skrze odkaz níže.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">Sdílení</string>
   <string name="clearGetGlueCredentials">Odpojit GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Vymazat Vaše spojení na GetGlue</string>
   <string name="pref_trakt">Přihlášení trakt.tv</string>
   <string name="pref_traktsummary">Přidejte nebo upravte Vaše přihlašovací údaje</string>
   <string name="pref_traktsync">Synchronizovat s trakt.tv</string>
-  <string name="donate">Koupit vývojáři pivo (PayPal)</string>
   <string name="feedback">Poslat reakci</string>
   <string name="pref_advanced">Pokročilé</string>
   <string name="clear_cache">Vymazat paměť pro obrázky</string>
@@ -203,10 +199,6 @@
   <string name="import_question">Stávající seznam pořadů bude ztracen! Ujistěte se, že máte zálohu Vašich pořadů.</string>
   <string name="import_yes">Obnovit</string>
   <string name="import_no">Neobnovovat</string>
-  <string name="widget_label">Další díly</string>
-  <string name="smallwidget">Příští epizody (malý)</string>
-  <string name="bigwidget">Příští epizody (střední)</string>
-  <string name="largewidget">Příští epizody (velký)</string>
   <string name="seasons">Série</string>
   <string name="cancel">Zrušit</string>
   <string name="share">Sdílet</string>
@@ -216,7 +208,6 @@
   <string name="checkinsuccess">Ohlášení v GetGlue úspěšné.</string>
   <string name="checkinfailed">Ohlášení se selhalo. Zkuste odpojit GetGlue.</string>
   <string name="getglue_authfailed">Ověření u GetGlue selhalo. Zkuste to později.</string>
-  <string name="menu_markseen_trakt">Zhlédnout (trakt)</string>
   <string name="menu_rate_trakt">Hodnotit (trakt)</string>
   <string name="menu_share_others">Skrze jiné aplikace</string>
   <string name="traktcheckin_cancel">Přepsat</string>
@@ -258,6 +249,13 @@
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">Téma aplikace</string>
   <string name="pref_themesummary">Vyberte barevné téma pro SeriesGuide</string>
+  <string name="choose_list">Choose activity list</string>
+  <string name="hide_watched">Hide watched episodes</string>
+  <string name="add_widget">Add widget</string>
+  <string name="widget_label">SeriesGuide</string>
+  <string name="smallwidget">SeriesGuide (small)</string>
+  <string name="bigwidget">SeriesGuide (middle)</string>
+  <string name="largewidget">SeriesGuide (large)</string>
   <string name="download_stable">Stáhnout SeriesGuide</string>
   <string name="betawarning"><b>Upozornění!</b> Toto je verze pouze pro beta-testery! Nejste-li si jistí, stáhněte si raději stabilní verzi níže.</string>
   <string-array name="shsorting">
