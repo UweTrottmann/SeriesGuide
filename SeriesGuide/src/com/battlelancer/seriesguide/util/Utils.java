@@ -810,6 +810,20 @@ public class Utils {
         return SGChannel.STABLE;
     }
 
+    /**
+     * Used to make some features only available to supporters.
+     * 
+     * @param context
+     * @return
+     */
+    public static boolean isSupporterChannel(Context context) {
+        if (getChannel(context) != SGChannel.STABLE) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static void setValueOrPlaceholder(View view, final String value) {
         TextView field = (TextView) view;
         if (value == null || value.length() == 0) {
