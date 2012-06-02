@@ -4,6 +4,7 @@ package com.battlelancer.seriesguide.appwidget;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
+import com.battlelancer.seriesguide.util.Utils;
 
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
@@ -52,7 +53,6 @@ public class ListWidgetProvider extends AppWidgetProvider {
         }
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // update each of the widgets with the remote adapter
@@ -61,32 +61,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
             // Toast.LENGTH_SHORT)
             // .show();
 
-            // Here we setup the intent which points to the StackViewService
-            // which will provide the views for this collection.
-            Intent intent = new Intent(context, ListWidgetService.class);
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
-            // When intents are compared, the extras are ignored, so we need to
-            // embed the extras into the data so that the extras will not be
-            // ignored.
-            intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-            RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.appwidget_v11);
-            rv.setRemoteAdapter(appWidgetIds[i], R.id.list_view, intent);
-
-            // The empty view is displayed when the collection has no items. It
-            // should be a sibling of the collection view.
-            rv.setEmptyView(R.id.list_view, R.id.empty_view);
-
-            // Create an Intent to launch Upcoming
-            Intent pi = new Intent(context, UpcomingRecentActivity.class);
-            pi.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, pi, 0);
-            rv.setOnClickPendingIntent(R.id.widget_title, pendingIntent);
-
-            // Create intents for items to launch an EpisodeDetailsActivity
-            Intent itemIntent = new Intent(context, EpisodeDetailsActivity.class);
-            PendingIntent pendingIntentTemplate = PendingIntent.getActivity(context, 1, itemIntent,
-                    PendingIntent.FLAG_UPDATE_CURRENT);
-            rv.setPendingIntentTemplate(R.id.list_view, pendingIntentTemplate);
+            RemoteViews rv = setupRemoteViews(context, appWidgetIds[i]);
 
             appWidgetManager.updateAppWidget(appWidgetIds[i], rv);
         }
@@ -99,5 +74,41 @@ public class ListWidgetProvider extends AppWidgetProvider {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         am.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()
                 + REPETITION_INTERVAL, REPETITION_INTERVAL, pi);
+    }
+
+    @SuppressWarnings("deprecation")
+    public static RemoteViews setupRemoteViews(Context context, int appWidgetId) {
+        // Here we setup the intent which points to the StackViewService
+        // which will provide the views for this collection.
+        Intent intent = new Intent(context, ListWidgetService.class);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+
+        // When intents are compared, the extras are ignored, so we need to
+        // embed the extras into the data so that the extras will not be
+        // ignored.
+        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.appwidget_v11);
+        if (Utils.isICSOrHigher()) {
+            rv.setRemoteAdapter(R.id.list_view, intent);
+        } else {
+            rv.setRemoteAdapter(appWidgetId, R.id.list_view, intent);
+        }
+
+        // The empty view is displayed when the collection has no items. It
+        // should be a sibling of the collection view.
+        rv.setEmptyView(R.id.list_view, R.id.empty_view);
+
+        // Create an Intent to launch Upcoming
+        Intent pi = new Intent(context, UpcomingRecentActivity.class);
+        pi.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, pi, 0);
+        rv.setOnClickPendingIntent(R.id.widget_title, pendingIntent);
+
+        // Create intents for items to launch an EpisodeDetailsActivity
+        Intent itemIntent = new Intent(context, EpisodeDetailsActivity.class);
+        PendingIntent pendingIntentTemplate = PendingIntent.getActivity(context, 1, itemIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        rv.setPendingIntentTemplate(R.id.list_view, pendingIntentTemplate);
+        return rv;
     }
 }

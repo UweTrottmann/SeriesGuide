@@ -155,6 +155,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
+        <activity android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
 
         <!-- Content provider -->
         <provider
@@ -243,6 +248,7 @@
             android:name="com.battlelancer.seriesguide.appwidget.AppWidgetLarge$UpdateServiceLarge"
             android:enabled="@bool/isFroyoOrLower" >
         </service>
+        
     </application>
 
 </manifest>
