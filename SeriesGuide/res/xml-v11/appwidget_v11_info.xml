@@ -4,7 +4,7 @@
     android:initialLayout="@layout/appwidget_v11"
     android:minHeight="140dp"
     android:minWidth="250dp"
-    android:previewImage="@drawable/next_episodes_ori_portrait"
+    android:previewImage="@drawable/listwidget_ori_portrait"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0" >
 </appwidget-provider>

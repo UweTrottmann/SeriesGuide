@@ -267,10 +267,6 @@
     <string name="import_no">Don\'t Restore</string>
 
     <!-- Misc -->
-    <string name="widget_label">Next episodes</string>
-    <string name="smallwidget">Next episodes (small)</string>
-    <string name="bigwidget">Next episodes (middle)</string>
-    <string name="largewidget">Next episodes (large)</string>
     <string name="seasons">Seasons</string>
     <string name="cancel">Cancel</string>
     <string name="share">Share</string>
@@ -343,6 +339,13 @@
         <item>SeriesGuide Theme</item>
         <item>ICS Base Theme</item>
     </string-array>
+    
+    <!-- Widgets -->
+    <string name="add_widget">Add widget</string>
+    <string name="widget_label">SeriesGuide</string>
+    <string name="smallwidget">SeriesGuide (small)</string>
+    <string name="bigwidget">SeriesGuide (middle)</string>
+    <string name="largewidget">SeriesGuide (large)</string>
 
     <!-- strings for BETA release -->
     <string name="download_stable">Download SeriesGuide</string>
