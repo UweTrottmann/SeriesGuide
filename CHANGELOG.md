@@ -5,12 +5,20 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 2.6.2 *(in development)*
+Version 2.7 *(in development)*
 --------------------------------
 
 * FEATURE Add notification settings for vibrating (thus requiring new VIBRATE permission) and ringtone selection.
+* FEATURE Configuration for widgets: choose between upcoming or recent episodes (only SeriesGuide X), hide watched episodes.
 
 ### Detailed changes:
+
+#### 2.6.12beta (2012-06-02)
+
+* FEATURE Configuration for widgets: choose between upcoming or recent episodes (only SeriesGuide X), hide watched episodes.
+* TWEAK Remove sorting preferences from settings screen (still available in seasons and episode lists).
+* TWEAK Remove Paypal link.
+* FIX New website url in About dialog.
 
 #### 2.6.11beta (2012-05-27)
 
