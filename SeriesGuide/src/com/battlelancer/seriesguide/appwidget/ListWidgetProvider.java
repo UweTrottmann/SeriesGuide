@@ -14,6 +14,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.SystemClock;
 import android.text.format.DateUtils;
@@ -61,7 +62,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
             // Toast.LENGTH_SHORT)
             // .show();
 
-            RemoteViews rv = setupRemoteViews(context, appWidgetIds[i]);
+            RemoteViews rv = buildRemoteViews(context, appWidgetIds[i]);
 
             appWidgetManager.updateAppWidget(appWidgetIds[i], rv);
         }
@@ -77,7 +78,8 @@ public class ListWidgetProvider extends AppWidgetProvider {
     }
 
     @SuppressWarnings("deprecation")
-    public static RemoteViews setupRemoteViews(Context context, int appWidgetId) {
+    public static RemoteViews buildRemoteViews(Context context, int appWidgetId) {
+
         // Here we setup the intent which points to the StackViewService
         // which will provide the views for this collection.
         Intent intent = new Intent(context, ListWidgetService.class);
@@ -98,10 +100,28 @@ public class ListWidgetProvider extends AppWidgetProvider {
         // should be a sibling of the collection view.
         rv.setEmptyView(R.id.list_view, R.id.empty_view);
 
+        // change title based on config
+        SharedPreferences prefs = context.getSharedPreferences(ListWidgetConfigure.PREFS_NAME, 0);
+        int listType = prefs.getInt(ListWidgetConfigure.PREF_LISTTYPE_KEY + appWidgetId,
+                R.id.radioUpcoming);
+        int selection = 0;
+        switch (listType) {
+            case R.id.radioUpcoming:
+                selection = 0;
+                rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.upcoming));
+                break;
+            case R.id.radioRecent:
+                selection = 1;
+                rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.recent));
+                break;
+        }
+
         // Create an Intent to launch Upcoming
         Intent pi = new Intent(context, UpcomingRecentActivity.class);
+        pi.putExtra(UpcomingRecentActivity.InitBundle.SELECTED_TAB, selection);
         pi.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, pi, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, pi,
+                PendingIntent.FLAG_UPDATE_CURRENT);
         rv.setOnClickPendingIntent(R.id.widget_title, pendingIntent);
 
         // Create intents for items to launch an EpisodeDetailsActivity
