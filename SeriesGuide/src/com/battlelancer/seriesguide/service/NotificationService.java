@@ -9,7 +9,6 @@ import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.util.Utils.SGChannel;
 import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.app.AlarmManager;
@@ -66,8 +65,10 @@ public class NotificationService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        // unschedule notification service wake-ups for disabled notifications
+        // and non-supporters
         if (!prefs.getBoolean(SeriesGuidePreferences.KEY_NOTIFICATIONS_ENABLED, true)
-                || Utils.getChannel(this) == SGChannel.STABLE) {
+                || !Utils.isSupporterChannel(this)) {
             // cancel any pending alarm
             AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent i = new Intent(this, OnAlarmReceiver.class);
