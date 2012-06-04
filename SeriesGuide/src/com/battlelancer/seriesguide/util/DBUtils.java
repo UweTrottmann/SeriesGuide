@@ -204,7 +204,7 @@ public class DBUtils {
 
         // append unwatched selection if necessary
         if (isOnlyUnwatched) {
-            query += UpcomingQuery.SELECTION_ONLYUNWATCHED;
+            query += UpcomingQuery.SELECTION_NOWATCHED;
         }
 
         // build result array
