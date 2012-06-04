@@ -226,6 +226,7 @@ public class UpcomingFragment extends ListFragment implements
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        // TODO look to merge this with DBUtils.buildActivityQuery
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         long fakeNow = Utils.getFakeCurrentTime(prefs);
         // go an hour back in time, so episodes move to recent one hour late
@@ -246,6 +247,13 @@ public class UpcomingFragment extends ListFragment implements
             selectionArgs = new String[] {
                     recentThreshold, "0"
             };
+        }
+
+        // append nospecials selection if necessary
+        boolean isNoSpecials = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES,
+                false);
+        if (isNoSpecials) {
+            query += UpcomingQuery.SELECTION_NOSPECIALS;
         }
 
         return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
@@ -275,6 +283,8 @@ public class UpcomingFragment extends ListFragment implements
 
         String SELECTION_ONLYUNWATCHED = " AND " + Episodes.WATCHED + "=0";
 
+        String SELECTION_NOSPECIALS = " AND " + Episodes.SEASON + "!=0";
+
         String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC,"
                 + Episodes.NUMBER + " ASC";
 
@@ -302,6 +312,7 @@ public class UpcomingFragment extends ListFragment implements
         int SHOW_POSTER = 9;
 
         int REF_SHOW_ID = 10;
+
     }
 
     private class SlowAdapter extends SimpleCursorAdapter {
