@@ -116,7 +116,7 @@
     <string name="friends_empty">No friend activity on trakt.</string>
     <string name="noupcoming">There are no upcoming episodes.</string>
     <string name="norecent">There are no recent episodes.</string>
-    <string name="only_favorites">Only favorites</string>
+    <string name="only_favorites">Only favorite shows</string>
     <string name="togglewatched">Toggle watched</string>
 
     <!-- Updating -->
