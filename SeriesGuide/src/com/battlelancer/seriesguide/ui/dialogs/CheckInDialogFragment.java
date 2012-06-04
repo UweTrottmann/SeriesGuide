@@ -193,8 +193,10 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                         newFragment.show(ft, "progress-dialog");
 
                         // start the trakt check in task
-                        new TraktTask(getActivity(), getFragmentManager(), null).checkin(tvdbid,
-                                season, episode, message).execute();
+                        Utils.executeAsyncTask(new TraktTask(getActivity(), getFragmentManager(),
+                                null).checkin(tvdbid, season, episode, message), new Void[] {
+                            null
+                        });
                     }
                 }
 

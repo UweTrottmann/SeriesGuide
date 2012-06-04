@@ -1,3 +1,4 @@
+
 package com.battlelancer.seriesguide.ui.dialogs;
 
 import com.battlelancer.seriesguide.R;
@@ -94,14 +95,16 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                     protected void onPostExecute(Response r) {
                         if (r.status.equalsIgnoreCase(TraktStatus.SUCCESS)) {
                             // all good
-                            Toast.makeText(
-                                    context,
-                                    context.getString(R.string.trakt_success) + ": "
-                                            + r.message, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,
+                                    context.getString(R.string.trakt_success) + ": " + r.message,
+                                    Toast.LENGTH_SHORT).show();
 
                             // relaunch the trakt task which called us to
                             // try the check in again
-                            new TraktTask(context, fm, args, null).execute();
+                            Utils.executeAsyncTask(new TraktTask(context, fm, args, null),
+                                    new Void[] {
+                                        null
+                                    });
                         } else if (r.status.equalsIgnoreCase(TraktStatus.FAILURE)) {
                             // well, something went wrong
                             Toast.makeText(context,

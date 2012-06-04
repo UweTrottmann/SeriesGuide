@@ -19,6 +19,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -706,6 +707,15 @@ public class Utils {
         return prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
     }
 
+    public static boolean isTraktCredentialsValid(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
+                .getApplicationContext());
+        String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+        String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
+
+        return (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase(""));
+    }
+
     public static String getVersion(Context context) {
         String version;
         try {
@@ -851,13 +861,22 @@ public class Utils {
         }
     }
 
-    public static boolean isTraktCredentialsValid(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                .getApplicationContext());
-        String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
-        String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
-
-        return (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase(""));
+    /**
+     * Execute an {@link AsyncTask} on a thread pool.
+     * 
+     * @param task Task to execute.
+     * @param args Optional arguments to pass to
+     *            {@link AsyncTask#execute(Object[])}.
+     * @param <T> Task argument type.
+     */
+    public static <T> void executeAsyncTask(AsyncTask<T, ?, ?> task, T... args) {
+        // TODO figure out how to subclass abstract and generalized AsyncTask,
+        // then put this there
+        if (Utils.isHoneycombOrHigher()) {
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, args);
+        } else {
+            task.execute(args);
+        }
     }
 
 }

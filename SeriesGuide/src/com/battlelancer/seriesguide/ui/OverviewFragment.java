@@ -368,7 +368,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     }
 
     protected void onLoadEpisode() {
-        new AsyncTask<Void, Void, Integer>() {
+        Utils.executeAsyncTask(new AsyncTask<Void, Void, Integer>() {
 
             private final static int SUCCESS = 1;
 
@@ -399,7 +399,9 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 }
             }
 
-        }.execute();
+        }, new Void[] {
+            null
+        });
     }
 
     @TargetApi(11)
@@ -527,11 +529,9 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         // trakt rating
         mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView()).episode(getShowId(),
                 mSeasonNumber, mEpisodeNumber);
-        if (Utils.isHoneycombOrHigher()) {
-            mTraktTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        } else {
-            mTraktTask.execute();
-        }
+        Utils.executeAsyncTask(mTraktTask, new Void[] {
+            null
+        });
     }
 
     protected void onLoadImage(String imagePath) {
@@ -542,7 +542,10 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             mArtTask.cancel(true);
             mArtTask = null;
         }
-        mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity()).execute();
+        mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity());
+        Utils.executeAsyncTask(mArtTask, new Void[] {
+            null
+        });
     }
 
     private void onMarkWatched() {
