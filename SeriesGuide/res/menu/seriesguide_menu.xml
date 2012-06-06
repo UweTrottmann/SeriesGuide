@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@+id/menu_quickcheckin"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/checkin"/>
+    <item
         android:id="@+id/menu_new_show"
         android:icon="@drawable/ic_action_add"
         android:showAsAction="ifRoom"
@@ -11,11 +15,6 @@
         android:icon="@drawable/ic_action_upcoming"
         android:showAsAction="ifRoom|withText"
         android:title="@string/activity"/>
-    <item
-        android:id="@+id/menu_update"
-        android:icon="@drawable/ic_action_refresh"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_update_delta"/>
     <item
         android:id="@+id/menu_search"
         android:icon="@drawable/ic_action_search"
@@ -41,6 +40,11 @@
         android:id="@+id/menu_updateart"
         android:showAsAction="never"
         android:title="@string/menu_updateart"/>
+    <item
+        android:id="@+id/menu_update"
+        android:icon="@drawable/ic_action_refresh"
+        android:showAsAction="never"
+        android:title="@string/menu_update_delta"/>
     <item
         android:id="@+id/menu_fullupdate"
         android:showAsAction="never"

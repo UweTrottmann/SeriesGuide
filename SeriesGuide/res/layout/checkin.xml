@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ScrollingLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/editTextCheckinSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/checkin_searchhint"
+        android:inputType="text"
+        android:paddingBottom="@dimen/default_padding" >
+
+        <requestFocus />
+    </EditText>
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:text="@string/checkin_empty"
+        android:visibility="gone" />
+
+    <GridView
+        android:id="@+id/gridViewCheckinShows"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="@bool/gridClipToPadding"
+        android:columnWidth="@dimen/showgrid_columnWidth"
+        android:gravity="center"
+        android:horizontalSpacing="@dimen/showgrid_spacing"
+        android:listSelector="?custom_list_selector"
+        android:numColumns="auto_fit"
+        android:padding="@dimen/showgrid_padding"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="@dimen/showgrid_spacing" >
+    </GridView>
+
+</LinearLayout>
