@@ -3,6 +3,7 @@ package com.battlelancer.seriesguide.appwidget;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.enums.WidgetListType;
 import com.battlelancer.seriesguide.util.Utils;
 
 import android.appwidget.AppWidgetManager;
@@ -76,7 +77,8 @@ public class ListWidgetConfigure extends SherlockActivity {
     private void onSetupWidget() {
         // save values for this widget to be used by ListWidgetService
         SharedPreferences.Editor prefs = getSharedPreferences(PREFS_NAME, 0).edit();
-        prefs.putInt(PREF_LISTTYPE_KEY + mAppWidgetId, mRadioGroupType.getCheckedRadioButtonId());
+        prefs.putInt(PREF_LISTTYPE_KEY + mAppWidgetId,
+                WidgetListType.fromId(mRadioGroupType.getCheckedRadioButtonId()).index);
         prefs.putBoolean(PREF_WATCHEDONLY_KEY + mAppWidgetId, mCheckUnwatched.isChecked());
         prefs.commit();
 
