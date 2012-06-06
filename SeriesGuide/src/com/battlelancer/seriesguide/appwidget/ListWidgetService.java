@@ -63,11 +63,12 @@ public class ListWidgetService extends RemoteViewsService {
 
         private void queryForData() {
             switch (mType) {
-                case UPCOMING:
-                    mEpisodeCursor = DBUtils.getUpcomingEpisodes(mIsOnlyUnwatched, mContext);
-                    break;
                 case RECENT:
                     mEpisodeCursor = DBUtils.getRecentEpisodes(mIsOnlyUnwatched, mContext);
+                    break;
+                case UPCOMING:
+                default:
+                    mEpisodeCursor = DBUtils.getUpcomingEpisodes(mIsOnlyUnwatched, mContext);
                     break;
             }
         }
