@@ -102,10 +102,14 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
 
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
-        boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
 
-        MenuItem item = menu.findItem(R.id.menu_onlyfavorites);
-        item.setChecked(isOnlyFavorites);
+        // set menu items to current values
+        readBooleanPreference(prefs, menu.findItem(R.id.menu_onlyfavorites),
+                SeriesGuidePreferences.KEY_ONLYFAVORITES);
+        readBooleanPreference(prefs, menu.findItem(R.id.menu_nospecials),
+                SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES);
+        readBooleanPreference(prefs, menu.findItem(R.id.menu_nowatched),
+                SeriesGuidePreferences.KEY_NOWATCHED);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -114,17 +118,33 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_onlyfavorites: {
-                item.setChecked(!item.isChecked());
-                SharedPreferences prefs = PreferenceManager
-                        .getDefaultSharedPreferences(getApplicationContext());
-                prefs.edit().putBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, item.isChecked())
-                        .commit();
+                storeBooleanPreference(item, SeriesGuidePreferences.KEY_ONLYFAVORITES);
+                return true;
+            }
+            case R.id.menu_nospecials: {
+                storeBooleanPreference(item, SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES);
+                return true;
+            }
+            case R.id.menu_nowatched: {
+                storeBooleanPreference(item, SeriesGuidePreferences.KEY_NOWATCHED);
                 return true;
             }
             default:
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    private void storeBooleanPreference(MenuItem item, String key) {
+        item.setChecked(!item.isChecked());
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+        prefs.edit().putBoolean(key, item.isChecked()).commit();
+    }
+
+    private void readBooleanPreference(SharedPreferences prefs, MenuItem item, String key) {
+        boolean value = prefs.getBoolean(key, false);
+        item.setChecked(value);
     }
 
     /**

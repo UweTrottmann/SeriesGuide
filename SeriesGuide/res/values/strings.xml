@@ -19,6 +19,7 @@
     <string name="loading">Loading…</string>
     <string name="sending">Sending…</string>
     <string name="done">Done</string>
+    <string name="clear">Clear</string>
 
     <plurals name="votes">
         <item quantity="one">%d vote</item>
@@ -116,7 +117,7 @@
     <string name="friends_empty">No friend activity on trakt.</string>
     <string name="noupcoming">There are no upcoming episodes.</string>
     <string name="norecent">There are no recent episodes.</string>
-    <string name="only_favorites">Only favorites</string>
+    <string name="only_favorites">Only favorite shows</string>
     <string name="togglewatched">Toggle watched</string>
 
     <!-- Updating -->
@@ -177,8 +178,8 @@
     <string name="pref_showsorting">Sort shows by…</string>
     <string name="pref_onlyfuture">No aired episodes</string>
     <string name="pref_onlyfuturesummary">\"next:\" never shows already aired episodes</string>
-    <string name="pref_onlyseasoneps">No special episodes</string>
-    <string name="pref_onlyseasonepssummary">\"next:\" never shows special episodes</string>
+    <string name="pref_onlyseasoneps">Hide special episodes</string>
+    <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
     <string name="pref_content">Content</string>
     <string name="pref_seasonsorting">Sort seasons by…</string>
     <string name="pref_episodesorting">Sort episodes by…</string>
@@ -273,6 +274,8 @@
 
     <!-- Check Ins -->
     <string name="checkin">Check in</string>
+    <string name="checkin_searchhint">Type a show name</string>
+    <string name="checkin_empty">No matching shows</string>
     <string name="checkin_hint">Type a message (optional)</string>
     <string name="paste_episode">Paste episode</string>
     <string name="checkinsuccess">GetGlue Check-in successful.</string>

@@ -9,12 +9,6 @@
             android:summary="@string/pref_onlyfuturesummary"
             android:title="@string/pref_onlyfuture" />
 
-        <CheckBoxPreference
-            android:defaultValue="False"
-            android:key="onlySeasonEpisodes"
-            android:summary="@string/pref_onlyseasonepssummary"
-            android:title="@string/pref_onlyseasoneps" />
-
         <ListPreference
             android:defaultValue="1"
             android:entries="@array/upcominglimit"
@@ -25,6 +19,12 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_content" >
+
+        <CheckBoxPreference
+            android:defaultValue="False"
+            android:key="onlySeasonEpisodes"
+            android:summary="@string/pref_onlyseasonepssummary"
+            android:title="@string/pref_onlyseasoneps" />
 
         <CheckBoxPreference
             android:defaultValue="True"

@@ -15,6 +15,18 @@
         android:text="@string/paste_episode"
         android:textSize="@dimen/text_size_small" />
 
+    <TextView
+        android:id="@+id/textViewClear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/pasteEpisode"
+        android:background="?custom_list_selector"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="@dimen/default_padding"
+        android:text="@string/clear"
+        android:textSize="@dimen/text_size_small" />
+
     <EditText
         android:id="@+id/message"
         android:layout_width="match_parent"

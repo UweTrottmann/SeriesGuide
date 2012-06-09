@@ -80,12 +80,9 @@ public class UpcomingFragment extends ListFragment implements
 
         setupAdapter();
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, isOnlyFavorites);
-        getActivity().getSupportLoaderManager().initLoader(getLoaderId(), bundle, this);
+        getActivity().getSupportLoaderManager().initLoader(getLoaderId(), null, this);
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         prefs.registerOnSharedPreferenceChangeListener(mPrefListener);
     }
 
@@ -93,9 +90,10 @@ public class UpcomingFragment extends ListFragment implements
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (key.equals(SeriesGuidePreferences.KEY_ONLYFAVORITES)) {
-                boolean isOnlyFavorites = sharedPreferences.getBoolean(key, false);
-                onRequery(isOnlyFavorites);
+            if (key.equals(SeriesGuidePreferences.KEY_ONLYFAVORITES)
+                    || key.equals(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES)
+                    || key.equals(SeriesGuidePreferences.KEY_NOWATCHED)) {
+                onRequery();
             }
         }
     };
@@ -215,10 +213,8 @@ public class UpcomingFragment extends ListFragment implements
         }
     }
 
-    public void onRequery(boolean isOnlyFavorites) {
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, isOnlyFavorites);
-        getLoaderManager().restartLoader(getLoaderId(), bundle, this);
+    public void onRequery() {
+        getLoaderManager().restartLoader(getLoaderId(), null, this);
     }
 
     private int getLoaderId() {
@@ -226,6 +222,7 @@ public class UpcomingFragment extends ListFragment implements
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        // TODO look to merge this with DBUtils.buildActivityQuery
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         long fakeNow = Utils.getFakeCurrentTime(prefs);
         // go an hour back in time, so episodes move to recent one hour late
@@ -235,7 +232,7 @@ public class UpcomingFragment extends ListFragment implements
         final String sortOrder = getArguments().getString("sortorder");
         String query = getArguments().getString("query");
 
-        boolean isOnlyFavorites = args.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
+        boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
         String[] selectionArgs;
         if (isOnlyFavorites) {
             query += UpcomingQuery.SELECTION_ONLYFAVORITES;
@@ -246,6 +243,18 @@ public class UpcomingFragment extends ListFragment implements
             selectionArgs = new String[] {
                     recentThreshold, "0"
             };
+        }
+
+        // append nospecials selection if necessary
+        boolean isNoSpecials = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES,
+                false);
+        if (isNoSpecials) {
+            query += UpcomingQuery.SELECTION_NOSPECIALS;
+        }
+
+        boolean isNoWatched = prefs.getBoolean(SeriesGuidePreferences.KEY_NOWATCHED, false);
+        if (isNoWatched) {
+            query += UpcomingQuery.SELECTION_NOWATCHED;
         }
 
         return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
@@ -273,7 +282,9 @@ public class UpcomingFragment extends ListFragment implements
 
         String SELECTION_ONLYFAVORITES = " AND " + Shows.FAVORITE + "=?";
 
-        String SELECTION_ONLYUNWATCHED = " AND " + Episodes.WATCHED + "=0";
+        String SELECTION_NOWATCHED = " AND " + Episodes.WATCHED + "=0";
+
+        String SELECTION_NOSPECIALS = " AND " + Episodes.SEASON + "!=0";
 
         String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC,"
                 + Episodes.NUMBER + " ASC";
@@ -302,6 +313,7 @@ public class UpcomingFragment extends ListFragment implements
         int SHOW_POSTER = 9;
 
         int REF_SHOW_ID = 10;
+
     }
 
     private class SlowAdapter extends SimpleCursorAdapter {

@@ -218,7 +218,10 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                                 }
 
                                 // relaunch the trakt task which called us
-                                new TraktTask(context, fm, args, null).execute();
+                                Utils.executeAsyncTask(new TraktTask(context, fm, args, null),
+                                        new Void[] {
+                                            null
+                                        });
                             }
                         }
                     }

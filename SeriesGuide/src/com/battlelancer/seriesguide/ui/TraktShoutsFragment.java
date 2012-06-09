@@ -146,14 +146,19 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
 
                 if (episode == 0) {
                     // shout for a show
-                    new TraktTask(getSherlockActivity(), getFragmentManager(),
-                            TraktShoutsFragment.this).shout(tvdbid, shout, isSpoiler).execute();
+                    Utils.executeAsyncTask(new TraktTask(getSherlockActivity(),
+                            getFragmentManager(), TraktShoutsFragment.this).shout(tvdbid, shout,
+                            isSpoiler), new Void[] {
+                        null
+                    });
                 } else {
                     // shout for an episode
                     int season = args.getInt(ShareItems.SEASON);
-                    new TraktTask(getSherlockActivity(), getFragmentManager(),
-                            TraktShoutsFragment.this).shout(tvdbid, season, episode, shout,
-                            isSpoiler).execute();
+                    Utils.executeAsyncTask(new TraktTask(getSherlockActivity(),
+                            getFragmentManager(), TraktShoutsFragment.this).shout(tvdbid, season,
+                            episode, shout, isSpoiler), new Void[] {
+                        null
+                    });
                 }
             }
         });

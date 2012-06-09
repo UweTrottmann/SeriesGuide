@@ -84,6 +84,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_ONLYFAVORITES = "com.battlelancer.seriesguide.onlyfavorites";
 
+    public static final String KEY_NOWATCHED = "com.battlelancer.seriesguide.activity.nowatched";
+
     public static final String KEY_UPCOMING_LIMIT = "com.battlelancer.seriesguide.upcominglimit";
 
     public static final String KEY_NOTIFICATIONS_ENABLED = "com.battlelancer.seriesguide.notifications";
@@ -257,31 +259,26 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
         // Notifications
         Preference notificationsPref = findPreference(KEY_NOTIFICATIONS_ENABLED);
-        switch (Utils.getChannel(this)) {
-            case STABLE: {
-                notificationsPref.setEnabled(false);
-                notificationsPref.setSummary(R.string.onlyx);
-                break;
-            }
-            default: {
-                notificationsPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        if (((CheckBoxPreference) preference).isChecked()) {
-                            AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                                    "Notifications", "Enable", 0);
-                        } else {
-                            AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                                    "Notifications", "Disable", 0);
-                        }
-
-                        Utils.runNotificationService(SeriesGuidePreferences.this);
-                        return true;
+        // allow supporters to enable notfications
+        if (Utils.isSupporterChannel(this)) {
+            notificationsPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    if (((CheckBoxPreference) preference).isChecked()) {
+                        AnalyticsUtils.getInstance(activity).trackEvent("Settings",
+                                "Notifications", "Enable", 0);
+                    } else {
+                        AnalyticsUtils.getInstance(activity).trackEvent("Settings",
+                                "Notifications", "Disable", 0);
                     }
-                });
-                break;
-            }
+
+                    Utils.runNotificationService(SeriesGuidePreferences.this);
+                    return true;
+                }
+            });
+        } else {
+            notificationsPref.setEnabled(false);
+            notificationsPref.setSummary(R.string.onlyx);
         }
 
         // Theme switcher

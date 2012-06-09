@@ -153,9 +153,13 @@ public class SeriesContract {
 
     public static final String PATH_SEARCH = "search";
 
+    public static final String PATH_FILTER = "filter";
+
     public static class Shows implements ShowsColumns, BaseColumns {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SHOWS)
                 .build();
+
+        public static final Uri CONTENT_FILTER_URI = Uri.withAppendedPath(CONTENT_URI, "filter");
 
         /** Use if multiple items get returned */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.show";

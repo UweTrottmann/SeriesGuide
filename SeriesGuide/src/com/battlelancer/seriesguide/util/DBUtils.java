@@ -195,9 +195,16 @@ public class DBUtils {
             };
         }
 
+        // append nospecials selection if necessary
+        boolean isNoSpecials = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES,
+                false);
+        if (isNoSpecials) {
+            query += UpcomingQuery.SELECTION_NOSPECIALS;
+        }
+
         // append unwatched selection if necessary
         if (isOnlyUnwatched) {
-            query += UpcomingQuery.SELECTION_ONLYUNWATCHED;
+            query += UpcomingQuery.SELECTION_NOWATCHED;
         }
 
         // build result array

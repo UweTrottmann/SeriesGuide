@@ -1,13 +1,14 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
-import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.enums.WidgetListType;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
+import android.R;
 import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -35,7 +36,7 @@ public class ListWidgetService extends RemoteViewsService {
 
         private Cursor mEpisodeCursor;
 
-        private int mTypeId;
+        private WidgetListType mType;
 
         private boolean mIsOnlyUnwatched;
 
@@ -52,8 +53,8 @@ public class ListWidgetService extends RemoteViewsService {
             // getViewAt(). Taking more than 20 seconds in this call will result
             // in an ANR.
             SharedPreferences prefs = getSharedPreferences(ListWidgetConfigure.PREFS_NAME, 0);
-            mTypeId = prefs.getInt(ListWidgetConfigure.PREF_LISTTYPE_KEY + mAppWidgetId,
-                    R.id.radioUpcoming);
+            mType = WidgetListType.values()[prefs.getInt(ListWidgetConfigure.PREF_LISTTYPE_KEY
+                    + mAppWidgetId, WidgetListType.UPCOMING.index)];
             mIsOnlyUnwatched = prefs.getBoolean(ListWidgetConfigure.PREF_WATCHEDONLY_KEY
                     + mAppWidgetId, false);
 
@@ -61,12 +62,13 @@ public class ListWidgetService extends RemoteViewsService {
         }
 
         private void queryForData() {
-            switch (mTypeId) {
-                case R.id.radioUpcoming:
-                    mEpisodeCursor = DBUtils.getUpcomingEpisodes(mIsOnlyUnwatched, mContext);
-                    break;
-                case R.id.radioRecent:
+            switch (mType) {
+                case RECENT:
                     mEpisodeCursor = DBUtils.getRecentEpisodes(mIsOnlyUnwatched, mContext);
+                    break;
+                case UPCOMING:
+                default:
+                    mEpisodeCursor = DBUtils.getUpcomingEpisodes(mIsOnlyUnwatched, mContext);
                     break;
             }
         }

@@ -160,6 +160,11 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.CheckinActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
 
         <!-- Content provider -->
         <provider

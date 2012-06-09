@@ -426,6 +426,10 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.menu_quickcheckin: {
+                startActivity(new Intent(this, CheckinActivity.class));
+                return true;
+            }
             case R.id.menu_search:
                 fireTrackerEvent("Search");
 
@@ -966,7 +970,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
             // airday
             String[] values = Utils.parseMillisecondsToTime(mCursor.getLong(ShowsQuery.AIRSTIME),
-                    mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), ShowsActivity.this);
+                    mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), mContext);
             viewHolder.airsTime.setText(values[1] + " " + values[0]);
 
             // set poster only when not busy scrolling

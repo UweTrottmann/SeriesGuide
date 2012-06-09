@@ -6,5 +6,15 @@
         android:checkable="true"
         android:title="@string/only_favorites">
     </item>
+    <item
+        android:id="@+id/menu_nowatched"
+        android:checkable="true"
+        android:title="@string/hide_watched">
+    </item>
+    <item
+        android:id="@+id/menu_nospecials"
+        android:checkable="true"
+        android:title="@string/pref_onlyseasoneps">
+    </item>
 
 </menu>

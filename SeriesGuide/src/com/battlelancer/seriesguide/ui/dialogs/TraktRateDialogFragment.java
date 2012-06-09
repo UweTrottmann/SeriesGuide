@@ -5,6 +5,7 @@ import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.enumerations.Rating;
 
 import android.app.AlertDialog;
@@ -123,7 +124,10 @@ public class TraktRateDialogFragment extends DialogFragment {
 
     private void onRate(Rating rating, Context context) {
         getArguments().putString(ShareItems.RATING, rating.toString());
-        new TraktTask(context, getFragmentManager(), getArguments(), null).execute();
+        Utils.executeAsyncTask(new TraktTask(context, getFragmentManager(), getArguments(), null),
+                new Void[] {
+                    null
+                });
         dismiss();
     }
 }

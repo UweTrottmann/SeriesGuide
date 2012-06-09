@@ -94,6 +94,14 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
             }
         });
 
+        // Clear button
+        layout.findViewById(R.id.textViewClear).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMessageBox.setText(null);
+            }
+        });
+
         // GetGlue toggle
         mToggleGetGlueButton = (CompoundButton) layout.findViewById(R.id.toggleGetGlue);
         mToggleGetGlueButton.setChecked(mGetGlueChecked);
@@ -193,8 +201,10 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                         newFragment.show(ft, "progress-dialog");
 
                         // start the trakt check in task
-                        new TraktTask(getActivity(), getFragmentManager(), null).checkin(tvdbid,
-                                season, episode, message).execute();
+                        Utils.executeAsyncTask(new TraktTask(getActivity(), getFragmentManager(),
+                                null).checkin(tvdbid, season, episode, message), new Void[] {
+                            null
+                        });
                     }
                 }
 
