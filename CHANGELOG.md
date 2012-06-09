@@ -13,10 +13,11 @@ Version 2.7 *(in development)*
 
 ### Detailed changes:
 
-#### 2.6.13beta
+#### 2.6.13beta (2012-06-09)
 
 * NOTICE Please re-add your list widgets!
 * FEATURE Quickly check into shows from the main screen.
+* FEATURE More filter options for activity screen (hide watched, special episodes)
 * FIX List widget configuration used layout ids which resulted in crashes on new releases.
 * FIX List widgets do not crash the app on an invalid configuration anymore.
 
