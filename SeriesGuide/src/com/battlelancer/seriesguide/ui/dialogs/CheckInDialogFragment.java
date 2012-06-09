@@ -94,6 +94,14 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
             }
         });
 
+        // Clear button
+        layout.findViewById(R.id.textViewClear).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMessageBox.setText(null);
+            }
+        });
+
         // GetGlue toggle
         mToggleGetGlueButton = (CompoundButton) layout.findViewById(R.id.toggleGetGlue);
         mToggleGetGlueButton.setChecked(mGetGlueChecked);
