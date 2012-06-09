@@ -2,10 +2,10 @@
 package com.battlelancer.seriesguide.appwidget;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.enums.WidgetListType;
 import com.battlelancer.seriesguide.util.Utils;
 
-import android.R;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
