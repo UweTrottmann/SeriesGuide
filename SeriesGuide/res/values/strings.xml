@@ -365,7 +365,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage"><b>Configure this!</b>\n- Widgets are now configurable: choose between recent or upcoming episodes and whether to hide already watched.\n\n- Various other small things.\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>
+    <string name="betamessage"><b>Ooops</b>\n- You have to re-add your list widgets as I screwed up the config files.\n\n- Experimenting with quick checkin screen, like it?.\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
