@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -70,6 +71,14 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
 
             @Override
             public void afterTextChanged(Editable s) {
+            }
+        });
+
+        // setup clear button
+        findViewById(R.id.imageButtonClearSearch).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSearchBox.setText(null);
             }
         });
 
@@ -135,9 +144,8 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
             baseUri = Shows.CONTENT_URI;
         }
 
-        // TODO: only display shows with upcoming episodes
-        return new CursorLoader(this, baseUri, CheckinQuery.PROJECTION, null, null,
-                ShowSorting.UPCOMING.query());
+        return new CursorLoader(this, baseUri, CheckinQuery.PROJECTION, CheckinQuery.SELECTION,
+                null, ShowSorting.UPCOMING.query());
     }
 
     @Override
@@ -278,6 +286,8 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
                 Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
                 Shows.FAVORITE, Shows.IMDBID, Shows.NEXTEPISODE
         };
+
+        String SELECTION = Shows.NEXTEPISODE + "!=''";
 
         int _ID = 0;
 

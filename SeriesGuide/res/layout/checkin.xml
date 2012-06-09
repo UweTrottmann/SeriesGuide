@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
     style="@style/ScrollingLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,6 +10,9 @@
         android:id="@+id/editTextCheckinSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/imageButtonClearSearch"
         android:ems="10"
         android:hint="@string/checkin_searchhint"
         android:inputType="text"
@@ -16,10 +20,13 @@
 
         <requestFocus />
     </EditText>
+
     <TextView
         android:id="@+id/empty"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextCheckinSearch"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:padding="10dp"
         android:text="@string/checkin_empty"
@@ -29,6 +36,8 @@
         android:id="@+id/gridViewCheckinShows"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/empty"
         android:clipToPadding="@bool/gridClipToPadding"
         android:columnWidth="@dimen/showgrid_columnWidth"
         android:gravity="center"
@@ -40,4 +49,18 @@
         android:verticalSpacing="@dimen/showgrid_spacing" >
     </GridView>
 
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/imageButtonClearSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/editTextCheckinSearch"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignTop="@+id/editTextCheckinSearch"
+        android:background="?custom_list_selector"
+        android:contentDescription="@string/clear"
+        android:paddingLeft="@dimen/inline_padding"
+        android:paddingRight="@dimen/inline_padding"
+        android:src="@android:drawable/ic_menu_close_clear_cancel" />
+
+</RelativeLayout>
