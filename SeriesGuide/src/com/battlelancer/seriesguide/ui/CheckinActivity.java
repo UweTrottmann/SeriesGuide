@@ -1,11 +1,15 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.Utils;
 
 import android.content.Context;
@@ -45,6 +49,12 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
 
         setContentView(R.layout.checkin);
 
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(getString(R.string.checkin));
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        // setup search box
         mSearchBox = (EditText) findViewById(R.id.editTextCheckinSearch);
         mSearchBox.addTextChangedListener(new TextWatcher() {
 
@@ -63,7 +73,7 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
             }
         });
 
-        // setup show adapter
+        // setup adapter
         String[] from = new String[] {
                 SeriesContract.Shows.TITLE, SeriesContract.Shows.NEXTTEXT,
                 SeriesContract.Shows.AIRSTIME, SeriesContract.Shows.NETWORK,
@@ -74,14 +84,36 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
                 R.id.TextViewShowListNetwork, R.id.showposter
         };
         int layout = R.layout.show_rowairtime;
-
         mAdapter = new SlowAdapter(this, layout, null, from, to, 0);
 
+        // setup grid view
         GridView list = (GridView) findViewById(R.id.gridViewCheckinShows);
         list.setAdapter(mAdapter);
         list.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                // TODO check in
+                Cursor show = (Cursor) mAdapter.getItem(position);
+                final String episodeId = show.getString(CheckinQuery.NEXTEPISODE);
+                if (TextUtils.isEmpty(episodeId)) {
+                    return;
+                }
+
+                // look up episode
+                final Cursor episode = getContentResolver().query(
+                        Episodes.buildEpisodeUri(episodeId), new String[] {
+                                Episodes.SEASON, Episodes.NUMBER, Episodes.TITLE
+                        }, null, null, null);
+                if (episode != null && episode.moveToFirst()) {
+                    final String episodeString = ShareUtils.onCreateShareString(
+                            CheckinActivity.this, episode);
+
+                    // display a check-in dialog
+                    CheckInDialogFragment f = CheckInDialogFragment.newInstance(
+                            show.getString(CheckinQuery.IMDBID), (int) id, episode.getInt(0),
+                            episode.getInt(1), episodeString);
+                    f.show(getSupportFragmentManager(), "checkin-dialog");
+
+                    episode.close();
+                }
             }
         });
 
@@ -244,7 +276,7 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
         String[] PROJECTION = {
                 Shows._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
                 Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE
+                Shows.FAVORITE, Shows.IMDBID, Shows.NEXTEPISODE
         };
 
         int _ID = 0;
@@ -266,5 +298,9 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
         int NEXTAIRDATETEXT = 8;
 
         int FAVORITE = 9;
+
+        int IMDBID = 10;
+
+        int NEXTEPISODE = 11;
     }
 }
