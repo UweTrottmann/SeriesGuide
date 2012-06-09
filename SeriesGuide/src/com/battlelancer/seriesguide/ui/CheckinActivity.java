@@ -241,19 +241,12 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
                     mCursor.getString(CheckinQuery.AIRSDAYOFWEEK), mContext);
             viewHolder.airsTime.setText(values[1] + " " + values[0]);
 
-            // TODO
-            // set poster only when not busy scrolling
+            // set poster immediately, we don't care for efficient scrolling
+            // here
             final String path = mCursor.getString(CheckinQuery.POSTER);
-            // if (!mBusy) {
-            // load poster
             Utils.setPosterBitmap(viewHolder.poster, path, false, null);
-
             // Null tag means the view has the correct data
             viewHolder.poster.setTag(null);
-            // } else {
-            // only load in-memory poster
-            // Utils.setPosterBitmap(viewHolder.poster, path, true, null);
-            // }
 
             return convertView;
         }
