@@ -13,6 +13,13 @@ Version 2.7 *(in development)*
 
 ### Detailed changes:
 
+#### 2.6.13beta
+
+* NOTICE Please re-add your list widgets!
+* FEATURE Quickly check into shows from the main screen.
+* FIX List widget configuration used layout ids which resulted in crashes on new releases.
+* FIX List widgets do not crash the app on an invalid configuration anymore.
+
 #### 2.6.12beta (2012-06-02)
 
 * FEATURE Configuration for widgets: choose between upcoming or recent episodes (only SeriesGuide X), hide watched episodes.
