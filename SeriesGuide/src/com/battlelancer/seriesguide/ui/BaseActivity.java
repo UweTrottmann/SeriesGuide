@@ -21,11 +21,17 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.UpdateTask;
+import com.battlelancer.seriesguide.util.Utils;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
+import android.text.format.DateUtils;
 import android.view.KeyEvent;
 
 /**
@@ -38,6 +44,12 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
         // set a theme based on user preference
         setTheme(SeriesGuidePreferences.THEME);
         super.onCreate(arg0);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        onAutoUpdate();
     }
 
     @Override
@@ -63,6 +75,40 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Try to launch a delta-update task if certain conditions are met.
+     */
+    private void onAutoUpdate() {
+        // try to run auto-update
+        if (Utils.isNetworkConnected(this)) {
+            final SharedPreferences prefs = PreferenceManager
+                    .getDefaultSharedPreferences(getApplicationContext());
+
+            // check if auto-update is actually enabled
+            final boolean isAutoUpdateEnabled = prefs.getBoolean(
+                    SeriesGuidePreferences.KEY_AUTOUPDATE, true);
+            if (isAutoUpdateEnabled) {
+
+                // check if wifi is required, abort if necessary
+                final boolean isWifiOnly = prefs.getBoolean(
+                        SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
+                if (!isWifiOnly || Utils.isWifiConnected(this)) {
+
+                    // only update if at least 15mins have passed since last one
+                    long now = System.currentTimeMillis();
+                    final long previousUpdateTime = prefs.getLong(
+                            SeriesGuidePreferences.KEY_LASTUPDATE, 0);
+                    final boolean isTime = (now - previousUpdateTime) > 15 * DateUtils.MINUTE_IN_MILLIS;
+
+                    if (isTime && !TaskManager.getInstance(this).isUpdateTaskRunning(false)) {
+                        TaskManager.getInstance(this)
+                                .tryUpdateTask(new UpdateTask(false, this), -1);
+                    }
+                }
+            }
+        }
     }
 
     /**
