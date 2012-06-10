@@ -10,6 +10,7 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.jakewharton.trakt.ServiceManager;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -869,6 +870,7 @@ public class Utils {
      *            {@link AsyncTask#execute(Object[])}.
      * @param <T> Task argument type.
      */
+    @TargetApi(11)
     public static <T> void executeAsyncTask(AsyncTask<T, ?, ?> task, T... args) {
         // TODO figure out how to subclass abstract and generalized AsyncTask,
         // then put this there
