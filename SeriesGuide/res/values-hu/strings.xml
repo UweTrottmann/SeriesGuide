@@ -18,6 +18,7 @@
   <string name="loading">Betöltés…</string>
   <string name="sending">Küldés…</string>
   <string name="done">Kész</string>
+  <string name="clear">Clear</string>
   <string name="offline">Nincs hálózati kapcsolat. Próbálja meg később.</string>
   <string name="onlyx">Csak a SeriesGuide X-ben elérhető</string>
   <string name="shouts">Shouts</string>
@@ -93,7 +94,7 @@
   <string name="friends_empty">Jelenleg nem aktív egyik barátod sem a trakton.</string>
   <string name="noupcoming">Nincsenek következő epizódok.</string>
   <string name="norecent">Nincsenek mostanában vetített epizódok.</string>
-  <string name="only_favorites">Csak Kedvencek</string>
+  <string name="only_favorites">Only favorite shows</string>
   <string name="togglewatched">Láttam igen/nem</string>
   <string name="update_notification">Sorozatok frissítése…</string>
   <string name="update_single">Sorozat frissítése…</string>
@@ -119,6 +120,7 @@
   <string name="season_unaired">nem vetített</string>
   <string name="oneotherepisode">egyéb epizód</string>
   <string name="otherepisodes">egyéb epizódok</string>
+  <string name="remaining">%s remaining</string>
   <string name="search_button">Keresés</string>
   <string name="search_hint_add">Sorozatcím</string>
   <string name="no_results">Nincs találat, próbálj teljes szavakat!</string>
@@ -142,8 +144,8 @@
   <string name="pref_showsorting">Sorozatok rendezése</string>
   <string name="pref_onlyfuture">Leadott epizódok nélkül</string>
   <string name="pref_onlyfuturesummary">A \"következő:\" nem mutatja a már sugárzott epizódokat</string>
-  <string name="pref_onlyseasoneps">Extra epizódok elrejtése</string>
-  <string name="pref_onlyseasonepssummary">A \"következő:\" soha ne mutassa az extra epizódokat</string>
+  <string name="pref_onlyseasoneps">Hide special episodes</string>
+  <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
   <string name="pref_content">Tartalom</string>
   <string name="pref_seasonsorting">Évadok rendezése</string>
   <string name="pref_episodesorting">Epizódok rendezése</string>
@@ -203,6 +205,8 @@
   <string name="cancel">Mégse</string>
   <string name="share">Megosztás</string>
   <string name="checkin">Check in</string>
+  <string name="checkin_searchhint">Type a show name</string>
+  <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Írjon üzenetet(nem kötelező)</string>
   <string name="paste_episode">Epizód beillesztése</string>
   <string name="checkinsuccess">GetGlue Check-in successful.</string>

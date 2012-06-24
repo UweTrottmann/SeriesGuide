@@ -18,6 +18,7 @@
   <string name="loading">Nahrávám…</string>
   <string name="sending">Posílám…</string>
   <string name="done">Hotovo</string>
+  <string name="clear">Clear</string>
   <string name="offline">Bez připojení k síti. Zkuste to později.</string>
   <string name="onlyx">Dostupné pouze ve verzi X</string>
   <string name="shouts">Výkřiky</string>
@@ -93,7 +94,7 @@
   <string name="friends_empty">Žádná aktivita přátel na traktu.</string>
   <string name="noupcoming">Žádné nadcházející díly.</string>
   <string name="norecent">Žádné nedávné díly.</string>
-  <string name="only_favorites">Pouze oblíbené</string>
+  <string name="only_favorites">Only favorite shows</string>
   <string name="togglewatched">Přepnout zhlédnutí</string>
   <string name="update_notification">Aktualizuji Vaše pořady…</string>
   <string name="update_single">Aktualizuji pořad…</string>
@@ -119,6 +120,7 @@
   <string name="season_unaired">Neodvysílána</string>
   <string name="oneotherepisode">jiný díl</string>
   <string name="otherepisodes">jiné díly</string>
+  <string name="remaining">%s remaining</string>
   <string name="search_button">Hledat</string>
   <string name="search_hint_add">Název pořadu</string>
   <string name="no_results">Bez výsledku, zkuste celá slova.</string>
@@ -142,8 +144,8 @@
   <string name="pref_showsorting">Řadit pořady dle…</string>
   <string name="pref_onlyfuture">Žádné odvysílané díly</string>
   <string name="pref_onlyfuturesummary">\"další:\" nezobrazovat již odvysílané díly</string>
-  <string name="pref_onlyseasoneps">Žádné bonusové díly</string>
-  <string name="pref_onlyseasonepssummary">\"další:\" nezobrazovat bonusové díly</string>
+  <string name="pref_onlyseasoneps">Hide special episodes</string>
+  <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
   <string name="pref_content">Obsah</string>
   <string name="pref_seasonsorting">Řadit série dle…</string>
   <string name="pref_episodesorting">Řadit díly dle…</string>
@@ -203,6 +205,8 @@
   <string name="cancel">Zrušit</string>
   <string name="share">Sdílet</string>
   <string name="checkin">Ohlásit se</string>
+  <string name="checkin_searchhint">Type a show name</string>
+  <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Napište postřeh (nepovinné)</string>
   <string name="paste_episode">Vložte díl</string>
   <string name="checkinsuccess">Ohlášení v GetGlue úspěšné.</string>

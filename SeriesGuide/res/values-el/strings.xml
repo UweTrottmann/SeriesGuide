@@ -18,6 +18,7 @@
   <string name="loading">Φόρτωση…</string>
   <string name="sending">Αποστολή…</string>
   <string name="done">Ολοκληρώθηκε</string>
+  <string name="clear">Clear</string>
   <string name="offline">Χωρίς σύνδεση δικτύου. Δοκιμάστε αργότερα.</string>
   <string name="onlyx">Διαθέσιμο μόνο στο SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -93,7 +94,7 @@
   <string name="friends_empty">Καμία δραστηριότητα φίλων στο trakt.</string>
   <string name="noupcoming">Δεν υπάρχουν επερχόμενα επεισόδια.</string>
   <string name="norecent">Δεν υπάρχουν πρόσφατα επεισόδια.</string>
-  <string name="only_favorites">Μόνο "Αγαπημένα"</string>
+  <string name="only_favorites">Only favorite shows</string>
   <string name="togglewatched">Εναλλαγή παρακολουθημένων</string>
   <string name="update_notification">Ενημέρωση των σειρών σας…</string>
   <string name="update_single">Ενημέρωση σειράς…</string>
@@ -119,6 +120,7 @@
   <string name="season_unaired">Δεν έχει προβληθεί</string>
   <string name="oneotherepisode">άλλο επεισόδιο</string>
   <string name="otherepisodes">άλλα επεισόδια</string>
+  <string name="remaining">%s remaining</string>
   <string name="search_button">Αναζήτηση</string>
   <string name="search_hint_add">Όνομα σειράς</string>
   <string name="no_results">Κανένα αποτέλεσμα, δοκιμάστε ολόκληρες λέξεις.</string>
@@ -142,8 +144,8 @@
   <string name="pref_showsorting">Ταξινόμηση σειρών κατα…</string>
   <string name="pref_onlyfuture">Επεισόδια που δεν έχουν προβληθεί</string>
   <string name="pref_onlyfuturesummary">\"Επόμενο:\" να μην εμφανίζονται επεισόδια που έχουν προβληθεί</string>
-  <string name="pref_onlyseasoneps">Χωρίς ειδικά επεισόδια</string>
-  <string name="pref_onlyseasonepssummary">\"Επόμενο:\" να μην εμφανίζονται τα ειδικά επεισόδια</string>
+  <string name="pref_onlyseasoneps">Hide special episodes</string>
+  <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
   <string name="pref_content">Περιεχόμενο</string>
   <string name="pref_seasonsorting">Ταξινόμηση σεζόν κατά…</string>
   <string name="pref_episodesorting">Ταξινόμηση επεισοδίων κατά…</string>
@@ -159,7 +161,7 @@
   <string name="pref_autoupdatesummary">Περιοδική ενημέρωση των σειρών σας κατά την έναρξη του SeriesGuide</string>
   <string name="pref_updatewifionly">Ενημέρωση μέσω Wi-Fi μόνο</string>
   <string name="about">Σχετικά με το SeriesGuide</string>
-  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="about_message">http://seriesgui.de - αναπτύχθηκε από τον Uwe Trottmann.\n\nΠαρακαλώ δείτε τον παρακάτω σύνδεσμο για όλους τους ανθρώπους και τους πόρους που βοηθούν στην εξέλιξη αυτού του project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">Κοινή χρήση</string>
   <string name="clearGetGlueCredentials">Αποσύνδεση GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Καθαρισμός της σύνδεσής σας στο GetGlue</string>
@@ -203,6 +205,8 @@
   <string name="cancel">Άκυρο</string>
   <string name="share">Κοινή χρήση</string>
   <string name="checkin">Check in</string>
+  <string name="checkin_searchhint">Type a show name</string>
+  <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Πληκτρολογήστε ένα μήνυμα (προαιρετικό)</string>
   <string name="paste_episode">Επικόλληση επεισοδίου</string>
   <string name="checkinsuccess">Επιτυχές Check-in στο GetGlue.</string>
@@ -249,13 +253,13 @@
   <string name="pref_vibratesummary">Δόνηση και κατά την εμφάνιση ειδοποίησης</string>
   <string name="pref_theme">Θέμα εφαρμογής</string>
   <string name="pref_themesummary">Επιλέξτε τον χρωματισμό του SeriesGuide</string>
-  <string name="choose_list">Choose activity list</string>
-  <string name="hide_watched">Hide watched episodes</string>
-  <string name="add_widget">Add widget</string>
+  <string name="choose_list">Επιλέξτε λίστα δραστηριότητας</string>
+  <string name="hide_watched">Απόκρυψη παρακολουθημένων επεισοδίων</string>
+  <string name="add_widget">Προσθήκη widget</string>
   <string name="widget_label">SeriesGuide</string>
-  <string name="smallwidget">SeriesGuide (small)</string>
-  <string name="bigwidget">SeriesGuide (middle)</string>
-  <string name="largewidget">SeriesGuide (large)</string>
+  <string name="smallwidget">SeriesGuide (μικρό)</string>
+  <string name="bigwidget">SeriesGuide (μεσαίο)</string>
+  <string name="largewidget">SeriesGuide (μεγάλο)</string>
   <string name="download_stable">Λήψη SeriesGuide</string>
   <string name="betawarning"><b>Ειδοποίηση!</b> Αυτή η έκδοση είναι μόνο για τους beta testers! Εάν έχετε αμφιβολίες, κατεβάστε την παρακάτω σταθερή έκδοση.</string>
   <string-array name="shsorting">

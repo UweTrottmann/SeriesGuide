@@ -18,6 +18,7 @@
   <string name="loading">Laden…</string>
   <string name="sending">Verzenden…</string>
   <string name="done">Gereed</string>
+  <string name="clear">Clear</string>
   <string name="offline">Geen netwerk verbinding. Probeer het later opnieuw.</string>
   <string name="onlyx">Alleen beschikbaar in Series Guide X</string>
   <string name="shouts">Shouts</string>
@@ -93,7 +94,7 @@
   <string name="friends_empty">Geen activiteit van vrienden op trakt.</string>
   <string name="noupcoming">Er zijn geen toekomstige afleveringen.</string>
   <string name="norecent">Er zijn geen recente afleveringen.</string>
-  <string name="only_favorites">Uitsluitend favorieten</string>
+  <string name="only_favorites">Only favorite shows</string>
   <string name="togglewatched">Bekeken/niet bekeken wijzigen</string>
   <string name="update_notification">Series bijwerken…</string>
   <string name="update_single">Serie bijwerken…</string>
@@ -119,6 +120,7 @@
   <string name="season_unaired">Niet uitgezonden</string>
   <string name="oneotherepisode">andere aflevering</string>
   <string name="otherepisodes">andere afleveringen</string>
+  <string name="remaining">%s remaining</string>
   <string name="search_button">Zoeken</string>
   <string name="search_hint_add">Naam weergeven</string>
   <string name="no_results">Geen resultaten, probeer complete woorden.</string>
@@ -142,8 +144,8 @@
   <string name="pref_showsorting">Series sorteren op…</string>
   <string name="pref_onlyfuture">Geen uitgezonden afleveringen</string>
   <string name="pref_onlyfuturesummary">\"volgende:\" geeft nooit reeds uitgezonden afleveringen weer</string>
-  <string name="pref_onlyseasoneps">Geen speciale afleveringen</string>
-  <string name="pref_onlyseasonepssummary">\"volgende:\" geeft nooit speciale afleveringen weer</string>
+  <string name="pref_onlyseasoneps">Hide special episodes</string>
+  <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
   <string name="pref_content">Inhoud</string>
   <string name="pref_seasonsorting">Seizoenen sorteren op…</string>
   <string name="pref_episodesorting">Afleveringen sorteren op…</string>
@@ -203,6 +205,8 @@
   <string name="cancel">Annuleren</string>
   <string name="share">Delen</string>
   <string name="checkin">Aanmelden</string>
+  <string name="checkin_searchhint">Type a show name</string>
+  <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Voer een bericht in (optioneel)</string>
   <string name="paste_episode">Aflevering plakken</string>
   <string name="checkinsuccess">GetGlue aanmelding succesvol.</string>

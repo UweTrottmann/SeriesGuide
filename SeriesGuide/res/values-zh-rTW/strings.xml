@@ -18,6 +18,7 @@
   <string name="loading">Loading…</string>
   <string name="sending">Sending…</string>
   <string name="done">完成</string>
+  <string name="clear">Clear</string>
   <string name="offline">No network connectivity. Try again later.</string>
   <string name="onlyx">Only available in SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -93,7 +94,7 @@
   <string name="friends_empty">trakt中無朋友活動。</string>
   <string name="noupcoming">沒有即將播出的集數。</string>
   <string name="norecent">沒有最近的影集。</string>
-  <string name="only_favorites">僅我的最愛</string>
+  <string name="only_favorites">Only favorite shows</string>
   <string name="togglewatched">切換已觀看</string>
   <string name="update_notification">Updating your shows…</string>
   <string name="update_single">Updating show…</string>
@@ -119,6 +120,7 @@
   <string name="season_unaired">尚未播出</string>
   <string name="oneotherepisode">其餘集數</string>
   <string name="otherepisodes">其餘集數</string>
+  <string name="remaining">%s remaining</string>
   <string name="search_button">搜尋</string>
   <string name="search_hint_add">顯示名稱</string>
   <string name="no_results">查無結果，請嘗試完整單字。</string>
@@ -142,8 +144,8 @@
   <string name="pref_showsorting">Sort shows by…</string>
   <string name="pref_onlyfuture">無已播出集數</string>
   <string name="pref_onlyfuturesummary">\"下集:\"永遠不顯示已播出集數</string>
-  <string name="pref_onlyseasoneps">無特集</string>
-  <string name="pref_onlyseasonepssummary">\"下集:\"永遠不顯示特集</string>
+  <string name="pref_onlyseasoneps">Hide special episodes</string>
+  <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
   <string name="pref_content">內容</string>
   <string name="pref_seasonsorting">Sort seasons by…</string>
   <string name="pref_episodesorting">Sort episodes by…</string>
@@ -203,6 +205,8 @@
   <string name="cancel">取消</string>
   <string name="share">分享</string>
   <string name="checkin">Check in</string>
+  <string name="checkin_searchhint">Type a show name</string>
+  <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Type a message (optional)</string>
   <string name="paste_episode">Paste episode</string>
   <string name="checkinsuccess">GetGlue Check-in successful.</string>

@@ -3,7 +3,7 @@
 <resources>
   <string name="episode">Episódio</string>
   <string name="season">Temporada</string>
-  <string name="unknown">unknown</string>
+  <string name="unknown">desconhecido</string>
   <string name="episode_iswatched">Já assisti</string>
   <string name="episode_notwatched">Não assistido</string>
   <string name="specialseason">Episódios Especiais</string>
@@ -18,6 +18,7 @@
   <string name="loading">Carregando…</string>
   <string name="sending">Enviando…</string>
   <string name="done">Concluído</string>
+  <string name="clear">Apagar</string>
   <string name="offline">Sem ligação à internet. Tente novamente mais tarde.</string>
   <string name="onlyx">Apenas disponível em SeriesGuide X</string>
   <string name="shouts">Comentários</string>
@@ -73,7 +74,7 @@
   <string name="trakt_collected">%s recolhido.</string>
   <string name="trakt_notcollected">%s não recolhidos.</string>
   <string name="shows_empty">Sem séries adicionadas</string>
-  <string name="confirm_delete">Do you really want to remove %s?</string>
+  <string name="confirm_delete">Deseja realmente remover %s?</string>
   <string name="delete_show">Remover</string>
   <string name="dontdelete_show">Não remover</string>
   <string name="no_nextepisode">Nenhum próximo episódio encontrado</string>
@@ -93,7 +94,7 @@
   <string name="friends_empty">Nenhuma atividade de amigos em trakt.</string>
   <string name="noupcoming">Não há próximos episódios</string>
   <string name="norecent">Não há episódios recentes.</string>
-  <string name="only_favorites">Apenas favoritos</string>
+  <string name="only_favorites">Apenas séries favoritas</string>
   <string name="togglewatched">Marcar como visto</string>
   <string name="update_notification">Atualizando suas séries…</string>
   <string name="update_single">Atualizando série…</string>
@@ -119,6 +120,7 @@
   <string name="season_unaired">não foi exibido</string>
   <string name="oneotherepisode">outro episódio</string>
   <string name="otherepisodes">outros episódios</string>
+  <string name="remaining">%s remaining</string>
   <string name="search_button">Procurar</string>
   <string name="search_hint_add">Nome da Série</string>
   <string name="no_results">Nenhum resultado, tente palavras completas.</string>
@@ -142,8 +144,8 @@
   <string name="pref_showsorting">Ordenar séries por…</string>
   <string name="pref_onlyfuture">Sem episódio em exibição</string>
   <string name="pref_onlyfuturesummary">\"next:\" nunca mostrar episódios já exibidos</string>
-  <string name="pref_onlyseasoneps">Sem episódios especiais</string>
-  <string name="pref_onlyseasonepssummary">\"next:\" nunca mostrar episódios especiais</string>
+  <string name="pref_onlyseasoneps">Ocultar episódios especiais</string>
+  <string name="pref_onlyseasonepssummary">Episódios especiais apenas na lista de temporadas</string>
   <string name="pref_content">Conteúdo</string>
   <string name="pref_seasonsorting">Ordenar temporadas por…</string>
   <string name="pref_episodesorting">Ordenar episódios por…</string>
@@ -159,7 +161,7 @@
   <string name="pref_autoupdatesummary">Atualizar periodicamente as séries ao iniciar o SeriesGuide</string>
   <string name="pref_updatewifionly">Atualizar somente através de Wi-Fi</string>
   <string name="about">Sobre SeriesGuide</string>
-  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="about_message">http://seriesgui.de - desenvolvido por Uwe Trottmann.\n\nPor favor siga o seguinte link para descobrir todas as pessoas e recursos que ajudaram a desenvolver este projeto.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">Partilhar</string>
   <string name="clearGetGlueCredentials">Desligar GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Apagar sua conexão com o GetGlue</string>
@@ -203,6 +205,8 @@
   <string name="cancel">Cancelar</string>
   <string name="share">Partilhar</string>
   <string name="checkin">Check-in</string>
+  <string name="checkin_searchhint">Introduza o nome de uma série</string>
+  <string name="checkin_empty">Nenhuma série encontrada</string>
   <string name="checkin_hint">Digite uma mensagem (opcional)</string>
   <string name="paste_episode">Colar episódio</string>
   <string name="checkinsuccess">Autenticação GetGlue bem sucedida</string>
@@ -244,18 +248,18 @@
   <string name="upcoming_display">Selecione para exibir as próximos séries</string>
   <string name="pref_notifications">Notificações</string>
   <string name="pref_notificationssummary">Notifique sobre as próximas exibições das séries favoritas</string>
-  <string name="pref_ringtone">Ringtone</string>
-  <string name="pref_vibrate">Vibrate</string>
-  <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
+  <string name="pref_ringtone">Toque</string>
+  <string name="pref_vibrate">Vibrar</string>
+  <string name="pref_vibratesummary">Também vibrar quando é mostrada uma notificação</string>
   <string name="pref_theme">Tema da aplicação</string>
   <string name="pref_themesummary">Escolha a coloração do SeriesGuide</string>
-  <string name="choose_list">Choose activity list</string>
-  <string name="hide_watched">Hide watched episodes</string>
-  <string name="add_widget">Add widget</string>
+  <string name="choose_list">Escolher lista de atividades</string>
+  <string name="hide_watched">Ocultar episódios já visualizados</string>
+  <string name="add_widget">Adicionar widget</string>
   <string name="widget_label">SeriesGuide</string>
-  <string name="smallwidget">SeriesGuide (small)</string>
-  <string name="bigwidget">SeriesGuide (middle)</string>
-  <string name="largewidget">SeriesGuide (large)</string>
+  <string name="smallwidget">SeriesGuide (pequeno)</string>
+  <string name="bigwidget">SeriesGuide (médio)</string>
+  <string name="largewidget">SeriesGuide (grande)</string>
   <string name="download_stable">Download SeriesGuide</string>
   <string name="betawarning"><b>Atenção!</b> Esta versão destina-se apenas aos "beta testers"! Se tiver dúvidas faça o download da versão estável.</string>
   <string-array name="shsorting">

@@ -18,6 +18,7 @@
   <string name="loading">Yükleniyor ...</string>
   <string name="sending">Gönderiliyor ...</string>
   <string name="done">Tamamlandı</string>
+  <string name="clear">Clear</string>
   <string name="offline">Ağ bağlantısı yok. Daha sonra yeniden deneyin.</string>
   <string name="onlyx">Yalnızca SeriesGuide X için mevcut</string>
   <string name="shouts">Notlar</string>
@@ -93,7 +94,7 @@
   <string name="friends_empty">Trakt içinde hiçbir arkadaş etkinliği yok.</string>
   <string name="noupcoming">There are no upcoming episodes.</string>
   <string name="norecent">There are no recent episodes.</string>
-  <string name="only_favorites">Yalnızca Sık Kullanılanlar</string>
+  <string name="only_favorites">Only favorite shows</string>
   <string name="togglewatched">Toggle watched</string>
   <string name="update_notification">Dizileriniz güncelleniyor ...</string>
   <string name="update_single">Updating show…</string>
@@ -119,6 +120,7 @@
   <string name="season_unaired">yayınlanmadı</string>
   <string name="oneotherepisode">diğer bölüm</string>
   <string name="otherepisodes">diğer bölümler</string>
+  <string name="remaining">%s remaining</string>
   <string name="search_button">Ara</string>
   <string name="search_hint_add">İsmini göster</string>
   <string name="no_results">Sonuç bulunamadı, tam sözcükleri deneyin.</string>
@@ -142,8 +144,8 @@
   <string name="pref_showsorting">Sort shows by…</string>
   <string name="pref_onlyfuture">Yayınlanan bölüm yok</string>
   <string name="pref_onlyfuturesummary">\"Next:\" yayınlanmış olan bölümler artık gösterilmeyecek</string>
-  <string name="pref_onlyseasoneps">Özel bölüm yok</string>
-  <string name="pref_onlyseasonepssummary">\"Next:\" özel bölümleri göstermez</string>
+  <string name="pref_onlyseasoneps">Hide special episodes</string>
+  <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
   <string name="pref_content">İçerik</string>
   <string name="pref_seasonsorting">Sezona göre sırala...</string>
   <string name="pref_episodesorting">Bölüme göre sırala...</string>
@@ -203,6 +205,8 @@
   <string name="cancel">Vazgeç</string>
   <string name="share">Paylaş</string>
   <string name="checkin">Giriş yapmak</string>
+  <string name="checkin_searchhint">Type a show name</string>
+  <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Bir mesaj yazın (isteğe bağlı)</string>
   <string name="paste_episode">Paste episode</string>
   <string name="checkinsuccess">GetGlue giriş başarılı.</string>

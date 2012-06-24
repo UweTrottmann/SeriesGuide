@@ -18,6 +18,7 @@
   <string name="loading">Chargement en cours...</string>
   <string name="sending">Envoi en cours...</string>
   <string name="done">acceptez</string>
+  <string name="clear">Clear</string>
   <string name="offline">Pas de connexion. Réessayer plus tard.</string>
   <string name="onlyx">Disponible seulement dans SeriesGuide X</string>
   <string name="shouts">Cris</string>
@@ -93,7 +94,7 @@
   <string name="friends_empty">Pas d\'activité sur Trakt.</string>
   <string name="noupcoming">Pas d\'épisodes à venir.</string>
   <string name="norecent">Pas d\'épisodes récents.</string>
-  <string name="only_favorites">Juste les favoris</string>
+  <string name="only_favorites">Only favorite shows</string>
   <string name="togglewatched">Vu/Non vu</string>
   <string name="update_notification">Mise à jour de vos séries en cours...</string>
   <string name="update_single">Mise à jour de la série...</string>
@@ -119,6 +120,7 @@
   <string name="season_unaired">non diffusé</string>
   <string name="oneotherepisode">autre épisode</string>
   <string name="otherepisodes">autres épisodes</string>
+  <string name="remaining">%s remaining</string>
   <string name="search_button">Rechercher</string>
   <string name="search_hint_add">Nom de la série</string>
   <string name="no_results">Pas de résultats, reformulez votre requête.</string>
@@ -142,8 +144,8 @@
   <string name="pref_showsorting">Trier les séries par...</string>
   <string name="pref_onlyfuture">Pas d\'épisodes diffusés</string>
   <string name="pref_onlyfuturesummary">\"Suivant:\" ne montre pas les épisodes déjà diffusés</string>
-  <string name="pref_onlyseasoneps">Pas d\'épisodes spéciaux</string>
-  <string name="pref_onlyseasonepssummary">\"Suivant:\" ne montre pas les épisodes spéciaux</string>
+  <string name="pref_onlyseasoneps">Hide special episodes</string>
+  <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
   <string name="pref_content">Contenu</string>
   <string name="pref_seasonsorting">Trier les saisons par...</string>
   <string name="pref_episodesorting">Trier les épisodes par...</string>
@@ -203,6 +205,8 @@
   <string name="cancel">Annuler</string>
   <string name="share">Partagez</string>
   <string name="checkin">Check-in</string>
+  <string name="checkin_searchhint">Type a show name</string>
+  <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Écrivez un message (optionnel)</string>
   <string name="paste_episode">Ancien épisode</string>
   <string name="checkinsuccess">Check-in GetGlue réussi.</string>

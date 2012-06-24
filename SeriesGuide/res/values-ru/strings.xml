@@ -18,6 +18,7 @@
   <string name="loading">Загрузка…</string>
   <string name="sending">Отправка…</string>
   <string name="done">Выполнено</string>
+  <string name="clear">Clear</string>
   <string name="offline">Нет соединения. Повторите попытку позже.</string>
   <string name="onlyx">Доступно только в SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -93,7 +94,7 @@
   <string name="friends_empty">Нет активности друзей на trakt.</string>
   <string name="noupcoming">Выходящих эпизодов нет.</string>
   <string name="norecent">Недавних эпизодов нет.</string>
-  <string name="only_favorites">Только избранные</string>
+  <string name="only_favorites">Only favorite shows</string>
   <string name="togglewatched">Toggle watched</string>
   <string name="update_notification">Обновление ваших сериалов…</string>
   <string name="update_single">Обновление сериала…</string>
@@ -119,6 +120,7 @@
   <string name="season_unaired">Не транслировался в эфир</string>
   <string name="oneotherepisode">другой эпизод</string>
   <string name="otherepisodes">другие эпизоды</string>
+  <string name="remaining">%s remaining</string>
   <string name="search_button">Поиск</string>
   <string name="search_hint_add">Название сериала</string>
   <string name="no_results">No results, try complete words.</string>
@@ -142,8 +144,8 @@
   <string name="pref_showsorting">Sort shows by…</string>
   <string name="pref_onlyfuture">Без показанных эпизодов</string>
   <string name="pref_onlyfuturesummary">\"next:\" никогда не показывать уже прошедшие в эфире эпизоды</string>
-  <string name="pref_onlyseasoneps">Без особых эпизодов</string>
-  <string name="pref_onlyseasonepssummary">\"next:\" никогда не показывать особые эпизоды</string>
+  <string name="pref_onlyseasoneps">Hide special episodes</string>
+  <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
   <string name="pref_content">Содержание</string>
   <string name="pref_seasonsorting">Sort seasons by…</string>
   <string name="pref_episodesorting">Sort episodes by…</string>
@@ -203,6 +205,8 @@
   <string name="cancel">Отмена</string>
   <string name="share">Поделиться</string>
   <string name="checkin">Check in</string>
+  <string name="checkin_searchhint">Type a show name</string>
+  <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Type a message (optional)</string>
   <string name="paste_episode">Paste episode</string>
   <string name="checkinsuccess">GetGlue Check-in successful.</string>

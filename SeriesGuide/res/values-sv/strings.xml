@@ -18,6 +18,7 @@
   <string name="loading">Laddar…</string>
   <string name="sending">Skickar…</string>
   <string name="done">Klar</string>
+  <string name="clear">Clear</string>
   <string name="offline">Ingen nätanslutning. Försök igen senare.</string>
   <string name="onlyx">Only available in SeriesGuide X</string>
   <string name="shouts">Rop</string>
@@ -93,7 +94,7 @@
   <string name="friends_empty">Ingen vänaktivitet på trakt.</string>
   <string name="noupcoming">Det finns inga kommande avsnitt.</string>
   <string name="norecent">Det finns inga färska avsnitt.</string>
-  <string name="only_favorites">Endast favoriter</string>
+  <string name="only_favorites">Only favorite shows</string>
   <string name="togglewatched">Växla sedda</string>
   <string name="update_notification">Uppdaterar dina serier…</string>
   <string name="update_single">Uppdaterar serie…</string>
@@ -119,6 +120,7 @@
   <string name="season_unaired">osända</string>
   <string name="oneotherepisode">annat avsnitt</string>
   <string name="otherepisodes">andra avsnitt</string>
+  <string name="remaining">%s remaining</string>
   <string name="search_button">Sök</string>
   <string name="search_hint_add">Visa namn</string>
   <string name="no_results">Inga resultat, försök med hela ord.</string>
@@ -142,8 +144,8 @@
   <string name="pref_showsorting">Sortera serier efter…</string>
   <string name="pref_onlyfuture">Inga sända avsnitt</string>
   <string name="pref_onlyfuturesummary">\"nästa:\" visar aldrig redan sända avsnitt</string>
-  <string name="pref_onlyseasoneps">Inga specialavsnitt</string>
-  <string name="pref_onlyseasonepssummary">\"nästa:\" visar aldrig specialavsnitt</string>
+  <string name="pref_onlyseasoneps">Hide special episodes</string>
+  <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
   <string name="pref_content">Innehåll</string>
   <string name="pref_seasonsorting">Sortera säsonger efter…</string>
   <string name="pref_episodesorting">Sortera avsnitt efter…</string>
@@ -203,6 +205,8 @@
   <string name="cancel">Avbryt</string>
   <string name="share">Dela</string>
   <string name="checkin">Check in</string>
+  <string name="checkin_searchhint">Type a show name</string>
+  <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Type a message (optional)</string>
   <string name="paste_episode">Paste episode</string>
   <string name="checkinsuccess">GetGlue Check-in successful.</string>

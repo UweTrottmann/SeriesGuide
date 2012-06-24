@@ -18,6 +18,7 @@
   <string name="loading">Ladataan…</string>
   <string name="sending">Lähetetään…</string>
   <string name="done">Valmis</string>
+  <string name="clear">Tyhjennä</string>
   <string name="offline">Ei verkkoyhteyttä. Yritä myöhemmin uudelleen.</string>
   <string name="onlyx">Saatavilla vain SeriesGuide X:ssä</string>
   <string name="shouts">Huudahdukset</string>
@@ -93,7 +94,7 @@
   <string name="friends_empty">Ei ystävien toimintaa traktissa.</string>
   <string name="noupcoming">Ei tulevia jaksoja.</string>
   <string name="norecent">Ei viimeaikaisia jaksoja.</string>
-  <string name="only_favorites">Vain suosikit</string>
+  <string name="only_favorites">Vain suosikkiohjelmat</string>
   <string name="togglewatched">Vaihda katsottu</string>
   <string name="update_notification">Päivitetään ohjelmiasi…</string>
   <string name="update_single">Päivitetään ohjelmaa…</string>
@@ -119,6 +120,7 @@
   <string name="season_unaired">esittämätöntä</string>
   <string name="oneotherepisode">muu jakso</string>
   <string name="otherepisodes">muuta jaksoa</string>
+  <string name="remaining">%s remaining</string>
   <string name="search_button">Hae</string>
   <string name="search_hint_add">Ohjelman nimi</string>
   <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
@@ -142,8 +144,8 @@
   <string name="pref_showsorting">Lajittele ohjelmat…</string>
   <string name="pref_onlyfuture">Ei esitettyjä jaksoja</string>
   <string name="pref_onlyfuturesummary">\"seuraava:\" älä koskaan näytä jo esitettyjä jaksoja</string>
-  <string name="pref_onlyseasoneps">Ei erikoisjaksoja</string>
-  <string name="pref_onlyseasonepssummary">\"seuraava:\" älä koskaan näytä erikoisjaksoja</string>
+  <string name="pref_onlyseasoneps">Piilota erikoisjaksot</string>
+  <string name="pref_onlyseasonepssummary">Erikoisjaksot eivät näy, paitsi kausiluettelosta</string>
   <string name="pref_content">Sisältö</string>
   <string name="pref_seasonsorting">Lajittele kaudet…</string>
   <string name="pref_episodesorting">Lajittele jaksot…</string>
@@ -159,7 +161,7 @@
   <string name="pref_autoupdatesummary">Päivitä ohjelmasi ajoittain SeriesGuiden käynnistyessä</string>
   <string name="pref_updatewifionly">Päivitä vain Wi-Fi-verkossa</string>
   <string name="about">Tietoja SeriesGuidesta</string>
-  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="about_message">http://seriesgui.de - kehittänyt Uwe Trottmann.\n\nAlla olevasta linkistä näet kaikki ihmiset ja resurssit, jotka ovat auttaneet tätä projektia.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">Jakaminen</string>
   <string name="clearGetGlueCredentials">Irrottaudu GetGluesta</string>
   <string name="clearGetGlueCredentialssummary">Poista GetGLue-yhteytesi</string>
@@ -203,6 +205,8 @@
   <string name="cancel">Peruuta</string>
   <string name="share">Jaa</string>
   <string name="checkin">Kirjaus</string>
+  <string name="checkin_searchhint">Kirjoita ohjelman nimi</string>
+  <string name="checkin_empty">Ei vastaavia ohjelmia</string>
   <string name="checkin_hint">Kirjoita viesti (valinnainen)</string>
   <string name="paste_episode">Liitä jakso</string>
   <string name="checkinsuccess">GetGluen kirjaus onnistui.</string>
@@ -246,16 +250,16 @@
   <string name="pref_notificationssummary">Ilmoita pian esitettävistä suosikkiohjelmista</string>
   <string name="pref_ringtone">Soittoääni</string>
   <string name="pref_vibrate">Värinä</string>
-  <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
+  <string name="pref_vibratesummary">Myös värise näytettäessä ilmoitus</string>
   <string name="pref_theme">Sovelluksen teema</string>
   <string name="pref_themesummary">Valitse SeriesGuiden väritys</string>
-  <string name="choose_list">Choose activity list</string>
-  <string name="hide_watched">Hide watched episodes</string>
-  <string name="add_widget">Add widget</string>
+  <string name="choose_list">Valitse toimintalista</string>
+  <string name="hide_watched">Piilota katsotut jaksot</string>
+  <string name="add_widget">Lisää widget</string>
   <string name="widget_label">SeriesGuide</string>
-  <string name="smallwidget">SeriesGuide (small)</string>
-  <string name="bigwidget">SeriesGuide (middle)</string>
-  <string name="largewidget">SeriesGuide (large)</string>
+  <string name="smallwidget">SeriesGuide (pieni)</string>
+  <string name="bigwidget">SeriesGuide (keski)</string>
+  <string name="largewidget">SeriesGuide (suuri)</string>
   <string name="download_stable">Lataa SeriesGuide</string>
   <string name="betawarning"><b>Varoitus!</b> Tämä julkaisu on vain beeta-testaajille! Jos epäröit, lataa vakaa versio alta.</string>
   <string-array name="shsorting">

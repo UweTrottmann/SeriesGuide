@@ -18,6 +18,7 @@
   <string name="loading">Lädt…</string>
   <string name="sending">Senden…</string>
   <string name="done">Erledigt</string>
+  <string name="clear">Löschen</string>
   <string name="offline">Keine Netzwerkverbindung. Versuchen Sie es später erneut.</string>
   <string name="onlyx">Nur verfügbar in SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -93,7 +94,7 @@
   <string name="friends_empty">Keine Aktivität von Freuden auf trakt.</string>
   <string name="noupcoming">Keine kommenden Folgen.</string>
   <string name="norecent">Keine bereits gesendeten Folgen.</string>
-  <string name="only_favorites">Nur Favoriten</string>
+  <string name="only_favorites">Nur Serien-Favoriten</string>
   <string name="togglewatched">"Gesehen" umschalten</string>
   <string name="update_notification">Aktualisierung Ihrer Serien…</string>
   <string name="update_single">Aktualisiere Serie…</string>
@@ -119,6 +120,7 @@
   <string name="season_unaired">zukünftige</string>
   <string name="oneotherepisode">andere Folge</string>
   <string name="otherepisodes">andere Folgen</string>
+  <string name="remaining">%s remaining</string>
   <string name="search_button">Suchen</string>
   <string name="search_hint_add">Serientitel</string>
   <string name="no_results">Keine Ergebnisse, versuchen Sie ganze Wörter.</string>
@@ -142,8 +144,8 @@
   <string name="pref_showsorting">Sortiere Serien nach…</string>
   <string name="pref_onlyfuture">Keine gesendeten Folgen</string>
   <string name="pref_onlyfuturesummary">\"nächste:\" zeigt niemals bereits gesendete Folgen an</string>
-  <string name="pref_onlyseasoneps">Keine \"Special Episodes\"</string>
-  <string name="pref_onlyseasonepssummary">\"nächste:\" zeigt niemals \"Special Episodes\" an</string>
+  <string name="pref_onlyseasoneps">Verstecke Special Episodes</string>
+  <string name="pref_onlyseasonepssummary">Special Episodes verschwinden, außer in der Staffel-Liste</string>
   <string name="pref_content">Inhalt</string>
   <string name="pref_seasonsorting">Sortiere Staffeln nach…</string>
   <string name="pref_episodesorting">Sortiere Folgen nach…</string>
@@ -203,6 +205,8 @@
   <string name="cancel">Abbrechen</string>
   <string name="share">Empfehlen</string>
   <string name="checkin">Einchecken</string>
+  <string name="checkin_searchhint">Serientitel eingeben</string>
+  <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Geben Sie eine Nachricht ein (optional)</string>
   <string name="paste_episode">Folge einfügen</string>
   <string name="checkinsuccess">GetGlue-Einchecken erfolgreich.</string>
@@ -249,13 +253,13 @@
   <string name="pref_vibratesummary">Bei Anzeige einer Benachrichtigung vibrieren</string>
   <string name="pref_theme">App Design</string>
   <string name="pref_themesummary">Festlegen, wie SeriesGuide eingefärbt wird</string>
-  <string name="choose_list">Choose activity list</string>
-  <string name="hide_watched">Hide watched episodes</string>
-  <string name="add_widget">Add widget</string>
+  <string name="choose_list">Aktivitäten-Liste wählen</string>
+  <string name="hide_watched">Verstecke gesehene Folgen</string>
+  <string name="add_widget">Widget hinzufügen</string>
   <string name="widget_label">SeriesGuide</string>
-  <string name="smallwidget">SeriesGuide (small)</string>
-  <string name="bigwidget">SeriesGuide (middle)</string>
-  <string name="largewidget">SeriesGuide (large)</string>
+  <string name="smallwidget">SeriesGuide (klein)</string>
+  <string name="bigwidget">SeriesGuide (mittel)</string>
+  <string name="largewidget">SeriesGuide (groß)</string>
   <string name="download_stable">SeriesGuide herunterladen</string>
   <string name="betawarning"><b>Achtung!</b> Diese Version ist für nur Beta-Tester! Laden Sie im Zweifel unten die stabile Version.</string>
   <string-array name="shsorting">

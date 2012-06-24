@@ -18,6 +18,7 @@
   <string name="loading">Loading…</string>
   <string name="sending">Sending…</string>
   <string name="done">Hotovo</string>
+  <string name="clear">Clear</string>
   <string name="offline">No network connectivity. Try again later.</string>
   <string name="onlyx">K dispozícii len v SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -93,7 +94,7 @@
   <string name="friends_empty">No friend activity on trakt.</string>
   <string name="noupcoming">There are no upcoming episodes.</string>
   <string name="norecent">There are no recent episodes.</string>
-  <string name="only_favorites">Iba Obľúbené položky</string>
+  <string name="only_favorites">Only favorite shows</string>
   <string name="togglewatched">Toggle watched</string>
   <string name="update_notification">Updating your shows…</string>
   <string name="update_single">Updating show…</string>
@@ -119,6 +120,7 @@
   <string name="season_unaired">neodvysielané</string>
   <string name="oneotherepisode">iná epizóda</string>
   <string name="otherepisodes">iné epizódy</string>
+  <string name="remaining">%s remaining</string>
   <string name="search_button">Hľadať</string>
   <string name="search_hint_add">Zobraziť názov</string>
   <string name="no_results">No results, try complete words.</string>
@@ -142,8 +144,8 @@
   <string name="pref_showsorting">Sort shows by…</string>
   <string name="pref_onlyfuture">Žiadne odvysielané epizódy</string>
   <string name="pref_onlyfuturesummary">\"ďalší:\" nezobrazovať už odvysielané epizódy</string>
-  <string name="pref_onlyseasoneps">Žiadne špeciálne epizódy</string>
-  <string name="pref_onlyseasonepssummary">\"ďalší:\" nezobrazovať špeciálne epizódy</string>
+  <string name="pref_onlyseasoneps">Hide special episodes</string>
+  <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
   <string name="pref_content">Obsah</string>
   <string name="pref_seasonsorting">Sort seasons by…</string>
   <string name="pref_episodesorting">Sort episodes by…</string>
@@ -203,6 +205,8 @@
   <string name="cancel">Zrušiť</string>
   <string name="share">Zdieľať</string>
   <string name="checkin">Check in</string>
+  <string name="checkin_searchhint">Type a show name</string>
+  <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Napíšte správu (nepovinné)</string>
   <string name="paste_episode">Prilepiť epizódu</string>
   <string name="checkinsuccess">GetGlue Check-in successful.</string>

@@ -18,6 +18,7 @@
   <string name="loading">Wczytywanie…</string>
   <string name="sending">Wysyłanie…</string>
   <string name="done">Zrobione</string>
+  <string name="clear">Wyczyść</string>
   <string name="offline">Brak połączenia sieciowego. Spróbuj ponownie później.</string>
   <string name="onlyx">Dostępne tylko w SeriesGuide X</string>
   <string name="shouts">Krzyki</string>
@@ -93,7 +94,7 @@
   <string name="friends_empty">Brak aktywności znajomych na trakt.</string>
   <string name="noupcoming">Brak nadchodzących odcinków.</string>
   <string name="norecent">Brak ostatnio emitowanych odcinków.</string>
-  <string name="only_favorites">Tylko ulubione</string>
+  <string name="only_favorites">Tylko ulubione seriale</string>
   <string name="togglewatched">Przełącz obejrzane</string>
   <string name="update_notification">Aktualizacja seriali</string>
   <string name="update_single">Aktualizacja serialu</string>
@@ -119,6 +120,7 @@
   <string name="season_unaired">Nie emitowany w TV</string>
   <string name="oneotherepisode">inny odcinek</string>
   <string name="otherepisodes">innych odcinków</string>
+  <string name="remaining">%s remaining</string>
   <string name="search_button">Szukaj</string>
   <string name="search_hint_add">Nazwa serialu</string>
   <string name="no_results">Brak wyników. Uzupełnij zapytanie.</string>
@@ -142,8 +144,8 @@
   <string name="pref_showsorting">Sortuj seriale wg</string>
   <string name="pref_onlyfuture">Bez wyemitowanych</string>
   <string name="pref_onlyfuturesummary">\"następny:\" nie pokazuje już wyemitowanych odcinków</string>
-  <string name="pref_onlyseasoneps">Bez specjalnych</string>
-  <string name="pref_onlyseasonepssummary">\"następny:\" nie pokazuje odcinków specjalnych</string>
+  <string name="pref_onlyseasoneps">Ukryj odcinki specjalne</string>
+  <string name="pref_onlyseasonepssummary">Odcinki specjalne będą widoczne tylko na liście sezonów</string>
   <string name="pref_content">Treść</string>
   <string name="pref_seasonsorting">Sortuj sezony wg</string>
   <string name="pref_episodesorting">Sortuj odcinki wg</string>
@@ -159,7 +161,7 @@
   <string name="pref_autoupdatesummary">Okresowo aktualizuje seriale podczas startu SeriesGuide</string>
   <string name="pref_updatewifionly">Aktual. tylko przez WiFi</string>
   <string name="about">O SeriesGuide</string>
-  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="about_message">http://seriesguide.uwetrottmann.com - opracowany przez Uwe Trottmann.\n\nPoniższy odnośnik prowadzi do listy osób i zasobów, które umożliwiły utworzenie tego projektu.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">Udostępnianie</string>
   <string name="clearGetGlueCredentials">Rozłącz z GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Usuń połączenie z GetGlue</string>
@@ -203,6 +205,8 @@
   <string name="cancel">Anuluj</string>
   <string name="share">Udostępnij</string>
   <string name="checkin">Podłącz się</string>
+  <string name="checkin_searchhint">Wpisz nazwę serialu</string>
+  <string name="checkin_empty">Brak odcinków</string>
   <string name="checkin_hint">Wpisz wiadomość (opcjonalnie)</string>
   <string name="paste_episode">Wklej odcinek</string>
   <string name="checkinsuccess">Podpięto do GetGlue.</string>
@@ -249,13 +253,13 @@
   <string name="pref_vibratesummary">Wibruj również przy wyświetlaniu powiadomienia</string>
   <string name="pref_theme">Schemat kolorów</string>
   <string name="pref_themesummary">Wybierz schemat kolorów SeriesGuide</string>
-  <string name="choose_list">Choose activity list</string>
-  <string name="hide_watched">Hide watched episodes</string>
-  <string name="add_widget">Add widget</string>
+  <string name="choose_list">Wybierz listę aktywności</string>
+  <string name="hide_watched">Ukryj obejrzane odcinki</string>
+  <string name="add_widget">Dodaj widżet</string>
   <string name="widget_label">SeriesGuide</string>
-  <string name="smallwidget">SeriesGuide (small)</string>
-  <string name="bigwidget">SeriesGuide (middle)</string>
-  <string name="largewidget">SeriesGuide (large)</string>
+  <string name="smallwidget">SeriesGuide (mały)</string>
+  <string name="bigwidget">SeriesGuide (średni)</string>
+  <string name="largewidget">SeriesGuide (duży)</string>
   <string name="download_stable">Pobierz SeriesGuide</string>
   <string name="betawarning"><b>Uwaga!</b> To wydanie jest tylko dla beta testerów! Wersję stabilną można pobrać poniżej.</string>
   <string-array name="shsorting">
