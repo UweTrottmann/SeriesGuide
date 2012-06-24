@@ -15,13 +15,12 @@ Version 2.7 *(in development)*
 
 ### Detailed changes:
 
-#### 2.6.14beta (TBA)
+#### 2.6.14beta (2012-06-24)
 
 * FEATURE Display remaining unseen episodes in overview in portrait mode.
 * TWEAK Auto-update when launching any part of the app.
 * TWEAK Hide episodes with no air date from Recent.
 * FIX Do not display hidden shows on check in screen.
-
 
 #### 2.6.13beta (2012-06-09)
 
