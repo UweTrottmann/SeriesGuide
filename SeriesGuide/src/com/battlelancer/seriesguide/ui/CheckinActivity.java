@@ -277,10 +277,10 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
         String[] PROJECTION = {
                 Shows._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
                 Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE, Shows.IMDBID, Shows.NEXTEPISODE
+                Shows.FAVORITE, Shows.IMDBID, Shows.NEXTEPISODE, Shows.HIDDEN
         };
 
-        String SELECTION = Shows.NEXTEPISODE + "!=''";
+        String SELECTION = Shows.NEXTEPISODE + "!='' AND " + Shows.HIDDEN + "=0";
 
         int _ID = 0;
 
