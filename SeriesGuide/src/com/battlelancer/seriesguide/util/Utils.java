@@ -570,8 +570,11 @@ public class Utils {
     }
 
     public static void copyFile(File src, File dst) throws IOException {
-        FileChannel inChannel = new FileInputStream(src).getChannel();
-        FileChannel outChannel = new FileOutputStream(dst).getChannel();
+        FileInputStream in = new FileInputStream(src);
+        FileOutputStream out = new FileOutputStream(dst);
+        FileChannel inChannel = in.getChannel();
+        FileChannel outChannel = out.getChannel();
+
         try {
             inChannel.transferTo(0, inChannel.size(), outChannel);
         } finally {
@@ -582,6 +585,9 @@ public class Utils {
                 outChannel.close();
             }
         }
+
+        in.close();
+        out.close();
     }
 
     public static int copy(InputStream input, OutputStream output) throws IOException {
