@@ -235,6 +235,8 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                                 .shout(shout).spoiler(isSpoiler).fire();
                     }
                 }
+                default:
+                    break;
             }
 
             return r;

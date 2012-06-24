@@ -305,6 +305,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                             }
                             break;
                         }
+                        default:
+                            break;
                     }
                 }
             }
