@@ -52,9 +52,15 @@ public class ListWidgetService extends RemoteViewsService {
             // content etc, should be deferred to onDataSetChanged() or
             // getViewAt(). Taking more than 20 seconds in this call will result
             // in an ANR.
-            SharedPreferences prefs = getSharedPreferences(ListWidgetConfigure.PREFS_NAME, 0);
-            mType = WidgetListType.values()[prefs.getInt(ListWidgetConfigure.PREF_LISTTYPE_KEY
-                    + mAppWidgetId, WidgetListType.UPCOMING.index)];
+            final SharedPreferences prefs = getSharedPreferences(ListWidgetConfigure.PREFS_NAME, 0);
+            final int typeIndex = prefs.getInt(
+                    ListWidgetConfigure.PREF_LISTTYPE_KEY + mAppWidgetId,
+                    WidgetListType.UPCOMING.index);
+            if (typeIndex == WidgetListType.RECENT.index) {
+                mType = WidgetListType.RECENT;
+            } else {
+                mType = WidgetListType.UPCOMING;
+            }
             mIsOnlyUnwatched = prefs.getBoolean(ListWidgetConfigure.PREF_WATCHEDONLY_KEY
                     + mAppWidgetId, false);
 
