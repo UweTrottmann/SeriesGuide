@@ -111,6 +111,12 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
     </style>
+    
+    <style name="LabelBase">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
     <style name="ScrollingLayout">
         <item name="android:paddingBottom">@dimen/default_padding</item>

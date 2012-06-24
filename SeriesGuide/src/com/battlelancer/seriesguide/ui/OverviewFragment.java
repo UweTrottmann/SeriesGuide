@@ -348,7 +348,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             numbers.setVisibility(View.VISIBLE);
 
             // load all other info
-            onLoadEpisodeDetails(episode);
+            onLoadEpisodeDetails(episode, prefs);
             episodemeta.setVisibility(View.VISIBLE);
 
             episode.close();
@@ -416,7 +416,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     }
 
     @TargetApi(11)
-    protected void onLoadEpisodeDetails(final Cursor episode) {
+    protected void onLoadEpisodeDetails(final Cursor episode, SharedPreferences prefs) {
         // Check in button
         getView().findViewById(R.id.checkinButton).setOnClickListener(new OnClickListener() {
             @Override
@@ -516,16 +516,26 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             }
         });
 
-        // Episode image
+        // episode image
         String imagePath = episode.getString(EpisodeQuery.IMAGE);
         onLoadImage(imagePath);
 
-        // trakt rating
+        // trakt ratings
         mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView()).episode(getShowId(),
                 mSeasonNumber, mEpisodeNumber);
         Utils.executeAsyncTask(mTraktTask, new Void[] {
             null
         });
+
+        // remaining episodes counter
+        if (!mDualPane) {
+            View remainingCount = getView().findViewById(R.id.textViewRemaining);
+            if (remainingCount != null) {
+                TextView remaining = (TextView) remainingCount;
+                remaining.setText(DBUtils.getUnwatchedEpisodesOfShow(getActivity(), mShow.getId(),
+                        prefs));
+            }
+        }
     }
 
     protected void onLoadImage(String imagePath) {

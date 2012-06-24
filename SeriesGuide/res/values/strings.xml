@@ -151,6 +151,7 @@
     <string name="season_unaired">unaired</string>
     <string name="oneotherepisode">other episode</string>
     <string name="otherepisodes">other episodes</string>
+    <string name="remaining">%s remaining</string>
 
     <!-- Add show -->
     <string name="search_button">Search</string>
