@@ -6,6 +6,7 @@ import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 
 import android.app.AlertDialog;
@@ -130,6 +131,11 @@ public class BackupDeleteActivity extends BaseActivity {
         // automatically done on worker thread (separate from UI thread)
         @Override
         protected String doInBackground(final Void... args) {
+            TaskManager tm = TaskManager.getInstance(BackupDeleteActivity.this);
+            if (tm.isUpdateTaskRunning(false) || tm.isAddTaskRunning()) {
+                return getString(R.string.update_inprogress);
+            }
+
             File dbFile = getApplication().getDatabasePath(SeriesGuideDatabase.DATABASE_NAME);
 
             File exportDir = new File(Environment.getExternalStorageDirectory(),
@@ -192,6 +198,10 @@ public class BackupDeleteActivity extends BaseActivity {
         // but not being re-used
         @Override
         protected String doInBackground(final Void... args) {
+            TaskManager tm = TaskManager.getInstance(BackupDeleteActivity.this);
+            if (tm.isUpdateTaskRunning(false) || tm.isAddTaskRunning()) {
+                return getString(R.string.update_inprogress);
+            }
 
             File dbBackupFile = new File(Environment.getExternalStorageDirectory()
                     + "/seriesguidebackup/seriesdatabase");

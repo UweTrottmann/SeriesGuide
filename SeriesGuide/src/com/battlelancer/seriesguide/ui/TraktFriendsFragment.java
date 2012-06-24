@@ -376,6 +376,8 @@ public class TraktFriendsFragment extends ListFragment implements
                         timestamp = getContext().getString(R.string.now);
                         holder.timestamp.setTextColor(Color.RED);
                         break;
+                    default:
+                        break;
                 }
             } else if (friend.watched != null) {
                 // if not display the latest episode he watched

@@ -10,6 +10,7 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.jakewharton.trakt.ServiceManager;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -569,8 +570,11 @@ public class Utils {
     }
 
     public static void copyFile(File src, File dst) throws IOException {
-        FileChannel inChannel = new FileInputStream(src).getChannel();
-        FileChannel outChannel = new FileOutputStream(dst).getChannel();
+        FileInputStream in = new FileInputStream(src);
+        FileOutputStream out = new FileOutputStream(dst);
+        FileChannel inChannel = in.getChannel();
+        FileChannel outChannel = out.getChannel();
+
         try {
             inChannel.transferTo(0, inChannel.size(), outChannel);
         } finally {
@@ -581,6 +585,9 @@ public class Utils {
                 outChannel.close();
             }
         }
+
+        in.close();
+        out.close();
     }
 
     public static int copy(InputStream input, OutputStream output) throws IOException {
@@ -869,6 +876,7 @@ public class Utils {
      *            {@link AsyncTask#execute(Object[])}.
      * @param <T> Task argument type.
      */
+    @TargetApi(11)
     public static <T> void executeAsyncTask(AsyncTask<T, ?, ?> task, T... args) {
         // TODO figure out how to subclass abstract and generalized AsyncTask,
         // then put this there

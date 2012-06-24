@@ -114,6 +114,31 @@ public class DBUtils {
     }
 
     /**
+     * Returns a string of how many episodes of a show are left to watch (only
+     * aired and not watched, exclusive episodes with no air date).
+     * 
+     * @param context
+     * @param showId
+     * @param prefs
+     */
+    public static String getUnwatchedEpisodesOfShow(Context context, String showId,
+            SharedPreferences prefs) {
+        final ContentResolver resolver = context.getContentResolver();
+        final String fakenow = String.valueOf(Utils.getFakeCurrentTime(prefs));
+        final Uri episodesOfShowUri = Episodes.buildEpisodesOfShowUri(showId);
+
+        // unwatched, aired episodes
+        final Cursor unwatched = resolver.query(episodesOfShowUri, UnwatchedQuery.PROJECTION,
+                UnwatchedQuery.AIRED_SELECTION, new String[] {
+                        "0", "-1", fakenow
+                }, null);
+        final int count = unwatched.getCount();
+        unwatched.close();
+
+        return context.getString(R.string.remaining, count);
+    }
+
+    /**
      * Calls {@code getUpcomingEpisodes(false, context)}.
      * 
      * @param context
