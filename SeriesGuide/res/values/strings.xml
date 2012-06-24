@@ -366,7 +366,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage"><b>Ooops</b>\n- You have to re-add your list widgets as I screwed up the config files.\n\n- Experimenting with quick checkin screen, like it?.\n\n<a href="http://git.io/sgbetachanges">Detailed changelog</a>\n\n</string>
+    <string name="betamessage"><b>Getting there</b>\n- Hide hidden shows from check in screen (thanks Richard for reporting this).\n\n- Remaining episodes counter in overview (single pane mode only).\n\n- Auto-Update wherever entering the app, no need to return to the home screen.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed changelog</a>\n\n</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
