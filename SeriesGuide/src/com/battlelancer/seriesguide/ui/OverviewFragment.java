@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
@@ -51,7 +52,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -388,11 +388,11 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
             private final static int ABORT = -1;
 
-            private FragmentActivity activity;
+            private SherlockFragmentActivity activity;
 
             @Override
             protected Integer doInBackground(Void... params) {
-                activity = getActivity();
+                activity = getSherlockActivity();
                 if (activity == null) {
                     return ABORT;
                 }
