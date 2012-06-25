@@ -15,7 +15,11 @@ Version 2.7 *(in development)*
 
 ### Detailed changes:
 
-#### 2.6.14beta (TBA)
+#### 2.6.15beta (2012-06-25)
+
+* FIX Crash on pre-3.0 devices in overview screen on small screen devices.
+
+#### 2.6.14beta (2012-06-24)
 
 * FEATURE Display remaining unseen episodes in overview in portrait mode.
 * TWEAK Auto-update when launching any part of the app.
