@@ -18,13 +18,7 @@
             android:title="@string/pref_upcominglimit" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_content" >
-
-        <CheckBoxPreference
-            android:defaultValue="False"
-            android:key="onlySeasonEpisodes"
-            android:summary="@string/pref_onlyseasonepssummary"
-            android:title="@string/pref_onlyseasoneps" />
+    <PreferenceCategory android:title="@string/pref_notifications" >
 
         <CheckBoxPreference
             android:defaultValue="True"
@@ -45,6 +39,15 @@
             android:showDefault="true"
             android:showSilent="true"
             android:title="@string/pref_ringtone" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_content" >
+
+        <CheckBoxPreference
+            android:defaultValue="False"
+            android:key="onlySeasonEpisodes"
+            android:summary="@string/pref_onlyseasonepssummary"
+            android:title="@string/pref_onlyseasoneps" />
 
         <ListPreference
             android:defaultValue="en"
