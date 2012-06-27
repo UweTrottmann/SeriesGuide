@@ -10,28 +10,33 @@
         android:background="@drawable/appwidget_bg"
         android:orientation="vertical" >
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/widget_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/appwidget_button_center"
-            android:focusable="true" >
-
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/icon" />
+            android:focusable="true"
+            android:paddingBottom="@dimen/inline_padding"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:paddingTop="@dimen/inline_padding" >
 
             <TextView
                 android:id="@+id/widgetTitle"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/upcoming"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
-        </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/icon" />
+        </RelativeLayout>
 
         <ListView
             android:id="@+id/list_view"
@@ -40,8 +45,8 @@
             android:clipToPadding="@bool/gridClipToPadding"
             android:divider="@null"
             android:listSelector="@drawable/list_selector_sg"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp" />
+            android:paddingLeft="@dimen/inline_padding"
+            android:paddingRight="@dimen/inline_padding" />
 
         <TextView
             android:id="@+id/empty_view"
