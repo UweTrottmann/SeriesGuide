@@ -2,7 +2,7 @@
 package com.battlelancer.seriesguide.appwidget;
 
 import com.actionbarsherlock.app.SherlockActivity;
-import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.WidgetListType;
 import com.battlelancer.seriesguide.util.Utils;
 

@@ -1,7 +1,7 @@
 
 package com.battlelancer.seriesguide.enums;
 
-import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.R;
 
 import java.util.HashMap;
 import java.util.Map;

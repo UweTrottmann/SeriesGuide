@@ -1,7 +1,7 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.DBUtils;
 
@@ -36,8 +36,8 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final String showId = getArguments().getString("showid");
 
-        final Cursor show = getActivity().getContentResolver().query(
-                Shows.buildShowUri(showId), new String[] {
+        final Cursor show = getActivity().getContentResolver().query(Shows.buildShowUri(showId),
+                new String[] {
                     Shows.TITLE
                 }, null, null, null);
 
@@ -60,8 +60,8 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
 
                         new Thread(new Runnable() {
                             public void run() {
-                                DBUtils.deleteShow(getActivity(),
-                                        getArguments().getString("showid"));
+                                DBUtils.deleteShow(getActivity(), getArguments()
+                                        .getString("showid"));
                                 if (progress.isShowing()) {
                                     progress.dismiss();
                                 }
