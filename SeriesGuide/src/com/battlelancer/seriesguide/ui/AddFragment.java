@@ -4,9 +4,11 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.Utils;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -37,6 +39,7 @@ public class AddFragment extends SherlockListFragment {
         AddDialogFragment.showAddDialog(result, getFragmentManager());
     }
 
+    @TargetApi(11)
     protected void setSearchResults(List<SearchResult> searchResults) {
         mAdapter.clear();
         if (Utils.isHoneycombOrHigher()) {
@@ -49,7 +52,7 @@ public class AddFragment extends SherlockListFragment {
         setListAdapter(mAdapter);
     }
 
-    public class AddAdapter extends ArrayAdapter<SearchResult> {
+    protected static class AddAdapter extends ArrayAdapter<SearchResult> {
 
         private LayoutInflater mLayoutInflater;
 
@@ -91,14 +94,14 @@ public class AddFragment extends SherlockListFragment {
 
             return convertView;
         }
-    }
 
-    public final class ViewHolder {
+        static class ViewHolder {
 
-        public TextView title;
+            public TextView title;
 
-        public TextView description;
+            public TextView description;
 
-        public ImageView poster;
+            public ImageView poster;
+        }
     }
 }

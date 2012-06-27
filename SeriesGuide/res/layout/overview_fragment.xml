@@ -8,18 +8,27 @@
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="@string/description_poster"
         android:scaleType="centerCrop" >
     </ImageView>
+
+    <include
+        android:id="@+id/progress_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/progress_container" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
         <LinearLayout
+            android:id="@+id/overview_container"
             style="@style/ScrollingLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:visibility="gone" >
 
             <RelativeLayout
                 android:id="@+id/showinfo"
@@ -35,8 +44,7 @@
                     style="@style/Header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="marquee"
-                    android:text="Loading" />
+                    android:ellipsize="marquee" />
 
                 <TextView
                     android:id="@+id/showmeta"
@@ -45,8 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@id/seriesname"
-                    android:layout_toLeftOf="@+id/showStatus"
-                    android:text="Thu 10:00 PM on Very Long Network Name (VLNM)" />
+                    android:layout_toLeftOf="@+id/showStatus" />
 
                 <TextView
                     android:id="@+id/showStatus"
@@ -54,8 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@id/seriesname"
-                    android:text="Continuing" />
+                    android:layout_below="@id/seriesname" />
             </RelativeLayout>
 
             <include layout="@layout/holodivider" />
@@ -73,8 +79,7 @@
                     android:layout_marginBottom="@dimen/inline_padding"
                     android:layout_marginLeft="@dimen/default_padding"
                     android:layout_marginRight="@dimen/default_padding"
-                    android:layout_marginTop="@dimen/default_padding"
-                    android:text="Loading..." >
+                    android:layout_marginTop="@dimen/default_padding" >
                 </TextView>
 
                 <TextView
@@ -84,16 +89,14 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/nextheader"
                     android:layout_marginLeft="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding"
-                    android:text="Loading..." />
+                    android:layout_marginRight="@dimen/default_padding" />
 
                 <TextView
                     android:id="@+id/TextViewEpisodeNumbers"
                     style="@style/Subtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/TextViewEpisodeTitle"
-                    android:text="Loading..." />
+                    android:layout_below="@id/TextViewEpisodeTitle" />
 
                 <LinearLayout
                     android:id="@+id/episodemeta"

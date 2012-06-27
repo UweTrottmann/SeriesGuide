@@ -5,11 +5,10 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.ui.AddDialogFragment.OnAddShowListener;
-import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.Utils;
 import com.viewpagerindicator.TabPageIndicator;
-import com.viewpagerindicator.TitleProvider;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -48,7 +47,7 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
         indicator.setViewPager(mPager);
     }
 
-    public static class AddPagerAdapter extends FragmentPagerAdapter implements TitleProvider {
+    public static class AddPagerAdapter extends FragmentPagerAdapter {
 
         private Context mContext;
 
@@ -68,7 +67,7 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
 
         @Override
         public int getCount() {
-            final boolean isValidCredentials = ShareUtils.isTraktCredentialsValid(mContext);
+            final boolean isValidCredentials = Utils.isTraktCredentialsValid(mContext);
             if (isValidCredentials) {
                 // show trakt recommended and libraried shows, too
                 return 4;
@@ -79,7 +78,7 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
         }
 
         @Override
-        public String getTitle(int position) {
+        public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 1:
                     return mContext.getString(R.string.trending).toUpperCase();

@@ -53,8 +53,7 @@
 
     <TextView
         android:id="@+id/textViewEpisodeDVDnumber"
-        style="@style/SmallItems.WithSideMargins"
-        android:text="@string/episode_unkownairdate" />
+        style="@style/SmallItems.WithSideMargins" />
 
     <TextView
         android:id="@+id/labelAirday"

@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FetchArtTask;
@@ -21,6 +22,7 @@ import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -219,6 +221,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 0);
         mAdapter.setViewBinder(new ViewBinder() {
 
+            @TargetApi(11)
             public boolean setViewValue(View view, Cursor episode, int columnIndex) {
                 if (columnIndex == EpisodeDetailsQuery.WATCHED) {
                     mWatched = episode.getInt(EpisodeDetailsQuery.WATCHED) == 1 ? true : false;
@@ -266,7 +269,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         String[] dayAndTime = Utils.formatToTimeAndDay(airtime, getActivity());
                         airtimeText.setText(dayAndTime[2] + " (" + dayAndTime[1] + ")");
                     } else {
-                        airdateText.setText(getString(R.string.episode_unkownairdate));
+                        airdateText.setText(getString(R.string.unknown));
                         airtimeText.setText("");
                     }
                     return true;
@@ -317,11 +320,9 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                             episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID),
                             episode.getInt(EpisodeDetailsQuery.SEASON),
                             episode.getInt(EpisodeDetailsQuery.NUMBER));
-                    if (Utils.isHoneycombOrHigher()) {
-                        mTraktTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    } else {
-                        mTraktTask.execute();
-                    }
+                    Utils.executeAsyncTask(mTraktTask, new Void[] {
+                        null
+                    });
 
                     return true;
                 }
@@ -444,8 +445,10 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     protected void onLoadImage(String imagePath, FrameLayout container) {
         if (mArtTask == null || mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity())
-                    .execute();
+            mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity());
+            Utils.executeAsyncTask(mArtTask, new Void[] {
+                null
+            });
         }
     }
 

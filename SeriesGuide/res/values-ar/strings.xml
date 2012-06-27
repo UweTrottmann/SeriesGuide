@@ -3,7 +3,7 @@
 <resources>
   <string name="episode">الحلقة</string>
   <string name="season">الموسم</string>
-  <string name="episode_unkownairdate">مجهول</string>
+  <string name="unknown">unknown</string>
   <string name="episode_iswatched">.تمت مشاهدتها بالفعل</string>
   <string name="episode_notwatched">لم تُشاهد بعد</string>
   <string name="specialseason">الحلقات الخاصة</string>
@@ -18,6 +18,7 @@
   <string name="loading">Loading…</string>
   <string name="sending">Sending…</string>
   <string name="done">تم</string>
+  <string name="clear">Clear</string>
   <string name="offline">No network connectivity. Try again later.</string>
   <string name="onlyx">Only available in SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -42,7 +43,6 @@
   <string name="show_actors">Actors</string>
   <string name="show_firstaired">First Aired</string>
   <string name="show_genres">Genres</string>
-  <string name="rating">Rating</string>
   <string name="show_runtime">Runtime</string>
   <string name="show_contentrating">Content Rating</string>
   <string name="episode_directors">Directors</string>
@@ -74,7 +74,7 @@
   <string name="trakt_collected">%s collected.</string>
   <string name="trakt_notcollected">%s not collected.</string>
   <string name="shows_empty">.لا توجد مسلسلات</string>
-  <string name="confirm_delete">هل تريد حقاً إزالة هذا المسلسل ؟</string>
+  <string name="confirm_delete">Do you really want to remove %s?</string>
   <string name="delete_show">إزالة</string>
   <string name="dontdelete_show">لا تقم بالإزالة</string>
   <string name="no_nextepisode">لا توجد حلقة قادمة</string>
@@ -94,7 +94,7 @@
   <string name="friends_empty">.لا نشاطات لأصدقائك على تراكت</string>
   <string name="noupcoming">.لا توجد حلقات قادمة</string>
   <string name="norecent">.لا توجد حلقات حالية</string>
-  <string name="only_favorites">المفضلة فقط</string>
+  <string name="only_favorites">Only favorite shows</string>
   <string name="togglewatched">تبديل المُشاهدة</string>
   <string name="update_notification">Updating your shows…</string>
   <string name="update_single">Updating show…</string>
@@ -120,6 +120,7 @@
   <string name="season_unaired">لم تُعرض</string>
   <string name="oneotherepisode">حلقة أخرى</string>
   <string name="otherepisodes">الحلقات الأخرى</string>
+  <string name="remaining">%s remaining</string>
   <string name="search_button">بحث</string>
   <string name="search_hint_add">إسم المسلسل</string>
   <string name="no_results">.لا نتائج, جرّب كلمات كاملة</string>
@@ -143,13 +144,11 @@
   <string name="pref_showsorting">Sort shows by…</string>
   <string name="pref_onlyfuture">الحلقات لم تُبث بعد</string>
   <string name="pref_onlyfuturesummary">.التالي:/" لا تُظهر الحلقات التي تم عرضُها بالفعل"/</string>
-  <string name="pref_onlyseasoneps">لا توجد حلقات خاصة</string>
-  <string name="pref_onlyseasonepssummary">.التالي:/" لا تُظهر الحلقات الخاصة"/</string>
+  <string name="pref_onlyseasoneps">Hide special episodes</string>
+  <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
   <string name="pref_content">المحتوى</string>
   <string name="pref_seasonsorting">Sort seasons by…</string>
-  <string name="pref_sortingsummary">تحديد كيفية ترتيب المواسم</string>
   <string name="pref_episodesorting">Sort episodes by…</string>
-  <string name="pref_epsortingsummary">تحديد كيفية ترتيب الحلقات</string>
   <string name="backup">النسخ الاحتياطي / الاستعادة</string>
   <string name="backup_summary">النسخ الاحتياطي أو استعادة مسلسلاتك</string>
   <string name="pref_language">لغة المحتوى</string>
@@ -162,15 +161,13 @@
   <string name="pref_autoupdatesummary">حدّث المسلسلات دورياً عند بدء البرنامج</string>
   <string name="pref_updatewifionly">التحديث عبر واي فاي فقط</string>
   <string name="about">SeriesGuide حول</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - من تطوير Uwe Trottmann.\n\nنرجو زيارة الرابط في الأسفل للإطلاع على قائمة بجميع الاشخاص والمصادر الذين ساعدوا في إخراج هذا المشروع
- .\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">مشاركة</string>
   <string name="clearGetGlueCredentials">GetGlue قطع إتصال</string>
   <string name="clearGetGlueCredentialssummary">امسح اتصالك بموقع جيت جلو</string>
   <string name="pref_trakt">trakt.tv بيانات</string>
   <string name="pref_traktsummary">trakt.tv أضف أو عدل بياناتك في موقع</string>
   <string name="pref_traktsync">trakt.tv المزامنة مع</string>
-  <string name="donate">Buy the dev a drink (Paypal)</string>
   <string name="feedback">أرسل ملاحظاتك</string>
   <string name="pref_advanced">خيارات متقدمة</string>
   <string name="clear_cache">مسح ذاكرة التخزين المؤقتة للصور</string>
@@ -204,20 +201,17 @@
   <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
   <string name="import_yes">استعادة</string>
   <string name="import_no">لا تقم بالإستعادة</string>
-  <string name="widget_label">الحلقات القادمة</string>
-  <string name="smallwidget">(الحلقات القادمة (صغير</string>
-  <string name="bigwidget">(الحلقات القادمة (متوسط</string>
-  <string name="largewidget">(الحلقات القادمة (كبير</string>
   <string name="seasons">المواسم</string>
   <string name="cancel">إلغاء الأمر</string>
   <string name="share">شارك</string>
   <string name="checkin">Check in</string>
+  <string name="checkin_searchhint">Type a show name</string>
+  <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Type a message (optional)</string>
   <string name="paste_episode">Paste episode</string>
   <string name="checkinsuccess">GetGlue Check-in successful.</string>
   <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
   <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
-  <string name="menu_markseen_trakt">(ضع علامة كمُشَاهد (تراكت</string>
   <string name="menu_rate_trakt">(قيّم (موقع تراكت</string>
   <string name="menu_share_others">عبر تطبيقات أخرى</string>
   <string name="traktcheckin_cancel">Override</string>
@@ -254,8 +248,18 @@
   <string name="upcoming_display">Select to display upcoming shows</string>
   <string name="pref_notifications">Notifications</string>
   <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
+  <string name="pref_ringtone">Ringtone</string>
+  <string name="pref_vibrate">Vibrate</string>
+  <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">App Theme</string>
   <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
+  <string name="choose_list">Choose activity list</string>
+  <string name="hide_watched">Hide watched episodes</string>
+  <string name="add_widget">Add widget</string>
+  <string name="widget_label">SeriesGuide</string>
+  <string name="smallwidget">SeriesGuide (small)</string>
+  <string name="bigwidget">SeriesGuide (middle)</string>
+  <string name="largewidget">SeriesGuide (large)</string>
   <string name="download_stable">حمّل دليل الحلقات</string>
   <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
   <string-array name="shsorting">

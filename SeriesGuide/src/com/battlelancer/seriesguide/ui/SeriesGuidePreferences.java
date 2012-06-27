@@ -51,7 +51,11 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_DATABASEIMPORTED = "com.battlelancer.seriesguide.dbimported";
 
-    public static final String KEY_SHOWSSORTORDER = "showSorting";
+    public static final String KEY_SHOW_SORT_ORDER = "showSorting";
+
+    public static final String KEY_SEASON_SORT_ORDER = "seasonSorting";
+
+    public static final String KEY_EPISODE_SORT_ORDER = "episodeSorting";
 
     public static final String KEY_SHOWFILTER = "com.battlelancer.seriesguide.showfilter";
 
@@ -80,9 +84,15 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_ONLYFAVORITES = "com.battlelancer.seriesguide.onlyfavorites";
 
+    public static final String KEY_NOWATCHED = "com.battlelancer.seriesguide.activity.nowatched";
+
     public static final String KEY_UPCOMING_LIMIT = "com.battlelancer.seriesguide.upcominglimit";
 
     public static final String KEY_NOTIFICATIONS_ENABLED = "com.battlelancer.seriesguide.notifications";
+
+    public static final String KEY_VIBRATE = "com.battlelancer.seriesguide.notifications.vibrate";
+
+    public static final String KEY_RINGTONE = "com.battlelancer.seriesguide.notifications.ringtone";
 
     public static final String KEY_LANGUAGE = "language";
 
@@ -99,8 +109,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
     protected static final int ABOUT_DIALOG = 0;
 
     private static final String TRANSLATIONS_URL = "http://crowdin.net/project/seriesguide-translations/invite";
-
-    private static final String PAYPAL_DONATE_URL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VVBLMQBSBU74L";
 
     private static final String TAG = "SeriesGuidePreferences";
 
@@ -249,48 +257,28 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             }
         });
 
-        // Donate
-        findPreference("com.battlelancer.seriesguide.donate").setOnPreferenceClickListener(
-                new OnPreferenceClickListener() {
-
-                    public boolean onPreferenceClick(Preference preference) {
-                        // track event
-                        fireTrackerEvent("Donate");
-
-                        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
-                                .parse(PAYPAL_DONATE_URL));
-                        startActivity(myIntent);
-                        return true;
-                    }
-                });
-
         // Notifications
         Preference notificationsPref = findPreference(KEY_NOTIFICATIONS_ENABLED);
-        switch (Utils.getChannel(this)) {
-            case STABLE: {
-                notificationsPref.setEnabled(false);
-                notificationsPref.setSummary(R.string.onlyx);
-                break;
-            }
-            default: {
-                notificationsPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        if (((CheckBoxPreference) preference).isChecked()) {
-                            AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                                    "Notifications", "Enable", 0);
-                        } else {
-                            AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                                    "Notifications", "Disable", 0);
-                        }
-
-                        Utils.runNotificationService(SeriesGuidePreferences.this);
-                        return true;
+        // allow supporters to enable notfications
+        if (Utils.isSupporterChannel(this)) {
+            notificationsPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    if (((CheckBoxPreference) preference).isChecked()) {
+                        AnalyticsUtils.getInstance(activity).trackEvent("Settings",
+                                "Notifications", "Enable", 0);
+                    } else {
+                        AnalyticsUtils.getInstance(activity).trackEvent("Settings",
+                                "Notifications", "Disable", 0);
                     }
-                });
-                break;
-            }
+
+                    Utils.runNotificationService(SeriesGuidePreferences.this);
+                    return true;
+                }
+            });
+        } else {
+            notificationsPref.setEnabled(false);
+            notificationsPref.setSummary(R.string.onlyx);
         }
 
         // Theme switcher

@@ -2,6 +2,7 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.Constants.EpisodeSorting;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
@@ -9,6 +10,7 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.thetvdbapi.ImageCache;
 import com.jakewharton.trakt.ServiceManager;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +20,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -517,30 +520,16 @@ public class Utils {
      * @param context
      * @return a EpisodeSorting enum set to the current sorting
      */
-    public static Constants.EpisodeSorting getEpisodeSorting(Context context) {
-        String[] epsortingData = context.getResources().getStringArray(R.array.epsortingData);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                .getApplicationContext());
-        String currentPref = prefs.getString("episodeSorting", epsortingData[1]);
+    public static EpisodeSorting getEpisodeSorting(Context context) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String currentPref = prefs.getString(SeriesGuidePreferences.KEY_EPISODE_SORT_ORDER,
+                EpisodeSorting.OLDEST_FIRST.value());
 
-        Constants.EpisodeSorting sorting;
-        if (currentPref.equals(epsortingData[0])) {
-            sorting = Constants.EpisodeSorting.LATEST_FIRST;
-        } else if (currentPref.equals(epsortingData[1])) {
-            sorting = Constants.EpisodeSorting.OLDEST_FIRST;
-        } else if (currentPref.equals(epsortingData[2])) {
-            sorting = Constants.EpisodeSorting.UNWATCHED_FIRST;
-        } else if (currentPref.equals(epsortingData[3])) {
-            sorting = Constants.EpisodeSorting.ALPHABETICAL_ASC;
-        } else if (currentPref.equals(epsortingData[4])) {
-            sorting = Constants.EpisodeSorting.ALPHABETICAL_DESC;
-        } else if (currentPref.equals(epsortingData[5])) {
-            sorting = Constants.EpisodeSorting.DVDLATEST_FIRST;
-        } else {
-            sorting = Constants.EpisodeSorting.DVDOLDEST_FIRST;
-        }
+        return EpisodeSorting.fromValue(currentPref);
+    }
 
-        return sorting;
+    public static boolean isICSOrHigher() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
     }
 
     public static boolean isHoneycombOrHigher() {
@@ -581,8 +570,11 @@ public class Utils {
     }
 
     public static void copyFile(File src, File dst) throws IOException {
-        FileChannel inChannel = new FileInputStream(src).getChannel();
-        FileChannel outChannel = new FileOutputStream(dst).getChannel();
+        FileInputStream in = new FileInputStream(src);
+        FileOutputStream out = new FileOutputStream(dst);
+        FileChannel inChannel = in.getChannel();
+        FileChannel outChannel = out.getChannel();
+
         try {
             inChannel.transferTo(0, inChannel.size(), outChannel);
         } finally {
@@ -593,6 +585,9 @@ public class Utils {
                 outChannel.close();
             }
         }
+
+        in.close();
+        out.close();
     }
 
     public static int copy(InputStream input, OutputStream output) throws IOException {
@@ -719,6 +714,15 @@ public class Utils {
         return prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
     }
 
+    public static boolean isTraktCredentialsValid(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
+                .getApplicationContext());
+        String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
+        String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
+
+        return (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase(""));
+    }
+
     public static String getVersion(Context context) {
         String version;
         try {
@@ -823,10 +827,24 @@ public class Utils {
         return SGChannel.STABLE;
     }
 
+    /**
+     * Used to make some features only available to supporters.
+     * 
+     * @param context
+     * @return
+     */
+    public static boolean isSupporterChannel(Context context) {
+        if (getChannel(context) != SGChannel.STABLE) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static void setValueOrPlaceholder(View view, final String value) {
         TextView field = (TextView) view;
         if (value == null || value.length() == 0) {
-            field.setText(R.string.episode_unkownairdate);
+            field.setText(R.string.unknown);
         } else {
             field.setText(value);
         }
@@ -847,6 +865,25 @@ public class Utils {
             default:
                 SeriesGuidePreferences.THEME = R.style.SeriesGuideTheme;
                 break;
+        }
+    }
+
+    /**
+     * Execute an {@link AsyncTask} on a thread pool.
+     * 
+     * @param task Task to execute.
+     * @param args Optional arguments to pass to
+     *            {@link AsyncTask#execute(Object[])}.
+     * @param <T> Task argument type.
+     */
+    @TargetApi(11)
+    public static <T> void executeAsyncTask(AsyncTask<T, ?, ?> task, T... args) {
+        // TODO figure out how to subclass abstract and generalized AsyncTask,
+        // then put this there
+        if (Utils.isHoneycombOrHigher()) {
+            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, args);
+        } else {
+            task.execute(args);
         }
     }
 

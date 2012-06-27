@@ -83,7 +83,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         // get watched episodes from trakt (if enabled/possible)
         // already here, so we only have to get it once
         List<TvShow> shows = new ArrayList<TvShow>();
-        if (ShareUtils.isTraktCredentialsValid(mContext)) {
+        if (Utils.isTraktCredentialsValid(mContext)) {
             try {
                 ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
 

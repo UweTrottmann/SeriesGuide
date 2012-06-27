@@ -57,8 +57,10 @@ public class TaskManager {
     public synchronized void tryUpdateTask(UpdateTask task, int messageId) {
         if (!isUpdateTaskRunning(true)) {
             mUpdateTask = task;
-            Toast.makeText(mContext, messageId, Toast.LENGTH_SHORT).show();
             task.execute();
+            if (messageId != -1) {
+                Toast.makeText(mContext, messageId, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -77,4 +79,11 @@ public class TaskManager {
         }
     }
 
+    public boolean isAddTaskRunning() {
+        if (mAddTask == null || mAddTask.getStatus() == AsyncTask.Status.FINISHED) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

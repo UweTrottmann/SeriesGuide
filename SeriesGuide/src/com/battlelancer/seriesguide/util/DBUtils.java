@@ -114,35 +114,62 @@ public class DBUtils {
     }
 
     /**
+     * Returns a string of how many episodes of a show are left to watch (only
+     * aired and not watched, exclusive episodes with no air date).
+     * 
+     * @param context
+     * @param showId
+     * @param prefs
+     */
+    public static String getUnwatchedEpisodesOfShow(Context context, String showId,
+            SharedPreferences prefs) {
+        final ContentResolver resolver = context.getContentResolver();
+        final String fakenow = String.valueOf(Utils.getFakeCurrentTime(prefs));
+        final Uri episodesOfShowUri = Episodes.buildEpisodesOfShowUri(showId);
+
+        // unwatched, aired episodes
+        final Cursor unwatched = resolver.query(episodesOfShowUri, UnwatchedQuery.PROJECTION,
+                UnwatchedQuery.AIRED_SELECTION, new String[] {
+                        "0", "-1", fakenow
+                }, null);
+        final int count = unwatched.getCount();
+        unwatched.close();
+
+        return context.getString(R.string.remaining, count);
+    }
+
+    /**
+     * Calls {@code getUpcomingEpisodes(false, context)}.
+     * 
+     * @param context
+     * @return
+     */
+    public static Cursor getUpcomingEpisodes(Context context) {
+        return getUpcomingEpisodes(false, context);
+    }
+
+    /**
      * Returns all episodes that air today or later. Using Pacific Time to
      * determine today. Excludes shows that are hidden.
      * 
      * @return Cursor including episodes with show title, network, airtime and
      *         posterpath.
      */
-    public static Cursor getUpcomingEpisodes(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        long fakeNow = Utils.getFakeCurrentTime(prefs);
-        // go an hour back in time, so episodes move to recent one hour late
-        fakeNow -= DateUtils.HOUR_IN_MILLIS;
-        final String recentThreshold = String.valueOf(fakeNow);
-        String query = UpcomingQuery.QUERY_UPCOMING;
-
-        boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
-        String[] selectionArgs;
-        if (isOnlyFavorites) {
-            query += UpcomingQuery.SELECTION_ONLYFAVORITES;
-            selectionArgs = new String[] {
-                    recentThreshold, "0", "1"
-            };
-        } else {
-            selectionArgs = new String[] {
-                    recentThreshold, "0"
-            };
-        }
+    public static Cursor getUpcomingEpisodes(boolean isOnlyUnwatched, Context context) {
+        String[][] args = buildActivityQuery(UpcomingQuery.QUERY_UPCOMING, isOnlyUnwatched, context);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
-                UpcomingQuery.PROJECTION, query, selectionArgs, UpcomingQuery.SORTING_UPCOMING);
+                UpcomingQuery.PROJECTION, args[0][0], args[1], UpcomingQuery.SORTING_UPCOMING);
+    }
+
+    /**
+     * Calls {@code getRecentEpisodes(false, context)}.
+     * 
+     * @param context
+     * @return
+     */
+    public static Cursor getRecentEpisodes(Context context) {
+        return getRecentEpisodes(false, context);
     }
 
     /**
@@ -153,16 +180,35 @@ public class DBUtils {
      * @return Cursor including episodes with show title, network, airtime and
      *         posterpath.
      */
-    public static Cursor getRecentEpisodes(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    public static Cursor getRecentEpisodes(boolean isOnlyUnwatched, Context context) {
+        String[][] args = buildActivityQuery(UpcomingQuery.QUERY_RECENT, isOnlyUnwatched, context);
+
+        return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
+                UpcomingQuery.PROJECTION, args[0][0], args[1], UpcomingQuery.SORTING_RECENT);
+    }
+
+    /**
+     * Returns an array of size 2. The built query is stored in {@code [0][0]},
+     * the built selection args in {@code [1]}.
+     * 
+     * @param query
+     * @param isOnlyUnwatched
+     * @param context
+     * @return
+     */
+    private static String[][] buildActivityQuery(String query, boolean isOnlyUnwatched,
+            Context context) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        // calc time threshold
         long fakeNow = Utils.getFakeCurrentTime(prefs);
         // go an hour back in time, so episodes move to recent one hour late
         fakeNow -= DateUtils.HOUR_IN_MILLIS;
         final String recentThreshold = String.valueOf(fakeNow);
-        String query = UpcomingQuery.QUERY_RECENT;
 
-        boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
+        // build selection args
         String[] selectionArgs;
+        boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
         if (isOnlyFavorites) {
             query += UpcomingQuery.SELECTION_ONLYFAVORITES;
             selectionArgs = new String[] {
@@ -174,8 +220,25 @@ public class DBUtils {
             };
         }
 
-        return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
-                UpcomingQuery.PROJECTION, query, selectionArgs, UpcomingQuery.SORTING_RECENT);
+        // append nospecials selection if necessary
+        boolean isNoSpecials = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES,
+                false);
+        if (isNoSpecials) {
+            query += UpcomingQuery.SELECTION_NOSPECIALS;
+        }
+
+        // append unwatched selection if necessary
+        if (isOnlyUnwatched) {
+            query += UpcomingQuery.SELECTION_NOWATCHED;
+        }
+
+        // build result array
+        String[][] results = new String[2][];
+        results[0] = new String[] {
+            query
+        };
+        results[1] = selectionArgs;
+        return results;
     }
 
     /**
@@ -236,7 +299,7 @@ public class DBUtils {
             final int season, final int episode, final boolean isAdd, final TraktAction actiontype) {
         // check for valid credentials here, not worth building up a whole
         // AsyncTask to do that
-        if (!ShareUtils.isTraktCredentialsValid(context)) {
+        if (!Utils.isTraktCredentialsValid(context)) {
             return;
         }
 

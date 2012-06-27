@@ -4,10 +4,14 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.WelcomeDialogFragment;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -15,13 +19,8 @@ import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -34,6 +33,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.BaseColumns;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -86,10 +86,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private static final int CONTEXT_UNHIDE = 207;
 
-    private static final int CONFIRM_DELETE_DIALOG = 304;
-
-    private static final int SORT_DIALOG = 306;
-
     private static final int LOADER_ID = 900;
 
     // Background Task States
@@ -120,9 +116,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
     private SlowAdapter mAdapter;
 
-    private Constants.ShowSorting mSorting;
-
-    private long mToDeleteId;
+    private ShowSorting mSorting;
 
     private boolean mIsPreventLoaderRestart;
 
@@ -207,33 +201,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     protected void onStart() {
         super.onStart();
         AnalyticsUtils.getInstance(this).trackPageView("/Shows");
-
-        if (Utils.isNetworkConnected(this)) {
-            final SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(getApplicationContext());
-
-            // auto-update only on allowed connection
-            final boolean isAutoUpdateWlanOnly = prefs.getBoolean(
-                    SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
-            if (!isAutoUpdateWlanOnly || Utils.isWifiConnected(this)) {
-
-                // auto-update
-                final boolean isAutoUpdateEnabled = prefs.getBoolean(
-                        SeriesGuidePreferences.KEY_AUTOUPDATE, true);
-                if (isAutoUpdateEnabled) {
-
-                    // auto-update if at least 15mins have passed since last one
-                    long now = System.currentTimeMillis();
-                    final long previousUpdateTime = prefs.getLong(
-                            SeriesGuidePreferences.KEY_LASTUPDATE, 0);
-                    final boolean isTime = (now - previousUpdateTime) > 15 * DateUtils.MINUTE_IN_MILLIS;
-
-                    if (isTime && !TaskManager.getInstance(this).isUpdateTaskRunning(false)) {
-                        performUpdateTask(false, null);
-                    }
-                }
-            }
-        }
     }
 
     @Override
@@ -300,53 +267,11 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         }
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case CONFIRM_DELETE_DIALOG:
-                return new AlertDialog.Builder(this).setMessage(getString(R.string.confirm_delete))
-                        .setPositiveButton(getString(R.string.delete_show), new OnClickListener() {
-
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                final ProgressDialog progress = new ProgressDialog(
-                                        ShowsActivity.this);
-                                progress.setCancelable(false);
-                                progress.show();
-
-                                new Thread(new Runnable() {
-                                    public void run() {
-                                        DBUtils.deleteShow(getApplicationContext(),
-                                                String.valueOf(mToDeleteId));
-                                        if (progress.isShowing()) {
-                                            progress.dismiss();
-                                        }
-                                    }
-                                }).start();
-                            }
-                        }).setNegativeButton(getString(R.string.dontdelete_show), null).create();
-            case SORT_DIALOG:
-                final CharSequence[] items = getResources().getStringArray(R.array.shsorting);
-
-                return new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.pref_showsorting))
-                        .setSingleChoiceItems(items, mSorting.index(),
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int item) {
-                                        SharedPreferences.Editor prefEditor = PreferenceManager
-                                                .getDefaultSharedPreferences(
-                                                        getApplicationContext()).edit();
-                                        prefEditor
-                                                .putString(
-                                                        SeriesGuidePreferences.KEY_SHOWSSORTORDER,
-                                                        (getResources()
-                                                                .getStringArray(R.array.shsortingData))[item]);
-                                        prefEditor.commit();
-                                        removeDialog(SORT_DIALOG);
-                                    }
-                                }).create();
-        }
-        return null;
+    private void showDeleteDialog(long showId) {
+        FragmentManager fm = getSupportFragmentManager();
+        ConfirmDeleteDialogFragment deleteDialog = ConfirmDeleteDialogFragment.newInstance(String
+                .valueOf(showId));
+        deleteDialog.show(fm, "fragment_delete");
     }
 
     @Override
@@ -428,8 +353,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 fireTrackerEvent("Delete show");
 
                 if (!TaskManager.getInstance(this).isUpdateTaskRunning(true)) {
-                    mToDeleteId = info.id;
-                    showDialog(CONFIRM_DELETE_DIALOG);
+                    showDeleteDialog(info.id);
                 }
                 return true;
             case CONTEXT_UPDATESHOW_ID:
@@ -467,6 +391,10 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.menu_quickcheckin: {
+                startActivity(new Intent(this, CheckinActivity.class));
+                return true;
+            }
             case R.id.menu_search:
                 fireTrackerEvent("Search");
 
@@ -486,7 +414,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             case R.id.menu_showsortby:
                 fireTrackerEvent("Sort shows");
 
-                showDialog(SORT_DIALOG);
+                showSortDialog();
                 return true;
             case R.id.menu_updateart:
                 fireTrackerEvent("Fetch missing posters");
@@ -544,6 +472,14 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 return super.onOptionsItemSelected(item);
             }
         }
+    }
+
+    private void showSortDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        SortDialogFragment sortDialog = SortDialogFragment.newInstance(R.array.shsorting,
+                R.array.shsortingData, mSorting.index(),
+                SeriesGuidePreferences.KEY_SHOW_SORT_ORDER, R.string.pref_showsorting);
+        sortDialog.show(fm, "fragment_sort");
     }
 
     @Override
@@ -731,12 +667,12 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         onNavigationItemSelected(filterId, filterId);
     }
 
-    final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
+    private final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
 
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             boolean isAffectingChange = false;
 
-            if (key.equals(SeriesGuidePreferences.KEY_SHOWSSORTORDER)) {
+            if (key.equals(SeriesGuidePreferences.KEY_SHOW_SORT_ORDER)) {
                 updateSorting(sharedPreferences);
                 isAffectingChange = true;
             } else if (key.equals(SeriesGuidePreferences.KEY_UPCOMING_LIMIT)) {
@@ -793,28 +729,25 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     }
 
     /**
-     * Fetch the sorting preference and store it in this class.
+     * Fetches the sorting preference and stores it in {@code mSorting}.
      * 
      * @param prefs
      * @return Returns true if the value changed, false otherwise.
      */
     private boolean updateSorting(SharedPreferences prefs) {
-        final Constants.ShowSorting oldSorting = mSorting;
-        final CharSequence[] items = getResources().getStringArray(R.array.shsortingData);
-        final String sortsetting = prefs.getString(SeriesGuidePreferences.KEY_SHOWSSORTORDER,
-                "favorites");
+        final ShowSorting oldSorting = mSorting;
 
-        for (int i = 0; i < items.length; i++) {
-            if (sortsetting.equals(items[i])) {
-                mSorting = Constants.ShowSorting.values()[i];
-                break;
-            }
+        mSorting = ShowSorting.fromValue(prefs.getString(
+                SeriesGuidePreferences.KEY_SHOW_SORT_ORDER, ShowSorting.ALPHABETIC.value()));
+
+        if (oldSorting != mSorting) {
+            AnalyticsUtils.getInstance(ShowsActivity.this).trackEvent("Shows", "Sorting",
+                    mSorting.name(), 0);
+
+            return true;
+        } else {
+            return false;
         }
-
-        AnalyticsUtils.getInstance(ShowsActivity.this).trackEvent("Shows", "Sorting",
-                mSorting.name(), 0);
-
-        return oldSorting != mSorting;
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -1002,7 +935,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
             // airday
             String[] values = Utils.parseMillisecondsToTime(mCursor.getLong(ShowsQuery.AIRSTIME),
-                    mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), ShowsActivity.this);
+                    mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), mContext);
             viewHolder.airsTime.setText(values[1] + " " + values[0]);
 
             // set poster only when not busy scrolling
@@ -1022,7 +955,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         }
     }
 
-    public final class ViewHolder {
+    static class ViewHolder {
 
         public TextView name;
 

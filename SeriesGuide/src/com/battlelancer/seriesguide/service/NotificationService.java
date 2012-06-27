@@ -9,7 +9,6 @@ import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.seriesguide.util.Utils.SGChannel;
 import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.app.AlarmManager;
@@ -21,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.text.format.DateUtils;
@@ -65,8 +65,10 @@ public class NotificationService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        // unschedule notification service wake-ups for disabled notifications
+        // and non-supporters
         if (!prefs.getBoolean(SeriesGuidePreferences.KEY_NOTIFICATIONS_ENABLED, true)
-                || Utils.getChannel(this) == SGChannel.STABLE) {
+                || !Utils.isSupporterChannel(this)) {
             // cancel any pending alarm
             AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent i = new Intent(this, OnAlarmReceiver.class);
@@ -142,7 +144,24 @@ public class NotificationService extends IntentService {
 
             }
 
-            nb.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS);
+            // notification sound
+            final String ringtoneUri = prefs.getString(SeriesGuidePreferences.KEY_RINGTONE,
+                    "content://settings/system/notification_sound");
+            // If the string is empty, the user chose silent. So only set a
+            // sound if necessary.
+            if (ringtoneUri.length() != 0) {
+                nb.setSound(Uri.parse(ringtoneUri));
+            }
+
+            // vibration
+            final boolean isVibrating = prefs.getBoolean(SeriesGuidePreferences.KEY_VIBRATE, false);
+            if (isVibrating) {
+                nb.setVibrate(new long[] {
+                        0, 100, 200, 100, 100, 100
+                });
+            }
+
+            nb.setDefaults(Notification.DEFAULT_LIGHTS);
             nb.setWhen(System.currentTimeMillis());
             nb.setAutoCancel(true);
             nb.setTicker(tickerText);

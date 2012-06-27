@@ -6,7 +6,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.util.ShareUtils.TraktCredentialsDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -74,7 +74,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected Integer doInBackground(Void... params) {
-        if (!ShareUtils.isTraktCredentialsValid(mContext)) {
+        if (!Utils.isTraktCredentialsValid(mContext)) {
             return FAILED_CREDENTIALS;
         }
 

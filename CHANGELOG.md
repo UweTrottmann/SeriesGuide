@@ -5,11 +5,57 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 2.6.1 *(in development)*
+Version 2.7 *(in development)*
 --------------------------------
 
-* New theme. Old ICS Base theme accessible via settings.
-* Support for trakt advanced 10-heart ratings.
+* FEATURE Quickly check into shows from the main screen.
+* FEATURE Add notification settings for vibrating (thus requiring new VIBRATE permission) and ringtone selection.
+* FEATURE Configuration for list widgets: choose between upcoming or recent episodes (only SeriesGuide X), hide watched episodes.
+* FEATURE More filter options for activity screen (hide watched, special episodes)
+
+### Detailed changes:
+
+#### 2.6.15beta (2012-06-25)
+
+* FIX Crash on pre-3.0 devices in overview screen on small screen devices.
+
+#### 2.6.14beta (2012-06-24)
+
+* FEATURE Display remaining unseen episodes in overview in portrait mode.
+* TWEAK Auto-update when launching any part of the app.
+* TWEAK Hide episodes with no air date from Recent.
+* FIX Do not display hidden shows on check in screen.
+
+#### 2.6.13beta (2012-06-09)
+
+* NOTICE Please re-add your list widgets!
+* FEATURE Quickly check into shows from the main screen.
+* FEATURE More filter options for activity screen (hide watched, special episodes)
+* TWEAK Let most of the AsyncTasks run in parallel to speed up response times.
+* FIX List widget configuration used layout ids which resulted in crashes on new releases.
+* FIX List widgets do not crash the app on an invalid configuration anymore.
+
+#### 2.6.12beta (2012-06-02)
+
+* FEATURE Configuration for widgets: choose between upcoming or recent episodes (only SeriesGuide X), hide watched episodes.
+* TWEAK Remove sorting preferences from settings screen (still available in seasons and episode lists).
+* TWEAK Remove Paypal link.
+* FIX New website url in About dialog.
+
+#### 2.6.11beta (2012-05-27)
+
+* FEATURE Add notification settings for vibrating (thus requiring new VIBRATE permission) and ringtone selection.
+* TWEAK Nicer loading behavior in shows overview screens.
+* TWEAK No initial notification toast when auto-updating.
+* TWEAK A lot of code cleanup and restructuring, see commit logs.
+* FIX Updated to ActionBarSherlock 4.1
+* FIX Updated to ViewPagerIndicator 2.3.1
+
+Version 2.6.1 *(2012-05-04)*
+--------------------------------
+
+* FEATURE New theme. Old ICS Base theme accessible via settings.
+* FEATURE Support for trakt advanced 10-heart ratings.
 
 ### Detailed changes:
 
