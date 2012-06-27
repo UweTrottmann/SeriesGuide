@@ -54,8 +54,19 @@ public class TaskManager {
         }
     }
 
-    public synchronized void tryUpdateTask(UpdateTask task, int messageId) {
-        if (!isUpdateTaskRunning(true)) {
+    /**
+     * Checks if an {@link UpdateTask} is already running. If yes, a warning can
+     * be displayed by setting displayWarning. If not the given
+     * {@link UpdateTask} is stored and executed. If messageId is not -1 this
+     * string resource will be displayed as a toast after the {@link UpdateTask}
+     * is started.
+     * 
+     * @param task
+     * @param displayWarning
+     * @param messageId
+     */
+    public synchronized void tryUpdateTask(UpdateTask task, boolean displayWarning, int messageId) {
+        if (!isUpdateTaskRunning(displayWarning)) {
             mUpdateTask = task;
             task.execute();
             if (messageId != -1) {
