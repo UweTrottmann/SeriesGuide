@@ -366,7 +366,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage"><b>BUG</b>\n- Fix crash on pre-3.0 devices in overview screen, sorry guys!\n\n- Hide hidden shows from check in screen (thanks Richard for reporting this).\n\n- Remaining episodes counter in overview (single pane mode only).\n\n- Auto-Update wherever entering the app, no need to return to the home screen.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed changelog</a>\n\n</string>
+    <string name="betamessage"><b>More intelligence</b>\n- Update shows whose overview screen is used more often.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed changelog</a>\n\n</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
