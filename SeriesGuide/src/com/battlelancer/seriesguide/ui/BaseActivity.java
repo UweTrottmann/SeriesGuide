@@ -102,9 +102,9 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
                             SeriesGuidePreferences.KEY_LASTUPDATE, 0);
                     final boolean isTime = (now - previousUpdateTime) > 15 * DateUtils.MINUTE_IN_MILLIS;
 
-                    if (isTime && !TaskManager.getInstance(this).isUpdateTaskRunning(false)) {
-                        TaskManager.getInstance(this)
-                                .tryUpdateTask(new UpdateTask(false, this), -1);
+                    if (isTime) {
+                        TaskManager.getInstance(this).tryUpdateTask(new UpdateTask(false, this),
+                                false, -1);
                     }
                 }
             }

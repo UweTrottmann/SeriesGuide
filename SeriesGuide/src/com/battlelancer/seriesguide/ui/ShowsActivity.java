@@ -511,7 +511,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 }, 0, "", this);
             }
         }
-        TaskManager.getInstance(this).tryUpdateTask(task, messageId);
+        TaskManager.getInstance(this).tryUpdateTask(task, true, messageId);
     }
 
     private class FetchPosterTask extends AsyncTask<Void, Void, Integer> {

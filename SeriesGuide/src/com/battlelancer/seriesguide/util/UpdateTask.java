@@ -40,27 +40,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
+enum UpdateResult {
+    SUCCESS, SILENT_SUCCESS, ERROR, OFFLINE, CANCELLED;
+}
+
+enum UpdateType {
+    SINGLE, DELTA, FULL
+}
+
+public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
 
     private static final String TAG = "UpdateTask";
 
-    private static final int UPDATE_SUCCESS = 100;
-
-    private static final int UPDATE_ERROR = 102;
-
-    private static final int UPDATE_OFFLINE = 103;
-
-    private static final int UPDATE_CANCELLED = 104;
-
-    public String[] mShows = null;
-
-    public String mFailedShows = "";
-
     private Context mAppContext;
 
-    public final AtomicInteger mUpdateCount = new AtomicInteger();
+    private String[] mShows = null;
 
-    private boolean mIsFullUpdate = false;
+    private final AtomicInteger mUpdateCount = new AtomicInteger();
+
+    private String mFailedShows = "";
+
+    private UpdateType mUpdateType;
 
     private String mCurrentShowName;
 
@@ -72,14 +72,27 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
     public UpdateTask(boolean isFullUpdate, Context context) {
         mAppContext = context.getApplicationContext();
-        mIsFullUpdate = isFullUpdate;
+        if (isFullUpdate) {
+            mUpdateType = UpdateType.FULL;
+        } else {
+            mUpdateType = UpdateType.DELTA;
+        }
     }
 
-    public UpdateTask(String[] shows, int index, String failedShows, Context context) {
+    public UpdateTask(String showId, Context context) {
         mAppContext = context.getApplicationContext();
-        mShows = shows;
+        mShows = new String[] {
+            showId
+        };
+        mUpdateType = UpdateType.SINGLE;
+    }
+
+    public UpdateTask(String[] showIds, int index, String failedShows, Context context) {
+        mAppContext = context.getApplicationContext();
+        mShows = showIds;
         mUpdateCount.set(index);
         mFailedShows = failedShows;
+        mUpdateType = UpdateType.DELTA;
     }
 
     @SuppressWarnings("deprecation")
@@ -115,43 +128,43 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     @Override
-    protected Integer doInBackground(Void... params) {
+    protected UpdateResult doInBackground(Void... params) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mAppContext);
         final ContentResolver resolver = mAppContext.getContentResolver();
         final AtomicInteger updateCount = mUpdateCount;
         final boolean isAutoUpdateWlanOnly = prefs.getBoolean(
                 SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
-        long currentTime = 0;
+        long currentTime = System.currentTimeMillis();
 
         // build a list of shows to update
         if (mShows == null) {
+            switch (mUpdateType) {
+                case FULL:
+                    // get all show IDs for a full update
+                    final Cursor shows = resolver.query(Shows.CONTENT_URI, new String[] {
+                        Shows._ID
+                    }, null, null, null);
 
-            currentTime = System.currentTimeMillis();
+                    mShows = new String[shows.getCount()];
+                    int i = 0;
+                    while (shows.moveToNext()) {
+                        mShows[i] = shows.getString(0);
+                        i++;
+                    }
 
-            if (mIsFullUpdate) {
-
-                // get all show IDs for a full update
-                final Cursor shows = resolver.query(Shows.CONTENT_URI, new String[] {
-                    Shows._ID
-                }, null, null, null);
-
-                mShows = new String[shows.getCount()];
-                int i = 0;
-                while (shows.moveToNext()) {
-                    mShows[i] = shows.getString(0);
-                    i++;
-                }
-
-                shows.close();
-
-            } else {
-                // get only shows which have not been updated for a certain time
-                mShows = TheTVDB.deltaUpdateShows(currentTime, prefs, mAppContext);
+                    shows.close();
+                    break;
+                case DELTA:
+                default:
+                    // get only shows which have not been updated for a certain
+                    // time
+                    mShows = TheTVDB.deltaUpdateShows(currentTime, prefs, mAppContext);
+                    break;
             }
         }
 
         final int maxProgress = mShows.length + 2;
-        int resultCode = UPDATE_SUCCESS;
+        UpdateResult resultCode = UpdateResult.SUCCESS;
         String id;
 
         // actually update the shows
@@ -159,12 +172,12 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             // skip ahead if we get cancelled or connectivity is
             // lost/forbidden
             if (isCancelled()) {
-                resultCode = UPDATE_CANCELLED;
+                resultCode = UpdateResult.CANCELLED;
                 break;
             }
             if (!Utils.isNetworkConnected(mAppContext)
                     || (isAutoUpdateWlanOnly && !Utils.isWifiConnected(mAppContext))) {
-                resultCode = UPDATE_OFFLINE;
+                resultCode = UpdateResult.OFFLINE;
                 break;
             }
 
@@ -177,12 +190,12 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                 // skip ahead if we get cancelled or connectivity is
                 // lost/forbidden
                 if (isCancelled()) {
-                    resultCode = UPDATE_CANCELLED;
+                    resultCode = UpdateResult.CANCELLED;
                     break;
                 }
                 if (!Utils.isNetworkConnected(mAppContext)
                         || (isAutoUpdateWlanOnly && !Utils.isWifiConnected(mAppContext))) {
-                    resultCode = UPDATE_OFFLINE;
+                    resultCode = UpdateResult.OFFLINE;
                     break;
                 }
 
@@ -193,7 +206,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
                     if (itry == 1) {
                         // failed twice, give up
                         fireTrackerEvent(e.getMessage());
-                        resultCode = UPDATE_ERROR;
+                        resultCode = UpdateResult.ERROR;
                         addFailedShow(mCurrentShowName);
                     }
                 }
@@ -202,43 +215,53 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             updateCount.incrementAndGet();
         }
 
-        // try to avoid renewing the search table as it is time consuming
-        if (updateCount.get() != 0 && mShows.length != 0) {
-            publishProgress(mShows.length, maxProgress);
-            TheTVDB.onRenewFTSTable(mAppContext);
+        // do not refresh search table and load trakt activity on each single
+        // auto update will run anyhow
+        if (mUpdateType != UpdateType.SINGLE) {
+            // try to avoid renewing the search table as it is time consuming
+            if (updateCount.get() > 0 && mShows.length > 0) {
+                publishProgress(mShows.length, maxProgress);
+                TheTVDB.onRenewFTSTable(mAppContext);
+            }
+
+            // mark episodes based on trakt activity
+            final UpdateResult traktResult = getTraktActivity(prefs, maxProgress, currentTime,
+                    isAutoUpdateWlanOnly);
+            // do not overwrite earlier failure codes
+            if (resultCode == UpdateResult.SUCCESS) {
+                resultCode = traktResult;
+            }
+
+            publishProgress(maxProgress, maxProgress);
+
+            // update the latest episodes
+            Utils.updateLatestEpisodes(mAppContext);
+
+            // store time of update if it was successful
+            if (resultCode == UpdateResult.SUCCESS) {
+                prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTUPDATE, currentTime).commit();
+            }
+        } else {
+            publishProgress(maxProgress, maxProgress);
         }
 
-        // mark episodes based on trakt activity
-        final int traktResult = getTraktActivity(prefs, maxProgress, currentTime,
-                isAutoUpdateWlanOnly);
-        // do not overwrite earlier failure codes
-        if (resultCode == UPDATE_SUCCESS) {
-            resultCode = traktResult;
-        }
-
-        publishProgress(maxProgress, maxProgress);
-
-        // update the latest episodes
-        Utils.updateLatestEpisodes(mAppContext);
-
-        // store time of update if it was successful
-        if (currentTime != 0 && resultCode == UPDATE_SUCCESS) {
-            prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTUPDATE, currentTime).commit();
+        if (mUpdateType == UpdateType.SINGLE && resultCode == UpdateResult.SUCCESS) {
+            resultCode = UpdateResult.SILENT_SUCCESS;
         }
 
         return resultCode;
     }
 
-    private int getTraktActivity(SharedPreferences prefs, int maxProgress, long currentTime,
-            boolean isAutoUpdateWlanOnly) {
+    private UpdateResult getTraktActivity(SharedPreferences prefs, int maxProgress,
+            long currentTime, boolean isAutoUpdateWlanOnly) {
         if (Utils.isTraktCredentialsValid(mAppContext)) {
             // return if we get cancelled or connectivity is lost/forbidden
             if (isCancelled()) {
-                return UPDATE_CANCELLED;
+                return UpdateResult.CANCELLED;
             }
             if (!Utils.isNetworkConnected(mAppContext)
                     || (isAutoUpdateWlanOnly && !Utils.isWifiConnected(mAppContext))) {
-                return UPDATE_OFFLINE;
+                return UpdateResult.OFFLINE;
             }
 
             publishProgress(maxProgress - 1, maxProgress);
@@ -253,7 +276,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             } catch (Exception e) {
                 fireTrackerEvent(e.getMessage());
                 Log.w(TAG, e);
-                return UPDATE_ERROR;
+                return UpdateResult.ERROR;
             }
 
             // get watched episodes from trakt
@@ -269,11 +292,11 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
             } catch (TraktException e) {
                 fireTrackerEvent(e.getMessage());
                 Log.w(TAG, e);
-                return UPDATE_ERROR;
+                return UpdateResult.ERROR;
             } catch (ApiException e) {
                 fireTrackerEvent(e.getMessage());
                 Log.w(TAG, e);
-                return UPDATE_ERROR;
+                return UpdateResult.ERROR;
             }
 
             // build an update batch
@@ -333,7 +356,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
 
         }
 
-        return UPDATE_SUCCESS;
+        return UpdateResult.SUCCESS;
     }
 
     private void setCurrentShowName(final ContentResolver resolver, String id) {
@@ -347,22 +370,22 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     @Override
-    protected void onPostExecute(Integer result) {
+    protected void onPostExecute(UpdateResult result) {
         String message = null;
         int length = 0;
         switch (result) {
-            case UPDATE_SUCCESS:
-                fireTrackerEvent("Success");
-
+            case SUCCESS:
                 message = mAppContext.getString(R.string.update_success);
                 length = Toast.LENGTH_SHORT;
-
+                // fall through one case here
+            case SILENT_SUCCESS:
+                fireTrackerEvent("Success");
                 break;
-            case UPDATE_ERROR:
+            case ERROR:
                 message = mAppContext.getString(R.string.update_saxerror);
                 length = Toast.LENGTH_LONG;
                 break;
-            case UPDATE_OFFLINE:
+            case OFFLINE:
                 fireTrackerEvent("Offline");
 
                 message = mAppContext.getString(R.string.update_offline);

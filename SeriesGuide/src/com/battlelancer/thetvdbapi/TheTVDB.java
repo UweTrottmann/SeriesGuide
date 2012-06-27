@@ -517,20 +517,50 @@ public class TheTVDB {
                 Shows._ID, Shows.LASTUPDATED
         }, null, null, null);
 
-        while (shows.moveToNext()) {
-            long lastUpdatedTime = shows.getLong(1);
-            if (currentTime - lastUpdatedTime > DateUtils.DAY_IN_MILLIS * updateAtLeastEvery) {
-                // add shows that are due for updating
-                updatableShowIds.add(shows.getString(0));
-            } else {
-                // add remaining ones to check-list for tvdb update function
-                existingShowIds.add(shows.getInt(0));
+        if (shows != null) {
+            while (shows.moveToNext()) {
+                long lastUpdatedTime = shows.getLong(1);
+                if (currentTime - lastUpdatedTime > DateUtils.DAY_IN_MILLIS * updateAtLeastEvery) {
+                    // add shows that are due for updating
+                    updatableShowIds.add(shows.getString(0));
+                } else {
+                    // add remaining ones to check-list for tvdb update function
+                    existingShowIds.add(shows.getInt(0));
+                }
             }
+
+            shows.close();
         }
 
-        shows.close();
-
         return updatableShowIds.toArray(new String[updatableShowIds.size()]);
+    }
+
+    /**
+     * Returns true if the given show has not been updated in the last 12 hours.
+     * 
+     * @param showId
+     * @param currentTime
+     * @param context
+     * @return
+     */
+    public static boolean isUpdateShow(String showId, long currentTime, Context context) {
+        final Cursor show = context.getContentResolver().query(Shows.buildShowUri(showId),
+                new String[] {
+                        Shows._ID, Shows.LASTUPDATED
+                }, null, null, null);
+
+        if (show != null) {
+            if (show.moveToFirst()) {
+                long lastUpdateTime = show.getLong(1);
+                if (currentTime - lastUpdateTime > DateUtils.HOUR_IN_MILLIS * 12) {
+                    return true;
+                }
+            }
+
+            show.close();
+        }
+
+        return false;
     }
 
     /**
