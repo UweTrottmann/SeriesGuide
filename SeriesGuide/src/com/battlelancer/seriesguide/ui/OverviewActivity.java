@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.thetvdbapi.TheTVDB;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -43,13 +44,17 @@ public class OverviewActivity extends BaseActivity {
     }
 
     private void onUpdate() {
-        final int showId = getIntent().getIntExtra(OverviewFragment.InitBundle.SHOW_TVDBID, -1);
+        final int showIdExtra = getIntent()
+                .getIntExtra(OverviewFragment.InitBundle.SHOW_TVDBID, -1);
 
         // only update this show if no global update is running
-        if (showId != -1 && !TaskManager.getInstance(this).isUpdateTaskRunning(false)) {
+        if (showIdExtra != -1 && !TaskManager.getInstance(this).isUpdateTaskRunning(false)) {
+            String showId = String.valueOf(showIdExtra);
+            boolean isTime = TheTVDB.isUpdateShow(showId, System.currentTimeMillis(), this);
 
             // look if we are online
-            if (Utils.isNetworkConnected(this)) {
+            if (isTime && Utils.isNetworkConnected(this)) {
+
                 final SharedPreferences prefs = PreferenceManager
                         .getDefaultSharedPreferences(getApplicationContext());
 
