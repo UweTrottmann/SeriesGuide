@@ -75,9 +75,18 @@ public class UpdateTask extends AsyncTask<Void, Integer, Integer> {
         mIsFullUpdate = isFullUpdate;
     }
 
-    public UpdateTask(String[] shows, int index, String failedShows, Context context) {
+    public UpdateTask(String showId, Context context) {
         mAppContext = context.getApplicationContext();
-        mShows = shows;
+        mShows = new String[] {
+            showId
+        };
+        mUpdateCount.set(0);
+        mFailedShows = "";
+    }
+
+    public UpdateTask(String[] showIds, int index, String failedShows, Context context) {
+        mAppContext = context.getApplicationContext();
+        mShows = showIds;
         mUpdateCount.set(index);
         mFailedShows = failedShows;
     }
