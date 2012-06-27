@@ -5,13 +5,14 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 2.7 *(in development)*
+Version 2.7 *(2012-06-27)*
 --------------------------------
 
 * FEATURE Quickly check into shows from the main screen.
 * FEATURE Add notification settings for vibrating (thus requiring new VIBRATE permission) and ringtone selection.
 * FEATURE Configuration for list widgets: choose between upcoming or recent episodes (only SeriesGuide X), hide watched episodes.
 * FEATURE More filter options for activity screen (hide watched, special episodes)
+* TWEAK Auto-update when launching any part of the app.
 
 ### Detailed changes:
 
