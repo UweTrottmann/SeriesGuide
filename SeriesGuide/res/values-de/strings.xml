@@ -120,7 +120,7 @@
   <string name="season_unaired">zukünftige</string>
   <string name="oneotherepisode">andere Folge</string>
   <string name="otherepisodes">andere Folgen</string>
-  <string name="remaining">%s remaining</string>
+  <string name="remaining">%s verbleibend</string>
   <string name="search_button">Suchen</string>
   <string name="search_hint_add">Serientitel</string>
   <string name="no_results">Keine Ergebnisse, versuchen Sie ganze Wörter.</string>
@@ -161,7 +161,7 @@
   <string name="pref_autoupdatesummary">Aktualisierung meiner Serien in regelmäßigen Abständen beim Start von SeriesGuide</string>
   <string name="pref_updatewifionly">Nur über Wi-Fi aktualisieren</string>
   <string name="about">Über SeriesGuide</string>
-  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="about_message">http://seriesgui.de - entwickelt von Uwe Trottmann.\n\nFür eine Übersicht über alle die dieses Projekt möglich machen, siehe\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">Empfehlen</string>
   <string name="clearGetGlueCredentials">Von GetGlue abmelden</string>
   <string name="clearGetGlueCredentialssummary">Deaktivieren Ihrer Verbindung zu GetGlue</string>
@@ -206,7 +206,7 @@
   <string name="share">Empfehlen</string>
   <string name="checkin">Einchecken</string>
   <string name="checkin_searchhint">Serientitel eingeben</string>
-  <string name="checkin_empty">No matching shows</string>
+  <string name="checkin_empty">Keine passenden Serien</string>
   <string name="checkin_hint">Geben Sie eine Nachricht ein (optional)</string>
   <string name="paste_episode">Folge einfügen</string>
   <string name="checkinsuccess">GetGlue-Einchecken erfolgreich.</string>
