@@ -367,7 +367,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage"><b>More intelligence</b>\n- Update shows whose overview screen is used more often.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed changelog</a>\n\n</string>
+    <string name="betamessage"><b>Jelly Bean!</b>\n- Use the new expandable notifications on Android 4.1 Jelly Bean.\n\n- Relayouted the list widget a little, removed visual border from all widgets making them flatter.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed changelog</a>\n\n</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
