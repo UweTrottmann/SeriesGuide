@@ -20,6 +20,7 @@
     <string name="sending">Sending…</string>
     <string name="done">Done</string>
     <string name="clear">Clear</string>
+    <string name="more">%s more</string>
 
     <plurals name="votes">
         <item quantity="one">%d vote</item>

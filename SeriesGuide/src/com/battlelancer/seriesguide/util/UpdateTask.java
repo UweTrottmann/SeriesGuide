@@ -113,7 +113,6 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
         // content view
         RemoteViews contentView = new RemoteViews(mAppContext.getPackageName(),
                 R.layout.update_notification);
-        contentView.setImageViewResource(R.id.image, icon);
         contentView.setTextViewText(R.id.text, mAppContext.getString(R.string.update_notification));
         contentView.setProgressBar(R.id.progressbar, 0, 0, true);
         mNotification.contentView = contentView;

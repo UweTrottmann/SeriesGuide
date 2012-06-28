@@ -12,6 +12,10 @@ Version 2.8 *(in development)*
 
 ### Detailed changes:
 
+#### 2.8.1beta (2012-06-28)
+
+* FEATURE Use the new expandable notifications on Android 4.1 Jelly Bean to display more content.
+
 #### 2.8beta (2012-06-27)
 
 * TWEAK Update single shows more often if their overview screen is used.
