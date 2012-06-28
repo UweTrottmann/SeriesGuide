@@ -1,3 +1,5 @@
+SeriesGuide as you know and love, with the bonus of supporting future development, more list widget options and notifications for favorite shows!
+
 If you want to support future development consider installing SeriesGuide X instead.
 
 Manage the progress of (re-)watching your favorite TV shows. Keep track of unseen episodes and share what you are watching with trakt.tv, GetGlue or any supported Android app like Google+, Twitter and Facebook.
