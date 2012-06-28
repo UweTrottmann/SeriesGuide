@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
+import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
@@ -27,9 +28,14 @@ import android.text.format.DateUtils;
 
 public class NotificationService extends IntentService {
 
+    private static final long[] VIBRATION_PATTERN = new long[] {
+            0, 100, 200, 100, 100, 100
+    };
+
     private static final String[] PROJECTION = new String[] {
             Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.FIRSTAIREDMS,
-            Shows.TITLE, Shows.NETWORK, Episodes.NUMBER, Episodes.SEASON, Shows.POSTER
+            Shows.TITLE, Shows.NETWORK, Episodes.NUMBER, Episodes.SEASON, Shows.POSTER,
+            Episodes.OVERVIEW
     };
 
     // by airdate, then by show, then lowest number first
@@ -56,12 +62,16 @@ public class NotificationService extends IntentService {
         int SEASON = 6;
 
         int POSTER = 7;
+
+        int OVERVIEW = 8;
     }
 
     public NotificationService() {
         super("AlarmManagerService");
     }
 
+    @SuppressWarnings("deprecation")
+    @TargetApi(16)
     @Override
     protected void onHandleIntent(Intent intent) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -106,7 +116,11 @@ public class NotificationService extends IntentService {
             CharSequence contentText = "";
             PendingIntent contentIntent = null;
 
-            NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
+            // notification sound
+            final String ringtoneUri = prefs.getString(SeriesGuidePreferences.KEY_RINGTONE,
+                    "content://settings/system/notification_sound");
+            // vibration
+            final boolean isVibrating = prefs.getBoolean(SeriesGuidePreferences.KEY_VIBRATE, false);
 
             if (count == 1) {
                 // notify in detail about one episode
@@ -129,9 +143,6 @@ public class NotificationService extends IntentService {
                 notificationIntent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID,
                         upcomingEpisodes.getInt(NotificationQuery._ID));
                 contentIntent = PendingIntent.getActivity(context, 2, notificationIntent, 0);
-
-                String posterPath = upcomingEpisodes.getString(NotificationQuery.POSTER);
-                nb.setLargeIcon(ImageCache.getInstance(context).getThumb(posterPath, false));
             } else if (count > 1) {
                 // notify about multiple episodes
                 tickerText = getString(R.string.upcoming_episodes);
@@ -141,38 +152,86 @@ public class NotificationService extends IntentService {
 
                 Intent notificationIntent = new Intent(context, UpcomingRecentActivity.class);
                 contentIntent = PendingIntent.getActivity(context, 3, notificationIntent, 0);
-
             }
 
-            // notification sound
-            final String ringtoneUri = prefs.getString(SeriesGuidePreferences.KEY_RINGTONE,
-                    "content://settings/system/notification_sound");
-            // If the string is empty, the user chose silent. So only set a
-            // sound if necessary.
-            if (ringtoneUri.length() != 0) {
-                nb.setSound(Uri.parse(ringtoneUri));
-            }
+            // build the notification
+            Notification notification;
+            if (Utils.isHoneycombOrHigher()) {
+                Notification.Builder anb = new Notification.Builder(context);
 
-            // vibration
-            final boolean isVibrating = prefs.getBoolean(SeriesGuidePreferences.KEY_VIBRATE, false);
-            if (isVibrating) {
-                nb.setVibrate(new long[] {
-                        0, 100, 200, 100, 100, 100
-                });
-            }
+                if (count == 1) {
+                    upcomingEpisodes.moveToFirst();
+                    String posterPath = upcomingEpisodes.getString(NotificationQuery.POSTER);
+                    anb.setLargeIcon(ImageCache.getInstance(context).getThumb(posterPath, false));
 
-            nb.setDefaults(Notification.DEFAULT_LIGHTS);
-            nb.setWhen(System.currentTimeMillis());
-            nb.setAutoCancel(true);
-            nb.setTicker(tickerText);
-            nb.setContentTitle(contentTitle);
-            nb.setContentText(contentText);
-            nb.setContentIntent(contentIntent);
-            nb.setSmallIcon(R.drawable.ic_notification);
+                    if (Utils.isJellyBeanOrHigher()) {
+                        String episodeSummary = upcomingEpisodes
+                                .getString(NotificationQuery.OVERVIEW);
+                        anb.setStyle(new Notification.BigTextStyle().bigText(episodeSummary)
+                                .setSummaryText(contentText));
+                    }
+                } else {
+                    if (Utils.isJellyBeanOrHigher()) {
+                        // anb.setStyle(new
+                        // Notification.InboxStyle().addLine("Episode 1"));
+                    }
+                }
+
+                // If the string is empty, the user chose silent. So only set a
+                // sound if necessary.
+                if (ringtoneUri.length() != 0) {
+                    anb.setSound(Uri.parse(ringtoneUri));
+                }
+                if (isVibrating) {
+                    anb.setVibrate(VIBRATION_PATTERN);
+                }
+                anb.setDefaults(Notification.DEFAULT_LIGHTS);
+                anb.setWhen(System.currentTimeMillis());
+                anb.setAutoCancel(true);
+                anb.setTicker(tickerText);
+                anb.setContentTitle(contentTitle);
+                anb.setContentText(contentText);
+                anb.setContentIntent(contentIntent);
+                anb.setSmallIcon(R.drawable.ic_notification);
+
+                if (Utils.isJellyBeanOrHigher()) {
+                    anb.setPriority(Notification.PRIORITY_DEFAULT);
+                    notification = anb.build();
+                } else {
+                    notification = anb.getNotification();
+                }
+            } else {
+                NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
+
+                if (count == 1) {
+                    upcomingEpisodes.moveToFirst();
+                    String posterPath = upcomingEpisodes.getString(NotificationQuery.POSTER);
+                    nb.setLargeIcon(ImageCache.getInstance(context).getThumb(posterPath, false));
+                }
+
+                // If the string is empty, the user chose silent. So only set a
+                // sound if necessary.
+                if (ringtoneUri.length() != 0) {
+                    nb.setSound(Uri.parse(ringtoneUri));
+                }
+                if (isVibrating) {
+                    nb.setVibrate(VIBRATION_PATTERN);
+                }
+                nb.setDefaults(Notification.DEFAULT_LIGHTS);
+                nb.setWhen(System.currentTimeMillis());
+                nb.setAutoCancel(true);
+                nb.setTicker(tickerText);
+                nb.setContentTitle(contentTitle);
+                nb.setContentText(contentText);
+                nb.setContentIntent(contentIntent);
+                nb.setSmallIcon(R.drawable.ic_notification);
+
+                notification = nb.getNotification();
+            }
 
             // use string resource id, always unique within app
             NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            nm.notify(R.string.upcoming_show, nb.getNotification());
+            nm.notify(R.string.upcoming_show, notification);
         }
 
         // set an alarm to wake us up later to notify about future episodes
