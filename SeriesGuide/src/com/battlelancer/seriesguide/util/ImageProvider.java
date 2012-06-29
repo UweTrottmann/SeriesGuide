@@ -21,7 +21,6 @@ import com.battlelancer.seriesguide.R;
 
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
-import android.content.ComponentCallbacks;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -115,21 +114,6 @@ public class ImageProvider {
                         Log.v(TAG, "evicting oldest half of thumbnail cache");
                         mCache.trimToSize(mCache.size() / 2);
                     }
-                }
-            });
-        } else {
-            context.registerComponentCallbacks(new ComponentCallbacks() {
-
-                @Override
-                public void onLowMemory() {
-                    // called after processes have already been killed, but
-                    // clean up anyhow
-                    Log.v(TAG, "evicting entire thumbnail cache");
-                    mCache.evictAll();
-                }
-
-                @Override
-                public void onConfigurationChanged(Configuration newConfig) {
                 }
             });
         }
