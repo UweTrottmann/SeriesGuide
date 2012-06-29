@@ -31,25 +31,22 @@ import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FetchArtTask;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
@@ -70,8 +67,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     private boolean mDualPane;
 
     private Series mShow;
-
-    private ImageCache imageCache;
 
     protected long mEpisodeId;
 
@@ -141,8 +136,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         if (getShowId() == 0) {
             getActivity().finish();
         }
-
-        imageCache = ImageCache.getInstance(getActivity());
 
         onLoadShow();
 
@@ -248,6 +241,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         return getArguments().getInt(InitBundle.SHOW_TVDBID);
     }
 
+    @SuppressWarnings("deprecation")
+    @TargetApi(16)
     private void onLoadShow() {
         mShow = DBUtils.getShow(getActivity(), String.valueOf(getShowId()));
         if (mShow == null) {
@@ -273,17 +268,13 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         }
 
         // poster
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ECLAIR_MR1) {
-            // using alpha seems not to work on eclair, so only set a
-            // background on froyo+ then
-            final ImageView background = (ImageView) getActivity().findViewById(R.id.background);
-            Bitmap bg = imageCache.get(mShow.getPoster());
-            if (bg != null) {
-                BitmapDrawable drawable = new BitmapDrawable(getResources(), bg);
-                drawable.setAlpha(50);
-                background.setImageDrawable(drawable);
-            }
+        final ImageView background = (ImageView) getView().findViewById(R.id.background);
+        if (Utils.isJellyBeanOrHigher()) {
+            background.setImageAlpha(50);
+        } else {
+            background.setAlpha(50);
         }
+        ImageProvider.getInstance(getActivity()).loadPoster(background, mShow.getPoster(), false);
 
         // air time and network
         String timeAndNetwork = "";
