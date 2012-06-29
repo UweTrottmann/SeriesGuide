@@ -35,6 +35,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.widget.RemoteViews;
 
 public class AppWidget extends AppWidgetProvider {
@@ -116,7 +117,6 @@ public class AppWidget extends AppWidgetProvider {
                 views.addView(R.id.LinearLayoutWidget, item);
             } else {
                 String value;
-                Bitmap poster;
 
                 int viewsToAdd = Integer.valueOf(limit);
                 while (upcomingEpisodes.moveToNext() && viewsToAdd != 0) {
@@ -151,9 +151,8 @@ public class AppWidget extends AppWidgetProvider {
 
                     // show poster
                     value = upcomingEpisodes.getString(UpcomingQuery.SHOW_POSTER);
-                    poster = null;
-                    if (value.length() != 0) {
-                        poster = imageCache.getThumb(value, false);
+                    if (!TextUtils.isEmpty(value)) {
+                        final Bitmap poster = imageCache.getThumb(value, false);
 
                         if (poster != null) {
                             item.setImageViewBitmap(R.id.widgetPoster, poster);
