@@ -7,7 +7,6 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.thetvdbapi.ImageCache;
 import com.jakewharton.trakt.ServiceManager;
 
 import android.annotation.TargetApi;
@@ -17,7 +16,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -28,7 +26,6 @@ import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
@@ -549,7 +546,7 @@ public class Utils {
     }
 
     public static boolean isExtStorageAvailable() {
-        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
+        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
     }
 
     public static boolean isNetworkConnected(Context context) {
@@ -751,33 +748,6 @@ public class Utils {
             return context.getString(R.string.specialseason);
         } else {
             return context.getString(R.string.season) + " " + seasonNumber;
-        }
-    }
-
-    /**
-     * If {@code isBusy} is {@code true}, then the image is only loaded if it is
-     * in memory. In every other case a place-holder is shown.
-     * 
-     * @param poster
-     * @param path
-     * @param isBusy
-     * @param context
-     */
-    public static void setPosterBitmap(ImageView poster, String path, boolean isBusy,
-            Context context) {
-        Bitmap bitmap = null;
-        if (path.length() != 0) {
-            bitmap = ImageCache.getInstance(context).getThumb(path, isBusy);
-        }
-
-        if (bitmap != null) {
-            poster.setImageBitmap(bitmap);
-            poster.setTag(null);
-        } else {
-            // set placeholder
-            poster.setImageResource(R.drawable.show_generic);
-            // Non-null tag means the view still needs to load it's data
-            poster.setTag(path);
         }
     }
 

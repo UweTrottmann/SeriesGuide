@@ -13,6 +13,7 @@ import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.WelcomeDialogFragment;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
@@ -46,8 +47,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.animation.AnimationUtils;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
@@ -62,10 +61,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollListener,
-        LoaderManager.LoaderCallbacks<Cursor>, ActionBar.OnNavigationListener {
+public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>,
+        ActionBar.OnNavigationListener {
 
-    private boolean mBusy;
+    // private boolean mBusy;
 
     private static final int UPDATE_SUCCESS = 100;
 
@@ -182,7 +181,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 startActivity(i);
             }
         });
-        list.setOnScrollListener(this);
         View emptyView = findViewById(R.id.empty);
         if (emptyView != null) {
             list.setEmptyView(emptyView);
@@ -877,7 +875,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 throw new IllegalStateException("couldn't move cursor to position " + position);
             }
 
-            ViewHolder viewHolder;
+            final ViewHolder viewHolder;
 
             if (convertView == null) {
                 convertView = mLayoutInflater.inflate(mLayout, null);
@@ -905,7 +903,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             viewHolder.name.setText(mCursor.getString(ShowsQuery.TITLE));
             viewHolder.network.setText(mCursor.getString(ShowsQuery.NETWORK));
 
-            boolean isFavorited = mCursor.getInt(ShowsQuery.FAVORITE) == 1;
+            final boolean isFavorited = mCursor.getInt(ShowsQuery.FAVORITE) == 1;
             viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
 
             // next episode info
@@ -933,22 +931,14 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             }
 
             // airday
-            String[] values = Utils.parseMillisecondsToTime(mCursor.getLong(ShowsQuery.AIRSTIME),
+            final String[] values = Utils.parseMillisecondsToTime(
+                    mCursor.getLong(ShowsQuery.AIRSTIME),
                     mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), mContext);
             viewHolder.airsTime.setText(values[1] + " " + values[0]);
 
-            // set poster only when not busy scrolling
-            final String path = mCursor.getString(ShowsQuery.POSTER);
-            if (!mBusy) {
-                // load poster
-                Utils.setPosterBitmap(viewHolder.poster, path, false, null);
-
-                // Null tag means the view has the correct data
-                viewHolder.poster.setTag(null);
-            } else {
-                // only load in-memory poster
-                Utils.setPosterBitmap(viewHolder.poster, path, true, null);
-            }
+            // set poster
+            final String imagePath = mCursor.getString(ShowsQuery.POSTER);
+            ImageProvider.getInstance(mContext).loadPosterThumb(viewHolder.poster, imagePath);
 
             return convertView;
         }
@@ -973,34 +963,5 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         public View favorited;
 
         public View collected;
-    }
-
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
-            int totalItemCount) {
-    }
-
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-        switch (scrollState) {
-            case OnScrollListener.SCROLL_STATE_IDLE:
-                mBusy = false;
-
-                int count = view.getChildCount();
-                for (int i = 0; i < count; i++) {
-                    final ViewHolder holder = (ViewHolder) view.getChildAt(i).getTag();
-                    final ImageView poster = holder.poster;
-                    if (poster.getTag() != null) {
-                        Utils.setPosterBitmap(poster, (String) poster.getTag(), false, null);
-                        poster.setTag(null);
-                    }
-                }
-
-                break;
-            case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
-                mBusy = false;
-                break;
-            case OnScrollListener.SCROLL_STATE_FLING:
-                mBusy = true;
-                break;
-        }
     }
 }

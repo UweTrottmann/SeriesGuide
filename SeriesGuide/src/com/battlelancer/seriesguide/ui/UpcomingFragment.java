@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 
 import android.content.Context;
@@ -31,15 +32,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class UpcomingFragment extends ListFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, OnScrollListener {
+public class UpcomingFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int MARK_WATCHED_ID = 0;
 
@@ -48,8 +46,6 @@ public class UpcomingFragment extends ListFragment implements
     private SimpleCursorAdapter mAdapter;
 
     private boolean mDualPane;
-
-    private boolean mBusy;
 
     /**
      * Data which has to be passed when creating {@link UpcomingFragment}. All
@@ -171,7 +167,6 @@ public class UpcomingFragment extends ListFragment implements
         final ListView list = getListView();
         list.setFastScrollEnabled(true);
         list.setDivider(null);
-        list.setOnScrollListener(this);
         list.setSelector(R.drawable.list_selector_holo_dark);
         list.setClipToPadding(Utils.isHoneycombOrHigher() ? false : true);
         final float scale = getResources().getDisplayMetrics().density;
@@ -344,7 +339,7 @@ public class UpcomingFragment extends ListFragment implements
                 throw new IllegalStateException("couldn't move cursor to position " + position);
             }
 
-            ViewHolder viewHolder;
+            final ViewHolder viewHolder;
 
             if (convertView == null) {
                 convertView = mLayoutInflater.inflate(mLayout, null);
@@ -390,11 +385,11 @@ public class UpcomingFragment extends ListFragment implements
             viewHolder.watchedBox.setChecked(mCursor.getInt(UpcomingQuery.WATCHED) > 0);
 
             // season and episode number
-            String number = Utils.getEpisodeNumber(mPrefs, seasonNumber, episodeNumber);
+            final String number = Utils.getEpisodeNumber(mPrefs, seasonNumber, episodeNumber);
             viewHolder.number.setText(number);
 
             // airdate and time
-            long airtime = mCursor.getLong(UpcomingQuery.FIRSTAIREDMS);
+            final long airtime = mCursor.getLong(UpcomingQuery.FIRSTAIREDMS);
             String network = "";
             if (airtime != -1) {
                 String[] timeAndDay = Utils.formatToTimeAndDay(airtime, mContext);
@@ -405,24 +400,15 @@ public class UpcomingFragment extends ListFragment implements
             }
 
             // add network
-            String value = mCursor.getString(UpcomingQuery.SHOW_NETWORK);
+            final String value = mCursor.getString(UpcomingQuery.SHOW_NETWORK);
             if (value.length() != 0) {
                 network += getString(R.string.show_network) + " " + value;
             }
             viewHolder.network.setText(network);
 
-            // set poster only when not busy scrolling
-            final String path = mCursor.getString(UpcomingQuery.SHOW_POSTER);
-            if (!mBusy) {
-                // load poster
-                Utils.setPosterBitmap(viewHolder.poster, path, false, null);
-
-                // Null tag means the view has the correct data
-                viewHolder.poster.setTag(null);
-            } else {
-                // only load in-memory poster
-                Utils.setPosterBitmap(viewHolder.poster, path, true, null);
-            }
+            // set poster
+            final String imagePath = mCursor.getString(UpcomingQuery.SHOW_POSTER);
+            ImageProvider.getInstance(mContext).loadPosterThumb(viewHolder.poster, imagePath);
 
             return convertView;
         }
@@ -443,34 +429,5 @@ public class UpcomingFragment extends ListFragment implements
         public TextView network;
 
         public ImageView poster;
-    }
-
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
-            int totalItemCount) {
-    }
-
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-        switch (scrollState) {
-            case OnScrollListener.SCROLL_STATE_IDLE:
-                mBusy = false;
-
-                int count = view.getChildCount();
-                for (int i = 0; i < count; i++) {
-                    final ViewHolder holder = (ViewHolder) view.getChildAt(i).getTag();
-                    final ImageView poster = holder.poster;
-                    if (poster.getTag() != null) {
-                        Utils.setPosterBitmap(poster, (String) poster.getTag(), false, null);
-                        poster.setTag(null);
-                    }
-                }
-
-                break;
-            case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
-                mBusy = false;
-                break;
-            case OnScrollListener.SCROLL_STATE_FLING:
-                mBusy = true;
-                break;
-        }
     }
 }

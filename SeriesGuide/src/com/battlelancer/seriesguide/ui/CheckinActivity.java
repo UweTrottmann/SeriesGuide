@@ -9,6 +9,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.Utils;
 
@@ -181,7 +182,7 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
                 throw new IllegalStateException("couldn't move cursor to position " + position);
             }
 
-            ViewHolder viewHolder;
+            final ViewHolder viewHolder;
 
             if (convertView == null) {
                 convertView = mLayoutInflater.inflate(mLayout, null);
@@ -209,7 +210,7 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
             viewHolder.name.setText(mCursor.getString(CheckinQuery.TITLE));
             viewHolder.network.setText(mCursor.getString(CheckinQuery.NETWORK));
 
-            boolean isFavorited = mCursor.getInt(CheckinQuery.FAVORITE) == 1;
+            final boolean isFavorited = mCursor.getInt(CheckinQuery.FAVORITE) == 1;
             viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
 
             // next episode info
@@ -237,16 +238,14 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
             }
 
             // airday
-            String[] values = Utils.parseMillisecondsToTime(mCursor.getLong(CheckinQuery.AIRSTIME),
+            final String[] values = Utils.parseMillisecondsToTime(
+                    mCursor.getLong(CheckinQuery.AIRSTIME),
                     mCursor.getString(CheckinQuery.AIRSDAYOFWEEK), mContext);
             viewHolder.airsTime.setText(values[1] + " " + values[0]);
 
-            // set poster immediately, we don't care for efficient scrolling
-            // here
-            final String path = mCursor.getString(CheckinQuery.POSTER);
-            Utils.setPosterBitmap(viewHolder.poster, path, false, null);
-            // Null tag means the view has the correct data
-            viewHolder.poster.setTag(null);
+            // set poster
+            final String imagePath = mCursor.getString(CheckinQuery.POSTER);
+            ImageProvider.getInstance(mContext).loadPosterThumb(viewHolder.poster, imagePath);
 
             return convertView;
         }
