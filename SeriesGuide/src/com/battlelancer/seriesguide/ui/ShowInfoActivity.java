@@ -12,14 +12,13 @@ import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -110,7 +109,6 @@ public class ShowInfoActivity extends BaseActivity {
         TextView airstime = (TextView) findViewById(R.id.TextViewShowInfoAirtime);
         TextView network = (TextView) findViewById(R.id.TextViewShowInfoNetwork);
         TextView status = (TextView) findViewById(R.id.TextViewShowInfoStatus);
-        ImageView showart = (ImageView) findViewById(R.id.ImageViewShowInfoPoster);
 
         final Series show = DBUtils.getShow(this, String.valueOf(getShowId()));
         if (show == null) {
@@ -237,12 +235,8 @@ public class ShowInfoActivity extends BaseActivity {
                 .setType("text/plain");
 
         // Poster
-        Bitmap bitmap = ImageCache.getInstance(this).get(show.getPoster());
-        if (bitmap != null) {
-            showart.setImageBitmap(bitmap);
-        } else {
-            showart.setImageBitmap(null);
-        }
+        final ImageView poster = (ImageView) findViewById(R.id.ImageViewShowInfoPoster);
+        ImageProvider.getInstance(this).loadPoster(poster, show.getPoster(), false);
 
         // trakt ratings
         TraktSummaryTask task = new TraktSummaryTask(this, findViewById(R.id.ratingbar))
