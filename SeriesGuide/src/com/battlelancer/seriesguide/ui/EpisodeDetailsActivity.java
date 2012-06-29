@@ -9,14 +9,13 @@ import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.ImageCache;
 import com.viewpagerindicator.TitlePageIndicator;
 
+import android.annotation.TargetApi;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -43,6 +42,8 @@ public class EpisodeDetailsActivity extends BaseActivity {
         String EPISODE_TVDBID = "episode_tvdbid";
     }
 
+    @TargetApi(16)
+    @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
@@ -70,17 +71,13 @@ public class EpisodeDetailsActivity extends BaseActivity {
 
         // set show poster as background
         final String posterPath = episode.getString(1);
-        if (Utils.isFroyoOrHigher()) {
-            // using alpha seems not to work on eclair, so only set
-            // a background on froyo+ then
-            final ImageView background = (ImageView) findViewById(R.id.background);
-            Bitmap bg = ImageCache.getInstance(this).get(posterPath);
-            if (bg != null) {
-                BitmapDrawable drawable = new BitmapDrawable(getResources(), bg);
-                drawable.setAlpha(50);
-                background.setImageDrawable(drawable);
-            }
+        final ImageView background = (ImageView) findViewById(R.id.background);
+        if (Utils.isJellyBeanOrHigher()) {
+            background.setImageAlpha(50);
+        } else {
+            background.setAlpha(50);
         }
+        ImageProvider.getInstance(this).loadPoster(background, posterPath, false);
 
         // lookup episodes of season
         final String seasonId = episode.getString(0);
