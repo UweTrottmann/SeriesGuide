@@ -142,14 +142,19 @@ public class ImageProvider {
         return _instance;
     }
 
+    public void loadPosterThumb(ImageView imageView, String imagePath) {
+        loadPoster(imageView, imagePath, true);
+    }
+
     /**
      * Set the poster bitmap, either directly from cache or load it async from
      * external storage.
      * 
      * @param imageView
      * @param imagePath
+     * @param loadThumbnail
      */
-    public void loadPosterThumb(ImageView imageView, String imagePath) {
+    public void loadPoster(ImageView imageView, String imagePath, boolean loadThumbnail) {
         if (TextUtils.isEmpty(imagePath)) {
             // There is no poster for this show, display a generic one
             imageView.setImageResource(R.drawable.show_generic);
@@ -163,8 +168,10 @@ public class ImageProvider {
             oldTask.cancel(false);
         }
 
-        // look for the thumbnail of this poster
-        imagePath += THUMB_SUFFIX;
+        if (loadThumbnail) {
+            // look for the thumbnail of this poster
+            imagePath += THUMB_SUFFIX;
+        }
 
         // Check the cache for this image
         final Bitmap cachedResult = mCache.get(imagePath);
@@ -178,7 +185,7 @@ public class ImageProvider {
         final ImageLoaderTask task = new ImageLoaderTask(imageView);
         imageView.setImageBitmap(null);
         imageView.setTag(task);
-        task.execute(imagePath);
+        Utils.executeAsyncTask(task, imagePath);
     }
 
     public class ImageLoaderTask extends AsyncTask<String, Void, Bitmap> {
