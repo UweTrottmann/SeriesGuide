@@ -18,11 +18,14 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -30,11 +33,15 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Built with code from http://code.google.com/p/iogallery of Google I/O 2012 by
@@ -44,11 +51,17 @@ import java.io.File;
  */
 public class ImageProvider {
 
+    protected static final String TAG = "ImageProvider";
+
     private static final CompressFormat IMAGE_FORMAT = CompressFormat.JPEG;
+
+    private static final int IMAGE_QUALITY = 98;
 
     private static final String THUMB_SUFFIX = "thumb";
 
-    protected static final String TAG = "ImageProvider";
+    private static final float THUMBNAIL_WIDTH_DIP = 68.0f;
+
+    private static final float THUMBNAIL_HEIGHT_DIP = 100.0f;
 
     private static ImageProvider _instance;
 
@@ -56,8 +69,17 @@ public class ImageProvider {
 
     private String mCacheDir;
 
+    private Context mContext;
+
+    private OnSharedPreferenceChangeListener listener;
+
+    private float mScale;
+
     @TargetApi(14)
     public ImageProvider(Context context) {
+        mContext = context.getApplicationContext();
+        mScale = context.getResources().getDisplayMetrics().density;
+
         // Pick cache size based on memory class of device
         final ActivityManager am = (ActivityManager) context
                 .getSystemService(Context.ACTIVITY_SERVICE);
@@ -117,6 +139,17 @@ public class ImageProvider {
                 }
             });
         }
+
+        // listen if user toggles .nomedia file pref
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        listener = new OnSharedPreferenceChangeListener() {
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_HIDEIMAGES)) {
+                    updateNoMediaFile(sharedPreferences);
+                }
+            }
+        };
+        prefs.registerOnSharedPreferenceChangeListener(listener);
     }
 
     public static synchronized ImageProvider getInstance(Context ctx) {
@@ -203,10 +236,8 @@ public class ImageProvider {
     }
 
     private Bitmap getImageFromExternalStorage(final String imagePath) {
-        String fileName = Integer.toHexString(imagePath.hashCode()) + "." + IMAGE_FORMAT.name();
-
         // try to get image from disk
-        final File imageFile = new File(mCacheDir + "/" + fileName);
+        final File imageFile = getImageFile(imagePath);
         if (imageFile.exists() && Utils.isExtStorageAvailable()) {
             // disk cache hit
             final Bitmap result = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
@@ -221,6 +252,73 @@ public class ImageProvider {
         }
 
         return null;
+    }
+
+    public void storeImage(String imageUrl, Bitmap bitmap, boolean createThumbnail) {
+        if (Utils.isExtStorageAvailable()) {
+            // make sure directories exist
+            createDirectories();
+
+            final File imageFile = getImageFile(imageUrl);
+
+            try {
+                imageFile.createNewFile();
+
+                FileOutputStream ostream = new FileOutputStream(imageFile);
+                bitmap.compress(IMAGE_FORMAT, IMAGE_QUALITY, ostream);
+                ostream.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // create a thumbnail, too, if requested
+            if (createThumbnail) {
+                int scaledWidth = (int) (THUMBNAIL_WIDTH_DIP * mScale + 0.5f);
+                int scaledHeight = (int) (THUMBNAIL_HEIGHT_DIP * mScale + 0.5f);
+                storeImage(imageUrl + THUMB_SUFFIX,
+                        Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, true), false);
+            }
+        }
+    }
+
+    public boolean exists(String imagePath) {
+        return getImageFile(imagePath).exists();
+    }
+
+    public File getImageFile(String imagePath) {
+        final String fileName = mCacheDir + "/" + Integer.toHexString(imagePath.hashCode()) + "."
+                + IMAGE_FORMAT.name();
+        return new File(fileName);
+    }
+
+    private void createDirectories() {
+        new File(mCacheDir).mkdirs();
+
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+        updateNoMediaFile(prefs);
+    }
+
+    private void updateNoMediaFile(SharedPreferences prefs) {
+        final String noMediaFilePath = mCacheDir + "/.nomedia";
+
+        if (prefs.getBoolean(SeriesGuidePreferences.KEY_HIDEIMAGES, true)) {
+            AnalyticsUtils.getInstance(mContext).trackEvent("Settings", "Hide images", "Enable", 0);
+
+            try {
+                Log.d(TAG, "Creating .nomedia file");
+                new File(noMediaFilePath).createNewFile();
+            } catch (IOException e) {
+                Log.w(TAG, "Could not create .nomedia file");
+            }
+        } else {
+            AnalyticsUtils.getInstance(mContext)
+                    .trackEvent("Settings", "Hide images", "Disable", 0);
+
+            new File(noMediaFilePath).delete();
+            Log.d(TAG, "Deleting .nomedia file");
+        }
     }
 
     public void clearCache() {

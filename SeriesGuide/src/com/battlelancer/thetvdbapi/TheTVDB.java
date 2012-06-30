@@ -11,6 +11,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Lists;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.TvShow;
@@ -45,6 +46,7 @@ import android.sax.Element;
 import android.sax.EndElementListener;
 import android.sax.EndTextElementListener;
 import android.sax.RootElement;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.Xml;
@@ -599,15 +601,14 @@ public class TheTVDB {
      *         nothing was downloaded
      */
     public static boolean fetchArt(String fileName, boolean isPoster, Context context) {
-        if (fileName == null || context == null) {
+        if (TextUtils.isEmpty(fileName) || context == null) {
             return true;
         }
 
-        ImageCache imageCache = ImageCache.getInstance(context);
-        boolean resultCode = true;
+        final ImageProvider imageProvider = ImageProvider.getInstance(context);
 
-        if (fileName.length() != 0 && !imageCache.exists(fileName)) {
-            String imageUrl;
+        if (!imageProvider.exists(fileName)) {
+            final String imageUrl;
             if (isPoster) {
                 // the cached version is a lot smaller, but still big enough for
                 // our purposes
@@ -616,20 +617,16 @@ public class TheTVDB {
                 imageUrl = mirror_banners + "/" + fileName;
             }
 
-            // try to download and decode the image
+            // try to download, decode and store the image
             final Bitmap bitmap = downloadBitmap(imageUrl);
             if (bitmap != null) {
-                imageCache.put(fileName, bitmap);
-                if (isPoster) {
-                    // already create a thumbnail
-                    imageCache.getThumbHelper(fileName);
-                }
+                imageProvider.storeImage(fileName, bitmap, isPoster);
             } else {
-                resultCode = false;
+                return false;
             }
         }
 
-        return resultCode;
+        return true;
     }
 
     static Bitmap downloadBitmap(String url) {
