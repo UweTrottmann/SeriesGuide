@@ -236,7 +236,7 @@ public class ShowInfoActivity extends BaseActivity {
 
         // Poster
         final ImageView poster = (ImageView) findViewById(R.id.ImageViewShowInfoPoster);
-        ImageProvider.getInstance(this).loadPoster(poster, show.getPoster(), false);
+        ImageProvider.getInstance(this).loadImage(poster, show.getPoster(), false);
 
         // trakt ratings
         TraktSummaryTask task = new TraktSummaryTask(this, findViewById(R.id.ratingbar))

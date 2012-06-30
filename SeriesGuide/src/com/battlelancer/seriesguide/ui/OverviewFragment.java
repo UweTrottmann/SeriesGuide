@@ -274,7 +274,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         } else {
             background.setAlpha(50);
         }
-        ImageProvider.getInstance(getActivity()).loadPoster(background, mShow.getPoster(), false);
+        ImageProvider.getInstance(getActivity()).loadImage(background, mShow.getPoster(), false);
 
         // air time and network
         String timeAndNetwork = "";

@@ -127,18 +127,18 @@ public class ImageProvider {
     }
 
     public void loadPosterThumb(ImageView imageView, String imagePath) {
-        loadPoster(imageView, imagePath, true);
+        loadImage(imageView, imagePath, true);
     }
 
     /**
-     * Set the poster bitmap, either directly from cache or load it
+     * Sets the image bitmap, either directly from cache or loads it
      * asynchronously from external storage.
      * 
      * @param imageView
      * @param imagePath
      * @param loadThumbnail
      */
-    public void loadPoster(ImageView imageView, String imagePath, boolean loadThumbnail) {
+    public void loadImage(ImageView imageView, String imagePath, boolean loadThumbnail) {
         if (TextUtils.isEmpty(imagePath)) {
             // There is no poster for this show, display a generic one
             imageView.setImageResource(R.drawable.show_generic);
@@ -181,7 +181,7 @@ public class ImageProvider {
      * @param loadThumbnail
      * @return
      */
-    public Bitmap getPoster(String imagePath, boolean loadThumbnail) {
+    public Bitmap getImage(String imagePath, boolean loadThumbnail) {
         if (TextUtils.isEmpty(imagePath)) {
             // There is no poster for this show
             return null;

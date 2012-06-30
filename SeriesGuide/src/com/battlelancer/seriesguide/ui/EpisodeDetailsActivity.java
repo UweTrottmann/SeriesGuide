@@ -77,7 +77,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
         } else {
             background.setAlpha(50);
         }
-        ImageProvider.getInstance(this).loadPoster(background, posterPath, false);
+        ImageProvider.getInstance(this).loadImage(background, posterPath, false);
 
         // lookup episodes of season
         final String seasonId = episode.getString(0);

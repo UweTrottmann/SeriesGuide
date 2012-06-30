@@ -125,7 +125,7 @@ public class ListWidgetService extends RemoteViewsService {
 
             // show poster
             value = mEpisodeCursor.getString(UpcomingQuery.SHOW_POSTER);
-            final Bitmap poster = ImageProvider.getInstance(mContext).getPoster(value, true);
+            final Bitmap poster = ImageProvider.getInstance(mContext).getImage(value, true);
             if (poster != null) {
                 rv.setImageViewBitmap(R.id.widgetPoster, poster);
             } else {

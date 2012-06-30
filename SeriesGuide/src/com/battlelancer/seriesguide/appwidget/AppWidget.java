@@ -148,7 +148,7 @@ public class AppWidget extends AppWidgetProvider {
 
                     // show poster
                     value = upcomingEpisodes.getString(UpcomingQuery.SHOW_POSTER);
-                    final Bitmap poster = ImageProvider.getInstance(context).getPoster(value, true);
+                    final Bitmap poster = ImageProvider.getInstance(context).getImage(value, true);
                     if (poster != null) {
                         item.setImageViewBitmap(R.id.widgetPoster, poster);
                     }
