@@ -20,7 +20,7 @@ public class SeriesGuideApplication extends Application {
 
         Utils.runNotificationService(this);
 
-        String theme = PreferenceManager.getDefaultSharedPreferences(this).getString(
+        final String theme = PreferenceManager.getDefaultSharedPreferences(this).getString(
                 SeriesGuidePreferences.KEY_THEME, "0");
         Utils.updateTheme(theme);
     }
