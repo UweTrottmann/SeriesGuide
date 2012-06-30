@@ -10,13 +10,10 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.ImageCache;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -100,17 +97,8 @@ public class EpisodesActivity extends BaseActivity {
         // build the episode pager if we are in a dual-pane layout
         if (mDualPane) {
             // set the pager background
-            if (Utils.isFroyoOrHigher()) {
-                // using alpha seems not to work on eclair, so only set
-                // a background on froyo+ then
-                final ImageView background = (ImageView) findViewById(R.id.background);
-                Bitmap bg = ImageCache.getInstance(this).get(show.getPoster());
-                if (bg != null) {
-                    BitmapDrawable drawable = new BitmapDrawable(getResources(), bg);
-                    drawable.setAlpha(50);
-                    background.setImageDrawable(drawable);
-                }
-            }
+            final ImageView background = (ImageView) findViewById(R.id.background);
+            Utils.setPosterBackground(background, show.getPoster(), this);
 
             // set adapters for pager and indicator
             Constants.EpisodeSorting sorting = Utils.getEpisodeSorting(this);

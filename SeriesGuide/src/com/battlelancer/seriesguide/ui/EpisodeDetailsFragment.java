@@ -20,16 +20,11 @@ import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.ImageCache;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -53,8 +48,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     private static final int EPISODE_LOADER = 3;
 
     private static final String TAG = "EpisodeDetails";
-
-    private ImageCache mImageCache;
 
     private FetchArtTask mArtTask;
 
@@ -124,8 +117,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        mImageCache = ImageCache.getInstance(getActivity());
 
         setupAdapter();
 
@@ -221,7 +212,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 0);
         mAdapter.setViewBinder(new ViewBinder() {
 
-            @TargetApi(11)
             public boolean setViewValue(View view, Cursor episode, int columnIndex) {
                 if (columnIndex == EpisodeDetailsQuery.WATCHED) {
                     mWatched = episode.getInt(EpisodeDetailsQuery.WATCHED) == 1 ? true : false;
@@ -345,20 +335,13 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     });
 
                     // Poster
-                    if (getArguments().getBoolean("showposter")
-                            && Build.VERSION.SDK_INT > Build.VERSION_CODES.ECLAIR_MR1) {
-                        // using alpha seems not to work on eclair, so only set
-                        // a background on froyo+ then
+                    if (getArguments().getBoolean("showposter")) {
                         final ImageView background = (ImageView) getActivity().findViewById(
                                 R.id.episodedetails_background);
-                        Bitmap bg = mImageCache.get(episode
-                                .getString(EpisodeDetailsQuery.SHOW_POSTER));
-                        if (bg != null) {
-                            BitmapDrawable drawable = new BitmapDrawable(getResources(), bg);
-                            drawable.setAlpha(50);
-                            background.setImageDrawable(drawable);
-                        }
+                        Utils.setPosterBackground(background,
+                                episode.getString(EpisodeDetailsQuery.SHOW_POSTER), getActivity());
                     }
+
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.REF_SHOW_ID) {

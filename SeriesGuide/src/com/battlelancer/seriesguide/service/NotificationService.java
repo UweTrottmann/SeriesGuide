@@ -8,8 +8,8 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
@@ -163,20 +163,21 @@ public class NotificationService extends IntentService {
 
                 if (Utils.isHoneycombOrHigher()) {
                     // HONEYCOMB and above (with some extensions for JELLY BEAN)
-                    Notification.Builder anb = new Notification.Builder(context);
+                    final Notification.Builder anb = new Notification.Builder(context);
 
                     if (count == 1) {
                         // single episode
                         upcomingEpisodes.moveToFirst();
-                        String posterPath = upcomingEpisodes.getString(NotificationQuery.POSTER);
-                        anb.setLargeIcon(ImageCache.getInstance(context)
-                                .getThumb(posterPath, false));
+                        final String imagePath = upcomingEpisodes
+                                .getString(NotificationQuery.POSTER);
+                        anb.setLargeIcon(ImageProvider.getInstance(context).getImage(imagePath,
+                                true));
 
                         // Jelly Bean and above can display more information
                         if (Utils.isJellyBeanOrHigher()) {
-                            String episodeTitle = upcomingEpisodes
+                            final String episodeTitle = upcomingEpisodes
                                     .getString(NotificationQuery.TITLE);
-                            String episodeSummary = upcomingEpisodes
+                            final String episodeSummary = upcomingEpisodes
                                     .getString(NotificationQuery.OVERVIEW);
 
                             SpannableStringBuilder bigText = new SpannableStringBuilder();
@@ -202,7 +203,7 @@ public class NotificationService extends IntentService {
                             for (int i = 0; i < 5; i++) {
                                 if (upcomingEpisodes.moveToPosition(i)) {
                                     // add show title, air time and network
-                                    SpannableStringBuilder lineText = new SpannableStringBuilder();
+                                    final SpannableStringBuilder lineText = new SpannableStringBuilder();
                                     lineText.append(upcomingEpisodes
                                             .getString(NotificationQuery.SHOW_TITLE));
                                     lineText.setSpan(new ForegroundColorSpan(Color.WHITE), 0,
@@ -252,13 +253,15 @@ public class NotificationService extends IntentService {
                     }
                 } else {
                     // GINGERBREAD and below
-                    NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
+                    final NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
 
                     if (count == 1) {
                         // single episode
                         upcomingEpisodes.moveToFirst();
-                        String posterPath = upcomingEpisodes.getString(NotificationQuery.POSTER);
-                        nb.setLargeIcon(ImageCache.getInstance(context).getThumb(posterPath, false));
+                        final String posterPath = upcomingEpisodes
+                                .getString(NotificationQuery.POSTER);
+                        nb.setLargeIcon(ImageProvider.getInstance(context).getImage(posterPath,
+                                true));
                     }
 
                     // If the string is empty, the user chose silent. So only
@@ -283,7 +286,7 @@ public class NotificationService extends IntentService {
                 }
 
                 // use string resource id, always unique within app
-                NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                final NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 nm.notify(R.string.upcoming_show, notification);
             }
 

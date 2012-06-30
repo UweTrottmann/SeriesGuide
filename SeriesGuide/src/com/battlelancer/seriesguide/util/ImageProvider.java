@@ -254,12 +254,12 @@ public class ImageProvider {
         return null;
     }
 
-    public void storeImage(String imageUrl, Bitmap bitmap, boolean createThumbnail) {
+    public void storeImage(String imagePath, Bitmap bitmap, boolean createThumbnail) {
         if (Utils.isExtStorageAvailable()) {
             // make sure directories exist
             createDirectories();
 
-            final File imageFile = getImageFile(imageUrl);
+            final File imageFile = getImageFile(imagePath);
 
             try {
                 imageFile.createNewFile();
@@ -277,9 +277,24 @@ public class ImageProvider {
             if (createThumbnail) {
                 int scaledWidth = (int) (THUMBNAIL_WIDTH_DIP * mScale + 0.5f);
                 int scaledHeight = (int) (THUMBNAIL_HEIGHT_DIP * mScale + 0.5f);
-                storeImage(imageUrl + THUMB_SUFFIX,
+                storeImage(imagePath + THUMB_SUFFIX,
                         Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, true), false);
             }
+        }
+    }
+
+    /**
+     * Remove the given image and a potentially existing thumbnail from the
+     * external storage cache.
+     * 
+     * @param imagePath
+     */
+    public void removeImage(String imagePath) {
+        try {
+            getImageFile(imagePath).delete();
+            getImageFile(imagePath + THUMB_SUFFIX).delete();
+        } catch (SecurityException se) {
+            // we don't care
         }
     }
 
@@ -321,9 +336,25 @@ public class ImageProvider {
         }
     }
 
+    /**
+     * Clear in memory cache.
+     */
     public void clearCache() {
         Log.v(TAG, "evicting entire thumbnail cache");
         mCache.evictAll();
+    }
+
+    /**
+     * Clear all files in cache directory.
+     */
+    public void clearExternalStorageCache() {
+        final File directory = new File(mCacheDir);
+        final File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                file.delete();
+            }
+        }
     }
 
     public class ImageLoaderTask extends AsyncTask<String, Void, Bitmap> {

@@ -26,6 +26,7 @@ import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
@@ -822,6 +823,16 @@ public class Utils {
         } else {
             field.setText(value);
         }
+    }
+
+    @SuppressWarnings("deprecation")
+    public static void setPosterBackground(ImageView background, String posterPath, Context context) {
+        if (Utils.isJellyBeanOrHigher()) {
+            background.setImageAlpha(50);
+        } else {
+            background.setAlpha(50);
+        }
+        ImageProvider.getInstance(context).loadImage(background, posterPath, false);
     }
 
     /**

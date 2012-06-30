@@ -10,7 +10,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
-import com.battlelancer.thetvdbapi.ImageCache;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -622,7 +621,7 @@ public class DBUtils {
     public static void deleteShow(Context context, String id) {
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
         final String showId = String.valueOf(id);
-        final ImageCache imageCache = ImageCache.getInstance(context);
+        final ImageProvider imageProvider = ImageProvider.getInstance(context);
 
         // delete images...
         // ...of show
@@ -632,7 +631,7 @@ public class DBUtils {
                 }, null, null, null);
         if (poster.moveToFirst()) {
             final String posterPath = poster.getString(0);
-            imageCache.removeFromDisk(posterPath);
+            imageProvider.removeImage(posterPath);
         }
         poster.close();
 
@@ -646,7 +645,7 @@ public class DBUtils {
         int counter = 0;
         while (!episodes.isAfterLast()) {
             episodeIDs[counter++] = episodes.getString(0);
-            imageCache.removeFromDisk(episodes.getString(1));
+            imageProvider.removeImage(episodes.getString(1));
             episodes.moveToNext();
         }
         episodes.close();

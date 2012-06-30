@@ -9,11 +9,9 @@ import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.viewpagerindicator.TitlePageIndicator;
 
-import android.annotation.TargetApi;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -42,8 +40,6 @@ public class EpisodeDetailsActivity extends BaseActivity {
         String EPISODE_TVDBID = "episode_tvdbid";
     }
 
-    @TargetApi(16)
-    @SuppressWarnings("deprecation")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
@@ -70,14 +66,8 @@ public class EpisodeDetailsActivity extends BaseActivity {
         }
 
         // set show poster as background
-        final String posterPath = episode.getString(1);
         final ImageView background = (ImageView) findViewById(R.id.background);
-        if (Utils.isJellyBeanOrHigher()) {
-            background.setImageAlpha(50);
-        } else {
-            background.setAlpha(50);
-        }
-        ImageProvider.getInstance(this).loadImage(background, posterPath, false);
+        Utils.setPosterBackground(background, episode.getString(1), this);
 
         // lookup episodes of season
         final String seasonId = episode.getString(0);

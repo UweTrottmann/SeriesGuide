@@ -8,8 +8,8 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -156,8 +156,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             public boolean onPreferenceClick(Preference preference) {
                 fireTrackerEvent("Clear Image Cache");
 
-                ImageCache.getInstance(activity).clear();
-                ImageCache.getInstance(activity).clearExternal();
+                ImageProvider.getInstance(activity).clearCache();
+                ImageProvider.getInstance(activity).clearExternalStorageCache();
                 Toast.makeText(getApplicationContext(), getString(R.string.done),
                         Toast.LENGTH_SHORT).show();
                 return true;

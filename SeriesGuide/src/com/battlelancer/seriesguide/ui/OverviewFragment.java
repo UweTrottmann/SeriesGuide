@@ -31,7 +31,6 @@ import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FetchArtTask;
-import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
@@ -241,8 +240,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         return getArguments().getInt(InitBundle.SHOW_TVDBID);
     }
 
-    @SuppressWarnings("deprecation")
-    @TargetApi(16)
     private void onLoadShow() {
         mShow = DBUtils.getShow(getActivity(), String.valueOf(getShowId()));
         if (mShow == null) {
@@ -269,12 +266,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
         // poster
         final ImageView background = (ImageView) getView().findViewById(R.id.background);
-        if (Utils.isJellyBeanOrHigher()) {
-            background.setImageAlpha(50);
-        } else {
-            background.setAlpha(50);
-        }
-        ImageProvider.getInstance(getActivity()).loadImage(background, mShow.getPoster(), false);
+        Utils.setPosterBackground(background, mShow.getPoster(), getActivity());
 
         // air time and network
         String timeAndNetwork = "";
