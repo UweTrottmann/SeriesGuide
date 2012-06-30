@@ -390,6 +390,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                 message = mAppContext.getString(R.string.update_offline);
                 length = Toast.LENGTH_LONG;
                 break;
+            default:
+                break;
         }
 
         if (message != null) {
