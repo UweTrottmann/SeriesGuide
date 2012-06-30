@@ -6,8 +6,8 @@ import com.battlelancer.seriesguide.enums.WidgetListType;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.annotation.TargetApi;
 import android.appwidget.AppWidgetManager;
@@ -125,10 +125,7 @@ public class ListWidgetService extends RemoteViewsService {
 
             // show poster
             value = mEpisodeCursor.getString(UpcomingQuery.SHOW_POSTER);
-            Bitmap poster = null;
-            if (value.length() != 0) {
-                poster = ImageCache.getInstance(mContext).getThumb(value, false);
-            }
+            final Bitmap poster = ImageProvider.getInstance(mContext).getPoster(value, true);
             if (poster != null) {
                 rv.setImageViewBitmap(R.id.widgetPoster, poster);
             } else {

@@ -21,8 +21,8 @@ import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.app.IntentService;
 import android.app.PendingIntent;
@@ -35,7 +35,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 import android.widget.RemoteViews;
 
 public class AppWidget extends AppWidgetProvider {
@@ -94,8 +93,6 @@ public class AppWidget extends AppWidgetProvider {
 
         protected RemoteViews buildUpdate(Context context, String limit, int layout,
                 int itemLayout, Intent updateIntent) {
-            final ImageCache imageCache = ImageCache.getInstance(context);
-
             // Get the layout for the App Widget, remove existing views
             // RemoteViews views = new RemoteViews(context.getPackageName(),
             // layout);
@@ -151,12 +148,9 @@ public class AppWidget extends AppWidgetProvider {
 
                     // show poster
                     value = upcomingEpisodes.getString(UpcomingQuery.SHOW_POSTER);
-                    if (!TextUtils.isEmpty(value)) {
-                        final Bitmap poster = imageCache.getThumb(value, false);
-
-                        if (poster != null) {
-                            item.setImageViewBitmap(R.id.widgetPoster, poster);
-                        }
+                    final Bitmap poster = ImageProvider.getInstance(context).getPoster(value, true);
+                    if (poster != null) {
+                        item.setImageViewBitmap(R.id.widgetPoster, poster);
                     }
 
                     views.addView(R.id.LinearLayoutWidget, item);
