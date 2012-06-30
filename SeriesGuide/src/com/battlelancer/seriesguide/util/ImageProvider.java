@@ -223,6 +223,11 @@ public class ImageProvider {
         return null;
     }
 
+    public void clearCache() {
+        Log.v(TAG, "evicting entire thumbnail cache");
+        mCache.evictAll();
+    }
+
     public class ImageLoaderTask extends AsyncTask<String, Void, Bitmap> {
 
         private ImageView mImageView;

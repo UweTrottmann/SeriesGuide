@@ -2,6 +2,7 @@
 package com.battlelancer.seriesguide;
 
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.ImageCache;
 
@@ -27,6 +28,11 @@ public class SeriesGuideApplication extends Application {
     @Override
     public void onLowMemory() {
         ImageCache.getInstance(getApplicationContext()).clear();
+        if (!Utils.isICSOrHigher()) {
+            // clear the whole cache as Honeycomb and below don't support
+            // onTrimMemory (used directly in our ImageProvider)
+            ImageProvider.getInstance(this).clearCache();
+        }
     }
 
 }
