@@ -74,11 +74,10 @@ public class NotificationService extends IntentService {
         super("AlarmManagerService");
     }
 
-    @SuppressWarnings("deprecation")
     @TargetApi(16)
     @Override
     protected void onHandleIntent(Intent intent) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         // unschedule notification service wake-ups for disabled notifications
         // and non-supporters
@@ -111,7 +110,7 @@ public class NotificationService extends IntentService {
 
             // look if we have found something to notify about
             final int count = upcomingEpisodes.getCount();
-            if (count != 0) {
+            if (count > 0) {
 
                 final Context context = getApplicationContext();
                 CharSequence tickerText = "";
@@ -129,10 +128,11 @@ public class NotificationService extends IntentService {
                 if (count == 1) {
                     // notify in detail about one episode
                     upcomingEpisodes.moveToFirst();
-                    String showTitle = upcomingEpisodes.getString(NotificationQuery.SHOW_TITLE);
-                    String airs = Utils.formatToTimeAndDay(
+                    final String showTitle = upcomingEpisodes
+                            .getString(NotificationQuery.SHOW_TITLE);
+                    final String airs = Utils.formatToTimeAndDay(
                             upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS), this)[0];
-                    String network = upcomingEpisodes.getString(NotificationQuery.NETWORK);
+                    final String network = upcomingEpisodes.getString(NotificationQuery.NETWORK);
 
                     tickerText = getString(R.string.upcoming_show, showTitle);
                     contentTitle = showTitle
@@ -161,8 +161,8 @@ public class NotificationService extends IntentService {
                 // build the notification
                 Notification notification;
 
-                if (Utils.isHoneycombOrHigher()) {
-                    // HONEYCOMB and above (with some extensions for JELLY BEAN)
+                if (Utils.isJellyBeanOrHigher()) {
+                    // JELLY BEAN and above
                     final Notification.Builder anb = new Notification.Builder(context);
 
                     if (count == 1) {
@@ -173,59 +173,55 @@ public class NotificationService extends IntentService {
                         anb.setLargeIcon(ImageProvider.getInstance(context).getImage(imagePath,
                                 true));
 
-                        // Jelly Bean and above can display more information
-                        if (Utils.isJellyBeanOrHigher()) {
-                            final String episodeTitle = upcomingEpisodes
-                                    .getString(NotificationQuery.TITLE);
-                            final String episodeSummary = upcomingEpisodes
-                                    .getString(NotificationQuery.OVERVIEW);
+                        final String episodeTitle = upcomingEpisodes
+                                .getString(NotificationQuery.TITLE);
+                        final String episodeSummary = upcomingEpisodes
+                                .getString(NotificationQuery.OVERVIEW);
 
-                            SpannableStringBuilder bigText = new SpannableStringBuilder();
-                            bigText.append(episodeTitle);
-                            bigText.setSpan(new ForegroundColorSpan(Color.WHITE), 0,
-                                    bigText.length(), 0);
-                            bigText.append("\n");
-                            bigText.append(episodeSummary);
+                        final SpannableStringBuilder bigText = new SpannableStringBuilder();
+                        bigText.append(episodeTitle);
+                        bigText.setSpan(new ForegroundColorSpan(Color.WHITE), 0, bigText.length(),
+                                0);
+                        bigText.append("\n");
+                        bigText.append(episodeSummary);
 
-                            anb.setStyle(new Notification.BigTextStyle().bigText(bigText)
-                                    .setSummaryText(contentText));
+                        anb.setStyle(new Notification.BigTextStyle().bigText(bigText)
+                                .setSummaryText(contentText));
 
-                            // TODO allow check ins via intent
-                            // anb.addAction(R.drawable.ic_notification,
-                            // getString(R.string.checkin), null);
-                        }
+                        // TODO allow check ins via intent
+                        // anb.addAction(R.drawable.ic_notification,
+                        // getString(R.string.checkin), null);
                     } else {
                         // multiple episodes
-                        if (Utils.isJellyBeanOrHigher()) {
-                            Notification.InboxStyle inboxStyle = new Notification.InboxStyle();
+                        Notification.InboxStyle inboxStyle = new Notification.InboxStyle();
 
-                            // display the first five
-                            for (int i = 0; i < 5; i++) {
-                                if (upcomingEpisodes.moveToPosition(i)) {
-                                    // add show title, air time and network
-                                    final SpannableStringBuilder lineText = new SpannableStringBuilder();
-                                    lineText.append(upcomingEpisodes
-                                            .getString(NotificationQuery.SHOW_TITLE));
-                                    lineText.setSpan(new ForegroundColorSpan(Color.WHITE), 0,
-                                            lineText.length(), 0);
-                                    lineText.append(" ");
-                                    String airs = Utils.formatToTimeAndDay(upcomingEpisodes
-                                            .getLong(NotificationQuery.FIRSTAIREDMS), this)[0];
-                                    String network = upcomingEpisodes
-                                            .getString(NotificationQuery.NETWORK);
-                                    lineText.append(getString(R.string.upcoming_show_detailed,
-                                            airs, network));
-                                    inboxStyle.addLine(lineText);
-                                }
+                        // display the first five
+                        for (int i = 0; i < 5; i++) {
+                            if (upcomingEpisodes.moveToPosition(i)) {
+                                // add show title, air time and network
+                                final SpannableStringBuilder lineText = new SpannableStringBuilder();
+                                lineText.append(upcomingEpisodes
+                                        .getString(NotificationQuery.SHOW_TITLE));
+                                lineText.setSpan(new ForegroundColorSpan(Color.WHITE), 0,
+                                        lineText.length(), 0);
+                                lineText.append(" ");
+                                String airs = Utils.formatToTimeAndDay(
+                                        upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS),
+                                        this)[0];
+                                String network = upcomingEpisodes
+                                        .getString(NotificationQuery.NETWORK);
+                                lineText.append(getString(R.string.upcoming_show_detailed, airs,
+                                        network));
+                                inboxStyle.addLine(lineText);
                             }
-
-                            // tell if we could not display all episodes
-                            if (count >= 5) {
-                                inboxStyle.setSummaryText(getString(R.string.more, count));
-                            }
-
-                            anb.setStyle(inboxStyle);
                         }
+
+                        // tell if we could not display all episodes
+                        if (count >= 5) {
+                            inboxStyle.setSummaryText(getString(R.string.more, count));
+                        }
+
+                        anb.setStyle(inboxStyle);
                     }
 
                     // If the string is empty, the user chose silent. So only
@@ -244,15 +240,11 @@ public class NotificationService extends IntentService {
                     anb.setContentText(contentText);
                     anb.setContentIntent(contentIntent);
                     anb.setSmallIcon(R.drawable.ic_notification);
+                    anb.setPriority(Notification.PRIORITY_DEFAULT);
 
-                    if (Utils.isJellyBeanOrHigher()) {
-                        anb.setPriority(Notification.PRIORITY_DEFAULT);
-                        notification = anb.build();
-                    } else {
-                        notification = anb.getNotification();
-                    }
+                    notification = anb.build();
                 } else {
-                    // GINGERBREAD and below
+                    // ICS and below
                     final NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
 
                     if (count == 1) {
