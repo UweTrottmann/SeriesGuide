@@ -131,8 +131,8 @@ public class ImageProvider {
     }
 
     /**
-     * Set the poster bitmap, either directly from cache or load it async from
-     * external storage.
+     * Set the poster bitmap, either directly from cache or load it
+     * asynchronously from external storage.
      * 
      * @param imageView
      * @param imagePath
@@ -172,6 +172,57 @@ public class ImageProvider {
         Utils.executeAsyncTask(task, imagePath);
     }
 
+    /**
+     * This will synchronously (!) access external storage to get the image if
+     * it is not cached already. Make sure to run this on a background thread or
+     * use {@code loadPoster} instead.
+     * 
+     * @param imagePath
+     * @param loadThumbnail
+     * @return
+     */
+    public Bitmap getPoster(String imagePath, boolean loadThumbnail) {
+        if (TextUtils.isEmpty(imagePath)) {
+            // There is no poster for this show
+            return null;
+        }
+
+        if (loadThumbnail) {
+            // look for the thumbnail of this poster
+            imagePath += THUMB_SUFFIX;
+        }
+
+        // Check the cache for this image
+        Bitmap result = mCache.get(imagePath);
+        if (result != null) {
+            return result;
+        }
+
+        result = getImageFromExternalStorage(imagePath);
+        return result;
+    }
+
+    private Bitmap getImageFromExternalStorage(final String imagePath) {
+        String fileName = Integer.toHexString(imagePath.hashCode()) + "." + IMAGE_FORMAT.name();
+
+        // try to get image from disk
+        final File imageFile = new File(mCacheDir + "/" + fileName);
+        if (imageFile.exists() && Utils.isExtStorageAvailable()) {
+            // disk cache hit
+            final Bitmap result = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+            if (result == null) {
+                // treat decoding errors as a cache miss
+                return null;
+            }
+
+            mCache.put(imagePath, result);
+
+            return result;
+        }
+
+        return null;
+    }
+
     public class ImageLoaderTask extends AsyncTask<String, Void, Bitmap> {
 
         private ImageView mImageView;
@@ -189,22 +240,7 @@ public class ImageProvider {
         protected Bitmap doInBackground(String... params) {
             final String imagePath = params[0];
 
-            // try to get image from disk
-            final File imageFile = getImageFile(imagePath);
-            if (imageFile.exists() && Utils.isExtStorageAvailable()) {
-                // disk cache hit
-                final Bitmap result = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
-                if (result == null) {
-                    // treat decoding errors as a cache miss
-                    return null;
-                }
-
-                mCache.put(imagePath, result);
-
-                return result;
-            }
-
-            return null;
+            return getImageFromExternalStorage(imagePath);
         }
 
         @Override
@@ -217,11 +253,6 @@ public class ImageProvider {
                 }
                 mImageView.setTag(null);
             }
-        }
-
-        private File getImageFile(String imagePath) {
-            String fileName = Integer.toHexString(imagePath.hashCode()) + "." + IMAGE_FORMAT.name();
-            return new File(mCacheDir + "/" + fileName);
         }
 
     }
