@@ -14,6 +14,10 @@ Version 2.8 *(in development)*
 
 #### 2.8.1beta (2012-06-28)
 
+* FIX Run the notification service in time for notifications, again.
+
+#### 2.8.1beta (2012-06-28)
+
 * FEATURE Use the new expandable notifications on Android 4.1 Jelly Bean to display more content.
 * TWEAK Relayouted list widget, updated widget backgrounds.
 
