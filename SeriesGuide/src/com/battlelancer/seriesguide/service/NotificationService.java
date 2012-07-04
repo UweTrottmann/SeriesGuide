@@ -46,9 +46,8 @@ public class NotificationService extends IntentService {
             + Episodes.NUMBER + " ASC";
 
     // only within time frame, unwatched episodes, only of favorite shows
-    private static final String SELECTION = Episodes.FIRSTAIREDMS + ">=? AND "
-            + Episodes.FIRSTAIREDMS + "<=? AND " + Episodes.WATCHED + "=? AND " + Shows.FAVORITE
-            + "=?";
+    private static final String SELECTION = Episodes.FIRSTAIREDMS + ">=? AND " + Episodes.WATCHED
+            + "=? AND " + Shows.FAVORITE + "=?";
 
     interface NotificationQuery {
         int _ID = 0;
@@ -95,23 +94,28 @@ public class NotificationService extends IntentService {
 
         long wakeUpTime = 0;
         final long fakeNow = Utils.getFakeCurrentTime(prefs);
-        final long inOneHour = fakeNow + DateUtils.HOUR_IN_MILLIS;
 
         // get episodes which air between 15 mins ago and one hour in the future
-        final Cursor upcomingEpisodes = getContentResolver().query(
-                Episodes.CONTENT_URI_WITHSHOW,
-                PROJECTION,
-                SELECTION,
-                new String[] {
-                        String.valueOf(fakeNow - 15 * DateUtils.MINUTE_IN_MILLIS),
-                        String.valueOf(inOneHour), "0", "1"
+        final Cursor upcomingEpisodes = getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
+                PROJECTION, SELECTION, new String[] {
+                        String.valueOf(fakeNow - 15 * DateUtils.MINUTE_IN_MILLIS), "0", "1"
                 }, SORTING);
 
         if (upcomingEpisodes != null) {
+            // look if we have found something to notify about
+            int count = 0;
+            final long inOneHour = fakeNow + DateUtils.HOUR_IN_MILLIS;
+            while (upcomingEpisodes.moveToNext()) {
+                final long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
+                if (airtime <= inOneHour) {
+                    count++;
+                } else {
+                    break;
+                }
+            }
 
             // look if we have found something to notify about
-            final int count = upcomingEpisodes.getCount();
-            if (count != 0) {
+            if (count > 0) {
 
                 final Context context = getApplicationContext();
                 CharSequence tickerText = "";
@@ -289,7 +293,7 @@ public class NotificationService extends IntentService {
 
             upcomingEpisodes.moveToPosition(-1);
             while (upcomingEpisodes.moveToNext()) {
-                long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
+                final long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
                 if (airtime > inOneHour) {
                     // wake up an hour before the next episode airs
                     wakeUpTime = Utils.convertToFakeTime(airtime, prefs, false)
