@@ -113,6 +113,7 @@ public class ShowInfoActivity extends BaseActivity {
         final Series show = DBUtils.getShow(this, String.valueOf(getShowId()));
         if (show == null) {
             finish();
+            return;
         }
 
         // Name

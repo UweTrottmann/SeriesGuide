@@ -54,6 +54,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
         if (episodeId == 0) {
             // nothing to display
             finish();
+            return;
         }
 
         List<Episode> episodes = new ArrayList<Episode>();
@@ -68,6 +69,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
         if (episode == null || !episode.moveToFirst()) {
             // nothing to display
             finish();
+            return;
         }
 
         // set show poster as background

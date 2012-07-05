@@ -61,6 +61,7 @@ public class EpisodesActivity extends BaseActivity {
         final int seasonId = getIntent().getIntExtra(InitBundle.SEASON_TVDBID, 0);
         if (show == null || seasonId == 0) {
             finish();
+            return;
         }
 
         // setup ActionBar

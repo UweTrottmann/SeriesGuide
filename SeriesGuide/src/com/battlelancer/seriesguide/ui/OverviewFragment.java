@@ -134,6 +134,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
         if (getShowId() == 0) {
             getActivity().finish();
+            return;
         }
 
         onLoadShow();
