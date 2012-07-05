@@ -772,8 +772,9 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
 
                 selection = Shows.NEXTAIRDATEMS + "!=? AND " + Shows.NEXTAIRDATEMS + " <=? AND "
                         + Shows.HIDDEN + "=?";
+                // Display shows upcoming within x amount of days + 1 hour
                 String inTheFuture = String.valueOf(System.currentTimeMillis() + upcomingLimit
-                        * DateUtils.DAY_IN_MILLIS);
+                        * DateUtils.DAY_IN_MILLIS + DateUtils.HOUR_IN_MILLIS);
                 selectionArgs = new String[] {
                         DBUtils.UNKNOWN_NEXT_AIR_DATE, inTheFuture, "0"
                 };
