@@ -50,8 +50,13 @@ public class EpisodeDetailsActivity extends BaseActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
 
+        final int episodeId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, 0);
+        if (episodeId == 0) {
+            // nothing to display
+            finish();
+        }
+
         List<Episode> episodes = new ArrayList<Episode>();
-        int episodeId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, 0);
         int startPosition = 0;
 
         // Lookup show and season of episode
