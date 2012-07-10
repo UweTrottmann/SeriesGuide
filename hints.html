@@ -10,22 +10,42 @@ title: Getting Started
         
         <div class="spacer"></div> 
         
-        <h2>Sync between devices/with trakt</h2>
-        <p>First, you have to set up each device. You only have to do this <strong>once</strong>:</p>
-        <ol>
-            <li>Set up your trakt.tv account in <strong>Settings</strong>.</li>
-            <li>On older versions make sure <strong>Integrate with trakt.tv</strong> is enabled in <strong>Settings</strong>.</li>
-            <li>Do initial syncing via <strong>Sync with trakt.tv</strong> in <strong>Settings</strong>.</li>  
-        </ol> 
+        <h2>trakt.tv integration</h2>
+        <p>The following sections assume that you have <strong>connected your trakt account</strong> within SeriesGuide.<br/>Look in <strong>Settings</strong> under <strong>trakt.tv</strong> if you want to.</p>
+
+        <br/>
+
+        <h3>Adding shows</h3>
+        <p>Press the + button and then swipe to the <strong>Library</strong> tab. SeriesGuide will try to load which episodes are already watched from trakt.</p>
+
+        <br/>
         
+        <h3>What is synced?</h3>
         <div class="row">
-	        <div class="span4">
-	        	<p>From now on you just have to either <strong>Check In</strong> or <strong>mark seen (use the check mark)</strong> an episode.</p><p>The next time your devices update checked in/marked seen/collected episodes are automatically fetched from trakt.</p>
-	        </div>       
-	        <div class="span2">
-	        	<img src="images/traktsharing.png" alt="The sharing button options for trakt" >
-	        </div>
+            <div class="span4">
+                <dl>
+                	<dt>Check Ins</dt>
+                	<dd>Submitted to trakt. On the next update checked-in episodes are marked as watched.</dd>
+                	<br/>
+                	<dt>Watched flag</dt>
+                	<dd>Changes are sent to trakt. Other SeriesGuide installations will mark episodes as watched, but never remove the watched flag on the next update.</dd>
+                	<br/>
+                	<dt>Collected flag</dt>
+                	<dd>Changes are sent to trakt. Other SeriesGuide installations will mark episodes as collected, but never remove the collected flag on the next update.</dd>
+                </dl>
+            </div>
+            <div class="span2">
+            	<img src="images/traktsharing.png" alt="The sharing button options for trakt" >
+            	<p><strong>Episode action bar:</strong> Check In button, watched flag and collected flag.</p>
+    	    </div>
         </div>
+        <p>If you want to <strong>match up unseen episodes</strong>, read the section below.</p>
+        
+        <br/> 
+                            
+        <h3>Bulk syncing</h3>
+        <p>Sometimes you might be in need of syncing a bulk of watched flags, such as <strong>a whole season</strong> you just marked watched or to <strong>match up unseen episodes</strong> with your trakt library.</p>
+        <p>Go into SeriesGuide <strong>Settings</strong>. Go to the <strong>trakt.tv</strong> section and look for <strong>Sync with trakt.tv</strong>. If you want to match up unseen episodes, check the box on the bottom.</p>
         <div class="spacer"></div>
         
         <h2>Backup or restore your show database</h2>
