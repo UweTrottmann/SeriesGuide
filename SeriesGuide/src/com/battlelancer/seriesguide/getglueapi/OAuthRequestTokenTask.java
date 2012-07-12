@@ -1,7 +1,7 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.Utils;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
@@ -48,19 +48,19 @@ public class OAuthRequestTokenTask extends AsyncTask<Void, Void, String> {
                             | Intent.FLAG_FROM_BACKGROUND);
             mContext.startActivity(intent);
         } catch (OAuthMessageSignerException e) {
-            fireTrackerEvent(e.getMessage());
+            Utils.trackException(mContext, e);
             Log.w(TAG, e);
             return e.getMessage();
         } catch (OAuthNotAuthorizedException e) {
-            fireTrackerEvent(e.getMessage());
+            Utils.trackException(mContext, e);
             Log.w(TAG, e);
             return e.getMessage();
         } catch (OAuthExpectationFailedException e) {
-            fireTrackerEvent(e.getMessage());
+            Utils.trackException(mContext, e);
             Log.w(TAG, e);
             return e.getMessage();
         } catch (OAuthCommunicationException e) {
-            fireTrackerEvent(e.getMessage());
+            Utils.trackException(mContext, e);
             Log.w(TAG, e);
             return e.getMessage();
         }
@@ -73,10 +73,6 @@ public class OAuthRequestTokenTask extends AsyncTask<Void, Void, String> {
             Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
             ((PrepareRequestTokenActivity) mContext).finish();
         }
-    }
-
-    private void fireTrackerEvent(String message) {
-        AnalyticsUtils.getInstance(mContext).trackEvent(TAG, "GetGlue OAuth result", message, 0);
     }
 
 }

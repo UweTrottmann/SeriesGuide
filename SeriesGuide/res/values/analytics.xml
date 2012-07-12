@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Replace placeholder ID with your tracking ID -->
+    <string name="ga_trackingId">UA-27760852-3</string>
+
+    <!-- Enable Activity tracking -->
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <!-- Enable automatic exception tracking -->
+    <bool name="ga_reportUncaughtExceptions">true</bool>
+
+    <!-- Remove the last octet of the IP address -->
+    <bool name="ga_anonymizeIp">true</bool>
+
+    <!-- Screen names for activities -->
+    <string name="com.battlelancer.seriesguide.ui.BackupDeleteActivity">Backup</string>
+    <string name="com.battlelancer.seriesguide.ui.CheckinActivity">Checkin</string>
+    <string name="com.battlelancer.seriesguide.ui.SearchActivity">Search</string>
+    <string name="com.battlelancer.seriesguide.ui.SeriesGuidePreferences">Settings</string>
+    <string name="com.battlelancer.seriesguide.ui.AddActivity">Add Shows</string>
+    <string name="com.battlelancer.seriesguide.ui.ShowInfoActivity">Show Info</string>
+    <string name="com.battlelancer.seriesguide.ui.ShowsActivity">Shows</string>
+    <string name="com.battlelancer.seriesguide.ui.TraktSyncActivity">Trakt Sync</string>
+
+</resources>

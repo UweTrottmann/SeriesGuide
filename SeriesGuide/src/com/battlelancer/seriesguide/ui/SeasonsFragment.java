@@ -11,8 +11,8 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -74,13 +74,7 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     public void fireTrackerEvent(String label) {
-        AnalyticsUtils.getInstance(getActivity()).trackEvent("Seasons", "Click", label, 0);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        AnalyticsUtils.getInstance(getActivity()).trackPageView("/Seasons");
+        EasyTracker.getTracker().trackEvent("Seasons", "Click", label, (long) 0);
     }
 
     @Override
@@ -104,6 +98,12 @@ public class SeasonsFragment extends SherlockListFragment implements
 
         registerForContextMenu(getListView());
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Seasons");
     }
 
     @Override
@@ -453,8 +453,7 @@ public class SeasonsFragment extends SherlockListFragment implements
         mSorting = SeasonSorting.fromValue(prefs.getString(
                 SeriesGuidePreferences.KEY_SEASON_SORT_ORDER, SeasonSorting.LATEST_FIRST.value()));
 
-        AnalyticsUtils.getInstance(getActivity()).trackEvent("Seasons", "Sorting", mSorting.name(),
-                0);
+        EasyTracker.getTracker().trackEvent("Seasons", "Sorting", mSorting.name(), (long) 0);
 
         // restart loader and update menu description
         getLoaderManager().restartLoader(LOADER_ID, null, SeasonsFragment.this);

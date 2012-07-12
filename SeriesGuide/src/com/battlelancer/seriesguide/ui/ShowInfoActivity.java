@@ -10,11 +10,11 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
@@ -46,7 +46,7 @@ public class ShowInfoActivity extends BaseActivity {
      * @param label
      */
     public void fireTrackerEvent(String label) {
-        AnalyticsUtils.getInstance(this).trackEvent("ShowInfo", "Click", label, 0);
+        EasyTracker.getTracker().trackEvent("ShowInfo", "Click", label, (long) 0);
     }
 
     @Override
@@ -65,7 +65,13 @@ public class ShowInfoActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        AnalyticsUtils.getInstance(this).trackPageView("/ShowInfo");
+        EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
     }
 
     @Override
@@ -181,7 +187,7 @@ public class ShowInfoActivity extends BaseActivity {
         if (imdbButton != null) {
             imdbButton.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-                    fireTrackerEvent("IMDb");
+                    fireTrackerEvent("Show IMDb page");
 
                     if (imdbid.length() != 0) {
                         Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("imdb:///title/"
@@ -207,7 +213,7 @@ public class ShowInfoActivity extends BaseActivity {
         if (tvdbButton != null) {
             tvdbButton.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-                    fireTrackerEvent("TVDb");
+                    fireTrackerEvent("Show TVDb page");
                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TVDB_SHOW_URL
                             + tvdbId));
                     startActivity(i);
@@ -219,6 +225,7 @@ public class ShowInfoActivity extends BaseActivity {
         findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                fireTrackerEvent("Show Trakt Shouts");
                 TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
                         show.getSeriesName(), Integer.valueOf(tvdbId));
 

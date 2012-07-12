@@ -7,9 +7,10 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.GoogleAnalytics;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -115,7 +116,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
     public static int THEME = R.style.SeriesGuideTheme;
 
     public void fireTrackerEvent(String label) {
-        AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
+        EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
     }
 
     @SuppressWarnings("deprecation")
@@ -180,11 +181,11 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
             public boolean onPreferenceClick(Preference preference) {
                 if (((CheckBoxPreference) preference).isChecked()) {
-                    AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                            "OnlyFutureEpisodes", "Enable", 0);
+                    EasyTracker.getTracker().trackEvent(TAG, "OnlyFutureEpisodes", "Enable",
+                            (long) 0);
                 } else {
-                    AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                            "OnlyFutureEpisodes", "Disable", 0);
+                    EasyTracker.getTracker().trackEvent(TAG, "OnlyFutureEpisodes", "Disable",
+                            (long) 0);
                 }
                 return false;
             }
@@ -196,11 +197,11 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
             public boolean onPreferenceClick(Preference preference) {
                 if (((CheckBoxPreference) preference).isChecked()) {
-                    AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                            "OnlySeasonEpisodes", "Enable", 0);
+                    EasyTracker.getTracker().trackEvent(TAG, "OnlySeasonEpisodes", "Enable",
+                            (long) 0);
                 } else {
-                    AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                            "OnlySeasonEpisodes", "Disable", 0);
+                    EasyTracker.getTracker().trackEvent(TAG, "OnlySeasonEpisodes", "Disable",
+                            (long) 0);
                 }
                 return false;
             }
@@ -265,11 +266,11 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     if (((CheckBoxPreference) preference).isChecked()) {
-                        AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                                "Notifications", "Enable", 0);
+                        EasyTracker.getTracker().trackEvent(TAG, "Notifications", "Enable",
+                                (long) 0);
                     } else {
-                        AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                                "Notifications", "Disable", 0);
+                        EasyTracker.getTracker().trackEvent(TAG, "Notifications", "Disable",
+                                (long) 0);
                     }
 
                     Utils.runNotificationService(SeriesGuidePreferences.this);
@@ -291,12 +292,32 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                 return true;
             }
         });
+
+        // GA opt-out
+        findPreference(KEY_GOOGLEANALYTICS).setOnPreferenceChangeListener(
+                new OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        if (preference.getKey().equals(KEY_GOOGLEANALYTICS)) {
+                            boolean isEnabled = (Boolean) newValue;
+                            GoogleAnalytics.getInstance(activity).setAppOptOut(isEnabled);
+                            return true;
+                        }
+                        return false;
+                    }
+                });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        AnalyticsUtils.getInstance(this).trackPageView("/Settings");
+        EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
     }
 
     @Override

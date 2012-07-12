@@ -5,6 +5,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.entities.TvShow;
 
@@ -59,6 +60,12 @@ public class TraktAddFragment extends AddFragment {
             int type = getArguments().getInt("traktlisttype");
             new GetTraktShowsTask(getActivity()).execute(type);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Add Trakt Shows");
     }
 
     public class GetTraktShowsTask extends AsyncTask<Integer, Void, List<SearchResult>> {

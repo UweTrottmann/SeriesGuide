@@ -7,11 +7,11 @@ import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
 import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -56,10 +56,9 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
     private View mCheckinButton;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        AnalyticsUtils.getInstance(getActivity()).trackPageView("/CheckInDialog");
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Check In Dialog");
     }
 
     @Override

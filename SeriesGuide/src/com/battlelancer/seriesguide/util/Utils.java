@@ -7,6 +7,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.trakt.ServiceManager;
 
 import android.annotation.TargetApi;
@@ -870,6 +871,16 @@ public class Utils {
         } else {
             task.execute(args);
         }
+    }
+
+    /**
+     * Tracks an exception using the Google Analytics {@link EasyTracker}.
+     * 
+     * @param context
+     * @param e
+     */
+    public static void trackException(Context context, Exception e) {
+        EasyTracker.getTracker().trackException(e.getMessage(), false);
     }
 
 }

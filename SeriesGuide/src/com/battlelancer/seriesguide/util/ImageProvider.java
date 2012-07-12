@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
@@ -319,7 +320,7 @@ public class ImageProvider {
         final String noMediaFilePath = mCacheDir + "/.nomedia";
 
         if (prefs.getBoolean(SeriesGuidePreferences.KEY_HIDEIMAGES, true)) {
-            AnalyticsUtils.getInstance(mContext).trackEvent("Settings", "Hide images", "Enable", 0);
+            EasyTracker.getTracker().trackEvent("Settings", "Hide images", "Enable", (long) 0);
 
             try {
                 Log.d(TAG, "Creating .nomedia file");
@@ -328,8 +329,7 @@ public class ImageProvider {
                 Log.w(TAG, "Could not create .nomedia file");
             }
         } else {
-            AnalyticsUtils.getInstance(mContext)
-                    .trackEvent("Settings", "Hide images", "Disable", 0);
+            EasyTracker.getTracker().trackEvent("Settings", "Hide images", "Disable", (long) 0);
 
             new File(noMediaFilePath).delete();
             Log.d(TAG, "Deleting .nomedia file");

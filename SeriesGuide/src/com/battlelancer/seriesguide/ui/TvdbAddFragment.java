@@ -6,6 +6,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import org.xml.sax.SAXException;
 
@@ -83,6 +84,12 @@ public class TvdbAddFragment extends AddFragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Add TVDb Shows");
     }
 
     protected void search() {

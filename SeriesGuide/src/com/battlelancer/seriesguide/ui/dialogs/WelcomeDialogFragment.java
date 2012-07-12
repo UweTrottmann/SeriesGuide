@@ -3,7 +3,8 @@ package com.battlelancer.seriesguide.ui.dialogs;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.GoogleAnalytics;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -35,13 +36,15 @@ public class WelcomeDialogFragment extends DialogFragment {
         return sp.getBoolean("accepted_eula", false);
     }
 
-    public void fireTrackerEvent(String label) {
-        AnalyticsUtils.getInstance(getActivity()).trackEvent(TAG, "Click", label, 0);
-    }
-
     public static WelcomeDialogFragment newInstance() {
         WelcomeDialogFragment f = new WelcomeDialogFragment();
         return f;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Welcome Dialog");
     }
 
     public static void showWelcomeDialog(FragmentActivity activity) {
@@ -75,7 +78,7 @@ public class WelcomeDialogFragment extends DialogFragment {
         v.findViewById(R.id.welcome_setuptrakt).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                fireTrackerEvent("Setup trakt account");
+                EasyTracker.getTracker().trackEvent(TAG, "Click", "Setup trakt account", (long) 0);
                 TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
                         .newInstance();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -100,6 +103,8 @@ public class WelcomeDialogFragment extends DialogFragment {
                                         .putBoolean("accepted_eula", true)
                                         .putBoolean(SeriesGuidePreferences.KEY_GOOGLEANALYTICS,
                                                 cb.isChecked()).commit();
+                                // GA opt-out right here
+                                GoogleAnalytics.getInstance(activity).setAppOptOut(cb.isChecked());
                                 return null;
                             }
                         }.execute();

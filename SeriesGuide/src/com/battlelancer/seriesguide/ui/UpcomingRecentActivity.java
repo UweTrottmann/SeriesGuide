@@ -55,7 +55,7 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
         argsUpcoming.putString(UpcomingFragment.InitBundle.QUERY, UpcomingQuery.QUERY_UPCOMING);
         argsUpcoming.putString(UpcomingFragment.InitBundle.SORTORDER,
                 UpcomingQuery.SORTING_UPCOMING);
-        argsUpcoming.putString(UpcomingFragment.InitBundle.ANALYTICS_TAG, "/Upcoming");
+        argsUpcoming.putString(UpcomingFragment.InitBundle.ANALYTICS_TAG, "Upcoming");
         argsUpcoming.putInt(UpcomingFragment.InitBundle.LOADER_ID, 10);
         argsUpcoming.putInt(UpcomingFragment.InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
         mTabsAdapter.addTab(upcomingTab, UpcomingFragment.class, argsUpcoming);
@@ -64,7 +64,7 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
         final Bundle argsRecent = new Bundle();
         argsRecent.putString(UpcomingFragment.InitBundle.QUERY, UpcomingQuery.QUERY_RECENT);
         argsRecent.putString(UpcomingFragment.InitBundle.SORTORDER, UpcomingQuery.SORTING_RECENT);
-        argsRecent.putString(UpcomingFragment.InitBundle.ANALYTICS_TAG, "/Recent");
+        argsRecent.putString(UpcomingFragment.InitBundle.ANALYTICS_TAG, "Recent");
         argsRecent.putInt(UpcomingFragment.InitBundle.LOADER_ID, 20);
         argsRecent.putInt(UpcomingFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);
         mTabsAdapter.addTab(recentTab, UpcomingFragment.class, argsRecent);

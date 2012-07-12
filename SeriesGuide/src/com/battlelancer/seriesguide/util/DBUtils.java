@@ -341,16 +341,16 @@ public class DBUtils {
                     }
 
                 } catch (TraktException e) {
-                    fireTrackerEvent(e.getMessage());
+                    Utils.trackException(context, e);
                     Log.w(ShareUtils.TAG, e);
                     return FAILED;
                 } catch (ApiException e) {
-                    fireTrackerEvent(e.getMessage());
+                    Utils.trackException(context, e);
                     Log.w(ShareUtils.TAG, e);
                     return FAILED;
                 } catch (Exception e) {
                     // password could likely not be decrypted
-                    fireTrackerEvent(e.getMessage());
+                    Utils.trackException(context, e);
                     Log.w(ShareUtils.TAG, e);
                     return FAILED;
                 }
@@ -403,11 +403,6 @@ public class DBUtils {
                 Toast.makeText(context,
                         context.getString(message, number) + " " + context.getString(status),
                         duration).show();
-            }
-
-            private void fireTrackerEvent(String message) {
-                AnalyticsUtils.getInstance(context).trackEvent("MarkTask", "Mark result", message,
-                        0);
             }
 
         }.execute();

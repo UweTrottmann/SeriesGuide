@@ -7,6 +7,7 @@ import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -241,15 +242,15 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
             return r;
         } catch (TraktException e) {
-            fireTrackerEvent(e.getMessage());
-            Log.w(ShareUtils.TAG, e);
+            EasyTracker.getTracker().trackException(e.getMessage(), false);
+            Log.w(TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.trakt_generalerror);
             return r;
         } catch (ApiException e) {
-            fireTrackerEvent(e.getMessage());
-            Log.w(ShareUtils.TAG, e);
+            EasyTracker.getTracker().trackException(e.getMessage(), false);
+            Log.w(TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.trakt_generalerror);
@@ -314,9 +315,5 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 mListener.onTraktActionComplete(true);
             }
         }
-    }
-
-    private void fireTrackerEvent(String message) {
-        AnalyticsUtils.getInstance(mContext).trackEvent(TAG, "Update result", message, 0);
     }
 }

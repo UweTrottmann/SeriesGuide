@@ -8,6 +8,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.thetvdbapi.TheTVDB;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -204,7 +205,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                 } catch (SAXException e) {
                     if (itry == 1) {
                         // failed twice, give up
-                        fireTrackerEvent(e.getMessage());
+                        Utils.trackException(mAppContext, e);
                         resultCode = UpdateResult.ERROR;
                         addFailedShow(mCurrentShowName);
                     }
@@ -273,7 +274,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             try {
                 manager = Utils.getServiceManagerWithAuth(mAppContext, false);
             } catch (Exception e) {
-                fireTrackerEvent(e.getMessage());
+                Utils.trackException(mAppContext, e);
                 Log.w(TAG, e);
                 return UpdateResult.ERROR;
             }
@@ -289,11 +290,11 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                                 ActivityAction.Scrobble, ActivityAction.Collection)
                         .timestamp(startTimeTrakt).fire();
             } catch (TraktException e) {
-                fireTrackerEvent(e.getMessage());
+                Utils.trackException(mAppContext, e);
                 Log.w(TAG, e);
                 return UpdateResult.ERROR;
             } catch (ApiException e) {
-                fireTrackerEvent(e.getMessage());
+                Utils.trackException(mAppContext, e);
                 Log.w(TAG, e);
                 return UpdateResult.ERROR;
             }
@@ -339,12 +340,12 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                         .applyBatch(SeriesContract.CONTENT_AUTHORITY, batch);
             } catch (RemoteException e) {
                 // Failed binder transactions aren't recoverable
-                fireTrackerEvent(e.getMessage());
+                Utils.trackException(mAppContext, e);
                 throw new RuntimeException("Problem applying batch operation", e);
             } catch (OperationApplicationException e) {
                 // Failures like constraint violation aren't
                 // recoverable
-                fireTrackerEvent(e.getMessage());
+                Utils.trackException(mAppContext, e);
                 throw new RuntimeException("Problem applying batch operation", e);
             }
 
@@ -383,12 +384,14 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             case ERROR:
                 message = mAppContext.getString(R.string.update_saxerror);
                 length = Toast.LENGTH_LONG;
+
+                fireTrackerEvent("Error");
                 break;
             case OFFLINE:
-                fireTrackerEvent("Offline");
-
                 message = mAppContext.getString(R.string.update_offline);
                 length = Toast.LENGTH_LONG;
+
+                fireTrackerEvent("Offline");
                 break;
             default:
                 break;
@@ -457,7 +460,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
     }
 
     private void fireTrackerEvent(String message) {
-        AnalyticsUtils.getInstance(mAppContext).trackEvent(TAG, "Update result", message, 0);
+        EasyTracker.getTracker().trackEvent(TAG, "Update result", message, (long) 0);
     }
 
 }

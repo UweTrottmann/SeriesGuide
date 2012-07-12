@@ -6,10 +6,10 @@ import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.content.Context;
 import android.content.Intent;
@@ -98,7 +98,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     public void onStart() {
         super.onStart();
         final String tag = getArguments().getString("analyticstag");
-        AnalyticsUtils.getInstance(getActivity()).trackPageView(tag);
+        EasyTracker.getTracker().trackView(tag);
     }
 
     @Override

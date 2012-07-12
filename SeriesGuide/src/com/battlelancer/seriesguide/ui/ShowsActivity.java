@@ -11,13 +11,13 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.WelcomeDialogFragment;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -64,7 +64,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>,
         ActionBar.OnNavigationListener {
 
-    // private boolean mBusy;
+    private static final String TAG = "Shows";
 
     private static final int UPDATE_SUCCESS = 100;
 
@@ -124,7 +124,7 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
      * @param label
      */
     public void fireTrackerEvent(String label) {
-        AnalyticsUtils.getInstance(this).trackEvent("Shows", "Click", label, 0);
+        EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
     }
 
     @Override
@@ -197,7 +197,7 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
     @Override
     protected void onStart() {
         super.onStart();
-        AnalyticsUtils.getInstance(this).trackPageView("/Shows");
+        EasyTracker.getInstance().activityStart(this);
     }
 
     @Override
@@ -207,6 +207,12 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
         if (mSavedState != null) {
             restoreLocalState(mSavedState);
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
     }
 
     @Override
@@ -242,8 +248,8 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
 
             if (paths != null) {
                 mArtTask = (FetchPosterTask) new FetchPosterTask(paths, index).execute();
-                AnalyticsUtils.getInstance(this).trackEvent("Shows", "Task Lifecycle",
-                        "Art Task Restored", 0);
+                EasyTracker.getTracker().trackEvent(TAG, "Task Lifecycle", "Art Task Restored",
+                        (long) 0);
             }
         }
     }
@@ -259,8 +265,7 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
 
             mArtTask = null;
 
-            AnalyticsUtils.getInstance(this).trackEvent("Shows", "Task Lifecycle",
-                    "Art Task Saved", 0);
+            EasyTracker.getTracker().trackEvent(TAG, "Task Lifecycle", "Art Task Saved", (long) 0);
         }
     }
 
@@ -603,15 +608,15 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
         protected void onPostExecute(Integer resultCode) {
             switch (resultCode) {
                 case UPDATE_SUCCESS:
-                    AnalyticsUtils.getInstance(ShowsActivity.this).trackEvent("Shows",
-                            "Fetch missing posters", "Success", 0);
+                    EasyTracker.getTracker().trackEvent(TAG, "Fetch missing posters", "Success",
+                            (long) 0);
 
                     Toast.makeText(getApplicationContext(), getString(R.string.update_success),
                             Toast.LENGTH_SHORT).show();
                     break;
                 case UPDATE_INCOMPLETE:
-                    AnalyticsUtils.getInstance(ShowsActivity.this).trackEvent("Shows",
-                            "Fetch missing posters", "Incomplete", 0);
+                    EasyTracker.getTracker().trackEvent(TAG, "Fetch missing posters", "Incomplete",
+                            (long) 0);
 
                     Toast.makeText(getApplicationContext(), getString(R.string.arttask_incomplete),
                             Toast.LENGTH_LONG).show();
@@ -641,8 +646,8 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
             mArtTask.cancel(true);
             mArtTask = null;
 
-            AnalyticsUtils.getInstance(this).trackEvent("Shows", "Task Lifecycle",
-                    "Art Task Canceled", 0);
+            EasyTracker.getTracker().trackEvent(TAG, "Task Lifecycle", "Art Task Canceled",
+                    (long) 0);
         }
     }
 
@@ -738,9 +743,6 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
                 SeriesGuidePreferences.KEY_SHOW_SORT_ORDER, ShowSorting.ALPHABETIC.value()));
 
         if (oldSorting != mSorting) {
-            AnalyticsUtils.getInstance(ShowsActivity.this).trackEvent("Shows", "Sorting",
-                    mSorting.name(), 0);
-
             return true;
         } else {
             return false;

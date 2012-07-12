@@ -5,7 +5,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -30,6 +30,18 @@ public class SearchActivity extends BaseActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         setIntent(intent);
         handleIntent(intent);
@@ -40,7 +52,7 @@ public class SearchActivity extends BaseActivity {
             return;
         }
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            AnalyticsUtils.getInstance(this).trackEvent(TAG, "Search action", "Search", 0);
+            EasyTracker.getTracker().trackEvent(TAG, "Search action", "Search", (long) 0);
             String query = intent.getStringExtra(SearchManager.QUERY);
             getSupportActionBar().setSubtitle("\"" + query + "\"");
 
@@ -56,7 +68,7 @@ public class SearchActivity extends BaseActivity {
                 searchFragment.onPerformSearch(getIntent().getExtras());
             }
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-            AnalyticsUtils.getInstance(this).trackEvent(TAG, "Search action", "View", 0);
+            EasyTracker.getTracker().trackEvent(TAG, "Search action", "View", (long) 0);
             Uri data = intent.getData();
             String id = data.getLastPathSegment();
             onShowEpisodeDetails(id);

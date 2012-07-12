@@ -6,7 +6,9 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.ui.ShowInfoActivity;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
+import com.google.analytics.tracking.android.EasyTracker;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -135,22 +137,20 @@ public class ShareUtils {
         intent.putExtra("title", title);
         intent.putExtra("description", description);
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
+                .getApplicationContext());
+
+        Calendar cal = Utils.getAirtimeCalendar(airtime, prefs);
+
+        long startTime = cal.getTimeInMillis();
+        long endTime = startTime + Long.valueOf(runtime) * DateUtils.MINUTE_IN_MILLIS;
+        intent.putExtra("beginTime", startTime);
+        intent.putExtra("endTime", endTime);
+
         try {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                    .getApplicationContext());
-
-            Calendar cal = Utils.getAirtimeCalendar(airtime, prefs);
-
-            long startTime = cal.getTimeInMillis();
-            long endTime = startTime + Long.valueOf(runtime) * DateUtils.MINUTE_IN_MILLIS;
-            intent.putExtra("beginTime", startTime);
-            intent.putExtra("endTime", endTime);
-
             context.startActivity(intent);
-
-            AnalyticsUtils.getInstance(context).trackEvent("Sharing", "Calendar", "Success", 0);
-        } catch (Exception e) {
-            AnalyticsUtils.getInstance(context).trackEvent("Sharing", "Calendar", "Failed", 0);
+        } catch (ActivityNotFoundException e) {
+            EasyTracker.getTracker().trackEvent(TAG, "Calendar", "Failed", (long) 0);
             Toast.makeText(context, context.getString(R.string.addtocalendar_failed),
                     Toast.LENGTH_SHORT).show();
         }

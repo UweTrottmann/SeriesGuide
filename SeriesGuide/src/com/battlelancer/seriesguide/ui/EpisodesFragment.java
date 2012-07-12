@@ -12,9 +12,9 @@ import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -85,7 +85,7 @@ public class EpisodesFragment extends SherlockListFragment implements
     }
 
     public void fireTrackerEvent(String label) {
-        AnalyticsUtils.getInstance(getActivity()).trackEvent("Episodes", "Click", label, 0);
+        EasyTracker.getTracker().trackEvent("Episodes", "Click", label, (long) 0);
     }
 
     @Override
@@ -96,8 +96,6 @@ public class EpisodesFragment extends SherlockListFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        AnalyticsUtils.getInstance(getActivity()).trackPageView("/Episodes");
 
         updatePreferences();
 
@@ -220,6 +218,12 @@ public class EpisodesFragment extends SherlockListFragment implements
             getSherlockActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
                     R.anim.fragment_slide_left_exit);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Episodes");
     }
 
     @Override
@@ -422,8 +426,7 @@ public class EpisodesFragment extends SherlockListFragment implements
                 .fromValue(prefs.getString(SeriesGuidePreferences.KEY_EPISODE_SORT_ORDER,
                         EpisodeSorting.OLDEST_FIRST.value()));
 
-        AnalyticsUtils.getInstance(getActivity()).trackEvent("Episodes", "Sorting",
-                mSorting.name(), 0);
+        EasyTracker.getTracker().trackEvent("Episodes", "Sorting", mSorting.name(), (long) 0);
 
         getLoaderManager().restartLoader(EPISODES_LOADER, null, EpisodesFragment.this);
         getSherlockActivity().invalidateOptionsMenu();

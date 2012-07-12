@@ -3,12 +3,12 @@ package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -185,8 +185,6 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        AnalyticsUtils.getInstance(getActivity()).trackPageView("/Shouts");
-
         mAdapter = new TraktShoutsAdapter(getActivity());
         setListAdapter(mAdapter);
 
@@ -199,6 +197,12 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
             getLoaderManager().initLoader(0, getArguments(), this);
             mHandler.postDelayed(mUpdateShoutsRunnable, DateUtils.MINUTE_IN_MILLIS);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Shouts");
     }
 
     private Runnable mUpdateShoutsRunnable = new Runnable() {
@@ -431,9 +435,11 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
                     int season = mArgs.getInt(ShareItems.SEASON);
                     shouts = manager.showService().episodeShouts(tvdbId, season, episode).fire();
                 }
-            } catch (TraktException te) {
+            } catch (TraktException e) {
+                Utils.trackException(getContext(), e);
                 return null;
-            } catch (ApiException ae) {
+            } catch (ApiException e) {
+                Utils.trackException(getContext(), e);
                 return null;
             }
 

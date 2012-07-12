@@ -5,9 +5,9 @@ import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -59,10 +59,6 @@ public class BackupDeleteActivity extends BaseActivity {
 
     private static final int IMPORT_PROGRESS = 4;
 
-    public void fireTrackerEvent(String label) {
-        AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
-    }
-
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +96,13 @@ public class BackupDeleteActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        AnalyticsUtils.getInstance(this).trackPageView("/BackupDelete");
+        EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
     }
 
     @Override
@@ -167,17 +169,11 @@ public class BackupDeleteActivity extends BaseActivity {
                 exportProgress.dismiss();
             }
             if (errorMsg == null) {
-                // track event
-                AnalyticsUtils.getInstance(BackupDeleteActivity.this).trackEvent(TAG, "Backup",
-                        "Success", 0);
-
+                EasyTracker.getTracker().trackEvent(TAG, "Backup", "Success", (long) 0);
                 Toast.makeText(BackupDeleteActivity.this, getString(R.string.backup_success),
                         Toast.LENGTH_SHORT).show();
             } else {
-                // track event
-                AnalyticsUtils.getInstance(BackupDeleteActivity.this).trackEvent(TAG, "Backup",
-                        errorMsg, 0);
-
+                EasyTracker.getTracker().trackEvent(TAG, "Backup", errorMsg, (long) 0);
                 Toast.makeText(BackupDeleteActivity.this,
                         getString(R.string.backup_failed) + " - " + errorMsg, Toast.LENGTH_LONG)
                         .show();
@@ -265,17 +261,11 @@ public class BackupDeleteActivity extends BaseActivity {
                 importProgress.dismiss();
             }
             if (errMsg == null) {
-                // track event
-                AnalyticsUtils.getInstance(BackupDeleteActivity.this).trackEvent(TAG, "Import",
-                        "Success", 0);
-
+                EasyTracker.getTracker().trackEvent(TAG, "Import", "Success", (long) 0);
                 Toast.makeText(BackupDeleteActivity.this, getString(R.string.import_success),
                         Toast.LENGTH_SHORT).show();
             } else {
-                // track event
-                AnalyticsUtils.getInstance(BackupDeleteActivity.this).trackEvent(TAG, "Import",
-                        errMsg, 0);
-
+                EasyTracker.getTracker().trackEvent(TAG, "Import", errMsg, (long) 0);
                 Toast.makeText(BackupDeleteActivity.this,
                         getString(R.string.import_failed) + " - " + errMsg, Toast.LENGTH_LONG)
                         .show();
