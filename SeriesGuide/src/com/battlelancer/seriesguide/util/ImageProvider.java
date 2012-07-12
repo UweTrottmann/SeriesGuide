@@ -147,6 +147,13 @@ public class ImageProvider {
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                 if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_HIDEIMAGES)) {
                     updateNoMediaFile(sharedPreferences);
+                    if (prefs.getBoolean(SeriesGuidePreferences.KEY_HIDEIMAGES, true)) {
+                        EasyTracker.getTracker().trackEvent("Settings", "Hide images", "Enabled",
+                                (long) 0);
+                    } else {
+                        EasyTracker.getTracker().trackEvent("Settings", "Hide images", "Disabled",
+                                (long) 0);
+                    }
                 }
             }
         };
@@ -320,8 +327,6 @@ public class ImageProvider {
         final String noMediaFilePath = mCacheDir + "/.nomedia";
 
         if (prefs.getBoolean(SeriesGuidePreferences.KEY_HIDEIMAGES, true)) {
-            EasyTracker.getTracker().trackEvent("Settings", "Hide images", "Enable", (long) 0);
-
             try {
                 Log.d(TAG, "Creating .nomedia file");
                 new File(noMediaFilePath).createNewFile();
@@ -329,8 +334,6 @@ public class ImageProvider {
                 Log.w(TAG, "Could not create .nomedia file");
             }
         } else {
-            EasyTracker.getTracker().trackEvent("Settings", "Hide images", "Disable", (long) 0);
-
             new File(noMediaFilePath).delete();
             Log.d(TAG, "Deleting .nomedia file");
         }
