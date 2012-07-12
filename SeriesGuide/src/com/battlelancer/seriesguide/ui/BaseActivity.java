@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Google Inc.
+ * Copyright 2012 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * Modified by Uwe Trottmann for SeriesGuide
  */
 
 package com.battlelancer.seriesguide.ui;
@@ -35,7 +34,8 @@ import android.text.format.DateUtils;
 import android.view.KeyEvent;
 
 /**
- * A base activity that has some common functionality across app activities.
+ * Provides some common functionality across all activities like setting the
+ * theme and navigation shortcuts.
  */
 public abstract class BaseActivity extends SherlockFragmentActivity {
 

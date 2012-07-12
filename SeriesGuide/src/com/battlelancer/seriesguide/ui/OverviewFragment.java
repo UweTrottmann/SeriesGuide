@@ -61,6 +61,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Displays general information about a show and its next episode. Displays a
+ * {@link SeasonsFragment} on larger screens.
+ */
 public class OverviewFragment extends SherlockFragment implements OnTraktActionCompleteListener {
 
     private boolean mDualPane;
