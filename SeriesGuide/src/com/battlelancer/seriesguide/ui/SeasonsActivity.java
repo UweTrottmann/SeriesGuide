@@ -21,6 +21,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -60,6 +61,18 @@ public class SeasonsActivity extends BaseActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.root_container, mFragment)
                     .commit();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
     }
 
     @Override

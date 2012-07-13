@@ -22,5 +22,11 @@
     <string name="com.battlelancer.seriesguide.ui.ShowInfoActivity">Show Info</string>
     <string name="com.battlelancer.seriesguide.ui.ShowsActivity">Shows</string>
     <string name="com.battlelancer.seriesguide.ui.TraktSyncActivity">Trakt Sync</string>
+    <string name="com.battlelancer.seriesguide.ui.OverviewActivity">Overview Screen</string>
+    <string name="com.battlelancer.seriesguide.ui.EpisodeDetailsActivity">Episode Details Screen</string>
+    <string name="com.battlelancer.seriesguide.ui.EpisodesActivity">Episodes Screen</string>
+    <string name="com.battlelancer.seriesguide.ui.SeasonsActivity">Seasons Screen</string>
+    <string name="com.battlelancer.seriesguide.ui.TraktShoutsActivity">Shouts Screen</string>
+    <string name="com.battlelancer.seriesguide.ui.UpcomingRecentActivity">Activity Screen</string>
 
 </resources>
