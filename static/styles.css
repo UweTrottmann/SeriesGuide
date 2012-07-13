@@ -35,6 +35,10 @@ font-weight: bold;
 height:50px;
 }
 
+.smallspacer {
+height:25px;
+}
+
 .largespacer {
 height:80px;
 }
