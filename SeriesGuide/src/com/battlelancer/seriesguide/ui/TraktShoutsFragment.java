@@ -29,6 +29,7 @@ import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Shout;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -162,7 +163,7 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
 
                 if (episode == 0) {
                     // shout for a show
-                    Utils.executeAsyncTask(new TraktTask(getSherlockActivity(),
+                    AndroidUtils.executeAsyncTask(new TraktTask(getSherlockActivity(),
                             getFragmentManager(), TraktShoutsFragment.this).shout(tvdbid, shout,
                             isSpoiler), new Void[] {
                         null
@@ -170,7 +171,7 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
                 } else {
                     // shout for an episode
                     int season = args.getInt(ShareItems.SEASON);
-                    Utils.executeAsyncTask(new TraktTask(getSherlockActivity(),
+                    AndroidUtils.executeAsyncTask(new TraktTask(getSherlockActivity(),
                             getFragmentManager(), TraktShoutsFragment.this).shout(tvdbid, season,
                             episode, shout, isSpoiler), new Void[] {
                         null
@@ -205,7 +206,7 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
         setListAdapter(mAdapter);
 
         // nag about no connectivity
-        if (!Utils.isNetworkConnected(getSherlockActivity())) {
+        if (!AndroidUtils.isNetworkConnected(getSherlockActivity())) {
             setListShown(true);
             ((TextView) mEmptyView).setText(R.string.offline);
         } else {

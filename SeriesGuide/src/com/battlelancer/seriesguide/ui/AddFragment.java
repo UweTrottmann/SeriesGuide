@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -62,7 +62,7 @@ public class AddFragment extends SherlockListFragment {
     @TargetApi(11)
     protected void setSearchResults(List<SearchResult> searchResults) {
         mAdapter.clear();
-        if (Utils.isHoneycombOrHigher()) {
+        if (AndroidUtils.isHoneycombOrHigher()) {
             mAdapter.addAll(searchResults);
         } else {
             for (SearchResult searchResult : searchResults) {

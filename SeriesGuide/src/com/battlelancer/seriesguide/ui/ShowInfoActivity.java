@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
@@ -268,7 +269,7 @@ public class ShowInfoActivity extends BaseActivity {
         // trakt ratings
         TraktSummaryTask task = new TraktSummaryTask(this, findViewById(R.id.ratingbar))
                 .show(tvdbId);
-        Utils.executeAsyncTask(task, new Void[] {
+        AndroidUtils.executeAsyncTask(task, new Void[] {
             null
         });
     }

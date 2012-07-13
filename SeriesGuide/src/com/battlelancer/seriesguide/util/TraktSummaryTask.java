@@ -24,6 +24,7 @@ import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Ratings;
 import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -160,8 +161,8 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         final boolean isOnlyWifiAllowed = prefs.getBoolean(
                 SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
-        return (isOnlyWifiAllowed && Utils.isWifiConnected(mContext))
-                || (!isOnlyWifiAllowed && Utils.isNetworkConnected(mContext));
+        return (isOnlyWifiAllowed && AndroidUtils.isWifiConnected(mContext))
+                || (!isOnlyWifiAllowed && AndroidUtils.isNetworkConnected(mContext));
     }
 
     @Override

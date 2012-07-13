@@ -30,6 +30,7 @@ import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.jakewharton.trakt.services.ShowService.CheckinBuilder;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -177,7 +178,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         mAction = TraktAction.values()[mArgs.getInt(ShareItems.TRAKTACTION)];
 
         // check for network connection
-        if (!Utils.isNetworkConnected(mContext)) {
+        if (!AndroidUtils.isNetworkConnected(mContext)) {
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.offline);

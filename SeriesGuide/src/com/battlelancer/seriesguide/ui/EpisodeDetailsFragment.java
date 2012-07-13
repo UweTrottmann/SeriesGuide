@@ -36,6 +36,7 @@ import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -330,7 +331,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                             episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID),
                             episode.getInt(EpisodeDetailsQuery.SEASON),
                             episode.getInt(EpisodeDetailsQuery.NUMBER));
-                    Utils.executeAsyncTask(mTraktTask, new Void[] {
+                    AndroidUtils.executeAsyncTask(mTraktTask, new Void[] {
                         null
                     });
 
@@ -449,7 +450,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     protected void onLoadImage(String imagePath, FrameLayout container) {
         if (mArtTask == null || mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
             mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity());
-            Utils.executeAsyncTask(mArtTask, new Void[] {
+            AndroidUtils.executeAsyncTask(mArtTask, new Void[] {
                 null
             });
         }

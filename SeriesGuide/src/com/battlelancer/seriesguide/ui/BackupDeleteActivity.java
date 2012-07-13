@@ -22,8 +22,8 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -167,7 +167,7 @@ public class BackupDeleteActivity extends BaseActivity {
             String errorMsg = null;
             try {
                 file.createNewFile();
-                Utils.copyFile(dbFile, file);
+                AndroidUtils.copyFile(dbFile, file);
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage(), e);
                 errorMsg = e.getMessage();
@@ -230,7 +230,7 @@ public class BackupDeleteActivity extends BaseActivity {
 
             try {
                 dbFile.createNewFile();
-                Utils.copyFile(dbBackupFile, dbFile);
+                AndroidUtils.copyFile(dbBackupFile, dbFile);
 
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
                         .putBoolean(SeriesGuidePreferences.KEY_DATABASEIMPORTED, true).commit();
@@ -297,7 +297,7 @@ public class BackupDeleteActivity extends BaseActivity {
                         .setPositiveButton(getString(R.string.backup_yes),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface arg0, int arg1) {
-                                        if (Utils.isExtStorageAvailable()) {
+                                        if (AndroidUtils.isExtStorageAvailable()) {
                                             mExportTask = new ExportDatabaseTask();
                                             mExportTask.execute();
                                         } else {
@@ -313,7 +313,7 @@ public class BackupDeleteActivity extends BaseActivity {
                         .setPositiveButton(getString(R.string.import_yes),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface arg0, int arg1) {
-                                        if (Utils.isExtStorageAvailable()) {
+                                        if (AndroidUtils.isExtStorageAvailable()) {
                                             mImportTask = new ImportDatabaseTask();
                                             mImportTask.execute();
                                         } else {

@@ -20,6 +20,7 @@ package com.battlelancer.seriesguide;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.app.Application;
 import android.preference.PreferenceManager;
@@ -39,7 +40,7 @@ public class SeriesGuideApplication extends Application {
 
     @Override
     public void onLowMemory() {
-        if (!Utils.isICSOrHigher()) {
+        if (!AndroidUtils.isICSOrHigher()) {
             // clear the whole cache as Honeycomb and below don't support
             // onTrimMemory (used directly in our ImageProvider)
             ImageProvider.getInstance(this).clearCache();

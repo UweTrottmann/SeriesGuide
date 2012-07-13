@@ -26,6 +26,7 @@ import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Response;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -117,7 +118,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
                             // relaunch the trakt task which called us to
                             // try the check in again
-                            Utils.executeAsyncTask(new TraktTask(context, fm, args, null),
+                            AndroidUtils.executeAsyncTask(new TraktTask(context, fm, args, null),
                                     new Void[] {
                                         null
                                     });

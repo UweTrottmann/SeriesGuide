@@ -28,6 +28,7 @@ import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -125,7 +126,7 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     if (!GetGlue.isAuthenticated(prefs)) {
-                        if (!Utils.isNetworkConnected(getActivity())) {
+                        if (!AndroidUtils.isNetworkConnected(getActivity())) {
                             Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_LONG)
                                     .show();
                             buttonView.setChecked(false);
@@ -174,7 +175,7 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
         mCheckinButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!Utils.isNetworkConnected(getActivity())) {
+                if (!AndroidUtils.isNetworkConnected(getActivity())) {
                     Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -216,8 +217,9 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                         newFragment.show(ft, "progress-dialog");
 
                         // start the trakt check in task
-                        Utils.executeAsyncTask(new TraktTask(getActivity(), getFragmentManager(),
-                                null).checkin(tvdbid, season, episode, message), new Void[] {
+                        AndroidUtils.executeAsyncTask(new TraktTask(getActivity(),
+                                getFragmentManager(), null).checkin(tvdbid, season, episode,
+                                message), new Void[] {
                             null
                         });
                     }

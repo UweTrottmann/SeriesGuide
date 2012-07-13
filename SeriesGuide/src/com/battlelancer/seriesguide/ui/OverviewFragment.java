@@ -37,6 +37,7 @@ import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -371,7 +372,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     }
 
     protected void onLoadEpisode() {
-        Utils.executeAsyncTask(new AsyncTask<Void, Void, Integer>() {
+        AndroidUtils.executeAsyncTask(new AsyncTask<Void, Void, Integer>() {
 
             private final static int SUCCESS = 1;
 
@@ -516,7 +517,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         // trakt ratings
         mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView()).episode(getShowId(),
                 mSeasonNumber, mEpisodeNumber);
-        Utils.executeAsyncTask(mTraktTask, new Void[] {
+        AndroidUtils.executeAsyncTask(mTraktTask, new Void[] {
             null
         });
 
@@ -540,7 +541,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             mArtTask = null;
         }
         mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity());
-        Utils.executeAsyncTask(mArtTask, new Void[] {
+        AndroidUtils.executeAsyncTask(mArtTask, new Void[] {
             null
         });
     }

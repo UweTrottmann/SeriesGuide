@@ -23,6 +23,7 @@ import com.battlelancer.thetvdbapi.TheTVDB;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.ExtendedParam;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import org.xml.sax.SAXException;
 
@@ -87,7 +88,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         int result;
         boolean modifiedDB = false;
 
-        if (!Utils.isNetworkConnected(mContext)) {
+        if (!AndroidUtils.isNetworkConnected(mContext)) {
             publishProgress(ADD_OFFLINE);
             return null;
         }
@@ -117,7 +118,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 return null;
             }
 
-            if (!Utils.isNetworkConnected(mContext)) {
+            if (!AndroidUtils.isNetworkConnected(mContext)) {
                 publishProgress(ADD_OFFLINE);
                 break;
             }

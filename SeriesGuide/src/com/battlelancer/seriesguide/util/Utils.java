@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.trakt.ServiceManager;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -33,11 +34,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
@@ -46,13 +42,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormatSymbols;
@@ -82,8 +71,6 @@ public class Utils {
     private static final String TIMEZONE_US_PACIFIC = "America/Los_Angeles";
 
     private static final String TIMEZONE_US_MOUNTAIN = "America/Denver";
-
-    private static final int DEFAULT_BUFFER_SIZE = 8192;
 
     private static ServiceManager sServiceManagerWithAuthInstance;
 
@@ -543,83 +530,6 @@ public class Utils {
         return EpisodeSorting.fromValue(currentPref);
     }
 
-    public static boolean isJellyBeanOrHigher() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
-    }
-
-    public static boolean isICSOrHigher() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
-    }
-
-    public static boolean isHoneycombOrHigher() {
-        // Can use static final constants like HONEYCOMB, declared in later
-        // versions
-        // of the OS since they are inlined at compile time. This is guaranteed
-        // behavior.
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
-    }
-
-    public static boolean isFroyoOrHigher() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO;
-    }
-
-    public static boolean isExtStorageAvailable() {
-        return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
-    }
-
-    public static boolean isNetworkConnected(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        if (activeNetworkInfo != null) {
-            return activeNetworkInfo.isConnected();
-        }
-        return false;
-    }
-
-    public static boolean isWifiConnected(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifiNetworkInfo = connectivityManager
-                .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (wifiNetworkInfo != null) {
-            return wifiNetworkInfo.isConnected();
-        }
-        return false;
-    }
-
-    public static void copyFile(File src, File dst) throws IOException {
-        FileInputStream in = new FileInputStream(src);
-        FileOutputStream out = new FileOutputStream(dst);
-        FileChannel inChannel = in.getChannel();
-        FileChannel outChannel = out.getChannel();
-
-        try {
-            inChannel.transferTo(0, inChannel.size(), outChannel);
-        } finally {
-            if (inChannel != null) {
-                inChannel.close();
-            }
-            if (outChannel != null) {
-                outChannel.close();
-            }
-        }
-
-        in.close();
-        out.close();
-    }
-
-    public static int copy(InputStream input, OutputStream output) throws IOException {
-        byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
-        int count = 0;
-        int n = 0;
-        while (-1 != (n = input.read(buffer))) {
-            output.write(buffer, 0, n);
-            count += n;
-        }
-        return count;
-    }
-
     /**
      * Update the latest episode fields for all existing shows.
      */
@@ -842,9 +752,10 @@ public class Utils {
         }
     }
 
+    @TargetApi(16)
     @SuppressWarnings("deprecation")
     public static void setPosterBackground(ImageView background, String posterPath, Context context) {
-        if (Utils.isJellyBeanOrHigher()) {
+        if (AndroidUtils.isJellyBeanOrHigher()) {
             background.setImageAlpha(50);
         } else {
             background.setAlpha(50);
@@ -867,25 +778,6 @@ public class Utils {
             default:
                 SeriesGuidePreferences.THEME = R.style.SeriesGuideTheme;
                 break;
-        }
-    }
-
-    /**
-     * Execute an {@link AsyncTask} on a thread pool.
-     * 
-     * @param task Task to execute.
-     * @param args Optional arguments to pass to
-     *            {@link AsyncTask#execute(Object[])}.
-     * @param <T> Task argument type.
-     */
-    @TargetApi(11)
-    public static <T> void executeAsyncTask(AsyncTask<T, ?, ?> task, T... args) {
-        // TODO figure out how to subclass abstract and generalized AsyncTask,
-        // then put this there
-        if (Utils.isHoneycombOrHigher()) {
-            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, args);
-        } else {
-            task.execute(args);
         }
     }
 

@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -184,7 +185,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         list.setFastScrollEnabled(true);
         list.setDivider(null);
         list.setSelector(R.drawable.list_selector_holo_dark);
-        list.setClipToPadding(Utils.isHoneycombOrHigher() ? false : true);
+        list.setClipToPadding(AndroidUtils.isHoneycombOrHigher() ? false : true);
         final float scale = getResources().getDisplayMetrics().density;
         int layoutPadding = (int) (10 * scale + 0.5f);
         int defaultPadding = (int) (8 * scale + 0.5f);

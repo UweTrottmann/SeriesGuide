@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -446,7 +447,7 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
                 }
 
                 // already fail if there is no external storage
-                if (!Utils.isExtStorageAvailable()) {
+                if (!AndroidUtils.isExtStorageAvailable()) {
                     Toast.makeText(this, getString(R.string.arttask_nosdcard), Toast.LENGTH_LONG)
                             .show();
                 } else {

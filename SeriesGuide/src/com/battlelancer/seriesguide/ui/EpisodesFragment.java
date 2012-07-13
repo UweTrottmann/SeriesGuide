@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -455,7 +456,7 @@ public class EpisodesFragment extends SherlockListFragment implements
     public void setItemChecked(int position) {
         final ListView list = getListView();
         list.setItemChecked(position, true);
-        if (Utils.isFroyoOrHigher()) {
+        if (AndroidUtils.isFroyoOrHigher()) {
             if (position <= list.getFirstVisiblePosition()
                     || position >= list.getLastVisiblePosition()) {
                 list.smoothScrollToPosition(position);

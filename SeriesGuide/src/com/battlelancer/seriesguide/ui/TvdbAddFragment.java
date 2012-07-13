@@ -20,9 +20,9 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import org.xml.sax.SAXException;
 
@@ -110,7 +110,7 @@ public class TvdbAddFragment extends AddFragment {
 
     protected void search() {
         // nag about no connectivity
-        if (!Utils.isNetworkConnected(getSherlockActivity())) {
+        if (!AndroidUtils.isNetworkConnected(getSherlockActivity())) {
             Toast.makeText(getSherlockActivity(), R.string.offline, Toast.LENGTH_LONG).show();
             return;
         }

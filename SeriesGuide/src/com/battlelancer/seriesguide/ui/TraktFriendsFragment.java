@@ -32,6 +32,7 @@ import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.entities.UserProfile;
 import com.jakewharton.trakt.enumerations.ActivityType;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -81,14 +82,14 @@ public class TraktFriendsFragment extends ListFragment implements
         final ListView list = getListView();
         list.setDivider(null);
         list.setSelector(R.drawable.list_selector_holo_dark);
-        list.setClipToPadding(Utils.isHoneycombOrHigher() ? false : true);
+        list.setClipToPadding(AndroidUtils.isHoneycombOrHigher() ? false : true);
         final float scale = getResources().getDisplayMetrics().density;
         int layoutPadding = (int) (10 * scale + 0.5f);
         int defaultPadding = (int) (8 * scale + 0.5f);
         list.setPadding(layoutPadding, layoutPadding, layoutPadding, defaultPadding);
 
         // nag about no connectivity
-        if (!Utils.isNetworkConnected(getActivity())) {
+        if (!AndroidUtils.isNetworkConnected(getActivity())) {
             setEmptyText(getString(R.string.offline));
             setListShown(true);
         } else {

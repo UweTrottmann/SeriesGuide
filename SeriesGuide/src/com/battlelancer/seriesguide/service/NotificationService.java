@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
@@ -181,7 +182,7 @@ public class NotificationService extends IntentService {
                 // build the notification
                 Notification notification;
 
-                if (Utils.isJellyBeanOrHigher()) {
+                if (AndroidUtils.isJellyBeanOrHigher()) {
                     // JELLY BEAN and above
                     final Notification.Builder anb = new Notification.Builder(context);
 

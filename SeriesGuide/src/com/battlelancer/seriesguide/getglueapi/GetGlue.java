@@ -20,6 +20,7 @@ package com.battlelancer.seriesguide.getglueapi;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
@@ -109,7 +110,7 @@ public class GetGlue {
 
         @Override
         protected Integer doInBackground(Void... params) {
-            if (!Utils.isNetworkConnected(mContext)) {
+            if (!AndroidUtils.isNetworkConnected(mContext)) {
                 return CHECKIN_OFFLINE;
             }
 

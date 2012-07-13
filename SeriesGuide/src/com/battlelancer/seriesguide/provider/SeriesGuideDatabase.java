@@ -24,7 +24,9 @@ import com.battlelancer.seriesguide.provider.SeriesContract.EpisodesColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesContract.ShowsColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.app.SearchManager;
 import android.content.ContentValues;
@@ -149,7 +151,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         Log.d(TAG, "onUpgrade() from " + oldVersion + " to " + newVersion);
 
         // make a backup of the database file
-        if (Utils.isExtStorageAvailable()) {
+        if (AndroidUtils.isExtStorageAvailable()) {
             File dbFile = new File(db.getPath());
             File exportDir = new File(Environment.getExternalStorageDirectory(),
                     "seriesguidebackup");
@@ -158,7 +160,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             try {
                 file.createNewFile();
-                Utils.copyFile(dbFile, file);
+                AndroidUtils.copyFile(dbFile, file);
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage(), e);
             }

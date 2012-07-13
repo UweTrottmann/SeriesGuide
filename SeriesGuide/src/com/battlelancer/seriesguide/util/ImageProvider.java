@@ -20,6 +20,7 @@ package com.battlelancer.seriesguide.util;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
@@ -106,7 +107,7 @@ public class ImageProvider {
 
         // listen to trim or low memory callbacks so we can shrink our memory
         // footprint
-        if (Utils.isICSOrHigher()) {
+        if (AndroidUtils.isICSOrHigher()) {
             context.registerComponentCallbacks(new ComponentCallbacks2() {
 
                 @Override
@@ -210,7 +211,7 @@ public class ImageProvider {
         final ImageLoaderTask task = new ImageLoaderTask(imageView);
         imageView.setImageBitmap(null);
         imageView.setTag(task);
-        Utils.executeAsyncTask(task, imagePath);
+        AndroidUtils.executeAsyncTask(task, imagePath);
     }
 
     /**
@@ -246,7 +247,7 @@ public class ImageProvider {
     private Bitmap getImageFromExternalStorage(final String imagePath) {
         // try to get image from disk
         final File imageFile = getImageFile(imagePath);
-        if (imageFile.exists() && Utils.isExtStorageAvailable()) {
+        if (imageFile.exists() && AndroidUtils.isExtStorageAvailable()) {
             // disk cache hit
             final Bitmap result = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
             if (result == null) {
@@ -263,7 +264,7 @@ public class ImageProvider {
     }
 
     public void storeImage(String imagePath, Bitmap bitmap, boolean createThumbnail) {
-        if (Utils.isExtStorageAvailable()) {
+        if (AndroidUtils.isExtStorageAvailable()) {
             // make sure directories exist
             createDirectories();
 

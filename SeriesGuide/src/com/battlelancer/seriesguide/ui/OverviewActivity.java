@@ -23,9 +23,9 @@ import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -85,7 +85,7 @@ public class OverviewActivity extends BaseActivity {
             boolean isTime = TheTVDB.isUpdateShow(showId, System.currentTimeMillis(), this);
 
             // look if we are online
-            if (isTime && Utils.isNetworkConnected(this)) {
+            if (isTime && AndroidUtils.isNetworkConnected(this)) {
 
                 final SharedPreferences prefs = PreferenceManager
                         .getDefaultSharedPreferences(getApplicationContext());
@@ -98,7 +98,7 @@ public class OverviewActivity extends BaseActivity {
                     // check if wifi is required and available
                     final boolean isWifiOnly = prefs.getBoolean(
                             SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
-                    if (!isWifiOnly || Utils.isWifiConnected(this)) {
+                    if (!isWifiOnly || AndroidUtils.isWifiConnected(this)) {
 
                         UpdateTask updateTask = new UpdateTask(String.valueOf(showId), this);
                         TaskManager.getInstance(this).tryUpdateTask(updateTask, false, -1);

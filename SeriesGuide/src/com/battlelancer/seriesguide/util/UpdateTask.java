@@ -33,6 +33,7 @@ import com.jakewharton.trakt.entities.ActivityItem;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import org.xml.sax.SAXException;
 
@@ -191,8 +192,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                 resultCode = UpdateResult.CANCELLED;
                 break;
             }
-            if (!Utils.isNetworkConnected(mAppContext)
-                    || (isAutoUpdateWlanOnly && !Utils.isWifiConnected(mAppContext))) {
+            if (!AndroidUtils.isNetworkConnected(mAppContext)
+                    || (isAutoUpdateWlanOnly && !AndroidUtils.isWifiConnected(mAppContext))) {
                 resultCode = UpdateResult.OFFLINE;
                 break;
             }
@@ -209,8 +210,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                     resultCode = UpdateResult.CANCELLED;
                     break;
                 }
-                if (!Utils.isNetworkConnected(mAppContext)
-                        || (isAutoUpdateWlanOnly && !Utils.isWifiConnected(mAppContext))) {
+                if (!AndroidUtils.isNetworkConnected(mAppContext)
+                        || (isAutoUpdateWlanOnly && !AndroidUtils.isWifiConnected(mAppContext))) {
                     resultCode = UpdateResult.OFFLINE;
                     break;
                 }
@@ -275,8 +276,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             if (isCancelled()) {
                 return UpdateResult.CANCELLED;
             }
-            if (!Utils.isNetworkConnected(mAppContext)
-                    || (isAutoUpdateWlanOnly && !Utils.isWifiConnected(mAppContext))) {
+            if (!AndroidUtils.isNetworkConnected(mAppContext)
+                    || (isAutoUpdateWlanOnly && !AndroidUtils.isWifiConnected(mAppContext))) {
                 return UpdateResult.OFFLINE;
             }
 

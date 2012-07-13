@@ -30,6 +30,7 @@ import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.services.ShowService;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
@@ -328,7 +329,7 @@ public class DBUtils {
             @Override
             protected Integer doInBackground(Void... params) {
                 // check for network connection
-                if (!Utils.isNetworkConnected(context)) {
+                if (!AndroidUtils.isNetworkConnected(context)) {
                     return OFFLINE;
                 }
 

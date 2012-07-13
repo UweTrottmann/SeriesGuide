@@ -30,6 +30,7 @@ import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Response;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -146,7 +147,7 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                         }
 
                         // check for connectivity
-                        if (!Utils.isNetworkConnected(context)) {
+                        if (!AndroidUtils.isNetworkConnected(context)) {
                             Response r = new Response();
                             r.status = TraktStatus.FAILURE;
                             r.error = context.getString(R.string.offline);
@@ -234,8 +235,8 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                                 }
 
                                 // relaunch the trakt task which called us
-                                Utils.executeAsyncTask(new TraktTask(context, fm, args, null),
-                                        new Void[] {
+                                AndroidUtils.executeAsyncTask(
+                                        new TraktTask(context, fm, args, null), new Void[] {
                                             null
                                         });
                             }
