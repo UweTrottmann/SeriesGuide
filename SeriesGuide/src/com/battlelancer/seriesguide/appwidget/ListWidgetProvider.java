@@ -18,6 +18,7 @@
 package com.battlelancer.seriesguide.appwidget;
 
 import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.enums.WidgetListType;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -32,6 +33,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.SystemClock;
 import android.text.format.DateUtils;
 import android.widget.RemoteViews;
@@ -93,6 +95,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
                 + REPETITION_INTERVAL, REPETITION_INTERVAL, pi);
     }
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @SuppressWarnings("deprecation")
     public static RemoteViews buildRemoteViews(Context context, int appWidgetId) {
 
@@ -118,23 +121,20 @@ public class ListWidgetProvider extends AppWidgetProvider {
 
         // change title based on config
         SharedPreferences prefs = context.getSharedPreferences(ListWidgetConfigure.PREFS_NAME, 0);
-        int listType = prefs.getInt(ListWidgetConfigure.PREF_LISTTYPE_KEY + appWidgetId,
-                R.id.radioUpcoming);
-        int selection = 0;
-        switch (listType) {
-            case R.id.radioUpcoming:
-                selection = 0;
-                rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.upcoming));
-                break;
-            case R.id.radioRecent:
-                selection = 1;
-                rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.recent));
-                break;
+        int typeIndex = prefs.getInt(ListWidgetConfigure.PREF_LISTTYPE_KEY + appWidgetId,
+                WidgetListType.UPCOMING.index);
+        int activityTab = 0;
+        if (typeIndex == WidgetListType.RECENT.index) {
+            activityTab = 0;
+            rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.recent));
+        } else {
+            activityTab = 1;
+            rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.upcoming));
         }
 
         // Create an Intent to launch Upcoming
         Intent pi = new Intent(context, UpcomingRecentActivity.class);
-        pi.putExtra(UpcomingRecentActivity.InitBundle.SELECTED_TAB, selection);
+        pi.putExtra(UpcomingRecentActivity.InitBundle.SELECTED_TAB, activityTab);
         pi.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, pi,
                 PendingIntent.FLAG_UPDATE_CURRENT);
