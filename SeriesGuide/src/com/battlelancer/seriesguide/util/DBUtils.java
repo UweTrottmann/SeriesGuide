@@ -774,95 +774,167 @@ public class DBUtils {
     }
 
     /**
+     * Convenience method for calling {@code updateLatestEpisode} once. If it is
+     * going to be called multiple times, use the version which passes more
+     * data.
+     * 
+     * @param context
+     * @param showId
+     */
+    public static long updateLatestEpisode(Context context, String showId) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final boolean isOnlyFutureEpisodes = prefs.getBoolean(
+                SeriesGuidePreferences.KEY_ONLY_FUTURE_EPISODES, false);
+        final boolean isNoSpecials = prefs.getBoolean(
+                SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES, false);
+        return updateLatestEpisode(context, showId, isOnlyFutureEpisodes, isNoSpecials, prefs);
+    }
+
+    /**
      * Update the latest episode fields of the show where {@link Shows._ID}
      * equals the given {@code id}.
      * 
-     * @param id
+     * @param context
+     * @param showId
+     * @param isOnlyFutureEpisodes
+     * @param isNoSpecials
+     * @param prefs
      */
-    public static long updateLatestEpisode(Context context, String id) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        final boolean onlyFutureEpisodes = prefs.getBoolean(
-                SeriesGuidePreferences.KEY_ONLY_FUTURE_EPISODES, false);
-        final boolean isNoSpecialEpisodes = prefs.getBoolean(
-                SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES, false);
+    public static long updateLatestEpisode(Context context, String showId,
+            boolean isOnlyFutureEpisodes, boolean isNoSpecials, SharedPreferences prefs) {
+        final Uri episodesWithShow = Episodes.buildEpisodesOfShowUri(showId);
+        final StringBuilder selectQuery = new StringBuilder();
 
-        final StringBuilder selection = new StringBuilder();
-        String[] selectionArgs = null;
-        selection.append(Episodes.WATCHED).append("=0");
-        if (isNoSpecialEpisodes) {
-            selection.append(" AND ").append(Episodes.SEASON).append("!=0");
+        // STEP 1: get youngest watched episode
+        selectQuery.append(NextEpisodeQuery.SELECT_WATCHED);
+        if (isNoSpecials) {
+            // do not take specials into account
+            selectQuery.append(NextEpisodeQuery.SELECT_NOSPECIALS);
         }
-        if (onlyFutureEpisodes) {
-            selection.append(" AND ").append(Episodes.FIRSTAIREDMS).append(">=?");
-            String now = String.valueOf(Utils.getFakeCurrentTime(prefs));
+        // only get episodes which have an air date
+        selectQuery.append(NextEpisodeQuery.SELECT_WITHAIRDATE);
+
+        final Cursor watched = context.getContentResolver().query(episodesWithShow,
+                NextEpisodeQuery.PROJECTION_WATCHED, selectQuery.toString(), null,
+                NextEpisodeQuery.SORTING_WATCHED);
+
+        final String season;
+        final String number;
+        if (watched != null && watched.moveToFirst()) {
+            season = watched.getString(NextEpisodeQuery.SEASON);
+            number = watched.getString(NextEpisodeQuery.NUMBER);
+        } else {
+            // no watched episodes, include all starting with
+            // special 0
+            season = "-1";
+            number = "-1";
+        }
+        if (watched != null) {
+            watched.close();
+        }
+
+        // STEP 2: get episode with next highest number or next highest
+        // season
+        final String[] selectionArgs;
+        selectQuery.delete(0, selectQuery.length());
+        selectQuery.append(NextEpisodeQuery.SELECT_NEXT);
+        if (isNoSpecials) {
+            // do not take specials into account
+            selectQuery.append(NextEpisodeQuery.SELECT_NOSPECIALS);
+        }
+        if (isOnlyFutureEpisodes) {
+            // restrict to episodes with future air date
+            selectQuery.append(NextEpisodeQuery.SELECT_ONLYFUTURE);
+            final String now = String.valueOf(Utils.getFakeCurrentTime(prefs));
             selectionArgs = new String[] {
-                now
+                    season, number, season, now
             };
         } else {
-            // only get episodes which have an air date
-            // selection.append(" AND ").append(Episodes.FIRSTAIRED).append(" like '%-%'");
-            selection.append(" AND ").append(Episodes.FIRSTAIREDMS).append("!=-1");
+            // restrict to episodes with any valid air date
+            selectQuery.append(NextEpisodeQuery.SELECT_WITHAIRDATE);
+            selectionArgs = new String[] {
+                    season, number, season
+            };
         }
 
-        final Cursor unwatched = context.getContentResolver().query(
-                Episodes.buildEpisodesOfShowUri(id), NextEpisodeQuery.PROJECTION,
-                selection.toString(), selectionArgs, NextEpisodeQuery.SORTING);
+        final Cursor next = context.getContentResolver().query(episodesWithShow,
+                NextEpisodeQuery.PROJECTION_NEXT, selectQuery.toString(), selectionArgs,
+                NextEpisodeQuery.SORTING_NEXT);
 
-        // maybe there are no episodes due to errors, or airdates are just
-        // unknown (they are -1 which we filtered out above)
-        long episodeid = 0;
+        // STEP 3: build and execute database update for show
+        final long episodeId;
         final ContentValues update = new ContentValues();
+        if (next != null && next.moveToFirst()) {
+            // next episode text, e.g. '0x12 Episode Name'
+            final String nextEpisodeString = Utils.getNextEpisodeString(prefs,
+                    next.getInt(NextEpisodeQuery.SEASON), next.getInt(NextEpisodeQuery.NUMBER),
+                    next.getString(NextEpisodeQuery.TITLE));
 
-        if (unwatched.getCount() != 0) {
-            unwatched.moveToFirst();
-
-            // nexttext (0x12 Episode)
-            final int season = unwatched.getInt(NextEpisodeQuery.SEASON);
-            final int number = unwatched.getInt(NextEpisodeQuery.NUMBER);
-            final String title = unwatched.getString(NextEpisodeQuery.TITLE);
-            final String nextEpisodeString = Utils.getNextEpisodeString(prefs, season, number,
-                    title);
-
-            // nextairdatetext
-            final long airtime = unwatched.getLong(1);
-            final String[] dayAndTimes = Utils.formatToTimeAndDay(airtime, context);
+            // next air date text, e.g. 'Apr 2 (Mon)'
+            final long airTime = next.getLong(NextEpisodeQuery.FIRSTAIREDMS);
+            final String[] dayAndTimes = Utils.formatToTimeAndDay(airTime, context);
             final String nextAirdateString = dayAndTimes[2] + " (" + dayAndTimes[1] + ")";
 
-            episodeid = unwatched.getLong(NextEpisodeQuery._ID);
-            update.put(Shows.NEXTEPISODE, episodeid);
-            update.put(Shows.NEXTAIRDATEMS, unwatched.getString(NextEpisodeQuery.FIRSTAIREDMS));
+            episodeId = next.getLong(NextEpisodeQuery._ID);
+            update.put(Shows.NEXTEPISODE, episodeId);
+            update.put(Shows.NEXTAIRDATEMS, airTime);
             update.put(Shows.NEXTTEXT, nextEpisodeString);
             update.put(Shows.NEXTAIRDATETEXT, nextAirdateString);
         } else {
+            episodeId = 0;
             update.put(Shows.NEXTEPISODE, "");
             update.put(Shows.NEXTAIRDATEMS, UNKNOWN_NEXT_AIR_DATE);
             update.put(Shows.NEXTTEXT, "");
             update.put(Shows.NEXTAIRDATETEXT, "");
         }
-
-        unwatched.close();
+        if (next != null) {
+            next.close();
+        }
 
         // update the show with the new next episode values
-        context.getContentResolver().update(Shows.buildShowUri(id), update, null, null);
+        context.getContentResolver().update(Shows.buildShowUri(showId), update, null, null);
 
-        return episodeid;
+        return episodeId;
     }
 
     private interface NextEpisodeQuery {
-        String[] PROJECTION = new String[] {
-                Episodes._ID, Episodes.FIRSTAIREDMS, Episodes.SEASON, Episodes.NUMBER,
+        String SELECT_WATCHED = Episodes.WATCHED + "=1";
+
+        String SELECT_NEXT = Episodes.WATCHED + "=0 AND ((" + Episodes.SEASON + "=? AND "
+                + Episodes.NUMBER + ">?) OR " + Episodes.SEASON + ">?)";
+
+        String SELECT_NOSPECIALS = " AND " + Episodes.SEASON + "!=0";
+
+        String SELECT_WITHAIRDATE = " AND " + Episodes.FIRSTAIREDMS + "!=-1";
+
+        String SELECT_ONLYFUTURE = " AND " + Episodes.FIRSTAIREDMS + ">=?";
+
+        String[] PROJECTION_WATCHED = new String[] {
+                Episodes._ID, Episodes.SEASON, Episodes.NUMBER
+        };
+
+        String[] PROJECTION_NEXT = new String[] {
+                Episodes._ID, Episodes.SEASON, Episodes.NUMBER, Episodes.FIRSTAIREDMS,
                 Episodes.TITLE
         };
 
-        final String SORTING = Episodes.FIRSTAIREDMS + " ASC," + Episodes.NUMBER + " ASC";
+        /**
+         * Highest season, or if identical highest episode number.
+         */
+        String SORTING_WATCHED = Episodes.SEASON + " DESC," + Episodes.NUMBER + " DESC";
+
+        /**
+         * Lowest season, or if identical lowest episode number.
+         */
+        String SORTING_NEXT = Episodes.SEASON + " ASC," + Episodes.NUMBER + " ASC";
 
         int _ID = 0;
 
-        int FIRSTAIREDMS = 1;
+        int SEASON = 1;
 
-        int SEASON = 2;
+        int NUMBER = 2;
 
-        int NUMBER = 3;
+        int FIRSTAIREDMS = 3;
 
         int TITLE = 4;
     }

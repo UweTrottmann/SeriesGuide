@@ -562,9 +562,16 @@ public class Utils {
         }
 
         public void run() {
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+            final boolean isOnlyFutureEpisodes = prefs.getBoolean(
+                    SeriesGuidePreferences.KEY_ONLY_FUTURE_EPISODES, false);
+            final boolean isNoSpecials = prefs.getBoolean(
+                    SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES, false);
+
             if (mShowId != null) {
                 // update single show
-                DBUtils.updateLatestEpisode(mContext, mShowId);
+                DBUtils.updateLatestEpisode(mContext, mShowId, isOnlyFutureEpisodes, isNoSpecials,
+                        prefs);
             } else {
                 // update all shows
                 final Cursor shows = mContext.getContentResolver().query(Shows.CONTENT_URI,
@@ -572,8 +579,9 @@ public class Utils {
                             Shows._ID
                         }, null, null, null);
                 while (shows.moveToNext()) {
-                    String id = shows.getString(0);
-                    DBUtils.updateLatestEpisode(mContext, id);
+                    String showId = shows.getString(0);
+                    DBUtils.updateLatestEpisode(mContext, showId, isOnlyFutureEpisodes,
+                            isNoSpecials, prefs);
                 }
                 shows.close();
             }
