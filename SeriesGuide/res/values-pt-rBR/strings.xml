@@ -19,6 +19,7 @@
   <string name="sending">Enviando...</string>
   <string name="done">Feito</string>
   <string name="clear">Limpar</string>
+  <string name="more">%s more</string>
   <string name="offline">Sem conexão. Tente novamente mais tarde.</string>
   <string name="onlyx">Somente disponível no SeriesGuide X</string>
   <string name="shouts">Gritos</string>
@@ -53,7 +54,7 @@
   <string name="show_isnotalive">Finalizada</string>
   <string name="sort">Ordenar por</string>
   <string name="updateall_yes">Atualizar (tudo)</string>
-  <string name="menu_update_delta">Atualizar (apenas os desatualizados)</string>
+  <string name="menu_update_delta">Atualizar os desatualizados</string>
   <string name="context_updateshow">Atualizar</string>
   <string name="context_showinfo">Mostrar Informações</string>
   <string name="context_marknext">Próximo episódio já assistido</string>
@@ -120,7 +121,7 @@
   <string name="season_unaired">não exibido</string>
   <string name="oneotherepisode">outro episódio</string>
   <string name="otherepisodes">outros episódios</string>
-  <string name="remaining">%s remaining</string>
+  <string name="remaining">%s restantes</string>
   <string name="search_button">Procurar</string>
   <string name="search_hint_add">Nome da série</string>
   <string name="no_results">Sem resultados, tente palavras completas.</string>
@@ -214,8 +215,8 @@
   <string name="getglue_authfailed">Autenticação com GetGlue falhou. Tente novamente.</string>
   <string name="menu_rate_trakt">Votar (trakt)</string>
   <string name="menu_share_others">Por outros aplicativos</string>
-  <string name="traktcheckin_cancel">Sobrecarregar</string>
-  <string name="traktcheckin_inprogress">Você já marcou como assistindo outro episódio ou filme. Ou substitua o checkin anterior ou espere %s e tente novamente.</string>
+  <string name="traktcheckin_cancel">Substituir</string>
+  <string name="traktcheckin_inprogress">Você já está assistindo outro episódio. Substitua o checkin anterior ou espere %s para fazer outro.</string>
   <string name="traktcheckin_wait">Vou esperar</string>
   <string name="oauthmessage">Autenticando SeriesGuide com GetGlue…</string>
   <string name="addtocalendar">Adicionar ao calendário</string>
@@ -282,11 +283,12 @@
     <item>Mais antigos primeiro (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>um dia</item>
-    <item>3 dias</item>
-    <item>uma semana</item>
-    <item>duas semanas</item>
-    <item>um mês</item>
+    <item>now</item>
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Todos</item>

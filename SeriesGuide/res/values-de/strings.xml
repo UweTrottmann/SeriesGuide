@@ -19,6 +19,7 @@
   <string name="sending">Senden…</string>
   <string name="done">Erledigt</string>
   <string name="clear">Löschen</string>
+  <string name="more">%s mehr</string>
   <string name="offline">Keine Netzwerkverbindung. Versuchen Sie es später erneut.</string>
   <string name="onlyx">Nur verfügbar in SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -282,6 +283,7 @@
     <item>Älteste zuerst (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
+    <item>jetzt</item>
     <item>eines Tages</item>
     <item>dreier Tage</item>
     <item>einer Woche</item>

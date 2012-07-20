@@ -18,7 +18,8 @@
   <string name="loading">Φόρτωση…</string>
   <string name="sending">Αποστολή…</string>
   <string name="done">Ολοκληρώθηκε</string>
-  <string name="clear">Clear</string>
+  <string name="clear">Καθαρισμός</string>
+  <string name="more">%s more</string>
   <string name="offline">Χωρίς σύνδεση δικτύου. Δοκιμάστε αργότερα.</string>
   <string name="onlyx">Διαθέσιμο μόνο στο SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -94,7 +95,7 @@
   <string name="friends_empty">Καμία δραστηριότητα φίλων στο trakt.</string>
   <string name="noupcoming">Δεν υπάρχουν επερχόμενα επεισόδια.</string>
   <string name="norecent">Δεν υπάρχουν πρόσφατα επεισόδια.</string>
-  <string name="only_favorites">Only favorite shows</string>
+  <string name="only_favorites">Μόνο αγαπημένες σειρές</string>
   <string name="togglewatched">Εναλλαγή παρακολουθημένων</string>
   <string name="update_notification">Ενημέρωση των σειρών σας…</string>
   <string name="update_single">Ενημέρωση σειράς…</string>
@@ -120,7 +121,7 @@
   <string name="season_unaired">Δεν έχει προβληθεί</string>
   <string name="oneotherepisode">άλλο επεισόδιο</string>
   <string name="otherepisodes">άλλα επεισόδια</string>
-  <string name="remaining">%s remaining</string>
+  <string name="remaining">%s απομένει</string>
   <string name="search_button">Αναζήτηση</string>
   <string name="search_hint_add">Όνομα σειράς</string>
   <string name="no_results">Κανένα αποτέλεσμα, δοκιμάστε ολόκληρες λέξεις.</string>
@@ -144,8 +145,8 @@
   <string name="pref_showsorting">Ταξινόμηση σειρών κατα…</string>
   <string name="pref_onlyfuture">Επεισόδια που δεν έχουν προβληθεί</string>
   <string name="pref_onlyfuturesummary">\"Επόμενο:\" να μην εμφανίζονται επεισόδια που έχουν προβληθεί</string>
-  <string name="pref_onlyseasoneps">Hide special episodes</string>
-  <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
+  <string name="pref_onlyseasoneps">Απόκρυψη ειδικών επεισοδίων</string>
+  <string name="pref_onlyseasonepssummary">Τα ειδικά επεισόδια να μην εμφανίζονται πουθενά εκτός από τη λίστα με τις σεζόν</string>
   <string name="pref_content">Περιεχόμενο</string>
   <string name="pref_seasonsorting">Ταξινόμηση σεζόν κατά…</string>
   <string name="pref_episodesorting">Ταξινόμηση επεισοδίων κατά…</string>
@@ -205,8 +206,8 @@
   <string name="cancel">Άκυρο</string>
   <string name="share">Κοινή χρήση</string>
   <string name="checkin">Check in</string>
-  <string name="checkin_searchhint">Type a show name</string>
-  <string name="checkin_empty">No matching shows</string>
+  <string name="checkin_searchhint">Πληκτρολογήστε το όνομα μιας σειράς</string>
+  <string name="checkin_empty">Καμία αντιστοιχία σειρών</string>
   <string name="checkin_hint">Πληκτρολογήστε ένα μήνυμα (προαιρετικό)</string>
   <string name="paste_episode">Επικόλληση επεισοδίου</string>
   <string name="checkinsuccess">Επιτυχές Check-in στο GetGlue.</string>
@@ -282,11 +283,12 @@
     <item>Το παλαιότερο πρώτα (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>μια ημέρα</item>
-    <item>3 ημέρες</item>
-    <item>μια εβδομάδα</item>
-    <item>δύο εβδομάδες</item>
-    <item>ένα μήνα</item>
+    <item>now</item>
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Όλα</item>

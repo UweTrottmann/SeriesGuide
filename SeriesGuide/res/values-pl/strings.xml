@@ -19,6 +19,7 @@
   <string name="sending">Wysyłanie…</string>
   <string name="done">Zrobione</string>
   <string name="clear">Wyczyść</string>
+  <string name="more">%s more</string>
   <string name="offline">Brak połączenia sieciowego. Spróbuj ponownie później.</string>
   <string name="onlyx">Dostępne tylko w SeriesGuide X</string>
   <string name="shouts">Krzyki</string>
@@ -120,7 +121,7 @@
   <string name="season_unaired">Nie emitowany w TV</string>
   <string name="oneotherepisode">inny odcinek</string>
   <string name="otherepisodes">innych odcinków</string>
-  <string name="remaining">%s remaining</string>
+  <string name="remaining">Pozostało: %s</string>
   <string name="search_button">Szukaj</string>
   <string name="search_hint_add">Nazwa serialu</string>
   <string name="no_results">Brak wyników. Uzupełnij zapytanie.</string>
@@ -282,11 +283,12 @@
     <item>Najpierw najstarsze (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>jeden dzień</item>
-    <item>trzy dni</item>
-    <item>tydzień</item>
-    <item>dwa tygodnie</item>
-    <item>miesiąc</item>
+    <item>now</item>
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Wszystkie</item>

@@ -19,6 +19,7 @@
   <string name="sending">Sending…</string>
   <string name="done">تم</string>
   <string name="clear">Clear</string>
+  <string name="more">%s more</string>
   <string name="offline">No network connectivity. Try again later.</string>
   <string name="onlyx">Only available in SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -282,7 +283,8 @@
     <item>الأقدم أولاً-دي في دي</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>يوم</item>
+    <item>now</item>
+    <item>a day</item>
     <item>3 days</item>
     <item>a week</item>
     <item>two weeks</item>

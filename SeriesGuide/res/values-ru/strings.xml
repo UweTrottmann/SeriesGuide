@@ -19,6 +19,7 @@
   <string name="sending">Отправка…</string>
   <string name="done">Выполнено</string>
   <string name="clear">Clear</string>
+  <string name="more">%s more</string>
   <string name="offline">Нет соединения. Повторите попытку позже.</string>
   <string name="onlyx">Доступно только в SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -282,7 +283,8 @@
     <item>Более старые первыми (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>в день</item>
+    <item>now</item>
+    <item>a day</item>
     <item>3 days</item>
     <item>a week</item>
     <item>two weeks</item>

@@ -19,6 +19,7 @@
   <string name="sending">Gönderiliyor ...</string>
   <string name="done">Tamamlandı</string>
   <string name="clear">Clear</string>
+  <string name="more">%s more</string>
   <string name="offline">Ağ bağlantısı yok. Daha sonra yeniden deneyin.</string>
   <string name="onlyx">Yalnızca SeriesGuide X için mevcut</string>
   <string name="shouts">Notlar</string>
@@ -282,11 +283,12 @@
     <item>Önce en eskisi (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>bir gün</item>
-    <item>3 gün</item>
-    <item>bir hafta</item>
-    <item>iki hafta</item>
-    <item>bir ay</item>
+    <item>now</item>
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Tümü</item>

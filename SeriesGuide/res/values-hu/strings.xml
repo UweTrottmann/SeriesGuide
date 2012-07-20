@@ -19,6 +19,7 @@
   <string name="sending">Küldés…</string>
   <string name="done">Kész</string>
   <string name="clear">Clear</string>
+  <string name="more">%s more</string>
   <string name="offline">Nincs hálózati kapcsolat. Próbálja meg később.</string>
   <string name="onlyx">Csak a SeriesGuide X-ben elérhető</string>
   <string name="shouts">Shouts</string>
@@ -282,11 +283,12 @@
     <item>Régebbiek előre (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>egy nap</item>
-    <item>három nap</item>
-    <item>egy hét</item>
-    <item>két hét</item>
-    <item>egy hónap</item>
+    <item>now</item>
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Mind</item>

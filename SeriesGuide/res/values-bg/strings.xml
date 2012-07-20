@@ -19,6 +19,7 @@
   <string name="sending">Изпраща…</string>
   <string name="done">Готово</string>
   <string name="clear">Clear</string>
+  <string name="more">%s more</string>
   <string name="offline">Няма интернет връзка. Моля опитайте по-късно.</string>
   <string name="onlyx">Само в SeriesGuide X</string>
   <string name="shouts">Мнения</string>
@@ -282,6 +283,7 @@
     <item>Най-старите отгоре (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
+    <item>now</item>
     <item>a day</item>
     <item>3 days</item>
     <item>a week</item>

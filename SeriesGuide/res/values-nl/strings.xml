@@ -3,14 +3,14 @@
 <resources>
   <string name="episode">Aflevering</string>
   <string name="season">Seizoen</string>
-  <string name="unknown">unknown</string>
+  <string name="unknown">onbekend</string>
   <string name="episode_iswatched">Al bekeken</string>
   <string name="episode_notwatched">Nog niet bekeken</string>
   <string name="specialseason">Speciale afleveringen</string>
   <string name="search_hint">Afleveringen zoeken</string>
   <string name="search_title">Gevonden afleveringen</string>
   <string name="share_episode">Aflevering delen</string>
-  <string name="share_checkout">Afmelden</string>
+  <string name="share_checkout">Uitchecken</string>
   <string name="search_description">Afleveringen</string>
   <string name="description_overview">Overzicht</string>
   <string name="description_poster">Affiche weergeven</string>
@@ -18,7 +18,8 @@
   <string name="loading">Laden…</string>
   <string name="sending">Verzenden…</string>
   <string name="done">Gereed</string>
-  <string name="clear">Clear</string>
+  <string name="clear">Ruim op</string>
+  <string name="more">%s more</string>
   <string name="offline">Geen netwerk verbinding. Probeer het later opnieuw.</string>
   <string name="onlyx">Alleen beschikbaar in Series Guide X</string>
   <string name="shouts">Shouts</string>
@@ -74,7 +75,7 @@
   <string name="trakt_collected">%s verzameld.</string>
   <string name="trakt_notcollected">%s niet verzameld.</string>
   <string name="shows_empty">Geen series.</string>
-  <string name="confirm_delete">Do you really want to remove %s?</string>
+  <string name="confirm_delete">Wilt u %s echt verwijderen?</string>
   <string name="delete_show">Verwijderen</string>
   <string name="dontdelete_show">Niet verwijderen</string>
   <string name="no_nextepisode">Geen volgende aflevering gevonden.</string>
@@ -94,7 +95,7 @@
   <string name="friends_empty">Geen activiteit van vrienden op trakt.</string>
   <string name="noupcoming">Er zijn geen toekomstige afleveringen.</string>
   <string name="norecent">Er zijn geen recente afleveringen.</string>
-  <string name="only_favorites">Only favorite shows</string>
+  <string name="only_favorites">Enkel favoriete series</string>
   <string name="togglewatched">Bekeken/niet bekeken wijzigen</string>
   <string name="update_notification">Series bijwerken…</string>
   <string name="update_single">Serie bijwerken…</string>
@@ -120,7 +121,7 @@
   <string name="season_unaired">Niet uitgezonden</string>
   <string name="oneotherepisode">andere aflevering</string>
   <string name="otherepisodes">andere afleveringen</string>
-  <string name="remaining">%s remaining</string>
+  <string name="remaining">%s resterende</string>
   <string name="search_button">Zoeken</string>
   <string name="search_hint_add">Naam weergeven</string>
   <string name="no_results">Geen resultaten, probeer complete woorden.</string>
@@ -144,8 +145,8 @@
   <string name="pref_showsorting">Series sorteren op…</string>
   <string name="pref_onlyfuture">Geen uitgezonden afleveringen</string>
   <string name="pref_onlyfuturesummary">\"volgende:\" geeft nooit reeds uitgezonden afleveringen weer</string>
-  <string name="pref_onlyseasoneps">Hide special episodes</string>
-  <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
+  <string name="pref_onlyseasoneps">Speciale afleveringen verbergen</string>
+  <string name="pref_onlyseasonepssummary">Speciale afleveringen overal verbergen uitgezonderd in het seizoenoverzicht</string>
   <string name="pref_content">Inhoud</string>
   <string name="pref_seasonsorting">Seizoenen sorteren op…</string>
   <string name="pref_episodesorting">Afleveringen sorteren op…</string>
@@ -161,7 +162,7 @@
   <string name="pref_autoupdatesummary">Series periodiek bijwerken bij het opstarten van SeriesGuide</string>
   <string name="pref_updatewifionly">Alleen bijwerken via Wi-Fi</string>
   <string name="about">Over SeriesGuide</string>
-  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
+  <string name="about_message">http://seriesgui.de - ontwikkeld door Uwe Trottmann.\n\nBekijk a.u.b. de link onderaan voor de mensen en middelen die dit project draaiende houden.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
   <string name="pref_sharing">Delen</string>
   <string name="clearGetGlueCredentials">GetGlue verbinding verbreken</string>
   <string name="clearGetGlueCredentialssummary">Verbinding met GetGlue wissen</string>
@@ -204,18 +205,18 @@
   <string name="seasons">Seizoenen</string>
   <string name="cancel">Annuleren</string>
   <string name="share">Delen</string>
-  <string name="checkin">Aanmelden</string>
-  <string name="checkin_searchhint">Type a show name</string>
-  <string name="checkin_empty">No matching shows</string>
+  <string name="checkin">Check-in</string>
+  <string name="checkin_searchhint">Voer de naam van een serie in</string>
+  <string name="checkin_empty">Geen overeenkomende series</string>
   <string name="checkin_hint">Voer een bericht in (optioneel)</string>
   <string name="paste_episode">Aflevering plakken</string>
-  <string name="checkinsuccess">GetGlue aanmelding succesvol.</string>
-  <string name="checkinfailed">GetGlue aanmelding mislukt. Probeer de GetGlue verbinding te verbreken.</string>
+  <string name="checkinsuccess">GetGlue Check-in succesvol.</string>
+  <string name="checkinfailed">GetGlue Check-in mislukt. Probeer de GetGlue verbinding te verbreken.</string>
   <string name="getglue_authfailed">GetGlue authenticatie mislukt. Probeer het later opnieuw.</string>
   <string name="menu_rate_trakt">Beoordelen (trakt)</string>
   <string name="menu_share_others">Via andere apps</string>
   <string name="traktcheckin_cancel">Overschrijven</string>
-  <string name="traktcheckin_inprogress">Er is al aangemeld bij een andere aflevering of serie. Overschrijf de vorige aanmelding of wacht %s en probeer het opnieuw.</string>
+  <string name="traktcheckin_inprogress">Je bent al ingecheckt bij een andere aflevering of film. Overschrijf de vorige check-in of wacht %s en probeer het opnieuw.</string>
   <string name="traktcheckin_wait">Wachten</string>
   <string name="oauthmessage">SeriesGuide met GetGlue authenticeren…</string>
   <string name="addtocalendar">Aan agenda toevoegen</string>
@@ -249,17 +250,17 @@
   <string name="pref_notifications">Meldingen</string>
   <string name="pref_notificationssummary">Favoriete series die binnenkort worden uitgezonden melden</string>
   <string name="pref_ringtone">Ringtone</string>
-  <string name="pref_vibrate">Vibrate</string>
-  <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
+  <string name="pref_vibrate">Trillen</string>
+  <string name="pref_vibratesummary">Ook trillen als melding wordt weergegeven</string>
   <string name="pref_theme">Applicatie thema</string>
   <string name="pref_themesummary">Kies welke kleuren gebruikt worden in SeriesGuide</string>
-  <string name="choose_list">Choose activity list</string>
-  <string name="hide_watched">Hide watched episodes</string>
-  <string name="add_widget">Add widget</string>
+  <string name="choose_list">Kies weer te geven lijst</string>
+  <string name="hide_watched">Verberg bekeken afleveringen</string>
+  <string name="add_widget">Widget toevoegen</string>
   <string name="widget_label">SeriesGuide</string>
-  <string name="smallwidget">SeriesGuide (small)</string>
-  <string name="bigwidget">SeriesGuide (middle)</string>
-  <string name="largewidget">SeriesGuide (large)</string>
+  <string name="smallwidget">SeriesGuide (klein)</string>
+  <string name="bigwidget">SeriesGuide (middelgroot)</string>
+  <string name="largewidget">SeriesGuide (groot)</string>
   <string name="download_stable">SeriesGuide downloaden</string>
   <string name="betawarning"><b>Let op!</b> Deze versie is uitsluitend voor beta testers! Bij twijfel de stabiele versie hieronder gebruiken.</string>
   <string-array name="shsorting">
@@ -282,11 +283,12 @@
     <item>Oudste eerst (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>een dag</item>
-    <item>3 dagen</item>
-    <item>een week</item>
-    <item>twee weken</item>
-    <item>een maand</item>
+    <item>now</item>
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Alle</item>
