@@ -12,10 +12,15 @@ Version 2.8 *(in development)*
 
 ### Detailed changes:
 
-#### 2.8.3beta (TBA)
+#### 2.8.3beta (2012-07-20)
 
 * TWEAK Calculate next episodes differently: display the next highest (season and number) episode after the newest watched episode.
+* TWEAK Cache images using a LRU cache as recommended by Google devs.
+* TWEAK Added 'now' and 'today' to upcoming shows limit setting.
 * FIX Display 'Recent' on list widget, if appropiate, again.
+* FIX Crash on selecting notification for deleted show.
+* MISC Use preview version (2.0beta2) of Google Analytics v2.
+* MISC Use latest support library release (r9).
 
 #### 2.8.2beta (2012-07-04)
 
