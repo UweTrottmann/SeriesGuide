@@ -125,10 +125,10 @@ public class ListWidgetProvider extends AppWidgetProvider {
                 WidgetListType.UPCOMING.index);
         int activityTab = 0;
         if (typeIndex == WidgetListType.RECENT.index) {
-            activityTab = 0;
+            activityTab = 1;
             rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.recent));
         } else {
-            activityTab = 1;
+            activityTab = 0;
             rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.upcoming));
         }
 
