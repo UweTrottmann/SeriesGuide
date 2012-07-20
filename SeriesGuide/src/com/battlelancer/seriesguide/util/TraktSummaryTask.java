@@ -1,3 +1,19 @@
+/*
+ * Copyright 2012 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.util;
 
@@ -8,6 +24,7 @@ import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Ratings;
 import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -144,8 +161,8 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
         final boolean isOnlyWifiAllowed = prefs.getBoolean(
                 SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
-        return (isOnlyWifiAllowed && Utils.isWifiConnected(mContext))
-                || (!isOnlyWifiAllowed && Utils.isNetworkConnected(mContext));
+        return (isOnlyWifiAllowed && AndroidUtils.isWifiConnected(mContext))
+                || (!isOnlyWifiAllowed && AndroidUtils.isNetworkConnected(mContext));
     }
 
     @Override

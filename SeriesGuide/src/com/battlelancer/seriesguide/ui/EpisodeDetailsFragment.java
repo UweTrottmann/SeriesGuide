@@ -1,3 +1,19 @@
+/*
+ * Copyright 2012 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui;
 
@@ -12,7 +28,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.ShareUtils;
@@ -20,16 +35,13 @@ import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.ImageCache;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -47,14 +59,16 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+/**
+ * Displays details about a single episode like summary, ratings and episode
+ * image if available.
+ */
 public class EpisodeDetailsFragment extends SherlockListFragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int EPISODE_LOADER = 3;
 
     private static final String TAG = "EpisodeDetails";
-
-    private ImageCache mImageCache;
 
     private FetchArtTask mArtTask;
 
@@ -100,7 +114,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     public void fireTrackerEvent(String label) {
-        AnalyticsUtils.getInstance(getActivity()).trackEvent(TAG, "Click", label, 0);
+        EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
     }
 
     @Override
@@ -116,22 +130,20 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        AnalyticsUtils.getInstance(getActivity()).trackPageView("/EpisodeDetails");
-    }
-
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        mImageCache = ImageCache.getInstance(getActivity());
 
         setupAdapter();
 
         getLoaderManager().initLoader(EPISODE_LOADER, null, this);
 
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Episode Details");
     }
 
     @Override
@@ -221,7 +233,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 0);
         mAdapter.setViewBinder(new ViewBinder() {
 
-            @TargetApi(11)
             public boolean setViewValue(View view, Cursor episode, int columnIndex) {
                 if (columnIndex == EpisodeDetailsQuery.WATCHED) {
                     mWatched = episode.getInt(EpisodeDetailsQuery.WATCHED) == 1 ? true : false;
@@ -320,7 +331,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                             episode.getInt(EpisodeDetailsQuery.REF_SHOW_ID),
                             episode.getInt(EpisodeDetailsQuery.SEASON),
                             episode.getInt(EpisodeDetailsQuery.NUMBER));
-                    Utils.executeAsyncTask(mTraktTask, new Void[] {
+                    AndroidUtils.executeAsyncTask(mTraktTask, new Void[] {
                         null
                     });
 
@@ -345,20 +356,13 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     });
 
                     // Poster
-                    if (getArguments().getBoolean("showposter")
-                            && Build.VERSION.SDK_INT > Build.VERSION_CODES.ECLAIR_MR1) {
-                        // using alpha seems not to work on eclair, so only set
-                        // a background on froyo+ then
+                    if (getArguments().getBoolean("showposter")) {
                         final ImageView background = (ImageView) getActivity().findViewById(
                                 R.id.episodedetails_background);
-                        Bitmap bg = mImageCache.get(episode
-                                .getString(EpisodeDetailsQuery.SHOW_POSTER));
-                        if (bg != null) {
-                            BitmapDrawable drawable = new BitmapDrawable(getResources(), bg);
-                            drawable.setAlpha(50);
-                            background.setImageDrawable(drawable);
-                        }
+                        Utils.setPosterBackground(background,
+                                episode.getString(EpisodeDetailsQuery.SHOW_POSTER), getActivity());
                     }
+
                     return true;
                 }
                 if (columnIndex == EpisodeDetailsQuery.REF_SHOW_ID) {
@@ -446,7 +450,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     protected void onLoadImage(String imagePath, FrameLayout container) {
         if (mArtTask == null || mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
             mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity());
-            Utils.executeAsyncTask(mArtTask, new Void[] {
+            AndroidUtils.executeAsyncTask(mArtTask, new Void[] {
                 null
             });
         }

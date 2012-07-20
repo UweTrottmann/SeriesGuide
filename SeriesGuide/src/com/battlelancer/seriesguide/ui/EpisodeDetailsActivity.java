@@ -1,3 +1,19 @@
+/*
+ * Copyright 2012 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui;
 
@@ -10,13 +26,11 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.ImageCache;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -28,6 +42,11 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Hosts a {@link ViewPager} displaying an episode per fragment of a complete
+ * season. Used on smaller screens which do not allow for multi-pane layouts or
+ * if coming from a search result selection.
+ */
 public class EpisodeDetailsActivity extends BaseActivity {
     protected static final String TAG = "EpisodeDetailsActivity";
 
@@ -53,8 +72,14 @@ public class EpisodeDetailsActivity extends BaseActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
 
+        final int episodeId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, 0);
+        if (episodeId == 0) {
+            // nothing to display
+            finish();
+            return;
+        }
+
         List<Episode> episodes = new ArrayList<Episode>();
-        int episodeId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, 0);
         int startPosition = 0;
 
         // Lookup show and season of episode
@@ -66,21 +91,12 @@ public class EpisodeDetailsActivity extends BaseActivity {
         if (episode == null || !episode.moveToFirst()) {
             // nothing to display
             finish();
+            return;
         }
 
         // set show poster as background
-        final String posterPath = episode.getString(1);
-        if (Utils.isFroyoOrHigher()) {
-            // using alpha seems not to work on eclair, so only set
-            // a background on froyo+ then
-            final ImageView background = (ImageView) findViewById(R.id.background);
-            Bitmap bg = ImageCache.getInstance(this).get(posterPath);
-            if (bg != null) {
-                BitmapDrawable drawable = new BitmapDrawable(getResources(), bg);
-                drawable.setAlpha(50);
-                background.setImageDrawable(drawable);
-            }
-        }
+        final ImageView background = (ImageView) findViewById(R.id.background);
+        Utils.setPosterBackground(background, episode.getString(1), this);
 
         // lookup episodes of season
         final String seasonId = episode.getString(0);
@@ -121,6 +137,18 @@ public class EpisodeDetailsActivity extends BaseActivity {
 
         TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mPager, startPosition);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
     }
 
     @Override

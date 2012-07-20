@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.util;
 
@@ -8,6 +24,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.thetvdbapi.TheTVDB;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -16,6 +33,7 @@ import com.jakewharton.trakt.entities.ActivityItem;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import org.xml.sax.SAXException;
 
@@ -174,8 +192,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                 resultCode = UpdateResult.CANCELLED;
                 break;
             }
-            if (!Utils.isNetworkConnected(mAppContext)
-                    || (isAutoUpdateWlanOnly && !Utils.isWifiConnected(mAppContext))) {
+            if (!AndroidUtils.isNetworkConnected(mAppContext)
+                    || (isAutoUpdateWlanOnly && !AndroidUtils.isWifiConnected(mAppContext))) {
                 resultCode = UpdateResult.OFFLINE;
                 break;
             }
@@ -192,8 +210,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                     resultCode = UpdateResult.CANCELLED;
                     break;
                 }
-                if (!Utils.isNetworkConnected(mAppContext)
-                        || (isAutoUpdateWlanOnly && !Utils.isWifiConnected(mAppContext))) {
+                if (!AndroidUtils.isNetworkConnected(mAppContext)
+                        || (isAutoUpdateWlanOnly && !AndroidUtils.isWifiConnected(mAppContext))) {
                     resultCode = UpdateResult.OFFLINE;
                     break;
                 }
@@ -204,7 +222,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                 } catch (SAXException e) {
                     if (itry == 1) {
                         // failed twice, give up
-                        fireTrackerEvent(e.getMessage());
+                        Utils.trackException(mAppContext, e);
                         resultCode = UpdateResult.ERROR;
                         addFailedShow(mCurrentShowName);
                     }
@@ -258,8 +276,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             if (isCancelled()) {
                 return UpdateResult.CANCELLED;
             }
-            if (!Utils.isNetworkConnected(mAppContext)
-                    || (isAutoUpdateWlanOnly && !Utils.isWifiConnected(mAppContext))) {
+            if (!AndroidUtils.isNetworkConnected(mAppContext)
+                    || (isAutoUpdateWlanOnly && !AndroidUtils.isWifiConnected(mAppContext))) {
                 return UpdateResult.OFFLINE;
             }
 
@@ -273,7 +291,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             try {
                 manager = Utils.getServiceManagerWithAuth(mAppContext, false);
             } catch (Exception e) {
-                fireTrackerEvent(e.getMessage());
+                Utils.trackException(mAppContext, e);
                 Log.w(TAG, e);
                 return UpdateResult.ERROR;
             }
@@ -289,11 +307,11 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                                 ActivityAction.Scrobble, ActivityAction.Collection)
                         .timestamp(startTimeTrakt).fire();
             } catch (TraktException e) {
-                fireTrackerEvent(e.getMessage());
+                Utils.trackException(mAppContext, e);
                 Log.w(TAG, e);
                 return UpdateResult.ERROR;
             } catch (ApiException e) {
-                fireTrackerEvent(e.getMessage());
+                Utils.trackException(mAppContext, e);
                 Log.w(TAG, e);
                 return UpdateResult.ERROR;
             }
@@ -339,12 +357,12 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                         .applyBatch(SeriesContract.CONTENT_AUTHORITY, batch);
             } catch (RemoteException e) {
                 // Failed binder transactions aren't recoverable
-                fireTrackerEvent(e.getMessage());
+                Utils.trackException(mAppContext, e);
                 throw new RuntimeException("Problem applying batch operation", e);
             } catch (OperationApplicationException e) {
                 // Failures like constraint violation aren't
                 // recoverable
-                fireTrackerEvent(e.getMessage());
+                Utils.trackException(mAppContext, e);
                 throw new RuntimeException("Problem applying batch operation", e);
             }
 
@@ -383,12 +401,16 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             case ERROR:
                 message = mAppContext.getString(R.string.update_saxerror);
                 length = Toast.LENGTH_LONG;
+
+                fireTrackerEvent("Error");
                 break;
             case OFFLINE:
-                fireTrackerEvent("Offline");
-
                 message = mAppContext.getString(R.string.update_offline);
                 length = Toast.LENGTH_LONG;
+
+                fireTrackerEvent("Offline");
+                break;
+            default:
                 break;
         }
 
@@ -455,7 +477,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
     }
 
     private void fireTrackerEvent(String message) {
-        AnalyticsUtils.getInstance(mAppContext).trackEvent(TAG, "Update result", message, 0);
+        EasyTracker.getTracker().trackEvent(TAG, "Update result", message, (long) 0);
     }
 
 }

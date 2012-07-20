@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui;
 
@@ -10,16 +26,16 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.ImageCache;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,6 +48,9 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Displays detailed information about a show.
+ */
 public class ShowInfoActivity extends BaseActivity {
     public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
 
@@ -47,7 +66,7 @@ public class ShowInfoActivity extends BaseActivity {
      * @param label
      */
     public void fireTrackerEvent(String label) {
-        AnalyticsUtils.getInstance(this).trackEvent("ShowInfo", "Click", label, 0);
+        EasyTracker.getTracker().trackEvent("ShowInfo", "Click", label, (long) 0);
     }
 
     @Override
@@ -66,7 +85,13 @@ public class ShowInfoActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        AnalyticsUtils.getInstance(this).trackPageView("/ShowInfo");
+        EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
     }
 
     @Override
@@ -110,11 +135,11 @@ public class ShowInfoActivity extends BaseActivity {
         TextView airstime = (TextView) findViewById(R.id.TextViewShowInfoAirtime);
         TextView network = (TextView) findViewById(R.id.TextViewShowInfoNetwork);
         TextView status = (TextView) findViewById(R.id.TextViewShowInfoStatus);
-        ImageView showart = (ImageView) findViewById(R.id.ImageViewShowInfoPoster);
 
         final Series show = DBUtils.getShow(this, String.valueOf(getShowId()));
         if (show == null) {
             finish();
+            return;
         }
 
         // Name
@@ -182,7 +207,7 @@ public class ShowInfoActivity extends BaseActivity {
         if (imdbButton != null) {
             imdbButton.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-                    fireTrackerEvent("IMDb");
+                    fireTrackerEvent("Show IMDb page");
 
                     if (imdbid.length() != 0) {
                         Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("imdb:///title/"
@@ -208,7 +233,7 @@ public class ShowInfoActivity extends BaseActivity {
         if (tvdbButton != null) {
             tvdbButton.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-                    fireTrackerEvent("TVDb");
+                    fireTrackerEvent("Show TVDb page");
                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TVDB_SHOW_URL
                             + tvdbId));
                     startActivity(i);
@@ -220,6 +245,7 @@ public class ShowInfoActivity extends BaseActivity {
         findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                fireTrackerEvent("Show Trakt Shouts");
                 TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
                         show.getSeriesName(), Integer.valueOf(tvdbId));
 
@@ -237,17 +263,13 @@ public class ShowInfoActivity extends BaseActivity {
                 .setType("text/plain");
 
         // Poster
-        Bitmap bitmap = ImageCache.getInstance(this).get(show.getPoster());
-        if (bitmap != null) {
-            showart.setImageBitmap(bitmap);
-        } else {
-            showart.setImageBitmap(null);
-        }
+        final ImageView poster = (ImageView) findViewById(R.id.ImageViewShowInfoPoster);
+        ImageProvider.getInstance(this).loadImage(poster, show.getPoster(), false);
 
         // trakt ratings
         TraktSummaryTask task = new TraktSummaryTask(this, findViewById(R.id.ratingbar))
                 .show(tvdbId);
-        Utils.executeAsyncTask(task, new Void[] {
+        AndroidUtils.executeAsyncTask(task, new Void[] {
             null
         });
     }

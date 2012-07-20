@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui;
 
@@ -12,9 +28,10 @@ import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -40,6 +57,9 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * Displays a list of episodes of a season.
+ */
 public class EpisodesFragment extends SherlockListFragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -85,7 +105,7 @@ public class EpisodesFragment extends SherlockListFragment implements
     }
 
     public void fireTrackerEvent(String label) {
-        AnalyticsUtils.getInstance(getActivity()).trackEvent("Episodes", "Click", label, 0);
+        EasyTracker.getTracker().trackEvent("Episodes", "Click", label, (long) 0);
     }
 
     @Override
@@ -96,8 +116,6 @@ public class EpisodesFragment extends SherlockListFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        AnalyticsUtils.getInstance(getActivity()).trackPageView("/Episodes");
 
         updatePreferences();
 
@@ -220,6 +238,12 @@ public class EpisodesFragment extends SherlockListFragment implements
             getSherlockActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
                     R.anim.fragment_slide_left_exit);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Episodes");
     }
 
     @Override
@@ -422,8 +446,7 @@ public class EpisodesFragment extends SherlockListFragment implements
                 .fromValue(prefs.getString(SeriesGuidePreferences.KEY_EPISODE_SORT_ORDER,
                         EpisodeSorting.OLDEST_FIRST.value()));
 
-        AnalyticsUtils.getInstance(getActivity()).trackEvent("Episodes", "Sorting",
-                mSorting.name(), 0);
+        EasyTracker.getTracker().trackEvent("Episodes", "Sorting", mSorting.name(), (long) 0);
 
         getLoaderManager().restartLoader(EPISODES_LOADER, null, EpisodesFragment.this);
         getSherlockActivity().invalidateOptionsMenu();
@@ -433,7 +456,7 @@ public class EpisodesFragment extends SherlockListFragment implements
     public void setItemChecked(int position) {
         final ListView list = getListView();
         list.setItemChecked(position, true);
-        if (Utils.isFroyoOrHigher()) {
+        if (AndroidUtils.isFroyoOrHigher()) {
             if (position <= list.getFirstVisiblePosition()
                     || position >= list.getLastVisiblePosition()) {
                 list.smoothScrollToPosition(position);

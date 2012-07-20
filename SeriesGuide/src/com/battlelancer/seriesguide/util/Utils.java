@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.util;
 
@@ -7,8 +23,9 @@ import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.thetvdbapi.ImageCache;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.trakt.ServiceManager;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -17,12 +34,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
@@ -31,13 +42,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormatSymbols;
@@ -67,8 +71,6 @@ public class Utils {
     private static final String TIMEZONE_US_PACIFIC = "America/Los_Angeles";
 
     private static final String TIMEZONE_US_MOUNTAIN = "America/Denver";
-
-    private static final int DEFAULT_BUFFER_SIZE = 8192;
 
     private static ServiceManager sServiceManagerWithAuthInstance;
 
@@ -528,83 +530,6 @@ public class Utils {
         return EpisodeSorting.fromValue(currentPref);
     }
 
-    public static boolean isJellyBeanOrHigher() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
-    }
-
-    public static boolean isICSOrHigher() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
-    }
-
-    public static boolean isHoneycombOrHigher() {
-        // Can use static final constants like HONEYCOMB, declared in later
-        // versions
-        // of the OS since they are inlined at compile time. This is guaranteed
-        // behavior.
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
-    }
-
-    public static boolean isFroyoOrHigher() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO;
-    }
-
-    public static boolean isExtStorageAvailable() {
-        return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
-    }
-
-    public static boolean isNetworkConnected(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        if (activeNetworkInfo != null) {
-            return activeNetworkInfo.isConnected();
-        }
-        return false;
-    }
-
-    public static boolean isWifiConnected(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifiNetworkInfo = connectivityManager
-                .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (wifiNetworkInfo != null) {
-            return wifiNetworkInfo.isConnected();
-        }
-        return false;
-    }
-
-    public static void copyFile(File src, File dst) throws IOException {
-        FileInputStream in = new FileInputStream(src);
-        FileOutputStream out = new FileOutputStream(dst);
-        FileChannel inChannel = in.getChannel();
-        FileChannel outChannel = out.getChannel();
-
-        try {
-            inChannel.transferTo(0, inChannel.size(), outChannel);
-        } finally {
-            if (inChannel != null) {
-                inChannel.close();
-            }
-            if (outChannel != null) {
-                outChannel.close();
-            }
-        }
-
-        in.close();
-        out.close();
-    }
-
-    public static int copy(InputStream input, OutputStream output) throws IOException {
-        byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
-        int count = 0;
-        int n = 0;
-        while (-1 != (n = input.read(buffer))) {
-            output.write(buffer, 0, n);
-            count += n;
-        }
-        return count;
-    }
-
     /**
      * Update the latest episode fields for all existing shows.
      */
@@ -637,9 +562,16 @@ public class Utils {
         }
 
         public void run() {
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+            final boolean isOnlyFutureEpisodes = prefs.getBoolean(
+                    SeriesGuidePreferences.KEY_ONLY_FUTURE_EPISODES, false);
+            final boolean isNoSpecials = prefs.getBoolean(
+                    SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES, false);
+
             if (mShowId != null) {
                 // update single show
-                DBUtils.updateLatestEpisode(mContext, mShowId);
+                DBUtils.updateLatestEpisode(mContext, mShowId, isOnlyFutureEpisodes, isNoSpecials,
+                        prefs);
             } else {
                 // update all shows
                 final Cursor shows = mContext.getContentResolver().query(Shows.CONTENT_URI,
@@ -647,8 +579,9 @@ public class Utils {
                             Shows._ID
                         }, null, null, null);
                 while (shows.moveToNext()) {
-                    String id = shows.getString(0);
-                    DBUtils.updateLatestEpisode(mContext, id);
+                    String showId = shows.getString(0);
+                    DBUtils.updateLatestEpisode(mContext, showId, isOnlyFutureEpisodes,
+                            isNoSpecials, prefs);
                 }
                 shows.close();
             }
@@ -755,33 +688,6 @@ public class Utils {
     }
 
     /**
-     * If {@code isBusy} is {@code true}, then the image is only loaded if it is
-     * in memory. In every other case a place-holder is shown.
-     * 
-     * @param poster
-     * @param path
-     * @param isBusy
-     * @param context
-     */
-    public static void setPosterBitmap(ImageView poster, String path, boolean isBusy,
-            Context context) {
-        Bitmap bitmap = null;
-        if (path.length() != 0) {
-            bitmap = ImageCache.getInstance(context).getThumb(path, isBusy);
-        }
-
-        if (bitmap != null) {
-            poster.setImageBitmap(bitmap);
-            poster.setTag(null);
-        } else {
-            // set placeholder
-            poster.setImageResource(R.drawable.show_generic);
-            // Non-null tag means the view still needs to load it's data
-            poster.setTag(path);
-        }
-    }
-
-    /**
      * Run the notification service to display and (re)schedule upcoming episode
      * alarms.
      * 
@@ -854,6 +760,17 @@ public class Utils {
         }
     }
 
+    @TargetApi(16)
+    @SuppressWarnings("deprecation")
+    public static void setPosterBackground(ImageView background, String posterPath, Context context) {
+        if (AndroidUtils.isJellyBeanOrHigher()) {
+            background.setImageAlpha(50);
+        } else {
+            background.setAlpha(50);
+        }
+        ImageProvider.getInstance(context).loadImage(background, posterPath, false);
+    }
+
     /**
      * Sets the global app theme variable. Applied by all activities once they
      * are created.
@@ -873,22 +790,13 @@ public class Utils {
     }
 
     /**
-     * Execute an {@link AsyncTask} on a thread pool.
+     * Tracks an exception using the Google Analytics {@link EasyTracker}.
      * 
-     * @param task Task to execute.
-     * @param args Optional arguments to pass to
-     *            {@link AsyncTask#execute(Object[])}.
-     * @param <T> Task argument type.
+     * @param context
+     * @param e
      */
-    @TargetApi(11)
-    public static <T> void executeAsyncTask(AsyncTask<T, ?, ?> task, T... args) {
-        // TODO figure out how to subclass abstract and generalized AsyncTask,
-        // then put this there
-        if (Utils.isHoneycombOrHigher()) {
-            task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, args);
-        } else {
-            task.execute(args);
-        }
+    public static void trackException(Context context, Exception e) {
+        EasyTracker.getTracker().trackException(e.getMessage(), false);
     }
 
 }

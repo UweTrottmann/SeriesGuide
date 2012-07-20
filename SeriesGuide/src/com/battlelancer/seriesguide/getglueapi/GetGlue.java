@@ -1,9 +1,26 @@
+/*
+ * Copyright 2011 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.getglueapi;
 
 import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
@@ -93,7 +110,7 @@ public class GetGlue {
 
         @Override
         protected Integer doInBackground(Void... params) {
-            if (!Utils.isNetworkConnected(mContext)) {
+            if (!AndroidUtils.isNetworkConnected(mContext)) {
                 return CHECKIN_OFFLINE;
             }
 
@@ -122,12 +139,15 @@ public class GetGlue {
             try {
                 consumer.sign(request);
             } catch (OAuthMessageSignerException e) {
+                Utils.trackException(mContext, e);
                 Log.w(TAG, e);
                 return CHECKIN_FAILED;
             } catch (OAuthExpectationFailedException e) {
+                Utils.trackException(mContext, e);
                 Log.w(TAG, e);
                 return CHECKIN_FAILED;
             } catch (OAuthCommunicationException e) {
+                Utils.trackException(mContext, e);
                 Log.w(TAG, e);
                 return CHECKIN_FAILED;
             }
@@ -140,8 +160,10 @@ public class GetGlue {
                     return CHECKIN_SUCCESSFUL;
                 }
             } catch (ClientProtocolException e) {
+                Utils.trackException(mContext, e);
                 Log.w(TAG, e);
             } catch (IOException e) {
+                Utils.trackException(mContext, e);
                 Log.w(TAG, e);
             }
 
@@ -153,14 +175,12 @@ public class GetGlue {
             switch (result) {
                 case CHECKIN_SUCCESSFUL:
                     Toast.makeText(mContext, R.string.checkinsuccess, Toast.LENGTH_SHORT).show();
-                    AnalyticsUtils.getInstance(mContext).trackEvent("Sharing", "GetGlue",
-                            "Success", 0);
+                    EasyTracker.getTracker().trackEvent("Sharing", "GetGlue", "Success", (long) 0);
                     break;
                 case CHECKIN_FAILED:
                     Toast.makeText(mContext, mContext.getString(R.string.checkinfailed),
                             Toast.LENGTH_LONG).show();
-                    AnalyticsUtils.getInstance(mContext).trackEvent("Sharing", "GetGlue", mComment,
-                            0);
+                    EasyTracker.getTracker().trackEvent("Sharing", "GetGlue", mComment, (long) 0);
                     break;
                 case CHECKIN_OFFLINE:
                     Toast.makeText(mContext, R.string.offline, Toast.LENGTH_LONG).show();

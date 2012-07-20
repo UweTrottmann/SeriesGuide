@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui;
 
@@ -11,8 +27,8 @@ import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -42,6 +58,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+/**
+ * Displays a list of seasons of one show.
+ */
 public class SeasonsFragment extends SherlockListFragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -74,13 +93,7 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     public void fireTrackerEvent(String label) {
-        AnalyticsUtils.getInstance(getActivity()).trackEvent("Seasons", "Click", label, 0);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        AnalyticsUtils.getInstance(getActivity()).trackPageView("/Seasons");
+        EasyTracker.getTracker().trackEvent("Seasons", "Click", label, (long) 0);
     }
 
     @Override
@@ -104,6 +117,12 @@ public class SeasonsFragment extends SherlockListFragment implements
 
         registerForContextMenu(getListView());
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Seasons");
     }
 
     @Override
@@ -453,8 +472,7 @@ public class SeasonsFragment extends SherlockListFragment implements
         mSorting = SeasonSorting.fromValue(prefs.getString(
                 SeriesGuidePreferences.KEY_SEASON_SORT_ORDER, SeasonSorting.LATEST_FIRST.value()));
 
-        AnalyticsUtils.getInstance(getActivity()).trackEvent("Seasons", "Sorting", mSorting.name(),
-                0);
+        EasyTracker.getTracker().trackEvent("Seasons", "Sorting", mSorting.name(), (long) 0);
 
         // restart loader and update menu description
         getLoaderManager().restartLoader(LOADER_ID, null, SeasonsFragment.this);

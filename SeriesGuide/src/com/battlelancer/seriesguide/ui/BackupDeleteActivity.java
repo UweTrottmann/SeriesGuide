@@ -1,3 +1,19 @@
+/*
+ * Copyright 2012 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui;
 
@@ -5,9 +21,9 @@ import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -30,10 +46,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Import/export DB activity.
- * 
- * @author ccollins
- * @author trottmann.uwe
+ * Allows to back up or restore the show database to external storage.
  */
 public class BackupDeleteActivity extends BaseActivity {
 
@@ -58,10 +71,6 @@ public class BackupDeleteActivity extends BaseActivity {
     private static final int EXPORT_PROGRESS = 3;
 
     private static final int IMPORT_PROGRESS = 4;
-
-    public void fireTrackerEvent(String label) {
-        AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
-    }
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -100,7 +109,13 @@ public class BackupDeleteActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        AnalyticsUtils.getInstance(this).trackPageView("/BackupDelete");
+        EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
     }
 
     @Override
@@ -152,7 +167,7 @@ public class BackupDeleteActivity extends BaseActivity {
             String errorMsg = null;
             try {
                 file.createNewFile();
-                Utils.copyFile(dbFile, file);
+                AndroidUtils.copyFile(dbFile, file);
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage(), e);
                 errorMsg = e.getMessage();
@@ -167,17 +182,11 @@ public class BackupDeleteActivity extends BaseActivity {
                 exportProgress.dismiss();
             }
             if (errorMsg == null) {
-                // track event
-                AnalyticsUtils.getInstance(BackupDeleteActivity.this).trackEvent(TAG, "Backup",
-                        "Success", 0);
-
+                EasyTracker.getTracker().trackEvent(TAG, "Backup", "Success", (long) 0);
                 Toast.makeText(BackupDeleteActivity.this, getString(R.string.backup_success),
                         Toast.LENGTH_SHORT).show();
             } else {
-                // track event
-                AnalyticsUtils.getInstance(BackupDeleteActivity.this).trackEvent(TAG, "Backup",
-                        errorMsg, 0);
-
+                EasyTracker.getTracker().trackEvent(TAG, "Backup", errorMsg, (long) 0);
                 Toast.makeText(BackupDeleteActivity.this,
                         getString(R.string.backup_failed) + " - " + errorMsg, Toast.LENGTH_LONG)
                         .show();
@@ -221,7 +230,7 @@ public class BackupDeleteActivity extends BaseActivity {
 
             try {
                 dbFile.createNewFile();
-                Utils.copyFile(dbBackupFile, dbFile);
+                AndroidUtils.copyFile(dbBackupFile, dbFile);
 
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
                         .putBoolean(SeriesGuidePreferences.KEY_DATABASEIMPORTED, true).commit();
@@ -265,17 +274,11 @@ public class BackupDeleteActivity extends BaseActivity {
                 importProgress.dismiss();
             }
             if (errMsg == null) {
-                // track event
-                AnalyticsUtils.getInstance(BackupDeleteActivity.this).trackEvent(TAG, "Import",
-                        "Success", 0);
-
+                EasyTracker.getTracker().trackEvent(TAG, "Import", "Success", (long) 0);
                 Toast.makeText(BackupDeleteActivity.this, getString(R.string.import_success),
                         Toast.LENGTH_SHORT).show();
             } else {
-                // track event
-                AnalyticsUtils.getInstance(BackupDeleteActivity.this).trackEvent(TAG, "Import",
-                        errMsg, 0);
-
+                EasyTracker.getTracker().trackEvent(TAG, "Import", errMsg, (long) 0);
                 Toast.makeText(BackupDeleteActivity.this,
                         getString(R.string.import_failed) + " - " + errMsg, Toast.LENGTH_LONG)
                         .show();
@@ -294,7 +297,7 @@ public class BackupDeleteActivity extends BaseActivity {
                         .setPositiveButton(getString(R.string.backup_yes),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface arg0, int arg1) {
-                                        if (Utils.isExtStorageAvailable()) {
+                                        if (AndroidUtils.isExtStorageAvailable()) {
                                             mExportTask = new ExportDatabaseTask();
                                             mExportTask.execute();
                                         } else {
@@ -310,7 +313,7 @@ public class BackupDeleteActivity extends BaseActivity {
                         .setPositiveButton(getString(R.string.import_yes),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface arg0, int arg1) {
-                                        if (Utils.isExtStorageAvailable()) {
+                                        if (AndroidUtils.isExtStorageAvailable()) {
                                             mImportTask = new ImportDatabaseTask();
                                             mImportTask.execute();
                                         } else {

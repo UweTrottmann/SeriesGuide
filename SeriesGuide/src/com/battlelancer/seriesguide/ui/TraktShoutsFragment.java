@@ -1,18 +1,35 @@
+/*
+ * Copyright 2011 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Shout;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -146,7 +163,7 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
 
                 if (episode == 0) {
                     // shout for a show
-                    Utils.executeAsyncTask(new TraktTask(getSherlockActivity(),
+                    AndroidUtils.executeAsyncTask(new TraktTask(getSherlockActivity(),
                             getFragmentManager(), TraktShoutsFragment.this).shout(tvdbid, shout,
                             isSpoiler), new Void[] {
                         null
@@ -154,7 +171,7 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
                 } else {
                     // shout for an episode
                     int season = args.getInt(ShareItems.SEASON);
-                    Utils.executeAsyncTask(new TraktTask(getSherlockActivity(),
+                    AndroidUtils.executeAsyncTask(new TraktTask(getSherlockActivity(),
                             getFragmentManager(), TraktShoutsFragment.this).shout(tvdbid, season,
                             episode, shout, isSpoiler), new Void[] {
                         null
@@ -185,13 +202,11 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        AnalyticsUtils.getInstance(getActivity()).trackPageView("/Shouts");
-
         mAdapter = new TraktShoutsAdapter(getActivity());
         setListAdapter(mAdapter);
 
         // nag about no connectivity
-        if (!Utils.isNetworkConnected(getSherlockActivity())) {
+        if (!AndroidUtils.isNetworkConnected(getSherlockActivity())) {
             setListShown(true);
             ((TextView) mEmptyView).setText(R.string.offline);
         } else {
@@ -199,6 +214,12 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
             getLoaderManager().initLoader(0, getArguments(), this);
             mHandler.postDelayed(mUpdateShoutsRunnable, DateUtils.MINUTE_IN_MILLIS);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Shouts");
     }
 
     private Runnable mUpdateShoutsRunnable = new Runnable() {
@@ -431,9 +452,11 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
                     int season = mArgs.getInt(ShareItems.SEASON);
                     shouts = manager.showService().episodeShouts(tvdbId, season, episode).fire();
                 }
-            } catch (TraktException te) {
+            } catch (TraktException e) {
+                Utils.trackException(getContext(), e);
                 return null;
-            } catch (ApiException ae) {
+            } catch (ApiException e) {
+                Utils.trackException(getContext(), e);
                 return null;
             }
 

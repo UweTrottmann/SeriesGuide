@@ -238,6 +238,7 @@
     <string name="pref_upcominglimitsummary">How far in the future to display upcoming shows</string>
 
     <string-array name="upcominglimit">
+        <item>now</item>
         <item>a day</item>
         <item>3 days</item>
         <item>a week</item>
@@ -497,6 +498,7 @@
         <item>13</item>
     </string-array>
     <string-array name="upcominglimitData">
+        <item>0</item>
         <item>1</item>
         <item>3</item>
         <item>7</item>

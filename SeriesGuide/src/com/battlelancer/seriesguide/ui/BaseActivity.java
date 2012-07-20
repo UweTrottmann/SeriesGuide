@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Google Inc.
+ * Copyright 2012 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * Modified by Uwe Trottmann for SeriesGuide
  */
 
 package com.battlelancer.seriesguide.ui;
@@ -23,7 +22,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
-import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,7 +34,8 @@ import android.text.format.DateUtils;
 import android.view.KeyEvent;
 
 /**
- * A base activity that has some common functionality across app activities.
+ * Provides some common functionality across all activities like setting the
+ * theme and navigation shortcuts.
  */
 public abstract class BaseActivity extends SherlockFragmentActivity {
 
@@ -82,7 +82,7 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
      */
     private void onAutoUpdate() {
         // try to run auto-update
-        if (Utils.isNetworkConnected(this)) {
+        if (AndroidUtils.isNetworkConnected(this)) {
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(getApplicationContext());
 
@@ -94,7 +94,7 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
                 // check if wifi is required, abort if necessary
                 final boolean isWifiOnly = prefs.getBoolean(
                         SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
-                if (!isWifiOnly || Utils.isWifiConnected(this)) {
+                if (!isWifiOnly || AndroidUtils.isWifiConnected(this)) {
 
                     // only update if at least 15mins have passed since last one
                     long now = System.currentTimeMillis();

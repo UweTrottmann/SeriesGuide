@@ -1,3 +1,19 @@
+/*
+ * Copyright 2012 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
@@ -7,11 +23,12 @@ import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
 import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -56,10 +73,9 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
     private View mCheckinButton;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        AnalyticsUtils.getInstance(getActivity()).trackPageView("/CheckInDialog");
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Check In Dialog");
     }
 
     @Override
@@ -110,7 +126,7 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     if (!GetGlue.isAuthenticated(prefs)) {
-                        if (!Utils.isNetworkConnected(getActivity())) {
+                        if (!AndroidUtils.isNetworkConnected(getActivity())) {
                             Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_LONG)
                                     .show();
                             buttonView.setChecked(false);
@@ -159,7 +175,7 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
         mCheckinButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!Utils.isNetworkConnected(getActivity())) {
+                if (!AndroidUtils.isNetworkConnected(getActivity())) {
                     Toast.makeText(getActivity(), R.string.offline, Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -201,8 +217,9 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                         newFragment.show(ft, "progress-dialog");
 
                         // start the trakt check in task
-                        Utils.executeAsyncTask(new TraktTask(getActivity(), getFragmentManager(),
-                                null).checkin(tvdbid, season, episode, message), new Void[] {
+                        AndroidUtils.executeAsyncTask(new TraktTask(getActivity(),
+                                getFragmentManager(), null).checkin(tvdbid, season, episode,
+                                message), new Void[] {
                             null
                         });
                     }

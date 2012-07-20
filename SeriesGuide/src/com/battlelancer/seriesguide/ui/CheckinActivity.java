@@ -1,3 +1,19 @@
+/*
+ * Copyright 2012 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui;
 
@@ -8,9 +24,10 @@ import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -34,6 +51,10 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * Displays a searchable list of shows to allow quickly checking into a shows
+ * next episode.
+ */
 public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cursor> {
 
     private static final int LOADER_ID = R.layout.checkin;
@@ -132,7 +153,13 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
     @Override
     protected void onStart() {
         super.onStart();
-        AnalyticsUtils.getInstance(this).trackPageView("/Checkin");
+        EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
     }
 
     @Override
@@ -181,7 +208,7 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
                 throw new IllegalStateException("couldn't move cursor to position " + position);
             }
 
-            ViewHolder viewHolder;
+            final ViewHolder viewHolder;
 
             if (convertView == null) {
                 convertView = mLayoutInflater.inflate(mLayout, null);
@@ -209,7 +236,7 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
             viewHolder.name.setText(mCursor.getString(CheckinQuery.TITLE));
             viewHolder.network.setText(mCursor.getString(CheckinQuery.NETWORK));
 
-            boolean isFavorited = mCursor.getInt(CheckinQuery.FAVORITE) == 1;
+            final boolean isFavorited = mCursor.getInt(CheckinQuery.FAVORITE) == 1;
             viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
 
             // next episode info
@@ -237,16 +264,14 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
             }
 
             // airday
-            String[] values = Utils.parseMillisecondsToTime(mCursor.getLong(CheckinQuery.AIRSTIME),
+            final String[] values = Utils.parseMillisecondsToTime(
+                    mCursor.getLong(CheckinQuery.AIRSTIME),
                     mCursor.getString(CheckinQuery.AIRSDAYOFWEEK), mContext);
             viewHolder.airsTime.setText(values[1] + " " + values[0]);
 
-            // set poster immediately, we don't care for efficient scrolling
-            // here
-            final String path = mCursor.getString(CheckinQuery.POSTER);
-            Utils.setPosterBitmap(viewHolder.poster, path, false, null);
-            // Null tag means the view has the correct data
-            viewHolder.poster.setTag(null);
+            // set poster
+            final String imagePath = mCursor.getString(CheckinQuery.POSTER);
+            ImageProvider.getInstance(mContext).loadPosterThumb(viewHolder.poster, imagePath);
 
             return convertView;
         }

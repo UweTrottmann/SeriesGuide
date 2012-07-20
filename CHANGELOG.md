@@ -12,6 +12,15 @@ Version 2.8 *(in development)*
 
 ### Detailed changes:
 
+#### 2.8.3beta (TBA)
+
+* TWEAK Calculate next episodes differently: display the next highest (season and number) episode after the newest watched episode.
+* FIX Display 'Recent' on list widget, if appropiate, again.
+
+#### 2.8.2beta (2012-07-04)
+
+* FIX Run the notification service in time for notifications, again.
+
 #### 2.8.1beta (2012-06-28)
 
 * FIX Run the notification service in time for notifications, again.

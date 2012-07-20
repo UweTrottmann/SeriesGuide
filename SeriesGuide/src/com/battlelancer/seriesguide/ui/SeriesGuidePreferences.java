@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui;
 
@@ -7,9 +23,10 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.ImageCache;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.GoogleAnalytics;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -29,6 +46,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Allows tweaking of various SeriesGuide settings.
+ */
 public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_TRAKTPWD = "com.battlelancer.seriesguide.traktpwd";
@@ -115,7 +135,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
     public static int THEME = R.style.SeriesGuideTheme;
 
     public void fireTrackerEvent(String label) {
-        AnalyticsUtils.getInstance(this).trackEvent(TAG, "Click", label, 0);
+        EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
     }
 
     @SuppressWarnings("deprecation")
@@ -156,8 +176,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             public boolean onPreferenceClick(Preference preference) {
                 fireTrackerEvent("Clear Image Cache");
 
-                ImageCache.getInstance(activity).clear();
-                ImageCache.getInstance(activity).clearExternal();
+                ImageProvider.getInstance(activity).clearCache();
+                ImageProvider.getInstance(activity).clearExternalStorageCache();
                 Toast.makeText(getApplicationContext(), getString(R.string.done),
                         Toast.LENGTH_SHORT).show();
                 return true;
@@ -180,11 +200,11 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
             public boolean onPreferenceClick(Preference preference) {
                 if (((CheckBoxPreference) preference).isChecked()) {
-                    AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                            "OnlyFutureEpisodes", "Enable", 0);
+                    EasyTracker.getTracker().trackEvent(TAG, "OnlyFutureEpisodes", "Enable",
+                            (long) 0);
                 } else {
-                    AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                            "OnlyFutureEpisodes", "Disable", 0);
+                    EasyTracker.getTracker().trackEvent(TAG, "OnlyFutureEpisodes", "Disable",
+                            (long) 0);
                 }
                 return false;
             }
@@ -196,11 +216,11 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
             public boolean onPreferenceClick(Preference preference) {
                 if (((CheckBoxPreference) preference).isChecked()) {
-                    AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                            "OnlySeasonEpisodes", "Enable", 0);
+                    EasyTracker.getTracker().trackEvent(TAG, "OnlySeasonEpisodes", "Enable",
+                            (long) 0);
                 } else {
-                    AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                            "OnlySeasonEpisodes", "Disable", 0);
+                    EasyTracker.getTracker().trackEvent(TAG, "OnlySeasonEpisodes", "Disable",
+                            (long) 0);
                 }
                 return false;
             }
@@ -265,11 +285,11 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     if (((CheckBoxPreference) preference).isChecked()) {
-                        AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                                "Notifications", "Enable", 0);
+                        EasyTracker.getTracker().trackEvent(TAG, "Notifications", "Enable",
+                                (long) 0);
                     } else {
-                        AnalyticsUtils.getInstance(activity).trackEvent("Settings",
-                                "Notifications", "Disable", 0);
+                        EasyTracker.getTracker().trackEvent(TAG, "Notifications", "Disable",
+                                (long) 0);
                     }
 
                     Utils.runNotificationService(SeriesGuidePreferences.this);
@@ -291,12 +311,32 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                 return true;
             }
         });
+
+        // GA opt-out
+        findPreference(KEY_GOOGLEANALYTICS).setOnPreferenceChangeListener(
+                new OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
+                        if (preference.getKey().equals(KEY_GOOGLEANALYTICS)) {
+                            boolean isEnabled = (Boolean) newValue;
+                            GoogleAnalytics.getInstance(activity).setAppOptOut(isEnabled);
+                            return true;
+                        }
+                        return false;
+                    }
+                });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        AnalyticsUtils.getInstance(this).trackPageView("/Settings");
+        EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
     }
 
     @Override

@@ -1,3 +1,19 @@
+/*
+ * Copyright 2012 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui;
 
@@ -6,7 +22,7 @@ import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -21,6 +37,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+/**
+ * Super class for fragments displaying a list of shows and allowing to add them
+ * to the database.
+ */
 public class AddFragment extends SherlockListFragment {
 
     protected AddAdapter mAdapter;
@@ -42,7 +62,7 @@ public class AddFragment extends SherlockListFragment {
     @TargetApi(11)
     protected void setSearchResults(List<SearchResult> searchResults) {
         mAdapter.clear();
-        if (Utils.isHoneycombOrHigher()) {
+        if (AndroidUtils.isHoneycombOrHigher()) {
             mAdapter.addAll(searchResults);
         } else {
             for (SearchResult searchResult : searchResults) {

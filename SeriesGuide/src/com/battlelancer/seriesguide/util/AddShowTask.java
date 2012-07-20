@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.util;
 
@@ -7,6 +23,7 @@ import com.battlelancer.thetvdbapi.TheTVDB;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.ExtendedParam;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import org.xml.sax.SAXException;
 
@@ -71,7 +88,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         int result;
         boolean modifiedDB = false;
 
-        if (!Utils.isNetworkConnected(mContext)) {
+        if (!AndroidUtils.isNetworkConnected(mContext)) {
             publishProgress(ADD_OFFLINE);
             return null;
         }
@@ -101,7 +118,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
                 return null;
             }
 
-            if (!Utils.isNetworkConnected(mContext)) {
+            if (!AndroidUtils.isNetworkConnected(mContext)) {
                 publishProgress(ADD_OFFLINE);
                 break;
             }

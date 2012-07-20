@@ -1,11 +1,28 @@
+/*
+ * Copyright 2011 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import org.xml.sax.SAXException;
 
@@ -85,9 +102,15 @@ public class TvdbAddFragment extends AddFragment {
         });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Add TVDb Shows");
+    }
+
     protected void search() {
         // nag about no connectivity
-        if (!Utils.isNetworkConnected(getSherlockActivity())) {
+        if (!AndroidUtils.isNetworkConnected(getSherlockActivity())) {
             Toast.makeText(getSherlockActivity(), R.string.offline, Toast.LENGTH_LONG).show();
             return;
         }

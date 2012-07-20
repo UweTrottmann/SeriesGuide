@@ -1,3 +1,19 @@
+/*
+ * Copyright 2012 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui;
 
@@ -10,13 +26,11 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.ImageCache;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -31,6 +45,10 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Hosts a fragment which displays episodes of a season. Used on smaller screens
+ * which do not allow for multi-pane layouts.
+ */
 public class EpisodesActivity extends BaseActivity {
 
     private EpisodesFragment mEpisodesFragment;
@@ -64,6 +82,7 @@ public class EpisodesActivity extends BaseActivity {
         final int seasonId = getIntent().getIntExtra(InitBundle.SEASON_TVDBID, 0);
         if (show == null || seasonId == 0) {
             finish();
+            return;
         }
 
         // setup ActionBar
@@ -100,17 +119,8 @@ public class EpisodesActivity extends BaseActivity {
         // build the episode pager if we are in a dual-pane layout
         if (mDualPane) {
             // set the pager background
-            if (Utils.isFroyoOrHigher()) {
-                // using alpha seems not to work on eclair, so only set
-                // a background on froyo+ then
-                final ImageView background = (ImageView) findViewById(R.id.background);
-                Bitmap bg = ImageCache.getInstance(this).get(show.getPoster());
-                if (bg != null) {
-                    BitmapDrawable drawable = new BitmapDrawable(getResources(), bg);
-                    drawable.setAlpha(50);
-                    background.setImageDrawable(drawable);
-                }
-            }
+            final ImageView background = (ImageView) findViewById(R.id.background);
+            Utils.setPosterBackground(background, show.getPoster(), this);
 
             // set adapters for pager and indicator
             Constants.EpisodeSorting sorting = Utils.getEpisodeSorting(this);
@@ -166,6 +176,18 @@ public class EpisodesActivity extends BaseActivity {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
     }
 
     List<WeakReference<Fragment>> mFragments = new ArrayList<WeakReference<Fragment>>();

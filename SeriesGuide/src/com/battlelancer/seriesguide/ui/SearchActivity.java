@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui;
 
@@ -5,13 +21,17 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.app.SearchManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+/**
+ * Handles search intents and displays a {@link SearchFragment} when needed or
+ * redirects directly to an {@link EpisodeDetailsActivity}.
+ */
 public class SearchActivity extends BaseActivity {
 
     private static final String TAG = "SearchActivity";
@@ -30,6 +50,18 @@ public class SearchActivity extends BaseActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         setIntent(intent);
         handleIntent(intent);
@@ -40,7 +72,7 @@ public class SearchActivity extends BaseActivity {
             return;
         }
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            AnalyticsUtils.getInstance(this).trackEvent(TAG, "Search action", "Search", 0);
+            EasyTracker.getTracker().trackEvent(TAG, "Search action", "Search", (long) 0);
             String query = intent.getStringExtra(SearchManager.QUERY);
             getSupportActionBar().setSubtitle("\"" + query + "\"");
 
@@ -56,7 +88,7 @@ public class SearchActivity extends BaseActivity {
                 searchFragment.onPerformSearch(getIntent().getExtras());
             }
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-            AnalyticsUtils.getInstance(this).trackEvent(TAG, "Search action", "View", 0);
+            EasyTracker.getTracker().trackEvent(TAG, "Search action", "View", (long) 0);
             Uri data = intent.getData();
             String id = data.getLastPathSegment();
             onShowEpisodeDetails(id);

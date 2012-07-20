@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui;
 
@@ -12,12 +28,14 @@ import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.WelcomeDialogFragment;
-import com.battlelancer.seriesguide.util.AnalyticsUtils;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -47,8 +65,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.animation.AnimationUtils;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
@@ -63,10 +79,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollListener,
-        LoaderManager.LoaderCallbacks<Cursor>, ActionBar.OnNavigationListener {
+/**
+ * Provides the apps main screen, displaying a list of shows and their next
+ * episodes.
+ */
+public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>,
+        ActionBar.OnNavigationListener {
 
-    private boolean mBusy;
+    private static final String TAG = "Shows";
 
     private static final int UPDATE_SUCCESS = 100;
 
@@ -126,7 +146,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
      * @param label
      */
     public void fireTrackerEvent(String label) {
-        AnalyticsUtils.getInstance(this).trackEvent("Shows", "Click", label, 0);
+        EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
     }
 
     @Override
@@ -183,7 +203,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 startActivity(i);
             }
         });
-        list.setOnScrollListener(this);
         View emptyView = findViewById(R.id.empty);
         if (emptyView != null) {
             list.setEmptyView(emptyView);
@@ -200,7 +219,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
     @Override
     protected void onStart() {
         super.onStart();
-        AnalyticsUtils.getInstance(this).trackPageView("/Shows");
+        EasyTracker.getInstance().activityStart(this);
     }
 
     @Override
@@ -210,6 +229,12 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         if (mSavedState != null) {
             restoreLocalState(mSavedState);
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
     }
 
     @Override
@@ -245,8 +270,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
             if (paths != null) {
                 mArtTask = (FetchPosterTask) new FetchPosterTask(paths, index).execute();
-                AnalyticsUtils.getInstance(this).trackEvent("Shows", "Task Lifecycle",
-                        "Art Task Restored", 0);
+                EasyTracker.getTracker().trackEvent(TAG, "Task Lifecycle", "Art Task Restored",
+                        (long) 0);
             }
         }
     }
@@ -262,8 +287,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
             mArtTask = null;
 
-            AnalyticsUtils.getInstance(this).trackEvent("Shows", "Task Lifecycle",
-                    "Art Task Saved", 0);
+            EasyTracker.getTracker().trackEvent(TAG, "Task Lifecycle", "Art Task Saved", (long) 0);
         }
     }
 
@@ -424,7 +448,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 }
 
                 // already fail if there is no external storage
-                if (!Utils.isExtStorageAvailable()) {
+                if (!AndroidUtils.isExtStorageAvailable()) {
                     Toast.makeText(this, getString(R.string.arttask_nosdcard), Toast.LENGTH_LONG)
                             .show();
                 } else {
@@ -606,15 +630,15 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         protected void onPostExecute(Integer resultCode) {
             switch (resultCode) {
                 case UPDATE_SUCCESS:
-                    AnalyticsUtils.getInstance(ShowsActivity.this).trackEvent("Shows",
-                            "Fetch missing posters", "Success", 0);
+                    EasyTracker.getTracker().trackEvent(TAG, "Fetch missing posters", "Success",
+                            (long) 0);
 
                     Toast.makeText(getApplicationContext(), getString(R.string.update_success),
                             Toast.LENGTH_SHORT).show();
                     break;
                 case UPDATE_INCOMPLETE:
-                    AnalyticsUtils.getInstance(ShowsActivity.this).trackEvent("Shows",
-                            "Fetch missing posters", "Incomplete", 0);
+                    EasyTracker.getTracker().trackEvent(TAG, "Fetch missing posters", "Incomplete",
+                            (long) 0);
 
                     Toast.makeText(getApplicationContext(), getString(R.string.arttask_incomplete),
                             Toast.LENGTH_LONG).show();
@@ -644,8 +668,8 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             mArtTask.cancel(true);
             mArtTask = null;
 
-            AnalyticsUtils.getInstance(this).trackEvent("Shows", "Task Lifecycle",
-                    "Art Task Canceled", 0);
+            EasyTracker.getTracker().trackEvent(TAG, "Task Lifecycle", "Art Task Canceled",
+                    (long) 0);
         }
     }
 
@@ -741,9 +765,6 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 SeriesGuidePreferences.KEY_SHOW_SORT_ORDER, ShowSorting.ALPHABETIC.value()));
 
         if (oldSorting != mSorting) {
-            AnalyticsUtils.getInstance(ShowsActivity.this).trackEvent("Shows", "Sorting",
-                    mSorting.name(), 0);
-
             return true;
         } else {
             return false;
@@ -775,8 +796,9 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
 
                 selection = Shows.NEXTAIRDATEMS + "!=? AND " + Shows.NEXTAIRDATEMS + " <=? AND "
                         + Shows.HIDDEN + "=?";
+                // Display shows upcoming within x amount of days + 1 hour
                 String inTheFuture = String.valueOf(System.currentTimeMillis() + upcomingLimit
-                        * DateUtils.DAY_IN_MILLIS);
+                        * DateUtils.DAY_IN_MILLIS + DateUtils.HOUR_IN_MILLIS);
                 selectionArgs = new String[] {
                         DBUtils.UNKNOWN_NEXT_AIR_DATE, inTheFuture, "0"
                 };
@@ -878,7 +900,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
                 throw new IllegalStateException("couldn't move cursor to position " + position);
             }
 
-            ViewHolder viewHolder;
+            final ViewHolder viewHolder;
 
             if (convertView == null) {
                 convertView = mLayoutInflater.inflate(mLayout, null);
@@ -906,7 +928,7 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             viewHolder.name.setText(mCursor.getString(ShowsQuery.TITLE));
             viewHolder.network.setText(mCursor.getString(ShowsQuery.NETWORK));
 
-            boolean isFavorited = mCursor.getInt(ShowsQuery.FAVORITE) == 1;
+            final boolean isFavorited = mCursor.getInt(ShowsQuery.FAVORITE) == 1;
             viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
 
             // next episode info
@@ -934,22 +956,14 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
             }
 
             // airday
-            String[] values = Utils.parseMillisecondsToTime(mCursor.getLong(ShowsQuery.AIRSTIME),
+            final String[] values = Utils.parseMillisecondsToTime(
+                    mCursor.getLong(ShowsQuery.AIRSTIME),
                     mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), mContext);
             viewHolder.airsTime.setText(values[1] + " " + values[0]);
 
-            // set poster only when not busy scrolling
-            final String path = mCursor.getString(ShowsQuery.POSTER);
-            if (!mBusy) {
-                // load poster
-                Utils.setPosterBitmap(viewHolder.poster, path, false, null);
-
-                // Null tag means the view has the correct data
-                viewHolder.poster.setTag(null);
-            } else {
-                // only load in-memory poster
-                Utils.setPosterBitmap(viewHolder.poster, path, true, null);
-            }
+            // set poster
+            final String imagePath = mCursor.getString(ShowsQuery.POSTER);
+            ImageProvider.getInstance(mContext).loadPosterThumb(viewHolder.poster, imagePath);
 
             return convertView;
         }
@@ -974,34 +988,5 @@ public class ShowsActivity extends BaseActivity implements AbsListView.OnScrollL
         public View favorited;
 
         public View collected;
-    }
-
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
-            int totalItemCount) {
-    }
-
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-        switch (scrollState) {
-            case OnScrollListener.SCROLL_STATE_IDLE:
-                mBusy = false;
-
-                int count = view.getChildCount();
-                for (int i = 0; i < count; i++) {
-                    final ViewHolder holder = (ViewHolder) view.getChildAt(i).getTag();
-                    final ImageView poster = holder.poster;
-                    if (poster.getTag() != null) {
-                        Utils.setPosterBitmap(poster, (String) poster.getTag(), false, null);
-                        poster.setTag(null);
-                    }
-                }
-
-                break;
-            case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
-                mBusy = false;
-                break;
-            case OnScrollListener.SCROLL_STATE_FLING:
-                mBusy = true;
-                break;
-        }
     }
 }
