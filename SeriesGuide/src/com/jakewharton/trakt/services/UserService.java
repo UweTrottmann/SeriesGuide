@@ -674,7 +674,7 @@ public final class UserService extends TraktApiService {
          * @return Builder instance.
          */
         public ListBuilder username(String username) {
-            super.field(FIELD_USERNAME, username);
+            super.field(FIELD_USERNAME, username, false);
             return this;
         }
     }
@@ -693,7 +693,7 @@ public final class UserService extends TraktApiService {
          * @return Builder instance.
          */
         public ListsBuilder username(String username) {
-            super.field(FIELD_USERNAME, username);
+            super.field(FIELD_USERNAME, username, false);
             return this;
         }
     }
