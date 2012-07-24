@@ -1,36 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <RelativeLayout
-        android:id="@+id/gotoseasons"
-        android:layout_width="fill_parent"
-        android:layout_height="45dp"
-        android:background="?custom_list_selector"
-        android:focusable="true"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/gotoseasonsText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_padding"
-            android:text="@string/seasons"
-            android:textSize="@dimen/text_size_medium" >
-        </TextView>
-
-        <TextView
-            android:id="@+id/textViewRemaining"
-            style="@style/LabelBase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/default_padding"
-            android:paddingTop="2dp"
-            android:text="" >
-        </TextView>
-    </RelativeLayout>
-
-    <include layout="@layout/holodivider" />
-
-</merge>
+</merge><!-- Seasons are shown in other fragment. -->
