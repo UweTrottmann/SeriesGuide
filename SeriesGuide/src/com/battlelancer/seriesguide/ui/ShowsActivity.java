@@ -908,7 +908,6 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
                 viewHolder.name = (TextView) convertView.findViewById(R.id.seriesname);
                 viewHolder.network = (TextView) convertView
                         .findViewById(R.id.TextViewShowListNetwork);
-                viewHolder.next = (TextView) convertView.findViewById(R.id.next);
                 viewHolder.episode = (TextView) convertView
                         .findViewById(R.id.TextViewShowListNextEpisode);
                 viewHolder.episodeTime = (TextView) convertView.findViewById(R.id.episodetime);
@@ -939,16 +938,14 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
 
                 // Continuing == 1 and Ended == 0
                 if (status == 1) {
-                    viewHolder.next.setText(getString(R.string.show_isalive));
+                    viewHolder.episodeTime.setText(getString(R.string.show_isalive));
                 } else if (status == 0) {
-                    viewHolder.next.setText(getString(R.string.show_isnotalive));
+                    viewHolder.episodeTime.setText(getString(R.string.show_isnotalive));
                 } else {
-                    viewHolder.next.setText("");
+                    viewHolder.episodeTime.setText("");
                 }
                 viewHolder.episode.setText("");
-                viewHolder.episodeTime.setText("");
             } else {
-                viewHolder.next.setText(getString(R.string.nextepisode));
                 viewHolder.episode.setText(fieldValue);
                 fieldValue = mCursor.getString(ShowsQuery.NEXTAIRDATETEXT);
                 viewHolder.episodeTime.setText(fieldValue);
@@ -958,7 +955,7 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
             final String[] values = Utils.parseMillisecondsToTime(
                     mCursor.getLong(ShowsQuery.AIRSTIME),
                     mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), mContext);
-            viewHolder.airsTime.setText(values[1] + " " + values[0]);
+            viewHolder.airsTime.setText("|  " + values[1] + " " + values[0]);
 
             // set poster
             final String imagePath = mCursor.getString(ShowsQuery.POSTER);
@@ -973,8 +970,6 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
         public TextView name;
 
         public TextView network;
-
-        public TextView next;
 
         public TextView episode;
 

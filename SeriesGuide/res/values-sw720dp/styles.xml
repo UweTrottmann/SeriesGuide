@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+	
+    <style name="ListTextBig">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+	<style name="ListTextNormal">
+		<item name="android:textSize">@dimen/text_size_xmedium</item>
+	</style>
+
+    <style name="ListTextSmall">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+	<style name="ListTextSmall.Dim">
+		<item name="android:textColor">@color/text_dim</item>
+	</style>
+
+</resources>
