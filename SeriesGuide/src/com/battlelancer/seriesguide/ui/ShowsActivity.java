@@ -955,7 +955,11 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
             final String[] values = Utils.parseMillisecondsToTime(
                     mCursor.getLong(ShowsQuery.AIRSTIME),
                     mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), mContext);
-            viewHolder.airsTime.setText("|  " + values[1] + " " + values[0]);
+            if (getResources().getBoolean(R.bool.isLargeTablet)) {
+                viewHolder.airsTime.setText("|  " + values[1] + " " + values[0]);
+            } else {
+                viewHolder.airsTime.setText(values[1] + " " + values[0]);
+            }
 
             // set poster
             final String imagePath = mCursor.getString(ShowsQuery.POSTER);
