@@ -12,6 +12,12 @@ Version 2.8 *(in development)*
 
 ### Detailed changes:
 
+#### 2.8.4beta (TBA)
+
+* TWEAK New show list layout for 10 inch tablets.
+* TWEAK Pre-fill check in message, again.
+* FIX Connecting to a trakt account using your email address instead of your user name now works.
+
 #### 2.8.3beta (2012-07-20)
 
 * TWEAK Calculate next episodes differently: display the next highest (season and number) episode after the newest watched episode.

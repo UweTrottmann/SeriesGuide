@@ -494,7 +494,7 @@ public class ActivityService extends TraktApiService {
          * URL when on a profile page.
          */
         public UserBuilder username(String username) {
-            this.field(FIELD_USERNAME, username);
+            this.field(FIELD_USERNAME, username, false);
             return this;
         }
 

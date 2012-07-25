@@ -90,6 +90,7 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
         final int tvdbid = getArguments().getInt(ShareItems.TVDBID);
         final int season = getArguments().getInt(ShareItems.SEASON);
         final int episode = getArguments().getInt(ShareItems.EPISODE);
+        final String defaultMessage = getArguments().getString(ShareItems.SHARESTRING);
 
         // get share service enabled settings
         mGetGlueChecked = prefs.getBoolean(SeriesGuidePreferences.KEY_SHAREWITHGETGLUE, false);
@@ -97,16 +98,16 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
 
         // Message box
         mMessageBox = (EditText) layout.findViewById(R.id.message);
+        mMessageBox.setText(defaultMessage);
 
         // Paste episode button
-        final String episodeText = getArguments().getString(ShareItems.SHARESTRING);
         layout.findViewById(R.id.pasteEpisode).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 int start = mMessageBox.getSelectionStart();
                 int end = mMessageBox.getSelectionEnd();
                 mMessageBox.getText().replace(Math.min(start, end), Math.max(start, end),
-                        episodeText, 0, episodeText.length());
+                        defaultMessage, 0, defaultMessage.length());
             }
         });
 

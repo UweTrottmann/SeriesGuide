@@ -63,7 +63,11 @@ public class ImageProvider {
 
     private static final float THUMBNAIL_WIDTH_DIP = 68.0f;
 
+    private static final float THUMBNAIL_WIDTH_LARGE = 102.0f;
+
     private static final float THUMBNAIL_HEIGHT_DIP = 100.0f;
+
+    private static final float THUMBNAIL_HEIGHT_LARGE = 150.0f;
 
     private static ImageProvider _instance;
 
@@ -284,8 +288,16 @@ public class ImageProvider {
 
             // create a thumbnail, too, if requested
             if (createThumbnail) {
-                int scaledWidth = (int) (THUMBNAIL_WIDTH_DIP * mScale + 0.5f);
-                int scaledHeight = (int) (THUMBNAIL_HEIGHT_DIP * mScale + 0.5f);
+                int scaledWidth;
+                int scaledHeight;
+                // create bigger thumbnails on large screen devices
+                if (mContext.getResources().getBoolean(R.bool.isLargeTablet)) {
+                    scaledWidth = (int) (THUMBNAIL_WIDTH_LARGE * mScale + 0.5f);
+                    scaledHeight = (int) (THUMBNAIL_HEIGHT_LARGE * mScale + 0.5f);
+                } else {
+                    scaledWidth = (int) (THUMBNAIL_WIDTH_DIP * mScale + 0.5f);
+                    scaledHeight = (int) (THUMBNAIL_HEIGHT_DIP * mScale + 0.5f);
+                }
                 storeImage(imagePath + THUMB_SUFFIX,
                         Bitmap.createScaledBitmap(bitmap, scaledWidth, scaledHeight, true), false);
             }

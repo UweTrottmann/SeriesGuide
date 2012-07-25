@@ -217,7 +217,6 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
                 viewHolder.name = (TextView) convertView.findViewById(R.id.seriesname);
                 viewHolder.network = (TextView) convertView
                         .findViewById(R.id.TextViewShowListNetwork);
-                viewHolder.next = (TextView) convertView.findViewById(R.id.next);
                 viewHolder.episode = (TextView) convertView
                         .findViewById(R.id.TextViewShowListNextEpisode);
                 viewHolder.episodeTime = (TextView) convertView.findViewById(R.id.episodetime);
@@ -248,16 +247,14 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
 
                 // Continuing == 1 and Ended == 0
                 if (status == 1) {
-                    viewHolder.next.setText(getString(R.string.show_isalive));
+                    viewHolder.episodeTime.setText(getString(R.string.show_isalive));
                 } else if (status == 0) {
-                    viewHolder.next.setText(getString(R.string.show_isnotalive));
+                    viewHolder.episodeTime.setText(getString(R.string.show_isnotalive));
                 } else {
-                    viewHolder.next.setText("");
+                    viewHolder.episodeTime.setText("");
                 }
                 viewHolder.episode.setText("");
-                viewHolder.episodeTime.setText("");
             } else {
-                viewHolder.next.setText(getString(R.string.nextepisode));
                 viewHolder.episode.setText(fieldValue);
                 fieldValue = mCursor.getString(CheckinQuery.NEXTAIRDATETEXT);
                 viewHolder.episodeTime.setText(fieldValue);
@@ -282,8 +279,6 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
         public TextView name;
 
         public TextView network;
-
-        public TextView next;
 
         public TextView episode;
 

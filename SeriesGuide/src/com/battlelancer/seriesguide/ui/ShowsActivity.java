@@ -28,6 +28,8 @@ import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.WelcomeDialogFragment;
+import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
+import com.battlelancer.seriesguide.util.CompatActionBarNavListener;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -84,7 +86,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * episodes.
  */
 public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>,
-        ActionBar.OnNavigationListener {
+        CompatActionBarNavListener {
 
     private static final String TAG = "Shows";
 
@@ -161,22 +163,9 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
 
-        // setup action bar filter list (! use different layouts for ABS)
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-        ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(this,
-                R.array.showfilter_list, R.layout.sherlock_spinner_item);
-        mActionBarList.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
-        actionBar.setListNavigationCallbacks(mActionBarList, this);
-
-        // try to restore previously set show filter
-        int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
-        actionBar.setSelectedNavigationItem(showfilter);
-        // prevent the onNavigationItemSelected listener from reacting
-        mIsPreventLoaderRestart = true;
-
         updatePreferences(prefs);
+
+        int selNavItem = setUpActionBar(prefs);
 
         // setup show adapter
         String[] from = new String[] {
@@ -210,10 +199,43 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
 
         // start loading data
         Bundle args = new Bundle();
-        args.putInt(FILTER_ID, showfilter);
+        args.putInt(FILTER_ID, selNavItem);
         getSupportLoaderManager().initLoader(LOADER_ID, args, this);
 
         registerForContextMenu(list);
+    }
+
+    private int setUpActionBar(final SharedPreferences prefs) {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+
+        // prevent the onNavigationItemSelected listener from reacting
+        mIsPreventLoaderRestart = true;
+
+        /* setup navigation */
+        CompatActionBarNavHandler handler = new CompatActionBarNavHandler(this);
+        if (getResources().getBoolean(R.bool.isLargeTablet)) {
+            /* use tabs */
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+            final String[] categories = getResources().getStringArray(R.array.showfilter_list);
+            for (String category : categories) {
+                actionBar.addTab(actionBar.newTab().setText(category).setTabListener(handler));
+            }
+        } else {
+            /* use list (spinner) (! use different layouts for ABS) */
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+            ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(this,
+                    R.array.showfilter_list, R.layout.sherlock_spinner_item);
+            mActionBarList.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
+            actionBar.setListNavigationCallbacks(mActionBarList, handler);
+        }
+
+        // try to restore previously set show filter
+        int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
+        // prevent the onNavigationItemSelected listener from reacting
+        mIsPreventLoaderRestart = true;
+        actionBar.setSelectedNavigationItem(showfilter);
+        return showfilter;
     }
 
     @Override
@@ -686,9 +708,8 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
     }
 
     private void requery() {
-        int filterId = getSupportActionBar().getSelectedNavigationIndex();
-        // just reuse the onNavigationItemSelected callback method
-        onNavigationItemSelected(filterId, filterId);
+        // just reuse the onCategorySelected callback method
+        onCategorySelected(getSupportActionBar().getSelectedNavigationIndex());
     }
 
     private final OnSharedPreferenceChangeListener mPrefsListener = new OnSharedPreferenceChangeListener() {
@@ -829,7 +850,7 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
     }
 
     @Override
-    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+    public void onCategorySelected(int itemPosition) {
         // only handle events after the event caused when creating the activity
         if (mIsPreventLoaderRestart) {
             mIsPreventLoaderRestart = false;
@@ -845,7 +866,6 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
             editor.putInt(SeriesGuidePreferences.KEY_SHOWFILTER, itemPosition);
             editor.commit();
         }
-        return true;
     }
 
     private interface ShowsQuery {
@@ -909,7 +929,6 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
                 viewHolder.name = (TextView) convertView.findViewById(R.id.seriesname);
                 viewHolder.network = (TextView) convertView
                         .findViewById(R.id.TextViewShowListNetwork);
-                viewHolder.next = (TextView) convertView.findViewById(R.id.next);
                 viewHolder.episode = (TextView) convertView
                         .findViewById(R.id.TextViewShowListNextEpisode);
                 viewHolder.episodeTime = (TextView) convertView.findViewById(R.id.episodetime);
@@ -940,16 +959,14 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
 
                 // Continuing == 1 and Ended == 0
                 if (status == 1) {
-                    viewHolder.next.setText(getString(R.string.show_isalive));
+                    viewHolder.episodeTime.setText(getString(R.string.show_isalive));
                 } else if (status == 0) {
-                    viewHolder.next.setText(getString(R.string.show_isnotalive));
+                    viewHolder.episodeTime.setText(getString(R.string.show_isnotalive));
                 } else {
-                    viewHolder.next.setText("");
+                    viewHolder.episodeTime.setText("");
                 }
                 viewHolder.episode.setText("");
-                viewHolder.episodeTime.setText("");
             } else {
-                viewHolder.next.setText(getString(R.string.nextepisode));
                 viewHolder.episode.setText(fieldValue);
                 fieldValue = mCursor.getString(ShowsQuery.NEXTAIRDATETEXT);
                 viewHolder.episodeTime.setText(fieldValue);
@@ -959,7 +976,11 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
             final String[] values = Utils.parseMillisecondsToTime(
                     mCursor.getLong(ShowsQuery.AIRSTIME),
                     mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), mContext);
-            viewHolder.airsTime.setText(values[1] + " " + values[0]);
+            if (getResources().getBoolean(R.bool.isLargeTablet)) {
+                viewHolder.airsTime.setText("|  " + values[1] + " " + values[0]);
+            } else {
+                viewHolder.airsTime.setText(values[1] + " " + values[0]);
+            }
 
             // set poster
             final String imagePath = mCursor.getString(ShowsQuery.POSTER);
@@ -974,8 +995,6 @@ public class ShowsActivity extends BaseActivity implements LoaderManager.LoaderC
         public TextView name;
 
         public TextView network;
-
-        public TextView next;
 
         public TextView episode;
 

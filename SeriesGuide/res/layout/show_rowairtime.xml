@@ -25,19 +25,10 @@
         android:text="Sanctuary Edition" />
 
     <TextView
-        android:id="@+id/next"
-        style="@style/Airdata"
-        android:layout_below="@id/seriesname"
-        android:layout_toLeftOf="@id/timestamp"
-        android:layout_toRightOf="@id/showposter"
-        android:paddingRight="5dp"
-        android:text="next:" />
-
-    <TextView
         android:id="@+id/TextViewShowListNextEpisode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/next"
+        android:layout_below="@id/seriesname"
         android:layout_toLeftOf="@id/timestamp"
         android:layout_toRightOf="@id/showposter"
         android:paddingRight="5dp"
