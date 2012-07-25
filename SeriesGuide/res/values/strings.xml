@@ -368,7 +368,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage"><b>Got some free time, have some recent changes!</b>\n- If you display recent episodes with the list widget it now correctly displays \'Recent\'.\n\n- New \'now\' and \'today\' options for upcoming shows limit setting.\n\n- Next episode is chosen based on the next highest number of all watched episodes.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed changelog</a>\n\n</string>
+    <string name="betamessage"><b>Some tablet love</b>\n- 10 inch tablets sport a new show list layout. Please clear your image cache to get higher res show posters!\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed changelog</a>\n\n</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
