@@ -12,7 +12,7 @@ Version 2.8 *(in development)*
 
 ### Detailed changes:
 
-#### 2.8.4beta (TBA)
+#### 2.8.4beta (2012-07-25)
 
 * TWEAK New show list layout for 10 inch tablets.
 * TWEAK Pre-fill check in message, again.
