@@ -188,9 +188,7 @@
     <string name="backup">Backup/Restore</string>
     <string name="backup_summary">Backup or restore your shows</string>
     <string name="pref_language">Content language</string>
-    <string name="pref_languagesummary">Translations not available for every show</string>
     <string name="pref_number">Number format</string>
-    <string name="pref_numbersummary">Choose between 1x01, S01E01 or s01e01</string>
     <string name="pref_offset">Manual time offset</string>
     <string name="pref_offsetsummary">Offset air times by %s hours</string>
     <string name="pref_autoupdate">Turn on Auto Update</string>
@@ -235,7 +233,6 @@
     </string-array>
 
     <string name="pref_upcominglimit">Upcoming shows within…</string>
-    <string name="pref_upcominglimitsummary">How far in the future to display upcoming shows</string>
 
     <string-array name="upcominglimit">
         <item>now</item>
@@ -339,7 +336,6 @@
 
     <!-- Theme switching -->
     <string name="pref_theme">App Theme</string>
-    <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
 
     <string-array name="themeSelection">
         <item>SeriesGuide Theme</item>
