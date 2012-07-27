@@ -192,7 +192,7 @@
     <string name="pref_number">Number format</string>
     <string name="pref_numbersummary">Choose between 1x01, S01E01 or s01e01</string>
     <string name="pref_offset">Manual time offset</string>
-    <string name="pref_offsetsummary">Offset air dates by a fixed amount of hours</string>
+    <string name="pref_offsetsummary">Offset air times by %s hours</string>
     <string name="pref_autoupdate">Turn on Auto Update</string>
     <string name="pref_autoupdatesummary">Periodically update your shows when starting SeriesGuide</string>
     <string name="pref_updatewifionly">Update over Wi-Fi only</string>
