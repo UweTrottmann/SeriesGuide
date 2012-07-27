@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui.dialogs;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -60,6 +61,12 @@ public class AddDialogFragment extends DialogFragment {
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement OnAddShowListener");
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Add Dialog");
     }
 
     @Override

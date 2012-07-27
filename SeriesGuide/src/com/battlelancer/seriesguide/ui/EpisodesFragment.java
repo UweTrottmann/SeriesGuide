@@ -241,12 +241,6 @@ public class EpisodesFragment extends SherlockListFragment implements
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getTracker().trackView("Episodes");
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         updatePreferences();

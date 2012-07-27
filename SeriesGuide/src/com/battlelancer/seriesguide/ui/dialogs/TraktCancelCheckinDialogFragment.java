@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -51,6 +52,12 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
         f.setArguments(traktData);
         f.mWait = wait;
         return f;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Cancel Check In Dialog");
     }
 
     @Override

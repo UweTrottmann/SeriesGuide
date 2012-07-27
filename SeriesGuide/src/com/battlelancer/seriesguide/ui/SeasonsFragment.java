@@ -120,12 +120,6 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getTracker().trackView("Seasons");
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         updatePreferences();

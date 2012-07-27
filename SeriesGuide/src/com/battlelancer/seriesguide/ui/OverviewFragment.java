@@ -150,12 +150,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getTracker().trackView("Overview");
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         onLoadEpisode();

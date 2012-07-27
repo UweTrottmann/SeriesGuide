@@ -17,6 +17,8 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -40,6 +42,12 @@ public class SortDialogFragment extends DialogFragment {
         f.setArguments(args);
 
         return f;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Sort Dialog");
     }
 
     @Override
