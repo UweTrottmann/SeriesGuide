@@ -84,10 +84,7 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
                         new Thread(new Runnable() {
                             public void run() {
                                 DBUtils.deleteShow(getActivity(), getArguments()
-                                        .getString("showid"));
-                                if (progress.isShowing()) {
-                                    progress.dismiss();
-                                }
+                                        .getString("showid"), progress);
                             }
                         }).start();
                     }
