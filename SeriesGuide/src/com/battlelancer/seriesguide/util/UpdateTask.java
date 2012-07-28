@@ -33,7 +33,6 @@ import com.jakewharton.trakt.entities.ActivityItem;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
-import com.uwetrottmann.androidutils.AndroidUtils;
 
 import org.xml.sax.SAXException;
 
@@ -149,8 +148,6 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mAppContext);
         final ContentResolver resolver = mAppContext.getContentResolver();
         final AtomicInteger updateCount = mUpdateCount;
-        final boolean isAutoUpdateWlanOnly = prefs.getBoolean(
-                SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
         long currentTime = System.currentTimeMillis();
 
         // build a list of shows to update
@@ -192,8 +189,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                 resultCode = UpdateResult.CANCELLED;
                 break;
             }
-            if (!AndroidUtils.isNetworkConnected(mAppContext)
-                    || (isAutoUpdateWlanOnly && !AndroidUtils.isWifiConnected(mAppContext))) {
+            if (!Utils.isAllowedConnection(mAppContext)) {
                 resultCode = UpdateResult.OFFLINE;
                 break;
             }
@@ -210,8 +206,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                     resultCode = UpdateResult.CANCELLED;
                     break;
                 }
-                if (!AndroidUtils.isNetworkConnected(mAppContext)
-                        || (isAutoUpdateWlanOnly && !AndroidUtils.isWifiConnected(mAppContext))) {
+                if (!Utils.isAllowedConnection(mAppContext)) {
                     resultCode = UpdateResult.OFFLINE;
                     break;
                 }
@@ -242,8 +237,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             }
 
             // mark episodes based on trakt activity
-            final UpdateResult traktResult = getTraktActivity(prefs, maxProgress, currentTime,
-                    isAutoUpdateWlanOnly);
+            final UpdateResult traktResult = getTraktActivity(prefs, maxProgress, currentTime);
             // do not overwrite earlier failure codes
             if (resultCode == UpdateResult.SUCCESS) {
                 resultCode = traktResult;
@@ -269,15 +263,13 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
         return resultCode;
     }
 
-    private UpdateResult getTraktActivity(SharedPreferences prefs, int maxProgress,
-            long currentTime, boolean isAutoUpdateWlanOnly) {
+    private UpdateResult getTraktActivity(SharedPreferences prefs, int maxProgress, long currentTime) {
         if (Utils.isTraktCredentialsValid(mAppContext)) {
             // return if we get cancelled or connectivity is lost/forbidden
             if (isCancelled()) {
                 return UpdateResult.CANCELLED;
             }
-            if (!AndroidUtils.isNetworkConnected(mAppContext)
-                    || (isAutoUpdateWlanOnly && !AndroidUtils.isWifiConnected(mAppContext))) {
+            if (!Utils.isAllowedConnection(mAppContext)) {
                 return UpdateResult.OFFLINE;
             }
 

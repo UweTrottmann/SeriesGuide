@@ -94,7 +94,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_AUTOUPDATE = "com.battlelancer.seriesguide.autoupdate";
 
-    public static final String KEY_AUTOUPDATEWLANONLY = "com.battlelancer.seriesguide.autoupdatewlanonly";
+    public static final String KEY_ONLYWIFI = "com.battlelancer.seriesguide.autoupdatewlanonly";
 
     public static final String KEY_LASTUPDATE = "com.battlelancer.seriesguide.lastupdate";
 

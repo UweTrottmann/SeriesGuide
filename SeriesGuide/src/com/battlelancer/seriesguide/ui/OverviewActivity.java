@@ -97,7 +97,7 @@ public class OverviewActivity extends BaseActivity {
 
                     // check if wifi is required and available
                     final boolean isWifiOnly = prefs.getBoolean(
-                            SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
+                            SeriesGuidePreferences.KEY_ONLYWIFI, true);
                     if (!isWifiOnly || AndroidUtils.isWifiConnected(this)) {
 
                         UpdateTask updateTask = new UpdateTask(String.valueOf(showId), this);
