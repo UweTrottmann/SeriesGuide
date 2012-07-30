@@ -239,8 +239,8 @@ public class NotificationService extends IntentService {
                         }
 
                         // tell if we could not display all episodes
-                        if (count >= 5) {
-                            inboxStyle.setSummaryText(getString(R.string.more, count));
+                        if (count > 5) {
+                            inboxStyle.setSummaryText(getString(R.string.more, count - 5));
                         }
 
                         anb.setStyle(inboxStyle);
