@@ -22,6 +22,8 @@ Version 2.8 *(in development)*
 * TWEAK Optimize screen tracking.
 * TWEAK Initialize app settings on first run.
 * FIX Empty message for check in screen.
+* FIX Apply app theme immediately after changing the setting.
+* FIX Expanded notification shows correct amount of shows.
 
 #### 2.8.4beta (2012-07-25)
 
