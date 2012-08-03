@@ -364,7 +364,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage"><b>Some tablet love</b>\n- 10 inch tablets sport a new show list layout. Please clear your image cache to get higher res show posters!\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed changelog</a>\n\n</string>
+    <string name="betamessage"><b>Tweaks and fixes</b>\n- Large show list layout for some 7 inch tablets. Please clear your image cache to get higher res show posters!\n\n- Shows appear to delete faster.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed changelog</a>\n\n</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
