@@ -298,6 +298,13 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 if (preference.getKey().equals(KEY_THEME)) {
                     Utils.updateTheme((String) newValue);
+
+                    // restart to apply new theme
+                    Intent intent = getIntent();
+                    NavUtils.navigateUpTo(SeriesGuidePreferences.this, new Intent(
+                            Intent.ACTION_MAIN).setClass(SeriesGuidePreferences.this,
+                            ShowsActivity.class));
+                    startActivity(intent);
                 }
                 return true;
             }
