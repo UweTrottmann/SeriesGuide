@@ -20,6 +20,7 @@ package com.battlelancer.seriesguide.ui.dialogs;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -46,6 +47,12 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
         f.setArguments(args);
 
         return f;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Delete Dialog");
     }
 
     @Override
@@ -77,10 +84,7 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
                         new Thread(new Runnable() {
                             public void run() {
                                 DBUtils.deleteShow(getActivity(), getArguments()
-                                        .getString("showid"));
-                                if (progress.isShowing()) {
-                                    progress.dismiss();
-                                }
+                                        .getString("showid"), progress);
                             }
                         }).start();
                     }

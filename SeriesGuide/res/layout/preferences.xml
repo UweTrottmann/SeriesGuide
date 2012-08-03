@@ -14,7 +14,6 @@
             android:entries="@array/upcominglimit"
             android:entryValues="@array/upcominglimitData"
             android:key="com.battlelancer.seriesguide.upcominglimit"
-            android:summary="@string/pref_upcominglimitsummary"
             android:title="@string/pref_upcominglimit" />
     </PreferenceCategory>
 
@@ -54,7 +53,6 @@
             android:entries="@array/languages"
             android:entryValues="@array/languageData"
             android:key="language"
-            android:summary="@string/pref_languagesummary"
             android:title="@string/pref_language" />
 
         <ListPreference
@@ -62,7 +60,6 @@
             android:entries="@array/numbers"
             android:entryValues="@array/numberData"
             android:key="numberformat"
-            android:summary="@string/pref_numbersummary"
             android:title="@string/pref_number" />
 
         <ListPreference
@@ -70,7 +67,6 @@
             android:entries="@array/offsets"
             android:entryValues="@array/offsetData"
             android:key="com.battlelancer.seriesguide.timeoffset"
-            android:summary="@string/pref_offsetsummary"
             android:title="@string/pref_offset" />
 
         <CheckBoxPreference
@@ -80,7 +76,7 @@
             android:title="@string/pref_autoupdate" />
 
         <CheckBoxPreference
-            android:defaultValue="True"
+            android:defaultValue="False"
             android:key="com.battlelancer.seriesguide.autoupdatewlanonly"
             android:title="@string/pref_updatewifionly" />
     </PreferenceCategory>
@@ -120,7 +116,6 @@
             android:entries="@array/themeSelection"
             android:entryValues="@array/themeSelectionData"
             android:key="com.battlelancer.seriesguide.theme"
-            android:summary="@string/pref_themesummary"
             android:title="@string/pref_theme" />
 
         <Preference

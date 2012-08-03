@@ -216,8 +216,9 @@ public class NotificationService extends IntentService {
                         // multiple episodes
                         Notification.InboxStyle inboxStyle = new Notification.InboxStyle();
 
-                        // display the first five
-                        for (int i = 0; i < 5; i++) {
+                        // display at most the first five
+                        final int displayCount = Math.min(count, 5);
+                        for (int i = 0; i < displayCount; i++) {
                             if (upcomingEpisodes.moveToPosition(i)) {
                                 // add show title, air time and network
                                 final SpannableStringBuilder lineText = new SpannableStringBuilder();
@@ -238,8 +239,8 @@ public class NotificationService extends IntentService {
                         }
 
                         // tell if we could not display all episodes
-                        if (count >= 5) {
-                            inboxStyle.setSummaryText(getString(R.string.more, count));
+                        if (count > 5) {
+                            inboxStyle.setSummaryText(getString(R.string.more, count - 5));
                         }
 
                         anb.setStyle(inboxStyle);

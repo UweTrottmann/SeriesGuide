@@ -146,6 +146,7 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
                 }
             }
         });
+        list.setEmptyView(findViewById(R.id.empty));
 
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
     }

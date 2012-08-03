@@ -18,18 +18,14 @@
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Ratings;
 import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
-import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
 
@@ -117,7 +113,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
         try {
             // decide whether we have a show or an episode
             if (mTvdbIdString != null) {
-                if (isNetworkAvailable()) {
+                if (Utils.isAllowedConnection(mContext)) {
                     // get the shows summary from trakt
                     TvShow entity = Utils.getServiceManager(mContext).showService()
                             .summary(mTvdbIdString).fire();
@@ -136,7 +132,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
                 }
 
                 // on cache miss load the summary from trakt
-                if (entity == null && isNetworkAvailable()) {
+                if (entity == null && Utils.isAllowedConnection(mContext)) {
                     entity = Utils.getServiceManager(mContext).showService()
                             .episodeSummary(mTvdbId, mSeason, mEpisode).fire();
                 }
@@ -155,14 +151,6 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
         }
 
         return null;
-    }
-
-    private boolean isNetworkAvailable() {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-        final boolean isOnlyWifiAllowed = prefs.getBoolean(
-                SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
-        return (isOnlyWifiAllowed && AndroidUtils.isWifiConnected(mContext))
-                || (!isOnlyWifiAllowed && AndroidUtils.isNetworkConnected(mContext));
     }
 
     @Override

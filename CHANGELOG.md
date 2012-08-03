@@ -12,6 +12,17 @@ Version 2.8 *(in development)*
 
 ### Detailed changes:
 
+#### 2.8.5beta (TBA)
+
+* TWEAK Shows appear to delete significantly faster.
+* TWEAK 'Update only via WiFi' setting respected by episode image and ratings downloads.
+* TWEAK Disable 'Update only via WiFi' setting by default.
+* TWEAK Display current values for list settings as their summary.
+* TWEAK Allow new large-size show list layout on devices with smallest width of 600dp, e.g. a 7in tablet (600x1024 mdpi).
+* TWEAK Optimize screen tracking.
+* TWEAK Initialize app settings on first run.
+* FIX Empty message for check in screen.
+
 #### 2.8.4beta (2012-07-25)
 
 * TWEAK New show list layout for 10 inch tablets.

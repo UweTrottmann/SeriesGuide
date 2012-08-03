@@ -32,9 +32,11 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -49,7 +51,8 @@ import android.widget.Toast;
 /**
  * Allows tweaking of various SeriesGuide settings.
  */
-public class SeriesGuidePreferences extends SherlockPreferenceActivity {
+public class SeriesGuidePreferences extends SherlockPreferenceActivity implements
+        OnSharedPreferenceChangeListener {
 
     public static final String KEY_TRAKTPWD = "com.battlelancer.seriesguide.traktpwd";
 
@@ -91,7 +94,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
 
     public static final String KEY_AUTOUPDATE = "com.battlelancer.seriesguide.autoupdate";
 
-    public static final String KEY_AUTOUPDATEWLANONLY = "com.battlelancer.seriesguide.autoupdatewlanonly";
+    public static final String KEY_ONLYWIFI = "com.battlelancer.seriesguide.autoupdatewlanonly";
 
     public static final String KEY_LASTUPDATE = "com.battlelancer.seriesguide.lastupdate";
 
@@ -226,19 +229,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
             }
         });
 
-        // run notification service to take care of potential time shifts when
-        // changing the time offset
-        findPreference(KEY_OFFSET).setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                if (preference.getKey().equals(KEY_OFFSET)) {
-                    Utils.runNotificationService(SeriesGuidePreferences.this);
-                }
-                return true;
-            }
-        });
-
         // Disconnect GetGlue
         Preference getgluePref = (Preference) findPreference("clearGetGlueCredentials");
         getgluePref.setEnabled(GetGlue.isAuthenticated(prefs));
@@ -302,11 +292,19 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
         }
 
         // Theme switcher
-        findPreference(KEY_THEME).setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+        Preference themePref = findPreference(KEY_THEME);
+        themePref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 if (preference.getKey().equals(KEY_THEME)) {
                     Utils.updateTheme((String) newValue);
+
+                    // restart to apply new theme
+                    Intent intent = getIntent();
+                    NavUtils.navigateUpTo(SeriesGuidePreferences.this, new Intent(
+                            Intent.ACTION_MAIN).setClass(SeriesGuidePreferences.this,
+                            ShowsActivity.class));
+                    startActivity(intent);
                 }
                 return true;
             }
@@ -325,17 +323,31 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                         return false;
                     }
                 });
+
+        // show currently set values for list prefs
+        setListPreferenceSummary(themePref);
+        setListPreferenceSummary(findPreference(KEY_UPCOMING_LIMIT));
+        setListPreferenceSummary(findPreference(KEY_LANGUAGE));
+        setListPreferenceSummary(findPreference(KEY_NUMBERFORMAT));
+        ListPreference offsetPref = (ListPreference) findPreference(KEY_OFFSET);
+        offsetPref.setSummary(getString(R.string.pref_offsetsummary, offsetPref.getEntry()));
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+        prefs.registerOnSharedPreferenceChangeListener(this);
         EasyTracker.getInstance().activityStart(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+        prefs.unregisterOnSharedPreferenceChangeListener(this);
         EasyTracker.getInstance().activityStop(this);
     }
 
@@ -378,5 +390,29 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(KEY_UPCOMING_LIMIT) || key.equals(KEY_LANGUAGE)
+                || key.equals(KEY_NUMBERFORMAT) || key.equals(KEY_THEME)) {
+            setListPreferenceSummary(findPreference(key));
+        }
+
+        if (key.equals(KEY_OFFSET)) {
+            ListPreference pref = (ListPreference) findPreference(key);
+            // Set summary to be the user-description for the selected value
+            pref.setSummary(getString(R.string.pref_offsetsummary, pref.getEntry()));
+
+            // run notification service to take care of potential time shifts
+            // when changing the time offset
+            Utils.runNotificationService(SeriesGuidePreferences.this);
+        }
+    }
+
+    private void setListPreferenceSummary(Preference pref) {
+        ListPreference listPref = (ListPreference) pref;
+        // Set summary to be the user-description for the selected value
+        listPref.setSummary(listPref.getEntry());
     }
 }

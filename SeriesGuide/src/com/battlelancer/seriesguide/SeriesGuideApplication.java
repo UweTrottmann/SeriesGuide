@@ -26,18 +26,31 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import android.app.Application;
 import android.preference.PreferenceManager;
 
+/**
+ * Initializes settings and services and on pre-ICS implements actions for low
+ * memory state.
+ * 
+ * @author Uwe Trottmann
+ */
 public class SeriesGuideApplication extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+        // initialize settings on first run
+        PreferenceManager.setDefaultValues(this, R.layout.preferences, false);
+
+        // ensure the notifications service is started (we also restart it on
+        // boot)
         Utils.runNotificationService(this);
 
+        // load the current theme into a global variable
         final String theme = PreferenceManager.getDefaultSharedPreferences(this).getString(
                 SeriesGuidePreferences.KEY_THEME, "0");
         Utils.updateTheme(theme);
 
+        // set a context for Google Analytics
         EasyTracker.getInstance().setContext(getApplicationContext());
     }
 

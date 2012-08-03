@@ -32,6 +32,7 @@ import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.services.ShowService;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
+import android.app.ProgressDialog;
 import android.content.ContentProviderOperation;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -628,47 +629,75 @@ public class DBUtils {
      * up the poster and images.
      * 
      * @param context
-     * @param id
+     * @param showId
+     * @param progress
      */
-    public static void deleteShow(Context context, String id) {
+    public static void deleteShow(Context context, String showId, ProgressDialog progress) {
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
-        final String showId = String.valueOf(id);
         final ImageProvider imageProvider = ImageProvider.getInstance(context);
 
-        // delete images...
-        // ...of show
+        // get poster path of show
         final Cursor poster = context.getContentResolver().query(Shows.buildShowUri(showId),
                 new String[] {
                     Shows.POSTER
                 }, null, null, null);
-        if (poster.moveToFirst()) {
-            final String posterPath = poster.getString(0);
+        String posterPath = null;
+        if (poster != null) {
+            if (poster.moveToFirst()) {
+                posterPath = poster.getString(0);
+            }
+            poster.close();
+        }
+
+        batch.add(ContentProviderOperation.newDelete(Shows.buildShowUri(showId)).build());
+
+        // remove show entry already so we can hide the progress dialog
+        try {
+            context.getContentResolver().applyBatch(SeriesContract.CONTENT_AUTHORITY, batch);
+        } catch (RemoteException e) {
+            // Failed binder transactions aren't recoverable
+            throw new RuntimeException("Problem applying batch operation", e);
+        } catch (OperationApplicationException e) {
+            // Failures like constraint violation aren't recoverable
+            throw new RuntimeException("Problem applying batch operation", e);
+        }
+
+        batch.clear();
+
+        // hide progress dialog now
+        if (progress.isShowing()) {
+            progress.dismiss();
+        }
+
+        // delete show poster
+        if (posterPath != null) {
             imageProvider.removeImage(posterPath);
         }
-        poster.close();
 
-        // ...of episodes
+        // delete episode images
         final Cursor episodes = context.getContentResolver().query(
                 Episodes.buildEpisodesOfShowUri(showId), new String[] {
                         Episodes._ID, Episodes.IMAGE
                 }, null, null, null);
-        String[] episodeIDs = new String[episodes.getCount()];
-        episodes.moveToFirst();
-        int counter = 0;
-        while (!episodes.isAfterLast()) {
-            episodeIDs[counter++] = episodes.getString(0);
-            imageProvider.removeImage(episodes.getString(1));
-            episodes.moveToNext();
-        }
-        episodes.close();
+        if (episodes != null) {
+            final String[] episodeIDs = new String[episodes.getCount()];
+            int counter = 0;
 
-        // delete database entries
-        for (String episodeID : episodeIDs) {
-            batch.add(ContentProviderOperation.newDelete(
-                    EpisodeSearch.buildDocIdUri(String.valueOf(episodeID))).build());
+            episodes.moveToFirst();
+            while (!episodes.isAfterLast()) {
+                episodeIDs[counter++] = episodes.getString(0);
+                imageProvider.removeImage(episodes.getString(1));
+                episodes.moveToNext();
+            }
+            episodes.close();
+
+            // delete search database entries
+            for (String episodeID : episodeIDs) {
+                batch.add(ContentProviderOperation.newDelete(
+                        EpisodeSearch.buildDocIdUri(String.valueOf(episodeID))).build());
+            }
         }
 
-        batch.add(ContentProviderOperation.newDelete(Shows.buildShowUri(showId)).build());
         batch.add(ContentProviderOperation.newDelete(Seasons.buildSeasonsOfShowUri(showId)).build());
         batch.add(ContentProviderOperation.newDelete(Episodes.buildEpisodesOfShowUri(showId))
                 .build());

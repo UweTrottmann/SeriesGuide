@@ -26,6 +26,7 @@ import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.SimpleCrypto;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -67,6 +68,12 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
         TraktCredentialsDialogFragment f = new TraktCredentialsDialogFragment();
         f.isForwardingGivenTask = false;
         return f;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Trakt Credentials Dialog");
     }
 
     @Override

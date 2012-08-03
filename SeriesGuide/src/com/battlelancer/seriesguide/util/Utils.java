@@ -799,4 +799,22 @@ public class Utils {
         EasyTracker.getTracker().trackException(e.getMessage(), false);
     }
 
+    /**
+     * Returns true if we are on a user-permitted and connected internet
+     * connection.
+     * 
+     * @param context
+     * @return
+     */
+    public static boolean isAllowedConnection(Context context) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        final boolean isWlanOnly = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYWIFI, true);
+
+        if (isWlanOnly) {
+            return AndroidUtils.isWifiConnected(context);
+        } else {
+            return AndroidUtils.isNetworkConnected(context);
+        }
+    }
+
 }
