@@ -8,11 +8,16 @@ All dates are in the European Central timezone.
 Version 2.8 *(in development)*
 --------------------------------
 
+* FEATURE Use the new expandable notifications on Android 4.1 Jelly Bean to display more content.
+* TWEAK Calculate next episodes differently: display the next highest (season and number) episode regarding all watched episodes.
+* TWEAK New show list layout for 10 inch and certain 7 inch tablets.
 * TWEAK Update single shows more often if their overview screen is used.
+* TWEAK 'Update only via WiFi' setting respected by episode image and ratings downloads.
+* TWEAK Relayouted list widget, updated widget backgrounds.
 
 ### Detailed changes:
 
-#### 2.8.5beta (TBA)
+#### 2.8.5beta (2012-08-03)
 
 * TWEAK Shows appear to delete significantly faster.
 * TWEAK 'Update only via WiFi' setting respected by episode image and ratings downloads.
@@ -33,7 +38,7 @@ Version 2.8 *(in development)*
 
 #### 2.8.3beta (2012-07-20)
 
-* TWEAK Calculate next episodes differently: display the next highest (season and number) episode after the newest watched episode.
+* TWEAK Calculate next episodes differently: display the next highest (season and number) episode regarding all watched episodes.
 * TWEAK Cache images using a LRU cache as recommended by Google devs.
 * TWEAK Added 'now' and 'today' to upcoming shows limit setting.
 * FIX Display 'Recent' on list widget, if appropiate, again.
