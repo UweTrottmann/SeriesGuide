@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.battlelancer.seriesguide.beta"
     android:installLocation="auto"
-    android:versionCode="175"
-    android:versionName="2.8.4beta" >
+    android:versionCode="176"
+    android:versionName="2.8.5beta" >
 
     <uses-sdk
         android:minSdkVersion="7"
