@@ -19,7 +19,7 @@
   <string name="sending">Lähetetään…</string>
   <string name="done">Valmis</string>
   <string name="clear">Tyhjennä</string>
-  <string name="more">%s more</string>
+  <string name="more">%s lisää</string>
   <string name="offline">Ei verkkoyhteyttä. Yritä myöhemmin uudelleen.</string>
   <string name="onlyx">Saatavilla vain SeriesGuide X:ssä</string>
   <string name="shouts">Huudahdukset</string>
@@ -153,11 +153,9 @@
   <string name="backup">Varmuuskopioi/Palauta</string>
   <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
   <string name="pref_language">Sisällön kieli</string>
-  <string name="pref_languagesummary">Käännöksiä ei ole saatavilla kaikille ohjelmille</string>
   <string name="pref_number">Lukumuoto</string>
-  <string name="pref_numbersummary">Valitse 1x01, S01E01 tai s01e01</string>
   <string name="pref_offset">Manuaalinen ajansiirto</string>
-  <string name="pref_offsetsummary">Siirrä esityspäiviä tietyllä tuntimäärällä</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">Ota automaattiset päivitykset käyttöön</string>
   <string name="pref_autoupdatesummary">Päivitä ohjelmasi ajoittain SeriesGuiden käynnistyessä</string>
   <string name="pref_updatewifionly">Päivitä vain Wi-Fi-verkossa</string>
@@ -179,7 +177,6 @@
   <string name="pref_ganalyticssummary">Seuraa ominaisuuksien käyttöä, jonka avulla parannetaan SeriesGuidea</string>
   <string name="sendusagedata">Lähetä kehittäjälle käyttötilastoja</string>
   <string name="pref_upcominglimit">Tulevat ohjelmat ajalta…</string>
-  <string name="pref_upcominglimitsummary">Kuinka pitkältä ajalta näytetään tulevia ohjelmia</string>
   <string name="backup_description"><b>Varmuuskopio</b> luo kopion ohjelmatietokannastasi tiedostoon nimeltä <b>seriesdatabase</b> alla mainittuun kansioon.\n\n<b>Palauttaaksesi</b> varmista tiedoston olevan alla mainitussa kansiossa.\n\nVain saman tai vanhemman tietokantaversion omaavat varmuuskopiot voidaan palauttaa.</string>
   <string name="backup_path"><b>Varmuuskopiointikansio</b></string>
   <string name="backup_version"><b>Tietokannan versio</b></string>
@@ -253,7 +250,6 @@
   <string name="pref_vibrate">Värinä</string>
   <string name="pref_vibratesummary">Myös värise näytettäessä ilmoitus</string>
   <string name="pref_theme">Sovelluksen teema</string>
-  <string name="pref_themesummary">Valitse SeriesGuiden väritys</string>
   <string name="choose_list">Valitse toimintalista</string>
   <string name="hide_watched">Piilota katsotut jaksot</string>
   <string name="add_widget">Lisää widget</string>
@@ -283,12 +279,12 @@
     <item>Vanhin ensin (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>now</item>
-    <item>a day</item>
-    <item>3 days</item>
-    <item>a week</item>
-    <item>two weeks</item>
-    <item>a month</item>
+    <item>nyt</item>
+    <item>päivä</item>
+    <item>3 päivää</item>
+    <item>viikko</item>
+    <item>kaksi viikkoa</item>
+    <item>kuukausi</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Kaikki</item>

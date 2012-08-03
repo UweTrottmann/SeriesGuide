@@ -19,7 +19,7 @@
   <string name="sending">Enviando...</string>
   <string name="done">Feito</string>
   <string name="clear">Limpar</string>
-  <string name="more">%s more</string>
+  <string name="more">mais de %s</string>
   <string name="offline">Sem conexão. Tente novamente mais tarde.</string>
   <string name="onlyx">Somente disponível no SeriesGuide X</string>
   <string name="shouts">Gritos</string>
@@ -153,11 +153,9 @@
   <string name="backup">Backup/Restauração</string>
   <string name="backup_summary">Fazer backup ou restaurar as suas séries</string>
   <string name="pref_language">Idioma do conteúdo</string>
-  <string name="pref_languagesummary">Traduções não estão disponíveis para todas as séries</string>
   <string name="pref_number">Formato de número</string>
-  <string name="pref_numbersummary">Escolha entre 1x01, S01E01 ou s01e01</string>
   <string name="pref_offset">Deslocamento de tempo manual</string>
-  <string name="pref_offsetsummary">Deslocar datas de exibição por uma quantidade fixa de horas</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">Ligar Auto Atualização</string>
   <string name="pref_autoupdatesummary">Atualizar quando iniciar o SeriesGuide</string>
   <string name="pref_updatewifionly">Atualizar apenas com Wi-Fi</string>
@@ -179,7 +177,6 @@
   <string name="pref_ganalyticssummary">Rastreia o uso de recursos para ajudar a melhorar o SeriesGuide</string>
   <string name="sendusagedata">Enviar as estatísticas de uso para os desenvolvedores</string>
   <string name="pref_upcominglimit">Exibir próximos shows em ate…</string>
-  <string name="pref_upcominglimitsummary">Quão longe no futuro para exibir próximos shows</string>
   <string name="backup_description"><b>Backup</b> cria uma cópia do seu banco de dados de séries num arquivo chamado <b>seriesdatabase</b> na pasta abaixo.\n\nPara <b>Restaurar</b> esteja certo de que esse arquivo esteja na pasta abaixo.\n\nApenas backups com banco de dados de versão igual ou anterior a da abaixo podem ser restaurados.</string>
   <string name="backup_path"><b>Pasta de backup</b></string>
   <string name="backup_version"><b>Versão do banco de dados</b></string>
@@ -253,7 +250,6 @@
   <string name="pref_vibrate">Vibrar</string>
   <string name="pref_vibratesummary">Vibrar também ao exibir uma notificação</string>
   <string name="pref_theme">Tema do Aplicativo</string>
-  <string name="pref_themesummary">Escolha a cor do SeriesGuide</string>
   <string name="choose_list">Escolher lista de atividades</string>
   <string name="hide_watched">Ocultar episódios já assistidos</string>
   <string name="add_widget">Adicionar widget</string>
@@ -283,12 +279,12 @@
     <item>Mais antigos primeiro (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>now</item>
-    <item>a day</item>
-    <item>3 days</item>
-    <item>a week</item>
-    <item>two weeks</item>
-    <item>a month</item>
+    <item>Agora</item>
+    <item>um dia</item>
+    <item>3 dias</item>
+    <item>uma semana</item>
+    <item>duas semanas</item>
+    <item>um mês</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Todos</item>

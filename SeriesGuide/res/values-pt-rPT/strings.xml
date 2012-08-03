@@ -153,11 +153,9 @@
   <string name="backup">Backup/Restauração</string>
   <string name="backup_summary">Fazer backup ou restaurar as suas séries</string>
   <string name="pref_language">Língua do conteúdo</string>
-  <string name="pref_languagesummary">Traduções não estão disponíveis para todas as séries</string>
   <string name="pref_number">Formato do número</string>
-  <string name="pref_numbersummary">Escolha entre 1x01, S01E01 ou s01e01</string>
   <string name="pref_offset">Acerto manual do fuso horário</string>
-  <string name="pref_offsetsummary">Deslocar datas de exibição por uma quantidade fixa de horas</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">Ativar atualização automática</string>
   <string name="pref_autoupdatesummary">Atualizar periodicamente as séries ao iniciar o SeriesGuide</string>
   <string name="pref_updatewifionly">Atualizar somente através de Wi-Fi</string>
@@ -179,7 +177,6 @@
   <string name="pref_ganalyticssummary">Controlar o uso de recursos para ajudar a melhorar o SeriesGuide</string>
   <string name="sendusagedata">Enviar as estatísticas de uso para os desenvolvedores</string>
   <string name="pref_upcominglimit">Próximas séries dentro de…</string>
-  <string name="pref_upcominglimitsummary">Quão longe no futuro para exibir próximas séries</string>
   <string name="backup_description"><b>Backup</b> Cria uma cópia da base de dados das séries num ficheiro chamado <b>seriesdatabase</b> no seguinte directório.\n\nPara <b>Restaurar</b> certifique-se que o ficheiro se encontra no directório.\n\nApenas os backups com a mesma versão ou inferior à base de dados seguinte podem ser resturados.</string>
   <string name="backup_path"><b>Pasta de backup</b></string>
   <string name="backup_version"><b>Versão de banco de dados</b></string>
@@ -253,7 +250,6 @@
   <string name="pref_vibrate">Vibrar</string>
   <string name="pref_vibratesummary">Também vibrar quando é mostrada uma notificação</string>
   <string name="pref_theme">Tema da aplicação</string>
-  <string name="pref_themesummary">Escolha a coloração do SeriesGuide</string>
   <string name="choose_list">Escolher lista de atividades</string>
   <string name="hide_watched">Ocultar episódios já visualizados</string>
   <string name="add_widget">Adicionar widget</string>

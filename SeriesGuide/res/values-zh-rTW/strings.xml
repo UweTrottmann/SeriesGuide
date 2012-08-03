@@ -153,11 +153,9 @@
   <string name="backup">備份/還原</string>
   <string name="backup_summary">備份或還原你的影集</string>
   <string name="pref_language">內容語言</string>
-  <string name="pref_languagesummary">並非每部影集皆提供翻譯</string>
   <string name="pref_number">數字格式</string>
-  <string name="pref_numbersummary">選擇顯示1x01, S01E01 或 s01e01</string>
   <string name="pref_offset">手動時間換算</string>
-  <string name="pref_offsetsummary">利用固定時數來換算播出時間</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">開啟自動更新</string>
   <string name="pref_autoupdatesummary">當執行SeriesGuide時，定期更新您的影集</string>
   <string name="pref_updatewifionly">僅透過Wi-Fi更新</string>
@@ -179,7 +177,6 @@
   <string name="pref_ganalyticssummary">紀錄追蹤功能以改善SeriesGuide和使用者的使用體驗</string>
   <string name="sendusagedata">Send the developer usage statistics</string>
   <string name="pref_upcominglimit">Upcoming shows within…</string>
-  <string name="pref_upcominglimitsummary">How far in the future to display upcoming shows</string>
   <string name="backup_description"><b>備份</b>在下列資料夾中建立您影集資料庫的備份並命名為<b>檔案資料庫</b>。\n\n若進行<b>還原</b>時請確保資料在以下的資料夾中。\n\n只有與資料庫相同或更低版本的備份檔可以被還原。</string>
   <string name="backup_path"><b>備份資料夾</b></string>
   <string name="backup_version"><b>資料庫版本</b></string>
@@ -253,7 +250,6 @@
   <string name="pref_vibrate">Vibrate</string>
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">App Theme</string>
-  <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
   <string name="choose_list">Choose activity list</string>
   <string name="hide_watched">Hide watched episodes</string>
   <string name="add_widget">Add widget</string>

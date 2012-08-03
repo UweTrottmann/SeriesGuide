@@ -153,11 +153,9 @@
   <string name="backup">Резервное копирование/восстановление</string>
   <string name="backup_summary">Резервное копирование или восстановление ваших сериалов</string>
   <string name="pref_language">Язык содержимого</string>
-  <string name="pref_languagesummary">Переводы доступны не для каждого сериала</string>
   <string name="pref_number">Формат номеров серий</string>
-  <string name="pref_numbersummary">Выберите между 1x01, S01E01 или s01e01</string>
   <string name="pref_offset">Manual time offset</string>
-  <string name="pref_offsetsummary">Offset air dates by a fixed amount of hours</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">Включить автоматическое обновление</string>
   <string name="pref_autoupdatesummary">Периодически обновлять ваши сериалы при запуске SeriesGuide</string>
   <string name="pref_updatewifionly">Обновление только через Wi-Fi</string>
@@ -179,7 +177,6 @@
   <string name="pref_ganalyticssummary">Отслеживать использование функций, чтобы помочь улучшить SeriesGuide</string>
   <string name="sendusagedata">Send the developer usage statistics</string>
   <string name="pref_upcominglimit">Показы в ближайшие N дней...</string>
-  <string name="pref_upcominglimitsummary">How far in the future to display upcoming shows</string>
   <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
   <string name="backup_path"><b>Backup folder</b></string>
   <string name="backup_version"><b>Database version</b></string>
@@ -253,7 +250,6 @@
   <string name="pref_vibrate">Vibrate</string>
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">App Theme</string>
-  <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
   <string name="choose_list">Choose activity list</string>
   <string name="hide_watched">Hide watched episodes</string>
   <string name="add_widget">Add widget</string>

@@ -153,11 +153,9 @@
   <string name="backup">Backup/Ripristino</string>
   <string name="backup_summary">Backup o ripristina le tue serie</string>
   <string name="pref_language">Lingua contenuto</string>
-  <string name="pref_languagesummary">Traduzioni non sono disponibili per ogni spettacolo</string>
   <string name="pref_number">Formato numerico</string>
-  <string name="pref_numbersummary">Choose between 1x01, S01E01 or s01e01</string>
   <string name="pref_offset">Manual time offset</string>
-  <string name="pref_offsetsummary">Offset air dates by a fixed amount of hours</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">Attiva aggiornamento automatico</string>
   <string name="pref_autoupdatesummary">Aggiorna periodicamente i tuoi spettacoli all\'avvio SeriesGuide</string>
   <string name="pref_updatewifionly">Aggiorna solo se connesso in Wi-Fi</string>
@@ -179,7 +177,6 @@
   <string name="pref_ganalyticssummary">Tracce l\'uso delle funzionalità per aiutare a migliorare SeriesGuide</string>
   <string name="sendusagedata">Invia allo sviluppatore delle statistiche sull\'utilizzo</string>
   <string name="pref_upcominglimit">Upcoming shows within…</string>
-  <string name="pref_upcominglimitsummary">How far in the future to display upcoming shows</string>
   <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
   <string name="backup_path"><b>Cartella backup</b></string>
   <string name="backup_version"><b>Versione database</b></string>
@@ -253,7 +250,6 @@
   <string name="pref_vibrate">Vibrazione</string>
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">Tema applicazione</string>
-  <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
   <string name="choose_list">Choose activity list</string>
   <string name="hide_watched">Nascondi episodi già visti</string>
   <string name="add_widget">Aggiungi widget</string>

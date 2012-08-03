@@ -153,11 +153,9 @@
   <string name="backup">Sikkerhetskopiering/gjenoppretting</string>
   <string name="backup_summary">Sikkerhetskopiere eller gjenopprette dine serier</string>
   <string name="pref_language">Content language</string>
-  <string name="pref_languagesummary">Oversettelse er ikke tilgjengelig for alle serier</string>
   <string name="pref_number">Nummerering</string>
-  <string name="pref_numbersummary">Velg mellom 1x01, S01E01 eller s01e01</string>
   <string name="pref_offset">Manuell tidsforskyvning</string>
-  <string name="pref_offsetsummary">Offset air dates by a fixed amount of hours</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">Slå på automatisk oppdatering</string>
   <string name="pref_autoupdatesummary">Oppdater serier med jevne mellomrom når SeriesGuide starter</string>
   <string name="pref_updatewifionly">Oppdater kun over Wi-Fi</string>
@@ -179,7 +177,6 @@
   <string name="pref_ganalyticssummary">Overvåker bruken av funksjoner for å forbedre SeriesGuide</string>
   <string name="sendusagedata">Send the developer usage statistics</string>
   <string name="pref_upcominglimit">Upcoming shows within…</string>
-  <string name="pref_upcominglimitsummary">How far in the future to display upcoming shows</string>
   <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
   <string name="backup_path"><b>Sikkerhetskopimappe</b></string>
   <string name="backup_version"><b>Databaseversjon</b></string>
@@ -253,7 +250,6 @@
   <string name="pref_vibrate">Vibrate</string>
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">App Theme</string>
-  <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
   <string name="choose_list">Choose activity list</string>
   <string name="hide_watched">Hide watched episodes</string>
   <string name="add_widget">Add widget</string>

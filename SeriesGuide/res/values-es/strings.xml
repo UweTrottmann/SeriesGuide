@@ -153,11 +153,9 @@
   <string name="backup">Respaldo/Restauración</string>
   <string name="backup_summary">Respaldar o restaurar sus programas</string>
   <string name="pref_language">Idioma del contenido</string>
-  <string name="pref_languagesummary">Las traducciones no están disponibles para todas las series</string>
   <string name="pref_number">Formato numérico</string>
-  <string name="pref_numbersummary">Elija entre 1x01, S01E01 o s01e01</string>
   <string name="pref_offset">Desplazamiento de tiempo manual</string>
-  <string name="pref_offsetsummary">Desplazar la hora de salida por una cantidad escogida de horas</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">Activar la actualización automática</string>
   <string name="pref_autoupdatesummary">Actualizar periódicamente las series al iniciar SeriesGuide</string>
   <string name="pref_updatewifionly">Actualizar sólo por Wi-Fi</string>
@@ -179,7 +177,6 @@
   <string name="pref_ganalyticssummary">Hacer un seguimiento del uso para ayudar a mejorar Series Guide</string>
   <string name="sendusagedata">Enviar las estadísticas de uso al desarrollador</string>
   <string name="pref_upcominglimit">Próximas exposiciones dentro de…</string>
-  <string name="pref_upcominglimitsummary">Cuánto más tardará en mostrar las series que vienen</string>
   <string name="backup_description"><b>Backup</b> crea una copia de la base de datos de sus programas en un archivo llamado <b>seriesdatabase</b> en elfolder de abajo.\n\nPara<b>Restaurar</b>compruebe que este archivo está en las copias de seguridad de abajo.\n\nSólo las copias de seguridad con la misma o menor versión pueden ser restauradas.</string>
   <string name="backup_path"><b>Carpeta de respaldo</b></string>
   <string name="backup_version"><b>Versión de la base de datos</b></string>
@@ -253,7 +250,6 @@
   <string name="pref_vibrate">Vibrar</string>
   <string name="pref_vibratesummary">También vibrar al mostrar una notificación</string>
   <string name="pref_theme">Tema de la App</string>
-  <string name="pref_themesummary">Elija el color de SeriesGuide</string>
   <string name="choose_list">Choose activity list</string>
   <string name="hide_watched">Hide watched episodes</string>
   <string name="add_widget">Add widget</string>

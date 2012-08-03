@@ -19,7 +19,7 @@
   <string name="sending">Wysyłanie…</string>
   <string name="done">Zrobione</string>
   <string name="clear">Wyczyść</string>
-  <string name="more">%s more</string>
+  <string name="more">%s więcej</string>
   <string name="offline">Brak połączenia sieciowego. Spróbuj ponownie później.</string>
   <string name="onlyx">Dostępne tylko w SeriesGuide X</string>
   <string name="shouts">Krzyki</string>
@@ -153,11 +153,9 @@
   <string name="backup">Kopia zapasowa/Przywracanie</string>
   <string name="backup_summary">Archiwizuj lub przywróć listę seriali</string>
   <string name="pref_language">Język treści</string>
-  <string name="pref_languagesummary">Tłumaczenie nie jest dostępne dla każdego serialu</string>
   <string name="pref_number">Format numeracji</string>
-  <string name="pref_numbersummary">Wybierz między 1x01, S01E01 i S01E01</string>
   <string name="pref_offset">Ręczne przesunięcie czasu</string>
-  <string name="pref_offsetsummary">Przesunięcie czasu emisji o określoną liczbę godzin</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">Aktualizacje automatyczne</string>
   <string name="pref_autoupdatesummary">Okresowo aktualizuje seriale podczas startu SeriesGuide</string>
   <string name="pref_updatewifionly">Aktual. tylko przez WiFi</string>
@@ -179,7 +177,6 @@
   <string name="pref_ganalyticssummary">Śledzi wykorzystanie funkcji, aby pomóc w ulepszeniu SeriesGuide</string>
   <string name="sendusagedata">Wyślij statystyki użytkowania</string>
   <string name="pref_upcominglimit">Wyświetlaj odcinki z</string>
-  <string name="pref_upcominglimitsummary">Okres czasu pokazywania nadchodzących odcinków</string>
   <string name="backup_description"><b>Kopia zapasowa</b> tworzy kopię listy seriali w pliku o nazwie <b>seriesdatabase</b> w poniższym folderze.\n\nAby<b>Przywrócić</b> listę upewnij się, że plik jest w poniższym folderze.\n\nTylko archiwa list z tej samej lub niższej wersji (niż poniższa) mogą zostać przywrócone.</string>
   <string name="backup_path"><b>Folder kopii zapasowej</b></string>
   <string name="backup_version"><b>Wersja bazy danych</b></string>
@@ -253,7 +250,6 @@
   <string name="pref_vibrate">Wibracja</string>
   <string name="pref_vibratesummary">Wibruj również przy wyświetlaniu powiadomienia</string>
   <string name="pref_theme">Schemat kolorów</string>
-  <string name="pref_themesummary">Wybierz schemat kolorów SeriesGuide</string>
   <string name="choose_list">Wybierz listę aktywności</string>
   <string name="hide_watched">Ukryj obejrzane odcinki</string>
   <string name="add_widget">Dodaj widżet</string>
@@ -283,12 +279,12 @@
     <item>Najpierw najstarsze (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>now</item>
-    <item>a day</item>
-    <item>3 days</item>
-    <item>a week</item>
-    <item>two weeks</item>
-    <item>a month</item>
+    <item>teraz</item>
+    <item>dzień</item>
+    <item>3 dni</item>
+    <item>tydzień</item>
+    <item>dwa tygodnie</item>
+    <item>miesiąc</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Wszystkie</item>

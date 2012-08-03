@@ -153,11 +153,9 @@
   <string name="backup">النسخ الاحتياطي / الاستعادة</string>
   <string name="backup_summary">النسخ الاحتياطي أو استعادة مسلسلاتك</string>
   <string name="pref_language">لغة المحتوى</string>
-  <string name="pref_languagesummary">الترجمات غير متوفر لكل عرض</string>
   <string name="pref_number">تنسيق الأرقام</string>
-  <string name="pref_numbersummary">Choose between 1x01, S01E01 or s01e01</string>
   <string name="pref_offset">تغيير التوقيت يدوياً</string>
-  <string name="pref_offsetsummary">تغيير أوقات العرض بقدر معين من الساعات</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">تشغيل التحديث التلقائي</string>
   <string name="pref_autoupdatesummary">حدّث المسلسلات دورياً عند بدء البرنامج</string>
   <string name="pref_updatewifionly">التحديث عبر واي فاي فقط</string>
@@ -179,7 +177,6 @@
   <string name="pref_ganalyticssummary">تعقب استخدام المميزات للمساعدة في تحسين البرنامج</string>
   <string name="sendusagedata">Send the developer usage statistics</string>
   <string name="pref_upcominglimit">Upcoming shows within…</string>
-  <string name="pref_upcominglimitsummary">How far in the future to display upcoming shows</string>
   <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
   <string name="backup_path"><b>مجلد النسخة الاحتياطية</b></string>
   <string name="backup_version"><b>إصدار قاعدة بيانات</b></string>
@@ -253,7 +250,6 @@
   <string name="pref_vibrate">Vibrate</string>
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">App Theme</string>
-  <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
   <string name="choose_list">Choose activity list</string>
   <string name="hide_watched">Hide watched episodes</string>
   <string name="add_widget">Add widget</string>

@@ -153,11 +153,9 @@
   <string name="backup">Sauvegarde/Restauration</string>
   <string name="backup_summary">Sauvegarder ou restaurer vos séries</string>
   <string name="pref_language">Langue</string>
-  <string name="pref_languagesummary">Traductions non disponibles pour toutes les séries</string>
   <string name="pref_number">Format de nombre</string>
-  <string name="pref_numbersummary">Choisissez 1x01, S01E01 ou s01e01</string>
   <string name="pref_offset">Décalage horaire manuel</string>
-  <string name="pref_offsetsummary">Décaler par un nombre d\'heures fixes les dates de diffusion</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">Activer la mise à jour automatique</string>
   <string name="pref_autoupdatesummary">Mettre à jour de façon périodique vos séries au démarrage de SeriesGuide</string>
   <string name="pref_updatewifionly">Mise à jour par Wi-Fi seulement</string>
@@ -179,7 +177,6 @@
   <string name="pref_ganalyticssummary">Suivi de l\'utilisation des fonctionnalités pour aider à améliorer SeriesGuide</string>
   <string name="sendusagedata">Envoyer des statistiques d\'utilisation au développeur</string>
   <string name="pref_upcominglimit">Prochains épisodes dans…</string>
-  <string name="pref_upcominglimitsummary">Afficher jusqu\'à quel point les prochains épisodes</string>
   <string name="backup_description"><b>Sauvegarder</b> crée une copie de la base de donnée de vos séries dans un fichier nommé <b>seriesdatabase</b> dans le répertoire ci-dessous.\n\nPour <b>Restaurer</b> assurez-vous que ce fichier soit bien dans ce répertoire.\n\nSeules les sauvegardes d\'un version inférieure ou égale celle ci-dessous peuvent être restaurées.</string>
   <string name="backup_path"><b>Répertoire de sauvegarde</b></string>
   <string name="backup_version"><b>Version de la base</b></string>
@@ -253,7 +250,6 @@
   <string name="pref_vibrate">Vibrer</string>
   <string name="pref_vibratesummary">Vibrer aussi lors d\'un notification</string>
   <string name="pref_theme">Thème</string>
-  <string name="pref_themesummary">Choix des couleurs pour SeriesGuide</string>
   <string name="choose_list">Choisissez la liste d\'activités</string>
   <string name="hide_watched">Masquer les épisodes vus</string>
   <string name="add_widget">Ajouter le widget</string>
@@ -283,12 +279,12 @@
     <item>Plus ancien en premier (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>now</item>
-    <item>a day</item>
-    <item>3 days</item>
-    <item>a week</item>
-    <item>two weeks</item>
-    <item>a month</item>
+    <item>maintenant</item>
+    <item>un jour</item>
+    <item>3 jours</item>
+    <item>une semaine</item>
+    <item>deux semaines</item>
+    <item>un mois</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Tout</item>

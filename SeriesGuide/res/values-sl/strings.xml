@@ -153,11 +153,9 @@
   <string name="backup">Backup/Restore</string>
   <string name="backup_summary">Backup or restore your shows</string>
   <string name="pref_language">Content language</string>
-  <string name="pref_languagesummary">Translations not available for every show</string>
   <string name="pref_number">Number format</string>
-  <string name="pref_numbersummary">Choose between 1x01, S01E01 or s01e01</string>
   <string name="pref_offset">Manual time offset</string>
-  <string name="pref_offsetsummary">Offset air dates by a fixed amount of hours</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">Turn on Auto Update</string>
   <string name="pref_autoupdatesummary">Periodically update your shows when starting SeriesGuide</string>
   <string name="pref_updatewifionly">Update over Wi-Fi only</string>
@@ -179,7 +177,6 @@
   <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
   <string name="sendusagedata">Send the developer usage statistics</string>
   <string name="pref_upcominglimit">Upcoming shows within…</string>
-  <string name="pref_upcominglimitsummary">How far in the future to display upcoming shows</string>
   <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
   <string name="backup_path"><b>Backup folder</b></string>
   <string name="backup_version"><b>Database version</b></string>
@@ -253,7 +250,6 @@
   <string name="pref_vibrate">Vibrate</string>
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">App Theme</string>
-  <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
   <string name="choose_list">Choose activity list</string>
   <string name="hide_watched">Hide watched episodes</string>
   <string name="add_widget">Add widget</string>

@@ -153,11 +153,9 @@
   <string name="backup">Säkerhetskopiering/återställning</string>
   <string name="backup_summary">Säkerhetskopiera eller återställ dina serier</string>
   <string name="pref_language">Innehållsspråk</string>
-  <string name="pref_languagesummary">Översättningar finns inte för alla serier</string>
   <string name="pref_number">Nummerformat</string>
-  <string name="pref_numbersummary">Välj mellan 1x01, S01E01 och s01e01</string>
   <string name="pref_offset">Manuell tidsskillnad</string>
-  <string name="pref_offsetsummary">Visa sändningstider förskjutna med ett visst antal timmar</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">Automatisk uppdatering</string>
   <string name="pref_autoupdatesummary">Uppdatera dina serier regelbundet när SeriesGuide startas</string>
   <string name="pref_updatewifionly">Uppdatera endast över Wi-Fi</string>
@@ -179,7 +177,6 @@
   <string name="pref_ganalyticssummary">Mäter användningen av funktioner för att förbättra SeriesGuide</string>
   <string name="sendusagedata">Skicka användningsstatistik till utvecklaren</string>
   <string name="pref_upcominglimit">Kommande serier inom…</string>
-  <string name="pref_upcominglimitsummary">Hur långt i framtiden som kommande serier visas</string>
   <string name="backup_description"><b>Säkerhetskopiering</b> skapar en kopia av databasen i en fil med namnet <b>seriesdatabase</b> i mappen nedan.\n\nFör att <b>återställa</b> kontrollera att filen är i mappen nedan.\n\nBara säkerhetskopior med samma eller en lägre databasversion som nedan kan återställas.</string>
   <string name="backup_path"><b>Mapp för säkerhetskopia</b></string>
   <string name="backup_version"><b>Databasversion</b></string>
@@ -253,7 +250,6 @@
   <string name="pref_vibrate">Vibrera</string>
   <string name="pref_vibratesummary">Vibrerar även när meddelande visas</string>
   <string name="pref_theme">Tema</string>
-  <string name="pref_themesummary">Välj hur SeriesGuide färgsätts</string>
   <string name="choose_list">Choose activity list</string>
   <string name="hide_watched">Dölj sedda avsnitt</string>
   <string name="add_widget">Lägg till widget</string>

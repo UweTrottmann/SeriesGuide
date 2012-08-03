@@ -153,11 +153,9 @@
   <string name="backup">Zálohování/obnovení</string>
   <string name="backup_summary">Zálohování a obnovení Vašich pořadů</string>
   <string name="pref_language">Jazyk obsahu</string>
-  <string name="pref_languagesummary">Ne všechny pořady mají překlad</string>
   <string name="pref_number">Formát číslování</string>
-  <string name="pref_numbersummary">Vyberte mezi 1x01, S01E01 nebo s01e01</string>
   <string name="pref_offset">Ruční časový posun</string>
-  <string name="pref_offsetsummary">Posune čas vysílání o daný počet hodin</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">Aktualizovat automaticky</string>
   <string name="pref_autoupdatesummary">Po spuštění SeriesGuide průběžně aktualizuje Vaše pořady</string>
   <string name="pref_updatewifionly">Aktualizovat jen skrze Wi-Fi</string>
@@ -179,7 +177,6 @@
   <string name="pref_ganalyticssummary">Sledovat užívání aplikace pro zlepšování SeriesGuide</string>
   <string name="sendusagedata">Poslat vývojáři statistiku užití</string>
   <string name="pref_upcominglimit">Nadcházející pořady během…</string>
-  <string name="pref_upcominglimitsummary">Jak daleko v budoucnu hledat nadcházející pořady</string>
   <string name="backup_description"><b>Záloha</b> vytvoří obraz databáze Vašich pořadů do souboru <b>seriesdatabase</b> v níže uvedené složce.\n\nPřed <b>Obnovením</b> se ujistěte, že se tento soubor ve složce nachází.\n\nObnoveny mohou být pouze zálohy se stejnou nebo nižší verzí databáze, než je uvedená níže.</string>
   <string name="backup_path"><b>Adresář záloh</b></string>
   <string name="backup_version"><b>Verze databáze</b></string>
@@ -253,7 +250,6 @@
   <string name="pref_vibrate">Vibrate</string>
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">Téma aplikace</string>
-  <string name="pref_themesummary">Vyberte barevné téma pro SeriesGuide</string>
   <string name="choose_list">Choose activity list</string>
   <string name="hide_watched">Hide watched episodes</string>
   <string name="add_widget">Add widget</string>

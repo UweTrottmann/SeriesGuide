@@ -19,7 +19,7 @@
   <string name="sending">Αποστολή…</string>
   <string name="done">Ολοκληρώθηκε</string>
   <string name="clear">Καθαρισμός</string>
-  <string name="more">%s more</string>
+  <string name="more">%s περισσότερο</string>
   <string name="offline">Χωρίς σύνδεση δικτύου. Δοκιμάστε αργότερα.</string>
   <string name="onlyx">Διαθέσιμο μόνο στο SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -153,11 +153,9 @@
   <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>
   <string name="backup_summary">Δημιουργία αντιγράφου ασφαλείας ή επαναφορά των σειρών</string>
   <string name="pref_language">Γλώσσα περιεχομένου</string>
-  <string name="pref_languagesummary">Δεν διατίθενται μεταφράσεις για κάθε σειρά</string>
   <string name="pref_number">Μορφή των αριθμών</string>
-  <string name="pref_numbersummary">Επιλέξτε μεταξύ 1x01, S01E01 ή s01e01</string>
   <string name="pref_offset">Χειροκίνητη χρονική μετατόπιση</string>
-  <string name="pref_offsetsummary">Μετατοπίστε της ημερομηνίες προβολής κατά συγκεκριμένο αριθμό ωρών</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">Aυτόματη ενημέρωση</string>
   <string name="pref_autoupdatesummary">Περιοδική ενημέρωση των σειρών σας κατά την έναρξη του SeriesGuide</string>
   <string name="pref_updatewifionly">Ενημέρωση μέσω Wi-Fi μόνο</string>
@@ -179,7 +177,6 @@
   <string name="pref_ganalyticssummary">Καταγραφή της χρήσης για την βελτίωση του SeriesGuide</string>
   <string name="sendusagedata">Αποστολή στατιστικών στοιχείων χρήσης στον δημιουργό</string>
   <string name="pref_upcominglimit">Επερχόμενες σειρές εντός…</string>
-  <string name="pref_upcominglimitsummary">Πόσο μακριά στο μέλλον θα εμφανίζονται οι επερχόμενες σειρές</string>
   <string name="backup_description">Το <b>αντίγραφο ασφαλείας</b> δημιουργεί ένα αντίγραφο της βάσης δεδομένων των σειρών σας σε ένα αρχείο με όνομα <b>seriesdatabase</b> στον κάτωθι φάκελο.\n\nΓια <b>Επαναφορά</b> βεβαιωθείτε ότι αυτό το αρχείο βρίσκεται στον κάτωθι φάκελο.\n\nΜόνο αρχεία αντιγράφων ασφαλείας με την ίδια ή χαμηλότερη έκδοση βάσης δεδομένων μπορούν να επαναφερθούν.</string>
   <string name="backup_path"><b>Φάκελος αντιγράφων ασφαλείας</b></string>
   <string name="backup_version"><b>Έκδοση βάσης δεδομένων</b></string>
@@ -253,7 +250,6 @@
   <string name="pref_vibrate">Δόνηση</string>
   <string name="pref_vibratesummary">Δόνηση και κατά την εμφάνιση ειδοποίησης</string>
   <string name="pref_theme">Θέμα εφαρμογής</string>
-  <string name="pref_themesummary">Επιλέξτε τον χρωματισμό του SeriesGuide</string>
   <string name="choose_list">Επιλέξτε λίστα δραστηριότητας</string>
   <string name="hide_watched">Απόκρυψη παρακολουθημένων επεισοδίων</string>
   <string name="add_widget">Προσθήκη widget</string>
@@ -283,12 +279,12 @@
     <item>Το παλαιότερο πρώτα (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>now</item>
-    <item>a day</item>
-    <item>3 days</item>
-    <item>a week</item>
-    <item>two weeks</item>
-    <item>a month</item>
+    <item>τώρα</item>
+    <item>1 ημέρα</item>
+    <item>3 ημέρες</item>
+    <item>μία εβδομάδα</item>
+    <item>δύο εβδομάδες</item>
+    <item>ένας μήνας</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Όλα</item>

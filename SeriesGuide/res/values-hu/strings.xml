@@ -153,11 +153,9 @@
   <string name="backup">Biztonsági másolat</string>
   <string name="backup_summary">Biztonsági mentés készítése a sorozatokról, vagy visszaállítás</string>
   <string name="pref_language">Tartalom nyelve</string>
-  <string name="pref_languagesummary">A fordítás nem mindegyik sorozathoz áll rendelkezésre</string>
   <string name="pref_number">Számozás formátuma</string>
-  <string name="pref_numbersummary">Válasszon az 1x01, S01E01 vagy s01e01 formátumok közül</string>
   <string name="pref_offset">Időeltolás</string>
-  <string name="pref_offsetsummary">Időpontok eltolása a megadott órával</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">Automatikus frissítés bekapcsolása</string>
   <string name="pref_autoupdatesummary">Időszakosan frissíti a sorozatokat a SeriesGuide indításakor</string>
   <string name="pref_updatewifionly">Frissítés csak Wi-Fi hálózaton keresztül</string>
@@ -179,7 +177,6 @@
   <string name="pref_ganalyticssummary">A SeriesGuide fejlesztése érdekében nyomon követi a használt funkciókat.</string>
   <string name="sendusagedata">Send the developer usage statistics</string>
   <string name="pref_upcominglimit">Upcoming shows within…</string>
-  <string name="pref_upcominglimitsummary">How far in the future to display upcoming shows</string>
   <string name="backup_description">A <b>Mentés</b> gombbal elmentheti a sorozatok adatbázisát <b>seriesdatabase</b> fájlnévvel a lenti mappába.\n\nA <b>Visszaállítás</b> gombbal a lent látható, vagy annál alacsonyabb verziójú adatbázis állítható vissza a biztonsági másolat mappából.</string>
   <string name="backup_path"><b>Biztonsági másolat mappa</b></string>
   <string name="backup_version"><b>Adatbázis verzió</b></string>
@@ -253,7 +250,6 @@
   <string name="pref_vibrate">Vibrate</string>
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">Alkalmazás téma</string>
-  <string name="pref_themesummary">A SeriesGuide kezelőfelületének színeit állítja be</string>
   <string name="choose_list">Choose activity list</string>
   <string name="hide_watched">Hide watched episodes</string>
   <string name="add_widget">Add widget</string>
