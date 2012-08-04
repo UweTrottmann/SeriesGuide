@@ -18,6 +18,7 @@ Version 2.8 *(in development)*
 * TWEAK Display text for and hide certain action items.
 * TWEAK Tweaked add show screen, larger layout for large tablets. This does not work great with D-PADs (Google TV), yet.
 * TWEAK Run more tasks in parallel, if possible.
+* TWEAK Refined first run experience. Trending shows tab is now first.
 
 #### 2.8.5beta (TBA)
 
