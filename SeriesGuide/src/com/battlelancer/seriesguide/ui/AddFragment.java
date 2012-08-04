@@ -17,7 +17,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
@@ -30,9 +30,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -41,9 +43,11 @@ import java.util.List;
  * Super class for fragments displaying a list of shows and allowing to add them
  * to the database.
  */
-public class AddFragment extends SherlockListFragment {
+public class AddFragment extends SherlockFragment {
 
     protected AddAdapter mAdapter;
+
+    protected GridView mGrid;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,10 +57,23 @@ public class AddFragment extends SherlockListFragment {
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-        SearchResult result = mAdapter.getItem(position);
-        AddDialogFragment.showAddDialog(result, getFragmentManager());
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        // basic setup of grid view
+        mGrid = (GridView) getView().findViewById(android.R.id.list);
+        mGrid.setFastScrollEnabled(true);
+        mGrid.setOnItemClickListener(new OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                SearchResult result = mAdapter.getItem(position);
+                AddDialogFragment.showAddDialog(result, getFragmentManager());
+            }
+        });
+        View emptyView = getView().findViewById(android.R.id.empty);
+        if (emptyView != null) {
+            mGrid.setEmptyView(emptyView);
+        }
     }
 
     @TargetApi(11)
@@ -69,7 +86,7 @@ public class AddFragment extends SherlockListFragment {
                 mAdapter.add(searchResult);
             }
         }
-        setListAdapter(mAdapter);
+        mGrid.setAdapter(mAdapter);
     }
 
     protected static class AddAdapter extends ArrayAdapter<SearchResult> {
