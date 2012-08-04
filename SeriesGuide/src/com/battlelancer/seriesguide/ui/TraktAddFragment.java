@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.entities.TvShow;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -74,7 +75,7 @@ public class TraktAddFragment extends AddFragment {
                     new ArrayList<SearchResult>());
 
             int type = getArguments().getInt("traktlisttype");
-            new GetTraktShowsTask(getActivity()).execute(type);
+            AndroidUtils.executeAsyncTask(new GetTraktShowsTask(getActivity()), type);
         }
     }
 
