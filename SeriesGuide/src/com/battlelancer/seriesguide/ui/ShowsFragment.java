@@ -203,7 +203,7 @@ public class ShowsFragment extends SherlockFragment implements
         // try to restore previously set show filter
         int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
         // prevent the onNavigationItemSelected listener from reacting
-        mIsPreventLoaderRestart = true;
+        // mIsPreventLoaderRestart = true;
         actionBar.setSelectedNavigationItem(showfilter);
         return showfilter;
     }
