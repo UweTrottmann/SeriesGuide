@@ -12,6 +12,13 @@ Version 2.8 *(in development)*
 
 ### Detailed changes:
 
+#### 2.8.6beta (TBA)
+
+* FEATURE Quickly add shows by tapping a + button.
+* TWEAK Display text for and hide certain action items.
+* TWEAK Tweaked add show screen, larger layout for large tablets. This does not work great with D-PADs (Google TV), yet.
+* TWEAK Run more tasks in parallel, if possible.
+
 #### 2.8.5beta (TBA)
 
 * TWEAK Shows appear to delete significantly faster.
