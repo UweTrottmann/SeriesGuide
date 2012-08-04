@@ -74,6 +74,11 @@ public class AddFragment extends SherlockFragment {
         if (emptyView != null) {
             mGrid.setEmptyView(emptyView);
         }
+
+        // restore an existing adapter
+        if (mAdapter != null) {
+            mGrid.setAdapter(mAdapter);
+        }
     }
 
     @TargetApi(11)
