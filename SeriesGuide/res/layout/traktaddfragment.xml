@@ -9,13 +9,14 @@
         android:layout_height="match_parent"
         android:clipToPadding="@bool/gridClipToPadding"
         android:columnWidth="@dimen/showgrid_columnWidth"
+        android:fastScrollEnabled="true"
         android:gravity="center"
-        android:horizontalSpacing="@dimen/showgrid_spacing"
+        android:horizontalSpacing="@dimen/default_padding"
         android:listSelector="?custom_list_selector"
         android:numColumns="auto_fit"
         android:padding="@dimen/showgrid_padding"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="@dimen/showgrid_spacing" >
+        android:verticalSpacing="@dimen/default_padding" >
     </GridView>
 
     <ProgressBar

@@ -72,7 +72,7 @@ public class TraktAddFragment extends AddFragment {
         // (e.g. after config/page changed)
         if (mAdapter == null) {
             mAdapter = new AddAdapter(getActivity(), R.layout.add_searchresult,
-                    new ArrayList<SearchResult>());
+                    new ArrayList<SearchResult>(), mAddButtonListener, mDetailsButtonListener);
 
             int type = getArguments().getInt("traktlisttype");
             AndroidUtils.executeAsyncTask(new GetTraktShowsTask(getActivity()), type);

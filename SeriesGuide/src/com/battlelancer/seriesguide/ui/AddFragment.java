@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
+import com.battlelancer.seriesguide.util.TaskManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.annotation.TargetApi;
@@ -29,9 +30,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -62,14 +62,6 @@ public class AddFragment extends SherlockFragment {
 
         // basic setup of grid view
         mGrid = (GridView) getView().findViewById(android.R.id.list);
-        mGrid.setFastScrollEnabled(true);
-        mGrid.setOnItemClickListener(new OnItemClickListener() {
-
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                SearchResult result = mAdapter.getItem(position);
-                AddDialogFragment.showAddDialog(result, getFragmentManager());
-            }
-        });
         View emptyView = getView().findViewById(android.R.id.empty);
         if (emptyView != null) {
             mGrid.setEmptyView(emptyView);
@@ -94,6 +86,29 @@ public class AddFragment extends SherlockFragment {
         mGrid.setAdapter(mAdapter);
     }
 
+    protected OnClickListener mAddButtonListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // queue show to be added
+            int position = mGrid.getPositionForView(v);
+            SearchResult show = mAdapter.getItem(position);
+            TaskManager.getInstance(getActivity()).performAddTask(show);
+
+            show.isAdded = true;
+            v.setVisibility(View.INVISIBLE);
+        }
+    };
+
+    protected OnClickListener mDetailsButtonListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // display more details in a dialog
+            int position = mGrid.getPositionForView(v);
+            SearchResult show = mAdapter.getItem(position);
+            AddDialogFragment.showAddDialog(show, getFragmentManager());
+        }
+    };
+
     protected static class AddAdapter extends ArrayAdapter<SearchResult> {
 
         private LayoutInflater mLayoutInflater;
@@ -102,12 +117,19 @@ public class AddFragment extends SherlockFragment {
 
         private ImageDownloader mImageDownloader;
 
-        public AddAdapter(Context context, int layout, List<SearchResult> objects) {
+        private OnClickListener mAddButtonListener;
+
+        private OnClickListener mDetailsButtonListener;
+
+        public AddAdapter(Context context, int layout, List<SearchResult> objects,
+                OnClickListener addButtonListener, OnClickListener detailsButtonListener) {
             super(context, layout, objects);
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             mLayout = layout;
             mImageDownloader = ImageDownloader.getInstance(context);
+            mAddButtonListener = addButtonListener;
+            mDetailsButtonListener = detailsButtonListener;
         }
 
         @Override
@@ -118,16 +140,27 @@ public class AddFragment extends SherlockFragment {
                 convertView = mLayoutInflater.inflate(mLayout, null);
 
                 viewHolder = new ViewHolder();
+                viewHolder.addbutton = convertView.findViewById(R.id.addbutton);
+                viewHolder.details = convertView.findViewById(R.id.details);
                 viewHolder.title = (TextView) convertView.findViewById(R.id.title);
                 viewHolder.description = (TextView) convertView.findViewById(R.id.description);
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.poster);
+
+                // add button listeners
+                viewHolder.addbutton.setOnClickListener(mAddButtonListener);
+                viewHolder.details.setOnClickListener(mDetailsButtonListener);
+
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
-            // set text properties immediately
             SearchResult item = getItem(position);
+
+            // hide add button if already added that show
+            viewHolder.addbutton.setVisibility(item.isAdded ? View.INVISIBLE : View.VISIBLE);
+
+            // set text properties immediately
             viewHolder.title.setText(item.title);
             viewHolder.description.setText(item.overview);
             if (item.poster != null) {
@@ -144,6 +177,10 @@ public class AddFragment extends SherlockFragment {
             public TextView description;
 
             public ImageView poster;
+
+            public View addbutton;
+
+            public View details;
         }
     }
 }
