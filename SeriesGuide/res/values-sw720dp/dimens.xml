@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="text_size_large">20sp</dimen>
     <dimen name="showgrid_padding">8dp</dimen>
     <dimen name="showgrid_columnWidth">350dp</dimen>
     <dimen name="showgrid_spacing">0dp</dimen>

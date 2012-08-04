@@ -49,7 +49,7 @@
         <item name="selectedColor">@color/text_primary</item>
         <item name="selectedBold">true</item>
     </style>
-    
+
     <style name="TitlePageIndicator.ICS" parent="TitlePageIndicator">
         <item name="footerColor">#33B5E5</item>
     </style>
@@ -90,6 +90,25 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <!-- Unified text styles and sizes -->
+    <style name="ListTextBig">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ListTextNormal">
+        <item name="android:textSize">@dimen/text_size_xmedium</item>
+    </style>
+
+    <style name="ListTextSmall">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="ListTextSmall.Dim">
+        <item name="android:textColor">@color/text_dim</item>
+    </style>
+
     <!-- Used for metadata in detail views. -->
     <style name="SmallItems">
         <item name="android:textSize">@dimen/text_size_xmedium</item>
@@ -111,7 +130,7 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
     </style>
-    
+
     <style name="LabelBase">
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:textAllCaps">true</item>
