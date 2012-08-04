@@ -96,8 +96,20 @@ public class FirstRunFragment extends SherlockFragment {
             }
         });
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        prefs.edit().putBoolean(PREF_KEY_FIRSTRUN, true).commit();
+        // dismiss button
+        getView().findViewById(R.id.dismissButton).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences prefs = PreferenceManager
+                        .getDefaultSharedPreferences(getActivity());
+                prefs.edit().putBoolean(PREF_KEY_FIRSTRUN, true).commit();
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ShowsFragment f = ShowsFragment.newInstance();
+                ft.replace(R.id.shows_fragment, f).commit();
+            }
+        });
+
     }
 
     public class OnLanguageSelectedListener implements OnItemSelectedListener {

@@ -107,12 +107,16 @@ public class ShowsActivity extends BaseActivity {
                     .commit();
         } else {
             if (savedInstanceState == null) {
-                mFragment = ShowsFragment.newInstance();
-
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.shows_fragment, mFragment).commit();
+                showShowsFragment();
             }
         }
+    }
+
+    private void showShowsFragment() {
+        mFragment = ShowsFragment.newInstance();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
+                .commit();
     }
 
     @Override
