@@ -572,7 +572,7 @@ public class ShowsFragment extends SherlockFragment implements
         final ShowSorting oldSorting = mSorting;
 
         mSorting = ShowSorting.fromValue(prefs.getString(
-                SeriesGuidePreferences.KEY_SHOW_SORT_ORDER, ShowSorting.ALPHABETIC.value()));
+                SeriesGuidePreferences.KEY_SHOW_SORT_ORDER, ShowSorting.FAVORITES_FIRST.value()));
 
         if (oldSorting != mSorting) {
             return true;
