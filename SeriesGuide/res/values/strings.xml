@@ -308,13 +308,13 @@
     <string name="trakt_syncunseen">Sync unseen episodes</string>
 
     <!-- Welcome dialog -->
-    <string name="welcome_message"><big>Get started</big></string>
-    <string name="welcome_text">Welcome!</string>
-    <string name="welcome_language">Choose the primary content language:</string>
+    <string name="welcome_message">Get started</string>
     <string name="welcome_setuplanguage">Choose language</string>
     <string name="welcome_setuptrakt">Connect to trakt</string>
     <string name="welcome_traktmessage">Access your trakt.tv library and friends activity with SeriesGuide:</string>
     <string name="dismiss">Dismiss</string>
+    <string name="welcome_add_part1">To add shows to SeriesGuide tap</string>
+    <string name="welcome_add_part2">in the action bar.</string>
 
     <string-array name="showfilter_list">
         <item>All</item>
@@ -505,5 +505,5 @@
         <item>0</item>
         <item>1</item>
     </string-array>
-
+    
 </resources>

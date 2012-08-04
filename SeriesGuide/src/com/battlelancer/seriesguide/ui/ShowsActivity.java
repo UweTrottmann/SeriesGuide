@@ -100,11 +100,18 @@ public class ShowsActivity extends BaseActivity {
 
         updatePreferences(prefs);
 
-        if (savedInstanceState == null) {
-            mFragment = ShowsFragment.newInstance();
+        if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
+            mFragment = FirstRunFragment.newInstance();
 
             getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
                     .commit();
+        } else {
+            if (savedInstanceState == null) {
+                mFragment = ShowsFragment.newInstance();
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.shows_fragment, mFragment).commit();
+            }
         }
     }
 
