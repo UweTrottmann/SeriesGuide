@@ -87,7 +87,7 @@ public class TraktAddFragment extends AddFragment {
 
     public class GetTraktShowsTask extends AsyncTask<Integer, Void, List<SearchResult>> {
 
-        private static final int TRENDING = 1;
+        private static final int TRENDING = 0;
 
         private static final int RECOMMENDED = 2;
 
