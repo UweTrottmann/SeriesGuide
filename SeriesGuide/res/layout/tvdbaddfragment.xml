@@ -39,16 +39,21 @@
                 android:src="@drawable/ic_action_search" />
         </LinearLayout>
 
-        <ListView
+        <GridView
             android:id="@android:id/list"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:clipToPadding="@bool/gridClipToPadding"
-            android:divider="@drawable/divider_horizontal_holo_dark"
-            android:listSelector="?custom_list_selector"
-            android:paddingBottom="@dimen/default_padding"
-            android:paddingTop="@dimen/inline_padding" />
+            android:columnWidth="@dimen/showgrid_columnWidth"
+            android:fastScrollEnabled="true"
+            android:gravity="center"
+            android:horizontalSpacing="@dimen/default_padding"
+            android:listSelector="@null"
+            android:numColumns="auto_fit"
+            android:padding="@dimen/showgrid_padding"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="@dimen/default_padding" >
+        </GridView>
     </LinearLayout>
 
     <TextView

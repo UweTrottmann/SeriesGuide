@@ -73,7 +73,7 @@ public class TvdbAddFragment extends AddFragment {
         // create an empty adapter to avoid displaying a progress indicator
         if (mAdapter == null) {
             mAdapter = new AddAdapter(getActivity(), R.layout.add_searchresult,
-                    new ArrayList<SearchResult>());
+                    new ArrayList<SearchResult>(), mAddButtonListener, mDetailsButtonListener);
         }
 
         ImageButton searchButton = (ImageButton) getView().findViewById(R.id.searchbutton);
@@ -121,7 +121,7 @@ public class TvdbAddFragment extends AddFragment {
         }
         if (mSearchTask == null || mSearchTask.getStatus() == AsyncTask.Status.FINISHED) {
             mSearchTask = new SearchTask(getActivity());
-            mSearchTask.execute(query);
+            AndroidUtils.executeAsyncTask(mSearchTask, query);
         }
     }
 

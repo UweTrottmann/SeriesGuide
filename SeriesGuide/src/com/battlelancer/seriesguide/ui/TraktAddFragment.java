@@ -24,6 +24,7 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.entities.TvShow;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -71,10 +72,10 @@ public class TraktAddFragment extends AddFragment {
         // (e.g. after config/page changed)
         if (mAdapter == null) {
             mAdapter = new AddAdapter(getActivity(), R.layout.add_searchresult,
-                    new ArrayList<SearchResult>());
+                    new ArrayList<SearchResult>(), mAddButtonListener, mDetailsButtonListener);
 
             int type = getArguments().getInt("traktlisttype");
-            new GetTraktShowsTask(getActivity()).execute(type);
+            AndroidUtils.executeAsyncTask(new GetTraktShowsTask(getActivity()), type);
         }
     }
 
@@ -86,7 +87,7 @@ public class TraktAddFragment extends AddFragment {
 
     public class GetTraktShowsTask extends AsyncTask<Integer, Void, List<SearchResult>> {
 
-        private static final int TRENDING = 1;
+        private static final int TRENDING = 0;
 
         private static final int RECOMMENDED = 2;
 

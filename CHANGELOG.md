@@ -17,6 +17,17 @@ Version 2.8 *(in development)*
 
 ### Detailed changes:
 
+#### 2.8.6beta (TBA)
+
+* FEATURE Quickly add shows by tapping a + button.
+* TWEAK Display text for and hide certain action items.
+* TWEAK Tweaked add show screen, larger layout for large tablets. This does not work great with D-PADs (Google TV), yet.
+* TWEAK Run more tasks in parallel, if possible.
+* TWEAK Refined first run experience. Trending shows tab is now first.
+* TWEAK New settings screen.
+* TWEAK Clear images on large tablets, schedule re-downloading to get hihger resolution thumbnails.
+* TWEAK Revert to old show list layout on 7inch tablets.
+
 #### 2.8.5beta (2012-08-03)
 
 * TWEAK Shows appear to delete significantly faster.

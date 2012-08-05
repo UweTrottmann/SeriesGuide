@@ -1,42 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/add_layout_root"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@+id/details"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="?custom_list_selector"
+        android:clickable="true"
+        android:focusable="true" >
+
+        <ImageView
+            android:id="@+id/poster"
+            android:layout_width="60dp"
+            android:layout_height="88dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="@dimen/default_padding"
+            android:contentDescription="@string/description_poster"
+            android:scaleType="centerInside"
+            android:src="@drawable/show_generic" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/poster"
+            android:paddingBottom="@dimen/inline_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:text="@string/app_name"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title"
+            android:layout_toRightOf="@id/poster"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:paddingRight="@dimen/default_padding"
+            android:text="@string/app_name"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/default_padding"
+        android:layout_marginTop="@dimen/default_padding"
+        android:background="@color/dim" />
 
     <ImageView
-        android:id="@+id/poster"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/description"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/title"
-        android:layout_marginRight="@dimen/default_padding"
-        android:contentDescription="@string/description_poster"
-        android:src="@drawable/show_generic" />
-
-    <TextView
-        android:id="@+id/title"
+        android:id="@+id/addbutton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/poster"
-        android:paddingBottom="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
-        android:paddingTop="@dimen/default_padding"
-        android:text="@string/app_name"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_height="match_parent"
+        android:background="?custom_list_selector"
+        android:clickable="true"
+        android:contentDescription="@string/add_show"
+        android:focusable="true"
+        android:padding="@dimen/default_padding"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_action_add" />
 
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
-        android:layout_toRightOf="@id/poster"
-        android:ellipsize="end"
-        android:maxLines="3"
-        android:paddingBottom="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
-        android:text="@string/app_name"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-</RelativeLayout>
+</LinearLayout>

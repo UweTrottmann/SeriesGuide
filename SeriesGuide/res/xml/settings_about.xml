@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <Preference
+        android:key="aboutPref"
+        android:title="@string/about" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="http://seriesgui.de" />
+    </Preference>
+    <Preference android:title="@string/pref_credits" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt" />
+    </Preference>
+    <Preference android:title="@string/helptranslate" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="http://crowdin.net/project/seriesguide-translations/invite" />
+    </Preference>
+
+</PreferenceScreen>

@@ -17,6 +17,8 @@ public class SearchResult implements Parcelable {
 
     public String poster;
 
+    public boolean isAdded;
+
     public static final Parcelable.Creator<SearchResult> CREATOR = new Parcelable.Creator<SearchResult>() {
         public SearchResult createFromParcel(Parcel in) {
             return new SearchResult(in);
@@ -35,6 +37,7 @@ public class SearchResult implements Parcelable {
         title = in.readString();
         overview = in.readString();
         poster = in.readString();
+        isAdded = in.readInt() == 1 ? true : false;
     }
 
     public SearchResult copy() {
@@ -43,6 +46,7 @@ public class SearchResult implements Parcelable {
         copy.title = this.title;
         copy.overview = this.overview;
         copy.poster = this.poster;
+        copy.isAdded = this.isAdded;
         return copy;
     }
 
@@ -57,6 +61,7 @@ public class SearchResult implements Parcelable {
         dest.writeString(title);
         dest.writeString(overview);
         dest.writeString(poster);
+        dest.writeInt(isAdded == true ? 1 : 0);
     }
 
 }

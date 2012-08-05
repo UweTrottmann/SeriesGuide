@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item name="addactivity_pager" type="layout">@layout/addactivity_pager_wide</item>
     <item name="episodes_multipane" type="layout">@layout/episodes_wide</item>
-    <item name="gotoseasons" type="layout">@layout/gotoseasons_empty</item>
+	<item name="gotoseasons" type="layout">@layout/gotoseasons_empty</item>
     <item name="overview" type="layout">@layout/overview_multipane</item>
     <item name="search" type="layout">@layout/search_wide</item>
     <item name="show_info" type="layout">@layout/show_info_wide</item>
     <item name="upcoming_multipane" type="layout">@layout/upcoming_wide</item>
-
-    <bool name="isLargeTablet">true</bool>
 
 </resources>
