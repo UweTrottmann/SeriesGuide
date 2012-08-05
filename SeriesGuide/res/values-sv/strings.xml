@@ -138,6 +138,10 @@
   <string name="library">Bibliotek</string>
   <string name="powered_by_thetvdb">möjliggörs av thetvdb.com</string>
   <string name="powered_by_trakt">möjliggörs av trakt.tv</string>
+  <string name="prefs_category_basic">Basics</string>
+  <string name="prefs_category_sharing">Sharing</string>
+  <string name="prefs_category_advanced">Advanced</string>
+  <string name="prefs_category_about">About</string>
   <string name="pref_more">Mer</string>
   <string name="pref_showlist">Serielista</string>
   <string name="help">Hjälp</string>
@@ -160,8 +164,7 @@
   <string name="pref_autoupdatesummary">Uppdatera dina serier regelbundet när SeriesGuide startas</string>
   <string name="pref_updatewifionly">Uppdatera endast över Wi-Fi</string>
   <string name="about">Om SeriesGuide</string>
-  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
-  <string name="pref_sharing">Delning</string>
+  <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">Koppla bort GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Ta bort kopplingen till GetGlue</string>
   <string name="pref_trakt">trakt.tv-uppgifter</string>
@@ -233,13 +236,13 @@
   <string name="trakt_synctodevice">Synka till SeriesGuide</string>
   <string name="trakt_synctotrakt">Synka till trakt.tv</string>
   <string name="trakt_syncunseen">Synka osedda avsnitt</string>
-  <string name="welcome_message"><big>Kom igång</big></string>
-  <string name="welcome_text">Välkommen!</string>
-  <string name="welcome_language">Välj huvudsakligt innehållsspråk:</string>
+  <string name="welcome_message">Get started</string>
   <string name="welcome_setuplanguage">Välj språk</string>
   <string name="welcome_setuptrakt">Anslut till trakt</string>
   <string name="welcome_traktmessage">Kom åt ditt bibliotek och dina vänners aktivitet på trakt.tv med SeriesGuide:</string>
   <string name="dismiss">Avfärda</string>
+  <string name="welcome_add_part1">To add shows to SeriesGuide tap</string>
+  <string name="welcome_add_part2">in the action bar.</string>
   <string name="upcoming_show">%s kommande</string>
   <string name="upcoming_episodes">Nya avsnitt är på gång</string>
   <string name="upcoming_show_detailed">%1$s på %2$s</string>

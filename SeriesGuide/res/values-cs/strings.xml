@@ -138,6 +138,10 @@
   <string name="library">Knihovna</string>
   <string name="powered_by_thetvdb">ve spolupráci s thetvdb.com</string>
   <string name="powered_by_trakt">ve spolupráci s trakt.tv</string>
+  <string name="prefs_category_basic">Basics</string>
+  <string name="prefs_category_sharing">Sharing</string>
+  <string name="prefs_category_advanced">Advanced</string>
+  <string name="prefs_category_about">About</string>
   <string name="pref_more">Více</string>
   <string name="pref_showlist">Zobrazit seznam</string>
   <string name="help">Nápověda</string>
@@ -160,8 +164,7 @@
   <string name="pref_autoupdatesummary">Po spuštění SeriesGuide průběžně aktualizuje Vaše pořady</string>
   <string name="pref_updatewifionly">Aktualizovat jen skrze Wi-Fi</string>
   <string name="about">O SeriesGuide</string>
-  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
-  <string name="pref_sharing">Sdílení</string>
+  <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">Odpojit GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Vymazat Vaše spojení na GetGlue</string>
   <string name="pref_trakt">Přihlášení trakt.tv</string>
@@ -233,13 +236,13 @@
   <string name="trakt_synctodevice">Synchronizovat do SeriesGuide</string>
   <string name="trakt_synctotrakt">Synchronizace do trakt.tv</string>
   <string name="trakt_syncunseen">Synchronizovat nové díly</string>
-  <string name="welcome_message"><big>Začínáme</big></string>
-  <string name="welcome_text">Vítejte!</string>
-  <string name="welcome_language">Zvolte hlavní jazyk obsahu:</string>
+  <string name="welcome_message">Get started</string>
   <string name="welcome_setuplanguage">Zvolte jazyk</string>
   <string name="welcome_setuptrakt">Připojení k traktu</string>
   <string name="welcome_traktmessage">Zpřístupněte si trakt.tv knihovnu a aktivity přátel v SeriesGuide:</string>
   <string name="dismiss">Storno</string>
+  <string name="welcome_add_part1">To add shows to SeriesGuide tap</string>
+  <string name="welcome_add_part2">in the action bar.</string>
   <string name="upcoming_show">%s právě vychází</string>
   <string name="upcoming_episodes">Právě vychází nové díly</string>
   <string name="upcoming_show_detailed">%1$s na %2$s</string>

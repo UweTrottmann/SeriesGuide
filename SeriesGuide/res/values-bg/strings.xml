@@ -138,6 +138,10 @@
   <string name="library">Библиотека</string>
   <string name="powered_by_thetvdb">Благодарение на thetvdb.com</string>
   <string name="powered_by_trakt">с помощта на trakt.tv</string>
+  <string name="prefs_category_basic">Basics</string>
+  <string name="prefs_category_sharing">Sharing</string>
+  <string name="prefs_category_advanced">Advanced</string>
+  <string name="prefs_category_about">About</string>
   <string name="pref_more">Още</string>
   <string name="pref_showlist">Покажи списъка</string>
   <string name="help">Помощ</string>
@@ -160,8 +164,7 @@
   <string name="pref_autoupdatesummary">Периодично актуализиране на вашите предавания при стартиране на SeriesGuide</string>
   <string name="pref_updatewifionly">Актуализиране само през Wi-Fi</string>
   <string name="about">Относно SeriesGuide</string>
-  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
-  <string name="pref_sharing">Споделяне</string>
+  <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">Прекъсни GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Прекъсване на връзката с GetGlue</string>
   <string name="pref_trakt">идентификационни данни за trakt.tv</string>
@@ -233,13 +236,13 @@
   <string name="trakt_synctodevice">Синхронизирай със SeriesGuide</string>
   <string name="trakt_synctotrakt">Синхронизирай с trakt.tv</string>
   <string name="trakt_syncunseen">Синхронизирай негледаните епизоди</string>
-  <string name="welcome_message"><big>Get started</big></string>
-  <string name="welcome_text">Welcome!</string>
-  <string name="welcome_language">Choose the primary content language:</string>
+  <string name="welcome_message">Get started</string>
   <string name="welcome_setuplanguage">Choose language</string>
   <string name="welcome_setuptrakt">Connect to trakt</string>
   <string name="welcome_traktmessage">Access your trakt.tv library and friends activity with SeriesGuide:</string>
   <string name="dismiss">Dismiss</string>
+  <string name="welcome_add_part1">To add shows to SeriesGuide tap</string>
+  <string name="welcome_add_part2">in the action bar.</string>
   <string name="upcoming_show">%s is coming up</string>
   <string name="upcoming_episodes">New episodes are coming up</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>

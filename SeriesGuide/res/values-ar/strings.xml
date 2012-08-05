@@ -138,6 +138,10 @@
   <string name="library">المكتبة</string>
   <string name="powered_by_thetvdb">Thetvdb.com مدعوم من</string>
   <string name="powered_by_trakt">trakt.tv مدعوم بواسطة</string>
+  <string name="prefs_category_basic">Basics</string>
+  <string name="prefs_category_sharing">Sharing</string>
+  <string name="prefs_category_advanced">Advanced</string>
+  <string name="prefs_category_about">About</string>
   <string name="pref_more">المزيد</string>
   <string name="pref_showlist">قائمة المسلسلات</string>
   <string name="help">مساعدة</string>
@@ -160,8 +164,7 @@
   <string name="pref_autoupdatesummary">حدّث المسلسلات دورياً عند بدء البرنامج</string>
   <string name="pref_updatewifionly">التحديث عبر واي فاي فقط</string>
   <string name="about">SeriesGuide حول</string>
-  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
-  <string name="pref_sharing">مشاركة</string>
+  <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">GetGlue قطع إتصال</string>
   <string name="clearGetGlueCredentialssummary">امسح اتصالك بموقع جيت جلو</string>
   <string name="pref_trakt">trakt.tv بيانات</string>
@@ -233,13 +236,13 @@
   <string name="trakt_synctodevice">seriesGuide المزامنة إلى</string>
   <string name="trakt_synctotrakt">trakt.tv المزامنة إلى</string>
   <string name="trakt_syncunseen">مزامنة الحلقات الغير مُشاهدة</string>
-  <string name="welcome_message"><big>البدء في العمل</big></string>
-  <string name="welcome_text">Welcome!</string>
-  <string name="welcome_language">Choose the primary content language:</string>
+  <string name="welcome_message">Get started</string>
   <string name="welcome_setuplanguage">Choose language</string>
   <string name="welcome_setuptrakt">Connect to trakt</string>
   <string name="welcome_traktmessage">Access your trakt.tv library and friends activity with SeriesGuide:</string>
   <string name="dismiss">Dismiss</string>
+  <string name="welcome_add_part1">To add shows to SeriesGuide tap</string>
+  <string name="welcome_add_part2">in the action bar.</string>
   <string name="upcoming_show">%s is coming up</string>
   <string name="upcoming_episodes">New episodes are coming up</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>

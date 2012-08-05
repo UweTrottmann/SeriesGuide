@@ -138,6 +138,10 @@
   <string name="library">Biblioteka</string>
   <string name="powered_by_thetvdb">powered by thetvdb.com</string>
   <string name="powered_by_trakt">powered by trakt.tv</string>
+  <string name="prefs_category_basic">Basics</string>
+  <string name="prefs_category_sharing">Sharing</string>
+  <string name="prefs_category_advanced">Advanced</string>
+  <string name="prefs_category_about">About</string>
   <string name="pref_more">Więcej</string>
   <string name="pref_showlist">Lista seriali</string>
   <string name="help">Pomoc</string>
@@ -160,8 +164,7 @@
   <string name="pref_autoupdatesummary">Okresowo aktualizuje seriale podczas startu SeriesGuide</string>
   <string name="pref_updatewifionly">Aktual. tylko przez WiFi</string>
   <string name="about">O SeriesGuide</string>
-  <string name="about_message">http://seriesguide.uwetrottmann.com - opracowany przez Uwe Trottmann.\n\nPoniższy odnośnik prowadzi do listy osób i zasobów, które umożliwiły utworzenie tego projektu.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
-  <string name="pref_sharing">Udostępnianie</string>
+  <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">Rozłącz z GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Usuń połączenie z GetGlue</string>
   <string name="pref_trakt">poświadczenia trakt.tv</string>
@@ -233,13 +236,13 @@
   <string name="trakt_synctodevice">Synchronizuj do SeriesGuide</string>
   <string name="trakt_synctotrakt">Synchronizuj do trakt.tv</string>
   <string name="trakt_syncunseen">Synchronizuj nieobejrzane odcinki</string>
-  <string name="welcome_message"><big>Pierwsze kroki</big></string>
-  <string name="welcome_text">Witamy!</string>
-  <string name="welcome_language">Wybierz podstawowy język:</string>
+  <string name="welcome_message">Get started</string>
   <string name="welcome_setuplanguage">Wybierz język</string>
   <string name="welcome_setuptrakt">Połącz z trakt</string>
   <string name="welcome_traktmessage">Uzyskaj dostęp biblioteki i przyjaciół z trakt.tv w SeriesGuide:</string>
   <string name="dismiss">Zamknij</string>
+  <string name="welcome_add_part1">To add shows to SeriesGuide tap</string>
+  <string name="welcome_add_part2">in the action bar.</string>
   <string name="upcoming_show">Nadchodzi odcinek %s</string>
   <string name="upcoming_episodes">Nadchodzą nowe odcinki</string>
   <string name="upcoming_show_detailed">%1$s na %2$s</string>

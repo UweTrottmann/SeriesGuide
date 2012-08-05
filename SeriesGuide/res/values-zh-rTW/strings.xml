@@ -138,6 +138,10 @@
   <string name="library">我的資料庫</string>
   <string name="powered_by_thetvdb">由thetvdb.com提供技術支持</string>
   <string name="powered_by_trakt">由trakt.tv提供技術支援</string>
+  <string name="prefs_category_basic">Basics</string>
+  <string name="prefs_category_sharing">Sharing</string>
+  <string name="prefs_category_advanced">Advanced</string>
+  <string name="prefs_category_about">About</string>
   <string name="pref_more">更多</string>
   <string name="pref_showlist">影集清單</string>
   <string name="help">說明</string>
@@ -160,8 +164,7 @@
   <string name="pref_autoupdatesummary">當執行SeriesGuide時，定期更新您的影集</string>
   <string name="pref_updatewifionly">僅透過Wi-Fi更新</string>
   <string name="about">關於 SeriesGuide</string>
-  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
-  <string name="pref_sharing">分享</string>
+  <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">中斷GetGlue的連線</string>
   <string name="clearGetGlueCredentialssummary">清除GetGlue的連線資料</string>
   <string name="pref_trakt">trakt.tv 憑證</string>
@@ -233,13 +236,13 @@
   <string name="trakt_synctodevice">同步至SeriesGuide</string>
   <string name="trakt_synctotrakt">同步至trakt.tv</string>
   <string name="trakt_syncunseen">同步未看的集數</string>
-  <string name="welcome_message"><big>新手上路</big></string>
-  <string name="welcome_text">Welcome!</string>
-  <string name="welcome_language">Choose the primary content language:</string>
+  <string name="welcome_message">Get started</string>
   <string name="welcome_setuplanguage">Choose language</string>
   <string name="welcome_setuptrakt">Connect to trakt</string>
   <string name="welcome_traktmessage">Access your trakt.tv library and friends activity with SeriesGuide:</string>
   <string name="dismiss">Dismiss</string>
+  <string name="welcome_add_part1">To add shows to SeriesGuide tap</string>
+  <string name="welcome_add_part2">in the action bar.</string>
   <string name="upcoming_show">%s is coming up</string>
   <string name="upcoming_episodes">New episodes are coming up</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>
