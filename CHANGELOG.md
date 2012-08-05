@@ -20,6 +20,8 @@ Version 2.8 *(in development)*
 * TWEAK Run more tasks in parallel, if possible.
 * TWEAK Refined first run experience. Trending shows tab is now first.
 * TWEAK New settings screen.
+* TWEAK Clear images on large tablets, schedule re-downloading to get hihger resolution thumbnails.
+* TWEAK Revert to old show list layout on 7inch tablets.
 
 #### 2.8.5beta (TBA)
 
