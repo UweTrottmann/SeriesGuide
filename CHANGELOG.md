@@ -17,7 +17,7 @@ Version 2.8 *(in development)*
 
 ### Detailed changes:
 
-#### 2.8.6beta (TBA)
+#### 2.8.6beta (2012-08-05)
 
 * FEATURE Quickly add shows by tapping a + button.
 * TWEAK Display text for and hide certain action items.
