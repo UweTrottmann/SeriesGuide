@@ -98,7 +98,6 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
 
         // Message box
         mMessageBox = (EditText) layout.findViewById(R.id.message);
-        mMessageBox.setText(defaultMessage);
 
         // Paste episode button
         layout.findViewById(R.id.pasteEpisode).setOnClickListener(new OnClickListener() {
