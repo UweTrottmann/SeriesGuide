@@ -21,6 +21,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
@@ -74,6 +75,8 @@ public class ShowsActivity extends BaseActivity {
     private static final int VER_TRAKT_SEC_CHANGES = 131;
 
     private static final int VER_SUMMERTIME_FIX = 151;
+
+    private static final int VER_HIGHRES_THUMBS = 177;
 
     private Bundle mSavedState;
 
@@ -478,10 +481,14 @@ public class ShowsActivity extends BaseActivity {
                     editor.putString(SeriesGuidePreferences.KEY_SECURE, null);
                 }
                 if (lastVersion < VER_SUMMERTIME_FIX) {
-                    // force update of all shows
-                    ContentValues values = new ContentValues();
-                    values.put(Shows.LASTUPDATED, 0);
-                    getContentResolver().update(Shows.CONTENT_URI, values, null, null);
+                    scheduleAllShowsUpdate();
+                }
+                if (getResources().getBoolean(R.bool.isLargeTablet)
+                        && lastVersion < VER_HIGHRES_THUMBS) {
+                    // clear image cache
+                    ImageProvider.getInstance(this).clearCache();
+                    ImageProvider.getInstance(this).clearExternalStorageCache();
+                    scheduleAllShowsUpdate();
                 }
 
                 // BETA warning dialog switch
@@ -496,6 +503,13 @@ public class ShowsActivity extends BaseActivity {
         } catch (NameNotFoundException e) {
             // this should never happen
         }
+    }
+
+    private void scheduleAllShowsUpdate() {
+        // force update of all shows
+        ContentValues values = new ContentValues();
+        values.put(Shows.LASTUPDATED, 0);
+        getContentResolver().update(Shows.CONTENT_URI, values, null, null);
     }
 
 }
