@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <header
+        android:fragment="com.battlelancer.seriesguide.ui.SeriesGuidePreferences$SettingsFragment"
+        android:title="@string/prefs_category_basic" >
+        <extra
+            android:name="settings"
+            android:value="basic" />
+    </header>
+    <header
+        android:fragment="com.battlelancer.seriesguide.ui.SeriesGuidePreferences$SettingsFragment"
+        android:title="@string/prefs_category_sharing" >
+        <extra
+            android:name="settings"
+            android:value="sharing" />
+    </header>
+    <header
+        android:fragment="com.battlelancer.seriesguide.ui.SeriesGuidePreferences$SettingsFragment"
+        android:title="@string/prefs_category_advanced" >
+        <extra
+            android:name="settings"
+            android:value="advanced" />
+    </header>
+    <header
+        android:fragment="com.battlelancer.seriesguide.ui.SeriesGuidePreferences$SettingsFragment"
+        android:title="@string/prefs_category_about" >
+        <extra
+            android:name="settings"
+            android:value="about" />
+    </header>
+
+</preference-headers>

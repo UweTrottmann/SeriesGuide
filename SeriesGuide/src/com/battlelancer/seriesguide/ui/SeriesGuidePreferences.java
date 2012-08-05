@@ -27,26 +27,27 @@ import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
-import android.text.util.Linkify;
 import android.view.KeyEvent;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
 
 /**
  * Allows tweaking of various SeriesGuide settings.
@@ -54,6 +55,20 @@ import android.widget.Toast;
 public class SeriesGuidePreferences extends SherlockPreferenceActivity implements
         OnSharedPreferenceChangeListener {
 
+    private static final String KEY_CLEAR_CACHE = "clearCache";
+
+    private static final String KEY_GETGLUE_DISCONNECT = "clearGetGlueCredentials";
+
+    // Actions for legacy settings
+    final static String ACTION_PREFS_BASIC = "com.battlelancer.seriesguide.PREFS_BASIC";
+
+    private static final Object ACTION_PREFS_SHARING = "com.battlelancer.seriesguide.PREFS_SHARING";
+
+    final static String ACTION_PREFS_ADVANCED = "com.battlelancer.seriesguide.PREFS_ADVANCED";
+
+    final static String ACTION_PREFS_ABOUT = "com.battlelancer.seriesguide.PREFS_ABOUT";
+
+    // Preference keys
     public static final String KEY_TRAKTPWD = "com.battlelancer.seriesguide.traktpwd";
 
     public static final String KEY_TRAKTUSER = "com.battlelancer.seriesguide.traktuser";
@@ -100,11 +115,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_LASTTRAKTUPDATE = "com.battlelancer.seriesguide.lasttraktupdate";
 
-    /**
-     * Deprecated.
-     */
-    public static final String KEY_LAST_USED_SHARE_METHOD = "com.battlelancer.seriesguide.lastusedsharemethod";
-
     public static final String KEY_ONLYFAVORITES = "com.battlelancer.seriesguide.onlyfavorites";
 
     public static final String KEY_NOWATCHED = "com.battlelancer.seriesguide.activity.nowatched";
@@ -129,15 +139,13 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String HELP_URL = "http://seriesgui.de/help";
 
-    protected static final int ABOUT_DIALOG = 0;
-
-    private static final String TRANSLATIONS_URL = "http://crowdin.net/project/seriesguide-translations/invite";
-
     private static final String TAG = "SeriesGuidePreferences";
+
+    private static final String KEY_ABOUT = "aboutPref";
 
     public static int THEME = R.style.SeriesGuideTheme;
 
-    public void fireTrackerEvent(String label) {
+    public static void fireTrackerEvent(String label) {
         EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
     }
 
@@ -147,59 +155,53 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         setTheme(SeriesGuidePreferences.THEME);
         super.onCreate(savedInstanceState);
 
-        final SeriesGuidePreferences activity = this;
-        addPreferencesFromResource(R.layout.preferences);
+        String action = getIntent().getAction();
+        if (action != null && action.equals(ACTION_PREFS_BASIC)) {
+            addPreferencesFromResource(R.xml.settings_basic);
+            setupBasicSettings(this, findPreference(KEY_ONLY_FUTURE_EPISODES),
+                    findPreference(KEY_ONLY_SEASON_EPISODES),
+                    findPreference(KEY_NOTIFICATIONS_ENABLED), findPreference(KEY_LANGUAGE));
+        } else if (action != null && action.equals(ACTION_PREFS_SHARING)) {
+            addPreferencesFromResource(R.xml.settings_sharing);
+            setupSharingSettings(this, findPreference(KEY_GETGLUE_DISCONNECT));
+        } else if (action != null && action.equals(ACTION_PREFS_ADVANCED)) {
+            addPreferencesFromResource(R.xml.settings_advanced);
+            setupAdvancedSettings(this, findPreference(KEY_THEME), getIntent(),
+                    findPreference(KEY_UPCOMING_LIMIT), findPreference(KEY_NUMBERFORMAT),
+                    findPreference(KEY_OFFSET), findPreference(KEY_GOOGLEANALYTICS),
+                    findPreference(KEY_CLEAR_CACHE));
+        } else if (action != null && action.equals(ACTION_PREFS_ABOUT)) {
+            addPreferencesFromResource(R.xml.settings_about);
+            setupAboutSettings(this, findPreference(KEY_ABOUT));
+        } else if (!AndroidUtils.isHoneycombOrHigher()) {
+            // Load the legacy preferences headers
+            addPreferencesFromResource(R.xml.settings_legacy);
+        }
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+    }
 
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-
-        final String versionFinal = Utils.getVersion(this);
-
-        // About
-        Preference aboutPref = (Preference) findPreference("aboutPref");
-        aboutPref.setSummary("v" + versionFinal + " (dbver " + SeriesGuideDatabase.DATABASE_VERSION
-                + ")");
-        aboutPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+    protected static void setupSharingSettings(Context context, Preference getGluePref) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        // Disconnect GetGlue
+        getGluePref.setEnabled(GetGlue.isAuthenticated(prefs));
+        getGluePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
-                fireTrackerEvent("About dialog");
+                fireTrackerEvent("Disonnect GetGlue");
 
-                showDialog(ABOUT_DIALOG);
+                GetGlue.clearCredentials(prefs);
+                preference.setEnabled(false);
                 return true;
             }
         });
+    }
 
-        // Clear image cache
-        Preference clearCachePref = (Preference) findPreference("clearCache");
-        clearCachePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference preference) {
-                fireTrackerEvent("Clear Image Cache");
-
-                ImageProvider.getInstance(activity).clearCache();
-                ImageProvider.getInstance(activity).clearExternalStorageCache();
-                Toast.makeText(getApplicationContext(), getString(R.string.done),
-                        Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
-
-        // Backup & Restore
-        Preference backupPref = (Preference) findPreference("backup");
-        backupPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference preference) {
-                startActivity(new Intent(activity, BackupDeleteActivity.class));
-                return true;
-            }
-        });
-
+    protected static void setupBasicSettings(final Context context, Preference noAiredPref,
+            Preference noSpecialsPref, Preference notificationsPref, Preference languagePref) {
         // No aired episodes
-        Preference futureepisodes = (Preference) findPreference(KEY_ONLY_FUTURE_EPISODES);
-        futureepisodes.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        noAiredPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
                 if (((CheckBoxPreference) preference).isChecked()) {
@@ -214,8 +216,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         });
 
         // No special episodes
-        Preference seasonEpisodes = (Preference) findPreference(KEY_ONLY_SEASON_EPISODES);
-        seasonEpisodes.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+        noSpecialsPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
             public boolean onPreferenceClick(Preference preference) {
                 if (((CheckBoxPreference) preference).isChecked()) {
@@ -229,48 +230,9 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             }
         });
 
-        // Disconnect GetGlue
-        Preference getgluePref = (Preference) findPreference("clearGetGlueCredentials");
-        getgluePref.setEnabled(GetGlue.isAuthenticated(prefs));
-        getgluePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference preference) {
-                fireTrackerEvent("Disonnect GetGlue");
-
-                GetGlue.clearCredentials(prefs);
-                preference.setEnabled(false);
-                return true;
-            }
-        });
-
-        // trakt.tv
-        findPreference("com.battlelancer.seriesguide.trakt").setOnPreferenceClickListener(
-                new OnPreferenceClickListener() {
-
-                    public boolean onPreferenceClick(Preference preference) {
-                        startActivity(new Intent(SeriesGuidePreferences.this,
-                                TraktSyncActivity.class));
-                        return true;
-                    }
-                });
-
-        // Help translate
-        Preference helpTranslate = (Preference) findPreference("com.battlelancer.seriesguide.helpTranslate");
-        helpTranslate.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference preference) {
-                fireTrackerEvent("Help translate");
-
-                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(TRANSLATIONS_URL));
-                startActivity(myIntent);
-                return true;
-            }
-        });
-
         // Notifications
-        Preference notificationsPref = findPreference(KEY_NOTIFICATIONS_ENABLED);
         // allow supporters to enable notfications
-        if (Utils.isSupporterChannel(this)) {
+        if (Utils.isSupporterChannel(context)) {
             notificationsPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
@@ -282,7 +244,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                                 (long) 0);
                     }
 
-                    Utils.runNotificationService(SeriesGuidePreferences.this);
+                    Utils.runNotificationService(context);
                     return true;
                 }
             });
@@ -291,8 +253,13 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             notificationsPref.setSummary(R.string.onlyx);
         }
 
+        setListPreferenceSummary((ListPreference) languagePref);
+    }
+
+    protected static void setupAdvancedSettings(final Activity activity, Preference themePref,
+            final Intent startIntent, Preference upcomingPref, Preference numberFormatPref,
+            Preference offsetPref, Preference analyticsPref, Preference clearCachePref) {
         // Theme switcher
-        Preference themePref = findPreference(KEY_THEME);
         themePref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
@@ -300,37 +267,62 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                     Utils.updateTheme((String) newValue);
 
                     // restart to apply new theme
-                    Intent intent = getIntent();
-                    NavUtils.navigateUpTo(SeriesGuidePreferences.this, new Intent(
-                            Intent.ACTION_MAIN).setClass(SeriesGuidePreferences.this,
-                            ShowsActivity.class));
-                    startActivity(intent);
+                    NavUtils.navigateUpTo(activity,
+                            new Intent(Intent.ACTION_MAIN).setClass(activity, ShowsActivity.class));
+                    activity.startActivity(startIntent);
                 }
                 return true;
             }
         });
 
+        // Clear image cache
+        clearCachePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+            public boolean onPreferenceClick(Preference preference) {
+                fireTrackerEvent("Clear Image Cache");
+
+                ImageProvider.getInstance(activity).clearCache();
+                ImageProvider.getInstance(activity).clearExternalStorageCache();
+                Toast.makeText(activity, activity.getString(R.string.done), Toast.LENGTH_SHORT)
+                        .show();
+                return true;
+            }
+        });
+
         // GA opt-out
-        findPreference(KEY_GOOGLEANALYTICS).setOnPreferenceChangeListener(
-                new OnPreferenceChangeListener() {
-                    @Override
-                    public boolean onPreferenceChange(Preference preference, Object newValue) {
-                        if (preference.getKey().equals(KEY_GOOGLEANALYTICS)) {
-                            boolean isEnabled = (Boolean) newValue;
-                            GoogleAnalytics.getInstance(activity).setAppOptOut(isEnabled);
-                            return true;
-                        }
-                        return false;
-                    }
-                });
+        analyticsPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                if (preference.getKey().equals(KEY_GOOGLEANALYTICS)) {
+                    boolean isEnabled = (Boolean) newValue;
+                    GoogleAnalytics.getInstance(activity).setAppOptOut(isEnabled);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         // show currently set values for list prefs
-        setListPreferenceSummary(themePref);
-        setListPreferenceSummary(findPreference(KEY_UPCOMING_LIMIT));
-        setListPreferenceSummary(findPreference(KEY_LANGUAGE));
-        setListPreferenceSummary(findPreference(KEY_NUMBERFORMAT));
-        ListPreference offsetPref = (ListPreference) findPreference(KEY_OFFSET);
-        offsetPref.setSummary(getString(R.string.pref_offsetsummary, offsetPref.getEntry()));
+        setListPreferenceSummary((ListPreference) themePref);
+        setListPreferenceSummary((ListPreference) upcomingPref);
+
+        setListPreferenceSummary((ListPreference) numberFormatPref);
+        ListPreference offsetListPref = (ListPreference) offsetPref;
+        offsetListPref.setSummary(activity.getString(R.string.pref_offsetsummary,
+                offsetListPref.getEntry()));
+    }
+
+    protected static void setupAboutSettings(Context context, Preference aboutPref) {
+        final String versionFinal = Utils.getVersion(context);
+
+        // About
+        aboutPref.setSummary("v" + versionFinal + " (Database v"
+                + SeriesGuideDatabase.DATABASE_VERSION + ")");
+    }
+
+    @Override
+    public void onBuildHeaders(List<Header> target) {
+        loadHeadersFromResource(R.xml.settings, target);
     }
 
     @Override
@@ -349,26 +341,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 .getDefaultSharedPreferences(getApplicationContext());
         prefs.unregisterOnSharedPreferenceChangeListener(this);
         EasyTracker.getInstance().activityStop(this);
-    }
-
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case ABOUT_DIALOG: {
-                final TextView message = new TextView(this);
-                message.setAutoLinkMask(Linkify.ALL);
-                message.setText(getString(R.string.about_message));
-                message.setPadding(10, 5, 10, 5);
-                message.setTextSize(16);
-                final ScrollView aboutScroll = new ScrollView(this);
-                aboutScroll.addView(message);
-                return new AlertDialog.Builder(this).setTitle(getString(R.string.about))
-                        .setCancelable(true).setIcon(R.drawable.icon)
-                        .setPositiveButton(getString(android.R.string.ok), null)
-                        .setView(aboutScroll).create();
-            }
-        }
-        return null;
     }
 
     @Override
@@ -392,27 +364,106 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(KEY_UPCOMING_LIMIT) || key.equals(KEY_LANGUAGE)
                 || key.equals(KEY_NUMBERFORMAT) || key.equals(KEY_THEME)) {
-            setListPreferenceSummary(findPreference(key));
+            Preference pref = findPreference(key);
+            if (pref != null) {
+                setListPreferenceSummary((ListPreference) pref);
+            }
         }
 
         if (key.equals(KEY_OFFSET)) {
-            ListPreference pref = (ListPreference) findPreference(key);
-            // Set summary to be the user-description for the selected value
-            pref.setSummary(getString(R.string.pref_offsetsummary, pref.getEntry()));
+            Preference pref = findPreference(key);
+            if (pref != null) {
+                ListPreference listPref = (ListPreference) pref;
+                // Set summary to be the user-description for the selected value
+                listPref.setSummary(getString(R.string.pref_offsetsummary, listPref.getEntry()));
 
-            // run notification service to take care of potential time shifts
-            // when changing the time offset
-            Utils.runNotificationService(SeriesGuidePreferences.this);
+                // run notification service to take care of potential time
+                // shifts
+                // when changing the time offset
+                Utils.runNotificationService(SeriesGuidePreferences.this);
+            }
         }
     }
 
-    private void setListPreferenceSummary(Preference pref) {
-        ListPreference listPref = (ListPreference) pref;
+    public static void setListPreferenceSummary(ListPreference listPref) {
         // Set summary to be the user-description for the selected value
         listPref.setSummary(listPref.getEntry());
+    }
+
+    @TargetApi(11)
+    public static class SettingsFragment extends PreferenceFragment implements
+            OnSharedPreferenceChangeListener {
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            String settings = getArguments().getString("settings");
+            if ("basic".equals(settings)) {
+                addPreferencesFromResource(R.xml.settings_basic);
+                setupBasicSettings(getActivity(), findPreference(KEY_ONLY_FUTURE_EPISODES),
+                        findPreference(KEY_ONLY_SEASON_EPISODES),
+                        findPreference(KEY_NOTIFICATIONS_ENABLED), findPreference(KEY_LANGUAGE));
+            } else if ("sharing".equals(settings)) {
+                addPreferencesFromResource(R.xml.settings_sharing);
+                setupSharingSettings(getActivity(), findPreference(KEY_GETGLUE_DISCONNECT));
+            } else if ("advanced".equals(settings)) {
+                addPreferencesFromResource(R.xml.settings_advanced);
+                setupAdvancedSettings(getActivity(), findPreference(KEY_THEME), getActivity()
+                        .getIntent(), findPreference(KEY_UPCOMING_LIMIT),
+                        findPreference(KEY_NUMBERFORMAT), findPreference(KEY_OFFSET),
+                        findPreference(KEY_GOOGLEANALYTICS), findPreference(KEY_CLEAR_CACHE));
+            } else if ("about".equals(settings)) {
+                addPreferencesFromResource(R.xml.settings_about);
+                setupAboutSettings(getActivity(), findPreference(KEY_ABOUT));
+            }
+        }
+
+        @Override
+        public void onStart() {
+            super.onStart();
+            final SharedPreferences prefs = PreferenceManager
+                    .getDefaultSharedPreferences(getActivity());
+            prefs.registerOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public void onStop() {
+            super.onStop();
+            final SharedPreferences prefs = PreferenceManager
+                    .getDefaultSharedPreferences(getActivity());
+            prefs.unregisterOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (key.equals(KEY_UPCOMING_LIMIT) || key.equals(KEY_LANGUAGE)
+                    || key.equals(KEY_NUMBERFORMAT) || key.equals(KEY_THEME)) {
+                Preference pref = findPreference(key);
+                if (pref != null) {
+                    setListPreferenceSummary((ListPreference) pref);
+                }
+            }
+
+            if (key.equals(KEY_OFFSET)) {
+                Preference pref = findPreference(key);
+                if (pref != null) {
+                    ListPreference listPref = (ListPreference) pref;
+                    // Set summary to be the user-description for the selected
+                    // value
+                    listPref.setSummary(getString(R.string.pref_offsetsummary, listPref.getEntry()));
+
+                    // run notification service to take care of potential time
+                    // shifts
+                    // when changing the time offset
+                    Utils.runNotificationService(getActivity());
+                }
+            }
+        }
     }
 }

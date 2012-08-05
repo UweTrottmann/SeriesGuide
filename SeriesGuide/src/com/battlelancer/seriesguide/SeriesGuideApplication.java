@@ -39,7 +39,8 @@ public class SeriesGuideApplication extends Application {
         super.onCreate();
 
         // initialize settings on first run
-        PreferenceManager.setDefaultValues(this, R.layout.preferences, false);
+        PreferenceManager.setDefaultValues(this, R.xml.settings_basic, false);
+        PreferenceManager.setDefaultValues(this, R.xml.settings_advanced, false);
 
         // ensure the notifications service is started (we also restart it on
         // boot)
