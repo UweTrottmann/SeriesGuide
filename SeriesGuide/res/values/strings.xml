@@ -201,7 +201,7 @@
     <string name="about">About SeriesGuide</string>
     <string name="pref_credits">Credits</string>
     <string name="clearGetGlueCredentials">Disconnect GetGlue</string>
-    <string name="clearGetGlueCredentialssummary">Clear your connection to GetGlue</string>
+    <string name="clearGetGlueCredentialssummary">Check In with GetGlue to reconnect</string>
     <string name="pref_trakt">trakt.tv credentials</string>
     <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
     <string name="pref_traktsync">Sync with trakt.tv</string>
