@@ -135,6 +135,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_THEME = "com.battlelancer.seriesguide.theme";
 
+    public static final String KEY_LASTBACKUP = "com.battlelancer.seriesguide.lastbackup";
+
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
 
     public static final String HELP_URL = "http://seriesgui.de/help";
