@@ -17,7 +17,6 @@
 
 package com.battlelancer.seriesguide;
 
-import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
