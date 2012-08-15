@@ -5,7 +5,7 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 2.8 *(in development)*
+Version 2.8 *(2012-08-15)*
 --------------------------------
 
 * FEATURE Use the new expandable notifications on Android 4.1 Jelly Bean to display more content.
