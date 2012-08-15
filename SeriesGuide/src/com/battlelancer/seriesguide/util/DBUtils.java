@@ -26,11 +26,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.services.ShowService;
-import com.uwetrottmann.androidutils.AndroidUtils;
+import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
 
 import android.app.ProgressDialog;
 import android.content.ContentProviderOperation;
@@ -41,12 +37,9 @@ import android.content.OperationApplicationException;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
-import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -259,271 +252,26 @@ public class DBUtils {
     }
 
     /**
-     * Updates the given boolean to the EPISODE_WATCHED column of the given
-     * episode row. Be aware that the database stores the value as an integer.
-     * 
-     * @param rowid
-     * @param state
-     */
-    public static void markEpisode(Context context, String episodeId, boolean state) {
-        if (context == null) {
-            return;
-        }
-
-        ContentValues values = new ContentValues();
-        values.put(Episodes.WATCHED, state);
-
-        context.getContentResolver()
-                .update(Episodes.buildEpisodeUri(episodeId), values, null, null);
-        context.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
-    }
-
-    /**
-     * Mark an episode as seen/unseen on trakt using an AsyncTask.
-     * 
-     * @param context
-     * @param showId
-     * @param seasonNumber
-     * @param episodeNumber
-     * @param isSeen
-     */
-    public static void markSeenOnTrakt(final Context context, int showId, int seasonNumber,
-            int episodeNumber, boolean isSeen) {
-        markEpisodeOnTrakt(context, showId, seasonNumber, episodeNumber, isSeen,
-                TraktAction.WATCHED);
-    }
-
-    /**
-     * Mark an episode as collected/not collected on trakt using an AsyncTask.
-     * 
-     * @param context
-     * @param showId
-     * @param seasonNumber
-     * @param episodeNumber
-     * @param isCollected
-     */
-    public static void markCollectedOnTrakt(final Context context, int showId, int seasonNumber,
-            int episodeNumber, boolean isCollected) {
-        markEpisodeOnTrakt(context, showId, seasonNumber, episodeNumber, isCollected,
-                TraktAction.LIBRARY);
-    }
-
-    private enum TraktAction {
-        WATCHED, LIBRARY
-    }
-
-    private static void markEpisodeOnTrakt(final Context context, final int tvdbId,
-            final int season, final int episode, final boolean isAdd, final TraktAction actiontype) {
-        // check for valid credentials here, not worth building up a whole
-        // AsyncTask to do that
-        if (!Utils.isTraktCredentialsValid(context)) {
-            return;
-        }
-
-        new AsyncTask<Void, Void, Integer>() {
-            private static final int FAILED = -1;
-
-            private static final int OFFLINE = -2;
-
-            private static final int SUCCESS = 0;
-
-            @Override
-            protected Integer doInBackground(Void... params) {
-                // check for network connection
-                if (!AndroidUtils.isNetworkConnected(context)) {
-                    return OFFLINE;
-                }
-
-                try {
-                    ServiceManager manager = Utils.getServiceManagerWithAuth(context, false);
-                    ShowService showService = manager.showService();
-
-                    switch (actiontype) {
-                        case WATCHED: {
-                            if (isAdd) {
-                                showService.episodeSeen(tvdbId).episode(season, episode).fire();
-                            } else {
-                                showService.episodeUnseen(tvdbId).episode(season, episode).fire();
-                            }
-                            break;
-                        }
-                        case LIBRARY: {
-                            if (isAdd) {
-                                showService.episodeLibrary(tvdbId).episode(season, episode).fire();
-                            } else {
-                                showService.episodeUnlibrary(tvdbId).episode(season, episode)
-                                        .fire();
-                            }
-                            break;
-                        }
-                    }
-
-                } catch (TraktException e) {
-                    Utils.trackException(context, e);
-                    Log.w(ShareUtils.TAG, e);
-                    return FAILED;
-                } catch (ApiException e) {
-                    Utils.trackException(context, e);
-                    Log.w(ShareUtils.TAG, e);
-                    return FAILED;
-                } catch (Exception e) {
-                    // password could likely not be decrypted
-                    Utils.trackException(context, e);
-                    Log.w(ShareUtils.TAG, e);
-                    return FAILED;
-                }
-
-                return SUCCESS;
-            }
-
-            protected void onPostExecute(Integer result) {
-                int message = 0;
-                switch (actiontype) {
-                    case WATCHED:
-                        if (isAdd) {
-                            message = R.string.trakt_seen;
-                        } else {
-                            message = R.string.trakt_notseen;
-                        }
-                        break;
-                    case LIBRARY:
-                        if (isAdd) {
-                            message = R.string.trakt_collected;
-                        } else {
-                            message = R.string.trakt_notcollected;
-                        }
-                        break;
-                }
-
-                int status = 0;
-                int duration = 0;
-                switch (result) {
-                    case SUCCESS: {
-                        status = R.string.trakt_submitsuccess;
-                        duration = Toast.LENGTH_SHORT;
-                        break;
-                    }
-                    case FAILED: {
-                        status = R.string.trakt_submitfailed;
-                        duration = Toast.LENGTH_LONG;
-                        break;
-                    }
-                    case OFFLINE: {
-                        status = R.string.offline;
-                        duration = Toast.LENGTH_LONG;
-                        break;
-                    }
-                }
-
-                final SharedPreferences prefs = PreferenceManager
-                        .getDefaultSharedPreferences(context);
-                final String number = Utils.getEpisodeNumber(prefs, season, episode);
-                Toast.makeText(context,
-                        context.getString(message, number) + " " + context.getString(status),
-                        duration).show();
-            }
-
-        }.execute();
-    }
-
-    /**
-     * Updates the {@link Episodes} COLLECTED column with the given value.
-     * 
-     * @param rowid
-     * @param state
-     */
-    public static void collectEpisode(Context context, String episodeId, boolean isCollected) {
-        if (context == null) {
-            return;
-        }
-
-        ContentValues values = new ContentValues();
-        values.put(Episodes.COLLECTED, isCollected);
-
-        context.getContentResolver()
-                .update(Episodes.buildEpisodeUri(episodeId), values, null, null);
-        context.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
-    }
-
-    /**
      * Marks the next episode (if there is one) of the given show as watched.
      * Submits it to trakt if possible.
      * 
      * @param showId
      */
-    public static void markNextEpisode(Context context, long showId) {
-        // get id of next episode
-        Cursor show = context.getContentResolver().query(
-                Shows.buildShowUri(String.valueOf(showId)), new String[] {
-                    Shows.NEXTEPISODE
-                }, null, null, null);
-
-        if (show != null && show.moveToFirst()) {
-            final String episodeId = show.getString(0);
-            show.close();
-
-            if (episodeId.length() != 0) {
-                // mark it as watched
-                ContentValues values = new ContentValues();
-                values.put(Episodes.WATCHED, true);
-                context.getContentResolver().update(Episodes.buildEpisodeUri(episodeId), values,
-                        null, null);
-
-                // submit that to trakt
-                Cursor episode = context.getContentResolver().query(
-                        Episodes.buildEpisodeUri(episodeId), new String[] {
-                                Episodes.SEASON, Episodes.NUMBER, Shows.REF_SHOW_ID
-                        }, null, null, null);
-                if (episode != null && episode.moveToFirst()) {
-                    DBUtils.markSeenOnTrakt(context, episode.getInt(2), episode.getInt(0),
-                            episode.getInt(1), true);
-                    episode.close();
+    public static void markNextEpisode(Context context, OnFlagListener listener, int showId,
+            int episodeId) {
+        if (episodeId > 0) {
+            Cursor episode = context.getContentResolver().query(
+                    Episodes.buildEpisodeUri(String.valueOf(episodeId)), new String[] {
+                            Episodes.SEASON, Episodes.NUMBER
+                    }, null, null, null);
+            if (episode != null) {
+                if (episode.moveToFirst()) {
+                    new FlagTask(context, (int) showId, listener)
+                            .episodeWatched(episode.getInt(0), episode.getInt(1))
+                            .setItemId(episodeId).setFlag(true).execute();
                 }
+                episode.close();
             }
-        }
-    }
-
-    /**
-     * Updates all EPISODE_WATCHED columns of the episodes of the given season
-     * with the given boolean. Be aware that the database stores the value as an
-     * integer.
-     * 
-     * @param seasonid
-     * @param state
-     */
-    public static void markSeasonEpisodes(Context context, String seasonId, boolean state) {
-        ContentValues values = new ContentValues();
-        values.put(Episodes.WATCHED, state);
-        context.getContentResolver().update(Episodes.buildEpisodesOfSeasonUri(seasonId), values,
-                null, null);
-    }
-
-    /**
-     * Marks all episodes of a show that have aired before the air date of the
-     * given episode.
-     * 
-     * @param context
-     * @param episodeId
-     */
-    public static void markUntilHere(Context context, String episodeId) {
-        Cursor episode = context.getContentResolver().query(Episodes.buildEpisodeUri(episodeId),
-                new String[] {
-                        Episodes.FIRSTAIRED, Shows.REF_SHOW_ID
-                }, null, null, null);
-        episode.moveToFirst();
-        final String untilDate = episode.getString(0);
-        final String showId = episode.getString(1);
-        episode.close();
-
-        if (untilDate.length() != 0) {
-            ContentValues values = new ContentValues();
-            values.put(Episodes.WATCHED, true);
-
-            context.getContentResolver().update(Episodes.buildEpisodesOfShowUri(showId), values,
-                    Episodes.FIRSTAIRED + "<? AND " + Episodes.FIRSTAIRED + "!=''", new String[] {
-                        untilDate
-                    });
-            context.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
         }
     }
 

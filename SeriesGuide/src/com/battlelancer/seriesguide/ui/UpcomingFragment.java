@@ -22,7 +22,7 @@ import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -146,23 +146,24 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
         switch (item.getItemId()) {
             case MARK_WATCHED_ID: {
-                onMarkEpisode(info, true);
+                onFlagEpisodeWatched(info, true);
                 return true;
             }
             case MARK_UNWATCHED_ID: {
-                onMarkEpisode(info, false);
+                onFlagEpisodeWatched(info, false);
                 return true;
             }
         }
         return super.onContextItemSelected(item);
     }
 
-    private void onMarkEpisode(AdapterContextMenuInfo info, boolean isWatched) {
-        DBUtils.markEpisode(getActivity(), String.valueOf(info.id), isWatched);
+    private void onFlagEpisodeWatched(AdapterContextMenuInfo info, boolean isWatched) {
+        Cursor item = (Cursor) mAdapter.getItem(info.position);
 
-        Cursor items = (Cursor) mAdapter.getItem(info.position);
-        DBUtils.markSeenOnTrakt(getActivity(), items.getInt(UpcomingQuery.REF_SHOW_ID),
-                items.getInt(UpcomingQuery.SEASON), items.getInt(UpcomingQuery.NUMBER), isWatched);
+        new FlagTask(getActivity(), item.getInt(UpcomingQuery.REF_SHOW_ID), null)
+                .episodeWatched(item.getInt(UpcomingQuery.SEASON),
+                        item.getInt(UpcomingQuery.NUMBER)).setItemId((int) info.id)
+                .setFlag(isWatched).execute();
     }
 
     private void setupAdapter() {
@@ -388,15 +389,16 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
             // save rowid to hand over to OnClick event listener
             final int showId = mCursor.getInt(UpcomingQuery.REF_SHOW_ID);
             final int seasonNumber = mCursor.getInt(UpcomingQuery.SEASON);
-            final String episodeId = mCursor.getString(UpcomingQuery._ID);
+            final int episodeId = mCursor.getInt(UpcomingQuery._ID);
             final int episodeNumber = mCursor.getInt(UpcomingQuery.NUMBER);
             viewHolder.watchedBox.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
                     WatchedBox checkBox = (WatchedBox) v;
                     checkBox.toggle();
-                    DBUtils.markEpisode(getActivity(), episodeId, checkBox.isChecked());
-                    DBUtils.markSeenOnTrakt(getActivity(), showId, seasonNumber, episodeNumber,
-                            checkBox.isChecked());
+
+                    new FlagTask(mContext, showId, null)
+                            .episodeWatched(seasonNumber, episodeNumber).setItemId(episodeId)
+                            .setFlag(checkBox.isChecked()).execute();
                 }
             });
             viewHolder.watchedBox.setChecked(mCursor.getInt(UpcomingQuery.WATCHED) > 0);

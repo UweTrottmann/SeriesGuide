@@ -320,6 +320,68 @@ public class ShowService extends TraktApiService {
     public SeasonsBuilder seasons(String query) {
         return new SeasonsBuilder(this, query);
     }
+    
+    /**
+     * Add all episodes from a season watched outside of trakt to your library.
+     *
+     * @param imdbId Show IMDB ID.
+     * @return Builder instance.
+     */
+    public SeasonSeenBuilder seasonSeen(String imdbId) {
+        return new SeasonSeenBuilder(this).imdbId(imdbId);
+    }
+
+    /**
+     * Add all episodes from a season watched outside of trakt to your library.
+     *
+     * @param tvdbId Show TVDB ID.
+     * @return Builder instance.
+     */
+    public SeasonSeenBuilder seasonSeen(int tvdbId) {
+        return new SeasonSeenBuilder(this).tvdbId(tvdbId);
+    }
+
+    /**
+     * Add all episodes from a season watched outside of trakt to your library.
+     *
+     * @param title Show title.
+     * @param year Show year.
+     * @return Builder instance.
+     */
+    public SeasonSeenBuilder seasonSeen(String title, int year) {
+        return new SeasonSeenBuilder(this).title(title).year(year);
+    }
+    
+    /**
+     * Add all episodes for a show watched outside of trakt to your library.
+     *
+     * @param imdbId Show IMDB ID.
+     * @return Builder instance.
+     */
+    public ShowSeenBuilder showSeen(String imdbId) {
+        return new ShowSeenBuilder(this).imdbId(imdbId);
+    }
+
+    /**
+     * Add all episodes for a show watched outside of trakt to your library.
+     *
+     * @param tvdbId Show TVDB ID.
+     * @return Builder instance.
+     */
+    public ShowSeenBuilder showSeen(int tvdbId) {
+        return new ShowSeenBuilder(this).tvdbId(tvdbId);
+    }
+
+    /**
+     * Add all episodes for a show watched outside of trakt to your library.
+     *
+     * @param title Show title.
+     * @param year Show year.
+     * @return Builder instance.
+     */
+    public ShowSeenBuilder showSeen(String title, int year) {
+        return new ShowSeenBuilder(this).title(title).year(year);
+    }
 
     /**
      * Returns information for a TV show including ratings, top watchers, and
@@ -1289,6 +1351,130 @@ public class ShowService extends TraktApiService {
             this.field(FIELD_QUERY, query);
         }
     }
+    public static final class SeasonSeenBuilder extends TraktApiBuilder<Void> {
+        private static final String POST_IMDB_ID = "imdb_id";
+        private static final String POST_TVDB_ID = "tvdb_id";
+        private static final String POST_TITLE = "title";
+        private static final String POST_YEAR = "year";
+        private static final String POST_SEASON = "season";
+        
+        private static final String URI = "/show/season/seen/" + FIELD_API_KEY;
+        
+        private SeasonSeenBuilder(ShowService service) {
+            super(service, new TypeToken<Void>() {}, URI, HttpMethod.Post);
+        }
+
+        /**
+         * Show IMDB ID.
+         *
+         * @param imdbId Value.
+         * @return Builder instance.
+         */
+        public SeasonSeenBuilder imdbId(String imdbId) {
+            postParameter(POST_IMDB_ID, imdbId);
+            return this;
+        }
+
+        /**
+         * Show TVDB ID.
+         *
+         * @param tvdbId Value.
+         * @return Builder instance.
+         */
+        public SeasonSeenBuilder tvdbId(int tvdbId) {
+            postParameter(POST_TVDB_ID, tvdbId);
+            return this;
+        }
+
+        /**
+         * Show title.
+         *
+         * @param title Value.
+         * @return Builder instance.
+         */
+        public SeasonSeenBuilder title(String title) {
+            postParameter(POST_TITLE, title);
+            return this;
+        }
+
+        /**
+         * Show year.
+         *
+         * @param year Value.
+         * @return Builder instance.
+         */
+        public SeasonSeenBuilder year(int year) {
+            postParameter(POST_YEAR, year);
+            return this;
+        }
+
+        /**
+         * Season.
+         *
+         * @param season Season number.
+         * @return Builder instance.
+         */
+        public SeasonSeenBuilder season(int season) {
+            postParameter(POST_SEASON, season);
+            return this;
+        }
+    }
+    public static final class ShowSeenBuilder extends TraktApiBuilder<Void> {
+        private static final String POST_IMDB_ID = "imdb_id";
+        private static final String POST_TVDB_ID = "tvdb_id";
+        private static final String POST_TITLE = "title";
+        private static final String POST_YEAR = "year";
+        
+        private static final String URI = "/show/seen/" + FIELD_API_KEY;
+        
+        private ShowSeenBuilder(ShowService service) {
+            super(service, new TypeToken<Void>() {}, URI, HttpMethod.Post);
+        }
+    
+        /**
+         * Show IMDB ID.
+         *
+         * @param imdbId Value.
+         * @return Builder instance.
+         */
+        public ShowSeenBuilder imdbId(String imdbId) {
+            postParameter(POST_IMDB_ID, imdbId);
+            return this;
+        }
+    
+        /**
+         * Show TVDB ID.
+         *
+         * @param tvdbId Value.
+         * @return Builder instance.
+         */
+        public ShowSeenBuilder tvdbId(int tvdbId) {
+            postParameter(POST_TVDB_ID, tvdbId);
+            return this;
+        }
+    
+        /**
+         * Show title.
+         *
+         * @param title Value.
+         * @return Builder instance.
+         */
+        public ShowSeenBuilder title(String title) {
+            postParameter(POST_TITLE, title);
+            return this;
+        }
+    
+        /**
+         * Show year.
+         *
+         * @param year Value.
+         * @return Builder instance.
+         */
+        public ShowSeenBuilder year(int year) {
+            postParameter(POST_YEAR, year);
+            return this;
+        }
+    }
     public static final class SummaryBuilder extends TraktApiBuilder<TvShow> {
         private static final String EXTENDED = "extended";
 
@@ -1852,7 +2038,7 @@ public class ShowService extends TraktApiService {
             this.postParameter(POST_VENUE_NAME, venueName);
             return this;
         }
-        
+
         /**
          * The message to use for sharing. If not sent, it will use the
          * localized watching string set on the connections page. The message

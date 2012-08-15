@@ -30,6 +30,9 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FetchArtTask;
+import com.battlelancer.seriesguide.util.FlagTask;
+import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
+import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
@@ -60,19 +63,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Displays general information about a show and its next episode. Displays a
  * {@link SeasonsFragment} on larger screens.
  */
-public class OverviewFragment extends SherlockFragment implements OnTraktActionCompleteListener {
+public class OverviewFragment extends SherlockFragment implements OnTraktActionCompleteListener,
+        OnFlagListener {
 
     private boolean mDualPane;
 
     private Series mShow;
 
-    protected long mEpisodeId;
+    protected int mEpisodeId;
 
     private FetchArtTask mArtTask;
 
@@ -385,7 +388,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                     return ABORT;
                 }
 
-                mEpisodeId = DBUtils.updateLatestEpisode(activity, String.valueOf(getShowId()));
+                mEpisodeId = (int) DBUtils.updateLatestEpisode(activity,
+                        String.valueOf(getShowId()));
 
                 return SUCCESS;
             }
@@ -420,7 +424,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         getView().findViewById(R.id.watchedButton).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                onMarkWatched();
+                onFlagWatched();
             }
         });
 
@@ -434,8 +438,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             @Override
             public void onClick(View v) {
                 onToggleCollected();
-                ((ImageButton) v).setImageResource(mCollected ? R.drawable.ic_collected
-                        : R.drawable.ic_action_collect);
             }
         });
 
@@ -540,22 +542,17 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         });
     }
 
-    private void onMarkWatched() {
-        DBUtils.markEpisode(getActivity(), String.valueOf(mEpisodeId), true);
-        DBUtils.markSeenOnTrakt(getActivity(), getShowId(), mSeasonNumber, mEpisodeNumber, true);
-
-        Toast.makeText(getActivity(), getString(R.string.mark_episode), Toast.LENGTH_SHORT).show();
-
-        // load new episode, update seasons (if shown)
-        onLoadEpisode();
-        onUpdateSeasons();
+    private void onFlagWatched() {
+        new FlagTask(getActivity(), getShowId(), this)
+                .episodeWatched(mSeasonNumber, mEpisodeNumber).setItemId(mEpisodeId).setFlag(true)
+                .execute();
     }
 
     private void onToggleCollected() {
         mCollected = !mCollected;
-        DBUtils.collectEpisode(getActivity(), String.valueOf(mEpisodeId), mCollected);
-        DBUtils.markCollectedOnTrakt(getActivity(), getShowId(), mSeasonNumber, mEpisodeNumber,
-                mCollected);
+        new FlagTask(getActivity(), getShowId(), this)
+                .episodeCollected(mSeasonNumber, mEpisodeNumber).setItemId(mEpisodeId)
+                .setFlag(mCollected).execute();
     }
 
     private void onUpdateSeasons() {
@@ -580,6 +577,15 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         // load new episode, update seasons (if shown)
         onLoadEpisode();
         onUpdateSeasons();
+    }
+
+    @Override
+    public void onFlagCompleted(FlagAction action, int showId, int itemId, boolean isSuccessful) {
+        if (isSuccessful) {
+            // load new episode, update seasons (if shown)
+            onLoadEpisode();
+            onUpdateSeasons();
+        }
     }
 
     interface EpisodeQuery {

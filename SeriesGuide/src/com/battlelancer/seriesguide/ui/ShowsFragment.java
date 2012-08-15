@@ -30,6 +30,8 @@ import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
 import com.battlelancer.seriesguide.util.CompatActionBarNavListener;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
+import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
@@ -71,7 +73,7 @@ import android.widget.Toast;
  * @author Uwe Trottmann
  */
 public class ShowsFragment extends SherlockFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, CompatActionBarNavListener {
+        LoaderManager.LoaderCallbacks<Cursor>, CompatActionBarNavListener, OnFlagListener {
 
     private static final String TAG = "ShowsFragment";
 
@@ -309,8 +311,10 @@ public class ShowsFragment extends SherlockFragment implements
             case CONTEXT_MARKNEXT:
                 fireTrackerEvent("Mark next episode");
 
-                DBUtils.markNextEpisode(getActivity(), info.id);
-                Utils.updateLatestEpisode(getActivity(), String.valueOf(info.id));
+                Cursor show = (Cursor) mAdapter.getItem(info.position);
+                DBUtils.markNextEpisode(getActivity(), this, (int) info.id,
+                        show.getInt(ShowsQuery.NEXTEPISODE));
+
                 return true;
         }
         return super.onContextItemSelected(item);
@@ -532,10 +536,11 @@ public class ShowsFragment extends SherlockFragment implements
     }
 
     private interface ShowsQuery {
+
         String[] PROJECTION = {
                 BaseColumns._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
                 Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE
+                Shows.FAVORITE, Shows.NEXTEPISODE
         };
 
         // int _ID = 0;
@@ -557,6 +562,8 @@ public class ShowsFragment extends SherlockFragment implements
         int NEXTAIRDATETEXT = 8;
 
         int FAVORITE = 9;
+
+        int NEXTEPISODE = 10;
     }
 
     public void fireTrackerEvent(String label) {
@@ -619,5 +626,12 @@ public class ShowsFragment extends SherlockFragment implements
             }
         }
     };
+
+    @Override
+    public void onFlagCompleted(FlagAction action, int showId, int itemId, boolean isSuccessful) {
+        if (isSuccessful) {
+            Utils.updateLatestEpisode(getActivity(), String.valueOf(showId));
+        }
+    }
 
 }
