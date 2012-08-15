@@ -20,6 +20,7 @@ package com.battlelancer.seriesguide.ui;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
@@ -49,7 +50,10 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        onAutoUpdate();
+        // make auto update task interfering with backup task less likely
+        if (!onAutoBackup()) {
+            onAutoUpdate();
+        }
     }
 
     @Override
@@ -78,13 +82,31 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
     }
 
     /**
+     * Periodically do an automatic backup of the show database.
+     */
+    private boolean onAutoBackup() {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        long now = System.currentTimeMillis();
+        final long previousBackupTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTBACKUP, 0);
+        final boolean isTime = (now - previousBackupTime) > 7 * DateUtils.DAY_IN_MILLIS;
+
+        if (isTime) {
+            TaskManager.getInstance(this).tryBackupTask(
+                    getApplication().getDatabasePath(SeriesGuideDatabase.DATABASE_NAME)
+                            .getAbsolutePath());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Try to launch a delta-update task if certain conditions are met.
      */
     private void onAutoUpdate() {
         // try to run auto-update
         if (Utils.isAllowedConnection(this)) {
-            final SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(getApplicationContext());
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
             // check if auto-update is actually enabled
             final boolean isAutoUpdateEnabled = prefs.getBoolean(

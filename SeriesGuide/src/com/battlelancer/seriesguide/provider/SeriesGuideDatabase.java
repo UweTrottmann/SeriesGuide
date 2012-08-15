@@ -24,7 +24,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.EpisodesColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesContract.ShowsColumns;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -156,7 +155,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             File exportDir = new File(Environment.getExternalStorageDirectory(),
                     "seriesguidebackup");
             exportDir.mkdirs();
-            File file = new File(exportDir, dbFile.getName() + "_b4upgr");
+            File file = new File(exportDir, dbFile.getName() + "_b4upgr.db");
 
             try {
                 file.createNewFile();

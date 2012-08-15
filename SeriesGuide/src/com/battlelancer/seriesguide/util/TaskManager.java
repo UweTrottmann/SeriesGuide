@@ -39,6 +39,8 @@ public class TaskManager {
 
     private UpdateTask mUpdateTask;
 
+    private BackupTask mBackupTask;
+
     private Context mContext;
 
     private TaskManager(Context context) {
@@ -108,6 +110,23 @@ public class TaskManager {
 
     public boolean isAddTaskRunning() {
         if (mAddTask == null || mAddTask.getStatus() == AsyncTask.Status.FINISHED) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void tryBackupTask(String filePath) {
+        if (!isUpdateTaskRunning(false) && !isAddTaskRunning()) {
+            mBackupTask = new BackupTask(mContext);
+            mBackupTask.execute(new String[] {
+                filePath
+            });
+        }
+    }
+
+    public boolean isBackupTaskRunning() {
+        if (mBackupTask == null || mBackupTask.getStatus() == AsyncTask.Status.FINISHED) {
             return false;
         } else {
             return true;

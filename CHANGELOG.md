@@ -8,9 +8,10 @@ All dates are in the European Central timezone.
 Version 2.8 *(in development)*
 --------------------------------
 
+* FEATURE Quickly add shows by tapping a + button.
 * FEATURE Use the new expandable notifications on Android 4.1 Jelly Bean to display more content.
 * TWEAK Calculate next episodes differently: display the next highest (season and number) episode regarding all watched episodes.
-* TWEAK New show list layout for 10 inch and certain 7 inch tablets.
+* TWEAK New layouts for 10 inch tablets.
 * TWEAK Update single shows more often if their overview screen is used.
 * TWEAK 'Update only via WiFi' setting respected by episode image and ratings downloads.
 * TWEAK Relayouted list widget, updated widget backgrounds.
