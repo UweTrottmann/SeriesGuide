@@ -5,25 +5,25 @@
         <intent
             android:action="com.battlelancer.seriesguide.PREFS_BASIC"
             android:targetClass="com.battlelancer.seriesguide.ui.SeriesGuidePreferences"
-            android:targetPackage="com.battlelancer.seriesguide.beta" />
+            android:targetPackage="com.battlelancer.seriesguide" />
     </Preference>
     <Preference android:title="@string/prefs_category_sharing" >
         <intent
             android:action="com.battlelancer.seriesguide.PREFS_SHARING"
             android:targetClass="com.battlelancer.seriesguide.ui.SeriesGuidePreferences"
-            android:targetPackage="com.battlelancer.seriesguide.beta" />
+            android:targetPackage="com.battlelancer.seriesguide" />
     </Preference>
     <Preference android:title="@string/prefs_category_advanced" >
         <intent
             android:action="com.battlelancer.seriesguide.PREFS_ADVANCED"
             android:targetClass="com.battlelancer.seriesguide.ui.SeriesGuidePreferences"
-            android:targetPackage="com.battlelancer.seriesguide.beta" />
+            android:targetPackage="com.battlelancer.seriesguide" />
     </Preference>
     <Preference android:title="@string/prefs_category_about" >
         <intent
             android:action="com.battlelancer.seriesguide.PREFS_ABOUT"
             android:targetClass="com.battlelancer.seriesguide.ui.SeriesGuidePreferences"
-            android:targetPackage="com.battlelancer.seriesguide.beta" />
+            android:targetPackage="com.battlelancer.seriesguide" />
     </Preference>
 
 </PreferenceScreen>
