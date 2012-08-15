@@ -19,6 +19,7 @@
   <string name="sending">Lähetetään…</string>
   <string name="done">Valmis</string>
   <string name="clear">Tyhjennä</string>
+  <string name="more">%s lisää</string>
   <string name="offline">Ei verkkoyhteyttä. Yritä myöhemmin uudelleen.</string>
   <string name="onlyx">Saatavilla vain SeriesGuide X:ssä</string>
   <string name="shouts">Huudahdukset</string>
@@ -120,7 +121,7 @@
   <string name="season_unaired">esittämätöntä</string>
   <string name="oneotherepisode">muu jakso</string>
   <string name="otherepisodes">muuta jaksoa</string>
-  <string name="remaining">%s remaining</string>
+  <string name="remaining">%s jäljellä</string>
   <string name="search_button">Hae</string>
   <string name="search_hint_add">Ohjelman nimi</string>
   <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
@@ -137,6 +138,10 @@
   <string name="library">Kokoelma</string>
   <string name="powered_by_thetvdb">Pohjautuu thetvdb.com:iin</string>
   <string name="powered_by_trakt">Pohjautuu trakt.tv:hen</string>
+  <string name="prefs_category_basic">Basics</string>
+  <string name="prefs_category_sharing">Sharing</string>
+  <string name="prefs_category_advanced">Advanced</string>
+  <string name="prefs_category_about">About</string>
   <string name="pref_more">Lisää</string>
   <string name="pref_showlist">Ohjelmalista</string>
   <string name="help">Apua</string>
@@ -152,17 +157,14 @@
   <string name="backup">Varmuuskopioi/Palauta</string>
   <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
   <string name="pref_language">Sisällön kieli</string>
-  <string name="pref_languagesummary">Käännöksiä ei ole saatavilla kaikille ohjelmille</string>
   <string name="pref_number">Lukumuoto</string>
-  <string name="pref_numbersummary">Valitse 1x01, S01E01 tai s01e01</string>
   <string name="pref_offset">Manuaalinen ajansiirto</string>
-  <string name="pref_offsetsummary">Siirrä esityspäiviä tietyllä tuntimäärällä</string>
+  <string name="pref_offsetsummary">Siirrä lähetysaikoja %s tunnilla</string>
   <string name="pref_autoupdate">Ota automaattiset päivitykset käyttöön</string>
   <string name="pref_autoupdatesummary">Päivitä ohjelmasi ajoittain SeriesGuiden käynnistyessä</string>
   <string name="pref_updatewifionly">Päivitä vain Wi-Fi-verkossa</string>
   <string name="about">Tietoja SeriesGuidesta</string>
-  <string name="about_message">http://seriesgui.de - kehittänyt Uwe Trottmann.\n\nAlla olevasta linkistä näet kaikki ihmiset ja resurssit, jotka ovat auttaneet tätä projektia.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
-  <string name="pref_sharing">Jakaminen</string>
+  <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">Irrottaudu GetGluesta</string>
   <string name="clearGetGlueCredentialssummary">Poista GetGLue-yhteytesi</string>
   <string name="pref_trakt">trakt.tv:n käyttäjätiedot</string>
@@ -178,7 +180,6 @@
   <string name="pref_ganalyticssummary">Seuraa ominaisuuksien käyttöä, jonka avulla parannetaan SeriesGuidea</string>
   <string name="sendusagedata">Lähetä kehittäjälle käyttötilastoja</string>
   <string name="pref_upcominglimit">Tulevat ohjelmat ajalta…</string>
-  <string name="pref_upcominglimitsummary">Kuinka pitkältä ajalta näytetään tulevia ohjelmia</string>
   <string name="backup_description"><b>Varmuuskopio</b> luo kopion ohjelmatietokannastasi tiedostoon nimeltä <b>seriesdatabase</b> alla mainittuun kansioon.\n\n<b>Palauttaaksesi</b> varmista tiedoston olevan alla mainitussa kansiossa.\n\nVain saman tai vanhemman tietokantaversion omaavat varmuuskopiot voidaan palauttaa.</string>
   <string name="backup_path"><b>Varmuuskopiointikansio</b></string>
   <string name="backup_version"><b>Tietokannan versio</b></string>
@@ -235,13 +236,13 @@
   <string name="trakt_synctodevice">Synkronoi SeriesGuideen</string>
   <string name="trakt_synctotrakt">Synkronoi traktiin</string>
   <string name="trakt_syncunseen">Synkronoi katsomattomat jaksot</string>
-  <string name="welcome_message"><big>Käytön aloittaminen</big></string>
-  <string name="welcome_text">Tervetuloa!</string>
-  <string name="welcome_language">Valitse ensisijainen kieli sisällölle:</string>
+  <string name="welcome_message">Get started</string>
   <string name="welcome_setuplanguage">Valitse kieli</string>
   <string name="welcome_setuptrakt">Yhdistä traktiin</string>
   <string name="welcome_traktmessage">Pääse käsiksi trakt.tv:n kirjastoosi ja ystäviesi toimintaan SeriesGuidella:</string>
   <string name="dismiss">Hylkää</string>
+  <string name="welcome_add_part1">To add shows to SeriesGuide tap</string>
+  <string name="welcome_add_part2">in the action bar.</string>
   <string name="upcoming_show">%s on tulossa</string>
   <string name="upcoming_episodes">Uusia jaksoja tulossa</string>
   <string name="upcoming_show_detailed">%1$s kanavalla %2$s</string>
@@ -252,7 +253,6 @@
   <string name="pref_vibrate">Värinä</string>
   <string name="pref_vibratesummary">Myös värise näytettäessä ilmoitus</string>
   <string name="pref_theme">Sovelluksen teema</string>
-  <string name="pref_themesummary">Valitse SeriesGuiden väritys</string>
   <string name="choose_list">Valitse toimintalista</string>
   <string name="hide_watched">Piilota katsotut jaksot</string>
   <string name="add_widget">Lisää widget</string>
@@ -282,6 +282,7 @@
     <item>Vanhin ensin (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
+    <item>nyt</item>
     <item>päivä</item>
     <item>3 päivää</item>
     <item>viikko</item>

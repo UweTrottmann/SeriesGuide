@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="CenteredColumn">
-        <item name="android:layout_width">500dp</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_gravity">center</item>
-    </style>
+	<style name="CenteredColumn">
+		<item name="android:layout_width">500dp</item>
+		<item name="android:layout_height">match_parent</item>
+		<item name="android:layout_gravity">center</item>
+	</style>
 
-    <style name="Dialog">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">400dp</item>
-    </style>
+	<style name="Dialog">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">400dp</item>
+	</style>
 
 </resources>

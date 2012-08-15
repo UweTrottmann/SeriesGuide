@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/default_padding" >
+
+    <ImageView
+        android:id="@+id/poster"
+        android:layout_width="100dp"
+        android:layout_height="147dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="@dimen/default_padding"
+        android:contentDescription="@string/description_poster"
+        android:scaleType="centerInside"
+        android:src="@drawable/show_generic" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="147dp"
+        android:layout_toRightOf="@id/poster"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/details"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="?custom_list_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/default_padding" >
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/ListTextBig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/inline_padding"
+                android:paddingRight="@dimen/default_padding"
+                android:text="@string/app_name"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/description"
+                style="@style/ListTextNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:paddingBottom="@dimen/inline_padding"
+                android:paddingRight="@dimen/default_padding"
+                android:text="@string/app_name"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dim" />
+
+        <LinearLayout
+            android:id="@+id/addbutton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?custom_list_selector"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/add_show"
+                android:padding="@dimen/inline_padding"
+                android:src="@drawable/ic_action_add" />
+
+            <TextView
+                style="@style/ListTextNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/add_show" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

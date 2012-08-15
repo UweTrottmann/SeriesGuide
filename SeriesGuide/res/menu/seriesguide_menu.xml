@@ -8,7 +8,7 @@
     <item
         android:id="@+id/menu_new_show"
         android:icon="@drawable/ic_action_add"
-        android:showAsAction="ifRoom"
+        android:showAsAction="ifRoom|withText"
         android:title="@string/add_show"/>
     <item
         android:id="@+id/menu_upcoming"

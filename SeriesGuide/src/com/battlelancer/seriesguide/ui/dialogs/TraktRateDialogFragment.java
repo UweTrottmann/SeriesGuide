@@ -1,3 +1,19 @@
+/*
+ * Copyright 2012 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
@@ -5,8 +21,9 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.trakt.enumerations.Rating;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -50,6 +67,12 @@ public class TraktRateDialogFragment extends DialogFragment {
         args.putInt(ShareItems.EPISODE, episode);
         f.setArguments(args);
         return f;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Rate Dialog");
     }
 
     @Override
@@ -124,10 +147,10 @@ public class TraktRateDialogFragment extends DialogFragment {
 
     private void onRate(Rating rating, Context context) {
         getArguments().putString(ShareItems.RATING, rating.toString());
-        Utils.executeAsyncTask(new TraktTask(context, getFragmentManager(), getArguments(), null),
-                new Void[] {
-                    null
-                });
+        AndroidUtils.executeAsyncTask(new TraktTask(context, getFragmentManager(), getArguments(),
+                null), new Void[] {
+            null
+        });
         dismiss();
     }
 }

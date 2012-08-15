@@ -20,6 +20,7 @@
     <string name="sending">Sending…</string>
     <string name="done">Done</string>
     <string name="clear">Clear</string>
+    <string name="more">%s more</string>
 
     <plurals name="votes">
         <item quantity="one">%d vote</item>
@@ -172,6 +173,10 @@
     <string name="powered_by_trakt">powered by trakt.tv</string>
 
     <!-- Settings -->
+    <string name="prefs_category_basic">Basics</string>
+    <string name="prefs_category_sharing">Sharing</string>
+    <string name="prefs_category_advanced">Advanced</string>
+    <string name="prefs_category_about">About</string>
     <string name="pref_more">More</string>
     <string name="pref_showlist">Show list</string>
     <string name="help">Help</string>
@@ -187,17 +192,14 @@
     <string name="backup">Backup/Restore</string>
     <string name="backup_summary">Backup or restore your shows</string>
     <string name="pref_language">Content language</string>
-    <string name="pref_languagesummary">Translations not available for every show</string>
     <string name="pref_number">Number format</string>
-    <string name="pref_numbersummary">Choose between 1x01, S01E01 or s01e01</string>
     <string name="pref_offset">Manual time offset</string>
-    <string name="pref_offsetsummary">Offset air dates by a fixed amount of hours</string>
+    <string name="pref_offsetsummary">Offset air times by %s hours</string>
     <string name="pref_autoupdate">Turn on Auto Update</string>
     <string name="pref_autoupdatesummary">Periodically update your shows when starting SeriesGuide</string>
     <string name="pref_updatewifionly">Update over Wi-Fi only</string>
     <string name="about">About SeriesGuide</string>
-    <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
-    <string name="pref_sharing">Sharing</string>
+    <string name="pref_credits">Credits</string>
     <string name="clearGetGlueCredentials">Disconnect GetGlue</string>
     <string name="clearGetGlueCredentialssummary">Clear your connection to GetGlue</string>
     <string name="pref_trakt">trakt.tv credentials</string>
@@ -212,6 +214,7 @@
     <string name="pref_ganalytics">Google Analytics</string>
     <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
     <string name="sendusagedata">Send the developer usage statistics</string>
+    <string name="pref_upcominglimit">Upcoming shows within…</string>
 
     <string-array name="shsorting">
         <item>A - Z</item>
@@ -233,10 +236,8 @@
         <item>Oldest first (DVD)</item>
     </string-array>
 
-    <string name="pref_upcominglimit">Upcoming shows within…</string>
-    <string name="pref_upcominglimitsummary">How far in the future to display upcoming shows</string>
-
     <string-array name="upcominglimit">
+        <item>now</item>
         <item>a day</item>
         <item>3 days</item>
         <item>a week</item>
@@ -309,13 +310,13 @@
     <string name="trakt_syncunseen">Sync unseen episodes</string>
 
     <!-- Welcome dialog -->
-    <string name="welcome_message"><big>Get started</big></string>
-    <string name="welcome_text">Welcome!</string>
-    <string name="welcome_language">Choose the primary content language:</string>
+    <string name="welcome_message">Get started</string>
     <string name="welcome_setuplanguage">Choose language</string>
     <string name="welcome_setuptrakt">Connect to trakt</string>
     <string name="welcome_traktmessage">Access your trakt.tv library and friends activity with SeriesGuide:</string>
     <string name="dismiss">Dismiss</string>
+    <string name="welcome_add_part1">To add shows to SeriesGuide tap</string>
+    <string name="welcome_add_part2">in the action bar.</string>
 
     <string-array name="showfilter_list">
         <item>All</item>
@@ -337,7 +338,6 @@
 
     <!-- Theme switching -->
     <string name="pref_theme">App Theme</string>
-    <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
 
     <string-array name="themeSelection">
         <item>SeriesGuide Theme</item>
@@ -366,7 +366,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage"><b>BUG</b>\n- Fix crash on pre-3.0 devices in overview screen, sorry guys!\n\n- Hide hidden shows from check in screen (thanks Richard for reporting this).\n\n- Remaining episodes counter in overview (single pane mode only).\n\n- Auto-Update wherever entering the app, no need to return to the home screen.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed changelog</a>\n\n</string>
+    <string name="betamessage"><b>SeriesGuide got reviewed by G+ Android Developers</b>\n\n- New show adding experience with quick-add buttons (thanks to Reto Meier for the idea).\n\n- New first user experience.\n\n- New settings screen.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed changelog</a>\n\n</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
@@ -496,6 +496,7 @@
         <item>13</item>
     </string-array>
     <string-array name="upcominglimitData">
+        <item>0</item>
         <item>1</item>
         <item>3</item>
         <item>7</item>
@@ -506,5 +507,5 @@
         <item>0</item>
         <item>1</item>
     </string-array>
-
+    
 </resources>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <CheckBoxPreference
+        android:defaultValue="True"
+        android:key="com.battlelancer.seriesguide.autoupdate"
+        android:summary="@string/pref_autoupdatesummary"
+        android:title="@string/pref_autoupdate" />
+
+    <Preference
+        android:key="backup"
+        android:summary="@string/backup_summary"
+        android:title="@string/backup" >
+        <intent
+            android:targetClass="com.battlelancer.seriesguide.ui.BackupDeleteActivity"
+            android:targetPackage="com.battlelancer.seriesguide.beta" />
+    </Preference>
+
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/upcominglimit"
+        android:entryValues="@array/upcominglimitData"
+        android:key="com.battlelancer.seriesguide.upcominglimit"
+        android:title="@string/pref_upcominglimit" />
+    <ListPreference
+        android:defaultValue="default"
+        android:entries="@array/numbers"
+        android:entryValues="@array/numberData"
+        android:key="numberformat"
+        android:title="@string/pref_number" />
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/offsets"
+        android:entryValues="@array/offsetData"
+        android:key="com.battlelancer.seriesguide.timeoffset"
+        android:title="@string/pref_offset" />
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/themeSelection"
+        android:entryValues="@array/themeSelectionData"
+        android:key="com.battlelancer.seriesguide.theme"
+        android:title="@string/pref_theme" />
+
+    <Preference
+        android:key="clearCache"
+        android:summary="@string/clear_cache_summary"
+        android:title="@string/clear_cache" />
+
+    <CheckBoxPreference
+        android:defaultValue="True"
+        android:key="enableGAnalytics"
+        android:summary="@string/pref_ganalyticssummary"
+        android:title="@string/pref_ganalytics" />
+    <CheckBoxPreference
+        android:defaultValue="True"
+        android:key="hideimages"
+        android:summary="@string/pref_hideimagessummary"
+        android:title="@string/pref_hideimages" />
+
+</PreferenceScreen>

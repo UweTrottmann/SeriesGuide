@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:padding="10dp" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
     <ImageView
         android:id="@+id/image"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:layout_width="64dp"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="12dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_notification" />
 
     <TextView
         android:id="@+id/text"
         style="@style/NotificationText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="@dimen/inline_padding"
+        android:layout_marginRight="@dimen/default_padding"
+        android:layout_marginTop="@dimen/default_padding"
         android:layout_toRightOf="@id/image"
         android:ellipsize="marquee"
         android:scrollHorizontally="true"
-        android:text="NotificationText" />
+        android:text="@string/app_name" />
 
     <ProgressBar
         android:id="@+id/progressbar"
@@ -29,6 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/text"
+        android:layout_marginRight="@dimen/default_padding"
         android:layout_toRightOf="@id/image" />
 
 </RelativeLayout>

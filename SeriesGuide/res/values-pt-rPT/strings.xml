@@ -19,6 +19,7 @@
   <string name="sending">Enviando…</string>
   <string name="done">Concluído</string>
   <string name="clear">Apagar</string>
+  <string name="more">%s more</string>
   <string name="offline">Sem ligação à internet. Tente novamente mais tarde.</string>
   <string name="onlyx">Apenas disponível em SeriesGuide X</string>
   <string name="shouts">Comentários</string>
@@ -137,6 +138,10 @@
   <string name="library">Biblioteca</string>
   <string name="powered_by_thetvdb">Powered by thetvdb.com</string>
   <string name="powered_by_trakt">desenvolvido por trakt.tv</string>
+  <string name="prefs_category_basic">Basics</string>
+  <string name="prefs_category_sharing">Sharing</string>
+  <string name="prefs_category_advanced">Advanced</string>
+  <string name="prefs_category_about">About</string>
   <string name="pref_more">Mais</string>
   <string name="pref_showlist">Mostrar lista</string>
   <string name="help">Ajuda</string>
@@ -152,17 +157,14 @@
   <string name="backup">Backup/Restauração</string>
   <string name="backup_summary">Fazer backup ou restaurar as suas séries</string>
   <string name="pref_language">Língua do conteúdo</string>
-  <string name="pref_languagesummary">Traduções não estão disponíveis para todas as séries</string>
   <string name="pref_number">Formato do número</string>
-  <string name="pref_numbersummary">Escolha entre 1x01, S01E01 ou s01e01</string>
   <string name="pref_offset">Acerto manual do fuso horário</string>
-  <string name="pref_offsetsummary">Deslocar datas de exibição por uma quantidade fixa de horas</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">Ativar atualização automática</string>
   <string name="pref_autoupdatesummary">Atualizar periodicamente as séries ao iniciar o SeriesGuide</string>
   <string name="pref_updatewifionly">Atualizar somente através de Wi-Fi</string>
   <string name="about">Sobre SeriesGuide</string>
-  <string name="about_message">http://seriesgui.de - desenvolvido por Uwe Trottmann.\n\nPor favor siga o seguinte link para descobrir todas as pessoas e recursos que ajudaram a desenvolver este projeto.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
-  <string name="pref_sharing">Partilhar</string>
+  <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">Desligar GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Apagar sua conexão com o GetGlue</string>
   <string name="pref_trakt">credenciais trakt.tv</string>
@@ -178,7 +180,6 @@
   <string name="pref_ganalyticssummary">Controlar o uso de recursos para ajudar a melhorar o SeriesGuide</string>
   <string name="sendusagedata">Enviar as estatísticas de uso para os desenvolvedores</string>
   <string name="pref_upcominglimit">Próximas séries dentro de…</string>
-  <string name="pref_upcominglimitsummary">Quão longe no futuro para exibir próximas séries</string>
   <string name="backup_description"><b>Backup</b> Cria uma cópia da base de dados das séries num ficheiro chamado <b>seriesdatabase</b> no seguinte directório.\n\nPara <b>Restaurar</b> certifique-se que o ficheiro se encontra no directório.\n\nApenas os backups com a mesma versão ou inferior à base de dados seguinte podem ser resturados.</string>
   <string name="backup_path"><b>Pasta de backup</b></string>
   <string name="backup_version"><b>Versão de banco de dados</b></string>
@@ -235,13 +236,13 @@
   <string name="trakt_synctodevice">Sincronizar com SeriesGuide</string>
   <string name="trakt_synctotrakt">Sincronizar com trakt.tv</string>
   <string name="trakt_syncunseen">Sincronizar os episódios por assistir</string>
-  <string name="welcome_message"><big>Começar</big></string>
-  <string name="welcome_text">Bem-vindo!</string>
-  <string name="welcome_language">Escolha o idioma principal do conteúdo:</string>
+  <string name="welcome_message">Get started</string>
   <string name="welcome_setuplanguage">Escolha o idioma</string>
   <string name="welcome_setuptrakt">Conectar ao trakt</string>
   <string name="welcome_traktmessage">Aceda à sua biblioteca trakt.tv e às actividades dos amigos com SeriesGuide:</string>
   <string name="dismiss">Recusar</string>
+  <string name="welcome_add_part1">To add shows to SeriesGuide tap</string>
+  <string name="welcome_add_part2">in the action bar.</string>
   <string name="upcoming_show">%s brevemente</string>
   <string name="upcoming_episodes">Novos episódios brevemente</string>
   <string name="upcoming_show_detailed">%1$s em %2$s</string>
@@ -252,7 +253,6 @@
   <string name="pref_vibrate">Vibrar</string>
   <string name="pref_vibratesummary">Também vibrar quando é mostrada uma notificação</string>
   <string name="pref_theme">Tema da aplicação</string>
-  <string name="pref_themesummary">Escolha a coloração do SeriesGuide</string>
   <string name="choose_list">Escolher lista de atividades</string>
   <string name="hide_watched">Ocultar episódios já visualizados</string>
   <string name="add_widget">Adicionar widget</string>
@@ -282,11 +282,12 @@
     <item>Antigo primeiro (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>um dia</item>
-    <item>3 dias</item>
-    <item>uma semana</item>
-    <item>duas semanas</item>
-    <item>um mês</item>
+    <item>now</item>
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Todos</item>

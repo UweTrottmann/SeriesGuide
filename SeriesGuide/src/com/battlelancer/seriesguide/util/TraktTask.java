@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.util;
 
@@ -7,12 +23,14 @@ import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.jakewharton.trakt.services.ShowService.CheckinBuilder;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -160,7 +178,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         mAction = TraktAction.values()[mArgs.getInt(ShareItems.TRAKTACTION)];
 
         // check for network connection
-        if (!Utils.isNetworkConnected(mContext)) {
+        if (!AndroidUtils.isNetworkConnected(mContext)) {
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.offline);
@@ -241,15 +259,15 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
             return r;
         } catch (TraktException e) {
-            fireTrackerEvent(e.getMessage());
-            Log.w(ShareUtils.TAG, e);
+            EasyTracker.getTracker().trackException(e.getMessage(), false);
+            Log.w(TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.trakt_generalerror);
             return r;
         } catch (ApiException e) {
-            fireTrackerEvent(e.getMessage());
-            Log.w(ShareUtils.TAG, e);
+            EasyTracker.getTracker().trackException(e.getMessage(), false);
+            Log.w(TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.trakt_generalerror);
@@ -314,9 +332,5 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 mListener.onTraktActionComplete(true);
             }
         }
-    }
-
-    private void fireTrackerEvent(String message) {
-        AnalyticsUtils.getInstance(mContext).trackEvent(TAG, "Update result", message, 0);
     }
 }

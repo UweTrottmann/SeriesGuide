@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <Preference
+        android:key="clearGetGlueCredentials"
+        android:summary="@string/clearGetGlueCredentialssummary"
+        android:title="@string/clearGetGlueCredentials" />
+    <Preference
+        android:key="com.battlelancer.seriesguide.trakt"
+        android:title="@string/trakt" >
+        <intent
+            android:targetClass="com.battlelancer.seriesguide.ui.TraktSyncActivity"
+            android:targetPackage="com.battlelancer.seriesguide.beta" />
+    </Preference>
+
+</PreferenceScreen>

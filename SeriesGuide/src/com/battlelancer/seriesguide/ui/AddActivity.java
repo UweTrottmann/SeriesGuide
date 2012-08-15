@@ -1,3 +1,19 @@
+/*
+ * Copyright 2012 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui;
 
@@ -8,6 +24,7 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.viewpagerindicator.TabPageIndicator;
 
 import android.content.Context;
@@ -18,6 +35,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.widget.EditText;
 
+/**
+ * Hosts various fragments in a {@link ViewPager} which allow adding shows to
+ * the database.
+ */
 public class AddActivity extends BaseActivity implements OnAddShowListener {
 
     private AddPagerAdapter mAdapter;
@@ -47,6 +68,18 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
         indicator.setViewPager(mPager);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
+    }
+
     public static class AddPagerAdapter extends FragmentPagerAdapter {
 
         private Context mContext;
@@ -58,7 +91,7 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 0) {
+            if (position == 1) {
                 return TvdbAddFragment.newInstance();
             } else {
                 return TraktAddFragment.newInstance(position);
@@ -81,13 +114,13 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 1:
-                    return mContext.getString(R.string.trending).toUpperCase();
+                    return mContext.getString(R.string.search_button).toUpperCase();
                 case 2:
                     return mContext.getString(R.string.recommended).toUpperCase();
                 case 3:
                     return mContext.getString(R.string.library).toUpperCase();
                 default:
-                    return mContext.getString(R.string.search_button).toUpperCase();
+                    return mContext.getString(R.string.trending).toUpperCase();
             }
         }
 

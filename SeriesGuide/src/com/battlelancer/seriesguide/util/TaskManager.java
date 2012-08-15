@@ -1,3 +1,19 @@
+/*
+ * Copyright 2012 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.util;
 
@@ -54,8 +70,19 @@ public class TaskManager {
         }
     }
 
-    public synchronized void tryUpdateTask(UpdateTask task, int messageId) {
-        if (!isUpdateTaskRunning(true)) {
+    /**
+     * Checks if an {@link UpdateTask} is already running. If yes, a warning can
+     * be displayed by setting displayWarning. If not the given
+     * {@link UpdateTask} is stored and executed. If messageId is not -1 this
+     * string resource will be displayed as a toast after the {@link UpdateTask}
+     * is started.
+     * 
+     * @param task
+     * @param displayWarning
+     * @param messageId
+     */
+    public synchronized void tryUpdateTask(UpdateTask task, boolean displayWarning, int messageId) {
+        if (!isUpdateTaskRunning(displayWarning)) {
             mUpdateTask = task;
             task.execute();
             if (messageId != -1) {

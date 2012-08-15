@@ -1,35 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <TextView
-        android:id="@+id/empty"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="10dp"
-        android:text="@string/shows_empty"
-        android:visibility="gone" />
-
-    <GridView
-        android:id="@+id/showlist"
+    <FrameLayout
+        android:id="@+id/shows_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="@bool/gridClipToPadding"
-        android:columnWidth="@dimen/showgrid_columnWidth"
-        android:gravity="center"
-        android:horizontalSpacing="@dimen/showgrid_spacing"
-        android:listSelector="?custom_list_selector"
-        android:numColumns="auto_fit"
-        android:padding="@dimen/showgrid_padding"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="@dimen/showgrid_spacing" >
-    </GridView>
-
-    <ViewStub
-        android:id="@+id/stub_update"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inflatedId="@+id/overlay_update"
-        android:layout="@layout/progress_overlay" />
+        android:layout_height="match_parent" >
+    </FrameLayout>
 
 </merge>

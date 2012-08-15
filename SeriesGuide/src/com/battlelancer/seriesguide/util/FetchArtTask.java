@@ -1,20 +1,36 @@
+/*
+ * Copyright 2011 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.util;
 
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.thetvdbapi.ImageCache;
 import com.battlelancer.thetvdbapi.TheTVDB;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
 
-    private String mPath;
+    private String mImagePath;
 
     private ImageView mImageView;
 
@@ -24,32 +40,24 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
 
     private View mContainer;
 
-    private ImageCache mImageCache;
-
     public FetchArtTask(String path, View container, Context context) {
-        mPath = path;
+        mImagePath = path;
         mContainer = container;
         mContext = context;
-        mImageCache = ImageCache.getInstance(context);
     }
 
     @Override
     protected void onPreExecute() {
-        // immediately hide container if there is no image
-        if (mPath.length() == 0) {
+        // immediately hide container if there is no image, cancel the task
+        if (TextUtils.isEmpty(mImagePath)) {
             mContainer.setVisibility(View.GONE);
+            cancel(false);
             return;
-        } else {
-            mContainer.setVisibility(View.VISIBLE);
         }
 
+        mContainer.setVisibility(View.VISIBLE);
         mImageView = (ImageView) mContainer.findViewById(R.id.ImageViewEpisodeImage);
         mProgressContainer = mContainer.findViewById(R.id.progress_container);
-        // only make progress container visible if we will do long running op
-        if (!mImageCache.isCached(mPath)) {
-            mProgressContainer.setVisibility(View.VISIBLE);
-            mImageView.setVisibility(View.GONE);
-        }
     }
 
     @Override
@@ -58,25 +66,23 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
             return null;
         }
 
-        if (mPath.length() != 0) {
+        final Bitmap bitmap = ImageProvider.getInstance(mContext).getImage(mImagePath, false);
+        if (bitmap != null) {
+            // image is in cache
+            return bitmap;
 
-            final Bitmap bitmap = mImageCache.get(mPath);
-            if (bitmap != null) {
-                // image is in cache
-                return bitmap;
-
-            } else {
-
-                if (isCancelled()) {
-                    return null;
-                }
-
-                // download image from TVDb
-                if (TheTVDB.fetchArt(mPath, false, mContext)) {
-                    return mImageCache.get(mPath);
-                }
-
+        } else {
+            // abort if we are cancelled or have no connection
+            if (isCancelled() || !Utils.isAllowedConnection(mContext)) {
+                return null;
             }
+
+            // download image from TVDb
+            publishProgress();
+            if (TheTVDB.fetchArt(mImagePath, false, mContext)) {
+                return ImageProvider.getInstance(mContext).getImage(mImagePath, false);
+            }
+
         }
 
         return null;
@@ -88,21 +94,30 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
     }
 
     @Override
+    protected void onProgressUpdate(Void... values) {
+        // this will only get called if we have to download the image
+        mProgressContainer.setVisibility(View.VISIBLE);
+        mImageView.setVisibility(View.GONE);
+    }
+
+    @Override
     protected void onPostExecute(Bitmap bitmap) {
         if (bitmap != null) {
             mImageView.setImageBitmap(bitmap);
-
-            // make image view visible
-            if (mImageView.getVisibility() == View.GONE) {
-                mProgressContainer.startAnimation(AnimationUtils.loadAnimation(mContext,
-                        android.R.anim.fade_out));
-                mImageView.startAnimation(AnimationUtils.loadAnimation(mContext,
-                        android.R.anim.fade_in));
-                mProgressContainer.setVisibility(View.GONE);
-                mImageView.setVisibility(View.VISIBLE);
-            }
         } else {
-            mContainer.setVisibility(View.GONE);
+            // we can be sure that there must be an image here, we just couldn't
+            // get it somehow, so set a place holder
+            mImageView.setImageResource(R.drawable.show_generic);
+        }
+
+        // make image view visible
+        if (mImageView.getVisibility() == View.GONE) {
+            mProgressContainer.startAnimation(AnimationUtils.loadAnimation(mContext,
+                    android.R.anim.fade_out));
+            mImageView.startAnimation(AnimationUtils
+                    .loadAnimation(mContext, android.R.anim.fade_in));
+            mProgressContainer.setVisibility(View.GONE);
+            mImageView.setVisibility(View.VISIBLE);
         }
 
         releaseReferences();
@@ -113,6 +128,5 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
         mContainer = null;
         mProgressContainer = null;
         mImageView = null;
-        mImageCache = null;
     }
 }

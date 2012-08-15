@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui;
 
@@ -11,6 +27,7 @@ import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import android.content.Context;
 import android.content.Intent;
@@ -55,7 +72,7 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
         argsUpcoming.putString(UpcomingFragment.InitBundle.QUERY, UpcomingQuery.QUERY_UPCOMING);
         argsUpcoming.putString(UpcomingFragment.InitBundle.SORTORDER,
                 UpcomingQuery.SORTING_UPCOMING);
-        argsUpcoming.putString(UpcomingFragment.InitBundle.ANALYTICS_TAG, "/Upcoming");
+        argsUpcoming.putString(UpcomingFragment.InitBundle.ANALYTICS_TAG, "Upcoming");
         argsUpcoming.putInt(UpcomingFragment.InitBundle.LOADER_ID, 10);
         argsUpcoming.putInt(UpcomingFragment.InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
         mTabsAdapter.addTab(upcomingTab, UpcomingFragment.class, argsUpcoming);
@@ -64,7 +81,7 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
         final Bundle argsRecent = new Bundle();
         argsRecent.putString(UpcomingFragment.InitBundle.QUERY, UpcomingQuery.QUERY_RECENT);
         argsRecent.putString(UpcomingFragment.InitBundle.SORTORDER, UpcomingQuery.SORTING_RECENT);
-        argsRecent.putString(UpcomingFragment.InitBundle.ANALYTICS_TAG, "/Recent");
+        argsRecent.putString(UpcomingFragment.InitBundle.ANALYTICS_TAG, "Recent");
         argsRecent.putInt(UpcomingFragment.InitBundle.LOADER_ID, 20);
         argsRecent.putInt(UpcomingFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);
         mTabsAdapter.addTab(recentTab, UpcomingFragment.class, argsRecent);
@@ -88,6 +105,18 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
             }
         }
         actionBar.setSelectedNavigationItem(selection);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
     }
 
     @Override

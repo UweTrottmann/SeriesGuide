@@ -3,14 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ListView
+    <GridView
         android:id="@android:id/list"
-        style="@style/ScrollingLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="@bool/gridClipToPadding"
-        android:divider="@drawable/divider_horizontal_holo_dark"
-        android:listSelector="?custom_list_selector" />
+        android:columnWidth="@dimen/showgrid_columnWidth"
+        android:fastScrollEnabled="true"
+        android:gravity="center"
+        android:horizontalSpacing="@dimen/default_padding"
+        android:listSelector="?custom_list_selector"
+        android:numColumns="auto_fit"
+        android:padding="@dimen/showgrid_padding"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="@dimen/default_padding" >
+    </GridView>
 
     <ProgressBar
         android:id="@android:id/empty"

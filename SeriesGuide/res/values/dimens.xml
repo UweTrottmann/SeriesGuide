@@ -4,6 +4,7 @@
     <dimen name="layout_padding">10dp</dimen>
     <dimen name="inline_padding">4dp</dimen>
     <dimen name="default_padding">8dp</dimen>
+    <dimen name="large_padding">16dp</dimen>
     <dimen name="body_padding">5dp</dimen>
     <dimen name="body_padding_large">10dp</dimen>
     <dimen name="item_padding">2dp</dimen>
@@ -11,6 +12,7 @@
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_xmedium">16sp</dimen>
     <dimen name="text_size_medium">18sp</dimen>
+    <dimen name="text_size_large">20sp</dimen>
     <dimen name="text_size_xlarge">22sp</dimen>
     <dimen name="widget_item_width">28dp</dimen>
     <dimen name="widget_margin">5dp</dimen>
@@ -25,6 +27,8 @@
     <dimen name="showgrid_padding">8dp</dimen>
     <dimen name="showgrid_columnWidth">300dp</dimen>
     <dimen name="showgrid_spacing">10dp</dimen>
+    <dimen name="showgrid_posterWidth">68dp</dimen>
+    <dimen name="showgrid_posterHeight">100dp</dimen>
     <dimen name="imagecontainer_height">180dp</dimen>
     <integer name="episodespane_weight">1</integer>
     <integer name="detailsspane_weight">1</integer>

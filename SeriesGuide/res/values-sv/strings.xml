@@ -3,9 +3,9 @@
 <resources>
   <string name="episode">Avsnitt</string>
   <string name="season">Säsong</string>
-  <string name="unknown">unknown</string>
+  <string name="unknown">okänd</string>
   <string name="episode_iswatched">Redan sett</string>
-  <string name="episode_notwatched">Inte sett än</string>
+  <string name="episode_notwatched">Ännu ej sedd</string>
   <string name="specialseason">Specialavsnitt</string>
   <string name="search_hint">Sök avsnitt</string>
   <string name="search_title">Matchande avsnitt</string>
@@ -18,36 +18,37 @@
   <string name="loading">Laddar…</string>
   <string name="sending">Skickar…</string>
   <string name="done">Klar</string>
-  <string name="clear">Clear</string>
+  <string name="clear">Rensa</string>
+  <string name="more">%s more</string>
   <string name="offline">Ingen nätanslutning. Försök igen senare.</string>
-  <string name="onlyx">Only available in SeriesGuide X</string>
+  <string name="onlyx">Endast tillgänglig i SeriesGuide X</string>
   <string name="shouts">Rop</string>
   <string name="shout_hint">Skriv ett rop (på engelska)</string>
   <string name="shout">Ropa!</string>
   <string name="isspoiler">Varning för spoiler!</string>
   <string name="no_shouts">Bli först att ropa!</string>
   <string name="shouts_for">Rop för %s</string>
-  <string name="autorefresh">Refreshing automagically</string>
+  <string name="autorefresh">Uppdatera automatiskt</string>
   <string name="love">Helt ninja!</string>
   <string name="hate">Svag sås :(</string>
-  <string name="rating2">Terrible</string>
-  <string name="rating3">Bad</string>
-  <string name="rating4">Poor</string>
-  <string name="rating5">Meh</string>
-  <string name="rating6">Fair</string>
-  <string name="rating7">Good</string>
-  <string name="rating8">Great</string>
-  <string name="rating9">Superb</string>
-  <string name="episode_firstaired">Airdate</string>
+  <string name="rating2">Usel</string>
+  <string name="rating3">Dålig</string>
+  <string name="rating4">Svag</string>
+  <string name="rating5">Medioker</string>
+  <string name="rating6">Godkänd</string>
+  <string name="rating7">Bra</string>
+  <string name="rating8">Mycket bra</string>
+  <string name="rating9">Fantastisk</string>
+  <string name="episode_firstaired">Sändningsdatum</string>
   <string name="episode_dvdnumber">DVD-avsnitt</string>
-  <string name="show_actors">Actors</string>
-  <string name="show_firstaired">First Aired</string>
-  <string name="show_genres">Genres</string>
-  <string name="show_runtime">Runtime</string>
-  <string name="show_contentrating">Content Rating</string>
-  <string name="episode_directors">Directors</string>
-  <string name="episode_gueststars">Guest Stars</string>
-  <string name="episode_writers">Writers</string>
+  <string name="show_actors">Skådespelare</string>
+  <string name="show_firstaired">Sändes först gången</string>
+  <string name="show_genres">Genrer</string>
+  <string name="show_runtime">Längd</string>
+  <string name="show_contentrating">Åldersgräns</string>
+  <string name="episode_directors">Regissörer</string>
+  <string name="episode_gueststars">Gästskådespelare</string>
+  <string name="episode_writers">Författare</string>
   <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Fortsätter</string>
   <string name="show_isnotalive">Avslutad</string>
@@ -55,53 +56,53 @@
   <string name="updateall_yes">Uppdatera (alla)</string>
   <string name="menu_update_delta">Uppdatera (gamla)</string>
   <string name="context_updateshow">Uppdatera</string>
-  <string name="context_showinfo">Serie-info</string>
-  <string name="context_marknext">Såg nästa avsnitt</string>
+  <string name="context_showinfo">Serieinformation</string>
+  <string name="context_marknext">Sett nästa avsnitt</string>
   <string name="today">idag</string>
   <string name="now">nu</string>
   <string name="daily">Dagligen</string>
   <string name="mark_episode">Sett avsnittet</string>
   <string name="unmark_episode">Ännu ej sett avsnittet</string>
   <string name="mark_all">Sett alla</string>
-  <string name="unmark_all">Sett inga</string>
-  <string name="mark_untilhere">Sett alla redan sända</string>
-  <string name="collect">Collected episode</string>
-  <string name="uncollect">Not yet collected episode</string>
-  <string name="trakt_submitfailed">Not submitted to trakt. Try again later.</string>
-  <string name="trakt_submitsuccess">Submitted to trakt.</string>
-  <string name="trakt_seen">%s seen.</string>
-  <string name="trakt_notseen">%s not seen.</string>
-  <string name="trakt_collected">%s collected.</string>
-  <string name="trakt_notcollected">%s not collected.</string>
-  <string name="shows_empty">Inga serier här.</string>
-  <string name="confirm_delete">Do you really want to remove %s?</string>
+  <string name="unmark_all">Inga sedda</string>
+  <string name="mark_untilhere">Sett alla sända avsnitt</string>
+  <string name="collect">Hämtat avsnitt</string>
+  <string name="uncollect">Ännu ej hämtat avsnitt</string>
+  <string name="trakt_submitfailed">Ej skickad till trakt. Försök igen senare.</string>
+  <string name="trakt_submitsuccess">Skickad till trakt.</string>
+  <string name="trakt_seen">%s sedda.</string>
+  <string name="trakt_notseen">%s ej sedda.</string>
+  <string name="trakt_collected">%s hämtade.</string>
+  <string name="trakt_notcollected">%s ej hämtade.</string>
+  <string name="shows_empty">Serier saknas.</string>
+  <string name="confirm_delete">Vill du verkligen ta bort %s?</string>
   <string name="delete_show">Ta bort</string>
   <string name="dontdelete_show">Ta inte bort</string>
-  <string name="no_nextepisode">hittade inget nästa avsnitt</string>
+  <string name="no_nextepisode">Inga ytterligare avsnitt hittade</string>
   <string name="nextepisode">nästa:</string>
   <string name="context_favorite">Lägg till som favorit</string>
   <string name="context_unfavorite">Ta bort från favoriter</string>
   <string name="favorited">Lade till som favorit</string>
-  <string name="unfavorited">Tog bort från favoriter</string>
+  <string name="unfavorited">Tog bort som favorit</string>
   <string name="context_hide">Dölj</string>
-  <string name="context_unhide">Av-dölj</string>
+  <string name="context_unhide">Visa</string>
   <string name="hidden">Dold serie</string>
-  <string name="unhidden">Av-dold serie</string>
+  <string name="unhidden">Visar serie</string>
   <string name="activity">Aktivitet</string>
   <string name="upcoming">Kommande</string>
-  <string name="recent">Färska</string>
+  <string name="recent">Senaste</string>
   <string name="friends">Vänner</string>
   <string name="friends_empty">Ingen vänaktivitet på trakt.</string>
   <string name="noupcoming">Det finns inga kommande avsnitt.</string>
-  <string name="norecent">Det finns inga färska avsnitt.</string>
-  <string name="only_favorites">Only favorite shows</string>
+  <string name="norecent">Det finns inga aktuella avsnitt.</string>
+  <string name="only_favorites">Endast favoritserier</string>
   <string name="togglewatched">Växla sedda</string>
   <string name="update_notification">Uppdaterar dina serier…</string>
   <string name="update_single">Uppdaterar serie…</string>
   <string name="update_delta">Uppdaterar gamla serier…</string>
   <string name="update_full">Uppdaterar alla serier…</string>
-  <string name="update_success">Uppdatering lyckades.</string>
-  <string name="update_offline">Uppdatering misslyckades, kontrollera din Internet-/Wi-Fi-anslutning</string>
+  <string name="update_success">Uppdateringen lyckades.</string>
+  <string name="update_offline">Uppdatering misslyckades, kontrollera din Internet- eller WiFi-anslutning.</string>
   <string name="update_saxerror">Uppdatering misslyckades, försök igen senare.</string>
   <string name="update_inprogress">En uppdatering pågår, försök igen senare.</string>
   <string name="update_rebuildsearch">Förnyar avsnittssökning…</string>
@@ -111,7 +112,7 @@
   <string name="arttask_start">Laddar affischer…</string>
   <string name="arttask_nosdcard">Laddning av affischer kräver externt minne (SD-kort).</string>
   <string name="show_airs">sänds</string>
-  <string name="show_network">den</string>
+  <string name="show_network">på</string>
   <string name="show_noairtime">Inga sändningstider tillgängliga</string>
   <string name="show_noimdbentry">Ingen IMDB-sida hittad.</string>
   <string name="season_watchcount">avsnitt ej sedda</string>
@@ -120,9 +121,9 @@
   <string name="season_unaired">osända</string>
   <string name="oneotherepisode">annat avsnitt</string>
   <string name="otherepisodes">andra avsnitt</string>
-  <string name="remaining">%s remaining</string>
+  <string name="remaining">%s återstår</string>
   <string name="search_button">Sök</string>
-  <string name="search_hint_add">Visa namn</string>
+  <string name="search_hint_add">Serienamn</string>
   <string name="no_results">Inga resultat, försök med hela ord.</string>
   <string name="search_error">Sökningen misslyckades, försök igen senare.</string>
   <string name="add_show">Lägg till serie</string>
@@ -137,6 +138,10 @@
   <string name="library">Bibliotek</string>
   <string name="powered_by_thetvdb">möjliggörs av thetvdb.com</string>
   <string name="powered_by_trakt">möjliggörs av trakt.tv</string>
+  <string name="prefs_category_basic">Basics</string>
+  <string name="prefs_category_sharing">Sharing</string>
+  <string name="prefs_category_advanced">Advanced</string>
+  <string name="prefs_category_about">About</string>
   <string name="pref_more">Mer</string>
   <string name="pref_showlist">Serielista</string>
   <string name="help">Hjälp</string>
@@ -144,43 +149,39 @@
   <string name="pref_showsorting">Sortera serier efter…</string>
   <string name="pref_onlyfuture">Inga sända avsnitt</string>
   <string name="pref_onlyfuturesummary">\"nästa:\" visar aldrig redan sända avsnitt</string>
-  <string name="pref_onlyseasoneps">Hide special episodes</string>
-  <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
+  <string name="pref_onlyseasoneps">Dölj specialavsnitt</string>
+  <string name="pref_onlyseasonepssummary">Specialavsnitt döljs överallt utom i säsongslistan</string>
   <string name="pref_content">Innehåll</string>
   <string name="pref_seasonsorting">Sortera säsonger efter…</string>
   <string name="pref_episodesorting">Sortera avsnitt efter…</string>
   <string name="backup">Säkerhetskopiering/återställning</string>
   <string name="backup_summary">Säkerhetskopiera eller återställ dina serier</string>
   <string name="pref_language">Innehållsspråk</string>
-  <string name="pref_languagesummary">Översättningar finns inte för alla serier</string>
   <string name="pref_number">Nummerformat</string>
-  <string name="pref_numbersummary">Välj mellan 1x01, S01E01 och s01e01</string>
   <string name="pref_offset">Manuell tidsskillnad</string>
-  <string name="pref_offsetsummary">Visa sändningstider förskjutna med ett visst antal timmar</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">Automatisk uppdatering</string>
   <string name="pref_autoupdatesummary">Uppdatera dina serier regelbundet när SeriesGuide startas</string>
   <string name="pref_updatewifionly">Uppdatera endast över Wi-Fi</string>
   <string name="about">Om SeriesGuide</string>
-  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
-  <string name="pref_sharing">Delning</string>
+  <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">Koppla bort GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Ta bort kopplingen till GetGlue</string>
   <string name="pref_trakt">trakt.tv-uppgifter</string>
   <string name="pref_traktsummary">Lägg till eller redigera dina trakt.tv-uppgifter</string>
   <string name="pref_traktsync">Synkronisera med trakt.tv</string>
-  <string name="feedback">Skicka kommentarer</string>
-  <string name="pref_advanced">Avancerad</string>
+  <string name="feedback">Skicka feedback</string>
+  <string name="pref_advanced">Avancerat</string>
   <string name="clear_cache">Töm bildcache</string>
   <string name="clear_cache_summary">Ta bort alla cachade bilder från enheten</string>
-  <string name="pref_hideimages">Göm bilderna</string>
-  <string name="pref_hideimagessummary">Göm bilderna för ditt fotogalleri (kräver omstart av systemet)</string>
+  <string name="pref_hideimages">Dölj bilder</string>
+  <string name="pref_hideimagessummary">Dölj bilderna i ditt fotogalleri (kräver omstart av systemet)</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Mäter användningen av funktioner för att förbättra SeriesGuide</string>
   <string name="sendusagedata">Skicka användningsstatistik till utvecklaren</string>
   <string name="pref_upcominglimit">Kommande serier inom…</string>
-  <string name="pref_upcominglimitsummary">Hur långt i framtiden som kommande serier visas</string>
-  <string name="backup_description"><b>Säkerhetskopiera</b> skapar en kopia av din seriedatabas i en fil med namnet <b>seriesdatabase</b> i mappen nedan.\n\nFör att <b>Återställa</b>, se till att filen finns i mappen nedan.\n\nEnbart säkerhetskopior med samma eller lägre databasversion som nedan kan återställas.</string>
-  <string name="backup_path"><b>Mapp för säkerhetskopior</b></string>
+  <string name="backup_description"><b>Säkerhetskopiering</b> skapar en kopia av databasen i en fil med namnet <b>seriesdatabase</b> i mappen nedan.\n\nFör att <b>återställa</b> kontrollera att filen är i mappen nedan.\n\nBara säkerhetskopior med samma eller en lägre databasversion som nedan kan återställas.</string>
+  <string name="backup_path"><b>Mapp för säkerhetskopia</b></string>
   <string name="backup_version"><b>Databasversion</b></string>
   <string name="backup_failed_nosd">Kan inte säkerhetskopiera. Mappen är inte tillgänglig.</string>
   <string name="backup_inprogress">Säkerhetskopierar databas…</string>
@@ -190,7 +191,7 @@
   <string name="import_failed_nosd">Kan inte återställa säkerhetskopian. Mappen är inte tillgänglig.</string>
   <string name="import_failed_nofile">Det finns ingen säkerhetskopia.</string>
   <string name="import_failed_noread">Säkerhetskopian är oläslig.</string>
-  <string name="dbupgradefailed">Din säkerhetskopia kan vara för gammal eller tom. Obs: Importera säkerhetskopior från äldre än 2.0 i en 1.9.x-version först.</string>
+  <string name="dbupgradefailed">Din säkerhetskopia kan vara för gammal eller tom. Obs: Importera säkerhetskopior äldre än version 2.0 i en 1.9.x-version först.</string>
   <string name="import_success">Säkerhetskopian återställdes.</string>
   <string name="import_failed">Återställning av säkerhetskopian misslyckades.</string>
   <string name="backup_button">Säkerhetskopiera</string>
@@ -204,9 +205,9 @@
   <string name="seasons">Säsonger</string>
   <string name="cancel">Avbryt</string>
   <string name="share">Dela</string>
-  <string name="checkin">Check in</string>
-  <string name="checkin_searchhint">Type a show name</string>
-  <string name="checkin_empty">No matching shows</string>
+  <string name="checkin">Checka in</string>
+  <string name="checkin_searchhint">Skriv ett serienamn</string>
+  <string name="checkin_empty">Inga matchande serier.</string>
   <string name="checkin_hint">Type a message (optional)</string>
   <string name="paste_episode">Paste episode</string>
   <string name="checkinsuccess">GetGlue Check-in successful.</string>
@@ -235,31 +236,30 @@
   <string name="trakt_synctodevice">Synka till SeriesGuide</string>
   <string name="trakt_synctotrakt">Synka till trakt.tv</string>
   <string name="trakt_syncunseen">Synka osedda avsnitt</string>
-  <string name="welcome_message"><big>Kom igång</big></string>
-  <string name="welcome_text">Välkommen!</string>
-  <string name="welcome_language">Välj huvudsakligt innehållsspråk:</string>
+  <string name="welcome_message">Get started</string>
   <string name="welcome_setuplanguage">Välj språk</string>
   <string name="welcome_setuptrakt">Anslut till trakt</string>
   <string name="welcome_traktmessage">Kom åt ditt bibliotek och dina vänners aktivitet på trakt.tv med SeriesGuide:</string>
   <string name="dismiss">Avfärda</string>
-  <string name="upcoming_show">%s är på gång</string>
+  <string name="welcome_add_part1">To add shows to SeriesGuide tap</string>
+  <string name="welcome_add_part2">in the action bar.</string>
+  <string name="upcoming_show">%s kommande</string>
   <string name="upcoming_episodes">Nya avsnitt är på gång</string>
   <string name="upcoming_show_detailed">%1$s på %2$s</string>
   <string name="upcoming_display">Välj för att visa kommande serier</string>
   <string name="pref_notifications">Meddelanden</string>
   <string name="pref_notificationssummary">Påminn mig om favoritserier som snart sänds</string>
-  <string name="pref_ringtone">Ringtone</string>
-  <string name="pref_vibrate">Vibrate</string>
-  <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
-  <string name="pref_theme">App Theme</string>
-  <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
+  <string name="pref_ringtone">Ringsignal</string>
+  <string name="pref_vibrate">Vibrera</string>
+  <string name="pref_vibratesummary">Vibrerar även när meddelande visas</string>
+  <string name="pref_theme">Tema</string>
   <string name="choose_list">Choose activity list</string>
-  <string name="hide_watched">Hide watched episodes</string>
-  <string name="add_widget">Add widget</string>
+  <string name="hide_watched">Dölj sedda avsnitt</string>
+  <string name="add_widget">Lägg till widget</string>
   <string name="widget_label">SeriesGuide</string>
-  <string name="smallwidget">SeriesGuide (small)</string>
-  <string name="bigwidget">SeriesGuide (middle)</string>
-  <string name="largewidget">SeriesGuide (large)</string>
+  <string name="smallwidget">SeriesGuide (liten)</string>
+  <string name="bigwidget">SeriesGuide (mellan)</string>
+  <string name="largewidget">SeriesGuide (stor)</string>
   <string name="download_stable">Hämta SeriesGuide</string>
   <string name="betawarning"><b>Varning!</b> Den här versionen är endast för betatestare! Om du är tveksam kan du hämta den stabila versionen nedan.</string>
   <string-array name="shsorting">
@@ -275,18 +275,19 @@
   <string-array name="epsorting">
     <item>Senaste först</item>
     <item>Äldsta först</item>
-    <item>Osedda först</item>
+    <item>Ej sedda först</item>
     <item>A – Ö</item>
     <item>Ö – A</item>
     <item>Senaste först (DVD)</item>
     <item>Äldsta först (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>en dag</item>
-    <item>3 dagar</item>
-    <item>en vecka</item>
-    <item>två veckor</item>
-    <item>en månad</item>
+    <item>now</item>
+    <item>a day</item>
+    <item>3 days</item>
+    <item>a week</item>
+    <item>two weeks</item>
+    <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Alla</item>

@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.thetvdbapi;
 
@@ -11,6 +27,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Lists;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.TvShow;
@@ -45,6 +62,7 @@ import android.sax.Element;
 import android.sax.EndElementListener;
 import android.sax.EndTextElementListener;
 import android.sax.RootElement;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.Xml;
@@ -517,20 +535,50 @@ public class TheTVDB {
                 Shows._ID, Shows.LASTUPDATED
         }, null, null, null);
 
-        while (shows.moveToNext()) {
-            long lastUpdatedTime = shows.getLong(1);
-            if (currentTime - lastUpdatedTime > DateUtils.DAY_IN_MILLIS * updateAtLeastEvery) {
-                // add shows that are due for updating
-                updatableShowIds.add(shows.getString(0));
-            } else {
-                // add remaining ones to check-list for tvdb update function
-                existingShowIds.add(shows.getInt(0));
+        if (shows != null) {
+            while (shows.moveToNext()) {
+                long lastUpdatedTime = shows.getLong(1);
+                if (currentTime - lastUpdatedTime > DateUtils.DAY_IN_MILLIS * updateAtLeastEvery) {
+                    // add shows that are due for updating
+                    updatableShowIds.add(shows.getString(0));
+                } else {
+                    // add remaining ones to check-list for tvdb update function
+                    existingShowIds.add(shows.getInt(0));
+                }
             }
+
+            shows.close();
         }
 
-        shows.close();
-
         return updatableShowIds.toArray(new String[updatableShowIds.size()]);
+    }
+
+    /**
+     * Returns true if the given show has not been updated in the last 12 hours.
+     * 
+     * @param showId
+     * @param currentTime
+     * @param context
+     * @return
+     */
+    public static boolean isUpdateShow(String showId, long currentTime, Context context) {
+        final Cursor show = context.getContentResolver().query(Shows.buildShowUri(showId),
+                new String[] {
+                        Shows._ID, Shows.LASTUPDATED
+                }, null, null, null);
+
+        if (show != null) {
+            if (show.moveToFirst()) {
+                long lastUpdateTime = show.getLong(1);
+                if (currentTime - lastUpdateTime > DateUtils.HOUR_IN_MILLIS * 12) {
+                    return true;
+                }
+            }
+
+            show.close();
+        }
+
+        return false;
     }
 
     /**
@@ -569,15 +617,14 @@ public class TheTVDB {
      *         nothing was downloaded
      */
     public static boolean fetchArt(String fileName, boolean isPoster, Context context) {
-        if (fileName == null || context == null) {
+        if (TextUtils.isEmpty(fileName) || context == null) {
             return true;
         }
 
-        ImageCache imageCache = ImageCache.getInstance(context);
-        boolean resultCode = true;
+        final ImageProvider imageProvider = ImageProvider.getInstance(context);
 
-        if (fileName.length() != 0 && !imageCache.exists(fileName)) {
-            String imageUrl;
+        if (!imageProvider.exists(fileName)) {
+            final String imageUrl;
             if (isPoster) {
                 // the cached version is a lot smaller, but still big enough for
                 // our purposes
@@ -586,20 +633,16 @@ public class TheTVDB {
                 imageUrl = mirror_banners + "/" + fileName;
             }
 
-            // try to download and decode the image
+            // try to download, decode and store the image
             final Bitmap bitmap = downloadBitmap(imageUrl);
             if (bitmap != null) {
-                imageCache.put(fileName, bitmap);
-                if (isPoster) {
-                    // already create a thumbnail
-                    imageCache.getThumbHelper(fileName);
-                }
+                imageProvider.storeImage(fileName, bitmap, isPoster);
             } else {
-                resultCode = false;
+                return false;
             }
         }
 
-        return resultCode;
+        return true;
     }
 
     static Bitmap downloadBitmap(String url) {

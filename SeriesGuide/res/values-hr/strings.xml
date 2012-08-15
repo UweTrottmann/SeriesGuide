@@ -19,6 +19,7 @@
   <string name="sending">Sending…</string>
   <string name="done">Gotovo</string>
   <string name="clear">Clear</string>
+  <string name="more">%s more</string>
   <string name="offline">No network connectivity. Try again later.</string>
   <string name="onlyx">Dostupno samo u SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -137,6 +138,10 @@
   <string name="library">Biblioteka</string>
   <string name="powered_by_thetvdb">powered by thetvdb.com</string>
   <string name="powered_by_trakt">powered by trakt.tv</string>
+  <string name="prefs_category_basic">Basics</string>
+  <string name="prefs_category_sharing">Sharing</string>
+  <string name="prefs_category_advanced">Advanced</string>
+  <string name="prefs_category_about">About</string>
   <string name="pref_more">Više</string>
   <string name="pref_showlist">Prikaži popis</string>
   <string name="help">Pomoć</string>
@@ -152,17 +157,14 @@
   <string name="backup">Pričuvna kopija/Vraćanje pričuvne kopije</string>
   <string name="backup_summary">Napravi ili vrati pričuvnu kopiju vaših serija</string>
   <string name="pref_language">Content language</string>
-  <string name="pref_languagesummary">Translations not available for every show</string>
   <string name="pref_number">Format broja</string>
-  <string name="pref_numbersummary">Choose between 1x01, S01E01 or s01e01</string>
   <string name="pref_offset">Manual time offset</string>
-  <string name="pref_offsetsummary">Offset air dates by a fixed amount of hours</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">Turn on Auto Update</string>
   <string name="pref_autoupdatesummary">Periodically update your shows when starting SeriesGuide</string>
   <string name="pref_updatewifionly">Update over Wi-Fi only</string>
   <string name="about">O SeriesGuide</string>
-  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
-  <string name="pref_sharing">Dijeljenje</string>
+  <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">Odjavi se sa GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Clear your connection to GetGlue</string>
   <string name="pref_trakt">trakt.tv podaci</string>
@@ -178,7 +180,6 @@
   <string name="pref_ganalyticssummary">Prati korištenje opcija zbog poboljšanja SeriesGuide-a</string>
   <string name="sendusagedata">Send the developer usage statistics</string>
   <string name="pref_upcominglimit">Upcoming shows within…</string>
-  <string name="pref_upcominglimitsummary">How far in the future to display upcoming shows</string>
   <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
   <string name="backup_path"><b>Mapa za pričuvu</b></string>
   <string name="backup_version"><b>Verzija baze podataka</b></string>
@@ -235,13 +236,13 @@
   <string name="trakt_synctodevice">Sinkroniziraj sa SeriesGuide</string>
   <string name="trakt_synctotrakt">Sinkroniziraj sa trakt.tv</string>
   <string name="trakt_syncunseen">Sinkroniziraj nepogledane epizode</string>
-  <string name="welcome_message"><big>Get started</big></string>
-  <string name="welcome_text">Welcome!</string>
-  <string name="welcome_language">Choose the primary content language:</string>
+  <string name="welcome_message">Get started</string>
   <string name="welcome_setuplanguage">Choose language</string>
   <string name="welcome_setuptrakt">Connect to trakt</string>
   <string name="welcome_traktmessage">Access your trakt.tv library and friends activity with SeriesGuide:</string>
   <string name="dismiss">Dismiss</string>
+  <string name="welcome_add_part1">To add shows to SeriesGuide tap</string>
+  <string name="welcome_add_part2">in the action bar.</string>
   <string name="upcoming_show">%s is coming up</string>
   <string name="upcoming_episodes">Nove epizode dolaze</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>
@@ -252,7 +253,6 @@
   <string name="pref_vibrate">Vibrate</string>
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">App Theme</string>
-  <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
   <string name="choose_list">Choose activity list</string>
   <string name="hide_watched">Hide watched episodes</string>
   <string name="add_widget">Add widget</string>
@@ -282,6 +282,7 @@
     <item>Najstariji prvi (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
+    <item>now</item>
     <item>a day</item>
     <item>3 days</item>
     <item>a week</item>

@@ -5,6 +5,71 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 2.8 *(in development)*
+--------------------------------
+
+* FEATURE Use the new expandable notifications on Android 4.1 Jelly Bean to display more content.
+* TWEAK Calculate next episodes differently: display the next highest (season and number) episode regarding all watched episodes.
+* TWEAK New show list layout for 10 inch and certain 7 inch tablets.
+* TWEAK Update single shows more often if their overview screen is used.
+* TWEAK 'Update only via WiFi' setting respected by episode image and ratings downloads.
+* TWEAK Relayouted list widget, updated widget backgrounds.
+
+### Detailed changes:
+
+#### 2.8.6beta (2012-08-05)
+
+* FEATURE Quickly add shows by tapping a + button.
+* TWEAK Display text for and hide certain action items.
+* TWEAK Tweaked add show screen, larger layout for large tablets. This does not work great with D-PADs (Google TV), yet.
+* TWEAK Run more tasks in parallel, if possible.
+* TWEAK Refined first run experience. Trending shows tab is now first.
+* TWEAK New settings screen.
+* TWEAK Clear images on large tablets, schedule re-downloading to get hihger resolution thumbnails.
+* TWEAK Revert to old show list layout on 7inch tablets.
+
+#### 2.8.5beta (2012-08-03)
+
+* TWEAK Shows appear to delete significantly faster.
+* TWEAK 'Update only via WiFi' setting respected by episode image and ratings downloads.
+* TWEAK Disable 'Update only via WiFi' setting by default.
+* TWEAK Display current values for list settings as their summary.
+* TWEAK Allow new large-size show list layout on devices with smallest width of 600dp, e.g. a 7in tablet (600x1024 mdpi).
+* TWEAK Optimize screen tracking.
+* TWEAK Initialize app settings on first run.
+* FIX Empty message for check in screen.
+* FIX Apply app theme immediately after changing the setting.
+* FIX Expanded notification shows correct amount of shows.
+
+#### 2.8.4beta (2012-07-25)
+
+* TWEAK New show list layout for 10 inch tablets.
+* TWEAK Pre-fill check in message, again.
+* FIX Connecting to a trakt account using your email address instead of your user name now works.
+
+#### 2.8.3beta (2012-07-20)
+
+* TWEAK Calculate next episodes differently: display the next highest (season and number) episode regarding all watched episodes.
+* TWEAK Cache images using a LRU cache as recommended by Google devs.
+* TWEAK Added 'now' and 'today' to upcoming shows limit setting.
+* FIX Display 'Recent' on list widget, if appropiate, again.
+* FIX Crash on selecting notification for deleted show.
+* MISC Use preview version (2.0beta2) of Google Analytics v2.
+* MISC Use latest support library release (r9).
+
+#### 2.8.2beta (2012-07-04)
+
+* FIX Run the notification service in time for notifications, again.
+
+#### 2.8.1beta (2012-06-28)
+
+* FEATURE Use the new expandable notifications on Android 4.1 Jelly Bean to display more content.
+* TWEAK Relayouted list widget, updated widget backgrounds.
+
+#### 2.8beta (2012-06-27)
+
+* TWEAK Update single shows more often if their overview screen is used.
+
 Version 2.7 *(2012-06-27)*
 --------------------------------
 

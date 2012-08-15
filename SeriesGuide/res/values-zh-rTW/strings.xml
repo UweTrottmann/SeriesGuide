@@ -19,6 +19,7 @@
   <string name="sending">Sending…</string>
   <string name="done">完成</string>
   <string name="clear">Clear</string>
+  <string name="more">%s more</string>
   <string name="offline">No network connectivity. Try again later.</string>
   <string name="onlyx">Only available in SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -137,6 +138,10 @@
   <string name="library">我的資料庫</string>
   <string name="powered_by_thetvdb">由thetvdb.com提供技術支持</string>
   <string name="powered_by_trakt">由trakt.tv提供技術支援</string>
+  <string name="prefs_category_basic">Basics</string>
+  <string name="prefs_category_sharing">Sharing</string>
+  <string name="prefs_category_advanced">Advanced</string>
+  <string name="prefs_category_about">About</string>
   <string name="pref_more">更多</string>
   <string name="pref_showlist">影集清單</string>
   <string name="help">說明</string>
@@ -152,17 +157,14 @@
   <string name="backup">備份/還原</string>
   <string name="backup_summary">備份或還原你的影集</string>
   <string name="pref_language">內容語言</string>
-  <string name="pref_languagesummary">並非每部影集皆提供翻譯</string>
   <string name="pref_number">數字格式</string>
-  <string name="pref_numbersummary">選擇顯示1x01, S01E01 或 s01e01</string>
   <string name="pref_offset">手動時間換算</string>
-  <string name="pref_offsetsummary">利用固定時數來換算播出時間</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
   <string name="pref_autoupdate">開啟自動更新</string>
   <string name="pref_autoupdatesummary">當執行SeriesGuide時，定期更新您的影集</string>
   <string name="pref_updatewifionly">僅透過Wi-Fi更新</string>
   <string name="about">關於 SeriesGuide</string>
-  <string name="about_message">http://seriesgui.de - developed by Uwe Trottmann.\n\nPlease see the link below for all the people and resources that help drive this project.\n\nhttps://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt</string>
-  <string name="pref_sharing">分享</string>
+  <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">中斷GetGlue的連線</string>
   <string name="clearGetGlueCredentialssummary">清除GetGlue的連線資料</string>
   <string name="pref_trakt">trakt.tv 憑證</string>
@@ -178,7 +180,6 @@
   <string name="pref_ganalyticssummary">紀錄追蹤功能以改善SeriesGuide和使用者的使用體驗</string>
   <string name="sendusagedata">Send the developer usage statistics</string>
   <string name="pref_upcominglimit">Upcoming shows within…</string>
-  <string name="pref_upcominglimitsummary">How far in the future to display upcoming shows</string>
   <string name="backup_description"><b>備份</b>在下列資料夾中建立您影集資料庫的備份並命名為<b>檔案資料庫</b>。\n\n若進行<b>還原</b>時請確保資料在以下的資料夾中。\n\n只有與資料庫相同或更低版本的備份檔可以被還原。</string>
   <string name="backup_path"><b>備份資料夾</b></string>
   <string name="backup_version"><b>資料庫版本</b></string>
@@ -235,13 +236,13 @@
   <string name="trakt_synctodevice">同步至SeriesGuide</string>
   <string name="trakt_synctotrakt">同步至trakt.tv</string>
   <string name="trakt_syncunseen">同步未看的集數</string>
-  <string name="welcome_message"><big>新手上路</big></string>
-  <string name="welcome_text">Welcome!</string>
-  <string name="welcome_language">Choose the primary content language:</string>
+  <string name="welcome_message">Get started</string>
   <string name="welcome_setuplanguage">Choose language</string>
   <string name="welcome_setuptrakt">Connect to trakt</string>
   <string name="welcome_traktmessage">Access your trakt.tv library and friends activity with SeriesGuide:</string>
   <string name="dismiss">Dismiss</string>
+  <string name="welcome_add_part1">To add shows to SeriesGuide tap</string>
+  <string name="welcome_add_part2">in the action bar.</string>
   <string name="upcoming_show">%s is coming up</string>
   <string name="upcoming_episodes">New episodes are coming up</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>
@@ -252,7 +253,6 @@
   <string name="pref_vibrate">Vibrate</string>
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
   <string name="pref_theme">App Theme</string>
-  <string name="pref_themesummary">Choose how SeriesGuide is colored</string>
   <string name="choose_list">Choose activity list</string>
   <string name="hide_watched">Hide watched episodes</string>
   <string name="add_widget">Add widget</string>
@@ -282,6 +282,7 @@
     <item>按最舊的順序排序(DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
+    <item>now</item>
     <item>a day</item>
     <item>3 days</item>
     <item>a week</item>

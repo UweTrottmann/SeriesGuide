@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Google Inc.
+ * Copyright 2012 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * 
- * Modified by Uwe Trottmann for SeriesGuide
  */
 
 package com.battlelancer.seriesguide.ui;
@@ -35,7 +34,8 @@ import android.text.format.DateUtils;
 import android.view.KeyEvent;
 
 /**
- * A base activity that has some common functionality across app activities.
+ * Provides some common functionality across all activities like setting the
+ * theme and navigation shortcuts.
  */
 public abstract class BaseActivity extends SherlockFragmentActivity {
 
@@ -82,30 +82,24 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
      */
     private void onAutoUpdate() {
         // try to run auto-update
-        if (Utils.isNetworkConnected(this)) {
+        if (Utils.isAllowedConnection(this)) {
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(getApplicationContext());
 
             // check if auto-update is actually enabled
             final boolean isAutoUpdateEnabled = prefs.getBoolean(
                     SeriesGuidePreferences.KEY_AUTOUPDATE, true);
+
             if (isAutoUpdateEnabled) {
+                // only update if at least 15mins have passed since last one
+                long now = System.currentTimeMillis();
+                final long previousUpdateTime = prefs.getLong(
+                        SeriesGuidePreferences.KEY_LASTUPDATE, 0);
+                final boolean isTime = (now - previousUpdateTime) > 15 * DateUtils.MINUTE_IN_MILLIS;
 
-                // check if wifi is required, abort if necessary
-                final boolean isWifiOnly = prefs.getBoolean(
-                        SeriesGuidePreferences.KEY_AUTOUPDATEWLANONLY, true);
-                if (!isWifiOnly || Utils.isWifiConnected(this)) {
-
-                    // only update if at least 15mins have passed since last one
-                    long now = System.currentTimeMillis();
-                    final long previousUpdateTime = prefs.getLong(
-                            SeriesGuidePreferences.KEY_LASTUPDATE, 0);
-                    final boolean isTime = (now - previousUpdateTime) > 15 * DateUtils.MINUTE_IN_MILLIS;
-
-                    if (isTime && !TaskManager.getInstance(this).isUpdateTaskRunning(false)) {
-                        TaskManager.getInstance(this)
-                                .tryUpdateTask(new UpdateTask(false, this), -1);
-                    }
+                if (isTime) {
+                    TaskManager.getInstance(this).tryUpdateTask(new UpdateTask(false, this), false,
+                            -1);
                 }
             }
         }

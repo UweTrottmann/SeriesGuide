@@ -1,3 +1,19 @@
+/*
+ * Copyright 2011 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.ui;
 
@@ -16,6 +32,7 @@ import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.entities.UserProfile;
 import com.jakewharton.trakt.enumerations.ActivityType;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -65,14 +82,14 @@ public class TraktFriendsFragment extends ListFragment implements
         final ListView list = getListView();
         list.setDivider(null);
         list.setSelector(R.drawable.list_selector_holo_dark);
-        list.setClipToPadding(Utils.isHoneycombOrHigher() ? false : true);
+        list.setClipToPadding(AndroidUtils.isHoneycombOrHigher() ? false : true);
         final float scale = getResources().getDisplayMetrics().density;
         int layoutPadding = (int) (10 * scale + 0.5f);
         int defaultPadding = (int) (8 * scale + 0.5f);
         list.setPadding(layoutPadding, layoutPadding, layoutPadding, defaultPadding);
 
         // nag about no connectivity
-        if (!Utils.isNetworkConnected(getActivity())) {
+        if (!AndroidUtils.isNetworkConnected(getActivity())) {
             setEmptyText(getString(R.string.offline));
             setListShown(true);
         } else {

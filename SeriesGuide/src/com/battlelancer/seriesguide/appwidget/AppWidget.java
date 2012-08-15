@@ -21,8 +21,8 @@ import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.ImageCache;
 
 import android.app.IntentService;
 import android.app.PendingIntent;
@@ -93,8 +93,6 @@ public class AppWidget extends AppWidgetProvider {
 
         protected RemoteViews buildUpdate(Context context, String limit, int layout,
                 int itemLayout, Intent updateIntent) {
-            final ImageCache imageCache = ImageCache.getInstance(context);
-
             // Get the layout for the App Widget, remove existing views
             // RemoteViews views = new RemoteViews(context.getPackageName(),
             // layout);
@@ -116,7 +114,6 @@ public class AppWidget extends AppWidgetProvider {
                 views.addView(R.id.LinearLayoutWidget, item);
             } else {
                 String value;
-                Bitmap poster;
 
                 int viewsToAdd = Integer.valueOf(limit);
                 while (upcomingEpisodes.moveToNext() && viewsToAdd != 0) {
@@ -151,13 +148,9 @@ public class AppWidget extends AppWidgetProvider {
 
                     // show poster
                     value = upcomingEpisodes.getString(UpcomingQuery.SHOW_POSTER);
-                    poster = null;
-                    if (value.length() != 0) {
-                        poster = imageCache.getThumb(value, false);
-
-                        if (poster != null) {
-                            item.setImageViewBitmap(R.id.widgetPoster, poster);
-                        }
+                    final Bitmap poster = ImageProvider.getInstance(context).getImage(value, true);
+                    if (poster != null) {
+                        item.setImageViewBitmap(R.id.widgetPoster, poster);
                     }
 
                     views.addView(R.id.LinearLayoutWidget, item);
