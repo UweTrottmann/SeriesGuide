@@ -50,7 +50,7 @@ Version 2.8 *(in development)*
 
 #### 2.8.3beta (2012-07-20)
 
-* TWEAK Calculate next episodes differently: display the next highest (season and number) episode after the newest watched episode.
+* TWEAK Calculate next episodes differently: display the next highest (season and number) episode regarding all watched episodes.
 * TWEAK Cache images using a LRU cache as recommended by Google devs.
 * TWEAK Added 'now' and 'today' to upcoming shows limit setting.
 * FIX Display 'Recent' on list widget, if appropiate, again.
