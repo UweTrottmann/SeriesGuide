@@ -5,7 +5,14 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 2.8 *(in development)*
+Version 2.9 *(in development)*
+--------------------------------
+
+### Detailed changes:
+
+#### 2.9beta (TBA)
+
+Version 2.8 *(2012-08-15)*
 --------------------------------
 
 * FEATURE Quickly add shows by tapping a + button.
