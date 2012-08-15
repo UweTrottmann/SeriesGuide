@@ -21,7 +21,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
@@ -73,22 +72,11 @@ public class ShowsActivity extends BaseActivity {
 
     private static final String STATE_ART_INDEX = "seriesguide.art.index";
 
-    // Show Filter Ids
-    private static final int SHOWFILTER_ALL = 0;
-
-    private static final int SHOWFILTER_FAVORITES = 1;
-
-    private static final int SHOWFILTER_UNSEENEPISODES = 2;
-
-    private static final int SHOWFILTER_HIDDEN = 3;
-
-    private static final String FILTER_ID = "filterid";
-
-    private static final int VER_TRAKT_SEC_CHANGES = 139;
+    private static final int VER_TRAKT_SEC_CHANGES = 129;
 
     private static final int VER_SUMMERTIME_FIX = 136;
 
-    private static final int VER_HIGHRES_THUMBS = 177;
+    private static final int VER_HIGHRES_THUMBS = 140;
 
     private Bundle mSavedState;
 
