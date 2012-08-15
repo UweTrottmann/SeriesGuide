@@ -99,12 +99,18 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
         // get watched episodes from trakt (if enabled/possible)
         // already here, so we only have to get it once
-        List<TvShow> shows = new ArrayList<TvShow>();
+        List<TvShow> watched = new ArrayList<TvShow>();
+        List<TvShow> collection = new ArrayList<TvShow>();
         if (Utils.isTraktCredentialsValid(mContext)) {
             try {
                 ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
 
-                shows = manager.userService().libraryShowsWatched(Utils.getTraktUsername(mContext))
+                watched = manager.userService()
+                        .libraryShowsWatched(Utils.getTraktUsername(mContext))
+                        .extended(ExtendedParam.Min).fire();
+
+                collection = manager.userService()
+                        .libraryShowsCollection(Utils.getTraktUsername(mContext))
                         .extended(ExtendedParam.Min).fire();
             } catch (Exception e1) {
                 // something went wrong, just go on
@@ -126,7 +132,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
             SearchResult nextShow = mAddQueue.removeFirst();
 
             try {
-                if (TheTVDB.addShow(nextShow.tvdbid, shows, mContext)) {
+                if (TheTVDB.addShow(nextShow.tvdbid, watched, collection, mContext)) {
                     // success
                     result = ADD_SUCCESS;
                 } else {
