@@ -4,6 +4,7 @@ package com.battlelancer.seriesguide.util;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -16,6 +17,8 @@ import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.services.ShowService;
+import com.jakewharton.trakt.services.ShowService.EpisodeSeenBuilder;
+import com.jakewharton.trakt.services.ShowService.EpisodeUnseenBuilder;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
@@ -123,6 +126,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
     public FlagTask seasonWatched(int seasonNumber) {
         mSeason = seasonNumber;
+        mEpisode = -1;
         mAction = FlagAction.SEASON_WATCHED;
         return this;
     }
@@ -176,8 +180,20 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                         if (mIsFlag) {
                             showService.seasonSeen(mShowId).season(mSeason).fire();
                         } else {
-                            // TODO Support removing seen flags for season
+                            removeEpisodeFlags(showService).fire();
                         }
+                        break;
+                    case SHOW_WATCHED:
+                        // flag a whole show watched
+                        if (mIsFlag) {
+                            showService.showSeen(mShowId).fire();
+                        } else {
+                            removeEpisodeFlags(showService).fire();
+                        }
+                        break;
+                    case EPISODE_WATCHED_PREVIOUS:
+                        // flag episodes up to one episode
+                        addEpisodeFlags(showService).fire();
                         break;
                     default:
                         break;
@@ -202,6 +218,74 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         updateDatabase(mItemId);
 
         return SUCCESS;
+    }
+
+    private EpisodeSeenBuilder addEpisodeFlags(ShowService showService) {
+        EpisodeSeenBuilder builder = showService.episodeSeen(mShowId);
+
+        // determine uri
+        Uri uri;
+        String selection;
+        switch (mAction) {
+            case EPISODE_WATCHED_PREVIOUS:
+                if (mFirstAired <= 0) {
+                    return builder;
+                }
+                uri = Episodes.buildEpisodesOfShowUri(String.valueOf(mShowId));
+                selection = Episodes.FIRSTAIREDMS + "<" + mFirstAired + " AND "
+                        + Episodes.FIRSTAIREDMS
+                        + ">0";
+                break;
+            default:
+                return builder;
+        }
+
+        // query and add episodes to builder
+        final Cursor episodes = mContext.getContentResolver().query(
+                uri,
+                new String[] {
+                        Episodes.SEASON, Episodes.NUMBER
+                }, selection, null, null);
+        if (episodes != null) {
+            while (episodes.moveToNext()) {
+                builder.episode(episodes.getInt(0), episodes.getInt(1));
+            }
+            episodes.close();
+        }
+
+        return builder;
+    }
+
+    private EpisodeUnseenBuilder removeEpisodeFlags(ShowService showService) {
+        EpisodeUnseenBuilder builder = showService.episodeUnseen(mShowId);
+
+        // determine uri
+        Uri uri;
+        switch (mAction) {
+            case SEASON_WATCHED:
+                uri = Episodes.buildEpisodesOfSeasonUri(String.valueOf(mItemId));
+                break;
+            case SHOW_WATCHED:
+                uri = Episodes.buildEpisodesOfShowUri(String.valueOf(mShowId));
+                break;
+            default:
+                return builder;
+        }
+
+        // query and add episodes to builder
+        final Cursor episodes = mContext.getContentResolver().query(
+                uri,
+                new String[] {
+                        Episodes.SEASON, Episodes.NUMBER
+                }, null, null, null);
+        if (episodes != null) {
+            while (episodes.moveToNext()) {
+                builder.episode(episodes.getInt(0), episodes.getInt(1));
+            }
+            episodes.close();
+        }
+
+        return builder;
     }
 
     private void updateDatabase(int itemId) {
@@ -276,7 +360,6 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
             switch (mAction) {
                 case EPISODE_WATCHED:
                 case SEASON_WATCHED:
-                case SHOW_WATCHED:
                     if (mIsFlag) {
                         message = R.string.trakt_seen;
                     } else {
@@ -295,39 +378,40 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                     break;
             }
 
-            if (message != 0) {
-                int status = 0;
-                int duration = 0;
-                switch (result) {
-                    case SUCCESS: {
-                        status = R.string.trakt_submitsuccess;
-                        duration = Toast.LENGTH_SHORT;
-                        break;
-                    }
-                    case FAILED: {
-                        status = R.string.trakt_submitfailed;
-                        duration = Toast.LENGTH_LONG;
-                        break;
-                    }
-                    case OFFLINE: {
-                        status = R.string.offline;
-                        duration = Toast.LENGTH_LONG;
-                        break;
-                    }
+            int status = 0;
+            int duration = 0;
+            switch (result) {
+                case SUCCESS: {
+                    status = R.string.trakt_submitsuccess;
+                    duration = Toast.LENGTH_SHORT;
+                    break;
                 }
+                case FAILED: {
+                    status = R.string.trakt_submitfailed;
+                    duration = Toast.LENGTH_LONG;
+                    break;
+                }
+                case OFFLINE: {
+                    status = R.string.offline;
+                    duration = Toast.LENGTH_LONG;
+                    break;
+                }
+            }
 
-                if (mAction == FlagAction.SHOW_WATCHED) {
-                    Toast.makeText(mContext,
-                            mContext.getString(status),
-                            duration).show();
-                } else {
-                    final SharedPreferences prefs = PreferenceManager
-                            .getDefaultSharedPreferences(mContext);
-                    String number = Utils.getEpisodeNumber(prefs, mSeason, mEpisode);
-                    Toast.makeText(mContext,
-                            mContext.getString(message, number) + " " + mContext.getString(status),
-                            duration).show();
-                }
+            if (mAction == FlagAction.SHOW_WATCHED
+                    || mAction == FlagAction.EPISODE_WATCHED_PREVIOUS) {
+                // simple ack
+                Toast.makeText(mContext,
+                        mContext.getString(status),
+                        duration).show();
+            } else {
+                // detailed ack
+                final SharedPreferences prefs = PreferenceManager
+                        .getDefaultSharedPreferences(mContext);
+                String number = Utils.getEpisodeNumber(prefs, mSeason, mEpisode);
+                Toast.makeText(mContext,
+                        mContext.getString(message, number) + " " + mContext.getString(status),
+                        duration).show();
             }
         }
 
