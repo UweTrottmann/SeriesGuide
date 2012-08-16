@@ -275,6 +275,8 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
             int message;
             switch (mAction) {
                 case EPISODE_WATCHED:
+                case SEASON_WATCHED:
+                case SHOW_WATCHED:
                     if (mIsFlag) {
                         message = R.string.trakt_seen;
                     } else {
@@ -314,12 +316,18 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                     }
                 }
 
-                final SharedPreferences prefs = PreferenceManager
-                        .getDefaultSharedPreferences(mContext);
-                final String number = Utils.getEpisodeNumber(prefs, mSeason, mEpisode);
-                Toast.makeText(mContext,
-                        mContext.getString(message, number) + " " + mContext.getString(status),
-                        duration).show();
+                if (mAction == FlagAction.SHOW_WATCHED) {
+                    Toast.makeText(mContext,
+                            mContext.getString(status),
+                            duration).show();
+                } else {
+                    final SharedPreferences prefs = PreferenceManager
+                            .getDefaultSharedPreferences(mContext);
+                    String number = Utils.getEpisodeNumber(prefs, mSeason, mEpisode);
+                    Toast.makeText(mContext,
+                            mContext.getString(message, number) + " " + mContext.getString(status),
+                            duration).show();
+                }
             }
         }
 
