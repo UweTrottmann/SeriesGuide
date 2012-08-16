@@ -10,7 +10,7 @@ Version 2.9 *(in development)*
 
 ### Detailed changes:
 
-#### 2.9beta (TBA)
+#### 2.9beta (2012-08-16)
 
 * FEATURE Fetch collected flags when adding a show from trakt.tv.
 * FEATURE Submit flagging whole seasons, shows and previously aired episodes to trakt.tv.
