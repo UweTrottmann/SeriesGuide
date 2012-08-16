@@ -12,6 +12,10 @@ Version 2.9 *(in development)*
 
 #### 2.9beta (TBA)
 
+* FEATURE Fetch collected flags when adding a show from trakt.tv.
+* FEATURE Submit flagging whole seasons, shows and previously aired episodes to trakt.tv.
+* FEATURE Automatically back up show database every week on starting the app. File is named seriesdatabase_auto.db and stored in the backup folder (See Backup/Restore in settings).
+
 Version 2.8 *(2012-08-15)*
 --------------------------------
 
