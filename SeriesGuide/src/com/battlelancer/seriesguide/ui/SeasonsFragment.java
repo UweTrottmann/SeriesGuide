@@ -17,21 +17,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.Constants.SeasonSorting;
-import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
-import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
-import com.google.analytics.tracking.android.EasyTracker;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -58,6 +43,21 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.Constants.SeasonSorting;
+import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
+import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.FlagTask;
+import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
+import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
+import com.google.analytics.tracking.android.EasyTracker;
 
 /**
  * Displays a list of seasons of one show.

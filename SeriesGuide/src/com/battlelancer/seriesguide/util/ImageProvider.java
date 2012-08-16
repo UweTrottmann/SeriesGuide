@@ -17,11 +17,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.content.ComponentCallbacks2;
@@ -39,6 +34,11 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
+
+import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;

@@ -17,6 +17,13 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
+
 import com.battlelancer.seriesguide.util.Utils;
 
 import oauth.signpost.OAuthConsumer;
@@ -25,13 +32,6 @@ import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 import oauth.signpost.exception.OAuthNotAuthorizedException;
-
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
 
 public class OAuthRequestTokenTask extends AsyncTask<Void, Void, String> {
     final String TAG = "OAuthRequestTokenTask";

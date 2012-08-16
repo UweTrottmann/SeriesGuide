@@ -17,16 +17,6 @@
 
 package com.battlelancer.seriesguide.provider;
 
-import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
-import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearchColumns;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.EpisodesColumns;
-import com.battlelancer.seriesguide.provider.SeriesContract.SeasonsColumns;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.provider.SeriesContract.ShowsColumns;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
 import android.app.SearchManager;
 import android.content.ContentValues;
 import android.content.Context;
@@ -36,6 +26,17 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 import android.provider.BaseColumns;
 import android.util.Log;
+
+import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
+import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearchColumns;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.EpisodesColumns;
+import com.battlelancer.seriesguide.provider.SeriesContract.SeasonsColumns;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesContract.ShowsColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.io.File;
 import java.io.IOException;

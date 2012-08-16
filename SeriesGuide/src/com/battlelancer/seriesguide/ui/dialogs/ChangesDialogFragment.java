@@ -17,8 +17,6 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import com.battlelancer.seriesguide.beta.R;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
@@ -36,6 +34,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.battlelancer.seriesguide.beta.R;
 
 public class ChangesDialogFragment extends DialogFragment {
     private static final String MARKETLINK_HTTP = "http://play.google.com/store/apps/details?id=com.battlelancer.seriesguide";

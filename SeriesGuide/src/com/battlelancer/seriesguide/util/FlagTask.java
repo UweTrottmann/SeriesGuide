@@ -1,14 +1,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.services.ShowService;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -17,6 +9,14 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.jakewharton.apibuilder.ApiException;
+import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.TraktException;
+import com.jakewharton.trakt.services.ShowService;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * Helps flag episodes in the local database and on trakt.tv.

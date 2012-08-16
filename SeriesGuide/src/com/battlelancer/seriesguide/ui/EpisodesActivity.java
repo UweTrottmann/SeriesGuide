@@ -17,18 +17,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.items.Episode;
-import com.battlelancer.seriesguide.items.Series;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapter;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.viewpagerindicator.TitlePageIndicator;
-
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -40,6 +28,18 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.items.Episode;
+import com.battlelancer.seriesguide.items.Series;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapter;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.viewpagerindicator.TitlePageIndicator;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

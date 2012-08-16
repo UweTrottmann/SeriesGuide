@@ -17,20 +17,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockDialogFragment;
-import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
-import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.entities.Shout;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -55,6 +41,20 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.actionbarsherlock.app.SherlockDialogFragment;
+import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.util.ImageDownloader;
+import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
+import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.jakewharton.apibuilder.ApiException;
+import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.TraktException;
+import com.jakewharton.trakt.entities.Shout;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.util.ArrayList;
 import java.util.List;

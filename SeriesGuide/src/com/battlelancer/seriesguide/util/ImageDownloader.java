@@ -16,15 +16,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.uwetrottmann.androidutils.AndroidUtils;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -37,6 +28,15 @@ import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
+
+import com.uwetrottmann.androidutils.AndroidUtils;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.File;
 import java.io.FileOutputStream;

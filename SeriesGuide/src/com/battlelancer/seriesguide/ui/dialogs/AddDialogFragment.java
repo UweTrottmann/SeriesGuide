@@ -17,10 +17,6 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.google.analytics.tracking.android.EasyTracker;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -30,6 +26,10 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+
+import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.google.analytics.tracking.android.EasyTracker;
 
 /**
  * A DialogFragment allowing the user to decide whether to add a show to his

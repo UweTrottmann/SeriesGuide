@@ -17,15 +17,15 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.io.File;
 import java.io.IOException;

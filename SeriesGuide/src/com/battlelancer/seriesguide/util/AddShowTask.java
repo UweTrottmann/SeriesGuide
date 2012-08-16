@@ -17,6 +17,10 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.content.Context;
+import android.os.AsyncTask;
+import android.widget.Toast;
+
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.thetvdbapi.TheTVDB;
@@ -26,10 +30,6 @@ import com.jakewharton.trakt.enumerations.ExtendedParam;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 import org.xml.sax.SAXException;
-
-import android.content.Context;
-import android.os.AsyncTask;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

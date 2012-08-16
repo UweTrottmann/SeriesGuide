@@ -17,16 +17,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.Constants.EpisodeSorting;
-import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.service.NotificationService;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.jakewharton.trakt.ServiceManager;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -41,6 +31,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.Constants.EpisodeSorting;
+import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.service.NotificationService;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.jakewharton.trakt.ServiceManager;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

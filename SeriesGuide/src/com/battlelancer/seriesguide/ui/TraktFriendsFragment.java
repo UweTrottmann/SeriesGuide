@@ -17,23 +17,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
-import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.entities.ActivityItem;
-import com.jakewharton.trakt.entities.ActivityItemBase;
-import com.jakewharton.trakt.entities.TvShow;
-import com.jakewharton.trakt.entities.TvShowEpisode;
-import com.jakewharton.trakt.entities.UserProfile;
-import com.jakewharton.trakt.enumerations.ActivityType;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -55,6 +38,23 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
+import com.battlelancer.seriesguide.util.ImageDownloader;
+import com.battlelancer.seriesguide.util.Utils;
+import com.jakewharton.apibuilder.ApiException;
+import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.TraktException;
+import com.jakewharton.trakt.entities.ActivityItem;
+import com.jakewharton.trakt.entities.ActivityItemBase;
+import com.jakewharton.trakt.entities.TvShow;
+import com.jakewharton.trakt.entities.TvShowEpisode;
+import com.jakewharton.trakt.entities.UserProfile;
+import com.jakewharton.trakt.enumerations.ActivityType;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.util.ArrayList;
 import java.util.List;

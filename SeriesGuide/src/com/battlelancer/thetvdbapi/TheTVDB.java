@@ -17,6 +17,26 @@
 
 package com.battlelancer.thetvdbapi;
 
+import android.content.ContentProviderOperation;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.OperationApplicationException;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.RemoteException;
+import android.preference.PreferenceManager;
+import android.sax.Element;
+import android.sax.EndElementListener;
+import android.sax.EndTextElementListener;
+import android.sax.RootElement;
+import android.text.TextUtils;
+import android.text.format.DateUtils;
+import android.util.Log;
+import android.util.Xml;
+
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.items.Series;
@@ -46,26 +66,6 @@ import org.apache.http.params.HttpParams;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;
-
-import android.content.ContentProviderOperation;
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.OperationApplicationException;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.RemoteException;
-import android.preference.PreferenceManager;
-import android.sax.Element;
-import android.sax.EndElementListener;
-import android.sax.EndTextElementListener;
-import android.sax.RootElement;
-import android.text.TextUtils;
-import android.text.format.DateUtils;
-import android.util.Log;
-import android.util.Xml;
 
 import java.io.FilterInputStream;
 import java.io.IOException;

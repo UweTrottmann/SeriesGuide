@@ -17,14 +17,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
-import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.battlelancer.seriesguide.util.TaskManager;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Bundle;
@@ -36,6 +28,14 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
+import com.battlelancer.seriesguide.util.ImageDownloader;
+import com.battlelancer.seriesguide.util.TaskManager;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.util.List;
 

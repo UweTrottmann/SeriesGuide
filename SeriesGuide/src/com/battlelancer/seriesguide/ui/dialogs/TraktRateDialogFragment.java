@@ -17,14 +17,6 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
-import com.battlelancer.seriesguide.util.TraktTask;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.jakewharton.trakt.enumerations.Rating;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -32,6 +24,14 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
+
+import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.TraktTask;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.jakewharton.trakt.enumerations.Rating;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 public class TraktRateDialogFragment extends DialogFragment {
 

@@ -17,14 +17,14 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.google.analytics.tracking.android.EasyTracker;
-
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 
 /**
  * Hosts a {@link SeasonsFragment}. Used on smaller screens which do not allow

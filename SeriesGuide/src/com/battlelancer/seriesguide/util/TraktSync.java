@@ -17,6 +17,18 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.content.ContentProviderOperation;
+import android.content.ContentValues;
+import android.content.OperationApplicationException;
+import android.database.Cursor;
+import android.os.AsyncTask;
+import android.os.RemoteException;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
+
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -31,18 +43,6 @@ import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.enumerations.ExtendedParam;
 import com.jakewharton.trakt.services.ShowService.EpisodeSeenBuilder;
 import com.jakewharton.trakt.services.ShowService.EpisodeUnseenBuilder;
-
-import android.content.ContentProviderOperation;
-import android.content.ContentValues;
-import android.content.OperationApplicationException;
-import android.database.Cursor;
-import android.os.AsyncTask;
-import android.os.RemoteException;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;

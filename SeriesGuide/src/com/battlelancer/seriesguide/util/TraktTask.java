@@ -17,6 +17,15 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.content.Context;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.widget.Toast;
+
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
@@ -31,15 +40,6 @@ import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.jakewharton.trakt.services.ShowService.CheckinBuilder;
 import com.uwetrottmann.androidutils.AndroidUtils;
-
-import android.content.Context;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.widget.Toast;
 
 public class TraktTask extends AsyncTask<Void, Void, Response> {
 

@@ -17,13 +17,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
-import com.battlelancer.seriesguide.util.TraktSync;
-import com.google.analytics.tracking.android.EasyTracker;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
@@ -37,6 +30,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
+import com.battlelancer.seriesguide.util.TraktSync;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class TraktSyncActivity extends BaseActivity {
 
