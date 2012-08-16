@@ -334,7 +334,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                             episode.getInt(EpisodeDetailsQuery.SEASON),
                             episode.getInt(EpisodeDetailsQuery.NUMBER));
                     AndroidUtils.executeAsyncTask(mTraktTask, new Void[] {
-                        null
+                            null
                     });
 
                     return true;
@@ -453,7 +453,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         if (mArtTask == null || mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
             mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity());
             AndroidUtils.executeAsyncTask(mArtTask, new Void[] {
-                null
+                    null
             });
         }
     }

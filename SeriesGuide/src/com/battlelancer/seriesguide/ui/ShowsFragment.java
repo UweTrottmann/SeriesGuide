@@ -373,7 +373,7 @@ public class ShowsFragment extends SherlockFragment implements
             case SHOWFILTER_ALL:
                 selection = Shows.HIDDEN + "=?";
                 selectionArgs = new String[] {
-                    "0"
+                        "0"
                 };
                 break;
             case SHOWFILTER_FAVORITES:
@@ -400,7 +400,7 @@ public class ShowsFragment extends SherlockFragment implements
             case SHOWFILTER_HIDDEN:
                 selection = Shows.HIDDEN + "=?";
                 selectionArgs = new String[] {
-                    "1"
+                        "1"
                 };
                 break;
         }

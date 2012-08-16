@@ -166,7 +166,7 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
                     AndroidUtils.executeAsyncTask(new TraktTask(getSherlockActivity(),
                             getFragmentManager(), TraktShoutsFragment.this).shout(tvdbid, shout,
                             isSpoiler), new Void[] {
-                        null
+                            null
                     });
                 } else {
                     // shout for an episode
@@ -174,7 +174,7 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
                     AndroidUtils.executeAsyncTask(new TraktTask(getSherlockActivity(),
                             getFragmentManager(), TraktShoutsFragment.this).shout(tvdbid, season,
                             episode, shout, isSpoiler), new Void[] {
-                        null
+                            null
                     });
                 }
             }

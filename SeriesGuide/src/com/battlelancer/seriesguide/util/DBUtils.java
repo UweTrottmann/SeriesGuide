@@ -57,7 +57,7 @@ public class DBUtils {
 
     interface UnwatchedQuery {
         static final String[] PROJECTION = new String[] {
-            Episodes._ID
+                Episodes._ID
         };
 
         static final String NOAIRDATE_SELECTION = Episodes.WATCHED + "=? AND "
@@ -86,7 +86,7 @@ public class DBUtils {
 
         // all a seasons episodes
         final Cursor total = resolver.query(episodesOfSeasonUri, new String[] {
-            Episodes._ID
+                Episodes._ID
         }, null, null, null);
         final int totalcount = total.getCount();
         total.close();
@@ -245,7 +245,7 @@ public class DBUtils {
         // build result array
         String[][] results = new String[2][];
         results[0] = new String[] {
-            query
+                query
         };
         results[1] = selectionArgs;
         return results;

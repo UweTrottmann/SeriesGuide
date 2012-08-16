@@ -99,7 +99,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
     public UpdateTask(String showId, Context context) {
         mAppContext = context.getApplicationContext();
         mShows = new String[] {
-            showId
+                showId
         };
         mUpdateType = UpdateType.SINGLE;
     }
@@ -156,7 +156,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                 case FULL:
                     // get all show IDs for a full update
                     final Cursor shows = resolver.query(Shows.CONTENT_URI, new String[] {
-                        Shows._ID
+                            Shows._ID
                     }, null, null, null);
 
                     mShows = new String[shows.getCount()];
@@ -370,7 +370,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
 
     private void setCurrentShowName(final ContentResolver resolver, String id) {
         Cursor show = resolver.query(Shows.buildShowUri(id), new String[] {
-            Shows.TITLE
+                Shows.TITLE
         }, null, null, null);
         if (show.moveToFirst()) {
             mCurrentShowName = show.getString(0);

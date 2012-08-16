@@ -163,7 +163,7 @@ public class TheTVDB {
                             batch.add(ContentProviderOperation
                                     .newUpdate(Episodes.buildEpisodesOfSeasonUri(seasonId))
                                     .withSelection(Episodes.NUMBER + "=?", new String[] {
-                                        episode.toString()
+                                            episode.toString()
                                     })
                                     .withValue(isSeenFlags ? Episodes.WATCHED : Episodes.COLLECTED,
                                             true).build());

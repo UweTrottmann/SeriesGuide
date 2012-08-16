@@ -220,7 +220,7 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                         AndroidUtils.executeAsyncTask(new TraktTask(getActivity(),
                                 getFragmentManager(), null).checkin(tvdbid, season, episode,
                                 message), new Void[] {
-                            null
+                                null
                         });
                     }
                 }

@@ -149,7 +149,7 @@ public class TraktRateDialogFragment extends DialogFragment {
         getArguments().putString(ShareItems.RATING, rating.toString());
         AndroidUtils.executeAsyncTask(new TraktTask(context, getFragmentManager(), getArguments(),
                 null), new Void[] {
-            null
+                null
         });
         dismiss();
     }

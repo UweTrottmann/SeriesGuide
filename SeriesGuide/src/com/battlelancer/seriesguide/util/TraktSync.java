@@ -129,7 +129,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
         // get show ids in local database
         Cursor showTvdbIds = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[] {
-            Shows._ID
+                Shows._ID
         }, null, null, null);
 
         // assume we have a local list of which shows to sync (later...)
@@ -171,7 +171,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                                 batch.add(ContentProviderOperation
                                         .newUpdate(Episodes.buildEpisodesOfSeasonUri(seasonId))
                                         .withSelection(Episodes.NUMBER + "=?", new String[] {
-                                            episode.toString()
+                                                episode.toString()
                                         }).withValue(Episodes.WATCHED, true).build());
                             }
 
@@ -220,7 +220,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
     private Integer syncToTrakt(ServiceManager manager) {
         // get show ids in local database for which syncing is enabled
         Cursor showTvdbIds = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[] {
-            Shows._ID
+                Shows._ID
         }, Shows.SYNCENABLED + "=1", null, null);
 
         if (showTvdbIds.getCount() == 0) {

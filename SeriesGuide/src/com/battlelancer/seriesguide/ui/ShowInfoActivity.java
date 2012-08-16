@@ -270,7 +270,7 @@ public class ShowInfoActivity extends BaseActivity {
         TraktSummaryTask task = new TraktSummaryTask(this, findViewById(R.id.ratingbar))
                 .show(tvdbId);
         AndroidUtils.executeAsyncTask(task, new Void[] {
-            null
+                null
         });
     }
 }

@@ -126,7 +126,7 @@ public class SearchFragment extends SherlockListFragment implements LoaderCallba
         String selection = null;
         final String query = args.getString(SearchManager.QUERY);
         String[] selectionArgs = new String[] {
-            query
+                query
         };
 
         Bundle appData = args.getBundle(SearchManager.APP_DATA);

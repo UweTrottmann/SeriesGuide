@@ -120,7 +120,7 @@ public class TaskManager {
         if (!isUpdateTaskRunning(false) && !isAddTaskRunning()) {
             mBackupTask = new BackupTask(mContext);
             mBackupTask.execute(new String[] {
-                filePath
+                    filePath
             });
         }
     }

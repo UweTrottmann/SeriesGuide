@@ -259,7 +259,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             final Cursor episodes = db.query(Tables.EPISODES, new String[] {
                     Episodes._ID, Episodes.FIRSTAIRED
             }, Shows.REF_SHOW_ID + "=?", new String[] {
-                showId
+                    showId
             }, null, null, null);
 
             db.beginTransaction();
@@ -271,7 +271,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
                     values.put(Episodes.FIRSTAIREDMS, episodeAirtime);
                     db.update(Tables.EPISODES, values, Episodes._ID + "=?", new String[] {
-                        episodes.getString(0)
+                            episodes.getString(0)
                     });
                     values.clear();
                 }
@@ -359,7 +359,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 }
                 values.put(Shows.STATUS, status);
                 db.update(Tables.SHOWS, values, Shows._ID + "=?", new String[] {
-                    shows.getString(0)
+                        shows.getString(0)
                 });
                 values.clear();
             }
@@ -501,7 +501,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         // search for anything starting with the given search term
         return db.rawQuery(query.toString(), new String[] {
-            "\"" + searchterm + "*\""
+                "\"" + searchterm + "*\""
         });
     }
 

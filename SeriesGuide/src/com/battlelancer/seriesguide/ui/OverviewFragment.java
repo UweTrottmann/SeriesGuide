@@ -403,7 +403,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             }
 
         }, new Void[] {
-            null
+                null
         });
     }
 
@@ -514,7 +514,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView()).episode(getShowId(),
                 mSeasonNumber, mEpisodeNumber);
         AndroidUtils.executeAsyncTask(mTraktTask, new Void[] {
-            null
+                null
         });
 
         // remaining episodes counter
@@ -538,7 +538,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         }
         mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity());
         AndroidUtils.executeAsyncTask(mArtTask, new Void[] {
-            null
+                null
         });
     }
 
