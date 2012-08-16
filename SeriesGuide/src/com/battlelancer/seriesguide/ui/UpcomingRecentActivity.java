@@ -26,6 +26,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -157,6 +158,13 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
             case R.id.menu_nowatched: {
                 storeBooleanPreference(item, SeriesGuidePreferences.KEY_NOWATCHED);
                 return true;
+            }
+            case android.R.id.home: {
+                /* force creating a new task if necessary as this activity may be created from */
+                NavUtils.navigateUpTo(this,
+                        new Intent(Intent.ACTION_MAIN).setClass(this, ShowsActivity.class));
+                overridePendingTransition(R.anim.fragment_slide_right_enter,
+                        R.anim.fragment_slide_right_exit);
             }
             default:
                 return super.onOptionsItemSelected(item);
