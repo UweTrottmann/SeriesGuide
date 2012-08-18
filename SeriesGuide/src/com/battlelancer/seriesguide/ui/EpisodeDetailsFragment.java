@@ -191,7 +191,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             String episodestring = ShareUtils.onCreateShareString(getActivity(), episode);
             String sharestring = getString(R.string.share_checkout);
             sharestring += " \"" + episode.getString(EpisodeDetailsQuery.SHOW_TITLE);
-            sharestring += " - " + episodestring + "\" via @SeriesGuide";
+            sharestring += " - " + episodestring + "\"";
             shareData.putString(ShareItems.EPISODESTRING, episodestring);
             shareData.putString(ShareItems.SHARESTRING, sharestring);
             shareData.putString(ShareItems.IMDBID,
