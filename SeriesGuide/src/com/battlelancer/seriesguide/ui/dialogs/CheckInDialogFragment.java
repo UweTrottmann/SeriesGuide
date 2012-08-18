@@ -190,8 +190,9 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                         updateCheckInButtonState();
                         return;
                     } else {
-                        // check in
-                        new CheckInTask(imdbid, message, getActivity()).execute();
+                        // check in, use task on thread pool
+                        AndroidUtils.executeAsyncTask(new CheckInTask(imdbid, message,
+                                getActivity()), new Void[] {});
                     }
                 }
 
