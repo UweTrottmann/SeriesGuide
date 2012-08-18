@@ -363,7 +363,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         // build share string
         final StringBuilder shareString = new StringBuilder(getString(R.string.share_checkout));
         shareString.append(" \"").append(mShow.getSeriesName());
-        shareString.append(" - ").append(episodestring).append("\" via @SeriesGuide");
+        shareString.append(" - ").append(episodestring).append("\"");
         mShareData.putString(ShareItems.SHARESTRING, shareString.toString());
         mShareData.putString(ShareItems.EPISODESTRING, episodestring);
     }
