@@ -14,9 +14,11 @@ Version 2.9 *(in development)*
 
 * NOTICE Database upgraded to version 27. Starting SeriesGuide the first time after installing the update may take a little than usual.
 * FEATURE Display IMDb pages for episodes (IMDb app or website).
-* FEATURE Sharing an episode now includes its IMDb page link, falls back to the show IMDb page if it does not exist.
+* TWEAK Sharing an episode now includes its IMDb page link, falls back to the show IMDb page if it does not exist.
+* TWEAK Episode and show detail screens show when information was last edited on theTVDb.com.
 * TWEAK Download images in add screen and shout screen one-by-one.
 * TWEAK Run GetGlue check in on thread pool, it should not be blocked by other background activity anymore.
+* TWEAK Only update episode information if it actually changed according to theTVDB.com.
 * NOTICE Updated Gson to 2.2.2. Possibly faster interaction with trakt.tv.
 
 #### 2.9beta (2012-08-16)
