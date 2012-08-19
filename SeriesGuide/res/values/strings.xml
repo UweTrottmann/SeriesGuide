@@ -367,7 +367,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage"><b>A new cycle</b>\n\n2.8 is out, let the next iteration begin. Thank you all for testing, translating and submitting bug reports!\n\n- Flagging a whole season, show, etc. is submitted to trakt.tv.\n\n- Collected flags are loaded from trakt.tv on adding a show.\n\n- Up in activity screen always opens the show list.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed changelog</a>\n\n</string>
+    <string name="betamessage"><b>A new cycle</b>\n\n2.8 is out, let the next iteration begin. Thank you all for testing, translating and submitting bug reports!\n\n- Link to episode IMDb pages, share them as well. Fall back to show\'s IMDb page.\n\n- Flagging a whole season, show, etc. is submitted to trakt.tv.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed changelog</a>\n\n</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
