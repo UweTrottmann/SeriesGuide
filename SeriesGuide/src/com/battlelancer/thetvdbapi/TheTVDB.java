@@ -403,6 +403,16 @@ public class TheTVDB {
                 currentShow.setImdbId(body.trim());
             }
         });
+        show.getChild("lastupdated").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                // system populated field, trimming not necessary
+                try {
+                    currentShow.lastEdit = Long.valueOf(body);
+                } catch (NumberFormatException e) {
+                    currentShow.lastEdit = 0;
+                }
+            }
+        });
 
         HttpUriRequest request = new HttpGet(url);
         HttpClient httpClient = getHttpClient();
@@ -518,6 +528,21 @@ public class TheTVDB {
         episode.getChild("filename").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 values.put(Episodes.IMAGE, body.trim());
+            }
+        });
+        episode.getChild("IMDB_ID").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                values.put(Episodes.IMDBID, body.trim());
+            }
+        });
+        episode.getChild("lastupdated").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                // system populated field, trimming not necessary
+                try {
+                    values.put(Episodes.LASTEDIT, Long.valueOf(body));
+                } catch (NumberFormatException e) {
+                    values.put(Episodes.LASTEDIT, 0);
+                }
             }
         });
 
