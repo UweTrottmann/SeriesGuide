@@ -87,6 +87,12 @@ public class SeriesContract {
          */
         String NEXTAIRDATEMS = "series_nextairdate";
 
+        /**
+         * Last time show was edited on theTVDb.com (lastupdated field). Added
+         * in db version 27.
+         */
+        String LASTEDIT = "series_lastedit";
+
     }
 
     interface SeasonsColumns {
@@ -137,6 +143,17 @@ public class SeriesContract {
          * Whether an episode has been collected in digital, physical form.
          */
         String COLLECTED = "episode_collected";
+
+        /**
+         * IMDb id for a single episode. Added in db version 27.
+         */
+        String IMDBID = "episode_imdbid";
+
+        /**
+         * Last time episode was edited on theTVDb.com (lastupdated field).
+         * Added in db version 27.
+         */
+        String LASTEDIT = "episode_lastedit";
     }
 
     interface EpisodeSearchColumns {

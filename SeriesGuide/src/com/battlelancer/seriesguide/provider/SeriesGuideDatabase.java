@@ -34,7 +34,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.EpisodesColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesContract.ShowsColumns;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -67,7 +66,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_COLLECTED = 26;
 
-    public static final int DATABASE_VERSION = DBVER_COLLECTED;
+    public static final int DBVER_IMDBIDSLASTEDIT = 27;
+
+    public static final int DATABASE_VERSION = DBVER_IMDBIDSLASTEDIT;
 
     public interface Tables {
         String SHOWS = "series";
@@ -88,48 +89,133 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         String SEASON_ID = "REFERENCES " + Tables.SEASONS + "(" + BaseColumns._ID + ")";
     }
 
-    private static final String CREATE_SHOWS_TABLE = "CREATE TABLE " + Tables.SHOWS + " ("
-            + BaseColumns._ID + " INTEGER PRIMARY KEY," + ShowsColumns.TITLE + " TEXT NOT NULL,"
-            + ShowsColumns.OVERVIEW + " TEXT DEFAULT ''," + ShowsColumns.ACTORS
-            + " TEXT DEFAULT ''," + ShowsColumns.AIRSDAYOFWEEK + " TEXT DEFAULT '',"
-            + ShowsColumns.AIRSTIME + " INTEGER DEFAULT ''," + ShowsColumns.FIRSTAIRED
-            + " TEXT DEFAULT ''," + ShowsColumns.GENRES + " TEXT DEFAULT '',"
-            + ShowsColumns.NETWORK + " TEXT DEFAULT ''," + ShowsColumns.RATING
-            + " TEXT DEFAULT ''," + ShowsColumns.RUNTIME + " TEXT DEFAULT '',"
-            + ShowsColumns.STATUS + " TEXT DEFAULT ''," + ShowsColumns.CONTENTRATING
-            + " TEXT DEFAULT ''," + ShowsColumns.NEXTEPISODE + " TEXT DEFAULT '',"
-            + ShowsColumns.POSTER + " TEXT DEFAULT ''," + ShowsColumns.NEXTAIRDATEMS + " INTEGER,"
-            + ShowsColumns.NEXTTEXT + " TEXT DEFAULT ''," + ShowsColumns.IMDBID
-            + " TEXT DEFAULT ''," + ShowsColumns.FAVORITE + " INTEGER DEFAULT 0,"
-            + ShowsColumns.NEXTAIRDATETEXT + " TEXT DEFAULT ''" + "," + ShowsColumns.SYNCENABLED
-            + " INTEGER DEFAULT 1" + "," + ShowsColumns.AIRTIME + " TEXT DEFAULT '',"
-            + ShowsColumns.HIDDEN + " INTEGER DEFAULT 0," + ShowsColumns.LASTUPDATED
-            + " INTEGER DEFAULT 0" + ");";
+    private static final String CREATE_SHOWS_TABLE = "CREATE TABLE " + Tables.SHOWS
+            + " ("
 
-    private static final String CREATE_SEASONS_TABLE = "CREATE TABLE " + Tables.SEASONS + " ("
-            + BaseColumns._ID + " INTEGER PRIMARY KEY," + SeasonsColumns.COMBINED + " INTEGER,"
+            + BaseColumns._ID + " INTEGER PRIMARY KEY,"
+
+            + ShowsColumns.TITLE + " TEXT NOT NULL,"
+
+            + ShowsColumns.OVERVIEW + " TEXT DEFAULT '',"
+
+            + ShowsColumns.ACTORS + " TEXT DEFAULT '',"
+
+            + ShowsColumns.AIRSDAYOFWEEK + " TEXT DEFAULT '',"
+
+            + ShowsColumns.AIRSTIME + " INTEGER DEFAULT '',"
+
+            + ShowsColumns.FIRSTAIRED + " TEXT DEFAULT '',"
+
+            + ShowsColumns.GENRES + " TEXT DEFAULT '',"
+
+            + ShowsColumns.NETWORK + " TEXT DEFAULT '',"
+
+            + ShowsColumns.RATING + " TEXT DEFAULT '',"
+
+            + ShowsColumns.RUNTIME + " TEXT DEFAULT '',"
+
+            + ShowsColumns.STATUS + " TEXT DEFAULT '',"
+
+            + ShowsColumns.CONTENTRATING + " TEXT DEFAULT '',"
+
+            + ShowsColumns.NEXTEPISODE + " TEXT DEFAULT '',"
+
+            + ShowsColumns.POSTER + " TEXT DEFAULT '',"
+
+            + ShowsColumns.NEXTAIRDATEMS + " INTEGER,"
+
+            + ShowsColumns.NEXTTEXT + " TEXT DEFAULT '',"
+
+            + ShowsColumns.IMDBID + " TEXT DEFAULT '',"
+
+            + ShowsColumns.FAVORITE + " INTEGER DEFAULT 0,"
+
+            + ShowsColumns.NEXTAIRDATETEXT + " TEXT DEFAULT '',"
+
+            + ShowsColumns.SYNCENABLED + " INTEGER DEFAULT 1,"
+
+            + ShowsColumns.AIRTIME + " TEXT DEFAULT '',"
+
+            + ShowsColumns.HIDDEN + " INTEGER DEFAULT 0,"
+
+            + ShowsColumns.LASTUPDATED + " INTEGER DEFAULT 0,"
+
+            + ShowsColumns.LASTEDIT + " INTEGER DEFAULT 0"
+
+            + ");";
+
+    private static final String CREATE_SEASONS_TABLE = "CREATE TABLE " + Tables.SEASONS
+            + " ("
+
+            + BaseColumns._ID + " INTEGER PRIMARY KEY,"
+
+            + SeasonsColumns.COMBINED + " INTEGER,"
+
             + ShowsColumns.REF_SHOW_ID + " TEXT " + References.SHOW_ID + ","
-            + SeasonsColumns.WATCHCOUNT + " INTEGER DEFAULT 0," + SeasonsColumns.UNAIREDCOUNT
-            + " INTEGER DEFAULT 0," + SeasonsColumns.NOAIRDATECOUNT + " INTEGER DEFAULT 0,"
-            + SeasonsColumns.POSTER + " TEXT DEFAULT ''," + SeasonsColumns.TOTALCOUNT
-            + " INTEGER DEFAULT 0);";
 
-    private static final String CREATE_EPISODES_TABLE = "CREATE TABLE " + Tables.EPISODES + " ("
-            + BaseColumns._ID + " INTEGER PRIMARY KEY," + EpisodesColumns.TITLE + " TEXT NOT NULL,"
-            + EpisodesColumns.OVERVIEW + " TEXT," + EpisodesColumns.NUMBER + " INTEGER default 0,"
-            + EpisodesColumns.SEASON + " INTEGER DEFAULT 0," + EpisodesColumns.DVDNUMBER + " REAL,"
-            + EpisodesColumns.FIRSTAIRED + " TEXT," + SeasonsColumns.REF_SEASON_ID + " TEXT "
-            + References.SEASON_ID + "," + ShowsColumns.REF_SHOW_ID + " TEXT " + References.SHOW_ID
-            + "," + EpisodesColumns.WATCHED + " INTEGER DEFAULT 0," + EpisodesColumns.DIRECTORS
-            + " TEXT DEFAULT ''," + EpisodesColumns.GUESTSTARS + " TEXT DEFAULT '',"
-            + EpisodesColumns.WRITERS + " TEXT DEFAULT ''," + EpisodesColumns.IMAGE
-            + " TEXT DEFAULT ''," + EpisodesColumns.FIRSTAIREDMS + " INTEGER DEFAULT -1,"
-            + EpisodesColumns.COLLECTED + " INTEGER DEFAULT 0," + EpisodesColumns.RATING
-            + " TEXT DEFAULT '');";
+            + SeasonsColumns.WATCHCOUNT + " INTEGER DEFAULT 0,"
+
+            + SeasonsColumns.UNAIREDCOUNT + " INTEGER DEFAULT 0,"
+
+            + SeasonsColumns.NOAIRDATECOUNT + " INTEGER DEFAULT 0,"
+
+            + SeasonsColumns.POSTER + " TEXT DEFAULT '',"
+
+            + SeasonsColumns.TOTALCOUNT + " INTEGER DEFAULT 0"
+
+            + ");";
+
+    private static final String CREATE_EPISODES_TABLE = "CREATE TABLE " + Tables.EPISODES
+            + " ("
+
+            + BaseColumns._ID + " INTEGER PRIMARY KEY,"
+
+            + EpisodesColumns.TITLE + " TEXT NOT NULL,"
+
+            + EpisodesColumns.OVERVIEW + " TEXT,"
+
+            + EpisodesColumns.NUMBER + " INTEGER DEFAULT 0,"
+
+            + EpisodesColumns.SEASON + " INTEGER DEFAULT 0,"
+
+            + EpisodesColumns.DVDNUMBER + " REAL,"
+
+            + EpisodesColumns.FIRSTAIRED + " TEXT,"
+
+            + SeasonsColumns.REF_SEASON_ID + " TEXT " + References.SEASON_ID + ","
+
+            + ShowsColumns.REF_SHOW_ID + " TEXT " + References.SHOW_ID + ","
+
+            + EpisodesColumns.WATCHED + " INTEGER DEFAULT 0,"
+
+            + EpisodesColumns.DIRECTORS + " TEXT DEFAULT '',"
+
+            + EpisodesColumns.GUESTSTARS + " TEXT DEFAULT '',"
+
+            + EpisodesColumns.WRITERS + " TEXT DEFAULT '',"
+
+            + EpisodesColumns.IMAGE + " TEXT DEFAULT '',"
+
+            + EpisodesColumns.FIRSTAIREDMS + " INTEGER DEFAULT -1,"
+
+            + EpisodesColumns.COLLECTED + " INTEGER DEFAULT 0,"
+
+            + EpisodesColumns.RATING + " TEXT DEFAULT '',"
+
+            + EpisodesColumns.IMDBID + " TEXT DEFAULT '',"
+
+            + EpisodesColumns.LASTEDIT + " INTEGER DEFAULT 0"
+
+            + ");";
 
     private static final String CREATE_SEARCH_TABLE = "CREATE VIRTUAL TABLE "
-            + Tables.EPISODES_SEARCH + " USING FTS3(" + EpisodeSearchColumns.TITLE + " TEXT,"
-            + EpisodeSearchColumns.OVERVIEW + " TEXT" + ");";
+            + Tables.EPISODES_SEARCH + " USING FTS3("
+
+            + EpisodeSearchColumns.TITLE + " TEXT,"
+
+            + EpisodeSearchColumns.OVERVIEW + " TEXT"
+
+            + ");";
 
     public SeriesGuideDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -199,6 +285,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 25:
                 upgradeToTwentySix(db);
                 version = 26;
+            case 26:
+                upgradeToTwentySeven(db);
+                version = 27;
         }
 
         // drop all tables if version is not right
@@ -213,6 +302,22 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             onCreate(db);
         }
+    }
+
+    /**
+     * Add {@link Episodes} columns for storing its IMDb id and last time of
+     * edit on theTVDB.com. Add {@link Shows} column for storing last time of
+     * edit as well.
+     * 
+     * @param db
+     */
+    private void upgradeToTwentySeven(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.LASTEDIT
+                + " INTEGER DEFAULT 0;");
+        db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN " + EpisodesColumns.IMDBID
+                + " TEXT DEFAULT '';");
+        db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN " + EpisodesColumns.LASTEDIT
+                + " INTEGER DEFAULT 0;");
     }
 
     /**
