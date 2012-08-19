@@ -275,41 +275,50 @@ public class DBUtils {
         }
     }
 
+    private static final String[] SHOW_PROJECTION = new String[] {
+            Shows._ID, Shows.ACTORS, Shows.AIRSDAYOFWEEK, Shows.AIRSTIME, Shows.CONTENTRATING,
+            Shows.FIRSTAIRED, Shows.GENRES, Shows.NETWORK, Shows.OVERVIEW, Shows.POSTER,
+            Shows.RATING, Shows.RUNTIME, Shows.TITLE, Shows.STATUS, Shows.IMDBID,
+            Shows.NEXTEPISODE, Shows.LASTEDIT
+    };
+
     /**
-     * Fetches the row to a given show id and returns the results an Series
-     * object. Returns {@code null} if there is no show with that id.
-     * 
-     * @param show tvdb id
-     * @return
+     * Returns a {@link Series} object populated with all needed fields, but not
+     * all of them! Might Return {@code null} if there is no show with that id.
      */
     public static Series getShow(Context context, String showId) {
-        Series show = new Series();
-        Cursor details = context.getContentResolver().query(Shows.buildShowUri(showId), null, null,
+        Cursor details = context.getContentResolver().query(Shows.buildShowUri(showId),
+                SHOW_PROJECTION, null,
                 null, null);
-        if (details.moveToFirst()) {
-            show.setActors(details.getString(details.getColumnIndexOrThrow(Shows.ACTORS)));
-            show.setAirsDayOfWeek(details.getString(details
-                    .getColumnIndexOrThrow(Shows.AIRSDAYOFWEEK)));
-            show.setAirsTime(details.getLong(details.getColumnIndexOrThrow(Shows.AIRSTIME)));
-            show.setContentRating(details.getString(details
-                    .getColumnIndexOrThrow(Shows.CONTENTRATING)));
-            show.setFirstAired(details.getString(details.getColumnIndexOrThrow(Shows.FIRSTAIRED)));
-            show.setGenres(details.getString(details.getColumnIndexOrThrow(Shows.GENRES)));
-            show.setId(details.getString(details.getColumnIndexOrThrow(Shows._ID)));
-            show.setNetwork(details.getString(details.getColumnIndexOrThrow(Shows.NETWORK)));
-            show.setOverview(details.getString(details.getColumnIndexOrThrow(Shows.OVERVIEW)));
-            show.setPoster(details.getString(details.getColumnIndexOrThrow(Shows.POSTER)));
-            show.setRating(details.getString(details.getColumnIndexOrThrow(Shows.RATING)));
-            show.setRuntime(details.getString(details.getColumnIndexOrThrow(Shows.RUNTIME)));
-            show.setTitle(details.getString(details.getColumnIndexOrThrow(Shows.TITLE)));
-            show.setStatus(details.getInt(details.getColumnIndexOrThrow(Shows.STATUS)));
-            show.setImdbId(details.getString(details.getColumnIndexOrThrow(Shows.IMDBID)));
-            show.setNextEpisode(details.getLong(details.getColumnIndexOrThrow(Shows.NEXTEPISODE)));
-        } else {
-            show = null;
+
+        if (details != null) {
+            if (details.moveToFirst()) {
+                Series show = new Series();
+
+                show.setId(details.getString(0));
+                show.setActors(details.getString(1));
+                show.setAirsDayOfWeek(details.getString(2));
+                show.setAirsTime(details.getLong(3));
+                show.setContentRating(details.getString(4));
+                show.setFirstAired(details.getString(5));
+                show.setGenres(details.getString(6));
+                show.setNetwork(details.getString(7));
+                show.setOverview(details.getString(8));
+                show.setPoster(details.getString(9));
+                show.setRating(details.getString(10));
+                show.setRuntime(details.getString(11));
+                show.setTitle(details.getString(12));
+                show.setStatus(details.getInt(13));
+                show.setImdbId(details.getString(14));
+                show.setNextEpisode(details.getLong(15));
+                show.setLastEdit(details.getLong(16));
+
+                return show;
+            }
+            details.close();
         }
-        details.close();
-        return show;
+
+        return null;
     }
 
     public static boolean isShowExists(String showId, Context context) {
@@ -368,6 +377,7 @@ public class DBUtils {
         values.put(Shows.POSTER, show.getPoster());
         values.put(Shows.IMDBID, show.getImdbId());
         values.put(Shows.LASTUPDATED, new Date().getTime());
+        values.put(Shows.LASTEDIT, show.getLastEdit());
         return values;
     }
 
