@@ -27,6 +27,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,6 +71,8 @@ import com.uwetrottmann.androidutils.AndroidUtils;
  */
 public class OverviewFragment extends SherlockFragment implements OnTraktActionCompleteListener,
         OnFlagListener {
+
+    private static final String TAG = "OverviewFragment";
 
     private boolean mDualPane;
 
@@ -476,9 +479,17 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             ((TextView) getView().findViewById(R.id.value)).setText(ratingText + "/10");
         }
 
-        // IMDb and TVDb button
+        // IMDb button
+        String imdbId = episode.getString(EpisodeQuery.IMDBID);
+        if (TextUtils.isEmpty(imdbId)) {
+            // fall back to show IMDb id
+            imdbId = mShow.getImdbId();
+        }
+        Utils.setUpImdbButton(imdbId, getView().findViewById(R.id.buttonShowInfoIMDB), TAG,
+                getActivity());
+
+        // TVDb button
         final String seasonId = episode.getString(EpisodeQuery.REF_SEASON_ID);
-        getView().findViewById(R.id.buttonShowInfoIMDB).setVisibility(View.GONE);
         getView().findViewById(R.id.buttonTVDB).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -594,7 +605,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 Episodes._ID, Shows.REF_SHOW_ID, Episodes.OVERVIEW, Episodes.NUMBER,
                 Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIREDMS, Episodes.DIRECTORS,
                 Episodes.GUESTSTARS, Episodes.WRITERS, Episodes.RATING, Episodes.IMAGE,
-                Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID, Episodes.COLLECTED
+                Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID, Episodes.COLLECTED,
+                Episodes.IMDBID
         };
 
         int _ID = 0;
@@ -628,5 +640,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         int REF_SEASON_ID = 14;
 
         int COLLECTED = 15;
+
+        int IMDBID = 16;
     }
 }
