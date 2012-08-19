@@ -253,7 +253,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         }
 
         // Save info for sharing
-        mShareData.putString(ShareItems.IMDBID, mShow.getImdbId());
         mShareData.putInt(ShareItems.TVDBID, getShowId());
 
         // Show name
@@ -417,7 +416,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             @Override
             public void onClick(View v) {
                 CheckInDialogFragment f = CheckInDialogFragment.newInstance(
-                        mShareData.getString(ShareItems.IMDBID), getShowId(), mSeasonNumber,
+                        mShow.getImdbId(), getShowId(), mSeasonNumber,
                         mEpisodeNumber, mShareData.getString(ShareItems.EPISODESTRING));
                 f.show(getFragmentManager(), "checkin-dialog");
             }
@@ -487,6 +486,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         }
         Utils.setUpImdbButton(imdbId, getView().findViewById(R.id.buttonShowInfoIMDB), TAG,
                 getActivity());
+        mShareData.putString(ShareItems.IMDBID, imdbId);
 
         // TVDb button
         final String seasonId = episode.getString(EpisodeQuery.REF_SEASON_ID);
