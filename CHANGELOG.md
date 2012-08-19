@@ -10,7 +10,7 @@ Version 2.9 *(in development)*
 
 ### Detailed changes:
 
-#### 2.9.1beta (TBA)
+#### 2.9.1beta (2012-08-19)
 
 * NOTICE Database upgraded to version 27. Starting SeriesGuide the first time after installing the update may take a little than usual.
 * FEATURE Display IMDb pages for episodes (IMDb app or website).
