@@ -28,6 +28,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -311,8 +312,18 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 String[] dayAndTime = Utils.formatToTimeAndDay(airTime, getActivity());
                 airtimeText.setText(dayAndTime[2] + " (" + dayAndTime[1] + ")");
             } else {
-                airdateText.setText(getString(R.string.unknown));
+                airdateText.setText(R.string.unknown);
                 airtimeText.setText("");
+            }
+
+            // Last edit date
+            TextView lastEdit = (TextView) view.findViewById(R.id.lastEdit);
+            long lastEditRaw = cursor.getLong(DetailsQuery.LASTEDIT);
+            if (lastEditRaw > 0) {
+                lastEdit.setText(DateUtils.formatDateTime(context, lastEditRaw * 1000,
+                        DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
+            } else {
+                lastEdit.setText(R.string.unknown);
             }
 
             // DVD episode number
@@ -459,7 +470,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
                 Tables.EPISODES + "." + Episodes.RATING, Episodes.IMAGE, Episodes.DVDNUMBER,
                 Episodes.TITLE, Shows.TITLE, Shows.IMDBID, Shows.RUNTIME, Shows.POSTER,
-                Seasons.REF_SEASON_ID, Episodes.COLLECTED, Episodes.IMDBID
+                Seasons.REF_SEASON_ID, Episodes.COLLECTED, Episodes.IMDBID, Episodes.LASTEDIT
         };
 
         int _ID = 0;
@@ -503,6 +514,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         int COLLECTED = 19;
 
         int IMDBID = 20;
+
+        int LASTEDIT = 21;
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {

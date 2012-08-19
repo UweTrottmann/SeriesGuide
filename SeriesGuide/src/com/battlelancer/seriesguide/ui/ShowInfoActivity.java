@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.app.ShareCompat.IntentBuilder;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -198,6 +199,16 @@ public class ShowInfoActivity extends BaseActivity {
             ratingBar.setProgress((int) (Double.valueOf(ratingText) / 0.1));
             TextView rating = (TextView) findViewById(R.id.value);
             rating.setText(ratingText + "/10");
+        }
+
+        // Last edit date
+        TextView lastEdit = (TextView) findViewById(R.id.lastEdit);
+        long lastEditRaw = show.getLastEdit();
+        if (lastEditRaw > 0) {
+            lastEdit.setText(DateUtils.formatDateTime(this, lastEditRaw * 1000,
+                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
+        } else {
+            lastEdit.setText(R.string.unknown);
         }
 
         // IMDb button

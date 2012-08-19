@@ -65,6 +65,7 @@
     <string name="show_airtimeunit">min</string>
     <string name="show_isalive">Continuing</string>
     <string name="show_isnotalive">Ended</string>
+    <string name="lastEdit">Last Edit // TVDb</string>
 
     <!-- Menu options -->
     <string name="sort">Sort by</string>

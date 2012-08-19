@@ -64,4 +64,15 @@
         android:id="@+id/TextViewShowInfoFirstAirdate"
         style="@style/SmallItems.WithSideMargins" />
 
+    <TextView
+        android:id="@+id/labelLastEdit"
+        style="@style/Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lastEdit" />
+
+    <TextView
+        android:id="@+id/lastEdit"
+        style="@style/SmallItems.WithSideMargins" />
+
 </merge>
