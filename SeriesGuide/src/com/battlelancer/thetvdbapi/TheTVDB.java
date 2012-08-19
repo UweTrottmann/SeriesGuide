@@ -74,6 +74,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.zip.ZipInputStream;
@@ -435,22 +436,33 @@ public class TheTVDB {
         RootElement root = new RootElement("Data");
         Element episode = root.getChild("Episode");
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
-        final HashSet<Long> episodeIDs = DBUtils.getEpisodeIDsForShow(showId, context);
+        final HashMap<Long, Long> episodeIDs = DBUtils.getEpisodeMapForShow(showId, context);
         final HashSet<Long> existingSeasonIDs = DBUtils.getSeasonIDsForShow(showId, context);
+        // store updated seasons to avoid duplicate ops
         final HashSet<Long> updatedSeasonIDs = new HashSet<Long>();
         final ContentValues values = new ContentValues();
 
         // set handlers for elements we want to react to
         episode.setEndElementListener(new EndElementListener() {
             public void end() {
-                // add insert/update op for episode
-                batch.add(DBUtils.buildEpisodeOp(values,
-                        !episodeIDs.contains(values.getAsLong(Episodes._ID))));
+                long episodeId = values.getAsLong(Episodes._ID);
+
+                if (episodeIDs.containsKey(episodeId)) {
+                    // check if this is newer information than we have
+                    if (episodeIDs.get(episodeId) < values.getAsLong(Episodes.LASTEDIT)) {
+                        // update op for episode
+                        batch.add(DBUtils.buildEpisodeOp(values, false));
+                    }
+                } else {
+                    // episode does not exist, yet
+                    batch.add(DBUtils.buildEpisodeOp(values, true));
+                }
 
                 long seasonid = values.getAsLong(Seasons.REF_SEASON_ID);
                 if (!updatedSeasonIDs.contains(seasonid)) {
                     // add insert/update op for season
-                    batch.add(DBUtils.buildSeasonOp(values, !existingSeasonIDs.contains(seasonid)));
+                    batch.add(DBUtils.buildSeasonOp(values,
+                            !existingSeasonIDs.contains(seasonid)));
                     updatedSeasonIDs.add(values.getAsLong(Seasons.REF_SEASON_ID));
                 }
 

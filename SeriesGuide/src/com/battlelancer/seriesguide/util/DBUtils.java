@@ -43,6 +43,7 @@ import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class DBUtils {
@@ -471,25 +472,27 @@ public class DBUtils {
     }
 
     /**
-     * Returns the episode IDs for a given show as a efficiently searchable
-     * HashMap.
+     * Returns the episode IDs and their last edit time for a given show as a
+     * efficiently searchable HashMap.
      * 
-     * @param seriesid
+     * @param showId
      * @return HashMap containing the shows existing episodes
      */
-    public static HashSet<Long> getEpisodeIDsForShow(String seriesid, Context context) {
+    public static HashMap<Long, Long> getEpisodeMapForShow(String showId, Context context) {
         Cursor eptest = context.getContentResolver().query(
-                Episodes.buildEpisodesOfShowUri(seriesid), new String[] {
-                    Episodes._ID
+                Episodes.buildEpisodesOfShowUri(showId), new String[] {
+                        Episodes._ID, Episodes.LASTEDIT
                 }, null, null, null);
-        HashSet<Long> episodeIDs = new HashSet<Long>();
-        eptest.moveToFirst();
-        while (!eptest.isAfterLast()) {
-            episodeIDs.add(eptest.getLong(0));
-            eptest.moveToNext();
+        HashMap<Long, Long> episodeMap = new HashMap<Long, Long>();
+        if (eptest != null) {
+            eptest.moveToFirst();
+            while (!eptest.isAfterLast()) {
+                episodeMap.put(eptest.getLong(0), eptest.getLong(1));
+                eptest.moveToNext();
+            }
+            eptest.close();
         }
-        eptest.close();
-        return episodeIDs;
+        return episodeMap;
     }
 
     /**
