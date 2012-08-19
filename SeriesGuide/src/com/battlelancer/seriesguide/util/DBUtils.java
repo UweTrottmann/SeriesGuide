@@ -301,8 +301,7 @@ public class DBUtils {
             show.setPoster(details.getString(details.getColumnIndexOrThrow(Shows.POSTER)));
             show.setRating(details.getString(details.getColumnIndexOrThrow(Shows.RATING)));
             show.setRuntime(details.getString(details.getColumnIndexOrThrow(Shows.RUNTIME)));
-            show.setSeriesId(details.getString(details.getColumnIndexOrThrow(Shows._ID)));
-            show.setSeriesName(details.getString(details.getColumnIndexOrThrow(Shows.TITLE)));
+            show.setTitle(details.getString(details.getColumnIndexOrThrow(Shows.TITLE)));
             show.setStatus(details.getInt(details.getColumnIndexOrThrow(Shows.STATUS)));
             show.setImdbId(details.getString(details.getColumnIndexOrThrow(Shows.IMDBID)));
             show.setNextEpisode(details.getLong(details.getColumnIndexOrThrow(Shows.NEXTEPISODE)));
@@ -354,7 +353,7 @@ public class DBUtils {
      * @return
      */
     private static ContentValues putCommonShowValues(Series show, ContentValues values) {
-        values.put(Shows.TITLE, show.getSeriesName());
+        values.put(Shows.TITLE, show.getTitle());
         values.put(Shows.OVERVIEW, show.getOverview());
         values.put(Shows.ACTORS, show.getActors());
         values.put(Shows.AIRSDAYOFWEEK, show.getAirsDayOfWeek());

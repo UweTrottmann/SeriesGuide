@@ -255,7 +255,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
         // Show name
         final TextView showname = (TextView) getActivity().findViewById(R.id.seriesname);
-        showname.setText(mShow.getSeriesName());
+        showname.setText(mShow.getTitle());
 
         // Running state
         final TextView status = (TextView) getActivity().findViewById(R.id.showStatus);
@@ -362,7 +362,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
         // build share string
         final StringBuilder shareString = new StringBuilder(getString(R.string.share_checkout));
-        shareString.append(" \"").append(mShow.getSeriesName());
+        shareString.append(" \"").append(mShow.getTitle());
         shareString.append(" - ").append(episodestring).append("\"");
         mShareData.putString(ShareItems.SHARESTRING, shareString.toString());
         mShareData.putString(ShareItems.EPISODESTRING, episodestring);
@@ -446,7 +446,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             @Override
             public void onClick(View v) {
                 fireTrackerEvent("Add to calendar");
-                ShareUtils.onAddCalendarEvent(getActivity(), mShow.getSeriesName(),
+                ShareUtils.onAddCalendarEvent(getActivity(), mShow.getTitle(),
                         mShareData.getString(ShareItems.EPISODESTRING), mAirtime,
                         mShow.getRuntime());
             }

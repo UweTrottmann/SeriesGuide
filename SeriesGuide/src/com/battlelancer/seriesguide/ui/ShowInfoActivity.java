@@ -143,7 +143,7 @@ public class ShowInfoActivity extends BaseActivity {
         }
 
         // Name
-        seriesname.setText(show.getSeriesName());
+        seriesname.setText(show.getTitle());
 
         // Overview
         if (show.getOverview().length() == 0) {
@@ -247,7 +247,7 @@ public class ShowInfoActivity extends BaseActivity {
             public void onClick(View v) {
                 fireTrackerEvent("Show Trakt Shouts");
                 TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
-                        show.getSeriesName(), Integer.valueOf(tvdbId));
+                        show.getTitle(), Integer.valueOf(tvdbId));
 
                 newFragment.show(getSupportFragmentManager(), "shouts-dialog");
             }
@@ -258,7 +258,7 @@ public class ShowInfoActivity extends BaseActivity {
                 .from(this)
                 .setChooserTitle(R.string.share)
                 .setText(
-                        getString(R.string.share_checkout) + " \"" + show.getSeriesName()
+                        getString(R.string.share_checkout) + " \"" + show.getTitle()
                                 + "\" via @SeriesGuide " + ShowInfoActivity.IMDB_TITLE_URL + imdbid)
                 .setType("text/plain");
 

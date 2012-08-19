@@ -89,7 +89,7 @@ public class EpisodesActivity extends BaseActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
-        String showname = show.getSeriesName();
+        String showname = show.getTitle();
 
         final int seasonNumber = getIntent().getIntExtra(InitBundle.SEASON_NUMBER, -1);
         final String seasonTitle = Utils.getSeasonString(this, seasonNumber);

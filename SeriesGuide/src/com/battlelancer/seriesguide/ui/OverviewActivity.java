@@ -118,7 +118,7 @@ public class OverviewActivity extends BaseActivity {
         }
 
         final Series show = DBUtils.getShow(this, String.valueOf(showId));
-        final String showTitle = show.getSeriesName();
+        final String showTitle = show.getTitle();
 
         Bundle args = new Bundle();
         args.putString(SearchFragment.InitBundle.SHOW_TITLE, showTitle);

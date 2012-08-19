@@ -6,64 +6,59 @@ package com.battlelancer.seriesguide.items;
  */
 public class Series {
 
-    public String id;
+    private String id;
 
-    public String seriesId;
+    private String language;
 
-    public String language;
+    private String title;
 
-    public String seriesName;
+    private String banner;
 
-    public String banner;
+    private String overview;
 
-    public String overview;
+    private String firstAired;
 
-    public String firstAired;
+    private String imdbId;
 
-    public String imdbId;
+    private String actors;
 
-    public String actors;
+    private String airsDayOfWeek;
 
-    public String airsDayOfWeek;
+    private long airsTime;
 
-    public long airsTime;
+    private String contentRating;
 
-    public String contentRating;
+    private String genres;
 
-    public String genres;
+    private String network;
 
-    public String network;
+    private String rating;
 
-    public String rating;
+    private String runtime;
 
-    public String runtime;
+    private int status;
 
-    public int status;
+    private String fanart;
 
-    public String fanart;
+    private String lastUpdated;
 
-    public String lastUpdated;
+    private String poster;
 
-    public String poster;
+    private long nextEpisode;
 
-    public long nextEpisode;
-
-    public long lastEdit;
+    private long lastEdit;
 
     public String getId() {
         return id;
     }
 
+    /**
+     * Equivalent to the theTVDb.com series id.
+     * 
+     * @param id
+     */
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getSeriesId() {
-        return seriesId;
-    }
-
-    public void setSeriesId(String seriesId) {
-        this.seriesId = seriesId;
     }
 
     public String getLanguage() {
@@ -74,12 +69,12 @@ public class Series {
         this.language = language;
     }
 
-    public String getSeriesName() {
-        return seriesName;
+    public String getTitle() {
+        return title;
     }
 
-    public void setSeriesName(String seriesName) {
-        this.seriesName = seriesName;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getBanner() {
@@ -212,7 +207,7 @@ public class Series {
 
     @Override
     public String toString() {
-        return this.seriesName;
+        return this.title;
     }
 
     public void setNextEpisode(long nextEpisode) {
@@ -221,6 +216,14 @@ public class Series {
 
     public long getNextEpisode() {
         return nextEpisode;
+    }
+
+    public long getLastEdit() {
+        return lastEdit;
+    }
+
+    public void setLastEdit(long lastEdit) {
+        this.lastEdit = lastEdit;
     }
 
 }

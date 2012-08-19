@@ -324,7 +324,7 @@ public class TheTVDB {
         });
         show.getChild("SeriesName").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setSeriesName(body.trim());
+                currentShow.setTitle(body.trim());
             }
         });
         show.getChild("Overview").setEndTextElementListener(new EndTextElementListener() {
@@ -407,9 +407,9 @@ public class TheTVDB {
             public void end(String body) {
                 // system populated field, trimming not necessary
                 try {
-                    currentShow.lastEdit = Long.valueOf(body);
+                    currentShow.setLastEdit(Long.valueOf(body));
                 } catch (NumberFormatException e) {
-                    currentShow.lastEdit = 0;
+                    currentShow.setLastEdit(0);
                 }
             }
         });
