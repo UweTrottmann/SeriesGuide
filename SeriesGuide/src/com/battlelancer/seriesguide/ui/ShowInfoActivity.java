@@ -18,7 +18,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -30,7 +29,6 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
@@ -52,7 +50,8 @@ import com.uwetrottmann.androidutils.AndroidUtils;
  * Displays detailed information about a show.
  */
 public class ShowInfoActivity extends BaseActivity {
-    public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
+
+    private static final String TAG = "ShowInfoActivity";
 
     private IntentBuilder mShareIntentBuilder;
 
@@ -203,29 +202,8 @@ public class ShowInfoActivity extends BaseActivity {
 
         // IMDb button
         View imdbButton = (View) findViewById(R.id.buttonShowInfoIMDB);
-        final String imdbid = show.getImdbId();
-        if (imdbButton != null) {
-            imdbButton.setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    fireTrackerEvent("Show IMDb page");
-
-                    if (imdbid.length() != 0) {
-                        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("imdb:///title/"
-                                + imdbid + "/"));
-                        try {
-                            startActivity(myIntent);
-                        } catch (ActivityNotFoundException e) {
-                            myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_TITLE_URL
-                                    + imdbid));
-                            startActivity(myIntent);
-                        }
-                    } else {
-                        Toast.makeText(getApplicationContext(),
-                                getString(R.string.show_noimdbentry), Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
-        }
+        final String imdbId = show.getImdbId();
+        Utils.setUpImdbButton(imdbId, imdbButton, TAG, this);
 
         // TVDb button
         View tvdbButton = (View) findViewById(R.id.buttonTVDB);
@@ -259,7 +237,7 @@ public class ShowInfoActivity extends BaseActivity {
                 .setChooserTitle(R.string.share)
                 .setText(
                         getString(R.string.share_checkout) + " \"" + show.getTitle()
-                                + "\" via @SeriesGuide " + ShowInfoActivity.IMDB_TITLE_URL + imdbid)
+                                + "\" " + Utils.IMDB_TITLE_URL + imdbId)
                 .setType("text/plain");
 
         // Poster

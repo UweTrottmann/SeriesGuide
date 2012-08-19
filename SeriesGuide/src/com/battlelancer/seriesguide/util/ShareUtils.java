@@ -37,7 +37,6 @@ import android.widget.Toast;
 
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.ui.ShowInfoActivity;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -126,7 +125,7 @@ public class ShareUtils {
                 String text = args.getString(ShareUtils.ShareItems.SHARESTRING);
                 final String imdbId = args.getString(ShareUtils.ShareItems.IMDBID);
                 if (imdbId.length() != 0) {
-                    text += " " + ShowInfoActivity.IMDB_TITLE_URL + imdbId;
+                    text += " " + Utils.IMDB_TITLE_URL + imdbId;
                 }
 
                 ib.setText(text);

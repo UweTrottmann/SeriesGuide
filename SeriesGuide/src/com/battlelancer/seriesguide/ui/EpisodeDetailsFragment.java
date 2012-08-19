@@ -27,6 +27,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -197,11 +198,17 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             sharestring += " - " + episodestring + "\"";
             shareData.putString(ShareItems.EPISODESTRING, episodestring);
             shareData.putString(ShareItems.SHARESTRING, sharestring);
-            shareData.putString(ShareItems.IMDBID,
-                    episode.getString(DetailsQuery.SHOW_IMDBID));
             shareData.putInt(ShareItems.EPISODE, episode.getInt(DetailsQuery.NUMBER));
             shareData.putInt(ShareItems.SEASON, episode.getInt(DetailsQuery.SEASON));
             shareData.putInt(ShareItems.TVDBID, episode.getInt(DetailsQuery.REF_SHOW_ID));
+
+            // IMDb id
+            String imdbId = episode.getString(DetailsQuery.IMDBID);
+            if (TextUtils.isEmpty(imdbId)) {
+                // fall back to show IMDb id
+                imdbId = episode.getString(DetailsQuery.SHOW_IMDBID);
+            }
+            shareData.putString(ShareItems.IMDBID, imdbId);
 
             // don't close cursor!
             // episode.close();
@@ -388,9 +395,13 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             });
 
             // IMDb button
-            // TODO
             String imdbId = cursor.getString(DetailsQuery.IMDBID);
-            view.findViewById(R.id.buttonShowInfoIMDB).setVisibility(View.GONE);
+            if (TextUtils.isEmpty(imdbId)) {
+                // fall back to show IMDb id
+                imdbId = cursor.getString(DetailsQuery.SHOW_IMDBID);
+            }
+            Utils.setUpImdbButton(imdbId, view.findViewById(R.id.buttonShowInfoIMDB), TAG,
+                    getActivity());
 
             // trakt shouts button
             final String episodeTitle = cursor.getString(DetailsQuery.TITLE);
