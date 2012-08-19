@@ -1,51 +1,54 @@
 
 package com.battlelancer.seriesguide.items;
 
+/**
+ * Object representation of a show for easier handling in code.
+ */
 public class Series {
 
-    private String id;
+    public String id;
 
-    private String seriesId;
+    public String seriesId;
 
-    private String language;
+    public String language;
 
-    private String seriesName;
+    public String seriesName;
 
-    private String banner;
+    public String banner;
 
-    private String overview;
+    public String overview;
 
-    private String firstAired;
+    public String firstAired;
 
-    private String imdbId;
+    public String imdbId;
 
-    private String zap2ItId;
+    public String actors;
 
-    private String actors;
+    public String airsDayOfWeek;
 
-    private String airsDayOfWeek;
+    public long airsTime;
 
-    private long airsTime;
+    public String contentRating;
 
-    private String contentRating;
+    public String genres;
 
-    private String genres;
+    public String network;
 
-    private String network;
+    public String rating;
 
-    private String rating;
+    public String runtime;
 
-    private String runtime;
+    public int status;
 
-    private int status;
+    public String fanart;
 
-    private String fanart;
+    public String lastUpdated;
 
-    private String lastUpdated;
+    public String poster;
 
-    private String poster;
+    public long nextEpisode;
 
-    private long nextEpisode;
+    public long lastEdit;
 
     public String getId() {
         return id;
@@ -109,14 +112,6 @@ public class Series {
 
     public void setImdbId(String imdbId) {
         this.imdbId = imdbId;
-    }
-
-    public String getZap2ItId() {
-        return zap2ItId;
-    }
-
-    public void setZap2ItId(String zap2ItId) {
-        this.zap2ItId = zap2ItId;
     }
 
     public String getActors() {
