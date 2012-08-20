@@ -126,6 +126,9 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                 // prevent multiple instances
                 connectbtn.setEnabled(false);
                 disconnectbtn.setEnabled(false);
+                
+                // prevent user canceling the dialog
+                setCancelable(false);
 
                 final String username = ((EditText) layout.findViewById(R.id.username)).getText()
                         .toString();
@@ -192,6 +195,7 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                     protected void onPostExecute(Response response) {
                         progressbar.setVisibility(View.GONE);
                         connectbtn.setEnabled(true);
+                        setCancelable(true);
 
                         if (response == null) {
                             status.setText(R.string.trakt_generalerror);
