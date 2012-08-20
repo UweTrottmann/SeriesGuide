@@ -27,6 +27,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,23 +88,21 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
 
         // restore the username from settings
         final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
-        ((EditText) layout.findViewById(R.id.username)).setText(username);
 
         // new account toggle
         final View mailviews = layout.findViewById(R.id.mailviews);
         mailviews.setVisibility(View.GONE);
 
-        ((CheckBox) layout.findViewById(R.id.checkNewAccount))
-                .setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked) {
-                            mailviews.setVisibility(View.VISIBLE);
-                        } else {
-                            mailviews.setVisibility(View.GONE);
-                        }
-                    }
-                });
+        CheckBox newAccCheckBox = (CheckBox) layout.findViewById(R.id.checkNewAccount);
+        newAccCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    mailviews.setVisibility(View.VISIBLE);
+                } else {
+                    mailviews.setVisibility(View.GONE);
+                }
+            }
+        });
 
         // status strip
         final TextView status = (TextView) layout.findViewById(R.id.status);
@@ -114,9 +113,23 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
         final Button connectbtn = (Button) layout.findViewById(R.id.connectbutton);
         final Button disconnectbtn = (Button) layout.findViewById(R.id.disconnectbutton);
 
-        // disable disconnect button if there are no saved credentials
-        if (username.length() == 0) {
+        // enable buttons based on if there are saved credentials
+        if (TextUtils.isEmpty(username)) {
+            // user has to enable first
             disconnectbtn.setEnabled(false);
+        } else {
+            // make it obvious trakt is connected
+            connectbtn.setEnabled(false);
+
+            EditText usernameField = (EditText) layout.findViewById(R.id.username);
+            usernameField.setEnabled(false);
+            usernameField.setText(username);
+
+            EditText passwordField = (EditText) layout.findViewById(R.id.password);
+            passwordField.setEnabled(false);
+            passwordField.setText("********"); // fake password
+            
+            newAccCheckBox.setEnabled(false);
         }
 
         connectbtn.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +139,7 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                 // prevent multiple instances
                 connectbtn.setEnabled(false);
                 disconnectbtn.setEnabled(false);
-                
+
                 // prevent user canceling the dialog
                 setCancelable(false);
 
