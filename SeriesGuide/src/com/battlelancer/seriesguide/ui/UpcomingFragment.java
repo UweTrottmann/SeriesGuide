@@ -185,7 +185,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         final ListView list = getListView();
         list.setFastScrollEnabled(true);
         list.setDivider(null);
-        list.setSelector(R.drawable.list_selector_holo_dark);
+        list.setSelector(R.drawable.list_selector_sg);
         list.setClipToPadding(AndroidUtils.isHoneycombOrHigher() ? false : true);
         final float scale = getResources().getDisplayMetrics().density;
         int layoutPadding = (int) (10 * scale + 0.5f);
