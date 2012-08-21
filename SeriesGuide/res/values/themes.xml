@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- SeriesGuides default theme -->
+    <style name="SeriesGuideTheme" parent="Theme.Sherlock.ForceOverflow">
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
+        <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
+
+        <!-- Dialogs -->
+        <item name="android:dialogTheme">@style/SeriesGuideTheme.Dialog</item>
+
+        <!-- ABS -->
+        <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator</item>
+        <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator</item>
+        <item name="actionBarStyle">@style/ActionBar</item>
+        <item name="android:actionBarStyle">@style/ActionBar</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
+        <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
+        <item name="custom_list_selector">@drawable/list_selector_sg</item>
+    </style>
+
+    <style name="SeriesGuideTheme.Dialog" parent="Theme.Sherlock.Dialog">
+        <item name="android:windowTitleStyle">@style/DialogWindowTitle.SeriesGuide</item>
+    </style>
+
+    <!-- An ICS base theme using default styles from ABS -->
+    <style name="ICSBaseTheme" parent="Theme.Sherlock.ForceOverflow">
+        <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.ICS</item>
+        <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
+        <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
+    </style>
+
+</resources>

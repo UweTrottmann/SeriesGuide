@@ -1,30 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- SeriesGuides default theme -->
-    <style name="SeriesGuideTheme" parent="Theme.Sherlock.ForceOverflow">
-        <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator</item>
-        <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator</item>
-        <item name="actionBarStyle">@style/ActionBar</item>
-        <item name="android:actionBarStyle">@style/ActionBar</item>
-        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
-        <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
-        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
-        <item name="dropDownListViewStyle">@style/DropDownListView</item>
-        <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
-        <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
-        <item name="custom_list_selector">@drawable/list_selector_sg</item>
-        <item name="android:colorBackground">@color/background</item>
-        <item name="android:windowBackground">@color/background</item>
+    <style name="Widget"></style>
+
+    <style name="Widget.SeriesGuide" parent="Widget"></style>
+
+    <!-- Buttons -->
+    <style name="Widget.SeriesGuide.Button">
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:background">@drawable/btn_default_sg</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">64dip</item>
     </style>
 
-    <!-- An ICS base theme using default styles from ABS -->
-    <style name="ICSBaseTheme" parent="Theme.Sherlock.ForceOverflow">
-        <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.ICS</item>
-        <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
-        <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
+    <style name="Widget.SeriesGuide.Button.Borderless">
+        <item name="android:background">@drawable/list_selector_sg</item>
+        <item name="android:paddingLeft">4dip</item>
+        <item name="android:paddingRight">4dip</item>
     </style>
 
+    <style name="Widget.SeriesGuide.Button.Borderless.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.ImageButton">
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:background">@drawable/btn_default_sg</item>
+    </style>
+
+    <!-- Dialogs -->
+    <style name="DialogWindowTitle.SeriesGuide" parent="Widget">
+        <item name="android:maxLines">1</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:textAppearance">@style/TextAppearance.SeriesGuide.DialogWindowTitle</item>
+        <item name="android:minHeight">64dip</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:paddingRight">16dip</item>
+    </style>
+
+    <style name="TextAppearance.SeriesGuide.DialogWindowTitle" parent="Widget">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <!-- ABS -->
     <style name="ActionBar" parent="Widget.Sherlock.ActionBar">
         <item name="background">@drawable/sg_actionbar_background</item>
         <item name="android:background">@drawable/sg_actionbar_background</item>
@@ -155,18 +180,6 @@
     <!-- Used for longer passages of text -->
     <style name="DescriptionFont">
         <item name="android:textSize">@dimen/text_size_xmedium</item>
-    </style>
-
-    <!-- custom button style -->
-    <style name="HoloCompatButton">
-        <item name="android:background">@drawable/btn_default_holo_dark</item>
-        <item name="android:textColor">@color/button_text</item>
-    </style>
-
-    <style name="HoloCompatButton.Small">
-        <item name="android:textSize">@dimen/text_size_small</item>
-        <item name="android:layout_height">40dp</item>
-        <item name="android:layout_width">wrap_content</item>
     </style>
 
     <!-- Widget items -->
