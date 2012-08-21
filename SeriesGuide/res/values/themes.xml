@@ -7,6 +7,7 @@
         <item name="android:windowBackground">@color/background</item>
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
         <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
+        <item name="custom_list_selector">@drawable/list_selector_sg</item>
 
         <!-- Dialogs -->
         <item name="android:dialogTheme">@style/SeriesGuideTheme.Dialog</item>
@@ -22,7 +23,8 @@
         <item name="dropDownListViewStyle">@style/DropDownListView</item>
         <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
         <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
-        <item name="custom_list_selector">@drawable/list_selector_sg</item>
+        <item name="actionDropDownStyle">@style/DropDownNav</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav</item>
     </style>
 
     <style name="SeriesGuideTheme.Dialog" parent="Theme.Sherlock.Dialog">

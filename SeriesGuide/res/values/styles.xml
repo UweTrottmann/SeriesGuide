@@ -66,6 +66,12 @@
         <item name="android:listSelector">?custom_list_selector</item>
     </style>
 
+    <style name="DropDownNav" parent="@style/Widget.Sherlock.Spinner.DropDown.ActionBar">
+        <item name="background">@drawable/spinner_background_ab_sg</item>
+        <item name="android:background">@drawable/spinner_background_ab_sg</item>
+    </style>
+
+    <!-- ViewPagerIndicator -->
     <style name="TitlePageIndicator">
         <item name="android:background">@android:color/transparent</item>
         <item name="footerColor">@color/accent_primary</item>
