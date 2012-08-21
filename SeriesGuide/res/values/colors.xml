@@ -21,5 +21,6 @@
     <color name="text_dim">#ff808080</color>
     <color name="accent_primary">#ff4800ff</color>
     <color name="dim">#ff313531</color>
+    <color name="background">#ff111111</color>
 
 </resources>
