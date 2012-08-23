@@ -29,7 +29,7 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v4.widget.CursorAdapter;
 import android.text.format.DateUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -60,7 +60,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
     private static final int MARK_UNWATCHED_ID = 1;
 
-    private SimpleCursorAdapter mAdapter;
+    private CursorAdapter mAdapter;
 
     private boolean mDualPane;
 
@@ -167,18 +167,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     }
 
     private void setupAdapter() {
-
-        String[] from = new String[] {
-                Episodes.TITLE, Episodes.WATCHED, Episodes.NUMBER, Episodes.FIRSTAIREDMS,
-                Shows.TITLE, Shows.NETWORK, Shows.POSTER
-        };
-        int[] to = new int[] {
-                R.id.textViewUpcomingEpisode, R.id.watchedBoxUpcoming, R.id.textViewUpcomingNumber,
-                R.id.textViewUpcomingAirdate, R.id.textViewUpcomingShow,
-                R.id.textViewUpcomingNetwork, R.id.poster
-        };
-
-        mAdapter = new SlowAdapter(getActivity(), R.layout.upcoming_row, null, from, to, 0);
+        mAdapter = new SlowAdapter(getActivity(), null, 0);
 
         setListAdapter(mAdapter);
 
@@ -330,20 +319,19 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
     }
 
-    private class SlowAdapter extends SimpleCursorAdapter {
+    private class SlowAdapter extends CursorAdapter {
 
         private LayoutInflater mLayoutInflater;
 
-        private int mLayout;
-
         private SharedPreferences mPrefs;
 
-        public SlowAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
-            super(context, layout, c, from, to, flags);
+        private static final int LAYOUT = R.layout.upcoming_row;
+
+        public SlowAdapter(Context context, Cursor c, int flags) {
+            super(context, c, flags);
 
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            mLayout = layout;
             mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         }
 
@@ -360,7 +348,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
             final ViewHolder viewHolder;
 
             if (convertView == null) {
-                convertView = mLayoutInflater.inflate(mLayout, null);
+                convertView = mLayoutInflater.inflate(LAYOUT, null);
 
                 viewHolder = new ViewHolder();
                 viewHolder.episode = (TextView) convertView
@@ -430,6 +418,16 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
             ImageProvider.getInstance(mContext).loadPosterThumb(viewHolder.poster, imagePath);
 
             return convertView;
+        }
+
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+            // do nothing here
+        }
+
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            return mLayoutInflater.inflate(LAYOUT, parent, false);
         }
     }
 
