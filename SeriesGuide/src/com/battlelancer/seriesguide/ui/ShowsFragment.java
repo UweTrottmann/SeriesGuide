@@ -31,7 +31,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v4.widget.CursorAdapter;
 import android.text.format.DateUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -53,7 +53,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.beta.R;
-import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
@@ -133,18 +132,7 @@ public class ShowsFragment extends SherlockFragment implements
         // get settings
         updateSorting(prefs);
 
-        // setup show adapter
-        String[] from = new String[] {
-                SeriesContract.Shows.TITLE, SeriesContract.Shows.NEXTTEXT,
-                SeriesContract.Shows.AIRSTIME, SeriesContract.Shows.NETWORK,
-                SeriesContract.Shows.POSTER
-        };
-        int[] to = new int[] {
-                R.id.seriesname, R.id.TextViewShowListNextEpisode, R.id.TextViewShowListAirtime,
-                R.id.TextViewShowListNetwork, R.id.showposter
-        };
-        int layout = R.layout.show_rowairtime;
-        mAdapter = new SlowAdapter(getActivity(), layout, null, from, to, 0);
+        mAdapter = new SlowAdapter(getActivity(), null, 0);
 
         // setup grid view
         mGrid = (GridView) getView().findViewById(R.id.showlist);
@@ -422,18 +410,16 @@ public class ShowsFragment extends SherlockFragment implements
         mAdapter.swapCursor(null);
     }
 
-    private class SlowAdapter extends SimpleCursorAdapter {
+    private class SlowAdapter extends CursorAdapter {
 
         private LayoutInflater mLayoutInflater;
 
-        private int mLayout;
+        private static final int LAYOUT = R.layout.show_rowairtime;
 
-        public SlowAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
-            super(context, layout, c, from, to, flags);
-
+        public SlowAdapter(Context context, Cursor c, int flags) {
+            super(context, c, flags);
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            mLayout = layout;
         }
 
         @Override
@@ -449,7 +435,7 @@ public class ShowsFragment extends SherlockFragment implements
             final ViewHolder viewHolder;
 
             if (convertView == null) {
-                convertView = mLayoutInflater.inflate(mLayout, null);
+                convertView = mLayoutInflater.inflate(LAYOUT, null);
 
                 viewHolder = new ViewHolder();
                 viewHolder.name = (TextView) convertView.findViewById(R.id.seriesname);
@@ -513,6 +499,16 @@ public class ShowsFragment extends SherlockFragment implements
             ImageProvider.getInstance(mContext).loadPosterThumb(viewHolder.poster, imagePath);
 
             return convertView;
+        }
+
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+            // do nothing here
+        }
+
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            return mLayoutInflater.inflate(LAYOUT, parent, false);
         }
     }
 
