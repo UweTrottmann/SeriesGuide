@@ -28,11 +28,13 @@
 
             <ImageView
                 android:id="@+id/ImageViewShowInfoPoster"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/default_padding"
                 android:layout_marginTop="@dimen/default_padding"
                 android:contentDescription="@string/description_poster"
+                android:scaleType="centerCrop"
                 android:src="@drawable/fringe_test" />
 
             <include layout="@layout/show_info_metamore" >
