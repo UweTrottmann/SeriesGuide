@@ -127,15 +127,18 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         mShowsAdapter = new ShowsPagerAdapter(getSupportFragmentManager());
         mListsAdapter = new ListsPagerAdapter(getSupportFragmentManager(), this);
 
-        // set up action bar
-        int navItem = setUpActionBar(prefs);
+        // try to restore previously set show filter
+        int navSelection = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
 
         // set up view pager
         mPager = (ViewPager) findViewById(R.id.pager);
-        onChangePagerAdapter(navItem);
+        onChangePagerAdapter(navSelection);
 
         mIndicator = (TabPageIndicator) findViewById(R.id.indicator);
         mIndicator.setViewPager(mPager);
+
+        // set up action bar
+        setUpActionBar(prefs, navSelection);
 
         // TODO First run fragment
         // if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
@@ -151,28 +154,7 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         // }
     }
 
-    private void onChangePagerAdapter(int navItem) {
-        /*
-         * Prevent unnecessary fragment destruction by checking if the right
-         * adapter is already attached.
-         */
-        if (navItem < LIST_NAV_ITEM_POSITION) {
-            if (!(mPager.getAdapter() instanceof ShowsPagerAdapter)) {
-                mPager.setAdapter(mShowsAdapter);
-                mShowsAdapter.notifyDataSetChanged();
-            }
-        } else {
-            if (!(mPager.getAdapter() instanceof ListsPagerAdapter)) {
-                mPager.setAdapter(mListsAdapter);
-                mListsAdapter.notifyDataSetChanged();
-                if (mIndicator != null) {
-                    mIndicator.notifyDataSetChanged();
-                }
-            }
-        }
-    }
-
-    private int setUpActionBar(final SharedPreferences prefs) {
+    private void setUpActionBar(final SharedPreferences prefs, int navSelection) {
         mIsLoaderStartAllowed = false;
 
         ActionBar actionBar = getSupportActionBar();
@@ -196,14 +178,10 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
             actionBar.setListNavigationCallbacks(mActionBarList, handler);
         }
 
-        // try to restore previously set show filter
-        int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
-        actionBar.setSelectedNavigationItem(showfilter);
+        actionBar.setSelectedNavigationItem(navSelection);
 
         // prevent the onNavigationItemSelected listener from reacting
         mIsLoaderStartAllowed = true;
-
-        return showfilter;
     }
 
     @Override
@@ -676,6 +654,27 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                 return POSITION_UNCHANGED;
             } else {
                 return POSITION_NONE;
+            }
+        }
+    }
+
+    private void onChangePagerAdapter(int navItem) {
+        /*
+         * Prevent unnecessary fragment destruction by checking if the right
+         * adapter is already attached.
+         */
+        if (navItem < LIST_NAV_ITEM_POSITION) {
+            if (!(mPager.getAdapter() instanceof ShowsPagerAdapter)) {
+                mPager.setAdapter(mShowsAdapter);
+                mShowsAdapter.notifyDataSetChanged();
+            }
+        } else {
+            if (!(mPager.getAdapter() instanceof ListsPagerAdapter)) {
+                mPager.setAdapter(mListsAdapter);
+                mListsAdapter.notifyDataSetChanged();
+                if (mIndicator != null) {
+                    mIndicator.notifyDataSetChanged();
+                }
             }
         }
     }
