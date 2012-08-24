@@ -130,15 +130,19 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         // try to restore previously set show filter
         int navSelection = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
 
+        // set up action bar
+        setUpActionBar(prefs, navSelection);
+
         // set up view pager
         mPager = (ViewPager) findViewById(R.id.pager);
         onChangePagerAdapter(navSelection);
 
         mIndicator = (TabPageIndicator) findViewById(R.id.indicator);
         mIndicator.setViewPager(mPager);
-
-        // set up action bar
-        setUpActionBar(prefs, navSelection);
+        onDisplayTitleIndicator(navSelection);
+        
+        // FIXME force the options menu to be shown
+        invalidateOptionsMenu();
 
         // TODO First run fragment
         // if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
@@ -658,6 +662,54 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         }
     }
 
+    @Override
+    public void onCategorySelected(int itemPosition) {
+        // only react if everything is set up
+        if (!mIsLoaderStartAllowed) {
+            return;
+        } else {
+            // show/hide title indicator
+            onDisplayTitleIndicator(itemPosition);
+
+            // attach correct adapter
+            onChangePagerAdapter(itemPosition);
+
+            // pass filter to show fragment
+            ShowsFragment fragment;
+            try {
+                fragment = (ShowsFragment) getSupportFragmentManager().findFragmentByTag(
+                        Utils.makeViewPagerFragmentName(mPager.getId(), 0));
+                if (fragment != null) {
+                    fragment.onFilterChanged(itemPosition);
+                }
+            } catch (ClassCastException e) {
+            }
+
+            // save the selected filter back to settings
+            Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+            editor.putInt(SeriesGuidePreferences.KEY_SHOWFILTER, itemPosition);
+            editor.commit();
+        }
+    }
+
+    private void onDisplayTitleIndicator(int itemPosition) {
+        if (itemPosition < LIST_NAV_ITEM_POSITION) {
+            // displaying shows
+            if (mIndicator.getVisibility() == View.VISIBLE) {
+                mIndicator.startAnimation(AnimationUtils.loadAnimation(this,
+                        android.R.anim.fade_out));
+            }
+            mIndicator.setVisibility(View.GONE);
+        } else {
+            // displaying lists
+            if (mIndicator.getVisibility() != View.VISIBLE) {
+                mIndicator.startAnimation(AnimationUtils.loadAnimation(this,
+                        android.R.anim.fade_in));
+            }
+            mIndicator.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void onChangePagerAdapter(int navItem) {
         /*
          * Prevent unnecessary fragment destruction by checking if the right
@@ -677,46 +729,5 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                 }
             }
         }
-    }
-
-    @Override
-    public void onCategorySelected(int itemPosition) {
-        if (itemPosition < LIST_NAV_ITEM_POSITION) {
-            // displaying shows
-            if (mIndicator.getVisibility() == View.VISIBLE) {
-                mIndicator.startAnimation(AnimationUtils.loadAnimation(this,
-                        android.R.anim.fade_out));
-            }
-            mIndicator.setVisibility(View.GONE);
-        } else {
-            // displaying lists
-            if (mIndicator.getVisibility() != View.VISIBLE) {
-                mIndicator.startAnimation(AnimationUtils.loadAnimation(this,
-                        android.R.anim.fade_in));
-            }
-            mIndicator.setVisibility(View.VISIBLE);
-        }
-
-        onChangePagerAdapter(itemPosition);
-
-        // only react if everything is set up
-        if (!mIsLoaderStartAllowed) {
-            return;
-        } else {
-            ShowsFragment fragment;
-            try {
-                fragment = (ShowsFragment) getSupportFragmentManager().findFragmentByTag(
-                        Utils.makeViewPagerFragmentName(mPager.getId(), 0));
-                if (fragment != null) {
-                    fragment.onFilterChanged(itemPosition);
-                }
-            } catch (ClassCastException e) {
-            }
-        }
-
-        // save the selected filter back to settings
-        Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-        editor.putInt(SeriesGuidePreferences.KEY_SHOWFILTER, itemPosition);
-        editor.commit();
     }
 }
