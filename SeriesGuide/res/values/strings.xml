@@ -324,6 +324,7 @@
         <item>Favorites</item>
         <item>Unseen/Upcoming</item>
         <item>Hidden</item>
+        <item>Lists</item>
     </string-array>
 
     <!-- Notifications -->

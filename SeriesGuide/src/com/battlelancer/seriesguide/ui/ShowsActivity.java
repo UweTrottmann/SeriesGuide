@@ -18,6 +18,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -29,26 +30,34 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
+import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
+import com.battlelancer.seriesguide.util.CompatActionBarNavListener;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.MultiPagerAdapter;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.viewpagerindicator.TabPageIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +67,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Provides the apps main screen, displaying a list of shows and their next
  * episodes.
  */
-public class ShowsActivity extends BaseActivity {
+public class ShowsActivity extends BaseActivity implements CompatActionBarNavListener {
 
     private static final String TAG = "Shows";
 
@@ -79,11 +88,21 @@ public class ShowsActivity extends BaseActivity {
 
     private static final int VER_HIGHRES_THUMBS = 177;
 
+    private static final int LIST_NAV_ITEM_POSITION = 4;
+
     private Bundle mSavedState;
 
     private FetchPosterTask mArtTask;
 
-    private Fragment mFragment;
+    private ViewPager mPager;
+
+    private boolean mIsLoaderStartAllowed;
+
+    private TabPageIndicator mIndicator;
+
+    private ShowsPagerAdapter mShowsAdapter;
+
+    private ListsPagerAdapter mListsAdapter;
 
     /**
      * Google Analytics helper method for easy event tracking.
@@ -104,23 +123,87 @@ public class ShowsActivity extends BaseActivity {
 
         updatePreferences(prefs);
 
-        if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
-            mFragment = FirstRunFragment.newInstance();
+        // set up adapters
+        mShowsAdapter = new ShowsPagerAdapter(getSupportFragmentManager());
+        mListsAdapter = new ListsPagerAdapter(getSupportFragmentManager(), this);
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
-                    .commit();
+        // set up action bar
+        int navItem = setUpActionBar(prefs);
+
+        // set up view pager
+        mPager = (ViewPager) findViewById(R.id.pager);
+        onChangePagerAdapter(navItem);
+
+        mIndicator = (TabPageIndicator) findViewById(R.id.indicator);
+        mIndicator.setViewPager(mPager);
+
+        // TODO First run fragment
+        // if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
+        // mFragment = FirstRunFragment.newInstance();
+        //
+        // getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment,
+        // mFragment)
+        // .commit();
+        // } else {
+        // if (savedInstanceState == null) {
+        // showShowsFragment();
+        // }
+        // }
+    }
+
+    private void onChangePagerAdapter(int navItem) {
+        /*
+         * Prevent unnecessary fragment destruction by checking if the right
+         * adapter is already attached.
+         */
+        if (navItem < LIST_NAV_ITEM_POSITION) {
+            if (!(mPager.getAdapter() instanceof ShowsPagerAdapter)) {
+                mPager.setAdapter(mShowsAdapter);
+                mShowsAdapter.notifyDataSetChanged();
+            }
         } else {
-            if (savedInstanceState == null) {
-                showShowsFragment();
+            if (!(mPager.getAdapter() instanceof ListsPagerAdapter)) {
+                mPager.setAdapter(mListsAdapter);
+                mListsAdapter.notifyDataSetChanged();
+                if (mIndicator != null) {
+                    mIndicator.notifyDataSetChanged();
+                }
             }
         }
     }
 
-    private void showShowsFragment() {
-        mFragment = ShowsFragment.newInstance();
+    private int setUpActionBar(final SharedPreferences prefs) {
+        mIsLoaderStartAllowed = false;
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
-                .commit();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+
+        /* setup navigation */
+        CompatActionBarNavHandler handler = new CompatActionBarNavHandler(this);
+        if (getResources().getBoolean(R.bool.isLargeTablet)) {
+            /* use tabs */
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+            final String[] categories = getResources().getStringArray(R.array.showfilter_list);
+            for (String category : categories) {
+                actionBar.addTab(actionBar.newTab().setText(category).setTabListener(handler));
+            }
+        } else {
+            /* use list (spinner) (! use different layouts for ABS) */
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+            ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(
+                    this, R.array.showfilter_list, R.layout.sherlock_spinner_item);
+            mActionBarList.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
+            actionBar.setListNavigationCallbacks(mActionBarList, handler);
+        }
+
+        // try to restore previously set show filter
+        int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
+        actionBar.setSelectedNavigationItem(showfilter);
+
+        // prevent the onNavigationItemSelected listener from reacting
+        mIsLoaderStartAllowed = true;
+
+        return showfilter;
     }
 
     @Override
@@ -513,4 +596,128 @@ public class ShowsActivity extends BaseActivity {
         getContentResolver().update(Shows.CONTENT_URI, values, null, null);
     }
 
+    public static class ShowsPagerAdapter extends MultiPagerAdapter {
+
+        public ShowsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return ShowsFragment.newInstance();
+        }
+
+        @Override
+        public int getCount() {
+            return 1;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "";
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            if (object instanceof ShowsFragment) {
+                return POSITION_UNCHANGED;
+            } else {
+                return POSITION_NONE;
+            }
+        }
+    }
+
+    public static class ListsPagerAdapter extends MultiPagerAdapter {
+
+        private Context mContext;
+
+        public ListsPagerAdapter(FragmentManager fm, Context context) {
+            super(fm);
+            mContext = context;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            int type;
+            switch (position) {
+                default:
+                    type = 0;
+                    break;
+                case 1:
+                    type = 2;
+                    break;
+                case 2:
+                    type = 3;
+                    break;
+            }
+            return TraktAddFragment.newInstance(type);
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                default:
+                    return mContext.getString(R.string.trending).toUpperCase();
+                case 1:
+                    return mContext.getString(R.string.recommended).toUpperCase();
+                case 2:
+                    return mContext.getString(R.string.library).toUpperCase();
+            }
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            if (object instanceof TraktAddFragment) {
+                return POSITION_UNCHANGED;
+            } else {
+                return POSITION_NONE;
+            }
+        }
+    }
+
+    @Override
+    public void onCategorySelected(int itemPosition) {
+        if (itemPosition < LIST_NAV_ITEM_POSITION) {
+            // displaying shows
+            if (mIndicator.getVisibility() == View.VISIBLE) {
+                mIndicator.startAnimation(AnimationUtils.loadAnimation(this,
+                        android.R.anim.fade_out));
+            }
+            mIndicator.setVisibility(View.GONE);
+        } else {
+            // displaying lists
+            if (mIndicator.getVisibility() != View.VISIBLE) {
+                mIndicator.startAnimation(AnimationUtils.loadAnimation(this,
+                        android.R.anim.fade_in));
+            }
+            mIndicator.setVisibility(View.VISIBLE);
+        }
+
+        onChangePagerAdapter(itemPosition);
+
+        // only react if everything is set up
+        if (!mIsLoaderStartAllowed) {
+            return;
+        } else {
+            ShowsFragment fragment;
+            try {
+                fragment = (ShowsFragment) getSupportFragmentManager().findFragmentByTag(
+                        Utils.makeViewPagerFragmentName(mPager.getId(), 0));
+                if (fragment != null) {
+                    fragment.onFilterChanged(itemPosition);
+                }
+            } catch (ClassCastException e) {
+            }
+        }
+
+        // save the selected filter back to settings
+        Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+        editor.putInt(SeriesGuidePreferences.KEY_SHOWFILTER, itemPosition);
+        editor.commit();
+    }
 }

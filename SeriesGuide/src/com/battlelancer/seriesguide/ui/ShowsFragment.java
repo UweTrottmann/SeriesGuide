@@ -21,7 +21,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -41,13 +40,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -56,8 +53,6 @@ import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
-import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
-import com.battlelancer.seriesguide.util.CompatActionBarNavListener;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
 import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
@@ -72,13 +67,13 @@ import com.google.analytics.tracking.android.EasyTracker;
  * @author Uwe Trottmann
  */
 public class ShowsFragment extends SherlockFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, CompatActionBarNavListener, OnFlagListener {
+        LoaderManager.LoaderCallbacks<Cursor>, OnFlagListener {
 
     private static final String TAG = "ShowsFragment";
 
-    private static final int LOADER_ID = R.layout.shows_fragment;
+    public static final int LOADER_ID = R.layout.shows_fragment;
 
-    private static final String FILTER_ID = "filterid";
+    public static final String FILTER_ID = "filterid";
 
     // context menu items
     private static final int CONTEXT_DELETE = 200;
@@ -109,8 +104,6 @@ public class ShowsFragment extends SherlockFragment implements
     private GridView mGrid;
 
     private ShowSorting mSorting;
-
-    private boolean mIsPreventLoaderRestart;
 
     public static ShowsFragment newInstance() {
         ShowsFragment f = new ShowsFragment();
@@ -151,51 +144,16 @@ public class ShowsFragment extends SherlockFragment implements
         }
         registerForContextMenu(mGrid);
 
-        // setup action bar
-        int selNavItem = setUpActionBar(prefs);
-
-        // start loading data
+        // start loading data, use saved show filter
+        int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
         Bundle args = new Bundle();
-        args.putInt(FILTER_ID, selNavItem);
+        args.putInt(FILTER_ID, showfilter);
         getLoaderManager().initLoader(LOADER_ID, args, this);
 
         // listen for some settings changes
         prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
 
         setHasOptionsMenu(true);
-    }
-
-    private int setUpActionBar(final SharedPreferences prefs) {
-        ActionBar actionBar = getSherlockActivity().getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
-
-        // prevent the onNavigationItemSelected listener from reacting
-        mIsPreventLoaderRestart = true;
-
-        /* setup navigation */
-        CompatActionBarNavHandler handler = new CompatActionBarNavHandler(this);
-        if (getResources().getBoolean(R.bool.isLargeTablet)) {
-            /* use tabs */
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-            final String[] categories = getResources().getStringArray(R.array.showfilter_list);
-            for (String category : categories) {
-                actionBar.addTab(actionBar.newTab().setText(category).setTabListener(handler));
-            }
-        } else {
-            /* use list (spinner) (! use different layouts for ABS) */
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-            ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(
-                    getActivity(), R.array.showfilter_list, R.layout.sherlock_spinner_item);
-            mActionBarList.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
-            actionBar.setListNavigationCallbacks(mActionBarList, handler);
-        }
-
-        // try to restore previously set show filter
-        int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
-        // prevent the onNavigationItemSelected listener from reacting
-        // mIsPreventLoaderRestart = true;
-        actionBar.setSelectedNavigationItem(showfilter);
-        return showfilter;
     }
 
     @Override
@@ -331,24 +289,6 @@ public class ShowsFragment extends SherlockFragment implements
             default: {
                 return super.onOptionsItemSelected(item);
             }
-        }
-    }
-
-    @Override
-    public void onCategorySelected(int itemPosition) {
-        // only handle events after the event caused when creating the activity
-        if (mIsPreventLoaderRestart) {
-            mIsPreventLoaderRestart = false;
-        } else {
-            // requery with the new filter
-            Bundle args = new Bundle();
-            args.putInt(FILTER_ID, itemPosition);
-            getLoaderManager().restartLoader(LOADER_ID, args, this);
-
-            // save the selected filter back to settings
-            Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
-            editor.putInt(SeriesGuidePreferences.KEY_SHOWFILTER, itemPosition);
-            editor.commit();
         }
     }
 
@@ -566,11 +506,6 @@ public class ShowsFragment extends SherlockFragment implements
         EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
     }
 
-    private void requery() {
-        // just reuse the onCategorySelected callback method
-        onCategorySelected(getSherlockActivity().getSupportActionBar().getSelectedNavigationIndex());
-    }
-
     private void showDeleteDialog(long showId) {
         FragmentManager fm = getFragmentManager();
         ConfirmDeleteDialogFragment deleteDialog = ConfirmDeleteDialogFragment.newInstance(String
@@ -618,7 +553,8 @@ public class ShowsFragment extends SherlockFragment implements
             }
 
             if (isAffectingChange) {
-                requery();
+                onFilterChanged(getSherlockActivity().getSupportActionBar()
+                        .getSelectedNavigationIndex());
             }
         }
     };
@@ -628,6 +564,13 @@ public class ShowsFragment extends SherlockFragment implements
         if (isSuccessful) {
             Utils.updateLatestEpisode(getActivity(), String.valueOf(showId));
         }
+    }
+
+    public void onFilterChanged(int itemPosition) {
+        // requery with the new filter
+        Bundle args = new Bundle();
+        args.putInt(ShowsFragment.FILTER_ID, itemPosition);
+        getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, args, this);
     }
 
 }
