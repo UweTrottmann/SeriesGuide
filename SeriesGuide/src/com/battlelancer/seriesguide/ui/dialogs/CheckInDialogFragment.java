@@ -77,7 +77,7 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
         super.onCreate(savedInstanceState);
         
         // hide title
-        setStyle(STYLE_NO_TITLE, 0);
+        setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog_CheckIn);
     }
 
     @Override
