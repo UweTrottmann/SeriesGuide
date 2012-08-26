@@ -27,10 +27,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.google.analytics.tracking.android.EasyTracker;
 
 /**
@@ -100,6 +102,13 @@ public class AddDialogFragment extends DialogFragment {
                 dismiss();
             }
         });
+
+        // poster
+        if (show.poster != null) {
+            ImageView posterView = (ImageView) layout.findViewById(R.id.poster);
+            posterView.setVisibility(View.VISIBLE);
+            ImageDownloader.getInstance(getActivity()).download(show.poster, posterView, false);
+        }
 
         return layout;
     }
