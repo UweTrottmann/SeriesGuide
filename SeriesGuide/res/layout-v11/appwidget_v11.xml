@@ -14,7 +14,7 @@
             android:id="@+id/widget_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/appwidget_button_center"
+            android:background="@drawable/list_selector_sg"
             android:focusable="true"
             android:paddingBottom="@dimen/inline_padding"
             android:paddingLeft="@dimen/default_padding"
