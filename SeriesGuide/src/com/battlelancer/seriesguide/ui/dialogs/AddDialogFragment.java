@@ -104,10 +104,12 @@ public class AddDialogFragment extends DialogFragment {
         });
 
         // poster
-        if (show.poster != null) {
-            ImageView posterView = (ImageView) layout.findViewById(R.id.poster);
-            posterView.setVisibility(View.VISIBLE);
-            ImageDownloader.getInstance(getActivity()).download(show.poster, posterView, false);
+        if (getResources().getBoolean(R.bool.isLargeTablet)) {
+            if (show.poster != null) {
+                ImageView posterView = (ImageView) layout.findViewById(R.id.poster);
+                posterView.setVisibility(View.VISIBLE);
+                ImageDownloader.getInstance(getActivity()).download(show.poster, posterView, false);
+            }
         }
 
         return layout;

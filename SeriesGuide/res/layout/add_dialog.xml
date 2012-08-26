@@ -1,69 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/large_padding" >
-
-        <TextView
-            android:id="@+id/title"
-            style="@style/ListTextBig"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/poster"
-            android:text="@string/add_show" />
-
-        <TextView
-            android:id="@+id/description"
-            style="@style/ListTextNormal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/title"
-            android:layout_toLeftOf="@+id/poster"
-            android:text="@string/description_overview" />
-
-        <ImageView
-            android:id="@+id/poster"
-            android:layout_width="100dp"
-            android:layout_height="147dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="@dimen/default_padding"
-            android:contentDescription="@string/description_poster"
-            android:visibility="gone" />
-    </RelativeLayout>
-
-    <include layout="@layout/divider_horizontal" />
+    android:layout_height="match_parent" >
 
     <LinearLayout
+        android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/buttonDontAdd"
-            style="@style/Widget.SeriesGuide.Button.Borderless"
-            android:layout_width="0dp"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/dont_add_show" />
+            android:layout_margin="@dimen/large_padding" >
 
-        <include layout="@layout/divider_vertical" />
+            <TextView
+                android:id="@+id/title"
+                style="@style/ListTextBig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/poster"
+                android:text="@string/add_show" />
 
-        <Button
-            android:id="@+id/buttonAdd"
-            style="@style/Widget.SeriesGuide.Button.Borderless"
-            android:layout_width="0dp"
+            <TextView
+                android:id="@+id/description"
+                style="@style/ListTextNormal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/title"
+                android:layout_toLeftOf="@+id/poster"
+                android:text="@string/description_overview" />
+
+            <ImageView
+                android:id="@+id/poster"
+                android:layout_width="100dp"
+                android:layout_height="147dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:contentDescription="@string/description_poster"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <include layout="@layout/divider_horizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/add_show" />
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/buttonDontAdd"
+                style="@style/Widget.SeriesGuide.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dont_add_show" />
+
+            <include layout="@layout/divider_vertical" />
+
+            <Button
+                android:id="@+id/buttonAdd"
+                style="@style/Widget.SeriesGuide.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/add_show" />
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>
