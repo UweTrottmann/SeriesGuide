@@ -27,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -89,13 +90,17 @@ public class AddDialogFragment extends DialogFragment {
         ((TextView) layout.findViewById(R.id.description)).setText(show.overview);
 
         // buttons
-        layout.findViewById(R.id.buttonDontAdd).setOnClickListener(new OnClickListener() {
+        Button dontAddButton = (Button) layout.findViewById(R.id.buttonNegative);
+        dontAddButton.setText(R.string.dont_add_show);
+        dontAddButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
-        layout.findViewById(R.id.buttonAdd).setOnClickListener(new OnClickListener() {
+        Button addButton = (Button) layout.findViewById(R.id.buttonPositive);
+        addButton.setText(R.string.add_show);
+        addButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener.onAddShow(show);
