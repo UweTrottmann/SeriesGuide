@@ -22,6 +22,14 @@
         android:paddingRight="@dimen/default_padding"
         android:src="@drawable/ic_action_watched" />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/layout_padding"
+        android:paddingTop="@dimen/layout_padding"
+        android:scaleType="fitXY"
+        android:src="@drawable/divider" />
+
     <ImageButton
         android:id="@+id/collectedButton"
         style="@style/Widget.SeriesGuide.Button.Borderless"
@@ -31,6 +39,14 @@
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:src="@drawable/ic_action_collect" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/layout_padding"
+        android:paddingTop="@dimen/layout_padding"
+        android:scaleType="fitXY"
+        android:src="@drawable/divider" />
 
     <ImageButton
         android:id="@+id/calendarButton"
