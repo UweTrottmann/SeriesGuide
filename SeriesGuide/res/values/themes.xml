@@ -38,12 +38,10 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:backgroundDimAmount">0.6</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:textColorPrimary">@color/abs__primary_text_holo_dark</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorPrimaryInverse">@color/abs__primary_text_holo_light</item>
-        <item name="windowMinWidthMajor">@dimen/abs__dialog_min_width_major</item>
-        <item name="windowMinWidthMinor">@dimen/abs__dialog_min_width_minor</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowContentOverlay">@null</item>
+        <item name="android:windowMinWidthMajor">65%</item>
+        <item name="android:windowMinWidthMinor">95%</item>
     </style>
 
     <style name="SeriesGuideTheme.Dialog.CheckIn">
