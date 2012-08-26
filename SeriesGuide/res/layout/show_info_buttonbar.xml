@@ -27,13 +27,7 @@
         </TextView>
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:paddingBottom="@dimen/layout_padding"
-        android:paddingTop="@dimen/layout_padding"
-        android:scaleType="fitXY"
-        android:src="@drawable/divider" />
+    <include layout="@layout/divider_vertical" />
 
     <LinearLayout
         android:id="@+id/buttonTVDB"
@@ -55,13 +49,7 @@
         </TextView>
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:paddingBottom="@dimen/layout_padding"
-        android:paddingTop="@dimen/layout_padding"
-        android:scaleType="fitXY"
-        android:src="@drawable/divider" />
+    <include layout="@layout/divider_vertical" />
 
     <LinearLayout
         android:id="@+id/buttonShouts"
