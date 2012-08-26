@@ -9,9 +9,6 @@
         <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
         <item name="custom_list_selector">@drawable/list_selector_sg</item>
 
-        <!-- Dialogs -->
-        <item name="android:dialogTheme">@style/SeriesGuideTheme.Dialog</item>
-
         <!-- ABS -->
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator</item>
