@@ -36,8 +36,6 @@ import com.google.analytics.tracking.android.EasyTracker;
 /**
  * A DialogFragment allowing the user to decide whether to add a show to his
  * show database.
- * 
- * @author Uwe Trottmann
  */
 public class AddDialogFragment extends DialogFragment {
 
