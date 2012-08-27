@@ -64,7 +64,7 @@
                     android:layout_below="@id/seriesname" />
             </RelativeLayout>
 
-            <include layout="@layout/holodivider" />
+            <include layout="@layout/divider_horizontal" />
 
             <include layout="@layout/gotoseasons" />
 

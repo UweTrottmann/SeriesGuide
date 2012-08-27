@@ -52,11 +52,7 @@
         android:id="@+id/textViewEpisodeDVDnumber"
         style="@style/SmallItems.WithSideMargins" />
 
-    <include
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/holodivider" />
+    <include layout="@layout/divider_horizontal" />
 
     <include
         android:id="@+id/buttonbar_ref"

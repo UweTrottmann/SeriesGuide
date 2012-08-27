@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonbar_ref"
-        layout="@layout/holodivider" >
+        layout="@layout/divider_horizontal" >
     </include>
 
     <include
