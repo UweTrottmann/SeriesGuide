@@ -5,17 +5,12 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 2.9 *(in development)*
+Version 2.8.1 *(2012-08-27)*
 --------------------------------
-
-### Detailed changes:
-
-#### 2.9beta (2012-08-16)
 
 * FEATURE Fetch collected flags when adding a show from trakt.tv.
 * FEATURE Submit flagging whole seasons, shows and previously aired episodes to trakt.tv.
 * FEATURE Automatically back up show database every week on starting the app. File is named seriesdatabase_auto.db and stored in the backup folder (See Backup/Restore in settings).
-* FIX Add low resolution first started background, fix scaling of existing one.
 * FIX Up in activity screen always returns back to show list.
 
 Version 2.8 *(2012-08-15)*
