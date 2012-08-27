@@ -17,19 +17,6 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import com.actionbarsherlock.app.SherlockDialogFragment;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.getglueapi.GetGlue;
-import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
-import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
-import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -44,6 +31,19 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockDialogFragment;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.getglueapi.GetGlue;
+import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
+import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
+import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 public class CheckInDialogFragment extends SherlockDialogFragment {
 
@@ -220,7 +220,7 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                         AndroidUtils.executeAsyncTask(new TraktTask(getActivity(),
                                 getFragmentManager(), null).checkin(tvdbid, season, episode,
                                 message), new Void[] {
-                            null
+                                null
                         });
                     }
                 }

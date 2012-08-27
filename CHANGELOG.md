@@ -5,12 +5,26 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 2.9 *(in development)*
+--------------------------------
+
+### Detailed changes:
+
+#### 2.9beta (2012-08-16)
+
+* FEATURE Fetch collected flags when adding a show from trakt.tv.
+* FEATURE Submit flagging whole seasons, shows and previously aired episodes to trakt.tv.
+* FEATURE Automatically back up show database every week on starting the app. File is named seriesdatabase_auto.db and stored in the backup folder (See Backup/Restore in settings).
+* FIX Add low resolution first started background, fix scaling of existing one.
+* FIX Up in activity screen always returns back to show list.
+
 Version 2.8 *(2012-08-15)*
 --------------------------------
 
+* FEATURE Quickly add shows by tapping a + button.
 * FEATURE Use the new expandable notifications on Android 4.1 Jelly Bean to display more content.
 * TWEAK Calculate next episodes differently: display the next highest (season and number) episode regarding all watched episodes.
-* TWEAK New show list layout for 10 inch and certain 7 inch tablets.
+* TWEAK New layouts for 10 inch tablets.
 * TWEAK Update single shows more often if their overview screen is used.
 * TWEAK 'Update only via WiFi' setting respected by episode image and ratings downloads.
 * TWEAK Relayouted list widget, updated widget backgrounds.

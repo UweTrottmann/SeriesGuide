@@ -17,18 +17,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.UpdateTask;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.TheTVDB;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -48,6 +36,19 @@ import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.UpdateTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.battlelancer.thetvdbapi.TheTVDB;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -257,7 +258,7 @@ public class ShowsActivity extends BaseActivity {
                 final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
                 intent.setType("plain/text");
                 intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
-                    SeriesGuidePreferences.SUPPORT_MAIL
+                        SeriesGuidePreferences.SUPPORT_MAIL
                 });
                 intent.putExtra(android.content.Intent.EXTRA_SUBJECT,
                         "SeriesGuide " + Utils.getVersion(this) + " Feedback");
@@ -308,7 +309,7 @@ public class ShowsActivity extends BaseActivity {
                 // update a single show
                 messageId = R.string.update_single;
                 task = (UpdateTask) new UpdateTask(new String[] {
-                    showId
+                        showId
                 }, 0, "", this);
             }
         }
@@ -360,7 +361,7 @@ public class ShowsActivity extends BaseActivity {
             // fetch all available poster paths
             if (mPaths == null) {
                 Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[] {
-                    Shows.POSTER
+                        Shows.POSTER
                 }, null, null, null);
 
                 // finish fast if there is no image to download

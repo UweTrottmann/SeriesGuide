@@ -17,6 +17,16 @@
 
 package com.battlelancer.seriesguide.provider;
 
+import android.app.SearchManager;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
+import android.provider.BaseColumns;
+import android.util.Log;
+
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearchColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -27,16 +37,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ShowsColumns;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
-
-import android.app.SearchManager;
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Environment;
-import android.provider.BaseColumns;
-import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
@@ -156,7 +156,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             File exportDir = new File(Environment.getExternalStorageDirectory(),
                     "seriesguidebackup");
             exportDir.mkdirs();
-            File file = new File(exportDir, dbFile.getName() + "_b4upgr");
+            File file = new File(exportDir, dbFile.getName() + "_b4upgr.db");
 
             try {
                 file.createNewFile();
@@ -259,7 +259,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             final Cursor episodes = db.query(Tables.EPISODES, new String[] {
                     Episodes._ID, Episodes.FIRSTAIRED
             }, Shows.REF_SHOW_ID + "=?", new String[] {
-                showId
+                    showId
             }, null, null, null);
 
             db.beginTransaction();
@@ -271,7 +271,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
                     values.put(Episodes.FIRSTAIREDMS, episodeAirtime);
                     db.update(Tables.EPISODES, values, Episodes._ID + "=?", new String[] {
-                        episodes.getString(0)
+                            episodes.getString(0)
                     });
                     values.clear();
                 }
@@ -359,7 +359,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 }
                 values.put(Shows.STATUS, status);
                 db.update(Tables.SHOWS, values, Shows._ID + "=?", new String[] {
-                    shows.getString(0)
+                        shows.getString(0)
                 });
                 values.clear();
             }
@@ -501,7 +501,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         // search for anything starting with the given search term
         return db.rawQuery(query.toString(), new String[] {
-            "\"" + searchterm + "*\""
+                "\"" + searchterm + "*\""
         });
     }
 

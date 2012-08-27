@@ -17,6 +17,14 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.widget.EditText;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.R;
@@ -26,14 +34,6 @@ import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.viewpagerindicator.TabPageIndicator;
-
-import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.widget.EditText;
 
 /**
  * Hosts various fragments in a {@link ViewPager} which allow adding shows to

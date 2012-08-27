@@ -17,6 +17,16 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.widget.Toast;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
@@ -29,16 +39,6 @@ import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 import oauth.signpost.exception.OAuthNotAuthorizedException;
-
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
-import android.widget.Toast;
 
 /**
  * Executes the OAuthRequestTokenTask to retrieve a request token and authorize

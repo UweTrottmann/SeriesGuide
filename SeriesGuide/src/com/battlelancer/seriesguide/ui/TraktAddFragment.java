@@ -17,6 +17,14 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -25,14 +33,6 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.entities.TvShow;
 import com.uwetrottmann.androidutils.AndroidUtils;
-
-import android.content.Context;
-import android.database.Cursor;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.HashSet;

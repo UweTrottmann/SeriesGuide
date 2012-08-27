@@ -17,9 +17,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.thetvdbapi.TheTVDB;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -27,6 +24,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.thetvdbapi.TheTVDB;
 
 public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
 

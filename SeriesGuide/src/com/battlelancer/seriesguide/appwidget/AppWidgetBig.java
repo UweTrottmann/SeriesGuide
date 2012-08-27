@@ -16,12 +16,12 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
-import com.battlelancer.seriesguide.R;
-
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+
+import com.battlelancer.seriesguide.R;
 
 public class AppWidgetBig extends AppWidget {
     private static final String LIMIT = "3";

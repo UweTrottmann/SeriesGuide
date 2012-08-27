@@ -16,14 +16,6 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.ui.ShowsActivity;
-import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
-import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.Utils;
-
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -36,6 +28,14 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
+
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.ui.ShowsActivity;
+import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
+import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.Utils;
 
 public class AppWidget extends AppWidgetProvider {
     public static final String REFRESH = "com.battlelancer.seriesguide.appwidget.REFRESH";

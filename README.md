@@ -8,18 +8,18 @@ For more information have a look at http://seriesgui.de
 Branch structure
 ----------------
 
-The repository is made up of three main development branches: master (stable), beta and dev.
+The repository is made up of two main development branches: master (stable) and beta.
 
 * **master** has the latest stable code, its tags are released as the stable SeriesGuide version in market.
-* **beta** is somewhat stable and contains new features early. Its tags are released as SeriesGuide beta on Android Market.
-* **dev** includes the latest unstable code, no releases are made of it.
+* **beta** includes the latest unstable code. Its tags are released as SeriesGuide beta on Android Market.
+* **dev** has been deprecated.
 
 Contributing
 ------------
 
 Want to contribute? Great! Fork the repository, code, tell me about it!
 
-To setup your environment clone the repository. Then import the three projects SeriesGuide, com_actionbarsherlock and viewpagerindicator into eclipse. To successfully build, you should create a keys.xml file in the SeriesGuide/res/values folder and add the string values 
+To setup your environment clone the repository. Then import the three projects SeriesGuide, AndroidUtils, ActionBarSherlock and ViewPagerIndicator into eclipse. To successfully build, you should create a keys.xml file in the SeriesGuide/res/values folder and add the string values 
 
     <resources>
         <string name="tvdb_apikey"></string>
@@ -28,7 +28,7 @@ To setup your environment clone the repository. Then import the three projects S
         <string name="trakt_apikey"></string>
     </resources>
 	
-to it.
+to it. AndroidUtils, ActionBarSherlock and ViewPagerIndicator are Android library projects used by SeriesGuide.
 
 License
 -------

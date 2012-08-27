@@ -17,27 +17,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.FetchArtTask;
-import com.battlelancer.seriesguide.util.ShareUtils;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
-import com.battlelancer.seriesguide.util.TraktSummaryTask;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -59,12 +38,35 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
+import com.battlelancer.seriesguide.util.FetchArtTask;
+import com.battlelancer.seriesguide.util.FlagTask;
+import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
+import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
+import com.battlelancer.seriesguide.util.ShareUtils;
+import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
+import com.battlelancer.seriesguide.util.TraktSummaryTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
+
 /**
  * Displays details about a single episode like summary, ratings and episode
  * image if available.
  */
 public class EpisodeDetailsFragment extends SherlockListFragment implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor>, OnFlagListener {
 
     private static final int EPISODE_LOADER = 3;
 
@@ -332,7 +334,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                             episode.getInt(EpisodeDetailsQuery.SEASON),
                             episode.getInt(EpisodeDetailsQuery.NUMBER));
                     AndroidUtils.executeAsyncTask(mTraktTask, new Void[] {
-                        null
+                            null
                     });
 
                     return true;
@@ -451,24 +453,21 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         if (mArtTask == null || mArtTask.getStatus() == AsyncTask.Status.FINISHED) {
             mArtTask = (FetchArtTask) new FetchArtTask(imagePath, container, getActivity());
             AndroidUtils.executeAsyncTask(mArtTask, new Void[] {
-                null
+                    null
             });
         }
     }
 
     private void onToggleWatched() {
         mWatched = !mWatched;
-        DBUtils.markEpisode(getActivity(), String.valueOf(getEpisodeId()), mWatched);
-        DBUtils.markSeenOnTrakt(getActivity(), mShowId, mSeasonNumber, mEpisodeNumber, mWatched);
-        getLoaderManager().restartLoader(EPISODE_LOADER, null, this);
+        new FlagTask(getActivity(), mShowId, this).episodeWatched(mSeasonNumber, mEpisodeNumber)
+                .setItemId(getEpisodeId()).setFlag(mWatched).execute();
     }
 
     private void onToggleCollected() {
         mCollected = !mCollected;
-        DBUtils.collectEpisode(getActivity(), String.valueOf(getEpisodeId()), mCollected);
-        DBUtils.markCollectedOnTrakt(getActivity(), mShowId, mSeasonNumber, mEpisodeNumber,
-                mCollected);
-        getLoaderManager().restartLoader(EPISODE_LOADER, null, this);
+        new FlagTask(getActivity(), mShowId, this).episodeCollected(mSeasonNumber, mEpisodeNumber)
+                .setItemId(getEpisodeId()).setFlag(mCollected).execute();
     }
 
     interface EpisodeDetailsQuery {
@@ -534,5 +533,12 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);
+    }
+
+    @Override
+    public void onFlagCompleted(FlagAction action, int showId, int itemId, boolean isSuccessful) {
+        if (isSuccessful) {
+            getLoaderManager().restartLoader(EPISODE_LOADER, null, this);
+        }
     }
 }

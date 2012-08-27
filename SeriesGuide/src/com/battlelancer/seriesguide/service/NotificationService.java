@@ -17,17 +17,6 @@
 
 package com.battlelancer.seriesguide.service;
 
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
 import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.IntentService;
@@ -45,6 +34,17 @@ import android.support.v4.app.NotificationCompat;
 import android.text.SpannableStringBuilder;
 import android.text.format.DateUtils;
 import android.text.style.ForegroundColorSpan;
+
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 public class NotificationService extends IntentService {
 
@@ -179,20 +179,18 @@ public class NotificationService extends IntentService {
                     contentIntent = PendingIntent.getActivity(context, 3, notificationIntent, 0);
                 }
 
-                // build the notification
-                Notification notification;
+                final NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
 
                 if (AndroidUtils.isJellyBeanOrHigher()) {
                     // JELLY BEAN and above
-                    final Notification.Builder anb = new Notification.Builder(context);
 
                     if (count == 1) {
                         // single episode
                         upcomingEpisodes.moveToFirst();
                         final String imagePath = upcomingEpisodes
                                 .getString(NotificationQuery.POSTER);
-                        anb.setLargeIcon(ImageProvider.getInstance(context).getImage(imagePath,
-                                true));
+                        nb.setLargeIcon(ImageProvider.getInstance(context)
+                                .getImage(imagePath, true));
 
                         final String episodeTitle = upcomingEpisodes
                                 .getString(NotificationQuery.TITLE);
@@ -206,7 +204,7 @@ public class NotificationService extends IntentService {
                         bigText.append("\n");
                         bigText.append(episodeSummary);
 
-                        anb.setStyle(new Notification.BigTextStyle().bigText(bigText)
+                        nb.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText)
                                 .setSummaryText(contentText));
 
                         // TODO allow check ins via intent
@@ -214,7 +212,7 @@ public class NotificationService extends IntentService {
                         // getString(R.string.checkin), null);
                     } else {
                         // multiple episodes
-                        Notification.InboxStyle inboxStyle = new Notification.InboxStyle();
+                        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
 
                         // display at most the first five
                         final int displayCount = Math.min(count, 5);
@@ -243,31 +241,10 @@ public class NotificationService extends IntentService {
                             inboxStyle.setSummaryText(getString(R.string.more, count - 5));
                         }
 
-                        anb.setStyle(inboxStyle);
+                        nb.setStyle(inboxStyle);
                     }
-
-                    // If the string is empty, the user chose silent. So only
-                    // set a sound if necessary.
-                    if (ringtoneUri.length() != 0) {
-                        anb.setSound(Uri.parse(ringtoneUri));
-                    }
-                    if (isVibrating) {
-                        anb.setVibrate(VIBRATION_PATTERN);
-                    }
-                    anb.setDefaults(Notification.DEFAULT_LIGHTS);
-                    anb.setWhen(System.currentTimeMillis());
-                    anb.setAutoCancel(true);
-                    anb.setTicker(tickerText);
-                    anb.setContentTitle(contentTitle);
-                    anb.setContentText(contentText);
-                    anb.setContentIntent(contentIntent);
-                    anb.setSmallIcon(R.drawable.ic_notification);
-                    anb.setPriority(Notification.PRIORITY_DEFAULT);
-
-                    notification = anb.build();
                 } else {
                     // ICS and below
-                    final NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
 
                     if (count == 1) {
                         // single episode
@@ -277,27 +254,28 @@ public class NotificationService extends IntentService {
                         nb.setLargeIcon(ImageProvider.getInstance(context).getImage(posterPath,
                                 true));
                     }
-
-                    // If the string is empty, the user chose silent. So only
-                    // set a
-                    // sound if necessary.
-                    if (ringtoneUri.length() != 0) {
-                        nb.setSound(Uri.parse(ringtoneUri));
-                    }
-                    if (isVibrating) {
-                        nb.setVibrate(VIBRATION_PATTERN);
-                    }
-                    nb.setDefaults(Notification.DEFAULT_LIGHTS);
-                    nb.setWhen(System.currentTimeMillis());
-                    nb.setAutoCancel(true);
-                    nb.setTicker(tickerText);
-                    nb.setContentTitle(contentTitle);
-                    nb.setContentText(contentText);
-                    nb.setContentIntent(contentIntent);
-                    nb.setSmallIcon(R.drawable.ic_notification);
-
-                    notification = nb.getNotification();
                 }
+
+                // If the string is empty, the user chose silent...
+                if (ringtoneUri.length() != 0) {
+                    // ...otherwise set the specified ringtone
+                    nb.setSound(Uri.parse(ringtoneUri));
+                }
+                if (isVibrating) {
+                    nb.setVibrate(VIBRATION_PATTERN);
+                }
+                nb.setDefaults(Notification.DEFAULT_LIGHTS);
+                nb.setWhen(System.currentTimeMillis());
+                nb.setAutoCancel(true);
+                nb.setTicker(tickerText);
+                nb.setContentTitle(contentTitle);
+                nb.setContentText(contentText);
+                nb.setContentIntent(contentIntent);
+                nb.setSmallIcon(R.drawable.ic_notification);
+                nb.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+                // build the notification
+                Notification notification = nb.build();
 
                 // use string resource id, always unique within app
                 final NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

@@ -17,12 +17,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-
 import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
@@ -39,6 +33,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 
 /**
  * Displays a list of search results and allows searching for episodes.
@@ -126,7 +126,7 @@ public class SearchFragment extends SherlockListFragment implements LoaderCallba
         String selection = null;
         final String query = args.getString(SearchManager.QUERY);
         String[] selectionArgs = new String[] {
-            query
+                query
         };
 
         Bundle appData = args.getBundle(SearchManager.APP_DATA);

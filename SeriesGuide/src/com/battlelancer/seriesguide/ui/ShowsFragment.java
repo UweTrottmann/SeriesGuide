@@ -17,24 +17,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants.ShowSorting;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesContract;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
-import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
-import com.battlelancer.seriesguide.util.CompatActionBarNavListener;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -65,13 +47,33 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.Constants.ShowSorting;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesContract;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
+import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
+import com.battlelancer.seriesguide.util.CompatActionBarNavListener;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
+import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
+
 /**
  * Displays the list of shows in a users local library.
  * 
  * @author Uwe Trottmann
  */
 public class ShowsFragment extends SherlockFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, CompatActionBarNavListener {
+        LoaderManager.LoaderCallbacks<Cursor>, CompatActionBarNavListener, OnFlagListener {
 
     private static final String TAG = "ShowsFragment";
 
@@ -309,8 +311,10 @@ public class ShowsFragment extends SherlockFragment implements
             case CONTEXT_MARKNEXT:
                 fireTrackerEvent("Mark next episode");
 
-                DBUtils.markNextEpisode(getActivity(), info.id);
-                Utils.updateLatestEpisode(getActivity(), String.valueOf(info.id));
+                Cursor show = (Cursor) mAdapter.getItem(info.position);
+                DBUtils.markNextEpisode(getActivity(), this, (int) info.id,
+                        show.getInt(ShowsQuery.NEXTEPISODE));
+
                 return true;
         }
         return super.onContextItemSelected(item);
@@ -369,7 +373,7 @@ public class ShowsFragment extends SherlockFragment implements
             case SHOWFILTER_ALL:
                 selection = Shows.HIDDEN + "=?";
                 selectionArgs = new String[] {
-                    "0"
+                        "0"
                 };
                 break;
             case SHOWFILTER_FAVORITES:
@@ -396,7 +400,7 @@ public class ShowsFragment extends SherlockFragment implements
             case SHOWFILTER_HIDDEN:
                 selection = Shows.HIDDEN + "=?";
                 selectionArgs = new String[] {
-                    "1"
+                        "1"
                 };
                 break;
         }
@@ -532,10 +536,11 @@ public class ShowsFragment extends SherlockFragment implements
     }
 
     private interface ShowsQuery {
+
         String[] PROJECTION = {
                 BaseColumns._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
                 Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE
+                Shows.FAVORITE, Shows.NEXTEPISODE
         };
 
         // int _ID = 0;
@@ -557,6 +562,8 @@ public class ShowsFragment extends SherlockFragment implements
         int NEXTAIRDATETEXT = 8;
 
         int FAVORITE = 9;
+
+        int NEXTEPISODE = 10;
     }
 
     public void fireTrackerEvent(String label) {
@@ -619,5 +626,12 @@ public class ShowsFragment extends SherlockFragment implements
             }
         }
     };
+
+    @Override
+    public void onFlagCompleted(FlagAction action, int showId, int itemId, boolean isSuccessful) {
+        if (isSuccessful) {
+            Utils.updateLatestEpisode(getActivity(), String.valueOf(showId));
+        }
+    }
 
 }

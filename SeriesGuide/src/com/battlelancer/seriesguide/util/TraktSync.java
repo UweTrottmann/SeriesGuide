@@ -17,6 +17,18 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.content.ContentProviderOperation;
+import android.content.ContentValues;
+import android.content.OperationApplicationException;
+import android.database.Cursor;
+import android.os.AsyncTask;
+import android.os.RemoteException;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
+
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -31,18 +43,6 @@ import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.enumerations.ExtendedParam;
 import com.jakewharton.trakt.services.ShowService.EpisodeSeenBuilder;
 import com.jakewharton.trakt.services.ShowService.EpisodeUnseenBuilder;
-
-import android.content.ContentProviderOperation;
-import android.content.ContentValues;
-import android.content.OperationApplicationException;
-import android.database.Cursor;
-import android.os.AsyncTask;
-import android.os.RemoteException;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,7 +129,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
         // get show ids in local database
         Cursor showTvdbIds = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[] {
-            Shows._ID
+                Shows._ID
         }, null, null, null);
 
         // assume we have a local list of which shows to sync (later...)
@@ -171,7 +171,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                                 batch.add(ContentProviderOperation
                                         .newUpdate(Episodes.buildEpisodesOfSeasonUri(seasonId))
                                         .withSelection(Episodes.NUMBER + "=?", new String[] {
-                                            episode.toString()
+                                                episode.toString()
                                         }).withValue(Episodes.WATCHED, true).build());
                             }
 
@@ -220,7 +220,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
     private Integer syncToTrakt(ServiceManager manager) {
         // get show ids in local database for which syncing is enabled
         Cursor showTvdbIds = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[] {
-            Shows._ID
+                Shows._ID
         }, Shows.SYNCENABLED + "=1", null, null);
 
         if (showTvdbIds.getCount() == 0) {

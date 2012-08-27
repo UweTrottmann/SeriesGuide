@@ -17,12 +17,12 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.os.Bundle;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
-
-import android.os.Bundle;
 
 public class TraktShoutsActivity extends BaseActivity {
 

@@ -17,6 +17,23 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ContentProviderOperation;
+import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.OperationApplicationException;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.os.AsyncTask;
+import android.os.RemoteException;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.widget.RemoteViews;
+import android.widget.Toast;
+
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -35,23 +52,6 @@ import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
 
 import org.xml.sax.SAXException;
-
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.ContentProviderOperation;
-import android.content.ContentResolver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.OperationApplicationException;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.os.AsyncTask;
-import android.os.RemoteException;
-import android.preference.PreferenceManager;
-import android.util.Log;
-import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,7 +99,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
     public UpdateTask(String showId, Context context) {
         mAppContext = context.getApplicationContext();
         mShows = new String[] {
-            showId
+                showId
         };
         mUpdateType = UpdateType.SINGLE;
     }
@@ -156,7 +156,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                 case FULL:
                     // get all show IDs for a full update
                     final Cursor shows = resolver.query(Shows.CONTENT_URI, new String[] {
-                        Shows._ID
+                            Shows._ID
                     }, null, null, null);
 
                     mShows = new String[shows.getCount()];
@@ -370,7 +370,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
 
     private void setCurrentShowName(final ContentResolver resolver, String id) {
         Cursor show = resolver.query(Shows.buildShowUri(id), new String[] {
-            Shows.TITLE
+                Shows.TITLE
         }, null, null, null);
         if (show.moveToFirst()) {
             mCurrentShowName = show.getString(0);

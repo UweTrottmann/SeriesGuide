@@ -17,6 +17,26 @@
 
 package com.battlelancer.thetvdbapi;
 
+import android.content.ContentProviderOperation;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.OperationApplicationException;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.RemoteException;
+import android.preference.PreferenceManager;
+import android.sax.Element;
+import android.sax.EndElementListener;
+import android.sax.EndTextElementListener;
+import android.sax.RootElement;
+import android.text.TextUtils;
+import android.text.format.DateUtils;
+import android.util.Log;
+import android.util.Xml;
+
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.items.Series;
@@ -46,26 +66,6 @@ import org.apache.http.params.HttpParams;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;
-
-import android.content.ContentProviderOperation;
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.OperationApplicationException;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.RemoteException;
-import android.preference.PreferenceManager;
-import android.sax.Element;
-import android.sax.EndElementListener;
-import android.sax.EndTextElementListener;
-import android.sax.RootElement;
-import android.text.TextUtils;
-import android.text.format.DateUtils;
-import android.util.Log;
-import android.util.Xml;
 
 import java.io.FilterInputStream;
 import java.io.IOException;
@@ -99,13 +99,14 @@ public class TheTVDB {
      * 
      * @param showId
      * @param seenShows
+     * @param collection
      * @return true if show and its episodes were added, false if it already
      *         exists
      * @throws IOException
      * @throws SAXException
      */
-    public static boolean addShow(String showId, List<TvShow> seenShows, Context context)
-            throws SAXException {
+    public static boolean addShow(String showId, List<TvShow> seenShows,
+            List<TvShow> collectedShows, Context context) throws SAXException {
         String language = getTheTVDBLanguage(context);
         Series show = fetchShow(showId, language, context);
 
@@ -125,8 +126,20 @@ public class TheTVDB {
             throw new RuntimeException("Problem applying batch operation", e);
         }
 
+        storeTraktFlags(showId, seenShows, context, true);
+        storeTraktFlags(showId, collectedShows, context, false);
+
+        DBUtils.updateLatestEpisode(context, showId);
+
+        return !isShowExists;
+    }
+
+    private static void storeTraktFlags(String showId, List<TvShow> shows, Context context,
+            boolean isSeenFlags) {
+        final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
+
         // try to find seen episodes from trakt
-        for (TvShow tvShow : seenShows) {
+        for (TvShow tvShow : shows) {
             if (showId.equals(tvShow.tvdbId)) {
                 batch.clear();
 
@@ -140,22 +153,27 @@ public class TheTVDB {
                                 season.season.toString()
                             }, null);
 
-                    // add ops to mark episodes as watched
+                    // add ops to flag episodes
                     if (seasonMatch.moveToFirst()) {
                         final String seasonId = seasonMatch.getString(0);
 
                         for (Integer episode : season.episodes.numbers) {
+                            // flag as watched or collected depending on call
+                            // parameter
                             batch.add(ContentProviderOperation
                                     .newUpdate(Episodes.buildEpisodesOfSeasonUri(seasonId))
                                     .withSelection(Episodes.NUMBER + "=?", new String[] {
-                                        episode.toString()
-                                    }).withValue(Episodes.WATCHED, true).build());
+                                            episode.toString()
+                                    })
+                                    .withValue(isSeenFlags ? Episodes.WATCHED : Episodes.COLLECTED,
+                                            true).build());
                         }
                     }
 
                     seasonMatch.close();
                 }
 
+                // apply ops for this show
                 try {
                     context.getContentResolver()
                             .applyBatch(SeriesContract.CONTENT_AUTHORITY, batch);
@@ -171,10 +189,6 @@ public class TheTVDB {
                 break;
             }
         }
-
-        DBUtils.updateLatestEpisode(context, showId);
-
-        return !isShowExists;
     }
 
     /**

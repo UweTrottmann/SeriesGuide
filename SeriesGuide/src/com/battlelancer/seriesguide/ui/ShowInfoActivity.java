@@ -17,6 +17,21 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.TargetApi;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v4.app.ShareCompat;
+import android.support.v4.app.ShareCompat.IntentBuilder;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -32,21 +47,6 @@ import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
-
-import android.annotation.TargetApi;
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.v4.app.ShareCompat;
-import android.support.v4.app.ShareCompat.IntentBuilder;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Displays detailed information about a show.
@@ -270,7 +270,7 @@ public class ShowInfoActivity extends BaseActivity {
         TraktSummaryTask task = new TraktSummaryTask(this, findViewById(R.id.ratingbar))
                 .show(tvdbId);
         AndroidUtils.executeAsyncTask(task, new Void[] {
-            null
+                null
         });
     }
 }

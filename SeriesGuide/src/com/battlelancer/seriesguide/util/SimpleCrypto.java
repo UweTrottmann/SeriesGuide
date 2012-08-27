@@ -17,11 +17,11 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 
 import java.security.SecureRandom;
 

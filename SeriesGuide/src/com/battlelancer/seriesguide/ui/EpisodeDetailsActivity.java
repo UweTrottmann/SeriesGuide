@@ -17,6 +17,16 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.widget.ImageView;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.Constants;
@@ -28,16 +38,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.viewpagerindicator.TitlePageIndicator;
-
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;

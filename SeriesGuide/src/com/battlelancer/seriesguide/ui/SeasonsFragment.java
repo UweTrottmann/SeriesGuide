@@ -17,20 +17,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.Constants.SeasonSorting;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
-import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.google.analytics.tracking.android.EasyTracker;
-
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -58,11 +44,26 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.Constants.SeasonSorting;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
+import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
+import com.battlelancer.seriesguide.util.DBUtils;
+import com.battlelancer.seriesguide.util.FlagTask;
+import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
+import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
+import com.google.analytics.tracking.android.EasyTracker;
+
 /**
  * Displays a list of seasons of one show.
  */
 public class SeasonsFragment extends SherlockListFragment implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor>, OnFlagListener {
 
     private static final int ID_MARK_ALL_WATCHED = 0;
 
@@ -146,14 +147,15 @@ public class SeasonsFragment extends SherlockListFragment implements
     @Override
     public boolean onContextItemSelected(android.view.MenuItem item) {
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+        Cursor season = (Cursor) mAdapter.getItem(info.position);
 
         switch (item.getItemId()) {
             case ID_MARK_ALL_WATCHED:
-                markSeasonEpisodes(info.id, true);
+                onFlagSeasonWatched(info.id, season.getInt(SeasonsQuery.COMBINED), true);
                 return true;
 
             case ID_MARK_ALL_UNWATCHED:
-                markSeasonEpisodes(info.id, false);
+                onFlagSeasonWatched(info.id, season.getInt(SeasonsQuery.COMBINED), false);
                 return true;
         }
         return super.onContextItemSelected(item);
@@ -180,12 +182,12 @@ public class SeasonsFragment extends SherlockListFragment implements
             case R.id.menu_markall:
                 fireTrackerEvent("Mark all seasons");
 
-                markAllEpisodes(true);
+                onFlagShowWatched(true);
                 return true;
             case R.id.menu_unmarkall:
                 fireTrackerEvent("Unmark all seasons");
 
-                markAllEpisodes(false);
+                onFlagShowWatched(false);
                 return true;
             case R.id.menu_sesortby:
                 fireTrackerEvent("Sort seasons");
@@ -304,32 +306,26 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     /**
-     * Mark all episodes of the given season, updates the status label of the
-     * season.
+     * Changes the seasons episodes watched flags, updates the status label of
+     * the season.
      * 
-     * @param seasonid
-     * @param state
+     * @param seasonId
+     * @param isWatched
      */
-    private void markSeasonEpisodes(long seasonid, boolean state) {
-        DBUtils.markSeasonEpisodes(getActivity(), String.valueOf(seasonid), state);
-        Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()), String.valueOf(seasonid),
-                true);
-        t.start();
+    private void onFlagSeasonWatched(long seasonId, int seasonNumber, boolean isWatched) {
+        new FlagTask(getActivity(), getShowId(), this).seasonWatched(seasonNumber)
+                .setItemId((int) seasonId).setFlag(isWatched).execute();
     }
 
     /**
-     * Mark all episodes of the given show, updates the status labels of the
-     * season.
+     * Changes the watched flag for all episodes of the given show, updates the
+     * status labels of all seasons.
      * 
      * @param seasonid
-     * @param state
+     * @param isWatched
      */
-    private void markAllEpisodes(boolean state) {
-        ContentValues values = new ContentValues();
-        values.put(Episodes.WATCHED, state);
-        getActivity().getContentResolver().update(
-                Episodes.buildEpisodesOfShowUri(String.valueOf(getShowId())), values, null, null);
-        updateUnwatchedCounts(true);
+    private void onFlagShowWatched(boolean isWatched) {
+        new FlagTask(getActivity(), getShowId(), this).showWatched().setFlag(isWatched).execute();
     }
 
     /**
@@ -471,5 +467,21 @@ public class SeasonsFragment extends SherlockListFragment implements
         // restart loader and update menu description
         getLoaderManager().restartLoader(LOADER_ID, null, SeasonsFragment.this);
         getSherlockActivity().invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onFlagCompleted(FlagAction action, int showId, int itemId, boolean isSuccessful) {
+        if (isSuccessful) {
+            switch (action) {
+                case SEASON_WATCHED:
+                    Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()),
+                            String.valueOf(itemId), true);
+                    t.start();
+                    break;
+                default:
+                    updateUnwatchedCounts(true);
+                    break;
+            }
+        }
     }
 }

@@ -17,12 +17,12 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.items.SearchResult;
-
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
+
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.items.SearchResult;
 
 /**
  * Inspired by florianmski's traktoid TraktManager. This class is used to hold
@@ -38,6 +38,8 @@ public class TaskManager {
     private AddShowTask mAddTask;
 
     private UpdateTask mUpdateTask;
+
+    private BackupTask mBackupTask;
 
     private Context mContext;
 
@@ -108,6 +110,23 @@ public class TaskManager {
 
     public boolean isAddTaskRunning() {
         if (mAddTask == null || mAddTask.getStatus() == AsyncTask.Status.FINISHED) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void tryBackupTask(String filePath) {
+        if (!isUpdateTaskRunning(false) && !isAddTaskRunning()) {
+            mBackupTask = new BackupTask(mContext);
+            mBackupTask.execute(new String[] {
+                    filePath
+            });
+        }
+    }
+
+    public boolean isBackupTaskRunning() {
+        if (mBackupTask == null || mBackupTask.getStatus() == AsyncTask.Status.FINISHED) {
             return false;
         } else {
             return true;

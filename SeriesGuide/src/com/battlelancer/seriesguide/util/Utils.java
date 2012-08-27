@@ -17,16 +17,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.Constants.EpisodeSorting;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.service.NotificationService;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.jakewharton.trakt.ServiceManager;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -41,6 +31,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.Constants.EpisodeSorting;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.service.NotificationService;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.jakewharton.trakt.ServiceManager;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -467,18 +467,18 @@ public class Utils {
      * Returns the episode number formatted according to the users preference
      * (e.g. '1x01', 'S01E01', ...).
      */
-    public static String getEpisodeNumber(SharedPreferences prefs, int seasonNumber,
-            int episodeNumber) {
+    public static String getEpisodeNumber(SharedPreferences prefs, int season,
+            int episode) {
         String format = prefs.getString(SeriesGuidePreferences.KEY_NUMBERFORMAT,
                 SeriesGuidePreferences.NUMBERFORMAT_DEFAULT);
-        String result = String.valueOf(seasonNumber);
+        String result = String.valueOf(season);
         if (format.equals(SeriesGuidePreferences.NUMBERFORMAT_DEFAULT)) {
             // 1x01 format
             result += "x";
         } else {
             // S01E01 format
             // make season number always two chars long
-            if (seasonNumber < 10) {
+            if (season < 10) {
                 result = "0" + result;
             }
             if (format.equals(SeriesGuidePreferences.NUMBERFORMAT_ENGLISHLOWER)) {
@@ -488,12 +488,14 @@ public class Utils {
             }
         }
 
-        // make episode number always two chars long
-        if (episodeNumber < 10) {
-            result += "0";
-        }
+        if (episode != -1) {
+            // make episode number always two chars long
+            if (episode < 10) {
+                result += "0";
+            }
 
-        result += episodeNumber;
+            result += episode;
+        }
         return result;
     }
 

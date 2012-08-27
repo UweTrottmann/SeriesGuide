@@ -17,24 +17,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.Constants.EpisodeSorting;
-import com.battlelancer.seriesguide.WatchedBox;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
-import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -56,6 +39,22 @@ import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.Constants.EpisodeSorting;
+import com.battlelancer.seriesguide.WatchedBox;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
+import com.battlelancer.seriesguide.util.FlagTask;
+import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * Displays a list of episodes of a season.
@@ -151,13 +150,14 @@ public class EpisodesFragment extends SherlockListFragment implements
                     WatchedBox wb = (WatchedBox) view;
                     wb.setChecked(cursor.getInt(columnIndex) > 0);
 
-                    final String episodeId = cursor.getString(EpisodesQuery._ID);
+                    final int episodeId = cursor.getInt(EpisodesQuery._ID);
                     final int episodeNumber = cursor.getInt(EpisodesQuery.NUMBER);
                     wb.setOnClickListener(new OnClickListener() {
 
                         public void onClick(View v) {
                             ((WatchedBox) v).toggle();
-                            onMarkEpisode(episodeId, episodeNumber, ((WatchedBox) v).isChecked());
+                            onFlagEpisodeWatched(episodeId, episodeNumber,
+                                    ((WatchedBox) v).isChecked());
                         }
                     });
 
@@ -280,16 +280,17 @@ public class EpisodesFragment extends SherlockListFragment implements
         switch (item.getItemId()) {
             case MARK_WATCHED_ID: {
                 final Cursor items = (Cursor) mAdapter.getItem(info.position);
-                onMarkEpisode(String.valueOf(info.id), items.getInt(EpisodesQuery.NUMBER), true);
+                onFlagEpisodeWatched((int) info.id, items.getInt(EpisodesQuery.NUMBER), true);
                 return true;
             }
             case MARK_UNWATCHED_ID: {
                 final Cursor items = (Cursor) mAdapter.getItem(info.position);
-                onMarkEpisode(String.valueOf(info.id), items.getInt(EpisodesQuery.NUMBER), false);
+                onFlagEpisodeWatched((int) info.id, items.getInt(EpisodesQuery.NUMBER), false);
                 return true;
             }
             case MARK_UNTILHERE_ID: {
-                onMarkUntilHere(String.valueOf(info.id));
+                final Cursor items = (Cursor) mAdapter.getItem(info.position);
+                onMarkUntilHere((int) info.id, items.getLong(EpisodesQuery.FIRSTAIREDMS));
                 return true;
             }
             case DELETE_EPISODE_ID:
@@ -324,12 +325,12 @@ public class EpisodesFragment extends SherlockListFragment implements
             case R.id.mark_all:
                 fireTrackerEvent("Mark all episodes");
 
-                onMarkAllEpisodes(true);
+                onFlagSeasonWatched(true);
                 return true;
             case R.id.unmark_all:
                 fireTrackerEvent("Unmark all episodes");
 
-                onMarkAllEpisodes(false);
+                onFlagSeasonWatched(false);
                 return true;
             case R.id.menu_epsorting:
                 fireTrackerEvent("Sort episodes");
@@ -346,39 +347,20 @@ public class EpisodesFragment extends SherlockListFragment implements
         showDetails(position);
     }
 
-    private void onMarkEpisode(final String episodeId, int episodeNumber, final boolean state) {
-        final Activity activity = getActivity();
-        if (activity != null) {
-            new Thread(new Runnable() {
-                public void run() {
-                    DBUtils.markEpisode(activity, episodeId, state);
-                }
-            }).start();
-        }
-        DBUtils.markSeenOnTrakt(activity, getShowId(), getSeasonNumber(), episodeNumber, state);
+    private void onFlagEpisodeWatched(int episodeId, int episodeNumber, boolean isWatched) {
+        new FlagTask(getActivity(), getShowId(), null)
+                .episodeWatched(getSeasonNumber(), episodeNumber).setItemId(episodeId)
+                .setFlag(isWatched).execute();
     }
 
-    private void onMarkAllEpisodes(final boolean state) {
-        final Activity activity = getActivity();
-        if (activity != null) {
-            new Thread(new Runnable() {
-                public void run() {
-                    DBUtils.markSeasonEpisodes(activity, String.valueOf(getSeasonId()), state);
-                    activity.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
-                }
-            }).start();
-        }
+    private void onFlagSeasonWatched(boolean isWatched) {
+        new FlagTask(getActivity(), getShowId(), null).seasonWatched(getSeasonNumber())
+                .setItemId(getSeasonId()).setFlag(isWatched).execute();
     }
 
-    private void onMarkUntilHere(final String episodeId) {
-        final Activity activity = getActivity();
-        if (activity != null) {
-            new Thread(new Runnable() {
-                public void run() {
-                    DBUtils.markUntilHere(activity, episodeId);
-                }
-            }).start();
-        }
+    private void onMarkUntilHere(int episodeId, long firstaired) {
+        new FlagTask(getActivity(), getShowId(), null).episodeWatchedPrevious(firstaired)
+                .setItemId(episodeId).execute();
     }
 
     private void updatePreferences() {

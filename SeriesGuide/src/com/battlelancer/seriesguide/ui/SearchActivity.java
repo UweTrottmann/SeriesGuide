@@ -17,16 +17,16 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.SearchManager;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.R;
 import com.google.analytics.tracking.android.EasyTracker;
-
-import android.app.SearchManager;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
 
 /**
  * Handles search intents and displays a {@link SearchFragment} when needed or

@@ -17,18 +17,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.getglueapi.GetGlue;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
-import com.google.analytics.tracking.android.GoogleAnalytics;
-import com.uwetrottmann.androidutils.AndroidUtils;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
@@ -46,6 +34,18 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NavUtils;
 import android.view.KeyEvent;
 import android.widget.Toast;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.R;
+import com.battlelancer.seriesguide.getglueapi.GetGlue;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.util.List;
 
@@ -134,6 +134,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     public static final String KEY_SHAREWITHGETGLUE = "com.battlelancer.seriesguide.sharewithgetglue";
 
     public static final String KEY_THEME = "com.battlelancer.seriesguide.theme";
+
+    public static final String KEY_LASTBACKUP = "com.battlelancer.seriesguide.lastbackup";
 
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
 

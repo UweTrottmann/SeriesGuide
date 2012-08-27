@@ -17,17 +17,17 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.content.Context;
+import android.os.AsyncTask;
+import android.view.View;
+import android.widget.TextView;
+
 import com.battlelancer.seriesguide.R;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Ratings;
 import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
-
-import android.content.Context;
-import android.os.AsyncTask;
-import android.view.View;
-import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
