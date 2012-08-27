@@ -17,8 +17,6 @@
 
 package com.battlelancer.seriesguide;
 
-import com.battlelancer.seriesguide.R;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Checkable;

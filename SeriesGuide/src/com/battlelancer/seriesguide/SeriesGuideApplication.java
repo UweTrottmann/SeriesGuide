@@ -20,7 +20,6 @@ package com.battlelancer.seriesguide;
 import android.app.Application;
 import android.preference.PreferenceManager;
 
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
