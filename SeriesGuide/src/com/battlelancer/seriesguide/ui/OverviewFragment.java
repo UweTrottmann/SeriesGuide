@@ -358,9 +358,9 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             return;
         }
 
-        final TextView nextheader = (TextView) getView().findViewById(R.id.nextheader);
-        final TextView episodetitle = (TextView) getView().findViewById(R.id.TextViewEpisodeTitle);
-        final TextView numbers = (TextView) getView().findViewById(R.id.TextViewEpisodeNumbers);
+        final TextView episodeTitle = (TextView) getView().findViewById(R.id.episodeTitle);
+        final TextView episodeTime = (TextView) getView().findViewById(R.id.episodeTime);
+        final TextView episodeInfo = (TextView) getView().findViewById(R.id.episodeInfo);
         final View episodemeta = getView().findViewById(R.id.episodemeta);
 
         String episodestring = "";
@@ -378,25 +378,34 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             mEpisodeNumber = episode.getInt(EpisodeQuery.NUMBER);
             final String title = episode.getString(EpisodeQuery.TITLE);
 
-            // air date
-            mAirtime = episode.getLong(EpisodeQuery.FIRSTAIREDMS);
-            if (mAirtime != -1) {
-                final String[] dayAndTime = Utils.formatToTimeAndDay(mAirtime, context);
-                nextheader.setText(dayAndTime[2] + " (" + dayAndTime[1] + "):");
-            }
-
             // build share data
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
             episodestring = Utils.getNextEpisodeString(prefs, mSeasonNumber, mEpisodeNumber, title);
             mShareData.putInt(ShareItems.SEASON, mSeasonNumber);
             mShareData.putInt(ShareItems.EPISODE, mEpisodeNumber);
 
-            // title and numbers
-            episodetitle.setText(title);
-            episodetitle.setVisibility(View.VISIBLE);
-            numbers.setText(getString(R.string.season) + " " + mSeasonNumber + " "
-                    + getString(R.string.episode) + " " + mEpisodeNumber);
-            numbers.setVisibility(View.VISIBLE);
+            // title
+            episodeTitle.setText(title);
+            episodeTitle.setVisibility(View.VISIBLE);
+
+            // number
+            StringBuilder infoText = new StringBuilder();
+            infoText.append(getString(R.string.season)).append(" ").append(mSeasonNumber);
+            infoText.append(" ");
+            infoText.append(getString(R.string.episode)).append(" ")
+                    .append(mEpisodeNumber);
+            episodeInfo.setText(infoText);
+            episodeInfo.setVisibility(View.VISIBLE);
+
+            // air date
+            mAirtime = episode.getLong(EpisodeQuery.FIRSTAIREDMS);
+            if (mAirtime != -1) {
+                final String[] dayAndTime = Utils.formatToTimeAndDay(mAirtime, context);
+                episodeTime.setText(new StringBuilder().append(dayAndTime[2]).append(" (")
+                        .append(dayAndTime[1])
+                        .append(")"));
+                episodeTime.setVisibility(View.VISIBLE);
+            }
 
             // load all other info
             onLoadEpisodeDetails(episode, prefs);
@@ -406,9 +415,9 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         } else {
             // no next episode: display single line info text, remove other
             // views
-            nextheader.setText("  " + getString(R.string.no_nextepisode));
-            episodetitle.setVisibility(View.GONE);
-            numbers.setVisibility(View.GONE);
+            episodeTitle.setText(R.string.no_nextepisode);
+            episodeTime.setVisibility(View.GONE);
+            episodeInfo.setVisibility(View.GONE);
             episodemeta.setVisibility(View.GONE);
 
             mAirtime = -1;

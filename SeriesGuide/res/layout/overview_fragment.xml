@@ -47,21 +47,28 @@
                     android:ellipsize="marquee" />
 
                 <TextView
-                    android:id="@+id/showmeta"
-                    style="@style/Subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_below="@id/seriesname"
-                    android:layout_toLeftOf="@+id/showStatus" />
-
-                <TextView
                     android:id="@+id/showStatus"
                     style="@style/Subtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentLeft="true"
                     android:layout_below="@id/seriesname" />
+
+                <TextView
+                    android:id="@+id/showMetaDivider"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/seriesname"
+                    android:layout_toRightOf="@+id/showStatus"
+                    android:text="@string/slashDivider" />
+
+                <TextView
+                    android:id="@+id/showmeta"
+                    style="@style/Subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/seriesname"
+                    android:layout_toRightOf="@+id/showMetaDivider" />
             </RelativeLayout>
 
             <include layout="@layout/divider_horizontal" />
@@ -73,36 +80,37 @@
                 android:layout_height="wrap_content" >
 
                 <TextView
-                    android:id="@+id/nextheader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/inline_padding"
-                    android:layout_marginLeft="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding"
-                    android:layout_marginTop="@dimen/default_padding" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/TextViewEpisodeTitle"
+                    android:id="@+id/episodeTitle"
                     style="@style/ListHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/nextheader"
+                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_marginTop="@dimen/default_padding" />
+
+                <TextView
+                    android:id="@+id/episodeTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/episodeTitle"
                     android:layout_marginLeft="@dimen/default_padding"
                     android:layout_marginRight="@dimen/default_padding" />
 
                 <TextView
-                    android:id="@+id/TextViewEpisodeNumbers"
-                    style="@style/Subtitle"
+                    android:id="@+id/episodeInfo"
+                    style="@style/ListTextSmall.Dim"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/TextViewEpisodeTitle" />
+                    android:layout_below="@+id/episodeTime"
+                    android:layout_marginBottom="@dimen/default_padding"
+                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding" />
 
                 <LinearLayout
                     android:id="@+id/episodemeta"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/TextViewEpisodeNumbers"
+                    android:layout_below="@+id/episodeInfo"
                     android:orientation="vertical" >
 
                     <include
