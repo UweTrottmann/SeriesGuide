@@ -41,8 +41,8 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorPrimaryInverse">@color/abs__primary_text_holo_light</item>
-        <item name="android:windowMinWidthMajor">65%</item>
-        <item name="android:windowMinWidthMinor">95%</item>
+        <item name="android:windowMinWidthMajor">45%</item>
+        <item name="android:windowMinWidthMinor">75%</item>
     </style>
 
     <style name="SeriesGuideTheme.Dialog.CheckIn">
