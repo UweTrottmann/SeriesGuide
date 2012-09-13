@@ -121,7 +121,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
 
         CharSequence tickerText = mAppContext.getString(R.string.update_notification);
         long when = System.currentTimeMillis();
-        final int icon = R.drawable.ic_notification;
+        final int icon = R.drawable.stat_sys_download;
 
         mNotification = new Notification(icon, tickerText, when);
         mNotification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR
