@@ -413,7 +413,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
             if (airtime != -1) {
                 String[] timeAndDay = Utils.formatToTimeAndDay(airtime, mContext);
                 viewHolder.airdate.setText(timeAndDay[2]);
-                network = timeAndDay[1] + " " + timeAndDay[0] + " ";
+                network = timeAndDay[1] + " " + timeAndDay[0];
             } else {
                 viewHolder.airdate.setText("");
             }
@@ -421,7 +421,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
             // add network
             final String value = mCursor.getString(UpcomingQuery.SHOW_NETWORK);
             if (value.length() != 0) {
-                network += getString(R.string.show_network) + " " + value;
+                network += " / " + value;
             }
             viewHolder.network.setText(network);
 
