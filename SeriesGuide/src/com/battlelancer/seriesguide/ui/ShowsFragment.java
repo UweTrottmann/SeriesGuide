@@ -503,7 +503,7 @@ public class ShowsFragment extends SherlockFragment implements
                     mCursor.getLong(ShowsQuery.AIRSTIME),
                     mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), mContext);
             if (getResources().getBoolean(R.bool.isLargeTablet)) {
-                viewHolder.airsTime.setText("|  " + values[1] + " " + values[0]);
+                viewHolder.airsTime.setText("/  " + values[1] + " " + values[0]);
             } else {
                 viewHolder.airsTime.setText(values[1] + " " + values[0]);
             }
