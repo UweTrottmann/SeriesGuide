@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/default_padding"
             android:text="@string/imdb"
-            android:textSize="@dimen/text_size_medium" >
+            android:textSize="@dimen/text_size_xmedium" >
         </TextView>
     </LinearLayout>
 
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/default_padding"
             android:text="@string/tvdb"
-            android:textSize="@dimen/text_size_medium" >
+            android:textSize="@dimen/text_size_xmedium" >
         </TextView>
     </LinearLayout>
 
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/default_padding"
             android:text="@string/shouts"
-            android:textSize="@dimen/text_size_medium" >
+            android:textSize="@dimen/text_size_xmedium" >
         </TextView>
     </LinearLayout>
 
