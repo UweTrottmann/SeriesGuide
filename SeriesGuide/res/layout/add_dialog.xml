@@ -17,13 +17,13 @@
 
             <TextView
                 android:id="@+id/title"
-                style="@style/ListTextBig"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/poster"
-                android:text="@string/add_show" />
+                android:text="@string/add_show"
+                android:textAppearance="@style/TextAppearance.XLarge.Light" />
 
             <TextView
                 android:id="@+id/description"
