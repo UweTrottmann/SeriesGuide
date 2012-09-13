@@ -2,28 +2,18 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <TextView
-        android:id="@+id/TextViewShowInfoAirtime"
+        android:id="@+id/showStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/default_padding"
-        android:layout_marginRight="@dimen/default_padding"
-        android:text="airs Tue 9:00 PM" />
+        android:layout_marginRight="@dimen/default_padding" />
 
     <TextView
-        android:id="@+id/TextViewShowInfoNetwork"
+        android:id="@+id/showInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_padding"
         android:layout_marginLeft="@dimen/default_padding"
-        android:layout_marginRight="@dimen/default_padding"
-        android:text="on Very Long Network Name (VLNM)" >
-    </TextView>
-
-    <TextView
-        android:id="@+id/TextViewShowInfoStatus"
-        style="@style/Subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Continuing" >
-    </TextView>
+        android:layout_marginRight="@dimen/default_padding" />
 
 </merge>
