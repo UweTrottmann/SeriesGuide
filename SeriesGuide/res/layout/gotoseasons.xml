@@ -16,7 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/default_padding"
             android:text="@string/episodes"
-            android:textAppearance="@style/TextAppearance.Small" >
+            android:textAppearance="@style/TextAppearance.Small"
+            android:textColor="@color/text_primary" >
         </TextView>
 
         <TextView
