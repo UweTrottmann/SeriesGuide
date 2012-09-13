@@ -47,12 +47,12 @@
 
     <TextView
         android:id="@+id/TextViewShowListNextEpisode"
-        style="@style/ListTextNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/TextViewShowListAirtime"
         android:layout_toRightOf="@id/showposter"
-        android:text="@string/no_nextepisode" />
+        android:text="@string/no_nextepisode"
+        android:textAppearance="@style/TextAppearance.Medium.Light" />
 
     <TextView
         android:id="@+id/episodetime"
