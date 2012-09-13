@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Text styles -->
+    <style name="TextAppearance">
+        <item name="android:textSize">@dimen/text_size_xmedium</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="TextAppearance.Large">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
+    <style name="TextAppearance.Large.Light">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="TextAppearance.XLarge">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">@dimen/text_size_xlarge</item>
+    </style>
+
+    <style name="TextAppearance.XLarge.Light">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
     <style name="Widget"></style>
 
     <style name="Widget.SeriesGuide" parent="Widget"></style>
