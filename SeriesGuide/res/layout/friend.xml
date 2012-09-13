@@ -40,12 +40,12 @@
 
     <TextView
         android:id="@+id/show"
-        style="@style/ListHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/userstrip"
         android:layout_toRightOf="@+id/avatar"
-        android:text="Placeholder" />
+        android:text="Placeholder"
+        android:textAppearance="@style/TextAppearance.Medium.Light" />
 
     <TextView
         android:id="@+id/episode"
