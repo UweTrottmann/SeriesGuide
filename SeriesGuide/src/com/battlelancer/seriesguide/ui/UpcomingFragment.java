@@ -407,21 +407,20 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
             final String number = Utils.getEpisodeNumber(mPrefs, seasonNumber, episodeNumber);
             viewHolder.number.setText(number);
 
+            // add network
+            String network = "";
+            final String value = mCursor.getString(UpcomingQuery.SHOW_NETWORK);
+            if (value.length() != 0) {
+                network = value + " / ";
+            }
             // airdate and time
             final long airtime = mCursor.getLong(UpcomingQuery.FIRSTAIREDMS);
-            String network = "";
             if (airtime != -1) {
                 String[] timeAndDay = Utils.formatToTimeAndDay(airtime, mContext);
                 viewHolder.airdate.setText(timeAndDay[2]);
-                network = timeAndDay[1] + " " + timeAndDay[0];
+                network += timeAndDay[1] + " " + timeAndDay[0];
             } else {
                 viewHolder.airdate.setText("");
-            }
-
-            // add network
-            final String value = mCursor.getString(UpcomingQuery.SHOW_NETWORK);
-            if (value.length() != 0) {
-                network += " / " + value;
             }
             viewHolder.network.setText(network);
 
