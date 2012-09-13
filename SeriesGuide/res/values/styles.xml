@@ -3,8 +3,17 @@
 
     <!-- Text styles -->
     <style name="TextAppearance">
+        <item name="android:textColor">@color/text_default</item>
         <item name="android:textSize">@dimen/text_size_xmedium</item>
         <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="TextAppearance.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="TextAppearance.Small.Dim">
+        <item name="android:textColor">@color/text_dim</item>
     </style>
 
     <style name="TextAppearance.Medium">

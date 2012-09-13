@@ -50,27 +50,22 @@
 
                 <TextView
                     android:id="@+id/showStatus"
-                    style="@style/Subtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:layout_below="@id/seriesname" />
-
-                <TextView
-                    android:id="@+id/showMetaDivider"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_below="@id/seriesname"
-                    android:layout_toRightOf="@+id/showStatus"
-                    android:text="@string/slashDivider" />
+                    android:layout_marginBottom="@dimen/default_padding"
+                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding" />
 
                 <TextView
                     android:id="@+id/showmeta"
-                    style="@style/Subtitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/seriesname"
-                    android:layout_toRightOf="@+id/showMetaDivider" />
+                    android:layout_marginBottom="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_toRightOf="@+id/showStatus" />
             </RelativeLayout>
 
             <include layout="@layout/divider_horizontal" />
@@ -103,10 +98,10 @@
                     style="@style/ListTextSmall.Dim"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/episodeTime"
+                    android:layout_below="@+id/episodeTitle"
                     android:layout_marginBottom="@dimen/default_padding"
-                    android:layout_marginLeft="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding" />
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_toRightOf="@+id/episodeTime" />
 
                 <LinearLayout
                     android:id="@+id/episodemeta"

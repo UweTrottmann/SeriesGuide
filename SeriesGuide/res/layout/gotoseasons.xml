@@ -15,19 +15,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/default_padding"
-            android:text="@string/seasons"
-            android:textSize="@dimen/text_size_small" >
+            android:text="@string/episodes"
+            android:textAppearance="@style/TextAppearance.Small" >
         </TextView>
 
         <TextView
             android:id="@+id/textViewRemaining"
-            style="@style/LabelBase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
-            android:paddingTop="2dp"
-            android:text="" >
+            android:layout_toRightOf="@+id/gotoseasonsText"
+            android:text=""
+            android:textAppearance="@style/TextAppearance.Small.Dim" >
         </TextView>
     </RelativeLayout>
 
