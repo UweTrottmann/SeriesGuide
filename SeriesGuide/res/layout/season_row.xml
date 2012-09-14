@@ -7,12 +7,12 @@
 
     <TextView
         android:id="@+id/TextViewSeasonListTitle"
-        style="@style/ListHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/seasonProgressText"
-        android:text="@string/season" />
+        android:text="@string/season"
+        android:textAppearance="@style/TextAppearance.Medium.Light" />
 
     <TextView
         android:id="@+id/seasonProgressText"
