@@ -26,24 +26,24 @@
 
     <TextView
         android:id="@+id/TextViewShowListNetwork"
-        style="@style/ListTextSmall.Dim"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/seriesname"
         android:layout_toRightOf="@id/showposter"
         android:paddingBottom="@dimen/default_padding"
-        android:text="Very Long Network Name (VLNM)" />
+        android:text="Very Long Network Name (VLNM)"
+        android:textAppearance="@style/TextAppearance.Small.Dim" />
 
     <TextView
         android:id="@+id/TextViewShowListAirtime"
-        style="@style/ListTextSmall.Dim"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/seriesname"
         android:layout_toRightOf="@id/TextViewShowListNetwork"
         android:paddingBottom="@dimen/default_padding"
         android:paddingLeft="@dimen/inline_padding"
-        android:text="|  Mon 17:00 PM" />
+        android:text="|  Mon 17:00 PM"
+        android:textAppearance="@style/TextAppearance.Small.Dim" />
 
     <TextView
         android:id="@+id/TextViewShowListNextEpisode"
@@ -52,17 +52,18 @@
         android:layout_below="@id/TextViewShowListAirtime"
         android:layout_toRightOf="@id/showposter"
         android:text="@string/no_nextepisode"
-        android:textAppearance="@style/TextAppearance.Medium.Light" />
+        android:textAppearance="@style/TextAppearance.Medium"
+        android:textColor="@color/text_default" />
 
     <TextView
         android:id="@+id/episodetime"
-        style="@style/ListTextSmall.Dim"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/TextViewShowListNextEpisode"
         android:layout_toRightOf="@id/showposter"
         android:paddingBottom="@dimen/item_padding"
-        android:text="@string/show_noairtime" />
+        android:text="@string/show_noairtime"
+        android:textAppearance="@style/TextAppearance.Small" />
 
     <LinearLayout
         android:id="@+id/timestamp"
