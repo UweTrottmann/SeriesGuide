@@ -8,6 +8,14 @@
         <item name="android:textStyle">normal</item>
     </style>
 
+    <style name="TextAppearance.XSmall">
+        <item name="android:textSize">@dimen/text_size_xsmall</item>
+    </style>
+
+    <style name="TextAppearance.XSmall.Dim">
+        <item name="android:textColor">@color/text_dim</item>
+    </style>
+
     <style name="TextAppearance.Small">
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>

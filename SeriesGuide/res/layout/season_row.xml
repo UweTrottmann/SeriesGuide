@@ -28,8 +28,8 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/seasonProgressBar"
         android:layout_marginLeft="@dimen/default_padding"
-        android:text="n/a"
-        android:textSize="@dimen/text_size_xsmall" >
+        android:text="@string/norating"
+        android:textAppearance="@style/TextAppearance.XSmall" >
     </TextView>
 
     <TextView
@@ -40,7 +40,6 @@
         android:layout_toLeftOf="@+id/seasonProgressText"
         android:text="@string/episode_notwatched"
         android:textAllCaps="true"
-        android:textSize="@dimen/text_size_xsmall"
-        android:textStyle="bold" />
+        android:textAppearance="@style/TextAppearance.XSmall" />
 
 </RelativeLayout>
