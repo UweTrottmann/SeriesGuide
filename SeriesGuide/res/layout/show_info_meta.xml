@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/default_padding"
+    android:orientation="horizontal" >
 
     <TextView
         android:id="@+id/showStatus"
@@ -12,8 +16,6 @@
         android:id="@+id/showInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_padding"
-        android:layout_marginLeft="@dimen/default_padding"
         android:layout_marginRight="@dimen/default_padding" />
 
-</merge>
+</LinearLayout>
