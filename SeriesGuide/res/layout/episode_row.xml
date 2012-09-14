@@ -5,8 +5,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingRight="@dimen/default_padding" >
+        android:layout_height="wrap_content" >
 
         <com.battlelancer.seriesguide.WatchedBox
             android:id="@+id/CustomCheckBoxWatched"
@@ -18,32 +17,36 @@
             android:padding="16dp" />
 
         <TextView
-            android:id="@+id/TextViewEpisodeListTitle"
-            style="@style/ListHeader"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_toLeftOf="@+id/number"
             android:layout_toRightOf="@id/CustomCheckBoxWatched"
-            android:paddingTop="@dimen/default_padding"
-            android:text="Really long Episode Title, You Know!?" />
+            android:text="@string/app_name"
+            android:textAppearance="@style/TextAppearance.Medium" />
 
         <TextView
-            android:id="@+id/TextViewEpisodeListNumber"
+            android:id="@+id/number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/TextViewEpisodeListTitle"
-            android:layout_toRightOf="@id/CustomCheckBoxWatched"
-            android:paddingBottom="@dimen/default_padding"
-            android:text="Episode X" />
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/default_padding"
+            android:layout_marginRight="@dimen/default_padding"
+            android:layout_marginTop="@dimen/default_padding"
+            android:text="@string/norating"
+            android:textAppearance="@style/TextAppearance.Medium.Light"
+            android:textColor="@color/text_default" />
 
         <TextView
-            android:id="@+id/TextViewEpisodeListAirdate"
+            android:id="@+id/airdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/TextViewEpisodeListTitle"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/TextViewEpisodeListNumber"
+            android:layout_below="@+id/title"
+            android:layout_toRightOf="@id/CustomCheckBoxWatched"
             android:paddingBottom="@dimen/default_padding"
-            android:text="Airdate: XXXX-XX-XX" />
+            android:text="@string/show_noairtime"
+            android:textAppearance="@style/TextAppearance.Small" />
     </RelativeLayout>
 
 </com.battlelancer.seriesguide.CheckableFrameLayout>
