@@ -46,7 +46,8 @@
                     android:layout_marginLeft="@dimen/default_padding"
                     android:layout_marginRight="@dimen/default_padding"
                     android:ellipsize="marquee"
-                    android:textAppearance="@style/TextAppearance.Large.Light" />
+                    android:textAppearance="@style/TextAppearance.Medium.Light"
+                    android:textColor="@color/text_default" />
 
                 <TextView
                     android:id="@+id/showStatus"

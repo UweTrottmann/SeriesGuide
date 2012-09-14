@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/gotoseasons"
         android:layout_width="fill_parent"
         android:layout_height="45dp"
@@ -16,7 +16,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/default_padding"
             android:text="@string/episodes"
-            android:textAppearance="@style/TextAppearance.Small.Primary" >
+            android:textAllCaps="true"
+            android:textAppearance="@style/TextAppearance.Small"
+            android:textColor="@color/text_primary" >
         </TextView>
 
         <TextView
@@ -27,9 +29,10 @@
             android:layout_marginRight="@dimen/default_padding"
             android:layout_toRightOf="@+id/gotoseasonsText"
             android:text=""
+            android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.Small" >
         </TextView>
-    </RelativeLayout>
+    </LinearLayout>
 
     <include layout="@layout/divider_horizontal" />
 
