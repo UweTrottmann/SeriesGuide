@@ -17,14 +17,14 @@
         android:focusable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding" >
+        android:paddingLeft="@dimen/large_padding"
+        android:paddingRight="@dimen/large_padding" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/default_padding"
             android:text="@string/imdb"
+            android:textAllCaps="true"
             android:textSize="@dimen/text_size_xmedium" >
         </TextView>
     </LinearLayout>
@@ -41,14 +41,14 @@
         android:focusable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding" >
+        android:paddingLeft="@dimen/large_padding"
+        android:paddingRight="@dimen/large_padding" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/default_padding"
             android:text="@string/tvdb"
+            android:textAllCaps="true"
             android:textSize="@dimen/text_size_xmedium" >
         </TextView>
     </LinearLayout>
@@ -65,14 +65,14 @@
         android:focusable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding" >
+        android:paddingLeft="@dimen/large_padding"
+        android:paddingRight="@dimen/large_padding" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/default_padding"
             android:text="@string/shouts"
+            android:textAllCaps="true"
             android:textSize="@dimen/text_size_xmedium" >
         </TextView>
     </LinearLayout>
