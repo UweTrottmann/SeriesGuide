@@ -16,8 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/default_padding"
             android:text="@string/episodes"
-            android:textAppearance="@style/TextAppearance.Small"
-            android:textColor="@color/text_primary" >
+            android:textAppearance="@style/TextAppearance.Small.Primary" >
         </TextView>
 
         <TextView
@@ -28,7 +27,7 @@
             android:layout_marginRight="@dimen/default_padding"
             android:layout_toRightOf="@+id/gotoseasonsText"
             android:text=""
-            android:textAppearance="@style/TextAppearance.Small.Dim" >
+            android:textAppearance="@style/TextAppearance.Small" >
         </TextView>
     </RelativeLayout>
 

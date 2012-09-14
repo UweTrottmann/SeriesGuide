@@ -91,17 +91,18 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/episodeTitle"
                     android:layout_marginLeft="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding" />
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:textAppearance="@style/TextAppearance.Small.Primary" />
 
                 <TextView
                     android:id="@+id/episodeInfo"
-                    style="@style/ListTextSmall.Dim"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/episodeTitle"
                     android:layout_marginBottom="@dimen/default_padding"
                     android:layout_marginRight="@dimen/default_padding"
-                    android:layout_toRightOf="@+id/episodeTime" />
+                    android:layout_toRightOf="@+id/episodeTime"
+                    android:textAppearance="@style/TextAppearance.Small" />
 
                 <LinearLayout
                     android:id="@+id/episodemeta"
