@@ -10,7 +10,21 @@
         style="@style/ListHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/seasonProgressText"
         android:text="@string/season" />
+
+    <TextView
+        android:id="@+id/seasonProgressText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginRight="@dimen/default_padding"
+        android:text="@string/norating"
+        android:textAppearance="@style/TextAppearance.Medium.Light"
+        android:textColor="@color/text_default" >
+    </TextView>
 
     <ProgressBar
         android:id="@+id/seasonProgressBar"
@@ -22,22 +36,10 @@
     </ProgressBar>
 
     <TextView
-        android:id="@+id/seasonProgressText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/seasonProgressBar"
-        android:layout_marginLeft="@dimen/default_padding"
-        android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.XSmall" >
-    </TextView>
-
-    <TextView
         android:id="@+id/TextViewSeasonListWatchCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/seasonProgressBar"
-        android:layout_toLeftOf="@+id/seasonProgressText"
         android:text="@string/episode_notwatched"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.XSmall" />
