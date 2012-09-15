@@ -34,6 +34,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
@@ -188,7 +189,10 @@ public class ImageProvider {
         if (TextUtils.isEmpty(imagePath)) {
             // There is no poster for this show, display a generic one
             imageView.setImageResource(R.drawable.show_generic);
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
             return;
+        } else {
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
 
         // Cancel any pending thumbnail task, since this view is now bound
@@ -397,8 +401,10 @@ public class ImageProvider {
         protected void onPostExecute(Bitmap result) {
             if (mImageView.getTag() == this) {
                 if (result != null) {
+                    mImageView.setScaleType(ScaleType.CENTER_CROP);
                     mImageView.setImageBitmap(result);
                 } else {
+                    mImageView.setScaleType(ScaleType.FIT_CENTER);
                     mImageView.setImageResource(R.drawable.show_generic);
                 }
                 mImageView.setTag(null);

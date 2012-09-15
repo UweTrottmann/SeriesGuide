@@ -3,6 +3,6 @@
 
     <item android:drawable="@drawable/list_pressed_sg"/>
 
-    <item android:drawable="@drawable/list_longpressed_holo"/>
+    <item android:drawable="@drawable/list_longpressed_sg"/>
 
 </transition>

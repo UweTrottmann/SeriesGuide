@@ -7,7 +7,6 @@
 
     <Button
         android:id="@+id/checkinButton"
-        style="@style/HoloCompatButton"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:nextFocusLeft="@+id/calendarButton"
@@ -15,29 +14,33 @@
 
     <ImageButton
         android:id="@+id/watchedButton"
+        style="@style/Widget.SeriesGuide.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="?custom_list_selector"
         android:contentDescription="@string/togglewatched"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:src="@drawable/ic_action_watched" />
 
+    <include layout="@layout/divider_vertical" />
+
     <ImageButton
         android:id="@+id/collectedButton"
+        style="@style/Widget.SeriesGuide.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="?custom_list_selector"
         android:contentDescription="@string/collect"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:src="@drawable/ic_action_collect" />
 
+    <include layout="@layout/divider_vertical" />
+
     <ImageButton
         android:id="@+id/calendarButton"
+        style="@style/Widget.SeriesGuide.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="?custom_list_selector"
         android:contentDescription="@string/addtocalendar"
         android:nextFocusRight="@+id/checkinButton"
         android:paddingLeft="@dimen/default_padding"

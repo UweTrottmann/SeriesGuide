@@ -3,7 +3,9 @@
 
     <!-- Generic -->
     <string name="episode">Episode</string>
+    <string name="episodes">All episodes</string>
     <string name="season">Season</string>
+    <string name="seasons">Seasons</string>
     <string name="unknown">unknown</string>
     <string name="episode_iswatched">Watched already</string>
     <string name="episode_notwatched">Not watched yet</string>
@@ -21,6 +23,8 @@
     <string name="done">Done</string>
     <string name="clear">Clear</string>
     <string name="more">%s more</string>
+    <string name="cancel">Cancel</string>
+    <string name="share">Share</string>
 
     <plurals name="votes">
         <item quantity="one">%d vote</item>
@@ -236,7 +240,6 @@
         <item>Latest first (DVD)</item>
         <item>Oldest first (DVD)</item>
     </string-array>
-
     <string-array name="upcominglimit">
         <item>now</item>
         <item>a day</item>
@@ -269,11 +272,6 @@
     <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
     <string name="import_yes">Restore</string>
     <string name="import_no">Don\'t Restore</string>
-
-    <!-- Misc -->
-    <string name="seasons">Seasons</string>
-    <string name="cancel">Cancel</string>
-    <string name="share">Share</string>
 
     <!-- Check Ins -->
     <string name="checkin">Check in</string>
@@ -346,7 +344,7 @@
         <item>SeriesGuide Theme</item>
         <item>ICS Base Theme</item>
     </string-array>
-    
+
     <!-- Widgets -->
     <string name="choose_list">Choose activity list</string>
     <string name="hide_watched">Hide watched episodes</string>
@@ -368,6 +366,7 @@
     <string name="trakt">trakt.tv</string>
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
+    <string name="slashDivider">/</string>
     <string name="gobreak">Go break things</string>
     <string name="betamessage"><b>A new cycle</b>\n\n2.8 is out, let the next iteration begin. Thank you all for testing, translating and submitting bug reports!\n\n- Link to episode IMDb pages, share them as well. Fall back to show\'s IMDb page.\n\n- Flagging a whole season, show, etc. is submitted to trakt.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed changelog</a>\n\n</string>
 
@@ -510,5 +509,5 @@
         <item>0</item>
         <item>1</item>
     </string-array>
-    
+
 </resources>

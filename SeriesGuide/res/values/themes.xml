@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- SeriesGuides default theme -->
+    <style name="SeriesGuideTheme" parent="Theme.Sherlock.ForceOverflow">
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
+        <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
+        <item name="android:editTextBackground">@drawable/edit_text_sg</item>
+        <item name="custom_list_selector">@drawable/list_selector_sg</item>
+
+        <!-- ABS -->
+        <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator</item>
+        <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator</item>
+        <item name="actionBarStyle">@style/ActionBar</item>
+        <item name="android:actionBarStyle">@style/ActionBar</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
+        <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
+        <item name="actionDropDownStyle">@style/DropDownNav</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav</item>
+    </style>
+
+    <style name="SeriesGuideTheme.Dialog" parent="SeriesGuideTheme">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowTitleStyle">@style/DialogWindowTitle.SeriesGuide</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorPrimaryInverse">@color/abs__primary_text_holo_light</item>
+        <item name="android:windowMinWidthMajor">45%</item>
+        <item name="android:windowMinWidthMinor">75%</item>
+    </style>
+
+    <style name="SeriesGuideTheme.Dialog.CheckIn">
+        <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
+    </style>
+
+    <!-- An ICS base theme using default styles from ABS -->
+    <style name="ICSBaseTheme" parent="Theme.Sherlock.ForceOverflow">
+        <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.ICS</item>
+        <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
+        <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
+    </style>
+
+</resources>

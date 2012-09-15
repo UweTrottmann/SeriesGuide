@@ -31,7 +31,7 @@
             android:paddingBottom="@dimen/inline_padding"
             android:paddingRight="@dimen/default_padding"
             android:text="@string/app_name"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="@style/TextAppearance.Medium.Light" />
 
         <TextView
             android:id="@+id/description"

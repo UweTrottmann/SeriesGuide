@@ -31,7 +31,7 @@
 
     <LinearLayout
         android:id="@+id/upcomingmeta"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/poster" >
@@ -39,29 +39,33 @@
         <TextView
             android:id="@+id/textViewUpcomingAirdate"
             style="@style/Airdata"
-            android:layout_width="0px"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:paddingRight="@dimen/default_padding"
             android:text="in X days" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/textViewUpcomingNetwork"
             style="@style/Airdata"
-            android:layout_width="0px"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="right"
             android:text="10:00 PM on Very Long Network Name (VLNN)" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/textViewUpcomingShow"
-        style="@style/ListHeader"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/upcomingmeta"
         android:layout_toRightOf="@+id/poster"
-        android:text="Placeholder" />
+        android:text="Placeholder"
+        android:textAppearance="@style/TextAppearance.Medium.Light" />
 
     <TextView
         android:id="@+id/textViewUpcomingNumber"

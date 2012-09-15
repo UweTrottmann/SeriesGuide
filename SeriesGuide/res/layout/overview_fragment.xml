@@ -41,30 +41,34 @@
 
                 <TextView
                     android:id="@+id/seriesname"
-                    style="@style/Header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="marquee" />
+                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:ellipsize="marquee"
+                    android:textAppearance="@style/TextAppearance.Medium.Light" />
 
                 <TextView
-                    android:id="@+id/showmeta"
-                    style="@style/Subtitle"
+                    android:id="@+id/showStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@id/seriesname"
-                    android:layout_toLeftOf="@+id/showStatus" />
+                    android:layout_marginBottom="@dimen/default_padding"
+                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding" />
 
                 <TextView
-                    android:id="@+id/showStatus"
-                    style="@style/Subtitle"
+                    android:id="@+id/showmeta"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@id/seriesname" />
+                    android:layout_below="@id/seriesname"
+                    android:layout_marginBottom="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_toRightOf="@+id/showStatus" />
             </RelativeLayout>
 
-            <include layout="@layout/holodivider" />
+            <include layout="@layout/divider_horizontal" />
 
             <include layout="@layout/gotoseasons" />
 
@@ -73,36 +77,38 @@
                 android:layout_height="wrap_content" >
 
                 <TextView
-                    android:id="@+id/nextheader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/inline_padding"
-                    android:layout_marginLeft="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding"
-                    android:layout_marginTop="@dimen/default_padding" >
-                </TextView>
-
-                <TextView
-                    android:id="@+id/TextViewEpisodeTitle"
-                    style="@style/ListHeader"
+                    android:id="@+id/episodeTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/nextheader"
                     android:layout_marginLeft="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding" />
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_marginTop="@dimen/default_padding"
+                    android:textAppearance="@style/TextAppearance.XLarge.Light" />
 
                 <TextView
-                    android:id="@+id/TextViewEpisodeNumbers"
-                    style="@style/Subtitle"
+                    android:id="@+id/episodeTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/TextViewEpisodeTitle" />
+                    android:layout_below="@+id/episodeTitle"
+                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:textAppearance="@style/TextAppearance.Small.Primary" />
+
+                <TextView
+                    android:id="@+id/episodeInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/episodeTitle"
+                    android:layout_marginBottom="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:layout_toRightOf="@+id/episodeTime"
+                    android:textAppearance="@style/TextAppearance.Small" />
 
                 <LinearLayout
                     android:id="@+id/episodemeta"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/TextViewEpisodeNumbers"
+                    android:layout_below="@+id/episodeInfo"
                     android:orientation="vertical" >
 
                     <include

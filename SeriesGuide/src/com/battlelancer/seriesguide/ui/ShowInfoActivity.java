@@ -132,9 +132,8 @@ public class ShowInfoActivity extends BaseActivity {
     private void fillData() {
         TextView seriesname = (TextView) findViewById(R.id.title);
         TextView overview = (TextView) findViewById(R.id.TextViewShowInfoOverview);
-        TextView airstime = (TextView) findViewById(R.id.TextViewShowInfoAirtime);
-        TextView network = (TextView) findViewById(R.id.TextViewShowInfoNetwork);
-        TextView status = (TextView) findViewById(R.id.TextViewShowInfoStatus);
+        TextView info = (TextView) findViewById(R.id.showInfo);
+        TextView status = (TextView) findViewById(R.id.showStatus);
 
         final Series show = DBUtils.getShow(this, String.valueOf(getShowId()));
         if (show == null) {
@@ -152,21 +151,21 @@ public class ShowInfoActivity extends BaseActivity {
             overview.setText(show.getOverview());
         }
 
-        // Airtimes
+        // air time
+        StringBuilder infoText = new StringBuilder();
         if (show.getAirsDayOfWeek().length() == 0 || show.getAirsTime() == -1) {
-            airstime.setText(getString(R.string.show_noairtime));
+            infoText.append(getString(R.string.show_noairtime));
         } else {
             String[] values = Utils.parseMillisecondsToTime(show.getAirsTime(),
                     show.getAirsDayOfWeek(), getApplicationContext());
-            airstime.setText(getString(R.string.show_airs) + " " + values[1] + " " + values[0]);
+            infoText.append(values[1]).append(" ").append(values[0]);
         }
-
-        // Network
-        if (show.getNetwork().length() == 0) {
-            network.setText("");
-        } else {
-            network.setText(getString(R.string.show_network) + " " + show.getNetwork());
+        // network
+        if (show.getNetwork().length() != 0) {
+            infoText.append(" ").append(getString(R.string.show_network)).append(" ")
+                    .append(show.getNetwork());
         }
+        info.setText(infoText);
 
         // Running state
         if (show.getStatus() == 1) {

@@ -27,10 +27,12 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/Header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/app_name" />
+        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginRight="@dimen/default_padding"
+        android:text="@string/app_name"
+        android:textAppearance="@style/TextAppearance.XLarge.Light" />
 
     <TextView
         android:id="@+id/airTime"
@@ -44,15 +46,9 @@
         android:layout_height="wrap_content"
         layout="@layout/imagecontainer" />
 
-    <include layout="@layout/episode_meta" >
-    </include>
+    <include layout="@layout/episode_meta" />
 
-    <include
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/holodivider" >
-    </include>
+    <include layout="@layout/divider_horizontal" />
 
     <include
         android:id="@+id/buttonbar_ref"

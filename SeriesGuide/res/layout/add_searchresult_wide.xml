@@ -33,13 +33,12 @@
 
             <TextView
                 android:id="@+id/title"
-                style="@style/ListTextBig"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingBottom="@dimen/inline_padding"
                 android:paddingRight="@dimen/default_padding"
                 android:text="@string/app_name"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="@style/TextAppearance.XLarge.Light" />
 
             <TextView
                 android:id="@+id/description"
@@ -65,11 +64,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?custom_list_selector"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:padding="@dimen/inline_padding" >
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:contentDescription="@string/add_show"
                 android:padding="@dimen/inline_padding"
                 android:src="@drawable/ic_action_add" />
