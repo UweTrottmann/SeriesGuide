@@ -8,6 +8,7 @@
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
         <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
         <item name="android:editTextBackground">@drawable/edit_text_sg</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_sg</item>
         <item name="custom_list_selector">@drawable/list_selector_sg</item>
 
         <!-- ABS -->
