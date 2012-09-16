@@ -29,7 +29,7 @@
     </style>
 
     <style name="TextAppearance.Medium">
-        <item name="android:textColor">#ffffff</item>
+        <item name="android:textColor">@color/primary_text_sg</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
 
@@ -65,8 +65,7 @@
         <item name="android:clickable">true</item>
         <item name="android:gravity">center_vertical|center_horizontal</item>
         <item name="android:background">@drawable/btn_default_sg</item>
-        <item name="android:textAppearance">@android:style/TextAppearance.Medium</item>
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textAppearance">@style/TextAppearance.Medium</item>
         <item name="android:minHeight">48dip</item>
         <item name="android:minWidth">64dip</item>
     </style>

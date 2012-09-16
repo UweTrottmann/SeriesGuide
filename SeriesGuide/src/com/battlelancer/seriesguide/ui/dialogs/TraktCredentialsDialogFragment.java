@@ -78,6 +78,14 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // hide title, use custom theme
+        setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getDialog().setTitle(R.string.pref_trakt);
         final Context context = getActivity().getApplicationContext();
@@ -128,7 +136,7 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
             EditText passwordField = (EditText) layout.findViewById(R.id.password);
             passwordField.setEnabled(false);
             passwordField.setText("********"); // fake password
-            
+
             newAccCheckBox.setEnabled(false);
         }
 
