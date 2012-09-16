@@ -45,6 +45,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
 import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
@@ -140,7 +141,7 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         mIndicator = (TabPageIndicator) findViewById(R.id.indicator);
         mIndicator.setViewPager(mPager);
         onDisplayTitleIndicator(navSelection);
-        
+
         // FIXME force the options menu to be shown
         invalidateOptionsMenu();
 
@@ -609,52 +610,67 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         }
     }
 
+    /**
+     * Returns {@link ListsFragment}s for every list in the database, makes sure
+     * there is always at least one.
+     */
     public static class ListsPagerAdapter extends MultiPagerAdapter {
 
         private Context mContext;
 
+        private Cursor mLists;
+
         public ListsPagerAdapter(FragmentManager fm, Context context) {
             super(fm);
             mContext = context;
+
+            mLists = mContext.getContentResolver().query(Lists.CONTENT_URI, new String[] {
+                    Lists.LIST_ID, Lists.NAME
+            }, null, null, null);
+
+            // precreate first list
+            if (mLists != null && mLists.getCount() == 0) {
+                String listName = mContext.getString(R.string.first_list);
+
+                ContentValues values = new ContentValues();
+                values.put(Lists.LIST_ID, Lists.generateListId(listName));
+                values.put(Lists.NAME, listName);
+                mContext.getContentResolver().insert(Lists.CONTENT_URI, values);
+            }
         }
 
         @Override
         public Fragment getItem(int position) {
-            int type;
-            switch (position) {
-                default:
-                    type = 0;
-                    break;
-                case 1:
-                    type = 2;
-                    break;
-                case 2:
-                    type = 3;
-                    break;
+            if (mLists == null) {
+                return null;
             }
-            return TraktAddFragment.newInstance(type);
+
+            mLists.moveToPosition(position);
+            return ListsFragment.newInstance(mLists.getString(0));
         }
 
         @Override
         public int getCount() {
-            return 3;
+            if (mLists == null) {
+                return 1;
+            }
+
+            return mLists.getCount();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                default:
-                    return mContext.getString(R.string.trending).toUpperCase();
-                case 1:
-                    return mContext.getString(R.string.recommended).toUpperCase();
-                case 2:
-                    return mContext.getString(R.string.library).toUpperCase();
+            if (mLists == null) {
+                return "";
             }
+
+            mLists.moveToPosition(position);
+            return mLists.getString(1);
         }
 
         @Override
         public int getItemPosition(Object object) {
-            if (object instanceof TraktAddFragment) {
+            if (object instanceof ListsFragment) {
                 return POSITION_UNCHANGED;
             } else {
                 return POSITION_NONE;

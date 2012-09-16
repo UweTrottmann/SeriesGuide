@@ -339,6 +339,10 @@ public class SeriesContract {
         public static String getId(Uri uri) {
             return uri.getPathSegments().get(1);
         }
+        
+        public static String generateListId(String name) {
+            return ParserUtils.sanitizeId(name);
+        }
     }
 
     public static class ListItems implements ListItemsColumns, BaseColumns {

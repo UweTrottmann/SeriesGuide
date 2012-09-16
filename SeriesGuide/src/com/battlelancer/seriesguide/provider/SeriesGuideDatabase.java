@@ -238,7 +238,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ListsColumns.NAME + " TEXT NOT NULL,"
 
-            + "UNIQUE (" + ListsColumns.LIST_ID + ") ON CONFLICT REPLACE)"
+            + "UNIQUE (" + ListsColumns.LIST_ID + ") ON CONFLICT REPLACE"
 
             + ");";
 
@@ -253,9 +253,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ListItemsColumns.TYPE + " INTEGER NOT NULL,"
 
-            + ListsColumns.LIST_ID + " TEXT " + References.LIST_ID
+            + ListsColumns.LIST_ID + " TEXT " + References.LIST_ID + ","
 
-            + "UNIQUE (" + ListItemsColumns.LIST_ITEM_ID + ") ON CONFLICT REPLACE)"
+            + "UNIQUE (" + ListItemsColumns.LIST_ITEM_ID + ") ON CONFLICT REPLACE"
 
             + ");";
 

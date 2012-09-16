@@ -18,27 +18,39 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.battlelancer.seriesguide.beta.R;
 
 /**
  * Displays one user created list which includes a mixture of shows, seasons and
  * episodes.
  */
-public class ListsFragment extends SherlockFragment {
+public class ListsFragment extends SherlockListFragment {
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+    public static ListsFragment newInstance(String list_id) {
+        ListsFragment f = new ListsFragment();
+
+        Bundle args = new Bundle();
+        args.putString(InitBundle.LIST_ID, list_id);
+        f.setArguments(args);
+
+        return f;
     }
-    
+
+    interface InitBundle {
+        String LIST_ID = "list_id";
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        String list_id = getArguments().getString(InitBundle.LIST_ID);
+
+        setEmptyText(getString(R.string.list_empty));
         
-        // set up adapter
+        setListShown(true);
     }
+
 }
