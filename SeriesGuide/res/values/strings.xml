@@ -5,6 +5,7 @@
     <string name="episode">Episode</string>
     <string name="episodes">All episodes</string>
     <string name="season">Season</string>
+    <string name="seasons">Seasons</string>
     <string name="unknown">unknown</string>
     <string name="episode_iswatched">Watched already</string>
     <string name="episode_notwatched">Not watched yet</string>
