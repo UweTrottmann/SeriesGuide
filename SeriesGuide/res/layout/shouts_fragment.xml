@@ -4,11 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <TextView
+        android:id="@+id/shouts_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/layout_padding"
+        android:layout_marginRight="@dimen/layout_padding"
+        android:layout_marginTop="@dimen/layout_padding"
+        android:text="@string/shouts"
+        android:textAppearance="@style/TextAppearance.Large.Light" />
+
+    <TextView
+        android:id="@+id/shouts_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shouts_title"
+        android:layout_marginLeft="@dimen/layout_padding"
+        android:layout_marginRight="@dimen/layout_padding"
+        android:text="@string/shouts_for"
+        android:textAppearance="@style/TextAppearance.Small.Primary" />
+
     <FrameLayout
         android:id="@+id/shouts_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/labelRefresh" >
+        android:layout_above="@+id/labelRefresh"
+        android:layout_below="@+id/shouts_item" >
 
         <LinearLayout
             android:id="@+id/progress_container"
