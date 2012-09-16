@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -248,13 +247,14 @@ public class SeasonsFragment extends SherlockListFragment implements
                                 episodeCount += getString(R.string.otherepisodes);
                             }
                         }
-                        watchcount.setTextColor(Color.GRAY);
+                        watchcount.setTextAppearance(getActivity(),
+                                R.style.TextAppearance_XSmall_Dim);
                     } else if (count == 1) {
                         episodeCount += count + " " + getString(R.string.season_onenotwatched);
-                        watchcount.setTextColor(Color.WHITE);
+                        watchcount.setTextAppearance(getActivity(), R.style.TextAppearance_XSmall);
                     } else {
                         episodeCount += count + " " + getString(R.string.season_watchcount);
-                        watchcount.setTextColor(Color.WHITE);
+                        watchcount.setTextAppearance(getActivity(), R.style.TextAppearance_XSmall);
                     }
 
                     // add strings for unaired episodes

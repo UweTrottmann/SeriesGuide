@@ -17,11 +17,7 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,10 +25,11 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.method.LinkMovementMethod;
-import android.text.util.Linkify;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.battlelancer.seriesguide.beta.R;
@@ -52,49 +49,50 @@ public class ChangesDialogFragment extends DialogFragment {
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final TextView message = new TextView(getActivity());
-        message.setText(R.string.betamessage);
-        message.setTextSize(16);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        final TextView warning = new TextView(getActivity());
-        warning.setText(R.string.betawarning);
-        warning.setTextSize(16);
+        // hide title, use custom theme
+        setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
+    }
 
-        Linkify.addLinks(message, Linkify.ALL);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View layout = inflater.inflate(R.layout.changes_dialog, null);
+
+        // title
+        ((TextView) layout.findViewById(R.id.title)).setText(getString(R.string.app_name));
+
+        // message
+        TextView message = (TextView) layout.findViewById(R.id.message);
         message.setMovementMethod(LinkMovementMethod.getInstance());
-        Linkify.addLinks(warning, Linkify.ALL);
-        warning.setMovementMethod(LinkMovementMethod.getInstance());
 
-        LinearLayout layout = new LinearLayout(getActivity());
-        layout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.WRAP_CONTENT));
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(30, 30, 30, 30);
-        layout.addView(message);
-        layout.addView(warning);
+        // buttons
+        Button buttonNegative = (Button) layout.findViewById(R.id.buttonNegative);
+        buttonNegative.setText(R.string.download_stable);
+        buttonNegative.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
+                            .parse(MARKETLINK_APP));
+                    startActivity(myIntent);
+                } catch (ActivityNotFoundException e) {
+                    Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
+                            .parse(MARKETLINK_HTTP));
+                    startActivity(myIntent);
+                }
+            }
+        });
+        Button buttonPositive = (Button) layout.findViewById(R.id.buttonPositive);
+        buttonPositive.setText(R.string.gobreak);
+        buttonPositive.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
-        ScrollView scrollView = new ScrollView(getActivity());
-        scrollView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT));
-        scrollView.addView(layout);
-
-        return new AlertDialog.Builder(getActivity()).setTitle(R.string.app_name)
-                .setIcon(android.R.drawable.ic_dialog_alert).setView(scrollView)
-                .setPositiveButton(R.string.gobreak, null)
-                .setNeutralButton(getString(R.string.download_stable), new OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        try {
-                            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
-                                    .parse(MARKETLINK_APP));
-                            startActivity(myIntent);
-                        } catch (ActivityNotFoundException e) {
-                            Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri
-                                    .parse(MARKETLINK_HTTP));
-                            startActivity(myIntent);
-                        }
-                    }
-                }).create();
+        return layout;
     }
 }

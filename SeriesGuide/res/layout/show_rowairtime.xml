@@ -14,7 +14,6 @@
 
     <TextView
         android:id="@+id/seriesname"
-        style="@style/ListHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/timestamp"
@@ -22,7 +21,8 @@
         android:paddingBottom="0dp"
         android:paddingRight="@dimen/inline_padding"
         android:paddingTop="2dp"
-        android:text="Sanctuary Edition" />
+        android:text="Sanctuary Edition"
+        android:textAppearance="@style/TextAppearance.Medium.Light" />
 
     <TextView
         android:id="@+id/TextViewShowListNextEpisode"

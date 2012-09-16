@@ -136,8 +136,7 @@ public class EpisodesFragment extends SherlockListFragment implements
                 Episodes.WATCHED, Episodes.TITLE, Episodes.NUMBER, Episodes.FIRSTAIREDMS
         };
         int[] to = new int[] {
-                R.id.CustomCheckBoxWatched, R.id.TextViewEpisodeListTitle,
-                R.id.TextViewEpisodeListNumber, R.id.TextViewEpisodeListAirdate
+                R.id.CustomCheckBoxWatched, R.id.title, R.id.number, R.id.airdate
         };
 
         mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.episode_row, null, from, to, 0);
@@ -165,11 +164,11 @@ public class EpisodesFragment extends SherlockListFragment implements
                 } else if (columnIndex == EpisodesQuery.NUMBER) {
                     // set episode number and if available dvd episode number
                     TextView tv = (TextView) view;
-                    String episodenumber = getString(R.string.episode) + " "
-                            + cursor.getString(EpisodesQuery.NUMBER);
+                    StringBuilder episodenumber = new StringBuilder(cursor
+                            .getString(EpisodesQuery.NUMBER));
                     float dvdnumber = cursor.getFloat(EpisodesQuery.DVDNUMBER);
-                    if (dvdnumber != 0.0) {
-                        episodenumber += " (" + dvdnumber + ")";
+                    if (dvdnumber != 0) {
+                        episodenumber.append("(").append(dvdnumber).append(")");
                     }
                     tv.setText(episodenumber);
                     return true;

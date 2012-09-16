@@ -1,5 +1,5 @@
 <!--
-  Copyright 2011 Google Inc.
+  Copyright 2012 Uwe Trottmann
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -15,11 +15,12 @@
 -->
 <resources>
 
-    <color name="button_text">#ffffffff</color>
     <color name="transparent">#00000000</color>
     <color name="text_primary">#fff1f1f1</color>
-    <color name="text_dim">#ff808080</color>
+    <color name="text_default">#bebebe</color>
+    <color name="text_dim">#80bebebe</color>
     <color name="accent_primary">#ff4800ff</color>
     <color name="dim">#ff313531</color>
+    <color name="background">#ff111111</color>
 
 </resources>

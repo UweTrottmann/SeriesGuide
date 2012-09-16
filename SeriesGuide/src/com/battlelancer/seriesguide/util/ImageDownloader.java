@@ -127,8 +127,8 @@ public class ImageDownloader {
             BitmapDownloaderTask task = new BitmapDownloaderTask(imageView, isDiskCaching);
             DownloadedDrawable downloadedDrawable = new DownloadedDrawable(task);
             imageView.setImageDrawable(downloadedDrawable);
-            // do not execute on thread pool (4.0+)
-            task.execute(url);
+            // always execute on thread pool (4.0+)
+            AndroidUtils.executeAsyncTask(task, url);
         }
     }
 

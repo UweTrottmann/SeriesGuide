@@ -11,7 +11,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginRight="12dp"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_notification" />
+        android:src="@drawable/stat_sys_download" />
 
     <TextView
         android:id="@+id/text"

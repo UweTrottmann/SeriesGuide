@@ -71,6 +71,14 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
     private EditText mMessageBox;
 
     private View mCheckinButton;
+    
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        // hide title
+        setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog_CheckIn);
+    }
 
     @Override
     public void onStart() {
@@ -80,7 +88,6 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getDialog().setTitle(R.string.checkin);
         final View layout = inflater.inflate(R.layout.checkin_dialog, null);
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getSherlockActivity());

@@ -3,7 +3,9 @@
 
     <!-- Generic -->
     <string name="episode">Episode</string>
+    <string name="episodes">All episodes</string>
     <string name="season">Season</string>
+    <string name="seasons">Seasons</string>
     <string name="unknown">unknown</string>
     <string name="episode_iswatched">Watched already</string>
     <string name="episode_notwatched">Not watched yet</string>
@@ -21,6 +23,8 @@
     <string name="done">Done</string>
     <string name="clear">Clear</string>
     <string name="more">%s more</string>
+    <string name="cancel">Cancel</string>
+    <string name="share">Share</string>
 
     <plurals name="votes">
         <item quantity="one">%d vote</item>
@@ -101,7 +105,6 @@
     <string name="delete_show">Remove</string>
     <string name="dontdelete_show">Don\'t remove</string>
     <string name="no_nextepisode">no next episode found</string>
-    <string name="nextepisode">next:</string>
     <string name="context_favorite">Add to favorites</string>
     <string name="context_unfavorite">Remove from favorites</string>
     <string name="favorited">Added to favorites</string>
@@ -141,7 +144,6 @@
     <string name="arttask_nosdcard">Loading posters requires external storage (SD card).</string>
 
     <!-- Show info -->
-    <string name="show_airs">airs</string>
     <string name="show_network">on</string>
     <string name="show_noairtime">No air times available</string>
     <string name="show_noimdbentry">No IMDB page found.</string>
@@ -178,16 +180,13 @@
     <string name="prefs_category_sharing">Sharing</string>
     <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">About</string>
-    <string name="pref_more">More</string>
-    <string name="pref_showlist">Show list</string>
     <string name="help">Help</string>
     <string name="preferences">Settings</string>
     <string name="pref_showsorting">Sort shows by…</string>
     <string name="pref_onlyfuture">No aired episodes</string>
-    <string name="pref_onlyfuturesummary">\"next:\" never shows already aired episodes</string>
+    <string name="pref_onlyfuturesummary">Never display already aired episodes</string>
     <string name="pref_onlyseasoneps">Hide special episodes</string>
     <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
-    <string name="pref_content">Content</string>
     <string name="pref_seasonsorting">Sort seasons by…</string>
     <string name="pref_episodesorting">Sort episodes by…</string>
     <string name="backup">Backup/Restore</string>
@@ -207,7 +206,6 @@
     <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
     <string name="pref_traktsync">Sync with trakt.tv</string>
     <string name="feedback">Send feedback</string>
-    <string name="pref_advanced">Advanced</string>
     <string name="clear_cache">Clear image caches</string>
     <string name="clear_cache_summary">Remove all cached images from your device</string>
     <string name="pref_hideimages">Hide images</string>
@@ -236,7 +234,6 @@
         <item>Latest first (DVD)</item>
         <item>Oldest first (DVD)</item>
     </string-array>
-
     <string-array name="upcominglimit">
         <item>now</item>
         <item>a day</item>
@@ -269,11 +266,6 @@
     <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
     <string name="import_yes">Restore</string>
     <string name="import_no">Don\'t Restore</string>
-
-    <!-- Misc -->
-    <string name="seasons">Seasons</string>
-    <string name="cancel">Cancel</string>
-    <string name="share">Share</string>
 
     <!-- Check Ins -->
     <string name="checkin">Check in</string>
@@ -309,6 +301,8 @@
     <string name="trakt_synctodevice">Sync to SeriesGuide</string>
     <string name="trakt_synctotrakt">Sync to trakt.tv</string>
     <string name="trakt_syncunseen">Include unwatched flags</string>
+    <string name="trakt_howto_title">Set up trakt.tv sync</string>
+    <string name="trakt_howto">To set up your devices:\n\n1. Connect or create your account below on every device.\n2. The first time, use the <b>Sync to trakt.tv</b> button to upload your existing shows.\n3. Add shows from trakt.tv by swiping to the <b>Library</b> tab in the <b>Add Show</b> screen.\n\nNow whenever SeriesGuide updates, your trakt.tv activity is downloaded to each device. This includes flagging episodes as watched or collected and check ins.</string>
 
     <!-- Welcome dialog -->
     <string name="welcome_message">Get started</string>
@@ -345,7 +339,7 @@
         <item>SeriesGuide Theme</item>
         <item>ICS Base Theme</item>
     </string-array>
-    
+
     <!-- Widgets -->
     <string name="choose_list">Choose activity list</string>
     <string name="hide_watched">Hide watched episodes</string>
@@ -368,7 +362,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage"><b>A new cycle</b>\n\n2.8 is out, let the next iteration begin. Thank you all for testing, translating and submitting bug reports!\n\n- Link to episode IMDb pages, share them as well. Fall back to show\'s IMDb page.\n\n- Flagging a whole season, show, etc. is submitted to trakt.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed changelog</a>\n\n</string>
+    <string name="betamessage">More branding\n\nFurther refined the UI design to include more custom elements, improved layouts.\n\nLess confusing trakt credentials dialog behavior, set up instructions.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
@@ -509,5 +503,5 @@
         <item>0</item>
         <item>1</item>
     </string-array>
-    
+
 </resources>
