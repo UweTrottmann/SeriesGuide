@@ -27,7 +27,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
-            android:layout_toRightOf="@+id/gotoseasonsText"
             android:text=""
             android:textAllCaps="true"
             android:textAppearance="@style/TextAppearance.Small" >
