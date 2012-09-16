@@ -15,7 +15,6 @@
 -->
 <resources>
 
-    <color name="button_text">#ffffffff</color>
     <color name="transparent">#00000000</color>
     <color name="text_primary">#fff1f1f1</color>
     <color name="text_default">#bebebe</color>
