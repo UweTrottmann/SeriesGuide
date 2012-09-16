@@ -183,7 +183,7 @@
     <string name="preferences">Settings</string>
     <string name="pref_showsorting">Sort shows by…</string>
     <string name="pref_onlyfuture">No aired episodes</string>
-    <string name="pref_onlyfuturesummary">\"next:\" never shows already aired episodes</string>
+    <string name="pref_onlyfuturesummary">Never display already aired episodes</string>
     <string name="pref_onlyseasoneps">Hide special episodes</string>
     <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
     <string name="pref_seasonsorting">Sort seasons by…</string>
