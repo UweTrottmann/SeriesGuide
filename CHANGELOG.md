@@ -10,6 +10,12 @@ Version 2.9 *(in development)*
 
 ### Detailed changes:
 
+#### 2.9.2beta (2012-09-16)
+
+* TWEAK Refined UI design with more custom elements, layout unification.
+* TWEAK Improved trakt.tv credentials dialog behavior, set up instructions.
+* NOTICE Updated ViewPagerIndicator to 2.4.1.
+
 #### 2.9.1beta (2012-08-19)
 
 * NOTICE Database upgraded to version 27. Starting SeriesGuide the first time after installing the update may take a little longer than usual.
