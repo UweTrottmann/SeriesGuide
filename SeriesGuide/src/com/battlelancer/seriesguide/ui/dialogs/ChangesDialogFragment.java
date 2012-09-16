@@ -24,6 +24,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -63,9 +64,8 @@ public class ChangesDialogFragment extends DialogFragment {
         ((TextView) layout.findViewById(R.id.title)).setText(getString(R.string.app_name));
 
         // message
-        // TextView message = (TextView) layout.findViewById(R.id.message);
-        // Linkify.addLinks(message, Linkify.ALL);
-        // message.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView message = (TextView) layout.findViewById(R.id.message);
+        message.setMovementMethod(LinkMovementMethod.getInstance());
 
         // buttons
         Button buttonNegative = (Button) layout.findViewById(R.id.buttonNegative);

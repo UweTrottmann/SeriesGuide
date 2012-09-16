@@ -33,8 +33,6 @@
                 android:layout_marginBottom="@dimen/large_padding"
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
-                android:autoLink="web"
-                android:linksClickable="true"
                 android:text="@string/betamessage"
                 android:textAppearance="@style/TextAppearance" />
 
