@@ -360,7 +360,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage"><b>A new cycle</b>\n\n2.8 is out, let the next iteration begin. Thank you all for testing, translating and submitting bug reports!\n\n- Link to episode IMDb pages, share them as well. Fall back to show\'s IMDb page.\n\n- Flagging a whole season, show, etc. is submitted to trakt.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed changelog</a>\n\n</string>
+    <string name="betamessage">More branding\n\nFurther refined the UI design to include more custom elements, improved layouts.\n\nLess confusing trakt credentials dialog behavior, set up instructions.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
