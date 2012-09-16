@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,6 +41,7 @@ import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
@@ -375,6 +377,13 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             if (pref != null) {
                 setListPreferenceSummary((ListPreference) pref);
             }
+        }
+
+        if (key.equals(KEY_LANGUAGE)) {
+            // reset last edit date of all episodes so they will get updated
+            ContentValues values = new ContentValues();
+            values.put(Episodes.LASTEDIT, 0);
+            getContentResolver().update(Episodes.CONTENT_URI, values, null, null);
         }
 
         if (key.equals(KEY_OFFSET)) {
