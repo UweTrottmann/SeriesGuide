@@ -35,6 +35,8 @@ import android.util.Log;
 
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
@@ -82,6 +84,10 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int EPISODESEARCH_ID = 401;
 
+    private static final int LISTS = 500;
+
+    private static final int LIST_ITEMS = 600;
+
     private static final int SEARCH_SUGGEST = 800;
 
     private static final int RENEW_FTSTABLE = 900;
@@ -120,6 +126,11 @@ public class SeriesGuideProvider extends ContentProvider {
         matcher.addURI(authority, SeriesContract.PATH_SEASONS + "/" + SeriesContract.PATH_OFSHOW
                 + "/*", SEASONS_OFSHOW);
         matcher.addURI(authority, SeriesContract.PATH_SEASONS + "/*", SEASONS_ID);
+
+        // Lists
+        matcher.addURI(authority, SeriesContract.PATH_LISTS, LISTS);
+
+        matcher.addURI(authority, SeriesContract.PATH_LIST_ITEMS, LIST_ITEMS);
 
         // Search
         matcher.addURI(authority, SeriesContract.PATH_EPISODESEARCH + "/"
@@ -192,6 +203,10 @@ public class SeriesGuideProvider extends ContentProvider {
                 return Seasons.CONTENT_TYPE;
             case SEASONS_ID:
                 return Seasons.CONTENT_ITEM_TYPE;
+            case LISTS:
+                return Lists.CONTENT_TYPE;
+            case LIST_ITEMS:
+                return ListItems.CONTENT_TYPE;
             case SEARCH_SUGGEST:
                 return SearchManager.SUGGEST_MIME_TYPE;
             case RENEW_FTSTABLE:
@@ -220,9 +235,19 @@ public class SeriesGuideProvider extends ContentProvider {
                 return Seasons.buildSeasonUri(values.getAsString(Seasons._ID));
             }
             case EPISODES: {
-                db.insertOrThrow(Tables.EPISODES, null, values);
+                long id = db.insertOrThrow(Tables.EPISODES, null, values);
                 getContext().getContentResolver().notifyChange(uri, null);
-                return Episodes.buildEpisodeUri(values.getAsString(Episodes._ID));
+                return Lists.buildListUri(String.valueOf(id));
+            }
+            case LISTS: {
+                db.insertOrThrow(Tables.LISTS, null, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return Lists.buildListUri(values.getAsString(Lists.LIST_ID));
+            }
+            case LIST_ITEMS: {
+                db.insertOrThrow(Tables.LIST_ITEMS, null, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return ListItems.buildListItemUri(values.getAsString(ListItems.LIST_ITEM_ID));
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

@@ -20,6 +20,8 @@ package com.battlelancer.seriesguide.provider;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
+import com.battlelancer.seriesguide.util.ParserUtils;
+
 public class SeriesContract {
 
     interface ShowsColumns {
@@ -164,6 +166,29 @@ public class SeriesContract {
         String OVERVIEW = Episodes.OVERVIEW;
     }
 
+    interface ListsColumns {
+        /** Unique string identifier. */
+        String LIST_ID = "list_id";
+
+        String NAME = "list_name";
+    }
+
+    interface ListItemsColumns {
+        /** Unique string identifier. */
+        String LIST_ITEM_ID = "list_item_id";
+
+        /**
+         * NON-unique string identifier referencing internal ids of other
+         * tables.
+         */
+        String ITEM_REF_ID = "item_ref_id";
+
+        /**
+         * Type of item: show, season or episode.
+         */
+        String TYPE = "item_type";
+    }
+
     public static final String CONTENT_AUTHORITY = "com.battlelancer.seriesguide.beta.provider";
 
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
@@ -187,6 +212,10 @@ public class SeriesContract {
     public static final String PATH_SEARCH = "search";
 
     public static final String PATH_FILTER = "filter";
+
+    public static final String PATH_LISTS = "lists";
+
+    public static final String PATH_LIST_ITEMS = "listitems";
 
     public static class Shows implements ShowsColumns, BaseColumns {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SHOWS)
@@ -290,6 +319,49 @@ public class SeriesContract {
 
         public static String getDocId(Uri uri) {
             return uri.getLastPathSegment();
+        }
+    }
+
+    public static class Lists implements ListsColumns, BaseColumns {
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_LISTS)
+                .build();
+
+        /** Use if multiple items get returned */
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.list";
+
+        /** Use if a single item is returned */
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.seriesguide.list";
+
+        public static Uri buildListUri(String id) {
+            return CONTENT_URI.buildUpon().appendPath(id).build();
+        }
+
+        public static String getId(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
+    }
+
+    public static class ListItems implements ListItemsColumns, BaseColumns {
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
+                .appendPath(PATH_LIST_ITEMS)
+                .build();
+
+        /** Use if multiple items get returned */
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.listitem";
+
+        /** Use if a single item is returned */
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.seriesguide.listitem";
+
+        public static Uri buildListItemUri(String id) {
+            return CONTENT_URI.buildUpon().appendPath(id).build();
+        }
+
+        public static String getId(Uri uri) {
+            return uri.getPathSegments().get(1);
+        }
+
+        public static String generateListItemId(String id, int type) {
+            return ParserUtils.sanitizeId(id + "-" + type);
         }
     }
 

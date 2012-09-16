@@ -31,9 +31,13 @@ import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearchColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodesColumns;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItemsColumns;
+import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesContract.ShowsColumns;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -68,7 +72,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_IMDBIDSLASTEDIT = 27;
 
-    public static final int DATABASE_VERSION = DBVER_IMDBIDSLASTEDIT;
+    public static final int DBVER_LISTS = 28;
+
+    public static final int DATABASE_VERSION = DBVER_LISTS;
 
     public interface Tables {
         String SHOWS = "series";
@@ -81,12 +87,18 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + "LEFT OUTER JOIN series ON episodes.series_id=series._id";
 
         String EPISODES_SEARCH = "searchtable";
+
+        String LISTS = "lists";
+
+        String LIST_ITEMS = "listitems";
     }
 
     interface References {
         String SHOW_ID = "REFERENCES " + Tables.SHOWS + "(" + BaseColumns._ID + ")";
 
         String SEASON_ID = "REFERENCES " + Tables.SEASONS + "(" + BaseColumns._ID + ")";
+
+        String LIST_ID = "REFERENCES " + Tables.LISTS + "(" + Lists.LIST_ID + ")";
     }
 
     private static final String CREATE_SHOWS_TABLE = "CREATE TABLE " + Tables.SHOWS
@@ -217,6 +229,36 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ");";
 
+    private static final String CREATE_LISTS_TABLE = "CREATE TABLE " + Tables.LISTS
+            + " ("
+
+            + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+
+            + ListsColumns.LIST_ID + " TEXT NOT NULL,"
+
+            + ListsColumns.NAME + " TEXT NOT NULL,"
+
+            + "UNIQUE (" + ListsColumns.LIST_ID + ") ON CONFLICT REPLACE)"
+
+            + ");";
+
+    private static final String CREATE_LIST_ITEMS_TABLE = "CREATE TABLE " + Tables.LIST_ITEMS
+            + " ("
+
+            + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+
+            + ListItemsColumns.LIST_ITEM_ID + " TEXT NOT NULL,"
+
+            + ListItemsColumns.ITEM_REF_ID + " TEXT NOT NULL,"
+
+            + ListItemsColumns.TYPE + " INTEGER NOT NULL,"
+
+            + ListsColumns.LIST_ID + " TEXT " + References.LIST_ID
+
+            + "UNIQUE (" + ListItemsColumns.LIST_ITEM_ID + ") ON CONFLICT REPLACE)"
+
+            + ");";
+
     public SeriesGuideDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -230,6 +272,10 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL(CREATE_EPISODES_TABLE);
 
         db.execSQL(CREATE_SEARCH_TABLE);
+
+        db.execSQL(CREATE_LISTS_TABLE);
+
+        db.execSQL(CREATE_LIST_ITEMS_TABLE);
     }
 
     @Override
@@ -288,6 +334,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 26:
                 upgradeToTwentySeven(db);
                 version = 27;
+            case 27:
+                upgradeToTwentyEight(db);
+                version = 28;
         }
 
         // drop all tables if version is not right
@@ -302,6 +351,15 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             onCreate(db);
         }
+    }
+
+    /**
+     * Add tables to store lists and list items.
+     */
+    private void upgradeToTwentyEight(SQLiteDatabase db) {
+        db.execSQL(CREATE_LISTS_TABLE);
+
+        db.execSQL(CREATE_LIST_ITEMS_TABLE);
     }
 
     /**
