@@ -53,6 +53,7 @@ import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
@@ -90,6 +91,8 @@ public class ShowsFragment extends SherlockFragment implements
     private static final int CONTEXT_HIDE = 205;
 
     private static final int CONTEXT_UNHIDE = 206;
+
+    private static final int CONTEXT_LISTS_ADD = 207;
 
     // Show Filter Ids
     private static final int SHOWFILTER_ALL = 0;
@@ -168,6 +171,7 @@ public class ShowsFragment extends SherlockFragment implements
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menuInfo.toString();
+
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         final Cursor show = getActivity().getContentResolver().query(
                 Shows.buildShowUri(String.valueOf(info.id)), new String[] {
@@ -180,15 +184,16 @@ public class ShowsFragment extends SherlockFragment implements
             menu.add(0, CONTEXT_UNFAVORITE, 0, R.string.context_unfavorite);
         }
         if (show.getInt(1) == 0) {
-            menu.add(0, CONTEXT_HIDE, 3, R.string.context_hide);
+            menu.add(0, CONTEXT_HIDE, 4, R.string.context_hide);
         } else {
-            menu.add(0, CONTEXT_UNHIDE, 3, R.string.context_unhide);
+            menu.add(0, CONTEXT_UNHIDE, 4, R.string.context_unhide);
         }
         show.close();
 
-        menu.add(0, CONTEXT_MARKNEXT, 1, R.string.context_marknext);
-        menu.add(0, CONTEXT_UPDATESHOW, 2, R.string.context_updateshow);
-        menu.add(0, CONTEXT_DELETE, 4, R.string.delete_show);
+        menu.add(0, CONTEXT_LISTS_ADD, 1, R.string.list_item_add);
+        menu.add(0, CONTEXT_MARKNEXT, 2, R.string.context_marknext);
+        menu.add(0, CONTEXT_UPDATESHOW, 3, R.string.context_updateshow);
+        menu.add(0, CONTEXT_DELETE, 5, R.string.delete_show);
     }
 
     @Override
@@ -263,10 +268,15 @@ public class ShowsFragment extends SherlockFragment implements
                         show.getInt(ShowsQuery.NEXTEPISODE));
 
                 return true;
+            case CONTEXT_LISTS_ADD: {
+                ListsDialogFragment.showListsDialog(String.valueOf(info.id), 0,
+                        getFragmentManager());
+                return true;
+            }
         }
         return super.onContextItemSelected(item);
     }
-    
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.shows_menu, menu);
