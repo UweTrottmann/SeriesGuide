@@ -339,7 +339,7 @@ public class SeriesContract {
         public static String getId(Uri uri) {
             return uri.getPathSegments().get(1);
         }
-        
+
         public static String generateListId(String name) {
             return ParserUtils.sanitizeId(name);
         }
@@ -364,8 +364,8 @@ public class SeriesContract {
             return uri.getPathSegments().get(1);
         }
 
-        public static String generateListItemId(String id, int type) {
-            return ParserUtils.sanitizeId(id + "-" + type);
+        public static String generateListItemId(String id, int type, String listId) {
+            return ParserUtils.sanitizeId(id + "-" + type + "-" + listId);
         }
     }
 
