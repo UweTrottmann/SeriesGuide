@@ -80,6 +80,7 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final int LIST_ITEMS = 600;
     private static final int LIST_ITEMS_ID = 601;
+    private static final int LIST_ITEMS_WITH_DETAILS = 602;
 
     private static final int SEARCH_SUGGEST = 800;
 
@@ -126,7 +127,10 @@ public class SeriesGuideProvider extends ContentProvider {
                 + SeriesContract.PATH_WITH_LIST_ITEM_ID + "/*", LISTS_WITH_LIST_ITEM_ID);
         matcher.addURI(authority, SeriesContract.PATH_LISTS + "/*", LISTS_ID);
 
+        // List items
         matcher.addURI(authority, SeriesContract.PATH_LIST_ITEMS, LIST_ITEMS);
+        matcher.addURI(authority, SeriesContract.PATH_LIST_ITEMS + "/"
+                + SeriesContract.PATH_WITH_DETAILS, LIST_ITEMS_WITH_DETAILS);
         matcher.addURI(authority, SeriesContract.PATH_LIST_ITEMS + "/*", LIST_ITEMS_ID);
 
         // Search
@@ -210,6 +214,8 @@ public class SeriesGuideProvider extends ContentProvider {
                 return ListItems.CONTENT_TYPE;
             case LIST_ITEMS_ID:
                 return ListItems.CONTENT_ITEM_TYPE;
+            case LIST_ITEMS_WITH_DETAILS:
+                return ListItems.CONTENT_TYPE;
             case SEARCH_SUGGEST:
                 return SearchManager.SUGGEST_MIME_TYPE;
             case RENEW_FTSTABLE:
@@ -483,6 +489,9 @@ public class SeriesGuideProvider extends ContentProvider {
             }
             case LIST_ITEMS: {
                 return builder.table(Tables.LIST_ITEMS);
+            }
+            case LIST_ITEMS_WITH_DETAILS: {
+                return builder.table(Tables.LIST_ITEMS_WITH_DETAILS);
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

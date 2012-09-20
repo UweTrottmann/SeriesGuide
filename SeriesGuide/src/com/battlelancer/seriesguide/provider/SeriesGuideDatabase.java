@@ -37,7 +37,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesContract.ShowsColumns;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -81,6 +80,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
         String SEASONS = "seasons";
 
+        String SEASONS_JOIN_SHOWS = "seasons "
+                + "LEFT OUTER JOIN series ON seasons.series_id=series._id";
+
         String EPISODES = "episodes";
 
         String EPISODES_JOIN_SHOWS = "episodes "
@@ -91,6 +93,30 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         String LISTS = "lists";
 
         String LIST_ITEMS = "listitems";
+
+        String LIST_ITEMS_WITH_DETAILS = "(SELECT "
+                + Selections.SHOWS_COLUMNS + " FROM "
+                + "((SELECT * FROM listitems WHERE item_type=1) AS listitems "
+                + "LEFT OUTER JOIN series ON listitems.item_ref_id=series._id) "
+
+                + "UNION SELECT " + Selections.SEASONS_COLUMNS + " FROM "
+                + "((SELECT * FROM listitems WHERE item_type=2) AS listitems LEFT OUTER JOIN ("
+                + SEASONS_JOIN_SHOWS
+                + ") AS seasons ON listitems.item_ref_id=seasons._id) "
+
+                + "UNION SELECT " + Selections.EPISODES_COLUMNS + " FROM "
+                + "((SELECT * FROM listitems WHERE item_type=3) AS listitems LEFT OUTER JOIN ("
+                + EPISODES_JOIN_SHOWS + ") AS episodes ON listitems.item_ref_id=episodes._id))";
+    }
+
+    private interface Selections {
+        String LIST_ITEMS_COLUMNS = "listitems._id,list_item_id,list_id,item_type,item_ref_id";
+        String SHOWS_COLUMNS = LIST_ITEMS_COLUMNS
+                + ",series._id AS series_id,seriestitle,overview,poster,network,airstime,airsdayofweek";
+        String SEASONS_COLUMNS = LIST_ITEMS_COLUMNS
+                + ",series_id,seriestitle,combinednr AS overview,poster,network,airstime,airsdayofweek";
+        String EPISODES_COLUMNS = LIST_ITEMS_COLUMNS
+                + ",series_id,seriestitle,episodetitle AS overview,poster,network,airstime,airsdayofweek";
     }
 
     interface References {

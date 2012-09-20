@@ -219,6 +219,8 @@ public class SeriesContract {
 
     public static final String PATH_LIST_ITEMS = "listitems";
 
+    public static final String PATH_WITH_DETAILS = "with_details";
+
     public static class Shows implements ShowsColumns, BaseColumns {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SHOWS)
                 .build();
@@ -358,6 +360,10 @@ public class SeriesContract {
     public static class ListItems implements ListItemsColumns, BaseColumns {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
                 .appendPath(PATH_LIST_ITEMS)
+                .build();
+
+        public static final Uri CONTENT_WITH_DETAILS_URI = CONTENT_URI.buildUpon()
+                .appendPath(PATH_WITH_DETAILS)
                 .build();
 
         /** Use if multiple items get returned */
