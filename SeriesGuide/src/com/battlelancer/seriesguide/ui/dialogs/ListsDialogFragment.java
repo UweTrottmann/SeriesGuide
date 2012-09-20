@@ -121,6 +121,8 @@ public class ListsDialogFragment extends DialogFragment implements
                     // Failures like constraint violation aren't recoverable
                     throw new RuntimeException("Problem applying batch operation", e);
                 }
+                
+                getActivity().getContentResolver().notifyChange(ListItems.CONTENT_WITH_DETAILS_URI, null);
 
                 dismiss();
             }
