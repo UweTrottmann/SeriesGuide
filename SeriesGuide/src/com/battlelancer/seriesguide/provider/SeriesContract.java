@@ -215,6 +215,8 @@ public class SeriesContract {
 
     public static final String PATH_LISTS = "lists";
 
+    public static final String PATH_WITH_LIST_ITEM_ID = "with_list_item";
+
     public static final String PATH_LIST_ITEMS = "listitems";
 
     public static class Shows implements ShowsColumns, BaseColumns {
@@ -326,6 +328,10 @@ public class SeriesContract {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_LISTS)
                 .build();
 
+        public static final Uri CONTENT_WITH_LIST_ITEMS_URI = CONTENT_URI.buildUpon()
+                .appendPath(PATH_WITH_LIST_ITEM_ID)
+                .build();
+
         /** Use if multiple items get returned */
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.seriesguide.list";
 
@@ -366,6 +372,10 @@ public class SeriesContract {
 
         public static String generateListItemId(String id, int type, String listId) {
             return ParserUtils.sanitizeId(id + "-" + type + "-" + listId);
+        }
+
+        public static String generateListItemIdWildcard(String id, int type) {
+            return ParserUtils.sanitizeId(id + "-" + type + "-%");
         }
     }
 

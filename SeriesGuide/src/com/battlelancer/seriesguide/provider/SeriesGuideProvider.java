@@ -55,41 +55,30 @@ public class SeriesGuideProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
     private static final int SHOWS = 100;
-
     private static final int SHOWS_ID = 101;
-
     private static final int SHOWS_FILTERED = 102;
 
     private static final int EPISODES = 200;
-
     private static final int EPISODES_ID = 201;
-
     private static final int EPISODES_OFSHOW = 202;
-
     private static final int EPISODES_OFSEASON = 203;
-
     private static final int EPISODES_OFSEASON_WITHSHOW = 204;
 
     private static final int EPISODES_WITHSHOW = 205;
-
     private static final int EPISODES_ID_WITHSHOW = 206;
 
     private static final int SEASONS = 300;
-
     private static final int SEASONS_ID = 301;
-
     private static final int SEASONS_OFSHOW = 302;
 
     private static final int EPISODESEARCH = 400;
-
     private static final int EPISODESEARCH_ID = 401;
 
     private static final int LISTS = 500;
-
     private static final int LISTS_ID = 501;
+    private static final int LISTS_WITH_LIST_ITEM_ID = 502;
 
     private static final int LIST_ITEMS = 600;
-
     private static final int LIST_ITEMS_ID = 601;
 
     private static final int SEARCH_SUGGEST = 800;
@@ -133,6 +122,8 @@ public class SeriesGuideProvider extends ContentProvider {
 
         // Lists
         matcher.addURI(authority, SeriesContract.PATH_LISTS, LISTS);
+        matcher.addURI(authority, SeriesContract.PATH_LISTS + "/"
+                + SeriesContract.PATH_WITH_LIST_ITEM_ID + "/*", LISTS_WITH_LIST_ITEM_ID);
         matcher.addURI(authority, SeriesContract.PATH_LISTS + "/*", LISTS_ID);
 
         matcher.addURI(authority, SeriesContract.PATH_LIST_ITEMS, LIST_ITEMS);
@@ -213,6 +204,8 @@ public class SeriesGuideProvider extends ContentProvider {
                 return Lists.CONTENT_TYPE;
             case LISTS_ID:
                 return Lists.CONTENT_ITEM_TYPE;
+            case LISTS_WITH_LIST_ITEM_ID:
+                return Lists.CONTENT_TYPE;
             case LIST_ITEMS:
                 return ListItems.CONTENT_TYPE;
             case LIST_ITEMS_ID:
@@ -469,7 +462,7 @@ public class SeriesGuideProvider extends ContentProvider {
                 return builder.table(Tables.EPISODES_JOIN_SHOWS)
                         .mapToTable(Episodes._ID, Tables.EPISODES)
                         .mapToTable(Episodes.RATING, Tables.EPISODES)
-                        .where(Tables.EPISODES + "." + Episodes._ID + "=?", episodeId);
+                        .where(Qualified.EPISODES_EPISODE_ID + "=?", episodeId);
             }
             case SEASONS_OFSHOW: {
                 final String showId = uri.getPathSegments().get(2);
@@ -478,6 +471,16 @@ public class SeriesGuideProvider extends ContentProvider {
             case LISTS: {
                 return builder.table(Tables.LISTS);
             }
+            case LISTS_WITH_LIST_ITEM_ID: {
+                final String itemId = uri.getPathSegments().get(3);
+                return builder
+                        .table(Tables.LISTS
+                                + " LEFT OUTER JOIN (" + SubQuery.LISTS_LIST_ITEM_ID
+                                + itemId
+                                + ") ON "
+                                + Qualified.LISTS_LIST_ID + "=" + Qualified.LIST_ITEMS_LIST_ID)
+                        .mapToTable(Lists._ID, Tables.LISTS);
+            }
             case LIST_ITEMS: {
                 return builder.table(Tables.LIST_ITEMS);
             }
@@ -485,5 +488,23 @@ public class SeriesGuideProvider extends ContentProvider {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
             }
         }
+    }
+
+    private interface SubQuery {
+        String LISTS_LIST_ITEM_ID = "SELECT " + Qualified.LIST_ITEMS_LIST_ID + " FROM "
+                + Tables.LIST_ITEMS + " WHERE "
+                + ListItems.LIST_ITEM_ID + " LIKE ";
+    }
+
+    /**
+     * {@link ScheduleContract} fields that are fully qualified with a specific
+     * parent {@link Tables}. Used when needed to work around SQL ambiguity.
+     */
+    private interface Qualified {
+        String EPISODES_EPISODE_ID = Tables.EPISODES + "." + Episodes._ID;
+
+        String LISTS_LIST_ID = Tables.LISTS + "." + Lists.LIST_ID;
+
+        String LIST_ITEMS_LIST_ID = Tables.LIST_ITEMS + "." + Lists.LIST_ID;
     }
 }
