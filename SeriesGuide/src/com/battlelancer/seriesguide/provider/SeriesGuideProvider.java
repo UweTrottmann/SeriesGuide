@@ -477,6 +477,10 @@ public class SeriesGuideProvider extends ContentProvider {
             case LISTS: {
                 return builder.table(Tables.LISTS);
             }
+            case LISTS_ID: {
+                final String listId = Lists.getId(uri);
+                return builder.table(Tables.LISTS).where(Lists.LIST_ID + "=?", listId);
+            }
             case LISTS_WITH_LIST_ITEM_ID: {
                 final String itemId = uri.getPathSegments().get(2);
                 return builder

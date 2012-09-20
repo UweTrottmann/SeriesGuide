@@ -179,7 +179,7 @@
     <string name="first_list">Favorites</string>
     <string name="list_add">Add list</string>
     <string name="list_remove">Remove list</string>
-    <string name="list_rename">Rename list</string>
+    <string name="list_manage">Manage list</string>
     <string name="list_item_manage">Manage lists</string>
     <string name="list_item_remove">Remove from list</string>
     <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
