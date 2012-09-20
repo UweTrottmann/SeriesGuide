@@ -21,7 +21,7 @@
         android:paddingBottom="0dp"
         android:paddingRight="@dimen/inline_padding"
         android:paddingTop="2dp"
-        android:text="Sanctuary Edition"
+        android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.Medium.Light" />
 
     <TextView
@@ -32,7 +32,7 @@
         android:layout_toLeftOf="@id/timestamp"
         android:layout_toRightOf="@id/showposter"
         android:paddingRight="5dp"
-        android:text="2x05 Maelstrom in a pit" />
+        android:text="@string/app_name" />
 
     <TextView
         android:id="@+id/episodetime"
@@ -42,7 +42,7 @@
         android:layout_toRightOf="@id/showposter"
         android:paddingBottom="2dp"
         android:paddingRight="5dp"
-        android:text="in 5 days (Mon)" />
+        android:text="@string/app_name" />
 
     <RelativeLayout
         android:id="@+id/timestamp"
@@ -82,7 +82,7 @@
             android:gravity="right"
             android:lineSpacingExtra="2sp"
             android:paddingTop="@dimen/inline_padding"
-            android:text="Mon 17:00 PM" />
+            android:text="@string/app_name" />
 
         <TextView
             android:id="@+id/TextViewShowListNetwork"
@@ -91,7 +91,7 @@
             android:layout_below="@+id/TextViewShowListAirtime"
             android:gravity="right"
             android:paddingBottom="@dimen/inline_padding"
-            android:text="Very Long Network Name (VLNM)" />
+            android:text="@string/app_name" />
     </RelativeLayout>
 
 </RelativeLayout>
