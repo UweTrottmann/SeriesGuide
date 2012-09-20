@@ -48,6 +48,7 @@ import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
 import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
 import com.battlelancer.seriesguide.util.CompatActionBarNavListener;
 import com.battlelancer.seriesguide.util.ImageProvider;
@@ -59,6 +60,7 @@ import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.viewpagerindicator.TabPageIndicator;
+import com.viewpagerindicator.TabPageIndicator.OnTabReselectedListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,6 +142,13 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
 
         mIndicator = (TabPageIndicator) findViewById(R.id.indicator);
         mIndicator.setViewPager(mPager);
+        mIndicator.setOnTabReselectedListener(new OnTabReselectedListener() {
+            @Override
+            public void onTabReselected(int position) {
+                String listId = mListsAdapter.getListId(position);
+                ListManageDialogFragment.showListManageDialog(listId, getSupportFragmentManager());
+            }
+        });
         onDisplayTitleIndicator(navSelection);
 
         // FIXME force the options menu to be shown
@@ -675,6 +684,15 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
             } else {
                 return POSITION_NONE;
             }
+        }
+
+        public String getListId(int position) {
+            if (mLists == null) {
+                return null;
+            }
+
+            mLists.moveToPosition(position);
+            return mLists.getString(0);
         }
     }
 
