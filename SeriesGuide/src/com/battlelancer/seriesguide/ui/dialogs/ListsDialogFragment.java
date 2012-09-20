@@ -166,8 +166,11 @@ public class ListsDialogFragment extends DialogFragment implements
 
     private class ListsAdapter extends CursorAdapter {
 
+        private LayoutInflater mInflater;
+
         public ListsAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);
+            mInflater = LayoutInflater.from(context);
         }
 
         @Override
@@ -204,8 +207,7 @@ public class ListsDialogFragment extends DialogFragment implements
 
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            LayoutInflater inflater = LayoutInflater.from(context);
-            View v = inflater.inflate(android.R.layout.simple_list_item_multiple_choice, parent,
+            View v = mInflater.inflate(android.R.layout.simple_list_item_multiple_choice, parent,
                     false);
             return v;
         }
