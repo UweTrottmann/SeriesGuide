@@ -472,12 +472,12 @@ public class SeriesGuideProvider extends ContentProvider {
                 return builder.table(Tables.LISTS);
             }
             case LISTS_WITH_LIST_ITEM_ID: {
-                final String itemId = uri.getPathSegments().get(3);
+                final String itemId = uri.getPathSegments().get(2);
                 return builder
                         .table(Tables.LISTS
                                 + " LEFT OUTER JOIN (" + SubQuery.LISTS_LIST_ITEM_ID
-                                + itemId
-                                + ") ON "
+                                + "'" + itemId
+                                + "%') AS " + Tables.LIST_ITEMS + " ON "
                                 + Qualified.LISTS_LIST_ID + "=" + Qualified.LIST_ITEMS_LIST_ID)
                         .mapToTable(Lists._ID, Tables.LISTS);
             }
@@ -491,7 +491,7 @@ public class SeriesGuideProvider extends ContentProvider {
     }
 
     private interface SubQuery {
-        String LISTS_LIST_ITEM_ID = "SELECT " + Qualified.LIST_ITEMS_LIST_ID + " FROM "
+        String LISTS_LIST_ITEM_ID = "SELECT * FROM "
                 + Tables.LIST_ITEMS + " WHERE "
                 + ListItems.LIST_ITEM_ID + " LIKE ";
     }

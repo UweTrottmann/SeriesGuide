@@ -190,7 +190,7 @@ public class ShowsFragment extends SherlockFragment implements
         }
         show.close();
 
-        menu.add(0, CONTEXT_LISTS_ADD, 1, R.string.list_item_add);
+        menu.add(0, CONTEXT_LISTS_ADD, 1, R.string.list_item_manage);
         menu.add(0, CONTEXT_MARKNEXT, 2, R.string.context_marknext);
         menu.add(0, CONTEXT_UPDATESHOW, 3, R.string.context_updateshow);
         menu.add(0, CONTEXT_DELETE, 5, R.string.delete_show);
@@ -269,7 +269,7 @@ public class ShowsFragment extends SherlockFragment implements
 
                 return true;
             case CONTEXT_LISTS_ADD: {
-                ListsDialogFragment.showListsDialog(String.valueOf(info.id), 0,
+                ListsDialogFragment.showListsDialog(String.valueOf(info.id), 1,
                         getFragmentManager());
                 return true;
             }

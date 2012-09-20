@@ -180,7 +180,7 @@
     <string name="list_add">Add list</string>
     <string name="list_remove">Remove list</string>
     <string name="list_rename">Rename list</string>
-    <string name="list_item_add">Add to list</string>
+    <string name="list_item_manage">Manage lists</string>
     <string name="list_item_remove">Remove from list</string>
     <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
 

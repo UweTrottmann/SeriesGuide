@@ -328,7 +328,7 @@ public class SeriesContract {
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_LISTS)
                 .build();
 
-        public static final Uri CONTENT_WITH_LIST_ITEMS_URI = CONTENT_URI.buildUpon()
+        public static final Uri CONTENT_WITH_LIST_ITEM_URI = CONTENT_URI.buildUpon()
                 .appendPath(PATH_WITH_LIST_ITEM_ID)
                 .build();
 
@@ -340,6 +340,10 @@ public class SeriesContract {
 
         public static Uri buildListUri(String id) {
             return CONTENT_URI.buildUpon().appendPath(id).build();
+        }
+
+        public static Uri buildListsWithListItemUri(String itemId) {
+            return CONTENT_WITH_LIST_ITEM_URI.buildUpon().appendPath(itemId).build();
         }
 
         public static String getId(Uri uri) {
@@ -375,7 +379,8 @@ public class SeriesContract {
         }
 
         public static String generateListItemIdWildcard(String id, int type) {
-            return ParserUtils.sanitizeId(id + "-" + type + "-%");
+            // The SQL % wildcard is added by the content provider
+            return ParserUtils.sanitizeId(id + "-" + type + "-");
         }
     }
 
