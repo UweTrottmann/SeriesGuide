@@ -164,6 +164,7 @@ public class SeasonsFragment extends SherlockListFragment implements
             case CONTEXT_MANAGE_LISTS_ID: {
                 ListsDialogFragment.showListsDialog(String.valueOf(info.id), 2,
                         getFragmentManager());
+                fireTrackerEvent("Manage lists");
                 return true;
             }
         }
