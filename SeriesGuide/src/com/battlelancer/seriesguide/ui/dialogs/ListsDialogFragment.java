@@ -1,9 +1,13 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import android.content.ContentProviderOperation;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +17,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
 import android.text.TextUtils;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,9 +27,12 @@ import android.widget.CheckedTextView;
 import android.widget.ListView;
 
 import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+
+import java.util.ArrayList;
 
 public class ListsDialogFragment extends DialogFragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -67,20 +75,53 @@ public class ListsDialogFragment extends DialogFragment implements
         addButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: add item to selected lists
-                // if (mListView != null) {
-                // SparseBooleanArray checkedLists =
-                // mListView.getCheckedItemPositions();
-                // String itemId = getArguments().getString("itemid");
-                // int itemType = getArguments().getInt("itemtype");
-                // checkedLists.
-                // for (long listId : checkedLists) {
-                // ContentValues values = new ContentValues();
-                // String listId = mAdapter.getItem(position)
-                // String id = ListItems.generateListItemId(itemId, itemType,
-                // listId);
-                // }
-                // }
+                // add item to selected lists
+                String itemId = getArguments().getString("itemid");
+                int itemType = getArguments().getInt("itemtype");
+                SparseBooleanArray checkedLists = mListView.getCheckedItemPositions();
+
+                final ArrayList<ContentProviderOperation> batch = com.battlelancer.seriesguide.util.Lists
+                        .newArrayList();
+
+                for (int position = 0; position < mAdapter.getCount(); position++) {
+                    final Cursor listEntry = (Cursor) mAdapter.getItem(position);
+
+                    boolean wasListChecked = !TextUtils.isEmpty(listEntry
+                            .getString(ListsQuery.LIST_ITEM_ID));
+                    boolean isListChecked = checkedLists.get(position);
+
+                    String listId = listEntry.getString(ListsQuery.LIST_ID);
+                    String listItemId = ListItems.generateListItemId(itemId, itemType, listId);
+
+                    if (wasListChecked && !isListChecked) {
+                        // remove from list
+                        batch.add(ContentProviderOperation.newDelete(
+                                ListItems.buildListItemUri(listItemId)).build());
+                    } else if (!wasListChecked && isListChecked) {
+                        // add to list
+                        ContentValues values = new ContentValues();
+                        values.put(ListItems.LIST_ITEM_ID, listItemId);
+                        values.put(ListItems.ITEM_REF_ID, itemId);
+                        values.put(ListItems.TYPE, itemType);
+                        values.put(Lists.LIST_ID, listId);
+                        batch.add(ContentProviderOperation.newInsert(ListItems.CONTENT_URI)
+                                .withValues(values)
+                                .build());
+                    }
+                }
+
+                // apply ops
+                try {
+                    getActivity().getContentResolver().applyBatch(SeriesContract.CONTENT_AUTHORITY,
+                            batch);
+                } catch (RemoteException e) {
+                    // Failed binder transactions aren't recoverable
+                    throw new RuntimeException("Problem applying batch operation", e);
+                } catch (OperationApplicationException e) {
+                    // Failures like constraint violation aren't recoverable
+                    throw new RuntimeException("Problem applying batch operation", e);
+                }
+
                 dismiss();
             }
         });
@@ -128,7 +169,7 @@ public class ListsDialogFragment extends DialogFragment implements
         public ListsAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);
         }
-        
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (!mDataValid) {
@@ -138,14 +179,14 @@ public class ListsDialogFragment extends DialogFragment implements
             if (!mCursor.moveToPosition(position)) {
                 throw new IllegalStateException("couldn't move cursor to position " + position);
             }
-            
+
             View v;
             if (convertView == null) {
                 v = newView(mContext, mCursor, parent);
             } else {
                 v = convertView;
             }
-            
+
             CheckedTextView checkedView = (CheckedTextView) v.findViewById(android.R.id.text1);
             checkedView.setText(mCursor.getString(ListsQuery.NAME));
 
@@ -153,14 +194,14 @@ public class ListsDialogFragment extends DialogFragment implements
             String itemId = mCursor.getString(ListsQuery.LIST_ITEM_ID);
             boolean isInList = !TextUtils.isEmpty(itemId);
             mListView.setItemChecked(position, isInList);
-            
+
             return v;
         }
 
         @Override
         public void bindView(View arg0, Context arg1, Cursor arg2) {
         }
-        
+
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             LayoutInflater inflater = LayoutInflater.from(context);
@@ -176,6 +217,8 @@ public class ListsDialogFragment extends DialogFragment implements
                 Tables.LISTS + "." + Lists._ID, Tables.LISTS + "." + Lists.LIST_ID, Lists.NAME,
                 ListItems.LIST_ITEM_ID
         };
+
+        int LIST_ID = 1;
 
         int NAME = 2;
 
