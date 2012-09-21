@@ -17,6 +17,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -114,9 +115,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
         View v = inflater.inflate(R.layout.overview_fragment, container, false);
         v.findViewById(R.id.showinfo).setOnClickListener(new OnClickListener() {
-
             public void onClick(View v) {
-                onShowShowInfo();
+                onShowShowInfo(v);
             }
         });
         mSeasonsButton = v.findViewById(R.id.gotoseasons);
@@ -605,10 +605,19 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     /**
      * Launch show info activity.
      */
-    private void onShowShowInfo() {
+    @TargetApi(16)
+    private void onShowShowInfo(View sourceView) {
         Intent i = new Intent(getActivity(), ShowInfoActivity.class);
         i.putExtra(ShowInfoActivity.InitBundle.SHOW_TVDBID, getShowId());
-        startActivity(i);
+
+        if (AndroidUtils.isJellyBeanOrHigher()) {
+            Bundle options = ActivityOptions.makeScaleUpAnimation(sourceView, 0, 0,
+                    sourceView.getWidth(),
+                    sourceView.getHeight()).toBundle();
+            getActivity().startActivity(i, options);
+        } else {
+            startActivity(i);
+        }
     }
 
     @Override
