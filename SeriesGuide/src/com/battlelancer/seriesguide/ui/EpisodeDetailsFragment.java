@@ -51,6 +51,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
@@ -175,13 +176,19 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_rate_trakt: {
-                fireTrackerEvent("Rate (trakt)");
                 onShareEpisode(ShareMethod.RATE_TRAKT, true);
+                fireTrackerEvent("Rate (trakt)");
                 return true;
             }
             case R.id.menu_share: {
-                fireTrackerEvent("Share (apps)");
                 onShareEpisode(ShareMethod.OTHER_SERVICES, true);
+                fireTrackerEvent("Share (apps)");
+                return true;
+            }
+            case R.id.menu_manage_lists: {
+                ListsDialogFragment.showListsDialog(String.valueOf(getEpisodeId()), 3,
+                        getFragmentManager());
+                fireTrackerEvent("Manage lists");
                 return true;
             }
         }

@@ -51,6 +51,7 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.Constants.SeasonSorting;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask;
@@ -64,9 +65,11 @@ import com.google.analytics.tracking.android.EasyTracker;
 public class SeasonsFragment extends SherlockListFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnFlagListener {
 
-    private static final int ID_MARK_ALL_WATCHED = 0;
+    private static final int CONTEXT_FLAG_ALL_WATCHED_ID = 0;
 
-    private static final int ID_MARK_ALL_UNWATCHED = 1;
+    private static final int CONTEXT_FLAG_ALL_UNWATCHED_ID = 1;
+
+    private static final int CONTEXT_MANAGE_LISTS_ID = 2;
 
     private static final int LOADER_ID = 1;
 
@@ -139,8 +142,9 @@ public class SeasonsFragment extends SherlockListFragment implements
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, ID_MARK_ALL_WATCHED, 0, R.string.mark_all);
-        menu.add(0, ID_MARK_ALL_UNWATCHED, 1, R.string.unmark_all);
+        menu.add(0, CONTEXT_FLAG_ALL_WATCHED_ID, 0, R.string.mark_all);
+        menu.add(0, CONTEXT_FLAG_ALL_UNWATCHED_ID, 1, R.string.unmark_all);
+        menu.add(0, CONTEXT_MANAGE_LISTS_ID, 2, R.string.list_item_manage);
     }
 
     @Override
@@ -149,13 +153,20 @@ public class SeasonsFragment extends SherlockListFragment implements
         Cursor season = (Cursor) mAdapter.getItem(info.position);
 
         switch (item.getItemId()) {
-            case ID_MARK_ALL_WATCHED:
+            case CONTEXT_FLAG_ALL_WATCHED_ID: {
                 onFlagSeasonWatched(info.id, season.getInt(SeasonsQuery.COMBINED), true);
                 return true;
-
-            case ID_MARK_ALL_UNWATCHED:
+            }
+            case CONTEXT_FLAG_ALL_UNWATCHED_ID: {
                 onFlagSeasonWatched(info.id, season.getInt(SeasonsQuery.COMBINED), false);
                 return true;
+            }
+            case CONTEXT_MANAGE_LISTS_ID: {
+                ListsDialogFragment.showListsDialog(String.valueOf(info.id), 2,
+                        getFragmentManager());
+                fireTrackerEvent("Manage lists");
+                return true;
+            }
         }
         return super.onContextItemSelected(item);
     }

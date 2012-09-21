@@ -28,6 +28,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
@@ -862,6 +863,16 @@ public class Utils {
                 }
             });
         }
+    }
+
+    /**
+     * Creates the tag of a {@link ViewPager} fragment.
+     * 
+     * @param viewId of the {@link ViewPager}
+     * @param id of the fragment, often the position
+     */
+    public static String makeViewPagerFragmentName(int viewId, long id) {
+        return "android:switcher:" + viewId + ":" + id;
     }
 
 }

@@ -31,7 +31,7 @@
         android:layout_below="@id/seriesname"
         android:layout_toRightOf="@id/showposter"
         android:paddingBottom="@dimen/default_padding"
-        android:text="Very Long Network Name (VLNM)"
+        android:text="@string/norating"
         android:textAppearance="@style/TextAppearance.Small.Dim" />
 
     <TextView
@@ -42,7 +42,7 @@
         android:layout_toRightOf="@id/TextViewShowListNetwork"
         android:paddingBottom="@dimen/default_padding"
         android:paddingLeft="@dimen/inline_padding"
-        android:text="|  Mon 17:00 PM"
+        android:text="@string/norating"
         android:textAppearance="@style/TextAppearance.Small.Dim" />
 
     <TextView

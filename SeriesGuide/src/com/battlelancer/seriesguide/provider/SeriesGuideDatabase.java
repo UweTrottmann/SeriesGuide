@@ -31,6 +31,9 @@ import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearchColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodesColumns;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItemsColumns;
+import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesContract.ShowsColumns;
@@ -68,12 +71,17 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_IMDBIDSLASTEDIT = 27;
 
-    public static final int DATABASE_VERSION = DBVER_IMDBIDSLASTEDIT;
+    public static final int DBVER_LISTS = 28;
+
+    public static final int DATABASE_VERSION = DBVER_LISTS;
 
     public interface Tables {
         String SHOWS = "series";
 
         String SEASONS = "seasons";
+
+        String SEASONS_JOIN_SHOWS = "seasons "
+                + "LEFT OUTER JOIN series ON seasons.series_id=series._id";
 
         String EPISODES = "episodes";
 
@@ -81,12 +89,42 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + "LEFT OUTER JOIN series ON episodes.series_id=series._id";
 
         String EPISODES_SEARCH = "searchtable";
+
+        String LISTS = "lists";
+
+        String LIST_ITEMS = "listitems";
+
+        String LIST_ITEMS_WITH_DETAILS = "(SELECT "
+                + Selections.SHOWS_COLUMNS + " FROM "
+                + "((SELECT * FROM listitems WHERE item_type=1) AS listitems "
+                + "LEFT OUTER JOIN series ON listitems.item_ref_id=series._id) "
+
+                + "UNION SELECT " + Selections.SEASONS_COLUMNS + " FROM "
+                + "((SELECT * FROM listitems WHERE item_type=2) AS listitems LEFT OUTER JOIN ("
+                + SEASONS_JOIN_SHOWS
+                + ") AS seasons ON listitems.item_ref_id=seasons._id) "
+
+                + "UNION SELECT " + Selections.EPISODES_COLUMNS + " FROM "
+                + "((SELECT * FROM listitems WHERE item_type=3) AS listitems LEFT OUTER JOIN ("
+                + EPISODES_JOIN_SHOWS + ") AS episodes ON listitems.item_ref_id=episodes._id))";
+    }
+
+    private interface Selections {
+        String LIST_ITEMS_COLUMNS = "listitems._id,list_item_id,list_id,item_type,item_ref_id";
+        String SHOWS_COLUMNS = LIST_ITEMS_COLUMNS
+                + ",series._id AS series_id,seriestitle,overview,poster,network,airstime,airsdayofweek";
+        String SEASONS_COLUMNS = LIST_ITEMS_COLUMNS
+                + ",series_id,seriestitle,combinednr AS overview,poster,network,airstime,airsdayofweek";
+        String EPISODES_COLUMNS = LIST_ITEMS_COLUMNS
+                + ",series_id,seriestitle,episodetitle AS overview,poster,network,airstime,airsdayofweek";
     }
 
     interface References {
         String SHOW_ID = "REFERENCES " + Tables.SHOWS + "(" + BaseColumns._ID + ")";
 
         String SEASON_ID = "REFERENCES " + Tables.SEASONS + "(" + BaseColumns._ID + ")";
+
+        String LIST_ID = "REFERENCES " + Tables.LISTS + "(" + Lists.LIST_ID + ")";
     }
 
     private static final String CREATE_SHOWS_TABLE = "CREATE TABLE " + Tables.SHOWS
@@ -217,6 +255,36 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ");";
 
+    private static final String CREATE_LISTS_TABLE = "CREATE TABLE " + Tables.LISTS
+            + " ("
+
+            + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+
+            + ListsColumns.LIST_ID + " TEXT NOT NULL,"
+
+            + ListsColumns.NAME + " TEXT NOT NULL,"
+
+            + "UNIQUE (" + ListsColumns.LIST_ID + ") ON CONFLICT REPLACE"
+
+            + ");";
+
+    private static final String CREATE_LIST_ITEMS_TABLE = "CREATE TABLE " + Tables.LIST_ITEMS
+            + " ("
+
+            + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+
+            + ListItemsColumns.LIST_ITEM_ID + " TEXT NOT NULL,"
+
+            + ListItemsColumns.ITEM_REF_ID + " TEXT NOT NULL,"
+
+            + ListItemsColumns.TYPE + " INTEGER NOT NULL,"
+
+            + ListsColumns.LIST_ID + " TEXT " + References.LIST_ID + ","
+
+            + "UNIQUE (" + ListItemsColumns.LIST_ITEM_ID + ") ON CONFLICT REPLACE"
+
+            + ");";
+
     public SeriesGuideDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -230,6 +298,10 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL(CREATE_EPISODES_TABLE);
 
         db.execSQL(CREATE_SEARCH_TABLE);
+
+        db.execSQL(CREATE_LISTS_TABLE);
+
+        db.execSQL(CREATE_LIST_ITEMS_TABLE);
     }
 
     @Override
@@ -288,6 +360,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 26:
                 upgradeToTwentySeven(db);
                 version = 27;
+            case 27:
+                upgradeToTwentyEight(db);
+                version = 28;
         }
 
         // drop all tables if version is not right
@@ -302,6 +377,15 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             onCreate(db);
         }
+    }
+
+    /**
+     * Add tables to store lists and list items.
+     */
+    private void upgradeToTwentyEight(SQLiteDatabase db) {
+        db.execSQL(CREATE_LISTS_TABLE);
+
+        db.execSQL(CREATE_LIST_ITEMS_TABLE);
     }
 
     /**
