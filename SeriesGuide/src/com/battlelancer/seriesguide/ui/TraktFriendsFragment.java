@@ -17,6 +17,8 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -129,7 +131,7 @@ public class TraktFriendsFragment extends ListFragment implements
                 episodeidquery.moveToFirst();
 
                 int episodeId = episodeidquery.getInt(0);
-                showDetails(episodeId);
+                showDetails(episodeId, v);
             } else {
                 // offer to add the show if it's not in the show database yet
                 SearchResult newshow = new SearchResult();
@@ -143,7 +145,8 @@ public class TraktFriendsFragment extends ListFragment implements
         }
     }
 
-    private void showDetails(int episodeId) {
+    @TargetApi(16)
+    private void showDetails(int episodeId, View sourceView) {
         if (mDualPane) {
             // Check if fragment is shown, create new if needed.
             EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
@@ -163,9 +166,17 @@ public class TraktFriendsFragment extends ListFragment implements
             Intent intent = new Intent();
             intent.setClass(getActivity(), EpisodeDetailsActivity.class);
             intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, episodeId);
-            startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
-                    R.anim.fragment_slide_left_exit);
+
+            if (AndroidUtils.isJellyBeanOrHigher()) {
+                Bundle options = ActivityOptions.makeScaleUpAnimation(sourceView, 0, 0,
+                        sourceView.getWidth(),
+                        sourceView.getHeight()).toBundle();
+                getActivity().startActivity(intent, options);
+            } else {
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
+                        R.anim.fragment_slide_left_exit);
+            }
         }
     }
 

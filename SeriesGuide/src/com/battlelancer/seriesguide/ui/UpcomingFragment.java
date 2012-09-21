@@ -17,6 +17,8 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -183,12 +185,11 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         registerForContextMenu(list);
     }
 
+    @TargetApi(16)
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        showDetails((int) id);
-    }
+        int episodeId = (int) id;
 
-    private void showDetails(int episodeId) {
         if (mDualPane) {
             // Check if fragment is shown, create new if needed.
             EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
@@ -204,14 +205,20 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                         R.anim.fragment_slide_right_exit);
                 ft.replace(R.id.fragment_details, detailsFragment, "fragmentDetails").commit();
             }
-
         } else {
             Intent intent = new Intent();
             intent.setClass(getActivity(), EpisodeDetailsActivity.class);
             intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, episodeId);
-            startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
-                    R.anim.fragment_slide_left_exit);
+
+            if (AndroidUtils.isJellyBeanOrHigher()) {
+                Bundle options = ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(),
+                        v.getHeight()).toBundle();
+                getActivity().startActivity(intent, options);
+            } else {
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
+                        R.anim.fragment_slide_left_exit);
+            }
         }
     }
 

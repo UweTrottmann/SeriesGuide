@@ -37,6 +37,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import java.util.ArrayList;
@@ -154,8 +155,10 @@ public class EpisodeDetailsActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.fragment_slide_right_enter,
-                R.anim.fragment_slide_right_exit);
+        if (!AndroidUtils.isJellyBeanOrHigher()) {
+            overridePendingTransition(R.anim.fragment_slide_right_enter,
+                    R.anim.fragment_slide_right_exit);
+        }
     }
 
     public static class EpisodePagerAdapter extends FragmentStatePagerAdapter {
