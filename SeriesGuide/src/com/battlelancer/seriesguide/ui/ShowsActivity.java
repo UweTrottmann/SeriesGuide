@@ -154,7 +154,7 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         onDisplayTitleIndicator(navSelection);
 
         // FIXME force the options menu to be shown
-        invalidateOptionsMenu();
+        // invalidateOptionsMenu();
 
         // TODO First run fragment
         // if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
@@ -317,7 +317,7 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                             .show();
                     mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
                 }
-                
+
                 fireTrackerEvent("Fetch missing posters");
                 return true;
             case R.id.menu_preferences:
@@ -651,6 +651,8 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                 values.put(Lists.LIST_ID, Lists.generateListId(listName));
                 values.put(Lists.NAME, listName);
                 mContext.getContentResolver().insert(Lists.CONTENT_URI, values);
+
+                onListsChanged();
             }
         }
 
@@ -703,10 +705,11 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
 
         public void onListsChanged() {
             if (mLists != null && !mLists.isClosed()) {
-                Cursor newCursor = mContext.getContentResolver().query(Lists.CONTENT_URI, new String[] {
-                        Lists.LIST_ID, Lists.NAME
-                }, null, null, null);
-                
+                Cursor newCursor = mContext.getContentResolver().query(Lists.CONTENT_URI,
+                        new String[] {
+                                Lists.LIST_ID, Lists.NAME
+                        }, null, null, null);
+
                 Cursor oldCursor = mLists;
                 mLists = newCursor;
                 oldCursor.close();
