@@ -288,14 +288,14 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                 return true;
             }
             case R.id.menu_search:
-                fireTrackerEvent("Search");
-
                 onSearchRequested();
+
+                fireTrackerEvent("Search");
                 return true;
             case R.id.menu_update:
-                fireTrackerEvent("Update");
-
                 performUpdateTask(false, null);
+
+                fireTrackerEvent("Update");
                 return true;
             case R.id.menu_upcoming:
                 startActivity(new Intent(this, UpcomingRecentActivity.class));
@@ -304,8 +304,6 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                 startActivity(new Intent(this, AddActivity.class));
                 return true;
             case R.id.menu_updateart:
-                fireTrackerEvent("Fetch missing posters");
-
                 if (isArtTaskRunning()) {
                     return true;
                 }
@@ -319,19 +317,19 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                             .show();
                     mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
                 }
+                
+                fireTrackerEvent("Fetch missing posters");
                 return true;
             case R.id.menu_preferences:
                 startActivity(new Intent(this, SeriesGuidePreferences.class));
 
                 return true;
             case R.id.menu_fullupdate:
-                fireTrackerEvent("Full Update");
-
                 performUpdateTask(true, null);
+
+                fireTrackerEvent("Full Update");
                 return true;
             case R.id.menu_feedback: {
-                fireTrackerEvent("Feedback");
-
                 final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
                 intent.setType("plain/text");
                 intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
@@ -343,16 +341,16 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
 
                 startActivity(Intent.createChooser(intent, "Send mail..."));
 
+                fireTrackerEvent("Feedback");
                 return true;
             }
             case R.id.menu_help: {
-                fireTrackerEvent("Help");
-
                 Intent myIntent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse(SeriesGuidePreferences.HELP_URL));
 
                 startActivity(myIntent);
 
+                fireTrackerEvent("Help");
                 return true;
             }
             case R.id.menu_list_add: {
