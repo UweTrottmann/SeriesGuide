@@ -3,22 +3,16 @@
     android:id="@+id/progress"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/body_padding"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/default_padding"
+    android:paddingLeft="@dimen/large_padding"
+    android:paddingRight="@dimen/large_padding"
+    android:paddingTop="@dimen/default_padding" >
 
     <ProgressBar
         android:id="@+id/progressBar1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
-        android:text="@string/sending"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </LinearLayout>
