@@ -196,13 +196,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-
-        // TODO use correct collected button
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_checkin: {
@@ -376,6 +369,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             // some episode properties
             mSeasonNumber = episode.getInt(EpisodeQuery.SEASON);
             mEpisodeNumber = episode.getInt(EpisodeQuery.NUMBER);
+            mCollected = episode.getInt(EpisodeQuery.COLLECTED) == 1 ? true : false;
             final String title = episode.getString(EpisodeQuery.TITLE);
 
             // build share data
