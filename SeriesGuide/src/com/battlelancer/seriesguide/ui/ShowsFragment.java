@@ -17,6 +17,8 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -67,6 +69,7 @@ import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * Displays the list of shows in a users local library.
@@ -74,7 +77,7 @@ import com.google.analytics.tracking.android.EasyTracker;
  * @author Uwe Trottmann
  */
 public class ShowsFragment extends SherlockFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, OnFlagListener {
+        LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, OnFlagListener {
 
     private static final String TAG = "ShowsFragment";
 
@@ -141,14 +144,7 @@ public class ShowsFragment extends SherlockFragment implements
         // setup grid view
         mGrid = (GridView) getView().findViewById(R.id.showlist);
         mGrid.setAdapter(mAdapter);
-        mGrid.setOnItemClickListener(new OnItemClickListener() {
-
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Intent i = new Intent(getActivity(), OverviewActivity.class);
-                i.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, (int) id);
-                startActivity(i);
-            }
-        });
+        mGrid.setOnItemClickListener(this);
         View emptyView = getView().findViewById(R.id.empty);
         if (emptyView != null) {
             mGrid.setEmptyView(emptyView);
@@ -339,6 +335,22 @@ public class ShowsFragment extends SherlockFragment implements
             default: {
                 return super.onOptionsItemSelected(item);
             }
+        }
+    }
+
+    @TargetApi(16)
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // display overview for this show
+
+        Intent i = new Intent(getActivity(), OverviewActivity.class);
+        i.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, (int) id);
+        if (AndroidUtils.isJellyBeanOrHigher()) {
+            Bundle options = ActivityOptions.makeScaleUpAnimation(view, 0, 0, view.getWidth(),
+                    view.getHeight()).toBundle();
+            getActivity().startActivity(i, options);
+        } else {
+            startActivity(i);
         }
     }
 
