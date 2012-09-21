@@ -251,12 +251,12 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         boolean isNoSpecials = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES,
                 false);
         if (isNoSpecials) {
-            query += UpcomingQuery.SELECTION_NOSPECIALS;
+            query += Episodes.SELECTION_NOSPECIALS;
         }
 
         boolean isNoWatched = prefs.getBoolean(SeriesGuidePreferences.KEY_NOWATCHED, false);
         if (isNoWatched) {
-            query += UpcomingQuery.SELECTION_NOWATCHED;
+            query += Episodes.SELECTION_NOWATCHED;
         }
 
         return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
@@ -282,12 +282,8 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
         String QUERY_RECENT = Episodes.FIRSTAIREDMS + "<? AND " + Episodes.FIRSTAIREDMS + ">0 AND "
                 + Shows.HIDDEN + "=?";
-
+        
         String SELECTION_ONLYFAVORITES = " AND " + Shows.FAVORITE + "=?";
-
-        String SELECTION_NOWATCHED = " AND " + Episodes.WATCHED + "=0";
-
-        String SELECTION_NOSPECIALS = " AND " + Episodes.SEASON + "!=0";
 
         String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC,"
                 + Episodes.NUMBER + " ASC";

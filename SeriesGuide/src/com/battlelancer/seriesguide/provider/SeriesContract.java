@@ -258,6 +258,10 @@ public class SeriesContract {
         /** Use if a single item is returned */
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.seriesguide.episode";
 
+        public static final String SELECTION_NOWATCHED = " AND " + Episodes.WATCHED + "=0";
+
+        public static final String SELECTION_NOSPECIALS = " AND " + Episodes.SEASON + "!=0";
+
         public static Uri buildEpisodeUri(String episodeId) {
             return CONTENT_URI.buildUpon().appendPath(episodeId).build();
         }

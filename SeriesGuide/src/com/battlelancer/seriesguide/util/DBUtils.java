@@ -235,12 +235,12 @@ public class DBUtils {
         boolean isNoSpecials = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES,
                 false);
         if (isNoSpecials) {
-            query += UpcomingQuery.SELECTION_NOSPECIALS;
+            query += Episodes.SELECTION_NOSPECIALS;
         }
 
         // append unwatched selection if necessary
         if (isOnlyUnwatched) {
-            query += UpcomingQuery.SELECTION_NOWATCHED;
+            query += Episodes.SELECTION_NOWATCHED;
         }
 
         // build result array
