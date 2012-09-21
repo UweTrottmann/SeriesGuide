@@ -218,20 +218,17 @@ public class DBUtils {
         final String recentThreshold = String.valueOf(fakeNow);
 
         // build selection args
-        String[] selectionArgs;
+        String[] selectionArgs = new String[] {
+                recentThreshold, "0"
+        };
+
+        // append only favorites selection if necessary
         boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
         if (isOnlyFavorites) {
-            query += UpcomingQuery.SELECTION_ONLYFAVORITES;
-            selectionArgs = new String[] {
-                    recentThreshold, "0", "1"
-            };
-        } else {
-            selectionArgs = new String[] {
-                    recentThreshold, "0"
-            };
+            query += Shows.SELECTION_FAVORITES;
         }
 
-        // append nospecials selection if necessary
+        // append no specials selection if necessary
         boolean isNoSpecials = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES,
                 false);
         if (isNoSpecials) {
@@ -598,7 +595,7 @@ public class DBUtils {
         selectQuery.append(NextEpisodeQuery.SELECT_WATCHED);
         if (isNoSpecials) {
             // do not take specials into account
-            selectQuery.append(NextEpisodeQuery.SELECT_NOSPECIALS);
+            selectQuery.append(Episodes.SELECTION_NOSPECIALS);
         }
         // only get episodes which have an air date
         selectQuery.append(NextEpisodeQuery.SELECT_WITHAIRDATE);
@@ -629,7 +626,7 @@ public class DBUtils {
         selectQuery.append(NextEpisodeQuery.SELECT_NEXT);
         if (isNoSpecials) {
             // do not take specials into account
-            selectQuery.append(NextEpisodeQuery.SELECT_NOSPECIALS);
+            selectQuery.append(Episodes.SELECTION_NOSPECIALS);
         }
         if (isOnlyFutureEpisodes) {
             // restrict to episodes with future air date
@@ -691,8 +688,6 @@ public class DBUtils {
 
         String SELECT_NEXT = Episodes.WATCHED + "=0 AND ((" + Episodes.SEASON + "=? AND "
                 + Episodes.NUMBER + ">?) OR " + Episodes.SEASON + ">?)";
-
-        String SELECT_NOSPECIALS = " AND " + Episodes.SEASON + "!=0";
 
         String SELECT_WITHAIRDATE = " AND " + Episodes.FIRSTAIREDMS + "!=-1";
 

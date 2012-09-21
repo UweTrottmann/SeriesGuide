@@ -235,16 +235,8 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         String query = getArguments().getString("query");
 
         boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
-        String[] selectionArgs;
         if (isOnlyFavorites) {
-            query += UpcomingQuery.SELECTION_ONLYFAVORITES;
-            selectionArgs = new String[] {
-                    recentThreshold, "0", "1"
-            };
-        } else {
-            selectionArgs = new String[] {
-                    recentThreshold, "0"
-            };
+            query += Shows.SELECTION_FAVORITES;
         }
 
         // append nospecials selection if necessary
@@ -260,7 +252,9 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         }
 
         return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
-                UpcomingQuery.PROJECTION, query, selectionArgs, sortOrder);
+                UpcomingQuery.PROJECTION, query, new String[] {
+                        recentThreshold, "0"
+                }, sortOrder);
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -282,8 +276,6 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
         String QUERY_RECENT = Episodes.FIRSTAIREDMS + "<? AND " + Episodes.FIRSTAIREDMS + ">0 AND "
                 + Shows.HIDDEN + "=?";
-        
-        String SELECTION_ONLYFAVORITES = " AND " + Shows.FAVORITE + "=?";
 
         String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC,"
                 + Episodes.NUMBER + " ASC";

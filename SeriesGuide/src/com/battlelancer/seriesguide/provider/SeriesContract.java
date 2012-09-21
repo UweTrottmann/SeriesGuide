@@ -235,6 +235,8 @@ public class SeriesContract {
 
         /** Default "ORDER BY" clause. */
         public static final String DEFAULT_SORT = ShowsColumns.TITLE + " ASC";
+        
+        public static final String SELECTION_FAVORITES = " AND " + Shows.FAVORITE + "=1";
 
         public static Uri buildShowUri(String showId) {
             return CONTENT_URI.buildUpon().appendPath(showId).build();
