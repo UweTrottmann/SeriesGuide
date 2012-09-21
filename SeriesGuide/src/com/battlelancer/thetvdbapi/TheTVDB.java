@@ -450,8 +450,14 @@ public class TheTVDB {
                 if (episodeIDs.containsKey(episodeId)) {
                     // check if this is newer information than we have
                     if (episodeIDs.get(episodeId) < values.getAsLong(Episodes.LASTEDIT)) {
-                        // update op for episode
+                        // complete update op for episode
                         batch.add(DBUtils.buildEpisodeOp(values, false));
+                    } else {
+                        // only update ratings
+                        ContentValues smallValues = new ContentValues();
+                        smallValues.put(Episodes._ID, values.getAsString(Episodes._ID));
+                        smallValues.put(Episodes.RATING, values.getAsString(Episodes.RATING));
+                        batch.add(DBUtils.buildEpisodeOp(smallValues, false));
                     }
                 } else {
                     // episode does not exist, yet
