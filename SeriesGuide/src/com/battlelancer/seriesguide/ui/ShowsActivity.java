@@ -47,6 +47,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
 import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
@@ -70,7 +71,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Provides the apps main screen, displaying a list of shows and their next
  * episodes.
  */
-public class ShowsActivity extends BaseActivity implements CompatActionBarNavListener {
+public class ShowsActivity extends BaseActivity implements CompatActionBarNavListener,
+        OnListsChangedListener {
 
     private static final String TAG = "Shows";
 
@@ -351,6 +353,12 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
 
                 startActivity(myIntent);
 
+                return true;
+            }
+            case R.id.menu_list_add: {
+                AddListDialogFragment.showAddListDialog(getSupportFragmentManager());
+
+                fireTrackerEvent("Add list");
                 return true;
             }
             default: {
@@ -663,8 +671,8 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
             if (mLists == null) {
                 return 1;
             }
-
-            return mLists.getCount();
+            int count = mLists.getCount();
+            return count;
         }
 
         @Override
@@ -693,6 +701,20 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
 
             mLists.moveToPosition(position);
             return mLists.getString(0);
+        }
+
+        public void onListsChanged() {
+            if (mLists != null && !mLists.isClosed()) {
+                Cursor newCursor = mContext.getContentResolver().query(Lists.CONTENT_URI, new String[] {
+                        Lists.LIST_ID, Lists.NAME
+                }, null, null, null);
+                
+                Cursor oldCursor = mLists;
+                mLists = newCursor;
+                oldCursor.close();
+
+                notifyDataSetChanged();
+            }
         }
     }
 
@@ -763,5 +785,13 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                 }
             }
         }
+    }
+
+    @Override
+    public void onListsChanged() {
+        // refresh list adapter
+        mListsAdapter.onListsChanged();
+        // update indicator and view pager
+        mIndicator.notifyDataSetChanged();
     }
 }

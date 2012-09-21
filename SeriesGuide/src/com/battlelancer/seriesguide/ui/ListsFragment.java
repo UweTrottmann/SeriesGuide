@@ -35,6 +35,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
@@ -68,6 +70,13 @@ public class ListsFragment extends SherlockFragment implements
     private ListItemAdapter mAdapter;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.lists_fragment, container, false);
     }
@@ -85,6 +94,11 @@ public class ListsFragment extends SherlockFragment implements
         list.setEmptyView(getView().findViewById(android.R.id.empty));
 
         getLoaderManager().initLoader(LOADER_ID, getArguments(), this);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.lists_menu, menu);
     }
 
     @Override
