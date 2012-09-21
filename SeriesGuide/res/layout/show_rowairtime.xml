@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/default_padding" >
 
     <ImageView
         android:id="@+id/showposter"
@@ -31,7 +32,7 @@
         android:layout_below="@id/seriesname"
         android:layout_toLeftOf="@id/timestamp"
         android:layout_toRightOf="@id/showposter"
-        android:paddingRight="5dp"
+        android:paddingRight="@dimen/inline_padding"
         android:text="@string/app_name" />
 
     <TextView
@@ -40,8 +41,7 @@
         android:layout_below="@id/TextViewShowListNextEpisode"
         android:layout_toLeftOf="@id/timestamp"
         android:layout_toRightOf="@id/showposter"
-        android:paddingBottom="2dp"
-        android:paddingRight="5dp"
+        android:paddingRight="@dimen/inline_padding"
         android:text="@string/app_name" />
 
     <RelativeLayout
@@ -49,8 +49,7 @@
         android:layout_width="90dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:orientation="vertical"
-        android:paddingRight="5dp" >
+        android:orientation="vertical" >
 
         <LinearLayout
             android:id="@+id/labels"
