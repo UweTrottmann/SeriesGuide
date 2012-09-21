@@ -31,6 +31,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -51,7 +52,10 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.CheckinActivity.CheckinQuery;
+import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
@@ -59,6 +63,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
 import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -93,6 +98,8 @@ public class ShowsFragment extends SherlockFragment implements
     private static final int CONTEXT_UNHIDE = 206;
 
     private static final int CONTEXT_LISTS_ADD = 207;
+
+    private static final int CONTEXT_CHECKIN = 208;
 
     // Show Filter Ids
     private static final int SHOWFILTER_ALL = 0;
@@ -179,21 +186,22 @@ public class ShowsFragment extends SherlockFragment implements
                 }, null, null, null);
         show.moveToFirst();
         if (show.getInt(0) == 0) {
-            menu.add(0, CONTEXT_FAVORITE, 0, R.string.context_favorite);
+            menu.add(0, CONTEXT_FAVORITE, 2, R.string.context_favorite);
         } else {
-            menu.add(0, CONTEXT_UNFAVORITE, 0, R.string.context_unfavorite);
+            menu.add(0, CONTEXT_UNFAVORITE, 2, R.string.context_unfavorite);
         }
         if (show.getInt(1) == 0) {
-            menu.add(0, CONTEXT_HIDE, 4, R.string.context_hide);
+            menu.add(0, CONTEXT_HIDE, 3, R.string.context_hide);
         } else {
-            menu.add(0, CONTEXT_UNHIDE, 4, R.string.context_unhide);
+            menu.add(0, CONTEXT_UNHIDE, 3, R.string.context_unhide);
         }
         show.close();
 
-        menu.add(0, CONTEXT_LISTS_ADD, 1, R.string.list_item_manage);
-        menu.add(0, CONTEXT_MARKNEXT, 2, R.string.context_marknext);
-        menu.add(0, CONTEXT_UPDATESHOW, 3, R.string.context_updateshow);
-        menu.add(0, CONTEXT_DELETE, 5, R.string.delete_show);
+        menu.add(0, CONTEXT_CHECKIN, 0, R.string.checkin);
+        menu.add(0, CONTEXT_MARKNEXT, 1, R.string.context_marknext);
+        menu.add(0, CONTEXT_LISTS_ADD, 4, R.string.list_item_manage);
+        menu.add(0, CONTEXT_UPDATESHOW, 5, R.string.context_updateshow);
+        menu.add(0, CONTEXT_DELETE, 6, R.string.delete_show);
     }
 
     @Override
@@ -201,6 +209,32 @@ public class ShowsFragment extends SherlockFragment implements
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
+            case CONTEXT_CHECKIN: {
+                Cursor show = (Cursor) mAdapter.getItem(info.position);
+                final String episodeId = show.getString(ShowsQuery.NEXTEPISODE);
+                if (TextUtils.isEmpty(episodeId)) {
+                    return true;
+                }
+
+                // look up episode
+                final Cursor episode = getActivity().getContentResolver().query(
+                        Episodes.buildEpisodeUri(episodeId), new String[] {
+                                Episodes.SEASON, Episodes.NUMBER, Episodes.TITLE
+                        }, null, null, null);
+                if (episode != null && episode.moveToFirst()) {
+                    final String episodeString = ShareUtils.onCreateShareString(
+                            getActivity(), episode);
+
+                    // display a check-in dialog
+                    CheckInDialogFragment f = CheckInDialogFragment.newInstance(
+                            show.getString(CheckinQuery.IMDBID), (int) info.id, episode.getInt(0),
+                            episode.getInt(1), episodeString);
+                    f.show(getFragmentManager(), "checkin-dialog");
+
+                    episode.close();
+                }
+                return true;
+            }
             case CONTEXT_FAVORITE: {
                 fireTrackerEvent("Favorite show");
 
