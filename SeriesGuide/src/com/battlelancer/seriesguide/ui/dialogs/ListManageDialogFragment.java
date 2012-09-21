@@ -83,6 +83,10 @@ public class ListManageDialogFragment extends DialogFragment {
         buttonPositive.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mTitle.getText().length() == 0) {
+                    return;
+                }
+                
                 // update title
                 String listId = getArguments().getString("listid");
                 ContentValues values = new ContentValues();
