@@ -35,6 +35,7 @@ public class ListManageDialogFragment extends DialogFragment {
 
     private EditText mTitle;
     private OnListsChangedListener mListener;
+    private Button mButtonNegative;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,32 +53,22 @@ public class ListManageDialogFragment extends DialogFragment {
         mTitle = (EditText) layout.findViewById(R.id.title);
 
         // buttons
-        Button buttonNegative = (Button) layout.findViewById(R.id.buttonNegative);
-        buttonNegative.setText(R.string.list_remove);
-        buttonNegative.setOnClickListener(new OnClickListener() {
+        mButtonNegative = (Button) layout.findViewById(R.id.buttonNegative);
+        mButtonNegative.setText(R.string.list_remove);
+        mButtonNegative.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cursor lists = getActivity().getContentResolver().query(Lists.CONTENT_URI,
-                        new String[] {
-                            Lists._ID
-                        }, null, null, null);
-                int listCount = lists.getCount();
-                lists.close();
+                // remove list and items
+                String listId = getArguments().getString("listid");
+                getActivity().getContentResolver().delete(Lists.buildListUri(listId), null,
+                        null);
+                getActivity().getContentResolver().delete(ListItems.CONTENT_URI,
+                        Lists.LIST_ID + "=?", new String[] {
+                            listId
+                        });
 
-                // do not remove last list
-                if (listCount > 1) {
-                    // remove list and items
-                    String listId = getArguments().getString("listid");
-                    getActivity().getContentResolver().delete(Lists.buildListUri(listId), null,
-                            null);
-                    getActivity().getContentResolver().delete(ListItems.CONTENT_URI,
-                            Lists.LIST_ID + "=?", new String[] {
-                                listId
-                            });
-
-                    // remove tab from view pager
-                    mListener.onListsChanged();
-                }
+                // remove tab from view pager
+                mListener.onListsChanged();
 
                 dismiss();
             }
@@ -120,16 +111,25 @@ public class ListManageDialogFragment extends DialogFragment {
     public void onActivityCreated(Bundle arg0) {
         super.onActivityCreated(arg0);
 
+        // pre-populate list title
         String listId = getArguments().getString("listid");
         final Cursor list = getActivity().getContentResolver()
                 .query(Lists.buildListUri(listId), new String[] {
                         Lists.NAME
                 }, null, null, null);
         list.moveToFirst();
-
         mTitle.setText(list.getString(0));
-
         list.close();
+
+        // do not allow removing last list, disable remove button
+        Cursor lists = getActivity().getContentResolver().query(Lists.CONTENT_URI,
+                new String[] {
+                    Lists._ID
+                }, null, null, null);
+        if (lists.getCount() == 1) {
+            mButtonNegative.setEnabled(false);
+        }
+        lists.close();
     }
 
     /**
