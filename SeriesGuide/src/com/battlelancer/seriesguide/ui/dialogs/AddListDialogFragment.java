@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
@@ -40,6 +41,9 @@ public class AddListDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View layout = inflater.inflate(R.layout.list_manage_dialog, null);
+
+        // set alternate dialog title
+        ((TextView) layout.findViewById(R.id.dialogTitle)).setText(R.string.list_add);
 
         // title
         mTitle = (EditText) layout.findViewById(R.id.title);
