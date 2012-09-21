@@ -9,6 +9,8 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -51,6 +53,9 @@ public class ListManageDialogFragment extends DialogFragment {
 
         // title
         mTitle = (EditText) layout.findViewById(R.id.title);
+        mTitle.setFilters(new InputFilter[] {
+                new CharAndDigitInputFilter()
+        });
 
         // buttons
         mButtonNegative = (Button) layout.findViewById(R.id.buttonNegative);
@@ -150,5 +155,22 @@ public class ListManageDialogFragment extends DialogFragment {
         // Create and show the dialog.
         DialogFragment newFragment = ListManageDialogFragment.newInstance(listId);
         newFragment.show(ft, "listmanagedialog");
+    }
+
+    /**
+     * Restricts text input to characters and digits preventing any special
+     * characters.
+     */
+    public static class CharAndDigitInputFilter implements InputFilter {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest,
+                int dstart, int dend) {
+            for (int i = start; i < end; i++) {
+                if (!Character.isLetterOrDigit(source.charAt(i))) {
+                    return "";
+                }
+            }
+            return null;
+        }
     }
 }

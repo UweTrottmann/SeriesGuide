@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.ui.OnListsChangedListener;
+import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment.CharAndDigitInputFilter;
 
 public class AddListDialogFragment extends DialogFragment {
 
@@ -47,6 +49,9 @@ public class AddListDialogFragment extends DialogFragment {
 
         // title
         mTitle = (EditText) layout.findViewById(R.id.title);
+        mTitle.setFilters(new InputFilter[] {
+                new CharAndDigitInputFilter()
+        });
 
         // buttons
         Button buttonNegative = (Button) layout.findViewById(R.id.buttonNegative);
