@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.google.analytics.tracking.android.EasyTracker;
 
 import java.util.ArrayList;
 
@@ -143,6 +144,12 @@ public class ListsDialogFragment extends DialogFragment implements
         mListView.setAdapter(mAdapter);
 
         getLoaderManager().initLoader(0, getArguments(), this);
+    }
+    
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("Lists Dialog");
     }
 
     @Override

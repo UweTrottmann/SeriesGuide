@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.ui.OnListsChangedListener;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class ListManageDialogFragment extends DialogFragment {
 
@@ -114,6 +115,12 @@ public class ListManageDialogFragment extends DialogFragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnListsChangedListener");
         }
+    }
+    
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().trackView("List Manage Dialog");
     }
 
     @Override
