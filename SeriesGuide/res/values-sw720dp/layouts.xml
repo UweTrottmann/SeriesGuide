@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item name="show_rowairtime" type="layout">@layout/show_rowairtime_wide</item>
+    <item name="shows_row" type="layout">@layout/shows_row_wide</item>
 
     <bool name="isLargeTablet">true</bool>
 

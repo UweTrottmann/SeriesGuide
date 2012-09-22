@@ -113,7 +113,7 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
                 R.id.seriesname, R.id.TextViewShowListNextEpisode, R.id.TextViewShowListAirtime,
                 R.id.TextViewShowListNetwork, R.id.showposter
         };
-        int layout = R.layout.show_rowairtime;
+        int layout = R.layout.shows_row;
         mAdapter = new SlowAdapter(this, layout, null, from, to, 0);
 
         // setup grid view

@@ -184,7 +184,7 @@ public class ListsFragment extends SherlockFragment implements
             final ViewHolder viewHolder;
 
             if (convertView == null) {
-                convertView = mInflater.inflate(R.layout.show_rowairtime, null);
+                convertView = mInflater.inflate(R.layout.shows_row, null);
 
                 viewHolder = new ViewHolder();
                 viewHolder.name = (TextView) convertView.findViewById(R.id.seriesname);

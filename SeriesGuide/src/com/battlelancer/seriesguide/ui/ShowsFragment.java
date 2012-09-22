@@ -416,7 +416,7 @@ public class ShowsFragment extends SherlockFragment implements
 
         private LayoutInflater mLayoutInflater;
 
-        private static final int LAYOUT = R.layout.show_rowairtime;
+        private static final int LAYOUT = R.layout.shows_row;
 
         public SlowAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);
