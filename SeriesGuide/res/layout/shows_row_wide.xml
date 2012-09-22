@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/showposter"
-        android:layout_width="@dimen/showgrid_posterWidth"
-        android:layout_height="@dimen/showgrid_posterHeight"
+        android:layout_width="102dp"
+        android:layout_height="150dp"
         android:layout_alignParentLeft="true"
         android:layout_marginRight="@dimen/large_padding"
         android:contentDescription="@string/description_poster"

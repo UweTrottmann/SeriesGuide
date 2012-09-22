@@ -6,8 +6,6 @@
     <dimen name="body_padding_large">15dp</dimen>
     <dimen name="item_padding">4dp</dimen>
     <dimen name="text_size_xlarge">24sp</dimen>
-    <dimen name="showgrid_padding">16dp</dimen>
-    <dimen name="showgrid_spacing">0dp</dimen>
     <dimen name="imagecontainer_height">250dp</dimen>
     <dimen name="addpager_width">450dp</dimen>
 
