@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item name="add_searchresult" type="layout">@layout/add_searchresult_wide</item>
+    <item name="search" type="layout">@layout/search_wide</item>
+
+</resources>
