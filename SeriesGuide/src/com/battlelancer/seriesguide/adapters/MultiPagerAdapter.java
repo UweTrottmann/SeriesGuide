@@ -1,5 +1,5 @@
 
-package com.battlelancer.seriesguide.util;
+package com.battlelancer.seriesguide.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
