@@ -7,6 +7,7 @@
     <item name="upcoming" type="layout">@layout/upcoming_multipane</item>
     <item name="search" type="layout">@layout/search_wide</item>
     <item name="show_info" type="layout">@layout/show_info_wide</item>
+    <item name="episode_pager" type="layout">@layout/episode_pager_wide</item>
     <item name="add_searchresult" type="layout">@layout/add_searchresult_wide</item>
     <item name="shows_row" type="layout">@layout/shows_row_wide</item>
 
