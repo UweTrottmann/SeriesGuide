@@ -23,7 +23,7 @@
     <dimen name="widget_text_middle">12sp</dimen>
     <dimen name="widget_text_large">13sp</dimen>
     <dimen name="showgrid_padding">8dp</dimen>
-    <dimen name="showgrid_columnWidth">300dp</dimen>
+    <dimen name="showgrid_columnWidth">290dp</dimen>
     <dimen name="showgrid_spacing">0dp</dimen>
     <dimen name="imagecontainer_height">180dp</dimen>
     <integer name="episodespane_weight">1</integer>

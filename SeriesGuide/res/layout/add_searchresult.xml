@@ -11,7 +11,10 @@
         android:layout_weight="1"
         android:background="?custom_list_selector"
         android:clickable="true"
-        android:focusable="true" >
+        android:focusable="true"
+        android:paddingBottom="@dimen/default_padding"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingTop="@dimen/default_padding" >
 
         <ImageView
             android:id="@+id/poster"
