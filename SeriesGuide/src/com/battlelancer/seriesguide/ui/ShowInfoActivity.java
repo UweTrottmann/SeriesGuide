@@ -124,8 +124,6 @@ public class ShowInfoActivity extends BaseActivity {
             case R.id.menu_manage_lists: {
                 ListsDialogFragment.showListsDialog(String.valueOf(getShowId()), 1,
                         getSupportFragmentManager());
-                
-                fireTrackerEvent("Manage lists");
                 return true;
             }
         }

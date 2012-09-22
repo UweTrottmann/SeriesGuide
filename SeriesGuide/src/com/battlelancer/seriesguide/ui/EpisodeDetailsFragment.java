@@ -188,7 +188,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             case R.id.menu_manage_lists: {
                 ListsDialogFragment.showListsDialog(String.valueOf(getEpisodeId()), 3,
                         getFragmentManager());
-                fireTrackerEvent("Manage lists");
                 return true;
             }
         }
