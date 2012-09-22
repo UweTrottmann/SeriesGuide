@@ -4,12 +4,17 @@
     <item
         android:id="@+id/menu_rate_trakt"
         android:icon="@drawable/trakt_heart"
-        android:showAsAction="ifRoom"
+        android:showAsAction="ifRoom|withText"
         android:title="@string/menu_rate_trakt"/>
     <item
         android:id="@+id/menu_share"
         android:actionProviderClass="com.actionbarsherlock.widget.ShareActionProvider"
         android:showAsAction="ifRoom"
         android:title="@string/share"/>
+    <item
+        android:id="@+id/menu_manage_lists"
+        android:icon="@drawable/ic_action_list"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/list_item_manage"/>
 
 </menu>
