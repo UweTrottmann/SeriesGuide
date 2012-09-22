@@ -75,7 +75,7 @@ public class EpisodesActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.episodes_multipane);
+        setContentView(R.layout.episodes);
 
         final int showId = getIntent().getIntExtra(InitBundle.SHOW_TVDBID, 0);
         final Series show = DBUtils.getShow(this, String.valueOf(showId));

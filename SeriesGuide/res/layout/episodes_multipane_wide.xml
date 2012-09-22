@@ -5,6 +5,12 @@
     android:baselineAligned="false"
     android:orientation="horizontal" >
 
+    <View
+        android:id="@+id/spacer_left"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
     <FrameLayout
         android:id="@+id/fragment_episodes"
         android:layout_width="0px"
@@ -42,5 +48,11 @@
                 android:layout_weight="1" />
         </LinearLayout>
     </FrameLayout>
+
+    <View
+        android:id="@+id/spacer_right"
+        android:layout_width="0px"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
 </LinearLayout>
