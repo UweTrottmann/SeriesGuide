@@ -3,7 +3,7 @@
 
     <item name="episodes_multipane" type="layout">@layout/episodes_wide</item>
     <item name="gotoseasons" type="layout">@layout/gotoseasons_empty</item>
-    <item name="overview" type="layout">@layout/overview_multipane</item>
+    <item name="overview" type="layout">@layout/overview_multipane_wide</item>
     <item name="search" type="layout">@layout/search_wide</item>
     <item name="upcoming_multipane" type="layout">@layout/upcoming_wide</item>
     <item name="add_searchresult" type="layout">@layout/add_searchresult_wide</item>
