@@ -73,11 +73,7 @@ public class ListsPagerAdapter extends MultiPagerAdapter {
 
     @Override
     public int getItemPosition(Object object) {
-        if (object instanceof ListsFragment) {
-            return POSITION_UNCHANGED;
-        } else {
             return POSITION_NONE;
-        }
     }
 
     public String getListId(int position) {
