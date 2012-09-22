@@ -6,6 +6,5 @@
     <item name="episodes" type="layout">@layout/episodes_multipane</item>
     <item name="upcoming" type="layout">@layout/upcoming_multipane</item>
     <item name="show_info" type="layout">@layout/show_info_wide</item>
-    <item name="search" type="layout">@layout/search_wide</item>
 
 </resources>
