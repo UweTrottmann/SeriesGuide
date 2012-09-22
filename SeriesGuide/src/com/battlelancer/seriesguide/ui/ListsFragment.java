@@ -25,10 +25,14 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -52,6 +56,8 @@ public class ListsFragment extends SherlockFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
 
     private static final int LOADER_ID = R.layout.lists_fragment;
+
+    private static final int CONTEXT_REMOVE_ID = 300;
 
     public static ListsFragment newInstance(String list_id) {
         ListsFragment f = new ListsFragment();
@@ -92,8 +98,36 @@ public class ListsFragment extends SherlockFragment implements
         list.setAdapter(mAdapter);
         list.setOnItemClickListener(this);
         list.setEmptyView(getView().findViewById(android.R.id.empty));
+        registerForContextMenu(list);
 
         getLoaderManager().initLoader(LOADER_ID, getArguments(), this);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        menu.add(0, CONTEXT_REMOVE_ID, 0, R.string.list_item_remove);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case CONTEXT_REMOVE_ID: {
+                AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+
+                String itemId = ((Cursor) mAdapter.getItem(info.position))
+                        .getString(ListItemsQuery.LIST_ITEM_ID);
+                getActivity().getContentResolver().delete(ListItems.buildListItemUri(itemId), null,
+                        null);
+                getActivity().getContentResolver().notifyChange(ListItems.CONTENT_WITH_DETAILS_URI,
+                        null);
+                return true;
+            }
+            default:
+                return super.onContextItemSelected(item);
+        }
+
     }
 
     @Override
