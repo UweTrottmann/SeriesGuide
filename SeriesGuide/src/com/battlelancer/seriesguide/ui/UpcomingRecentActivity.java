@@ -55,7 +55,7 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.upcoming_multipane);
+        setContentView(R.layout.upcoming);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
