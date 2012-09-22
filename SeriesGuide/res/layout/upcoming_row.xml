@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="@dimen/item_padding"
-    android:paddingRight="@dimen/body_padding"
+    android:paddingRight="@dimen/default_padding"
     android:paddingTop="@dimen/item_padding" >
 
     <com.battlelancer.seriesguide.WatchedBox
@@ -23,7 +23,7 @@
         android:layout_width="60dp"
         android:layout_height="90dp"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="@dimen/body_padding"
+        android:layout_marginRight="@dimen/default_padding"
         android:layout_toRightOf="@+id/watchedBoxUpcoming"
         android:contentDescription="@string/description_poster"
         android:scaleType="fitCenter"
