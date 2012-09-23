@@ -18,6 +18,7 @@ Version 2.9 *(in development)*
 * TWEAK GetGlue authentication in internal WebView instead of launching browser. Check if this works on Google TV!
 * TWEAK Remove text from progress indicators as suggested by the ADG.
 * TWEAK Added 'Check in' to shows long-press menus.
+* TWEAK More values for Time Offset.
 * FIX Assume correct default disabled 'Update only via Wi-Fi' in overview.
 * FIX Hide episodes airing later than in an hour from check in screen.
 * FIX Episodes did not get flagged when flagging whole season watched.
