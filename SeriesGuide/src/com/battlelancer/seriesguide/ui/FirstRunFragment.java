@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -49,9 +50,15 @@ public class FirstRunFragment extends SherlockFragment {
 
     protected static final String TAG = "FirstRunFragment";
 
+    private OnFirstRunDismissedListener mListener;
+
     public static FirstRunFragment newInstance() {
         FirstRunFragment f = new FirstRunFragment();
         return f;
+    }
+
+    public interface OnFirstRunDismissedListener {
+        public void onFirstRunDismissed();
     }
 
     public static boolean hasSeenFirstRunFragment(final Context context) {
@@ -62,6 +69,18 @@ public class FirstRunFragment extends SherlockFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.firstrun_fragment, container, false);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            mListener = (OnFirstRunDismissedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFirstRunDismissedListener");
+        }
     }
 
     @Override
@@ -104,9 +123,8 @@ public class FirstRunFragment extends SherlockFragment {
                         .getDefaultSharedPreferences(getActivity());
                 prefs.edit().putBoolean(PREF_KEY_FIRSTRUN, true).commit();
 
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ShowsFragment f = ShowsFragment.newInstance();
-                ft.replace(R.id.shows_fragment, f).commit();
+                // display shows fragment again, better use an interface!
+                mListener.onFirstRunDismissed();
             }
         });
 

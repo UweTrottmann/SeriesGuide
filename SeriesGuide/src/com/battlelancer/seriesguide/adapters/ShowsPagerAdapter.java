@@ -1,19 +1,29 @@
+
 package com.battlelancer.seriesguide.adapters;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import com.battlelancer.seriesguide.ui.FirstRunFragment;
 import com.battlelancer.seriesguide.ui.ShowsFragment;
 
 public class ShowsPagerAdapter extends MultiPagerAdapter {
 
-    public ShowsPagerAdapter(FragmentManager fm) {
+    private Context mContext;
+
+    public ShowsPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
+        mContext = context;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return ShowsFragment.newInstance();
+        if (!FirstRunFragment.hasSeenFirstRunFragment(mContext)) {
+            return FirstRunFragment.newInstance();
+        } else {
+            return ShowsFragment.newInstance();
+        }
     }
 
     @Override

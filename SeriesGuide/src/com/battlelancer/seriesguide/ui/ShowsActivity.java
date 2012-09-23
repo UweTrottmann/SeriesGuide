@@ -45,6 +45,7 @@ import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
 import com.battlelancer.seriesguide.adapters.ShowsPagerAdapter;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
@@ -69,7 +70,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * episodes.
  */
 public class ShowsActivity extends BaseActivity implements CompatActionBarNavListener,
-        OnListsChangedListener {
+        OnListsChangedListener, OnFirstRunDismissedListener {
 
     private static final String TAG = "Shows";
 
@@ -126,7 +127,7 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         updatePreferences(prefs);
 
         // set up adapters
-        mShowsAdapter = new ShowsPagerAdapter(getSupportFragmentManager());
+        mShowsAdapter = new ShowsPagerAdapter(getSupportFragmentManager(), this);
         mListsAdapter = new ListsPagerAdapter(getSupportFragmentManager(), this);
 
         // try to restore previously set show filter
@@ -152,19 +153,6 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
 
         // FIXME force the options menu to be shown
         // invalidateOptionsMenu();
-
-        // TODO First run fragment
-        // if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
-        // mFragment = FirstRunFragment.newInstance();
-        //
-        // getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment,
-        // mFragment)
-        // .commit();
-        // } else {
-        // if (savedInstanceState == null) {
-        // showShowsFragment();
-        // }
-        // }
     }
 
     private void setUpActionBar(final SharedPreferences prefs, int navSelection) {
@@ -666,5 +654,10 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         mListsAdapter.onListsChanged();
         // update indicator and view pager
         mIndicator.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onFirstRunDismissed() {
+        mShowsAdapter.notifyDataSetChanged();
     }
 }
