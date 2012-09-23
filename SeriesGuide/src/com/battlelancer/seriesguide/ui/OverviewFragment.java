@@ -51,6 +51,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.FlagTask;
@@ -193,6 +194,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         menu.findItem(R.id.menu_calendarevent).setEnabled(isEpisodeVisible);
         menu.findItem(R.id.menu_share).setEnabled(isEpisodeVisible);
         menu.findItem(R.id.menu_rate_trakt).setEnabled(isEpisodeVisible);
+        menu.findItem(R.id.menu_manage_lists).setEnabled(isEpisodeVisible);
     }
 
     @Override
@@ -244,6 +246,11 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 onShareEpisode(ShareMethod.OTHER_SERVICES, true);
 
                 fireTrackerEvent("Share (apps)");
+                return true;
+            }
+            case R.id.menu_manage_lists: {
+                ListsDialogFragment.showListsDialog(String.valueOf(mEpisodeId), 3,
+                        getFragmentManager());
                 return true;
             }
             case R.id.menu_search: {
