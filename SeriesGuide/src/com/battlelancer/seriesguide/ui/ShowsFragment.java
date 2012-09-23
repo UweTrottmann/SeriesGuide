@@ -86,23 +86,23 @@ public class ShowsFragment extends SherlockFragment implements
     public static final String FILTER_ID = "filterid";
 
     // context menu items
-    private static final int CONTEXT_DELETE = 200;
+    private static final int CONTEXT_DELETE_ID = 200;
 
-    private static final int CONTEXT_UPDATESHOW = 201;
+    private static final int CONTEXT_UPDATE_ID = 201;
 
-    private static final int CONTEXT_MARKNEXT = 202;
+    private static final int CONTEXT_FLAG_NEXT_ID = 202;
 
-    private static final int CONTEXT_FAVORITE = 203;
+    private static final int CONTEXT_FAVORITE_ID = 203;
 
-    private static final int CONTEXT_UNFAVORITE = 204;
+    private static final int CONTEXT_UNFAVORITE_ID = 204;
 
-    private static final int CONTEXT_HIDE = 205;
+    private static final int CONTEXT_HIDE_ID = 205;
 
-    private static final int CONTEXT_UNHIDE = 206;
+    private static final int CONTEXT_UNHIDE_ID = 206;
 
-    private static final int CONTEXT_LISTS_ADD = 207;
+    private static final int CONTEXT_MANAGE_LISTS_ID = 207;
 
-    private static final int CONTEXT_CHECKIN = 208;
+    private static final int CONTEXT_CHECKIN_ID = 208;
 
     // Show Filter Ids
     private static final int SHOWFILTER_ALL = 0;
@@ -182,22 +182,22 @@ public class ShowsFragment extends SherlockFragment implements
                 }, null, null, null);
         show.moveToFirst();
         if (show.getInt(0) == 0) {
-            menu.add(0, CONTEXT_FAVORITE, 2, R.string.context_favorite);
+            menu.add(0, CONTEXT_FAVORITE_ID, 2, R.string.context_favorite);
         } else {
-            menu.add(0, CONTEXT_UNFAVORITE, 2, R.string.context_unfavorite);
+            menu.add(0, CONTEXT_UNFAVORITE_ID, 2, R.string.context_unfavorite);
         }
         if (show.getInt(1) == 0) {
-            menu.add(0, CONTEXT_HIDE, 3, R.string.context_hide);
+            menu.add(0, CONTEXT_HIDE_ID, 3, R.string.context_hide);
         } else {
-            menu.add(0, CONTEXT_UNHIDE, 3, R.string.context_unhide);
+            menu.add(0, CONTEXT_UNHIDE_ID, 3, R.string.context_unhide);
         }
         show.close();
 
-        menu.add(0, CONTEXT_CHECKIN, 0, R.string.checkin);
-        menu.add(0, CONTEXT_MARKNEXT, 1, R.string.context_marknext);
-        menu.add(0, CONTEXT_LISTS_ADD, 4, R.string.list_item_manage);
-        menu.add(0, CONTEXT_UPDATESHOW, 5, R.string.context_updateshow);
-        menu.add(0, CONTEXT_DELETE, 6, R.string.delete_show);
+        menu.add(0, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
+        menu.add(0, CONTEXT_FLAG_NEXT_ID, 1, R.string.context_marknext);
+        menu.add(0, CONTEXT_MANAGE_LISTS_ID, 4, R.string.list_item_manage);
+        menu.add(0, CONTEXT_UPDATE_ID, 5, R.string.context_updateshow);
+        menu.add(0, CONTEXT_DELETE_ID, 6, R.string.delete_show);
     }
 
     @Override
@@ -205,7 +205,7 @@ public class ShowsFragment extends SherlockFragment implements
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
-            case CONTEXT_CHECKIN: {
+            case CONTEXT_CHECKIN_ID: {
                 Cursor show = (Cursor) mAdapter.getItem(info.position);
                 final String episodeId = show.getString(ShowsQuery.NEXTEPISODE);
                 if (TextUtils.isEmpty(episodeId)) {
@@ -233,7 +233,7 @@ public class ShowsFragment extends SherlockFragment implements
                 }
                 return true;
             }
-            case CONTEXT_FAVORITE: {
+            case CONTEXT_FAVORITE_ID: {
                 fireTrackerEvent("Favorite show");
 
                 ContentValues values = new ContentValues();
@@ -247,7 +247,7 @@ public class ShowsFragment extends SherlockFragment implements
                         .show();
                 return true;
             }
-            case CONTEXT_UNFAVORITE: {
+            case CONTEXT_UNFAVORITE_ID: {
                 fireTrackerEvent("Unfavorite show");
 
                 ContentValues values = new ContentValues();
@@ -258,7 +258,7 @@ public class ShowsFragment extends SherlockFragment implements
                         .show();
                 return true;
             }
-            case CONTEXT_HIDE: {
+            case CONTEXT_HIDE_ID: {
                 fireTrackerEvent("Hidden show");
 
                 ContentValues values = new ContentValues();
@@ -269,7 +269,7 @@ public class ShowsFragment extends SherlockFragment implements
                         .show();
                 return true;
             }
-            case CONTEXT_UNHIDE: {
+            case CONTEXT_UNHIDE_ID: {
                 fireTrackerEvent("Unhidden show");
 
                 ContentValues values = new ContentValues();
@@ -280,19 +280,19 @@ public class ShowsFragment extends SherlockFragment implements
                         .show();
                 return true;
             }
-            case CONTEXT_DELETE:
+            case CONTEXT_DELETE_ID:
                 fireTrackerEvent("Delete show");
 
                 if (!TaskManager.getInstance(getActivity()).isUpdateTaskRunning(true)) {
                     showDeleteDialog(info.id);
                 }
                 return true;
-            case CONTEXT_UPDATESHOW:
+            case CONTEXT_UPDATE_ID:
                 fireTrackerEvent("Update show");
 
                 ((ShowsActivity) getActivity()).performUpdateTask(false, String.valueOf(info.id));
                 return true;
-            case CONTEXT_MARKNEXT:
+            case CONTEXT_FLAG_NEXT_ID:
                 fireTrackerEvent("Mark next episode");
 
                 Cursor show = (Cursor) mAdapter.getItem(info.position);
@@ -300,7 +300,7 @@ public class ShowsFragment extends SherlockFragment implements
                         show.getInt(ShowsQuery.NEXTEPISODE));
 
                 return true;
-            case CONTEXT_LISTS_ADD: {
+            case CONTEXT_MANAGE_LISTS_ID: {
                 ListsDialogFragment.showListsDialog(String.valueOf(info.id), 1,
                         getFragmentManager());
                 return true;
