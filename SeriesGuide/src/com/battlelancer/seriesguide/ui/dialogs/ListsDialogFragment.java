@@ -22,7 +22,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.Checkable;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 
@@ -36,7 +39,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 import java.util.ArrayList;
 
 public class ListsDialogFragment extends DialogFragment implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
 
     public static ListsDialogFragment newInstance(String itemId, int itemType) {
         ListsDialogFragment f = new ListsDialogFragment();
@@ -79,7 +82,7 @@ public class ListsDialogFragment extends DialogFragment implements
                 // add item to selected lists
                 String itemId = getArguments().getString("itemid");
                 int itemType = getArguments().getInt("itemtype");
-                SparseBooleanArray checkedLists = mListView.getCheckedItemPositions();
+                SparseBooleanArray checkedLists = mAdapter.getCheckedPositions();
 
                 final ArrayList<ContentProviderOperation> batch = com.battlelancer.seriesguide.util.Lists
                         .newArrayList();
@@ -132,7 +135,11 @@ public class ListsDialogFragment extends DialogFragment implements
 
         // lists list
         mListView = (ListView) layout.findViewById(R.id.list);
-        mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        /*
+         * As using CHOICE_MODE_MULTIPLE does not seem to work before Jelly
+         * Bean, do everything ourselves.
+         */
+        mListView.setOnItemClickListener(this);
 
         return layout;
     }
@@ -151,6 +158,13 @@ public class ListsDialogFragment extends DialogFragment implements
     public void onStart() {
         super.onStart();
         EasyTracker.getTracker().trackView("Lists Dialog");
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Checkable checkable = (Checkable) view;
+        checkable.toggle();
+        mAdapter.setItemChecked(position, checkable.isChecked());
     }
 
     @Override
@@ -177,10 +191,12 @@ public class ListsDialogFragment extends DialogFragment implements
     private class ListsAdapter extends CursorAdapter {
 
         private LayoutInflater mInflater;
+        private SparseBooleanArray mCheckedItems;
 
         public ListsAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);
             mInflater = LayoutInflater.from(context);
+            mCheckedItems = new SparseBooleanArray();
         }
 
         @Override
@@ -206,7 +222,8 @@ public class ListsDialogFragment extends DialogFragment implements
             // check list entry if this item is already added to it
             String itemId = mCursor.getString(ListsQuery.LIST_ITEM_ID);
             boolean isInList = !TextUtils.isEmpty(itemId);
-            mListView.setItemChecked(position, isInList);
+            mCheckedItems.put(position, isInList);
+            checkedView.setChecked(isInList);
 
             return v;
         }
@@ -219,6 +236,14 @@ public class ListsDialogFragment extends DialogFragment implements
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             View v = mInflater.inflate(R.layout.list_dialog_row, parent, false);
             return v;
+        }
+
+        public void setItemChecked(int position, boolean value) {
+            mCheckedItems.put(position, value);
+        }
+
+        public SparseBooleanArray getCheckedPositions() {
+            return mCheckedItems;
         }
 
     }
