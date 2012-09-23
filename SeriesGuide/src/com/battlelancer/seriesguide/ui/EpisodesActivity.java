@@ -18,6 +18,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -49,13 +50,15 @@ import java.util.List;
  * Hosts a fragment which displays episodes of a season. Used on smaller screens
  * which do not allow for multi-pane layouts.
  */
-public class EpisodesActivity extends BaseActivity {
+public class EpisodesActivity extends BaseActivity implements OnSharedPreferenceChangeListener {
 
     private EpisodesFragment mEpisodesFragment;
 
     private EpisodePagerAdapter mAdapter;
 
     private ViewPager mPager;
+
+    private TitlePageIndicator mIndicator;
 
     private boolean mDualPane;
 
@@ -79,7 +82,7 @@ public class EpisodesActivity extends BaseActivity {
 
         final int showId = getIntent().getIntExtra(InitBundle.SHOW_TVDBID, 0);
         final Series show = DBUtils.getShow(this, String.valueOf(showId));
-        final int seasonId = getIntent().getIntExtra(InitBundle.SEASON_TVDBID, 0);
+        final int seasonId = getSeasonId();
         if (show == null || seasonId == 0) {
             finish();
             return;
@@ -91,7 +94,7 @@ public class EpisodesActivity extends BaseActivity {
         actionBar.setDisplayShowTitleEnabled(true);
         String showname = show.getTitle();
 
-        final int seasonNumber = getIntent().getIntExtra(InitBundle.SEASON_NUMBER, -1);
+        final int seasonNumber = getSeasonNumber();
         final String seasonTitle = Utils.getSeasonString(this, seasonNumber);
         setTitle(showname + " " + seasonTitle);
         actionBar.setTitle(showname);
@@ -122,36 +125,18 @@ public class EpisodesActivity extends BaseActivity {
             final ImageView background = (ImageView) findViewById(R.id.background);
             Utils.setPosterBackground(background, show.getPoster(), this);
 
-            // set adapters for pager and indicator
-            Constants.EpisodeSorting sorting = Utils.getEpisodeSorting(this);
-
-            Cursor episodeCursor = getContentResolver().query(
-                    Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(seasonId)),
-                    new String[] {
-                            Episodes._ID, Episodes.NUMBER
-                    }, null, null, sorting.query());
-
-            mEpisodes = new ArrayList<Episode>();
-            if (episodeCursor != null) {
-                while (episodeCursor.moveToNext()) {
-                    Episode ep = new Episode();
-                    ep.episodeId = episodeCursor.getInt(0);
-                    ep.episodeNumber = episodeCursor.getInt(1);
-                    ep.seasonNumber = seasonNumber;
-                    mEpisodes.add(ep);
-                }
-            }
-
             final SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(getApplicationContext());
 
+            // set adapters for pager and indicator
+            updateEpisodeList();
             mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), mEpisodes, prefs);
             mPager = (ViewPager) pagerFragment;
             mPager.setAdapter(mAdapter);
 
-            TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
-            indicator.setViewPager(mPager, 0);
-            indicator.setOnPageChangeListener(new OnPageChangeListener() {
+            mIndicator = (TitlePageIndicator) findViewById(R.id.indicator);
+            mIndicator.setViewPager(mPager, 0);
+            mIndicator.setOnPageChangeListener(new OnPageChangeListener() {
 
                 @Override
                 public void onPageSelected(int position) {
@@ -178,15 +163,35 @@ public class EpisodesActivity extends BaseActivity {
         }
     }
 
+    private int getSeasonId() {
+        return getIntent().getIntExtra(InitBundle.SEASON_TVDBID, 0);
+    }
+
+    private int getSeasonNumber() {
+        return getIntent().getIntExtra(InitBundle.SEASON_NUMBER, -1);
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
+
+        // listen to changes to the sorting preference
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(this);
+
         EasyTracker.getInstance().activityStart(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+
+        // stop listening to changes to the sorting preference
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        prefs.unregisterOnSharedPreferenceChangeListener(this);
+
         EasyTracker.getInstance().activityStop(this);
     }
 
@@ -235,5 +240,44 @@ public class EpisodesActivity extends BaseActivity {
         super.onBackPressed();
         overridePendingTransition(R.anim.fragment_slide_right_enter,
                 R.anim.fragment_slide_right_exit);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        // update the viewpager with new sorting, if shown
+        if (key.equals(SeriesGuidePreferences.KEY_EPISODE_SORT_ORDER) && mDualPane) {
+            updateEpisodeList();
+            mAdapter.updateEpisodeList(mEpisodes);
+            mIndicator.notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * Updates the episode list, using the current sorting
+     */
+    private void updateEpisodeList() {
+        Constants.EpisodeSorting sorting = Utils.getEpisodeSorting(this);
+
+        Cursor episodeCursor = getContentResolver().query(
+                Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(getSeasonId())),
+                new String[] {
+                        Episodes._ID, Episodes.NUMBER
+                }, null, null, sorting.query());
+
+        ArrayList<Episode> episodeList = new ArrayList<Episode>();
+        int seasonNumber = getSeasonNumber();
+        if (episodeCursor != null) {
+            while (episodeCursor.moveToNext()) {
+                Episode ep = new Episode();
+                ep.episodeId = episodeCursor.getInt(0);
+                ep.episodeNumber = episodeCursor.getInt(1);
+                ep.seasonNumber = seasonNumber;
+                episodeList.add(ep);
+            }
+        }
+
+        episodeCursor.close();
+
+        mEpisodes = episodeList;
     }
 }

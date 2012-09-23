@@ -186,6 +186,13 @@ public class EpisodeDetailsActivity extends BaseActivity {
             Episode episode = mEpisodes.get(position);
             return Utils.getEpisodeNumber(mPrefs, episode.seasonNumber, episode.episodeNumber);
         }
+        
+        public void updateEpisodeList(List<Episode> list){
+            if (list != null) {
+                mEpisodes = list;
+                notifyDataSetChanged();
+            }
+        }
 
     }
 }
