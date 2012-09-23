@@ -30,21 +30,21 @@ public class Constants {
     public static final SimpleDateFormat theTVDBDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public static enum EpisodeSorting {
-        LATEST_FIRST(0, "latestfirst", Episodes.NUMBER + " desc"),
+        LATEST_FIRST(0, "latestfirst", Episodes.NUMBER + " DESC"),
 
-        OLDEST_FIRST(1, "oldestfirst", Episodes.NUMBER + " asc"),
+        OLDEST_FIRST(1, "oldestfirst", Episodes.NUMBER + " ASC"),
 
-        UNWATCHED_FIRST(2, "unwatchedfirst", Episodes.WATCHED + " asc," + Episodes.NUMBER + " asc"),
+        UNWATCHED_FIRST(2, "unwatchedfirst", Episodes.WATCHED + " ASC," + Episodes.NUMBER + " ASC"),
 
-        ALPHABETICAL_ASC(3, "atoz", Episodes.TITLE + " asc"),
+        ALPHABETICAL_ASC(3, "atoz", Episodes.TITLE + " COLLATE NOCASE ASC"),
 
-        ALPHABETICAL_DESC(4, "ztoa", Episodes.TITLE + " desc"),
+        ALPHABETICAL_DESC(4, "ztoa", Episodes.TITLE + " COLLATE NOCASE DESC"),
 
-        DVDLATEST_FIRST(5, "dvdlatestfirst", Episodes.DVDNUMBER + " desc," + Episodes.NUMBER
-                + " desc"),
+        DVDLATEST_FIRST(5, "dvdlatestfirst", Episodes.DVDNUMBER + " DESC," + Episodes.NUMBER
+                + " DESC"),
 
-        DVDOLDEST_FIRST(6, "dvdoldestfirst", Episodes.DVDNUMBER + " asc," + Episodes.NUMBER
-                + " asc");
+        DVDOLDEST_FIRST(6, "dvdoldestfirst", Episodes.DVDNUMBER + " ASC," + Episodes.NUMBER
+                + " ASC");
 
         private final int index;
 
@@ -89,9 +89,9 @@ public class Constants {
     }
 
     public static enum SeasonSorting {
-        LATEST_FIRST(0, "latestfirst", Seasons.COMBINED + " desc"),
+        LATEST_FIRST(0, "latestfirst", Seasons.COMBINED + " DESC"),
 
-        OLDEST_FIRST(1, "oldestfirst", Seasons.COMBINED + " asc");
+        OLDEST_FIRST(1, "oldestfirst", Seasons.COMBINED + " ASC");
 
         private final int index;
 
@@ -136,15 +136,16 @@ public class Constants {
     }
 
     public static enum ShowSorting {
-        ALPHABETIC(0, "alphabetic", Shows.TITLE + " asc"),
+        ALPHABETIC(0, "alphabetic", Shows.TITLE + " COLLATE NOCASE ASC"),
 
-        UPCOMING(1, "upcoming", Shows.NEXTAIRDATEMS + " asc," + Shows.AIRSTIME + " asc,"
-                + Shows.TITLE + " asc"),
+        UPCOMING(1, "upcoming", Shows.NEXTAIRDATEMS + " ASC," + Shows.AIRSTIME + " ASC,"
+                + Shows.TITLE + " COLLATE NOCASE ASC"),
 
-        FAVORITES_FIRST(2, "favorites", Shows.FAVORITE + " desc," + Shows.TITLE + " asc"),
+        FAVORITES_FIRST(2, "favorites", Shows.FAVORITE + " DESC," + Shows.TITLE
+                + " COLLATE NOCASE ASC"),
 
-        FAVORITES_UPCOMING(3, "favoritesupcoming", Shows.FAVORITE + " desc," + Shows.NEXTAIRDATEMS
-                + " asc," + Shows.AIRSTIME + " asc," + Shows.TITLE + " asc");
+        FAVORITES_UPCOMING(3, "favoritesupcoming", Shows.FAVORITE + " DESC," + Shows.NEXTAIRDATEMS
+                + " ASC," + Shows.AIRSTIME + " ASC," + Shows.TITLE + " COLLATE NOCASE ASC");
 
         private final int index;
 
