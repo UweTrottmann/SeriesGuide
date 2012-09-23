@@ -97,7 +97,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         String LIST_ITEMS_WITH_DETAILS = "(SELECT "
                 + Selections.SHOWS_COLUMNS + " FROM "
                 + "((SELECT * FROM listitems WHERE item_type=1) AS listitems "
-                + "LEFT OUTER JOIN series ON listitems.item_ref_id=series._id) "
+                + "LEFT OUTER JOIN (SELECT _id as series_id,* FROM series) as series ON item_ref_id=series_id) "
 
                 + "UNION SELECT " + Selections.SEASONS_COLUMNS + " FROM "
                 + "((SELECT * FROM listitems WHERE item_type=2) AS listitems LEFT OUTER JOIN ("
@@ -110,9 +110,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     private interface Selections {
-        String LIST_ITEMS_COLUMNS = "listitems._id,list_item_id,list_id,item_type,item_ref_id";
+        String LIST_ITEMS_COLUMNS = "_id,list_item_id,list_id,item_type,item_ref_id";
         String SHOWS_COLUMNS = LIST_ITEMS_COLUMNS
-                + ",series._id AS series_id,seriestitle,overview,poster,network,airstime,airsdayofweek";
+                + ",series_id,seriestitle,overview,poster,network,airstime,airsdayofweek";
         String SEASONS_COLUMNS = LIST_ITEMS_COLUMNS
                 + ",series_id,seriestitle,combinednr AS overview,poster,network,airstime,airsdayofweek";
         String EPISODES_COLUMNS = LIST_ITEMS_COLUMNS
