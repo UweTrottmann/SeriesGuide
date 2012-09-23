@@ -227,6 +227,8 @@ public class ShowsFragment extends SherlockFragment implements
                             episode.getInt(1), episodeString);
                     f.show(getFragmentManager(), "checkin-dialog");
 
+                }
+                if (episode != null) {
                     episode.close();
                 }
                 return true;

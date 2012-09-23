@@ -587,12 +587,14 @@ public class Utils {
                         new String[] {
                             Shows._ID
                         }, null, null, null);
-                while (shows.moveToNext()) {
-                    String showId = shows.getString(0);
-                    DBUtils.updateLatestEpisode(mContext, showId, isOnlyFutureEpisodes,
-                            isNoSpecials, prefs);
+                if (shows != null) {
+                    while (shows.moveToNext()) {
+                        String showId = shows.getString(0);
+                        DBUtils.updateLatestEpisode(mContext, showId, isOnlyFutureEpisodes,
+                                isNoSpecials, prefs);
+                    }
+                    shows.close();
                 }
-                shows.close();
             }
 
             // Adapter gets notified by ContentProvider
