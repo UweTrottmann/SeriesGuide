@@ -10,10 +10,29 @@ Version 2.9 *(in development)*
 
 ### Detailed changes:
 
+#### 2.9.3beta (2012-09-23)
+
+* FEATURE Basic lists, add shows, seasons or episodes to them. No syncing with trakt.tv, yet.
+* TWEAK More UI tweaks, e.g. nicer wide layouts on large tablets and it should look nicer on the Nexus 7.
+* TWEAK When sorting by alphabet, ignore case.
+* TWEAK GetGlue authentication in internal WebView instead of launching browser. Check if this works on Google TV!
+* TWEAK Remove text from progress indicators as suggested by the ADG.
+* TWEAK Added 'Check in' to shows long-press menus.
+* FIX Assume correct default disabled 'Update only via Wi-Fi' in overview.
+* FIX Hide episodes airing later than in an hour from check in screen.
+* FIX Episodes did not get flagged when flagging whole season watched.
+* FIX Always update the TVDb rating, allow to update everything when changing the content language.
+* FIX Do not notify about specials if the user chose to hide them.
+* FIX Next episode algorithm will show all specials again if the user did not hide them.
+* FIX Display correct collected flag state in overview.
+* FIX Jelly Bean: Up in activity screen always returns to the show list.
+* NOTICE Latest translations from crowdin.
+
 #### 2.9.2beta (2012-09-16)
 
 * TWEAK Refined UI design with more custom elements, layout unification.
 * TWEAK Improved trakt.tv credentials dialog behavior, set up instructions.
+* TWEAK Name list widget according to app version. Yay, no more guesswork!
 * NOTICE Updated ViewPagerIndicator to 2.4.1.
 
 #### 2.9.1beta (2012-08-19)
