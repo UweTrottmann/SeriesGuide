@@ -347,6 +347,9 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
             case EPISODE_WATCHED_PREVIOUS:
                 mContext.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
                 break;
+            case SEASON_WATCHED:
+                mContext.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
+                break;
             default:
                 break;
         }
