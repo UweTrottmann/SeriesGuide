@@ -36,7 +36,7 @@ import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
-import com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity;
+import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
@@ -141,7 +141,7 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                         } else {
                             // authenticate already here
                             Intent i = new Intent(getSherlockActivity(),
-                                    PrepareRequestTokenActivity.class);
+                                    GetGlueAuthActivity.class);
                             startActivity(i);
                         }
                     }

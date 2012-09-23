@@ -17,7 +17,7 @@
 
 package com.battlelancer.seriesguide.getglueapi;
 
-import android.content.Intent;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -25,11 +25,17 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.ui.BaseActivity;
+import com.battlelancer.seriesguide.util.Utils;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
@@ -44,7 +50,7 @@ import oauth.signpost.exception.OAuthNotAuthorizedException;
  * Executes the OAuthRequestTokenTask to retrieve a request token and authorize
  * it by the user. After the request is authorized, this will get the callback.
  */
-public class PrepareRequestTokenActivity extends BaseActivity {
+public class GetGlueAuthActivity extends BaseActivity {
 
     final String TAG = "PrepareRequestTokenActivity";
 
@@ -52,14 +58,57 @@ public class PrepareRequestTokenActivity extends BaseActivity {
 
     private OAuthProvider mProvider;
 
+    private WebView mWebview;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.oauthscreen);
+
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
+        mWebview = new WebView(this);
+        setContentView(mWebview);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.oauthmessage));
         actionBar.setDisplayShowTitleEnabled(true);
+
+        final SherlockFragmentActivity activity = this;
+        mWebview.setWebChromeClient(new WebChromeClient() {
+            public void onProgressChanged(WebView view, int progress) {
+                /*
+                 * Activities and WebViews measure progress with different
+                 * scales. The progress meter will automatically disappear when
+                 * we reach 100%
+                 */
+                activity.setSupportProgress(progress * 1000);
+            }
+        });
+        mWebview.setWebViewClient(new WebViewClient() {
+            public void onReceivedError(WebView view, int errorCode, String description,
+                    String failingUrl) {
+                Toast.makeText(activity,
+                        getString(R.string.getglue_authfailed) + " " + description,
+                        Toast.LENGTH_LONG).show();
+
+                finish();
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url.startsWith(GetGlue.OAUTH_CALLBACK_URL)) {
+                    Uri uri = Uri.parse(url);
+                    new RetrieveAccessTokenTask(mConsumer, mProvider,
+                            PreferenceManager.getDefaultSharedPreferences(activity)).execute(uri);
+
+                    finish();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        // mWebview.getSettings().setJavaScriptEnabled(true);
 
         Resources res = getResources();
         this.mConsumer = new CommonsHttpOAuthConsumer(res.getString(R.string.getglue_consumer_key),
@@ -68,26 +117,7 @@ public class PrepareRequestTokenActivity extends BaseActivity {
                 GetGlue.AUTHORIZE_URL);
 
         Log.i(TAG, "Starting task to retrieve request token.");
-        new OAuthRequestTokenTask(this, mConsumer, mProvider).execute();
-    }
-
-    /**
-     * Called when the OAuthRequestTokenTask finishes (user has authorized the
-     * request token). The callback URL will be intercepted here.
-     */
-    @Override
-    public void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-        final Uri uri = intent.getData();
-        if (uri != null && uri.getScheme().equals(GetGlue.OAUTH_CALLBACK_SCHEME)) {
-            Log.i(TAG, "Callback received, retrieving Access Token");
-
-            new RetrieveAccessTokenTask(mConsumer, mProvider,
-                    PreferenceManager.getDefaultSharedPreferences(this)).execute(uri);
-
-            finish();
-        }
+        new OAuthRequestTokenTask(this, mConsumer, mProvider, mWebview).execute();
     }
 
     public class RetrieveAccessTokenTask extends AsyncTask<Uri, Void, Integer> {
@@ -152,4 +182,65 @@ public class PrepareRequestTokenActivity extends BaseActivity {
         }
     }
 
+    public static class OAuthRequestTokenTask extends AsyncTask<Void, Void, String> {
+        final String TAG = "OAuthRequestTokenTask";
+
+        private Context mContext;
+
+        private OAuthConsumer mConsumer;
+
+        private OAuthProvider mProvider;
+
+        private WebView mWebView;
+
+        public OAuthRequestTokenTask(Context context, OAuthConsumer consumer,
+                OAuthProvider provider, WebView webView) {
+            mContext = context;
+            mConsumer = consumer;
+            mProvider = provider;
+            mWebView = webView;
+        }
+
+        /**
+         * Retrieve the OAuth Request Token and present a browser to the user to
+         * authorize the token.
+         */
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                Log.i(TAG, "Retrieving request token from GetGlue servers");
+                String authUrl = mProvider.retrieveRequestToken(mConsumer,
+                        GetGlue.OAUTH_CALLBACK_URL);
+
+                Log.i(TAG, "Popping a browser with the authorize URL");
+                mWebView.loadUrl(authUrl);
+            } catch (OAuthMessageSignerException e) {
+                Utils.trackException(mContext, e);
+                Log.w(TAG, e);
+                return e.getMessage();
+            } catch (OAuthNotAuthorizedException e) {
+                Utils.trackException(mContext, e);
+                Log.w(TAG, e);
+                return e.getMessage();
+            } catch (OAuthExpectationFailedException e) {
+                Utils.trackException(mContext, e);
+                Log.w(TAG, e);
+                return e.getMessage();
+            } catch (OAuthCommunicationException e) {
+                Utils.trackException(mContext, e);
+                Log.w(TAG, e);
+                return e.getMessage();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result != null) {
+                Toast.makeText(mContext, result, Toast.LENGTH_LONG).show();
+                ((GetGlueAuthActivity) mContext).finish();
+            }
+        }
+
+    }
 }

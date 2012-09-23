@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.hardware.touchscreen"
@@ -82,19 +82,8 @@
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity
-            android:name="com.battlelancer.seriesguide.getglueapi.PrepareRequestTokenActivity"
+            android:name="com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity"
             android:launchMode="singleTask" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="getgluecallback"
-                    android:scheme="sgoauth" />
-            </intent-filter>
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
@@ -158,9 +147,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure">
+        <activity android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure" >
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.CheckinActivity" >
@@ -256,7 +245,6 @@
             android:name="com.battlelancer.seriesguide.appwidget.AppWidgetLarge$UpdateServiceLarge"
             android:enabled="@bool/isFroyoOrLower" >
         </service>
-        
     </application>
 
 </manifest>
