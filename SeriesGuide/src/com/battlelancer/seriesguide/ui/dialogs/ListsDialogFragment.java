@@ -122,8 +122,9 @@ public class ListsDialogFragment extends DialogFragment implements
                     // Failures like constraint violation aren't recoverable
                     throw new RuntimeException("Problem applying batch operation", e);
                 }
-                
-                getActivity().getContentResolver().notifyChange(ListItems.CONTENT_WITH_DETAILS_URI, null);
+
+                getActivity().getContentResolver().notifyChange(ListItems.CONTENT_WITH_DETAILS_URI,
+                        null);
 
                 dismiss();
             }
@@ -145,7 +146,7 @@ public class ListsDialogFragment extends DialogFragment implements
 
         getLoaderManager().initLoader(0, getArguments(), this);
     }
-    
+
     @Override
     public void onStart() {
         super.onStart();
@@ -216,8 +217,7 @@ public class ListsDialogFragment extends DialogFragment implements
 
         @Override
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            View v = mInflater.inflate(android.R.layout.simple_list_item_multiple_choice, parent,
-                    false);
+            View v = mInflater.inflate(R.layout.list_dialog_row, parent, false);
             return v;
         }
 
