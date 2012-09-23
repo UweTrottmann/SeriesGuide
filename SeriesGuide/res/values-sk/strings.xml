@@ -18,7 +18,6 @@
   <string name="description_poster">Zobraziť plagát</string>
   <string name="norating">nedostupné</string>
   <string name="loading">Načítavam…</string>
-  <string name="sending">Odosielam…</string>
   <string name="done">Hotovo</string>
   <string name="clear">Zmazať</string>
   <string name="more">%s viac</string>
@@ -141,6 +140,14 @@
   <string name="library">Knižnica</string>
   <string name="powered_by_thetvdb">v spolupráci s thetvdb.com</string>
   <string name="powered_by_trakt">v spolupráci s trakt.tv</string>
+  <string name="first_list">Favorites</string>
+  <string name="list_add">Add list</string>
+  <string name="list_title_hint">Name your list</string>
+  <string name="list_remove">Remove list</string>
+  <string name="list_manage">Manage list</string>
+  <string name="list_item_manage">Manage lists</string>
+  <string name="list_item_remove">Remove from list</string>
+  <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
   <string name="prefs_category_basic">Základné</string>
   <string name="prefs_category_sharing">Zdieľanie</string>
   <string name="prefs_category_advanced">Pokročilé</string>
@@ -292,6 +299,7 @@
     <item>Obľúbené</item>
     <item>Nové/Nadchádzajúce</item>
     <item>Skryté</item>
+    <item>Lists</item>
   </string-array>
   <string-array name="themeSelection">
     <item>Téma SeriesGuide</item>

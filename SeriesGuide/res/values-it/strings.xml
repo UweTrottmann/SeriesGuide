@@ -18,7 +18,6 @@
   <string name="description_poster">Mostra poster</string>
   <string name="norating">non disponibile</string>
   <string name="loading">Caricamento in corso...</string>
-  <string name="sending">Invio in corso...</string>
   <string name="done">Fatto</string>
   <string name="clear">Ripulire</string>
   <string name="more">%s più</string>
@@ -141,6 +140,14 @@
   <string name="library">Archivio</string>
   <string name="powered_by_thetvdb">powered by thetvdb.com</string>
   <string name="powered_by_trakt">powered by trakt.tv</string>
+  <string name="first_list">Favorites</string>
+  <string name="list_add">Add list</string>
+  <string name="list_title_hint">Name your list</string>
+  <string name="list_remove">Remove list</string>
+  <string name="list_manage">Manage list</string>
+  <string name="list_item_manage">Manage lists</string>
+  <string name="list_item_remove">Remove from list</string>
+  <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
   <string name="prefs_category_basic">Base</string>
   <string name="prefs_category_sharing">Condivisione</string>
   <string name="prefs_category_advanced">Avanzato</string>
@@ -292,6 +299,7 @@
     <item>Preferiti</item>
     <item>Non Visti/Prossimi</item>
     <item>Nascosti</item>
+    <item>Lists</item>
   </string-array>
   <string-array name="themeSelection">
     <item>Tema SeriesGuide</item>

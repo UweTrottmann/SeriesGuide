@@ -18,7 +18,6 @@
   <string name="description_poster">Serien-Poster</string>
   <string name="norating">n/a</string>
   <string name="loading">Lädt…</string>
-  <string name="sending">Senden…</string>
   <string name="done">Erledigt</string>
   <string name="clear">Löschen</string>
   <string name="more">%s mehr</string>
@@ -141,6 +140,14 @@
   <string name="library">Bibliothek</string>
   <string name="powered_by_thetvdb">ein Dienst von thetvdb.com</string>
   <string name="powered_by_trakt">ein Dienst von trakt.tv</string>
+  <string name="first_list">Favoriten</string>
+  <string name="list_add">Liste hinzufügen</string>
+  <string name="list_title_hint">Liste bennenen</string>
+  <string name="list_remove">Liste entfernen</string>
+  <string name="list_manage">Liste verwalten</string>
+  <string name="list_item_manage">Listen verwalten</string>
+  <string name="list_item_remove">Von Liste entfernen</string>
+  <string name="list_empty">Sie können Serien, Staffeln oder Folgen zu dieser Liste hinzufügen.</string>
   <string name="prefs_category_basic">Grundlegendes</string>
   <string name="prefs_category_sharing">Dienste</string>
   <string name="prefs_category_advanced">Weiteres</string>
@@ -292,6 +299,7 @@
     <item>Favoriten</item>
     <item>Ungesehene/Zukünftige</item>
     <item>Ausgeblendete</item>
+    <item>Listen</item>
   </string-array>
   <string-array name="themeSelection">
     <item>SeriesGuide Design</item>

@@ -18,7 +18,6 @@
   <string name="description_poster">Обложка</string>
   <string name="norating">няма</string>
   <string name="loading">Зарежда…</string>
-  <string name="sending">Изпраща…</string>
   <string name="done">Готово</string>
   <string name="clear">Clear</string>
   <string name="more">%s more</string>
@@ -141,6 +140,14 @@
   <string name="library">Библиотека</string>
   <string name="powered_by_thetvdb">Благодарение на thetvdb.com</string>
   <string name="powered_by_trakt">с помощта на trakt.tv</string>
+  <string name="first_list">Favorites</string>
+  <string name="list_add">Add list</string>
+  <string name="list_title_hint">Name your list</string>
+  <string name="list_remove">Remove list</string>
+  <string name="list_manage">Manage list</string>
+  <string name="list_item_manage">Manage lists</string>
+  <string name="list_item_remove">Remove from list</string>
+  <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
   <string name="prefs_category_basic">Basics</string>
   <string name="prefs_category_sharing">Sharing</string>
   <string name="prefs_category_advanced">Advanced</string>
@@ -292,6 +299,7 @@
     <item>Любими</item>
     <item>Негледани/Предстоящи</item>
     <item>Hidden</item>
+    <item>Lists</item>
   </string-array>
   <string-array name="themeSelection">
     <item>SeriesGuide Theme</item>
