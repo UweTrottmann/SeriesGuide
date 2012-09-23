@@ -183,7 +183,7 @@ public class ListsFragment extends SherlockFragment implements
                 Lists.LIST_ID + "=?",
                 new String[] {
                         listId
-                }, null);
+                }, ListItemsQuery.SORTING);
     }
 
     @Override
@@ -314,6 +314,8 @@ public class ListsFragment extends SherlockFragment implements
                 Shows.REF_SHOW_ID, Shows.TITLE, Shows.OVERVIEW, Shows.POSTER, Shows.NETWORK,
                 Shows.AIRSTIME, Shows.AIRSDAYOFWEEK
         };
+
+        String SORTING = Shows.TITLE + " COLLATE NOCASE ASC, " + ListItems.TYPE + " ASC";
 
         int LIST_ITEM_ID = 1;
 
