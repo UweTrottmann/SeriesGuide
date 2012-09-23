@@ -58,9 +58,9 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 
 public class UpcomingFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final int MARK_WATCHED_ID = 0;
+    private static final int CONTEXT_FLAG_WATCHED_ID = 0;
 
-    private static final int MARK_UNWATCHED_ID = 1;
+    private static final int CONTEXT_FLAG_UNWATCHED_ID = 1;
 
     private CursorAdapter mAdapter;
 
@@ -136,9 +136,9 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         WatchedBox watchedBox = (WatchedBox) info.targetView.findViewById(R.id.watchedBoxUpcoming);
         if (watchedBox.isChecked()) {
-            menu.add(0, MARK_UNWATCHED_ID, 1, R.string.unmark_episode);
+            menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 1, R.string.unmark_episode);
         } else {
-            menu.add(0, MARK_WATCHED_ID, 0, R.string.mark_episode);
+            menu.add(0, CONTEXT_FLAG_WATCHED_ID, 0, R.string.mark_episode);
         }
     }
 
@@ -147,11 +147,11 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
-            case MARK_WATCHED_ID: {
+            case CONTEXT_FLAG_WATCHED_ID: {
                 onFlagEpisodeWatched(info, true);
                 return true;
             }
-            case MARK_UNWATCHED_ID: {
+            case CONTEXT_FLAG_UNWATCHED_ID: {
                 onFlagEpisodeWatched(info, false);
                 return true;
             }
