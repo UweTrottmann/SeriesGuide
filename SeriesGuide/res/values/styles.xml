@@ -6,6 +6,7 @@
         <item name="android:textColor">@color/text_default</item>
         <item name="android:textSize">@dimen/text_size_xmedium</item>
         <item name="android:textStyle">normal</item>
+        <item name="android:textColorLink">@color/text_link</item>
     </style>
 
     <style name="TextAppearance.XSmall">

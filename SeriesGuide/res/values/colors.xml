@@ -17,6 +17,7 @@
 
     <color name="transparent">#00000000</color>
     <color name="text_primary">#fff1f1f1</color>
+    <color name="text_link">#ff0099CC</color>
     <color name="text_default">#bebebe</color>
     <color name="text_dim">#80bebebe</color>
     <color name="accent_primary">#ff4800ff</color>
