@@ -606,21 +606,24 @@ public class DBUtils {
 
         final String season;
         final String number;
+        final String airtime;
         if (watched != null && watched.moveToFirst()) {
             season = watched.getString(NextEpisodeQuery.SEASON);
             number = watched.getString(NextEpisodeQuery.NUMBER);
+            airtime = watched.getString(NextEpisodeQuery.FIRSTAIREDMS);
         } else {
             // no watched episodes, include all starting with
             // special 0
             season = "-1";
             number = "-1";
+            airtime = "0";
         }
         if (watched != null) {
             watched.close();
         }
 
-        // STEP 2: get episode with next highest number or next highest
-        // season
+        // STEP 2: get episode airing closest afterwards or at the same time,
+        // but with a higher number
         final String[] selectionArgs;
         selectQuery.delete(0, selectQuery.length());
         selectQuery.append(NextEpisodeQuery.SELECT_NEXT);
@@ -633,13 +636,13 @@ public class DBUtils {
             selectQuery.append(NextEpisodeQuery.SELECT_ONLYFUTURE);
             final String now = String.valueOf(Utils.getFakeCurrentTime(prefs));
             selectionArgs = new String[] {
-                    season, number, season, now
+                    airtime, number, season, airtime, now
             };
         } else {
             // restrict to episodes with any valid air date
             selectQuery.append(NextEpisodeQuery.SELECT_WITHAIRDATE);
             selectionArgs = new String[] {
-                    season, number, season
+                    airtime, number, season, airtime
             };
         }
 
@@ -686,15 +689,21 @@ public class DBUtils {
     private interface NextEpisodeQuery {
         String SELECT_WATCHED = Episodes.WATCHED + "=1";
 
-        String SELECT_NEXT = Episodes.WATCHED + "=0 AND ((" + Episodes.SEASON + "=? AND "
-                + Episodes.NUMBER + ">?) OR " + Episodes.SEASON + ">?)";
+        /**
+         * Unwatched, airing later or has a different number or season if airing
+         * the same time.
+         */
+        String SELECT_NEXT = Episodes.WATCHED + "=0 AND ("
+                + "(" + Episodes.FIRSTAIREDMS + "=? AND "
+                + "(" + Episodes.NUMBER + "!=? OR " + Episodes.SEASON + "!=?)) "
+                + "OR " + Episodes.FIRSTAIREDMS + ">?)";
 
         String SELECT_WITHAIRDATE = " AND " + Episodes.FIRSTAIREDMS + "!=-1";
 
         String SELECT_ONLYFUTURE = " AND " + Episodes.FIRSTAIREDMS + ">=?";
 
         String[] PROJECTION_WATCHED = new String[] {
-                Episodes._ID, Episodes.SEASON, Episodes.NUMBER
+                Episodes._ID, Episodes.SEASON, Episodes.NUMBER, Episodes.FIRSTAIREDMS
         };
 
         String[] PROJECTION_NEXT = new String[] {
@@ -708,9 +717,10 @@ public class DBUtils {
         String SORTING_WATCHED = Episodes.SEASON + " DESC," + Episodes.NUMBER + " DESC";
 
         /**
-         * Lowest season, or if identical lowest episode number.
+         * Air time, then lowest season, or if identical lowest episode number.
          */
-        String SORTING_NEXT = Episodes.SEASON + " ASC," + Episodes.NUMBER + " ASC";
+        String SORTING_NEXT = Episodes.FIRSTAIREDMS + " ASC," + Episodes.SEASON + " ASC,"
+                + Episodes.NUMBER + " ASC";
 
         int _ID = 0;
 
