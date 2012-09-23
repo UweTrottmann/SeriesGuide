@@ -819,7 +819,7 @@ public class Utils {
      */
     public static boolean isAllowedConnection(Context context) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        final boolean isWlanOnly = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYWIFI, true);
+        final boolean isWlanOnly = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYWIFI, false);
 
         if (isWlanOnly) {
             return AndroidUtils.isWifiConnected(context);
