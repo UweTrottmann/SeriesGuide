@@ -84,10 +84,11 @@ public class ListManageDialogFragment extends DialogFragment {
         buttonPositive.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mTitle.getText().length() == 0) {
+                // prevent whitespaces/empty names
+                if (mTitle.getText().toString().trim().length() == 0) {
                     return;
                 }
-                
+
                 // update title
                 String listId = getArguments().getString("listid");
                 ContentValues values = new ContentValues();
@@ -116,7 +117,7 @@ public class ListManageDialogFragment extends DialogFragment {
                     + " must implement OnListsChangedListener");
         }
     }
-    
+
     @Override
     public void onStart() {
         super.onStart();
@@ -177,7 +178,8 @@ public class ListManageDialogFragment extends DialogFragment {
         public CharSequence filter(CharSequence source, int start, int end, Spanned dest,
                 int dstart, int dend) {
             for (int i = start; i < end; i++) {
-                if (!Character.isLetterOrDigit(source.charAt(i))) {
+                if (!(Character.isLetterOrDigit(source.charAt(i))
+                || Character.isWhitespace(source.charAt(i)))) {
                     return "";
                 }
             }
