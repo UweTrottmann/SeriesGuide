@@ -371,7 +371,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">Spot the difference\n\nLists, nothing more, nothing less. No trakt sync, yet.\n\nMore UI tweaks, especially for Nexus 7 and larger tablets.\n\nGetGlue auth inside app, should work everywhere now.\n\nFixes, and some more fixes. Read the change log:\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">Spot the difference\n\nLists, nothing more, nothing less. No trakt sync, yet.\n\nMore UI tweaks, especially for Nexus 7 and larger tablets.\n\nGetGlue auth inside app, should work everywhere now.\n\nFixes, and some more fixes. Read the change log (Yes, you can click the link again! Revolutionary.):\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
