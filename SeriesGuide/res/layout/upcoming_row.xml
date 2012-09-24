@@ -64,6 +64,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/upcomingmeta"
         android:layout_toRightOf="@+id/poster"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:text="Placeholder"
         android:textAppearance="@style/TextAppearance.Medium.Light" />
 
