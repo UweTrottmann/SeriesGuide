@@ -23,6 +23,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:lines="1"
             android:text="@string/imdb"
             android:textAllCaps="true"
             android:textSize="@dimen/text_size_xmedium" >
@@ -47,6 +49,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:lines="1"
             android:text="@string/tvdb"
             android:textAllCaps="true"
             android:textSize="@dimen/text_size_xmedium" >
@@ -71,6 +75,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:lines="1"
             android:text="@string/shouts"
             android:textAllCaps="true"
             android:textSize="@dimen/text_size_xmedium" >
