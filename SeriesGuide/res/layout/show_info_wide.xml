@@ -12,7 +12,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="5"
+            android:layout_weight="2"
             android:orientation="vertical" >
 
             <TextView
@@ -43,27 +43,20 @@
                 layout="@layout/show_info_buttonbar" />
         </LinearLayout>
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-
         <ImageView
             android:id="@+id/ImageViewShowInfoPoster"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:layout_marginLeft="@dimen/layout_padding"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
             android:layout_marginTop="@dimen/default_padding"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
             android:contentDescription="@string/description_poster"
             android:scaleType="centerCrop"
             android:src="@drawable/fringe_test" >
         </ImageView>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
     </LinearLayout>
 
 </ScrollView>
