@@ -5,5 +5,6 @@
     <item name="overview" type="layout">@layout/overview_multipane</item>
     <item name="episodes" type="layout">@layout/episodes_multipane</item>
     <item name="search" type="layout">@layout/search_wide</item>
+    <item name="episode_pager" type="layout">@layout/episode_pager_wide</item>
 
 </resources>
