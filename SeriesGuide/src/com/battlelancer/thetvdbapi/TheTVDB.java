@@ -437,6 +437,7 @@ public class TheTVDB {
         Element episode = root.getChild("Episode");
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
         final HashMap<Long, Long> episodeIDs = DBUtils.getEpisodeMapForShow(showId, context);
+        final HashMap<Long, Long> existingEpisodeIds = new HashMap<Long, Long>(episodeIDs);
         final HashSet<Long> existingSeasonIDs = DBUtils.getSeasonIDsForShow(showId, context);
         // store updated seasons to avoid duplicate ops
         final HashSet<Long> updatedSeasonIDs = new HashSet<Long>();
@@ -446,18 +447,17 @@ public class TheTVDB {
         episode.setEndElementListener(new EndElementListener() {
             public void end() {
                 long episodeId = values.getAsLong(Episodes._ID);
+                existingEpisodeIds.remove(episodeId);
 
                 if (episodeIDs.containsKey(episodeId)) {
-                    // check if this is newer information than we have
-                    if (episodeIDs.get(episodeId) < values.getAsLong(Episodes.LASTEDIT)) {
+                    /*
+                     * check if this is newer information than we have, however
+                     * always update last years episodes
+                     */
+                    if (episodeIDs.get(episodeId) - (DateUtils.YEAR_IN_MILLIS / 1000) < values
+                            .getAsLong(Episodes.LASTEDIT)) {
                         // complete update op for episode
                         batch.add(DBUtils.buildEpisodeOp(values, false));
-                    } else {
-                        // only update ratings
-                        ContentValues smallValues = new ContentValues();
-                        smallValues.put(Episodes._ID, values.getAsString(Episodes._ID));
-                        smallValues.put(Episodes.RATING, values.getAsString(Episodes.RATING));
-                        batch.add(DBUtils.buildEpisodeOp(smallValues, false));
                     }
                 } else {
                     // episode does not exist, yet
@@ -567,6 +567,12 @@ public class TheTVDB {
         HttpUriRequest request = new HttpGet(url);
         HttpClient httpClient = getHttpClient();
         execute(request, httpClient, root.getContentHandler(), true);
+
+        // add delete ops for left over episodeIds in our db
+        for (Long id : existingEpisodeIds.keySet()) {
+            batch.add(ContentProviderOperation.newDelete(Episodes.buildEpisodeUri(String
+                    .valueOf(id))).build());
+        }
 
         return batch;
     }
