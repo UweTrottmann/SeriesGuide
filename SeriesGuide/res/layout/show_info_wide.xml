@@ -47,15 +47,12 @@
             android:id="@+id/ImageViewShowInfoPoster"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="top"
             android:layout_marginLeft="@dimen/large_padding"
             android:layout_marginRight="@dimen/large_padding"
             android:layout_marginTop="@dimen/default_padding"
             android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/description_poster"
-            android:scaleType="centerCrop"
-            android:src="@drawable/fringe_test" >
+            android:contentDescription="@string/description_poster" >
         </ImageView>
     </LinearLayout>
 
