@@ -416,7 +416,8 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
         return new CursorLoader(getActivity(), Seasons.buildSeasonsOfShowUri(String
-                .valueOf(getShowId())), SeasonsQuery.PROJECTION, null, null, mSorting.query());
+                .valueOf(getShowId())), SeasonsQuery.PROJECTION, SeasonsQuery.SELECTION, null,
+                mSorting.query());
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -433,10 +434,13 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     private interface SeasonsQuery {
+
         String[] PROJECTION = {
                 BaseColumns._ID, Seasons.COMBINED, Seasons.WATCHCOUNT, Seasons.UNAIREDCOUNT,
                 Seasons.NOAIRDATECOUNT, Seasons.TOTALCOUNT
         };
+
+        String SELECTION = Seasons.TOTALCOUNT + ">0";
 
         // int _ID = 0;
 
