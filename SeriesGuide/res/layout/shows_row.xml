@@ -19,6 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/timestamp"
         android:layout_toRightOf="@id/showposter"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:paddingBottom="0dp"
         android:paddingRight="@dimen/inline_padding"
         android:paddingTop="2dp"
@@ -32,21 +34,25 @@
         android:layout_below="@id/seriesname"
         android:layout_toLeftOf="@id/timestamp"
         android:layout_toRightOf="@id/showposter"
+        android:ellipsize="end"
+        android:maxLines="2"
         android:paddingRight="@dimen/inline_padding"
         android:text="@string/app_name" />
 
     <TextView
         android:id="@+id/episodetime"
         style="@style/Airdata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/TextViewShowListNextEpisode"
         android:layout_toLeftOf="@id/timestamp"
         android:layout_toRightOf="@id/showposter"
         android:paddingRight="@dimen/inline_padding"
         android:text="@string/app_name" />
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/timestamp"
-        android:layout_width="90dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:orientation="vertical" >
@@ -55,20 +61,15 @@
             android:id="@+id/labels"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:orientation="horizontal"
             android:paddingTop="@dimen/inline_padding" >
-
-            <ImageView
-                android:id="@+id/collectedLabel"
-                android:layout_width="15dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_collected"
-                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/favoritedLabel"
                 android:layout_width="15dp"
                 android:layout_height="20dp"
+                android:contentDescription="@string/favorited"
                 android:src="@drawable/ic_favorited"
                 android:visibility="gone" />
         </LinearLayout>
@@ -76,21 +77,24 @@
         <TextView
             android:id="@+id/TextViewShowListAirtime"
             style="@style/Airdata"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/labels"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
             android:gravity="right"
             android:lineSpacingExtra="2sp"
             android:paddingTop="@dimen/inline_padding"
-            android:text="@string/app_name" />
+            android:text="@string/norating" />
 
         <TextView
             android:id="@+id/TextViewShowListNetwork"
             style="@style/Airdata"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/TextViewShowListAirtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
             android:gravity="right"
+            android:maxWidth="90dp"
             android:paddingBottom="@dimen/inline_padding"
             android:text="@string/app_name" />
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>
