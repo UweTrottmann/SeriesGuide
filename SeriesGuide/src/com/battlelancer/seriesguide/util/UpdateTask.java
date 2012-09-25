@@ -307,6 +307,10 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                 Log.w(TAG, e);
                 return UpdateResult.ERROR;
             }
+            
+            if (activity == null) {
+                return UpdateResult.ERROR;
+            }
 
             // build an update batch
             final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
