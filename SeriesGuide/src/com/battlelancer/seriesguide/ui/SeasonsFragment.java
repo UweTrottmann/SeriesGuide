@@ -485,7 +485,7 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     @Override
     public void onFlagCompleted(FlagAction action, int showId, int itemId, boolean isSuccessful) {
-        if (isSuccessful) {
+        if (isSuccessful && isAdded()) {
             switch (action) {
                 case SEASON_WATCHED:
                     Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()),

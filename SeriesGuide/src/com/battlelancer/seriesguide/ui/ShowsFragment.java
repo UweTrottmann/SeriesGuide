@@ -626,7 +626,7 @@ public class ShowsFragment extends SherlockFragment implements
 
     @Override
     public void onFlagCompleted(FlagAction action, int showId, int itemId, boolean isSuccessful) {
-        if (isSuccessful) {
+        if (isSuccessful && isAdded()) {
             Utils.updateLatestEpisode(getActivity(), String.valueOf(showId));
         }
     }

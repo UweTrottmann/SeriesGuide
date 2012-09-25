@@ -539,7 +539,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     @Override
     public void onFlagCompleted(FlagAction action, int showId, int itemId, boolean isSuccessful) {
-        if (isSuccessful) {
+        if (isSuccessful && isAdded()) {
             getLoaderManager().restartLoader(EPISODE_LOADER, null, this);
         }
     }
