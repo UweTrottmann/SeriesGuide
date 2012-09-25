@@ -189,7 +189,7 @@ public class SeriesContract {
         String TYPE = "item_type";
     }
 
-    public static final String CONTENT_AUTHORITY = "com.battlelancer.seriesguide.beta.provider";
+    public static final String CONTENT_AUTHORITY = "com.battlelancer.seriesguide";
 
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
