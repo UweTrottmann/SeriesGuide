@@ -378,6 +378,8 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS " + Tables.SHOWS);
             db.execSQL("DROP TABLE IF EXISTS " + Tables.SEASONS);
             db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES);
+            db.execSQL("DROP TABLE IF EXISTS " + Tables.LISTS);
+            db.execSQL("DROP TABLE IF EXISTS " + Tables.LIST_ITEMS);
 
             db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
 
