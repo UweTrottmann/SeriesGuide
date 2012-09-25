@@ -10,6 +10,16 @@ Version 2.9 *(in development)*
 
 ### Detailed changes:
 
+#### 2.9.4beta (2012-09-25)
+
+* TWEAK Display which show got checked in on GetGlue.
+* TWEAK More subtle app logo.
+* TWEAK Dual pane upcoming layout only on larger screens to avoid text cut off.
+* TWEAK Remove episodes deleted from TVDb, hide empty seasons.
+* FIX Show list layout bleeding out.
+* FIX Better show info layout.
+* NOTICE Latest translations from crowdin. 
+
 #### 2.9.3beta (2012-09-23)
 
 * FEATURE Basic lists, add shows, seasons or episodes to them. No syncing with trakt.tv, yet.
