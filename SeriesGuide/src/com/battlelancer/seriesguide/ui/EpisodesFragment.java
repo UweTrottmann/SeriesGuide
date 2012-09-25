@@ -50,6 +50,7 @@ import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.Utils;
@@ -62,13 +63,15 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 public class EpisodesFragment extends SherlockListFragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final int MARK_WATCHED_ID = 0;
+    private static final int CONTEXT_FLAG_WATCHED_ID = 0;
 
-    private static final int MARK_UNWATCHED_ID = 1;
+    private static final int CONTEXT_FLAG_UNWATCHED_ID = 1;
 
-    private static final int DELETE_EPISODE_ID = 2;
+    private static final int CONTEXT_DELETE_EPISODE_ID = 2;
 
-    private static final int MARK_UNTILHERE_ID = 3;
+    private static final int CONTEXT_MANAGE_LISTS_ID = 3;
+
+    private static final int CONTEXT_FLAG_UNTILHERE_ID = 4;
 
     private static final int EPISODES_LOADER = 4;
 
@@ -136,8 +139,7 @@ public class EpisodesFragment extends SherlockListFragment implements
                 Episodes.WATCHED, Episodes.TITLE, Episodes.NUMBER, Episodes.FIRSTAIREDMS
         };
         int[] to = new int[] {
-                R.id.CustomCheckBoxWatched, R.id.TextViewEpisodeListTitle,
-                R.id.TextViewEpisodeListNumber, R.id.TextViewEpisodeListAirdate
+                R.id.CustomCheckBoxWatched, R.id.title, R.id.number, R.id.airdate
         };
 
         mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.episode_row, null, from, to, 0);
@@ -165,11 +167,11 @@ public class EpisodesFragment extends SherlockListFragment implements
                 } else if (columnIndex == EpisodesQuery.NUMBER) {
                     // set episode number and if available dvd episode number
                     TextView tv = (TextView) view;
-                    String episodenumber = getString(R.string.episode) + " "
-                            + cursor.getString(EpisodesQuery.NUMBER);
+                    StringBuilder episodenumber = new StringBuilder(cursor
+                            .getString(EpisodesQuery.NUMBER));
                     float dvdnumber = cursor.getFloat(EpisodesQuery.DVDNUMBER);
-                    if (dvdnumber != 0.0) {
-                        episodenumber += " (" + dvdnumber + ")";
+                    if (dvdnumber != 0) {
+                        episodenumber.append("(").append(dvdnumber).append(")");
                     }
                     tv.setText(episodenumber);
                     return true;
@@ -265,12 +267,13 @@ public class EpisodesFragment extends SherlockListFragment implements
         WatchedBox watchedBox = (WatchedBox) info.targetView
                 .findViewById(R.id.CustomCheckBoxWatched);
         if (watchedBox.isChecked()) {
-            menu.add(0, MARK_UNWATCHED_ID, 1, R.string.unmark_episode);
+            menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 1, R.string.unmark_episode);
         } else {
-            menu.add(0, MARK_WATCHED_ID, 0, R.string.mark_episode);
+            menu.add(0, CONTEXT_FLAG_WATCHED_ID, 0, R.string.mark_episode);
         }
-        menu.add(0, MARK_UNTILHERE_ID, 2, R.string.mark_untilhere);
-        menu.add(0, DELETE_EPISODE_ID, 3, R.string.delete_show);
+        menu.add(0, CONTEXT_FLAG_UNTILHERE_ID, 2, R.string.mark_untilhere);
+        menu.add(0, CONTEXT_MANAGE_LISTS_ID, 3, R.string.list_item_manage);
+        menu.add(0, CONTEXT_DELETE_EPISODE_ID, 4, R.string.delete_show);
     }
 
     @Override
@@ -278,28 +281,34 @@ public class EpisodesFragment extends SherlockListFragment implements
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
-            case MARK_WATCHED_ID: {
+            case CONTEXT_FLAG_WATCHED_ID: {
                 final Cursor items = (Cursor) mAdapter.getItem(info.position);
                 onFlagEpisodeWatched((int) info.id, items.getInt(EpisodesQuery.NUMBER), true);
                 return true;
             }
-            case MARK_UNWATCHED_ID: {
+            case CONTEXT_FLAG_UNWATCHED_ID: {
                 final Cursor items = (Cursor) mAdapter.getItem(info.position);
                 onFlagEpisodeWatched((int) info.id, items.getInt(EpisodesQuery.NUMBER), false);
                 return true;
             }
-            case MARK_UNTILHERE_ID: {
+            case CONTEXT_FLAG_UNTILHERE_ID: {
                 final Cursor items = (Cursor) mAdapter.getItem(info.position);
                 onMarkUntilHere((int) info.id, items.getLong(EpisodesQuery.FIRSTAIREDMS));
                 return true;
             }
-            case DELETE_EPISODE_ID:
+            case CONTEXT_MANAGE_LISTS_ID: {
+                ListsDialogFragment.showListsDialog(String.valueOf(info.id), 3,
+                        getFragmentManager());
+                return true;
+            }
+            case CONTEXT_DELETE_EPISODE_ID: {
                 getActivity().getContentResolver().delete(
                         Episodes.buildEpisodeUri(String.valueOf(info.id)), null, null);
                 getActivity().getContentResolver().notifyChange(
                         Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(getSeasonId())),
                         null);
                 return true;
+            }
         }
         return super.onContextItemSelected(item);
     }

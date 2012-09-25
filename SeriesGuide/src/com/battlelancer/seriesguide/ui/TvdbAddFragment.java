@@ -76,11 +76,11 @@ public class TvdbAddFragment extends AddFragment {
                     new ArrayList<SearchResult>(), mAddButtonListener, mDetailsButtonListener);
         }
 
-        ImageButton searchButton = (ImageButton) getView().findViewById(R.id.searchbutton);
+        ImageButton searchButton = (ImageButton) getView().findViewById(R.id.clearButton);
         searchButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-                search();
+                onClearInput();
             }
         });
 
@@ -100,6 +100,13 @@ public class TvdbAddFragment extends AddFragment {
                 }
             }
         });
+    }
+
+    protected void onClearInput() {
+        EditText searchBox = (EditText) getView().findViewById(R.id.searchbox);
+        if (searchBox != null) {
+            searchBox.setText("");
+        }
     }
 
     @Override

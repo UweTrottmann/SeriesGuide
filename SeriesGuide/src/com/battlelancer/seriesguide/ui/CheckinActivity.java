@@ -18,9 +18,11 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -28,6 +30,7 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -113,7 +116,7 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
                 R.id.seriesname, R.id.TextViewShowListNextEpisode, R.id.TextViewShowListAirtime,
                 R.id.TextViewShowListNetwork, R.id.showposter
         };
-        int layout = R.layout.show_rowairtime;
+        int layout = R.layout.shows_row;
         mAdapter = new SlowAdapter(this, layout, null, from, to, 0);
 
         // setup grid view
@@ -172,8 +175,14 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
             baseUri = Shows.CONTENT_URI;
         }
 
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String fakeInAnHour = String.valueOf(Utils.getFakeCurrentTime(prefs)
+                + DateUtils.HOUR_IN_MILLIS);
+
         return new CursorLoader(this, baseUri, CheckinQuery.PROJECTION, CheckinQuery.SELECTION,
-                null, ShowSorting.UPCOMING.query());
+                new String[] {
+                        fakeInAnHour
+                }, ShowSorting.UPCOMING.query());
     }
 
     @Override
@@ -298,10 +307,11 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
         String[] PROJECTION = {
                 Shows._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
                 Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE, Shows.IMDBID, Shows.NEXTEPISODE, Shows.HIDDEN
+                Shows.FAVORITE, Shows.IMDBID, Shows.NEXTEPISODE, Shows.HIDDEN, Shows.NEXTAIRDATEMS
         };
 
-        String SELECTION = Shows.NEXTEPISODE + "!='' AND " + Shows.HIDDEN + "=0";
+        String SELECTION = Shows.NEXTEPISODE + "!='' AND " + Shows.HIDDEN + "=0 AND "
+                + Shows.NEXTAIRDATEMS + "<?";
 
         int _ID = 0;
 

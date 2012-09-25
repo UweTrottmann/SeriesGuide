@@ -52,6 +52,7 @@ import com.battlelancer.seriesguide.util.Lists;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -59,10 +60,6 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;
@@ -74,6 +71,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.zip.ZipInputStream;
@@ -87,8 +85,6 @@ public class TheTVDB {
     private static final String xmlMirror = mirror + "/api/";
 
     private static final String TAG = "TheTVDB";
-
-    private static final int SECOND_IN_MILLIS = (int) DateUtils.SECOND_IN_MILLIS;
 
     /**
      * Adds a show and its episodes. If it already exists updates them. This
@@ -324,7 +320,7 @@ public class TheTVDB {
         });
         show.getChild("SeriesName").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setSeriesName(body.trim());
+                currentShow.setTitle(body.trim());
             }
         });
         show.getChild("Overview").setEndTextElementListener(new EndTextElementListener() {
@@ -403,9 +399,19 @@ public class TheTVDB {
                 currentShow.setImdbId(body.trim());
             }
         });
+        show.getChild("lastupdated").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                // system populated field, trimming not necessary
+                try {
+                    currentShow.setLastEdit(Long.valueOf(body));
+                } catch (NumberFormatException e) {
+                    currentShow.setLastEdit(0);
+                }
+            }
+        });
 
         HttpUriRequest request = new HttpGet(url);
-        HttpClient httpClient = getHttpClient();
+        HttpClient httpClient = AndroidUtils.getHttpClient();
         execute(request, httpClient, root.getContentHandler(), false);
 
         return currentShow;
@@ -425,22 +431,39 @@ public class TheTVDB {
         RootElement root = new RootElement("Data");
         Element episode = root.getChild("Episode");
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
-        final HashSet<Long> episodeIDs = DBUtils.getEpisodeIDsForShow(showId, context);
+        final HashMap<Long, Long> episodeIDs = DBUtils.getEpisodeMapForShow(showId, context);
+        final HashMap<Long, Long> existingEpisodeIds = new HashMap<Long, Long>(episodeIDs);
         final HashSet<Long> existingSeasonIDs = DBUtils.getSeasonIDsForShow(showId, context);
+        // store updated seasons to avoid duplicate ops
         final HashSet<Long> updatedSeasonIDs = new HashSet<Long>();
         final ContentValues values = new ContentValues();
 
         // set handlers for elements we want to react to
         episode.setEndElementListener(new EndElementListener() {
             public void end() {
-                // add insert/update op for episode
-                batch.add(DBUtils.buildEpisodeOp(values,
-                        !episodeIDs.contains(values.getAsLong(Episodes._ID))));
+                long episodeId = values.getAsLong(Episodes._ID);
+                existingEpisodeIds.remove(episodeId);
+
+                if (episodeIDs.containsKey(episodeId)) {
+                    /*
+                     * check if this is newer information than we have, however
+                     * always update last years episodes
+                     */
+                    if (episodeIDs.get(episodeId) - (DateUtils.YEAR_IN_MILLIS / 1000) < values
+                            .getAsLong(Episodes.LASTEDIT)) {
+                        // complete update op for episode
+                        batch.add(DBUtils.buildEpisodeOp(values, false));
+                    }
+                } else {
+                    // episode does not exist, yet
+                    batch.add(DBUtils.buildEpisodeOp(values, true));
+                }
 
                 long seasonid = values.getAsLong(Seasons.REF_SEASON_ID);
                 if (!updatedSeasonIDs.contains(seasonid)) {
                     // add insert/update op for season
-                    batch.add(DBUtils.buildSeasonOp(values, !existingSeasonIDs.contains(seasonid)));
+                    batch.add(DBUtils.buildSeasonOp(values,
+                            !existingSeasonIDs.contains(seasonid)));
                     updatedSeasonIDs.add(values.getAsLong(Seasons.REF_SEASON_ID));
                 }
 
@@ -520,10 +543,31 @@ public class TheTVDB {
                 values.put(Episodes.IMAGE, body.trim());
             }
         });
+        episode.getChild("IMDB_ID").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                values.put(Episodes.IMDBID, body.trim());
+            }
+        });
+        episode.getChild("lastupdated").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                // system populated field, trimming not necessary
+                try {
+                    values.put(Episodes.LASTEDIT, Long.valueOf(body));
+                } catch (NumberFormatException e) {
+                    values.put(Episodes.LASTEDIT, 0);
+                }
+            }
+        });
 
         HttpUriRequest request = new HttpGet(url);
-        HttpClient httpClient = getHttpClient();
+        HttpClient httpClient = AndroidUtils.getHttpClient();
         execute(request, httpClient, root.getContentHandler(), true);
+
+        // add delete ops for left over episodeIds in our db
+        for (Long id : existingEpisodeIds.keySet()) {
+            batch.add(ContentProviderOperation.newDelete(Episodes.buildEpisodeUri(String
+                    .valueOf(id))).build());
+        }
 
         return batch;
     }
@@ -613,7 +657,7 @@ public class TheTVDB {
         });
         final String url = xmlMirror + "Updates.php?type=none";
         HttpUriRequest request = new HttpGet(url);
-        HttpClient httpClient = getHttpClient();
+        HttpClient httpClient = AndroidUtils.getHttpClient();
         execute(request, httpClient, root.getContentHandler(), false);
 
         return serverTime[0];
@@ -660,7 +704,7 @@ public class TheTVDB {
     }
 
     static Bitmap downloadBitmap(String url) {
-        final HttpClient client = getHttpClient();
+        final HttpClient client = AndroidUtils.getHttpClient();
         final HttpGet getRequest = new HttpGet(url);
 
         try {
@@ -743,24 +787,6 @@ public class TheTVDB {
     public static void onRenewFTSTable(Context context) {
         context.getContentResolver().query(EpisodeSearch.CONTENT_URI_RENEWFTSTABLE, null, null,
                 null, null);
-    }
-
-    /**
-     * Generate and return a {@link HttpClient} configured for general use,
-     * including setting an application-specific user-agent string.
-     */
-    public static HttpClient getHttpClient() {
-        final HttpParams params = new BasicHttpParams();
-
-        // Use generous timeouts for slow mobile networks
-        HttpConnectionParams.setConnectionTimeout(params, 20 * SECOND_IN_MILLIS);
-        HttpConnectionParams.setSoTimeout(params, 20 * SECOND_IN_MILLIS);
-
-        HttpConnectionParams.setSocketBufferSize(params, 8192);
-
-        final DefaultHttpClient client = new DefaultHttpClient(params);
-
-        return client;
     }
 
     /**

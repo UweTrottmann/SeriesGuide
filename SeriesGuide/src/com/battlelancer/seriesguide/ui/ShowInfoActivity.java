@@ -18,19 +18,18 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.app.ShareCompat.IntentBuilder;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
@@ -40,6 +39,7 @@ import com.actionbarsherlock.widget.ShareActionProvider;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.Series;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
@@ -52,7 +52,8 @@ import com.uwetrottmann.androidutils.AndroidUtils;
  * Displays detailed information about a show.
  */
 public class ShowInfoActivity extends BaseActivity {
-    public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
+
+    private static final String TAG = "ShowInfoActivity";
 
     private IntentBuilder mShareIntentBuilder;
 
@@ -120,6 +121,11 @@ public class ShowInfoActivity extends BaseActivity {
                 newFragment.show(getSupportFragmentManager(), "traktratedialog");
                 return true;
             }
+            case R.id.menu_manage_lists: {
+                ListsDialogFragment.showListsDialog(String.valueOf(getShowId()), 1,
+                        getSupportFragmentManager());
+                return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -132,9 +138,8 @@ public class ShowInfoActivity extends BaseActivity {
     private void fillData() {
         TextView seriesname = (TextView) findViewById(R.id.title);
         TextView overview = (TextView) findViewById(R.id.TextViewShowInfoOverview);
-        TextView airstime = (TextView) findViewById(R.id.TextViewShowInfoAirtime);
-        TextView network = (TextView) findViewById(R.id.TextViewShowInfoNetwork);
-        TextView status = (TextView) findViewById(R.id.TextViewShowInfoStatus);
+        TextView info = (TextView) findViewById(R.id.showInfo);
+        TextView status = (TextView) findViewById(R.id.showStatus);
 
         final Series show = DBUtils.getShow(this, String.valueOf(getShowId()));
         if (show == null) {
@@ -143,7 +148,7 @@ public class ShowInfoActivity extends BaseActivity {
         }
 
         // Name
-        seriesname.setText(show.getSeriesName());
+        seriesname.setText(show.getTitle());
 
         // Overview
         if (show.getOverview().length() == 0) {
@@ -152,21 +157,21 @@ public class ShowInfoActivity extends BaseActivity {
             overview.setText(show.getOverview());
         }
 
-        // Airtimes
+        // air time
+        StringBuilder infoText = new StringBuilder();
         if (show.getAirsDayOfWeek().length() == 0 || show.getAirsTime() == -1) {
-            airstime.setText(getString(R.string.show_noairtime));
+            infoText.append(getString(R.string.show_noairtime));
         } else {
             String[] values = Utils.parseMillisecondsToTime(show.getAirsTime(),
                     show.getAirsDayOfWeek(), getApplicationContext());
-            airstime.setText(getString(R.string.show_airs) + " " + values[1] + " " + values[0]);
+            infoText.append(values[1]).append(" ").append(values[0]);
         }
-
-        // Network
-        if (show.getNetwork().length() == 0) {
-            network.setText("");
-        } else {
-            network.setText(getString(R.string.show_network) + " " + show.getNetwork());
+        // network
+        if (show.getNetwork().length() != 0) {
+            infoText.append(" ").append(getString(R.string.show_network)).append(" ")
+                    .append(show.getNetwork());
         }
+        info.setText(infoText);
 
         // Running state
         if (show.getStatus() == 1) {
@@ -201,31 +206,20 @@ public class ShowInfoActivity extends BaseActivity {
             rating.setText(ratingText + "/10");
         }
 
+        // Last edit date
+        TextView lastEdit = (TextView) findViewById(R.id.lastEdit);
+        long lastEditRaw = show.getLastEdit();
+        if (lastEditRaw > 0) {
+            lastEdit.setText(DateUtils.formatDateTime(this, lastEditRaw * 1000,
+                    DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME));
+        } else {
+            lastEdit.setText(R.string.unknown);
+        }
+
         // IMDb button
         View imdbButton = (View) findViewById(R.id.buttonShowInfoIMDB);
-        final String imdbid = show.getImdbId();
-        if (imdbButton != null) {
-            imdbButton.setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    fireTrackerEvent("Show IMDb page");
-
-                    if (imdbid.length() != 0) {
-                        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("imdb:///title/"
-                                + imdbid + "/"));
-                        try {
-                            startActivity(myIntent);
-                        } catch (ActivityNotFoundException e) {
-                            myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_TITLE_URL
-                                    + imdbid));
-                            startActivity(myIntent);
-                        }
-                    } else {
-                        Toast.makeText(getApplicationContext(),
-                                getString(R.string.show_noimdbentry), Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
-        }
+        final String imdbId = show.getImdbId();
+        Utils.setUpImdbButton(imdbId, imdbButton, TAG, this);
 
         // TVDb button
         View tvdbButton = (View) findViewById(R.id.buttonTVDB);
@@ -247,7 +241,7 @@ public class ShowInfoActivity extends BaseActivity {
             public void onClick(View v) {
                 fireTrackerEvent("Show Trakt Shouts");
                 TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
-                        show.getSeriesName(), Integer.valueOf(tvdbId));
+                        show.getTitle(), Integer.valueOf(tvdbId));
 
                 newFragment.show(getSupportFragmentManager(), "shouts-dialog");
             }
@@ -258,8 +252,8 @@ public class ShowInfoActivity extends BaseActivity {
                 .from(this)
                 .setChooserTitle(R.string.share)
                 .setText(
-                        getString(R.string.share_checkout) + " \"" + show.getSeriesName()
-                                + "\" via @SeriesGuide " + ShowInfoActivity.IMDB_TITLE_URL + imdbid)
+                        getString(R.string.share_checkout) + " \"" + show.getTitle()
+                                + "\" " + Utils.IMDB_TITLE_URL + imdbId)
                 .setType("text/plain");
 
         // Poster

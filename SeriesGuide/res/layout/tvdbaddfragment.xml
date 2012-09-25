@@ -6,23 +6,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/layout_padding"
-        android:paddingRight="@dimen/layout_padding"
-        android:paddingTop="@dimen/layout_padding" >
+        android:orientation="vertical" >
 
         <LinearLayout
             android:id="@+id/searchbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/inline_padding"
-            android:paddingTop="@dimen/inline_padding" >
+            android:layout_marginBottom="@dimen/default_padding"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
+            android:layout_marginTop="@dimen/large_padding" >
 
             <EditText
                 android:id="@+id/searchbox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/inline_padding"
                 android:layout_weight="1"
                 android:contentDescription="@string/search_hint_add"
                 android:hint="@string/search_hint_add"
@@ -30,13 +28,12 @@
                 android:inputType="text" />
 
             <ImageButton
-                android:id="@+id/searchbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginLeft="@dimen/inline_padding"
-                android:background="@drawable/btn_default_holo_dark"
+                android:id="@+id/clearButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/list_selector_sg"
                 android:contentDescription="@string/search_button"
-                android:src="@drawable/ic_action_search" />
+                android:src="@android:drawable/ic_menu_close_clear_cancel" />
         </LinearLayout>
 
         <GridView
@@ -47,12 +44,12 @@
             android:columnWidth="@dimen/showgrid_columnWidth"
             android:fastScrollEnabled="true"
             android:gravity="center"
-            android:horizontalSpacing="@dimen/default_padding"
+            android:horizontalSpacing="@dimen/showgrid_spacing"
             android:listSelector="@null"
             android:numColumns="auto_fit"
             android:padding="@dimen/showgrid_padding"
             android:stretchMode="columnWidth"
-            android:verticalSpacing="@dimen/default_padding" >
+            android:verticalSpacing="@dimen/showgrid_spacing" >
         </GridView>
     </LinearLayout>
 

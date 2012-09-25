@@ -28,19 +28,29 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
+import com.battlelancer.seriesguide.adapters.ShowsPagerAdapter;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
+import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
+import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
+import com.battlelancer.seriesguide.util.CompatActionBarNavListener;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
@@ -48,6 +58,8 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.viewpagerindicator.TabPageIndicator;
+import com.viewpagerindicator.TabPageIndicator.OnTabReselectedListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +69,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Provides the apps main screen, displaying a list of shows and their next
  * episodes.
  */
-public class ShowsActivity extends BaseActivity {
+public class ShowsActivity extends BaseActivity implements CompatActionBarNavListener,
+        OnListsChangedListener, OnFirstRunDismissedListener {
 
     private static final String TAG = "Shows";
 
@@ -78,11 +91,21 @@ public class ShowsActivity extends BaseActivity {
 
     private static final int VER_HIGHRES_THUMBS = 140;
 
+    private static final int LIST_NAV_ITEM_POSITION = 4;
+
     private Bundle mSavedState;
 
     private FetchPosterTask mArtTask;
 
-    private Fragment mFragment;
+    private ViewPager mPager;
+
+    private boolean mIsLoaderStartAllowed;
+
+    private TabPageIndicator mIndicator;
+
+    private ShowsPagerAdapter mShowsAdapter;
+
+    private ListsPagerAdapter mListsAdapter;
 
     /**
      * Google Analytics helper method for easy event tracking.
@@ -103,23 +126,63 @@ public class ShowsActivity extends BaseActivity {
 
         updatePreferences(prefs);
 
-        if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
-            mFragment = FirstRunFragment.newInstance();
+        // set up adapters
+        mShowsAdapter = new ShowsPagerAdapter(getSupportFragmentManager(), this);
+        mListsAdapter = new ListsPagerAdapter(getSupportFragmentManager(), this);
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
-                    .commit();
-        } else {
-            if (savedInstanceState == null) {
-                showShowsFragment();
+        // try to restore previously set show filter
+        int navSelection = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
+
+        // set up action bar
+        setUpActionBar(prefs, navSelection);
+
+        // set up view pager
+        mPager = (ViewPager) findViewById(R.id.pager);
+        onChangePagerAdapter(navSelection);
+
+        mIndicator = (TabPageIndicator) findViewById(R.id.indicator);
+        mIndicator.setViewPager(mPager);
+        mIndicator.setOnTabReselectedListener(new OnTabReselectedListener() {
+            @Override
+            public void onTabReselected(int position) {
+                String listId = mListsAdapter.getListId(position);
+                ListManageDialogFragment.showListManageDialog(listId, getSupportFragmentManager());
             }
-        }
+        });
+        onDisplayTitleIndicator(navSelection);
+
+        // FIXME force the options menu to be shown
+        // invalidateOptionsMenu();
     }
 
-    private void showShowsFragment() {
-        mFragment = ShowsFragment.newInstance();
+    private void setUpActionBar(final SharedPreferences prefs, int navSelection) {
+        mIsLoaderStartAllowed = false;
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
-                .commit();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(false);
+
+        /* setup navigation */
+        CompatActionBarNavHandler handler = new CompatActionBarNavHandler(this);
+        if (getResources().getBoolean(R.bool.isLargeTablet)) {
+            /* use tabs */
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+            final String[] categories = getResources().getStringArray(R.array.showfilter_list);
+            for (String category : categories) {
+                actionBar.addTab(actionBar.newTab().setText(category).setTabListener(handler));
+            }
+        } else {
+            /* use list (spinner) (! use different layouts for ABS) */
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+            ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(
+                    this, R.array.showfilter_list, R.layout.sherlock_spinner_item);
+            mActionBarList.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
+            actionBar.setListNavigationCallbacks(mActionBarList, handler);
+        }
+
+        actionBar.setSelectedNavigationItem(navSelection);
+
+        // prevent the onNavigationItemSelected listener from reacting
+        mIsLoaderStartAllowed = true;
     }
 
     @Override
@@ -210,14 +273,14 @@ public class ShowsActivity extends BaseActivity {
                 return true;
             }
             case R.id.menu_search:
-                fireTrackerEvent("Search");
-
                 onSearchRequested();
+
+                fireTrackerEvent("Search");
                 return true;
             case R.id.menu_update:
-                fireTrackerEvent("Update");
-
                 performUpdateTask(false, null);
+
+                fireTrackerEvent("Update");
                 return true;
             case R.id.menu_upcoming:
                 startActivity(new Intent(this, UpcomingRecentActivity.class));
@@ -226,8 +289,6 @@ public class ShowsActivity extends BaseActivity {
                 startActivity(new Intent(this, AddActivity.class));
                 return true;
             case R.id.menu_updateart:
-                fireTrackerEvent("Fetch missing posters");
-
                 if (isArtTaskRunning()) {
                     return true;
                 }
@@ -241,19 +302,19 @@ public class ShowsActivity extends BaseActivity {
                             .show();
                     mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
                 }
+
+                fireTrackerEvent("Fetch missing posters");
                 return true;
             case R.id.menu_preferences:
                 startActivity(new Intent(this, SeriesGuidePreferences.class));
 
                 return true;
             case R.id.menu_fullupdate:
-                fireTrackerEvent("Full Update");
-
                 performUpdateTask(true, null);
+
+                fireTrackerEvent("Full Update");
                 return true;
             case R.id.menu_feedback: {
-                fireTrackerEvent("Feedback");
-
                 final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
                 intent.setType("plain/text");
                 intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
@@ -265,16 +326,22 @@ public class ShowsActivity extends BaseActivity {
 
                 startActivity(Intent.createChooser(intent, "Send mail..."));
 
+                fireTrackerEvent("Feedback");
                 return true;
             }
             case R.id.menu_help: {
-                fireTrackerEvent("Help");
-
                 Intent myIntent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse(SeriesGuidePreferences.HELP_URL));
 
                 startActivity(myIntent);
 
+                fireTrackerEvent("Help");
+                return true;
+            }
+            case R.id.menu_list_add: {
+                AddListDialogFragment.showAddListDialog(getSupportFragmentManager());
+
+                fireTrackerEvent("Add list");
                 return true;
             }
             default: {
@@ -512,4 +579,85 @@ public class ShowsActivity extends BaseActivity {
         getContentResolver().update(Shows.CONTENT_URI, values, null, null);
     }
 
+    @Override
+    public void onCategorySelected(int itemPosition) {
+        // only react if everything is set up
+        if (!mIsLoaderStartAllowed) {
+            return;
+        } else {
+            // show/hide title indicator
+            onDisplayTitleIndicator(itemPosition);
+
+            // attach correct adapter
+            onChangePagerAdapter(itemPosition);
+
+            // pass filter to show fragment
+            ShowsFragment fragment;
+            try {
+                fragment = (ShowsFragment) getSupportFragmentManager().findFragmentByTag(
+                        Utils.makeViewPagerFragmentName(mPager.getId(), 0));
+                if (fragment != null) {
+                    fragment.onFilterChanged(itemPosition);
+                }
+            } catch (ClassCastException e) {
+            }
+
+            // save the selected filter back to settings
+            Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+            editor.putInt(SeriesGuidePreferences.KEY_SHOWFILTER, itemPosition);
+            editor.commit();
+        }
+    }
+
+    private void onDisplayTitleIndicator(int itemPosition) {
+        if (itemPosition < LIST_NAV_ITEM_POSITION) {
+            // displaying shows
+            if (mIndicator.getVisibility() == View.VISIBLE) {
+                mIndicator.startAnimation(AnimationUtils.loadAnimation(this,
+                        android.R.anim.fade_out));
+            }
+            mIndicator.setVisibility(View.GONE);
+        } else {
+            // displaying lists
+            if (mIndicator.getVisibility() != View.VISIBLE) {
+                mIndicator.startAnimation(AnimationUtils.loadAnimation(this,
+                        android.R.anim.fade_in));
+            }
+            mIndicator.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void onChangePagerAdapter(int navItem) {
+        /*
+         * Prevent unnecessary fragment destruction by checking if the right
+         * adapter is already attached.
+         */
+        if (navItem < LIST_NAV_ITEM_POSITION) {
+            if (!(mPager.getAdapter() instanceof ShowsPagerAdapter)) {
+                mPager.setAdapter(mShowsAdapter);
+                mShowsAdapter.notifyDataSetChanged();
+            }
+        } else {
+            if (!(mPager.getAdapter() instanceof ListsPagerAdapter)) {
+                mPager.setAdapter(mListsAdapter);
+                mListsAdapter.notifyDataSetChanged();
+                if (mIndicator != null) {
+                    mIndicator.notifyDataSetChanged();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onListsChanged() {
+        // refresh list adapter
+        mListsAdapter.onListsChanged();
+        // update indicator and view pager
+        mIndicator.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onFirstRunDismissed() {
+        mShowsAdapter.notifyDataSetChanged();
+    }
 }

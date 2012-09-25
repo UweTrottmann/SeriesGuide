@@ -1,15 +1,16 @@
 
 package com.battlelancer.seriesguide.items;
 
+/**
+ * Object representation of a show for easier handling in code.
+ */
 public class Series {
 
     private String id;
 
-    private String seriesId;
-
     private String language;
 
-    private String seriesName;
+    private String title;
 
     private String banner;
 
@@ -18,8 +19,6 @@ public class Series {
     private String firstAired;
 
     private String imdbId;
-
-    private String zap2ItId;
 
     private String actors;
 
@@ -47,20 +46,19 @@ public class Series {
 
     private long nextEpisode;
 
+    private long lastEdit;
+
     public String getId() {
         return id;
     }
 
+    /**
+     * Equivalent to the theTVDb.com series id.
+     * 
+     * @param id
+     */
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getSeriesId() {
-        return seriesId;
-    }
-
-    public void setSeriesId(String seriesId) {
-        this.seriesId = seriesId;
     }
 
     public String getLanguage() {
@@ -71,12 +69,12 @@ public class Series {
         this.language = language;
     }
 
-    public String getSeriesName() {
-        return seriesName;
+    public String getTitle() {
+        return title;
     }
 
-    public void setSeriesName(String seriesName) {
-        this.seriesName = seriesName;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getBanner() {
@@ -109,14 +107,6 @@ public class Series {
 
     public void setImdbId(String imdbId) {
         this.imdbId = imdbId;
-    }
-
-    public String getZap2ItId() {
-        return zap2ItId;
-    }
-
-    public void setZap2ItId(String zap2ItId) {
-        this.zap2ItId = zap2ItId;
     }
 
     public String getActors() {
@@ -217,7 +207,7 @@ public class Series {
 
     @Override
     public String toString() {
-        return this.seriesName;
+        return this.title;
     }
 
     public void setNextEpisode(long nextEpisode) {
@@ -226,6 +216,14 @@ public class Series {
 
     public long getNextEpisode() {
         return nextEpisode;
+    }
+
+    public long getLastEdit() {
+        return lastEdit;
+    }
+
+    public void setLastEdit(long lastEdit) {
+        this.lastEdit = lastEdit;
     }
 
 }

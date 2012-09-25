@@ -12,15 +12,17 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/title"
-                style="@style/Header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name" />
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.XLarge.Light" />
 
             <include layout="@layout/show_info_meta" >
             </include>
@@ -32,7 +34,7 @@
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/holodivider" />
+                layout="@layout/divider_horizontal" />
 
             <include
                 android:id="@+id/buttonbar_ref"
@@ -41,17 +43,23 @@
                 layout="@layout/show_info_buttonbar" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/ImageViewShowInfoPoster"
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_marginLeft="@dimen/layout_padding"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/large_padding"
+            android:layout_marginRight="@dimen/large_padding"
             android:layout_marginTop="@dimen/default_padding"
-            android:layout_weight="2"
-            android:contentDescription="@string/description_poster"
-            android:src="@drawable/fringe_test" >
-        </ImageView>
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/ImageViewShowInfoPoster"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/description_poster"
+                android:src="@drawable/fringe_test" >
+            </ImageView>
+        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>

@@ -5,12 +5,64 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 2.8.1 *(2012-08-27)*
+Version 2.9 *(in development)*
 --------------------------------
+
+### Detailed changes:
+
+#### 2.9.4beta (2012-09-25)
+
+* TWEAK Display which show got checked in on GetGlue.
+* TWEAK More subtle app logo.
+* TWEAK Dual pane upcoming layout only on larger screens to avoid text cut off.
+* TWEAK Remove episodes deleted from TVDb, hide empty seasons.
+* FIX Show list layout bleeding out.
+* FIX Better show info layout.
+* NOTICE Latest translations from crowdin. 
+
+#### 2.9.3beta (2012-09-23)
+
+* FEATURE Basic lists, add shows, seasons or episodes to them. No syncing with trakt.tv, yet.
+* TWEAK More UI tweaks, e.g. nicer wide layouts on large tablets and it should look nicer on the Nexus 7.
+* TWEAK When sorting by alphabet, ignore case.
+* TWEAK GetGlue authentication in internal WebView instead of launching browser. Check if this works on Google TV!
+* TWEAK Remove text from progress indicators as suggested by the ADG.
+* TWEAK Added 'Check in' to shows long-press menus.
+* TWEAK More values for Time Offset.
+* FIX Assume correct default disabled 'Update only via Wi-Fi' in overview.
+* FIX Hide episodes airing later than in an hour from check in screen.
+* FIX Episodes did not get flagged when flagging whole season watched.
+* FIX Always update the TVDb rating, allow to update everything when changing the content language.
+* FIX Do not notify about specials if the user chose to hide them.
+* FIX Next episode algorithm will show all specials again if the user did not hide them.
+* FIX Display correct collected flag state in overview.
+* FIX Jelly Bean: Up in activity screen always returns to the show list.
+* NOTICE Latest translations from crowdin.
+
+#### 2.9.2beta (2012-09-16)
+
+* TWEAK Refined UI design with more custom elements, layout unification.
+* TWEAK Improved trakt.tv credentials dialog behavior, set up instructions.
+* TWEAK Name list widget according to app version. Yay, no more guesswork!
+* NOTICE Updated ViewPagerIndicator to 2.4.1.
+
+#### 2.9.1beta (2012-08-19)
+
+* NOTICE Database upgraded to version 27. Starting SeriesGuide the first time after installing the update may take a little longer than usual.
+* FEATURE Display IMDb pages for episodes (IMDb app or website).
+* TWEAK Sharing an episode now includes its IMDb page link, falls back to the show IMDb page if it does not exist.
+* TWEAK Episode and show detail screens display time of last edit on theTVDb.com.
+* TWEAK Download images in add screen and shout screen one-by-one.
+* TWEAK Run GetGlue check in on thread pool, it should not be blocked by other background activity anymore.
+* TWEAK Only update episode information if it actually changed according to theTVDB.com leading to slightly faster udpates.
+* NOTICE Updated Gson to 2.2.2. Possibly faster interaction with trakt.tv.
+
+#### 2.9beta (2012-08-16)
 
 * FEATURE Fetch collected flags when adding a show from trakt.tv.
 * FEATURE Submit flagging whole seasons, shows and previously aired episodes to trakt.tv.
 * FEATURE Automatically back up show database every week on starting the app. File is named seriesdatabase_auto.db and stored in the backup folder (See Backup/Restore in settings).
+* FIX Add low resolution first started background, fix scaling of existing one.
 * FIX Up in activity screen always returns back to show list.
 
 Version 2.8 *(2012-08-15)*

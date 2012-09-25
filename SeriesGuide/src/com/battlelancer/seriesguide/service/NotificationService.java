@@ -63,8 +63,8 @@ public class NotificationService extends IntentService {
             + Episodes.NUMBER + " ASC";
 
     // only within time frame, unwatched episodes, only of favorite shows
-    private static final String SELECTION = Episodes.FIRSTAIREDMS + ">=? AND " + Episodes.WATCHED
-            + "=? AND " + Shows.FAVORITE + "=?";
+    private static final String SELECTION = Episodes.FIRSTAIREDMS + ">=?"
+            + Episodes.SELECTION_NOWATCHED + Shows.SELECTION_FAVORITES;
 
     interface NotificationQuery {
         int _ID = 0;
@@ -110,11 +110,18 @@ public class NotificationService extends IntentService {
 
         long wakeUpTime = 0;
         final long fakeNow = Utils.getFakeCurrentTime(prefs);
+        StringBuilder selection = new StringBuilder(SELECTION);
+
+        boolean isNoSpecials = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES,
+                false);
+        if (isNoSpecials) {
+            selection.append(Episodes.SELECTION_NOSPECIALS);
+        }
 
         // get episodes which air between 15 mins ago and one hour in the future
         final Cursor upcomingEpisodes = getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
-                PROJECTION, SELECTION, new String[] {
-                        String.valueOf(fakeNow - 15 * DateUtils.MINUTE_IN_MILLIS), "0", "1"
+                PROJECTION, selection.toString(), new String[] {
+                    String.valueOf(fakeNow - 15 * DateUtils.MINUTE_IN_MILLIS)
                 }, SORTING);
 
         if (upcomingEpisodes != null) {

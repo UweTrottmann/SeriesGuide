@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/RelativeLayout1"
-    style="@style/ScrollingLayout"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -12,6 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="@dimen/large_padding"
+        android:layout_marginTop="@dimen/large_padding"
         android:layout_toLeftOf="@+id/imageButtonClearSearch"
         android:ems="10"
         android:hint="@string/checkin_searchhint"
@@ -57,6 +58,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_alignTop="@+id/editTextCheckinSearch"
+        android:layout_marginRight="@dimen/large_padding"
+        android:layout_marginTop="@dimen/large_padding"
         android:background="?custom_list_selector"
         android:contentDescription="@string/clear"
         android:paddingLeft="@dimen/inline_padding"

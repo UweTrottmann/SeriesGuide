@@ -18,24 +18,27 @@
 package com.battlelancer.seriesguide.ui.dialogs;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.google.analytics.tracking.android.EasyTracker;
 
 /**
  * A DialogFragment allowing the user to decide whether to add a show to his
  * show database.
- * 
- * @author Uwe Trottmann
  */
 public class AddDialogFragment extends DialogFragment {
 
@@ -51,6 +54,14 @@ public class AddDialogFragment extends DialogFragment {
         args.putParcelable("show", show);
         f.setArguments(args);
         return f;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // hide title, use custom theme
+        setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
     }
 
     @Override
@@ -70,19 +81,43 @@ public class AddDialogFragment extends DialogFragment {
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View layout = inflater.inflate(R.layout.add_dialog, null);
         final SearchResult show = getArguments().getParcelable("show");
 
-        return new AlertDialog.Builder(getActivity()).setTitle(show.title)
-                .setMessage(show.overview)
-                .setPositiveButton(R.string.add_show, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        mListener.onAddShow(show);
-                    }
-                }).setNegativeButton(R.string.dont_add_show, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                    }
-                }).create();
+        // title and description
+        ((TextView) layout.findViewById(R.id.title)).setText(show.title);
+        ((TextView) layout.findViewById(R.id.description)).setText(show.overview);
+
+        // buttons
+        Button dontAddButton = (Button) layout.findViewById(R.id.buttonNegative);
+        dontAddButton.setText(R.string.dont_add_show);
+        dontAddButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+        Button addButton = (Button) layout.findViewById(R.id.buttonPositive);
+        addButton.setText(R.string.add_show);
+        addButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onAddShow(show);
+                dismiss();
+            }
+        });
+
+        // poster
+        if (getResources().getBoolean(R.bool.isLargeTablet)) {
+            if (show.poster != null) {
+                ImageView posterView = (ImageView) layout.findViewById(R.id.poster);
+                posterView.setVisibility(View.VISIBLE);
+                ImageDownloader.getInstance(getActivity()).download(show.poster, posterView, false);
+            }
+        }
+
+        return layout;
     }
 
     /**

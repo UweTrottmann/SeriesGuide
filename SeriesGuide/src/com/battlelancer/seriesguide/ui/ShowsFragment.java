@@ -17,11 +17,12 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -31,7 +32,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v4.widget.CursorAdapter;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -41,31 +43,32 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesContract;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
-import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
-import com.battlelancer.seriesguide.util.CompatActionBarNavListener;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
 import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * Displays the list of shows in a users local library.
@@ -73,28 +76,32 @@ import com.google.analytics.tracking.android.EasyTracker;
  * @author Uwe Trottmann
  */
 public class ShowsFragment extends SherlockFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, CompatActionBarNavListener, OnFlagListener {
+        LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, OnFlagListener {
 
     private static final String TAG = "ShowsFragment";
 
-    private static final int LOADER_ID = R.layout.shows_fragment;
+    public static final int LOADER_ID = R.layout.shows_fragment;
 
-    private static final String FILTER_ID = "filterid";
+    public static final String FILTER_ID = "filterid";
 
     // context menu items
-    private static final int CONTEXT_DELETE = 200;
+    private static final int CONTEXT_DELETE_ID = 200;
 
-    private static final int CONTEXT_UPDATESHOW = 201;
+    private static final int CONTEXT_UPDATE_ID = 201;
 
-    private static final int CONTEXT_MARKNEXT = 202;
+    private static final int CONTEXT_FLAG_NEXT_ID = 202;
 
-    private static final int CONTEXT_FAVORITE = 203;
+    private static final int CONTEXT_FAVORITE_ID = 203;
 
-    private static final int CONTEXT_UNFAVORITE = 204;
+    private static final int CONTEXT_UNFAVORITE_ID = 204;
 
-    private static final int CONTEXT_HIDE = 205;
+    private static final int CONTEXT_HIDE_ID = 205;
 
-    private static final int CONTEXT_UNHIDE = 206;
+    private static final int CONTEXT_UNHIDE_ID = 206;
+
+    private static final int CONTEXT_MANAGE_LISTS_ID = 207;
+
+    private static final int CONTEXT_CHECKIN_ID = 208;
 
     // Show Filter Ids
     private static final int SHOWFILTER_ALL = 0;
@@ -110,8 +117,6 @@ public class ShowsFragment extends SherlockFragment implements
     private GridView mGrid;
 
     private ShowSorting mSorting;
-
-    private boolean mIsPreventLoaderRestart;
 
     public static ShowsFragment newInstance() {
         ShowsFragment f = new ShowsFragment();
@@ -133,81 +138,28 @@ public class ShowsFragment extends SherlockFragment implements
         // get settings
         updateSorting(prefs);
 
-        // setup show adapter
-        String[] from = new String[] {
-                SeriesContract.Shows.TITLE, SeriesContract.Shows.NEXTTEXT,
-                SeriesContract.Shows.AIRSTIME, SeriesContract.Shows.NETWORK,
-                SeriesContract.Shows.POSTER
-        };
-        int[] to = new int[] {
-                R.id.seriesname, R.id.TextViewShowListNextEpisode, R.id.TextViewShowListAirtime,
-                R.id.TextViewShowListNetwork, R.id.showposter
-        };
-        int layout = R.layout.show_rowairtime;
-        mAdapter = new SlowAdapter(getActivity(), layout, null, from, to, 0);
+        mAdapter = new SlowAdapter(getActivity(), null, 0);
 
         // setup grid view
         mGrid = (GridView) getView().findViewById(R.id.showlist);
         mGrid.setAdapter(mAdapter);
-        mGrid.setOnItemClickListener(new OnItemClickListener() {
-
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Intent i = new Intent(getActivity(), OverviewActivity.class);
-                i.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, (int) id);
-                startActivity(i);
-            }
-        });
+        mGrid.setOnItemClickListener(this);
         View emptyView = getView().findViewById(R.id.empty);
         if (emptyView != null) {
             mGrid.setEmptyView(emptyView);
         }
         registerForContextMenu(mGrid);
 
-        // setup action bar
-        int selNavItem = setUpActionBar(prefs);
-
-        // start loading data
+        // start loading data, use saved show filter
+        int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
         Bundle args = new Bundle();
-        args.putInt(FILTER_ID, selNavItem);
+        args.putInt(FILTER_ID, showfilter);
         getLoaderManager().initLoader(LOADER_ID, args, this);
 
         // listen for some settings changes
         prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
 
         setHasOptionsMenu(true);
-    }
-
-    private int setUpActionBar(final SharedPreferences prefs) {
-        ActionBar actionBar = getSherlockActivity().getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
-
-        // prevent the onNavigationItemSelected listener from reacting
-        mIsPreventLoaderRestart = true;
-
-        /* setup navigation */
-        CompatActionBarNavHandler handler = new CompatActionBarNavHandler(this);
-        if (getResources().getBoolean(R.bool.isLargeTablet)) {
-            /* use tabs */
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-            final String[] categories = getResources().getStringArray(R.array.showfilter_list);
-            for (String category : categories) {
-                actionBar.addTab(actionBar.newTab().setText(category).setTabListener(handler));
-            }
-        } else {
-            /* use list (spinner) (! use different layouts for ABS) */
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-            ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(
-                    getActivity(), R.array.showfilter_list, R.layout.sherlock_spinner_item);
-            mActionBarList.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
-            actionBar.setListNavigationCallbacks(mActionBarList, handler);
-        }
-
-        // try to restore previously set show filter
-        int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
-        // prevent the onNavigationItemSelected listener from reacting
-        // mIsPreventLoaderRestart = true;
-        actionBar.setSelectedNavigationItem(showfilter);
-        return showfilter;
     }
 
     @Override
@@ -221,6 +173,7 @@ public class ShowsFragment extends SherlockFragment implements
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menuInfo.toString();
+
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         final Cursor show = getActivity().getContentResolver().query(
                 Shows.buildShowUri(String.valueOf(info.id)), new String[] {
@@ -228,20 +181,22 @@ public class ShowsFragment extends SherlockFragment implements
                 }, null, null, null);
         show.moveToFirst();
         if (show.getInt(0) == 0) {
-            menu.add(0, CONTEXT_FAVORITE, 0, R.string.context_favorite);
+            menu.add(0, CONTEXT_FAVORITE_ID, 2, R.string.context_favorite);
         } else {
-            menu.add(0, CONTEXT_UNFAVORITE, 0, R.string.context_unfavorite);
+            menu.add(0, CONTEXT_UNFAVORITE_ID, 2, R.string.context_unfavorite);
         }
         if (show.getInt(1) == 0) {
-            menu.add(0, CONTEXT_HIDE, 3, R.string.context_hide);
+            menu.add(0, CONTEXT_HIDE_ID, 3, R.string.context_hide);
         } else {
-            menu.add(0, CONTEXT_UNHIDE, 3, R.string.context_unhide);
+            menu.add(0, CONTEXT_UNHIDE_ID, 3, R.string.context_unhide);
         }
         show.close();
 
-        menu.add(0, CONTEXT_MARKNEXT, 1, R.string.context_marknext);
-        menu.add(0, CONTEXT_UPDATESHOW, 2, R.string.context_updateshow);
-        menu.add(0, CONTEXT_DELETE, 4, R.string.delete_show);
+        menu.add(0, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
+        menu.add(0, CONTEXT_FLAG_NEXT_ID, 1, R.string.context_marknext);
+        menu.add(0, CONTEXT_MANAGE_LISTS_ID, 4, R.string.list_item_manage);
+        menu.add(0, CONTEXT_UPDATE_ID, 5, R.string.context_updateshow);
+        menu.add(0, CONTEXT_DELETE_ID, 6, R.string.delete_show);
     }
 
     @Override
@@ -249,7 +204,35 @@ public class ShowsFragment extends SherlockFragment implements
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
-            case CONTEXT_FAVORITE: {
+            case CONTEXT_CHECKIN_ID: {
+                Cursor show = (Cursor) mAdapter.getItem(info.position);
+                final String episodeId = show.getString(ShowsQuery.NEXTEPISODE);
+                if (TextUtils.isEmpty(episodeId)) {
+                    return true;
+                }
+
+                // look up episode
+                final Cursor episode = getActivity().getContentResolver().query(
+                        Episodes.buildEpisodeUri(episodeId), new String[] {
+                                Episodes.SEASON, Episodes.NUMBER, Episodes.TITLE
+                        }, null, null, null);
+                if (episode != null && episode.moveToFirst()) {
+                    final String episodeString = ShareUtils.onCreateShareString(
+                            getActivity(), episode);
+
+                    // display a check-in dialog
+                    CheckInDialogFragment f = CheckInDialogFragment.newInstance(
+                            show.getString(ShowsQuery.IMDB_ID), (int) info.id, episode.getInt(0),
+                            episode.getInt(1), episodeString);
+                    f.show(getFragmentManager(), "checkin-dialog");
+
+                }
+                if (episode != null) {
+                    episode.close();
+                }
+                return true;
+            }
+            case CONTEXT_FAVORITE_ID: {
                 fireTrackerEvent("Favorite show");
 
                 ContentValues values = new ContentValues();
@@ -263,7 +246,7 @@ public class ShowsFragment extends SherlockFragment implements
                         .show();
                 return true;
             }
-            case CONTEXT_UNFAVORITE: {
+            case CONTEXT_UNFAVORITE_ID: {
                 fireTrackerEvent("Unfavorite show");
 
                 ContentValues values = new ContentValues();
@@ -274,7 +257,7 @@ public class ShowsFragment extends SherlockFragment implements
                         .show();
                 return true;
             }
-            case CONTEXT_HIDE: {
+            case CONTEXT_HIDE_ID: {
                 fireTrackerEvent("Hidden show");
 
                 ContentValues values = new ContentValues();
@@ -285,7 +268,7 @@ public class ShowsFragment extends SherlockFragment implements
                         .show();
                 return true;
             }
-            case CONTEXT_UNHIDE: {
+            case CONTEXT_UNHIDE_ID: {
                 fireTrackerEvent("Unhidden show");
 
                 ContentValues values = new ContentValues();
@@ -296,19 +279,19 @@ public class ShowsFragment extends SherlockFragment implements
                         .show();
                 return true;
             }
-            case CONTEXT_DELETE:
+            case CONTEXT_DELETE_ID:
                 fireTrackerEvent("Delete show");
 
                 if (!TaskManager.getInstance(getActivity()).isUpdateTaskRunning(true)) {
                     showDeleteDialog(info.id);
                 }
                 return true;
-            case CONTEXT_UPDATESHOW:
+            case CONTEXT_UPDATE_ID:
                 fireTrackerEvent("Update show");
 
                 ((ShowsActivity) getActivity()).performUpdateTask(false, String.valueOf(info.id));
                 return true;
-            case CONTEXT_MARKNEXT:
+            case CONTEXT_FLAG_NEXT_ID:
                 fireTrackerEvent("Mark next episode");
 
                 Cursor show = (Cursor) mAdapter.getItem(info.position);
@@ -316,8 +299,18 @@ public class ShowsFragment extends SherlockFragment implements
                         show.getInt(ShowsQuery.NEXTEPISODE));
 
                 return true;
+            case CONTEXT_MANAGE_LISTS_ID: {
+                ListsDialogFragment.showListsDialog(String.valueOf(info.id), 1,
+                        getFragmentManager());
+                return true;
+            }
         }
         return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.shows_menu, menu);
     }
 
     @Override
@@ -346,21 +339,19 @@ public class ShowsFragment extends SherlockFragment implements
         }
     }
 
+    @TargetApi(16)
     @Override
-    public void onCategorySelected(int itemPosition) {
-        // only handle events after the event caused when creating the activity
-        if (mIsPreventLoaderRestart) {
-            mIsPreventLoaderRestart = false;
-        } else {
-            // requery with the new filter
-            Bundle args = new Bundle();
-            args.putInt(FILTER_ID, itemPosition);
-            getLoaderManager().restartLoader(LOADER_ID, args, this);
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // display overview for this show
 
-            // save the selected filter back to settings
-            Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
-            editor.putInt(SeriesGuidePreferences.KEY_SHOWFILTER, itemPosition);
-            editor.commit();
+        Intent i = new Intent(getActivity(), OverviewActivity.class);
+        i.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, (int) id);
+        if (AndroidUtils.isJellyBeanOrHigher()) {
+            Bundle options = ActivityOptions.makeScaleUpAnimation(view, 0, 0, view.getWidth(),
+                    view.getHeight()).toBundle();
+            getActivity().startActivity(i, options);
+        } else {
+            startActivity(i);
         }
     }
 
@@ -422,18 +413,16 @@ public class ShowsFragment extends SherlockFragment implements
         mAdapter.swapCursor(null);
     }
 
-    private class SlowAdapter extends SimpleCursorAdapter {
+    private class SlowAdapter extends CursorAdapter {
 
         private LayoutInflater mLayoutInflater;
 
-        private int mLayout;
+        private static final int LAYOUT = R.layout.shows_row;
 
-        public SlowAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
-            super(context, layout, c, from, to, flags);
-
+        public SlowAdapter(Context context, Cursor c, int flags) {
+            super(context, c, flags);
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            mLayout = layout;
         }
 
         @Override
@@ -449,7 +438,7 @@ public class ShowsFragment extends SherlockFragment implements
             final ViewHolder viewHolder;
 
             if (convertView == null) {
-                convertView = mLayoutInflater.inflate(mLayout, null);
+                convertView = mLayoutInflater.inflate(LAYOUT, null);
 
                 viewHolder = new ViewHolder();
                 viewHolder.name = (TextView) convertView.findViewById(R.id.seriesname);
@@ -503,7 +492,7 @@ public class ShowsFragment extends SherlockFragment implements
                     mCursor.getLong(ShowsQuery.AIRSTIME),
                     mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), mContext);
             if (getResources().getBoolean(R.bool.isLargeTablet)) {
-                viewHolder.airsTime.setText("|  " + values[1] + " " + values[0]);
+                viewHolder.airsTime.setText("/ " + values[1] + " " + values[0]);
             } else {
                 viewHolder.airsTime.setText(values[1] + " " + values[0]);
             }
@@ -513,6 +502,16 @@ public class ShowsFragment extends SherlockFragment implements
             ImageProvider.getInstance(mContext).loadPosterThumb(viewHolder.poster, imagePath);
 
             return convertView;
+        }
+
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+            // do nothing here
+        }
+
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            return mLayoutInflater.inflate(LAYOUT, parent, false);
         }
     }
 
@@ -540,7 +539,7 @@ public class ShowsFragment extends SherlockFragment implements
         String[] PROJECTION = {
                 BaseColumns._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
                 Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE, Shows.NEXTEPISODE
+                Shows.FAVORITE, Shows.NEXTEPISODE, Shows.IMDBID
         };
 
         // int _ID = 0;
@@ -564,15 +563,12 @@ public class ShowsFragment extends SherlockFragment implements
         int FAVORITE = 9;
 
         int NEXTEPISODE = 10;
+
+        int IMDB_ID = 11;
     }
 
     public void fireTrackerEvent(String label) {
         EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
-    }
-
-    private void requery() {
-        // just reuse the onCategorySelected callback method
-        onCategorySelected(getSherlockActivity().getSupportActionBar().getSelectedNavigationIndex());
     }
 
     private void showDeleteDialog(long showId) {
@@ -622,16 +618,24 @@ public class ShowsFragment extends SherlockFragment implements
             }
 
             if (isAffectingChange) {
-                requery();
+                onFilterChanged(getSherlockActivity().getSupportActionBar()
+                        .getSelectedNavigationIndex());
             }
         }
     };
 
     @Override
     public void onFlagCompleted(FlagAction action, int showId, int itemId, boolean isSuccessful) {
-        if (isSuccessful) {
+        if (isSuccessful && isAdded()) {
             Utils.updateLatestEpisode(getActivity(), String.valueOf(showId));
         }
+    }
+
+    public void onFilterChanged(int itemPosition) {
+        // requery with the new filter
+        Bundle args = new Bundle();
+        args.putInt(ShowsFragment.FILTER_ID, itemPosition);
+        getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, args, this);
     }
 
 }

@@ -29,9 +29,9 @@ import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
+import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
 
 /**
  * Hosts an {@link OverviewFragment}.
@@ -79,30 +79,24 @@ public class OverviewActivity extends BaseActivity {
         final int showIdExtra = getIntent()
                 .getIntExtra(OverviewFragment.InitBundle.SHOW_TVDBID, -1);
 
-        // only update this show if no global update is running
-        if (showIdExtra != -1 && !TaskManager.getInstance(this).isUpdateTaskRunning(false)) {
-            String showId = String.valueOf(showIdExtra);
-            boolean isTime = TheTVDB.isUpdateShow(showId, System.currentTimeMillis(), this);
+        // only update this show if no global update is running and we have a
+        // connection
+        if (showIdExtra != -1 && !TaskManager.getInstance(this).isUpdateTaskRunning(false)
+                && Utils.isAllowedConnection(this)) {
+            final SharedPreferences prefs = PreferenceManager
+                    .getDefaultSharedPreferences(getApplicationContext());
 
-            // look if we are online
-            if (isTime && AndroidUtils.isNetworkConnected(this)) {
+            // check if auto-update is enabled
+            final boolean isAutoUpdateEnabled = prefs.getBoolean(
+                    SeriesGuidePreferences.KEY_AUTOUPDATE, true);
+            if (isAutoUpdateEnabled) {
+                String showId = String.valueOf(showIdExtra);
+                boolean isTime = TheTVDB.isUpdateShow(showId, System.currentTimeMillis(), this);
 
-                final SharedPreferences prefs = PreferenceManager
-                        .getDefaultSharedPreferences(getApplicationContext());
-
-                // check if auto-update is enabled
-                final boolean isAutoUpdateEnabled = prefs.getBoolean(
-                        SeriesGuidePreferences.KEY_AUTOUPDATE, true);
-                if (isAutoUpdateEnabled) {
-
-                    // check if wifi is required and available
-                    final boolean isWifiOnly = prefs.getBoolean(
-                            SeriesGuidePreferences.KEY_ONLYWIFI, true);
-                    if (!isWifiOnly || AndroidUtils.isWifiConnected(this)) {
-
-                        UpdateTask updateTask = new UpdateTask(String.valueOf(showId), this);
-                        TaskManager.getInstance(this).tryUpdateTask(updateTask, false, -1);
-                    }
+                // look if we need to update
+                if (isTime) {
+                    UpdateTask updateTask = new UpdateTask(String.valueOf(showId), this);
+                    TaskManager.getInstance(this).tryUpdateTask(updateTask, false, -1);
                 }
             }
 
@@ -118,7 +112,7 @@ public class OverviewActivity extends BaseActivity {
         }
 
         final Series show = DBUtils.getShow(this, String.valueOf(showId));
-        final String showTitle = show.getSeriesName();
+        final String showTitle = show.getTitle();
 
         Bundle args = new Bundle();
         args.putString(SearchFragment.InitBundle.SHOW_TITLE, showTitle);

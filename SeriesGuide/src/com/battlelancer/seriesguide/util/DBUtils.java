@@ -43,6 +43,7 @@ import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class DBUtils {
@@ -217,29 +218,26 @@ public class DBUtils {
         final String recentThreshold = String.valueOf(fakeNow);
 
         // build selection args
-        String[] selectionArgs;
+        String[] selectionArgs = new String[] {
+                recentThreshold, "0"
+        };
+
+        // append only favorites selection if necessary
         boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
         if (isOnlyFavorites) {
-            query += UpcomingQuery.SELECTION_ONLYFAVORITES;
-            selectionArgs = new String[] {
-                    recentThreshold, "0", "1"
-            };
-        } else {
-            selectionArgs = new String[] {
-                    recentThreshold, "0"
-            };
+            query += Shows.SELECTION_FAVORITES;
         }
 
-        // append nospecials selection if necessary
+        // append no specials selection if necessary
         boolean isNoSpecials = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES,
                 false);
         if (isNoSpecials) {
-            query += UpcomingQuery.SELECTION_NOSPECIALS;
+            query += Episodes.SELECTION_NOSPECIALS;
         }
 
         // append unwatched selection if necessary
         if (isOnlyUnwatched) {
-            query += UpcomingQuery.SELECTION_NOWATCHED;
+            query += Episodes.SELECTION_NOWATCHED;
         }
 
         // build result array
@@ -275,42 +273,50 @@ public class DBUtils {
         }
     }
 
+    private static final String[] SHOW_PROJECTION = new String[] {
+            Shows._ID, Shows.ACTORS, Shows.AIRSDAYOFWEEK, Shows.AIRSTIME, Shows.CONTENTRATING,
+            Shows.FIRSTAIRED, Shows.GENRES, Shows.NETWORK, Shows.OVERVIEW, Shows.POSTER,
+            Shows.RATING, Shows.RUNTIME, Shows.TITLE, Shows.STATUS, Shows.IMDBID,
+            Shows.NEXTEPISODE, Shows.LASTEDIT
+    };
+
     /**
-     * Fetches the row to a given show id and returns the results an Series
-     * object. Returns {@code null} if there is no show with that id.
-     * 
-     * @param show tvdb id
-     * @return
+     * Returns a {@link Series} object populated with all needed fields, but not
+     * all of them! Might Return {@code null} if there is no show with that id.
      */
     public static Series getShow(Context context, String showId) {
-        Series show = new Series();
-        Cursor details = context.getContentResolver().query(Shows.buildShowUri(showId), null, null,
+        Cursor details = context.getContentResolver().query(Shows.buildShowUri(showId),
+                SHOW_PROJECTION, null,
                 null, null);
-        if (details.moveToFirst()) {
-            show.setActors(details.getString(details.getColumnIndexOrThrow(Shows.ACTORS)));
-            show.setAirsDayOfWeek(details.getString(details
-                    .getColumnIndexOrThrow(Shows.AIRSDAYOFWEEK)));
-            show.setAirsTime(details.getLong(details.getColumnIndexOrThrow(Shows.AIRSTIME)));
-            show.setContentRating(details.getString(details
-                    .getColumnIndexOrThrow(Shows.CONTENTRATING)));
-            show.setFirstAired(details.getString(details.getColumnIndexOrThrow(Shows.FIRSTAIRED)));
-            show.setGenres(details.getString(details.getColumnIndexOrThrow(Shows.GENRES)));
-            show.setId(details.getString(details.getColumnIndexOrThrow(Shows._ID)));
-            show.setNetwork(details.getString(details.getColumnIndexOrThrow(Shows.NETWORK)));
-            show.setOverview(details.getString(details.getColumnIndexOrThrow(Shows.OVERVIEW)));
-            show.setPoster(details.getString(details.getColumnIndexOrThrow(Shows.POSTER)));
-            show.setRating(details.getString(details.getColumnIndexOrThrow(Shows.RATING)));
-            show.setRuntime(details.getString(details.getColumnIndexOrThrow(Shows.RUNTIME)));
-            show.setSeriesId(details.getString(details.getColumnIndexOrThrow(Shows._ID)));
-            show.setSeriesName(details.getString(details.getColumnIndexOrThrow(Shows.TITLE)));
-            show.setStatus(details.getInt(details.getColumnIndexOrThrow(Shows.STATUS)));
-            show.setImdbId(details.getString(details.getColumnIndexOrThrow(Shows.IMDBID)));
-            show.setNextEpisode(details.getLong(details.getColumnIndexOrThrow(Shows.NEXTEPISODE)));
-        } else {
-            show = null;
+
+        if (details != null) {
+            if (details.moveToFirst()) {
+                Series show = new Series();
+
+                show.setId(details.getString(0));
+                show.setActors(details.getString(1));
+                show.setAirsDayOfWeek(details.getString(2));
+                show.setAirsTime(details.getLong(3));
+                show.setContentRating(details.getString(4));
+                show.setFirstAired(details.getString(5));
+                show.setGenres(details.getString(6));
+                show.setNetwork(details.getString(7));
+                show.setOverview(details.getString(8));
+                show.setPoster(details.getString(9));
+                show.setRating(details.getString(10));
+                show.setRuntime(details.getString(11));
+                show.setTitle(details.getString(12));
+                show.setStatus(details.getInt(13));
+                show.setImdbId(details.getString(14));
+                show.setNextEpisode(details.getLong(15));
+                show.setLastEdit(details.getLong(16));
+
+                return show;
+            }
+            details.close();
         }
-        details.close();
-        return show;
+
+        return null;
     }
 
     public static boolean isShowExists(String showId, Context context) {
@@ -354,7 +360,7 @@ public class DBUtils {
      * @return
      */
     private static ContentValues putCommonShowValues(Series show, ContentValues values) {
-        values.put(Shows.TITLE, show.getSeriesName());
+        values.put(Shows.TITLE, show.getTitle());
         values.put(Shows.OVERVIEW, show.getOverview());
         values.put(Shows.ACTORS, show.getActors());
         values.put(Shows.AIRSDAYOFWEEK, show.getAirsDayOfWeek());
@@ -369,6 +375,7 @@ public class DBUtils {
         values.put(Shows.POSTER, show.getPoster());
         values.put(Shows.IMDBID, show.getImdbId());
         values.put(Shows.LASTUPDATED, new Date().getTime());
+        values.put(Shows.LASTEDIT, show.getLastEdit());
         return values;
     }
 
@@ -462,25 +469,27 @@ public class DBUtils {
     }
 
     /**
-     * Returns the episode IDs for a given show as a efficiently searchable
-     * HashMap.
+     * Returns the episode IDs and their last edit time for a given show as a
+     * efficiently searchable HashMap.
      * 
-     * @param seriesid
+     * @param showId
      * @return HashMap containing the shows existing episodes
      */
-    public static HashSet<Long> getEpisodeIDsForShow(String seriesid, Context context) {
+    public static HashMap<Long, Long> getEpisodeMapForShow(String showId, Context context) {
         Cursor eptest = context.getContentResolver().query(
-                Episodes.buildEpisodesOfShowUri(seriesid), new String[] {
-                    Episodes._ID
+                Episodes.buildEpisodesOfShowUri(showId), new String[] {
+                        Episodes._ID, Episodes.LASTEDIT
                 }, null, null, null);
-        HashSet<Long> episodeIDs = new HashSet<Long>();
-        eptest.moveToFirst();
-        while (!eptest.isAfterLast()) {
-            episodeIDs.add(eptest.getLong(0));
-            eptest.moveToNext();
+        HashMap<Long, Long> episodeMap = new HashMap<Long, Long>();
+        if (eptest != null) {
+            eptest.moveToFirst();
+            while (!eptest.isAfterLast()) {
+                episodeMap.put(eptest.getLong(0), eptest.getLong(1));
+                eptest.moveToNext();
+            }
+            eptest.close();
         }
-        eptest.close();
-        return episodeIDs;
+        return episodeMap;
     }
 
     /**
@@ -586,7 +595,7 @@ public class DBUtils {
         selectQuery.append(NextEpisodeQuery.SELECT_WATCHED);
         if (isNoSpecials) {
             // do not take specials into account
-            selectQuery.append(NextEpisodeQuery.SELECT_NOSPECIALS);
+            selectQuery.append(Episodes.SELECTION_NOSPECIALS);
         }
         // only get episodes which have an air date
         selectQuery.append(NextEpisodeQuery.SELECT_WITHAIRDATE);
@@ -597,40 +606,43 @@ public class DBUtils {
 
         final String season;
         final String number;
+        final String airtime;
         if (watched != null && watched.moveToFirst()) {
             season = watched.getString(NextEpisodeQuery.SEASON);
             number = watched.getString(NextEpisodeQuery.NUMBER);
+            airtime = watched.getString(NextEpisodeQuery.FIRSTAIREDMS);
         } else {
             // no watched episodes, include all starting with
             // special 0
             season = "-1";
             number = "-1";
+            airtime = "0";
         }
         if (watched != null) {
             watched.close();
         }
 
-        // STEP 2: get episode with next highest number or next highest
-        // season
+        // STEP 2: get episode airing closest afterwards or at the same time,
+        // but with a higher number
         final String[] selectionArgs;
         selectQuery.delete(0, selectQuery.length());
         selectQuery.append(NextEpisodeQuery.SELECT_NEXT);
         if (isNoSpecials) {
             // do not take specials into account
-            selectQuery.append(NextEpisodeQuery.SELECT_NOSPECIALS);
+            selectQuery.append(Episodes.SELECTION_NOSPECIALS);
         }
         if (isOnlyFutureEpisodes) {
             // restrict to episodes with future air date
             selectQuery.append(NextEpisodeQuery.SELECT_ONLYFUTURE);
             final String now = String.valueOf(Utils.getFakeCurrentTime(prefs));
             selectionArgs = new String[] {
-                    season, number, season, now
+                    airtime, number, season, airtime, now
             };
         } else {
             // restrict to episodes with any valid air date
             selectQuery.append(NextEpisodeQuery.SELECT_WITHAIRDATE);
             selectionArgs = new String[] {
-                    season, number, season
+                    airtime, number, season, airtime
             };
         }
 
@@ -677,17 +689,21 @@ public class DBUtils {
     private interface NextEpisodeQuery {
         String SELECT_WATCHED = Episodes.WATCHED + "=1";
 
-        String SELECT_NEXT = Episodes.WATCHED + "=0 AND ((" + Episodes.SEASON + "=? AND "
-                + Episodes.NUMBER + ">?) OR " + Episodes.SEASON + ">?)";
-
-        String SELECT_NOSPECIALS = " AND " + Episodes.SEASON + "!=0";
+        /**
+         * Unwatched, airing later or has a different number or season if airing
+         * the same time.
+         */
+        String SELECT_NEXT = Episodes.WATCHED + "=0 AND ("
+                + "(" + Episodes.FIRSTAIREDMS + "=? AND "
+                + "(" + Episodes.NUMBER + "!=? OR " + Episodes.SEASON + "!=?)) "
+                + "OR " + Episodes.FIRSTAIREDMS + ">?)";
 
         String SELECT_WITHAIRDATE = " AND " + Episodes.FIRSTAIREDMS + "!=-1";
 
         String SELECT_ONLYFUTURE = " AND " + Episodes.FIRSTAIREDMS + ">=?";
 
         String[] PROJECTION_WATCHED = new String[] {
-                Episodes._ID, Episodes.SEASON, Episodes.NUMBER
+                Episodes._ID, Episodes.SEASON, Episodes.NUMBER, Episodes.FIRSTAIREDMS
         };
 
         String[] PROJECTION_NEXT = new String[] {
@@ -701,9 +717,10 @@ public class DBUtils {
         String SORTING_WATCHED = Episodes.SEASON + " DESC," + Episodes.NUMBER + " DESC";
 
         /**
-         * Lowest season, or if identical lowest episode number.
+         * Air time, then lowest season, or if identical lowest episode number.
          */
-        String SORTING_NEXT = Episodes.SEASON + " ASC," + Episodes.NUMBER + " ASC";
+        String SORTING_NEXT = Episodes.FIRSTAIREDMS + " ASC," + Episodes.SEASON + " ASC,"
+                + Episodes.NUMBER + " ASC";
 
         int _ID = 0;
 

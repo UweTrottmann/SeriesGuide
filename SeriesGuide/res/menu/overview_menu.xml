@@ -2,19 +2,43 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/menu_search"
-        android:icon="@drawable/ic_action_search"
+        android:id="@+id/menu_checkin"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/search_hint"/>
+        android:title="@string/checkin"/>
     <item
-        android:id="@+id/menu_rate_trakt"
-        android:icon="@drawable/trakt_heart"
+        android:id="@+id/menu_flag_watched"
+        android:icon="@drawable/ic_action_watched"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/menu_rate_trakt"/>
+        android:title="@string/mark_episode"/>
+    <item
+        android:id="@+id/menu_flag_collected"
+        android:icon="@drawable/ic_action_collect"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/collect"/>
     <item
         android:id="@+id/menu_share"
         android:icon="@drawable/ic_action_share"
         android:showAsAction="ifRoom|withText"
         android:title="@string/share_episode"/>
+    <item
+        android:id="@+id/menu_rate_trakt"
+        android:icon="@drawable/trakt_heart"
+        android:showAsAction="never"
+        android:title="@string/menu_rate_trakt"/>
+    <item
+        android:id="@+id/menu_manage_lists"
+        android:icon="@drawable/ic_action_list"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/list_item_manage"/>
+    <item
+        android:id="@+id/menu_calendarevent"
+        android:icon="@drawable/ic_action_calendar"
+        android:showAsAction="never"
+        android:title="@string/addtocalendar"/>
+    <item
+        android:id="@+id/menu_search"
+        android:icon="@drawable/ic_action_search"
+        android:showAsAction="never"
+        android:title="@string/search_hint"/>
 
 </menu>

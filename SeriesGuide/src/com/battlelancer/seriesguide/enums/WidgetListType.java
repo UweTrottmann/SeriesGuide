@@ -1,10 +1,9 @@
 
 package com.battlelancer.seriesguide.enums;
 
-import com.battlelancer.seriesguide.R;
+import android.util.SparseArray;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.battlelancer.seriesguide.R;
 
 public enum WidgetListType {
     UPCOMING(0, R.id.radioUpcoming), RECENT(1, R.id.radioRecent);
@@ -18,7 +17,7 @@ public enum WidgetListType {
         this.id = id;
     }
 
-    private static final Map<Integer, WidgetListType> MAPPING = new HashMap<Integer, WidgetListType>();
+    private static final SparseArray<WidgetListType> MAPPING = new SparseArray<WidgetListType>();
 
     static {
         for (WidgetListType via : WidgetListType.values()) {

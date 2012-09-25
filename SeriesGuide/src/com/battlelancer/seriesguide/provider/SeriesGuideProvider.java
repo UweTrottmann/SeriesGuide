@@ -35,6 +35,8 @@ import android.util.Log;
 
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
@@ -53,34 +55,32 @@ public class SeriesGuideProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
     private static final int SHOWS = 100;
-
     private static final int SHOWS_ID = 101;
-
     private static final int SHOWS_FILTERED = 102;
 
     private static final int EPISODES = 200;
-
     private static final int EPISODES_ID = 201;
-
     private static final int EPISODES_OFSHOW = 202;
-
     private static final int EPISODES_OFSEASON = 203;
-
     private static final int EPISODES_OFSEASON_WITHSHOW = 204;
 
     private static final int EPISODES_WITHSHOW = 205;
-
     private static final int EPISODES_ID_WITHSHOW = 206;
 
     private static final int SEASONS = 300;
-
     private static final int SEASONS_ID = 301;
-
     private static final int SEASONS_OFSHOW = 302;
 
     private static final int EPISODESEARCH = 400;
-
     private static final int EPISODESEARCH_ID = 401;
+
+    private static final int LISTS = 500;
+    private static final int LISTS_ID = 501;
+    private static final int LISTS_WITH_LIST_ITEM_ID = 502;
+
+    private static final int LIST_ITEMS = 600;
+    private static final int LIST_ITEMS_ID = 601;
+    private static final int LIST_ITEMS_WITH_DETAILS = 602;
 
     private static final int SEARCH_SUGGEST = 800;
 
@@ -120,6 +120,18 @@ public class SeriesGuideProvider extends ContentProvider {
         matcher.addURI(authority, SeriesContract.PATH_SEASONS + "/" + SeriesContract.PATH_OFSHOW
                 + "/*", SEASONS_OFSHOW);
         matcher.addURI(authority, SeriesContract.PATH_SEASONS + "/*", SEASONS_ID);
+
+        // Lists
+        matcher.addURI(authority, SeriesContract.PATH_LISTS, LISTS);
+        matcher.addURI(authority, SeriesContract.PATH_LISTS + "/"
+                + SeriesContract.PATH_WITH_LIST_ITEM_ID + "/*", LISTS_WITH_LIST_ITEM_ID);
+        matcher.addURI(authority, SeriesContract.PATH_LISTS + "/*", LISTS_ID);
+
+        // List items
+        matcher.addURI(authority, SeriesContract.PATH_LIST_ITEMS, LIST_ITEMS);
+        matcher.addURI(authority, SeriesContract.PATH_LIST_ITEMS + "/"
+                + SeriesContract.PATH_WITH_DETAILS, LIST_ITEMS_WITH_DETAILS);
+        matcher.addURI(authority, SeriesContract.PATH_LIST_ITEMS + "/*", LIST_ITEMS_ID);
 
         // Search
         matcher.addURI(authority, SeriesContract.PATH_EPISODESEARCH + "/"
@@ -192,6 +204,18 @@ public class SeriesGuideProvider extends ContentProvider {
                 return Seasons.CONTENT_TYPE;
             case SEASONS_ID:
                 return Seasons.CONTENT_ITEM_TYPE;
+            case LISTS:
+                return Lists.CONTENT_TYPE;
+            case LISTS_ID:
+                return Lists.CONTENT_ITEM_TYPE;
+            case LISTS_WITH_LIST_ITEM_ID:
+                return Lists.CONTENT_TYPE;
+            case LIST_ITEMS:
+                return ListItems.CONTENT_TYPE;
+            case LIST_ITEMS_ID:
+                return ListItems.CONTENT_ITEM_TYPE;
+            case LIST_ITEMS_WITH_DETAILS:
+                return ListItems.CONTENT_TYPE;
             case SEARCH_SUGGEST:
                 return SearchManager.SUGGEST_MIME_TYPE;
             case RENEW_FTSTABLE:
@@ -220,9 +244,19 @@ public class SeriesGuideProvider extends ContentProvider {
                 return Seasons.buildSeasonUri(values.getAsString(Seasons._ID));
             }
             case EPISODES: {
-                db.insertOrThrow(Tables.EPISODES, null, values);
+                long id = db.insertOrThrow(Tables.EPISODES, null, values);
                 getContext().getContentResolver().notifyChange(uri, null);
-                return Episodes.buildEpisodeUri(values.getAsString(Episodes._ID));
+                return Lists.buildListUri(String.valueOf(id));
+            }
+            case LISTS: {
+                db.insertOrThrow(Tables.LISTS, null, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return Lists.buildListUri(values.getAsString(Lists.LIST_ID));
+            }
+            case LIST_ITEMS: {
+                db.insertOrThrow(Tables.LIST_ITEMS, null, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                return ListItems.buildListItemUri(values.getAsString(ListItems.LIST_ITEM_ID));
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -333,6 +367,9 @@ public class SeriesGuideProvider extends ContentProvider {
                 final String showId = Shows.getShowId(uri);
                 return builder.table(Tables.SHOWS).where(Shows._ID + "=?", showId);
             }
+            case EPISODES: {
+                return builder.table(Tables.EPISODES);
+            }
             case EPISODES_OFSHOW: {
                 final String showId = uri.getPathSegments().get(2);
                 return builder.table(Tables.EPISODES).where(Shows.REF_SHOW_ID + "=?", showId);
@@ -357,6 +394,21 @@ public class SeriesGuideProvider extends ContentProvider {
                 final String rowid = EpisodeSearch.getDocId(uri);
                 return builder.table(Tables.EPISODES_SEARCH).where(EpisodeSearch._DOCID + "=?",
                         rowid);
+            }
+            case LISTS: {
+                return builder.table(Tables.LISTS);
+            }
+            case LISTS_ID: {
+                final String list_id = Lists.getId(uri);
+                return builder.table(Tables.LISTS).where(Lists.LIST_ID + "=?", list_id);
+            }
+            case LIST_ITEMS: {
+                return builder.table(Tables.LIST_ITEMS);
+            }
+            case LIST_ITEMS_ID: {
+                final String list_item_id = ListItems.getId(uri);
+                return builder.table(Tables.LIST_ITEMS).where(ListItems.LIST_ITEM_ID + "=?",
+                        list_item_id);
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -416,15 +468,56 @@ public class SeriesGuideProvider extends ContentProvider {
                 return builder.table(Tables.EPISODES_JOIN_SHOWS)
                         .mapToTable(Episodes._ID, Tables.EPISODES)
                         .mapToTable(Episodes.RATING, Tables.EPISODES)
-                        .where(Tables.EPISODES + "." + Episodes._ID + "=?", episodeId);
+                        .where(Qualified.EPISODES_EPISODE_ID + "=?", episodeId);
             }
             case SEASONS_OFSHOW: {
                 final String showId = uri.getPathSegments().get(2);
                 return builder.table(Tables.SEASONS).where(Shows.REF_SHOW_ID + "=?", showId);
             }
+            case LISTS: {
+                return builder.table(Tables.LISTS);
+            }
+            case LISTS_ID: {
+                final String listId = Lists.getId(uri);
+                return builder.table(Tables.LISTS).where(Lists.LIST_ID + "=?", listId);
+            }
+            case LISTS_WITH_LIST_ITEM_ID: {
+                final String itemId = uri.getPathSegments().get(2);
+                return builder
+                        .table(Tables.LISTS
+                                + " LEFT OUTER JOIN (" + SubQuery.LISTS_LIST_ITEM_ID
+                                + "'" + itemId
+                                + "%') AS " + Tables.LIST_ITEMS + " ON "
+                                + Qualified.LISTS_LIST_ID + "=" + Qualified.LIST_ITEMS_LIST_ID)
+                        .mapToTable(Lists._ID, Tables.LISTS);
+            }
+            case LIST_ITEMS: {
+                return builder.table(Tables.LIST_ITEMS);
+            }
+            case LIST_ITEMS_WITH_DETAILS: {
+                return builder.table(Tables.LIST_ITEMS_WITH_DETAILS);
+            }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
             }
         }
+    }
+
+    private interface SubQuery {
+        String LISTS_LIST_ITEM_ID = "SELECT * FROM "
+                + Tables.LIST_ITEMS + " WHERE "
+                + ListItems.LIST_ITEM_ID + " LIKE ";
+    }
+
+    /**
+     * {@link ScheduleContract} fields that are fully qualified with a specific
+     * parent {@link Tables}. Used when needed to work around SQL ambiguity.
+     */
+    private interface Qualified {
+        String EPISODES_EPISODE_ID = Tables.EPISODES + "." + Episodes._ID;
+
+        String LISTS_LIST_ID = Tables.LISTS + "." + Lists.LIST_ID;
+
+        String LIST_ITEMS_LIST_ID = Tables.LIST_ITEMS + "." + Lists.LIST_ID;
     }
 }

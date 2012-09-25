@@ -18,19 +18,26 @@
 package com.battlelancer.seriesguide.util;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
+import android.net.Uri;
 import android.preference.PreferenceManager;
+import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.Constants.EpisodeSorting;
@@ -580,12 +587,14 @@ public class Utils {
                         new String[] {
                             Shows._ID
                         }, null, null, null);
-                while (shows.moveToNext()) {
-                    String showId = shows.getString(0);
-                    DBUtils.updateLatestEpisode(mContext, showId, isOnlyFutureEpisodes,
-                            isNoSpecials, prefs);
+                if (shows != null) {
+                    while (shows.moveToNext()) {
+                        String showId = shows.getString(0);
+                        DBUtils.updateLatestEpisode(mContext, showId, isOnlyFutureEpisodes,
+                                isNoSpecials, prefs);
+                    }
+                    shows.close();
                 }
-                shows.close();
             }
 
             // Adapter gets notified by ContentProvider
@@ -810,13 +819,62 @@ public class Utils {
      */
     public static boolean isAllowedConnection(Context context) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        final boolean isWlanOnly = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYWIFI, true);
+        final boolean isWlanOnly = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYWIFI, false);
 
         if (isWlanOnly) {
             return AndroidUtils.isWifiConnected(context);
         } else {
             return AndroidUtils.isNetworkConnected(context);
         }
+    }
+
+    public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
+
+    /**
+     * Displays the IMDb page for the given id (show or episode) in the IMDb app
+     * or on the imdb.com web page.
+     * 
+     * @param imdbId
+     * @param imdbButton
+     * @param logTag
+     * @param activity
+     */
+    public static void setUpImdbButton(final String imdbId, View imdbButton, final String logTag,
+            final Activity activity) {
+        if (imdbButton != null) {
+            imdbButton.setOnClickListener(new OnClickListener() {
+                public void onClick(View v) {
+                    EasyTracker.getTracker()
+                            .trackEvent(logTag, "Click", "Show IMDb page", (long) 0);
+
+                    if (!TextUtils.isEmpty(imdbId)) {
+                        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("imdb:///title/"
+                                + imdbId + "/"));
+                        try {
+                            activity.startActivity(myIntent);
+                        } catch (ActivityNotFoundException e) {
+                            myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_TITLE_URL
+                                    + imdbId));
+                            activity.startActivity(myIntent);
+                        }
+                    } else {
+                        Toast.makeText(activity,
+                                activity.getString(R.string.show_noimdbentry), Toast.LENGTH_LONG)
+                                .show();
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     * Creates the tag of a {@link ViewPager} fragment.
+     * 
+     * @param viewId of the {@link ViewPager}
+     * @param id of the fragment, often the position
+     */
+    public static String makeViewPagerFragmentName(int viewId, long id) {
+        return "android:switcher:" + viewId + ":" + id;
     }
 
 }

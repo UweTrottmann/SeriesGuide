@@ -45,9 +45,7 @@ public class TraktShoutsActivity extends BaseActivity {
         String title = args.getString(ShareItems.SHARESTRING);
 
         final ActionBar actionBar = getSupportActionBar();
-        setTitle(getString(R.string.shouts_for, ""));
-        actionBar.setTitle(getString(R.string.shouts_for, ""));
-        actionBar.setSubtitle(title);
+        actionBar.hide();
 
         // embed the shouts fragment dialog
         SherlockDialogFragment newFragment;

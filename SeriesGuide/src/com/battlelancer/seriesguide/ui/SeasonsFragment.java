@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -52,6 +51,7 @@ import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.Constants.SeasonSorting;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask;
@@ -65,9 +65,11 @@ import com.google.analytics.tracking.android.EasyTracker;
 public class SeasonsFragment extends SherlockListFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnFlagListener {
 
-    private static final int ID_MARK_ALL_WATCHED = 0;
+    private static final int CONTEXT_FLAG_ALL_WATCHED_ID = 0;
 
-    private static final int ID_MARK_ALL_UNWATCHED = 1;
+    private static final int CONTEXT_FLAG_ALL_UNWATCHED_ID = 1;
+
+    private static final int CONTEXT_MANAGE_LISTS_ID = 2;
 
     private static final int LOADER_ID = 1;
 
@@ -140,8 +142,9 @@ public class SeasonsFragment extends SherlockListFragment implements
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, ID_MARK_ALL_WATCHED, 0, R.string.mark_all);
-        menu.add(0, ID_MARK_ALL_UNWATCHED, 1, R.string.unmark_all);
+        menu.add(0, CONTEXT_FLAG_ALL_WATCHED_ID, 0, R.string.mark_all);
+        menu.add(0, CONTEXT_FLAG_ALL_UNWATCHED_ID, 1, R.string.unmark_all);
+        menu.add(0, CONTEXT_MANAGE_LISTS_ID, 2, R.string.list_item_manage);
     }
 
     @Override
@@ -150,13 +153,19 @@ public class SeasonsFragment extends SherlockListFragment implements
         Cursor season = (Cursor) mAdapter.getItem(info.position);
 
         switch (item.getItemId()) {
-            case ID_MARK_ALL_WATCHED:
+            case CONTEXT_FLAG_ALL_WATCHED_ID: {
                 onFlagSeasonWatched(info.id, season.getInt(SeasonsQuery.COMBINED), true);
                 return true;
-
-            case ID_MARK_ALL_UNWATCHED:
+            }
+            case CONTEXT_FLAG_ALL_UNWATCHED_ID: {
                 onFlagSeasonWatched(info.id, season.getInt(SeasonsQuery.COMBINED), false);
                 return true;
+            }
+            case CONTEXT_MANAGE_LISTS_ID: {
+                ListsDialogFragment.showListsDialog(String.valueOf(info.id), 2,
+                        getFragmentManager());
+                return true;
+            }
         }
         return super.onContextItemSelected(item);
     }
@@ -248,13 +257,14 @@ public class SeasonsFragment extends SherlockListFragment implements
                                 episodeCount += getString(R.string.otherepisodes);
                             }
                         }
-                        watchcount.setTextColor(Color.GRAY);
+                        watchcount.setTextAppearance(getActivity(),
+                                R.style.TextAppearance_XSmall_Dim);
                     } else if (count == 1) {
                         episodeCount += count + " " + getString(R.string.season_onenotwatched);
-                        watchcount.setTextColor(Color.WHITE);
+                        watchcount.setTextAppearance(getActivity(), R.style.TextAppearance_XSmall);
                     } else {
                         episodeCount += count + " " + getString(R.string.season_watchcount);
-                        watchcount.setTextColor(Color.WHITE);
+                        watchcount.setTextAppearance(getActivity(), R.style.TextAppearance_XSmall);
                     }
 
                     // add strings for unaired episodes
@@ -406,7 +416,8 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
         return new CursorLoader(getActivity(), Seasons.buildSeasonsOfShowUri(String
-                .valueOf(getShowId())), SeasonsQuery.PROJECTION, null, null, mSorting.query());
+                .valueOf(getShowId())), SeasonsQuery.PROJECTION, SeasonsQuery.SELECTION, null,
+                mSorting.query());
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -423,10 +434,13 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     private interface SeasonsQuery {
+
         String[] PROJECTION = {
                 BaseColumns._ID, Seasons.COMBINED, Seasons.WATCHCOUNT, Seasons.UNAIREDCOUNT,
                 Seasons.NOAIRDATECOUNT, Seasons.TOTALCOUNT
         };
+
+        String SELECTION = Seasons.TOTALCOUNT + ">0";
 
         // int _ID = 0;
 
@@ -471,7 +485,7 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     @Override
     public void onFlagCompleted(FlagAction action, int showId, int itemId, boolean isSuccessful) {
-        if (isSuccessful) {
+        if (isSuccessful && isAdded()) {
             switch (action) {
                 case SEASON_WATCHED:
                     Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()),

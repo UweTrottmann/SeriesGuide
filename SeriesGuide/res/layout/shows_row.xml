@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/default_padding" >
+
+    <ImageView
+        android:id="@+id/showposter"
+        android:layout_width="68dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="@dimen/default_padding"
+        android:scaleType="centerInside"
+        android:src="@drawable/show_generic" />
+
+    <TextView
+        android:id="@+id/seriesname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/timestamp"
+        android:layout_toRightOf="@id/showposter"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:paddingBottom="0dp"
+        android:paddingRight="@dimen/inline_padding"
+        android:paddingTop="2dp"
+        android:text="@string/app_name"
+        android:textAppearance="@style/TextAppearance.Medium.Light" />
+
+    <TextView
+        android:id="@+id/TextViewShowListNextEpisode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/seriesname"
+        android:layout_toLeftOf="@id/timestamp"
+        android:layout_toRightOf="@id/showposter"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:paddingRight="@dimen/inline_padding"
+        android:text="@string/app_name" />
+
+    <TextView
+        android:id="@+id/episodetime"
+        style="@style/Airdata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/TextViewShowListNextEpisode"
+        android:layout_toLeftOf="@id/timestamp"
+        android:layout_toRightOf="@id/showposter"
+        android:paddingRight="@dimen/inline_padding"
+        android:text="@string/app_name" />
+
+    <LinearLayout
+        android:id="@+id/timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/labels"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/inline_padding" >
+
+            <ImageView
+                android:id="@+id/favoritedLabel"
+                android:layout_width="15dp"
+                android:layout_height="20dp"
+                android:contentDescription="@string/favorited"
+                android:src="@drawable/ic_favorited"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/TextViewShowListAirtime"
+            style="@style/Airdata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:lineSpacingExtra="2sp"
+            android:paddingTop="@dimen/inline_padding"
+            android:text="@string/norating" />
+
+        <TextView
+            android:id="@+id/TextViewShowListNetwork"
+            style="@style/Airdata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:maxWidth="90dp"
+            android:paddingBottom="@dimen/inline_padding"
+            android:text="@string/app_name" />
+    </LinearLayout>
+
+</RelativeLayout>

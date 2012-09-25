@@ -26,7 +26,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -55,7 +54,7 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.upcoming_multipane);
+        setContentView(R.layout.upcoming);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
@@ -160,9 +159,15 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
                 return true;
             }
             case android.R.id.home: {
-                /* force creating a new task if necessary as this activity may be created from */
-                NavUtils.navigateUpTo(this,
-                        new Intent(Intent.ACTION_MAIN).setClass(this, ShowsActivity.class));
+                /*
+                 * force creating a new task if necessary as this activity may
+                 * be created from the list widget with SeriesGuide not running
+                 * already.
+                 */
+                Intent i = new Intent(Intent.ACTION_MAIN).setClass(this, ShowsActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+                finish();
                 overridePendingTransition(R.anim.fragment_slide_right_enter,
                         R.anim.fragment_slide_right_exit);
             }

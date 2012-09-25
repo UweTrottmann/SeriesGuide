@@ -16,16 +16,22 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/large_padding"
+        android:paddingRight="@dimen/large_padding" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/default_padding"
+            android:ellipsize="marquee"
+            android:lines="1"
             android:text="@string/imdb"
-            android:textSize="@dimen/text_size_medium" >
+            android:textAllCaps="true"
+            android:textSize="@dimen/text_size_xmedium" >
         </TextView>
     </LinearLayout>
+
+    <include layout="@layout/divider_vertical" />
 
     <LinearLayout
         android:id="@+id/buttonTVDB"
@@ -36,16 +42,22 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/large_padding"
+        android:paddingRight="@dimen/large_padding" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/default_padding"
+            android:ellipsize="marquee"
+            android:lines="1"
             android:text="@string/tvdb"
-            android:textSize="@dimen/text_size_medium" >
+            android:textAllCaps="true"
+            android:textSize="@dimen/text_size_xmedium" >
         </TextView>
     </LinearLayout>
+
+    <include layout="@layout/divider_vertical" />
 
     <LinearLayout
         android:id="@+id/buttonShouts"
@@ -56,14 +68,18 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/large_padding"
+        android:paddingRight="@dimen/large_padding" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/default_padding"
+            android:ellipsize="marquee"
+            android:lines="1"
             android:text="@string/shouts"
-            android:textSize="@dimen/text_size_medium" >
+            android:textAllCaps="true"
+            android:textSize="@dimen/text_size_xmedium" >
         </TextView>
     </LinearLayout>
 

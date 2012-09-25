@@ -8,7 +8,7 @@
     </include>
 
     <TextView
-        android:id="@+id/TextViewEpisodeDescription"
+        android:id="@+id/description"
         style="@style/SmallItems.WithSideMargins" />
 
     <TextView
@@ -19,7 +19,7 @@
         android:text="@string/episode_gueststars" />
 
     <TextView
-        android:id="@+id/TextViewEpisodeGuestStars"
+        android:id="@+id/guestStars"
         style="@style/SmallItems.WithSideMargins" />
 
     <TextView
@@ -30,7 +30,7 @@
         android:text="@string/episode_directors" />
 
     <TextView
-        android:id="@+id/TextViewEpisodeDirectors"
+        android:id="@+id/directors"
         style="@style/SmallItems.WithSideMargins" />
 
     <TextView
@@ -41,29 +41,40 @@
         android:text="@string/episode_writers" />
 
     <TextView
-        android:id="@+id/TextViewEpisodeWriters"
+        android:id="@+id/writers"
         style="@style/SmallItems.WithSideMargins" />
 
     <TextView
-        android:id="@+id/labelDVD"
+        android:id="@+id/labelDvd"
         style="@style/Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/episode_dvdnumber" />
 
     <TextView
-        android:id="@+id/textViewEpisodeDVDnumber"
+        android:id="@+id/dvdNumber"
         style="@style/SmallItems.WithSideMargins" />
 
     <TextView
-        android:id="@+id/labelAirday"
+        android:id="@+id/labelAirDay"
         style="@style/Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/episode_firstaired" />
 
     <TextView
-        android:id="@+id/TextViewEpisodeFirstAirdate"
+        android:id="@+id/airDay"
+        style="@style/SmallItems.WithSideMargins" />
+
+    <TextView
+        android:id="@+id/labelLastEdit"
+        style="@style/Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lastEdit" />
+
+    <TextView
+        android:id="@+id/lastEdit"
         style="@style/SmallItems.WithSideMargins" />
 
 </merge>

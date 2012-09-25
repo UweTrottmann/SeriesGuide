@@ -23,11 +23,11 @@
         <TextView
             android:id="@+id/name"
             style="@style/Airdata"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="Placeholder" />
+            android:text="@string/app_name" />
 
         <TextView
             android:id="@+id/timestamp"
@@ -35,17 +35,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="XXX XX:XX" />
+            android:text="@string/norating" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/show"
-        style="@style/ListHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/userstrip"
         android:layout_toRightOf="@+id/avatar"
-        android:text="Placeholder" />
+        android:text="@string/app_name"
+        android:textAppearance="@style/TextAppearance.Medium.Light" />
 
     <TextView
         android:id="@+id/episode"
@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/show"
         android:layout_toRightOf="@+id/avatar"
-        android:text="0x00 Placeholder holding place"
+        android:text="@string/app_name"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

@@ -138,13 +138,21 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
     boolean mListShown;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // hide title, use custom theme
+        setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.shouts_fragment, container, false);
+        final TextView item = (TextView) v.findViewById(R.id.shouts_item);
         final EditText shouttext = (EditText) v.findViewById(R.id.shouttext);
         final CheckBox checkIsSpoiler = (CheckBox) v.findViewById(R.id.checkIsSpoiler);
 
         v.findViewById(R.id.shoutbutton).setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 // prevent empty shouts
@@ -180,12 +188,10 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
             }
         });
 
-        if (getDialog() != null) {
-            getDialog()
-                    .setTitle(
-                            getString(R.string.shouts_for,
-                                    getArguments().getString(ShareItems.SHARESTRING)));
+        if (item != null) {
+            item.setText(getArguments().getString(ShareItems.SHARESTRING));
         }
+
         return v;
     }
 

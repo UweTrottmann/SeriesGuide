@@ -11,7 +11,10 @@
         android:layout_weight="1"
         android:background="?custom_list_selector"
         android:clickable="true"
-        android:focusable="true" >
+        android:focusable="true"
+        android:paddingBottom="@dimen/default_padding"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingTop="@dimen/default_padding" >
 
         <ImageView
             android:id="@+id/poster"
@@ -28,10 +31,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/poster"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:paddingBottom="@dimen/inline_padding"
             android:paddingRight="@dimen/default_padding"
             android:text="@string/app_name"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="@style/TextAppearance.Medium.Light" />
 
         <TextView
             android:id="@+id/description"

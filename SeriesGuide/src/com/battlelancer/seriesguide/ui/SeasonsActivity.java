@@ -47,7 +47,7 @@ public class SeasonsActivity extends BaseActivity {
         int showId = extras.getInt(SeasonsFragment.InitBundle.SHOW_TVDBID);
         final Series show = DBUtils.getShow(this, String.valueOf(showId));
         if (show != null) {
-            String showname = show.getSeriesName();
+            String showname = show.getTitle();
             actionBar.setTitle(showname);
             setTitle(showname);
         } else {

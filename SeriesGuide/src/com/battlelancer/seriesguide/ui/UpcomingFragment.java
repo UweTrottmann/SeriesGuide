@@ -17,6 +17,8 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,7 +31,7 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v4.widget.CursorAdapter;
 import android.text.format.DateUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -56,11 +58,11 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 
 public class UpcomingFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final int MARK_WATCHED_ID = 0;
+    private static final int CONTEXT_FLAG_WATCHED_ID = 0;
 
-    private static final int MARK_UNWATCHED_ID = 1;
+    private static final int CONTEXT_FLAG_UNWATCHED_ID = 1;
 
-    private SimpleCursorAdapter mAdapter;
+    private CursorAdapter mAdapter;
 
     private boolean mDualPane;
 
@@ -134,9 +136,9 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         WatchedBox watchedBox = (WatchedBox) info.targetView.findViewById(R.id.watchedBoxUpcoming);
         if (watchedBox.isChecked()) {
-            menu.add(0, MARK_UNWATCHED_ID, 1, R.string.unmark_episode);
+            menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 1, R.string.unmark_episode);
         } else {
-            menu.add(0, MARK_WATCHED_ID, 0, R.string.mark_episode);
+            menu.add(0, CONTEXT_FLAG_WATCHED_ID, 0, R.string.mark_episode);
         }
     }
 
@@ -145,11 +147,11 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
-            case MARK_WATCHED_ID: {
+            case CONTEXT_FLAG_WATCHED_ID: {
                 onFlagEpisodeWatched(info, true);
                 return true;
             }
-            case MARK_UNWATCHED_ID: {
+            case CONTEXT_FLAG_UNWATCHED_ID: {
                 onFlagEpisodeWatched(info, false);
                 return true;
             }
@@ -167,25 +169,14 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     }
 
     private void setupAdapter() {
-
-        String[] from = new String[] {
-                Episodes.TITLE, Episodes.WATCHED, Episodes.NUMBER, Episodes.FIRSTAIREDMS,
-                Shows.TITLE, Shows.NETWORK, Shows.POSTER
-        };
-        int[] to = new int[] {
-                R.id.textViewUpcomingEpisode, R.id.watchedBoxUpcoming, R.id.textViewUpcomingNumber,
-                R.id.textViewUpcomingAirdate, R.id.textViewUpcomingShow,
-                R.id.textViewUpcomingNetwork, R.id.poster
-        };
-
-        mAdapter = new SlowAdapter(getActivity(), R.layout.upcoming_row, null, from, to, 0);
+        mAdapter = new SlowAdapter(getActivity(), null, 0);
 
         setListAdapter(mAdapter);
 
         final ListView list = getListView();
         list.setFastScrollEnabled(true);
         list.setDivider(null);
-        list.setSelector(R.drawable.list_selector_holo_dark);
+        list.setSelector(R.drawable.list_selector_sg);
         list.setClipToPadding(AndroidUtils.isHoneycombOrHigher() ? false : true);
         final float scale = getResources().getDisplayMetrics().density;
         int layoutPadding = (int) (10 * scale + 0.5f);
@@ -194,12 +185,11 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         registerForContextMenu(list);
     }
 
+    @TargetApi(16)
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        showDetails((int) id);
-    }
+        int episodeId = (int) id;
 
-    private void showDetails(int episodeId) {
         if (mDualPane) {
             // Check if fragment is shown, create new if needed.
             EpisodeDetailsFragment detailsFragment = (EpisodeDetailsFragment) getFragmentManager()
@@ -215,14 +205,20 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                         R.anim.fragment_slide_right_exit);
                 ft.replace(R.id.fragment_details, detailsFragment, "fragmentDetails").commit();
             }
-
         } else {
             Intent intent = new Intent();
             intent.setClass(getActivity(), EpisodeDetailsActivity.class);
             intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, episodeId);
-            startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
-                    R.anim.fragment_slide_left_exit);
+
+            if (AndroidUtils.isJellyBeanOrHigher()) {
+                Bundle options = ActivityOptions.makeScaleUpAnimation(v, 0, 0, v.getWidth(),
+                        v.getHeight()).toBundle();
+                getActivity().startActivity(intent, options);
+            } else {
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
+                        R.anim.fragment_slide_left_exit);
+            }
         }
     }
 
@@ -246,32 +242,26 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         String query = getArguments().getString("query");
 
         boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
-        String[] selectionArgs;
         if (isOnlyFavorites) {
-            query += UpcomingQuery.SELECTION_ONLYFAVORITES;
-            selectionArgs = new String[] {
-                    recentThreshold, "0", "1"
-            };
-        } else {
-            selectionArgs = new String[] {
-                    recentThreshold, "0"
-            };
+            query += Shows.SELECTION_FAVORITES;
         }
 
         // append nospecials selection if necessary
         boolean isNoSpecials = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES,
                 false);
         if (isNoSpecials) {
-            query += UpcomingQuery.SELECTION_NOSPECIALS;
+            query += Episodes.SELECTION_NOSPECIALS;
         }
 
         boolean isNoWatched = prefs.getBoolean(SeriesGuidePreferences.KEY_NOWATCHED, false);
         if (isNoWatched) {
-            query += UpcomingQuery.SELECTION_NOWATCHED;
+            query += Episodes.SELECTION_NOWATCHED;
         }
 
         return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
-                UpcomingQuery.PROJECTION, query, selectionArgs, sortOrder);
+                UpcomingQuery.PROJECTION, query, new String[] {
+                        recentThreshold, "0"
+                }, sortOrder);
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -293,12 +283,6 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
         String QUERY_RECENT = Episodes.FIRSTAIREDMS + "<? AND " + Episodes.FIRSTAIREDMS + ">0 AND "
                 + Shows.HIDDEN + "=?";
-
-        String SELECTION_ONLYFAVORITES = " AND " + Shows.FAVORITE + "=?";
-
-        String SELECTION_NOWATCHED = " AND " + Episodes.WATCHED + "=0";
-
-        String SELECTION_NOSPECIALS = " AND " + Episodes.SEASON + "!=0";
 
         String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC,"
                 + Episodes.NUMBER + " ASC";
@@ -330,20 +314,19 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
     }
 
-    private class SlowAdapter extends SimpleCursorAdapter {
+    private class SlowAdapter extends CursorAdapter {
 
         private LayoutInflater mLayoutInflater;
 
-        private int mLayout;
-
         private SharedPreferences mPrefs;
 
-        public SlowAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
-            super(context, layout, c, from, to, flags);
+        private static final int LAYOUT = R.layout.upcoming_row;
+
+        public SlowAdapter(Context context, Cursor c, int flags) {
+            super(context, c, flags);
 
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            mLayout = layout;
             mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         }
 
@@ -360,7 +343,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
             final ViewHolder viewHolder;
 
             if (convertView == null) {
-                convertView = mLayoutInflater.inflate(mLayout, null);
+                convertView = mLayoutInflater.inflate(LAYOUT, null);
 
                 viewHolder = new ViewHolder();
                 viewHolder.episode = (TextView) convertView
@@ -407,21 +390,20 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
             final String number = Utils.getEpisodeNumber(mPrefs, seasonNumber, episodeNumber);
             viewHolder.number.setText(number);
 
+            // add network
+            String network = "";
+            final String value = mCursor.getString(UpcomingQuery.SHOW_NETWORK);
+            if (value.length() != 0) {
+                network = value + " / ";
+            }
             // airdate and time
             final long airtime = mCursor.getLong(UpcomingQuery.FIRSTAIREDMS);
-            String network = "";
             if (airtime != -1) {
                 String[] timeAndDay = Utils.formatToTimeAndDay(airtime, mContext);
                 viewHolder.airdate.setText(timeAndDay[2]);
-                network = timeAndDay[1] + " " + timeAndDay[0] + " ";
+                network += timeAndDay[1] + " " + timeAndDay[0];
             } else {
                 viewHolder.airdate.setText("");
-            }
-
-            // add network
-            final String value = mCursor.getString(UpcomingQuery.SHOW_NETWORK);
-            if (value.length() != 0) {
-                network += getString(R.string.show_network) + " " + value;
             }
             viewHolder.network.setText(network);
 
@@ -430,6 +412,16 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
             ImageProvider.getInstance(mContext).loadPosterThumb(viewHolder.poster, imagePath);
 
             return convertView;
+        }
+
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+            // do nothing here
+        }
+
+        @Override
+        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+            return mLayoutInflater.inflate(LAYOUT, parent, false);
         }
     }
 
