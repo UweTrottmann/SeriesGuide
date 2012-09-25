@@ -629,14 +629,16 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
     @Override
     public void onTraktActionComplete(boolean wasSuccessfull) {
-        // load new episode, update seasons (if shown)
-        onLoadEpisode();
-        onUpdateSeasons();
+        if (isAdded()) {
+            // load new episode, update seasons (if shown)
+            onLoadEpisode();
+            onUpdateSeasons();
+        }
     }
 
     @Override
     public void onFlagCompleted(FlagAction action, int showId, int itemId, boolean isSuccessful) {
-        if (isSuccessful) {
+        if (isSuccessful && isAdded()) {
             // load new episode, update seasons (if shown)
             onLoadEpisode();
             onUpdateSeasons();
