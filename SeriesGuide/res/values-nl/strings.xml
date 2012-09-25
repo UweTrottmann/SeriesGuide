@@ -213,7 +213,7 @@
   <string name="checkin_empty">Geen overeenkomende series</string>
   <string name="checkin_hint">Voer een bericht in (optioneel)</string>
   <string name="paste_episode">Aflevering plakken</string>
-  <string name="checkinsuccess">GetGlue Check-in succesvol.</string>
+  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">GetGlue Check-in mislukt. Probeer de GetGlue verbinding te verbreken.</string>
   <string name="getglue_authfailed">GetGlue authenticatie mislukt. Probeer het later opnieuw.</string>
   <string name="menu_rate_trakt">Beoordelen (trakt)</string>

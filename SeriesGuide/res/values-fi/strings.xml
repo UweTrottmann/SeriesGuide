@@ -140,14 +140,14 @@
   <string name="library">Kokoelma</string>
   <string name="powered_by_thetvdb">Pohjautuu thetvdb.com:iin</string>
   <string name="powered_by_trakt">Pohjautuu trakt.tv:hen</string>
-  <string name="first_list">Favorites</string>
-  <string name="list_add">Add list</string>
-  <string name="list_title_hint">Name your list</string>
-  <string name="list_remove">Remove list</string>
-  <string name="list_manage">Manage list</string>
-  <string name="list_item_manage">Manage lists</string>
-  <string name="list_item_remove">Remove from list</string>
-  <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
+  <string name="first_list">Suosikit</string>
+  <string name="list_add">Lisää lista</string>
+  <string name="list_title_hint">Nimeä listasi</string>
+  <string name="list_remove">Poista lista</string>
+  <string name="list_manage">Hallitse listaa</string>
+  <string name="list_item_manage">Hallitse listoja</string>
+  <string name="list_item_remove">Poista listalta</string>
+  <string name="list_empty">Voit listä ohjelmia, kausia tai jaksoja tähän listaan.</string>
   <string name="prefs_category_basic">Perustiedot</string>
   <string name="prefs_category_sharing">Jakaminen</string>
   <string name="prefs_category_advanced">Edistyneet</string>
@@ -213,7 +213,7 @@
   <string name="checkin_empty">Ei vastaavia ohjelmia</string>
   <string name="checkin_hint">Kirjoita viesti (valinnainen)</string>
   <string name="paste_episode">Liitä jakso</string>
-  <string name="checkinsuccess">GetGluen kirjaus onnistui.</string>
+  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">GetGluen kirjaus epäonnistui. Yritä irrottautua GetGluesta.</string>
   <string name="getglue_authfailed">GetGluen todentaminen epäonnistui. Yritä myöhemmin uudelleen.</string>
   <string name="menu_rate_trakt">Arvostele (trakt)</string>
@@ -299,7 +299,7 @@
     <item>Suosikit</item>
     <item>Katsomattomat/Tulevat</item>
     <item>Piilotetut</item>
-    <item>Lists</item>
+    <item>Listat</item>
   </string-array>
   <string-array name="themeSelection">
     <item>SeriesGuiden teema</item>

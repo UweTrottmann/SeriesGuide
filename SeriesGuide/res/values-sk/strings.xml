@@ -213,7 +213,7 @@
   <string name="checkin_empty">Seriál sa nenašiel</string>
   <string name="checkin_hint">Napíšte správu (nepovinné)</string>
   <string name="paste_episode">Prilepiť epizódu</string>
-  <string name="checkinsuccess">GetGlue Ohlas pridaný.</string>
+  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">Pridanie ohlasu zlyhalo. Skúste odpojiť GetGlue.</string>
   <string name="getglue_authfailed">GetGlue overenie zlyhalo. Skúste to znova neskôr.</string>
   <string name="menu_rate_trakt">Hodnotiť (trakt)</string>

@@ -213,7 +213,7 @@
   <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Napište postřeh (nepovinné)</string>
   <string name="paste_episode">Vložte díl</string>
-  <string name="checkinsuccess">Ohlášení v GetGlue úspěšné.</string>
+  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">Ohlášení se selhalo. Zkuste odpojit GetGlue.</string>
   <string name="getglue_authfailed">Ověření u GetGlue selhalo. Zkuste to později.</string>
   <string name="menu_rate_trakt">Hodnotit (trakt)</string>

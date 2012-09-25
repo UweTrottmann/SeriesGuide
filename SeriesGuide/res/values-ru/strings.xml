@@ -213,7 +213,7 @@
   <string name="checkin_empty">Сериалы не найдены</string>
   <string name="checkin_hint">Введите сообщение (необязательно)</string>
   <string name="paste_episode">Вставить эпизод</string>
-  <string name="checkinsuccess">GetGlue-регистрация успешна.</string>
+  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">Регистрация в GetGlue не удалось. Попробуйте отключить GetGlue.</string>
   <string name="getglue_authfailed">Ошибка аутентификации GetGlue. Повторите попытку позже.</string>
   <string name="menu_rate_trakt">Рейтинг (trakt)</string>

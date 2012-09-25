@@ -213,7 +213,7 @@
   <string name="checkin_empty">Nincs találat</string>
   <string name="checkin_hint">Írjon üzenetet(nem kötelező)</string>
   <string name="paste_episode">Epizód beillesztése</string>
-  <string name="checkinsuccess">GetGlue Check-in successful.</string>
+  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
   <string name="getglue_authfailed">A GetGlue azonosítás nem sikerült. Próbálja meg később.</string>
   <string name="menu_rate_trakt">Értékelem (trakt)</string>

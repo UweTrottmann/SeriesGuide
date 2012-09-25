@@ -213,7 +213,7 @@
   <string name="checkin_empty">Keine passenden Serien</string>
   <string name="checkin_hint">Geben Sie eine Nachricht ein (optional)</string>
   <string name="paste_episode">Folge einfügen</string>
-  <string name="checkinsuccess">GetGlue-Einchecken erfolgreich.</string>
+  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">GetGlue-Einchecken fehlgeschlagen. Versuchen Sie GetGlue zu trennen.</string>
   <string name="getglue_authfailed">GetGlue-Authentifizierung fehlgeschlagen. Versuchen Sie es später erneut.</string>
   <string name="menu_rate_trakt">Bewerten (trakt)</string>

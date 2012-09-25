@@ -213,7 +213,7 @@
   <string name="checkin_empty">Nessuna corrispondenza spettacoli</string>
   <string name="checkin_hint">Digita un messaggio (opzionale)</string>
   <string name="paste_episode">Incolla episodio</string>
-  <string name="checkinsuccess">Check-in su GetGlue avvenuto con successo.</string>
+  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">Check-in su GetGlue fallito. Prova a disconnetterti da GetGlue.</string>
   <string name="getglue_authfailed">GetGlue autenticazione non riuscita. Riprovare più tardi.</string>
   <string name="menu_rate_trakt">Vota (trakt)</string>

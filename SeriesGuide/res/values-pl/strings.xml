@@ -140,14 +140,14 @@
   <string name="library">Biblioteka</string>
   <string name="powered_by_thetvdb">dzięki thetvdb.com</string>
   <string name="powered_by_trakt">dzięki trakt.tv</string>
-  <string name="first_list">Favorites</string>
-  <string name="list_add">Add list</string>
-  <string name="list_title_hint">Name your list</string>
-  <string name="list_remove">Remove list</string>
-  <string name="list_manage">Manage list</string>
-  <string name="list_item_manage">Manage lists</string>
-  <string name="list_item_remove">Remove from list</string>
-  <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
+  <string name="first_list">Ulubione</string>
+  <string name="list_add">Dodaj listę</string>
+  <string name="list_title_hint">Nazwij listę</string>
+  <string name="list_remove">Usuń listę</string>
+  <string name="list_manage">Zarządzaj listą</string>
+  <string name="list_item_manage">Zarządzaj listami</string>
+  <string name="list_item_remove">Usuń z listy</string>
+  <string name="list_empty">Do listy można dodać seriale, sezony lub odcinki.</string>
   <string name="prefs_category_basic">Podstawowe</string>
   <string name="prefs_category_sharing">Udostępnianie</string>
   <string name="prefs_category_advanced">Zaawansowane</string>
@@ -213,7 +213,7 @@
   <string name="checkin_empty">Brak odcinków</string>
   <string name="checkin_hint">Wpisz wiadomość (opcjonalnie)</string>
   <string name="paste_episode">Wklej odcinek</string>
-  <string name="checkinsuccess">Podpięto do GetGlue.</string>
+  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">Podpięcie do GetGlue nie powiodło się. Spróbuj odłączyć GetGlue.</string>
   <string name="getglue_authfailed">Uwierzytelnianie GetGlue nie powiodło się. Spróbuj ponownie później.</string>
   <string name="menu_rate_trakt">Oceń (trakt)</string>
@@ -299,7 +299,7 @@
     <item>Ulubione</item>
     <item>Nieobejrzane/nadchodzące</item>
     <item>Ukryte</item>
-    <item>Lists</item>
+    <item>Listy</item>
   </string-array>
   <string-array name="themeSelection">
     <item>Schemat SeriesGuide</item>

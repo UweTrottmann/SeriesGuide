@@ -213,7 +213,7 @@
   <string name="checkin_empty">Inga matchande serier.</string>
   <string name="checkin_hint">Type a message (optional)</string>
   <string name="paste_episode">Paste episode</string>
-  <string name="checkinsuccess">GetGlue Check-in successful.</string>
+  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
   <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
   <string name="menu_rate_trakt">Betygsätt (trakt)</string>

@@ -213,7 +213,7 @@
   <string name="checkin_empty">Καμία αντιστοιχία σειρών</string>
   <string name="checkin_hint">Πληκτρολογήστε ένα μήνυμα (προαιρετικό)</string>
   <string name="paste_episode">Επικόλληση επεισοδίου</string>
-  <string name="checkinsuccess">Επιτυχές Check-in στο GetGlue.</string>
+  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">Αποτυχία Check-in στο GetGlue. Δοκιμάστε να αποσυνδέσετε το GetGlue.</string>
   <string name="getglue_authfailed">Αποτυχία ταυτοποίησης στο GetGlue. Δοκιμάστε ξανά αργότερα.</string>
   <string name="menu_rate_trakt">Αξιολόγηση (trakt)</string>

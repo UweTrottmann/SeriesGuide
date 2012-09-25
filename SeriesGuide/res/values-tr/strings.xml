@@ -213,7 +213,7 @@
   <string name="checkin_empty">Uygun dizi yok</string>
   <string name="checkin_hint">Bir mesaj yazın (isteğe bağlı)</string>
   <string name="paste_episode">Bölümü Yapıştır</string>
-  <string name="checkinsuccess">GetGlue giriş başarılı.</string>
+  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">GetGlue giriş başarısız oldu. GetGlue bağlantısını kesmeyi deneyin.</string>
   <string name="getglue_authfailed">GetGlue kimlik doğrulaması başarısız oldu. Daha sonra yeniden deneyin.</string>
   <string name="menu_rate_trakt">Oran (trakt)</string>

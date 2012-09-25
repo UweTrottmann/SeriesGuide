@@ -140,14 +140,14 @@
   <string name="library">Bibliothèque</string>
   <string name="powered_by_thetvdb">fourni par thetvdb.com</string>
   <string name="powered_by_trakt">fourni par trakt.tv</string>
-  <string name="first_list">Favorites</string>
-  <string name="list_add">Add list</string>
-  <string name="list_title_hint">Name your list</string>
-  <string name="list_remove">Remove list</string>
-  <string name="list_manage">Manage list</string>
-  <string name="list_item_manage">Manage lists</string>
-  <string name="list_item_remove">Remove from list</string>
-  <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
+  <string name="first_list">Favoris</string>
+  <string name="list_add">Ajouter liste</string>
+  <string name="list_title_hint">Nommez votre liste</string>
+  <string name="list_remove">Supprimer la liste</string>
+  <string name="list_manage">Gérer la liste</string>
+  <string name="list_item_manage">Gérer les listes</string>
+  <string name="list_item_remove">Retirer de la liste</string>
+  <string name="list_empty">Vous pouvez ajouter des séries, des saisons ou des épisodes à cette liste.</string>
   <string name="prefs_category_basic">Paramètres de base</string>
   <string name="prefs_category_sharing">Partage</string>
   <string name="prefs_category_advanced">Avancé</string>
@@ -213,7 +213,7 @@
   <string name="checkin_empty">Aucune série correspondante</string>
   <string name="checkin_hint">Écrivez un message (optionnel)</string>
   <string name="paste_episode">Ajouter l\'épisode</string>
-  <string name="checkinsuccess">Check-in GetGlue réussi.</string>
+  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">Le Check-in de GetGlue a échoué. Essayez de déconnecter GetGlue.</string>
   <string name="getglue_authfailed">Authentification à GetGlue échouée. Réessayez plus tard.</string>
   <string name="menu_rate_trakt">Noter (trakt)</string>
@@ -299,7 +299,7 @@
     <item>Favoris</item>
     <item>Pas vu / Prochains</item>
     <item>Masqués</item>
-    <item>Lists</item>
+    <item>Listes</item>
   </string-array>
   <string-array name="themeSelection">
     <item>Thème SeriesGuide</item>
