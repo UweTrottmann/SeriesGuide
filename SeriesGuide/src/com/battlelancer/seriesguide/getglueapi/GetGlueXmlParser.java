@@ -148,7 +148,7 @@ public class GetGlueXmlParser {
                     skip(parser);
                 }
             }
-            return null;
+            return new ArrayList<Interaction>();
         }
 
         private List<Interaction> readInteractions(XmlPullParser parser)

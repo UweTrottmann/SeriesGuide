@@ -48,6 +48,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 
 public class GetGlue {
 
@@ -154,6 +155,9 @@ public class GetGlue {
                 return CHECKIN_FAILED;
             }
 
+            // clear before potentially using in post
+            mComment = "";
+            
             try {
                 HttpResponse response = httpClient.execute(request);
                 GetGlueXmlParser getGlueXmlParser = new GetGlueXmlParser();
@@ -161,12 +165,16 @@ public class GetGlue {
 
                 int statuscode = response.getStatusLine().getStatusCode();
                 if (statuscode == HttpStatus.SC_OK) {
-                    Interaction interaction = getGlueXmlParser.parseInteractions(responseIn).get(0);
-                    mComment = interaction.title;
+                    List<Interaction> interactions = getGlueXmlParser.parseInteractions(responseIn);
+                    if (interactions.size() > 0) {
+                        mComment = interactions.get(0).title;
+                    }
                     return CHECKIN_SUCCESSFUL;
                 } else {
                     GetGlueXmlParser.Error error = getGlueXmlParser.parseError(responseIn);
-                    mComment = error.toString();
+                    if (error != null) {
+                        mComment = error.toString();
+                    }
                 }
             } catch (ClientProtocolException e) {
                 Utils.trackException(mContext, e);
