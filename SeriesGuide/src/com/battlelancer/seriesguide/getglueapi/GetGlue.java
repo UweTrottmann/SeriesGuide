@@ -26,6 +26,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.getglueapi.GetGlueXmlParser.Interaction;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -41,9 +42,10 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -134,7 +136,7 @@ public class GetGlue {
                     mPrefs.getString(OAUTH_TOKEN_SECRET, ""));
 
             HttpGet request = new HttpGet(url);
-            HttpClient httpClient = new DefaultHttpClient();
+            HttpClient httpClient = AndroidUtils.getHttpClient();
 
             try {
                 consumer.sign(request);
@@ -154,15 +156,28 @@ public class GetGlue {
 
             try {
                 HttpResponse response = httpClient.execute(request);
+                GetGlueXmlParser getGlueXmlParser = new GetGlueXmlParser();
+                InputStream responseIn = response.getEntity().getContent();
 
                 int statuscode = response.getStatusLine().getStatusCode();
                 if (statuscode == HttpStatus.SC_OK) {
+                    Interaction interaction = getGlueXmlParser.parseInteractions(responseIn).get(0);
+                    mComment = interaction.title;
                     return CHECKIN_SUCCESSFUL;
+                } else {
+                    GetGlueXmlParser.Error error = getGlueXmlParser.parseError(responseIn);
+                    mComment = error.toString();
                 }
             } catch (ClientProtocolException e) {
                 Utils.trackException(mContext, e);
                 Log.w(TAG, e);
             } catch (IOException e) {
+                Utils.trackException(mContext, e);
+                Log.w(TAG, e);
+            } catch (IllegalStateException e) {
+                Utils.trackException(mContext, e);
+                Log.w(TAG, e);
+            } catch (XmlPullParserException e) {
                 Utils.trackException(mContext, e);
                 Log.w(TAG, e);
             }
@@ -174,7 +189,8 @@ public class GetGlue {
         protected void onPostExecute(Integer result) {
             switch (result) {
                 case CHECKIN_SUCCESSFUL:
-                    Toast.makeText(mContext, R.string.checkinsuccess, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, mContext.getString(R.string.checkinsuccess, mComment),
+                            Toast.LENGTH_SHORT).show();
                     EasyTracker.getTracker().trackEvent("Sharing", "GetGlue", "Success", (long) 0);
                     break;
                 case CHECKIN_FAILED:
