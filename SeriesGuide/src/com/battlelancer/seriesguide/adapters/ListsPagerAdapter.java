@@ -7,7 +7,7 @@ import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import com.battlelancer.seriesguide.beta.R;
+import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.ui.ListsFragment;
 
