@@ -25,6 +25,12 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -48,7 +54,7 @@ public class AndroidUtils {
     public static boolean isHoneycombOrHigher() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
-    
+
     public static boolean isGingerbreadOrHigher() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD;
     }
@@ -166,5 +172,23 @@ public class AndroidUtils {
         } else {
             task.execute(args);
         }
+    }
+
+    /**
+     * Generate and return a {@link HttpClient} configured for general use,
+     * including setting an application-specific user-agent string.
+     */
+    public static HttpClient getHttpClient() {
+        final HttpParams params = new BasicHttpParams();
+
+        // Use generous timeouts for slow mobile networks
+        HttpConnectionParams.setConnectionTimeout(params, 20000);
+        HttpConnectionParams.setSoTimeout(params, 10000);
+
+        HttpConnectionParams.setSocketBufferSize(params, 8192);
+
+        final DefaultHttpClient client = new DefaultHttpClient(params);
+
+        return client;
     }
 }
