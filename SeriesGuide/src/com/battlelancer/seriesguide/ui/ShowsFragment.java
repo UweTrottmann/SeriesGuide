@@ -56,7 +56,6 @@ import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.ui.CheckinActivity.CheckinQuery;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
@@ -223,7 +222,7 @@ public class ShowsFragment extends SherlockFragment implements
 
                     // display a check-in dialog
                     CheckInDialogFragment f = CheckInDialogFragment.newInstance(
-                            show.getString(CheckinQuery.IMDBID), (int) info.id, episode.getInt(0),
+                            show.getString(ShowsQuery.IMDB_ID), (int) info.id, episode.getInt(0),
                             episode.getInt(1), episodeString);
                     f.show(getFragmentManager(), "checkin-dialog");
 
@@ -540,7 +539,7 @@ public class ShowsFragment extends SherlockFragment implements
         String[] PROJECTION = {
                 BaseColumns._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
                 Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE, Shows.NEXTEPISODE
+                Shows.FAVORITE, Shows.NEXTEPISODE, Shows.IMDBID
         };
 
         // int _ID = 0;
@@ -564,6 +563,8 @@ public class ShowsFragment extends SherlockFragment implements
         int FAVORITE = 9;
 
         int NEXTEPISODE = 10;
+
+        int IMDB_ID = 11;
     }
 
     public void fireTrackerEvent(String label) {
