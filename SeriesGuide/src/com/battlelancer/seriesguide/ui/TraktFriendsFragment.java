@@ -83,7 +83,9 @@ public class TraktFriendsFragment extends ListFragment implements
         setListAdapter(mAdapter);
         final ListView list = getListView();
         list.setDivider(null);
-        list.setSelector(R.drawable.list_selector_sg);
+        if (SeriesGuidePreferences.THEME != R.style.ICSBaseTheme) {
+            list.setSelector(R.drawable.list_selector_sg);
+        }
         list.setClipToPadding(AndroidUtils.isHoneycombOrHigher() ? false : true);
         final float scale = getResources().getDisplayMetrics().density;
         int layoutPadding = (int) (10 * scale + 0.5f);

@@ -72,7 +72,7 @@
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless">
-        <item name="android:background">@drawable/list_selector_sg</item>
+        <item name="android:background">?custom_list_selector</item>
         <item name="android:paddingLeft">4dip</item>
         <item name="android:paddingRight">4dip</item>
     </style>
