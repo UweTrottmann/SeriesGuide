@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.FileChannel;
 
@@ -199,16 +200,29 @@ public class AndroidUtils {
      * to the given URL.
      */
     public static InputStream downloadUrl(String urlString) throws IOException {
+        HttpURLConnection conn = buildHttpUrlConnection(urlString);
+        conn.connect();
+
+        InputStream stream = conn.getInputStream();
+        return stream;
+    }
+
+    /**
+     * Returns an {@link HttpURLConnection} using sensible default settings for
+     * mobile and taking care of buggy behavior prior to Froyo.
+     */
+    public static HttpURLConnection buildHttpUrlConnection(String urlString)
+            throws MalformedURLException, IOException {
         AndroidUtils.disableConnectionReuseIfNecessary();
+
         URL url = new URL(urlString);
+
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setReadTimeout(10000 /* milliseconds */);
         conn.setConnectTimeout(15000 /* milliseconds */);
         conn.setDoInput(true);
-
-        conn.connect();
-        InputStream stream = conn.getInputStream();
-        return stream;
+        conn.setRequestMethod("GET");
+        return conn;
     }
 
     /**
