@@ -53,17 +53,13 @@ import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -697,48 +693,35 @@ public class TheTVDB {
     }
 
     static Bitmap downloadBitmap(String url) {
-        final HttpClient client = AndroidUtils.getHttpClient();
-        final HttpGet getRequest = new HttpGet(url);
-
+        InputStream inputStream = null;
         try {
-            HttpResponse response = client.execute(getRequest);
-            final int statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode != HttpStatus.SC_OK) {
-                Log.w(TAG, "Error " + statusCode + " while retrieving bitmap from " + url);
+            HttpURLConnection conn = AndroidUtils.buildHttpUrlConnection(url);
+            conn.connect();
+            long imageSize = conn.getContentLength();
+            // allow images up to 100K (although size is always around
+            // 30K)
+            if (imageSize > 100000) {
                 return null;
-            }
-
-            final HttpEntity entity = response.getEntity();
-            if (entity != null) {
-                InputStream inputStream = null;
-                try {
-                    long imageSize = entity.getContentLength();
-                    // allow images up to 100K (although size is always around
-                    // 30K)
-                    if (imageSize > 100000) {
-                        return null;
-                    } else {
-                        inputStream = entity.getContent();
-                        // return BitmapFactory.decodeStream(inputStream);
-                        // Bug on slow connections, fixed in future release.
-                        return BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
-                    }
-                } finally {
-                    if (inputStream != null) {
-                        inputStream.close();
-                    }
-                    entity.consumeContent();
-                }
+            } else {
+                inputStream = conn.getInputStream();
+                // return BitmapFactory.decodeStream(inputStream);
+                // Bug on slow connections, fixed in future release.
+                return BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
             }
         } catch (IOException e) {
-            getRequest.abort();
             Log.w(TAG, "I/O error while retrieving bitmap from " + url, e);
         } catch (IllegalStateException e) {
-            getRequest.abort();
             Log.w(TAG, "Incorrect URL: " + url);
         } catch (Exception e) {
-            getRequest.abort();
             Log.w(TAG, "Error while retrieving bitmap from " + url, e);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    Log.w(TAG, "I/O error while retrieving bitmap from " + url, e);
+                }
+            }
         }
         return null;
     }
