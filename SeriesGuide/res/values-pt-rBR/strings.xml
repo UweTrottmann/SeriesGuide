@@ -140,14 +140,14 @@
   <string name="library">Biblioteca</string>
   <string name="powered_by_thetvdb">fonte: thetvdb.com</string>
   <string name="powered_by_trakt">fonte: trakt.tv</string>
-  <string name="first_list">Favorites</string>
-  <string name="list_add">Add list</string>
-  <string name="list_title_hint">Name your list</string>
-  <string name="list_remove">Remove list</string>
-  <string name="list_manage">Manage list</string>
-  <string name="list_item_manage">Manage lists</string>
-  <string name="list_item_remove">Remove from list</string>
-  <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
+  <string name="first_list">Favoritos</string>
+  <string name="list_add">Adicionar lista</string>
+  <string name="list_title_hint">Nome da sua lista</string>
+  <string name="list_remove">Remover lista</string>
+  <string name="list_manage">Gerenciar lista</string>
+  <string name="list_item_manage">Gerenciar listas</string>
+  <string name="list_item_remove">Remover da lista</string>
+  <string name="list_empty">Você pode adicionar series, temporadas ou episódios para a lista.</string>
   <string name="prefs_category_basic">Básico</string>
   <string name="prefs_category_sharing">Compartilhamento</string>
   <string name="prefs_category_advanced">Avançado</string>
@@ -213,7 +213,7 @@
   <string name="checkin_empty">Nenhuma série encontrada</string>
   <string name="checkin_hint">Digite uma mensagem (opcional)</string>
   <string name="paste_episode">Colar episódio</string>
-  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
+  <string name="checkinsuccess">Verificado em %s no GetGlue.</string>
   <string name="checkinfailed">Check-in do GetGlue falhou. Tente desconectar do GetGlue.</string>
   <string name="getglue_authfailed">Autenticação com GetGlue falhou. Tente novamente.</string>
   <string name="menu_rate_trakt">Avaliar (trakt)</string>
@@ -241,12 +241,11 @@
   <string name="trakt_syncunseen">Sincronizar episódios não-vistos</string>
   <string name="trakt_howto_title">Configurar sincronização com trakt.tv</string>
   <string name="trakt_howto">Para configurar seus dispositivos:\n\n1. Conecte ou crie sua conta abaixo em cada dispositivo.\n2. Na primeira vez, use o botão <b>Sincronizar com o trakt.tv</b> para subir suas séries existentes.\n3. Adicione séries do trakt.tv arrastando para a guia <b>Biblioteca</b> na tela <b>Adicionar Série</b>.\n\nAgora sempre que o SeriesGuide atualizar, sua atividade no trakt.tv é baixada em cada dispositivo. Isto inclui a marcação de episódios como vistos ou coletados e check-ins.</string>
-  <string name="welcome_message">Começar</string>
   <string name="welcome_setuplanguage">Escolha o idioma</string>
   <string name="welcome_setuptrakt">Conectar-se ao trakt</string>
-  <string name="welcome_traktmessage">Acesse sua lista do trakt.tv e as atividades de seus amigos com SeriesGuide:</string>
+  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
   <string name="dismiss">Recusar</string>
-  <string name="welcome_add_part1">Toque para adicionar séries ao SeriesGuide</string>
+  <string name="welcome_add_part1">To get started tap</string>
   <string name="welcome_add_part2">na barra de ações.</string>
   <string name="upcoming_show">%s está chegando</string>
   <string name="upcoming_episodes">Novos episódios estão chegando</string>
@@ -299,7 +298,7 @@
     <item>Favoritos</item>
     <item>Não visto/Próximo</item>
     <item>Oculto</item>
-    <item>Lists</item>
+    <item>Listas</item>
   </string-array>
   <string-array name="themeSelection">
     <item>Tema do SeriesGuide</item>
