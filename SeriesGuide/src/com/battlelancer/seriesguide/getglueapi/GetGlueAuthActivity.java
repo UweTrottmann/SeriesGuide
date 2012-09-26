@@ -39,8 +39,8 @@ import com.battlelancer.seriesguide.util.Utils;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.OAuthProvider;
-import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
-import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
+import oauth.signpost.basic.DefaultOAuthConsumer;
+import oauth.signpost.basic.DefaultOAuthProvider;
 import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
@@ -64,7 +64,7 @@ public class GetGlueAuthActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        requestWindowFeature(Window.FEATURE_PROGRESS);
 
         mWebview = new WebView(this);
         setContentView(mWebview);
@@ -73,13 +73,15 @@ public class GetGlueAuthActivity extends BaseActivity {
         actionBar.setTitle(getString(R.string.oauthmessage));
         actionBar.setDisplayShowTitleEnabled(true);
 
+        setSupportProgressBarVisibility(true);
+
         final SherlockFragmentActivity activity = this;
         mWebview.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 /*
                  * Activities and WebViews measure progress with different
                  * scales. The progress meter will automatically disappear when
-                 * we reach 100%
+                 * we reach 100%.
                  */
                 activity.setSupportProgress(progress * 1000);
             }
@@ -111,9 +113,9 @@ public class GetGlueAuthActivity extends BaseActivity {
         // mWebview.getSettings().setJavaScriptEnabled(true);
 
         Resources res = getResources();
-        this.mConsumer = new CommonsHttpOAuthConsumer(res.getString(R.string.getglue_consumer_key),
+        this.mConsumer = new DefaultOAuthConsumer(res.getString(R.string.getglue_consumer_key),
                 res.getString(R.string.getglue_consumer_secret));
-        this.mProvider = new CommonsHttpOAuthProvider(GetGlue.REQUEST_URL, GetGlue.ACCESS_URL,
+        this.mProvider = new DefaultOAuthProvider(GetGlue.REQUEST_URL, GetGlue.ACCESS_URL,
                 GetGlue.AUTHORIZE_URL);
 
         Log.i(TAG, "Starting task to retrieve request token.");
@@ -182,7 +184,7 @@ public class GetGlueAuthActivity extends BaseActivity {
         }
     }
 
-    public static class OAuthRequestTokenTask extends AsyncTask<Void, Void, String> {
+    public static class OAuthRequestTokenTask extends AsyncTask<Void, String, String> {
         final String TAG = "OAuthRequestTokenTask";
 
         private Context mContext;
@@ -213,7 +215,7 @@ public class GetGlueAuthActivity extends BaseActivity {
                         GetGlue.OAUTH_CALLBACK_URL);
 
                 Log.i(TAG, "Popping a browser with the authorize URL");
-                mWebView.loadUrl(authUrl);
+                publishProgress(authUrl);
             } catch (OAuthMessageSignerException e) {
                 Utils.trackException(mContext, e);
                 Log.w(TAG, e);
@@ -232,6 +234,11 @@ public class GetGlueAuthActivity extends BaseActivity {
                 return e.getMessage();
             }
             return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            mWebView.loadUrl(values[0]);
         }
 
         @Override

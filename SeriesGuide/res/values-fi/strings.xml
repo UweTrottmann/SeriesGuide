@@ -213,7 +213,7 @@
   <string name="checkin_empty">Ei vastaavia ohjelmia</string>
   <string name="checkin_hint">Kirjoita viesti (valinnainen)</string>
   <string name="paste_episode">Liitä jakso</string>
-  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
+  <string name="checkinsuccess">Kirjattu kohteeseen %s GetGluessa.</string>
   <string name="checkinfailed">GetGluen kirjaus epäonnistui. Yritä irrottautua GetGluesta.</string>
   <string name="getglue_authfailed">GetGluen todentaminen epäonnistui. Yritä myöhemmin uudelleen.</string>
   <string name="menu_rate_trakt">Arvostele (trakt)</string>
@@ -241,12 +241,11 @@
   <string name="trakt_syncunseen">Sisällytä katsomattomaksi merkatut</string>
   <string name="trakt_howto_title">Määritä trakt.tv:n syknronointi</string>
   <string name="trakt_howto">Määrittääksesi laitteesi:\n\n1. Yhdistä tai luo tilisi alla jokaisella laitteellasi.\n2. Ensimmäisellä kerralla käytä <b>Synkronoi traktiin</b> -nappia lähettääksesi nykyiset ohjelmasi.\n3. Lisää ohjelmat traktista pyyhkäisemällä <b>Kokoelma</b> -välilehteen <b>Lisää ohjelma</b> -näkymässä.\n\nNyt aina SeriesGuiden päivittäessä trakt.tv -toimintasi ladataan jokaiseen laitteeseen. Tähän sisältyy myös jaksojen merkitseminen katsotuiksi, kerätyiksi tai kirjatuiksi.</string>
-  <string name="welcome_message">Käytön aloittaminen</string>
   <string name="welcome_setuplanguage">Valitse kieli</string>
   <string name="welcome_setuptrakt">Yhdistä traktiin</string>
-  <string name="welcome_traktmessage">Pääse käsiksi trakt.tv:n kirjastoosi ja ystäviesi toimintaan SeriesGuidella:</string>
+  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
   <string name="dismiss">Hylkää</string>
-  <string name="welcome_add_part1">Lisää ohjelmia SeriesGuideen napauttamalla</string>
+  <string name="welcome_add_part1">To get started tap</string>
   <string name="welcome_add_part2">toimintopalkissa.</string>
   <string name="upcoming_show">%s on tulossa</string>
   <string name="upcoming_episodes">Uusia jaksoja tulossa</string>

@@ -71,13 +71,17 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
     private EditText mMessageBox;
 
     private View mCheckinButton;
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         // hide title
-        setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog_CheckIn);
+        if (SeriesGuidePreferences.THEME == R.style.ICSBaseTheme) {
+            setStyle(STYLE_NO_TITLE, 0);
+        } else {
+            setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog_CheckIn);
+        }
     }
 
     @Override

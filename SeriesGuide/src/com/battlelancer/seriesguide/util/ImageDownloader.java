@@ -31,13 +31,6 @@ import android.widget.ImageView;
 
 import com.uwetrottmann.androidutils.AndroidUtils;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FilterInputStream;
@@ -169,11 +162,11 @@ public class ImageDownloader {
         return null;
     }
 
-    Bitmap downloadBitmap(String url, boolean isDiskCaching) {
+    Bitmap downloadBitmap(String urlString, boolean isDiskCaching) {
 
         File imagefile = null;
         if (isDiskCaching) {
-            String filename = Integer.toHexString(url.hashCode()) + "."
+            String filename = Integer.toHexString(urlString.hashCode()) + "."
                     + CompressFormat.JPEG.name();
             imagefile = new File(mDiskCacheDir + "/" + filename);
 
@@ -190,70 +183,53 @@ public class ImageDownloader {
         }
 
         // if loading from disk fails, download it
-        final HttpClient client = new DefaultHttpClient();
-        final HttpGet getRequest = new HttpGet(url);
-
+        InputStream inputStream = null;
         try {
-            HttpResponse response = client.execute(getRequest);
-            final int statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode != HttpStatus.SC_OK) {
-                Log.w("ImageDownloader", "Error " + statusCode + " while retrieving bitmap from "
-                        + url);
-                return null;
+            inputStream = AndroidUtils.downloadUrl(urlString);
+
+            // return BitmapFactory.decodeStream(inputStream);
+            // Bug on slow connections, fixed in future release.
+            // Bitmap bitmap = BitmapFactory.decodeStream(new
+            // FlushedInputStream(inputStream));
+
+            // write directly to disk
+            Bitmap bitmap;
+            if (isDiskCaching && AndroidUtils.isExtStorageAvailable()) {
+                FileOutputStream outputstream = new FileOutputStream(imagefile);
+                AndroidUtils.copy(new FlushedInputStream(inputStream), outputstream);
+                outputstream.close();
+                bitmap = BitmapFactory.decodeFile(imagefile.getAbsolutePath());
+            } else {
+                // if we have no external storage, decode directly
+                bitmap = BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
             }
 
-            final HttpEntity entity = response.getEntity();
-            if (entity != null) {
-                InputStream inputStream = null;
+            // // TODO look if we can return the bitmap first, then save
+            // in
+            // // the background
+            // if (Utils.isExtStorageAvailable()) {
+            // // write the bitmap to the disk cache
+            // FileOutputStream os = new FileOutputStream(imagefile);
+            //
+            // @SuppressWarnings("unused")
+            // boolean isreconstructable =
+            // bitmap.compress(CompressFormat.JPEG, 90, os);
+            // os.close();
+            // }
+
+            return bitmap;
+        } catch (IOException e) {
+            Log.w(LOG_TAG, "I/O error while retrieving bitmap from " + urlString, e);
+        } catch (Exception e) {
+            Log.w(LOG_TAG, "Error while retrieving bitmap from " + urlString, e);
+        } finally {
+            if (inputStream != null) {
                 try {
-                    inputStream = entity.getContent();
-                    // return BitmapFactory.decodeStream(inputStream);
-                    // Bug on slow connections, fixed in future release.
-                    // Bitmap bitmap = BitmapFactory.decodeStream(new
-                    // FlushedInputStream(inputStream));
-
-                    // write directly to disk
-                    Bitmap bitmap;
-                    if (isDiskCaching && AndroidUtils.isExtStorageAvailable()) {
-                        FileOutputStream outputstream = new FileOutputStream(imagefile);
-                        AndroidUtils.copy(new FlushedInputStream(inputStream), outputstream);
-                        outputstream.close();
-                        bitmap = BitmapFactory.decodeFile(imagefile.getAbsolutePath());
-                    } else {
-                        // if we have no external storage, decode directly
-                        bitmap = BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
-                    }
-
-                    // // TODO look if we can return the bitmap first, then save
-                    // in
-                    // // the background
-                    // if (Utils.isExtStorageAvailable()) {
-                    // // write the bitmap to the disk cache
-                    // FileOutputStream os = new FileOutputStream(imagefile);
-                    //
-                    // @SuppressWarnings("unused")
-                    // boolean isreconstructable =
-                    // bitmap.compress(CompressFormat.JPEG, 90, os);
-                    // os.close();
-                    // }
-
-                    return bitmap;
-                } finally {
-                    if (inputStream != null) {
-                        inputStream.close();
-                    }
-                    entity.consumeContent();
+                    inputStream.close();
+                } catch (IOException e) {
+                    Log.w(LOG_TAG, "Error while retrieving bitmap from " + urlString, e);
                 }
             }
-        } catch (IOException e) {
-            getRequest.abort();
-            Log.w(LOG_TAG, "I/O error while retrieving bitmap from " + url, e);
-        } catch (IllegalStateException e) {
-            getRequest.abort();
-            Log.w(LOG_TAG, "Incorrect URL: " + url);
-        } catch (Exception e) {
-            getRequest.abort();
-            Log.w(LOG_TAG, "Error while retrieving bitmap from " + url, e);
         }
         return null;
     }

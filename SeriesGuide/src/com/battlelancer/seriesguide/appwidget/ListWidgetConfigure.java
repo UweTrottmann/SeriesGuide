@@ -31,6 +31,7 @@ import android.widget.RemoteViews;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.enums.WidgetListType;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.Utils;
 
 public class ListWidgetConfigure extends SherlockActivity {
@@ -51,6 +52,9 @@ public class ListWidgetConfigure extends SherlockActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // set a theme based on user preference
+        setTheme(SeriesGuidePreferences.THEME);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listwidget_configure);
 

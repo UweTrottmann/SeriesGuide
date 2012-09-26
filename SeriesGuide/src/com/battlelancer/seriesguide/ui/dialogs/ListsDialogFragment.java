@@ -34,6 +34,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.analytics.tracking.android.EasyTracker;
 
 import java.util.ArrayList;
@@ -58,7 +59,11 @@ public class ListsDialogFragment extends DialogFragment implements
         super.onCreate(savedInstanceState);
 
         // hide title, use custom theme
-        setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
+        if (SeriesGuidePreferences.THEME == R.style.ICSBaseTheme) {
+            setStyle(STYLE_NO_TITLE, 0);
+        } else {
+            setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
+        }
     }
 
     @Override

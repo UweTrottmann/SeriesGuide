@@ -82,7 +82,11 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
 
         // hide title, use custom theme
-        setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
+        if (SeriesGuidePreferences.THEME == R.style.ICSBaseTheme) {
+            setStyle(STYLE_NO_TITLE, 0);
+        } else {
+            setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
+        }
     }
 
     @Override

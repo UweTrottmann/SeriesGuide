@@ -25,18 +25,15 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.channels.FileChannel;
 
 public class AndroidUtils {
@@ -175,20 +172,45 @@ public class AndroidUtils {
     }
 
     /**
-     * Generate and return a {@link HttpClient} configured for general use,
-     * including setting an application-specific user-agent string.
+     * Returns an {@link InputStream} using {@link HttpURLConnection} to connect
+     * to the given URL.
      */
-    public static HttpClient getHttpClient() {
-        final HttpParams params = new BasicHttpParams();
+    public static InputStream downloadUrl(String urlString) throws IOException {
+        HttpURLConnection conn = buildHttpUrlConnection(urlString);
+        conn.connect();
 
-        // Use generous timeouts for slow mobile networks
-        HttpConnectionParams.setConnectionTimeout(params, 20000);
-        HttpConnectionParams.setSoTimeout(params, 10000);
+        InputStream stream = conn.getInputStream();
+        return stream;
+    }
 
-        HttpConnectionParams.setSocketBufferSize(params, 8192);
+    /**
+     * Returns an {@link HttpURLConnection} using sensible default settings for
+     * mobile and taking care of buggy behavior prior to Froyo.
+     */
+    public static HttpURLConnection buildHttpUrlConnection(String urlString)
+            throws MalformedURLException, IOException {
+        AndroidUtils.disableConnectionReuseIfNecessary();
 
-        final DefaultHttpClient client = new DefaultHttpClient(params);
+        URL url = new URL(urlString);
 
-        return client;
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setReadTimeout(10000 /* milliseconds */);
+        conn.setConnectTimeout(15000 /* milliseconds */);
+        conn.setDoInput(true);
+        conn.setRequestMethod("GET");
+        return conn;
+    }
+
+    /**
+     * Prior to Android 2.2 (Froyo), {@link HttpURLConnection} had some
+     * frustrating bugs. In particular, calling close() on a readable
+     * InputStream could poison the connection pool. Work around this by
+     * disabling connection pooling.
+     */
+    public static void disableConnectionReuseIfNecessary() {
+        // HTTP connection reuse which was buggy pre-froyo
+        if (!isFroyoOrHigher()) {
+            System.setProperty("http.keepAlive", "false");
+        }
     }
 }

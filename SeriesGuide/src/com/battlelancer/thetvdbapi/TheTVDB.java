@@ -18,7 +18,6 @@
 package com.battlelancer.thetvdbapi;
 
 import android.content.ContentProviderOperation;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
@@ -54,19 +53,13 @@ import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
-import org.xmlpull.v1.XmlPullParser;
 
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -410,9 +403,7 @@ public class TheTVDB {
             }
         });
 
-        HttpUriRequest request = new HttpGet(url);
-        HttpClient httpClient = AndroidUtils.getHttpClient();
-        execute(request, httpClient, root.getContentHandler(), false);
+        downloadAndParse(url, root.getContentHandler(), false);
 
         return currentShow;
     }
@@ -430,6 +421,7 @@ public class TheTVDB {
             final long showAirtime, Context context) throws SAXException {
         RootElement root = new RootElement("Data");
         Element episode = root.getChild("Episode");
+        final long oneYearAgoEpoch = System.currentTimeMillis() - DateUtils.YEAR_IN_MILLIS;
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
         final HashMap<Long, Long> episodeIDs = DBUtils.getEpisodeMapForShow(showId, context);
         final HashMap<Long, Long> existingEpisodeIds = new HashMap<Long, Long>(episodeIDs);
@@ -449,8 +441,9 @@ public class TheTVDB {
                      * check if this is newer information than we have, however
                      * always update last years episodes
                      */
-                    if (episodeIDs.get(episodeId) - (DateUtils.YEAR_IN_MILLIS / 1000) < values
-                            .getAsLong(Episodes.LASTEDIT)) {
+                    long lastEditEpoch = episodeIDs.get(episodeId);
+                    if (lastEditEpoch < values.getAsLong(Episodes.LASTEDIT)
+                            || oneYearAgoEpoch < lastEditEpoch) {
                         // complete update op for episode
                         batch.add(DBUtils.buildEpisodeOp(values, false));
                     }
@@ -559,9 +552,7 @@ public class TheTVDB {
             }
         });
 
-        HttpUriRequest request = new HttpGet(url);
-        HttpClient httpClient = AndroidUtils.getHttpClient();
-        execute(request, httpClient, root.getContentHandler(), true);
+        downloadAndParse(url, root.getContentHandler(), true);
 
         // add delete ops for left over episodeIds in our db
         for (Long id : existingEpisodeIds.keySet()) {
@@ -656,9 +647,7 @@ public class TheTVDB {
             }
         });
         final String url = xmlMirror + "Updates.php?type=none";
-        HttpUriRequest request = new HttpGet(url);
-        HttpClient httpClient = AndroidUtils.getHttpClient();
-        execute(request, httpClient, root.getContentHandler(), false);
+        downloadAndParse(url, root.getContentHandler(), false);
 
         return serverTime[0];
     }
@@ -704,48 +693,35 @@ public class TheTVDB {
     }
 
     static Bitmap downloadBitmap(String url) {
-        final HttpClient client = AndroidUtils.getHttpClient();
-        final HttpGet getRequest = new HttpGet(url);
-
+        InputStream inputStream = null;
         try {
-            HttpResponse response = client.execute(getRequest);
-            final int statusCode = response.getStatusLine().getStatusCode();
-            if (statusCode != HttpStatus.SC_OK) {
-                Log.w(TAG, "Error " + statusCode + " while retrieving bitmap from " + url);
+            HttpURLConnection conn = AndroidUtils.buildHttpUrlConnection(url);
+            conn.connect();
+            long imageSize = conn.getContentLength();
+            // allow images up to 100K (although size is always around
+            // 30K)
+            if (imageSize > 100000) {
                 return null;
-            }
-
-            final HttpEntity entity = response.getEntity();
-            if (entity != null) {
-                InputStream inputStream = null;
-                try {
-                    long imageSize = entity.getContentLength();
-                    // allow images up to 100K (although size is always around
-                    // 30K)
-                    if (imageSize > 100000) {
-                        return null;
-                    } else {
-                        inputStream = entity.getContent();
-                        // return BitmapFactory.decodeStream(inputStream);
-                        // Bug on slow connections, fixed in future release.
-                        return BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
-                    }
-                } finally {
-                    if (inputStream != null) {
-                        inputStream.close();
-                    }
-                    entity.consumeContent();
-                }
+            } else {
+                inputStream = conn.getInputStream();
+                // return BitmapFactory.decodeStream(inputStream);
+                // Bug on slow connections, fixed in future release.
+                return BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
             }
         } catch (IOException e) {
-            getRequest.abort();
             Log.w(TAG, "I/O error while retrieving bitmap from " + url, e);
         } catch (IllegalStateException e) {
-            getRequest.abort();
             Log.w(TAG, "Incorrect URL: " + url);
         } catch (Exception e) {
-            getRequest.abort();
             Log.w(TAG, "Error while retrieving bitmap from " + url, e);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    Log.w(TAG, "I/O error while retrieving bitmap from " + url, e);
+                }
+            }
         }
         return null;
     }
@@ -790,31 +766,22 @@ public class TheTVDB {
     }
 
     /**
-     * Execute this {@link HttpUriRequest}, passing a valid response through
-     * {@link XmlHandler#parseAndApply(XmlPullParser, ContentResolver)}.
+     * Downloads the XML or ZIP file from the given URL, passing a valid
+     * response to
+     * {@link Xml#parse(InputStream, android.util.Xml.Encoding, ContentHandler)}
+     * using the given {@link ContentHandler}.
      */
-    private static void execute(HttpUriRequest request, HttpClient httpClient,
+    private static void downloadAndParse(String urlString,
             ContentHandler handler, boolean isZipFile) throws SAXException {
         try {
-            final HttpResponse resp = httpClient.execute(request);
-            final int status = resp.getStatusLine().getStatusCode();
-            if (status != HttpStatus.SC_OK) {
-                throw new SAXException("Unexpected server response " + resp.getStatusLine()
-                        + " for " + request.getRequestLine());
-            }
+            final InputStream input = AndroidUtils.downloadUrl(urlString);
 
-            final InputStream input = resp.getEntity().getContent();
             if (isZipFile) {
                 // We downloaded the compressed file from TheTVDB
                 final ZipInputStream zipin = new ZipInputStream(input);
                 zipin.getNextEntry();
                 try {
                     Xml.parse(zipin, Xml.Encoding.UTF_8, handler);
-                } catch (SAXException e) {
-                    throw new SAXException("Malformed response for " + request.getRequestLine(), e);
-                } catch (IOException ioe) {
-                    throw new SAXException("Problem reading remote response for "
-                            + request.getRequestLine(), ioe);
                 } finally {
                     if (zipin != null) {
                         zipin.close();
@@ -823,25 +790,25 @@ public class TheTVDB {
             } else {
                 try {
                     Xml.parse(input, Xml.Encoding.UTF_8, handler);
-                } catch (SAXException e) {
-                    throw new SAXException("Malformed response for " + request.getRequestLine(), e);
-                } catch (IOException ioe) {
-                    throw new SAXException("Problem reading remote response for "
-                            + request.getRequestLine(), ioe);
                 } finally {
                     if (input != null) {
                         input.close();
                     }
                 }
             }
+        } catch (SAXException e) {
+            throw new SAXException("Malformed response for " + urlString, e);
+        } catch (IOException e) {
+            throw new SAXException("Problem reading remote response for "
+                    + urlString, e);
         } catch (AssertionError ae) {
             // looks like Xml.parse is throwing AssertionErrors instead of
             // IOExceptions
             throw new SAXException("Problem reading remote response for "
-                    + request.getRequestLine());
+                    + urlString);
         } catch (Exception e) {
             throw new SAXException("Problem reading remote response for "
-                    + request.getRequestLine(), e);
+                    + urlString, e);
         }
     }
 }

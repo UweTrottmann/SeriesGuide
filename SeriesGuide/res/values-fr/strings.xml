@@ -241,12 +241,11 @@
   <string name="trakt_syncunseen">Inclure les épisodes non vus</string>
   <string name="trakt_howto_title">Mettre en place la synchro trakt.tv</string>
   <string name="trakt_howto">Pour configurer vos appareils :\n\n1. Créez ou connectez-vous à votre compte ci-dessous sur chaque appareil.\n2. La première fois, utilisez le bouton <b>Synchroniser vers trakt.tv</b> pour transmettre vos séries.\n3. Ajoutez les séries depuis trakt.tv en vous déplaçant dans l\'onglet <b>Bibliothèque</b> dans l\'écran <b>Ajouter Série</b>.\n\nMaintenant, à chaque fois que SeriesGuide se met à jour, votre activité sur trakt.tv sera téléchargée sur chaque appareil. Cela inclut les épisodes vus ou collectés et les check-ins.</string>
-  <string name="welcome_message">Pour commencer</string>
   <string name="welcome_setuplanguage">Choisissez la langue</string>
   <string name="welcome_setuptrakt">Se connecter à trakt</string>
-  <string name="welcome_traktmessage">Accédez à votre bibliothèque trakt.tv et à l\'activité de vos amis avec SeriesGuide :</string>
+  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
   <string name="dismiss">Passer</string>
-  <string name="welcome_add_part1">Pour ajouter des séries sur SeriesGuide, appuyez sur</string>
+  <string name="welcome_add_part1">To get started tap</string>
   <string name="welcome_add_part2">dans la barre d\'action.</string>
   <string name="upcoming_show">%s arrive bientôt</string>
   <string name="upcoming_episodes">De nouveaux épisodes arrivent</string>

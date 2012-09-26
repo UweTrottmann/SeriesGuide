@@ -33,6 +33,7 @@ import android.widget.TextView;
 
 import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.google.analytics.tracking.android.EasyTracker;
 
@@ -61,7 +62,11 @@ public class AddDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
 
         // hide title, use custom theme
-        setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
+        if (SeriesGuidePreferences.THEME == R.style.ICSBaseTheme) {
+            setStyle(STYLE_NO_TITLE, 0);
+        } else {
+            setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
+        }
     }
 
     @Override

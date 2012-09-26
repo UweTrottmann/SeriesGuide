@@ -301,7 +301,6 @@
     <string name="waitplease">A moment, please…</string>
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
-    <string name="trakt_success">trakt action successful</string>
     <string name="trakt_error">Interaction with trakt failed</string>
     <string name="trakt_decryptfail">password could not be decrypted</string>
     <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
@@ -314,12 +313,11 @@
     <string name="trakt_howto">To set up your devices:\n\n1. Connect or create your account below on every device.\n2. The first time, use the <b>Sync to trakt.tv</b> button to upload your existing shows.\n3. Add shows from trakt.tv by swiping to the <b>Library</b> tab in the <b>Add Show</b> screen.\n\nNow whenever SeriesGuide updates, your trakt.tv activity is downloaded to each device. This includes flagging episodes as watched or collected and check ins.</string>
 
     <!-- Welcome dialog -->
-    <string name="welcome_message">Get started</string>
     <string name="welcome_setuplanguage">Choose language</string>
     <string name="welcome_setuptrakt">Connect to trakt</string>
-    <string name="welcome_traktmessage">Access your trakt.tv library and friends activity with SeriesGuide:</string>
+    <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
     <string name="dismiss">Dismiss</string>
-    <string name="welcome_add_part1">To add shows to SeriesGuide tap</string>
+    <string name="welcome_add_part1">To get started tap</string>
     <string name="welcome_add_part2">in the action bar.</string>
 
     <string-array name="showfilter_list">
@@ -368,10 +366,11 @@
     <string name="imdb">IMDb</string>
     <string name="tvdb">TVDb</string>
     <string name="trakt">trakt.tv</string>
+    <string name="ontrakt">on trakt</string>
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">More polish\n\nFix show list items bleeding out, show info cut offs.\n\nOrphaned episodes are removed when updating.\n\nDisplay which show got checked in with GetGlue.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">More speed and fixes\n\nIn general faster updates, failing quicker.\n\nGetGlue check in comments allow non-A-to-Z characters.\n\nFixed various crashes reported via the Play store.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>

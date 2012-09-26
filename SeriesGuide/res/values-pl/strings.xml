@@ -241,12 +241,11 @@
   <string name="trakt_syncunseen">Dołącz znacznik nieoglądanych</string>
   <string name="trakt_howto_title">Konfiguruj synchronizację trakt.tv</string>
   <string name="trakt_howto">Aby skonfigurować urządzenia:\n\n1. Połącz lub utwórz poniżej konto dla każdego urządzenia.\n2. Użyj przycisku <b>Synchronizuj z trakt.tv</b>, aby wgrać zapisane seriale.\n3. Dodaj seriale z trakt.tv przez przesuwanie na kartę <b>Biblioteka</b> na ekranie <b>Dodaj serial</b>.\n\nTeraz każda aktualizacja wykonana przez SeriesGuide, aktywność trakt.tv zostanie wczytana na każdym urządzeniu. Obejmuje to również oznaczenie odcinków jako obejrzanych, skolekcjonowanych oraz zalogowanych.</string>
-  <string name="welcome_message">Pierwsze kroki</string>
   <string name="welcome_setuplanguage">Wybierz język</string>
   <string name="welcome_setuptrakt">Połącz z trakt</string>
-  <string name="welcome_traktmessage">Uzyskaj dostęp biblioteki i przyjaciół z trakt.tv w SeriesGuide:</string>
+  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
   <string name="dismiss">Zamknij</string>
-  <string name="welcome_add_part1">Naciśnij, aby dodać seriale</string>
+  <string name="welcome_add_part1">To get started tap</string>
   <string name="welcome_add_part2">w pasku akcji.</string>
   <string name="upcoming_show">Nadchodzi odcinek %s</string>
   <string name="upcoming_episodes">Nadchodzą nowe odcinki</string>

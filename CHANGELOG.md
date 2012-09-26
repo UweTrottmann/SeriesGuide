@@ -8,7 +8,26 @@ All dates are in the European Central timezone.
 Version 2.9 *(in development)*
 --------------------------------
 
+* FEATURE Basic lists, add shows, seasons or episodes to them. No syncing with trakt.tv, yet.
+* FEATURE Submit flagging whole seasons, shows and previously aired episodes to trakt.tv.
+* FEATURE Automatically back up show database every week on starting the app. File is named seriesdatabase_auto.db and stored in the backup folder (See Backup/Restore in settings).
+* TWEAK Refined UI design with more custom elements, layout unification.
+* TWEAK Sharing an episode now includes its IMDb page link, falls back to the show IMDb page if it does not exist.
+* FIX Multiple fixes for crashes reported via the Play store.
+
 ### Detailed changes:
+
+#### 2.9.5beta (2012-09-26)
+
+* TWEAK Use faster and light weight HttpURLConnection for data connections.
+* TWEAK Set smaller timeouts on connections.
+* TWEAK Simplified first run information.
+* FIX Updater was supposed to always update year old TVDb episodes, but did update everything. Now works as expected, therefore finishes updating faster.
+* FIX GetGlue check in comments now allow all characters, previously non-A-to-Z chars failed the check in.
+* FIX Crash when trying to load posters in lists view, also freshened up the progress layout for that a bit.
+* FIX Crash when flagging episodes and moving to different screen before update was done.
+* FIX Multiple fixes for crashes reported via the Play store.
+* FIX Respect theme setting in new UI, widget config screen.
 
 #### 2.9.4beta (2012-09-25)
 

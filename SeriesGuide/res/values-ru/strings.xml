@@ -241,12 +241,11 @@
   <string name="trakt_syncunseen">Включить непросмотренные метки</string>
   <string name="trakt_howto_title">Set up trakt.tv sync</string>
   <string name="trakt_howto">To set up your devices:\n\n1. Connect or create your account below on every device.\n2. The first time, use the <b>Sync to trakt.tv</b> button to upload your existing shows.\n3. Add shows from trakt.tv by swiping to the <b>Library</b> tab in the <b>Add Show</b> screen.\n\nNow whenever SeriesGuide updates, your trakt.tv activity is downloaded to each device. This includes flagging episodes as watched or collected and check ins.</string>
-  <string name="welcome_message">Начать работу</string>
   <string name="welcome_setuplanguage">Выбрать язык</string>
   <string name="welcome_setuptrakt">Подключить trakt.tv аккаунт</string>
-  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity with SeriesGuide:</string>
+  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
   <string name="dismiss">Отменить</string>
-  <string name="welcome_add_part1">Для добавления сериала в SeriesGuide нажмите</string>
+  <string name="welcome_add_part1">To get started tap</string>
   <string name="welcome_add_part2">в панели действий.</string>
   <string name="upcoming_show">%s выпущено</string>
   <string name="upcoming_episodes">Выходят новые эпизоды</string>

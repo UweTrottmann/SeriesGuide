@@ -240,13 +240,12 @@
   <string name="trakt_synctotrakt">Sync nach trakt.tv</string>
   <string name="trakt_syncunseen">Ungesehen-Markierungen mit einbeziehen</string>
   <string name="trakt_howto_title">trakt.tv Sync einrichten</string>
-  <string name="trakt_howto">To set up your devices:\n\n1. Connect or create your account below on every device.\n2. The first time, use the <b>Sync to trakt.tv</b> button to upload your existing shows.\n3. Add shows from trakt.tv by swiping to the <b>Library</b> tab in the <b>Add Show</b> screen.\n\nNow whenever SeriesGuide updates, your trakt.tv activity is downloaded to each device. This includes flagging episodes as watched or collected and check ins.</string>
-  <string name="welcome_message">Erste Schritte</string>
+  <string name="trakt_howto">Auf GetGlue in %s eingecheckt.</string>
   <string name="welcome_setuplanguage">Sprache auswählen</string>
   <string name="welcome_setuptrakt">Mit trakt verbinden</string>
-  <string name="welcome_traktmessage">Greifen Sie mit SeriesGuide auf Ihre trakt.tv Bibliothek und Aktivität von Freunden zu:</string>
+  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
   <string name="dismiss">Schließen</string>
-  <string name="welcome_add_part1">Um Serien zu SeriesGuide hinzuzufügen, tippe</string>
+  <string name="welcome_add_part1">To get started tap</string>
   <string name="welcome_add_part2">in der Action-Bar.</string>
   <string name="upcoming_show">In Kürze läuft %s</string>
   <string name="upcoming_episodes">Neue Folgen laufen in Kürze</string>
