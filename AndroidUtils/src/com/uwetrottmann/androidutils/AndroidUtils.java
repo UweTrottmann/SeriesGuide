@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.channels.FileChannel;
 
 public class AndroidUtils {
@@ -191,6 +192,23 @@ public class AndroidUtils {
         final DefaultHttpClient client = new DefaultHttpClient(params);
 
         return client;
+    }
+
+    /**
+     * Returns an {@link InputStream} using {@link HttpURLConnection} to connect
+     * to the given URL.
+     */
+    public static InputStream downloadUrl(String urlString) throws IOException {
+        AndroidUtils.disableConnectionReuseIfNecessary();
+        URL url = new URL(urlString);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setReadTimeout(10000 /* milliseconds */);
+        conn.setConnectTimeout(15000 /* milliseconds */);
+        conn.setDoInput(true);
+
+        conn.connect();
+        InputStream stream = conn.getInputStream();
+        return stream;
     }
 
     /**
