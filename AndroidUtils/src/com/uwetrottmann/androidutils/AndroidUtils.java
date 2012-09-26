@@ -37,6 +37,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.nio.channels.FileChannel;
 
 public class AndroidUtils {
@@ -190,5 +191,18 @@ public class AndroidUtils {
         final DefaultHttpClient client = new DefaultHttpClient(params);
 
         return client;
+    }
+
+    /**
+     * Prior to Android 2.2 (Froyo), {@link HttpURLConnection} had some
+     * frustrating bugs. In particular, calling close() on a readable
+     * InputStream could poison the connection pool. Work around this by
+     * disabling connection pooling.
+     */
+    public static void disableConnectionReuseIfNecessary() {
+        // HTTP connection reuse which was buggy pre-froyo
+        if (!isFroyoOrHigher()) {
+            System.setProperty("http.keepAlive", "false");
+        }
     }
 }
