@@ -64,7 +64,7 @@ public class GetGlueAuthActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        requestWindowFeature(Window.FEATURE_PROGRESS);
 
         mWebview = new WebView(this);
         setContentView(mWebview);
@@ -73,13 +73,15 @@ public class GetGlueAuthActivity extends BaseActivity {
         actionBar.setTitle(getString(R.string.oauthmessage));
         actionBar.setDisplayShowTitleEnabled(true);
 
+        setSupportProgressBarVisibility(true);
+
         final SherlockFragmentActivity activity = this;
         mWebview.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 /*
                  * Activities and WebViews measure progress with different
                  * scales. The progress meter will automatically disappear when
-                 * we reach 100%
+                 * we reach 100%.
                  */
                 activity.setSupportProgress(progress * 1000);
             }
