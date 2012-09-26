@@ -38,8 +38,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.SoftReference;
 import java.lang.ref.WeakReference;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.concurrent.ConcurrentHashMap;
@@ -187,15 +185,7 @@ public class ImageDownloader {
         // if loading from disk fails, download it
         InputStream inputStream = null;
         try {
-            AndroidUtils.disableConnectionReuseIfNecessary();
-            URL url = new URL(urlString);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
-            conn.setDoInput(true);
-
-            conn.connect();
-            inputStream = conn.getInputStream();
+            inputStream = AndroidUtils.downloadUrl(urlString);
 
             // return BitmapFactory.decodeStream(inputStream);
             // Bug on slow connections, fixed in future release.
