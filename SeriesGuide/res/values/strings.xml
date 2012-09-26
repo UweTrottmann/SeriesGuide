@@ -370,7 +370,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">More polish\n\nFix show list items bleeding out, show info cut offs.\n\nOrphaned episodes are removed when updating.\n\nDisplay which show got checked in with GetGlue.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">More speed and fixes\n\nIn general faster updates, failing quicker.\n\nGetGlue check in comments allow non-A-to-Z characters.\n\nFixed various crashes reported via the Play store.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
