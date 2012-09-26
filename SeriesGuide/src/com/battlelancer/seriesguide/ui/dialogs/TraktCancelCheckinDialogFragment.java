@@ -120,7 +120,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                         if (r.status.equalsIgnoreCase(TraktStatus.SUCCESS)) {
                             // all good
                             Toast.makeText(context,
-                                    context.getString(R.string.trakt_success) + ": " + r.message,
+                                    r.message + " " + context.getString(R.string.ontrakt),
                                     Toast.LENGTH_SHORT).show();
 
                             // relaunch the trakt task which called us to

@@ -292,7 +292,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
                 // all good
                 Toast.makeText(mContext,
-                        mContext.getString(R.string.trakt_success) + ": " + r.message,
+                        r.message + " " + mContext.getString(R.string.ontrakt),
                         Toast.LENGTH_SHORT).show();
 
                 if (mListener != null) {
