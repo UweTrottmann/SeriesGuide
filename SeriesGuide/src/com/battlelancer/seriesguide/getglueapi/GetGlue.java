@@ -32,22 +32,17 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
 import oauth.signpost.OAuthConsumer;
-import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
+import oauth.signpost.basic.DefaultOAuthConsumer;
 import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.net.HttpURLConnection;
 import java.util.List;
 
 public class GetGlue {
@@ -62,7 +57,7 @@ public class GetGlue {
 
     public static final String ACCESS_URL = "https://api.getglue.com/oauth/access_token";
 
-    public static final String AUTHORIZE_URL = "http://getglue.com/oauth/authorize?style=mobile";
+    public static final String AUTHORIZE_URL = "http://o.getglue.com/oauth/authorize?style=mobile";
 
     public static final String OAUTH_CALLBACK_SCHEME = "sgoauth";
 
@@ -116,30 +111,25 @@ public class GetGlue {
             if (!AndroidUtils.isNetworkConnected(mContext)) {
                 return CHECKIN_OFFLINE;
             }
+            
+            // Encode only whitespaces
+            mComment = mComment.replace(" ", "%20");
 
-            final Resources res = mContext.getResources();
-            try {
-                mComment = URLEncoder.encode(mComment, "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                Log.w(TAG, e);
-                mComment = e.getMessage();
-                return CHECKIN_FAILED;
-            }
             String url = GETGLUE_APIPATH_V2 + GETGLUE_CHECKIN_IMDBID + mImdbId + GETGLUE_SOURCE
                     + "&comment=" + mComment;
 
             // create a consumer object and configure it with the access
             // token and token secret obtained from the service provider
-            OAuthConsumer consumer = new CommonsHttpOAuthConsumer(
+            final Resources res = mContext.getResources();
+            OAuthConsumer consumer = new DefaultOAuthConsumer(
                     res.getString(R.string.getglue_consumer_key),
                     res.getString(R.string.getglue_consumer_secret));
             consumer.setTokenWithSecret(mPrefs.getString(OAUTH_TOKEN, ""),
                     mPrefs.getString(OAUTH_TOKEN_SECRET, ""));
 
-            HttpGet request = new HttpGet(url);
-            HttpClient httpClient = AndroidUtils.getHttpClient();
-
+            HttpURLConnection request = null;
             try {
+                request = AndroidUtils.buildHttpUrlConnection(url);
                 consumer.sign(request);
             } catch (OAuthMessageSignerException e) {
                 Utils.trackException(mContext, e);
@@ -153,18 +143,24 @@ public class GetGlue {
                 Utils.trackException(mContext, e);
                 Log.w(TAG, e);
                 return CHECKIN_FAILED;
+            } catch (IOException e) {
+                Utils.trackException(mContext, e);
+                Log.w(TAG, e);
+                return CHECKIN_FAILED;
             }
 
             // clear before potentially using in post
             mComment = "";
-            
-            try {
-                HttpResponse response = httpClient.execute(request);
-                GetGlueXmlParser getGlueXmlParser = new GetGlueXmlParser();
-                InputStream responseIn = response.getEntity().getContent();
 
-                int statuscode = response.getStatusLine().getStatusCode();
-                if (statuscode == HttpStatus.SC_OK) {
+            InputStream responseIn = null;
+            try {
+                request.connect();
+
+                GetGlueXmlParser getGlueXmlParser = new GetGlueXmlParser();
+                responseIn = request.getInputStream();
+
+                int statuscode = request.getResponseCode();
+                if (statuscode == HttpURLConnection.HTTP_OK) {
                     List<Interaction> interactions = getGlueXmlParser.parseInteractions(responseIn);
                     if (interactions.size() > 0) {
                         mComment = interactions.get(0).title;
@@ -188,6 +184,15 @@ public class GetGlue {
             } catch (XmlPullParserException e) {
                 Utils.trackException(mContext, e);
                 Log.w(TAG, e);
+            } finally {
+                if (responseIn != null) {
+                    try {
+                        responseIn.close();
+                    } catch (IOException e) {
+                        Utils.trackException(mContext, e);
+                        Log.w(TAG, e);
+                    }
+                }
             }
 
             return CHECKIN_FAILED;
