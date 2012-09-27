@@ -230,7 +230,6 @@
   <string name="waitplease">A moment, please…</string>
   <string name="connect">الاتصال</string>
   <string name="disconnect">قطع الاتصال</string>
-  <string name="trakt_success">trakt action successful</string>
   <string name="trakt_error">فشل الاتصال مع موقع تراكت</string>
   <string name="trakt_decryptfail">لا يمكن فك تشفير كلمة المرور</string>
   <string name="trakt_generalerror">.حصل خطأ. الرجاء التحقق من اعتمادك ثم حاول مرة أخرى</string>

@@ -230,7 +230,6 @@
   <string name="waitplease">A moment, please…</string>
   <string name="connect">Povezati</string>
   <string name="disconnect">Disconnect</string>
-  <string name="trakt_success">trakt action successful</string>
   <string name="trakt_error">Komunikacija sa trakt.tv nije uspješna</string>
   <string name="trakt_decryptfail">lozinka nemože biti dešifrirana</string>
   <string name="trakt_generalerror">Nešto je pošlo po krivu. Molimo provjerite podatke i pokušajte ponovno.</string>

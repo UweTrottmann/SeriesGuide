@@ -230,7 +230,6 @@
   <string name="waitplease">Hetkinen, olkaa hyvä…</string>
   <string name="connect">Yhdistä</string>
   <string name="disconnect">Katkaise yhteys</string>
-  <string name="trakt_success">trakt-toiminta onnistui</string>
   <string name="trakt_error">Vuorovaikutus traktin kanssa epäonnistui</string>
   <string name="trakt_decryptfail">Salasanaa ei voitu purkaa</string>
   <string name="trakt_generalerror">Jokin meni pieleen. Tarkista käyttäjätietosi ja yritä uudelleen.</string>

@@ -230,7 +230,6 @@
   <string name="waitplease">A moment, please…</string>
   <string name="connect">Connect</string>
   <string name="disconnect">Disconnect</string>
-  <string name="trakt_success">trakt action successful</string>
   <string name="trakt_error">Свързването с trakt е неуспешно</string>
   <string name="trakt_decryptfail">паролата не може да се дешифрира</string>
   <string name="trakt_generalerror">Нещо се обърка. Моля проверете данните за достъп и опитайте отново.</string>

@@ -230,7 +230,6 @@
   <string name="waitplease">Prosím, chvíľku počkajte…</string>
   <string name="connect">Pripojiť</string>
   <string name="disconnect">Odpojiť</string>
-  <string name="trakt_success">Úspešná akcia traktu</string>
   <string name="trakt_error">Chyba v komunikácii s trakt.tv</string>
   <string name="trakt_decryptfail">Heslo nebolo možné dešifrovať</string>
   <string name="trakt_generalerror">Niečo sa pokazilo. Skontrolujte si prosím prihlasovacie údaje a skúste to znova.</string>

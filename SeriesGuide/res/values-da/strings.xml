@@ -230,7 +230,6 @@
   <string name="waitplease">A moment, please…</string>
   <string name="connect">Connect</string>
   <string name="disconnect">Disconnect</string>
-  <string name="trakt_success">trakt action successful</string>
   <string name="trakt_error">Kommunikation med trakt mislykkedes</string>
   <string name="trakt_decryptfail">Adgangskoden kunne ikke dekrypteres</string>
   <string name="trakt_generalerror">Noget gik galt. Tjek dit login-info og prøv igen.</string>

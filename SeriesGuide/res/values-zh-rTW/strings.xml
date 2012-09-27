@@ -230,7 +230,6 @@
   <string name="waitplease">A moment, please…</string>
   <string name="connect">Connect</string>
   <string name="disconnect">Disconnect</string>
-  <string name="trakt_success">trakt action successful</string>
   <string name="trakt_error">與trakt的互動失敗</string>
   <string name="trakt_decryptfail">無法解密密碼</string>
   <string name="trakt_generalerror">發生錯誤。請檢查您的憑證並再試一次。</string>

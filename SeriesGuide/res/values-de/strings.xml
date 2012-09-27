@@ -213,7 +213,7 @@
   <string name="checkin_empty">Keine passenden Serien</string>
   <string name="checkin_hint">Geben Sie eine Nachricht ein (optional)</string>
   <string name="paste_episode">Folge einfügen</string>
-  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
+  <string name="checkinsuccess">Auf GetGlue in %s eingecheckt.</string>
   <string name="checkinfailed">GetGlue-Einchecken fehlgeschlagen. Versuchen Sie GetGlue zu trennen.</string>
   <string name="getglue_authfailed">GetGlue-Authentifizierung fehlgeschlagen. Versuchen Sie es später erneut.</string>
   <string name="menu_rate_trakt">Bewerten (trakt)</string>
@@ -230,7 +230,6 @@
   <string name="waitplease">Einen Augenblick, bitte…</string>
   <string name="connect">Verbinden</string>
   <string name="disconnect">Trennen</string>
-  <string name="trakt_success">trakt-Aktion erfolgreich</string>
   <string name="trakt_error">Interaktion mit trakt ist fehlgeschlagen</string>
   <string name="trakt_decryptfail">Kennwort konnte nicht entschlüsselt werden</string>
   <string name="trakt_generalerror">Etwas ist schief gelaufen. Bitte überprüfen Sie Ihre Anmeldeinformationen und versuchen Sie es erneut.</string>
@@ -243,9 +242,9 @@
   <string name="trakt_howto">Auf GetGlue in %s eingecheckt.</string>
   <string name="welcome_setuplanguage">Sprache auswählen</string>
   <string name="welcome_setuptrakt">Mit trakt verbinden</string>
-  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
+  <string name="welcome_traktmessage">Zugriff auf Ihre trakt.tv-Bibliothek und Aktivität von Freunden</string>
   <string name="dismiss">Schließen</string>
-  <string name="welcome_add_part1">To get started tap</string>
+  <string name="welcome_add_part1">Um loszulegen tippen Sie</string>
   <string name="welcome_add_part2">in der Action-Bar.</string>
   <string name="upcoming_show">In Kürze läuft %s</string>
   <string name="upcoming_episodes">Neue Folgen laufen in Kürze</string>

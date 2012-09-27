@@ -230,7 +230,6 @@
   <string name="waitplease">Bir dakika lütfen...</string>
   <string name="connect">Bağlan</string>
   <string name="disconnect">Bağlantıyı Kes</string>
-  <string name="trakt_success">trakt eylemi başarılı</string>
   <string name="trakt_error">Trakt etkileşimi başarısız oldu</string>
   <string name="trakt_decryptfail">parola şifresi çözülemedi</string>
   <string name="trakt_generalerror">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>

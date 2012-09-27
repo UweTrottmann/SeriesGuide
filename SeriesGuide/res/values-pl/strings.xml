@@ -230,7 +230,6 @@
   <string name="waitplease">Proszę czekać…</string>
   <string name="connect">Połącz</string>
   <string name="disconnect">Rozłącz</string>
-  <string name="trakt_success">Działanie na trakt zakończone</string>
   <string name="trakt_error">Komunikacja z trakt.tv zakończona niepowodzeniem</string>
   <string name="trakt_decryptfail">Nie można odszyfrować hasła</string>
   <string name="trakt_generalerror">Coś poszło nie tak. Prosimy o sprawdzenie poświadczeń i ponowną próbę.</string>

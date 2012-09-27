@@ -230,7 +230,6 @@
   <string name="waitplease">Um momento, por favor…</string>
   <string name="connect">Conectar</string>
   <string name="disconnect">Desconectar</string>
-  <string name="trakt_success">Ação trakt com sucesso</string>
   <string name="trakt_error">Interação com o trakt falhou</string>
   <string name="trakt_decryptfail">senha não pôde ser descriptografada</string>
   <string name="trakt_generalerror">Algo deu errado. Por favor, verifique suas credenciais e tente novamente.</string>
