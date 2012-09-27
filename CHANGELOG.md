@@ -5,7 +5,7 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 2.9 *(in development)*
+Version 2.9 *(2012-09-27)*
 --------------------------------
 
 * FEATURE Basic lists, add shows, seasons or episodes to them. No syncing with trakt.tv, yet.
