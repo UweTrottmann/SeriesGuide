@@ -230,7 +230,6 @@
   <string name="waitplease">Een ogenblok geduld a.u.b.…</string>
   <string name="connect">Verbinden</string>
   <string name="disconnect">Verbreken</string>
-  <string name="trakt_success">trakt actie succesvol</string>
   <string name="trakt_error">Communicatie met trakt is mislukt</string>
   <string name="trakt_decryptfail">wachtwoord kon niet worden gedecodeerd</string>
   <string name="trakt_generalerror">Er ging iets fout. Controleer uw referenties en probeer het opnieuw.</string>

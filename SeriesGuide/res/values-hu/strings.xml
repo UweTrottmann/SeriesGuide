@@ -230,7 +230,6 @@
   <string name="waitplease">Kis türelmet…</string>
   <string name="connect">Kapcsolódás</string>
   <string name="disconnect">Disconnect</string>
-  <string name="trakt_success">trakt action successful</string>
   <string name="trakt_error">trakt.tv kapcsolódási hiba</string>
   <string name="trakt_decryptfail">jelszó dekódolása nem sikerült</string>
   <string name="trakt_generalerror">Hiba történt. Ellenőrizd a bejelentkezési adataid és próbáld újra!</string>

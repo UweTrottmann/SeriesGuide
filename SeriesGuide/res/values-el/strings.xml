@@ -230,7 +230,6 @@
   <string name="waitplease">Μια στιγμή, παρακαλώ…</string>
   <string name="connect">Σύνδεση</string>
   <string name="disconnect">Αποσύνδεση</string>
-  <string name="trakt_success">Επιτυχής ενέργεια trakt</string>
   <string name="trakt_error">Αλληλεπίδραση με Trakt απέτυχε</string>
   <string name="trakt_decryptfail">Ο κωδικός πρόσβασης δεν μπορούσε να αποκρυπτογραφηθεί</string>
   <string name="trakt_generalerror">Κάτι δεν πήγε καλά. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>

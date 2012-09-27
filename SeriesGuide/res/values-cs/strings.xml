@@ -230,7 +230,6 @@
   <string name="waitplease">Chvilku strpení…</string>
   <string name="connect">Připojit</string>
   <string name="disconnect">Odpojit</string>
-  <string name="trakt_success">Úspěšná akce traktu</string>
   <string name="trakt_error">Chyba v komunikaci s traktem</string>
   <string name="trakt_decryptfail">Heslo nelze dešifrovat.</string>
   <string name="trakt_generalerror">Něco je špatně. Zkontrolujte si prosím přihlašovací údaje a zkuste to znovu.</string>

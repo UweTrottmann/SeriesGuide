@@ -230,7 +230,6 @@
   <string name="waitplease">Ett ögonblick…</string>
   <string name="connect">Anslut</string>
   <string name="disconnect">Koppla ner</string>
-  <string name="trakt_success">trakt action successful</string>
   <string name="trakt_error">Interaktion med trakt misslyckades</string>
   <string name="trakt_decryptfail">lösenordet kunde inte avkrypteras</string>
   <string name="trakt_generalerror">Någonting gick fel. Kontrollera dina uppgifter och försök igen.</string>

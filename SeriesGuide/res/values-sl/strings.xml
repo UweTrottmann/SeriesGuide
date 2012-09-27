@@ -230,7 +230,6 @@
   <string name="waitplease">A moment, please…</string>
   <string name="connect">Connect</string>
   <string name="disconnect">Disconnect</string>
-  <string name="trakt_success">trakt action successful</string>
   <string name="trakt_error">Interaction with trakt failed</string>
   <string name="trakt_decryptfail">password could not be decrypted</string>
   <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>

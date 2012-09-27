@@ -230,7 +230,6 @@
   <string name="waitplease">Пожалуйста, подождите…</string>
   <string name="connect">Подключиться</string>
   <string name="disconnect">Отключить</string>
-  <string name="trakt_success">Действия на trakt  выполнены</string>
   <string name="trakt_error">Связь с trakt не удалась</string>
   <string name="trakt_decryptfail">не удалось расшифровать пароль</string>
   <string name="trakt_generalerror">Что-то пошло не так. Пожалуйста, проверьте ваши данные и повторите попытку.</string>
