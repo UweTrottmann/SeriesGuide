@@ -261,7 +261,7 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.seriesguide_menu, menu);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
