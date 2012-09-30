@@ -33,7 +33,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -434,10 +433,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         final View overviewContainer = getView().findViewById(R.id.overview_container);
         if (overviewContainer.getVisibility() == View.GONE) {
             final View progressContainer = getView().findViewById(R.id.progress_container);
-            progressContainer.startAnimation(AnimationUtils.loadAnimation(context,
-                    android.R.anim.fade_out));
-            overviewContainer.startAnimation(AnimationUtils.loadAnimation(context,
-                    android.R.anim.fade_in));
             progressContainer.setVisibility(View.GONE);
             overviewContainer.setVisibility(View.VISIBLE);
         }
