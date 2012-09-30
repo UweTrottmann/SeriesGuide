@@ -616,7 +616,7 @@ public class DBUtils {
             // special 0
             season = "-1";
             number = "-1";
-            airtime = "0";
+            airtime = String.valueOf(Long.MIN_VALUE);
         }
         if (watched != null) {
             watched.close();
