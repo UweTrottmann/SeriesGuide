@@ -126,7 +126,7 @@ public class SeasonsFragment extends SherlockListFragment implements
     public void onResume() {
         super.onResume();
         updatePreferences();
-        updateUnwatchedCounts(false);
+        updateUnwatchedCounts();
     }
 
     @Override
@@ -342,8 +342,8 @@ public class SeasonsFragment extends SherlockListFragment implements
      * Update unwatched stats for all seasons of this fragments show. Requeries
      * the list afterwards.
      */
-    protected void updateUnwatchedCounts(boolean updateOverview) {
-        Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()), updateOverview);
+    protected void updateUnwatchedCounts() {
+        Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()));
         t.start();
     }
 
@@ -352,16 +352,13 @@ public class SeasonsFragment extends SherlockListFragment implements
 
         private String mShowId;
 
-        private boolean mUpdateOverview;
-
-        public UpdateUnwatchThread(String showId, String seasonid, boolean updateOverview) {
-            this(showId, updateOverview);
+        public UpdateUnwatchThread(String showId, String seasonid) {
+            this(showId);
             mSeasonId = seasonid;
         }
 
-        public UpdateUnwatchThread(String showId, boolean updateOverview) {
+        public UpdateUnwatchThread(String showId) {
             mShowId = showId;
-            mUpdateOverview = updateOverview;
             this.setName("UpdateWatchStatsThread");
         }
 
@@ -393,14 +390,6 @@ public class SeasonsFragment extends SherlockListFragment implements
             }
 
             notifyContentProvider(context);
-
-            if (mUpdateOverview) {
-                OverviewFragment overview = (OverviewFragment) context.getSupportFragmentManager()
-                        .findFragmentById(R.id.fragment_overview);
-                if (overview != null) {
-                    overview.onLoadEpisode();
-                }
-            }
         }
 
         private void notifyContentProvider(final FragmentActivity context) {
@@ -490,11 +479,11 @@ public class SeasonsFragment extends SherlockListFragment implements
             switch (action) {
                 case SEASON_WATCHED:
                     Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()),
-                            String.valueOf(itemId), true);
+                            String.valueOf(itemId));
                     t.start();
                     break;
                 default:
-                    updateUnwatchedCounts(true);
+                    updateUnwatchedCounts();
                     break;
             }
         }
