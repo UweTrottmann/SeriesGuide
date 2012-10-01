@@ -598,11 +598,11 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         getSherlockActivity().invalidateOptionsMenu();
 
         // animate view into visibility
-        final View overviewContainer = getView().findViewById(R.id.overview_container);
-        if (overviewContainer.getVisibility() == View.GONE) {
+        final View contentContainer = getView().findViewById(R.id.content_container);
+        if (contentContainer.getVisibility() == View.GONE) {
             final View progressContainer = getView().findViewById(R.id.progress_container);
             progressContainer.setVisibility(View.GONE);
-            overviewContainer.setVisibility(View.VISIBLE);
+            contentContainer.setVisibility(View.VISIBLE);
         }
 
     }

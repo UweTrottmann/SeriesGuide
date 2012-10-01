@@ -12,12 +12,6 @@
         android:scaleType="centerCrop" >
     </ImageView>
 
-    <include
-        android:id="@+id/progress_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        layout="@layout/progress_container" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -27,8 +21,7 @@
             style="@style/ScrollingLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone" >
+            android:orientation="vertical" >
 
             <RelativeLayout
                 android:id="@+id/showinfo"
@@ -72,55 +65,69 @@
 
             <include layout="@layout/gotoseasons" />
 
-            <RelativeLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
-                <TextView
-                    android:id="@+id/episodeTitle"
+                <include
+                    android:id="@+id/progress_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="48dp"
+                    layout="@layout/progress_container" />
+
+                <RelativeLayout
+                    android:id="@+id/content_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding"
-                    android:layout_marginTop="@dimen/default_padding"
-                    android:textAppearance="@style/TextAppearance.XLarge.Light" />
+                    android:visibility="gone" >
 
-                <TextView
-                    android:id="@+id/episodeTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/episodeTitle"
-                    android:layout_marginLeft="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding"
-                    android:textAppearance="@style/TextAppearance.Small.Primary" />
-
-                <TextView
-                    android:id="@+id/episodeInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/episodeTitle"
-                    android:layout_marginBottom="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding"
-                    android:layout_toRightOf="@+id/episodeTime"
-                    android:textAppearance="@style/TextAppearance.Small" />
-
-                <LinearLayout
-                    android:id="@+id/episodemeta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/episodeInfo"
-                    android:orientation="vertical" >
-
-                    <include
+                    <TextView
+                        android:id="@+id/episodeTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/default_padding"
-                        layout="@layout/imagecontainer" />
+                        android:layout_marginLeft="@dimen/default_padding"
+                        android:layout_marginRight="@dimen/default_padding"
+                        android:layout_marginTop="@dimen/default_padding"
+                        android:textAppearance="@style/TextAppearance.XLarge.Light" />
 
-                    <include layout="@layout/overview_episode_meta" >
-                    </include>
-                </LinearLayout>
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/episodeTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/episodeTitle"
+                        android:layout_marginLeft="@dimen/default_padding"
+                        android:layout_marginRight="@dimen/default_padding"
+                        android:textAppearance="@style/TextAppearance.Small.Primary" />
+
+                    <TextView
+                        android:id="@+id/episodeInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/episodeTitle"
+                        android:layout_marginBottom="@dimen/default_padding"
+                        android:layout_marginRight="@dimen/default_padding"
+                        android:layout_toRightOf="@+id/episodeTime"
+                        android:textAppearance="@style/TextAppearance.Small" />
+
+                    <LinearLayout
+                        android:id="@+id/episodemeta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/episodeInfo"
+                        android:orientation="vertical" >
+
+                        <include
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/default_padding"
+                            layout="@layout/imagecontainer" />
+
+                        <include layout="@layout/overview_episode_meta" >
+                        </include>
+                    </LinearLayout>
+                </RelativeLayout>
+            </FrameLayout>
         </LinearLayout>
     </ScrollView>
 
