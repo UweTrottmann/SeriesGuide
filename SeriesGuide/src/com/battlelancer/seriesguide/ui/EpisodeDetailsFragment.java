@@ -455,7 +455,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             });
 
             // Calendar button
-            final String runtime = cursor.getString(DetailsQuery.SHOW_RUNTIME);
+            final int runtime = cursor.getInt(DetailsQuery.SHOW_RUNTIME);
             view.findViewById(R.id.calendarButton).setOnClickListener(
                     new OnClickListener() {
                         @Override

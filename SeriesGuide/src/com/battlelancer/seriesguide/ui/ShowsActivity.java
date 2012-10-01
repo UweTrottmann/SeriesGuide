@@ -132,11 +132,12 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         // try to restore previously set show filter
         int navSelection = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
 
+        mPager = (ViewPager) findViewById(R.id.pager);
+
         // set up action bar
         setUpActionBar(prefs, navSelection);
 
         // set up view pager
-        mPager = (ViewPager) findViewById(R.id.pager);
         onChangePagerAdapter(navSelection);
 
         mIndicator = (TabPageIndicator) findViewById(R.id.indicator);
@@ -149,15 +150,12 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
             }
         });
         onDisplayTitleIndicator(navSelection);
-
-        // FIXME force the options menu to be shown
-        // invalidateOptionsMenu();
     }
 
-    private void setUpActionBar(final SharedPreferences prefs, int navSelection) {
+    private void setUpActionBar(final SharedPreferences prefs, final int navSelection) {
         mIsLoaderStartAllowed = false;
 
-        ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
 
         /* setup navigation */
@@ -178,7 +176,13 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
             actionBar.setListNavigationCallbacks(mActionBarList, handler);
         }
 
-        actionBar.setSelectedNavigationItem(navSelection);
+        mPager.post(new Runnable() {
+            @Override
+            public void run() {
+                // defer setting
+                actionBar.setSelectedNavigationItem(navSelection);
+            }
+        });
 
         // prevent the onNavigationItemSelected listener from reacting
         mIsLoaderStartAllowed = true;
@@ -260,7 +264,7 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.seriesguide_menu, menu);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override

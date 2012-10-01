@@ -146,7 +146,7 @@ public class ShareUtils {
     }
 
     public static void onAddCalendarEvent(Context context, String title, String description,
-            long airtime, String runtime) {
+            long airtime, int runtime) {
         Intent intent = new Intent(Intent.ACTION_EDIT);
         intent.setType("vnd.android.cursor.item/event");
         intent.putExtra("title", title);
@@ -158,7 +158,7 @@ public class ShareUtils {
         Calendar cal = Utils.getAirtimeCalendar(airtime, prefs);
 
         long startTime = cal.getTimeInMillis();
-        long endTime = startTime + Long.valueOf(runtime) * DateUtils.MINUTE_IN_MILLIS;
+        long endTime = startTime + runtime * DateUtils.MINUTE_IN_MILLIS;
         intent.putExtra("beginTime", startTime);
         intent.putExtra("endTime", endTime);
 

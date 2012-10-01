@@ -1,15 +1,11 @@
-SeriesGuide as you know and love, with the bonus of supporting future development, more list widget options and notifications for favorite shows!
+SeriesGuide X adds more list widget options and notifications for favorited shows.
 
-If you want to support future development consider installing SeriesGuide X instead.
+To support future development consider buying SeriesGuide X.
 
-Manage the progress of (re-)watching your favorite TV shows. Keep track of unseen episodes and share what you are watching with trakt.tv, GetGlue or any supported Android app like Google+, Twitter and Facebook.
+Manage the progress of (re-)watching your favorite TV shows. See what is coming up, keep track of what to watch next. Check in with trakt.tv or GetGlue. Share episodes with your friends or the world.
 
-NOTE: Show and airtime information is United States (Pacific Time) based due to limitations of the data source (thetvdb.com).
+NOTE: Information is United States (Pacific time) based. You can't watch episodes.
 
-- No sign-in (optional: trakt.tv).
-- Offline support. (Internet connection may be required for adding or updating shows, downloading episode images, sharing).
-- 'Backup/Restore' in Settings.
-- Upcoming episodes widget.
-- trakt.tv support (Check In, Rate, Friends activity, Sync...).
-- GetGlue Check In support.
-- Share episodes via Android apps (Email, Facebook, Twitter, ...).
+No sign-in required.
+
+Offline support (Internet connection may be required for adding or updating shows, downloading episode images, sharing).

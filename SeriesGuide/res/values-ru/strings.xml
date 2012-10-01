@@ -47,7 +47,7 @@
   <string name="show_actors">Актеры</string>
   <string name="show_firstaired">Первый эфир</string>
   <string name="show_genres">Жанры</string>
-  <string name="show_runtime">Runtime</string>
+  <string name="show_runtime">Показ</string>
   <string name="show_contentrating">Оценка содержимого</string>
   <string name="episode_directors">Режиссеры</string>
   <string name="episode_gueststars">Приглашенные звезды</string>
@@ -55,7 +55,7 @@
   <string name="show_airtimeunit">мин</string>
   <string name="show_isalive">Продолжение</string>
   <string name="show_isnotalive">Закончился</string>
-  <string name="lastEdit">Last Edit // TVDb</string>
+  <string name="lastEdit">Последние изменения / / TVDb</string>
   <string name="sort">Сортировать по</string>
   <string name="updateall_yes">Обновить (все)</string>
   <string name="menu_update_delta">Обновить (только устаревшие)</string>
@@ -140,14 +140,14 @@
   <string name="library">Библиотека</string>
   <string name="powered_by_thetvdb">Сделано наhetvdb.com</string>
   <string name="powered_by_trakt">Сделано на trakt.tv</string>
-  <string name="first_list">Favorites</string>
-  <string name="list_add">Add list</string>
-  <string name="list_title_hint">Name your list</string>
-  <string name="list_remove">Remove list</string>
-  <string name="list_manage">Manage list</string>
-  <string name="list_item_manage">Manage lists</string>
-  <string name="list_item_remove">Remove from list</string>
-  <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
+  <string name="first_list">Любимые</string>
+  <string name="list_add">Добавить список</string>
+  <string name="list_title_hint">Назвать список</string>
+  <string name="list_remove">Удалить список</string>
+  <string name="list_manage">Редактировать список</string>
+  <string name="list_item_manage">Редактировать списки</string>
+  <string name="list_item_remove">Удалить из списка</string>
+  <string name="list_empty">Сериалы, сезоны или эпизоды можно добавить в этот список.</string>
   <string name="prefs_category_basic">Основные</string>
   <string name="prefs_category_sharing">Поделиться</string>
   <string name="prefs_category_advanced">Дополнительные</string>
@@ -156,7 +156,7 @@
   <string name="preferences">Настройки</string>
   <string name="pref_showsorting">Сортировка сериалов по</string>
   <string name="pref_onlyfuture">Без показанных эпизодов</string>
-  <string name="pref_onlyfuturesummary">Never display already aired episodes</string>
+  <string name="pref_onlyfuturesummary">Никогда не показывать транслируемые эпизоды</string>
   <string name="pref_onlyseasoneps">Скрыть особые эпизоды</string>
   <string name="pref_onlyseasonepssummary">Особые Эпизоды исчезают везде за исключением списка сезона</string>
   <string name="pref_seasonsorting">Сортировка сезонов по</string>
@@ -173,7 +173,7 @@
   <string name="about">О SeriesGuide</string>
   <string name="pref_credits">Создатели</string>
   <string name="clearGetGlueCredentials">Отключить GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Check In with GetGlue to reconnect</string>
+  <string name="clearGetGlueCredentialssummary">Проверьте GetGlue после переподключения</string>
   <string name="pref_trakt">учетные данные trakt.tv</string>
   <string name="pref_traktsummary">Добавить или изменить учетные данные trakt.tv</string>
   <string name="pref_traktsync">Синхронизировать с trakt.tv</string>
@@ -197,7 +197,7 @@
   <string name="import_failed_nosd">Не могу восстановить резервную копию. Папка резервного копирования не доступен.</string>
   <string name="import_failed_nofile">Отсутствует файл резервной копии.</string>
   <string name="import_failed_noread">Невозможно прочитать файл резервной копии.</string>
-  <string name="dbupgradefailed">Your backup may be too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
+  <string name="dbupgradefailed">Резервная копия слишком старая или пустая. Примечание: Сначала импортируйте pre-2.0 резервные копии в 1.9.x версии.</string>
   <string name="import_success">Резервное копирование успешно восстановлено.</string>
   <string name="import_failed">Восстановление резервной копии не удалось.</string>
   <string name="backup_button">Резервное копирование</string>
@@ -213,7 +213,7 @@
   <string name="checkin_empty">Сериалы не найдены</string>
   <string name="checkin_hint">Введите сообщение (необязательно)</string>
   <string name="paste_episode">Вставить эпизод</string>
-  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
+  <string name="checkinsuccess">Отметил на %s GetGlue.</string>
   <string name="checkinfailed">Регистрация в GetGlue не удалось. Попробуйте отключить GetGlue.</string>
   <string name="getglue_authfailed">Ошибка аутентификации GetGlue. Повторите попытку позже.</string>
   <string name="menu_rate_trakt">Рейтинг (trakt)</string>
@@ -238,17 +238,17 @@
   <string name="trakt_synctodevice">Синхронизация с SeriesGuide</string>
   <string name="trakt_synctotrakt">Синхронизировать с trakt.tv</string>
   <string name="trakt_syncunseen">Включить непросмотренные метки</string>
-  <string name="trakt_howto_title">Set up trakt.tv sync</string>
+  <string name="trakt_howto_title">Настроить синхронизацию trakt.tv</string>
   <string name="trakt_howto">To set up your devices:\n\n1. Connect or create your account below on every device.\n2. The first time, use the <b>Sync to trakt.tv</b> button to upload your existing shows.\n3. Add shows from trakt.tv by swiping to the <b>Library</b> tab in the <b>Add Show</b> screen.\n\nNow whenever SeriesGuide updates, your trakt.tv activity is downloaded to each device. This includes flagging episodes as watched or collected and check ins.</string>
   <string name="welcome_setuplanguage">Выбрать язык</string>
   <string name="welcome_setuptrakt">Подключить trakt.tv аккаунт</string>
-  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
+  <string name="welcome_traktmessage">Доступ к вашей активности и активности друзей в trakt.tv</string>
   <string name="dismiss">Отменить</string>
-  <string name="welcome_add_part1">To get started tap</string>
+  <string name="welcome_add_part1">Для начала нажмите</string>
   <string name="welcome_add_part2">в панели действий.</string>
   <string name="upcoming_show">%s выпущено</string>
   <string name="upcoming_episodes">Выходят новые эпизоды</string>
-  <string name="upcoming_show_detailed">%1$s on %2$s</string>
+  <string name="upcoming_show_detailed">%1$s на %2$s</string>
   <string name="upcoming_display">Выберите, чтобы показать предстоящие передачи</string>
   <string name="pref_notifications">Уведомления</string>
   <string name="pref_notificationssummary">Уведомлять о трансляции избранных сериалов</string>
@@ -264,7 +264,7 @@
   <string name="bigwidget">SeriesGuide (средний)</string>
   <string name="largewidget">SeriesGuide (большой)</string>
   <string name="download_stable">Скачать SeriesGuide</string>
-  <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
+  <string name="betawarning"><b>Посмотрите!</b> Этот релиз предназначен для бета-тестеров только! Если вы сомневаетесь Скачайте стабильную версию ниже.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Следующий эпизод</item>
@@ -297,7 +297,7 @@
     <item>Избранное</item>
     <item>Не просмотренные/предстоящие</item>
     <item>Скрытые</item>
-    <item>Lists</item>
+    <item>Списки</item>
   </string-array>
   <string-array name="themeSelection">
     <item>SeriesGuide тема</item>

@@ -208,12 +208,12 @@
   <string name="import_question">Bieżąca lista seriali zostanie utracona! Upewnij się, że plik kopii zapasowej jest we wskazanym folderze.</string>
   <string name="import_yes">Przywróć</string>
   <string name="import_no">Nie przywracaj</string>
-  <string name="checkin">Podłącz się</string>
+  <string name="checkin">Podepnij się</string>
   <string name="checkin_searchhint">Wpisz nazwę serialu</string>
   <string name="checkin_empty">Brak odcinków</string>
   <string name="checkin_hint">Wpisz wiadomość (opcjonalnie)</string>
   <string name="paste_episode">Wklej odcinek</string>
-  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
+  <string name="checkinsuccess">Podpięty do %s na GetGlue.</string>
   <string name="checkinfailed">Podpięcie do GetGlue nie powiodło się. Spróbuj odłączyć GetGlue.</string>
   <string name="getglue_authfailed">Uwierzytelnianie GetGlue nie powiodło się. Spróbuj ponownie później.</string>
   <string name="menu_rate_trakt">Oceń (trakt)</string>
@@ -242,9 +242,9 @@
   <string name="trakt_howto">Aby skonfigurować urządzenia:\n\n1. Połącz lub utwórz poniżej konto dla każdego urządzenia.\n2. Użyj przycisku <b>Synchronizuj z trakt.tv</b>, aby wgrać zapisane seriale.\n3. Dodaj seriale z trakt.tv przez przesuwanie na kartę <b>Biblioteka</b> na ekranie <b>Dodaj serial</b>.\n\nTeraz każda aktualizacja wykonana przez SeriesGuide, aktywność trakt.tv zostanie wczytana na każdym urządzeniu. Obejmuje to również oznaczenie odcinków jako obejrzanych, skolekcjonowanych oraz zalogowanych.</string>
   <string name="welcome_setuplanguage">Wybierz język</string>
   <string name="welcome_setuptrakt">Połącz z trakt</string>
-  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
+  <string name="welcome_traktmessage">Uzyskaj dostęp do biblioteki trakt.tv i aktywności przyjaciół</string>
   <string name="dismiss">Zamknij</string>
-  <string name="welcome_add_part1">To get started tap</string>
+  <string name="welcome_add_part1">Naciśnij, aby rozpocząć</string>
   <string name="welcome_add_part2">w pasku akcji.</string>
   <string name="upcoming_show">Nadchodzi odcinek %s</string>
   <string name="upcoming_episodes">Nadchodzą nowe odcinki</string>

@@ -76,8 +76,8 @@
   <string name="trakt_submitsuccess">Envoyé à trakt.</string>
   <string name="trakt_seen">%s vu.</string>
   <string name="trakt_notseen">%s non vu.</string>
-  <string name="trakt_collected">%s rapatriées.</string>
-  <string name="trakt_notcollected">%s non rapatriées.</string>
+  <string name="trakt_collected">%s dans votre collection.</string>
+  <string name="trakt_notcollected">%s n\'est pas dans votre collection.</string>
   <string name="shows_empty">Pas de séries.</string>
   <string name="confirm_delete">Voulez-vous vraiment supprimer %s?</string>
   <string name="delete_show">Supprimer</string>
@@ -175,7 +175,7 @@
   <string name="clearGetGlueCredentials">Déconnecter GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Faites un Check in avec GetGlue pour le reconnecter</string>
   <string name="pref_trakt">Identifiants trakt.tv</string>
-  <string name="pref_traktsummary">Ajouter ou modifier vos informations d\'identification sur trakt.tv</string>
+  <string name="pref_traktsummary">Ajouter ou modifier vos identifiants sur trakt.tv</string>
   <string name="pref_traktsync">Synchroniser avec trakt.tv</string>
   <string name="feedback">Envoyez vos commentaires</string>
   <string name="clear_cache">Vider le cache d\'images</string>
@@ -244,7 +244,7 @@
   <string name="welcome_setuptrakt">Se connecter à trakt</string>
   <string name="welcome_traktmessage">Accédez à votre bibliothèque trakt.tv et à l\'activité de vos amis</string>
   <string name="dismiss">Passer</string>
-  <string name="welcome_add_part1">Pour commencer, touchez l\'écran</string>
+  <string name="welcome_add_part1">Pour commencer, appuyez sur</string>
   <string name="welcome_add_part2">dans la barre d\'action.</string>
   <string name="upcoming_show">%s arrive bientôt</string>
   <string name="upcoming_episodes">De nouveaux épisodes arrivent</string>

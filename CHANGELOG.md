@@ -5,6 +5,23 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 2.9.1/2.9.6beta *(2012-10-01)*
+--------------------------------
+
+* TWEAK Speed up overview, displaying show and seasons link right away.
+* FIX Next episode algorithm will show episodes before 1970.
+* FIX Action bar items sometimes disappear.
+
+### Detailed changes:
+
+#### 2.9.6beta (2012-10-01)
+
+* TWEAK Speed up overview by using loaders, displaying show and seasons link right away.
+* TWEAK Update season counters starting with latest season (previously oldest).
+* FIX Next episode algorithm will show episodes before 1970.
+* FIX Action bar items sometimes disappear.
+* INFO Latest translations from crowdin.
+
 Version 2.9 *(2012-09-27)*
 --------------------------------
 
