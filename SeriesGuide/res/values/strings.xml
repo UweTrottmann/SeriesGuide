@@ -370,7 +370,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">More speed and fixes\n\nIn general faster updates, failing quicker.\n\nGetGlue check in comments allow non-A-to-Z characters.\n\nFixed various crashes reported via the Play store.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">Thanks, a new SeriesGuide is out!\n\nOverview loads perceivably faster (not actually :).\n\nNext episodes can now be before 1970.\n\nAction bar items should not disappear anymore.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
