@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:clipToPadding="@bool/gridClipToPadding"
         android:divider="@drawable/divider_horizontal_holo_dark"
+        android:fastScrollEnabled="true"
         android:listSelector="?custom_list_selector" >
     </ListView>
 
