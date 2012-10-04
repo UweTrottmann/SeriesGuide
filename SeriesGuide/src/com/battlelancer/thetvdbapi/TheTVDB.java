@@ -698,9 +698,9 @@ public class TheTVDB {
             HttpURLConnection conn = AndroidUtils.buildHttpUrlConnection(url);
             conn.connect();
             long imageSize = conn.getContentLength();
-            // allow images up to 100K (although size is always around
-            // 30K)
-            if (imageSize > 100000) {
+            // allow images up to 300K (although size is always around
+            // 30K for posters and 100K for episode images)
+            if (imageSize > 300000) {
                 return null;
             } else {
                 inputStream = conn.getInputStream();
