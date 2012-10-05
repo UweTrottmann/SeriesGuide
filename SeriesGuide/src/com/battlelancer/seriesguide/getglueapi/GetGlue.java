@@ -57,7 +57,7 @@ public class GetGlue {
 
     public static final String ACCESS_URL = "https://api.getglue.com/oauth/access_token";
 
-    public static final String AUTHORIZE_URL = "http://o.getglue.com/oauth/authorize?style=mobile";
+    public static final String AUTHORIZE_URL = "http://getglue.com/oauth/authorize?style=mobile";
 
     public static final String OAUTH_CALLBACK_SCHEME = "sgoauth";
 
