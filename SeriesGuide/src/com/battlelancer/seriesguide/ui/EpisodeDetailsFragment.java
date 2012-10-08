@@ -368,6 +368,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     onToggleWatched();
                 }
             });
+            AndroidUtils.setInfoToast(context, seenButton, mWatched ? R.string.unmark_episode
+                    : R.string.mark_episode);
 
             // Collected button
             mCollected = cursor.getInt(DetailsQuery.COLLECTED) == 1 ? true : false;
@@ -381,6 +383,22 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     onToggleCollected();
                 }
             });
+            AndroidUtils.setInfoToast(context, collectedButton, mCollected ? R.string.uncollect
+                    : R.string.collect);
+
+            // Calendar button
+            final int runtime = cursor.getInt(DetailsQuery.SHOW_RUNTIME);
+            View calendarButton = view.findViewById(R.id.calendarButton);
+            calendarButton.setOnClickListener(
+                    new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            fireTrackerEvent("Add to calendar");
+                            ShareUtils.onAddCalendarEvent(getSherlockActivity(), showTitle,
+                                    episodeString, airTime, runtime);
+                        }
+                    });
+            AndroidUtils.setInfoToast(context, calendarButton, R.string.addtocalendar);
 
             // TVDb rating
             RelativeLayout rating = (RelativeLayout) view.findViewById(R.id.ratingbar);
@@ -454,17 +472,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 }
             });
 
-            // Calendar button
-            final int runtime = cursor.getInt(DetailsQuery.SHOW_RUNTIME);
-            view.findViewById(R.id.calendarButton).setOnClickListener(
-                    new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            fireTrackerEvent("Add to calendar");
-                            ShareUtils.onAddCalendarEvent(getSherlockActivity(), showTitle,
-                                    episodeString, airTime, runtime);
-                        }
-                    });
         }
     }
 
