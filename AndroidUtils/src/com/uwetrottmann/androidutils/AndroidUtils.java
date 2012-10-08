@@ -24,6 +24,10 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.view.Gravity;
+import android.view.View;
+import android.view.View.OnLongClickListener;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -212,5 +216,29 @@ public class AndroidUtils {
         if (!isFroyoOrHigher()) {
             System.setProperty("http.keepAlive", "false");
         }
+    }
+
+    /**
+     * Display an info toast on long clicking the given view, describing the
+     * functionality if the given view would have been clicked instead. It will
+     * be positioned just above the view (set your own listener if your view is
+     * at the very top of the window).
+     */
+    public static void setInfoToast(final Context context, View view, final int stringResource) {
+        view.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast infoToast = Toast.makeText(context, stringResource, Toast.LENGTH_SHORT);
+
+                // position toast near view
+                int[] location = new int[2];
+                v.getLocationOnScreen(location);
+                infoToast.setGravity(Gravity.TOP | Gravity.LEFT, location[0] - v.getWidth() / 2,
+                        location[1] - v.getHeight() - v.getHeight() / 2);
+
+                infoToast.show();
+                return true;
+            }
+        });
     }
 }

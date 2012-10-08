@@ -244,7 +244,7 @@
   <string name="welcome_setuptrakt">Conectar-se ao trakt</string>
   <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
   <string name="dismiss">Recusar</string>
-  <string name="welcome_add_part1">To get started tap</string>
+  <string name="welcome_add_part1">Para iniciar aperte</string>
   <string name="welcome_add_part2">na barra de ações.</string>
   <string name="upcoming_show">%s está chegando</string>
   <string name="upcoming_episodes">Novos episódios estão chegando</string>
