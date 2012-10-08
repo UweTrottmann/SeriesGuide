@@ -5,6 +5,14 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 2.9.2/2.9.7beta *(2012-10-08)*
+--------------------------------
+
+* TWEAK Enabled fast scrolling for season and episode lists.
+* FIX Episode images sometimes did not download successfully due to size constraints: increased the maximum size.
+* TWEAK Revert back to the regular GetGlue OAuth URL.
+* TWEAK Display info toasts for watched, collected and calendar buttons on long click.
+
 Version 2.9.1/2.9.6beta *(2012-10-01)*
 --------------------------------
 
