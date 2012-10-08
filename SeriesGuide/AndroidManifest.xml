@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     android:installLocation="auto"
     package="com.battlelancer.seriesguide"
-    android:versionCode="143"
-    android:versionName="2.9.1" >
+    android:versionCode="144"
+    android:versionName="2.9.2" >
 
     <uses-sdk
         android:minSdkVersion="7"
