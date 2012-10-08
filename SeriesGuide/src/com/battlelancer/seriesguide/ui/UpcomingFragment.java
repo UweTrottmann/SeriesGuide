@@ -35,15 +35,18 @@ import android.support.v4.widget.CursorAdapter;
 import android.text.format.DateUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.beta.R;
@@ -387,6 +390,24 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                 }
             });
             viewHolder.watchedBox.setChecked(mCursor.getInt(UpcomingQuery.WATCHED) > 0);
+            viewHolder.watchedBox.setOnLongClickListener(new OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Toast infoToast = Toast.makeText(getActivity(), ((WatchedBox) v)
+                            .isChecked() ? R.string.unmark_episode : R.string.mark_episode,
+                            Toast.LENGTH_SHORT);
+
+                    // position toast near view
+                    int[] location = new int[2];
+                    v.getLocationOnScreen(location);
+                    infoToast.setGravity(Gravity.TOP | Gravity.LEFT,
+                            location[0] - v.getWidth() / 2,
+                            location[1] - v.getHeight() - v.getHeight() / 2);
+
+                    infoToast.show();
+                    return true;
+                }
+            });
 
             // season and episode number
             final String number = Utils.getEpisodeNumber(mPrefs, seasonNumber, episodeNumber);

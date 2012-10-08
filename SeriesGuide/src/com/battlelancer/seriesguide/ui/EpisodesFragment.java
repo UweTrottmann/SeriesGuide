@@ -32,13 +32,16 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
@@ -155,11 +158,28 @@ public class EpisodesFragment extends SherlockListFragment implements
                     final int episodeId = cursor.getInt(EpisodesQuery._ID);
                     final int episodeNumber = cursor.getInt(EpisodesQuery.NUMBER);
                     wb.setOnClickListener(new OnClickListener() {
-
                         public void onClick(View v) {
                             ((WatchedBox) v).toggle();
                             onFlagEpisodeWatched(episodeId, episodeNumber,
                                     ((WatchedBox) v).isChecked());
+                        }
+                    });
+                    wb.setOnLongClickListener(new OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            Toast infoToast = Toast.makeText(getActivity(), ((WatchedBox) v)
+                                    .isChecked() ? R.string.unmark_episode : R.string.mark_episode,
+                                    Toast.LENGTH_SHORT);
+
+                            // position toast near view
+                            int[] location = new int[2];
+                            v.getLocationOnScreen(location);
+                            infoToast.setGravity(Gravity.TOP | Gravity.LEFT,
+                                    location[0] - v.getWidth() / 2,
+                                    location[1] - v.getHeight() - v.getHeight() / 2);
+
+                            infoToast.show();
+                            return true;
                         }
                     });
 
