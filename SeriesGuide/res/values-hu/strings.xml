@@ -203,7 +203,7 @@
   <string name="backup_button">Mentés</string>
   <string name="import_button">Visszaállítás</string>
   <string name="backup_question">Ez felülírja a jelenlegi biztonsági másolat fájlt!</string>
-  <string name="backup_yes">Mentés</string>
+  <string name="backup_yes">Biztonsági Mentés</string>
   <string name="backup_no">Mégse</string>
   <string name="import_question">A jelenlegi sorozatlista törlődik. Győződj meg róla, hogy a biztonsági másolat a megfelelő mappában van!</string>
   <string name="import_yes">Visszaállítás</string>
