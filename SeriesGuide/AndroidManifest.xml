@@ -3,7 +3,7 @@
     package="com.uwetrottmann.seriesguide"
     android:installLocation="auto"
     android:versionCode="185"
-    android:versionName="2.9.7beta" >
+    android:versionName="2.9.7" >
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -25,7 +25,7 @@
         android:name="com.battlelancer.seriesguide.SeriesGuideApplication"
         android:backupAgent="com.battlelancer.seriesguide.PrefBackupHelper"
         android:hardwareAccelerated="true"
-        android:icon="@drawable/icon"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/SeriesGuideTheme" >
 
