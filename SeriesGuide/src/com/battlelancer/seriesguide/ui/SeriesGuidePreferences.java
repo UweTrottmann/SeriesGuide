@@ -208,7 +208,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     protected static void setupBasicSettings(final Context context, Preference noAiredPref,
             Preference noSpecialsPref, Preference notificationsPref,
-            Preference notificationsFavOnlyPref, Preference vibratePref, Preference ringtonePref,
+            final Preference notificationsFavOnlyPref, final Preference vibratePref,
+            final Preference ringtonePref,
             Preference languagePref) {
         // No aired episodes
         noAiredPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -246,13 +247,18 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             notificationsPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    if (((CheckBoxPreference) preference).isChecked()) {
+                    boolean isChecked = ((CheckBoxPreference) preference).isChecked();
+                    if (isChecked) {
                         EasyTracker.getTracker().trackEvent(TAG, "Notifications", "Enable",
                                 (long) 0);
                     } else {
                         EasyTracker.getTracker().trackEvent(TAG, "Notifications", "Disable",
                                 (long) 0);
                     }
+
+                    notificationsFavOnlyPref.setEnabled(isChecked);
+                    vibratePref.setEnabled(isChecked);
+                    ringtonePref.setEnabled(isChecked);
 
                     Utils.runNotificationService(context);
                     return true;
