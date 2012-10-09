@@ -35,7 +35,7 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.uwetrottmann.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesContract;
+import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
@@ -350,7 +350,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             // execute the batch
             try {
                 mAppContext.getContentResolver()
-                        .applyBatch(SeriesContract.CONTENT_AUTHORITY, batch);
+                        .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
             } catch (RemoteException e) {
                 // Failed binder transactions aren't recoverable
                 Utils.trackException(mAppContext, e);

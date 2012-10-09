@@ -545,8 +545,10 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                     scheduleAllShowsUpdate();
                 }
 
-                // BETA warning dialog switch
-                ChangesDialogFragment.show(getSupportFragmentManager());
+                if (getPackageName().contains("beta")) {
+                    // BETA info dialog
+                    ChangesDialogFragment.show(getSupportFragmentManager());
+                }
 
                 // set this as lastVersion
                 editor.putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion);

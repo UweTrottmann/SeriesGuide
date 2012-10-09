@@ -31,8 +31,8 @@ import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 
 import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.items.Series;
-import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
@@ -408,7 +408,7 @@ public class DBUtils {
 
         // remove show entry already so we can hide the progress dialog
         try {
-            context.getContentResolver().applyBatch(SeriesContract.CONTENT_AUTHORITY, batch);
+            context.getContentResolver().applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
         } catch (RemoteException e) {
             // Failed binder transactions aren't recoverable
             throw new RuntimeException("Problem applying batch operation", e);
@@ -458,7 +458,7 @@ public class DBUtils {
                 .build());
 
         try {
-            context.getContentResolver().applyBatch(SeriesContract.CONTENT_AUTHORITY, batch);
+            context.getContentResolver().applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
         } catch (RemoteException e) {
             // Failed binder transactions aren't recoverable
             throw new RuntimeException("Problem applying batch operation", e);

@@ -30,7 +30,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.uwetrottmann.seriesguide.R;
-import com.battlelancer.seriesguide.provider.SeriesContract;
+import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -187,7 +187,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                     }
 
                     try {
-                        mContext.getContentResolver().applyBatch(SeriesContract.CONTENT_AUTHORITY,
+                        mContext.getContentResolver().applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY,
                                 batch);
                     } catch (RemoteException e) {
                         // Failed binder transactions aren't recoverable
