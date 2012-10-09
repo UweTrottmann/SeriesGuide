@@ -125,6 +125,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_NOTIFICATIONS_ENABLED = "com.battlelancer.seriesguide.notifications";
 
+    public static final String KEY_NOTIFICATIONS_FAVONLY = "com.battlelancer.seriesguide.notifications.favonly";
+
     public static final String KEY_VIBRATE = "com.battlelancer.seriesguide.notifications.vibrate";
 
     public static final String KEY_RINGTONE = "com.battlelancer.seriesguide.notifications.ringtone";
@@ -164,7 +166,9 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             addPreferencesFromResource(R.xml.settings_basic);
             setupBasicSettings(this, findPreference(KEY_ONLY_FUTURE_EPISODES),
                     findPreference(KEY_ONLY_SEASON_EPISODES),
-                    findPreference(KEY_NOTIFICATIONS_ENABLED), findPreference(KEY_LANGUAGE));
+                    findPreference(KEY_NOTIFICATIONS_ENABLED),
+                    findPreference(KEY_NOTIFICATIONS_FAVONLY), findPreference(KEY_VIBRATE),
+                    findPreference(KEY_RINGTONE), findPreference(KEY_LANGUAGE));
         } else if (action != null && action.equals(ACTION_PREFS_SHARING)) {
             addPreferencesFromResource(R.xml.settings_sharing);
             setupSharingSettings(this, findPreference(KEY_GETGLUE_DISCONNECT));
@@ -203,7 +207,9 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     }
 
     protected static void setupBasicSettings(final Context context, Preference noAiredPref,
-            Preference noSpecialsPref, Preference notificationsPref, Preference languagePref) {
+            Preference noSpecialsPref, Preference notificationsPref,
+            Preference notificationsFavOnlyPref, Preference vibratePref, Preference ringtonePref,
+            Preference languagePref) {
         // No aired episodes
         noAiredPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
@@ -252,9 +258,20 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                     return true;
                 }
             });
+            notificationsFavOnlyPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    // run notifications service to update next notification
+                    Utils.runNotificationService(context);
+                    return true;
+                }
+            });
         } else {
             notificationsPref.setEnabled(false);
             notificationsPref.setSummary(R.string.onlyx);
+            notificationsFavOnlyPref.setEnabled(false);
+            vibratePref.setEnabled(false);
+            ringtonePref.setEnabled(false);
         }
 
         setListPreferenceSummary((ListPreference) languagePref);
@@ -419,7 +436,9 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 addPreferencesFromResource(R.xml.settings_basic);
                 setupBasicSettings(getActivity(), findPreference(KEY_ONLY_FUTURE_EPISODES),
                         findPreference(KEY_ONLY_SEASON_EPISODES),
-                        findPreference(KEY_NOTIFICATIONS_ENABLED), findPreference(KEY_LANGUAGE));
+                        findPreference(KEY_NOTIFICATIONS_ENABLED),
+                        findPreference(KEY_NOTIFICATIONS_FAVONLY), findPreference(KEY_VIBRATE),
+                        findPreference(KEY_RINGTONE), findPreference(KEY_LANGUAGE));
             } else if ("sharing".equals(settings)) {
                 addPreferencesFromResource(R.xml.settings_sharing);
                 setupSharingSettings(getActivity(), findPreference(KEY_GETGLUE_DISCONNECT));

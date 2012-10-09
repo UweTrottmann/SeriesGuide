@@ -173,7 +173,7 @@
     <string name="library">Library</string>
     <string name="powered_by_thetvdb">powered by thetvdb.com</string>
     <string name="powered_by_trakt">powered by trakt.tv</string>
-    
+
     <!-- Lists -->
     <string name="first_list">Favorites</string>
     <string name="list_add">Add list</string>
@@ -335,6 +335,8 @@
     <string name="upcoming_display">Select to display upcoming shows</string>
     <string name="pref_notifications">Notifications</string>
     <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
+    <string name="pref_notifyfavonly">Favorites only</string>
+    <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
     <string name="pref_ringtone">Ringtone</string>
     <string name="pref_vibrate">Vibrate</string>
     <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
