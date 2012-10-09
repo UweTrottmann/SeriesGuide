@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.battlelancer.seriesguide.beta"
+    package="com.uwetrottmann.seriesguide"
     android:installLocation="auto"
     android:versionCode="185"
     android:versionName="2.9.7beta" >
@@ -28,10 +28,6 @@
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:theme="@style/SeriesGuideTheme" >
-        <meta-data
-            android:name="com.google.android.backup.api_key"
-            android:value="AEdPqrEAAAAIlG-fXzOx6u3ozZ1ah_9eqMnUD70jCFA1FPzJnQ" />
-
         <activity
             android:name="com.battlelancer.seriesguide.ui.ShowsActivity"
             android:uiOptions="splitActionBarWhenNarrow" >
@@ -157,12 +153,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
-
-        <!-- Content provider -->
-        <provider
-            android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider"
-            android:authorities="com.battlelancer.seriesguide.beta.provider" >
-        </provider>
 
         <!-- Notification service -->
         <service android:name="com.battlelancer.seriesguide.service.NotificationService" >

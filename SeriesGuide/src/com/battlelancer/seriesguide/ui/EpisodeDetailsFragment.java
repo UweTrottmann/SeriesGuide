@@ -45,7 +45,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -63,6 +62,7 @@ import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays details about a single episode like summary, ratings and episode
@@ -174,22 +174,19 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_rate_trakt: {
-                onShareEpisode(ShareMethod.RATE_TRAKT, true);
-                fireTrackerEvent("Rate (trakt)");
-                return true;
-            }
-            case R.id.menu_share: {
-                onShareEpisode(ShareMethod.OTHER_SERVICES, true);
-                fireTrackerEvent("Share (apps)");
-                return true;
-            }
-            case R.id.menu_manage_lists: {
-                ListsDialogFragment.showListsDialog(String.valueOf(getEpisodeId()), 3,
-                        getFragmentManager());
-                return true;
-            }
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_rate_trakt) {
+            onShareEpisode(ShareMethod.RATE_TRAKT, true);
+            fireTrackerEvent("Rate (trakt)");
+            return true;
+        } else if (itemId == R.id.menu_share) {
+            onShareEpisode(ShareMethod.OTHER_SERVICES, true);
+            fireTrackerEvent("Share (apps)");
+            return true;
+        } else if (itemId == R.id.menu_manage_lists) {
+            ListsDialogFragment.showListsDialog(String.valueOf(getEpisodeId()), 3,
+                    getFragmentManager());
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

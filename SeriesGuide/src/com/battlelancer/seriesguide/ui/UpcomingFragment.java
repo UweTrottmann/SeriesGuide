@@ -49,7 +49,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.WatchedBox;
-import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
@@ -58,6 +57,7 @@ import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 
 public class UpcomingFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -325,7 +325,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
         private SharedPreferences mPrefs;
 
-        private static final int LAYOUT = R.layout.upcoming_row;
+        private final int LAYOUT = R.layout.upcoming_row;
 
         public SlowAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);

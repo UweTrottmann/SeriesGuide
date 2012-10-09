@@ -22,7 +22,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
-import com.battlelancer.seriesguide.beta.R;
+import com.uwetrottmann.seriesguide.R;
 
 public class AppWidgetLarge extends AppWidget {
     private static final String LIMIT = "7";

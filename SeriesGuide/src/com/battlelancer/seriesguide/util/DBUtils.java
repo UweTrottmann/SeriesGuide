@@ -30,7 +30,7 @@ import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 
-import com.battlelancer.seriesguide.beta.R;
+import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;

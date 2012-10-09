@@ -49,7 +49,6 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.Constants.SeasonSorting;
-import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
@@ -58,6 +57,7 @@ import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
 import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays a list of seasons of one show.
@@ -187,24 +187,21 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_markall:
-                fireTrackerEvent("Mark all seasons");
-
-                onFlagShowWatched(true);
-                return true;
-            case R.id.menu_unmarkall:
-                fireTrackerEvent("Unmark all seasons");
-
-                onFlagShowWatched(false);
-                return true;
-            case R.id.menu_sesortby:
-                fireTrackerEvent("Sort seasons");
-
-                showSortDialog();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_markall) {
+            fireTrackerEvent("Mark all seasons");
+            onFlagShowWatched(true);
+            return true;
+        } else if (itemId == R.id.menu_unmarkall) {
+            fireTrackerEvent("Unmark all seasons");
+            onFlagShowWatched(false);
+            return true;
+        } else if (itemId == R.id.menu_sesortby) {
+            fireTrackerEvent("Sort seasons");
+            showSortDialog();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 

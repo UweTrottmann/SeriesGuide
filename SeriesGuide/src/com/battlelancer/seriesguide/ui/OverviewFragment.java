@@ -46,7 +46,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.beta.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -66,6 +65,7 @@ import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays general information about a show and its next episode. Displays a
@@ -190,86 +190,72 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_checkin: {
-                if (mShowCursor != null && mShowCursor.moveToFirst() && mEpisodeCursor != null
-                        && mEpisodeCursor.moveToFirst()) {
-                    final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
-                    final int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-                    // check in
-                    CheckInDialogFragment f = CheckInDialogFragment.newInstance(
-                            mShowCursor.getString(ShowQuery.SHOW_IMDBID),
-                            getShowId(),
-                            seasonNumber,
-                            episodeNumber,
-                            buildEpisodeString(seasonNumber, episodeNumber,
-                                    mEpisodeCursor.getString(EpisodeQuery.TITLE)));
-                    f.show(getFragmentManager(), "checkin-dialog");
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_checkin) {
+            if (mShowCursor != null && mShowCursor.moveToFirst() && mEpisodeCursor != null
+                    && mEpisodeCursor.moveToFirst()) {
+                final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
+                final int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+                // check in
+                CheckInDialogFragment f = CheckInDialogFragment.newInstance(
+                        mShowCursor.getString(ShowQuery.SHOW_IMDBID),
+                        getShowId(),
+                        seasonNumber,
+                        episodeNumber,
+                        buildEpisodeString(seasonNumber, episodeNumber,
+                                mEpisodeCursor.getString(EpisodeQuery.TITLE)));
+                f.show(getFragmentManager(), "checkin-dialog");
 
-                }
-
-                fireTrackerEvent("Check In");
-                return true;
             }
-            case R.id.menu_flag_watched: {
-                // flag watched
-                onFlagWatched();
-
-                fireTrackerEvent("Flag Watched");
-                return true;
+            fireTrackerEvent("Check In");
+            return true;
+        } else if (itemId == R.id.menu_flag_watched) {
+            // flag watched
+            onFlagWatched();
+            fireTrackerEvent("Flag Watched");
+            return true;
+        } else if (itemId == R.id.menu_flag_collected) {
+            // toggle collected
+            onToggleCollected(item);
+            fireTrackerEvent("Toggle Collected");
+            return true;
+        } else if (itemId == R.id.menu_calendarevent) {
+            if (mShowCursor != null && mShowCursor.moveToFirst() && mEpisodeCursor != null
+                    && mEpisodeCursor.moveToFirst()) {
+                final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
+                final int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+                final String episodeTitle = mEpisodeCursor.getString(EpisodeQuery.TITLE);
+                // add calendar event
+                ShareUtils.onAddCalendarEvent(
+                        getActivity(),
+                        mShowCursor.getString(ShowQuery.SHOW_TITLE),
+                        buildEpisodeString(seasonNumber, episodeNumber,
+                                episodeTitle), mShowCursor.getLong(ShowQuery.SHOW_AIRSTIME),
+                        mShowCursor.getInt(ShowQuery.SHOW_RUNTIME));
             }
-            case R.id.menu_flag_collected: {
-                // toggle collected
-                onToggleCollected(item);
-
-                fireTrackerEvent("Toggle Collected");
-                return true;
+            fireTrackerEvent("Add to calendar");
+            return true;
+        } else if (itemId == R.id.menu_rate_trakt) {
+            // rate episode on trakt.tv
+            onShareEpisode(ShareMethod.RATE_TRAKT);
+            fireTrackerEvent("Rate (trakt)");
+            return true;
+        } else if (itemId == R.id.menu_share) {
+            // share episode
+            onShareEpisode(ShareMethod.OTHER_SERVICES);
+            fireTrackerEvent("Share (apps)");
+            return true;
+        } else if (itemId == R.id.menu_manage_lists) {
+            if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
+                ListsDialogFragment.showListsDialog(mEpisodeCursor.getString(EpisodeQuery._ID),
+                        3, getFragmentManager());
             }
-            case R.id.menu_calendarevent: {
-                if (mShowCursor != null && mShowCursor.moveToFirst() && mEpisodeCursor != null
-                        && mEpisodeCursor.moveToFirst()) {
-                    final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
-                    final int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-                    final String episodeTitle = mEpisodeCursor.getString(EpisodeQuery.TITLE);
-                    // add calendar event
-                    ShareUtils.onAddCalendarEvent(
-                            getActivity(),
-                            mShowCursor.getString(ShowQuery.SHOW_TITLE),
-                            buildEpisodeString(seasonNumber, episodeNumber,
-                                    episodeTitle), mShowCursor.getLong(ShowQuery.SHOW_AIRSTIME),
-                            mShowCursor.getInt(ShowQuery.SHOW_RUNTIME));
-                }
-                fireTrackerEvent("Add to calendar");
-                return true;
-            }
-            case R.id.menu_rate_trakt: {
-                // rate episode on trakt.tv
-                onShareEpisode(ShareMethod.RATE_TRAKT);
-
-                fireTrackerEvent("Rate (trakt)");
-                return true;
-            }
-            case R.id.menu_share: {
-                // share episode
-                onShareEpisode(ShareMethod.OTHER_SERVICES);
-
-                fireTrackerEvent("Share (apps)");
-                return true;
-            }
-            case R.id.menu_manage_lists: {
-                if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
-                    ListsDialogFragment.showListsDialog(mEpisodeCursor.getString(EpisodeQuery._ID),
-                            3, getFragmentManager());
-                }
-                return true;
-            }
-            case R.id.menu_search: {
-                // search through this shows episodes
-                getActivity().onSearchRequested();
-
-                fireTrackerEvent("Search show episodes");
-                return true;
-            }
+            return true;
+        } else if (itemId == R.id.menu_search) {
+            // search through this shows episodes
+            getActivity().onSearchRequested();
+            fireTrackerEvent("Search show episodes");
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

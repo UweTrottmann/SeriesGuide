@@ -22,7 +22,7 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.TextView;
 
-import com.battlelancer.seriesguide.beta.R;
+import com.uwetrottmann.seriesguide.R;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Ratings;
