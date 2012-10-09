@@ -25,7 +25,8 @@
         android:backupAgent="com.battlelancer.seriesguide.PrefBackupHelper"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" >
+        android:label="@string/app_name"
+        android:theme="@style/SeriesGuideTheme" >
 
         <!-- Android Backup key for X -->
         <meta-data
