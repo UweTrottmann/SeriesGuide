@@ -2,7 +2,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- SeriesGuides default theme -->
-    <style name="SeriesGuideTheme" parent="Theme.Sherlock.ForceOverflow">
+    <style name="SeriesGuideTheme" parent="Theme.Sherlock">
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
@@ -51,7 +51,7 @@
     </style>
 
     <!-- An ICS base theme using default styles from ABS -->
-    <style name="ICSBaseTheme" parent="Theme.Sherlock.ForceOverflow">
+    <style name="ICSBaseTheme" parent="Theme.Sherlock">
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.ICS</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
