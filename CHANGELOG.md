@@ -5,6 +5,14 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 2.9.8beta *(2012-10-10)*
+--------------------------------
+
+* TWEAK Let update task wait on failure before trying again.
+* FEATURE Setting to display notifications for all shows, not just favorites.
+* TWEAK Display 'Shows updated.' instead of generic 'Update successful.'.
+* NOTICE Use ActionBarSherlock 4.2.0: notably, the menu buttons are gone on Android 2.3 and lower.
+
 Version 2.9.2/2.9.7beta *(2012-10-08)*
 --------------------------------
 
