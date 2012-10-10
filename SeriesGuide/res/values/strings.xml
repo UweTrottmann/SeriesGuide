@@ -372,7 +372,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">Improvements\n\nFast scrolling in episode and season lists.\n\nInfo toasts for watched, collected, calendar buttons on long click.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">Improvements\n\nUpdate task backs off on failure.\n\nSetting to enable notifications for any show, not just favorited.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
