@@ -30,11 +30,11 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -50,6 +50,7 @@ import com.jakewharton.trakt.entities.ActivityItem;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
+import com.uwetrottmann.seriesguide.R;
 
 import org.xml.sax.SAXException;
 
@@ -248,14 +249,33 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             // update the latest episodes
             Utils.updateLatestEpisodes(mAppContext);
 
-            // store time of update if it was successful
+            // store time for triggering next update 15min after
             if (resultCode == UpdateResult.SUCCESS) {
-                prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTUPDATE, currentTime).commit();
+                // now, if we were successful, reset failed counter
+                prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTUPDATE, currentTime)
+                        .putInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, 0).commit();
+            } else {
+                int failed = prefs.getInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, 0);
+
+                // back off by the power of 2 times minutes
+                long time;
+                if (failed < 4) {
+                    time = currentTime
+                            - ((15 - (int) Math.pow(2, failed)) * DateUtils.MINUTE_IN_MILLIS);
+                } else {
+                    time = currentTime;
+                }
+
+                failed += 1;
+                prefs.edit()
+                        .putLong(SeriesGuidePreferences.KEY_LASTUPDATE, time)
+                        .putInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, failed).commit();
             }
         } else {
             publishProgress(maxProgress, maxProgress);
         }
 
+        // do not display a disturbing info toast for specific updates
         if (mUpdateType == UpdateType.SINGLE && resultCode == UpdateResult.SUCCESS) {
             resultCode = UpdateResult.SILENT_SUCCESS;
         }
@@ -307,7 +327,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                 Log.w(TAG, e);
                 return UpdateResult.ERROR;
             }
-            
+
             if (activity == null) {
                 return UpdateResult.ERROR;
             }

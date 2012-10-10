@@ -39,7 +39,6 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
@@ -48,6 +47,7 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 
 import java.util.List;
 
@@ -140,6 +140,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     public static final String KEY_THEME = "com.battlelancer.seriesguide.theme";
 
     public static final String KEY_LASTBACKUP = "com.battlelancer.seriesguide.lastbackup";
+
+    public static final String KEY_FAILED_COUNTER = "com.battlelancer.seriesguide.failedcounter";
 
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
 
