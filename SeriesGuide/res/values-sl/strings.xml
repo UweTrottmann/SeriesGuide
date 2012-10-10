@@ -7,22 +7,22 @@
   <string name="seasons">Sezone</string>
   <string name="unknown">unknown</string>
   <string name="episode_iswatched">Že gledano</string>
-  <string name="episode_notwatched">Not watched yet</string>
+  <string name="episode_notwatched">Nepogledano</string>
   <string name="specialseason">Posebne epizode</string>
   <string name="search_hint">Iskanje epizode</string>
   <string name="search_title">Ujemanje epizode</string>
   <string name="share_episode">Deli epizodo</string>
   <string name="share_checkout">Preveri</string>
-  <string name="search_description">Episodes</string>
-  <string name="description_overview">Overview</string>
+  <string name="search_description">Epizode</string>
+  <string name="description_overview">Pregled</string>
   <string name="description_poster">Show poster</string>
   <string name="norating">n/a</string>
-  <string name="loading">Loading…</string>
-  <string name="done">Done</string>
+  <string name="loading">Nalaganje...</string>
+  <string name="done">Urejeno</string>
   <string name="clear">Clear</string>
   <string name="more">%s more</string>
-  <string name="cancel">Cancel</string>
-  <string name="share">Share</string>
+  <string name="cancel">Prekini</string>
+  <string name="share">Deli</string>
   <string name="offline">No network connectivity. Try again later.</string>
   <string name="onlyx">Only available in SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -57,18 +57,18 @@
   <string name="show_isnotalive">Končala</string>
   <string name="lastEdit">Last Edit // TVDb</string>
   <string name="sort">Razvrsti po</string>
-  <string name="updateall_yes">Update (all)</string>
-  <string name="menu_update_delta">Update (outdated only)</string>
+  <string name="updateall_yes">Posodobitev (vse)</string>
+  <string name="menu_update_delta">Posodobitev (samo zastarelih)</string>
   <string name="context_updateshow">Posodobitev</string>
   <string name="context_showinfo">Pokaži Informacije</string>
-  <string name="context_marknext">Watched next episode</string>
+  <string name="context_marknext">Pogledana naslednja epizoda</string>
   <string name="today">danes</string>
   <string name="now">zdaj</string>
   <string name="daily">Daily</string>
   <string name="mark_episode">Ogledana epizoda</string>
-  <string name="unmark_episode">Not yet watched episode</string>
-  <string name="mark_all">Watched all</string>
-  <string name="unmark_all">Watched none</string>
+  <string name="unmark_episode">Še ne pogledana epizoda</string>
+  <string name="mark_all">Vse pogledane</string>
+  <string name="unmark_all">Nobena pogledana</string>
   <string name="mark_untilhere">Watched all previously aired</string>
   <string name="collect">Collected episode</string>
   <string name="uncollect">Not yet collected episode</string>
@@ -83,9 +83,9 @@
   <string name="delete_show">odstrani</string>
   <string name="dontdelete_show">Ne odstrani.</string>
   <string name="no_nextepisode">ni naslednje epizode</string>
-  <string name="context_favorite">Add to favorites</string>
-  <string name="context_unfavorite">Remove from favorites</string>
-  <string name="favorited">Added to favorites</string>
+  <string name="context_favorite">Dodaj priljubljenim</string>
+  <string name="context_unfavorite">Odstrani s priljubljenih</string>
+  <string name="favorited">Dodano priljubljenim</string>
   <string name="unfavorited">Odstrani iz priljubljenih</string>
   <string name="context_hide">Hide</string>
   <string name="context_unhide">Un-Hide</string>
@@ -93,18 +93,18 @@
   <string name="unhidden">Un-Hidden show</string>
   <string name="activity">Activity</string>
   <string name="upcoming">Prihajajoče</string>
-  <string name="recent">Recent</string>
+  <string name="recent">Nedavno</string>
   <string name="friends">Friends</string>
   <string name="friends_empty">No friend activity on trakt.</string>
   <string name="noupcoming">There are no upcoming episodes.</string>
   <string name="norecent">There are no recent episodes.</string>
   <string name="only_favorites">Only favorite shows</string>
   <string name="togglewatched">Toggle watched</string>
-  <string name="update_notification">Updating your shows…</string>
+  <string name="update_notification">Posodabljanje vaših oddaj...</string>
   <string name="update_single">Updating show…</string>
   <string name="update_delta">Updating outdated shows…</string>
   <string name="update_full">Updating all shows…</string>
-  <string name="update_success">Update successful.</string>
+  <string name="update_success">Posodabljanje je uspelo.</string>
   <string name="update_offline">Updating failed, check your internet/Wi-Fi connection.</string>
   <string name="update_saxerror">Updating failed, try again later.</string>
   <string name="update_inprogress">An update is in progress, try again later.</string>
@@ -115,31 +115,31 @@
   <string name="arttask_start">Loading posters…</string>
   <string name="arttask_nosdcard">Loading posters requires external storage (SD card).</string>
   <string name="show_network">dne</string>
-  <string name="show_noairtime">No air times available</string>
+  <string name="show_noairtime">Časa oddajanja ni na voljo</string>
   <string name="show_noimdbentry">No IMDB page found.</string>
   <string name="season_watchcount">Neogledane epizode.</string>
   <string name="season_allwatched">Vse epizode ogledal</string>
   <string name="season_onenotwatched">Neogledana epizoda.</string>
-  <string name="season_unaired">unaired</string>
+  <string name="season_unaired">Nepredvajano</string>
   <string name="oneotherepisode">druga epizoda</string>
   <string name="otherepisodes">druge epizode</string>
   <string name="remaining">%s remaining</string>
   <string name="search_button">Iskanje</string>
   <string name="search_hint_add">Show name</string>
   <string name="no_results">No results, try complete words.</string>
-  <string name="search_error">Searching failed, try again later.</string>
+  <string name="search_error">Iskanje ni uspelo, poskusite znova pozneje.</string>
   <string name="add_show">Dodaj oddajo.</string>
   <string name="dont_add_show">Ne dodaj</string>
-  <string name="add_started">will appear in your show list shortly.</string>
+  <string name="add_started">se bo pojavilo kmalu na tvoji listi serij.</string>
   <string name="add_success">Uspešno dodano.</string>
   <string name="add_error_begin">Ne morem dodati \ "</string>
   <string name="add_error_end">\ ".</string>
-  <string name="add_already_exists">already is in your show list.</string>
+  <string name="add_already_exists">je že na vašem seznamu.</string>
   <string name="trending">Trending</string>
   <string name="recommended">Recommended</string>
   <string name="library">Library</string>
   <string name="powered_by_thetvdb">powered by thetvdb.com</string>
-  <string name="powered_by_trakt">powered by trakt.tv</string>
+  <string name="powered_by_trakt">Powered by trakt.tv</string>
   <string name="first_list">Favorites</string>
   <string name="list_add">Add list</string>
   <string name="list_title_hint">Name your list</string>
@@ -155,59 +155,59 @@
   <string name="help">Pomoč</string>
   <string name="preferences">Nastavitve</string>
   <string name="pref_showsorting">Sort shows by…</string>
-  <string name="pref_onlyfuture">No aired episodes</string>
+  <string name="pref_onlyfuture">Nepredvajane epizode</string>
   <string name="pref_onlyfuturesummary">Never display already aired episodes</string>
   <string name="pref_onlyseasoneps">Hide special episodes</string>
   <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
   <string name="pref_seasonsorting">Sort seasons by…</string>
   <string name="pref_episodesorting">Sort episodes by…</string>
-  <string name="backup">Backup/Restore</string>
-  <string name="backup_summary">Backup or restore your shows</string>
-  <string name="pref_language">Content language</string>
-  <string name="pref_number">Number format</string>
-  <string name="pref_offset">Manual time offset</string>
+  <string name="backup">Varnostno kopiranje/Obnovitev</string>
+  <string name="backup_summary">Varnostno kopiranje ali obnovitev vaših oddaj</string>
+  <string name="pref_language">Jezik vsebine</string>
+  <string name="pref_number">Oblika števil</string>
+  <string name="pref_offset">Ročna nast. čas. odmik</string>
   <string name="pref_offsetsummary">Offset air times by %s hours</string>
-  <string name="pref_autoupdate">Turn on Auto Update</string>
-  <string name="pref_autoupdatesummary">Periodically update your shows when starting SeriesGuide</string>
-  <string name="pref_updatewifionly">Update over Wi-Fi only</string>
+  <string name="pref_autoupdate">Vklopite samodejno posodobitev</string>
+  <string name="pref_autoupdatesummary">Občasno posodobi svoje oddaje ob zagonu SeriesGuide</string>
+  <string name="pref_updatewifionly">Posodobitev samo preko Wi-Fi</string>
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Credits</string>
-  <string name="clearGetGlueCredentials">Disconnect GetGlue</string>
+  <string name="clearGetGlueCredentials">Odklopi GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Check In with GetGlue to reconnect</string>
-  <string name="pref_trakt">trakt.tv credentials</string>
-  <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
-  <string name="pref_traktsync">Sync with trakt.tv</string>
+  <string name="pref_trakt">trakt.TV poverilnice</string>
+  <string name="pref_traktsummary">Dodajanje ali urejanje poverilnice trakt.tv</string>
+  <string name="pref_traktsync">Sinh. z trakt.tv</string>
   <string name="feedback">Send feedback</string>
-  <string name="clear_cache">Clear image caches</string>
-  <string name="clear_cache_summary">Remove all cached images from your device</string>
+  <string name="clear_cache">Izbriši predp. slik</string>
+  <string name="clear_cache_summary">Odstranite vse predpomnjene slike iz naprave</string>
   <string name="pref_hideimages">Skrij slike</string>
-  <string name="pref_hideimagessummary">Hide images from your photo gallery (reboot required)</string>
+  <string name="pref_hideimagessummary">Skrij slike iz svoje foto galerije (zahteva ponovni zagon)</string>
   <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Sledenje uporabe funkcije za izboljšanje SeriesGuide</string>
   <string name="sendusagedata">Send the developer usage statistics</string>
   <string name="pref_upcominglimit">Upcoming shows within…</string>
   <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
-  <string name="backup_path"><b>Backup folder</b></string>
+  <string name="backup_path"><b>Mapa z varnostnimi kopijami</b></string>
   <string name="backup_version"><b>Database version</b></string>
   <string name="backup_failed_nosd">Can\'t backup. The backup folder is not available.</string>
   <string name="backup_inprogress">Backing up database…</string>
-  <string name="backup_success">Backup successful.</string>
-  <string name="backup_failed">Backup failed.</string>
+  <string name="backup_success">Uspešno varnostno kopiranje.</string>
+  <string name="backup_failed">Varnostno kopiranje ni uspelo.</string>
   <string name="import_inprogress">Restoring database…</string>
   <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
-  <string name="import_failed_nofile">There is no backup file.</string>
-  <string name="import_failed_noread">The backup file is not readable.</string>
+  <string name="import_failed_nofile">Ni backup datoteke.</string>
+  <string name="import_failed_noread">Varnostna kopija datoteke ni berljiva.</string>
   <string name="dbupgradefailed">Your backup may be too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
-  <string name="import_success">Backup successfully restored.</string>
-  <string name="import_failed">Restoring the backup failed.</string>
+  <string name="import_success">Varnostno kopiranje uspešno obnovljeno.</string>
+  <string name="import_failed">Obnovitev varnostne kopije ni uspela.</string>
   <string name="backup_button">Backup</string>
   <string name="import_button">Restore</string>
-  <string name="backup_question">This will overwrite the current backup file in the backup folder!</string>
-  <string name="backup_yes">Backup</string>
+  <string name="backup_question">To bo prepisalo trenutno varnostno kopijo v mapo za varnostne kopije!</string>
+  <string name="backup_yes">Varnostno kopiranje</string>
   <string name="backup_no">Brez varnostne kopije</string>
-  <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
-  <string name="import_yes">Restore</string>
-  <string name="import_no">Don\'t Restore</string>
+  <string name="import_question">Trenutna lista oddaj bo izgubljena! Poskrbite, da bo varnostna datoteka znotraj varnostne mape.</string>
+  <string name="import_yes">Obnovitev</string>
+  <string name="import_no">Ne obnovi</string>
   <string name="checkin">Check in</string>
   <string name="checkin_searchhint">Type a show name</string>
   <string name="checkin_empty">No matching shows</string>
@@ -216,27 +216,27 @@
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
   <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
-  <string name="menu_rate_trakt">Rate (trakt)</string>
-  <string name="menu_share_others">Via other apps</string>
+  <string name="menu_rate_trakt">Ocena (trakt)</string>
+  <string name="menu_share_others">Preko drugih apps</string>
   <string name="traktcheckin_cancel">Override</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous checkin or wait %s and try again.</string>
   <string name="traktcheckin_wait">I\'ll wait</string>
   <string name="oauthmessage">Authenticating SeriesGuide with GetGlue…</string>
-  <string name="addtocalendar">Add to calendar</string>
-  <string name="addtocalendar_failed">Can not create a calendar event.</string>
-  <string name="username">Username</string>
+  <string name="addtocalendar">Dodaj v koledar</string>
+  <string name="addtocalendar_failed">Dogodka v koledarju ni bilo mogoče ustvariti.</string>
+  <string name="username">Upor. ime</string>
   <string name="email">Email</string>
-  <string name="password">Password</string>
+  <string name="password">Geslo</string>
   <string name="waitplease">A moment, please…</string>
   <string name="connect">Connect</string>
   <string name="disconnect">Disconnect</string>
   <string name="trakt_error">Interaction with trakt failed</string>
-  <string name="trakt_decryptfail">password could not be decrypted</string>
-  <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
-  <string name="trakt_createaccount">Create new account</string>
+  <string name="trakt_decryptfail">gesla ni bilo mogoče šifrirati</string>
+  <string name="trakt_generalerror">Nekaj je šlo narobe. Preverite vaše poverilnice in poskusite znova.</string>
+  <string name="trakt_createaccount">Izdelaj nov račun</string>
   <string name="trakt_experimental">Only shows in your SeriesGuide show list are synced. \'Sync to SeriesGuide\' fetches watched flags from trakt. \'Sync to trakt\' sends watched flags to trakt.</string>
-  <string name="trakt_synctodevice">Sync to SeriesGuide</string>
-  <string name="trakt_synctotrakt">Sync to trakt.tv</string>
+  <string name="trakt_synctodevice">Sinh. z SeriesGuide</string>
+  <string name="trakt_synctotrakt">Sinh. z trakt.tv</string>
   <string name="trakt_syncunseen">Include unwatched flags</string>
   <string name="trakt_howto_title">Set up trakt.tv sync</string>
   <string name="trakt_howto">To set up your devices:\n\n1. Connect or create your account below on every device.\n2. The first time, use the <b>Sync to trakt.tv</b> button to upload your existing shows.\n3. Add shows from trakt.tv by swiping to the <b>Library</b> tab in the <b>Add Show</b> screen.\n\nNow whenever SeriesGuide updates, your trakt.tv activity is downloaded to each device. This includes flagging episodes as watched or collected and check ins.</string>
@@ -268,21 +268,21 @@
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Naslednja epizoda</item>
-    <item>Favorites (A - Z)</item>
-    <item>Favorites (Next ep.)</item>
+    <item>Priljubljene (A - Z)</item>
+    <item>Priljubljene (Nasl. ep.)</item>
   </string-array>
   <string-array name="sesorting">
     <item>Novejša prva</item>
     <item>Starejša prva</item>
   </string-array>
   <string-array name="epsorting">
-    <item>Latest first</item>
-    <item>Oldest first</item>
-    <item>Unwatched first</item>
+    <item>Najprej zadnje</item>
+    <item>Najprej najstarejše</item>
+    <item>Najprej nepogledane</item>
     <item>A - Ž</item>
     <item>Ž - A</item>
-    <item>Latest first (DVD)</item>
-    <item>Oldest first (DVD)</item>
+    <item>Najprej zadnje (DVD)</item>
+    <item>Najprej najstarejše (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
     <item>now</item>
@@ -293,10 +293,10 @@
     <item>a month</item>
   </string-array>
   <string-array name="showfilter_list">
-    <item>All</item>
-    <item>Favorites</item>
-    <item>Unseen/Upcoming</item>
-    <item>Hidden</item>
+    <item>Vse</item>
+    <item>Priljubljene</item>
+    <item>Nepogledano/Prihajajoče</item>
+    <item>Skrito</item>
     <item>Lists</item>
   </string-array>
   <string-array name="themeSelection">

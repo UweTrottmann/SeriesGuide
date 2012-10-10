@@ -7,7 +7,7 @@
   <string name="seasons">시즌</string>
   <string name="unknown">알 수 없음</string>
   <string name="episode_iswatched">이미 시청하였습니다</string>
-  <string name="episode_notwatched">Not watched yet</string>
+  <string name="episode_notwatched">아직 안봤음</string>
   <string name="specialseason">스페셜 에피소드</string>
   <string name="search_hint">에피소드 검색</string>
   <string name="search_title">일치하는 에피소드</string>
@@ -20,17 +20,17 @@
   <string name="loading">로드 중</string>
   <string name="done">완료</string>
   <string name="clear">지우기</string>
-  <string name="more">%s more</string>
+  <string name="more">%s개의 에피소드 정보 더 있음</string>
   <string name="cancel">취소</string>
   <string name="share">공유</string>
   <string name="offline">네트워크에 연결에 실패하였습니다. 나중에 다시 시도해주세요.</string>
   <string name="onlyx">시리즈가이드 X 에서만 사용가능</string>
-  <string name="shouts">Shouts</string>
-  <string name="shout_hint">Type a shout (in English)</string>
-  <string name="shout">Shout!</string>
+  <string name="shouts">감상평</string>
+  <string name="shout_hint">감상평쓰기 (영어로 쓰세요)</string>
+  <string name="shout">외쳐! (이이)</string>
   <string name="isspoiler">스포일러 경고!</string>
-  <string name="no_shouts">Be the first to shout!</string>
-  <string name="shouts_for">Shouts for %s</string>
+  <string name="no_shouts">첫 감상평의 주인공이 되세요!</string>
+  <string name="shouts_for">%s에 대한 감상평</string>
   <string name="autorefresh">자동으로 새로고침</string>
   <string name="love">킹왕짱!</string>
   <string name="hate">쓰레기 :(</string>
@@ -52,7 +52,7 @@
   <string name="episode_directors">감독</string>
   <string name="episode_gueststars">게스트</string>
   <string name="episode_writers">작가</string>
-  <string name="show_airtimeunit">min</string>
+  <string name="show_airtimeunit">분</string>
   <string name="show_isalive">방영중</string>
   <string name="show_isnotalive">종료</string>
   <string name="lastEdit">최근 편집 // TVDb</string>
@@ -60,17 +60,17 @@
   <string name="updateall_yes">업데이트 (모두)</string>
   <string name="menu_update_delta">업데이트 (오래된 것만)</string>
   <string name="context_updateshow">업데이트</string>
-  <string name="context_showinfo">Show Info</string>
+  <string name="context_showinfo">쇼 정보</string>
   <string name="context_marknext">Watched next episode</string>
   <string name="today">오늘</string>
-  <string name="now">now</string>
-  <string name="daily">Daily</string>
+  <string name="now">지금</string>
+  <string name="daily">매일</string>
   <string name="mark_episode">시청한 에피소드</string>
   <string name="unmark_episode">Not yet watched episode</string>
-  <string name="mark_all">Watched all</string>
-  <string name="unmark_all">Watched none</string>
+  <string name="mark_all">모두 시청 완료</string>
+  <string name="unmark_all">미시청</string>
   <string name="mark_untilhere">Watched all previously aired</string>
-  <string name="collect">Collected episode</string>
+  <string name="collect">수집된 에피소드</string>
   <string name="uncollect">Not yet collected episode</string>
   <string name="trakt_submitfailed">Not submitted to trakt. Try again later.</string>
   <string name="trakt_submitsuccess">trakt에 전송 완료.</string>
@@ -79,7 +79,7 @@
   <string name="trakt_collected">%s 수집됨.</string>
   <string name="trakt_notcollected">%s 수집되지 않음.</string>
   <string name="shows_empty">쇼 없음.</string>
-  <string name="confirm_delete">Do you really want to remove %s?</string>
+  <string name="confirm_delete">%S을 제거 하시겠습니까?</string>
   <string name="delete_show">삭제</string>
   <string name="dontdelete_show">Don\'t remove</string>
   <string name="no_nextepisode">다음 에피소드가 없습니다</string>
@@ -91,7 +91,7 @@
   <string name="context_unhide">보이기</string>
   <string name="hidden">숨겨진 쇼</string>
   <string name="unhidden">쇼 보이기</string>
-  <string name="activity">Activity</string>
+  <string name="activity">활동</string>
   <string name="upcoming">방영예정</string>
   <string name="recent">최근방영</string>
   <string name="friends">친구</string>
@@ -100,75 +100,75 @@
   <string name="norecent">최근 방영된 에피소드가 없습니다.</string>
   <string name="only_favorites">즐겨찾기한 쇼만 보이기</string>
   <string name="togglewatched">시청/미시청 토글</string>
-  <string name="update_notification">Updating your shows…</string>
-  <string name="update_single">Updating show…</string>
-  <string name="update_delta">Updating outdated shows…</string>
-  <string name="update_full">Updating all shows…</string>
+  <string name="update_notification">쇼 업데이트 중...</string>
+  <string name="update_single">쇼 업데이트 중...</string>
+  <string name="update_delta">오래 된 쇼 업데이트 중...</string>
+  <string name="update_full">모든 쇼 목록을 업데이트 중...</string>
   <string name="update_success">성공적으로 업데이트하였습니다.</string>
   <string name="update_offline">업데이트 실패, 인터넷/Wi-Fi 연결을 확인하세요.</string>
   <string name="update_saxerror">업데이트 실패, 나중에 다시 시도하세요.</string>
-  <string name="update_inprogress">An update is in progress, try again later.</string>
-  <string name="update_rebuildsearch">Refreshing episode search…</string>
+  <string name="update_inprogress">업데이트가 진행 중 입니다. 잠시 후 다시 시도해주세요.</string>
+  <string name="update_rebuildsearch">에피소드 검색 새로고치는 중...</string>
   <string name="update_traktactivity">Trakt 활동을 로드 중</string>
   <string name="menu_updateart">포스터 불러오기</string>
   <string name="arttask_incomplete">일부 포스터 읽기에 실패하였습니다, 나중에 다시 시도하세요.</string>
   <string name="arttask_start">포스터 로드 중</string>
   <string name="arttask_nosdcard">포스터를 불러오기 위해서는 외장 SD카드가 필요합니다.</string>
   <string name="show_network">on</string>
-  <string name="show_noairtime">No air times available</string>
+  <string name="show_noairtime">방영시간 정보 없음</string>
   <string name="show_noimdbentry">IMDB 페이지를 찾을 수 없습니다.</string>
   <string name="season_watchcount">시청하지 않았음</string>
-  <string name="season_allwatched">All episodes watched</string>
+  <string name="season_allwatched">모든 에피소드 시청완료</string>
   <string name="season_onenotwatched">시청하지 않음</string>
   <string name="season_unaired">방영예정</string>
   <string name="oneotherepisode">다른 에피소드</string>
   <string name="otherepisodes">다른 에피소드</string>
-  <string name="remaining">%s remaining</string>
+  <string name="remaining">%s회 남음</string>
   <string name="search_button">검색</string>
   <string name="search_hint_add">쇼 이름</string>
   <string name="no_results">결과 없음, 완전한 단어를 입력하세요.</string>
   <string name="search_error">검색 실패, 나중에 다시 시도하세요.</string>
   <string name="add_show">쇼 추가</string>
   <string name="dont_add_show">Don\'t Add</string>
-  <string name="add_started">will appear in your show list shortly.</string>
+  <string name="add_started">가 곧 쇼 목록에 나타납니다.</string>
   <string name="add_success">성공적으로 추가 되었습니다.</string>
-  <string name="add_error_begin">Could not add \"</string>
-  <string name="add_error_end">\".</string>
+  <string name="add_error_begin">\"</string>
+  <string name="add_error_end">\"을 추가할 수 없습니다.</string>
   <string name="add_already_exists">이미 쇼 목록에 있습니다.</string>
   <string name="trending">트렌드</string>
   <string name="recommended">추천</string>
   <string name="library">라이브러리</string>
-  <string name="powered_by_thetvdb">powered by thetvdb.com</string>
-  <string name="powered_by_trakt">powered by trakt.tv</string>
+  <string name="powered_by_thetvdb">thetvdb.com 제공</string>
+  <string name="powered_by_trakt">trakt.tv 제공</string>
   <string name="first_list">즐겨찾기</string>
-  <string name="list_add">Add list</string>
-  <string name="list_title_hint">Name your list</string>
-  <string name="list_remove">Remove list</string>
-  <string name="list_manage">Manage list</string>
-  <string name="list_item_manage">Manage lists</string>
-  <string name="list_item_remove">Remove from list</string>
-  <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
+  <string name="list_add">목록 추가</string>
+  <string name="list_title_hint">목록의 이름을 적으세요</string>
+  <string name="list_remove">목록 제거</string>
+  <string name="list_manage">목록 관리</string>
+  <string name="list_item_manage">목록 관리</string>
+  <string name="list_item_remove">목록에서 제거</string>
+  <string name="list_empty">쇼, 시즌 혹은 에피소드를 목록에 추가할 수 있습니다.</string>
   <string name="prefs_category_basic">기본</string>
   <string name="prefs_category_sharing">공유</string>
   <string name="prefs_category_advanced">고급</string>
   <string name="prefs_category_about">대하여</string>
   <string name="help">도움말</string>
   <string name="preferences">설정</string>
-  <string name="pref_showsorting">Sort shows by…</string>
-  <string name="pref_onlyfuture">방영된 에피소드가 없습니다</string>
-  <string name="pref_onlyfuturesummary">Never display already aired episodes</string>
-  <string name="pref_onlyseasoneps">Hide special episodes</string>
-  <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
-  <string name="pref_seasonsorting">Sort seasons by…</string>
-  <string name="pref_episodesorting">Sort episodes by…</string>
+  <string name="pref_showsorting">쇼 정렬</string>
+  <string name="pref_onlyfuture">방영된 에피소드 보이지 않기</string>
+  <string name="pref_onlyfuturesummary">방영된 에피소드를 목록에 표시하지 않습니다</string>
+  <string name="pref_onlyseasoneps">스페셜 에피소드 숨기기</string>
+  <string name="pref_onlyseasonepssummary">시즌목록을 제외한 모든 목록에서 스페셜 에피소드를 나타내지 않습니다</string>
+  <string name="pref_seasonsorting">시즌 정렬</string>
+  <string name="pref_episodesorting">에피소드 정렬</string>
   <string name="backup">백업/복원</string>
-  <string name="backup_summary">Backup or restore your shows</string>
+  <string name="backup_summary">쇼 목록을 백업학거나 복원합니다</string>
   <string name="pref_language">콘텐츠 언어</string>
-  <string name="pref_number">Number format</string>
+  <string name="pref_number">에피소드 표시 형식</string>
   <string name="pref_offset">시차 수동 설정</string>
-  <string name="pref_offsetsummary">Offset air times by %s hours</string>
+  <string name="pref_offsetsummary">방영 시간을 %s시간 시차 변경하여 나타냅니다</string>
   <string name="pref_autoupdate">자동 업데이트 켜기</string>
-  <string name="pref_autoupdatesummary">시리즈가이드를 시작할 때 주기적으로 쇼 업데이트</string>
+  <string name="pref_autoupdatesummary">시리즈가이드를 시작할 때 주기적으로 쇼 목록을 업데이트합니다</string>
   <string name="pref_updatewifionly">와이파이가 켜져있을 때 업데이트</string>
   <string name="about">시리즈가이드에 대하여</string>
   <string name="pref_credits">만든이</string>
@@ -179,21 +179,21 @@
   <string name="pref_traktsync">trakt.tv와 동기화</string>
   <string name="feedback">사용자 의견 보내기</string>
   <string name="clear_cache">이미지 캐쉬 삭제</string>
-  <string name="clear_cache_summary">디바이스에 있는 모든 캐쉬된 이미지 제거</string>
+  <string name="clear_cache_summary">디바이스에 있는 모든 캐쉬된 이미지를 제거합니다</string>
   <string name="pref_hideimages">이미지 숨기기</string>
-  <string name="pref_hideimagessummary">Hide images from your photo gallery (reboot required)</string>
-  <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_ganalyticssummary">시리즈가이드 개선을 돕기위해 사용 이력을 추적</string>
-  <string name="sendusagedata">Send the developer usage statistics</string>
-  <string name="pref_upcominglimit">Upcoming shows within…</string>
+  <string name="pref_hideimagessummary">갤러리에 있는 이미지를 숨깁니다 (재부팅 필요)</string>
+  <string name="pref_ganalytics">구글 통계</string>
+  <string name="pref_ganalyticssummary">시리즈가이드를 개선시키는데 도움을 주기 위해 사용 이력을 추적합니다</string>
+  <string name="sendusagedata">개발자에게 사용 통계 보내기</string>
+  <string name="pref_upcominglimit">방영 예정 쇼 표기</string>
   <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
   <string name="backup_path"><b>백업 폴더</b></string>
   <string name="backup_version"><b>데이터베이스 버전</b></string>
   <string name="backup_failed_nosd">Can\'t backup. The backup folder is not available.</string>
-  <string name="backup_inprogress">Backing up database…</string>
+  <string name="backup_inprogress">데이터베이스 백업 중...</string>
   <string name="backup_success">성공적으로 백업하였습니다.</string>
   <string name="backup_failed">백업에 실패하였습니다.</string>
-  <string name="import_inprogress">Restoring database…</string>
+  <string name="import_inprogress">데이터베이스 복원 중...</string>
   <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
   <string name="import_failed_nofile">백업 파일이 없습니다.</string>
   <string name="import_failed_noread">백업 파일을 읽을 수 없습니다.</string>
@@ -202,25 +202,25 @@
   <string name="import_failed">백업을 복원하지 못했습니다.</string>
   <string name="backup_button">백업</string>
   <string name="import_button">복원</string>
-  <string name="backup_question">This will overwrite the current backup file in the backup folder!</string>
+  <string name="backup_question">이 백업 폴더에 현재 백업 파일을 덮어쓰게 됩니다!</string>
   <string name="backup_yes">백업</string>
   <string name="backup_no">Don\'t Backup</string>
-  <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
+  <string name="import_question">현재의 쇼 목록 손실 될 것입니다! 백업 폴더 안에 백업 파일이 있는지 확인하세요.</string>
   <string name="import_yes">복원</string>
   <string name="import_no">Don\'t Restore</string>
   <string name="checkin">체크인</string>
   <string name="checkin_searchhint">Type a show name</string>
-  <string name="checkin_empty">No matching shows</string>
+  <string name="checkin_empty">일치하는 쇼가 없습니다</string>
   <string name="checkin_hint">메세지 입력 (선택사항)</string>
   <string name="paste_episode">에피소드 붙여넣기</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
-  <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
+  <string name="getglue_authfailed">GetGlue 인증이 실패 하였습니다. 나중에 다시 시도 하세요.</string>
   <string name="menu_rate_trakt">평가 (trakt)</string>
   <string name="menu_share_others">Via other apps</string>
   <string name="traktcheckin_cancel">Override</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous checkin or wait %s and try again.</string>
-  <string name="traktcheckin_wait">I\'ll wait</string>
+  <string name="traktcheckin_wait">기다리겠소</string>
   <string name="oauthmessage">Authenticating SeriesGuide with GetGlue…</string>
   <string name="addtocalendar">캘린더에 추가</string>
   <string name="addtocalendar_failed">캘린더 이벤트를 만들 수 없습니다.</string>
@@ -230,9 +230,9 @@
   <string name="waitplease">잠시만 기다려주십시오</string>
   <string name="connect">연결</string>
   <string name="disconnect">연결 끊기</string>
-  <string name="trakt_error">Interaction with trakt failed</string>
+  <string name="trakt_error">trakt와 통신 실패</string>
   <string name="trakt_decryptfail">password could not be decrypted</string>
-  <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
+  <string name="trakt_generalerror">오류가 있습니다. 계정정보를 확인하여 재시도해주세요.</string>
   <string name="trakt_createaccount">새 계정 만들기</string>
   <string name="trakt_experimental">Only shows in your SeriesGuide show list are synced. \'Sync to SeriesGuide\' fetches watched flags from trakt. \'Sync to trakt\' sends watched flags to trakt.</string>
   <string name="trakt_synctodevice">시리즈가이드에 동기화</string>
@@ -242,29 +242,29 @@
   <string name="trakt_howto">To set up your devices:\n\n1. Connect or create your account below on every device.\n2. The first time, use the <b>Sync to trakt.tv</b> button to upload your existing shows.\n3. Add shows from trakt.tv by swiping to the <b>Library</b> tab in the <b>Add Show</b> screen.\n\nNow whenever SeriesGuide updates, your trakt.tv activity is downloaded to each device. This includes flagging episodes as watched or collected and check ins.</string>
   <string name="welcome_setuplanguage">언어 선택</string>
   <string name="welcome_setuptrakt">trakt에 연결</string>
-  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
+  <string name="welcome_traktmessage">track.tv 라이브러리와 친구의 상태를 확인하세요</string>
   <string name="dismiss">취소</string>
-  <string name="welcome_add_part1">To get started tap</string>
+  <string name="welcome_add_part1">시작하려면 아래를 탭하세요</string>
   <string name="welcome_add_part2">in the action bar.</string>
-  <string name="upcoming_show">%s is coming up</string>
+  <string name="upcoming_show">%s가 방영 예정입니다</string>
   <string name="upcoming_episodes">새 에피소드 방영예정</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>
   <string name="upcoming_display">방영예정인 쇼를 표시하려면 선택</string>
   <string name="pref_notifications">알림</string>
-  <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
+  <string name="pref_notificationssummary">곧 방영예정인 쇼를 알려줍니다</string>
   <string name="pref_ringtone">벨소리</string>
   <string name="pref_vibrate">진동</string>
-  <string name="pref_vibratesummary">알람 시 진동</string>
+  <string name="pref_vibratesummary">알림 시 진동</string>
   <string name="pref_theme">앱 테마</string>
-  <string name="choose_list">Choose activity list</string>
+  <string name="choose_list">표시할 목록 선택</string>
   <string name="hide_watched">시청한 에피소드 숨기기</string>
   <string name="add_widget">위젯 추가</string>
   <string name="widget_label">시리즈가이드</string>
-  <string name="smallwidget">SeriesGuide (small)</string>
-  <string name="bigwidget">SeriesGuide (middle)</string>
-  <string name="largewidget">SeriesGuide (large)</string>
+  <string name="smallwidget">시리즈가이드 (소형)</string>
+  <string name="bigwidget">시리즈가이드 (중형)</string>
+  <string name="largewidget">시리즈가이드 (대형)</string>
   <string name="download_stable">시리즈가이드 다운로드</string>
-  <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
+  <string name="betawarning"><b>주목!</b> 이 버전은 베타테스터를 위한 버전입니다! 기분이 찝찝하다면 아래의 안정판을 다운받으세요.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>다음 에피소드</item>
@@ -272,39 +272,39 @@
     <item>즐겨찾기 (다음에피)</item>
   </string-array>
   <string-array name="sesorting">
-    <item>Latest first</item>
-    <item>Oldest first</item>
+    <item>최근 방영 순</item>
+    <item>예전 방영 순</item>
   </string-array>
   <string-array name="epsorting">
-    <item>Latest first</item>
-    <item>오름차순</item>
+    <item>최근 방영 순</item>
+    <item>오래된 것부터</item>
     <item>안본 것부터</item>
     <item>A - Z</item>
     <item>Z - A</item>
-    <item>내림차순 (DVD)</item>
-    <item>오름차순 (DVD)</item>
+    <item>최근 방영 순 (DVD)</item>
+    <item>예전 방영 순 (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>now</item>
-    <item>a day</item>
-    <item>3 days</item>
-    <item>a week</item>
-    <item>two weeks</item>
-    <item>a month</item>
+    <item>지금</item>
+    <item>1일</item>
+    <item>3일</item>
+    <item>1주</item>
+    <item>2주</item>
+    <item>한달</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>모두</item>
     <item>즐겨찾기</item>
     <item>미시청/방영예정</item>
     <item>숨겨짐</item>
-    <item>Lists</item>
+    <item>목록</item>
   </string-array>
   <string-array name="themeSelection">
     <item>시리즈가이드 테마</item>
     <item>ICS 기본 테마</item>
   </string-array>
   <plurals name="votes">
-    <item quantity="one">%d vote</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="one">%d명이 투표</item>
+    <item quantity="other">%d명이 투표</item>
   </plurals>
 </resources>
