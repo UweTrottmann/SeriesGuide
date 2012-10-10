@@ -129,7 +129,7 @@
     <string name="update_single">Updating show…</string>
     <string name="update_delta">Updating outdated shows…</string>
     <string name="update_full">Updating all shows…</string>
-    <string name="update_success">Update successful.</string>
+    <string name="update_success">Shows updated.</string>
     <string name="update_offline">Updating failed, check your internet/Wi-Fi connection.</string>
     <string name="update_saxerror">Updating failed, try again later.</string>
     <string name="update_inprogress">An update is in progress, try again later.</string>
