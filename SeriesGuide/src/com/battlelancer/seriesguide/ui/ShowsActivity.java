@@ -136,7 +136,7 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         mPager = (ViewPager) findViewById(R.id.pager);
 
         // set up action bar
-        setUpActionBar(prefs, navSelection);
+        setUpActionBar();
 
         // set up view pager
         onChangePagerAdapter(navSelection);
@@ -153,7 +153,7 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         onDisplayTitleIndicator(navSelection);
     }
 
-    private void setUpActionBar(final SharedPreferences prefs, final int navSelection) {
+    private void setUpActionBar() {
         mIsLoaderStartAllowed = false;
 
         final ActionBar actionBar = getSupportActionBar();
@@ -171,19 +171,11 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         } else {
             /* use list (spinner) (! use different layouts for ABS) */
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-            ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(
-                    this, R.array.showfilter_list, R.layout.sherlock_spinner_item);
+            ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(this,
+                    R.array.showfilter_list, R.layout.sherlock_spinner_item);
             mActionBarList.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
             actionBar.setListNavigationCallbacks(mActionBarList, handler);
         }
-
-        mPager.post(new Runnable() {
-            @Override
-            public void run() {
-                // defer setting
-                actionBar.setSelectedNavigationItem(navSelection);
-            }
-        });
 
         // prevent the onNavigationItemSelected listener from reacting
         mIsLoaderStartAllowed = true;
@@ -192,6 +184,13 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
     @Override
     protected void onStart() {
         super.onStart();
+
+        // try to restore previously set show filter
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+        int navSelection = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
+        getSupportActionBar().setSelectedNavigationItem(navSelection);
+
         EasyTracker.getInstance().activityStart(this);
     }
 
@@ -297,8 +296,7 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                 Toast.makeText(this, getString(R.string.arttask_nosdcard), Toast.LENGTH_LONG)
                         .show();
             } else {
-                Toast.makeText(this, getString(R.string.arttask_start), Toast.LENGTH_LONG)
-                        .show();
+                Toast.makeText(this, getString(R.string.arttask_start), Toast.LENGTH_LONG).show();
                 mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
             }
             fireTrackerEvent("Fetch missing posters");
@@ -609,8 +607,8 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         } else {
             // displaying lists
             if (mIndicator.getVisibility() != View.VISIBLE) {
-                mIndicator.startAnimation(AnimationUtils.loadAnimation(this,
-                        android.R.anim.fade_in));
+                mIndicator.startAnimation(AnimationUtils
+                        .loadAnimation(this, android.R.anim.fade_in));
             }
             mIndicator.setVisibility(View.VISIBLE);
         }
