@@ -189,7 +189,9 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
         int navSelection = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
-        getSupportActionBar().setSelectedNavigationItem(navSelection);
+        if (getSupportActionBar().getSelectedNavigationIndex() != navSelection) {
+            getSupportActionBar().setSelectedNavigationItem(navSelection);
+        }
 
         EasyTracker.getInstance().activityStart(this);
     }
