@@ -143,6 +143,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_FAILED_COUNTER = "com.battlelancer.seriesguide.failedcounter";
 
+    public static final String KEY_ACTIVITYTAB = "com.battlelancer.seriesguide.activitytab";
+
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
 
     public static final String HELP_URL = "http://seriesgui.de/help";

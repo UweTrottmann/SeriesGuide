@@ -102,6 +102,10 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
             Bundle extras = intent.getExtras();
             if (extras != null) {
                 selection = extras.getInt(InitBundle.SELECTED_TAB, 0);
+            } else {
+                // use saved selection
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                selection = prefs.getInt(SeriesGuidePreferences.KEY_ACTIVITYTAB, 0);
             }
         }
         actionBar.setSelectedNavigationItem(selection);
@@ -209,6 +213,8 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
 
         private final ArrayList<Bundle> mArgs = new ArrayList<Bundle>();
 
+        private SharedPreferences mPrefs;
+
         public TabsAdapter(FragmentActivity activity, ActionBar actionBar, ViewPager pager) {
             super(activity.getSupportFragmentManager());
             mContext = activity;
@@ -216,6 +222,7 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
             mViewPager = pager;
             mViewPager.setAdapter(this);
             mViewPager.setOnPageChangeListener(this);
+            mPrefs = PreferenceManager.getDefaultSharedPreferences(activity);
         }
 
         public void addTab(ActionBar.Tab tab, Class<?> clss, Bundle args) {
@@ -242,6 +249,8 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
         @Override
         public void onPageSelected(int position) {
             mActionBar.setSelectedNavigationItem(position);
+            // save selected tab index
+            mPrefs.edit().putInt(SeriesGuidePreferences.KEY_ACTIVITYTAB, position).commit();
         }
 
         @Override
