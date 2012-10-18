@@ -10,15 +10,15 @@
   <string name="episode_notwatched">Nieobejrzany</string>
   <string name="specialseason">Odcinki specjalne</string>
   <string name="search_hint">Szukaj odcinków</string>
-  <string name="search_title">Pasujące odcinki</string>
+  <string name="search_title">Znalezione odcinki</string>
   <string name="share_episode">Udostępnij</string>
-  <string name="share_checkout">Sprawdź</string>
+  <string name="share_checkout">Odłącz się</string>
   <string name="search_description">Odcinki</string>
   <string name="description_overview">Opis</string>
   <string name="description_poster">Pokaż plakat</string>
   <string name="norating">brak danych</string>
   <string name="loading">Wczytywanie…</string>
-  <string name="done">Zrobione</string>
+  <string name="done">Wykonano</string>
   <string name="clear">Wyczyść</string>
   <string name="more">%s więcej</string>
   <string name="cancel">Anuluj</string>
@@ -28,7 +28,7 @@
   <string name="shouts">Krzyki</string>
   <string name="shout_hint">Wpisz krzyk (w języku angielskim)</string>
   <string name="shout">Krzyk!</string>
-  <string name="isspoiler">Ostrzeżenie o spojlerach!</string>
+  <string name="isspoiler">Ostrzeżenie o spoilerach!</string>
   <string name="no_shouts">Krzycz jako pierwszy!</string>
   <string name="shouts_for">Krzyków: %s</string>
   <string name="autorefresh">Odświeżanie automagicznie ;)</string>
@@ -52,8 +52,8 @@
   <string name="episode_directors">Reżyseria</string>
   <string name="episode_gueststars">Występy gościnne</string>
   <string name="episode_writers">Scenariusz</string>
-  <string name="show_airtimeunit">minut</string>
-  <string name="show_isalive">Będzie kontynuowany</string>
+  <string name="show_airtimeunit">min</string>
+  <string name="show_isalive">W emisji</string>
   <string name="show_isnotalive">Zakończony</string>
   <string name="lastEdit">Ostatnia edycja // TVDb</string>
   <string name="sort">Sortuj wg</string>
@@ -104,7 +104,7 @@
   <string name="update_single">Aktualizacja serialu</string>
   <string name="update_delta">Aktualizacja starych</string>
   <string name="update_full">Aktualizacja wszystkich</string>
-  <string name="update_success">Aktualizacja zakończona.</string>
+  <string name="update_success">Shows updated.</string>
   <string name="update_offline">Aktualizacja nie powiodła się. Sprawdź połączenie internetowe/Wi-Fi.</string>
   <string name="update_saxerror">Aktualizacja nie powiodła się. Spróbuj ponownie później.</string>
   <string name="update_inprogress">Aktualizacja w toku, spróbuj ponownie później.</string>
@@ -120,7 +120,7 @@
   <string name="season_watchcount">nieobejrzanych</string>
   <string name="season_allwatched">Wszystkie odcinki obejrzane</string>
   <string name="season_onenotwatched">odcinek nie obejrzany</string>
-  <string name="season_unaired">Nie emitowany w TV</string>
+  <string name="season_unaired">niewyemitowanych</string>
   <string name="oneotherepisode">inny odcinek</string>
   <string name="otherepisodes">innych odcinków</string>
   <string name="remaining">Pozostało: %s</string>
@@ -151,7 +151,7 @@
   <string name="prefs_category_basic">Podstawowe</string>
   <string name="prefs_category_sharing">Udostępnianie</string>
   <string name="prefs_category_advanced">Zaawansowane</string>
-  <string name="prefs_category_about">O aplikacji</string>
+  <string name="prefs_category_about">O programie</string>
   <string name="help">Pomoc</string>
   <string name="preferences">Ustawienia</string>
   <string name="pref_showsorting">Sortuj seriale wg</string>
@@ -161,8 +161,8 @@
   <string name="pref_onlyseasonepssummary">Odcinki specjalne będą widoczne tylko na liście sezonów</string>
   <string name="pref_seasonsorting">Sortuj sezony wg</string>
   <string name="pref_episodesorting">Sortuj odcinki wg</string>
-  <string name="backup">Kopia zapasowa/Przywracanie</string>
-  <string name="backup_summary">Archiwizuj lub przywróć listę seriali</string>
+  <string name="backup">Kopia zapasowa</string>
+  <string name="backup_summary">Utwórz/Przywróć kopię bazy seriali</string>
   <string name="pref_language">Język treści</string>
   <string name="pref_number">Format numeracji</string>
   <string name="pref_offset">Ręczne przesunięcie czasu</string>
@@ -172,7 +172,7 @@
   <string name="pref_updatewifionly">Aktual. tylko przez WiFi</string>
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Autorzy</string>
-  <string name="clearGetGlueCredentials">Rozłącz z GetGlue</string>
+  <string name="clearGetGlueCredentials">Odłącz GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Podepnij do GetGlue, aby ponownie połączyć</string>
   <string name="pref_trakt">Poświadczenia trakt.tv</string>
   <string name="pref_traktsummary">Dodaj lub edytuj dane logowania trakt.tv</string>
@@ -203,14 +203,14 @@
   <string name="backup_button">Kopia zapasowa</string>
   <string name="import_button">Przywróć</string>
   <string name="backup_question">Spowoduje to zastąpienie bieżącego pliku kopii zapasowej w folderze kopii zapasowej!</string>
-  <string name="backup_yes">Archiwizuj</string>
+  <string name="backup_yes">Kontynuuj</string>
   <string name="backup_no">Nie archiwizuj</string>
   <string name="import_question">Bieżąca lista seriali zostanie utracona! Upewnij się, że plik kopii zapasowej jest we wskazanym folderze.</string>
   <string name="import_yes">Przywróć</string>
   <string name="import_no">Nie przywracaj</string>
   <string name="checkin">Podepnij się</string>
   <string name="checkin_searchhint">Wpisz nazwę serialu</string>
-  <string name="checkin_empty">Brak odcinków</string>
+  <string name="checkin_empty">Nie odnaleziono serialu</string>
   <string name="checkin_hint">Wpisz wiadomość (opcjonalnie)</string>
   <string name="paste_episode">Wklej odcinek</string>
   <string name="checkinsuccess">Podpięty do %s na GetGlue.</string>
@@ -252,6 +252,8 @@
   <string name="upcoming_display">Wyświetl informacje o nadchodzących odcinkach</string>
   <string name="pref_notifications">Powiadomienia</string>
   <string name="pref_notificationssummary">Powiadamiaj o nadchodzących emisjach ulubionych seriali</string>
+  <string name="pref_notifyfavonly">Favorites only</string>
+  <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
   <string name="pref_ringtone">Dzwonek</string>
   <string name="pref_vibrate">Wibracja</string>
   <string name="pref_vibratesummary">Wibruj również przy wyświetlaniu powiadomienia</string>
@@ -288,9 +290,9 @@
     <item>Teraz</item>
     <item>Dziś</item>
     <item>3 dni</item>
-    <item>Tydzień</item>
-    <item>Dwa tygodnie</item>
-    <item>Miesiąc</item>
+    <item>Tygodnia</item>
+    <item>Dwóch tygodni</item>
+    <item>Miesiąca</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Wszystkie</item>

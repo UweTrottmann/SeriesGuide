@@ -104,7 +104,7 @@
   <string name="update_single">Serie bijwerken…</string>
   <string name="update_delta">Verouderde series bijwerken…</string>
   <string name="update_full">Alle series bijwerken…</string>
-  <string name="update_success">Bijwerken succesvol.</string>
+  <string name="update_success">Shows updated.</string>
   <string name="update_offline">Bijwerken is mislukt, controleer de internet/Wi-Fi verbinding.</string>
   <string name="update_saxerror">Bijwerken is mislukt, probeer het later opnieuw.</string>
   <string name="update_inprogress">Er wordt een update uitgevoerd, probeer het later opnieuw.</string>
@@ -213,7 +213,7 @@
   <string name="checkin_empty">Geen overeenkomende series</string>
   <string name="checkin_hint">Voer een bericht in (optioneel)</string>
   <string name="paste_episode">Aflevering plakken</string>
-  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
+  <string name="checkinsuccess">Ingecheckt in %s op GetGlue.</string>
   <string name="checkinfailed">GetGlue Check-in mislukt. Probeer de GetGlue verbinding te verbreken.</string>
   <string name="getglue_authfailed">GetGlue authenticatie mislukt. Probeer het later opnieuw.</string>
   <string name="menu_rate_trakt">Beoordelen (trakt)</string>
@@ -239,10 +239,10 @@
   <string name="trakt_synctotrakt">Synchroniseren naar trakt.tv</string>
   <string name="trakt_syncunseen">Inclusief onbekeken</string>
   <string name="trakt_howto_title">Voeg trakt.tv synchronistatie toe</string>
-  <string name="trakt_howto">To set up your devices:\n\n1. Connect or create your account below on every device.\n2. The first time, use the <b>Sync to trakt.tv</b> button to upload your existing shows.\n3. Add shows from trakt.tv by swiping to the <b>Library</b> tab in the <b>Add Show</b> screen.\n\nNow whenever SeriesGuide updates, your trakt.tv activity is downloaded to each device. This includes flagging episodes as watched or collected and check ins.</string>
+  <string name="trakt_howto">Om uw apparaten: \n\n1 te configureren. Login of maak hieronder uw account aan op elk apparaat. \n2. Gebruik de eerste keer de knop <b>Synchroniseren naar trakt.tv</b> voor het uploaden van uw bestaande shows. \n3. Voeg shows toe vanuit trakt.tv door te swipen naar het <b>bibliotheek</b> tabblad in het <b>Toevoegen Show</b> scherm. Telkens als SeriesGuide bijwerkt, wordt uw trakt.tv activiteit gedownload naar elk apparaat. Dit is inclusief het markeren van afleveringen als gezien of verzameld en ook checkins.</string>
   <string name="welcome_setuplanguage">Selecteer taal</string>
   <string name="welcome_setuptrakt">Verbinden met trakt</string>
-  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
+  <string name="welcome_traktmessage">Toegang tot uw bibliotheek en vrienden activiteit op trakt.tv</string>
   <string name="dismiss">Afwijzen</string>
   <string name="welcome_add_part1">Om te beginnen druk op</string>
   <string name="welcome_add_part2">in de action bar.</string>
@@ -252,6 +252,8 @@
   <string name="upcoming_display">Selecteer om toekomstige series weer te geven</string>
   <string name="pref_notifications">Meldingen</string>
   <string name="pref_notificationssummary">Favoriete series die binnenkort worden uitgezonden melden</string>
+  <string name="pref_notifyfavonly">Favorites only</string>
+  <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
   <string name="pref_ringtone">Ringtone</string>
   <string name="pref_vibrate">Trillen</string>
   <string name="pref_vibratesummary">Ook trillen als melding wordt weergegeven</string>

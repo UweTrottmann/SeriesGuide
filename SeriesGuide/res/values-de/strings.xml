@@ -104,7 +104,7 @@
   <string name="update_single">Aktualisiere Serie…</string>
   <string name="update_delta">Aktualisiere veraltete Serien…</string>
   <string name="update_full">Aktualisiere alle Serien…</string>
-  <string name="update_success">Aktualisierung erfolgreich.</string>
+  <string name="update_success">Serien aktualisiert.</string>
   <string name="update_offline">Aktualisierung ist fehlgeschlagen, überprüfen Sie Ihre Internet-/Wi-Fi-Verbindung.</string>
   <string name="update_saxerror">Aktualisierung fehlgeschlagen, versuchen Sie es später erneut.</string>
   <string name="update_inprogress">Eine Aktualisierung ist im Gange, versuchen Sie es später erneut.</string>
@@ -252,6 +252,8 @@
   <string name="upcoming_display">Auswählen um kommende Serien anzuzeigen</string>
   <string name="pref_notifications">Benachrichtigungen</string>
   <string name="pref_notificationssummary">Benachr. über in Kürze laufende Favoriten</string>
+  <string name="pref_notifyfavonly">Nur Favoriten</string>
+  <string name="pref_notifyfavonlysummary">Nur Benachrichtigungen für Favoriten anzeigen</string>
   <string name="pref_ringtone">Klingelton</string>
   <string name="pref_vibrate">Vibrieren</string>
   <string name="pref_vibratesummary">Bei Anzeige einer Benachrichtigung vibrieren</string>

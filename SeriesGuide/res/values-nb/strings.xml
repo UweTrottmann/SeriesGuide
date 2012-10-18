@@ -31,7 +31,7 @@
   <string name="isspoiler">Spoileradvarsel!</string>
   <string name="no_shouts">Be the first to shout!</string>
   <string name="shouts_for">Shouts for %s</string>
-  <string name="autorefresh">Oppdaterer automagisk</string>
+  <string name="autorefresh">Oppdateres automagisk</string>
   <string name="love">Helt ninja!</string>
   <string name="hate">Svak saus :(</string>
   <string name="rating2">Forferdelig</string>
@@ -104,7 +104,7 @@
   <string name="update_single">Oppdaterer serie...</string>
   <string name="update_delta">Oppdaterer utdaterte serier...</string>
   <string name="update_full">Oppdaterer alle seriene...</string>
-  <string name="update_success">Oppdatering vellykket.</string>
+  <string name="update_success">Shows updated.</string>
   <string name="update_offline">Oppdatering mislyktes, sjekk internett/Wi-Fi koblingen din.</string>
   <string name="update_saxerror">Oppdatering mislyktes, prøv på nytt senere.</string>
   <string name="update_inprogress">En oppdatering er i gang, prøv på nytt senere.</string>
@@ -112,7 +112,7 @@
   <string name="update_traktactivity">Laster trakt aktiviteter...</string>
   <string name="menu_updateart">Last plakater</string>
   <string name="arttask_incomplete">Noen plakater ble ikke lasted, prøv på nytt senere.</string>
-  <string name="arttask_start">Laster plakater...</string>
+  <string name="arttask_start">Oppdaterer plakater...</string>
   <string name="arttask_nosdcard">Lasting av plakater krever ekstern lagring (SD-kort).</string>
   <string name="show_network">på</string>
   <string name="show_noairtime">Ingen sendetid tilgjengelig</string>
@@ -136,7 +136,7 @@
   <string name="add_error_end">\"</string>
   <string name="add_already_exists">er allerede i listen.</string>
   <string name="trending">Populære</string>
-  <string name="recommended">Anbefalt</string>
+  <string name="recommended">Anbefalte</string>
   <string name="library">Bibliotek</string>
   <string name="powered_by_thetvdb">drevet av thetvdb.com</string>
   <string name="powered_by_trakt">drevet at travkt.tv</string>
@@ -212,7 +212,7 @@
   <string name="checkin_searchhint">Skriv inn et serienavn</string>
   <string name="checkin_empty">Ingen treff</string>
   <string name="checkin_hint">Skriv inn en melding (valgfritt)</string>
-  <string name="paste_episode">Paste episode</string>
+  <string name="paste_episode">Lim inn episode</string>
   <string name="checkinsuccess">Sjekket inn %s på GetGlue.</string>
   <string name="checkinfailed">GetGlue sjekk inn mislyktes. Prøv å koble fra GetGlue.</string>
   <string name="getglue_authfailed">GetGlue autentisering mislyktes. Prøv igjen senere.</string>
@@ -237,9 +237,9 @@
   <string name="trakt_experimental">Bare serier i SeriesGuide listen din blir synkronisert. \'Synkroniser til SeriesGuiede\' henter sette episoder fra trakt. \'Synkroniser til trakt\' sender sette episoder til trakt.</string>
   <string name="trakt_synctodevice">Synkroniser til SeriesGuide</string>
   <string name="trakt_synctotrakt">Synkroniser til trakt.tv</string>
-  <string name="trakt_syncunseen">Include unwatched flags</string>
+  <string name="trakt_syncunseen">Inkluder usette</string>
   <string name="trakt_howto_title">Sett opp trakt.tv synkronisering</string>
-  <string name="trakt_howto">To set up your devices:\n\n1. Connect or create your account below on every device.\n2. The first time, use the <b>Sync to trakt.tv</b> button to upload your existing shows.\n3. Add shows from trakt.tv by swiping to the <b>Library</b> tab in the <b>Add Show</b> screen.\n\nNow whenever SeriesGuide updates, your trakt.tv activity is downloaded to each device. This includes flagging episodes as watched or collected and check ins.</string>
+  <string name="trakt_howto">Slik setter du opp enhetne\n\n1. Koble til eller opprett en kontor under for hver enhet.\n2. Første gangener bruker du <b>Synkroniser til trakt.tv</b> knappen for å laste opp seriene dine.\n3. Legg til serier fra trakt.tv ved å gå til katagorien <b>bibliotek</b> i <b>Legg til</b> skjermbildet.\n\nHver gang SeriesGuide oppdateres blir nå dine trakt.tv aktiviteter lastet ned til hver enhet. Dette inkluderer markering av episoder som sett, samlet og sjekk inn.</string>
   <string name="welcome_setuplanguage">Velg språk</string>
   <string name="welcome_setuptrakt">Koble til trakt</string>
   <string name="welcome_traktmessage">Få tilgang til ditt trakt.tv bibliotek og venners aktiviteter</string>
@@ -252,12 +252,14 @@
   <string name="upcoming_display">Velg for å vise kommende serier</string>
   <string name="pref_notifications">Varsler</string>
   <string name="pref_notificationssummary">Varsle om kommende favorittserier</string>
+  <string name="pref_notifyfavonly">Favorites only</string>
+  <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
   <string name="pref_ringtone">Ringetone</string>
   <string name="pref_vibrate">Vibrer</string>
   <string name="pref_vibratesummary">Vibrer også ved visning av varsel</string>
   <string name="pref_theme">App tema</string>
   <string name="choose_list">Velg aktivitetliste</string>
-  <string name="hide_watched">Skjul viste episoder</string>
+  <string name="hide_watched">Skjul sette episoder</string>
   <string name="add_widget">Legg til modul</string>
   <string name="widget_label">SeriesGuide</string>
   <string name="smallwidget">SeriesGuide (liten)</string>
