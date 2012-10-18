@@ -13,7 +13,7 @@
         android:title="@string/backup" >
         <intent
             android:targetClass="com.battlelancer.seriesguide.ui.BackupDeleteActivity"
-            android:targetPackage="com.battlelancer.seriesguide.beta" />
+            android:targetPackage="@string/package_name" />
     </Preference>
 
     <ListPreference
