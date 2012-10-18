@@ -230,7 +230,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                         getActivity(),
                         mShowCursor.getString(ShowQuery.SHOW_TITLE),
                         buildEpisodeString(seasonNumber, episodeNumber,
-                                episodeTitle), mShowCursor.getLong(ShowQuery.SHOW_AIRSTIME),
+                                episodeTitle), mEpisodeCursor.getLong(EpisodeQuery.FIRSTAIREDMS),
                         mShowCursor.getInt(ShowQuery.SHOW_RUNTIME));
             }
             fireTrackerEvent("Add to calendar");
@@ -301,7 +301,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     private void onShowShowInfo(View sourceView) {
         Intent i = new Intent(getActivity(), ShowInfoActivity.class);
         i.putExtra(ShowInfoActivity.InitBundle.SHOW_TVDBID, getShowId());
-    
+
         if (AndroidUtils.isJellyBeanOrHigher()) {
             Bundle options = ActivityOptions.makeScaleUpAnimation(sourceView, 0, 0,
                     sourceView.getWidth(),
@@ -317,30 +317,30 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 && mEpisodeCursor.moveToFirst()) {
             final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
             final int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-    
+
             // build share data
             Bundle shareData = new Bundle();
             shareData.putInt(ShareItems.SEASON, seasonNumber);
             shareData.putInt(ShareItems.EPISODE, episodeNumber);
             shareData.putInt(ShareItems.TVDBID, getShowId());
-    
+
             String episodestring = buildEpisodeString(seasonNumber, episodeNumber,
                     mEpisodeCursor.getString(EpisodeQuery.TITLE));
             shareData.putString(ShareItems.EPISODESTRING, episodestring);
-    
+
             final StringBuilder shareString = new
                     StringBuilder(getString(R.string.share_checkout));
             shareString.append(" \"").append(mShowCursor.getString(ShowQuery.SHOW_TITLE));
             shareString.append(" - ").append(episodestring).append("\"");
             shareData.putString(ShareItems.SHARESTRING, shareString.toString());
-    
+
             String imdbId = mEpisodeCursor.getString(EpisodeQuery.IMDBID);
             if (TextUtils.isEmpty(imdbId)) {
                 // fall back to show IMDb id
                 imdbId = mShowCursor.getString(ShowQuery.SHOW_IMDBID);
             }
             shareData.putString(ShareItems.IMDBID, imdbId);
-    
+
             ShareUtils.onShareEpisode(getActivity(), shareData, shareMethod, this);
         }
     }
@@ -680,7 +680,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
     private void onLoadImage(String imagePath) {
         final FrameLayout container = (FrameLayout) getView().findViewById(R.id.imageContainer);
-    
+
         // clean up a previous task
         if (mArtTask != null) {
             mArtTask.cancel(true);
