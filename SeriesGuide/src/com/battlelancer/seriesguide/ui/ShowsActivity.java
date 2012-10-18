@@ -85,12 +85,6 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
 
     private static final String STATE_ART_INDEX = "seriesguide.art.index";
 
-    private static final int VER_TRAKT_SEC_CHANGES = 131;
-
-    private static final int VER_SUMMERTIME_FIX = 155;
-
-    private static final int VER_HIGHRES_THUMBS = 177;
-
     private static final int LIST_NAV_ITEM_POSITION = 4;
 
     private Bundle mSavedState;
@@ -528,6 +522,23 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                     PackageManager.GET_META_DATA).versionCode;
             if (currentVersion > lastVersion) {
                 Editor editor = prefs.edit();
+                
+                int VER_TRAKT_SEC_CHANGES;
+                int VER_SUMMERTIME_FIX;
+                int VER_HIGHRES_THUMBS;
+                if(getPackageName().contains("beta")){
+                    VER_TRAKT_SEC_CHANGES = 131;
+                    VER_SUMMERTIME_FIX = 155;
+                    VER_HIGHRES_THUMBS = 177;
+                } else if (getPackageName().contains("x")) {
+                    VER_TRAKT_SEC_CHANGES = 129;
+                    VER_SUMMERTIME_FIX = 136;
+                    VER_HIGHRES_THUMBS = 141;
+                } else {
+                    VER_TRAKT_SEC_CHANGES = 129;
+                    VER_SUMMERTIME_FIX = 136;
+                    VER_HIGHRES_THUMBS = 140;
+                }
 
                 if (lastVersion < VER_TRAKT_SEC_CHANGES) {
                     // clear trakt credetials
