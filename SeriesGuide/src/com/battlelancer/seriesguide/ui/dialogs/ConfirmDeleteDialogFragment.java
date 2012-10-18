@@ -26,7 +26,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
-import com.battlelancer.seriesguide.R;
+import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.google.analytics.tracking.android.EasyTracker;

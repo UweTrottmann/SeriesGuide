@@ -21,6 +21,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import com.uwetrottmann.seriesguide.R;
+
 public class WatchedBox extends ImageView {
 
     private boolean checked;

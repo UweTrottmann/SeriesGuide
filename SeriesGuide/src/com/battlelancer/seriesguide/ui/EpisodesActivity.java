@@ -32,7 +32,7 @@ import android.widget.ImageView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.R;
+import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;

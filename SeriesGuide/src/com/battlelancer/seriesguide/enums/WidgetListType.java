@@ -3,7 +3,7 @@ package com.battlelancer.seriesguide.enums;
 
 import android.util.SparseArray;
 
-import com.battlelancer.seriesguide.R;
+import com.uwetrottmann.seriesguide.R;
 
 public enum WidgetListType {
     UPCOMING(0, R.id.radioUpcoming), RECENT(1, R.id.radioRecent);

@@ -21,7 +21,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.battlelancer.seriesguide.R;
+import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.google.analytics.tracking.android.EasyTracker;

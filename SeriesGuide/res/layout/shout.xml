@@ -12,7 +12,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="@dimen/default_padding"
-        android:src="@drawable/icon" />
+        android:src="@drawable/ic_launcher" />
 
     <LinearLayout
         android:id="@+id/userstrip"

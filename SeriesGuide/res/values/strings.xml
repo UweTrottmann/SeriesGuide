@@ -129,7 +129,7 @@
     <string name="update_single">Updating show…</string>
     <string name="update_delta">Updating outdated shows…</string>
     <string name="update_full">Updating all shows…</string>
-    <string name="update_success">Update successful.</string>
+    <string name="update_success">Shows updated.</string>
     <string name="update_offline">Updating failed, check your internet/Wi-Fi connection.</string>
     <string name="update_saxerror">Updating failed, try again later.</string>
     <string name="update_inprogress">An update is in progress, try again later.</string>
@@ -173,7 +173,7 @@
     <string name="library">Library</string>
     <string name="powered_by_thetvdb">powered by thetvdb.com</string>
     <string name="powered_by_trakt">powered by trakt.tv</string>
-    
+
     <!-- Lists -->
     <string name="first_list">Favorites</string>
     <string name="list_add">Add list</string>
@@ -335,6 +335,8 @@
     <string name="upcoming_display">Select to display upcoming shows</string>
     <string name="pref_notifications">Notifications</string>
     <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
+    <string name="pref_notifyfavonly">Favorites only</string>
+    <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
     <string name="pref_ringtone">Ringtone</string>
     <string name="pref_vibrate">Vibrate</string>
     <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
@@ -362,6 +364,7 @@
 
     <!-- REMOVE before uploading to crowdin -->
     <string name="app_name">SeriesGuide</string>
+    <string name="package_name">com.battlelancer.seriesguide</string>
     <string name="helptranslate">Help translate SeriesGuide</string>
     <string name="imdb">IMDb</string>
     <string name="tvdb">TVDb</string>
@@ -370,7 +373,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">Improvements\n\nFast scrolling in episode and season lists.\n\nInfo toasts for watched, collected, calendar buttons on long click.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">Remembering\n\nRemember the last active activity tab.\n\nUse correct date when creating calendar event in overview.\n\nShow list action items should not disappear anymore.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>

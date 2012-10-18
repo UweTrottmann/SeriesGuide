@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.battlelancer.seriesguide.R;
+import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.ui.OnListsChangedListener;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;

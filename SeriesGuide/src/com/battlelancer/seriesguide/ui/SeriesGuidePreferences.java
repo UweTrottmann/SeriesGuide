@@ -39,7 +39,6 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
@@ -48,6 +47,7 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.GoogleAnalytics;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 
 import java.util.List;
 
@@ -125,6 +125,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_NOTIFICATIONS_ENABLED = "com.battlelancer.seriesguide.notifications";
 
+    public static final String KEY_NOTIFICATIONS_FAVONLY = "com.battlelancer.seriesguide.notifications.favonly";
+
     public static final String KEY_VIBRATE = "com.battlelancer.seriesguide.notifications.vibrate";
 
     public static final String KEY_RINGTONE = "com.battlelancer.seriesguide.notifications.ringtone";
@@ -138,6 +140,10 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     public static final String KEY_THEME = "com.battlelancer.seriesguide.theme";
 
     public static final String KEY_LASTBACKUP = "com.battlelancer.seriesguide.lastbackup";
+
+    public static final String KEY_FAILED_COUNTER = "com.battlelancer.seriesguide.failedcounter";
+
+    public static final String KEY_ACTIVITYTAB = "com.battlelancer.seriesguide.activitytab";
 
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
 
@@ -164,7 +170,9 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             addPreferencesFromResource(R.xml.settings_basic);
             setupBasicSettings(this, findPreference(KEY_ONLY_FUTURE_EPISODES),
                     findPreference(KEY_ONLY_SEASON_EPISODES),
-                    findPreference(KEY_NOTIFICATIONS_ENABLED), findPreference(KEY_LANGUAGE));
+                    findPreference(KEY_NOTIFICATIONS_ENABLED),
+                    findPreference(KEY_NOTIFICATIONS_FAVONLY), findPreference(KEY_VIBRATE),
+                    findPreference(KEY_RINGTONE), findPreference(KEY_LANGUAGE));
         } else if (action != null && action.equals(ACTION_PREFS_SHARING)) {
             addPreferencesFromResource(R.xml.settings_sharing);
             setupSharingSettings(this, findPreference(KEY_GETGLUE_DISCONNECT));
@@ -203,7 +211,10 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     }
 
     protected static void setupBasicSettings(final Context context, Preference noAiredPref,
-            Preference noSpecialsPref, Preference notificationsPref, Preference languagePref) {
+            Preference noSpecialsPref, Preference notificationsPref,
+            final Preference notificationsFavOnlyPref, final Preference vibratePref,
+            final Preference ringtonePref,
+            Preference languagePref) {
         // No aired episodes
         noAiredPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
@@ -240,7 +251,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             notificationsPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    if (((CheckBoxPreference) preference).isChecked()) {
+                    boolean isChecked = ((CheckBoxPreference) preference).isChecked();
+                    if (isChecked) {
                         EasyTracker.getTracker().trackEvent(TAG, "Notifications", "Enable",
                                 (long) 0);
                     } else {
@@ -248,6 +260,18 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                                 (long) 0);
                     }
 
+                    notificationsFavOnlyPref.setEnabled(isChecked);
+                    vibratePref.setEnabled(isChecked);
+                    ringtonePref.setEnabled(isChecked);
+
+                    Utils.runNotificationService(context);
+                    return true;
+                }
+            });
+            notificationsFavOnlyPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    // run notifications service to update next notification
                     Utils.runNotificationService(context);
                     return true;
                 }
@@ -255,6 +279,9 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         } else {
             notificationsPref.setEnabled(false);
             notificationsPref.setSummary(R.string.onlyx);
+            notificationsFavOnlyPref.setEnabled(false);
+            vibratePref.setEnabled(false);
+            ringtonePref.setEnabled(false);
         }
 
         setListPreferenceSummary((ListPreference) languagePref);
@@ -419,7 +446,9 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 addPreferencesFromResource(R.xml.settings_basic);
                 setupBasicSettings(getActivity(), findPreference(KEY_ONLY_FUTURE_EPISODES),
                         findPreference(KEY_ONLY_SEASON_EPISODES),
-                        findPreference(KEY_NOTIFICATIONS_ENABLED), findPreference(KEY_LANGUAGE));
+                        findPreference(KEY_NOTIFICATIONS_ENABLED),
+                        findPreference(KEY_NOTIFICATIONS_FAVONLY), findPreference(KEY_VIBRATE),
+                        findPreference(KEY_RINGTONE), findPreference(KEY_LANGUAGE));
             } else if ("sharing".equals(settings)) {
                 addPreferencesFromResource(R.xml.settings_sharing);
                 setupSharingSettings(getActivity(), findPreference(KEY_GETGLUE_DISCONNECT));

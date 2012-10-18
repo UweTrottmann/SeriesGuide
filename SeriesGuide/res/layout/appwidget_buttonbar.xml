@@ -14,7 +14,7 @@
         android:clickable="true"
         android:focusable="true"
         android:padding="5dp"
-        android:src="@drawable/icon" />
+        android:src="@drawable/ic_launcher" />
 
     <ImageButton
         android:id="@+id/ImageButtonWidget"

@@ -35,7 +35,7 @@ import android.text.SpannableStringBuilder;
 import android.text.format.DateUtils;
 import android.text.style.ForegroundColorSpan;
 
-import com.battlelancer.seriesguide.R;
+import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
@@ -62,9 +62,9 @@ public class NotificationService extends IntentService {
     private static final String SORTING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC,"
             + Episodes.NUMBER + " ASC";
 
-    // only within time frame, unwatched episodes, only of favorite shows
+    // only within time frame, unwatched episodes
     private static final String SELECTION = Episodes.FIRSTAIREDMS + ">=?"
-            + Episodes.SELECTION_NOWATCHED + Shows.SELECTION_FAVORITES;
+            + Episodes.SELECTION_NOWATCHED;
 
     interface NotificationQuery {
         int _ID = 0;
@@ -112,6 +112,12 @@ public class NotificationService extends IntentService {
         final long fakeNow = Utils.getFakeCurrentTime(prefs);
         StringBuilder selection = new StringBuilder(SELECTION);
 
+        boolean isFavsOnly = prefs.getBoolean(SeriesGuidePreferences.KEY_NOTIFICATIONS_FAVONLY,
+                true);
+        if (isFavsOnly) {
+            selection.append(Shows.SELECTION_FAVORITES);
+        }
+
         boolean isNoSpecials = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES,
                 false);
         if (isNoSpecials) {
@@ -125,7 +131,7 @@ public class NotificationService extends IntentService {
                 }, SORTING);
 
         if (upcomingEpisodes != null) {
-            // look if we have found something to notify about
+            // look if we have something to notify about
             int count = 0;
             final long inOneHour = fakeNow + DateUtils.HOUR_IN_MILLIS;
             while (upcomingEpisodes.moveToNext()) {
@@ -137,7 +143,7 @@ public class NotificationService extends IntentService {
                 }
             }
 
-            // look if we have found something to notify about
+            // notify if we found any episodes
             if (count > 0) {
 
                 final Context context = getApplicationContext();

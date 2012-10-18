@@ -30,6 +30,11 @@
             android:summary="@string/pref_notificationssummary"
             android:title="@string/pref_notifications" />
         <CheckBoxPreference
+            android:defaultValue="True"
+            android:key="com.battlelancer.seriesguide.notifications.favonly"
+            android:summary="@string/pref_notifyfavonlysummary"
+            android:title="@string/pref_notifyfavonly" />
+        <CheckBoxPreference
             android:defaultValue="False"
             android:key="com.battlelancer.seriesguide.notifications.vibrate"
             android:summary="@string/pref_vibratesummary"

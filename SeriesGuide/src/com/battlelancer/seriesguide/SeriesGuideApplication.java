@@ -25,6 +25,7 @@ import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 
 /**
  * Initializes settings and services and on pre-ICS implements actions for low
@@ -34,9 +35,14 @@ import com.uwetrottmann.androidutils.AndroidUtils;
  */
 public class SeriesGuideApplication extends Application {
 
+    public static String CONTENT_AUTHORITY;
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // set provider authority
+        CONTENT_AUTHORITY = getPackageName() + ".provider";
 
         // initialize settings on first run
         PreferenceManager.setDefaultValues(this, R.xml.settings_basic, false);

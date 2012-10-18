@@ -25,8 +25,8 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.R;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.seriesguide.R;
 
 /**
  * Handles search intents and displays a {@link SearchFragment} when needed or
@@ -104,10 +104,10 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_search:
-                onSearchRequested();
-                return true;
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_search) {
+            onSearchRequested();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

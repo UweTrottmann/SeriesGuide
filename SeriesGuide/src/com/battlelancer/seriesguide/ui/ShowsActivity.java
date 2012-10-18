@@ -41,12 +41,12 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
 import com.battlelancer.seriesguide.adapters.ShowsPagerAdapter;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
+import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
 import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
 import com.battlelancer.seriesguide.util.CompatActionBarNavListener;
@@ -57,6 +57,7 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TabPageIndicator;
 import com.viewpagerindicator.TabPageIndicator.OnTabReselectedListener;
 
@@ -84,11 +85,11 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
 
     private static final String STATE_ART_INDEX = "seriesguide.art.index";
 
-    private static final int VER_TRAKT_SEC_CHANGES = 129;
+    private static final int VER_TRAKT_SEC_CHANGES = 131;
 
-    private static final int VER_SUMMERTIME_FIX = 136;
+    private static final int VER_SUMMERTIME_FIX = 155;
 
-    private static final int VER_HIGHRES_THUMBS = 140;
+    private static final int VER_HIGHRES_THUMBS = 177;
 
     private static final int LIST_NAV_ITEM_POSITION = 4;
 
@@ -135,7 +136,7 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         mPager = (ViewPager) findViewById(R.id.pager);
 
         // set up action bar
-        setUpActionBar(prefs, navSelection);
+        setUpActionBar();
 
         // set up view pager
         onChangePagerAdapter(navSelection);
@@ -152,7 +153,7 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         onDisplayTitleIndicator(navSelection);
     }
 
-    private void setUpActionBar(final SharedPreferences prefs, final int navSelection) {
+    private void setUpActionBar() {
         mIsLoaderStartAllowed = false;
 
         final ActionBar actionBar = getSupportActionBar();
@@ -170,19 +171,11 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         } else {
             /* use list (spinner) (! use different layouts for ABS) */
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-            ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(
-                    this, R.array.showfilter_list, R.layout.sherlock_spinner_item);
+            ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(this,
+                    R.array.showfilter_list, R.layout.sherlock_spinner_item);
             mActionBarList.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
             actionBar.setListNavigationCallbacks(mActionBarList, handler);
         }
-
-        mPager.post(new Runnable() {
-            @Override
-            public void run() {
-                // defer setting
-                actionBar.setSelectedNavigationItem(navSelection);
-            }
-        });
 
         // prevent the onNavigationItemSelected listener from reacting
         mIsLoaderStartAllowed = true;
@@ -191,6 +184,15 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
     @Override
     protected void onStart() {
         super.onStart();
+
+        // try to restore previously set show filter
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+        int navSelection = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
+        if (getSupportActionBar().getSelectedNavigationIndex() != navSelection) {
+            getSupportActionBar().setSelectedNavigationItem(navSelection);
+        }
+
         EasyTracker.getInstance().activityStart(this);
     }
 
@@ -269,87 +271,69 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.menu_quickcheckin: {
-                startActivity(new Intent(this, CheckinActivity.class));
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_quickcheckin) {
+            startActivity(new Intent(this, CheckinActivity.class));
+            return true;
+        } else if (itemId == R.id.menu_search) {
+            onSearchRequested();
+            fireTrackerEvent("Search");
+            return true;
+        } else if (itemId == R.id.menu_update) {
+            performUpdateTask(false, null);
+            fireTrackerEvent("Update");
+            return true;
+        } else if (itemId == R.id.menu_upcoming) {
+            startActivity(new Intent(this, UpcomingRecentActivity.class));
+            return true;
+        } else if (itemId == R.id.menu_new_show) {
+            startActivity(new Intent(this, AddActivity.class));
+            return true;
+        } else if (itemId == R.id.menu_updateart) {
+            if (isArtTaskRunning()) {
                 return true;
             }
-            case R.id.menu_search:
-                onSearchRequested();
-
-                fireTrackerEvent("Search");
-                return true;
-            case R.id.menu_update:
-                performUpdateTask(false, null);
-
-                fireTrackerEvent("Update");
-                return true;
-            case R.id.menu_upcoming:
-                startActivity(new Intent(this, UpcomingRecentActivity.class));
-                return true;
-            case R.id.menu_new_show:
-                startActivity(new Intent(this, AddActivity.class));
-                return true;
-            case R.id.menu_updateart:
-                if (isArtTaskRunning()) {
-                    return true;
-                }
-
-                // already fail if there is no external storage
-                if (!AndroidUtils.isExtStorageAvailable()) {
-                    Toast.makeText(this, getString(R.string.arttask_nosdcard), Toast.LENGTH_LONG)
-                            .show();
-                } else {
-                    Toast.makeText(this, getString(R.string.arttask_start), Toast.LENGTH_LONG)
-                            .show();
-                    mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
-                }
-
-                fireTrackerEvent("Fetch missing posters");
-                return true;
-            case R.id.menu_preferences:
-                startActivity(new Intent(this, SeriesGuidePreferences.class));
-
-                return true;
-            case R.id.menu_fullupdate:
-                performUpdateTask(true, null);
-
-                fireTrackerEvent("Full Update");
-                return true;
-            case R.id.menu_feedback: {
-                final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-                intent.setType("plain/text");
-                intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
-                        SeriesGuidePreferences.SUPPORT_MAIL
-                });
-                intent.putExtra(android.content.Intent.EXTRA_SUBJECT,
-                        "SeriesGuide " + Utils.getVersion(this) + " Feedback");
-                intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
-
-                startActivity(Intent.createChooser(intent, "Send mail..."));
-
-                fireTrackerEvent("Feedback");
-                return true;
+            // already fail if there is no external storage
+            if (!AndroidUtils.isExtStorageAvailable()) {
+                Toast.makeText(this, getString(R.string.arttask_nosdcard), Toast.LENGTH_LONG)
+                        .show();
+            } else {
+                Toast.makeText(this, getString(R.string.arttask_start), Toast.LENGTH_LONG).show();
+                mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
             }
-            case R.id.menu_help: {
-                Intent myIntent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse(SeriesGuidePreferences.HELP_URL));
-
-                startActivity(myIntent);
-
-                fireTrackerEvent("Help");
-                return true;
-            }
-            case R.id.menu_list_add: {
-                AddListDialogFragment.showAddListDialog(getSupportFragmentManager());
-
-                fireTrackerEvent("Add list");
-                return true;
-            }
-            default: {
-                return super.onOptionsItemSelected(item);
-            }
+            fireTrackerEvent("Fetch missing posters");
+            return true;
+        } else if (itemId == R.id.menu_preferences) {
+            startActivity(new Intent(this, SeriesGuidePreferences.class));
+            return true;
+        } else if (itemId == R.id.menu_fullupdate) {
+            performUpdateTask(true, null);
+            fireTrackerEvent("Full Update");
+            return true;
+        } else if (itemId == R.id.menu_feedback) {
+            final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+            intent.setType("plain/text");
+            intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
+                    SeriesGuidePreferences.SUPPORT_MAIL
+            });
+            intent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+                    "SeriesGuide " + Utils.getVersion(this) + " Feedback");
+            intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
+            startActivity(Intent.createChooser(intent, "Send mail..."));
+            fireTrackerEvent("Feedback");
+            return true;
+        } else if (itemId == R.id.menu_help) {
+            Intent myIntent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse(SeriesGuidePreferences.HELP_URL));
+            startActivity(myIntent);
+            fireTrackerEvent("Help");
+            return true;
+        } else if (itemId == R.id.menu_list_add) {
+            AddListDialogFragment.showAddListDialog(getSupportFragmentManager());
+            fireTrackerEvent("Add list");
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -561,8 +545,10 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                     scheduleAllShowsUpdate();
                 }
 
-                // BETA warning dialog switch
-                // ChangesDialogFragment.show(getSupportFragmentManager());
+                if (getPackageName().contains("beta")) {
+                    // BETA info dialog
+                    ChangesDialogFragment.show(getSupportFragmentManager());
+                }
 
                 // set this as lastVersion
                 editor.putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion);
@@ -623,8 +609,8 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         } else {
             // displaying lists
             if (mIndicator.getVisibility() != View.VISIBLE) {
-                mIndicator.startAnimation(AnimationUtils.loadAnimation(this,
-                        android.R.anim.fade_in));
+                mIndicator.startAnimation(AnimationUtils
+                        .loadAnimation(this, android.R.anim.fade_in));
             }
             mIndicator.setVisibility(View.VISIBLE);
         }

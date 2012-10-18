@@ -59,6 +59,7 @@ import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays a list of episodes of a season.
@@ -350,24 +351,21 @@ public class EpisodesFragment extends SherlockListFragment implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.mark_all:
-                fireTrackerEvent("Mark all episodes");
-
-                onFlagSeasonWatched(true);
-                return true;
-            case R.id.unmark_all:
-                fireTrackerEvent("Unmark all episodes");
-
-                onFlagSeasonWatched(false);
-                return true;
-            case R.id.menu_epsorting:
-                fireTrackerEvent("Sort episodes");
-
-                showSortDialog();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.mark_all) {
+            fireTrackerEvent("Mark all episodes");
+            onFlagSeasonWatched(true);
+            return true;
+        } else if (itemId == R.id.unmark_all) {
+            fireTrackerEvent("Unmark all episodes");
+            onFlagSeasonWatched(false);
+            return true;
+        } else if (itemId == R.id.menu_epsorting) {
+            fireTrackerEvent("Sort episodes");
+            showSortDialog();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 

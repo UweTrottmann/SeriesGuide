@@ -21,7 +21,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
-import com.battlelancer.seriesguide.R;
+import com.uwetrottmann.seriesguide.R;
 
 public class AppWidgetBig extends AppWidget {
     private static final String LIMIT = "3";

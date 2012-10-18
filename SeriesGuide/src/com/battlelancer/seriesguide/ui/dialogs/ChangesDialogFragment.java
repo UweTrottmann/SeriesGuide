@@ -32,7 +32,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.battlelancer.seriesguide.R;
+import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 
 public class ChangesDialogFragment extends DialogFragment {

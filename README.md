@@ -12,7 +12,6 @@ The repository is made up of two main development branches: master (stable) and 
 
 * **master** has the latest stable code, its tags are released as the stable SeriesGuide version in market.
 * **beta** includes the latest unstable code. Its tags are released as SeriesGuide beta on Android Market.
-* **dev** has been deprecated.
 
 Contributing
 ------------
@@ -29,6 +28,8 @@ To setup your environment clone the repository. Then import the three projects S
     </resources>
 	
 to it. AndroidUtils, ActionBarSherlock and ViewPagerIndicator are Android library projects used by SeriesGuide.
+
+To build any of the free, X or beta version use the appropiate flavor project. They all use the SeriesGuide project as a library project and just change the package names and icons as well as the Content Provider URI.
 
 License
 -------

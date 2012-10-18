@@ -32,7 +32,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.battlelancer.seriesguide.R;
+import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.battlelancer.seriesguide.util.TraktSync;

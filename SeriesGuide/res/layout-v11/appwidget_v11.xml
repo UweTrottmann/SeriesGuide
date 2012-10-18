@@ -35,7 +35,7 @@
                 android:layout_height="24dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:src="@drawable/icon" />
+                android:src="@drawable/ic_launcher" />
         </RelativeLayout>
 
         <ListView

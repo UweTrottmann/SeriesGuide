@@ -53,7 +53,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
@@ -69,6 +68,7 @@ import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays the list of shows in a users local library.
@@ -325,17 +325,13 @@ public class ShowsFragment extends SherlockFragment implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.menu_showsortby: {
-                fireTrackerEvent("Sort shows");
-
-                showSortDialog();
-                return true;
-            }
-            default: {
-                return super.onOptionsItemSelected(item);
-            }
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_showsortby) {
+            fireTrackerEvent("Sort shows");
+            showSortDialog();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
@@ -417,7 +413,7 @@ public class ShowsFragment extends SherlockFragment implements
 
         private LayoutInflater mLayoutInflater;
 
-        private static final int LAYOUT = R.layout.shows_row;
+        private final int LAYOUT = R.layout.shows_row;
 
         public SlowAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);

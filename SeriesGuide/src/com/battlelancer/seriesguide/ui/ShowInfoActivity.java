@@ -37,7 +37,6 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.ShareActionProvider;
 import com.battlelancer.seriesguide.Constants;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
@@ -47,6 +46,7 @@ import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays detailed information about a show.
@@ -110,22 +110,19 @@ public class ShowInfoActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home: {
-                navigateToOverview(getShowId());
-                return true;
-            }
-            case R.id.menu_rate_trakt: {
-                TraktRateDialogFragment newFragment = TraktRateDialogFragment
-                        .newInstance(getShowId());
-                newFragment.show(getSupportFragmentManager(), "traktratedialog");
-                return true;
-            }
-            case R.id.menu_manage_lists: {
-                ListsDialogFragment.showListsDialog(String.valueOf(getShowId()), 1,
-                        getSupportFragmentManager());
-                return true;
-            }
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            navigateToOverview(getShowId());
+            return true;
+        } else if (itemId == R.id.menu_rate_trakt) {
+            TraktRateDialogFragment newFragment = TraktRateDialogFragment
+                    .newInstance(getShowId());
+            newFragment.show(getSupportFragmentManager(), "traktratedialog");
+            return true;
+        } else if (itemId == R.id.menu_manage_lists) {
+            ListsDialogFragment.showListsDialog(String.valueOf(getShowId()), 1,
+                    getSupportFragmentManager());
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

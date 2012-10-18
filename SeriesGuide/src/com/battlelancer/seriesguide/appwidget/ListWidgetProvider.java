@@ -32,7 +32,7 @@ import android.os.SystemClock;
 import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 
-import com.battlelancer.seriesguide.R;
+import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.enums.WidgetListType;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;

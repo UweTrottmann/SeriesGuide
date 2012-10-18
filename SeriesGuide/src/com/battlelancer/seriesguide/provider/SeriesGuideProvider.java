@@ -52,7 +52,7 @@ public class SeriesGuideProvider extends ContentProvider {
 
     private static final boolean LOGV = false;
 
-    private static final UriMatcher sUriMatcher = buildUriMatcher();
+    private static UriMatcher sUriMatcher;
 
     private static final int SHOWS = 100;
     private static final int SHOWS_ID = 101;
@@ -90,9 +90,9 @@ public class SeriesGuideProvider extends ContentProvider {
      * Build and return a {@link UriMatcher} that catches all {@link Uri}
      * variations supported by this {@link ContentProvider}.
      */
-    private static UriMatcher buildUriMatcher() {
+    private static UriMatcher buildUriMatcher(Context context) {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-        final String authority = SeriesContract.CONTENT_AUTHORITY;
+        final String authority = context.getPackageName() + ".provider";
 
         // Shows
         matcher.addURI(authority, SeriesContract.PATH_SHOWS, SHOWS);
@@ -153,6 +153,7 @@ public class SeriesGuideProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         final Context context = getContext();
+        sUriMatcher = buildUriMatcher(context);
         mOpenHelper = new SeriesGuideDatabase(context);
         PreferenceManager.getDefaultSharedPreferences(context)
                 .registerOnSharedPreferenceChangeListener(mImportListener);

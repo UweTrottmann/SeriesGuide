@@ -32,13 +32,13 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.seriesguide.R;
 
 import java.util.ArrayList;
 
@@ -102,6 +102,10 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
             Bundle extras = intent.getExtras();
             if (extras != null) {
                 selection = extras.getInt(InitBundle.SELECTED_TAB, 0);
+            } else {
+                // use saved selection
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                selection = prefs.getInt(SeriesGuidePreferences.KEY_ACTIVITYTAB, 0);
             }
         }
         actionBar.setSelectedNavigationItem(selection);
@@ -145,34 +149,31 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_onlyfavorites: {
-                storeBooleanPreference(item, SeriesGuidePreferences.KEY_ONLYFAVORITES);
-                return true;
-            }
-            case R.id.menu_nospecials: {
-                storeBooleanPreference(item, SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES);
-                return true;
-            }
-            case R.id.menu_nowatched: {
-                storeBooleanPreference(item, SeriesGuidePreferences.KEY_NOWATCHED);
-                return true;
-            }
-            case android.R.id.home: {
-                /*
-                 * force creating a new task if necessary as this activity may
-                 * be created from the list widget with SeriesGuide not running
-                 * already.
-                 */
-                Intent i = new Intent(Intent.ACTION_MAIN).setClass(this, ShowsActivity.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-                finish();
-                overridePendingTransition(R.anim.fragment_slide_right_enter,
-                        R.anim.fragment_slide_right_exit);
-            }
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_onlyfavorites) {
+            storeBooleanPreference(item, SeriesGuidePreferences.KEY_ONLYFAVORITES);
+            return true;
+        } else if (itemId == R.id.menu_nospecials) {
+            storeBooleanPreference(item, SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES);
+            return true;
+        } else if (itemId == R.id.menu_nowatched) {
+            storeBooleanPreference(item, SeriesGuidePreferences.KEY_NOWATCHED);
+            return true;
+        } else if (itemId == android.R.id.home) {
+            /*
+             * force creating a new task if necessary as this activity may be
+             * created from the list widget with SeriesGuide not running
+             * already.
+             */
+            Intent i = new Intent(Intent.ACTION_MAIN).setClass(this, ShowsActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            finish();
+            overridePendingTransition(R.anim.fragment_slide_right_enter,
+                    R.anim.fragment_slide_right_exit);
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
 
     }
@@ -212,6 +213,8 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
 
         private final ArrayList<Bundle> mArgs = new ArrayList<Bundle>();
 
+        private SharedPreferences mPrefs;
+
         public TabsAdapter(FragmentActivity activity, ActionBar actionBar, ViewPager pager) {
             super(activity.getSupportFragmentManager());
             mContext = activity;
@@ -219,6 +222,7 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
             mViewPager = pager;
             mViewPager.setAdapter(this);
             mViewPager.setOnPageChangeListener(this);
+            mPrefs = PreferenceManager.getDefaultSharedPreferences(activity);
         }
 
         public void addTab(ActionBar.Tab tab, Class<?> clss, Bundle args) {
@@ -245,6 +249,8 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
         @Override
         public void onPageSelected(int position) {
             mActionBar.setSelectedNavigationItem(position);
+            // save selected tab index
+            mPrefs.edit().putInt(SeriesGuidePreferences.KEY_ACTIVITYTAB, position).commit();
         }
 
         @Override
