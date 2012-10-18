@@ -5,8 +5,25 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 2.9.8beta *(2012-10-10)*
+Version 2.9.3 *(2012-10-18)*
 --------------------------------
+
+* FEATURE Setting to display notifications for all shows, not just favorites.
+* FEATURE Remember last used activity tab.
+* NOTICE Use ActionBarSherlock 4.2.0: notably, the menu buttons are gone on Android 2.3 and lower.
+* NOTICE The content provider URI for SeriesGuide (free, not beta or X) has changed to com.battlelancer.seriesguide.provider (appended .provider).
+
+### Detailed changes:
+
+#### 2.9.9beta (2012-10-18)
+
+* FEATURE Remember last used activity tab.
+* TWEAK Remove RECEIVE_BOOT_COMPLETED permission in free version (only needed for notifications in X version).
+* FIX Action bar items sometimes disappear in show list.
+* FIX Crash on leaving overview while still determining remaining episodes.
+* FIX Correctly use episode time if adding a calendar event from overview.
+
+#### 2.9.8beta (2012-10-10)
 
 * TWEAK Let update task wait on failure before trying again.
 * FEATURE Setting to display notifications for all shows, not just favorites.
