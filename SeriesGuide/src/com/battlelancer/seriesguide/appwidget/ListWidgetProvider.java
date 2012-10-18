@@ -32,11 +32,11 @@ import android.os.SystemClock;
 import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.enums.WidgetListType;
 import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 
 @TargetApi(11)
 public class ListWidgetProvider extends AppWidgetProvider {

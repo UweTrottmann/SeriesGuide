@@ -32,7 +32,6 @@ import android.widget.ImageView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.Constants;
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -40,6 +39,7 @@ import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapte
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import java.lang.ref.WeakReference;

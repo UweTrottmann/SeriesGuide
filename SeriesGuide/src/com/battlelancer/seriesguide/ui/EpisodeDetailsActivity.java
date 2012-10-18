@@ -30,13 +30,13 @@ import android.widget.ImageView;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.Constants;
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import java.util.ArrayList;
@@ -186,8 +186,8 @@ public class EpisodeDetailsActivity extends BaseActivity {
             Episode episode = mEpisodes.get(position);
             return Utils.getEpisodeNumber(mPrefs, episode.seasonNumber, episode.episodeNumber);
         }
-        
-        public void updateEpisodeList(List<Episode> list){
+
+        public void updateEpisodeList(List<Episode> list) {
             if (list != null) {
                 mEpisodes = list;
                 notifyDataSetChanged();

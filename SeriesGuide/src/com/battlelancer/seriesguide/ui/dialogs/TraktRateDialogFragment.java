@@ -25,13 +25,13 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 
 public class TraktRateDialogFragment extends DialogFragment {
 

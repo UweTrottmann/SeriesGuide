@@ -41,7 +41,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
@@ -57,6 +56,7 @@ import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.entities.UserProfile;
 import com.jakewharton.trakt.enumerations.ActivityType;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 
 import java.util.ArrayList;
 import java.util.List;

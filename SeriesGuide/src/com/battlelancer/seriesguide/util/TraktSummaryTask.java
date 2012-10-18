@@ -22,12 +22,12 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.TextView;
 
-import com.uwetrottmann.seriesguide.R;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Ratings;
 import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
+import com.uwetrottmann.seriesguide.R;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
