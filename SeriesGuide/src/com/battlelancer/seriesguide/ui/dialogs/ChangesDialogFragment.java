@@ -32,8 +32,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.uwetrottmann.seriesguide.R;
 
 public class ChangesDialogFragment extends DialogFragment {
     private static final String MARKETLINK_HTTP = "http://play.google.com/store/apps/details?id=com.battlelancer.seriesguide";

@@ -21,8 +21,8 @@ import android.os.Bundle;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockDialogFragment;
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.uwetrottmann.seriesguide.R;
 
 public class TraktShoutsActivity extends BaseActivity {
 

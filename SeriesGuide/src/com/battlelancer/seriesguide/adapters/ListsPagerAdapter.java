@@ -7,9 +7,9 @@ import android.database.Cursor;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.ui.ListsFragment;
+import com.uwetrottmann.seriesguide.R;
 
 /**
  * Returns {@link ListsFragment}s for every list in the database, makes sure
@@ -73,7 +73,7 @@ public class ListsPagerAdapter extends MultiPagerAdapter {
 
     @Override
     public int getItemPosition(Object object) {
-            return POSITION_NONE;
+        return POSITION_NONE;
     }
 
     public String getListId(int position) {

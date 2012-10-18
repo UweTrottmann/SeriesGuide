@@ -29,13 +29,13 @@ import android.widget.Checkable;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.seriesguide.R;
 
 import java.util.ArrayList;
 
@@ -121,7 +121,8 @@ public class ListsDialogFragment extends DialogFragment implements
 
                 // apply ops
                 try {
-                    getActivity().getContentResolver().applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY,
+                    getActivity().getContentResolver().applyBatch(
+                            SeriesGuideApplication.CONTENT_AUTHORITY,
                             batch);
                 } catch (RemoteException e) {
                     // Failed binder transactions aren't recoverable

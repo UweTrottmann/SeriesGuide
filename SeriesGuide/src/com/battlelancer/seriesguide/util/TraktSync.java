@@ -29,7 +29,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
@@ -43,6 +42,7 @@ import com.jakewharton.trakt.entities.TvShowSeason;
 import com.jakewharton.trakt.enumerations.ExtendedParam;
 import com.jakewharton.trakt.services.ShowService.EpisodeSeenBuilder;
 import com.jakewharton.trakt.services.ShowService.EpisodeUnseenBuilder;
+import com.uwetrottmann.seriesguide.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -187,7 +187,8 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
                     }
 
                     try {
-                        mContext.getContentResolver().applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY,
+                        mContext.getContentResolver().applyBatch(
+                                SeriesGuideApplication.CONTENT_AUTHORITY,
                                 batch);
                     } catch (RemoteException e) {
                         // Failed binder transactions aren't recoverable
