@@ -373,7 +373,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">Improvements\n\nUpdate task backs off on failure.\n\nSetting to enable notifications for any show, not just favorited.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">Remembering\n\nRemember the last active activity tab.\n\nUse correct date when creating calendar event in overview.\n\nShow list action items should not disappear anymore.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
