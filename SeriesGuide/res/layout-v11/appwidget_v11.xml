@@ -27,7 +27,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="@string/upcoming"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.Medium.Light" />
 
             <ImageView
                 android:id="@+id/imageView1"
@@ -35,6 +36,7 @@
                 android:layout_height="24dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_launcher" />
         </RelativeLayout>
 
@@ -54,7 +56,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="@string/no_nextepisode"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="@style/TextAppearance.Medium.Light" />
     </LinearLayout>
 
 </FrameLayout>
