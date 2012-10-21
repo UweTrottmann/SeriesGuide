@@ -39,14 +39,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays one user created list which includes a mixture of shows, seasons and
@@ -74,13 +72,6 @@ public class ListsFragment extends SherlockFragment implements
     }
 
     private ListItemAdapter mAdapter;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setHasOptionsMenu(true);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -128,11 +119,6 @@ public class ListsFragment extends SherlockFragment implements
                 return super.onContextItemSelected(item);
         }
 
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.lists_menu, menu);
     }
 
     @Override
