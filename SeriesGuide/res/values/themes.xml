@@ -25,7 +25,7 @@
         <item name="textAppearanceSgXLarge">@style/TextAppearance.XLarge</item>
         <item name="textAppearanceSgXLargeLight">@style/TextAppearance.XLarge.Light</item>
 
-        <!-- ABS -->
+        <!-- Action bar -->
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator</item>
         <item name="actionBarStyle">@style/ActionBar</item>
@@ -38,6 +38,10 @@
         <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
         <item name="actionDropDownStyle">@style/DropDownNav</item>
         <item name="android:actionDropDownStyle">@style/DropDownNav</item>
+        <item name="spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
+        <item name="spinnerItemStyle">@style/Widget.SpinnerItem</item>
+        <item name="android:spinnerItemStyle">@style/Widget.SpinnerItem</item>
     </style>
 
     <style name="SeriesGuideTheme.Dialog" parent="SeriesGuideTheme">
@@ -64,7 +68,7 @@
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
-    <!-- An ICS base theme using default styles from ABS -->
+    <!-- An dark Android theme -->
     <style name="ICSBaseTheme" parent="Theme.Sherlock">
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.Dark</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
@@ -83,9 +87,15 @@
         <item name="textAppearanceSgLargeLight">@style/TextAppearance.Large.Light</item>
         <item name="textAppearanceSgXLarge">@style/TextAppearance.XLarge</item>
         <item name="textAppearanceSgXLargeLight">@style/TextAppearance.XLarge.Light</item>
+
+        <!-- Action bar -->
+        <item name="spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
+        <item name="spinnerItemStyle">@style/Widget.SpinnerItem</item>
+        <item name="android:spinnerItemStyle">@style/Widget.SpinnerItem</item>
     </style>
 
-    <!-- A light ICS base theme using default styles from ABS -->
+    <!-- A light Android theme -->
     <style name="ICSBaseThemeLight" parent="Theme.Sherlock.Light.DarkActionBar">
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.Light</item>
         <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator.Light</item>
@@ -104,6 +114,12 @@
         <item name="textAppearanceSgLargeLight">@style/TextAppearance.Large.Light</item>
         <item name="textAppearanceSgXLarge">@style/TextAppearance.XLarge</item>
         <item name="textAppearanceSgXLargeLight">@style/TextAppearance.XLarge.Light</item>
+
+        <!-- Action bar -->
+        <item name="spinnerDropDownItemStyle">@style/Widget.Light.DropDownItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/Widget.Light.DropDownItem</item>
+        <item name="spinnerItemStyle">@style/Widget.Light.SpinnerItem</item>
+        <item name="android:spinnerItemStyle">@style/Widget.Light.SpinnerItem</item>
     </style>
 
 </resources>
