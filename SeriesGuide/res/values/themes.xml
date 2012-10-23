@@ -11,6 +11,20 @@
         <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_sg</item>
         <item name="custom_list_selector">@drawable/list_selector_sg</item>
 
+        <!-- Text styles -->
+        <item name="textAppearanceSg">@style/TextAppearance</item>
+        <item name="textAppearanceSgXSmall">@style/TextAppearance.XSmall</item>
+        <item name="textAppearanceSgXSmallDim">@style/TextAppearance.XSmall</item>
+        <item name="textAppearanceSgSmall">@style/TextAppearance.Small</item>
+        <item name="textAppearanceSgSmallDim">@style/TextAppearance.Small.Dim</item>
+        <item name="textAppearanceSgSmallPrimary">@style/TextAppearance.Small.Primary</item>
+        <item name="textAppearanceSgMedium">@style/TextAppearance.Medium</item>
+        <item name="textAppearanceSgMediumLight">@style/TextAppearance.Medium.Light</item>
+        <item name="textAppearanceSgLarge">@style/TextAppearance.Large</item>
+        <item name="textAppearanceSgLargeLight">@style/TextAppearance.Large.Light</item>
+        <item name="textAppearanceSgXLarge">@style/TextAppearance.XLarge</item>
+        <item name="textAppearanceSgXLargeLight">@style/TextAppearance.XLarge.Light</item>
+
         <!-- ABS -->
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator</item>
@@ -55,6 +69,20 @@
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.ICS</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
+
+        <!-- Text styles -->
+        <item name="textAppearanceSg">@style/TextAppearance</item>
+        <item name="textAppearanceSgXSmall">@style/TextAppearance.XSmall</item>
+        <item name="textAppearanceSgXSmallDim">@style/TextAppearance.XSmall</item>
+        <item name="textAppearanceSgSmall">@style/TextAppearance.Small</item>
+        <item name="textAppearanceSgSmallDim">@style/TextAppearance.Small.Dim</item>
+        <item name="textAppearanceSgSmallPrimary">@style/TextAppearance.Small.Primary</item>
+        <item name="textAppearanceSgMedium">@style/TextAppearance.Medium</item>
+        <item name="textAppearanceSgMediumLight">@style/TextAppearance.Medium.Light</item>
+        <item name="textAppearanceSgLarge">@style/TextAppearance.Large</item>
+        <item name="textAppearanceSgLargeLight">@style/TextAppearance.Large.Light</item>
+        <item name="textAppearanceSgXLarge">@style/TextAppearance.XLarge</item>
+        <item name="textAppearanceSgXLargeLight">@style/TextAppearance.XLarge.Light</item>
     </style>
 
     <!-- A light ICS base theme using default styles from ABS -->
@@ -62,6 +90,20 @@
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.ICS</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
+
+        <!-- Text styles -->
+        <item name="textAppearanceSg">@android:style/TextAppearance</item>
+        <item name="textAppearanceSgXSmall">@style/TextAppearance.Light.XSmall</item>
+        <item name="textAppearanceSgXSmallDim">@style/TextAppearance.Light.XSmall.Dim</item>
+        <item name="textAppearanceSgSmall">@style/TextAppearance.Light.Small</item>
+        <item name="textAppearanceSgSmallDim">@style/TextAppearance.Light.Small.Dim</item>
+        <item name="textAppearanceSgSmallPrimary">@style/TextAppearance.Light.Small.Primary</item>
+        <item name="textAppearanceSgMedium">@style/TextAppearance.Medium</item>
+        <item name="textAppearanceSgMediumLight">@style/TextAppearance.Medium.Light</item>
+        <item name="textAppearanceSgLarge">@style/TextAppearance.Large</item>
+        <item name="textAppearanceSgLargeLight">@style/TextAppearance.Large.Light</item>
+        <item name="textAppearanceSgXLarge">@style/TextAppearance.XLarge</item>
+        <item name="textAppearanceSgXLargeLight">@style/TextAppearance.XLarge.Light</item>
     </style>
 
 </resources>

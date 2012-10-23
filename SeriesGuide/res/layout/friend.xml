@@ -45,7 +45,7 @@
         android:layout_below="@+id/userstrip"
         android:layout_toRightOf="@+id/avatar"
         android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.Medium.Light" />
+        android:textAppearance="?attr/textAppearanceSgMediumLight" />
 
     <TextView
         android:id="@+id/episode"

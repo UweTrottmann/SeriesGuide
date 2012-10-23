@@ -23,8 +23,8 @@
         <item name="android:textColor">@color/text_dim</item>
     </style>
 
-    <style name="TextAppearance.Small.Primary" parent="@android:style/TextAppearance">
-        <item name="android:textSize">@dimen/text_size_small</item>
+    <style name="TextAppearance.Small.Primary">
+        <item name="android:textColor">@color/text_primary</item>
     </style>
 
     <style name="TextAppearance.Medium" parent="@android:style/TextAppearance">
@@ -51,6 +51,26 @@
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
+    <!-- Light styles -->
+    <style name="TextAppearance.Light" parent="TextAppearance"></style>
+
+    <style name="TextAppearance.Light.XSmall" parent="TextAppearance.Light.XSmall"></style>
+
+    <style name="TextAppearance.Light.XSmall.Dim" parent="TextAppearance.Light.XSmall.Dim">
+        <item name="android:textColor">@color/text_dim_light</item>
+    </style>
+
+    <style name="TextAppearance.Light.Small" parent="TextAppearance.Small"></style>
+
+    <style name="TextAppearance.Light.Small.Dim">
+        <item name="android:textColor">@color/text_dim_light</item>
+    </style>
+
+    <style name="TextAppearance.Light.Small.Primary">
+        <item name="android:textColor">@color/text_primary_inverse</item>
+    </style>
+
+    <!-- Widget styles -->
     <style name="Widget"></style>
 
     <style name="Widget.SeriesGuide" parent="Widget"></style>

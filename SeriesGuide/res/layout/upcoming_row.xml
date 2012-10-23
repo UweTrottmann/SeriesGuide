@@ -67,7 +67,7 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:text="Placeholder"
-        android:textAppearance="@style/TextAppearance.Medium.Light" />
+        android:textAppearance="?attr/textAppearanceSgMediumLight" />
 
     <TextView
         android:id="@+id/textViewUpcomingNumber"

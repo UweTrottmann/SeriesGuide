@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="?custom_list_selector"
+            android:background="?attr/custom_list_selector"
             android:clickable="true"
             android:focusable="true"
             android:orientation="vertical"
@@ -40,7 +40,7 @@
                 android:paddingBottom="@dimen/inline_padding"
                 android:paddingRight="@dimen/default_padding"
                 android:text="@string/app_name"
-                android:textAppearance="@style/TextAppearance.XLarge.Light" />
+                android:textAppearance="?attr/textAppearanceSgXLargeLight" />
 
             <TextView
                 android:id="@+id/description"
@@ -52,7 +52,7 @@
                 android:paddingBottom="@dimen/inline_padding"
                 android:paddingRight="@dimen/default_padding"
                 android:text="@string/app_name"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?attr/textAppearanceSgSmall" />
         </LinearLayout>
 
         <View

@@ -39,7 +39,7 @@
                     android:layout_marginLeft="@dimen/default_padding"
                     android:layout_marginRight="@dimen/default_padding"
                     android:ellipsize="marquee"
-                    android:textAppearance="@style/TextAppearance.Medium.Light" />
+                    android:textAppearance="?attr/textAppearanceSgMediumLight" />
 
                 <TextView
                     android:id="@+id/showStatus"
@@ -89,7 +89,7 @@
                         android:layout_marginLeft="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
                         android:layout_marginTop="@dimen/default_padding"
-                        android:textAppearance="@style/TextAppearance.XLarge.Light" />
+                        android:textAppearance="?attr/textAppearanceSgXLargeLight" />
 
                     <TextView
                         android:id="@+id/episodeTime"
@@ -98,7 +98,7 @@
                         android:layout_below="@+id/episodeTitle"
                         android:layout_marginLeft="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
-                        android:textAppearance="@style/TextAppearance.Small.Primary" />
+                        android:textAppearance="?attr/textAppearanceSgSmallPrimary" />
 
                     <TextView
                         android:id="@+id/episodeInfo"
@@ -108,7 +108,7 @@
                         android:layout_marginBottom="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
                         android:layout_toRightOf="@+id/episodeTime"
-                        android:textAppearance="@style/TextAppearance.Small" />
+                        android:textAppearance="?attr/textAppearanceSgSmall" />
 
                     <LinearLayout
                         android:id="@+id/episodemeta"
