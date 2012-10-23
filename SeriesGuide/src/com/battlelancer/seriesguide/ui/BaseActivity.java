@@ -28,11 +28,11 @@ import android.view.KeyEvent;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
+import com.uwetrottmann.seriesguide.R;
 
 /**
  * Provides some common functionality across all activities like setting the
@@ -87,7 +87,8 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
     private boolean onAutoBackup() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         long now = System.currentTimeMillis();
-        final long previousBackupTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTBACKUP, 0);
+        // use now as default value, so a re-install won't overwrite the old auto-backup right away
+        final long previousBackupTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTBACKUP, now);
         final boolean isTime = (now - previousBackupTime) > 7 * DateUtils.DAY_IN_MILLIS;
 
         if (isTime) {
