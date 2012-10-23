@@ -344,11 +344,6 @@
     <!-- Theme switching -->
     <string name="pref_theme">App Theme</string>
 
-    <string-array name="themeSelection">
-        <item>SeriesGuide Theme</item>
-        <item>ICS Base Theme</item>
-    </string-array>
-
     <!-- Widgets -->
     <string name="choose_list">Choose activity list</string>
     <string name="hide_watched">Hide watched episodes</string>
@@ -526,9 +521,15 @@
         <item>14</item>
         <item>30</item>
     </string-array>
+    <string-array name="themeSelection">
+        <item>SeriesGuide</item>
+        <item>Android Dark</item>
+        <item>Android Light</item>
+    </string-array>
     <string-array name="themeSelectionData">
         <item>0</item>
         <item>1</item>
+        <item>2</item>
     </string-array>
 
 </resources>

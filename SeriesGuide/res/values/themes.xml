@@ -57,4 +57,11 @@
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
     </style>
 
+    <!-- A light ICS base theme using default styles from ABS -->
+    <style name="ICSBaseThemeLight" parent="Theme.Sherlock.Light.DarkActionBar">
+        <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.ICS</item>
+        <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
+        <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
+    </style>
+
 </resources>
