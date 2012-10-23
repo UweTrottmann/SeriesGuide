@@ -35,8 +35,7 @@
             android:layout_marginRight="@dimen/default_padding"
             android:layout_marginTop="@dimen/default_padding"
             android:text="@string/norating"
-            android:textAppearance="@style/TextAppearance.Medium.Light"
-            android:textColor="@color/text_default" />
+            android:textAppearance="@style/TextAppearance.Medium.Light" />
 
         <TextView
             android:id="@+id/airdate"

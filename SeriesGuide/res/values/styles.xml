@@ -2,11 +2,9 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Text styles -->
-    <style name="TextAppearance">
-        <item name="android:textColor">@color/text_default</item>
+    <style name="TextAppearance" parent="@android:style/TextAppearance">
         <item name="android:textSize">@dimen/text_size_xmedium</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColorLink">@color/text_link</item>
     </style>
 
     <style name="TextAppearance.XSmall">
@@ -17,7 +15,7 @@
         <item name="android:textColor">@color/text_dim</item>
     </style>
 
-    <style name="TextAppearance.Small">
+    <style name="TextAppearance.Small" parent="@android:style/TextAppearance.Small">
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
@@ -25,12 +23,11 @@
         <item name="android:textColor">@color/text_dim</item>
     </style>
 
-    <style name="TextAppearance.Small.Primary">
-        <item name="android:textColor">@color/text_primary</item>
+    <style name="TextAppearance.Small.Primary" parent="@android:style/TextAppearance">
+        <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
-    <style name="TextAppearance.Medium">
-        <item name="android:textColor">@color/primary_text_sg</item>
+    <style name="TextAppearance.Medium" parent="@android:style/TextAppearance">
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
 
@@ -38,8 +35,7 @@
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
-    <style name="TextAppearance.Large">
-        <item name="android:textColor">#ffffff</item>
+    <style name="TextAppearance.Large" parent="@android:style/TextAppearance">
         <item name="android:textSize">@dimen/text_size_large</item>
     </style>
 
@@ -47,8 +43,7 @@
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
-    <style name="TextAppearance.XLarge">
-        <item name="android:textColor">#ffffff</item>
+    <style name="TextAppearance.XLarge" parent="@android:style/TextAppearance">
         <item name="android:textSize">@dimen/text_size_xlarge</item>
     </style>
 
