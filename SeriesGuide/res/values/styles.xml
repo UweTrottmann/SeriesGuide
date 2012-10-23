@@ -134,7 +134,7 @@
     </style>
 
     <style name="Widget.SpinnerItem" parent="Widget">
-        <item name="android:textAppearance">@style/TextAppearance.Light.Medium.Light</item>
+        <item name="android:textAppearance">@style/TextAppearance.Medium.Light</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
     </style>
@@ -336,7 +336,7 @@
 
     <style name="TextAppearance.Light.Medium" parent="TextAppearance.Medium"></style>
 
-    <style name="TextAppearance.Light.Medium.Light"></style>
+    <style name="TextAppearance.Light.Medium.Light" parent="TextAppearance.Medium.Light"></style>
 
     <!-- Title page indicator -->
     <style name="TitlePageIndicator.Light" parent="TitlePageIndicator.Dark">
