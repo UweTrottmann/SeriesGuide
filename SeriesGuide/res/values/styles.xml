@@ -156,8 +156,13 @@
         <item name="selectedBold">true</item>
     </style>
 
-    <style name="TitlePageIndicator.ICS" parent="TitlePageIndicator">
+    <style name="TitlePageIndicator.Dark" parent="TitlePageIndicator">
         <item name="footerColor">#33B5E5</item>
+    </style>
+
+    <style name="TitlePageIndicator.Light" parent="TitlePageIndicator.Dark">
+        <item name="android:textColor">@color/text_primary_inverse</item>
+        <item name="selectedColor">@color/text_primary_inverse</item>
     </style>
 
     <style name="TabPageIndicator" parent="Widget.TabPageIndicator">
@@ -175,6 +180,14 @@
     <style name="TextAppearance.TabPageIndicator" parent="Widget">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/vpi__dark_theme</item>
+    </style>
+
+    <style name="TabPageIndicator.Light" parent="Widget.TabPageIndicator">
+        <item name="android:textAppearance">@style/TextAppearance.Light.TabPageIndicator</item>
+    </style>
+
+    <style name="TextAppearance.Light.TabPageIndicator" parent="TextAppearance.TabPageIndicator">
+        <item name="android:textColor">@color/vpi__light_theme</item>
     </style>
 
     <style name="Header">
