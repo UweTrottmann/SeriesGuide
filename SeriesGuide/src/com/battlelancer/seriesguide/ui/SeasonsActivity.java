@@ -21,10 +21,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.seriesguide.R;
 
 /**
  * Hosts a {@link SeasonsFragment}. Used on smaller screens which do not allow

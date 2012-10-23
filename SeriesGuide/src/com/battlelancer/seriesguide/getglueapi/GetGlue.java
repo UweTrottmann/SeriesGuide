@@ -25,11 +25,11 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.getglueapi.GetGlueXmlParser.Interaction;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 
 import oauth.signpost.OAuthConsumer;
 import oauth.signpost.basic.DefaultOAuthConsumer;
@@ -111,7 +111,7 @@ public class GetGlue {
             if (!AndroidUtils.isNetworkConnected(mContext)) {
                 return CHECKIN_OFFLINE;
             }
-            
+
             // Encode only whitespaces
             mComment = mComment.replace(" ", "%20");
 

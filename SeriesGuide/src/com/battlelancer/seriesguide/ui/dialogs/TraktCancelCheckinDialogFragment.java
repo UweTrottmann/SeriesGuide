@@ -31,7 +31,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.TraktTask;
@@ -42,6 +41,7 @@ import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Response;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 
 public class TraktCancelCheckinDialogFragment extends DialogFragment {
 

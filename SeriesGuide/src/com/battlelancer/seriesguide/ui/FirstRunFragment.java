@@ -34,9 +34,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.seriesguide.R;
 
 /**
  * Helps the user to get familiar with the basic functions of SeriesGuide. Shown

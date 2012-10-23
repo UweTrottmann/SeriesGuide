@@ -21,8 +21,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.uwetrottmann.seriesguide.R;
 
 /**
  * Inspired by florianmski's traktoid TraktManager. This class is used to hold

@@ -36,7 +36,6 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.Xml;
 
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.items.Series;
@@ -52,6 +51,7 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
@@ -106,7 +106,8 @@ public class TheTVDB {
         batch.addAll(importShowEpisodes(showId, show.getAirsTime(), language, context));
 
         try {
-            context.getContentResolver().applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
+            context.getContentResolver()
+                    .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
         } catch (RemoteException e) {
             // Failed binder transactions aren't recoverable
             throw new RuntimeException("Problem applying batch operation", e);
@@ -196,7 +197,8 @@ public class TheTVDB {
         batch.addAll(importShowEpisodes(showId, show.getAirsTime(), language, context));
 
         try {
-            context.getContentResolver().applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
+            context.getContentResolver()
+                    .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
         } catch (RemoteException e) {
             // Failed binder transactions aren't recoverable
             throw new RuntimeException("Problem applying batch operation", e);

@@ -190,7 +190,8 @@ public class SeriesContract {
         String TYPE = "item_type";
     }
 
-    private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + SeriesGuideApplication.CONTENT_AUTHORITY);
+    private static final Uri BASE_CONTENT_URI = Uri.parse("content://"
+            + SeriesGuideApplication.CONTENT_AUTHORITY);
 
     public static final String PATH_SHOWS = "shows";
 
@@ -234,7 +235,7 @@ public class SeriesContract {
 
         /** Default "ORDER BY" clause. */
         public static final String DEFAULT_SORT = ShowsColumns.TITLE + " ASC";
-        
+
         public static final String SELECTION_FAVORITES = " AND " + Shows.FAVORITE + "=1";
 
         public static Uri buildShowUri(String showId) {

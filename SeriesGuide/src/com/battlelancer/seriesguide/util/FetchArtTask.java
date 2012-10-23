@@ -25,8 +25,8 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.uwetrottmann.seriesguide.R;
 import com.battlelancer.thetvdbapi.TheTVDB;
+import com.uwetrottmann.seriesguide.R;
 
 public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
 
@@ -58,7 +58,7 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
         mContainer.setVisibility(View.VISIBLE);
         mImageView = (ImageView) mContainer.findViewById(R.id.ImageViewEpisodeImage);
         mProgressContainer = mContainer.findViewById(R.id.progress_container);
-        
+
         if (mImageView == null || mProgressContainer == null) {
             cancel(true);
         }
