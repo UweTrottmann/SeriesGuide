@@ -5,6 +5,18 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 2.9.4 *(TBA)*
+--------------------------------
+
+
+
+### Detailed changes:
+
+#### 2.9.10beta (TBA)
+
+* TWEAK Some love to the list widget, increased font-sizes on Nexus 7-like screens.
+* FIX Action items sometimes invisible on tablets.
+
 Version 2.9.3 *(2012-10-18)*
 --------------------------------
 
