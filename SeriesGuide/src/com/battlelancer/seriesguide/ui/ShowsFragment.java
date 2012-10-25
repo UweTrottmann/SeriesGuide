@@ -415,7 +415,6 @@ public class ShowsFragment extends SherlockFragment implements
                         .findViewById(R.id.TextViewShowListAirtime);
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.showposter);
                 viewHolder.favorited = convertView.findViewById(R.id.favoritedLabel);
-                viewHolder.collected = convertView.findViewById(R.id.collectedLabel);
 
                 convertView.setTag(viewHolder);
             } else {
@@ -495,7 +494,6 @@ public class ShowsFragment extends SherlockFragment implements
 
         public View favorited;
 
-        public View collected;
     }
 
     private interface ShowsQuery {
