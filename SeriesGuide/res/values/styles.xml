@@ -188,13 +188,6 @@
         <item name="android:textColor">@color/text_primary</item>
     </style>
 
-    <style name="Airdata">
-        <item name="android:textSize">@dimen/text_size_xsmall</item>
-        <item name="android:textColor">@color/text_dim</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
     <!-- Unified text styles and sizes -->
     <style name="ListTextBig">
         <item name="android:textSize">@dimen/text_size_large</item>
