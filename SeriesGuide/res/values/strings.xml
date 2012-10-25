@@ -524,7 +524,7 @@
     <string-array name="themeSelection">
         <item>SeriesGuide</item>
         <item>Android Dark</item>
-        <item>Android Light</item>
+        <item>SeriesGuide Light</item>
     </string-array>
     <string-array name="themeSelectionData">
         <item>0</item>

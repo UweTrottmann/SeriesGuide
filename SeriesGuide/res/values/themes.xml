@@ -36,10 +36,10 @@
         <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator</item>
         <item name="actionBarStyle">@style/ActionBar</item>
         <item name="android:actionBarStyle">@style/ActionBar</item>
-        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
         <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
-        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
         <item name="dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
         <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
         <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
         <item name="actionDropDownStyle">@style/DropDownNav</item>
@@ -120,10 +120,14 @@
     </style>
 
     <!-- A light Android theme -->
-    <style name="ICSBaseThemeLight" parent="Theme.Sherlock.Light.DarkActionBar">
+    <style name="SeriesGuideThemeLight" parent="Theme.Sherlock.Light.DarkActionBar">
+        <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
+        <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
+        <item name="android:editTextBackground">@drawable/edit_text_sg</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_sg</item>
+        <item name="custom_list_selector">@drawable/list_selector_sg</item>
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.Light</item>
         <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator.Light</item>
-        <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
 
         <!-- Colors -->
         <item name="textColorSgPrimary">@color/text_primary_inverse</item>
@@ -146,6 +150,14 @@
         <item name="textAppearanceSgXLargeLight">@style/TextAppearance.XLarge.Light</item>
 
         <!-- Action bar -->
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
+        <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
+        <item name="actionDropDownStyle">@style/DropDownNav</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
         <item name="spinnerDropDownItemStyle">@style/Widget.Light.DropDownItem</item>
         <item name="android:spinnerDropDownItemStyle">@style/Widget.Light.DropDownItem</item>
         <item name="spinnerItemStyle">@style/Widget.Light.SpinnerItem</item>

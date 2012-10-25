@@ -179,7 +179,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         final ListView list = getListView();
         list.setFastScrollEnabled(true);
         list.setDivider(null);
-        if (SeriesGuidePreferences.THEME == R.style.SeriesGuideTheme) {
+        if (SeriesGuidePreferences.THEME != R.style.ICSBaseTheme) {
             list.setSelector(R.drawable.list_selector_sg);
         }
         list.setClipToPadding(AndroidUtils.isHoneycombOrHigher() ? false : true);

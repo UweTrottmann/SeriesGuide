@@ -350,13 +350,13 @@
     </style>
 
     <!-- Title page indicator -->
-    <style name="TitlePageIndicator.Light" parent="TitlePageIndicator.Dark">
+    <style name="TitlePageIndicator.Light">
         <item name="android:textColor">@color/text_primary_inverse</item>
         <item name="selectedColor">@color/text_primary_inverse</item>
     </style>
 
     <!-- Tab page indicator -->
-    <style name="TabPageIndicator.Light" parent="Widget.TabPageIndicator">
+    <style name="TabPageIndicator.Light">
         <item name="android:textAppearance">@style/TextAppearance.Light.TabPageIndicator</item>
     </style>
 

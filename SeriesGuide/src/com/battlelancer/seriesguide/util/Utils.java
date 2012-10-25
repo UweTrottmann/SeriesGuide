@@ -799,7 +799,7 @@ public class Utils {
                 SeriesGuidePreferences.THEME = R.style.ICSBaseTheme;
                 break;
             case 2:
-                SeriesGuidePreferences.THEME = R.style.ICSBaseThemeLight;
+                SeriesGuidePreferences.THEME = R.style.SeriesGuideThemeLight;
                 break;
             default:
                 SeriesGuidePreferences.THEME = R.style.SeriesGuideTheme;
