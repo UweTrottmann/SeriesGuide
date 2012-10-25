@@ -403,11 +403,12 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                 }
             });
 
-            viewHolder.episode.setText(mCursor.getString(UpcomingQuery.TITLE));
+            // show
+            viewHolder.show.setText(mCursor.getString(UpcomingQuery.SHOW_TITLE));
 
             // episode number and title
             final String number = Utils.getEpisodeNumber(mPrefs, seasonNumber, episodeNumber);
-            viewHolder.show.setText(number + " " + mCursor.getString(UpcomingQuery.SHOW_TITLE));
+            viewHolder.episode.setText(number + " " + mCursor.getString(UpcomingQuery.TITLE));
 
             // add network
             String network = "";
