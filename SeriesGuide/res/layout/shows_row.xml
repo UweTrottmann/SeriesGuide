@@ -10,6 +10,7 @@
         android:layout_height="100dp"
         android:layout_alignParentLeft="true"
         android:layout_marginRight="@dimen/default_padding"
+        android:contentDescription="@string/description_poster"
         android:scaleType="centerInside"
         android:src="@drawable/show_generic" />
 

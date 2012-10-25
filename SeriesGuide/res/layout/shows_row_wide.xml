@@ -52,8 +52,7 @@
         android:layout_below="@id/TextViewShowListAirtime"
         android:layout_toRightOf="@id/showposter"
         android:text="@string/no_nextepisode"
-        android:textAppearance="?attr/textAppearanceSgMedium"
-        android:textColor="@color/text_default" />
+        android:textAppearance="?attr/textAppearanceSgMediumDim" />
 
     <TextView
         android:id="@+id/episodetime"

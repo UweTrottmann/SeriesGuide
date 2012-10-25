@@ -20,6 +20,7 @@
     <color name="text_primary_inverse">#ff010101</color>
     <color name="text_link">#ff0099CC</color>
     <color name="text_default">#bebebe</color>
+    <color name="text_default_inverse">#414141</color>
     <color name="text_dim">#80bebebe</color>
     <color name="text_dim_light">#80323232</color>
     <color name="accent_primary">#ff4800ff</color>

@@ -8,7 +8,9 @@
     <attr name="textAppearanceSgSmallDim" format="reference" />
     <attr name="textAppearanceSgSmallPrimary" format="reference" />
     <attr name="textAppearanceSgMedium" format="reference" />
+    <attr name="textAppearanceSgMediumDim" format="reference" />
     <attr name="textAppearanceSgMediumLight" format="reference" />
+    <attr name="textAppearanceSgMediumLightDim" format="reference" />
     <attr name="textAppearanceSgLarge" format="reference" />
     <attr name="textAppearanceSgLargeLight" format="reference" />
     <attr name="textAppearanceSgXLarge" format="reference" />

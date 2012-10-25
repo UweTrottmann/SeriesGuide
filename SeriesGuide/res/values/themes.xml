@@ -19,7 +19,9 @@
         <item name="textAppearanceSgSmallDim">@style/TextAppearance.Small.Dim</item>
         <item name="textAppearanceSgSmallPrimary">@style/TextAppearance.Small.Primary</item>
         <item name="textAppearanceSgMedium">@style/TextAppearance.Medium</item>
+        <item name="textAppearanceSgMediumDim">@style/TextAppearance.Medium.Dim</item>
         <item name="textAppearanceSgMediumLight">@style/TextAppearance.Medium.Light</item>
+        <item name="textAppearanceSgMediumLightDim">@style/TextAppearance.Medium.Light.Dim</item>
         <item name="textAppearanceSgLarge">@style/TextAppearance.Large</item>
         <item name="textAppearanceSgLargeLight">@style/TextAppearance.Large.Light</item>
         <item name="textAppearanceSgXLarge">@style/TextAppearance.XLarge</item>
@@ -82,7 +84,9 @@
         <item name="textAppearanceSgSmallDim">@style/TextAppearance.Small.Dim</item>
         <item name="textAppearanceSgSmallPrimary">@style/TextAppearance.Small.Primary</item>
         <item name="textAppearanceSgMedium">@style/TextAppearance.Medium</item>
+        <item name="textAppearanceSgMediumDim">@style/TextAppearance.Medium.Dim</item>
         <item name="textAppearanceSgMediumLight">@style/TextAppearance.Medium.Light</item>
+        <item name="textAppearanceSgMediumLightDim">@style/TextAppearance.Medium.Light.Dim</item>
         <item name="textAppearanceSgLarge">@style/TextAppearance.Large</item>
         <item name="textAppearanceSgLargeLight">@style/TextAppearance.Large.Light</item>
         <item name="textAppearanceSgXLarge">@style/TextAppearance.XLarge</item>
@@ -108,8 +112,10 @@
         <item name="textAppearanceSgSmall">@style/TextAppearance.Light.Small</item>
         <item name="textAppearanceSgSmallDim">@style/TextAppearance.Light.Small.Dim</item>
         <item name="textAppearanceSgSmallPrimary">@style/TextAppearance.Light.Small.Primary</item>
-        <item name="textAppearanceSgMedium">@style/TextAppearance.Medium</item>
-        <item name="textAppearanceSgMediumLight">@style/TextAppearance.Medium.Light</item>
+        <item name="textAppearanceSgMedium">@style/TextAppearance.Light.Medium</item>
+        <item name="textAppearanceSgMediumDim">@style/TextAppearance.Light.Medium.Dim</item>
+        <item name="textAppearanceSgMediumLight">@style/TextAppearance.Light.Medium.Light</item>
+        <item name="textAppearanceSgMediumLightDim">@style/TextAppearance.Light.Medium.Light.Dim</item>
         <item name="textAppearanceSgLarge">@style/TextAppearance.Large</item>
         <item name="textAppearanceSgLargeLight">@style/TextAppearance.Large.Light</item>
         <item name="textAppearanceSgXLarge">@style/TextAppearance.XLarge</item>

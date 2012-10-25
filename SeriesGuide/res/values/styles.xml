@@ -31,8 +31,16 @@
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
 
+    <style name="TextAppearance.Medium.Dim">
+        <item name="android:textColor">@color/text_default</item>
+    </style>
+
     <style name="TextAppearance.Medium.Light">
         <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="TextAppearance.Medium.Light.Dim">
+        <item name="android:textColor">@color/text_default</item>
     </style>
 
     <style name="TextAppearance.Large" parent="@android:style/TextAppearance">
@@ -336,7 +344,17 @@
 
     <style name="TextAppearance.Light.Medium" parent="TextAppearance.Medium"></style>
 
-    <style name="TextAppearance.Light.Medium.Light" parent="TextAppearance.Medium.Light"></style>
+    <style name="TextAppearance.Light.Medium.Dim">
+        <item name="android:textColor">@color/text_default_inverse</item>
+    </style>
+
+    <style name="TextAppearance.Light.Medium.Light">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="TextAppearance.Light.Medium.Light.Dim">
+        <item name="android:textColor">@color/text_default_inverse</item>
+    </style>
 
     <!-- Title page indicator -->
     <style name="TitlePageIndicator.Light" parent="TitlePageIndicator.Dark">
