@@ -17,8 +17,7 @@
             android:layout_marginLeft="@dimen/default_padding"
             android:text="@string/episodes"
             android:textAllCaps="true"
-            android:textAppearance="?attr/textAppearanceSgSmall"
-            android:textColor="@color/text_primary" >
+            android:textAppearance="?attr/textAppearanceSgSmallPrimary" >
         </TextView>
 
         <TextView
