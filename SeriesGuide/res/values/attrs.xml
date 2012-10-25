@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="custom_list_selector" format="reference" />
+    <attr name="textColorSgPrimary" format="reference|color" />
+    <attr name="textColorSgPrimaryInverse" format="reference|color" />
     <attr name="textAppearanceSg" format="reference" />
     <attr name="textAppearanceSgXSmall" format="reference" />
     <attr name="textAppearanceSgXSmallDim" format="reference" />

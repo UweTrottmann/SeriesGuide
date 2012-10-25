@@ -11,6 +11,10 @@
         <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_sg</item>
         <item name="custom_list_selector">@drawable/list_selector_sg</item>
 
+        <!-- Colors -->
+        <item name="textColorPrimary">@color/text_primary</item>
+        <item name="textColorPrimaryInverse">@color/text_primary_inverse</item>
+
         <!-- Text styles -->
         <item name="textAppearanceSg">@style/TextAppearance</item>
         <item name="textAppearanceSgXSmall">@style/TextAppearance.XSmall</item>
@@ -76,6 +80,10 @@
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
 
+        <!-- Colors -->
+        <item name="textColorPrimary">@color/text_primary</item>
+        <item name="textColorPrimaryInverse">@color/text_primary_inverse</item>
+
         <!-- Text styles -->
         <item name="textAppearanceSg">@style/TextAppearance</item>
         <item name="textAppearanceSgXSmall">@style/TextAppearance.XSmall</item>
@@ -104,6 +112,10 @@
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.Light</item>
         <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator.Light</item>
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
+
+        <!-- Colors -->
+        <item name="textColorSgPrimary">@color/text_primary_inverse</item>
+        <item name="textColorSgPrimaryInverse">@color/text_primary</item>
 
         <!-- Text styles -->
         <item name="textAppearanceSg">@android:style/TextAppearance</item>
