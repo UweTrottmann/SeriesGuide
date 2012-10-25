@@ -183,53 +183,52 @@ public class ImageDownloader {
         }
 
         // if loading from disk fails, download it
-        InputStream inputStream = null;
         try {
-            inputStream = AndroidUtils.downloadUrl(urlString);
+            InputStream inputStream = AndroidUtils.downloadUrl(urlString);
 
-            // return BitmapFactory.decodeStream(inputStream);
-            // Bug on slow connections, fixed in future release.
-            // Bitmap bitmap = BitmapFactory.decodeStream(new
-            // FlushedInputStream(inputStream));
+            try {
+                // return BitmapFactory.decodeStream(inputStream);
+                // Bug on slow connections, fixed in future release.
+                // Bitmap bitmap = BitmapFactory.decodeStream(new
+                // FlushedInputStream(inputStream));
 
-            // write directly to disk
-            Bitmap bitmap;
-            if (isDiskCaching && AndroidUtils.isExtStorageAvailable()) {
-                FileOutputStream outputstream = new FileOutputStream(imagefile);
-                AndroidUtils.copy(new FlushedInputStream(inputStream), outputstream);
-                outputstream.close();
-                bitmap = BitmapFactory.decodeFile(imagefile.getAbsolutePath());
-            } else {
-                // if we have no external storage, decode directly
-                bitmap = BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
+                // write directly to disk
+                Bitmap bitmap;
+                if (isDiskCaching && AndroidUtils.isExtStorageAvailable()) {
+                    FileOutputStream outputstream = new FileOutputStream(imagefile);
+                    try {
+                        AndroidUtils.copy(new FlushedInputStream(inputStream), outputstream);
+                    } finally {
+                        outputstream.close();
+                    }
+                    bitmap = BitmapFactory.decodeFile(imagefile.getAbsolutePath());
+                } else {
+                    // if we have no external storage, decode directly
+                    bitmap = BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
+                }
+
+                /*
+                 * TODO look if we can return the bitmap first, then save in the
+                 * background
+                 */
+                // if (Utils.isExtStorageAvailable()) {
+                // // write the bitmap to the disk cache
+                // FileOutputStream os = new FileOutputStream(imagefile);
+                //
+                // @SuppressWarnings("unused")
+                // boolean isreconstructable =
+                // bitmap.compress(CompressFormat.JPEG, 90, os);
+                // os.close();
+                // }
+
+                return bitmap;
+            } finally {
+                inputStream.close();
             }
-
-            // // TODO look if we can return the bitmap first, then save
-            // in
-            // // the background
-            // if (Utils.isExtStorageAvailable()) {
-            // // write the bitmap to the disk cache
-            // FileOutputStream os = new FileOutputStream(imagefile);
-            //
-            // @SuppressWarnings("unused")
-            // boolean isreconstructable =
-            // bitmap.compress(CompressFormat.JPEG, 90, os);
-            // os.close();
-            // }
-
-            return bitmap;
         } catch (IOException e) {
             Log.w(LOG_TAG, "I/O error while retrieving bitmap from " + urlString, e);
         } catch (Exception e) {
             Log.w(LOG_TAG, "Error while retrieving bitmap from " + urlString, e);
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    Log.w(LOG_TAG, "Error while retrieving bitmap from " + urlString, e);
-                }
-            }
         }
         return null;
     }
