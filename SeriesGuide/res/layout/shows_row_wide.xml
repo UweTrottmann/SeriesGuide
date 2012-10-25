@@ -73,17 +73,11 @@
         android:paddingTop="@dimen/default_padding" >
 
         <ImageView
-            android:id="@+id/collectedLabel"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_collected"
-            android:visibility="gone" />
-
-        <ImageView
             android:id="@+id/favoritedLabel"
             android:layout_width="20dp"
             android:layout_height="25dp"
-            android:src="@drawable/ic_favorited"
+            android:contentDescription="@string/favorited"
+            android:src="?attr/drawableStar"
             android:visibility="gone" />
     </LinearLayout>
 

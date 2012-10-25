@@ -48,6 +48,9 @@
         <item name="android:spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
         <item name="spinnerItemStyle">@style/Widget.SpinnerItem</item>
         <item name="android:spinnerItemStyle">@style/Widget.SpinnerItem</item>
+
+        <!-- Drawables -->
+        <item name="drawableStar">@drawable/ic_favorited</item>
     </style>
 
     <style name="SeriesGuideTheme.Dialog" parent="SeriesGuideTheme">
@@ -105,6 +108,9 @@
         <item name="android:spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
         <item name="spinnerItemStyle">@style/Widget.SpinnerItem</item>
         <item name="android:spinnerItemStyle">@style/Widget.SpinnerItem</item>
+
+        <!-- Drawables -->
+        <item name="drawableStar">@drawable/ic_favorited</item>
     </style>
 
     <!-- A light Android theme -->
@@ -138,6 +144,9 @@
         <item name="android:spinnerDropDownItemStyle">@style/Widget.Light.DropDownItem</item>
         <item name="spinnerItemStyle">@style/Widget.Light.SpinnerItem</item>
         <item name="android:spinnerItemStyle">@style/Widget.Light.SpinnerItem</item>
+
+        <!-- Drawables -->
+        <item name="drawableStar">@drawable/ic_favorited_inverse</item>
     </style>
 
 </resources>

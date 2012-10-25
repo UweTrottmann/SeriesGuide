@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <attr name="custom_list_selector" format="reference" />
+    
+    <!-- Colors -->
     <attr name="textColorSgPrimary" format="reference|color" />
     <attr name="textColorSgPrimaryInverse" format="reference|color" />
+    
+    <!-- Text -->
     <attr name="textAppearanceSg" format="reference" />
     <attr name="textAppearanceSgXSmall" format="reference" />
     <attr name="textAppearanceSgXSmallDim" format="reference" />
@@ -17,4 +21,8 @@
     <attr name="textAppearanceSgLargeLight" format="reference" />
     <attr name="textAppearanceSgXLarge" format="reference" />
     <attr name="textAppearanceSgXLargeLight" format="reference" />
+
+    <!-- Drawables -->
+    <attr name="drawableStar" format="reference" />
+    
 </resources>
