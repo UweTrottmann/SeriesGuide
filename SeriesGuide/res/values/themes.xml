@@ -50,6 +50,8 @@
         <item name="android:spinnerItemStyle">@style/Widget.SpinnerItem</item>
 
         <!-- Drawables -->
+        <item name="drawableCalendarIcon">@drawable/ic_action_calendar</item>
+        <item name="drawableDivider">@drawable/divider</item>
         <item name="drawableStar">@drawable/ic_favorited</item>
     </style>
 
@@ -110,6 +112,8 @@
         <item name="android:spinnerItemStyle">@style/Widget.SpinnerItem</item>
 
         <!-- Drawables -->
+        <item name="drawableCalendarIcon">@drawable/ic_action_calendar</item>
+        <item name="drawableDivider">@drawable/divider</item>
         <item name="drawableStar">@drawable/ic_favorited</item>
     </style>
 
@@ -146,6 +150,8 @@
         <item name="android:spinnerItemStyle">@style/Widget.Light.SpinnerItem</item>
 
         <!-- Drawables -->
+        <item name="drawableCalendarIcon">@drawable/ic_action_calendar_inverse</item>
+        <item name="drawableDivider">@drawable/divider_light</item>
         <item name="drawableStar">@drawable/ic_favorited_inverse</item>
     </style>
 

@@ -45,6 +45,6 @@
         android:nextFocusRight="@+id/checkinButton"
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
-        android:src="@drawable/ic_action_calendar" />
+        android:src="?attr/drawableCalendarIcon" />
 
 </LinearLayout>

@@ -23,6 +23,8 @@
     <attr name="textAppearanceSgXLargeLight" format="reference" />
 
     <!-- Drawables -->
+    <attr name="drawableCalendarIcon" format="reference" />
+    <attr name="drawableDivider" format="reference" />
     <attr name="drawableStar" format="reference" />
     
 </resources>
