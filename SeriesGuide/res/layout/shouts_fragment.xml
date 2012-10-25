@@ -55,8 +55,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="@bool/gridClipToPadding"
-                android:divider="@drawable/divider_horizontal_holo_dark"
-                android:listSelector="?custom_list_selector" >
+                android:divider="?attr/drawableDivider"
+                android:listSelector="?attr/custom_list_selector" >
             </ListView>
 
             <TextView
@@ -74,6 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/divider"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/inline_padding"
         android:text="@string/autorefresh"
         android:textSize="@dimen/text_size_xsmall" />
 
@@ -82,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/shouttext"
-        layout="@layout/holodivider" />
+        layout="@layout/divider_horizontal" />
 
     <EditText
         android:id="@+id/shouttext"
