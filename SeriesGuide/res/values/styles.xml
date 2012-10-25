@@ -349,6 +349,11 @@
         <item name="android:textColor">@color/text_default_inverse</item>
     </style>
 
+    <!-- Buttons -->
+    <style name="Widget.SeriesGuide.Light.Button" parent="Widget.SeriesGuide.Button">
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
     <!-- Title page indicator -->
     <style name="TitlePageIndicator.Light">
         <item name="android:textColor">@color/text_primary_inverse</item>
