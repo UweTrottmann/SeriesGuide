@@ -14,7 +14,7 @@
         <!-- Text styles -->
         <item name="textAppearanceSg">@style/TextAppearance</item>
         <item name="textAppearanceSgXSmall">@style/TextAppearance.XSmall</item>
-        <item name="textAppearanceSgXSmallDim">@style/TextAppearance.XSmall</item>
+        <item name="textAppearanceSgXSmallDim">@style/TextAppearance.XSmall.Dim</item>
         <item name="textAppearanceSgSmall">@style/TextAppearance.Small</item>
         <item name="textAppearanceSgSmallDim">@style/TextAppearance.Small.Dim</item>
         <item name="textAppearanceSgSmallPrimary">@style/TextAppearance.Small.Primary</item>
@@ -79,7 +79,7 @@
         <!-- Text styles -->
         <item name="textAppearanceSg">@style/TextAppearance</item>
         <item name="textAppearanceSgXSmall">@style/TextAppearance.XSmall</item>
-        <item name="textAppearanceSgXSmallDim">@style/TextAppearance.XSmall</item>
+        <item name="textAppearanceSgXSmallDim">@style/TextAppearance.XSmall.Dim</item>
         <item name="textAppearanceSgSmall">@style/TextAppearance.Small</item>
         <item name="textAppearanceSgSmallDim">@style/TextAppearance.Small.Dim</item>
         <item name="textAppearanceSgSmallPrimary">@style/TextAppearance.Small.Primary</item>
