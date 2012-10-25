@@ -326,7 +326,7 @@
     <!-- Text styles -->
     <style name="TextAppearance.Light" parent="TextAppearance"></style>
 
-    <style name="TextAppearance.Light.XSmall" parent="TextAppearance.Light.XSmall"></style>
+    <style name="TextAppearance.Light.XSmall" parent="TextAppearance.XSmall"></style>
 
     <style name="TextAppearance.Light.XSmall.Dim">
         <item name="android:textColor">@color/text_dim_light</item>

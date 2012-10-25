@@ -33,6 +33,7 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
+import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -77,6 +78,10 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     private SimpleCursorAdapter mAdapter;
 
+    private int mTextAppearanceXSmall;
+
+    private int mTextAppearanceXSmallDim;
+
     /**
      * All values have to be integer.
      */
@@ -110,13 +115,22 @@ public class SeasonsFragment extends SherlockListFragment implements
 
         updatePreferences();
 
+        // get some style refs
+        TypedValue outValue = new TypedValue();
+        getActivity().getTheme().resolveAttribute(R.attr.textAppearanceSgXSmall,
+                outValue, true);
+        mTextAppearanceXSmall = outValue.resourceId;
+        getActivity().getTheme().resolveAttribute(R.attr.textAppearanceSgXSmallDim,
+                outValue, true);
+        mTextAppearanceXSmallDim = outValue.resourceId;
+
+        // populate list
+        fillData();
+
         // listen to changes to the sorting preference
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
         prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
-
-        // populate list
-        fillData();
 
         registerForContextMenu(getListView());
         setHasOptionsMenu(true);
@@ -254,14 +268,14 @@ public class SeasonsFragment extends SherlockListFragment implements
                                 episodeCount += getString(R.string.otherepisodes);
                             }
                         }
-                        watchcount.setTextAppearance(getActivity(),
-                                R.style.TextAppearance_XSmall_Dim);
+
+                        watchcount.setTextAppearance(getActivity(), mTextAppearanceXSmallDim);
                     } else if (count == 1) {
                         episodeCount += count + " " + getString(R.string.season_onenotwatched);
-                        watchcount.setTextAppearance(getActivity(), R.style.TextAppearance_XSmall);
+                        watchcount.setTextAppearance(getActivity(), mTextAppearanceXSmall);
                     } else {
                         episodeCount += count + " " + getString(R.string.season_watchcount);
-                        watchcount.setTextAppearance(getActivity(), R.style.TextAppearance_XSmall);
+                        watchcount.setTextAppearance(getActivity(), mTextAppearanceXSmall);
                     }
 
                     // add strings for unaired episodes
