@@ -15,6 +15,7 @@ Version 2.10 *(TBA)*
 #### 2.10.1beta (2012-10-16)
 
 * FEATURE Light theme, can be enabled in advanced settings.
+* FEATURE Add all button for trakt library.
 * TWEAK Some love to the list widget, increased font-sizes on Nexus 7-like screens.
 * TWEAK Custom selected color (seen when navigating with D-PAD).
 * FIX Action items sometimes invisible on tablets.
