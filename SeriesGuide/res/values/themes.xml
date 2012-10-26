@@ -149,8 +149,8 @@
         <item name="textAppearanceSgMediumLightDim">@style/TextAppearance.Light.Medium.Light.Dim</item>
         <item name="textAppearanceSgLarge">@style/TextAppearance.Large</item>
         <item name="textAppearanceSgLargeLight">@style/TextAppearance.Large.Light</item>
-        <item name="textAppearanceSgXLarge">@style/TextAppearance.XLarge</item>
-        <item name="textAppearanceSgXLargeLight">@style/TextAppearance.XLarge.Light</item>
+        <item name="textAppearanceSgXLarge">@style/TextAppearance.Light.XLarge</item>
+        <item name="textAppearanceSgXLargeLight">@style/TextAppearance.Light.XLarge.Light</item>
 
         <!-- Action bar -->
         <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>

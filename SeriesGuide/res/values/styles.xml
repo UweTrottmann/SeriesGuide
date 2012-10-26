@@ -352,6 +352,14 @@
         <item name="android:textColor">@color/text_default_inverse</item>
     </style>
 
+    <style name="TextAppearance.Light.XLarge" parent="@style/TextAppearance.XLarge">
+        <item name="android:textColor">@color/text_primary_light_sg</item>
+    </style>
+
+    <style name="TextAppearance.Light.XLarge.Light">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
     <!-- Buttons -->
     <style name="Widget.SeriesGuide.Light.Button" parent="Widget.SeriesGuide.Button">
         <item name="android:textColor">@color/text_primary</item>
