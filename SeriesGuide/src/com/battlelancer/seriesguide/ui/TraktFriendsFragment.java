@@ -389,7 +389,7 @@ public class TraktFriendsFragment extends ListFragment implements
             holder.name.setText(friend.username);
             mImageDownloader.download(friend.avatar, holder.avatar);
 
-            holder.timestamp.setTextColor(Color.LTGRAY);
+            holder.timestamp.setTextColor(Color.GRAY);
 
             String show = "";
             String episode = "";
