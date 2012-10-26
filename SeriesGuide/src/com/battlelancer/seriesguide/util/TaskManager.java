@@ -74,8 +74,7 @@ public class TaskManager {
             // generic adding multiple message
             Toast.makeText(
                     mContext,
-                    mContext.getString(R.string.add_multiple) + " "
-                            + mContext.getString(R.string.add_started),
+                    R.string.add_multiple,
                     Toast.LENGTH_SHORT).show();
         }
 

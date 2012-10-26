@@ -164,7 +164,7 @@
     <string name="add_show">Add Show</string>
     <string name="add_all">Add all</string>
     <string name="dont_add_show">Don\'t Add</string>
-    <string name="add_multiple">All shows</string>
+    <string name="add_multiple">All shows will appear in your show list shortly.</string>
     <string name="add_started">will appear in your show list shortly.</string>
     <string name="add_success">added successfully.</string>
     <string name="add_error_begin">Could not add \"</string>
@@ -370,7 +370,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">Remembering\n\nRemember the last active activity tab.\n\nUse correct date when creating calendar event in overview.\n\nShow list action items should not disappear anymore.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">Snow is white, so is the new theme\n\nTry out the new Light theme! See advanced settings to switch.\n\nAdd all your trakt library with one button.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
