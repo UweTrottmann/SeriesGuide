@@ -72,8 +72,7 @@
                 <include
                     android:id="@+id/progress_container"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="48dp"
+                    android:layout_height="120dp"
                     layout="@layout/progress_container" />
 
                 <RelativeLayout
