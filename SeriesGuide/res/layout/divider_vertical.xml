@@ -5,4 +5,4 @@
     android:paddingBottom="@dimen/default_padding"
     android:paddingTop="@dimen/default_padding"
     android:scaleType="fitXY"
-    android:src="@drawable/divider" />
+    android:src="?attr/drawableDivider" />

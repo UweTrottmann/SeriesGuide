@@ -356,8 +356,6 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                 viewHolder.show = (TextView) convertView.findViewById(R.id.textViewUpcomingShow);
                 viewHolder.watchedBox = (WatchedBox) convertView
                         .findViewById(R.id.watchedBoxUpcoming);
-                viewHolder.number = (TextView) convertView
-                        .findViewById(R.id.textViewUpcomingNumber);
                 viewHolder.airdate = (TextView) convertView
                         .findViewById(R.id.textViewUpcomingAirdate);
                 viewHolder.network = (TextView) convertView
@@ -368,10 +366,6 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-
-            // set text properties immediately
-            viewHolder.episode.setText(mCursor.getString(UpcomingQuery.TITLE));
-            viewHolder.show.setText(mCursor.getString(UpcomingQuery.SHOW_TITLE));
 
             // watched box
             // save rowid to hand over to OnClick event listener
@@ -409,9 +403,12 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                 }
             });
 
-            // season and episode number
+            // show
+            viewHolder.show.setText(mCursor.getString(UpcomingQuery.SHOW_TITLE));
+
+            // episode number and title
             final String number = Utils.getEpisodeNumber(mPrefs, seasonNumber, episodeNumber);
-            viewHolder.number.setText(number);
+            viewHolder.episode.setText(number + " " + mCursor.getString(UpcomingQuery.TITLE));
 
             // add network
             String network = "";
@@ -455,8 +452,6 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         public TextView episode;
 
         public WatchedBox watchedBox;
-
-        public TextView number;
 
         public TextView airdate;
 

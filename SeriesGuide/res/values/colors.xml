@@ -17,11 +17,18 @@
 
     <color name="transparent">#00000000</color>
     <color name="text_primary">#fff1f1f1</color>
+    <color name="text_primary_inverse">#ff010101</color>
     <color name="text_link">#ff0099CC</color>
     <color name="text_default">#bebebe</color>
+    <color name="text_default_inverse">#414141</color>
     <color name="text_dim">#80bebebe</color>
+    <color name="text_dim_light">#80323232</color>
     <color name="accent_primary">#ff4800ff</color>
+    <color name="accent_primary_light">#bb4800ff</color>
     <color name="dim">#ff313531</color>
     <color name="background">#ff111111</color>
+
+    <color name="green_bright">#ff65f526</color>
+    <color name="green_dark">#ff05A30D</color>
 
 </resources>

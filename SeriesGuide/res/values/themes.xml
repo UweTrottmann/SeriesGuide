@@ -11,19 +11,50 @@
         <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_sg</item>
         <item name="custom_list_selector">@drawable/list_selector_sg</item>
 
-        <!-- ABS -->
+        <!-- Colors -->
+        <item name="textColorSgPrimary">@color/text_primary</item>
+        <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
+        <item name="textColorSgGreen">@color/green_bright</item>
+
+        <!-- Text styles -->
+        <item name="textAppearanceSg">@style/TextAppearance</item>
+        <item name="textAppearanceSgXSmall">@style/TextAppearance.XSmall</item>
+        <item name="textAppearanceSgXSmallDim">@style/TextAppearance.XSmall.Dim</item>
+        <item name="textAppearanceSgSmall">@style/TextAppearance.Small</item>
+        <item name="textAppearanceSgSmallDim">@style/TextAppearance.Small.Dim</item>
+        <item name="textAppearanceSgSmallPrimary">@style/TextAppearance.Small.Primary</item>
+        <item name="textAppearanceSgMedium">@style/TextAppearance.Medium</item>
+        <item name="textAppearanceSgMediumDim">@style/TextAppearance.Medium.Dim</item>
+        <item name="textAppearanceSgMediumLight">@style/TextAppearance.Medium.Light</item>
+        <item name="textAppearanceSgMediumLightDim">@style/TextAppearance.Medium.Light.Dim</item>
+        <item name="textAppearanceSgLarge">@style/TextAppearance.Large</item>
+        <item name="textAppearanceSgLargeLight">@style/TextAppearance.Large.Light</item>
+        <item name="textAppearanceSgXLarge">@style/TextAppearance.XLarge</item>
+        <item name="textAppearanceSgXLargeLight">@style/TextAppearance.XLarge.Light</item>
+
+        <!-- Action bar -->
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator</item>
         <item name="actionBarStyle">@style/ActionBar</item>
         <item name="android:actionBarStyle">@style/ActionBar</item>
-        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
         <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
-        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
         <item name="dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
         <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
         <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
         <item name="actionDropDownStyle">@style/DropDownNav</item>
         <item name="android:actionDropDownStyle">@style/DropDownNav</item>
+        <item name="spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
+        <item name="spinnerItemStyle">@style/Widget.SpinnerItem</item>
+        <item name="android:spinnerItemStyle">@style/Widget.SpinnerItem</item>
+
+        <!-- Drawables -->
+        <item name="drawableAddIcon">@drawable/ic_action_add</item>
+        <item name="drawableCalendarIcon">@drawable/ic_action_calendar</item>
+        <item name="drawableDivider">@drawable/divider</item>
+        <item name="drawableStar">@drawable/ic_favorited</item>
     </style>
 
     <style name="SeriesGuideTheme.Dialog" parent="SeriesGuideTheme">
@@ -33,7 +64,7 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustResize</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowActionModeOverlay">true</item>
         <item name="android:windowCloseOnTouchOutside">true</item>
@@ -50,11 +81,96 @@
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
-    <!-- An ICS base theme using default styles from ABS -->
+    <!-- An dark Android theme -->
     <style name="ICSBaseTheme" parent="Theme.Sherlock">
-        <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.ICS</item>
+        <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.Dark</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
+
+        <!-- Colors -->
+        <item name="textColorSgPrimary">@color/text_primary</item>
+        <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
+        <item name="textColorSgGreen">@color/green_bright</item>
+
+        <!-- Text styles -->
+        <item name="textAppearanceSg">@style/TextAppearance</item>
+        <item name="textAppearanceSgXSmall">@style/TextAppearance.XSmall</item>
+        <item name="textAppearanceSgXSmallDim">@style/TextAppearance.XSmall.Dim</item>
+        <item name="textAppearanceSgSmall">@style/TextAppearance.Small</item>
+        <item name="textAppearanceSgSmallDim">@style/TextAppearance.Small.Dim</item>
+        <item name="textAppearanceSgSmallPrimary">@style/TextAppearance.Small.Primary</item>
+        <item name="textAppearanceSgMedium">@style/TextAppearance.Medium</item>
+        <item name="textAppearanceSgMediumDim">@style/TextAppearance.Medium.Dim</item>
+        <item name="textAppearanceSgMediumLight">@style/TextAppearance.Medium.Light</item>
+        <item name="textAppearanceSgMediumLightDim">@style/TextAppearance.Medium.Light.Dim</item>
+        <item name="textAppearanceSgLarge">@style/TextAppearance.Large</item>
+        <item name="textAppearanceSgLargeLight">@style/TextAppearance.Large.Light</item>
+        <item name="textAppearanceSgXLarge">@style/TextAppearance.XLarge</item>
+        <item name="textAppearanceSgXLargeLight">@style/TextAppearance.XLarge.Light</item>
+
+        <!-- Action bar -->
+        <item name="spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
+        <item name="spinnerItemStyle">@style/Widget.SpinnerItem</item>
+        <item name="android:spinnerItemStyle">@style/Widget.SpinnerItem</item>
+
+        <!-- Drawables -->
+        <item name="drawableAddIcon">@drawable/ic_action_add</item>
+        <item name="drawableCalendarIcon">@drawable/ic_action_calendar</item>
+        <item name="drawableDivider">@drawable/divider</item>
+        <item name="drawableStar">@drawable/ic_favorited</item>
+    </style>
+
+    <!-- A light Android theme -->
+    <style name="SeriesGuideThemeLight" parent="Theme.Sherlock.Light.DarkActionBar">
+        <item name="android:buttonStyle">@style/Widget.SeriesGuide.Light.Button</item>
+        <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
+        <item name="android:editTextBackground">@drawable/edit_text_sg</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_sg</item>
+        <item name="custom_list_selector">@drawable/list_selector_sg</item>
+        <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.Light</item>
+        <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator.Light</item>
+
+        <!-- Colors -->
+        <item name="textColorSgPrimary">@color/text_primary_inverse</item>
+        <item name="textColorSgPrimaryInverse">@color/text_primary</item>
+        <item name="textColorSgGreen">@color/green_dark</item>
+
+        <!-- Text styles -->
+        <item name="textAppearanceSg">@android:style/TextAppearance</item>
+        <item name="textAppearanceSgXSmall">@style/TextAppearance.Light.XSmall</item>
+        <item name="textAppearanceSgXSmallDim">@style/TextAppearance.Light.XSmall.Dim</item>
+        <item name="textAppearanceSgSmall">@style/TextAppearance.Light.Small</item>
+        <item name="textAppearanceSgSmallDim">@style/TextAppearance.Light.Small.Dim</item>
+        <item name="textAppearanceSgSmallPrimary">@style/TextAppearance.Light.Small.Primary</item>
+        <item name="textAppearanceSgMedium">@style/TextAppearance.Light.Medium</item>
+        <item name="textAppearanceSgMediumDim">@style/TextAppearance.Light.Medium.Dim</item>
+        <item name="textAppearanceSgMediumLight">@style/TextAppearance.Light.Medium.Light</item>
+        <item name="textAppearanceSgMediumLightDim">@style/TextAppearance.Light.Medium.Light.Dim</item>
+        <item name="textAppearanceSgLarge">@style/TextAppearance.Large</item>
+        <item name="textAppearanceSgLargeLight">@style/TextAppearance.Large.Light</item>
+        <item name="textAppearanceSgXLarge">@style/TextAppearance.Light.XLarge</item>
+        <item name="textAppearanceSgXLargeLight">@style/TextAppearance.Light.XLarge.Light</item>
+
+        <!-- Action bar -->
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
+        <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
+        <item name="actionDropDownStyle">@style/DropDownNav</item>
+        <item name="android:actionDropDownStyle">@style/DropDownNav</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="spinnerDropDownItemStyle">@style/Widget.Light.DropDownItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/Widget.Light.DropDownItem</item>
+        <item name="spinnerItemStyle">@style/Widget.Light.SpinnerItem</item>
+        <item name="android:spinnerItemStyle">@style/Widget.Light.SpinnerItem</item>
+
+        <!-- Drawables -->
+        <item name="drawableAddIcon">@drawable/ic_action_add_inverse</item>
+        <item name="drawableCalendarIcon">@drawable/ic_action_calendar_inverse</item>
+        <item name="drawableDivider">@drawable/divider_light</item>
+        <item name="drawableStar">@drawable/ic_favorited_inverse</item>
     </style>
 
 </resources>

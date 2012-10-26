@@ -23,7 +23,7 @@
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginRight="@dimen/default_padding"
                 android:text="@string/app_name"
-                android:textAppearance="@style/TextAppearance.XLarge.Light" />
+                android:textAppearance="?attr/textAppearanceSgXLargeLight" />
 
             <include layout="@layout/show_info_meta" >
             </include>

@@ -5,17 +5,21 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 2.9.4 *(TBA)*
+Version 2.10 *(TBA)*
 --------------------------------
 
-
+* FEATURE Light theme, can be enabled in advanced settings.
 
 ### Detailed changes:
 
-#### 2.9.10beta (TBA)
+#### 2.10.1beta (2012-10-16)
 
+* FEATURE Light theme, can be enabled in advanced settings.
 * TWEAK Some love to the list widget, increased font-sizes on Nexus 7-like screens.
+* TWEAK Custom selected color (seen when navigating with D-PAD).
 * FIX Action items sometimes invisible on tablets.
+* FIX Shouts dialog resizing properly, only showing on large or xlarge screens.
+* FIX Do not create auto-backup on first launch, at earliest after a week.
 
 Version 2.9.3 *(2012-10-18)*
 --------------------------------
