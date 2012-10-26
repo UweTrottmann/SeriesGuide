@@ -28,6 +28,7 @@
     </style>
 
     <style name="TextAppearance.Medium" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/text_primary_sg</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
 
@@ -332,10 +333,12 @@
     </style>
 
     <style name="TextAppearance.Light.Small.Primary">
-        <item name="android:textColor">@color/text_primary_inverse</item>
+        <item name="android:textColor">@color/text_primary_light_sg</item>
     </style>
 
-    <style name="TextAppearance.Light.Medium" parent="TextAppearance.Medium"></style>
+    <style name="TextAppearance.Light.Medium" parent="TextAppearance.Medium">
+        <item name="android:textColor">@color/text_primary_light_sg</item>
+    </style>
 
     <style name="TextAppearance.Light.Medium.Dim">
         <item name="android:textColor">@color/text_default_inverse</item>
