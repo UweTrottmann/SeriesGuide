@@ -24,6 +24,8 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.uwetrottmann.seriesguide.R;
 
+import java.util.List;
+
 /**
  * Inspired by florianmski's traktoid TraktManager. This class is used to hold
  * running tasks, so it can execute independently from a running activity (so
@@ -55,20 +57,38 @@ public class TaskManager {
     }
 
     public synchronized void performAddTask(SearchResult show) {
-        // notify user here already
-        Toast.makeText(mContext,
-                "\"" + show.title + "\" " + mContext.getString(R.string.add_started),
-                Toast.LENGTH_SHORT).show();
+        List<SearchResult> wrapper = Lists.newArrayList();
+        wrapper.add(show);
+        performAddTask(wrapper);
+    }
 
-        // add the show to a running add task or create a new one
+    public synchronized void performAddTask(List<SearchResult> shows) {
+        // notify user here already
+        if (shows.size() == 1) {
+            // say title of show
+            SearchResult show = shows.get(0);
+            Toast.makeText(mContext,
+                    "\"" + show.title + "\" " + mContext.getString(R.string.add_started),
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            // generic adding multiple message
+            Toast.makeText(
+                    mContext,
+                    mContext.getString(R.string.add_multiple) + " "
+                            + mContext.getString(R.string.add_started),
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        // add the show(s) to a running add task or create a new one
+        boolean isRequiringNewTask;
         if (mAddTask == null || mAddTask.getStatus() == AsyncTask.Status.FINISHED) {
-            mAddTask = (AddShowTask) new AddShowTask(mContext, show).execute();
+            isRequiringNewTask = true;
         } else {
             // addTask is still running, try to add another show to its queue
-            boolean hasAddedShow = mAddTask.addShow(show);
-            if (!hasAddedShow) {
-                mAddTask = (AddShowTask) new AddShowTask(mContext, show).execute();
-            }
+            isRequiringNewTask = !mAddTask.addShows(shows);
+        }
+        if (isRequiringNewTask) {
+            mAddTask = (AddShowTask) new AddShowTask(mContext, shows).execute();
         }
     }
 
