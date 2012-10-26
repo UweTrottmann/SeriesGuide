@@ -12,8 +12,9 @@
         <item name="custom_list_selector">@drawable/list_selector_sg</item>
 
         <!-- Colors -->
-        <item name="textColorPrimary">@color/text_primary</item>
-        <item name="textColorPrimaryInverse">@color/text_primary_inverse</item>
+        <item name="textColorSgPrimary">@color/text_primary</item>
+        <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
+        <item name="textColorSgGreen">@color/green_bright</item>
 
         <!-- Text styles -->
         <item name="textAppearanceSg">@style/TextAppearance</item>
@@ -87,8 +88,9 @@
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
 
         <!-- Colors -->
-        <item name="textColorPrimary">@color/text_primary</item>
-        <item name="textColorPrimaryInverse">@color/text_primary_inverse</item>
+        <item name="textColorSgPrimary">@color/text_primary</item>
+        <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
+        <item name="textColorSgGreen">@color/green_bright</item>
 
         <!-- Text styles -->
         <item name="textAppearanceSg">@style/TextAppearance</item>
@@ -132,6 +134,7 @@
         <!-- Colors -->
         <item name="textColorSgPrimary">@color/text_primary_inverse</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary</item>
+        <item name="textColorSgGreen">@color/green_dark</item>
 
         <!-- Text styles -->
         <item name="textAppearanceSg">@android:style/TextAppearance</item>
