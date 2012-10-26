@@ -39,6 +39,8 @@ public class TraktShoutsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // override default theme
+        setTheme(R.style.SeriesGuideTheme);
         setContentView(R.layout.activity_singlepane_empty);
 
         Bundle args = getIntent().getExtras();
