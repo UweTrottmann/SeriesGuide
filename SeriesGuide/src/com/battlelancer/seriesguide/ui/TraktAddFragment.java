@@ -47,9 +47,9 @@ public class TraktAddFragment extends AddFragment {
 
     public static final int TRENDING = 0;
 
-    public static final int RECOMMENDED = 2;
+    public static final int RECOMMENDED = 1;
 
-    public static final int LIBRARY = 3;
+    public static final int LIBRARY = 2;
 
     public static TraktAddFragment newInstance(int position) {
         TraktAddFragment f = new TraktAddFragment();

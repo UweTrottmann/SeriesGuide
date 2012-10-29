@@ -91,7 +91,8 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
 
         @Override
         public Fragment getItem(int position) {
-            if (position == 1) {
+            int count = getCount();
+            if ((count == 2 && position == 1) || (count == 4 && position == 3)) {
                 return TvdbAddFragment.newInstance();
             } else {
                 return TraktAddFragment.newInstance(position);
@@ -112,15 +113,24 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 1:
-                    return mContext.getString(R.string.search_button).toUpperCase();
-                case 2:
-                    return mContext.getString(R.string.recommended).toUpperCase();
-                case 3:
-                    return mContext.getString(R.string.library).toUpperCase();
-                default:
-                    return mContext.getString(R.string.trending).toUpperCase();
+            if (getCount() == 4) {
+                switch (position) {
+                    case 1:
+                        return mContext.getString(R.string.recommended).toUpperCase();
+                    case 2:
+                        return mContext.getString(R.string.library).toUpperCase();
+                    case 3:
+                        return mContext.getString(R.string.search_button).toUpperCase();
+                    default:
+                        return mContext.getString(R.string.trending).toUpperCase();
+                }
+            } else {
+                switch (position) {
+                    case 1:
+                        return mContext.getString(R.string.search_button).toUpperCase();
+                    default:
+                        return mContext.getString(R.string.trending).toUpperCase();
+                }
             }
         }
 
