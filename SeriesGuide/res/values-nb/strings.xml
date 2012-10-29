@@ -129,7 +129,9 @@
   <string name="no_results">Ingen treff. Prøv hele ord.</string>
   <string name="search_error">Søking mislyktes, prøv på nytt senere.</string>
   <string name="add_show">Legg Til</string>
+  <string name="add_all">Add all</string>
   <string name="dont_add_show">Ikke Legg til</string>
+  <string name="add_multiple">All shows will appear in your show list shortly.</string>
   <string name="add_started">vil vises i serielisten om kort tid.</string>
   <string name="add_success">lagt til.</string>
   <string name="add_error_begin">Kunne ikke legge til\"</string>
@@ -300,10 +302,6 @@
     <item>Usett/Kommende</item>
     <item>Skjulte</item>
     <item>Lister</item>
-  </string-array>
-  <string-array name="themeSelection">
-    <item>SeriesGuide tema</item>
-    <item>ICS basert tema</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d stemme</item>

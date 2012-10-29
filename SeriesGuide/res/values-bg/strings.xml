@@ -104,7 +104,7 @@
   <string name="update_single">Обновява сериал…</string>
   <string name="update_delta">Обновява старите сериали…</string>
   <string name="update_full">Обновява всичко…</string>
-  <string name="update_success">Актуализацията беше успешна.</string>
+  <string name="update_success">Shows updated.</string>
   <string name="update_offline">Актуализирането се провали, проверете вашата интернет/Wi-Fi връзка.</string>
   <string name="update_saxerror">Обновяването провалено, опитайте по-късно.</string>
   <string name="update_inprogress">Обновяване в процес, опитайте по-късно.</string>
@@ -129,7 +129,9 @@
   <string name="no_results">Няма резултати, опитайте търсене с цели думи.</string>
   <string name="search_error">Търсенето е неуспешно, опитайте отново по-късно.</string>
   <string name="add_show">Добавяне на сериал</string>
+  <string name="add_all">Add all</string>
   <string name="dont_add_show">Не добавяй</string>
+  <string name="add_multiple">All shows will appear in your show list shortly.</string>
   <string name="add_started">скоро ще се появи във вашият списък със сериали.</string>
   <string name="add_success">добавен успешно.</string>
   <string name="add_error_begin">Не може да бъде добавен \"</string>
@@ -252,6 +254,8 @@
   <string name="upcoming_display">Select to display upcoming shows</string>
   <string name="pref_notifications">Notifications</string>
   <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
+  <string name="pref_notifyfavonly">Favorites only</string>
+  <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
   <string name="pref_ringtone">Ringtone</string>
   <string name="pref_vibrate">Vibrate</string>
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
@@ -298,10 +302,6 @@
     <item>Негледани/Предстоящи</item>
     <item>Hidden</item>
     <item>Lists</item>
-  </string-array>
-  <string-array name="themeSelection">
-    <item>SeriesGuide Theme</item>
-    <item>ICS Base Theme</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d vote</item>

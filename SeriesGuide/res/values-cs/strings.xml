@@ -5,7 +5,7 @@
   <string name="episodes">Všechny díly</string>
   <string name="season">Série</string>
   <string name="seasons">Série</string>
-  <string name="unknown">unknown</string>
+  <string name="unknown">neznámo</string>
   <string name="episode_iswatched">Již zhlédnuto</string>
   <string name="episode_notwatched">Nových</string>
   <string name="specialseason">Bonusové díly</string>
@@ -19,7 +19,7 @@
   <string name="norating">n/a</string>
   <string name="loading">Nahrávám…</string>
   <string name="done">Hotovo</string>
-  <string name="clear">Clear</string>
+  <string name="clear">Vyčistit</string>
   <string name="more">%s další</string>
   <string name="cancel">Zrušit</string>
   <string name="share">Sdílet</string>
@@ -104,7 +104,7 @@
   <string name="update_single">Aktualizuji pořad…</string>
   <string name="update_delta">Aktualizuji zastaralé pořady…</string>
   <string name="update_full">Aktualizuji všechny pořady…</string>
-  <string name="update_success">Úspěšná aktualizace.</string>
+  <string name="update_success">Pořady aktualizovány.</string>
   <string name="update_offline">Aktualizace selhala, zkontrolujte Vaše připojení k internetu.</string>
   <string name="update_saxerror">Aktualizace selhala, zkuste to později.</string>
   <string name="update_inprogress">Probíhá aktualizace, zkuste to později.</string>
@@ -129,7 +129,9 @@
   <string name="no_results">Bez výsledku, zkuste celá slova.</string>
   <string name="search_error">Vyhledání selhalo, zkuste to později.</string>
   <string name="add_show">Přidat pořad</string>
+  <string name="add_all">Add all</string>
   <string name="dont_add_show">Nepřidávat</string>
+  <string name="add_multiple">All shows will appear in your show list shortly.</string>
   <string name="add_started">se brzy objeví na Vašem seznamu pořadů.</string>
   <string name="add_success">úspěšně přidán.</string>
   <string name="add_error_begin">Nelze přidat\"</string>
@@ -145,9 +147,9 @@
   <string name="list_title_hint">Pojmenovat seznam</string>
   <string name="list_remove">Odstranit seznam</string>
   <string name="list_manage">Upravit seznam</string>
-  <string name="list_item_manage">Manage lists</string>
+  <string name="list_item_manage">Vybrat seznamy</string>
   <string name="list_item_remove">Odebrat ze seznamu</string>
-  <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
+  <string name="list_empty">Do seznamu můžete přidat pořady, série nebo díly.</string>
   <string name="prefs_category_basic">Základní</string>
   <string name="prefs_category_sharing">Sdílení</string>
   <string name="prefs_category_advanced">Pokročilé</string>
@@ -173,7 +175,7 @@
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Poděkování</string>
   <string name="clearGetGlueCredentials">Odpojit GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Check In with GetGlue to reconnect</string>
+  <string name="clearGetGlueCredentialssummary">Ohlaste se do GetGlue pro připojení</string>
   <string name="pref_trakt">Přihlášení trakt.tv</string>
   <string name="pref_traktsummary">Přidejte nebo upravte Vaše přihlašovací údaje</string>
   <string name="pref_traktsync">Synchronizovat s trakt.tv</string>
@@ -209,11 +211,11 @@
   <string name="import_yes">Obnovit</string>
   <string name="import_no">Neobnovovat</string>
   <string name="checkin">Ohlásit se</string>
-  <string name="checkin_searchhint">Type a show name</string>
+  <string name="checkin_searchhint">Napište název pořadu</string>
   <string name="checkin_empty">Žádné odpovídající série</string>
   <string name="checkin_hint">Napište postřeh (nepovinné)</string>
   <string name="paste_episode">Vložte díl</string>
-  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
+  <string name="checkinsuccess">Ohlášeno do %s na GetGlue.</string>
   <string name="checkinfailed">Ohlášení se selhalo. Zkuste odpojit GetGlue.</string>
   <string name="getglue_authfailed">Ověření u GetGlue selhalo. Zkuste to později.</string>
   <string name="menu_rate_trakt">Hodnotit (trakt)</string>
@@ -234,29 +236,31 @@
   <string name="trakt_decryptfail">Heslo nelze dešifrovat.</string>
   <string name="trakt_generalerror">Něco je špatně. Zkontrolujte si prosím přihlašovací údaje a zkuste to znovu.</string>
   <string name="trakt_createaccount">Vytvořit nový účet</string>
-  <string name="trakt_experimental">Only shows in your SeriesGuide show list are synced. \'Sync to SeriesGuide\' fetches watched flags from trakt. \'Sync to trakt\' sends watched flags to trakt.</string>
+  <string name="trakt_experimental">Pouze pořady ze seznamu v SeriesGuide jsou synchronizovány. \'Synchronizovat do SeriesGuide\' stáhne označení jako zhlédnuté z traktu. \'Synchronizace do trakt.tv\' odešle označení jako zhlédnutého do traktu.</string>
   <string name="trakt_synctodevice">Synchronizovat do SeriesGuide</string>
   <string name="trakt_synctotrakt">Synchronizace do trakt.tv</string>
-  <string name="trakt_syncunseen">Include unwatched flags</string>
-  <string name="trakt_howto_title">Set up trakt.tv sync</string>
-  <string name="trakt_howto">To set up your devices:\n\n1. Connect or create your account below on every device.\n2. The first time, use the <b>Sync to trakt.tv</b> button to upload your existing shows.\n3. Add shows from trakt.tv by swiping to the <b>Library</b> tab in the <b>Add Show</b> screen.\n\nNow whenever SeriesGuide updates, your trakt.tv activity is downloaded to each device. This includes flagging episodes as watched or collected and check ins.</string>
+  <string name="trakt_syncunseen">Včetně označení jako nezhlédnuté</string>
+  <string name="trakt_howto_title">Nastavení synchronizace s trakt.tv</string>
+  <string name="trakt_howto">Pro nastavení vašeho zařízení:\n\n1. Přihlašte se nebo vytvořte účet z každého vašeho zařízení\n2. Při prvním přihlášení použijte <b>Synchronizace do trakt.tv</b> pro odeslání vašich pořadů\n3. Přidejte pořady z trakt.tv ze záložky <b>Knihovna</b> v nabídce <b>Přidat pořad</b>\n\nKdykoliv se potom SeriesGuide aktualizuje, stáhne vaší aktivitu na trakt.tv do každého vašeho zařízení. Synchronizuje se označení jako zhlédnuté, sesbírané a ohlášení.</string>
   <string name="welcome_setuplanguage">Zvolte jazyk</string>
   <string name="welcome_setuptrakt">Připojení k traktu</string>
-  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
+  <string name="welcome_traktmessage">Zpřístupnit vaši trakt.tv knihovnu a aktivitu přátel</string>
   <string name="dismiss">Storno</string>
-  <string name="welcome_add_part1">To get started tap</string>
-  <string name="welcome_add_part2">in the action bar.</string>
+  <string name="welcome_add_part1">Začněte klepnutím na</string>
+  <string name="welcome_add_part2">v panelu akcí.</string>
   <string name="upcoming_show">%s právě vychází</string>
   <string name="upcoming_episodes">Právě vychází nové díly</string>
   <string name="upcoming_show_detailed">%1$s na %2$s</string>
   <string name="upcoming_display">Vyberte pro zobrazení nadcházejících pořadů</string>
   <string name="pref_notifications">Upozornění</string>
   <string name="pref_notificationssummary">Upozorni mě na vysílání oblíbených pořadů</string>
+  <string name="pref_notifyfavonly">Pouze pro oblíbené</string>
+  <string name="pref_notifyfavonlysummary">Upozornění pouze pro oblíbené pořady</string>
   <string name="pref_ringtone">Vyzváněcí tón</string>
   <string name="pref_vibrate">Vibrovat</string>
   <string name="pref_vibratesummary">Při upozornění také vibrovat</string>
   <string name="pref_theme">Téma aplikace</string>
-  <string name="choose_list">Choose activity list</string>
+  <string name="choose_list">Vyberte přehled aktivity</string>
   <string name="hide_watched">Skrýt zhlédnuté díly</string>
   <string name="add_widget">Přidat widget</string>
   <string name="widget_label">SeriesGuide</string>
@@ -298,10 +302,6 @@
     <item>Nadcházející nové</item>
     <item>Skryté</item>
     <item>Seznamy</item>
-  </string-array>
-  <string-array name="themeSelection">
-    <item>Téma SeriesGuide</item>
-    <item>Téma Androidu ICS</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d hlas</item>

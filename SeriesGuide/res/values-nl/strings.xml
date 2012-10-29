@@ -19,7 +19,7 @@
   <string name="norating">n/a</string>
   <string name="loading">Laden…</string>
   <string name="done">Gereed</string>
-  <string name="clear">Ruim op</string>
+  <string name="clear">Wissen</string>
   <string name="more">%s meer</string>
   <string name="cancel">Annuleren</string>
   <string name="share">Delen</string>
@@ -31,7 +31,7 @@
   <string name="isspoiler">Spoiler waarschuwing!</string>
   <string name="no_shouts">Wees de eerste die shout!</string>
   <string name="shouts_for">Shouts voor %s</string>
-  <string name="autorefresh">Automatisch verversen</string>
+  <string name="autorefresh">Automatisch vernieuwen</string>
   <string name="love">Zeer goed!</string>
   <string name="hate">Zwak</string>
   <string name="rating2">Verschrikkelijk</string>
@@ -42,7 +42,7 @@
   <string name="rating7">Goed</string>
   <string name="rating8">Geweldig</string>
   <string name="rating9">Uitmuntend</string>
-  <string name="episode_firstaired">uitzend datum</string>
+  <string name="episode_firstaired">Uitzenddatum</string>
   <string name="episode_dvdnumber">DVD aflevering</string>
   <string name="show_actors">Acteurs</string>
   <string name="show_firstaired">Voor het eerst uitgezonden</string>
@@ -69,7 +69,7 @@
   <string name="unmark_episode">Onbekeken aflevering</string>
   <string name="mark_all">Alles bekeken</string>
   <string name="unmark_all">Niets bekeken</string>
-  <string name="mark_untilhere">Alle eerdere uitgezonden afleveringen bekeken</string>
+  <string name="mark_untilhere">Alle eerder uitgezonden bekijken</string>
   <string name="collect">Verzamelde aflevering</string>
   <string name="uncollect">Nog niet verzamelde aflevering</string>
   <string name="trakt_submitfailed">Niet aan trakt toegevoegd. Probeer later nog een keer.</string>
@@ -88,9 +88,9 @@
   <string name="favorited">Toegevoegd aan favorieten</string>
   <string name="unfavorited">Verwijderd uit favorieten</string>
   <string name="context_hide">Verbergen</string>
-  <string name="context_unhide">Weergeven</string>
+  <string name="context_unhide">Niet verbergen</string>
   <string name="hidden">Verborgen serie</string>
-  <string name="unhidden">Weergegeven serie</string>
+  <string name="unhidden">Niet verborgen serie</string>
   <string name="activity">Activiteit</string>
   <string name="upcoming">Eerstvolgende</string>
   <string name="recent">Recente</string>
@@ -104,7 +104,7 @@
   <string name="update_single">Serie bijwerken…</string>
   <string name="update_delta">Verouderde series bijwerken…</string>
   <string name="update_full">Alle series bijwerken…</string>
-  <string name="update_success">Shows updated.</string>
+  <string name="update_success">Bijgwerkte weergeven.</string>
   <string name="update_offline">Bijwerken is mislukt, controleer de internet/Wi-Fi verbinding.</string>
   <string name="update_saxerror">Bijwerken is mislukt, probeer het later opnieuw.</string>
   <string name="update_inprogress">Er wordt een update uitgevoerd, probeer het later opnieuw.</string>
@@ -129,7 +129,9 @@
   <string name="no_results">Geen resultaten, probeer complete woorden.</string>
   <string name="search_error">Zoeken mislukt, probeer het later opnieuw.</string>
   <string name="add_show">Serie toevoegen</string>
+  <string name="add_all">Alle toevoegen</string>
   <string name="dont_add_show">Niet toevoegen</string>
+  <string name="add_multiple">Alle series worden binnenkort in de lijst weergegeven.</string>
   <string name="add_started">zal binnenkort in het series overzicht worden weergegeven.</string>
   <string name="add_success">succesvol toegevoegd.</string>
   <string name="add_error_begin">Niet toe te voegen \"</string>
@@ -141,9 +143,9 @@
   <string name="powered_by_thetvdb">mede mogelijk gemaakt door thetvdb.com</string>
   <string name="powered_by_trakt">aangestuurd door trakt.tv</string>
   <string name="first_list">Favorieten</string>
-  <string name="list_add">Voeg lijst toe</string>
-  <string name="list_title_hint">Benoem je lijst</string>
-  <string name="list_remove">Verwijder lijst</string>
+  <string name="list_add">Lijst toevoegen</string>
+  <string name="list_title_hint">Lijst een naam geven</string>
+  <string name="list_remove">Lijst verwijderen</string>
   <string name="list_manage">Beheer lijst</string>
   <string name="list_item_manage">Beheer lijsten</string>
   <string name="list_item_remove">Verwijder van lijst</string>
@@ -208,7 +210,7 @@
   <string name="import_question">De huidige serieslijst zal verloren gaan! Zorg ervoor dat het back-up bestand in de back-up map aanwezig is.</string>
   <string name="import_yes">Herstellen</string>
   <string name="import_no">Niet herstellen</string>
-  <string name="checkin">Check-in</string>
+  <string name="checkin">Aanmelden</string>
   <string name="checkin_searchhint">Voer de naam van een serie in</string>
   <string name="checkin_empty">Geen overeenkomende series</string>
   <string name="checkin_hint">Voer een bericht in (optioneel)</string>
@@ -219,7 +221,7 @@
   <string name="menu_rate_trakt">Beoordelen (trakt)</string>
   <string name="menu_share_others">Via andere apps</string>
   <string name="traktcheckin_cancel">Overschrijven</string>
-  <string name="traktcheckin_inprogress">Je bent al ingecheckt bij een andere aflevering of film. Overschrijf de vorige check-in of wacht %s en probeer het opnieuw.</string>
+  <string name="traktcheckin_inprogress">Er is al aangemeld bij een andere aflevering of serie. Overschrijf de vorige aanmelding of wacht %s en probeer het opnieuw.</string>
   <string name="traktcheckin_wait">Wachten</string>
   <string name="oauthmessage">SeriesGuide met GetGlue authenticeren…</string>
   <string name="addtocalendar">Aan agenda toevoegen</string>
@@ -252,14 +254,14 @@
   <string name="upcoming_display">Selecteer om toekomstige series weer te geven</string>
   <string name="pref_notifications">Meldingen</string>
   <string name="pref_notificationssummary">Favoriete series die binnenkort worden uitgezonden melden</string>
-  <string name="pref_notifyfavonly">Favorites only</string>
-  <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
+  <string name="pref_notifyfavonly">Alleen favorieten</string>
+  <string name="pref_notifyfavonlysummary">Alleen over favoriete series berichten ontvangen</string>
   <string name="pref_ringtone">Ringtone</string>
   <string name="pref_vibrate">Trillen</string>
   <string name="pref_vibratesummary">Ook trillen als melding wordt weergegeven</string>
   <string name="pref_theme">Applicatie thema</string>
   <string name="choose_list">Kies weer te geven lijst</string>
-  <string name="hide_watched">Verberg bekeken afleveringen</string>
+  <string name="hide_watched">Bekeken afleveringen verbergen</string>
   <string name="add_widget">Widget toevoegen</string>
   <string name="widget_label">SeriesGuide</string>
   <string name="smallwidget">SeriesGuide (klein)</string>
@@ -300,10 +302,6 @@
     <item>Niet bekeken/Aankomende</item>
     <item>Verborgen</item>
     <item>Lijsten</item>
-  </string-array>
-  <string-array name="themeSelection">
-    <item>SeriesGuide thema</item>
-    <item>ICS Thema</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d stem</item>

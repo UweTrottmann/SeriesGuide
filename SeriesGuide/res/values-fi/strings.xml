@@ -104,7 +104,7 @@
   <string name="update_single">Päivitetään ohjelmaa…</string>
   <string name="update_delta">Päivitetään vanhentuneita ohjelmia…</string>
   <string name="update_full">Päivitetään kaikkia ohjelmia…</string>
-  <string name="update_success">Shows updated.</string>
+  <string name="update_success">Näyttää päivitetyt.</string>
   <string name="update_offline">Päivitys epäonnistui, tarkista internet/Wi-Fi-yhteytesi.</string>
   <string name="update_saxerror">Päivitys epäonnistui, yritä myöhemmin uudelleen.</string>
   <string name="update_inprogress">Päivitys on käynnissä, yritä myöhemmin uudelleen.</string>
@@ -129,7 +129,9 @@
   <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
   <string name="search_error">Haku epäonnistui, yritä myöhemmin uudelleen.</string>
   <string name="add_show">Lisää ohjelma</string>
+  <string name="add_all">Lisää kaikki</string>
   <string name="dont_add_show">Älä lisää</string>
+  <string name="add_multiple">Kaikki ohjelmat ilmaantuvat ohjelmalistaasi pian.</string>
   <string name="add_started">ilmestyy pian ohjelmaluetteloosi.</string>
   <string name="add_success">lisätty onnistuneesti.</string>
   <string name="add_error_begin">Ei voi lisätä ohjelmaa \"</string>
@@ -252,8 +254,8 @@
   <string name="upcoming_display">Valitse näyttääksesi tulevat ohjelmat</string>
   <string name="pref_notifications">Ilmoitukset</string>
   <string name="pref_notificationssummary">Ilmoita pian esitettävistä suosikkiohjelmista</string>
-  <string name="pref_notifyfavonly">Favorites only</string>
-  <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
+  <string name="pref_notifyfavonly">Vain suosikit</string>
+  <string name="pref_notifyfavonlysummary">Vastaanota ainoastaan ilmoituksia suosissiohjelmista</string>
   <string name="pref_ringtone">Soittoääni</string>
   <string name="pref_vibrate">Värinä</string>
   <string name="pref_vibratesummary">Myös värise näytettäessä ilmoitus</string>
@@ -300,10 +302,6 @@
     <item>Katsomattomat/Tulevat</item>
     <item>Piilotetut</item>
     <item>Listat</item>
-  </string-array>
-  <string-array name="themeSelection">
-    <item>SeriesGuiden teema</item>
-    <item>ICS-pohjainen teema</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d ääni</item>

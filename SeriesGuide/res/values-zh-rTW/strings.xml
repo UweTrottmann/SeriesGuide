@@ -104,7 +104,7 @@
   <string name="update_single">Updating show…</string>
   <string name="update_delta">Updating outdated shows…</string>
   <string name="update_full">Updating all shows…</string>
-  <string name="update_success">更新成功。</string>
+  <string name="update_success">Shows updated.</string>
   <string name="update_offline">更新失敗，請檢查你的網路/Wi-Fi設定。</string>
   <string name="update_saxerror">更新失敗，請稍後再試。</string>
   <string name="update_inprogress">An update is in progress, try again later.</string>
@@ -129,7 +129,9 @@
   <string name="no_results">查無結果，請嘗試完整單字。</string>
   <string name="search_error">查詢失敗，請稍候再試。</string>
   <string name="add_show">新增影集</string>
+  <string name="add_all">Add all</string>
   <string name="dont_add_show">請勿新增</string>
+  <string name="add_multiple">All shows will appear in your show list shortly.</string>
   <string name="add_started">將於短期內顯示在您的影集清單中。</string>
   <string name="add_success">新增成功</string>
   <string name="add_error_begin">不能新增\"</string>
@@ -252,6 +254,8 @@
   <string name="upcoming_display">Select to display upcoming shows</string>
   <string name="pref_notifications">Notifications</string>
   <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
+  <string name="pref_notifyfavonly">Favorites only</string>
+  <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
   <string name="pref_ringtone">Ringtone</string>
   <string name="pref_vibrate">Vibrate</string>
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
@@ -298,10 +302,6 @@
     <item>尚未觀賞/即將播出</item>
     <item>隱藏</item>
     <item>Lists</item>
-  </string-array>
-  <string-array name="themeSelection">
-    <item>SeriesGuide Theme</item>
-    <item>ICS Base Theme</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d vote</item>

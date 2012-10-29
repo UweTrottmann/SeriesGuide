@@ -104,7 +104,7 @@
   <string name="update_single">Atualizando série…</string>
   <string name="update_delta">Atualizando séries já exibidas…</string>
   <string name="update_full">Actualizando todas as séries…</string>
-  <string name="update_success">Actualização com sucesso.</string>
+  <string name="update_success">Shows updated.</string>
   <string name="update_offline">Falha na atualização, verifique sua conexão de internet/Wi-Fi.</string>
   <string name="update_saxerror">Falha na atualização, tente novamente mais tarde.</string>
   <string name="update_inprogress">Uma atualização em curso, tente novamente mais tarde.</string>
@@ -129,7 +129,9 @@
   <string name="no_results">Nenhum resultado, tente palavras completas.</string>
   <string name="search_error">Erro de pesquisa, tente novamente mais tarde.</string>
   <string name="add_show">Adicionar Série</string>
+  <string name="add_all">Add all</string>
   <string name="dont_add_show">Não adicionar</string>
+  <string name="add_multiple">All shows will appear in your show list shortly.</string>
   <string name="add_started">aparecerá na sua lista de séries brevemente.</string>
   <string name="add_success">adicionado com êxito.</string>
   <string name="add_error_begin">Não foi possível adicionar \"</string>
@@ -252,6 +254,8 @@
   <string name="upcoming_display">Selecione para exibir as próximos séries</string>
   <string name="pref_notifications">Notificações</string>
   <string name="pref_notificationssummary">Notifique sobre as próximas exibições das séries favoritas</string>
+  <string name="pref_notifyfavonly">Favorites only</string>
+  <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
   <string name="pref_ringtone">Toque</string>
   <string name="pref_vibrate">Vibrar</string>
   <string name="pref_vibratesummary">Também vibrar quando é mostrada uma notificação</string>
@@ -298,10 +302,6 @@
     <item>Por ver/Por exibir</item>
     <item>Oculto</item>
     <item>Lists</item>
-  </string-array>
-  <string-array name="themeSelection">
-    <item>Tema de SeriesGuide</item>
-    <item>Tema ICS</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d voto</item>

@@ -104,7 +104,7 @@
   <string name="update_single">Atualizando série...</string>
   <string name="update_delta">Atualizando séries antigas…</string>
   <string name="update_full">Atualizando todas as séries…</string>
-  <string name="update_success">Atualização bem sucedida.</string>
+  <string name="update_success">Séries atualizadas.</string>
   <string name="update_offline">Atualização falhou, cheque sua conexão de internet.</string>
   <string name="update_saxerror">Falha na atualização, tente novamente mais tarde.</string>
   <string name="update_inprogress">Atualização em andamento, tente novamente mais tarde.</string>
@@ -129,7 +129,9 @@
   <string name="no_results">Sem resultados, tente palavras completas.</string>
   <string name="search_error">Falha na pesquisa, tente novamente mais tarde.</string>
   <string name="add_show">Adicionar Série</string>
+  <string name="add_all">Add all</string>
   <string name="dont_add_show">Não Adicionar</string>
+  <string name="add_multiple">All shows will appear in your show list shortly.</string>
   <string name="add_started">aparecerá em suas séries em breve.</string>
   <string name="add_success">adicionada com sucesso.</string>
   <string name="add_error_begin">Não foi possível adicionar \"</string>
@@ -242,7 +244,7 @@
   <string name="trakt_howto">Para configurar seus dispositivos:\n\n1. Conecte ou crie sua conta abaixo em cada dispositivo.\n2. Na primeira vez, use o botão <b>Sincronizar com o trakt.tv</b> para subir suas séries existentes.\n3. Adicione séries do trakt.tv arrastando para a guia <b>Biblioteca</b> na tela <b>Adicionar Série</b>.\n\nAgora sempre que o SeriesGuide atualizar, sua atividade no trakt.tv é baixada em cada dispositivo. Isto inclui a marcação de episódios como vistos ou coletados e check-ins.</string>
   <string name="welcome_setuplanguage">Escolha o idioma</string>
   <string name="welcome_setuptrakt">Conectar-se ao trakt</string>
-  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
+  <string name="welcome_traktmessage">Acesse sua biblioteca do trakt.tv e as atividades dos seus amigos</string>
   <string name="dismiss">Recusar</string>
   <string name="welcome_add_part1">Para iniciar aperte</string>
   <string name="welcome_add_part2">na barra de ações.</string>
@@ -252,6 +254,8 @@
   <string name="upcoming_display">Exibir próximas exibições</string>
   <string name="pref_notifications">Notificações</string>
   <string name="pref_notificationssummary">Notifique as exibições próximas dos favoritos</string>
+  <string name="pref_notifyfavonly">Só favoritos</string>
+  <string name="pref_notifyfavonlysummary">Receber notificações apenas para séries favoritas</string>
   <string name="pref_ringtone">Toque</string>
   <string name="pref_vibrate">Vibrar</string>
   <string name="pref_vibratesummary">Vibrar também ao exibir uma notificação</string>
@@ -298,10 +302,6 @@
     <item>Não visto/Próximo</item>
     <item>Oculto</item>
     <item>Listas</item>
-  </string-array>
-  <string-array name="themeSelection">
-    <item>Tema do SeriesGuide</item>
-    <item>Tema base do ICS</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d votado</item>

@@ -104,7 +104,7 @@
   <string name="update_single">Aktualizacja serialu</string>
   <string name="update_delta">Aktualizacja starych</string>
   <string name="update_full">Aktualizacja wszystkich</string>
-  <string name="update_success">Shows updated.</string>
+  <string name="update_success">Seriale zostały zaktualizowane.</string>
   <string name="update_offline">Aktualizacja nie powiodła się. Sprawdź połączenie internetowe/Wi-Fi.</string>
   <string name="update_saxerror">Aktualizacja nie powiodła się. Spróbuj ponownie później.</string>
   <string name="update_inprogress">Aktualizacja w toku, spróbuj ponownie później.</string>
@@ -129,7 +129,9 @@
   <string name="no_results">Brak wyników. Uzupełnij zapytanie.</string>
   <string name="search_error">Wyszukiwanie nie powiodło się. Spróbuj ponownie później.</string>
   <string name="add_show">Dodaj serial</string>
+  <string name="add_all">Dodaj wszystkie</string>
   <string name="dont_add_show">Nie dodawaj</string>
+  <string name="add_multiple">Seriale za chwilę zostaną dodane do listy.</string>
   <string name="add_started">za chwilę zostanie dodany do listy.</string>
   <string name="add_success">dodany.</string>
   <string name="add_error_begin">Nie można dodać \"</string>
@@ -252,8 +254,8 @@
   <string name="upcoming_display">Wyświetl informacje o nadchodzących odcinkach</string>
   <string name="pref_notifications">Powiadomienia</string>
   <string name="pref_notificationssummary">Powiadamiaj o nadchodzących emisjach ulubionych seriali</string>
-  <string name="pref_notifyfavonly">Favorites only</string>
-  <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
+  <string name="pref_notifyfavonly">Tylko ulubione</string>
+  <string name="pref_notifyfavonlysummary">Pokazuj powiadomienia tylko dla ulubionych seriali</string>
   <string name="pref_ringtone">Dzwonek</string>
   <string name="pref_vibrate">Wibracja</string>
   <string name="pref_vibratesummary">Wibruj również przy wyświetlaniu powiadomienia</string>
@@ -300,10 +302,6 @@
     <item>Nieobejrzane/nadchodzące</item>
     <item>Ukryte</item>
     <item>Listy</item>
-  </string-array>
-  <string-array name="themeSelection">
-    <item>Schemat SeriesGuide</item>
-    <item>Schemat ICS</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">głosy: %d</item>

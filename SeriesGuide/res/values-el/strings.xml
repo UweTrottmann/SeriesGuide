@@ -104,7 +104,7 @@
   <string name="update_single">Ενημέρωση σειράς…</string>
   <string name="update_delta">Ενημέρωση παλιών σειρών…</string>
   <string name="update_full">Ενημέρωση όλων των σειρών…</string>
-  <string name="update_success">Επιτυχής ενημέρωση.</string>
+  <string name="update_success">Shows updated.</string>
   <string name="update_offline">Η ενημέρωση απέτυχε, ελέγξτε την σύνδεσή σας στο internet/Wi-Fi.</string>
   <string name="update_saxerror">Η ενημέρωση απέτυχε, δοκιμάστε ξανά αργότερα.</string>
   <string name="update_inprogress">Μια ενημέρωση βρίσκεται σε εξέλιξη, δοκιμάστε ξανά αργότερα.</string>
@@ -129,7 +129,9 @@
   <string name="no_results">Κανένα αποτέλεσμα, δοκιμάστε ολόκληρες λέξεις.</string>
   <string name="search_error">Η αναζήτηση απέτυχε, δοκιμάστε ξανά αργότερα.</string>
   <string name="add_show">Προσθήκη σειράς</string>
+  <string name="add_all">Add all</string>
   <string name="dont_add_show">Να μην γίνει προσθήκη</string>
+  <string name="add_multiple">All shows will appear in your show list shortly.</string>
   <string name="add_started">Θα εμφανιστεί στην λίστα σας σύντομα.</string>
   <string name="add_success">Προστέθηκε με επιτυχία.</string>
   <string name="add_error_begin">Δεν είναι δυνατή η προσθήκη \"</string>
@@ -252,6 +254,8 @@
   <string name="upcoming_display">Επιλέξτε, για να εμφανίσετε τις επερχόμενες σειρές</string>
   <string name="pref_notifications">Ειδοποιήσεις</string>
   <string name="pref_notificationssummary">Ειδοποίηση για αγαπημένες σειρές που θα προβληθούν σύντομα</string>
+  <string name="pref_notifyfavonly">Favorites only</string>
+  <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
   <string name="pref_ringtone">Ήχος κλήσης</string>
   <string name="pref_vibrate">Δόνηση</string>
   <string name="pref_vibratesummary">Δόνηση και κατά την εμφάνιση ειδοποίησης</string>
@@ -298,10 +302,6 @@
     <item>Μη παρακολουθημένα/Επερχόμενα</item>
     <item>Κρυμμένα</item>
     <item>Lists</item>
-  </string-array>
-  <string-array name="themeSelection">
-    <item>Θέμα SeriesGuide</item>
-    <item>Βασικό θέμα ICS</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d ψήφος</item>
