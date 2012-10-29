@@ -142,7 +142,7 @@
   <string name="library">Kitaplık</string>
   <string name="powered_by_thetvdb">thetvdb.com tarafından desteklenmektedir</string>
   <string name="powered_by_trakt">trakt.tv tarafından desteklenmektedir</string>
-  <string name="first_list">Favoriler</string>
+  <string name="first_list">First list</string>
   <string name="list_add">Yeni liste</string>
   <string name="list_title_hint">Listene isim ver</string>
   <string name="list_remove">Listeyi kaldır</string>

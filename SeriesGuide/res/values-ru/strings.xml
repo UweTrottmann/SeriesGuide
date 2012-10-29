@@ -142,7 +142,7 @@
   <string name="library">Библиотека</string>
   <string name="powered_by_thetvdb">Сделано наhetvdb.com</string>
   <string name="powered_by_trakt">Сделано на trakt.tv</string>
-  <string name="first_list">Любимые</string>
+  <string name="first_list">First list</string>
   <string name="list_add">Добавить список</string>
   <string name="list_title_hint">Назвать список</string>
   <string name="list_remove">Удалить список</string>

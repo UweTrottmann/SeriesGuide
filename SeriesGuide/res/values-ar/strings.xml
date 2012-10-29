@@ -142,7 +142,7 @@
   <string name="library">المكتبة</string>
   <string name="powered_by_thetvdb">Thetvdb.com مدعوم من</string>
   <string name="powered_by_trakt">trakt.tv مدعوم بواسطة</string>
-  <string name="first_list">المفضلة</string>
+  <string name="first_list">First list</string>
   <string name="list_add">إضافة قائمة</string>
   <string name="list_title_hint">اسم القائمة الخاصة بك</string>
   <string name="list_remove">إزالة قائمة</string>

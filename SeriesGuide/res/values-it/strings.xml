@@ -142,7 +142,7 @@
   <string name="library">Archivio</string>
   <string name="powered_by_thetvdb">powered by thetvdb.com</string>
   <string name="powered_by_trakt">powered by trakt.tv</string>
-  <string name="first_list">Preferiti</string>
+  <string name="first_list">First list</string>
   <string name="list_add">Aggiungi lista</string>
   <string name="list_title_hint">Rinomina lista</string>
   <string name="list_remove">Elimina lista</string>

@@ -142,7 +142,7 @@
   <string name="library">Bibliotek</string>
   <string name="powered_by_thetvdb">möjliggörs av thetvdb.com</string>
   <string name="powered_by_trakt">möjliggörs av trakt.tv</string>
-  <string name="first_list">Favoriter</string>
+  <string name="first_list">First list</string>
   <string name="list_add">Lägg till lista</string>
   <string name="list_title_hint">Namnge din lista</string>
   <string name="list_remove">Ta bort lista</string>

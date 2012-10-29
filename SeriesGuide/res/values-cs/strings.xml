@@ -142,7 +142,7 @@
   <string name="library">Knihovna</string>
   <string name="powered_by_thetvdb">ve spolupráci s thetvdb.com</string>
   <string name="powered_by_trakt">ve spolupráci s trakt.tv</string>
-  <string name="first_list">Oblíbené</string>
+  <string name="first_list">First list</string>
   <string name="list_add">Přidat seznam</string>
   <string name="list_title_hint">Pojmenovat seznam</string>
   <string name="list_remove">Odstranit seznam</string>

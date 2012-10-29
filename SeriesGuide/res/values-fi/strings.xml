@@ -142,7 +142,7 @@
   <string name="library">Kokoelma</string>
   <string name="powered_by_thetvdb">Pohjautuu thetvdb.com:iin</string>
   <string name="powered_by_trakt">Pohjautuu trakt.tv:hen</string>
-  <string name="first_list">Suosikit</string>
+  <string name="first_list">First list</string>
   <string name="list_add">Lisää lista</string>
   <string name="list_title_hint">Nimeä listasi</string>
   <string name="list_remove">Poista lista</string>

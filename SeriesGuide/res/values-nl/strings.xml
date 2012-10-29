@@ -142,7 +142,7 @@
   <string name="library">Bibliotheek</string>
   <string name="powered_by_thetvdb">mede mogelijk gemaakt door thetvdb.com</string>
   <string name="powered_by_trakt">aangestuurd door trakt.tv</string>
-  <string name="first_list">Favorieten</string>
+  <string name="first_list">First list</string>
   <string name="list_add">Lijst toevoegen</string>
   <string name="list_title_hint">Lijst een naam geven</string>
   <string name="list_remove">Lijst verwijderen</string>

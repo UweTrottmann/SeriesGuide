@@ -142,7 +142,7 @@
   <string name="library">라이브러리</string>
   <string name="powered_by_thetvdb">thetvdb.com 제공</string>
   <string name="powered_by_trakt">trakt.tv 제공</string>
-  <string name="first_list">즐겨찾기</string>
+  <string name="first_list">First list</string>
   <string name="list_add">목록 추가</string>
   <string name="list_title_hint">목록의 이름을 적으세요</string>
   <string name="list_remove">목록 제거</string>
