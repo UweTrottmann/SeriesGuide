@@ -225,6 +225,9 @@ public class ShowsFragment extends SherlockFragment implements
                 if (episode != null) {
                     episode.close();
                 }
+                
+                fireTrackerEvent("Check in");
+                
                 return true;
             }
             case CONTEXT_FAVORITE_ID: {
