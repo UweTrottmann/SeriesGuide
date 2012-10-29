@@ -107,8 +107,9 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
         mGetGlueChecked = prefs.getBoolean(SeriesGuidePreferences.KEY_SHAREWITHGETGLUE, false);
         mTraktChecked = prefs.getBoolean(SeriesGuidePreferences.KEY_SHAREWITHTRAKT, false);
 
-        // Message box
+        // Message box, set title as default comment
         mMessageBox = (EditText) layout.findViewById(R.id.message);
+        mMessageBox.setText(defaultMessage);
 
         // Paste episode button
         layout.findViewById(R.id.pasteEpisode).setOnClickListener(new OnClickListener() {
