@@ -123,7 +123,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         String SEASONS_COLUMNS = LIST_ITEMS_COLUMNS
                 + ",series_id,seriestitle,combinednr AS overview,poster,network,airstime,airsdayofweek,status,nexttext,series_nextairdatetext";
         String EPISODES_COLUMNS = LIST_ITEMS_COLUMNS
-                + ",series_id,seriestitle,episodetitle AS overview,poster,network,airstime,airsdayofweek,status,nexttext,series_nextairdatetext";
+                + ",series_id,seriestitle,episodetitle AS overview,poster,network,episode_firstairedms AS airstime,airsdayofweek,status,season AS nexttext,episodenumber AS series_nextairdatetext";
     }
 
     interface References {
