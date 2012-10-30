@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Dialog"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/shouts_title"
@@ -12,24 +12,22 @@
         android:layout_marginRight="@dimen/layout_padding"
         android:layout_marginTop="@dimen/layout_padding"
         android:text="@string/shouts"
-        android:textAppearance="@style/TextAppearance.Large.Light" />
+        android:textAppearance="?attr/textAppearanceSgLargeLight" />
 
     <TextView
         android:id="@+id/shouts_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/shouts_title"
         android:layout_marginLeft="@dimen/layout_padding"
         android:layout_marginRight="@dimen/layout_padding"
         android:text="@string/shouts_for"
-        android:textAppearance="@style/TextAppearance.Small.Primary" />
+        android:textAppearance="?attr/textAppearanceSgSmallPrimary" />
 
     <FrameLayout
         android:id="@+id/shouts_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/labelRefresh"
-        android:layout_below="@+id/shouts_item" >
+        android:layout_height="0dp"
+        android:layout_weight="1" >
 
         <LinearLayout
             android:id="@+id/progress_container"
@@ -55,8 +53,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="@bool/gridClipToPadding"
-                android:divider="@drawable/divider_horizontal_holo_dark"
-                android:listSelector="?custom_list_selector" >
+                android:divider="?attr/drawableDivider"
+                android:listSelector="?attr/custom_list_selector" >
             </ListView>
 
             <TextView
@@ -64,6 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+                android:padding="@dimen/large_padding"
                 android:text="@string/no_shouts" />
         </FrameLayout>
     </FrameLayout>
@@ -72,8 +71,8 @@
         android:id="@+id/labelRefresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/divider"
-        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/inline_padding"
         android:text="@string/autorefresh"
         android:textSize="@dimen/text_size_xsmall" />
 
@@ -81,43 +80,39 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/shouttext"
-        layout="@layout/holodivider" />
+        layout="@layout/divider_horizontal" />
 
-    <EditText
-        android:id="@+id/shouttext"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/checkIsSpoiler"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="@dimen/layout_padding"
-        android:layout_marginRight="@dimen/inline_padding"
-        android:layout_marginTop="@dimen/default_padding"
-        android:layout_toLeftOf="@+id/shoutbutton"
-        android:gravity="top"
-        android:hint="@string/shout_hint"
-        android:maxLength="2000"
-        android:maxLines="3" />
+        android:layout_margin="@dimen/layout_padding" >
 
-    <ImageButton
-        android:id="@+id/shoutbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/shouttext"
-        android:layout_marginRight="@dimen/layout_padding"
-        android:contentDescription="@string/shout"
-        android:src="@drawable/ic_menu_send" />
+        <EditText
+            android:id="@+id/shouttext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/inline_padding"
+            android:layout_toLeftOf="@+id/shoutbutton"
+            android:gravity="top"
+            android:hint="@string/shout_hint"
+            android:maxLength="2000"
+            android:maxLines="3" />
 
-    <CheckBox
-        android:id="@+id/checkIsSpoiler"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="@dimen/layout_padding"
-        android:layout_marginLeft="@dimen/layout_padding"
-        android:layout_marginRight="@dimen/layout_padding"
-        android:text="@string/isspoiler" />
+        <ImageButton
+            android:id="@+id/shoutbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/shouttext"
+            android:contentDescription="@string/shout"
+            android:src="@drawable/ic_menu_send" />
 
-</RelativeLayout>
+        <CheckBox
+            android:id="@+id/checkIsSpoiler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/shouttext"
+            android:text="@string/isspoiler" />
+    </RelativeLayout>
+
+</LinearLayout>

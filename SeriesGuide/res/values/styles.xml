@@ -2,11 +2,9 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Text styles -->
-    <style name="TextAppearance">
-        <item name="android:textColor">@color/text_default</item>
+    <style name="TextAppearance" parent="@android:style/TextAppearance">
         <item name="android:textSize">@dimen/text_size_xmedium</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColorLink">@color/text_link</item>
     </style>
 
     <style name="TextAppearance.XSmall">
@@ -17,7 +15,7 @@
         <item name="android:textColor">@color/text_dim</item>
     </style>
 
-    <style name="TextAppearance.Small">
+    <style name="TextAppearance.Small" parent="@android:style/TextAppearance.Small">
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
@@ -29,17 +27,24 @@
         <item name="android:textColor">@color/text_primary</item>
     </style>
 
-    <style name="TextAppearance.Medium">
-        <item name="android:textColor">@color/primary_text_sg</item>
+    <style name="TextAppearance.Medium" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/text_primary_sg</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <style name="TextAppearance.Medium.Dim">
+        <item name="android:textColor">@color/text_default</item>
     </style>
 
     <style name="TextAppearance.Medium.Light">
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
-    <style name="TextAppearance.Large">
-        <item name="android:textColor">#ffffff</item>
+    <style name="TextAppearance.Medium.Light.Dim">
+        <item name="android:textColor">@color/text_default</item>
+    </style>
+
+    <style name="TextAppearance.Large" parent="@android:style/TextAppearance">
         <item name="android:textSize">@dimen/text_size_large</item>
     </style>
 
@@ -47,8 +52,7 @@
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
-    <style name="TextAppearance.XLarge">
-        <item name="android:textColor">#ffffff</item>
+    <style name="TextAppearance.XLarge" parent="@android:style/TextAppearance">
         <item name="android:textSize">@dimen/text_size_xlarge</item>
     </style>
 
@@ -56,6 +60,7 @@
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
+    <!-- Widget styles -->
     <style name="Widget"></style>
 
     <style name="Widget.SeriesGuide" parent="Widget"></style>
@@ -129,6 +134,20 @@
         <item name="android:background">@drawable/spinner_background_ab_sg</item>
     </style>
 
+    <!-- ActionBar Spinner -->
+    <style name="Widget.DropDownItem" parent="Widget">
+        <item name="android:textAppearance">@style/TextAppearance</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="Widget.SpinnerItem" parent="Widget">
+        <item name="android:textAppearance">@style/TextAppearance.Medium.Light</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+
     <!-- ViewPagerIndicator -->
     <style name="TitlePageIndicator">
         <item name="android:background">@android:color/transparent</item>
@@ -141,20 +160,17 @@
         <item name="selectedBold">true</item>
     </style>
 
-    <style name="TitlePageIndicator.ICS" parent="TitlePageIndicator">
-        <item name="footerColor">#33B5E5</item>
-    </style>
-
     <style name="TabPageIndicator" parent="Widget.TabPageIndicator">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:background">@drawable/tab_indicator</item>
-        <item name="android:paddingLeft">22dip</item>
-        <item name="android:paddingRight">22dip</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:paddingRight">16dip</item>
         <item name="android:paddingTop">12dp</item>
         <item name="android:paddingBottom">12dp</item>
         <item name="android:textAppearance">@style/TextAppearance.TabPageIndicator</item>
         <item name="android:textSize">12sp</item>
         <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">marquee</item>
     </style>
 
     <style name="TextAppearance.TabPageIndicator" parent="Widget">
@@ -172,13 +188,6 @@
     <style name="ListHeader">
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textColor">@color/text_primary</item>
-    </style>
-
-    <style name="Airdata">
-        <item name="android:textSize">@dimen/text_size_xsmall</item>
-        <item name="android:textColor">@color/text_dim</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <!-- Unified text styles and sizes -->
@@ -277,11 +286,6 @@
         <item name="android:layout_gravity">fill</item>
     </style>
 
-    <style name="Dialog">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
-
     <!-- Rating -->
     <style name="RatingButton">
         <item name="android:background">?custom_list_selector</item>
@@ -290,6 +294,95 @@
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:textSize">@dimen/text_size_xmedium</item>
         <item name="android:drawableLeft">@drawable/trakt_heart</item>
+    </style>
+
+    <!-- ////////////////////////////////////////////// -->
+
+
+    <!-- Dark styles -->
+
+
+    <!-- Title indicator -->
+    <style name="TitlePageIndicator.Dark" parent="TitlePageIndicator">
+        <item name="footerColor">#33B5E5</item>
+    </style>
+
+    <!-- ////////////////////////////////////////////// -->
+
+
+    <!-- Light styles -->
+
+
+    <!-- Text styles -->
+    <style name="TextAppearance.Light" parent="TextAppearance"></style>
+
+    <style name="TextAppearance.Light.XSmall" parent="TextAppearance.XSmall"></style>
+
+    <style name="TextAppearance.Light.XSmall.Dim">
+        <item name="android:textColor">@color/text_dim_light</item>
+    </style>
+
+    <style name="TextAppearance.Light.Small" parent="TextAppearance.Small"></style>
+
+    <style name="TextAppearance.Light.Small.Dim">
+        <item name="android:textColor">@color/text_dim_light</item>
+    </style>
+
+    <style name="TextAppearance.Light.Small.Primary">
+        <item name="android:textColor">@color/text_primary_light_sg</item>
+    </style>
+
+    <style name="TextAppearance.Light.Medium" parent="TextAppearance.Medium">
+        <item name="android:textColor">@color/text_primary_light_sg</item>
+    </style>
+
+    <style name="TextAppearance.Light.Medium.Dim">
+        <item name="android:textColor">@color/text_default_inverse</item>
+    </style>
+
+    <style name="TextAppearance.Light.Medium.Light">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="TextAppearance.Light.Medium.Light.Dim">
+        <item name="android:textColor">@color/text_default_inverse</item>
+    </style>
+
+    <style name="TextAppearance.Light.XLarge" parent="@style/TextAppearance.XLarge">
+        <item name="android:textColor">@color/text_primary_light_sg</item>
+    </style>
+
+    <style name="TextAppearance.Light.XLarge.Light">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <!-- Buttons -->
+    <style name="Widget.SeriesGuide.Light.Button" parent="Widget.SeriesGuide.Button">
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <!-- Title page indicator -->
+    <style name="TitlePageIndicator.Light">
+        <item name="android:textColor">@color/text_primary_inverse</item>
+        <item name="selectedColor">@color/text_primary_inverse</item>
+    </style>
+
+    <!-- Tab page indicator -->
+    <style name="TabPageIndicator.Light">
+        <item name="android:textAppearance">@style/TextAppearance.Light.TabPageIndicator</item>
+    </style>
+
+    <style name="TextAppearance.Light.TabPageIndicator" parent="TextAppearance.TabPageIndicator">
+        <item name="android:textColor">@color/vpi__light_theme</item>
+    </style>
+
+    <!-- ActionBar Spinner -->
+    <style name="Widget.Light.DropDownItem" parent="Widget.DropDownItem">
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <style name="Widget.Light.SpinnerItem" parent="Widget.SpinnerItem">
+        <item name="android:textColor">@color/text_primary</item>
     </style>
 
 </resources>

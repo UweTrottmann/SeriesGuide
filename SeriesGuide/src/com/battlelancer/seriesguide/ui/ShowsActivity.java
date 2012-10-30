@@ -41,6 +41,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
 import com.battlelancer.seriesguide.adapters.ShowsPagerAdapter;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -130,7 +131,7 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         mPager = (ViewPager) findViewById(R.id.pager);
 
         // set up action bar
-        setUpActionBar();
+        setUpActionBar(navSelection);
 
         // set up view pager
         onChangePagerAdapter(navSelection);
@@ -147,7 +148,7 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         onDisplayTitleIndicator(navSelection);
     }
 
-    private void setUpActionBar() {
+    private void setUpActionBar(int navSelection) {
         mIsLoaderStartAllowed = false;
 
         final ActionBar actionBar = getSupportActionBar();
@@ -171,6 +172,11 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
             actionBar.setListNavigationCallbacks(mActionBarList, handler);
         }
 
+        // try to restore previously set show filter
+        if (getSupportActionBar().getSelectedNavigationIndex() != navSelection) {
+            getSupportActionBar().setSelectedNavigationItem(navSelection);
+        }
+
         // prevent the onNavigationItemSelected listener from reacting
         mIsLoaderStartAllowed = true;
     }
@@ -178,14 +184,6 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
     @Override
     protected void onStart() {
         super.onStart();
-
-        // try to restore previously set show filter
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-        int navSelection = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
-        if (getSupportActionBar().getSelectedNavigationIndex() != navSelection) {
-            getSupportActionBar().setSelectedNavigationItem(navSelection);
-        }
 
         EasyTracker.getInstance().activityStart(this);
     }
@@ -264,6 +262,28 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isShowingLists = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0) == LIST_NAV_ITEM_POSITION;
+
+        menu.findItem(R.id.menu_list_add).setEnabled(isShowingLists).setVisible(isShowingLists);
+
+        MenuItem sortMenu = menu.findItem(R.id.menu_showsortby);
+        sortMenu.setEnabled(!isShowingLists).setVisible(!isShowingLists);
+        if (android.os.Build.VERSION.SDK_INT >= 11) {
+            final CharSequence[] items = getResources().getStringArray(R.array.shsorting);
+            ShowSorting sorting = ShowSorting
+                    .fromValue(prefs.getString(
+                            SeriesGuidePreferences.KEY_SHOW_SORT_ORDER,
+                            ShowSorting.FAVORITES_FIRST.value()));
+            sortMenu.setTitle(
+                    getString(R.string.sort) + ": " + items[sorting.index()]);
+        }
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_quickcheckin) {
@@ -321,6 +341,15 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                     Uri.parse(SeriesGuidePreferences.HELP_URL));
             startActivity(myIntent);
             fireTrackerEvent("Help");
+            return true;
+        } else if (itemId == R.id.menu_showsortby) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            ShowSorting sorting = ShowSorting
+                    .fromValue(prefs.getString(
+                            SeriesGuidePreferences.KEY_SHOW_SORT_ORDER,
+                            ShowSorting.FAVORITES_FIRST.value()));
+            ShowsFragment.showSortDialog(getSupportFragmentManager(), sorting);
+            fireTrackerEvent("Sort shows");
             return true;
         } else if (itemId == R.id.menu_list_add) {
             AddListDialogFragment.showAddListDialog(getSupportFragmentManager());
@@ -522,11 +551,11 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                     PackageManager.GET_META_DATA).versionCode;
             if (currentVersion > lastVersion) {
                 Editor editor = prefs.edit();
-                
+
                 int VER_TRAKT_SEC_CHANGES;
                 int VER_SUMMERTIME_FIX;
                 int VER_HIGHRES_THUMBS;
-                if(getPackageName().contains("beta")){
+                if (getPackageName().contains("beta")) {
                     VER_TRAKT_SEC_CHANGES = 131;
                     VER_SUMMERTIME_FIX = 155;
                     VER_HIGHRES_THUMBS = 177;
@@ -548,8 +577,8 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                 if (lastVersion < VER_SUMMERTIME_FIX) {
                     scheduleAllShowsUpdate();
                 }
-                if (getResources().getBoolean(R.bool.isLargeTablet)
-                        && lastVersion < VER_HIGHRES_THUMBS) {
+                if (lastVersion < VER_HIGHRES_THUMBS
+                        && getResources().getBoolean(R.bool.isLargeTablet)) {
                     // clear image cache
                     ImageProvider.getInstance(this).clearCache();
                     ImageProvider.getInstance(this).clearExternalStorageCache();
@@ -560,6 +589,8 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                     // BETA info dialog
                     ChangesDialogFragment.show(getSupportFragmentManager());
                 }
+                
+                Toast.makeText(this, R.string.updated, Toast.LENGTH_LONG).show();
 
                 // set this as lastVersion
                 editor.putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion);

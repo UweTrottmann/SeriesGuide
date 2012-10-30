@@ -24,6 +24,7 @@
     <string name="more">%s more</string>
     <string name="cancel">Cancel</string>
     <string name="share">Share</string>
+    <string name="updated">Updated to latest version.</string>
 
     <plurals name="votes">
         <item quantity="one">%d vote</item>
@@ -162,7 +163,9 @@
     <string name="no_results">No results, try complete words.</string>
     <string name="search_error">Searching failed, try again later.</string>
     <string name="add_show">Add Show</string>
+    <string name="add_all">Add all</string>
     <string name="dont_add_show">Don\'t Add</string>
+    <string name="add_multiple">All shows will appear in your show list shortly.</string>
     <string name="add_started">will appear in your show list shortly.</string>
     <string name="add_success">added successfully.</string>
     <string name="add_error_begin">Could not add \"</string>
@@ -175,7 +178,7 @@
     <string name="powered_by_trakt">powered by trakt.tv</string>
 
     <!-- Lists -->
-    <string name="first_list">Favorites</string>
+    <string name="first_list">First list</string>
     <string name="list_add">Add list</string>
     <string name="list_title_hint">Name your list</string>
     <string name="list_remove">Remove list</string>
@@ -239,7 +242,7 @@
         <item>Oldest first</item>
         <item>Unwatched first</item>
         <item>A - Z</item>
-        <item>Z - A</item>
+        <item>Top rated</item>
         <item>Latest first (DVD)</item>
         <item>Oldest first (DVD)</item>
     </string-array>
@@ -344,11 +347,6 @@
     <!-- Theme switching -->
     <string name="pref_theme">App Theme</string>
 
-    <string-array name="themeSelection">
-        <item>SeriesGuide Theme</item>
-        <item>ICS Base Theme</item>
-    </string-array>
-
     <!-- Widgets -->
     <string name="choose_list">Choose activity list</string>
     <string name="hide_watched">Hide watched episodes</string>
@@ -373,7 +371,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">Remembering\n\nRemember the last active activity tab.\n\nUse correct date when creating calendar event in overview.\n\nShow list action items should not disappear anymore.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">Better lists, snow for everyone\n\nShows in lists display next episode, episodes display their number and air date.\n\nLight theme for non-English users.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
@@ -390,7 +388,7 @@
         <item>oldestfirst</item>
         <item>unwatchedfirst</item>
         <item>atoz</item>
-        <item>ztoa</item>
+        <item>toprated</item>
         <item>dvdlatestfirst</item>
         <item>dvdoldestfirst</item>
     </string-array>
@@ -526,9 +524,15 @@
         <item>14</item>
         <item>30</item>
     </string-array>
+    <string-array name="themeSelection">
+        <item>SeriesGuide</item>
+        <item>Android Dark</item>
+        <item>SeriesGuide Light</item>
+    </string-array>
     <string-array name="themeSelectionData">
         <item>0</item>
         <item>1</item>
+        <item>2</item>
     </string-array>
 
 </resources>

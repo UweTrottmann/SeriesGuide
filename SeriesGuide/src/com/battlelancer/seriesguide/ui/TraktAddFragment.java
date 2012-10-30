@@ -25,8 +25,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.trakt.ServiceManager;
@@ -40,6 +44,12 @@ import java.util.Iterator;
 import java.util.List;
 
 public class TraktAddFragment extends AddFragment {
+
+    public static final int TRENDING = 0;
+
+    public static final int RECOMMENDED = 1;
+
+    public static final int LIBRARY = 2;
 
     public static TraktAddFragment newInstance(int position) {
         TraktAddFragment f = new TraktAddFragment();
@@ -68,14 +78,19 @@ public class TraktAddFragment extends AddFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        int type = getListType();
+
         // only create and fill a new adapter if there is no previous one
         // (e.g. after config/page changed)
         if (mAdapter == null) {
             mAdapter = new AddAdapter(getActivity(), R.layout.add_searchresult,
                     new ArrayList<SearchResult>(), mAddButtonListener, mDetailsButtonListener);
 
-            int type = getArguments().getInt("traktlisttype");
             AndroidUtils.executeAsyncTask(new GetTraktShowsTask(getActivity()), type);
+        }
+
+        if (type == LIBRARY) {
+            setHasOptionsMenu(true);
         }
     }
 
@@ -85,13 +100,31 @@ public class TraktAddFragment extends AddFragment {
         EasyTracker.getTracker().trackView("Add Trakt Shows");
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.trakt_library_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_add_all) {
+            if (mSearchResults != null) {
+                TaskManager.getInstance(getActivity()).performAddTask(mSearchResults);
+            }
+            // disable the item so the user has to come back
+            item.setEnabled(false);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private int getListType() {
+        return getArguments().getInt("traktlisttype");
+    }
+
     public class GetTraktShowsTask extends AsyncTask<Integer, Void, List<SearchResult>> {
-
-        private static final int TRENDING = 0;
-
-        private static final int RECOMMENDED = 2;
-
-        private static final int LIBRARY = 3;
 
         private Context mContext;
 

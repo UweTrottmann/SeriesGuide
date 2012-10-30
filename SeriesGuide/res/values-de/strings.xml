@@ -129,7 +129,9 @@
   <string name="no_results">Keine Ergebnisse, versuchen Sie ganze Wörter.</string>
   <string name="search_error">Suche fehlgeschlagen, versuchen Sie es später erneut.</string>
   <string name="add_show">Serie hinzufügen</string>
+  <string name="add_all">Alle hinzufügen</string>
   <string name="dont_add_show">Nicht hinzufügen</string>
+  <string name="add_multiple">Alle Serien werden in Kürze der Serienliste hinzugefügt.</string>
   <string name="add_started">wird in Kürze in der Serienliste erscheinen.</string>
   <string name="add_success">erfolgreich hinzugefügt.</string>
   <string name="add_error_begin">Konnte \"</string>
@@ -140,7 +142,7 @@
   <string name="library">Bibliothek</string>
   <string name="powered_by_thetvdb">ein Dienst von thetvdb.com</string>
   <string name="powered_by_trakt">ein Dienst von trakt.tv</string>
-  <string name="first_list">Favoriten</string>
+  <string name="first_list">Erste Liste</string>
   <string name="list_add">Liste hinzufügen</string>
   <string name="list_title_hint">Liste bennenen</string>
   <string name="list_remove">Liste entfernen</string>
@@ -300,10 +302,6 @@
     <item>Ungesehene/Zukünftige</item>
     <item>Ausgeblendete</item>
     <item>Listen</item>
-  </string-array>
-  <string-array name="themeSelection">
-    <item>SeriesGuide Design</item>
-    <item>ICS Basis Design</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d Stimme</item>

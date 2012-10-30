@@ -18,11 +18,11 @@
 
     <TextView
         android:id="@+id/TextViewSearchRow"
-        style="@style/ListHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/inline_padding"
-        android:text="@string/app_name" >
+        android:text="@string/app_name"
+        android:textAppearance="?attr/textAppearanceSgMediumLight" >
     </TextView>
 
     <RelativeLayout
@@ -35,15 +35,13 @@
             android:id="@+id/TextViewSearchEpNumbers"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="@dimen/default_padding"
-            android:text="Episode X Season X" />
+            android:paddingRight="@dimen/default_padding" />
 
         <TextView
             android:id="@+id/TextViewSearchEpWatchedState"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/TextViewSearchEpNumbers"
-            android:text="watchedstate" />
+            android:layout_toRightOf="@+id/TextViewSearchEpNumbers" />
     </RelativeLayout>
 
     <TextView
@@ -51,8 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/inline_padding"
-        android:paddingTop="@dimen/inline_padding"
-        android:text="...some bla..." >
+        android:paddingTop="@dimen/inline_padding" >
     </TextView>
 
 </LinearLayout>

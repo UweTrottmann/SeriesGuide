@@ -104,7 +104,7 @@
   <string name="update_single">Sorozat frissítése…</string>
   <string name="update_delta">Updating outdated shows…</string>
   <string name="update_full">Minden sorozat frissítése…</string>
-  <string name="update_success">A frissítés sikerült.</string>
+  <string name="update_success">Shows updated.</string>
   <string name="update_offline">A frissítés nem sikerült, ellenőrizd az internet/Wi-Fi kapcsolatot!</string>
   <string name="update_saxerror">A frissítés nem sikerült, próbáld meg később!</string>
   <string name="update_inprogress">An update is in progress, try again later.</string>
@@ -129,7 +129,9 @@
   <string name="no_results">Nincs találat, próbálj teljes szavakat!</string>
   <string name="search_error">A keresés nem sikerült, próbáld meg később!</string>
   <string name="add_show">Sorozat felvétele</string>
+  <string name="add_all">Add all</string>
   <string name="dont_add_show">Mégse</string>
+  <string name="add_multiple">All shows will appear in your show list shortly.</string>
   <string name="add_started">hamarosan megjelenik a sorozatlistában.</string>
   <string name="add_success">sikeresen hozzáadva.</string>
   <string name="add_error_begin">Sikertelen hozzáadás: \"</string>
@@ -140,7 +142,7 @@
   <string name="library">Saját</string>
   <string name="powered_by_thetvdb">powered by thetvdb.com</string>
   <string name="powered_by_trakt">powered by trakt.tv</string>
-  <string name="first_list">Favorites</string>
+  <string name="first_list">First list</string>
   <string name="list_add">Add list</string>
   <string name="list_title_hint">Name your list</string>
   <string name="list_remove">Remove list</string>
@@ -252,6 +254,8 @@
   <string name="upcoming_display">Select to display upcoming shows</string>
   <string name="pref_notifications">Értesítések</string>
   <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
+  <string name="pref_notifyfavonly">Favorites only</string>
+  <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
   <string name="pref_ringtone">Csengőhang</string>
   <string name="pref_vibrate">Vibra</string>
   <string name="pref_vibratesummary">Vibrálás értesítések megjelenítésekor</string>
@@ -298,10 +302,6 @@
     <item>Nem látott/Következő</item>
     <item>Rejtett</item>
     <item>Lists</item>
-  </string-array>
-  <string-array name="themeSelection">
-    <item>SeriesGuide téma</item>
-    <item>ICS alap téma</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d szavazat</item>

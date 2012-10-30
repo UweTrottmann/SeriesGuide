@@ -129,7 +129,9 @@
   <string name="no_results">결과 없음, 완전한 단어를 입력하세요.</string>
   <string name="search_error">검색 실패, 나중에 다시 시도하세요.</string>
   <string name="add_show">쇼 추가</string>
+  <string name="add_all">Add all</string>
   <string name="dont_add_show">취소</string>
+  <string name="add_multiple">All shows will appear in your show list shortly.</string>
   <string name="add_started">가 곧 쇼 목록에 나타납니다.</string>
   <string name="add_success">성공적으로 추가 되었습니다.</string>
   <string name="add_error_begin">\"</string>
@@ -140,7 +142,7 @@
   <string name="library">라이브러리</string>
   <string name="powered_by_thetvdb">thetvdb.com 제공</string>
   <string name="powered_by_trakt">trakt.tv 제공</string>
-  <string name="first_list">즐겨찾기</string>
+  <string name="first_list">First list</string>
   <string name="list_add">목록 추가</string>
   <string name="list_title_hint">목록의 이름을 적으세요</string>
   <string name="list_remove">목록 제거</string>
@@ -300,10 +302,6 @@
     <item>미시청/방영예정</item>
     <item>숨겨짐</item>
     <item>목록</item>
-  </string-array>
-  <string-array name="themeSelection">
-    <item>시리즈가이드 테마</item>
-    <item>ICS 기본 테마</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d명이 투표</item>

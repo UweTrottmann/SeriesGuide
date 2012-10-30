@@ -1,4 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <attr name="custom_list_selector" format="reference" />
+
+    <!-- Colors -->
+    <attr name="textColorSgPrimary" format="reference|color" />
+    <attr name="textColorSgPrimaryInverse" format="reference|color" />
+    <attr name="textColorSgGreen" format="reference|color" />
+
+    <!-- Text -->
+    <attr name="textAppearanceSg" format="reference" />
+    <attr name="textAppearanceSgXSmall" format="reference" />
+    <attr name="textAppearanceSgXSmallDim" format="reference" />
+    <attr name="textAppearanceSgSmall" format="reference" />
+    <attr name="textAppearanceSgSmallDim" format="reference" />
+    <attr name="textAppearanceSgSmallPrimary" format="reference" />
+    <attr name="textAppearanceSgMedium" format="reference" />
+    <attr name="textAppearanceSgMediumDim" format="reference" />
+    <attr name="textAppearanceSgMediumLight" format="reference" />
+    <attr name="textAppearanceSgMediumLightDim" format="reference" />
+    <attr name="textAppearanceSgLarge" format="reference" />
+    <attr name="textAppearanceSgLargeLight" format="reference" />
+    <attr name="textAppearanceSgXLarge" format="reference" />
+    <attr name="textAppearanceSgXLargeLight" format="reference" />
+
+    <!-- Drawables -->
+    <attr name="drawableAddIcon" format="reference" />
+    <attr name="drawableCalendarIcon" format="reference" />
+    <attr name="drawableDivider" format="reference" />
+    <attr name="drawableStar" format="reference" />
+
 </resources>

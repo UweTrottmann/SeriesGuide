@@ -104,7 +104,7 @@
   <string name="update_single">Mise à jour de la série...</string>
   <string name="update_delta">Mise à jour des séries dépassées...</string>
   <string name="update_full">Mise à jour des séries...</string>
-  <string name="update_success">Mise à jour réussie.</string>
+  <string name="update_success">Séries mises à jour.</string>
   <string name="update_offline">Échec de la mise à jour, vérifiez votre connexion 3G/Wifi.</string>
   <string name="update_saxerror">Échec de la mise à jour, réessayez plus tard.</string>
   <string name="update_inprogress">Une mise à jour est en cours, réessayez plus tard.</string>
@@ -129,18 +129,20 @@
   <string name="no_results">Pas de résultats, reformulez votre requête.</string>
   <string name="search_error">Recherche échouée, réessayez plus tard.</string>
   <string name="add_show">Ajouter Série</string>
+  <string name="add_all">Tout ajouter</string>
   <string name="dont_add_show">Ne pas ajouter</string>
+  <string name="add_multiple">Toutes les séries apparaîtront dans votre liste sous peu.</string>
   <string name="add_started">apparaîtra dans votre liste de séries rapidement.</string>
   <string name="add_success">ajoutée avec succès.</string>
   <string name="add_error_begin">Impossible d\'ajouter \"</string>
   <string name="add_error_end">\".</string>
-  <string name="add_already_exists">déjà dans votre liste de séries.</string>
+  <string name="add_already_exists">est déjà dans votre liste de séries.</string>
   <string name="trending">Tendances</string>
   <string name="recommended">Recommandé</string>
   <string name="library">Bibliothèque</string>
   <string name="powered_by_thetvdb">fourni par thetvdb.com</string>
   <string name="powered_by_trakt">fourni par trakt.tv</string>
-  <string name="first_list">Favoris</string>
+  <string name="first_list">Première liste</string>
   <string name="list_add">Ajouter une liste</string>
   <string name="list_title_hint">Nommez votre liste</string>
   <string name="list_remove">Supprimer la liste</string>
@@ -252,6 +254,8 @@
   <string name="upcoming_display">Afficher les épisodes à venir</string>
   <string name="pref_notifications">Notifications</string>
   <string name="pref_notificationssummary">Informe lorsqu\'une série favorite est bientôt diffusée</string>
+  <string name="pref_notifyfavonly">Favoris seulement</string>
+  <string name="pref_notifyfavonlysummary">Recevoir des notifications uniquement pour les séries favorites</string>
   <string name="pref_ringtone">Sonnerie</string>
   <string name="pref_vibrate">Vibrer</string>
   <string name="pref_vibratesummary">Vibrer aussi lors d\'un notification</string>
@@ -298,10 +302,6 @@
     <item>Pas vu / Prochains</item>
     <item>Masqués</item>
     <item>Listes</item>
-  </string-array>
-  <string-array name="themeSelection">
-    <item>Thème SeriesGuide</item>
-    <item>Thème ICS</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d vote</item>

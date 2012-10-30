@@ -22,7 +22,7 @@
         android:layout_toRightOf="@id/showposter"
         android:paddingTop="@dimen/inline_padding"
         android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.XLarge.Light" />
+        android:textAppearance="?attr/textAppearanceSgXLargeLight" />
 
     <TextView
         android:id="@+id/TextViewShowListNetwork"
@@ -32,7 +32,7 @@
         android:layout_toRightOf="@id/showposter"
         android:paddingBottom="@dimen/default_padding"
         android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.Small.Dim" />
+        android:textAppearance="?attr/textAppearanceSgSmallDim" />
 
     <TextView
         android:id="@+id/TextViewShowListAirtime"
@@ -43,7 +43,7 @@
         android:paddingBottom="@dimen/default_padding"
         android:paddingLeft="@dimen/inline_padding"
         android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.Small.Dim" />
+        android:textAppearance="?attr/textAppearanceSgSmallDim" />
 
     <TextView
         android:id="@+id/TextViewShowListNextEpisode"
@@ -52,8 +52,7 @@
         android:layout_below="@id/TextViewShowListAirtime"
         android:layout_toRightOf="@id/showposter"
         android:text="@string/no_nextepisode"
-        android:textAppearance="@style/TextAppearance.Medium"
-        android:textColor="@color/text_default" />
+        android:textAppearance="?attr/textAppearanceSgMediumDim" />
 
     <TextView
         android:id="@+id/episodetime"
@@ -63,7 +62,7 @@
         android:layout_toRightOf="@id/showposter"
         android:paddingBottom="@dimen/item_padding"
         android:text="@string/show_noairtime"
-        android:textAppearance="@style/TextAppearance.Small" />
+        android:textAppearance="?attr/textAppearanceSgSmall" />
 
     <LinearLayout
         android:id="@+id/timestamp"
@@ -74,17 +73,11 @@
         android:paddingTop="@dimen/default_padding" >
 
         <ImageView
-            android:id="@+id/collectedLabel"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_collected"
-            android:visibility="gone" />
-
-        <ImageView
             android:id="@+id/favoritedLabel"
             android:layout_width="20dp"
             android:layout_height="25dp"
-            android:src="@drawable/ic_favorited"
+            android:contentDescription="@string/favorited"
+            android:src="?attr/drawableStar"
             android:visibility="gone" />
     </LinearLayout>
 

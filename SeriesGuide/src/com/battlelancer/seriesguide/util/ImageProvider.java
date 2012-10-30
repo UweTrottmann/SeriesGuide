@@ -280,14 +280,16 @@ public class ImageProvider {
 
             try {
                 imageFile.createNewFile();
-
                 FileOutputStream ostream = new FileOutputStream(imageFile);
-                bitmap.compress(IMAGE_FORMAT, IMAGE_QUALITY, ostream);
-                ostream.close();
+                try {
+                    bitmap.compress(IMAGE_FORMAT, IMAGE_QUALITY, ostream);
+                } finally {
+                    ostream.close();
+                }
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                Log.e(TAG, e.getMessage());
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e(TAG, e.getMessage());
             }
 
             // create a thumbnail, too, if requested

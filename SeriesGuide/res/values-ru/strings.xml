@@ -104,7 +104,7 @@
   <string name="update_single">Обновление сериала…</string>
   <string name="update_delta">Обновление устаревших сериалов…</string>
   <string name="update_full">Обновление всех сериалов</string>
-  <string name="update_success">Успешно обновленно.</string>
+  <string name="update_success">Shows updated.</string>
   <string name="update_offline">Обновление не удалось, проверьте ваше Интернет/Wi-Fi соединение.</string>
   <string name="update_saxerror">Обновление не удалось, повторите попытку позже.</string>
   <string name="update_inprogress">Выполняется обновление, попробуйте еще раз позже.</string>
@@ -129,7 +129,9 @@
   <string name="no_results">Никаких результатов, попробуйте полные слова.</string>
   <string name="search_error">Поиск не удался, повторите попытку позже.</string>
   <string name="add_show">Добавить сериал</string>
+  <string name="add_all">Add all</string>
   <string name="dont_add_show">Не добавлять</string>
+  <string name="add_multiple">All shows will appear in your show list shortly.</string>
   <string name="add_started">скоро появится в списке ваших сериалов</string>
   <string name="add_success">успешно добавлено.</string>
   <string name="add_error_begin">Не удалось добавить \"</string>
@@ -140,7 +142,7 @@
   <string name="library">Библиотека</string>
   <string name="powered_by_thetvdb">Сделано наhetvdb.com</string>
   <string name="powered_by_trakt">Сделано на trakt.tv</string>
-  <string name="first_list">Любимые</string>
+  <string name="first_list">First list</string>
   <string name="list_add">Добавить список</string>
   <string name="list_title_hint">Назвать список</string>
   <string name="list_remove">Удалить список</string>
@@ -252,6 +254,8 @@
   <string name="upcoming_display">Выберите, чтобы показать предстоящие передачи</string>
   <string name="pref_notifications">Уведомления</string>
   <string name="pref_notificationssummary">Уведомлять о трансляции избранных сериалов</string>
+  <string name="pref_notifyfavonly">Favorites only</string>
+  <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
   <string name="pref_ringtone">Звуковое уведомление</string>
   <string name="pref_vibrate">Вибросигнал</string>
   <string name="pref_vibratesummary">Также вибрируют при уведомлении</string>
@@ -298,10 +302,6 @@
     <item>Не просмотренные/предстоящие</item>
     <item>Скрытые</item>
     <item>Списки</item>
-  </string-array>
-  <string-array name="themeSelection">
-    <item>SeriesGuide тема</item>
-    <item>ICS тема</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d голоса</item>

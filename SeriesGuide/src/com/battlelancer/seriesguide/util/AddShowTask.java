@@ -58,7 +58,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         mAddQueue.add(show);
     }
 
-    public AddShowTask(Context context, LinkedList<SearchResult> shows) {
+    public AddShowTask(Context context, List<SearchResult> shows) {
         mContext = context.getApplicationContext();
         mAddQueue.addAll(shows);
     }
@@ -70,9 +70,6 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
     /**
      * Add a show to the add queue. If this returns false, the show was not
      * added because the task is finishing up. Create a new one instead.
-     * 
-     * @param show
-     * @return
      */
     public boolean addShow(SearchResult show) {
         if (mIsFinishedAddingShows) {
@@ -83,8 +80,27 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         }
     }
 
+    /**
+     * Add multiple shows to the add queue. If this returns false, the shows
+     * were not added because the task is finishing up. Create a new one
+     * instead.
+     */
+    public boolean addShows(List<SearchResult> show) {
+        if (mIsFinishedAddingShows) {
+            return false;
+        } else {
+            mAddQueue.addAll(show);
+            return true;
+        }
+    }
+
     @Override
     protected Void doInBackground(Void... params) {
+        // don't even get started
+        if (mAddQueue.isEmpty()) {
+            return null;
+        }
+        
         int result;
         boolean modifiedDB = false;
 

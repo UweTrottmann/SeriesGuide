@@ -10,6 +10,7 @@
         android:layout_height="100dp"
         android:layout_alignParentLeft="true"
         android:layout_marginRight="@dimen/default_padding"
+        android:contentDescription="@string/description_poster"
         android:scaleType="centerInside"
         android:src="@drawable/show_generic" />
 
@@ -25,7 +26,7 @@
         android:paddingRight="@dimen/inline_padding"
         android:paddingTop="2dp"
         android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.Medium.Light" />
+        android:textAppearance="?attr/textAppearanceSgMediumLight" />
 
     <TextView
         android:id="@+id/TextViewShowListNextEpisode"
@@ -41,7 +42,7 @@
 
     <TextView
         android:id="@+id/episodetime"
-        style="@style/Airdata"
+        style="?attr/textAppearanceSgXSmallDim"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/TextViewShowListNextEpisode"
@@ -70,13 +71,13 @@
                 android:layout_width="15dp"
                 android:layout_height="20dp"
                 android:contentDescription="@string/favorited"
-                android:src="@drawable/ic_favorited"
+                android:src="?attr/drawableStar"
                 android:visibility="gone" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/TextViewShowListAirtime"
-            style="@style/Airdata"
+            style="?attr/textAppearanceSgXSmallDim"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -87,7 +88,7 @@
 
         <TextView
             android:id="@+id/TextViewShowListNetwork"
-            style="@style/Airdata"
+            style="?attr/textAppearanceSgXSmallDim"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"

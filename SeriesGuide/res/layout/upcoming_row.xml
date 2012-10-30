@@ -38,11 +38,11 @@
 
         <TextView
             android:id="@+id/textViewUpcomingAirdate"
-            style="@style/Airdata"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="@dimen/default_padding"
-            android:text="in X days" />
+            android:text="in X days"
+            android:textAppearance="?attr/textAppearanceSgXSmallDim" />
 
         <View
             android:layout_width="0dp"
@@ -51,11 +51,11 @@
 
         <TextView
             android:id="@+id/textViewUpcomingNetwork"
-            style="@style/Airdata"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:text="10:00 PM on Very Long Network Name (VLNN)" />
+            android:text="10:00 PM on Very Long Network Name (VLNN)"
+            android:textAppearance="?attr/textAppearanceSgXSmallDim" />
     </LinearLayout>
 
     <TextView
@@ -66,24 +66,15 @@
         android:layout_toRightOf="@+id/poster"
         android:ellipsize="end"
         android:maxLines="2"
-        android:text="Placeholder"
-        android:textAppearance="@style/TextAppearance.Medium.Light" />
-
-    <TextView
-        android:id="@+id/textViewUpcomingNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewUpcomingShow"
-        android:layout_toRightOf="@+id/poster"
-        android:text="XxXX" />
+        android:text="@string/app_name"
+        android:textAppearance="?attr/textAppearanceSgMediumLight" />
 
     <TextView
         android:id="@+id/textViewUpcomingEpisode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewUpcomingShow"
-        android:layout_marginLeft="5dp"
-        android:layout_toRightOf="@id/textViewUpcomingNumber"
-        android:text="Placeholder holding place" />
+        android:layout_toRightOf="@+id/poster"
+        android:text="@string/no_nextepisode" />
 
 </RelativeLayout>

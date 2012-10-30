@@ -19,12 +19,14 @@ package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.text.format.DateUtils;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -172,7 +174,10 @@ public class ShowInfoActivity extends BaseActivity {
 
         // Running state
         if (show.getStatus() == 1) {
-            status.setTextColor(Color.GREEN);
+            TypedValue outValue = new TypedValue();
+            getTheme().resolveAttribute(R.attr.textColorSgGreen,
+                    outValue, true);
+            status.setTextColor(getResources().getColor(outValue.resourceId));
             status.setText(getString(R.string.show_isalive));
         } else if (show.getStatus() == 0) {
             status.setTextColor(Color.GRAY);
@@ -236,11 +241,18 @@ public class ShowInfoActivity extends BaseActivity {
         findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                // display in dialog on large or bigger screen
+                if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE) {
+                    TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
+                            show.getTitle(), Integer.valueOf(tvdbId));
+                    newFragment.show(getSupportFragmentManager(), "shouts-dialog");
+                } else {
+                    Intent i = new Intent(ShowInfoActivity.this, TraktShoutsActivity.class);
+                    i.putExtras(TraktShoutsActivity.createInitBundle(getShowId(),
+                            0, 0, show.getTitle()));
+                    startActivity(i);
+                }
                 fireTrackerEvent("Show Trakt Shouts");
-                TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
-                        show.getTitle(), Integer.valueOf(tvdbId));
-
-                newFragment.show(getSupportFragmentManager(), "shouts-dialog");
             }
         });
 

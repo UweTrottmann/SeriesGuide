@@ -32,6 +32,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -745,7 +746,10 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         final TextView statusText = (TextView) getView().findViewById(R.id.showStatus);
         int status = show.getInt(ShowQuery.SHOW_STATUS);
         if (status == 1) {
-            statusText.setTextColor(Color.GREEN);
+            TypedValue outValue = new TypedValue();
+            getActivity().getTheme().resolveAttribute(R.attr.textColorSgGreen,
+                    outValue, true);
+            statusText.setTextColor(getResources().getColor(outValue.resourceId));
             statusText.setText(getString(R.string.show_isalive));
         } else if (status == 0) {
             statusText.setTextColor(Color.GRAY);

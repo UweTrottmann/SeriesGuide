@@ -28,6 +28,7 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.text.Html;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,11 @@ public class SearchFragment extends SherlockListFragment implements LoaderCallba
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        // get color attribute
+        final TypedValue greenValue = new TypedValue();
+        getActivity().getTheme().resolveAttribute(R.attr.textColorSgGreen,
+                greenValue, true);
+
         String[] from = new String[] {
                 Episodes.TITLE, Episodes.OVERVIEW, Episodes.NUMBER, Episodes.WATCHED, Shows.TITLE
         };
@@ -92,7 +98,8 @@ public class SearchFragment extends SherlockListFragment implements LoaderCallba
                     TextView watchedState = (TextView) view;
                     watchedState.setText(isWatched ? getString(R.string.episode_iswatched)
                             : getString(R.string.episode_notwatched));
-                    watchedState.setTextColor(isWatched ? Color.GREEN : Color.GRAY);
+                    watchedState.setTextColor(isWatched ? getResources().getColor(
+                            greenValue.resourceId) : Color.GRAY);
                     return true;
                 }
                 if (columnIndex == SearchQuery.OVERVIEW) {

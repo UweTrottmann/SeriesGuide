@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v4.app.DialogFragment;
@@ -28,12 +29,17 @@ import android.widget.Button;
 import android.widget.Checkable;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
+import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
@@ -151,8 +157,55 @@ public class ListsDialogFragment extends DialogFragment implements
     }
 
     @Override
-    public void onActivityCreated(Bundle arg0) {
-        super.onActivityCreated(arg0);
+    public void onActivityCreated(Bundle args) {
+        super.onActivityCreated(args);
+
+        // display item title
+        final String itemId = getArguments().getString("itemid");
+        final int itemType = getArguments().getInt("itemtype");
+        final TextView itemTitle = (TextView) getView().findViewById(R.id.item);
+        Uri uri = null;
+        String[] projection = null;
+        switch (itemType) {
+            case 1:
+                // show
+                uri = Shows.buildShowUri(itemId);
+                projection = new String[] {
+                        Shows._ID, Shows.TITLE
+                };
+                break;
+            case 2:
+                // season
+                uri = Seasons.buildSeasonUri(itemId);
+                projection = new String[] {
+                        Seasons._ID, Seasons.COMBINED
+                };
+                break;
+            case 3:
+                // episode
+                uri = Episodes.buildEpisodeUri(itemId);
+                projection = new String[] {
+                        Episodes._ID, Episodes.TITLE
+                };
+                break;
+        }
+        if (uri != null && projection != null) {
+            Cursor item = getActivity().getContentResolver().query(uri, projection, null, null,
+                    null);
+            if (item != null && item.moveToFirst()) {
+                if (itemType == 2) {
+                    // season just has a number, build string
+                    itemTitle.setText(Utils.getSeasonString(getActivity(), item.getInt(1)));
+                } else {
+                    // shows and episodes
+                    itemTitle.setText(item.getString(1));
+                }
+            }
+
+            if (item != null) {
+                item.close();
+            }
+        }
 
         mAdapter = new ListsAdapter(getActivity(), null, 0);
         mListView.setAdapter(mAdapter);

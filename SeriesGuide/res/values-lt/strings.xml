@@ -4,7 +4,7 @@
   <string name="episode">Serija</string>
   <string name="episodes">Visos serijos</string>
   <string name="season">Sezonas</string>
-  <string name="seasons">Seasons</string>
+  <string name="seasons">Sezonai</string>
   <string name="unknown">unknown</string>
   <string name="episode_iswatched">Jau pažiūrėta</string>
   <string name="episode_notwatched">Dar nepažiūrėta</string>
@@ -15,7 +15,7 @@
   <string name="share_checkout">Check out</string>
   <string name="search_description">Serijos</string>
   <string name="description_overview">Apžvalga</string>
-  <string name="description_poster">Show poster</string>
+  <string name="description_poster">Rodyti plakatą</string>
   <string name="norating">n/a</string>
   <string name="loading">Loading…</string>
   <string name="done">Done</string>
@@ -23,7 +23,7 @@
   <string name="more">%s more</string>
   <string name="cancel">Cancel</string>
   <string name="share">Share</string>
-  <string name="offline">No network connectivity. Try again later.</string>
+  <string name="offline">Nėra tinklo ryšio. Pabandykite vėliau.</string>
   <string name="onlyx">Prieinama tik SeriesGuide X</string>
   <string name="shouts">Shouts</string>
   <string name="shout_hint">Type a shout (in English)</string>
@@ -43,19 +43,19 @@
   <string name="rating8">Great</string>
   <string name="rating9">Superb</string>
   <string name="episode_firstaired">Rodymo data</string>
-  <string name="episode_dvdnumber">DVD Episode</string>
+  <string name="episode_dvdnumber">DVD serija</string>
   <string name="show_actors">Aktoriai</string>
-  <string name="show_firstaired">First Aired</string>
+  <string name="show_firstaired">Pirmą kartą parodyta</string>
   <string name="show_genres">Žanrai</string>
   <string name="show_runtime">Runtime</string>
-  <string name="show_contentrating">Content Rating</string>
+  <string name="show_contentrating">Turinio įvertinimas</string>
   <string name="episode_directors">Režisieriai</string>
   <string name="episode_gueststars">Kviestinės žvaigždės</string>
-  <string name="episode_writers">Writers</string>
+  <string name="episode_writers">Rašytojai</string>
   <string name="show_airtimeunit">min.</string>
   <string name="show_isalive">Rodomas</string>
   <string name="show_isnotalive">Pasibaigęs</string>
-  <string name="lastEdit">Last Edit // TVDb</string>
+  <string name="lastEdit">Paskutinis redagavimas // TVDb</string>
   <string name="sort">Rūšiuoti pagal</string>
   <string name="updateall_yes">Update (all)</string>
   <string name="menu_update_delta">Update (outdated only)</string>
@@ -91,17 +91,17 @@
   <string name="context_unhide">Nebeslėpti</string>
   <string name="hidden">Hidden show</string>
   <string name="unhidden">Un-Hidden show</string>
-  <string name="activity">Activity</string>
+  <string name="activity">Veikla</string>
   <string name="upcoming">Artėjančios</string>
   <string name="recent">Paskutinės</string>
-  <string name="friends">Friends</string>
-  <string name="friends_empty">No friend activity on trakt.</string>
+  <string name="friends">Draugai</string>
+  <string name="friends_empty">Draugų veiklos „trakt“ nėra.</string>
   <string name="noupcoming">Artėjančių serijų nėra.</string>
   <string name="norecent">Paskutinių serijų nėra.</string>
   <string name="only_favorites">Tik mėgstamiausi serialai</string>
   <string name="togglewatched">Toggle watched</string>
-  <string name="update_notification">Updating your shows…</string>
-  <string name="update_single">Updating show…</string>
+  <string name="update_notification">Atnaujinami serialai...</string>
+  <string name="update_single">Atnaujinamas serialas...</string>
   <string name="update_delta">Updating outdated shows…</string>
   <string name="update_full">Updating all shows…</string>
   <string name="update_success">Shows updated.</string>
@@ -116,31 +116,33 @@
   <string name="arttask_nosdcard">Loading posters requires external storage (SD card).</string>
   <string name="show_network">on</string>
   <string name="show_noairtime">No air times available</string>
-  <string name="show_noimdbentry">No IMDB page found.</string>
+  <string name="show_noimdbentry">„IMDB“ puslapio nerasta.</string>
   <string name="season_watchcount">serijos nepažiūrėtos</string>
   <string name="season_allwatched">Visos serijos pažiūrėtos</string>
   <string name="season_onenotwatched">serija nepažiūrėta</string>
   <string name="season_unaired">neparodyta</string>
-  <string name="oneotherepisode">other episode</string>
-  <string name="otherepisodes">other episodes</string>
+  <string name="oneotherepisode">Kita serija</string>
+  <string name="otherepisodes">Kitos serijos</string>
   <string name="remaining">liko %s</string>
   <string name="search_button">Paieška</string>
   <string name="search_hint_add">Serialo pavadinimas</string>
   <string name="no_results">No results, try complete words.</string>
   <string name="search_error">Searching failed, try again later.</string>
   <string name="add_show">Pridėti serialą</string>
+  <string name="add_all">Add all</string>
   <string name="dont_add_show">Don\'t Add</string>
+  <string name="add_multiple">All shows will appear in your show list shortly.</string>
   <string name="add_started">netrukus atsiras jūsų serialų sąraše.</string>
   <string name="add_success">pridėta sėkmingai.</string>
   <string name="add_error_begin">Nepavyko pridėti \"</string>
   <string name="add_error_end">\".</string>
   <string name="add_already_exists">already is in your show list.</string>
   <string name="trending">Populiarūs</string>
-  <string name="recommended">Recommended</string>
-  <string name="library">Library</string>
+  <string name="recommended">Rekomenduojami</string>
+  <string name="library">Biblioteka</string>
   <string name="powered_by_thetvdb">powered by thetvdb.com</string>
   <string name="powered_by_trakt">powered by trakt.tv</string>
-  <string name="first_list">Mėgstamiausi</string>
+  <string name="first_list">First list</string>
   <string name="list_add">Add list</string>
   <string name="list_title_hint">Name your list</string>
   <string name="list_remove">Remove list</string>
@@ -159,8 +161,8 @@
   <string name="pref_onlyfuturesummary">Niekada nerodyti jau parodytų serijų</string>
   <string name="pref_onlyseasoneps">Slėpti ypatingas serijas</string>
   <string name="pref_onlyseasonepssummary">Ypatingos serijos pradingsta visur, išskyrus sezonų sąrašą</string>
-  <string name="pref_seasonsorting">Sort seasons by…</string>
-  <string name="pref_episodesorting">Sort episodes by…</string>
+  <string name="pref_seasonsorting">Rūšiuoti sezonus pagal...</string>
+  <string name="pref_episodesorting">Rūšiuoti serijas pagal...</string>
   <string name="backup">Atsarginė kopija/atstatymas</string>
   <string name="backup_summary">Padaryti atsarginę kopiją arba atkurti serialus</string>
   <string name="pref_language">Turinio kalba</string>
@@ -248,7 +250,7 @@
   <string name="welcome_add_part2">in the action bar.</string>
   <string name="upcoming_show">%s is coming up</string>
   <string name="upcoming_episodes">New episodes are coming up</string>
-  <string name="upcoming_show_detailed">%1$s on %2$s</string>
+  <string name="upcoming_show_detailed">%1$s %2$s</string>
   <string name="upcoming_display">Select to display upcoming shows</string>
   <string name="pref_notifications">Pranešimai</string>
   <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
@@ -265,7 +267,7 @@
   <string name="smallwidget">SeriesGuide (small)</string>
   <string name="bigwidget">SeriesGuide (middle)</string>
   <string name="largewidget">SeriesGuide (large)</string>
-  <string name="download_stable">Download SeriesGuide</string>
+  <string name="download_stable">Parsisiųsti SeriesGuide</string>
   <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
   <string-array name="shsorting">
     <item>A–Z</item>
@@ -300,10 +302,6 @@
     <item>Unseen/Upcoming</item>
     <item>Hidden</item>
     <item>Lists</item>
-  </string-array>
-  <string-array name="themeSelection">
-    <item>SeriesGuide tema</item>
-    <item>ICS Base Theme</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d balsas</item>

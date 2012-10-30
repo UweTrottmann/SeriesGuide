@@ -20,6 +20,7 @@ package com.battlelancer.seriesguide;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ public class Constants {
 
         ALPHABETICAL_ASC(3, "atoz", Episodes.TITLE + " COLLATE NOCASE ASC"),
 
-        ALPHABETICAL_DESC(4, "ztoa", Episodes.TITLE + " COLLATE NOCASE DESC"),
+        TOP_RATED(4, "toprated", Tables.EPISODES + "." + Episodes.RATING + " COLLATE NOCASE DESC"),
 
         DVDLATEST_FIRST(5, "dvdlatestfirst", Episodes.DVDNUMBER + " DESC," + Episodes.NUMBER
                 + " DESC"),

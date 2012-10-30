@@ -49,9 +49,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -158,8 +155,6 @@ public class ShowsFragment extends SherlockFragment implements
 
         // listen for some settings changes
         prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
-
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -230,6 +225,9 @@ public class ShowsFragment extends SherlockFragment implements
                 if (episode != null) {
                     episode.close();
                 }
+                
+                fireTrackerEvent("Check in");
+                
                 return true;
             }
             case CONTEXT_FAVORITE_ID: {
@@ -306,33 +304,6 @@ public class ShowsFragment extends SherlockFragment implements
             }
         }
         return super.onContextItemSelected(item);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.shows_menu, menu);
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        if (android.os.Build.VERSION.SDK_INT >= 11) {
-            final CharSequence[] items = getResources().getStringArray(R.array.shsorting);
-            menu.findItem(R.id.menu_showsortby).setTitle(
-                    getString(R.string.sort) + ": " + items[mSorting.index()]);
-        }
-        super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.menu_showsortby) {
-            fireTrackerEvent("Sort shows");
-            showSortDialog();
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
     }
 
     @TargetApi(16)
@@ -447,7 +418,6 @@ public class ShowsFragment extends SherlockFragment implements
                         .findViewById(R.id.TextViewShowListAirtime);
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.showposter);
                 viewHolder.favorited = convertView.findViewById(R.id.favoritedLabel);
-                viewHolder.collected = convertView.findViewById(R.id.collectedLabel);
 
                 convertView.setTag(viewHolder);
             } else {
@@ -527,7 +497,6 @@ public class ShowsFragment extends SherlockFragment implements
 
         public View favorited;
 
-        public View collected;
     }
 
     private interface ShowsQuery {
@@ -574,10 +543,9 @@ public class ShowsFragment extends SherlockFragment implements
         deleteDialog.show(fm, "fragment_delete");
     }
 
-    private void showSortDialog() {
-        FragmentManager fm = getFragmentManager();
+    public static void showSortDialog(FragmentManager fm, ShowSorting currentSorting) {
         SortDialogFragment sortDialog = SortDialogFragment.newInstance(R.array.shsorting,
-                R.array.shsortingData, mSorting.index(),
+                R.array.shsortingData, currentSorting.index(),
                 SeriesGuidePreferences.KEY_SHOW_SORT_ORDER, R.string.pref_showsorting);
         sortDialog.show(fm, "fragment_sort");
     }

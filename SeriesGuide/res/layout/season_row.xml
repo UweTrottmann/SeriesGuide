@@ -12,7 +12,7 @@
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/seasonProgressText"
         android:text="@string/season"
-        android:textAppearance="@style/TextAppearance.Medium.Light" />
+        android:textAppearance="?attr/textAppearanceSgMediumLight" />
 
     <TextView
         android:id="@+id/seasonProgressText"
@@ -21,8 +21,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginLeft="@dimen/default_padding"
         android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.Medium.Light"
-        android:textColor="@color/text_default" >
+        android:textAppearance="?attr/textAppearanceSgMediumLightDim" >
     </TextView>
 
     <ProgressBar
@@ -41,6 +40,6 @@
         android:layout_below="@+id/seasonProgressBar"
         android:text="@string/episode_notwatched"
         android:textAllCaps="true"
-        android:textAppearance="@style/TextAppearance.XSmall" />
+        android:textAppearance="?attr/textAppearanceSgXSmall" />
 
 </RelativeLayout>

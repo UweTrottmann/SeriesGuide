@@ -104,7 +104,7 @@
   <string name="update_single">Aktualizujem seriály…</string>
   <string name="update_delta">Aktualizujem zastarané seriály…</string>
   <string name="update_full">Aktualizujem všetky seriály…</string>
-  <string name="update_success">Aktualizácia úspešná.</string>
+  <string name="update_success">Shows updated.</string>
   <string name="update_offline">Aktualizácia zlyhala, skontrolujte pripojenie k internetu.</string>
   <string name="update_saxerror">Aktualizácia zlyhala, skúste to neskôr.</string>
   <string name="update_inprogress">Prebieha aktualizácia, skúste to neskôr.</string>
@@ -129,7 +129,9 @@
   <string name="no_results">Žiadne výsledky, skúste celé slová.</string>
   <string name="search_error">Hľadanie zlyhalo, skúste to neskôr.</string>
   <string name="add_show">Pridať seriál</string>
+  <string name="add_all">Add all</string>
   <string name="dont_add_show">Nepridať</string>
+  <string name="add_multiple">All shows will appear in your show list shortly.</string>
   <string name="add_started">sa čoskoro objaví vo vašom zozname relácií.</string>
   <string name="add_success">úspešne pridané.</string>
   <string name="add_error_begin">Nepodarilo sa pridať \"</string>
@@ -140,7 +142,7 @@
   <string name="library">Knižnica</string>
   <string name="powered_by_thetvdb">v spolupráci s thetvdb.com</string>
   <string name="powered_by_trakt">v spolupráci s trakt.tv</string>
-  <string name="first_list">Favorites</string>
+  <string name="first_list">First list</string>
   <string name="list_add">Add list</string>
   <string name="list_title_hint">Name your list</string>
   <string name="list_remove">Remove list</string>
@@ -252,6 +254,8 @@
   <string name="upcoming_display">Vyberte pre zobrazenie nadchádzajúcich seriálov</string>
   <string name="pref_notifications">Notifikácie</string>
   <string name="pref_notificationssummary">Upozorni ma na vysielanie obľúbených seriálov</string>
+  <string name="pref_notifyfavonly">Favorites only</string>
+  <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
   <string name="pref_ringtone">Zvonenie</string>
   <string name="pref_vibrate">Vibrovať</string>
   <string name="pref_vibratesummary">Pri zobrazení notifikácie zavibrovať</string>
@@ -298,10 +302,6 @@
     <item>Nové/Nadchádzajúce</item>
     <item>Skryté</item>
     <item>Lists</item>
-  </string-array>
-  <string-array name="themeSelection">
-    <item>Téma SeriesGuide</item>
-    <item>Téma Androidu ICS</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d hlas</item>

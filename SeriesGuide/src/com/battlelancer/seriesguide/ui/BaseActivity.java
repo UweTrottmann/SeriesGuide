@@ -87,7 +87,9 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
     private boolean onAutoBackup() {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         long now = System.currentTimeMillis();
-        final long previousBackupTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTBACKUP, 0);
+        // use now as default value, so a re-install won't overwrite the old
+        // auto-backup right away
+        final long previousBackupTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTBACKUP, now);
         final boolean isTime = (now - previousBackupTime) > 7 * DateUtils.DAY_IN_MILLIS;
 
         if (isTime) {

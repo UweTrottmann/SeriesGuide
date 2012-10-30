@@ -44,6 +44,8 @@ import java.util.List;
  * to the database.
  */
 public class AddFragment extends SherlockFragment {
+    
+    protected List<SearchResult> mSearchResults;
 
     protected AddAdapter mAdapter;
 
@@ -75,6 +77,7 @@ public class AddFragment extends SherlockFragment {
 
     @TargetApi(11)
     protected void setSearchResults(List<SearchResult> searchResults) {
+        mSearchResults = searchResults;
         mAdapter.clear();
         if (AndroidUtils.isHoneycombOrHigher()) {
             mAdapter.addAll(searchResults);

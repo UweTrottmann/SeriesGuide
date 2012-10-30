@@ -22,20 +22,20 @@
 
         <TextView
             android:id="@+id/name"
-            style="@style/Airdata"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:text="@string/app_name" />
+            android:text="@string/app_name"
+            android:textAppearance="?attr/textAppearanceSgXSmallDim" />
 
         <TextView
             android:id="@+id/timestamp"
-            style="@style/Airdata"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="@string/norating" />
+            android:text="@string/norating"
+            android:textAppearance="?attr/textAppearanceSgXSmallDim" />
     </LinearLayout>
 
     <TextView
@@ -45,7 +45,7 @@
         android:layout_below="@+id/userstrip"
         android:layout_toRightOf="@+id/avatar"
         android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.Medium.Light" />
+        android:textAppearance="?attr/textAppearanceSgMediumLight" />
 
     <TextView
         android:id="@+id/episode"

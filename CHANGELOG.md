@@ -5,6 +5,36 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 2.10 *(TBA)*
+--------------------------------
+
+* FEATURE Light theme, can be enabled in advanced settings.
+
+### Detailed changes:
+
+#### 2.10.2beta (2012-10-16)
+
+* FEATURE Episodes are sortable by rating.
+* TWEAK Use episode title as default check in comment to avoid confusion about what is actually checked in.
+* TWEAK Change first list name to 'First list' to avoid confusion with Favorites.
+* TWEAK Move recommended and library tabs right next to trending if connected to a trakt account.
+* TWEAK Lists: shows display next episode, episodes display number and air date.
+* TWEAK Show which items list associations are manipulated.
+* TWEAK Dropped rarely used reverse alphabetical sorting.
+* FIX Light theme for all languages.
+* FIX Recommended tab text was cut off on small screens.
+* NOTE Latest translations from crowdin.
+
+#### 2.10.1beta (2012-10-16)
+
+* FEATURE Light theme, can be enabled in advanced settings.
+* FEATURE Add all button for trakt library.
+* TWEAK Some love to the list widget, increased font-sizes on Nexus 7-like screens.
+* TWEAK Custom selected color (seen when navigating with D-PAD).
+* FIX Action items sometimes invisible on tablets.
+* FIX Shouts dialog resizing properly, only showing on large or xlarge screens.
+* FIX Do not create auto-backup on first launch, at earliest after a week.
+
 Version 2.9.3 *(2012-10-18)*
 --------------------------------
 
