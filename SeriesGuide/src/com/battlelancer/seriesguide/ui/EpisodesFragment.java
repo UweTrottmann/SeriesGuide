@@ -448,10 +448,10 @@ public class EpisodesFragment extends SherlockListFragment implements
                 .fromValue(prefs.getString(SeriesGuidePreferences.KEY_EPISODE_SORT_ORDER,
                         EpisodeSorting.OLDEST_FIRST.value()));
 
-        EasyTracker.getTracker().trackEvent("Episodes", "Sorting", mSorting.name(), (long) 0);
-
         getLoaderManager().restartLoader(EPISODES_LOADER, null, EpisodesFragment.this);
         getSherlockActivity().invalidateOptionsMenu();
+
+        EasyTracker.getTracker().trackEvent("Episodes", "Sorting", mSorting.name(), (long) 0);
     }
 
     @TargetApi(8)

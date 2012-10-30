@@ -241,7 +241,7 @@
         <item>Oldest first</item>
         <item>Unwatched first</item>
         <item>A - Z</item>
-        <item>Z - A</item>
+        <item>Top rated</item>
         <item>Latest first (DVD)</item>
         <item>Oldest first (DVD)</item>
     </string-array>
@@ -387,7 +387,7 @@
         <item>oldestfirst</item>
         <item>unwatchedfirst</item>
         <item>atoz</item>
-        <item>ztoa</item>
+        <item>toprated</item>
         <item>dvdlatestfirst</item>
         <item>dvdoldestfirst</item>
     </string-array>

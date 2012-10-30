@@ -536,7 +536,12 @@ public class Utils {
         String currentPref = prefs.getString(SeriesGuidePreferences.KEY_EPISODE_SORT_ORDER,
                 EpisodeSorting.OLDEST_FIRST.value());
 
-        return EpisodeSorting.fromValue(currentPref);
+        EpisodeSorting sorting = EpisodeSorting.fromValue(currentPref);
+        if (sorting == null) {
+            return EpisodeSorting.OLDEST_FIRST;
+        } else {
+            return EpisodeSorting.fromValue(currentPref);
+        }
     }
 
     /**
