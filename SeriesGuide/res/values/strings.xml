@@ -24,6 +24,7 @@
     <string name="more">%s more</string>
     <string name="cancel">Cancel</string>
     <string name="share">Share</string>
+    <string name="updated">Updated to latest version.</string>
 
     <plurals name="votes">
         <item quantity="one">%d vote</item>

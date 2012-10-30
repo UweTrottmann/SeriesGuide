@@ -577,8 +577,8 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                 if (lastVersion < VER_SUMMERTIME_FIX) {
                     scheduleAllShowsUpdate();
                 }
-                if (getResources().getBoolean(R.bool.isLargeTablet)
-                        && lastVersion < VER_HIGHRES_THUMBS) {
+                if (lastVersion < VER_HIGHRES_THUMBS
+                        && getResources().getBoolean(R.bool.isLargeTablet)) {
                     // clear image cache
                     ImageProvider.getInstance(this).clearCache();
                     ImageProvider.getInstance(this).clearExternalStorageCache();
@@ -589,6 +589,8 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                     // BETA info dialog
                     ChangesDialogFragment.show(getSupportFragmentManager());
                 }
+                
+                Toast.makeText(this, R.string.updated, Toast.LENGTH_SHORT).show();
 
                 // set this as lastVersion
                 editor.putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion);
