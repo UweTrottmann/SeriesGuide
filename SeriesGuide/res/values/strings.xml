@@ -370,7 +370,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">Snow is white, so is the new theme\n\nTry out the new Light theme! See advanced settings to switch.\n\nAdd all your trakt library with one button.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">Better lists, snow for everyone\n\nShows in lists display next episode, episodes display their number and air date.\n\nLight theme for non-English users.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
