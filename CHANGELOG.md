@@ -12,6 +12,19 @@ Version 2.10 *(TBA)*
 
 ### Detailed changes:
 
+#### 2.10.2beta (2012-10-16)
+
+* FEATURE Episodes are sortable by rating.
+* TWEAK Use episode title as default check in comment to avoid confusion about what is actually checked in.
+* TWEAK Change first list name to 'First list' to avoid confusion with Favorites.
+* TWEAK Move recommended and library tabs right next to trending if connected to a trakt account.
+* TWEAK Lists: shows display next episode, episodes display number and air date.
+* TWEAK Show which items list associations are manipulated.
+* TWEAK Dropped rarely used reverse alphabetical sorting.
+* FIX Light theme for all languages.
+* FIX Recommended tab text was cut off on small screens.
+* NOTE Latest translations from crowdin.
+
 #### 2.10.1beta (2012-10-16)
 
 * FEATURE Light theme, can be enabled in advanced settings.
