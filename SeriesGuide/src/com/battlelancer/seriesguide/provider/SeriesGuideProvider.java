@@ -471,6 +471,10 @@ public class SeriesGuideProvider extends ContentProvider {
                         .mapToTable(Episodes.RATING, Tables.EPISODES)
                         .where(Qualified.EPISODES_EPISODE_ID + "=?", episodeId);
             }
+            case SEASONS_ID: {
+                final String seasonId = Seasons.getSeasonId(uri);
+                return builder.table(Tables.SEASONS).where(Seasons._ID + "=?", seasonId);
+            }
             case SEASONS_OFSHOW: {
                 final String showId = uri.getPathSegments().get(2);
                 return builder.table(Tables.SEASONS).where(Shows.REF_SHOW_ID + "=?", showId);
