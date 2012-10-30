@@ -82,7 +82,7 @@
   <string name="confirm_delete">Opravdu chcete odstranit %s?</string>
   <string name="delete_show">Odstranit</string>
   <string name="dontdelete_show">Neodstraňovat</string>
-  <string name="no_nextepisode">žádná další díl nenalezen</string>
+  <string name="no_nextepisode">žádný další díl nenalezen</string>
   <string name="context_favorite">Přidat k oblíbeným</string>
   <string name="context_unfavorite">Odebrat z oblíbených</string>
   <string name="favorited">Přidáno k oblíbeným</string>
@@ -129,9 +129,9 @@
   <string name="no_results">Bez výsledku, zkuste celá slova.</string>
   <string name="search_error">Vyhledání selhalo, zkuste to později.</string>
   <string name="add_show">Přidat pořad</string>
-  <string name="add_all">Add all</string>
+  <string name="add_all">Přidat vše</string>
   <string name="dont_add_show">Nepřidávat</string>
-  <string name="add_multiple">All shows will appear in your show list shortly.</string>
+  <string name="add_multiple">Všechny pořady se brzy objeví ve Vašem seznamu pořadů.</string>
   <string name="add_started">se brzy objeví na Vašem seznamu pořadů.</string>
   <string name="add_success">úspěšně přidán.</string>
   <string name="add_error_begin">Nelze přidat\"</string>
@@ -142,7 +142,7 @@
   <string name="library">Knihovna</string>
   <string name="powered_by_thetvdb">ve spolupráci s thetvdb.com</string>
   <string name="powered_by_trakt">ve spolupráci s trakt.tv</string>
-  <string name="first_list">First list</string>
+  <string name="first_list">První seznam</string>
   <string name="list_add">Přidat seznam</string>
   <string name="list_title_hint">Pojmenovat seznam</string>
   <string name="list_remove">Odstranit seznam</string>
