@@ -75,7 +75,7 @@ public class ImageDownloader {
      * cache and will be done asynchronously otherwise. A null bitmap will be
      * associated to the ImageView if an error occurs.
      * 
-     * @param url The URL of the image to download.
+     * @param mUrl The URL of the image to download.
      * @param imageView The ImageView to bind the downloaded image to.
      */
     public void download(String url, ImageView imageView) {
@@ -88,7 +88,7 @@ public class ImageDownloader {
      * cache and will be done asynchronously otherwise. A null bitmap will be
      * associated to the ImageView if an error occurs.
      * 
-     * @param url The URL of the image to download.
+     * @param mUrl The URL of the image to download.
      * @param imageView The ImageView to bind the downloaded image to.
      * @param isDiskCaching Wether to cache the image to disk or just memory.
      */
@@ -109,7 +109,7 @@ public class ImageDownloader {
      * used. Kept private at the moment as its interest is not clear.
      */
     private void forceDownload(String url, ImageView imageView, boolean isDiskCaching) {
-        // State sanity: url is guaranteed to never be null in
+        // State sanity: mUrl is guaranteed to never be null in
         // DownloadedDrawable and cache keys.
         if (url == null) {
             imageView.setImageDrawable(null);
@@ -128,14 +128,14 @@ public class ImageDownloader {
     /**
      * Returns true if the current download has been canceled or if there was no
      * download in progress on this image view. Returns false if the download in
-     * progress deals with the same url. The download is not stopped in that
+     * progress deals with the same mUrl. The download is not stopped in that
      * case.
      */
     private static boolean cancelPotentialDownload(String url, ImageView imageView) {
         BitmapDownloaderTask bitmapDownloaderTask = getBitmapDownloaderTask(imageView);
 
         if (bitmapDownloaderTask != null) {
-            String bitmapUrl = bitmapDownloaderTask.url;
+            String bitmapUrl = bitmapDownloaderTask.mUrl;
             if ((bitmapUrl == null) || (!bitmapUrl.equals(url))) {
                 bitmapDownloaderTask.cancel(true);
             } else {
@@ -162,27 +162,20 @@ public class ImageDownloader {
         return null;
     }
 
-    Bitmap downloadBitmap(String urlString, boolean isDiskCaching) {
-
-        File imagefile = null;
-        if (isDiskCaching) {
-            String filename = Integer.toHexString(urlString.hashCode()) + "."
-                    + CompressFormat.JPEG.name();
-            imagefile = new File(mDiskCacheDir + "/" + filename);
-
-            if (AndroidUtils.isExtStorageAvailable()) {
-                // try to get bitmap from disk cache first
-                if (imagefile.exists()) {
-                    // disk cache hit
-                    final Bitmap bitmap = BitmapFactory.decodeFile(imagefile.getAbsolutePath());
-                    if (bitmap != null) {
-                        return bitmap;
-                    }
+    private Bitmap getBitmapFromDisk(String urlString, File imageFile) {
+        if (AndroidUtils.isExtStorageAvailable()) {
+            if (imageFile.exists()) {
+                // disk cache hit
+                final Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+                if (bitmap != null) {
+                    return bitmap;
                 }
             }
         }
+        return null;
+    }
 
-        // if loading from disk fails, download it
+    private Bitmap downloadBitmap(String urlString, boolean isDiskCaching, File imageFile) {
         try {
             InputStream inputStream = AndroidUtils.downloadUrl(urlString);
 
@@ -195,13 +188,13 @@ public class ImageDownloader {
                 // write directly to disk
                 Bitmap bitmap;
                 if (isDiskCaching && AndroidUtils.isExtStorageAvailable()) {
-                    FileOutputStream outputstream = new FileOutputStream(imagefile);
+                    FileOutputStream outputstream = new FileOutputStream(imageFile);
                     try {
                         AndroidUtils.copy(new FlushedInputStream(inputStream), outputstream);
                     } finally {
                         outputstream.close();
                     }
-                    bitmap = BitmapFactory.decodeFile(imagefile.getAbsolutePath());
+                    bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
                 } else {
                     // if we have no external storage, decode directly
                     bitmap = BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
@@ -265,7 +258,7 @@ public class ImageDownloader {
      * The actual AsyncTask that will asynchronously download the image.
      */
     class BitmapDownloaderTask extends AsyncTask<String, Void, Bitmap> {
-        private String url;
+        private String mUrl;
 
         private final WeakReference<ImageView> imageViewReference;
 
@@ -281,8 +274,26 @@ public class ImageDownloader {
          */
         @Override
         protected Bitmap doInBackground(String... params) {
-            url = params[0];
-            return downloadBitmap(url, mIsDiskCaching);
+            mUrl = params[0];
+
+            final String fileName = Integer.toHexString(mUrl.hashCode()) + "."
+                    + CompressFormat.JPEG.name();
+            File imageFile = new File(mDiskCacheDir + "/" + fileName);
+
+            // try to get bitmap from disk cache first
+            if (mIsDiskCaching) {
+                Bitmap bitmap = getBitmapFromDisk(mUrl, imageFile);
+                if (bitmap != null) {
+                    return bitmap;
+                }
+            }
+            
+            if (isCancelled()) {
+                return null;
+            }
+
+            // if loading from disk fails, download it
+            return downloadBitmap(mUrl, mIsDiskCaching, imageFile);
         }
 
         /**
@@ -294,7 +305,7 @@ public class ImageDownloader {
                 bitmap = null;
             }
 
-            addBitmapToCache(url, bitmap);
+            addBitmapToCache(mUrl, bitmap);
 
             if (imageViewReference != null) {
                 ImageView imageView = imageViewReference.get();
@@ -385,7 +396,7 @@ public class ImageDownloader {
     }
 
     /**
-     * @param url The URL of the image that will be retrieved from the cache.
+     * @param mUrl The URL of the image that will be retrieved from the cache.
      * @return The cached bitmap or null if it was not found.
      */
     private Bitmap getBitmapFromCache(String url) {
