@@ -25,6 +25,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
+import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -217,48 +218,70 @@ public class ListsFragment extends SherlockFragment implements
                         .findViewById(R.id.TextViewShowListAirtime);
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.showposter);
 
-                // hide unused views
-                viewHolder.episodeTime.setVisibility(View.GONE);
-
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
-            // show title and network
+            // show title
             viewHolder.name.setText(mCursor.getString(ListItemsQuery.SHOW_TITLE));
-            viewHolder.network.setText(mCursor.getString(ListItemsQuery.SHOW_NETWORK));
-
-            // airday
-            final String[] values = Utils.parseMillisecondsToTime(
-                    mCursor.getLong(ListItemsQuery.SHOW_AIRSTIME),
-                    mCursor.getString(ListItemsQuery.SHOW_AIRSDAY), mContext);
-            if (getResources().getBoolean(R.bool.isLargeTablet)) {
-                viewHolder.airsTime.setText("/ " + values[1] + " " + values[0]);
-            } else {
-                viewHolder.airsTime.setText(values[1] + " " + values[0]);
-            }
 
             // item title
             int itemType = mCursor.getInt(ListItemsQuery.ITEM_TYPE);
-            String itemTitle;
             switch (itemType) {
                 default:
                 case 1:
                     // shows
-                    itemTitle = "";
+                    viewHolder.network.setText(mCursor.getString(ListItemsQuery.SHOW_NETWORK));
+
+                    // airday
+                    final String[] values = Utils.parseMillisecondsToTime(
+                            mCursor.getLong(ListItemsQuery.SHOW_AIRSTIME),
+                            mCursor.getString(ListItemsQuery.SHOW_AIRSDAY), mContext);
+                    if (getResources().getBoolean(R.bool.isLargeTablet)) {
+                        viewHolder.airsTime.setText("/ " + values[1] + " " + values[0]);
+                    } else {
+                        viewHolder.airsTime.setText(values[1] + " " + values[0]);
+                    }
+
+                    // next episode info
+                    String fieldValue = mCursor.getString(ListItemsQuery.SHOW_NEXTTEXT);
+                    if (TextUtils.isEmpty(fieldValue)) {
+                        // show show status if there are currently no more
+                        // episodes
+                        int status = mCursor.getInt(ListItemsQuery.SHOW_STATUS);
+
+                        // Continuing == 1 and Ended == 0
+                        if (status == 1) {
+                            viewHolder.episodeTime.setText(getString(R.string.show_isalive));
+                        } else if (status == 0) {
+                            viewHolder.episodeTime.setText(getString(R.string.show_isnotalive));
+                        } else {
+                            viewHolder.episodeTime.setText("");
+                        }
+                        viewHolder.episode.setText("");
+                    } else {
+                        viewHolder.episode.setText(fieldValue);
+                        fieldValue = mCursor.getString(ListItemsQuery.SHOW_NEXTAIRDATETEXT);
+                        viewHolder.episodeTime.setText(fieldValue);
+                    }
                     break;
                 case 2:
                     // seasons
-                    itemTitle = Utils.getSeasonString(mContext,
-                            mCursor.getInt(ListItemsQuery.ITEM_TITLE));
+                    viewHolder.network.setText("");
+                    viewHolder.airsTime.setText("");
+                    viewHolder.episode.setText(Utils.getSeasonString(mContext,
+                            mCursor.getInt(ListItemsQuery.ITEM_TITLE)));
+                    viewHolder.episodeTime.setText("");
                     break;
                 case 3:
                     // episodes
-                    itemTitle = mCursor.getString(ListItemsQuery.ITEM_TITLE);
+                    viewHolder.network.setText("");
+                    viewHolder.airsTime.setText("");
+                    viewHolder.episode.setText(mCursor.getString(ListItemsQuery.ITEM_TITLE));
+                    viewHolder.episodeTime.setText("");
                     break;
             }
-            viewHolder.episode.setText(itemTitle);
 
             // poster
             final String imagePath = mCursor.getString(ListItemsQuery.SHOW_POSTER);
@@ -298,7 +321,8 @@ public class ListsFragment extends SherlockFragment implements
         String[] PROJECTION = new String[] {
                 ListItems._ID, ListItems.LIST_ITEM_ID, ListItems.ITEM_REF_ID, ListItems.TYPE,
                 Shows.REF_SHOW_ID, Shows.TITLE, Shows.OVERVIEW, Shows.POSTER, Shows.NETWORK,
-                Shows.AIRSTIME, Shows.AIRSDAYOFWEEK
+                Shows.AIRSTIME, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTTEXT,
+                Shows.NEXTAIRDATETEXT
         };
 
         String SORTING = Shows.TITLE + " COLLATE NOCASE ASC, " + ListItems.TYPE + " ASC";
@@ -322,6 +346,13 @@ public class ListsFragment extends SherlockFragment implements
         int SHOW_AIRSTIME = 9;
 
         int SHOW_AIRSDAY = 10;
+
+        int SHOW_STATUS = 11;
+
+        int SHOW_NEXTTEXT = 12;
+
+        int SHOW_NEXTAIRDATETEXT = 13;
+
     }
 
 }
