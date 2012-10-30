@@ -9,6 +9,8 @@ Version 2.10 *(TBA)*
 --------------------------------
 
 * FEATURE Light theme, can be enabled in advanced settings.
+* FEATURE Episodes are sortable by rating.
+* TWEAK Some love to the list widget, increased font-sizes on Nexus 7-like screens.
 
 ### Detailed changes:
 
