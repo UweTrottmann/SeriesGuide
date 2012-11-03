@@ -35,7 +35,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/recent" />
         </RadioGroup>
-
+
+
+
         <CheckBox
             android:id="@+id/checkBoxUnwatched"
             android:layout_width="wrap_content"
