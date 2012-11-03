@@ -30,6 +30,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -44,12 +45,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class TraktAddFragment extends AddFragment {
-
-    public static final int TRENDING = 0;
-
-    public static final int RECOMMENDED = 1;
-
-    public static final int LIBRARY = 2;
 
     public static TraktAddFragment newInstance(int position) {
         TraktAddFragment f = new TraktAddFragment();
@@ -89,7 +84,8 @@ public class TraktAddFragment extends AddFragment {
             AndroidUtils.executeAsyncTask(new GetTraktShowsTask(getActivity()), type);
         }
 
-        if (type == LIBRARY) {
+        if (type == AddPagerAdapter.LIBRARY_TAB_POSITION
+                || type == AddPagerAdapter.WATCHLIST_TAB_POSITION) {
             setHasOptionsMenu(true);
         }
     }
@@ -139,7 +135,7 @@ public class TraktAddFragment extends AddFragment {
 
             List<TvShow> shows = new ArrayList<TvShow>();
 
-            if (type == TRENDING) {
+            if (type == AddPagerAdapter.TRENDING_TAB_POSITION) {
                 try {
                     shows = Utils.getServiceManager(mContext).showService().trending().fire();
                 } catch (Exception e) {
@@ -150,12 +146,16 @@ public class TraktAddFragment extends AddFragment {
                     ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
 
                     switch (type) {
-                        case RECOMMENDED:
+                        case AddPagerAdapter.RECOMMENDED_TAB_POSITION:
                             shows = manager.recommendationsService().shows().fire();
                             break;
-                        case LIBRARY:
+                        case AddPagerAdapter.LIBRARY_TAB_POSITION:
                             shows = manager.userService()
                                     .libraryShowsAll(Utils.getTraktUsername(mContext)).fire();
+                            break;
+                        case AddPagerAdapter.WATCHLIST_TAB_POSITION:
+                            shows = manager.userService()
+                                    .watchlistShows(Utils.getTraktUsername(mContext)).fire();
                             break;
                     }
                 } catch (Exception e) {
@@ -195,9 +195,9 @@ public class TraktAddFragment extends AddFragment {
      */
     private static void parseTvShowsToSearchResults(List<TvShow> inputList,
             List<SearchResult> outputList, HashSet<String> existingIds) {
-        Iterator<TvShow> trendingit = inputList.iterator();
-        while (trendingit.hasNext()) {
-            TvShow tvShow = (TvShow) trendingit.next();
+        Iterator<TvShow> shows = inputList.iterator();
+        while (shows.hasNext()) {
+            TvShow tvShow = (TvShow) shows.next();
 
             // only list non-existing shows
             if (!existingIds.contains(tvShow.tvdbId)) {

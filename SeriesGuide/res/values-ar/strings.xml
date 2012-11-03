@@ -20,7 +20,7 @@
   <string name="loading">تحميل...</string>
   <string name="done">تم</string>
   <string name="clear">تنظيف</string>
-  <string name="more">% s أكثر</string>
+  <string name="more">%s أكثر</string>
   <string name="cancel">إلغاء الأمر</string>
   <string name="share">شارك</string>
   <string name="offline">خطأ في الاتصال. حاول لاحقاً.</string>
@@ -79,7 +79,7 @@
   <string name="trakt_collected">%s تم جمعها.</string>
   <string name="trakt_notcollected">%s لم يتم جمعها.</string>
   <string name="shows_empty">.لا توجد مسلسلات</string>
-  <string name="confirm_delete">هل تريد حقاً إزالة % s؟</string>
+  <string name="confirm_delete">هل تريد حقاً إزالة %s؟</string>
   <string name="delete_show">إزالة</string>
   <string name="dontdelete_show">لا تقم بالإزالة</string>
   <string name="no_nextepisode">لا توجد حلقة قادمة</string>
@@ -123,7 +123,7 @@
   <string name="season_unaired">لم تُعرض</string>
   <string name="oneotherepisode">حلقة أخرى</string>
   <string name="otherepisodes">الحلقات الأخرى</string>
-  <string name="remaining">% s المتبقية</string>
+  <string name="remaining">%s المتبقية</string>
   <string name="search_button">بحث</string>
   <string name="search_hint_add">إسم المسلسل</string>
   <string name="no_results">.لا نتائج, جرّب كلمات كاملة</string>
