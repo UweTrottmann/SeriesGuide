@@ -23,6 +23,7 @@
   <string name="more">%s gjenstår</string>
   <string name="cancel">Avbryt</string>
   <string name="share">Del</string>
+  <string name="updated">Updated to latest version.</string>
   <string name="offline">Ingen nettverksforbindelse. Prøv på nytt senere.</string>
   <string name="onlyx">Kun tilgjengelig i SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -140,6 +141,7 @@
   <string name="trending">Populære</string>
   <string name="recommended">Anbefalte</string>
   <string name="library">Bibliotek</string>
+  <string name="watchlist">Watchlist</string>
   <string name="powered_by_thetvdb">drevet av thetvdb.com</string>
   <string name="powered_by_trakt">drevet at travkt.tv</string>
   <string name="first_list">Første liste</string>
@@ -284,7 +286,7 @@
     <item>Eldste først</item>
     <item>Usette først</item>
     <item>A - Z</item>
-    <item>Z - A</item>
+    <item>Top rated</item>
     <item>Nyeste først (DVD)</item>
     <item>Eldste først (DVD)</item>
   </string-array>

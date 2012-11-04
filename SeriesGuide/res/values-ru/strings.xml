@@ -23,6 +23,7 @@
   <string name="more">%s больше</string>
   <string name="cancel">Отмена</string>
   <string name="share">Поделиться</string>
+  <string name="updated">Updated to latest version.</string>
   <string name="offline">Нет соединения. Повторите попытку позже.</string>
   <string name="onlyx">Доступно только в SeriesGuide X</string>
   <string name="shouts">Отзывы</string>
@@ -140,6 +141,7 @@
   <string name="trending">Тенденции</string>
   <string name="recommended">Рекомендуемые</string>
   <string name="library">Библиотека</string>
+  <string name="watchlist">Watchlist</string>
   <string name="powered_by_thetvdb">Сделано наhetvdb.com</string>
   <string name="powered_by_trakt">Сделано на trakt.tv</string>
   <string name="first_list">First list</string>
@@ -284,7 +286,7 @@
     <item>Старшие с начала</item>
     <item>Сначала непросмотренные</item>
     <item>A - Z</item>
-    <item>Z - A</item>
+    <item>Top rated</item>
     <item>Сначала последние (DVD)</item>
     <item>Более старые первыми (DVD)</item>
   </string-array>

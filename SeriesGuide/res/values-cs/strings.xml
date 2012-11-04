@@ -23,6 +23,7 @@
   <string name="more">%s další</string>
   <string name="cancel">Zrušit</string>
   <string name="share">Sdílet</string>
+  <string name="updated">Updated to latest version.</string>
   <string name="offline">Bez připojení k síti. Zkuste to později.</string>
   <string name="onlyx">Dostupné pouze ve verzi X</string>
   <string name="shouts">Výkřiky</string>
@@ -140,6 +141,7 @@
   <string name="trending">V kurzu</string>
   <string name="recommended">Doporučené</string>
   <string name="library">Knihovna</string>
+  <string name="watchlist">Watchlist</string>
   <string name="powered_by_thetvdb">ve spolupráci s thetvdb.com</string>
   <string name="powered_by_trakt">ve spolupráci s trakt.tv</string>
   <string name="first_list">První seznam</string>
@@ -284,7 +286,7 @@
     <item>Od nejstarších</item>
     <item>Od nezhlédnutých</item>
     <item>A - Z</item>
-    <item>Z - A</item>
+    <item>Top rated</item>
     <item>Od nejnovějších (DVD)</item>
     <item>Od nejstarších (DVD)</item>
   </string-array>

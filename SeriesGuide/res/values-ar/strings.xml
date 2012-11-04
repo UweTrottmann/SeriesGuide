@@ -23,6 +23,7 @@
   <string name="more">%s أكثر</string>
   <string name="cancel">إلغاء الأمر</string>
   <string name="share">شارك</string>
+  <string name="updated">Updated to latest version.</string>
   <string name="offline">خطأ في الاتصال. حاول لاحقاً.</string>
   <string name="onlyx">متوفر فقط في سيريزغايد اكس</string>
   <string name="shouts">Shouts</string>
@@ -140,6 +141,7 @@
   <string name="trending">الأكثر إقبال</string>
   <string name="recommended">يُنصح به</string>
   <string name="library">المكتبة</string>
+  <string name="watchlist">Watchlist</string>
   <string name="powered_by_thetvdb">Thetvdb.com مدعوم من</string>
   <string name="powered_by_trakt">trakt.tv مدعوم بواسطة</string>
   <string name="first_list">First list</string>
@@ -284,7 +286,7 @@
     <item>الأقدم أولاً</item>
     <item>غير المُشاهدة أولاً</item>
     <item>A-Z</item>
-    <item>Z-A</item>
+    <item>Top rated</item>
     <item>الأحدث أولاً-دي في دي</item>
     <item>الأقدم أولاً-دي في دي</item>
   </string-array>

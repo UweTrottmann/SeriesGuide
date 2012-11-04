@@ -23,6 +23,7 @@
   <string name="more">%s more</string>
   <string name="cancel">Cancel</string>
   <string name="share">Share</string>
+  <string name="updated">Updated to latest version.</string>
   <string name="offline">Nėra tinklo ryšio. Pabandykite vėliau.</string>
   <string name="onlyx">Prieinama tik SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -140,6 +141,7 @@
   <string name="trending">Populiarūs</string>
   <string name="recommended">Rekomenduojami</string>
   <string name="library">Biblioteka</string>
+  <string name="watchlist">Watchlist</string>
   <string name="powered_by_thetvdb">powered by thetvdb.com</string>
   <string name="powered_by_trakt">powered by trakt.tv</string>
   <string name="first_list">First list</string>
@@ -284,7 +286,7 @@
     <item>Oldest first</item>
     <item>Unwatched first</item>
     <item>A–Z</item>
-    <item>Z–A</item>
+    <item>Top rated</item>
     <item>Latest first (DVD)</item>
     <item>Oldest first (DVD)</item>
   </string-array>

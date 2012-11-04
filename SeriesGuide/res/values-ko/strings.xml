@@ -23,6 +23,7 @@
   <string name="more">%s개의 에피소드 정보 더 있음</string>
   <string name="cancel">취소</string>
   <string name="share">공유</string>
+  <string name="updated">Updated to latest version.</string>
   <string name="offline">네트워크에 연결에 실패하였습니다. 나중에 다시 시도해주세요.</string>
   <string name="onlyx">시리즈가이드 X 에서만 사용가능</string>
   <string name="shouts">감상평</string>
@@ -140,6 +141,7 @@
   <string name="trending">트렌드</string>
   <string name="recommended">추천</string>
   <string name="library">라이브러리</string>
+  <string name="watchlist">Watchlist</string>
   <string name="powered_by_thetvdb">thetvdb.com 제공</string>
   <string name="powered_by_trakt">trakt.tv 제공</string>
   <string name="first_list">First list</string>
@@ -284,7 +286,7 @@
     <item>오래된 것부터</item>
     <item>안본 것부터</item>
     <item>A - Z</item>
-    <item>Z - A</item>
+    <item>Top rated</item>
     <item>최근 방영 순 (DVD)</item>
     <item>예전 방영 순 (DVD)</item>
   </string-array>
