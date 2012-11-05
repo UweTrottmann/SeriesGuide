@@ -3,28 +3,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <GridView
-        android:id="@android:id/list"
+    <FrameLayout
+        android:id="@+id/contentContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="@bool/gridClipToPadding"
-        android:columnWidth="@dimen/showgrid_columnWidth"
-        android:fastScrollEnabled="true"
-        android:gravity="center"
-        android:horizontalSpacing="@dimen/showgrid_spacing"
-        android:listSelector="?custom_list_selector"
-        android:numColumns="auto_fit"
-        android:padding="@dimen/showgrid_padding"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="@dimen/showgrid_spacing" >
-    </GridView>
+        android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@android:id/empty"
+        <GridView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="@bool/gridClipToPadding"
+            android:columnWidth="@dimen/showgrid_columnWidth"
+            android:fastScrollEnabled="true"
+            android:gravity="center"
+            android:horizontalSpacing="@dimen/showgrid_spacing"
+            android:listSelector="?custom_list_selector"
+            android:numColumns="auto_fit"
+            android:padding="@dimen/showgrid_padding"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="@dimen/showgrid_spacing" >
+        </GridView>
+
+        <TextView
+            android:id="@android:id/empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/shows_empty" />
+    </FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/progressIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/shows_empty" />
+        android:layout_gravity="center" />
 
     <TextView
         android:id="@+id/poweredby"

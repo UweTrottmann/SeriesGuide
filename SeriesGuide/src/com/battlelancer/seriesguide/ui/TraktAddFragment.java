@@ -46,6 +46,10 @@ import java.util.List;
 
 public class TraktAddFragment extends AddFragment {
 
+    private View mContentContainer;
+
+    private View mProgressIndicator;
+
     public static TraktAddFragment newInstance(int position) {
         TraktAddFragment f = new TraktAddFragment();
 
@@ -75,13 +79,21 @@ public class TraktAddFragment extends AddFragment {
 
         int type = getListType();
 
+        mContentContainer = getView().findViewById(R.id.contentContainer);
+        mProgressIndicator = getView().findViewById(R.id.progressIndicator);
+
         // only create and fill a new adapter if there is no previous one
         // (e.g. after config/page changed)
         if (mAdapter == null) {
+            mContentContainer.setVisibility(View.GONE);
+            mProgressIndicator.setVisibility(View.VISIBLE);
             mAdapter = new AddAdapter(getActivity(), R.layout.add_searchresult,
                     new ArrayList<SearchResult>(), mAddButtonListener, mDetailsButtonListener);
 
             AndroidUtils.executeAsyncTask(new GetTraktShowsTask(getActivity()), type);
+        } else {
+            mContentContainer.setVisibility(View.VISIBLE);
+            mProgressIndicator.setVisibility(View.GONE);
         }
 
         if (type == AddPagerAdapter.LIBRARY_TAB_POSITION
@@ -182,6 +194,10 @@ public class TraktAddFragment extends AddFragment {
         @Override
         protected void onPostExecute(List<SearchResult> result) {
             setSearchResults(result);
+            if (isAdded()) {
+                mProgressIndicator.setVisibility(View.GONE);
+                mContentContainer.setVisibility(View.VISIBLE);
+            }
         }
     }
 
