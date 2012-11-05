@@ -23,6 +23,7 @@
   <string name="more">%s mehr</string>
   <string name="cancel">Abbrechen</string>
   <string name="share">Empfehlen</string>
+  <string name="updated">Auf neueste Version aktualisiert.</string>
   <string name="offline">Keine Netzwerkverbindung. Versuchen Sie es später erneut.</string>
   <string name="onlyx">Nur verfügbar in SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -70,8 +71,8 @@
   <string name="mark_all">Alle gesehen</string>
   <string name="unmark_all">Keine gesehen</string>
   <string name="mark_untilhere">Alle bisher gesendeten gesehen</string>
-  <string name="collect">Gesammelte Folge</string>
-  <string name="uncollect">Noch nicht gesammelte Folge</string>
+  <string name="collect">Folge gesammelt</string>
+  <string name="uncollect">Folge noch nicht gesammelt</string>
   <string name="trakt_submitfailed">Nicht an trakt übermittelt. Versuchen Sie es später erneut.</string>
   <string name="trakt_submitsuccess">An trakt übermittelt.</string>
   <string name="trakt_seen">%s gesehen.</string>
@@ -140,6 +141,7 @@
   <string name="trending">Beliebt</string>
   <string name="recommended">Empfehlungen</string>
   <string name="library">Bibliothek</string>
+  <string name="watchlist">Watchlist</string>
   <string name="powered_by_thetvdb">ein Dienst von thetvdb.com</string>
   <string name="powered_by_trakt">ein Dienst von trakt.tv</string>
   <string name="first_list">Erste Liste</string>
@@ -284,7 +286,7 @@
     <item>Älteste zuerst</item>
     <item>Ungesehene zuerst</item>
     <item>A - Z</item>
-    <item>Z - A</item>
+    <item>Top bewertet</item>
     <item>Aktuellste zuerst (DVD)</item>
     <item>Älteste zuerst (DVD)</item>
   </string-array>

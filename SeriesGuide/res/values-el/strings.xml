@@ -23,6 +23,7 @@
   <string name="more">%s περισσότερο</string>
   <string name="cancel">Άκυρο</string>
   <string name="share">Κοινή χρήση</string>
+  <string name="updated">Updated to latest version.</string>
   <string name="offline">Χωρίς σύνδεση δικτύου. Δοκιμάστε αργότερα.</string>
   <string name="onlyx">Διαθέσιμο μόνο στο SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -140,6 +141,7 @@
   <string name="trending">Τάσεις</string>
   <string name="recommended">Προτεινόμενα</string>
   <string name="library">Βιβλιοθήκη</string>
+  <string name="watchlist">Watchlist</string>
   <string name="powered_by_thetvdb">Powered by thetvdb.com</string>
   <string name="powered_by_trakt">powered by trakt.tv</string>
   <string name="first_list">First list</string>
@@ -284,7 +286,7 @@
     <item>Το παλαιότερο πρώτα</item>
     <item>Αυτά που δεν έχουν παρακολουθηθεί, πρώτα</item>
     <item>Α - Ω</item>
-    <item>Ω - A</item>
+    <item>Top rated</item>
     <item>Το πιο πρόσφατο, πρώτο (DVD)</item>
     <item>Το παλαιότερο πρώτα (DVD)</item>
   </string-array>

@@ -23,6 +23,7 @@
   <string name="more">%s viac</string>
   <string name="cancel">Zrušiť</string>
   <string name="share">Zdieľať</string>
+  <string name="updated">Updated to latest version.</string>
   <string name="offline">Žiadne sieťové pripojenie. Skúste to neskôr.</string>
   <string name="onlyx">K dispozícii len v SeriesGuide X</string>
   <string name="shouts">Výkriky</string>
@@ -140,6 +141,7 @@
   <string name="trending">V kurze</string>
   <string name="recommended">Odporúčané</string>
   <string name="library">Knižnica</string>
+  <string name="watchlist">Watchlist</string>
   <string name="powered_by_thetvdb">v spolupráci s thetvdb.com</string>
   <string name="powered_by_trakt">v spolupráci s trakt.tv</string>
   <string name="first_list">First list</string>
@@ -284,7 +286,7 @@
     <item>Od najstarších</item>
     <item>Od nezhliadnutých</item>
     <item>A - Z</item>
-    <item>Z - A</item>
+    <item>Top rated</item>
     <item>Od najnovších (DVD)</item>
     <item>Od najstarších (DVD)</item>
   </string-array>

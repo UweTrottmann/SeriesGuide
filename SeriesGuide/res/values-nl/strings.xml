@@ -23,6 +23,7 @@
   <string name="more">%s meer</string>
   <string name="cancel">Annuleren</string>
   <string name="share">Delen</string>
+  <string name="updated">Updated to latest version.</string>
   <string name="offline">Geen netwerk verbinding. Probeer het later opnieuw.</string>
   <string name="onlyx">Alleen beschikbaar in Series Guide X</string>
   <string name="shouts">Shouts</string>
@@ -140,6 +141,7 @@
   <string name="trending">Trending</string>
   <string name="recommended">Aanbevolen</string>
   <string name="library">Bibliotheek</string>
+  <string name="watchlist">Watchlist</string>
   <string name="powered_by_thetvdb">mede mogelijk gemaakt door thetvdb.com</string>
   <string name="powered_by_trakt">aangestuurd door trakt.tv</string>
   <string name="first_list">First list</string>
@@ -284,7 +286,7 @@
     <item>Oudste eerst</item>
     <item>Onbekeken eerst</item>
     <item>A - Z</item>
-    <item>Z - A</item>
+    <item>Top rated</item>
     <item>Nieuwste eerst (DVD)</item>
     <item>Oudste eerst (DVD)</item>
   </string-array>

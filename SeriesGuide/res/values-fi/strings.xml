@@ -23,6 +23,7 @@
   <string name="more">%s lisää</string>
   <string name="cancel">Peruuta</string>
   <string name="share">Jaa</string>
+  <string name="updated">Päivitetty viimeisimpään versioon.</string>
   <string name="offline">Ei verkkoyhteyttä. Yritä myöhemmin uudelleen.</string>
   <string name="onlyx">Saatavilla vain SeriesGuide X:ssä</string>
   <string name="shouts">Huudahdukset</string>
@@ -104,7 +105,7 @@
   <string name="update_single">Päivitetään ohjelmaa…</string>
   <string name="update_delta">Päivitetään vanhentuneita ohjelmia…</string>
   <string name="update_full">Päivitetään kaikkia ohjelmia…</string>
-  <string name="update_success">Näyttää päivitetyt.</string>
+  <string name="update_success">Ohjelmat päivitetty.</string>
   <string name="update_offline">Päivitys epäonnistui, tarkista internet/Wi-Fi-yhteytesi.</string>
   <string name="update_saxerror">Päivitys epäonnistui, yritä myöhemmin uudelleen.</string>
   <string name="update_inprogress">Päivitys on käynnissä, yritä myöhemmin uudelleen.</string>
@@ -140,9 +141,10 @@
   <string name="trending">Trendit</string>
   <string name="recommended">Suositellut</string>
   <string name="library">Kokoelma</string>
+  <string name="watchlist">Seurantalista</string>
   <string name="powered_by_thetvdb">Pohjautuu thetvdb.com:iin</string>
   <string name="powered_by_trakt">Pohjautuu trakt.tv:hen</string>
-  <string name="first_list">First list</string>
+  <string name="first_list">Ensimmäinen lista</string>
   <string name="list_add">Lisää lista</string>
   <string name="list_title_hint">Nimeä listasi</string>
   <string name="list_remove">Poista lista</string>
@@ -284,7 +286,7 @@
     <item>Vanhin ensin</item>
     <item>Katsomattomat ensin</item>
     <item>A - Ö</item>
-    <item>Ö - A</item>
+    <item>Suosituimmat</item>
     <item>Uusimmat ensin (DVD)</item>
     <item>Vanhin ensin (DVD)</item>
   </string-array>

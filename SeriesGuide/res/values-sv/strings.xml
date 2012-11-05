@@ -23,6 +23,7 @@
   <string name="more">%s fler</string>
   <string name="cancel">Avbryt</string>
   <string name="share">Dela</string>
+  <string name="updated">Updated to latest version.</string>
   <string name="offline">Ingen nätanslutning. Försök igen senare.</string>
   <string name="onlyx">Endast tillgänglig i SeriesGuide X</string>
   <string name="shouts">Rop</string>
@@ -140,6 +141,7 @@
   <string name="trending">Trendiga</string>
   <string name="recommended">Rekommenderade</string>
   <string name="library">Bibliotek</string>
+  <string name="watchlist">Watchlist</string>
   <string name="powered_by_thetvdb">möjliggörs av thetvdb.com</string>
   <string name="powered_by_trakt">möjliggörs av trakt.tv</string>
   <string name="first_list">First list</string>
@@ -284,7 +286,7 @@
     <item>Äldsta först</item>
     <item>Ej sedda först</item>
     <item>A – Ö</item>
-    <item>Ö – A</item>
+    <item>Top rated</item>
     <item>Senaste först (DVD)</item>
     <item>Äldsta först (DVD)</item>
   </string-array>

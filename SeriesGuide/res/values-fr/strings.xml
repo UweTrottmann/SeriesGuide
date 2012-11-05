@@ -23,6 +23,7 @@
   <string name="more">%s en plus</string>
   <string name="cancel">Annuler</string>
   <string name="share">Partager</string>
+  <string name="updated">Mis à jour avec la version la plus récente.</string>
   <string name="offline">Pas de connexion. Réessayez plus tard.</string>
   <string name="onlyx">Disponible seulement dans SeriesGuide X</string>
   <string name="shouts">Commentaires</string>
@@ -140,6 +141,7 @@
   <string name="trending">Tendances</string>
   <string name="recommended">Recommandé</string>
   <string name="library">Bibliothèque</string>
+  <string name="watchlist">Liste de suivi</string>
   <string name="powered_by_thetvdb">fourni par thetvdb.com</string>
   <string name="powered_by_trakt">fourni par trakt.tv</string>
   <string name="first_list">Première liste</string>
@@ -284,7 +286,7 @@
     <item>Plus anciens en premier</item>
     <item>Jamais vu en premier</item>
     <item>A - Z</item>
-    <item>Z - A</item>
+    <item>Les mieux notés</item>
     <item>Plus récents en premier (DVD)</item>
     <item>Plus ancien en premier (DVD)</item>
   </string-array>

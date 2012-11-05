@@ -23,6 +23,7 @@
   <string name="more">%s more</string>
   <string name="cancel">Odustani</string>
   <string name="share">Dijeli</string>
+  <string name="updated">Updated to latest version.</string>
   <string name="offline">No network connectivity. Try again later.</string>
   <string name="onlyx">Dostupno samo u SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -140,6 +141,7 @@
   <string name="trending">Popularno</string>
   <string name="recommended">Preporučeno</string>
   <string name="library">Biblioteka</string>
+  <string name="watchlist">Watchlist</string>
   <string name="powered_by_thetvdb">powered by thetvdb.com</string>
   <string name="powered_by_trakt">powered by trakt.tv</string>
   <string name="first_list">First list</string>
@@ -284,7 +286,7 @@
     <item>Najstariji prvi</item>
     <item>Nepogledane prve</item>
     <item>A - Z</item>
-    <item>Z - A</item>
+    <item>Top rated</item>
     <item>Posljednji prvi(DVD)</item>
     <item>Najstariji prvi (DVD)</item>
   </string-array>
