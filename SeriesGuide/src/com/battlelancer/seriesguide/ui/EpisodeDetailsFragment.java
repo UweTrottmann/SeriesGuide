@@ -62,6 +62,7 @@ import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -365,7 +366,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     onToggleWatched();
                 }
             });
-            AndroidUtils.setInfoToast(context, seenButton, mWatched ? R.string.unmark_episode
+            CheatSheet.setup(seenButton, mWatched ? R.string.unmark_episode
                     : R.string.mark_episode);
 
             // Collected button
@@ -380,7 +381,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     onToggleCollected();
                 }
             });
-            AndroidUtils.setInfoToast(context, collectedButton, mCollected ? R.string.uncollect
+            CheatSheet.setup(collectedButton, mCollected ? R.string.uncollect
                     : R.string.collect);
 
             // Calendar button
@@ -395,7 +396,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                                     episodeString, airTime, runtime);
                         }
                     });
-            AndroidUtils.setInfoToast(context, calendarButton, R.string.addtocalendar);
+            CheatSheet.setup(calendarButton);
 
             // TVDb rating
             RelativeLayout rating = (RelativeLayout) view.findViewById(R.id.ratingbar);
