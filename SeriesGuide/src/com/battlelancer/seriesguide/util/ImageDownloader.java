@@ -23,13 +23,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.AsyncTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -120,8 +120,13 @@ public class ImageDownloader {
             BitmapDownloaderTask task = new BitmapDownloaderTask(imageView, isDiskCaching);
             DownloadedDrawable downloadedDrawable = new DownloadedDrawable(task);
             imageView.setImageDrawable(downloadedDrawable);
-            // always execute on thread pool (4.0+)
-            AndroidUtils.executeAsyncTask(task, url);
+
+            /*
+             * NOTE: This uses a custom version of AsyncTask that has been
+             * pulled from the framework and slightly modified. Refer to the
+             * docs at the top of the class for more info on what was changed.
+             */
+            task.executeOnExecutor(AsyncTask.DUAL_THREAD_EXECUTOR, url);
         }
     }
 
@@ -287,7 +292,7 @@ public class ImageDownloader {
                     return bitmap;
                 }
             }
-            
+
             if (isCancelled()) {
                 return null;
             }
