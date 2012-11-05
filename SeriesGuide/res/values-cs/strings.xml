@@ -23,7 +23,7 @@
   <string name="more">%s další</string>
   <string name="cancel">Zrušit</string>
   <string name="share">Sdílet</string>
-  <string name="updated">Updated to latest version.</string>
+  <string name="updated">Aktualizováno na nejnovější verzi.</string>
   <string name="offline">Bez připojení k síti. Zkuste to později.</string>
   <string name="onlyx">Dostupné pouze ve verzi X</string>
   <string name="shouts">Výkřiky</string>
@@ -69,7 +69,7 @@
   <string name="mark_episode">Zhlédnutý díl</string>
   <string name="unmark_episode">Zatím nezhlédnutý díl</string>
   <string name="mark_all">Zhlédnuty všechny</string>
-  <string name="unmark_all">Žádný nezhlédnutý</string>
+  <string name="unmark_all">Žádný zhlédnutý</string>
   <string name="mark_untilhere">Zhlédnuto až sem</string>
   <string name="collect">Sebraný díl</string>
   <string name="uncollect">Prozatím nesebraný díl</string>
@@ -141,7 +141,7 @@
   <string name="trending">V kurzu</string>
   <string name="recommended">Doporučené</string>
   <string name="library">Knihovna</string>
-  <string name="watchlist">Watchlist</string>
+  <string name="watchlist">Seznam sledovaných</string>
   <string name="powered_by_thetvdb">ve spolupráci s thetvdb.com</string>
   <string name="powered_by_trakt">ve spolupráci s trakt.tv</string>
   <string name="first_list">První seznam</string>
@@ -214,7 +214,7 @@
   <string name="import_no">Neobnovovat</string>
   <string name="checkin">Ohlásit se</string>
   <string name="checkin_searchhint">Napište název pořadu</string>
-  <string name="checkin_empty">Žádné odpovídající série</string>
+  <string name="checkin_empty">Žádné odpovídající pořady</string>
   <string name="checkin_hint">Napište postřeh (nepovinné)</string>
   <string name="paste_episode">Vložte díl</string>
   <string name="checkinsuccess">Ohlášeno do %s na GetGlue.</string>
@@ -286,7 +286,7 @@
     <item>Od nejstarších</item>
     <item>Od nezhlédnutých</item>
     <item>A - Z</item>
-    <item>Top rated</item>
+    <item>Nejlépe hodnocené</item>
     <item>Od nejnovějších (DVD)</item>
     <item>Od nejstarších (DVD)</item>
   </string-array>
