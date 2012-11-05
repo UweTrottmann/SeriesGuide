@@ -585,12 +585,12 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                     scheduleAllShowsUpdate();
                 }
 
+                // display extensive change dialog on beta channel
                 if (getPackageName().contains("beta")) {
-                    // BETA info dialog
                     ChangesDialogFragment.show(getSupportFragmentManager());
+                } else {
+                    Toast.makeText(this, R.string.updated, Toast.LENGTH_LONG).show();
                 }
-                
-                Toast.makeText(this, R.string.updated, Toast.LENGTH_LONG).show();
 
                 // set this as lastVersion
                 editor.putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion);
