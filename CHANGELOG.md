@@ -5,12 +5,24 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 2.10 *(TBA)*
+Version 2.10 *(2012-11-05)*
 --------------------------------
 
 * FEATURE Light theme, can be enabled in advanced settings.
+* FEATURE trakt watchlist in add screen.
+* FEATURE Episodes are sortable by rating.
+* TWEAK Some love to the list widget, increased font-sizes on Nexus 7-like screens.
+* NOTE Latest translations from crowdin.
 
 ### Detailed changes:
+
+#### 2.10.3beta (2012-11-05)
+
+* FEATURE trakt watchlist in add screen.
+* TWEAK Display empty message instead of progress indicator in add screens.
+* FIX Broken placeholders in Arabic strings.
+* FIX Fast scrolling in add screen crashed the app.
+* NOTE Latest translations from crowdin.
 
 #### 2.10.2beta (2012-10-16)
 
