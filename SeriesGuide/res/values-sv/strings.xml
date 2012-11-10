@@ -23,7 +23,7 @@
   <string name="more">%s fler</string>
   <string name="cancel">Avbryt</string>
   <string name="share">Dela</string>
-  <string name="updated">Updated to latest version.</string>
+  <string name="updated">Uppdaterad till senaste versionen</string>
   <string name="offline">Ingen nätanslutning. Försök igen senare.</string>
   <string name="onlyx">Endast tillgänglig i SeriesGuide X</string>
   <string name="shouts">Rop</string>
@@ -130,7 +130,7 @@
   <string name="no_results">Inga resultat, försök med hela ord.</string>
   <string name="search_error">Sökningen misslyckades, försök igen senare.</string>
   <string name="add_show">Lägg till serie</string>
-  <string name="add_all">Add all</string>
+  <string name="add_all">Lägg till alla</string>
   <string name="dont_add_show">Lägg inte till</string>
   <string name="add_multiple">All shows will appear in your show list shortly.</string>
   <string name="add_started">kommer snart att visas i din serielista.</string>
@@ -286,7 +286,7 @@
     <item>Äldsta först</item>
     <item>Ej sedda först</item>
     <item>A – Ö</item>
-    <item>Top rated</item>
+    <item>Högst rankad</item>
     <item>Senaste först (DVD)</item>
     <item>Äldsta först (DVD)</item>
   </string-array>

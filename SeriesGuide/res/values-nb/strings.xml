@@ -23,7 +23,7 @@
   <string name="more">%s gjenstår</string>
   <string name="cancel">Avbryt</string>
   <string name="share">Del</string>
-  <string name="updated">Updated to latest version.</string>
+  <string name="updated">Oppdatert til nyeste versjon.</string>
   <string name="offline">Ingen nettverksforbindelse. Prøv på nytt senere.</string>
   <string name="onlyx">Kun tilgjengelig i SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -71,14 +71,14 @@
   <string name="mark_all">Sett alle</string>
   <string name="unmark_all">Ingen sett</string>
   <string name="mark_untilhere">Sett alle tidligere vist</string>
-  <string name="collect">Collected episode</string>
-  <string name="uncollect">Not yet collected episode</string>
+  <string name="collect">Anskaffet episode</string>
+  <string name="uncollect">Ikke enda anskaffet episode</string>
   <string name="trakt_submitfailed">Ikke sendt til trakt. Prøv på nytt senere.</string>
   <string name="trakt_submitsuccess">Sendt til trakt.</string>
   <string name="trakt_seen">%s sett.</string>
   <string name="trakt_notseen">%s ikke sett.</string>
-  <string name="trakt_collected">%s collected.</string>
-  <string name="trakt_notcollected">%s not collected.</string>
+  <string name="trakt_collected">%s anskaffet.</string>
+  <string name="trakt_notcollected">%s ikke anskaffet.</string>
   <string name="shows_empty">Inger serier her.</string>
   <string name="confirm_delete">Vil du virkelig fjerne %s?</string>
   <string name="delete_show">Fjern</string>
@@ -286,7 +286,7 @@
     <item>Eldste først</item>
     <item>Usette først</item>
     <item>A - Z</item>
-    <item>Top rated</item>
+    <item>Høyest rangerte først</item>
     <item>Nyeste først (DVD)</item>
     <item>Eldste først (DVD)</item>
   </string-array>

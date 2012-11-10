@@ -5,6 +5,13 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 2.10.1 and 2.10.4beta *(2012-11-10)*
+--------------------------------
+
+* TWEAK Add high resolution launcher icon for upcoming Nexus devices.
+* NOTE Latest translations from crowdin.
+* NOTE Fixed Google Analytics.
+
 Version 2.10 *(2012-11-05)*
 --------------------------------
 
