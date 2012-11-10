@@ -23,7 +23,7 @@
   <string name="more">%s daha fazla</string>
   <string name="cancel">Vazgeç</string>
   <string name="share">Paylaş</string>
-  <string name="updated">Updated to latest version.</string>
+  <string name="updated">En son sürüme güncellendi.</string>
   <string name="offline">Ağ bağlantısı yok. Daha sonra tekrar deneyin.</string>
   <string name="onlyx">Yalnızca SeriesGuide X için mevcut</string>
   <string name="shouts">Notlar</string>
@@ -141,7 +141,7 @@
   <string name="trending">Öne Çıkanlar</string>
   <string name="recommended">Önerilen</string>
   <string name="library">Kitaplık</string>
-  <string name="watchlist">Watchlist</string>
+  <string name="watchlist">İzleme listesi</string>
   <string name="powered_by_thetvdb">thetvdb.com tarafından desteklenmektedir</string>
   <string name="powered_by_trakt">trakt.tv tarafından desteklenmektedir</string>
   <string name="first_list">İlk liste</string>
@@ -286,7 +286,7 @@
     <item>Önce en eskisi</item>
     <item>Önce izlenmeyen</item>
     <item>A - Z</item>
-    <item>Top rated</item>
+    <item>En çok oy alanlar</item>
     <item>Önce en yenisi (DVD)</item>
     <item>Önce en eskisi (DVD)</item>
   </string-array>

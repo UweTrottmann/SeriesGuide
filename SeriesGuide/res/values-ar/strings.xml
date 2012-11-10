@@ -23,15 +23,15 @@
   <string name="more">%s أكثر</string>
   <string name="cancel">إلغاء الأمر</string>
   <string name="share">شارك</string>
-  <string name="updated">Updated to latest version.</string>
+  <string name="updated">تحديث إلى الإصدار الأحدث.</string>
   <string name="offline">خطأ في الاتصال. حاول لاحقاً.</string>
   <string name="onlyx">متوفر فقط في سيريزغايد اكس</string>
-  <string name="shouts">Shouts</string>
-  <string name="shout_hint">Type a shout (in English)</string>
-  <string name="shout">Shout!</string>
-  <string name="isspoiler">Spoiler alert!</string>
-  <string name="no_shouts">Be the first to shout!</string>
-  <string name="shouts_for">Shouts for %s</string>
+  <string name="shouts">التعليقات</string>
+  <string name="shout_hint">أكتب تعليق(بالإنجليزي)</string>
+  <string name="shout">تعليق</string>
+  <string name="isspoiler">تنبيه</string>
+  <string name="no_shouts">أكتب أول تعليق</string>
+  <string name="shouts_for">تعليقات لـ % s</string>
   <string name="autorefresh">تحديث تلقائي</string>
   <string name="love">!أعجبني</string>
   <string name="hate">):لم يعجبني</string>
@@ -51,7 +51,7 @@
   <string name="show_runtime">وقت التشغيل</string>
   <string name="show_contentrating">تقييم المحتوى</string>
   <string name="episode_directors">الإدارة</string>
-  <string name="episode_gueststars">ضيف النجوم</string>
+  <string name="episode_gueststars">ضيف الحلقة</string>
   <string name="episode_writers">الكتاب</string>
   <string name="show_airtimeunit">دقيقة</string>
   <string name="show_isalive">مستمر</string>
@@ -110,7 +110,7 @@
   <string name="update_saxerror">.فشل التحديث، حاول مرة أخرى لاحقاً</string>
   <string name="update_inprogress">التحديث قيد التقدم, حاول مرة أخرى.</string>
   <string name="update_rebuildsearch">تحديث البحث عن الحلقات...</string>
-  <string name="update_traktactivity">Loading trakt activity…</string>
+  <string name="update_traktactivity">تحميل أنشطة التراكت...</string>
   <string name="menu_updateart">تحميل الأغلفة</string>
   <string name="arttask_incomplete">.بعض الأغلفة لم تُحمّل, حاول مرة اخرى لاحقاً</string>
   <string name="arttask_start">تحميل الملصقات...</string>
@@ -130,9 +130,9 @@
   <string name="no_results">.لا نتائج, جرّب كلمات كاملة</string>
   <string name="search_error">.البحث فشل، حاول مرة أخرى لاحقاً</string>
   <string name="add_show">إضافة مسلسل</string>
-  <string name="add_all">Add all</string>
+  <string name="add_all">إضافة الكل </string>
   <string name="dont_add_show">لا تقم بالإضافة</string>
-  <string name="add_multiple">All shows will appear in your show list shortly.</string>
+  <string name="add_multiple">كافة البرامج سوف تظهر في قائمة برامجك قريبا</string>
   <string name="add_started">.سيظهر في قائمة مسلسلاتك قريباً</string>
   <string name="add_success">.تمت الإضافة بنجاح</string>
   <string name="add_error_begin">"/تعذرت الإضافة</string>
@@ -141,10 +141,10 @@
   <string name="trending">الأكثر إقبال</string>
   <string name="recommended">يُنصح به</string>
   <string name="library">المكتبة</string>
-  <string name="watchlist">Watchlist</string>
+  <string name="watchlist">قائمة المشاهدة</string>
   <string name="powered_by_thetvdb">Thetvdb.com مدعوم من</string>
   <string name="powered_by_trakt">trakt.tv مدعوم بواسطة</string>
-  <string name="first_list">First list</string>
+  <string name="first_list">القائمة الأولى</string>
   <string name="list_add">إضافة قائمة</string>
   <string name="list_title_hint">اسم القائمة الخاصة بك</string>
   <string name="list_remove">إزالة قائمة</string>
@@ -170,12 +170,12 @@
   <string name="pref_language">لغة المحتوى</string>
   <string name="pref_number">تنسيق الأرقام</string>
   <string name="pref_offset">تغيير التوقيت يدوياً</string>
-  <string name="pref_offsetsummary">Offset air times by %s hours</string>
+  <string name="pref_offsetsummary">بدأت أوقات العرض من الساعة٪ S</string>
   <string name="pref_autoupdate">تشغيل التحديث التلقائي</string>
   <string name="pref_autoupdatesummary">حدّث المسلسلات دورياً عند بدء البرنامج</string>
   <string name="pref_updatewifionly">التحديث عبر واي فاي فقط</string>
   <string name="about">SeriesGuide حول</string>
-  <string name="pref_credits">Credits</string>
+  <string name="pref_credits">الاعتمادات</string>
   <string name="clearGetGlueCredentials">GetGlue قطع إتصال</string>
   <string name="clearGetGlueCredentialssummary">تحقق مع جيتجلوي من إعادة الاتصال</string>
   <string name="pref_trakt">trakt.tv بيانات</string>
@@ -189,7 +189,7 @@
   <string name="pref_ganalytics">تحليلات قوقل</string>
   <string name="pref_ganalyticssummary">تعقب استخدام المميزات للمساعدة في تحسين البرنامج</string>
   <string name="sendusagedata">إرسال إحصائيات الاستخدام المطور</string>
-  <string name="pref_upcominglimit">Upcoming shows within…</string>
+  <string name="pref_upcominglimit">العروض القادمة خلال ...</string>
   <string name="backup_description"><b>النسخ الاحتياطي</b> بإنشاء نسخة من قاعدة البيانات الخاصة بك وتظهر في ملف يسمى <b>سيريسداتاباسي</b> في below.\n\nTo مجلد <b>استعادة</b> التأكد من هذا الملف موجود في مجلد النسخ الاحتياطية below.\n\nOnly مع نفسه أو يمكن استعادة قاعدة بيانات إصدار أدنى أدناه.</string>
   <string name="backup_path"><b>مجلد النسخة الاحتياطية</b></string>
   <string name="backup_version"><b>إصدار قاعدة بيانات</b></string>
@@ -209,21 +209,21 @@
   <string name="backup_question">سوف يتم الكتابة فوق الملف النسخ الاحتياطي الحالية في مجلد النسخ الاحتياطي!</string>
   <string name="backup_yes">نسخ احتياطي</string>
   <string name="backup_no">لا تقم بالنسخ الإحتياطي</string>
-  <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
+  <string name="import_question">سيتم فقدان قائمة المعرض الحالي! تأكد من أن ملف النسخة الاحتياطية داخل مجلد النسخ الاحتياطي.</string>
   <string name="import_yes">استعادة</string>
   <string name="import_no">لا تقم بالإستعادة</string>
-  <string name="checkin">Check in</string>
+  <string name="checkin">إدخال</string>
   <string name="checkin_searchhint">اكتب اسم عرض</string>
   <string name="checkin_empty">لا تظهر مطابقة</string>
   <string name="checkin_hint">اكتب رسالة (اختياري)</string>
   <string name="paste_episode">لصق الحلقة</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
-  <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
+  <string name="checkinfailed">GetGlue تسجيل الدخول فشل. حاول قطع الاتصال بـ GetGlue.</string>
+  <string name="getglue_authfailed">فشل GetGlue المصادقة. حاول مرة أخرى في وقت لاحق.</string>
   <string name="menu_rate_trakt">(قيّم (موقع تراكت</string>
   <string name="menu_share_others">عبر تطبيقات أخرى</string>
   <string name="traktcheckin_cancel">تجاهل</string>
-  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous checkin or wait %s and try again.</string>
+  <string name="traktcheckin_inprogress">يتم التحقق مسبقا في حلقة أخرى أو الفيلم. تخطي إما الإيداع السابق أو انتظر s٪ وحاول مرة أخرى.</string>
   <string name="traktcheckin_wait">سأنتظر</string>
   <string name="oauthmessage">Authenticating SeriesGuide with GetGlue…</string>
   <string name="addtocalendar">إضافة إلى التقويم</string>
@@ -241,12 +241,12 @@
   <string name="trakt_experimental">Only shows in your SeriesGuide show list are synced. \'Sync to SeriesGuide\' fetches watched flags from trakt. \'Sync to trakt\' sends watched flags to trakt.</string>
   <string name="trakt_synctodevice">seriesGuide المزامنة إلى</string>
   <string name="trakt_synctotrakt">trakt.tv المزامنة إلى</string>
-  <string name="trakt_syncunseen">Include unwatched flags</string>
+  <string name="trakt_syncunseen">تشمل العلامات الغير مشاهدة</string>
   <string name="trakt_howto_title">إعداد مزامنة trakt.tv</string>
   <string name="trakt_howto">To set up your devices:\n\n1. Connect or create your account below on every device.\n2. The first time, use the <b>Sync to trakt.tv</b> button to upload your existing shows.\n3. Add shows from trakt.tv by swiping to the <b>Library</b> tab in the <b>Add Show</b> screen.\n\nNow whenever SeriesGuide updates, your trakt.tv activity is downloaded to each device. This includes flagging episodes as watched or collected and check ins.</string>
   <string name="welcome_setuplanguage">اختر اللغة</string>
   <string name="welcome_setuptrakt">الاتصال بـ trakt</string>
-  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
+  <string name="welcome_traktmessage">الوصول إلى حسابك في التراكت,المكتبة ونشاط الأصدقاء</string>
   <string name="dismiss">إبعاد</string>
   <string name="welcome_add_part1">لبدء الاستخدام اضغط</string>
   <string name="welcome_add_part2">في شريط الإجراءات.</string>
@@ -286,7 +286,7 @@
     <item>الأقدم أولاً</item>
     <item>غير المُشاهدة أولاً</item>
     <item>A-Z</item>
-    <item>Top rated</item>
+    <item>أعلى تقييم</item>
     <item>الأحدث أولاً-دي في دي</item>
     <item>الأقدم أولاً-دي في دي</item>
   </string-array>
