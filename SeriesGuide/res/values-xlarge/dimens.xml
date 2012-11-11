@@ -10,7 +10,9 @@
     <dimen name="widget_text_small">12sp</dimen>
     <dimen name="widget_text_middle">14sp</dimen>
     <dimen name="widget_text_large">16sp</dimen>
+    <dimen name="imagecontainer_height">250dp</dimen>
     <dimen name="addpager_width">600dp</dimen>
+
     <integer name="episodespane_weight">3</integer>
     <integer name="detailsspane_weight">4</integer>
 
