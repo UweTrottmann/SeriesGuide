@@ -413,6 +413,8 @@
         <item>Suomeksi</item>
         <item>Svenska</item>
         <item>Türkçe</item>
+        <item>한국어 (Korean)</item>
+        <item>中文 (Chinese)</item>
     </string-array>
     <string-array name="languageData">
         <item>en</item>
@@ -434,6 +436,8 @@
         <item>fi</item>
         <item>sv</item>
         <item>tr</item>
+        <item>ko</item>
+        <item>zh</item>
     </string-array>
     <string-array name="numberData">
         <item>default</item>
