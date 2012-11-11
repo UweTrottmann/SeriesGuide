@@ -47,8 +47,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Hosts a fragment which displays episodes of a season. Used on smaller screens
- * which do not allow for multi-pane layouts.
+ * Hosts a fragment which displays episodes of a season. On larger screen hosts
+ * a {@link ViewPager} displaying the episodes.
  */
 public class EpisodesActivity extends BaseActivity implements OnSharedPreferenceChangeListener {
 
