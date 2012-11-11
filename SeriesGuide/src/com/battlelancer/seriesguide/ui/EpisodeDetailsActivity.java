@@ -40,7 +40,6 @@ import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TitlePageIndicator;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Hosts a {@link ViewPager} displaying an episode per fragment of a complete
@@ -79,7 +78,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
             return;
         }
 
-        List<Episode> episodes = new ArrayList<Episode>();
+        ArrayList<Episode> episodes = new ArrayList<Episode>();
         int startPosition = 0;
 
         // Lookup show and season of episode
@@ -160,11 +159,11 @@ public class EpisodeDetailsActivity extends BaseActivity {
 
     public static class EpisodePagerAdapter extends FragmentStatePagerAdapter {
 
-        private List<Episode> mEpisodes;
+        private ArrayList<Episode> mEpisodes;
 
         private SharedPreferences mPrefs;
 
-        public EpisodePagerAdapter(FragmentManager fm, List<Episode> episodes,
+        public EpisodePagerAdapter(FragmentManager fm, ArrayList<Episode> episodes,
                 SharedPreferences prefs) {
             super(fm);
             mEpisodes = episodes;
@@ -177,8 +176,30 @@ public class EpisodeDetailsActivity extends BaseActivity {
         }
 
         @Override
+        public int getItemPosition(Object object) {
+            /*
+             * This breaks the FragmentStatePagerAdapter (see
+             * http://code.google.com/p/android/issues/detail?id=37990), so we
+             * just destroy everything!
+             */
+            // EpisodeDetailsFragment fragment = (EpisodeDetailsFragment)
+            // object;
+            // int episodeId = fragment.getEpisodeId();
+            // for (int i = 0; i < mEpisodes.size(); i++) {
+            // if (episodeId == mEpisodes.get(i).episodeId) {
+            // return i;
+            // }
+            // }
+            return POSITION_NONE;
+        }
+
+        @Override
         public int getCount() {
-            return mEpisodes.size();
+            if (mEpisodes != null) {
+                return mEpisodes.size();
+            } else {
+                return 0;
+            }
         }
 
         @Override
@@ -187,7 +208,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
             return Utils.getEpisodeNumber(mPrefs, episode.seasonNumber, episode.episodeNumber);
         }
 
-        public void updateEpisodeList(List<Episode> list) {
+        public void updateEpisodeList(ArrayList<Episode> list) {
             if (list != null) {
                 mEpisodes = list;
                 notifyDataSetChanged();

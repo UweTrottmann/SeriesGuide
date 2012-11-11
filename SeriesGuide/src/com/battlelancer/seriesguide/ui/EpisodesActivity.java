@@ -246,9 +246,19 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         // update the viewpager with new sorting, if shown
         if (key.equals(SeriesGuidePreferences.KEY_EPISODE_SORT_ORDER) && mDualPane) {
+            // Workaround in combination with
+            // EpisodePagerAdapter.getItemPosition()
+            // save visible episode
+            int oldPosition = mPager.getCurrentItem();
+            int episodeId = mEpisodes.get(oldPosition).episodeId;
+
+            // reorder
             updateEpisodeList();
             mAdapter.updateEpisodeList(mEpisodes);
             mIndicator.notifyDataSetChanged();
+
+            // restore visible episode
+            onChangePage(episodeId);
         }
     }
 
