@@ -9,7 +9,9 @@
 
     <TextView
         android:id="@+id/description"
-        style="@style/SmallItems.WithSideMargins" />
+        style="@style/SmallItems.WithSideMargins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/labelGuestStars"
@@ -20,7 +22,9 @@
 
     <TextView
         android:id="@+id/guestStars"
-        style="@style/SmallItems.WithSideMargins" />
+        style="@style/SmallItems.WithSideMargins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/labelDirectors"
@@ -31,7 +35,9 @@
 
     <TextView
         android:id="@+id/directors"
-        style="@style/SmallItems.WithSideMargins" />
+        style="@style/SmallItems.WithSideMargins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/labelWriters"
@@ -42,7 +48,9 @@
 
     <TextView
         android:id="@+id/writers"
-        style="@style/SmallItems.WithSideMargins" />
+        style="@style/SmallItems.WithSideMargins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/labelDvd"
@@ -53,7 +61,9 @@
 
     <TextView
         android:id="@+id/dvdNumber"
-        style="@style/SmallItems.WithSideMargins" />
+        style="@style/SmallItems.WithSideMargins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/labelAirDay"
@@ -64,7 +74,9 @@
 
     <TextView
         android:id="@+id/airDay"
-        style="@style/SmallItems.WithSideMargins" />
+        style="@style/SmallItems.WithSideMargins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/labelLastEdit"
@@ -75,6 +87,8 @@
 
     <TextView
         android:id="@+id/lastEdit"
-        style="@style/SmallItems.WithSideMargins" />
+        style="@style/SmallItems.WithSideMargins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </merge>

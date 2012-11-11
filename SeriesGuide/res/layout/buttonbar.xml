@@ -3,7 +3,9 @@
     android:id="@+id/buttonbar"
     android:layout_width="wrap_content"
     android:layout_height="48dp"
-    android:layout_marginBottom="@dimen/default_padding" >
+    android:layout_marginBottom="@dimen/large_padding"
+    android:layout_marginLeft="@dimen/default_padding"
+    android:layout_marginRight="@dimen/default_padding" >
 
     <Button
         android:id="@+id/checkinButton"
