@@ -6,5 +6,7 @@
     android:minWidth="250dp"
     android:previewImage="@drawable/listwidget_ori_portrait"
     android:resizeMode="horizontal|vertical"
-    android:updatePeriodMillis="0" >
+    android:updatePeriodMillis="0"
+    android:widgetCategory="keyguard|home_screen" >
+
 </appwidget-provider>
