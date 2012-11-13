@@ -372,7 +372,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">10? Number 10 is up!\n\nAdded trakt watchlist in add screen.\n\nNo more fast scrolling crashes.\n\nLatest translations, fixes.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">Android 4.2 is coming!\n\nUse the list widget on your Android 4.2 lock screen.\n\nDesign refinements for episode images and button bar.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
