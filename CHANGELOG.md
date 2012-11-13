@@ -5,6 +5,17 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 2.11 *(In development)*
+--------------------------------
+
+### Detailed changes:
+
+#### 2.11.1beta (2012-11-13)
+
+* FEATURE Lock screen widget support.
+* TWEAK Episode images and button bar tweaks.
+* NOTE Now with Chinese translation! And latest translations from crowdin.
+
 Version 2.10.1 and 2.10.4beta *(2012-11-10)*
 --------------------------------
 
