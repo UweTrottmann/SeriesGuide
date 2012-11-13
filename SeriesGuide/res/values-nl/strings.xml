@@ -23,7 +23,7 @@
   <string name="more">%s meer</string>
   <string name="cancel">Annuleren</string>
   <string name="share">Delen</string>
-  <string name="updated">Updated to latest version.</string>
+  <string name="updated">nieuwste versie is geinstaleerd.</string>
   <string name="offline">Geen netwerk verbinding. Probeer het later opnieuw.</string>
   <string name="onlyx">Alleen beschikbaar in Series Guide X</string>
   <string name="shouts">Shouts</string>
@@ -32,7 +32,7 @@
   <string name="isspoiler">Spoiler waarschuwing!</string>
   <string name="no_shouts">Wees de eerste die shout!</string>
   <string name="shouts_for">Shouts voor %s</string>
-  <string name="autorefresh">Automatisch vernieuwen</string>
+  <string name="autorefresh">Automatisch verversen</string>
   <string name="love">Zeer goed!</string>
   <string name="hate">Zwak</string>
   <string name="rating2">Verschrikkelijk</string>
@@ -99,13 +99,13 @@
   <string name="friends_empty">Geen activiteit van vrienden op trakt.</string>
   <string name="noupcoming">Er zijn geen toekomstige afleveringen.</string>
   <string name="norecent">Er zijn geen recente afleveringen.</string>
-  <string name="only_favorites">Enkel favoriete series</string>
+  <string name="only_favorites">Alleen favoriete series</string>
   <string name="togglewatched">Bekeken/niet bekeken wijzigen</string>
   <string name="update_notification">Series bijwerken…</string>
   <string name="update_single">Serie bijwerken…</string>
   <string name="update_delta">Verouderde series bijwerken…</string>
   <string name="update_full">Alle series bijwerken…</string>
-  <string name="update_success">Bijgwerkte weergeven.</string>
+  <string name="update_success">Series zijn bijgewerkt.</string>
   <string name="update_offline">Bijwerken is mislukt, controleer de internet/Wi-Fi verbinding.</string>
   <string name="update_saxerror">Bijwerken is mislukt, probeer het later opnieuw.</string>
   <string name="update_inprogress">Er wordt een update uitgevoerd, probeer het later opnieuw.</string>
@@ -130,7 +130,7 @@
   <string name="no_results">Geen resultaten, probeer complete woorden.</string>
   <string name="search_error">Zoeken mislukt, probeer het later opnieuw.</string>
   <string name="add_show">Serie toevoegen</string>
-  <string name="add_all">Alle toevoegen</string>
+  <string name="add_all">Alles toevoegen</string>
   <string name="dont_add_show">Niet toevoegen</string>
   <string name="add_multiple">Alle series worden binnenkort in de lijst weergegeven.</string>
   <string name="add_started">zal binnenkort in het series overzicht worden weergegeven.</string>
@@ -141,10 +141,10 @@
   <string name="trending">Trending</string>
   <string name="recommended">Aanbevolen</string>
   <string name="library">Bibliotheek</string>
-  <string name="watchlist">Watchlist</string>
+  <string name="watchlist">Nog te kijken</string>
   <string name="powered_by_thetvdb">mede mogelijk gemaakt door thetvdb.com</string>
   <string name="powered_by_trakt">aangestuurd door trakt.tv</string>
-  <string name="first_list">First list</string>
+  <string name="first_list">Top lijst</string>
   <string name="list_add">Lijst toevoegen</string>
   <string name="list_title_hint">Lijst een naam geven</string>
   <string name="list_remove">Lijst verwijderen</string>
@@ -158,9 +158,9 @@
   <string name="prefs_category_about">Over</string>
   <string name="help">Help</string>
   <string name="preferences">Instellingen</string>
-  <string name="pref_showsorting">Series sorteren op…</string>
+  <string name="pref_showsorting">Sorteer series op…</string>
   <string name="pref_onlyfuture">Geen uitgezonden afleveringen</string>
-  <string name="pref_onlyfuturesummary">Laat geen uitgezonden afleveringen zien</string>
+  <string name="pref_onlyfuturesummary">Laat nooit al uitgezonden afleveringen zien</string>
   <string name="pref_onlyseasoneps">Speciale afleveringen verbergen</string>
   <string name="pref_onlyseasonepssummary">Speciale afleveringen overal verbergen uitgezonderd in het seizoenoverzicht</string>
   <string name="pref_seasonsorting">Seizoenen sorteren op…</string>
@@ -222,8 +222,8 @@
   <string name="getglue_authfailed">GetGlue authenticatie mislukt. Probeer het later opnieuw.</string>
   <string name="menu_rate_trakt">Beoordelen (trakt)</string>
   <string name="menu_share_others">Via andere apps</string>
-  <string name="traktcheckin_cancel">Overschrijven</string>
-  <string name="traktcheckin_inprogress">Er is al aangemeld bij een andere aflevering of serie. Overschrijf de vorige aanmelding of wacht %s en probeer het opnieuw.</string>
+  <string name="traktcheckin_cancel">Negeren</string>
+  <string name="traktcheckin_inprogress">Je bent al ingecheckt bij een andere aflevering of film. Overschrijf de vorige check-in of wacht %s en probeer het opnieuw.</string>
   <string name="traktcheckin_wait">Wachten</string>
   <string name="oauthmessage">SeriesGuide met GetGlue authenticeren…</string>
   <string name="addtocalendar">Aan agenda toevoegen</string>
@@ -241,12 +241,12 @@
   <string name="trakt_experimental">Alleen series in jouw SeriesGuide serielijst worden gesynchroniseerd. \'Sync met SeriesGuide\' haalt de bekeken afleveringen op van trakt. \'Sync met trakt\' stuurt de bekeken afleveringen naar trakt.</string>
   <string name="trakt_synctodevice">Synchroniseren naar SeriesGuide</string>
   <string name="trakt_synctotrakt">Synchroniseren naar trakt.tv</string>
-  <string name="trakt_syncunseen">Inclusief onbekeken</string>
+  <string name="trakt_syncunseen">Inclusief als onbekeken gemarkeerd</string>
   <string name="trakt_howto_title">Voeg trakt.tv synchronistatie toe</string>
   <string name="trakt_howto">Om uw apparaten: \n\n1 te configureren. Login of maak hieronder uw account aan op elk apparaat. \n2. Gebruik de eerste keer de knop <b>Synchroniseren naar trakt.tv</b> voor het uploaden van uw bestaande shows. \n3. Voeg shows toe vanuit trakt.tv door te swipen naar het <b>bibliotheek</b> tabblad in het <b>Toevoegen Show</b> scherm. Telkens als SeriesGuide bijwerkt, wordt uw trakt.tv activiteit gedownload naar elk apparaat. Dit is inclusief het markeren van afleveringen als gezien of verzameld en ook checkins.</string>
-  <string name="welcome_setuplanguage">Selecteer taal</string>
+  <string name="welcome_setuplanguage">Selecteer een taal</string>
   <string name="welcome_setuptrakt">Verbinden met trakt</string>
-  <string name="welcome_traktmessage">Toegang tot uw bibliotheek en vrienden activiteit op trakt.tv</string>
+  <string name="welcome_traktmessage">Toegang tot uw bibliotheek en activiteit van vrienden op trakt.tv</string>
   <string name="dismiss">Afwijzen</string>
   <string name="welcome_add_part1">Om te beginnen druk op</string>
   <string name="welcome_add_part2">in de action bar.</string>
@@ -257,13 +257,13 @@
   <string name="pref_notifications">Meldingen</string>
   <string name="pref_notificationssummary">Favoriete series die binnenkort worden uitgezonden melden</string>
   <string name="pref_notifyfavonly">Alleen favorieten</string>
-  <string name="pref_notifyfavonlysummary">Alleen over favoriete series berichten ontvangen</string>
-  <string name="pref_ringtone">Ringtone</string>
+  <string name="pref_notifyfavonlysummary">Ontvang alleen berichten over favoriete series</string>
+  <string name="pref_ringtone">Beltoon</string>
   <string name="pref_vibrate">Trillen</string>
   <string name="pref_vibratesummary">Ook trillen als melding wordt weergegeven</string>
   <string name="pref_theme">Applicatie thema</string>
   <string name="choose_list">Kies weer te geven lijst</string>
-  <string name="hide_watched">Bekeken afleveringen verbergen</string>
+  <string name="hide_watched">Verberg bekeken afleveringen</string>
   <string name="add_widget">Widget toevoegen</string>
   <string name="widget_label">SeriesGuide</string>
   <string name="smallwidget">SeriesGuide (klein)</string>
@@ -286,7 +286,7 @@
     <item>Oudste eerst</item>
     <item>Onbekeken eerst</item>
     <item>A - Z</item>
-    <item>Top rated</item>
+    <item>Hoogste waardering</item>
     <item>Nieuwste eerst (DVD)</item>
     <item>Oudste eerst (DVD)</item>
   </string-array>
