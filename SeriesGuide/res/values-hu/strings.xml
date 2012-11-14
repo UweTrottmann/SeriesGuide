@@ -223,7 +223,7 @@
   <string name="menu_rate_trakt">Értékelem (trakt)</string>
   <string name="menu_share_others">Más alkalmazásokkal</string>
   <string name="traktcheckin_cancel">Override</string>
-  <string name="traktcheckin_inprogress">Már bejelentkeztél egy másik filmbe vagy epizódba. Vagy felülírjuk azt, esetleg vársz % másodpercet és próbáld újra.</string>
+  <string name="traktcheckin_inprogress">Már bejelentkeztél egy másik filmbe vagy epizódba. Vagy felülírjuk azt, esetleg vársz %s másodpercet és próbáld újra.</string>
   <string name="traktcheckin_wait">Várok</string>
   <string name="oauthmessage">SeriesGuide azonosítása a GetGlue-val</string>
   <string name="addtocalendar">Hozzáadás naptárhoz</string>
