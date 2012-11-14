@@ -634,15 +634,22 @@ public class Utils {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
                     .getApplicationContext());
 
-            final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
-            String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
-            password = SimpleCrypto.decrypt(password, context);
-            if (TextUtils.isEmpty(password)) {
-                TraktCredentialsDialogFragment.clearTraktCredentials(prefs);
-                return null;
+            final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, null);
+            String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, null);
+
+            if (!TextUtils.isEmpty(password)) {
+                // decryption might return null, so wrap in separate condition
+                password = SimpleCrypto.decrypt(password, context);
             }
 
-            sServiceManagerWithAuthInstance.setAuthentication(username, password);
+            if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
+                sServiceManagerWithAuthInstance.setAuthentication(username, password);
+            } else {
+                // clear all trakt credentials
+                TraktCredentialsDialogFragment.clearTraktCredentials(prefs);
+                sServiceManagerWithAuthInstance.setAuthentication(null, null);
+                return null;
+            }
         }
 
         return sServiceManagerWithAuthInstance;
