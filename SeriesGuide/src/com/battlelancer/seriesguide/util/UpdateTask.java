@@ -31,7 +31,6 @@ import android.os.AsyncTask;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -218,9 +217,9 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                 } catch (SAXException e) {
                     if (itry == 1) {
                         // failed twice, give up
-                        Utils.trackException(mAppContext, e);
                         resultCode = UpdateResult.ERROR;
                         addFailedShow(mCurrentShowName);
+                        Utils.trackException(mAppContext, TAG, e);
                     }
                 }
             }
@@ -315,12 +314,10 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                                 ActivityAction.Scrobble, ActivityAction.Collection)
                         .timestamp(startTimeTrakt).fire();
             } catch (TraktException e) {
-                Utils.trackException(mAppContext, e);
-                Log.w(TAG, e);
+                Utils.trackException(mAppContext, TAG, e);
                 return UpdateResult.ERROR;
             } catch (ApiException e) {
-                Utils.trackException(mAppContext, e);
-                Log.w(TAG, e);
+                Utils.trackException(mAppContext, TAG, e);
                 return UpdateResult.ERROR;
             }
 
@@ -369,12 +366,12 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                         .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
             } catch (RemoteException e) {
                 // Failed binder transactions aren't recoverable
-                Utils.trackException(mAppContext, e);
+                Utils.trackException(mAppContext, TAG, e);
                 throw new RuntimeException("Problem applying batch operation", e);
             } catch (OperationApplicationException e) {
                 // Failures like constraint violation aren't
                 // recoverable
-                Utils.trackException(mAppContext, e);
+                Utils.trackException(mAppContext, TAG, e);
                 throw new RuntimeException("Problem applying batch operation", e);
             }
 

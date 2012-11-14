@@ -825,17 +825,12 @@ public class Utils {
     }
 
     /**
-     * Tracks an exception using the Google Analytics {@link EasyTracker}.
+     * Tracks an exception using the Google Analytics {@link EasyTracker} and
+     * the local log.
      */
-    public static void trackException(Context context, Exception e) {
-        EasyTracker.getTracker().trackException(e.getMessage(), false);
-    }
-
-    /**
-     * Tracks an exception using the Google Analytics {@link EasyTracker}.
-     */
-    public static void trackException(Context context, String message) {
-        EasyTracker.getTracker().trackException(message, false);
+    public static void trackException(Context context, String tag, Exception e) {
+        EasyTracker.getTracker().trackException(tag + ": " + e.getMessage(), false);
+        Log.w(tag, e);
     }
 
     /**

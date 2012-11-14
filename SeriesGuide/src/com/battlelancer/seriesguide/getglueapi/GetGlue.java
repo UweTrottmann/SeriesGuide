@@ -132,20 +132,16 @@ public class GetGlue {
                 request = AndroidUtils.buildHttpUrlConnection(url);
                 consumer.sign(request);
             } catch (OAuthMessageSignerException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
+                Utils.trackException(mContext, TAG, e);
                 return CHECKIN_FAILED;
             } catch (OAuthExpectationFailedException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
+                Utils.trackException(mContext, TAG, e);
                 return CHECKIN_FAILED;
             } catch (OAuthCommunicationException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
+                Utils.trackException(mContext, TAG, e);
                 return CHECKIN_FAILED;
             } catch (IOException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
+                Utils.trackException(mContext, TAG, e);
                 return CHECKIN_FAILED;
             }
 
@@ -173,24 +169,24 @@ public class GetGlue {
                     }
                 }
             } catch (ClientProtocolException e) {
-                Utils.trackException(mContext, e);
                 Log.w(TAG, e);
+                Utils.trackException(mContext, TAG, e);
             } catch (IOException e) {
-                Utils.trackException(mContext, e);
                 Log.w(TAG, e);
+                Utils.trackException(mContext, TAG, e);
             } catch (IllegalStateException e) {
-                Utils.trackException(mContext, e);
                 Log.w(TAG, e);
+                Utils.trackException(mContext, TAG, e);
             } catch (XmlPullParserException e) {
-                Utils.trackException(mContext, e);
                 Log.w(TAG, e);
+                Utils.trackException(mContext, TAG, e);
             } finally {
                 if (responseIn != null) {
                     try {
                         responseIn.close();
                     } catch (IOException e) {
-                        Utils.trackException(mContext, e);
                         Log.w(TAG, e);
+                        Utils.trackException(mContext, TAG, e);
                     }
                 }
             }

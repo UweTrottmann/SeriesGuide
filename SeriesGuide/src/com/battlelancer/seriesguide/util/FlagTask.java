@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -202,12 +201,10 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                         break;
                 }
             } catch (TraktException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
+                Utils.trackException(mContext, TAG, e);
                 return FAILED;
             } catch (ApiException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
+                Utils.trackException(mContext, TAG, e);
                 return FAILED;
             }
         }

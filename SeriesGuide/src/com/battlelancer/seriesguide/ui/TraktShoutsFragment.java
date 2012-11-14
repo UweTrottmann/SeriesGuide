@@ -435,6 +435,8 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
 
     public static class TraktShoutsLoader extends AsyncTaskLoader<List<Shout>> {
 
+        private static final String TAG = "TraktShoutsLoader";
+
         private Bundle mArgs;
 
         private List<Shout> mResults;
@@ -459,10 +461,10 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
                     shouts = manager.showService().episodeShouts(tvdbId, season, episode).fire();
                 }
             } catch (TraktException e) {
-                Utils.trackException(getContext(), e);
+                Utils.trackException(getContext(), TAG, e);
                 return null;
             } catch (ApiException e) {
-                Utils.trackException(getContext(), e);
+                Utils.trackException(getContext(), TAG, e);
                 return null;
             }
 
