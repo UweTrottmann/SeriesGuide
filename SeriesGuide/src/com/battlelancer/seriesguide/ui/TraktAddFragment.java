@@ -34,7 +34,9 @@ import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.TvShow;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -156,21 +158,24 @@ public class TraktAddFragment extends AddFragment {
             } else {
                 try {
                     ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
-
-                    switch (type) {
-                        case AddPagerAdapter.RECOMMENDED_TAB_POSITION:
-                            shows = manager.recommendationsService().shows().fire();
-                            break;
-                        case AddPagerAdapter.LIBRARY_TAB_POSITION:
-                            shows = manager.userService()
-                                    .libraryShowsAll(Utils.getTraktUsername(mContext)).fire();
-                            break;
-                        case AddPagerAdapter.WATCHLIST_TAB_POSITION:
-                            shows = manager.userService()
-                                    .watchlistShows(Utils.getTraktUsername(mContext)).fire();
-                            break;
+                    if (manager != null) {
+                        switch (type) {
+                            case AddPagerAdapter.RECOMMENDED_TAB_POSITION:
+                                shows = manager.recommendationsService().shows().fire();
+                                break;
+                            case AddPagerAdapter.LIBRARY_TAB_POSITION:
+                                shows = manager.userService()
+                                        .libraryShowsAll(Utils.getTraktUsername(mContext)).fire();
+                                break;
+                            case AddPagerAdapter.WATCHLIST_TAB_POSITION:
+                                shows = manager.userService()
+                                        .watchlistShows(Utils.getTraktUsername(mContext)).fire();
+                                break;
+                        }
                     }
-                } catch (Exception e) {
+                } catch (ApiException e) {
+                    // we don't care
+                } catch (TraktException e) {
                     // we don't care
                 }
             }

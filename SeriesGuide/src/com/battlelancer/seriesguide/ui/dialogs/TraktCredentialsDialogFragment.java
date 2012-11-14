@@ -246,12 +246,9 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
 
                         if (response.status.equals(TraktStatus.SUCCESS)
                                 && passwordEncr.length() != 0 && editor.commit()) {
-                            // set new auth data for service manager
-                            try {
-                                Utils.getServiceManagerWithAuth(context, true);
-                            } catch (Exception e) {
+                            // try setting new auth data for service manager
+                            if (Utils.getServiceManagerWithAuth(context, true) == null) {
                                 status.setText(R.string.trakt_generalerror);
-                                clearTraktCredentials(prefs);
                                 return;
                             }
 
@@ -293,11 +290,10 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                     protected Void doInBackground(Void... params) {
                         clearTraktCredentials(prefs);
 
-                        try {
-                            Utils.getServiceManagerWithAuth(context, false).setAuthentication("",
-                                    "");
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        // force removing credentials from memory
+                        ServiceManager manager = Utils.getServiceManagerWithAuth(context, false);
+                        if (manager != null) {
+                            manager.setAuthentication(null, null);
                         }
 
                         return null;

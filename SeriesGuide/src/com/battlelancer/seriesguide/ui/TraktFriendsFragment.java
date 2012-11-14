@@ -193,11 +193,8 @@ public class TraktFriendsFragment extends ListFragment implements
         @Override
         public List<UserProfile> loadInBackground() {
             if (Utils.isTraktCredentialsValid(getContext())) {
-                ServiceManager manager = null;
-                try {
-                    manager = Utils.getServiceManagerWithAuth(getContext(), false);
-                } catch (Exception e) {
-                    Log.w(TAG, "Could not get trakt service manager", e);
+                ServiceManager manager = Utils.getServiceManagerWithAuth(getContext(), false);
+                if (manager == null) {
                     return null;
                 }
 
