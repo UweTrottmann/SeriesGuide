@@ -253,6 +253,7 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                                 Utils.getServiceManagerWithAuth(context, true);
                             } catch (Exception e) {
                                 status.setText(R.string.trakt_generalerror);
+                                clearTraktCredentials(prefs);
                                 return;
                             }
 
@@ -292,10 +293,7 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                 new AsyncTask<Void, Void, Void>() {
                     @Override
                     protected Void doInBackground(Void... params) {
-                        Editor editor = prefs.edit();
-                        editor.putString(SeriesGuidePreferences.KEY_TRAKTUSER, "").putString(
-                                SeriesGuidePreferences.KEY_TRAKTPWD, "");
-                        editor.commit();
+                        clearTraktCredentials(prefs);
 
                         try {
                             Utils.getServiceManagerWithAuth(context, false).setAuthentication("",
@@ -313,5 +311,12 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
         });
 
         return layout;
+    }
+
+    private void clearTraktCredentials(final SharedPreferences prefs) {
+        Editor editor = prefs.edit();
+        editor.putString(SeriesGuidePreferences.KEY_TRAKTUSER, "").putString(
+                SeriesGuidePreferences.KEY_TRAKTPWD, "");
+        editor.commit();
     }
 }
