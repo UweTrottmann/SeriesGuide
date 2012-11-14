@@ -44,6 +44,7 @@ import com.battlelancer.seriesguide.Constants.EpisodeSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.trakt.ServiceManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -616,7 +617,7 @@ public class Utils {
      * @throws Exception When decrypting the password failed.
      */
     public static synchronized ServiceManager getServiceManagerWithAuth(Context context,
-            boolean refreshCredentials) throws Exception {
+            boolean refreshCredentials) {
         if (sServiceManagerWithAuthInstance == null) {
             sServiceManagerWithAuthInstance = new ServiceManager();
             sServiceManagerWithAuthInstance.setReadTimeout(10000);
@@ -636,6 +637,10 @@ public class Utils {
             final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
             String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
             password = SimpleCrypto.decrypt(password, context);
+            if (TextUtils.isEmpty(password)) {
+                TraktCredentialsDialogFragment.clearTraktCredentials(prefs);
+                return null;
+            }
 
             sServiceManagerWithAuthInstance.setAuthentication(username, password);
         }

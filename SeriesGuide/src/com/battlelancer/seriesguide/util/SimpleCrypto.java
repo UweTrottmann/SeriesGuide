@@ -20,10 +20,17 @@ package com.battlelancer.seriesguide.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 
-import java.security.NoSuchAlgorithmException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.security.KeyStore;
+import java.security.KeyStore.SecretKeyEntry;
 import java.security.SecureRandom;
 
 import javax.crypto.Cipher;
@@ -35,53 +42,121 @@ import javax.crypto.SecretKey;
  */
 public class SimpleCrypto {
 
-    private static final String TAG = "SimpleCrypto";
+    public static final String KEY_ALIAS = "coreentry";
+    public static final String TAG = "SimpleCrypto";
 
-    public static String encrypt(String cleartext, Context context) throws Exception {
-        // TODO: use better handling than throwing around random exceptions
-        SecretKey key = getKey(context);
-        byte[] result = encrypt(key, cleartext.getBytes());
-        return toHex(result);
+    private static final String DATACORE = "datacore";
+
+    /**
+     * Returns the given string in encrypted form, or {@code null} if encryption
+     * was unsuccessful.
+     */
+    public static String encrypt(String cleartext, Context context) {
+        try {
+            SecretKey key = getKey(context);
+            byte[] result = encrypt(key, cleartext.getBytes());
+            return toHex(result);
+        } catch (GeneralSecurityException e) {
+            Log.w(TAG, "encrypt(): " + e.getMessage());
+        } catch (IOException e) {
+            Log.w(TAG, "encrypt(): " + e.getMessage());
+        }
+        return null;
     }
 
-    public static String decrypt(String encrypted, Context context) throws Exception {
-        // TODO: use better handling than throwing around random exceptions
-        SecretKey key = getKey(context);
-        byte[] enc = toByte(encrypted);
-        byte[] result = decrypt(key, enc);
-        return new String(result);
+    /**
+     * Decrypts the given string and returns the clear text, or {@code null} if
+     * decryption was unsuccessful.
+     */
+    public static String decrypt(String encrypted, Context context) {
+        try {
+            SecretKey key = getKey(context);
+            byte[] enc = toByte(encrypted);
+            byte[] result = decrypt(key, enc);
+            return new String(result);
+        } catch (GeneralSecurityException e) {
+            Log.w(TAG, "encrypt(): " + e.getMessage());
+        } catch (IOException e) {
+            Log.w(TAG, "encrypt(): " + e.getMessage());
+        }
+        return null;
     }
 
-    private static SecretKey getKey(Context context) throws NoSuchAlgorithmException {
-        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
-
+    private static SecretKey getKey(Context context) throws IOException,
+            GeneralSecurityException {
+        // ensure seed/password
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
                 .getApplicationContext());
         String seed = prefs.getString(SeriesGuidePreferences.KEY_SECURE, null);
-        byte[] seedBytes;
         if (seed == null) {
-            seedBytes = sr.generateSeed(16);
+            SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
+            byte[] seedBytes = sr.generateSeed(16);
             seed = toHex(seedBytes);
             prefs.edit().putString(SeriesGuidePreferences.KEY_SECURE, seed).commit();
-        } else {
-            seedBytes = toByte(seed);
         }
-        sr.setSeed(seedBytes);
 
-        keyGen.init(128, sr); // 192 and 256 bits may not be available
-        SecretKey key = keyGen.generateKey();
-        return key;
+        final char[] keystorePassword = seed.toCharArray();
+
+        // ensure key store
+        KeyStore keystore = KeyStore.getInstance(KeyStore.getDefaultType());
+        FileInputStream fis = null;
+        try {
+            // load existing key store
+            fis = context.openFileInput(DATACORE);
+            keystore.load(fis, keystorePassword);
+        } catch (FileNotFoundException e) {
+            // create new key store
+            keystore.load(null, keystorePassword);
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+
+        // ensure key
+        if (keystore.containsAlias("trakt")) {
+            // retrieve existing key
+            KeyStore.SecretKeyEntry entry = (SecretKeyEntry) keystore.getEntry(KEY_ALIAS, null);
+            SecretKey key = entry.getSecretKey();
+            return key;
+        } else {
+            // create new key
+            KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+            SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
+            sr.setSeed(toByte(seed));
+            keyGen.init(128, sr); // 192 and 256 bits may not be available
+            SecretKey key = keyGen.generateKey();
+
+            // store key
+            KeyStore.SecretKeyEntry entry = new KeyStore.SecretKeyEntry(key);
+            keystore.setEntry(KEY_ALIAS, entry, null);
+
+            // write out key store
+            FileOutputStream fos = null;
+            try {
+                fos = context.openFileOutput(DATACORE, Context.MODE_PRIVATE);
+                keystore.store(fos, keystorePassword);
+            } finally {
+                if (fos != null) {
+                    fos.close();
+                }
+            }
+
+            return key;
+        }
     }
 
-    private static byte[] encrypt(SecretKey key, byte[] clear) throws Exception {
+    private static byte[] encrypt(SecretKey key, byte[] clear) throws GeneralSecurityException {
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.ENCRYPT_MODE, key);
         byte[] encrypted = cipher.doFinal(clear);
         return encrypted;
     }
 
-    private static byte[] decrypt(SecretKey key, byte[] encrypted) throws Exception {
+    private static byte[] decrypt(SecretKey key, byte[] encrypted) throws GeneralSecurityException {
         Cipher cipher = Cipher.getInstance("AES");
         cipher.init(Cipher.DECRYPT_MODE, key);
         byte[] decrypted = cipher.doFinal(encrypted);

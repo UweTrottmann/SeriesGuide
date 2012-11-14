@@ -231,11 +231,9 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                             return;
                         }
 
-                        String passwordEncr;
                         // try to encrypt the password before storing it
-                        try {
-                            passwordEncr = SimpleCrypto.encrypt(passwordHash, context);
-                        } catch (Exception e) {
+                        String passwordEncr = SimpleCrypto.encrypt(passwordHash, context);
+                        if (passwordEncr == null) {
                             // password encryption failed
                             status.setText(R.string.trakt_generalerror);
                             return;
@@ -313,7 +311,7 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
         return layout;
     }
 
-    private void clearTraktCredentials(final SharedPreferences prefs) {
+    public static void clearTraktCredentials(final SharedPreferences prefs) {
         Editor editor = prefs.edit();
         editor.putString(SeriesGuidePreferences.KEY_TRAKTUSER, "").putString(
                 SeriesGuidePreferences.KEY_TRAKTPWD, "");
