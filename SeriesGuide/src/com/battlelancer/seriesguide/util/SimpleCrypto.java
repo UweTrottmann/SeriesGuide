@@ -28,36 +28,31 @@ import java.security.SecureRandom;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 
 /**
- * Usage:
- * 
- * <pre>
- * String crypto = SimpleCrypto.encrypt(cleartext)
- * ...
- * String cleartext = SimpleCrypto.decrypt(crypto)
- * </pre>
- * 
- * @author ferenc.hechler, modified by Uwe Trottmann for SeriesGuide
+ * Symmetrically encrypts and decrypts strings using a seeded key.
  */
 public class SimpleCrypto {
 
+    private static final String TAG = "SimpleCrypto";
+
     public static String encrypt(String cleartext, Context context) throws Exception {
-        byte[] rawKey = getRawKey(context);
-        byte[] result = encrypt(rawKey, cleartext.getBytes());
+        // TODO: use better handling than throwing around random exceptions
+        SecretKey key = getKey(context);
+        byte[] result = encrypt(key, cleartext.getBytes());
         return toHex(result);
     }
 
     public static String decrypt(String encrypted, Context context) throws Exception {
-        byte[] rawKey = getRawKey(context);
+        // TODO: use better handling than throwing around random exceptions
+        SecretKey key = getKey(context);
         byte[] enc = toByte(encrypted);
-        byte[] result = decrypt(rawKey, enc);
+        byte[] result = decrypt(key, enc);
         return new String(result);
     }
 
-    private static byte[] getRawKey(Context context) throws Exception {
-        KeyGenerator kgen = KeyGenerator.getInstance("AES");
+    private static SecretKey getKey(Context context) throws Exception {
+        KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
@@ -73,24 +68,21 @@ public class SimpleCrypto {
         }
         sr.setSeed(seedBytes);
 
-        kgen.init(128, sr); // 192 and 256 bits may not be available
-        SecretKey skey = kgen.generateKey();
-        byte[] raw = skey.getEncoded();
-        return raw;
+        keyGen.init(128, sr); // 192 and 256 bits may not be available
+        SecretKey key = keyGen.generateKey();
+        return key;
     }
 
-    private static byte[] encrypt(byte[] raw, byte[] clear) throws Exception {
-        SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
+    private static byte[] encrypt(SecretKey key, byte[] clear) throws Exception {
         Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
+        cipher.init(Cipher.ENCRYPT_MODE, key);
         byte[] encrypted = cipher.doFinal(clear);
         return encrypted;
     }
 
-    private static byte[] decrypt(byte[] raw, byte[] encrypted) throws Exception {
-        SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
+    private static byte[] decrypt(SecretKey key, byte[] encrypted) throws Exception {
         Cipher cipher = Cipher.getInstance("AES");
-        cipher.init(Cipher.DECRYPT_MODE, skeySpec);
+        cipher.init(Cipher.DECRYPT_MODE, key);
         byte[] decrypted = cipher.doFinal(encrypted);
         return decrypted;
     }
