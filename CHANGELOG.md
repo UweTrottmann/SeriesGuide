@@ -5,7 +5,7 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 2.10.2 *(TBA)*
+Version 2.10.2 *(2012-11-14)*
 --------------------------------
 
 * FEATURE Lock screen widget support.
@@ -14,7 +14,7 @@ Version 2.10.2 *(TBA)*
 
 ### Detailed changes:
 
-#### 2.11.2beta (TBA)
+#### 2.11.2beta (2012-11-14)
 
 * FIX Adding a list widget on Android 4.2 crashes SeriesGuide.
 * FIX Could not interact with trakt as password could not be decrypted.
