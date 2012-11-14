@@ -201,10 +201,10 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                         break;
                 }
             } catch (TraktException e) {
-                Utils.trackException(mContext, TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
                 return FAILED;
             } catch (ApiException e) {
-                Utils.trackException(mContext, TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
                 return FAILED;
             }
         }

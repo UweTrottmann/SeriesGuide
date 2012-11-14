@@ -59,9 +59,9 @@ public class SimpleCrypto {
             byte[] result = encrypt(key, cleartext.getBytes());
             return toHex(result);
         } catch (GeneralSecurityException e) {
-            Utils.trackException(context, TAG + ".encrypt()", e);
+            Utils.trackExceptionAndLog(context, TAG + ".encrypt()", e);
         } catch (IOException e) {
-            Utils.trackException(context, TAG + ".encrypt()", e);
+            Utils.trackExceptionAndLog(context, TAG + ".encrypt()", e);
         }
         return null;
     }
@@ -77,9 +77,9 @@ public class SimpleCrypto {
             byte[] result = decrypt(key, enc);
             return new String(result);
         } catch (GeneralSecurityException e) {
-            Utils.trackException(context, TAG + ".decrypt()", e);
+            Utils.trackExceptionAndLog(context, TAG + ".decrypt()", e);
         } catch (IOException e) {
-            Utils.trackException(context, TAG + ".decrypt()", e);
+            Utils.trackExceptionAndLog(context, TAG + ".decrypt()", e);
         }
         return null;
     }

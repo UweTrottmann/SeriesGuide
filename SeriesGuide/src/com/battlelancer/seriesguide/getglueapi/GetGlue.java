@@ -132,16 +132,16 @@ public class GetGlue {
                 request = AndroidUtils.buildHttpUrlConnection(url);
                 consumer.sign(request);
             } catch (OAuthMessageSignerException e) {
-                Utils.trackException(mContext, TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
                 return CHECKIN_FAILED;
             } catch (OAuthExpectationFailedException e) {
-                Utils.trackException(mContext, TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
                 return CHECKIN_FAILED;
             } catch (OAuthCommunicationException e) {
-                Utils.trackException(mContext, TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
                 return CHECKIN_FAILED;
             } catch (IOException e) {
-                Utils.trackException(mContext, TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
                 return CHECKIN_FAILED;
             }
 
@@ -170,23 +170,23 @@ public class GetGlue {
                 }
             } catch (ClientProtocolException e) {
                 Log.w(TAG, e);
-                Utils.trackException(mContext, TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
             } catch (IOException e) {
                 Log.w(TAG, e);
-                Utils.trackException(mContext, TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
             } catch (IllegalStateException e) {
                 Log.w(TAG, e);
-                Utils.trackException(mContext, TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
             } catch (XmlPullParserException e) {
                 Log.w(TAG, e);
-                Utils.trackException(mContext, TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
             } finally {
                 if (responseIn != null) {
                     try {
                         responseIn.close();
                     } catch (IOException e) {
                         Log.w(TAG, e);
-                        Utils.trackException(mContext, TAG, e);
+                        Utils.trackExceptionAndLog(mContext, TAG, e);
                     }
                 }
             }

@@ -219,7 +219,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                         // failed twice, give up
                         resultCode = UpdateResult.ERROR;
                         addFailedShow(mCurrentShowName);
-                        Utils.trackException(mAppContext, TAG, e);
+                        Utils.trackExceptionAndLog(mAppContext, TAG, e);
                     }
                 }
             }
@@ -314,10 +314,10 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                                 ActivityAction.Scrobble, ActivityAction.Collection)
                         .timestamp(startTimeTrakt).fire();
             } catch (TraktException e) {
-                Utils.trackException(mAppContext, TAG, e);
+                Utils.trackExceptionAndLog(mAppContext, TAG, e);
                 return UpdateResult.ERROR;
             } catch (ApiException e) {
-                Utils.trackException(mAppContext, TAG, e);
+                Utils.trackExceptionAndLog(mAppContext, TAG, e);
                 return UpdateResult.ERROR;
             }
 
@@ -366,12 +366,12 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                         .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
             } catch (RemoteException e) {
                 // Failed binder transactions aren't recoverable
-                Utils.trackException(mAppContext, TAG, e);
+                Utils.trackExceptionAndLog(mAppContext, TAG, e);
                 throw new RuntimeException("Problem applying batch operation", e);
             } catch (OperationApplicationException e) {
                 // Failures like constraint violation aren't
                 // recoverable
-                Utils.trackException(mAppContext, TAG, e);
+                Utils.trackExceptionAndLog(mAppContext, TAG, e);
                 throw new RuntimeException("Problem applying batch operation", e);
             }
 

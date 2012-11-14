@@ -461,10 +461,10 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
                     shouts = manager.showService().episodeShouts(tvdbId, season, episode).fire();
                 }
             } catch (TraktException e) {
-                Utils.trackException(getContext(), TAG, e);
+                Utils.trackExceptionAndLog(getContext(), TAG, e);
                 return null;
             } catch (ApiException e) {
-                Utils.trackException(getContext(), TAG, e);
+                Utils.trackExceptionAndLog(getContext(), TAG, e);
                 return null;
             }
 
