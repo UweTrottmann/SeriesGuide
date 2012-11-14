@@ -126,7 +126,8 @@ public class SimpleCrypto {
         // ensure key
         if (keystore.containsAlias(KEY_ALIAS)) {
             // retrieve existing key
-            KeyStore.SecretKeyEntry entry = (SecretKeyEntry) keystore.getEntry(KEY_ALIAS, null);
+            KeyStore.SecretKeyEntry entry = (SecretKeyEntry) keystore.getEntry(KEY_ALIAS,
+                    new KeyStore.PasswordProtection(null));
             SecretKey key = entry.getSecretKey();
             return key;
         } else {
@@ -139,7 +140,7 @@ public class SimpleCrypto {
 
             // store key
             KeyStore.SecretKeyEntry entry = new KeyStore.SecretKeyEntry(key);
-            keystore.setEntry(KEY_ALIAS, entry, null);
+            keystore.setEntry(KEY_ALIAS, entry, new KeyStore.PasswordProtection(null));
 
             // write out key store
             FileOutputStream fos = null;
