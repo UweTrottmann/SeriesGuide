@@ -23,6 +23,7 @@ import android.preference.PreferenceManager;
 
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 import javax.crypto.Cipher;
@@ -51,7 +52,7 @@ public class SimpleCrypto {
         return new String(result);
     }
 
-    private static SecretKey getKey(Context context) throws Exception {
+    private static SecretKey getKey(Context context) throws NoSuchAlgorithmException {
         KeyGenerator keyGen = KeyGenerator.getInstance("AES");
         SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
 
