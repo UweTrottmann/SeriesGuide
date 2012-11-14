@@ -44,6 +44,7 @@ import com.battlelancer.seriesguide.Constants.EpisodeSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.trakt.ServiceManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -616,7 +617,7 @@ public class Utils {
      * @throws Exception When decrypting the password failed.
      */
     public static synchronized ServiceManager getServiceManagerWithAuth(Context context,
-            boolean refreshCredentials) throws Exception {
+            boolean refreshCredentials) {
         if (sServiceManagerWithAuthInstance == null) {
             sServiceManagerWithAuthInstance = new ServiceManager();
             sServiceManagerWithAuthInstance.setReadTimeout(10000);
@@ -633,11 +634,22 @@ public class Utils {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
                     .getApplicationContext());
 
-            final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
-            String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
-            password = SimpleCrypto.decrypt(password, context);
+            final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, null);
+            String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, null);
 
-            sServiceManagerWithAuthInstance.setAuthentication(username, password);
+            if (!TextUtils.isEmpty(password)) {
+                // decryption might return null, so wrap in separate condition
+                password = SimpleCrypto.decrypt(password, context);
+            }
+
+            if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
+                sServiceManagerWithAuthInstance.setAuthentication(username, password);
+            } else {
+                // clear all trakt credentials
+                TraktCredentialsDialogFragment.clearTraktCredentials(prefs);
+                sServiceManagerWithAuthInstance.setAuthentication(null, null);
+                return null;
+            }
         }
 
         return sServiceManagerWithAuthInstance;
@@ -814,12 +826,16 @@ public class Utils {
 
     /**
      * Tracks an exception using the Google Analytics {@link EasyTracker}.
-     * 
-     * @param context
-     * @param e
      */
     public static void trackException(Context context, Exception e) {
         EasyTracker.getTracker().trackException(e.getMessage(), false);
+    }
+
+    /**
+     * Tracks an exception using the Google Analytics {@link EasyTracker}.
+     */
+    public static void trackException(Context context, String message) {
+        EasyTracker.getTracker().trackException(message, false);
     }
 
     /**

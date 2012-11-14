@@ -299,12 +299,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             final long startTimeTrakt = prefs.getLong(SeriesGuidePreferences.KEY_LASTTRAKTUPDATE,
                     currentTime) / 1000;
 
-            ServiceManager manager;
-            try {
-                manager = Utils.getServiceManagerWithAuth(mAppContext, false);
-            } catch (Exception e) {
-                Utils.trackException(mAppContext, e);
-                Log.w(TAG, e);
+            ServiceManager manager = Utils.getServiceManagerWithAuth(mAppContext, false);
+            if (manager == null) {
                 return UpdateResult.ERROR;
             }
 

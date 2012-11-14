@@ -25,7 +25,7 @@
     <dimen name="showgrid_padding">8dp</dimen>
     <dimen name="showgrid_columnWidth">290dp</dimen>
     <dimen name="showgrid_spacing">0dp</dimen>
-    <dimen name="imagecontainer_height">180dp</dimen>
+    <dimen name="imagecontainer_height">166dp</dimen>
     <integer name="episodespane_weight">1</integer>
     <integer name="detailsspane_weight">1</integer>
 

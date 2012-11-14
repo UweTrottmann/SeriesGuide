@@ -231,11 +231,9 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                             return;
                         }
 
-                        String passwordEncr;
                         // try to encrypt the password before storing it
-                        try {
-                            passwordEncr = SimpleCrypto.encrypt(passwordHash, context);
-                        } catch (Exception e) {
+                        String passwordEncr = SimpleCrypto.encrypt(passwordHash, context);
+                        if (passwordEncr == null) {
                             // password encryption failed
                             status.setText(R.string.trakt_generalerror);
                             return;
@@ -248,10 +246,8 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
 
                         if (response.status.equals(TraktStatus.SUCCESS)
                                 && passwordEncr.length() != 0 && editor.commit()) {
-                            // set new auth data for service manager
-                            try {
-                                Utils.getServiceManagerWithAuth(context, true);
-                            } catch (Exception e) {
+                            // try setting new auth data for service manager
+                            if (Utils.getServiceManagerWithAuth(context, true) == null) {
                                 status.setText(R.string.trakt_generalerror);
                                 return;
                             }
@@ -292,16 +288,12 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                 new AsyncTask<Void, Void, Void>() {
                     @Override
                     protected Void doInBackground(Void... params) {
-                        Editor editor = prefs.edit();
-                        editor.putString(SeriesGuidePreferences.KEY_TRAKTUSER, "").putString(
-                                SeriesGuidePreferences.KEY_TRAKTPWD, "");
-                        editor.commit();
+                        clearTraktCredentials(prefs);
 
-                        try {
-                            Utils.getServiceManagerWithAuth(context, false).setAuthentication("",
-                                    "");
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        // force removing credentials from memory
+                        ServiceManager manager = Utils.getServiceManagerWithAuth(context, false);
+                        if (manager != null) {
+                            manager.setAuthentication(null, null);
                         }
 
                         return null;
@@ -313,5 +305,12 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
         });
 
         return layout;
+    }
+
+    public static void clearTraktCredentials(final SharedPreferences prefs) {
+        Editor editor = prefs.edit();
+        editor.putString(SeriesGuidePreferences.KEY_TRAKTUSER, "").putString(
+                SeriesGuidePreferences.KEY_TRAKTPWD, "");
+        editor.commit();
     }
 }

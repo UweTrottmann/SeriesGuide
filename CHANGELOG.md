@@ -5,6 +5,26 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 2.10.2 *(2012-11-14)*
+--------------------------------
+
+* FEATURE Lock screen widget support.
+* FIX Adding a list widget on Android 4.2 crashes SeriesGuide.
+* FIX Could not interact with trakt as password could not be decrypted.
+
+### Detailed changes:
+
+#### 2.11.2beta (2012-11-14)
+
+* FIX Adding a list widget on Android 4.2 crashes SeriesGuide.
+* FIX Could not interact with trakt as password could not be decrypted.
+
+#### 2.11.1beta (2012-11-13)
+
+* FEATURE Lock screen widget support.
+* TWEAK Episode images and button bar tweaks.
+* NOTE Now with Chinese translation! And latest translations from crowdin.
+
 Version 2.10.1 and 2.10.4beta *(2012-11-10)*
 --------------------------------
 

@@ -17,7 +17,7 @@
   <string name="description_overview">نظرة عامة</string>
   <string name="description_poster">إظهار الملصقات</string>
   <string name="norating">لا يوجد</string>
-  <string name="loading">تحميل...</string>
+  <string name="loading">تحميل…</string>
   <string name="done">تم</string>
   <string name="clear">تنظيف</string>
   <string name="more">%s أكثر</string>
@@ -31,7 +31,7 @@
   <string name="shout">تعليق</string>
   <string name="isspoiler">تنبيه</string>
   <string name="no_shouts">أكتب أول تعليق</string>
-  <string name="shouts_for">تعليقات لـ % s</string>
+  <string name="shouts_for">تعليقات لـ %s</string>
   <string name="autorefresh">تحديث تلقائي</string>
   <string name="love">!أعجبني</string>
   <string name="hate">):لم يعجبني</string>

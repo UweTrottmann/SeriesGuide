@@ -190,7 +190,7 @@
   <string name="pref_ganalyticssummary">Отслеживать использование функций, чтобы помочь улучшить SeriesGuide</string>
   <string name="sendusagedata">Отправлять статистику использования разработчику</string>
   <string name="pref_upcominglimit">Показы в ближайшие N дней...</string>
-  <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
+  <string name="backup_description"><b>Бекап</b> создает копию базы данных сериалов в файле с именем <b>seriesdatabase</b> в папке.\n\n Для <b>восстановления</b> убедитесь, что этот файл находится в папке.\n\n Только резервные копии с теми же или ниже версии базы данных как ниже могут быть восстановлены.</string>
   <string name="backup_path"><b>Папка резервного копирования</b></string>
   <string name="backup_version"><b>Версия базы данных</b></string>
   <string name="backup_failed_nosd">Не могу сделать резервное копирование. Папка резервного копирования не доступен.</string>
@@ -238,12 +238,12 @@
   <string name="trakt_decryptfail">не удалось расшифровать пароль</string>
   <string name="trakt_generalerror">Что-то пошло не так. Пожалуйста, проверьте ваши данные и повторите попытку.</string>
   <string name="trakt_createaccount">Создать новую учетную запись</string>
-  <string name="trakt_experimental">Only shows in your SeriesGuide show list are synced. \'Sync to SeriesGuide\' fetches watched flags from trakt. \'Sync to trakt\' sends watched flags to trakt.</string>
+  <string name="trakt_experimental">Синхронизируются только сериалы из вашего списка SeriesGuide. \'Синхронизация SeriesGuide\' извлекает метки просмотра из trakt. \'Синхронизация trakt\' посылает метки просмотра в trakt.</string>
   <string name="trakt_synctodevice">Синхронизация с SeriesGuide</string>
   <string name="trakt_synctotrakt">Синхронизировать с trakt.tv</string>
   <string name="trakt_syncunseen">Включить непросмотренные метки</string>
   <string name="trakt_howto_title">Настроить синхронизацию trakt.tv</string>
-  <string name="trakt_howto">To set up your devices:\n\n1. Connect or create your account below on every device.\n2. The first time, use the <b>Sync to trakt.tv</b> button to upload your existing shows.\n3. Add shows from trakt.tv by swiping to the <b>Library</b> tab in the <b>Add Show</b> screen.\n\nNow whenever SeriesGuide updates, your trakt.tv activity is downloaded to each device. This includes flagging episodes as watched or collected and check ins.</string>
+  <string name="trakt_howto">Настройка устройства: \n\n1. Подключение или создать учетную запись на каждое устройство. \n2. Первый раз, используйте кнопку <b>Синхронизация trakt.tv</b> для загрузки ваших сериалов. \n3. Добавить сериалы от trakt.tv путем перехода на вкладку <b>Библиотека</b>.<b>Добавить сериал</b> \n\n Всякий раз, когда SeriesGuide обновляется, ваша активность trakt.tv загружается для каждого устройства. Это включает пометка эпизодов как просмотренных или собранных и проверяет их.</string>
   <string name="welcome_setuplanguage">Выбрать язык</string>
   <string name="welcome_setuptrakt">Подключить trakt.tv аккаунт</string>
   <string name="welcome_traktmessage">Доступ к вашей активности и активности друзей в trakt.tv</string>

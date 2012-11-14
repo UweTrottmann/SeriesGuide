@@ -193,10 +193,8 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         }
 
         // get an authenticated trakt-java ServiceManager
-        ServiceManager manager;
-        try {
-            manager = Utils.getServiceManagerWithAuth(mContext, false);
-        } catch (Exception e) {
+        ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
+        if (manager == null) {
             // password could not be decrypted
             Response r = new Response();
             r.status = TraktStatus.FAILURE;

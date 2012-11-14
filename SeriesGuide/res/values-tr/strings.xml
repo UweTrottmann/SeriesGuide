@@ -25,7 +25,7 @@
   <string name="share">Paylaş</string>
   <string name="updated">En son sürüme güncellendi.</string>
   <string name="offline">Ağ bağlantısı yok. Daha sonra tekrar deneyin.</string>
-  <string name="onlyx">Yalnızca SeriesGuide X için mevcut</string>
+  <string name="onlyx">Yalnızca SeriesGuide X kullanıcıları için</string>
   <string name="shouts">Notlar</string>
   <string name="shout_hint">Bir not yazın (İngilizce)</string>
   <string name="shout">Not!</string>
@@ -35,7 +35,7 @@
   <string name="autorefresh">Otomatik yenileme</string>
   <string name="love">Harikulade!</string>
   <string name="hate">Eh işte :(</string>
-  <string name="rating2">Rezil</string>
+  <string name="rating2">Berbat</string>
   <string name="rating3">Kötü</string>
   <string name="rating4">Zayıf</string>
   <string name="rating5">Eh işte</string>
@@ -46,10 +46,10 @@
   <string name="episode_firstaired">Yayınlanma Tarihi</string>
   <string name="episode_dvdnumber">DVD Bölümü</string>
   <string name="show_actors">Aktörler</string>
-  <string name="show_firstaired">İlk Yayınlanan</string>
+  <string name="show_firstaired">İlk Yayınlanma Tarihi</string>
   <string name="show_genres">Türler</string>
-  <string name="show_runtime">Çalışma Zamanı</string>
-  <string name="show_contentrating">İçerik Derecelendirme</string>
+  <string name="show_runtime">Süresi</string>
+  <string name="show_contentrating">İçerik Derecelendirmesi</string>
   <string name="episode_directors">Yönetmen</string>
   <string name="episode_gueststars">Konuk oyuncular</string>
   <string name="episode_writers">Yazarlar</string>
@@ -62,7 +62,7 @@
   <string name="menu_update_delta">Güncelleştir (yalnızca eski)</string>
   <string name="context_updateshow">Güncelle</string>
   <string name="context_showinfo">Bilgi Göster</string>
-  <string name="context_marknext">Sonraki bölüm izlendi</string>
+  <string name="context_marknext">Sıradaki bölüm izlendi</string>
   <string name="today">bugün</string>
   <string name="now">şimdi</string>
   <string name="daily">Günlük</string>
@@ -71,23 +71,23 @@
   <string name="mark_all">Tümü izlendi</string>
   <string name="unmark_all">Hiçbiri izlenmedi</string>
   <string name="mark_untilhere">Önceden yayınlananların tamamı izlendi</string>
-  <string name="collect">Bilgileri alınmış bölüm</string>
-  <string name="uncollect">Bilgileri henüz alınmamış bölüm</string>
+  <string name="collect">Kolleksiyona dahil edilmiş bölüm</string>
+  <string name="uncollect">Kolleksiyona dahil edilmemiş bölüm</string>
   <string name="trakt_submitfailed">trakt\'a gönderilemedi. Sonra tekrar deneyin.</string>
   <string name="trakt_submitsuccess">trakt\'a gönderildi.</string>
   <string name="trakt_seen">%s görüldü.</string>
   <string name="trakt_notseen">%s görülmedi.</string>
-  <string name="trakt_collected">Bilgileri alınan: %s.</string>
-  <string name="trakt_notcollected">Bilgileri alınamadı: %s.</string>
+  <string name="trakt_collected">Kolleksiyona dahil edilen: %s.</string>
+  <string name="trakt_notcollected">Kolleksiyonda bulunmayan: %s.</string>
   <string name="shows_empty">Gösterilecek dizi yok.</string>
   <string name="confirm_delete">%s öğesini silmek istediğinize emin misiniz?</string>
   <string name="delete_show">Kaldır</string>
   <string name="dontdelete_show">Kaldırma</string>
   <string name="no_nextepisode">sonraki bölüm bulunamadı</string>
-  <string name="context_favorite">Sık Kullanılanlara Ekle</string>
-  <string name="context_unfavorite">Sık Kullanılanlardan Kaldır</string>
+  <string name="context_favorite">Favorilere Ekle</string>
+  <string name="context_unfavorite">Favorilerden Kaldır</string>
   <string name="favorited">Favorilere eklendi</string>
-  <string name="unfavorited">Sık Kullanılanlar\'dan kaldırıldı</string>
+  <string name="unfavorited">Favoriler\'den kaldırıldı</string>
   <string name="context_hide">Gizle</string>
   <string name="context_unhide">Göster</string>
   <string name="hidden">Gizli dizi</string>
@@ -114,11 +114,11 @@
   <string name="menu_updateart">Posterleri yükle</string>
   <string name="arttask_incomplete">Bazı posterler yüklenemedi, daha sonra tekrar deneyin.</string>
   <string name="arttask_start">Posterler yükleniyor...</string>
-  <string name="arttask_nosdcard">Posterleri yüklemek harici depolama (SD kart) gerektirir.</string>
-  <string name="show_network"> kanal</string>
-  <string name="show_noairtime">Yayınlanma zamanı mevcut değil</string>
+  <string name="arttask_nosdcard">Posterleri yüklemek için harici depolama (SD kart) gereklidir.</string>
+  <string name="show_network"> </string>
+  <string name="show_noairtime">Yayın tarihi yok</string>
   <string name="show_noimdbentry">IMDB sayfası bulunamadı.</string>
-  <string name="season_watchcount">izlenmeyen bölümler</string>
+  <string name="season_watchcount">izlenilmemiş bölüm</string>
   <string name="season_allwatched">Tüm bölümler izlendi</string>
   <string name="season_onenotwatched">bölüm izlenmedi</string>
   <string name="season_unaired">yayınlanmadı</string>
@@ -127,7 +127,7 @@
   <string name="remaining">Kalan: %s</string>
   <string name="search_button">Ara</string>
   <string name="search_hint_add">Dizi adı</string>
-  <string name="no_results">Sonuç bulunamadı, tam sözcükleri deneyin.</string>
+  <string name="no_results">Sonuç bulunamadı, tam sözcüklerle deneyin.</string>
   <string name="search_error">Arama başarısız oldu, daha sonra tekrar deneyin.</string>
   <string name="add_show">Dizi Ekle</string>
   <string name="add_all">Tümünü ekle</string>
@@ -172,7 +172,7 @@
   <string name="pref_offset">El ile saat farkı</string>
   <string name="pref_offsetsummary">Yayınlanma süresini %s saat ötele</string>
   <string name="pref_autoupdate">Oto. Güncelleme Aç</string>
-  <string name="pref_autoupdatesummary">SeriesGuide başlatılırken programlarınızı düzenli aralıklarla güncelleştirin</string>
+  <string name="pref_autoupdatesummary">SeriesGuide başlatılırken dizilerinizi düzenli aralıklarla güncelleştirin</string>
   <string name="pref_updatewifionly">Yalnızca Wi-Fi ile güncelleştir.</string>
   <string name="about">SeriesGuide Hakkında</string>
   <string name="pref_credits">Katkıda Bulunanlar</string>
@@ -190,7 +190,7 @@
   <string name="pref_ganalyticssummary">SeriesGuide geliştirmeye yardımcı olmak için kullanım özelliklerini izler</string>
   <string name="sendusagedata">Geliştirici için kullanım istatistiklerini gönder.</string>
   <string name="pref_upcominglimit">Gelecek bölümleri gösterme süresi</string>
-  <string name="backup_description"><b>Yedekle</b> dizi verilerinizin bir kopyasını aşağıdaki klasördeki <b>seriesdatabase</b> isimli bir dosyaya yazar.\n\n<b>Geri Yükle</b> işlemi için aşağıdaki klasörde bu dosyanın olduğundan emin olun.\n\nSadece aynı veya daha eski veri sürümleri geri yüklenebilir.</string>
+  <string name="backup_description"><b>Yedekle</b> dizi veritabanınızın bir kopyasını aşağıdaki klasördeki <b>seriesdatabase</b> isimli dosyaya yazar.\n\n<b>Geri Yükle</b> işlemi için aşağıdaki klasörde bu dosyanın bulunduğundan emin olun.\n\nSadece aynı veya daha eski veritabanı sürümleri geri yüklenebilir.</string>
   <string name="backup_path"><b>Yedek klasörü</b></string>
   <string name="backup_version"><b>Veritabanı sürümü</b></string>
   <string name="backup_failed_nosd">Yedeklenemedi. Yedekleme klasörüne erişilemiyor.</string>
@@ -214,10 +214,10 @@
   <string name="import_no">Geri Yükleme</string>
   <string name="checkin">Giriş yap</string>
   <string name="checkin_searchhint">Bir dizi adı yazın</string>
-  <string name="checkin_empty">Uygun dizi yok</string>
+  <string name="checkin_empty">Eşleşen dizi yok</string>
   <string name="checkin_hint">Bir mesaj yazın (isteğe bağlı)</string>
   <string name="paste_episode">Bölümü yapıştır</string>
-  <string name="checkinsuccess">GetGlue ile %s bağlantı sağlandı.</string>
+  <string name="checkinsuccess">GetGlue ile %s bağlantısı sağlandı.</string>
   <string name="checkinfailed">GetGlue girişi başarısız oldu. GetGlue bağlantısını kesmeyi deneyin.</string>
   <string name="getglue_authfailed">GetGlue kimlik doğrulaması başarısız oldu. Daha sonra yeniden deneyin.</string>
   <string name="menu_rate_trakt">Derece (trakt)</string>
@@ -225,7 +225,7 @@
   <string name="traktcheckin_cancel">Geçersiz Kıl</string>
   <string name="traktcheckin_inprogress">Bir başka bölüm veya filme giriş yapmış durumdasınız. Ya önceki girişinizi geçersiz kılın, ya da %s bekleyin ve tekrar deneyin.</string>
   <string name="traktcheckin_wait">Bekleyin</string>
-  <string name="oauthmessage">GetGlue ile SeriesGuide erişimi sağlanıyor…</string>
+  <string name="oauthmessage">SeriesGuide için GetGlue erişimi sağlanıyor…</string>
   <string name="addtocalendar">Takvime ekle</string>
   <string name="addtocalendar_failed">Takvim etkinliği oluşturulamıyor.</string>
   <string name="username">Kullanıcı Adı</string>
@@ -235,13 +235,13 @@
   <string name="connect">Bağlan</string>
   <string name="disconnect">Bağlantıyı Kes</string>
   <string name="trakt_error">Trakt etkileşimi başarısız oldu</string>
-  <string name="trakt_decryptfail">parola şifresi çözülemedi</string>
+  <string name="trakt_decryptfail">parola çözümlenemedi</string>
   <string name="trakt_generalerror">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
   <string name="trakt_createaccount">Yeni hesap oluştur</string>
   <string name="trakt_experimental">Sadece SeriesGuide listenizdeki diziler eşitlenecektir. \'SeriesGuide\'ı eşitle\' seçeneği trakt\'taki bilgileri içe aktarır. \'trakt.tv\'ı eşitle\' seçeneği bilgilerinizi dışa aktarır.</string>
-  <string name="trakt_synctodevice">SeriesGuide\'ı eşitle</string>
-  <string name="trakt_synctotrakt">trakt.tv ile eşitle</string>
-  <string name="trakt_syncunseen">İzlenmemiş bayrakları dahil et</string>
+  <string name="trakt_synctodevice">SeriesGuide\'a eşitle</string>
+  <string name="trakt_synctotrakt">trakt.tv\'ye eşitle</string>
+  <string name="trakt_syncunseen">İzlenmemiş bayraklarını dahil et</string>
   <string name="trakt_howto_title">Trakt.tv ile eşitlemeyi kur</string>
   <string name="trakt_howto">Cihazlarınızı yapılandırmak için:\n\n1. Tüm cihazlarınızda oturum açın veya kayıt olun.\n2. Önce <b>trakt.tv\'ı eşitle</b> butonunu kullanarak bilgilerinizi gönderin.\n3. Trakt.tv\'deki dizileri eklemek için <b>Dizi Ekle</b> ekranındaki <b>Kitaplık</b> sekmesine gidin.\n\nArtık SeriesGuide\'ın her güncellemesinde bilgileriniz tüm cihazlarınıza indirilecektir. Bu bilgilere izlenmiş veya koleksiyona alınmış olarak işaretlenen diziler ve yapılan girişleriniz de dahildir.</string>
   <string name="welcome_setuplanguage">Dil seçin</string>
@@ -274,7 +274,7 @@
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Sonraki bölüm</item>
-    <item>Sık Kullanılanlar (A - Z)</item>
+    <item>Favoriler (A - Z)</item>
     <item>Sık Kullanılanlar (sonraki bl)</item>
   </string-array>
   <string-array name="sesorting">
@@ -307,6 +307,6 @@
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d oy</item>
-    <item quantity="other">%d oy</item>
+    <item quantity="other">%d oylar</item>
   </plurals>
 </resources>

@@ -154,10 +154,13 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                 return OFFLINE;
             }
 
-            try {
-                ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
-                ShowService showService = manager.showService();
+            ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
+            if (manager == null) {
+                return FAILED;
+            }
 
+            ShowService showService = manager.showService();
+            try {
                 switch (mAction) {
                     case EPISODE_WATCHED:
                         // flag a single episode watched
@@ -203,11 +206,6 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                 Log.w(TAG, e);
                 return FAILED;
             } catch (ApiException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
-                return FAILED;
-            } catch (Exception e) {
-                // password could likely not be decrypted
                 Utils.trackException(mContext, e);
                 Log.w(TAG, e);
                 return FAILED;

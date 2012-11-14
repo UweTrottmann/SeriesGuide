@@ -23,7 +23,9 @@ import android.widget.Toast;
 
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.thetvdbapi.TheTVDB;
+import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.enumerations.ExtendedParam;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -100,7 +102,7 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         if (mAddQueue.isEmpty()) {
             return null;
         }
-        
+
         int result;
         boolean modifiedDB = false;
 
@@ -118,18 +120,21 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         List<TvShow> watched = new ArrayList<TvShow>();
         List<TvShow> collection = new ArrayList<TvShow>();
         if (Utils.isTraktCredentialsValid(mContext)) {
-            try {
-                ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
+            ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
+            if (manager != null) {
+                try {
+                    watched = manager.userService()
+                            .libraryShowsWatched(Utils.getTraktUsername(mContext))
+                            .extended(ExtendedParam.Min).fire();
 
-                watched = manager.userService()
-                        .libraryShowsWatched(Utils.getTraktUsername(mContext))
-                        .extended(ExtendedParam.Min).fire();
+                    collection = manager.userService()
+                            .libraryShowsCollection(Utils.getTraktUsername(mContext))
+                            .extended(ExtendedParam.Min).fire();
+                } catch (ApiException e) {
+                    // something went wrong, just go on
+                } catch (TraktException e) {
 
-                collection = manager.userService()
-                        .libraryShowsCollection(Utils.getTraktUsername(mContext))
-                        .extended(ExtendedParam.Min).fire();
-            } catch (Exception e1) {
-                // something went wrong, just go on
+                }
             }
         }
 

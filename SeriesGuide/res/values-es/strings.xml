@@ -23,7 +23,7 @@
   <string name="more">%s más</string>
   <string name="cancel">Cancelar</string>
   <string name="share">Compartir</string>
-  <string name="updated">Updated to latest version.</string>
+  <string name="updated">Actualizado a la última versión.</string>
   <string name="offline">No hay conexión de red. Inténtelo más tarde.</string>
   <string name="onlyx">Sólo está disponible en SeriesGuide X</string>
   <string name="shouts">Gritos</string>
@@ -286,7 +286,7 @@
     <item>Más antiguo primero</item>
     <item>No vistos primero</item>
     <item>A-Z</item>
-    <item>Top rated</item>
+    <item>Mas valorado</item>
     <item>Primero los más rencientes (DVD)</item>
     <item>Primero más antiguos (DVD)</item>
   </string-array>

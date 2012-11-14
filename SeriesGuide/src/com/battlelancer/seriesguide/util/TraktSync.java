@@ -94,10 +94,8 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             return FAILED_CREDENTIALS;
         }
 
-        ServiceManager manager;
-        try {
-            manager = Utils.getServiceManagerWithAuth(mContext, false);
-        } catch (Exception e1) {
+        ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
+        if (manager == null) {
             // password could not be decrypted
             return FAILED_CREDENTIALS;
         }
