@@ -11,7 +11,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">Android 4.2 is coming!\n\nUse the list widget on your Android 4.2 lock screen.\n\nDesign refinements for episode images and button bar.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">Android 4.2 is coming!\n\nUse the list widget on your Android 4.2 lock screen.\n\nDesign refinements for episode images and button bar.\n\nFixed list widget crash, trakt syncing on 4.2.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
