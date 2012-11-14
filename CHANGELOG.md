@@ -8,9 +8,9 @@ All dates are in the European Central timezone.
 Version 2.10.2 *(2012-11-14)*
 --------------------------------
 
-* FEATURE Lock screen widget support.
+* FEATURE Android 4.2 lock screen widget support.
 * FIX Adding a list widget on Android 4.2 crashes SeriesGuide.
-* FIX Could not interact with trakt as password could not be decrypted.
+* FIX Could not interact with trakt on Android 4.2 as password could not be decrypted.
 
 ### Detailed changes:
 
