@@ -35,7 +35,8 @@
         <!-- Content provider -->
         <provider
             android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider"
-            android:authorities="com.battlelancer.seriesguide.provider" >
+            android:authorities="com.battlelancer.seriesguide.provider"
+            android:exported="true" >
         </provider>
 
         <!-- Launch activity -->
