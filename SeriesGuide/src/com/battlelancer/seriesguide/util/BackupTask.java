@@ -75,7 +75,7 @@ public class BackupTask extends AsyncTask<String, Void, Void> {
 
             Log.i(TAG, "Created automatic backup of show database on external storage.");
         } catch (IOException e) {
-            Log.e(TAG, e.getMessage(), e);
+            Utils.trackExceptionAndLog(mContext, TAG, e);
         }
 
         return null;
