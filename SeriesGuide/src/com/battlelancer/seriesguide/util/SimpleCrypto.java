@@ -38,7 +38,10 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
 /**
- * Symmetrically encrypts and decrypts strings using a seeded key.
+ * Symmetrically encrypts and decrypts strings using a seeded key stored in a
+ * key store on internal storage. Be aware that anyone gaining access to this
+ * app's storage may be able to access the key store. This is just supposed to
+ * add furhter layers of work before being able to access encrypted data.
  */
 public class SimpleCrypto {
 
@@ -121,7 +124,7 @@ public class SimpleCrypto {
         }
 
         // ensure key
-        if (keystore.containsAlias("trakt")) {
+        if (keystore.containsAlias(KEY_ALIAS)) {
             // retrieve existing key
             KeyStore.SecretKeyEntry entry = (SecretKeyEntry) keystore.getEntry(KEY_ALIAS, null);
             SecretKey key = entry.getSecretKey();
