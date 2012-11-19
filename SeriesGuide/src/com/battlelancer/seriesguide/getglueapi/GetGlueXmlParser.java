@@ -48,6 +48,10 @@ public class GetGlueXmlParser {
         return null;
     }
 
+    public List<GetGlueObject> parseObjects(InputStream in) throws XmlPullParserException {
+        return null;
+    }
+
     private abstract class GenericGetGlueXmlParser<T> {
         private String mSecondLevelTag = "";
 
@@ -240,9 +244,24 @@ public class GetGlueXmlParser {
     }
 
     /**
+     * Object format used by GetGlue (<a
+     * href="http://getglue.com/api#networkwide-methods"
+     * >http://getglue.com/api#networkwide-methods</a>).
+     */
+    public static class GetGlueObject {
+        public final String title;
+        public final String key;
+
+        private GetGlueObject(String title, String key) {
+            this.title = title;
+            this.key = key;
+        }
+    }
+
+    /**
      * Error format used by GetGlue (<a
-     * href="http://o.getglue.com/api#glue-api-errors"
-     * >http://o.getglue.com/api#interaction-format</a>).<br>
+     * href="http://getglue.com/api#glue-api-errors"
+     * >http://getglue.com/api#glue-api-errors</a>).<br>
      * <b>Attention:</b> There are additional fields not used here.
      */
     public static class Error {
