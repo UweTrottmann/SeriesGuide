@@ -108,6 +108,10 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
                 selection = prefs.getInt(SeriesGuidePreferences.KEY_ACTIVITYTAB, 0);
             }
         }
+        // never select a non-existent tab
+        if (selection > mTabsAdapter.getCount() - 1) {
+            selection = 0;
+        }
         actionBar.setSelectedNavigationItem(selection);
     }
 
