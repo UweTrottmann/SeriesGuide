@@ -23,6 +23,7 @@
     <color name="text_default_inverse">#414141</color>
     <color name="text_dim">#80bebebe</color>
     <color name="text_dim_light">#80323232</color>
+    <color name="text_blue">#FF0099CC</color>
     <color name="accent_primary">#ff4800ff</color>
     <color name="accent_primary_light">#bb4800ff</color>
     <color name="dim">#ff313531</color>
