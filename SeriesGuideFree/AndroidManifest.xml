@@ -165,17 +165,25 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
 
         <!-- Notification service -->
         <service android:name="com.battlelancer.seriesguide.service.NotificationService" >
         </service>
 
         <!-- Not available in free version -->
-        <!-- <receiver android:name="com.battlelancer.seriesguide.service.OnAlarmReceiver" >
+        <!--
+        <receiver android:name="com.battlelancer.seriesguide.service.OnAlarmReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver> -->
+        </receiver>
+        -->
+
 
         <!-- Widgets -->
         <receiver
