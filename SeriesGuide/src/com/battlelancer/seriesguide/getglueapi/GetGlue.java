@@ -49,7 +49,7 @@ public class GetGlue {
 
     private static final String TAG = "GetGlue";
 
-    private static final String GETGLUE_APIPATH_V2 = "http://api.getglue.com/v2/";
+    public static final String GETGLUE_APIPATH_V2 = "http://api.getglue.com/v2/";
 
     private static final String GETGLUE_SOURCE = "&source=http://seriesgui.de/&app=SeriesGuide";
 
@@ -117,23 +117,8 @@ public class GetGlue {
             String url = GETGLUE_APIPATH_V2 + GETGLUE_CHECKIN_IMDBID + mImdbId + GETGLUE_SOURCE
                     + "&comment=" + mComment;
 
-            OAuthConsumer consumer = createOAuthConsumer(mContext);
-
-            HttpURLConnection request = null;
-            try {
-                request = AndroidUtils.buildHttpUrlConnection(url);
-                consumer.sign(request);
-            } catch (OAuthMessageSignerException e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
-                return CHECKIN_FAILED;
-            } catch (OAuthExpectationFailedException e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
-                return CHECKIN_FAILED;
-            } catch (OAuthCommunicationException e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
-                return CHECKIN_FAILED;
-            } catch (IOException e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
+            HttpURLConnection request = buildGetGlueRequest(url, mContext);
+            if (request == null) {
                 return CHECKIN_FAILED;
             }
 
@@ -161,16 +146,12 @@ public class GetGlue {
                     }
                 }
             } catch (ClientProtocolException e) {
-                Log.w(TAG, e);
                 Utils.trackExceptionAndLog(mContext, TAG, e);
             } catch (IOException e) {
-                Log.w(TAG, e);
                 Utils.trackExceptionAndLog(mContext, TAG, e);
             } catch (IllegalStateException e) {
-                Log.w(TAG, e);
                 Utils.trackExceptionAndLog(mContext, TAG, e);
             } catch (XmlPullParserException e) {
-                Log.w(TAG, e);
                 Utils.trackExceptionAndLog(mContext, TAG, e);
             } finally {
                 if (responseIn != null) {
@@ -207,10 +188,10 @@ public class GetGlue {
     }
 
     /**
-     * Creates a consumer object and configures it with the access token and
-     * token secret obtained from the service provider.
+     * Creates a {@link HttpURLConnection} for the given url string and signs it
+     * using the stored GetGlue OAuth consumer credentials.
      */
-    private static OAuthConsumer createOAuthConsumer(Context context) {
+    public static HttpURLConnection buildGetGlueRequest(String url, Context context) {
         final Resources res = context.getResources();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -219,7 +200,22 @@ public class GetGlue {
                 res.getString(R.string.getglue_consumer_secret));
         consumer.setTokenWithSecret(prefs.getString(OAUTH_TOKEN, ""),
                 prefs.getString(OAUTH_TOKEN_SECRET, ""));
-        return consumer;
+
+        HttpURLConnection request = null;
+        try {
+            request = AndroidUtils.buildHttpUrlConnection(url);
+            consumer.sign(request);
+            return request;
+        } catch (OAuthMessageSignerException e) {
+            Utils.trackExceptionAndLog(context, TAG, e);
+        } catch (OAuthExpectationFailedException e) {
+            Utils.trackExceptionAndLog(context, TAG, e);
+        } catch (OAuthCommunicationException e) {
+            Utils.trackExceptionAndLog(context, TAG, e);
+        } catch (IOException e) {
+            Utils.trackExceptionAndLog(context, TAG, e);
+        }
+        return null;
     }
 
     public static void clearCredentials(final SharedPreferences prefs) {
