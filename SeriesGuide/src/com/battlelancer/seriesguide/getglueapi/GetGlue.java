@@ -70,6 +70,8 @@ public class GetGlue {
 
     public static final String OAUTH_TOKEN_SECRET = "oauth_token_secret";
 
+    public static final String GETGLUE_FIND_OBJECTS = "glue/findObjects?q=";
+
     private static final String GETGLUE_CHECKIN_IMDBID = "user/addCheckin?objectId=http://www.imdb.com/title/";
 
     public static boolean isAuthenticated(final SharedPreferences prefs) {
@@ -97,13 +99,10 @@ public class GetGlue {
 
         private Context mContext;
 
-        private SharedPreferences mPrefs;
-
         public CheckInTask(String imdbId, String comment, Context context) {
             mImdbId = imdbId;
             mComment = comment;
             mContext = context;
-            mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         }
 
         @Override
@@ -118,14 +117,7 @@ public class GetGlue {
             String url = GETGLUE_APIPATH_V2 + GETGLUE_CHECKIN_IMDBID + mImdbId + GETGLUE_SOURCE
                     + "&comment=" + mComment;
 
-            // create a consumer object and configure it with the access
-            // token and token secret obtained from the service provider
-            final Resources res = mContext.getResources();
-            OAuthConsumer consumer = new DefaultOAuthConsumer(
-                    res.getString(R.string.getglue_consumer_key),
-                    res.getString(R.string.getglue_consumer_secret));
-            consumer.setTokenWithSecret(mPrefs.getString(OAUTH_TOKEN, ""),
-                    mPrefs.getString(OAUTH_TOKEN_SECRET, ""));
+            OAuthConsumer consumer = createOAuthConsumer(mContext);
 
             HttpURLConnection request = null;
             try {
@@ -212,6 +204,22 @@ public class GetGlue {
             }
         }
 
+    }
+
+    /**
+     * Creates a consumer object and configures it with the access token and
+     * token secret obtained from the service provider.
+     */
+    private static OAuthConsumer createOAuthConsumer(Context context) {
+        final Resources res = context.getResources();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        OAuthConsumer consumer = new DefaultOAuthConsumer(
+                res.getString(R.string.getglue_consumer_key),
+                res.getString(R.string.getglue_consumer_secret));
+        consumer.setTokenWithSecret(prefs.getString(OAUTH_TOKEN, ""),
+                prefs.getString(OAUTH_TOKEN_SECRET, ""));
+        return consumer;
     }
 
     public static void clearCredentials(final SharedPreferences prefs) {
