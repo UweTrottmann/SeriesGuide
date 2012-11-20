@@ -251,7 +251,7 @@ public class GetGlueXmlParser {
                     continue;
                 }
                 String name = parser.getName();
-                if (name.equals(GetGlueObject.TVSHOW)) {
+                if (name.equals(GetGlueObject.TVSHOWS)) {
                     tvShows.add(readTvShow(parser));
                 } else {
                     skip(parser);
@@ -265,7 +265,7 @@ public class GetGlueXmlParser {
             String title = null;
             String key = null;
 
-            parser.require(XmlPullParser.START_TAG, ns, GetGlueObject.TVSHOW);
+            parser.require(XmlPullParser.START_TAG, ns, GetGlueObject.TVSHOWS);
             while (parser.next() != XmlPullParser.END_TAG) {
                 if (parser.getEventType() != XmlPullParser.START_TAG) {
                     continue;
@@ -341,8 +341,7 @@ public class GetGlueXmlParser {
      */
     public static class GetGlueObject {
         static String MATCHES = "matches";
-        static String TVSHOWS = "tvshows";
-        static String TVSHOW = "tvshow";
+        static String TVSHOWS = "tv_shows";
         static String KEY = "key";
         static String TITLE = "title";
 
