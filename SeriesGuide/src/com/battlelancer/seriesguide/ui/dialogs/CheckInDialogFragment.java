@@ -36,6 +36,7 @@ import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
+import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
@@ -239,6 +240,15 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                 }
 
                 dismiss();
+            }
+        });
+
+        layout.findViewById(R.id.buttonFixGetGlue).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), FixGetGlueCheckInActivity.class);
+                i.putExtra(FixGetGlueCheckInActivity.InitBundle.SHOW_ID, tvdbid);
+                startActivity(i);
             }
         });
 

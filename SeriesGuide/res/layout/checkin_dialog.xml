@@ -73,7 +73,7 @@
         layout="@layout/divider_horizontal" />
 
     <Button
-        android:id="@+id/textViewFixGetGlue"
+        android:id="@+id/buttonFixGetGlue"
         style="@style/Widget.SeriesGuide.Button.Borderless.Small.Highlight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
