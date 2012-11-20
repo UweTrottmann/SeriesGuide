@@ -353,6 +353,11 @@ public class GetGlueXmlParser {
             this.title = title;
             this.key = key;
         }
+
+        @Override
+        public String toString() {
+            return title;
+        }
     }
 
     /**
