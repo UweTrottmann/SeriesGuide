@@ -247,7 +247,7 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), FixGetGlueCheckInActivity.class);
-                i.putExtra(FixGetGlueCheckInActivity.InitBundle.SHOW_ID, tvdbid);
+                i.putExtra(FixGetGlueCheckInActivity.InitBundle.SHOW_ID, String.valueOf(tvdbid));
                 startActivity(i);
             }
         });
