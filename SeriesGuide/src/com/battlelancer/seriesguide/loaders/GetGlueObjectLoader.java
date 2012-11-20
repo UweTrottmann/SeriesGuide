@@ -35,6 +35,9 @@ public class GetGlueObjectLoader extends GenericListLoader<GetGlueObject> {
 
     @Override
     public List<GetGlueObject> loadInBackground() {
+        // replace only white spaces
+        mQuery = mQuery.replace(" ", "%20");
+
         String url = GetGlue.GETGLUE_APIPATH_V2 + GetGlue.GETGLUE_FIND_OBJECTS + mQuery;
 
         // build request
