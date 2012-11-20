@@ -7,6 +7,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.battlelancer.seriesguide.getglueapi.GetGlueXmlParser.GetGlueObject;
 import com.battlelancer.seriesguide.loaders.GetGlueObjectLoader;
@@ -27,6 +28,7 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
     }
 
     private ArrayAdapter<GetGlueObject> mAdapter;
+    private ListView mList;
 
     @Override
     protected void onCreate(Bundle args) {
@@ -34,13 +36,18 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
         setContentView(R.layout.activity_fix_get_glue);
 
         String showId = null;
-        if (args != null) {
-            showId = args.getString(InitBundle.SHOW_ID);
+        if (getIntent() != null) {
+            showId = getIntent().getStringExtra(InitBundle.SHOW_ID);
         }
         if (TextUtils.isEmpty(showId)) {
             finish();
             return;
         }
+
+        mAdapter = new ArrayAdapter<GetGlueObject>(this, R.layout.getglue_item,
+                R.id.textViewGetGlueShowTitle);
+        mList = (ListView) findViewById(R.id.listViewGetGlueResults);
+        mList.setAdapter(mAdapter);
 
         // query for show title
         final Cursor show = getContentResolver().query(Shows.buildShowUri(showId), new String[] {
@@ -51,9 +58,6 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
                 String query = show.getString(1);
                 Bundle loaderArgs = new Bundle();
                 loaderArgs.putString("query", query);
-
-                mAdapter = new ArrayAdapter<GetGlueObject>(this, R.layout.getglue_item,
-                        R.id.textViewGetGlueShowTitle);
 
                 getSupportLoaderManager().initLoader(0, loaderArgs, this);
             }
@@ -67,7 +71,7 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
     public Loader<List<GetGlueObject>> onCreateLoader(int id, Bundle args) {
         String query = null;
         if (args != null) {
-            query = args.getString(InitBundle.SHOW_ID);
+            query = args.getString("query");
         }
         return new GetGlueObjectLoader(query, this);
     }
