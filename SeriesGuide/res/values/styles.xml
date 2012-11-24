@@ -19,6 +19,11 @@
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
+    <style name="TextAppearance.Small.Highlight">
+        <item name="android:textColor">@color/text_blue</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
     <style name="TextAppearance.Small.Dim">
         <item name="android:textColor">@color/text_dim</item>
     </style>
@@ -84,6 +89,10 @@
 
     <style name="Widget.SeriesGuide.Button.Borderless.Small">
         <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.Button.Borderless.Small.Highlight">
+        <item name="android:textAppearance">@style/TextAppearance.Small.Highlight</item>
     </style>
 
     <style name="Widget.SeriesGuide.ImageButton">

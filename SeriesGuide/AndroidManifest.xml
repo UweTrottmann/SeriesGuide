@@ -161,6 +161,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
 
         <!-- Notification service -->
         <service android:name="com.battlelancer.seriesguide.service.NotificationService" >

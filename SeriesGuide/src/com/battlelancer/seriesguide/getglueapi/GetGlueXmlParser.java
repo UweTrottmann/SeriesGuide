@@ -1,15 +1,18 @@
 /*
- * Copyright (C) 2012 The Android Open Source Project
+ * Copyright 2012 Uwe Trottmann
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
  */
 
 package com.battlelancer.seriesguide.getglueapi;
@@ -31,6 +34,8 @@ import java.util.List;
  */
 public class GetGlueXmlParser {
     private static final String ns = null;
+    private static final String ADAPTIVEBLUE = "adaptiveblue";
+    private static final String RESPONSE = "response";
 
     // We don't use namespaces
 
@@ -48,6 +53,11 @@ public class GetGlueXmlParser {
         return null;
     }
 
+    public List<GetGlueObject> parseObjects(InputStream in) throws XmlPullParserException,
+            IOException {
+        return new GetGlueObjectXmlParser().parse(in);
+    }
+
     private abstract class GenericGetGlueXmlParser<T> {
         private String mSecondLevelTag = "";
 
@@ -58,15 +68,15 @@ public class GetGlueXmlParser {
                 parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
                 parser.setInput(in, null);
                 parser.nextTag();
-                return readGetGlueContent(parser);
+                return readAdaptiveBlue(parser);
             } finally {
                 in.close();
             }
         }
 
-        private List<T> readGetGlueContent(XmlPullParser parser) throws XmlPullParserException,
+        private List<T> readAdaptiveBlue(XmlPullParser parser) throws XmlPullParserException,
                 IOException {
-            parser.require(XmlPullParser.START_TAG, ns, "adaptiveblue");
+            parser.require(XmlPullParser.START_TAG, ns, ADAPTIVEBLUE);
             while (parser.next() != XmlPullParser.END_TAG) {
                 if (parser.getEventType() != XmlPullParser.START_TAG) {
                     continue;
@@ -130,19 +140,19 @@ public class GetGlueXmlParser {
     private class InteractionXmlParser extends GenericGetGlueXmlParser<Interaction> {
 
         public InteractionXmlParser() {
-            super.mSecondLevelTag = "response";
+            super.mSecondLevelTag = RESPONSE;
         }
 
         @Override
         protected List<Interaction> readContent(XmlPullParser parser)
                 throws XmlPullParserException, IOException {
-            parser.require(XmlPullParser.START_TAG, ns, "response");
+            parser.require(XmlPullParser.START_TAG, ns, RESPONSE);
             while (parser.next() != XmlPullParser.END_TAG) {
                 if (parser.getEventType() != XmlPullParser.START_TAG) {
                     continue;
                 }
                 String name = parser.getName();
-                if (name.equals("interactions")) {
+                if (name.equals(Interaction.INTERACTIONS)) {
                     return readInteractions(parser);
                 } else {
                     skip(parser);
@@ -154,7 +164,7 @@ public class GetGlueXmlParser {
         private List<Interaction> readInteractions(XmlPullParser parser)
                 throws XmlPullParserException,
                 IOException {
-            parser.require(XmlPullParser.START_TAG, ns, "interactions");
+            parser.require(XmlPullParser.START_TAG, ns, Interaction.INTERACTIONS);
             List<Interaction> interactions = new ArrayList<Interaction>();
             while (parser.next() != XmlPullParser.END_TAG) {
                 if (parser.getEventType() != XmlPullParser.START_TAG) {
@@ -188,6 +198,89 @@ public class GetGlueXmlParser {
             return new Interaction(title);
         }
 
+    }
+
+    private class GetGlueObjectXmlParser extends GenericGetGlueXmlParser<GetGlueObject> {
+
+        public GetGlueObjectXmlParser() {
+            super.mSecondLevelTag = "response";
+        }
+
+        @Override
+        protected List<GetGlueObject> readContent(XmlPullParser parser)
+                throws XmlPullParserException, IOException {
+            parser.require(XmlPullParser.START_TAG, ns, "response");
+            while (parser.next() != XmlPullParser.END_TAG) {
+                if (parser.getEventType() != XmlPullParser.START_TAG) {
+                    continue;
+                }
+                String name = parser.getName();
+                if (name.equals(GetGlueObject.MATCHES)) {
+                    return readMatches(parser);
+                } else {
+                    skip(parser);
+                }
+            }
+            return new ArrayList<GetGlueObject>();
+        }
+
+        private List<GetGlueObject> readMatches(XmlPullParser parser)
+                throws XmlPullParserException, IOException {
+            parser.require(XmlPullParser.START_TAG, ns, GetGlueObject.MATCHES);
+            while (parser.next() != XmlPullParser.END_TAG) {
+                if (parser.getEventType() != XmlPullParser.START_TAG) {
+                    continue;
+                }
+                String name = parser.getName();
+                if (name.equals(GetGlueObject.TVSHOWS)) {
+                    return readTvShows(parser);
+                } else {
+                    skip(parser);
+                }
+            }
+            return new ArrayList<GetGlueObject>();
+        }
+
+        private List<GetGlueObject> readTvShows(XmlPullParser parser)
+                throws XmlPullParserException, IOException {
+            List<GetGlueObject> tvShows = new ArrayList<GetGlueObject>();
+
+            parser.require(XmlPullParser.START_TAG, ns, GetGlueObject.TVSHOWS);
+            while (parser.next() != XmlPullParser.END_TAG) {
+                if (parser.getEventType() != XmlPullParser.START_TAG) {
+                    continue;
+                }
+                String name = parser.getName();
+                if (name.equals(GetGlueObject.TVSHOWS)) {
+                    tvShows.add(readTvShow(parser));
+                } else {
+                    skip(parser);
+                }
+            }
+            return tvShows;
+        }
+
+        private GetGlueObject readTvShow(XmlPullParser parser) throws XmlPullParserException,
+                IOException {
+            String title = null;
+            String key = null;
+
+            parser.require(XmlPullParser.START_TAG, ns, GetGlueObject.TVSHOWS);
+            while (parser.next() != XmlPullParser.END_TAG) {
+                if (parser.getEventType() != XmlPullParser.START_TAG) {
+                    continue;
+                }
+                String name = parser.getName();
+                if (name.equals(GetGlueObject.KEY)) {
+                    key = readTextTag(parser, GetGlueObject.KEY);
+                } else if (name.equals(GetGlueObject.TITLE)) {
+                    title = readTextTag(parser, GetGlueObject.TITLE);
+                } else {
+                    skip(parser);
+                }
+            }
+            return new GetGlueObject(title, key);
+        }
     }
 
     private class ErrorXmlParser extends GenericGetGlueXmlParser<Error> {
@@ -232,6 +325,8 @@ public class GetGlueXmlParser {
      * <b>Attention:</b> There are additional fields not used here.
      */
     public static class Interaction {
+        static String INTERACTIONS = "interactions";
+
         public final String title;
 
         private Interaction(String title) {
@@ -240,9 +335,34 @@ public class GetGlueXmlParser {
     }
 
     /**
+     * Object format used by GetGlue (<a
+     * href="http://getglue.com/api#networkwide-methods"
+     * >http://getglue.com/api#networkwide-methods</a>).
+     */
+    public static class GetGlueObject {
+        static String MATCHES = "matches";
+        static String TVSHOWS = "tv_shows";
+        static String KEY = "key";
+        static String TITLE = "title";
+
+        public final String title;
+        public final String key;
+
+        private GetGlueObject(String title, String key) {
+            this.title = title;
+            this.key = key;
+        }
+
+        @Override
+        public String toString() {
+            return title;
+        }
+    }
+
+    /**
      * Error format used by GetGlue (<a
-     * href="http://o.getglue.com/api#glue-api-errors"
-     * >http://o.getglue.com/api#interaction-format</a>).<br>
+     * href="http://getglue.com/api#glue-api-errors"
+     * >http://getglue.com/api#glue-api-errors</a>).<br>
      * <b>Attention:</b> There are additional fields not used here.
      */
     public static class Error {

@@ -74,7 +74,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_LISTS = 28;
 
-    public static final int DATABASE_VERSION = DBVER_LISTS;
+    public static final int DBVER_GETGLUE_CHECKIN_FIX = 29;
+
+    public static final int DATABASE_VERSION = DBVER_GETGLUE_CHECKIN_FIX;
 
     public interface Tables {
         String SHOWS = "series";
@@ -185,7 +187,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ShowsColumns.LASTUPDATED + " INTEGER DEFAULT 0,"
 
-            + ShowsColumns.LASTEDIT + " INTEGER DEFAULT 0"
+            + ShowsColumns.LASTEDIT + " INTEGER DEFAULT 0,"
+
+            + ShowsColumns.GETGLUEID + " TEXT DEFAULT ''"
 
             + ");";
 
@@ -370,6 +374,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 27:
                 upgradeToTwentyEight(db);
                 version = 28;
+            case 28:
+                upgradeToTwentyNine(db);
+                version = 29;
         }
 
         // drop all tables if version is not right
@@ -386,6 +393,14 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             onCreate(db);
         }
+    }
+
+    /**
+     * Add {@link Shows} column to store a GetGlue object id.
+     */
+    private void upgradeToTwentyNine(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.GETGLUEID
+                + " TEXT DEFAULT '';");
     }
 
     /**

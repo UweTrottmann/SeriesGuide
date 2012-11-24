@@ -25,6 +25,8 @@
     <string name="cancel">Cancel</string>
     <string name="share">Share</string>
     <string name="updated">Updated to latest version.</string>
+    <string name="discard">Discard</string>
+    <string name="save_selection">Save selection</string>
 
     <plurals name="votes">
         <item quantity="one">%d vote</item>
@@ -285,10 +287,17 @@
     <string name="checkin_searchhint">Type a show name</string>
     <string name="checkin_empty">No matching shows</string>
     <string name="checkin_hint">Type a message (optional)</string>
+    <string name="checkin_fixgetglue">Fix GetGlue check in</string>
     <string name="paste_episode">Paste episode</string>
     <string name="checkinsuccess">Checked into %s on GetGlue.</string>
     <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
     <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
+
+    <!-- Fix GetGlue Check In -->
+    <string name="select_show">Select show</string>
+    <string name="check_into">Check into</string>
+    <string name="no_selection">pick one below</string>
+    <string name="looking_for_something_else">Looking for something else?</string>
 
     <!-- Share methods -->
     <string name="menu_rate_trakt">Rate (trakt)</string>
