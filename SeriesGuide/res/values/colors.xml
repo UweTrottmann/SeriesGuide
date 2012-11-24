@@ -29,6 +29,7 @@
     <color name="dim">#ff313531</color>
     <color name="background">#ff111111</color>
     <color name="background_dim">#80111111</color>
+    <color name="disabled">#80333333</color>
 
     <color name="green_bright">#ff65f526</color>
     <color name="green_dark">#ff05A30D</color>

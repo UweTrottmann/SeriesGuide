@@ -3,4 +3,10 @@
 
     <solid android:color="@color/accent_primary" />
 
+    <padding
+        android:bottom="4dp"
+        android:left="8dp"
+        android:right="8dp"
+        android:top="4dp" />
+
 </shape>
