@@ -35,11 +35,14 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
     private ListView mList;
     private GetGlueObjectAdapter mAdapter;
     private TextView mSelectedValue;
+    private View mHeaderView;
 
     @Override
     protected void onCreate(Bundle args) {
         super.onCreate(args);
         setContentView(R.layout.activity_fix_get_glue);
+
+        setTitle(R.string.select_show);
 
         setupViews();
 
@@ -54,6 +57,7 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
 
         mAdapter = new GetGlueObjectAdapter(this);
         mList = (ListView) findViewById(R.id.listViewGetGlueResults);
+        mList.addHeaderView(mHeaderView, null, false);
         mList.setAdapter(mAdapter);
         mList.setOnItemClickListener(this);
 
@@ -76,15 +80,16 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
     }
 
     private void setupViews() {
-        mSelectedValue = (TextView) findViewById(R.id.textViewSelectedShowValue);
-        
+        mHeaderView = getLayoutInflater().inflate(R.layout.getglue_header, null);
+        mSelectedValue = (TextView) mHeaderView.findViewById(R.id.textViewSelectedShowValue);
+
         findViewById(R.id.buttonDiscard).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        
+
         findViewById(R.id.buttonSaveSelection).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +101,8 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        GetGlueObject glueObject = mAdapter.getItem(position);
+        // we have a header view, subtract one to get actual position
+        GetGlueObject glueObject = mAdapter.getItem(position - 1);
         mSelectedValue.setText(glueObject.key);
     }
 

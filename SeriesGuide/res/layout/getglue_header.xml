@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/headerGetGlueObjects"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/large_padding" >
+
+    <TextView
+        android:id="@+id/textViewFixGetGlueHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/large_padding"
+        android:paddingLeft="@dimen/default_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:text="@string/select_show"
+        android:textAppearance="?attr/textAppearanceSgXLargeLight" />
+
+    <TextView
+        android:id="@+id/textViewSelectedShowHeader"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewFixGetGlueHeader"
+        android:layout_marginRight="@dimen/large_padding"
+        android:ellipsize="end"
+        android:paddingLeft="@dimen/default_padding"
+        android:text="@string/check_into"
+        android:textAllCaps="true"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewSelectedShowValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewFixGetGlueHeader"
+        android:layout_toRightOf="@+id/textViewSelectedShowHeader"
+        android:paddingRight="@dimen/default_padding"
+        android:text="@string/no_selection" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/textViewSelectedShowHeader"
+        android:layout_marginTop="@dimen/large_padding"
+        layout="@layout/divider_horizontal" >
+    </include>
+
+</RelativeLayout>
