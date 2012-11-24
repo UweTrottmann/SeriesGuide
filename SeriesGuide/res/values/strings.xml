@@ -287,7 +287,7 @@
     <string name="checkin_searchhint">Type a show name</string>
     <string name="checkin_empty">No matching shows</string>
     <string name="checkin_hint">Type a message (optional)</string>
-    <string name="checkin_fixgetglue">Fix incorrect GetGlue check in</string>
+    <string name="checkin_fixgetglue">Fix GetGlue check in</string>
     <string name="paste_episode">Paste episode</string>
     <string name="checkinsuccess">Checked into %s on GetGlue.</string>
     <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
