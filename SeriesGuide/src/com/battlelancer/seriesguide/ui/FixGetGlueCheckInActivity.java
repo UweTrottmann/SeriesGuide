@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,6 +39,8 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
     private GetGlueObjectAdapter mAdapter;
     private TextView mSelectedValue;
     private View mHeaderView;
+    private EditText mSearchBox;
+    private View mFooterView;
 
     @Override
     protected void onCreate(Bundle args) {
@@ -58,6 +63,7 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
         mAdapter = new GetGlueObjectAdapter(this);
         mList = (ListView) findViewById(R.id.listViewGetGlueResults);
         mList.addHeaderView(mHeaderView, null, false);
+        mList.addFooterView(mFooterView, null, false);
         mList.setAdapter(mAdapter);
         mList.setOnItemClickListener(this);
 
@@ -68,6 +74,7 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
         if (show != null) {
             if (show.moveToFirst()) {
                 String query = show.getString(1);
+
                 Bundle loaderArgs = new Bundle();
                 loaderArgs.putString("query", query);
 
@@ -82,6 +89,33 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
     private void setupViews() {
         mHeaderView = getLayoutInflater().inflate(R.layout.getglue_header, null);
         mSelectedValue = (TextView) mHeaderView.findViewById(R.id.textViewSelectedShowValue);
+
+        mFooterView = getLayoutInflater().inflate(R.layout.getglue_footer, null);
+        mSearchBox = (EditText) mFooterView.findViewById(R.id.editTextGetGlueSearch);
+        mSearchBox.setOnKeyListener(new OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // we only want to react to down events
+                if (event.getAction() != KeyEvent.ACTION_DOWN) {
+                    return false;
+                }
+
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    onSearch(mSearchBox.getText().toString());
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+        mFooterView.findViewById(R.id.buttonShowSearch).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setVisibility(View.GONE);
+                mSearchBox.setVisibility(View.VISIBLE);
+                // TODO animate
+            }
+        });
 
         findViewById(R.id.buttonDiscard).setOnClickListener(new OnClickListener() {
             @Override
@@ -104,6 +138,13 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
         // we have a header view, subtract one to get actual position
         GetGlueObject glueObject = mAdapter.getItem(position - 1);
         mSelectedValue.setText(glueObject.key);
+    }
+
+    private void onSearch(String query) {
+        Bundle loaderArgs = new Bundle();
+        loaderArgs.putString("query", query);
+
+        getSupportLoaderManager().restartLoader(0, loaderArgs, this);
     }
 
     @Override
