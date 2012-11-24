@@ -43,7 +43,6 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
     private EditText mSearchBox;
     private View mFooterView;
     private String mShowId;
-    private String mGetGlueId;
     private View mSaveButton;
 
     @Override
