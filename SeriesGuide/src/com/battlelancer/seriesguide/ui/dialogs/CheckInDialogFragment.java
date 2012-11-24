@@ -19,10 +19,12 @@ package com.battlelancer.seriesguide.ui.dialogs;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,6 +38,7 @@ import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
@@ -72,6 +75,8 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
     private EditText mMessageBox;
 
     private View mCheckinButton;
+
+    private String mGetGlueId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -150,6 +155,11 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                                     GetGlueAuthActivity.class);
                             startActivity(i);
                         }
+                    } else if (TextUtils.isEmpty(imdbid) && TextUtils.isEmpty(mGetGlueId)) {
+                        // the user has to set a GetGlue object id
+                        Intent i = new Intent(getSherlockActivity(),
+                                FixGetGlueCheckInActivity.class);
+                        startActivity(i);
                     }
                 }
 
@@ -196,15 +206,44 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                 final String message = mMessageBox.getText().toString();
 
                 if (mGetGlueChecked) {
-                    if (!GetGlue.isAuthenticated(prefs) || imdbid.length() == 0) {
-                        // cancel if required auth data is missing
+                    boolean isAbortingCheckIn = false;
+                    String objectId = null;
+
+                    // require GetGlue authentication
+                    if (!GetGlue.isAuthenticated(prefs)) {
+                        isAbortingCheckIn = true;
+                    } else {
+                        Cursor show = getActivity().getContentResolver().query(
+                                Shows.buildShowUri(String.valueOf(tvdbid)), new String[] {
+                                        Shows._ID, Shows.GETGLUEID
+                                }, null, null, null);
+                        if (show != null) {
+                            show.moveToFirst();
+                            mGetGlueId = show.getString(1);
+                            show.close();
+                        }
+
+                        // fall back to IMDb id
+                        if (TextUtils.isEmpty(mGetGlueId)) {
+                            if (TextUtils.isEmpty(imdbid)) {
+                                // cancel if we don't know what to check into
+                                isAbortingCheckIn = true;
+                            } else {
+                                objectId = imdbid;
+                            }
+                        } else {
+                            objectId = mGetGlueId;
+                        }
+                    }
+
+                    if (isAbortingCheckIn) {
                         mToggleGetGlueButton.setChecked(false);
                         mGetGlueChecked = false;
                         updateCheckInButtonState();
                         return;
                     } else {
                         // check in, use task on thread pool
-                        AndroidUtils.executeAsyncTask(new CheckInTask(imdbid, message,
+                        AndroidUtils.executeAsyncTask(new CheckInTask(objectId, message,
                                 getActivity()), new Void[] {});
                     }
                 }

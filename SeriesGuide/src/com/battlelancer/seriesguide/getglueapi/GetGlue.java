@@ -22,9 +22,11 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.battlelancer.seriesguide.getglueapi.GetGlueXmlParser.GetGlueObject;
 import com.battlelancer.seriesguide.getglueapi.GetGlueXmlParser.Interaction;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -72,7 +74,9 @@ public class GetGlue {
 
     public static final String GETGLUE_FIND_OBJECTS = "glue/findObjects?q=";
 
-    private static final String GETGLUE_CHECKIN_IMDBID = "user/addCheckin?objectId=http://www.imdb.com/title/";
+    private static final String GETGLUE_CHECKIN = "user/addCheckin?objectId=";
+
+    private static final String GETGLUE_CHECKIN_IMDBID_PREFIX = "http://www.imdb.com/title/";
 
     public static boolean isAuthenticated(final SharedPreferences prefs) {
         String token = prefs.getString(OAUTH_TOKEN, "");
@@ -93,14 +97,14 @@ public class GetGlue {
 
         private static final int CHECKIN_OFFLINE = 2;
 
-        private String mImdbId;
+        private String mObjectId;
 
         private String mComment;
 
         private Context mContext;
 
-        public CheckInTask(String imdbId, String comment, Context context) {
-            mImdbId = imdbId;
+        public CheckInTask(String objectId, String comment, Context context) {
+            mObjectId = objectId;
             mComment = comment;
             mContext = context;
         }
@@ -111,13 +115,23 @@ public class GetGlue {
                 return CHECKIN_OFFLINE;
             }
 
-            // Encode only whitespaces
-            mComment = mComment.replace(" ", "%20");
+            // build URL
+            StringBuilder url = new StringBuilder();
+            url.append(GETGLUE_APIPATH_V2).append(GETGLUE_CHECKIN);
+            
+            if (!mObjectId.startsWith(GetGlueObject.TVSHOWS)) {
+                url.append(GETGLUE_CHECKIN_IMDBID_PREFIX);
+            }
+            
+            url.append(mObjectId).append(GETGLUE_SOURCE);
+            
+            if (!TextUtils.isEmpty(mComment)) {
+                // Encode only whitespaces
+                mComment = mComment.replace(" ", "%20");
+                url.append("&comment=").append(mComment);
+            }
 
-            String url = GETGLUE_APIPATH_V2 + GETGLUE_CHECKIN_IMDBID + mImdbId + GETGLUE_SOURCE
-                    + "&comment=" + mComment;
-
-            HttpURLConnection request = buildGetGlueRequest(url, mContext);
+            HttpURLConnection request = buildGetGlueRequest(url.toString(), mContext);
             if (request == null) {
                 return CHECKIN_FAILED;
             }
