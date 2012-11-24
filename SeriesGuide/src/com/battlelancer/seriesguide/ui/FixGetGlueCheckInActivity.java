@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -41,6 +42,9 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
     private View mHeaderView;
     private EditText mSearchBox;
     private View mFooterView;
+    private String mShowId;
+    private String mGetGlueId;
+    private View mSaveButton;
 
     @Override
     protected void onCreate(Bundle args) {
@@ -51,11 +55,11 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
 
         setupViews();
 
-        String showId = null;
+        mShowId = null;
         if (getIntent() != null) {
-            showId = getIntent().getStringExtra(InitBundle.SHOW_ID);
+            mShowId = getIntent().getStringExtra(InitBundle.SHOW_ID);
         }
-        if (TextUtils.isEmpty(showId)) {
+        if (TextUtils.isEmpty(mShowId)) {
             finish();
             return;
         }
@@ -68,11 +72,16 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
         mList.setOnItemClickListener(this);
 
         // query for show title
-        final Cursor show = getContentResolver().query(Shows.buildShowUri(showId), new String[] {
-                Shows._ID, Shows.TITLE
+        final Cursor show = getContentResolver().query(Shows.buildShowUri(mShowId), new String[] {
+                Shows._ID, Shows.TITLE, Shows.GETGLUEID
         }, null, null, null);
         if (show != null) {
             if (show.moveToFirst()) {
+                String glueId = show.getString(2);
+                if (!TextUtils.isEmpty(glueId)) {
+                    mSelectedValue.setText(glueId);
+                }
+
                 String query = show.getString(1);
 
                 Bundle loaderArgs = new Bundle();
@@ -124,10 +133,15 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
             }
         });
 
-        findViewById(R.id.buttonSaveSelection).setOnClickListener(new OnClickListener() {
+        mSaveButton = findViewById(R.id.buttonSaveSelection);
+        mSaveButton.setEnabled(false);
+        mSaveButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO save magic
+                // save new GetGlue object id
+                ContentValues values = new ContentValues();
+                values.put(Shows.GETGLUEID, mSelectedValue.getText().toString());
+                getContentResolver().update(Shows.buildShowUri(mShowId), values, null, null);
                 finish();
             }
         });
@@ -138,6 +152,7 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
         // we have a header view, subtract one to get actual position
         GetGlueObject glueObject = mAdapter.getItem(position - 1);
         mSelectedValue.setText(glueObject.key);
+        mSaveButton.setEnabled(true);
     }
 
     private void onSearch(String query) {
