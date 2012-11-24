@@ -31,6 +31,8 @@
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:visibility="gone" >
+
+        <requestFocus />
     </EditText>
 
 </LinearLayout>
