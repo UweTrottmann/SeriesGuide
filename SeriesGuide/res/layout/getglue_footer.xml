@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
+        android:layout_marginTop="@dimen/inline_padding"
         android:hint="@string/checkin_searchhint"
         android:imeOptions="actionSearch"
         android:inputType="text"
