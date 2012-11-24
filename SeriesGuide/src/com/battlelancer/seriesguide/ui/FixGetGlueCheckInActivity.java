@@ -6,9 +6,14 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
-import android.widget.ArrayAdapter;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.battlelancer.seriesguide.adapters.GetGlueObjectAdapter;
 import com.battlelancer.seriesguide.getglueapi.GetGlueXmlParser.GetGlueObject;
 import com.battlelancer.seriesguide.loaders.GetGlueObjectLoader;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -21,19 +26,22 @@ import java.util.List;
  * provide object ids for GetGlue check ins.
  */
 public class FixGetGlueCheckInActivity extends BaseActivity implements
-        LoaderManager.LoaderCallbacks<List<GetGlueObject>> {
+        LoaderManager.LoaderCallbacks<List<GetGlueObject>>, OnItemClickListener {
 
     public interface InitBundle {
         String SHOW_ID = "showid";
     }
 
-    private ArrayAdapter<GetGlueObject> mAdapter;
     private ListView mList;
+    private GetGlueObjectAdapter mAdapter;
+    private TextView mSelectedValue;
 
     @Override
     protected void onCreate(Bundle args) {
         super.onCreate(args);
         setContentView(R.layout.activity_fix_get_glue);
+
+        setupViews();
 
         String showId = null;
         if (getIntent() != null) {
@@ -44,10 +52,10 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
             return;
         }
 
-        mAdapter = new ArrayAdapter<GetGlueObject>(this, R.layout.getglue_item,
-                R.id.textViewGetGlueShowTitle);
+        mAdapter = new GetGlueObjectAdapter(this);
         mList = (ListView) findViewById(R.id.listViewGetGlueResults);
         mList.setAdapter(mAdapter);
+        mList.setOnItemClickListener(this);
 
         // query for show title
         final Cursor show = getContentResolver().query(Shows.buildShowUri(showId), new String[] {
@@ -67,6 +75,31 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
 
     }
 
+    private void setupViews() {
+        mSelectedValue = (TextView) findViewById(R.id.textViewSelectedShowValue);
+        
+        findViewById(R.id.buttonDiscard).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        
+        findViewById(R.id.buttonSaveSelection).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO save magic
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        GetGlueObject glueObject = mAdapter.getItem(position);
+        mSelectedValue.setText(glueObject.key);
+    }
+
     @Override
     public Loader<List<GetGlueObject>> onCreateLoader(int id, Bundle args) {
         String query = null;
@@ -78,16 +111,11 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
 
     @Override
     public void onLoadFinished(Loader<List<GetGlueObject>> loader, List<GetGlueObject> data) {
-        mAdapter.clear();
-        if (data != null) {
-            for (GetGlueObject tvShow : data) {
-                mAdapter.add(tvShow);
-            }
-        }
+        mAdapter.setData(data);
     }
 
     @Override
     public void onLoaderReset(Loader<List<GetGlueObject>> laoder) {
-        mAdapter.clear();
+        mAdapter.setData(null);
     }
 }

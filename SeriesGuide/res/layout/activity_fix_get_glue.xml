@@ -18,11 +18,11 @@
             android:id="@+id/textViewFixGetGlueHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/large_padding"
             android:paddingLeft="@dimen/default_padding"
             android:paddingRight="@dimen/default_padding"
             android:text="@string/select_show"
-            android:textAppearance="?attr/textAppearanceSgLargeLight" />
+            android:textAppearance="?attr/textAppearanceSgXLargeLight" />
 
         <TextView
             android:id="@+id/textViewSelectedShowHeader"
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/textViewSelectedShowHeader"
-            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginTop="@dimen/large_padding"
             layout="@layout/divider_horizontal" />
 
         <ListView
@@ -73,7 +73,7 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/prev_button"
+            android:id="@+id/buttonDiscard"
             style="@style/Widget.SeriesGuide.Button.Borderless.Small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
             layout="@layout/divider_vertical" />
 
         <Button
-            android:id="@+id/next_button"
+            android:id="@+id/buttonSaveSelection"
             style="@style/Widget.SeriesGuide.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
