@@ -47,7 +47,7 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
         super.onCreate(args);
         setContentView(R.layout.activity_fix_get_glue);
 
-        setTitle(R.string.select_show);
+        setTitle(R.string.checkin_fixgetglue);
 
         setupViews();
 

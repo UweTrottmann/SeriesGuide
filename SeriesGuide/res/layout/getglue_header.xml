@@ -40,7 +40,7 @@
         android:id="@+id/divider1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/textViewSelectedShowHeader"
+        android:layout_below="@+id/textViewSelectedShowValue"
         android:layout_marginTop="@dimen/large_padding"
         layout="@layout/divider_horizontal" >
     </include>

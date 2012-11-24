@@ -296,7 +296,7 @@
     <!-- Fix GetGlue Check In -->
     <string name="select_show">Select show</string>
     <string name="check_into">Check into</string>
-    <string name="no_selection">not set</string>
+    <string name="no_selection">pick one below</string>
     <string name="looking_for_something_else">Looking for something else?</string>
 
     <!-- Share methods -->
