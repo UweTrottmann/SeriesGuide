@@ -358,7 +358,7 @@
         <item name="android:textColor">@color/text_default_inverse</item>
     </style>
 
-    <style name="TextAppearance.Light.XLarge" parent="@style/TextAppearance.XLarge">
+    <style name="TextAppearance.Light.XLarge" parent="TextAppearance.XLarge">
         <item name="android:textColor">@color/text_primary_light_sg</item>
     </style>
 
