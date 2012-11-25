@@ -5,6 +5,18 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 2.11.3beta *(2012-11-25)*
+--------------------------------
+
+* FEATURE 'Fix GetGlue check in' in check in dialog for shows without or with wrongly mapped IMDb ids.
+* NOTICE Database upgraded to version 29. Starting SeriesGuide the first time after installing the update may take a little longer than usual.
+* FIX Icons overlap in check in dialog.
+* FIX Never select non-existing activity tab. Fixes #187.
+* TWEAK Trakt add tabs use higher resolution images on high-res tablets (e.g. Nexus 10).
+* TWEAK Add custom button disabled drawable.
+* TWEAK Refresh check box and edit text drawables with more acurate color, higher resolution variants.
+* TWEAK Better exception tracking so problems are easier to pinpoint.
+
 Version 2.10.2 *(2012-11-14)*
 --------------------------------
 
