@@ -41,7 +41,6 @@
 
         <Button
             android:id="@+id/buttonSaveSelection"
-            style="@style/Widget.SeriesGuide.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
