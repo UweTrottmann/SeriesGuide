@@ -24,6 +24,8 @@
   <string name="cancel">Zrušit</string>
   <string name="share">Sdílet</string>
   <string name="updated">Aktualizováno na nejnovější verzi.</string>
+  <string name="discard">Discard</string>
+  <string name="save_selection">Save selection</string>
   <string name="offline">Bez připojení k síti. Zkuste to později.</string>
   <string name="onlyx">Dostupné pouze ve verzi X</string>
   <string name="shouts">Výkřiky</string>
@@ -216,10 +218,15 @@
   <string name="checkin_searchhint">Napište název pořadu</string>
   <string name="checkin_empty">Žádné odpovídající pořady</string>
   <string name="checkin_hint">Napište postřeh (nepovinné)</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Vložte díl</string>
   <string name="checkinsuccess">Ohlášeno do %s na GetGlue.</string>
   <string name="checkinfailed">Ohlášení se selhalo. Zkuste odpojit GetGlue.</string>
   <string name="getglue_authfailed">Ověření u GetGlue selhalo. Zkuste to později.</string>
+  <string name="select_show">Select show</string>
+  <string name="check_into">Check into</string>
+  <string name="no_selection">pick one below</string>
+  <string name="looking_for_something_else">Looking for something else?</string>
   <string name="menu_rate_trakt">Hodnotit (trakt)</string>
   <string name="menu_share_others">Skrze jiné aplikace</string>
   <string name="traktcheckin_cancel">Přepsat</string>

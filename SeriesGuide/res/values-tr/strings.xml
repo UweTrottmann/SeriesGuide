@@ -24,6 +24,8 @@
   <string name="cancel">Vazgeç</string>
   <string name="share">Paylaş</string>
   <string name="updated">En son sürüme güncellendi.</string>
+  <string name="discard">Discard</string>
+  <string name="save_selection">Save selection</string>
   <string name="offline">Ağ bağlantısı yok. Daha sonra tekrar deneyin.</string>
   <string name="onlyx">Yalnızca SeriesGuide X kullanıcıları için</string>
   <string name="shouts">Notlar</string>
@@ -216,10 +218,15 @@
   <string name="checkin_searchhint">Bir dizi adı yazın</string>
   <string name="checkin_empty">Eşleşen dizi yok</string>
   <string name="checkin_hint">Bir mesaj yazın (isteğe bağlı)</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Bölümü yapıştır</string>
   <string name="checkinsuccess">GetGlue ile %s bağlantısı sağlandı.</string>
   <string name="checkinfailed">GetGlue girişi başarısız oldu. GetGlue bağlantısını kesmeyi deneyin.</string>
   <string name="getglue_authfailed">GetGlue kimlik doğrulaması başarısız oldu. Daha sonra yeniden deneyin.</string>
+  <string name="select_show">Select show</string>
+  <string name="check_into">Check into</string>
+  <string name="no_selection">pick one below</string>
+  <string name="looking_for_something_else">Looking for something else?</string>
   <string name="menu_rate_trakt">Derece (trakt)</string>
   <string name="menu_share_others">Diğer uygulamalar aracılığıyla</string>
   <string name="traktcheckin_cancel">Geçersiz Kıl</string>

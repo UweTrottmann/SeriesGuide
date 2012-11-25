@@ -24,6 +24,8 @@
   <string name="cancel">Abbrechen</string>
   <string name="share">Empfehlen</string>
   <string name="updated">Auf neueste Version aktualisiert.</string>
+  <string name="discard">Verwerfen</string>
+  <string name="save_selection">Auswahl speichern</string>
   <string name="offline">Keine Netzwerkverbindung. Versuchen Sie es später erneut.</string>
   <string name="onlyx">Nur verfügbar in SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -216,10 +218,15 @@
   <string name="checkin_searchhint">Serientitel eingeben</string>
   <string name="checkin_empty">Keine passenden Serien</string>
   <string name="checkin_hint">Geben Sie eine Nachricht ein (optional)</string>
+  <string name="checkin_fixgetglue">GetGlue Check In korrigieren</string>
   <string name="paste_episode">Folge einfügen</string>
   <string name="checkinsuccess">Auf GetGlue in %s eingecheckt.</string>
   <string name="checkinfailed">GetGlue-Einchecken fehlgeschlagen. Versuchen Sie GetGlue zu trennen.</string>
   <string name="getglue_authfailed">GetGlue-Authentifizierung fehlgeschlagen. Versuchen Sie es später erneut.</string>
+  <string name="select_show">Serie auswählen</string>
+  <string name="check_into">Einchecken in</string>
+  <string name="no_selection">unten auswählen</string>
+  <string name="looking_for_something_else">Sie suchen etwas anderes?</string>
   <string name="menu_rate_trakt">Bewerten (trakt)</string>
   <string name="menu_share_others">Über andere Apps</string>
   <string name="traktcheckin_cancel">Überschreiben</string>

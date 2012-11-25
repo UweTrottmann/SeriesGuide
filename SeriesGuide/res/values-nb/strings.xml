@@ -24,6 +24,8 @@
   <string name="cancel">Avbryt</string>
   <string name="share">Del</string>
   <string name="updated">Oppdatert til nyeste versjon.</string>
+  <string name="discard">Discard</string>
+  <string name="save_selection">Save selection</string>
   <string name="offline">Ingen nettverksforbindelse. Prøv på nytt senere.</string>
   <string name="onlyx">Kun tilgjengelig i SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -216,10 +218,15 @@
   <string name="checkin_searchhint">Skriv inn et serienavn</string>
   <string name="checkin_empty">Ingen treff</string>
   <string name="checkin_hint">Skriv inn en melding (valgfritt)</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Lim inn episode</string>
   <string name="checkinsuccess">Sjekket inn %s på GetGlue.</string>
   <string name="checkinfailed">GetGlue sjekk inn mislyktes. Prøv å koble fra GetGlue.</string>
   <string name="getglue_authfailed">GetGlue autentisering mislyktes. Prøv igjen senere.</string>
+  <string name="select_show">Select show</string>
+  <string name="check_into">Check into</string>
+  <string name="no_selection">pick one below</string>
+  <string name="looking_for_something_else">Looking for something else?</string>
   <string name="menu_rate_trakt">Vurder (trakt)</string>
   <string name="menu_share_others">Via andre apper</string>
   <string name="traktcheckin_cancel">Overskriv</string>

@@ -24,6 +24,8 @@
   <string name="cancel">Annuleren</string>
   <string name="share">Delen</string>
   <string name="updated">nieuwste versie is geinstaleerd.</string>
+  <string name="discard">Discard</string>
+  <string name="save_selection">Save selection</string>
   <string name="offline">Geen netwerk verbinding. Probeer het later opnieuw.</string>
   <string name="onlyx">Alleen beschikbaar in Series Guide X</string>
   <string name="shouts">Shouts</string>
@@ -216,10 +218,15 @@
   <string name="checkin_searchhint">Voer de naam van een serie in</string>
   <string name="checkin_empty">Geen overeenkomende series</string>
   <string name="checkin_hint">Voer een bericht in (optioneel)</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Aflevering plakken</string>
   <string name="checkinsuccess">Ingecheckt in %s op GetGlue.</string>
   <string name="checkinfailed">GetGlue Check-in mislukt. Probeer de GetGlue verbinding te verbreken.</string>
   <string name="getglue_authfailed">GetGlue authenticatie mislukt. Probeer het later opnieuw.</string>
+  <string name="select_show">Select show</string>
+  <string name="check_into">Check into</string>
+  <string name="no_selection">pick one below</string>
+  <string name="looking_for_something_else">Looking for something else?</string>
   <string name="menu_rate_trakt">Beoordelen (trakt)</string>
   <string name="menu_share_others">Via andere apps</string>
   <string name="traktcheckin_cancel">Negeren</string>

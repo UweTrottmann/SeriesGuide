@@ -24,6 +24,8 @@
   <string name="cancel">Отмена</string>
   <string name="share">Поделиться</string>
   <string name="updated">Обновлено до последней версии.</string>
+  <string name="discard">Discard</string>
+  <string name="save_selection">Save selection</string>
   <string name="offline">Нет соединения. Повторите попытку позже.</string>
   <string name="onlyx">Доступно только в SeriesGuide X</string>
   <string name="shouts">Отзывы</string>
@@ -216,10 +218,15 @@
   <string name="checkin_searchhint">Введите название сериала</string>
   <string name="checkin_empty">Сериалы не найдены</string>
   <string name="checkin_hint">Введите сообщение (необязательно)</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Вставить эпизод</string>
   <string name="checkinsuccess">Отметил на %s GetGlue.</string>
   <string name="checkinfailed">Регистрация в GetGlue не удалось. Попробуйте отключить GetGlue.</string>
   <string name="getglue_authfailed">Ошибка аутентификации GetGlue. Повторите попытку позже.</string>
+  <string name="select_show">Select show</string>
+  <string name="check_into">Check into</string>
+  <string name="no_selection">pick one below</string>
+  <string name="looking_for_something_else">Looking for something else?</string>
   <string name="menu_rate_trakt">Рейтинг (trakt)</string>
   <string name="menu_share_others">C помощью других приложений</string>
   <string name="traktcheckin_cancel">Переопределение</string>

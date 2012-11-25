@@ -24,6 +24,8 @@
   <string name="cancel">Avbryt</string>
   <string name="share">Dela</string>
   <string name="updated">Uppdaterad till senaste versionen</string>
+  <string name="discard">Discard</string>
+  <string name="save_selection">Save selection</string>
   <string name="offline">Ingen nätanslutning. Försök igen senare.</string>
   <string name="onlyx">Endast tillgänglig i SeriesGuide X</string>
   <string name="shouts">Rop</string>
@@ -216,10 +218,15 @@
   <string name="checkin_searchhint">Skriv ett serienamn</string>
   <string name="checkin_empty">Inga matchande serier.</string>
   <string name="checkin_hint">Skriv ett meddelande (valfritt)</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Klistra in avsnitt</string>
   <string name="checkinsuccess">Checka in %s på GetGlue.</string>
   <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
   <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
+  <string name="select_show">Select show</string>
+  <string name="check_into">Check into</string>
+  <string name="no_selection">pick one below</string>
+  <string name="looking_for_something_else">Looking for something else?</string>
   <string name="menu_rate_trakt">Betygsätt (trakt)</string>
   <string name="menu_share_others">Via andra appar</string>
   <string name="traktcheckin_cancel">Override</string>

@@ -23,7 +23,9 @@
   <string name="more">%s개의 에피소드 정보 더 있음</string>
   <string name="cancel">취소</string>
   <string name="share">공유</string>
-  <string name="updated">Updated to latest version.</string>
+  <string name="updated">최신버전으로 업데이트 완료.</string>
+  <string name="discard">Discard</string>
+  <string name="save_selection">Save selection</string>
   <string name="offline">네트워크에 연결에 실패하였습니다. 나중에 다시 시도해주세요.</string>
   <string name="onlyx">시리즈가이드 X 에서만 사용가능</string>
   <string name="shouts">감상평</string>
@@ -54,7 +56,7 @@
   <string name="episode_gueststars">게스트</string>
   <string name="episode_writers">작가</string>
   <string name="show_airtimeunit">분</string>
-  <string name="show_isalive">휴방</string>
+  <string name="show_isalive">방영중</string>
   <string name="show_isnotalive">종료</string>
   <string name="lastEdit">마지막 편집 // TVDb</string>
   <string name="sort">정렬 기준</string>
@@ -105,7 +107,7 @@
   <string name="update_single">쇼 업데이트 중...</string>
   <string name="update_delta">오래된 쇼 목록 업데이트 중...</string>
   <string name="update_full">모든 쇼 목록 업데이트 중...</string>
-  <string name="update_success">Shows updated.</string>
+  <string name="update_success">쇼 업데이트 완료.</string>
   <string name="update_offline">업데이트 실패, 인터넷/Wi-Fi 연결을 확인하세요.</string>
   <string name="update_saxerror">업데이트 실패, 나중에 다시 시도하세요.</string>
   <string name="update_inprogress">업데이트가 진행 중 입니다. 잠시 후 다시 시도해주세요.</string>
@@ -130,9 +132,9 @@
   <string name="no_results">결과 없음, 완전한 단어를 입력하세요.</string>
   <string name="search_error">검색 실패, 나중에 다시 시도하세요.</string>
   <string name="add_show">쇼 추가</string>
-  <string name="add_all">Add all</string>
+  <string name="add_all">모두 추가</string>
   <string name="dont_add_show">취소</string>
-  <string name="add_multiple">All shows will appear in your show list shortly.</string>
+  <string name="add_multiple">모든 쇼가 곧 목록에 표시됩니다.</string>
   <string name="add_started">가 곧 쇼 목록에 나타납니다.</string>
   <string name="add_success">성공적으로 추가 되었습니다.</string>
   <string name="add_error_begin">\"</string>
@@ -216,10 +218,15 @@
   <string name="checkin_searchhint">쇼 이름을 입력하세요</string>
   <string name="checkin_empty">일치하는 쇼가 없습니다</string>
   <string name="checkin_hint">메세지 입력 (선택사항)</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">에피소드 붙여넣기</string>
   <string name="checkinsuccess">%s을 GetGlue에 체크인 완료.</string>
   <string name="checkinfailed">GetClue 체크인 실패. GetClue와의 연결끊기를 시도합니다.</string>
   <string name="getglue_authfailed">GetGlue 인증이 실패 하였습니다. 나중에 다시 시도 하세요.</string>
+  <string name="select_show">Select show</string>
+  <string name="check_into">Check into</string>
+  <string name="no_selection">pick one below</string>
+  <string name="looking_for_something_else">Looking for something else?</string>
   <string name="menu_rate_trakt">평가 (trakt)</string>
   <string name="menu_share_others">다른 앱을 통해</string>
   <string name="traktcheckin_cancel">오버라이드</string>
@@ -256,8 +263,8 @@
   <string name="upcoming_display">방영예정인 쇼를 표시하려면 선택</string>
   <string name="pref_notifications">알림</string>
   <string name="pref_notificationssummary">곧 방영예정인 쇼를 알려줍니다</string>
-  <string name="pref_notifyfavonly">Favorites only</string>
-  <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
+  <string name="pref_notifyfavonly">즐겨찾기한 쇼만 알림</string>
+  <string name="pref_notifyfavonlysummary">즐겨찾기 목록에 추가한 쇼만 알려줍니다.</string>
   <string name="pref_ringtone">벨소리</string>
   <string name="pref_vibrate">진동</string>
   <string name="pref_vibratesummary">알림 시 진동</string>
@@ -286,7 +293,7 @@
     <item>오래된 것부터</item>
     <item>안본 것부터</item>
     <item>A - Z</item>
-    <item>Top rated</item>
+    <item>최고 점수</item>
     <item>최근 방영 순 (DVD)</item>
     <item>예전 방영 순 (DVD)</item>
   </string-array>

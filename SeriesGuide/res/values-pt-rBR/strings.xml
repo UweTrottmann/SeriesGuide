@@ -24,6 +24,8 @@
   <string name="cancel">Cancelar</string>
   <string name="share">Compartilhar</string>
   <string name="updated">Atualizado para a versão mais recente.</string>
+  <string name="discard">Discard</string>
+  <string name="save_selection">Save selection</string>
   <string name="offline">Sem conexão. Tente novamente mais tarde.</string>
   <string name="onlyx">Somente disponível no SeriesGuide X</string>
   <string name="shouts">Gritos</string>
@@ -216,10 +218,15 @@
   <string name="checkin_searchhint">Digite o nome da série</string>
   <string name="checkin_empty">Nenhuma série encontrada</string>
   <string name="checkin_hint">Digite uma mensagem (opcional)</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Colar episódio</string>
   <string name="checkinsuccess">Verificado em %s no GetGlue.</string>
   <string name="checkinfailed">Check-in do GetGlue falhou. Tente desconectar do GetGlue.</string>
   <string name="getglue_authfailed">Autenticação com GetGlue falhou. Tente novamente.</string>
+  <string name="select_show">Select show</string>
+  <string name="check_into">Check into</string>
+  <string name="no_selection">pick one below</string>
+  <string name="looking_for_something_else">Looking for something else?</string>
   <string name="menu_rate_trakt">Avaliar (trakt)</string>
   <string name="menu_share_others">Por outros aplicativos</string>
   <string name="traktcheckin_cancel">Substituir</string>
