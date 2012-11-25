@@ -76,7 +76,7 @@
         <item name="android:clickable">true</item>
         <item name="android:gravity">center_vertical|center_horizontal</item>
         <item name="android:background">@drawable/btn_default_sg</item>
-        <item name="android:textAppearance">@style/TextAppearance.Medium</item>
+        <item name="android:textAppearance">?attr/textAppearanceSgMedium</item>
         <item name="android:minHeight">48dip</item>
         <item name="android:minWidth">64dip</item>
     </style>
@@ -92,7 +92,8 @@
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Small.Highlight">
-        <item name="android:textAppearance">@style/TextAppearance.Small.Highlight</item>
+        <item name="android:textColor">@color/text_blue</item>
+        <item name="android:textStyle">italic</item>
     </style>
 
     <style name="Widget.SeriesGuide.ImageButton">
