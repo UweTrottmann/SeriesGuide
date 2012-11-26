@@ -39,16 +39,16 @@
 
                 <Button
                     android:id="@+id/addbutton"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="?custom_list_selector"
-                    android:drawableLeft="@drawable/ic_action_add"
+                    android:drawableLeft="?attr/drawableAddIcon"
                     android:drawablePadding="5dp"
                     android:paddingLeft="@dimen/default_padding"
                     android:paddingRight="@dimen/default_padding"
                     android:text="@string/add_show"
                     android:textAllCaps="true"
-                    android:textAppearance="?attr/textAppearanceSgSmall"
+                    android:textColor="?attr/textColorSgPrimary"
                     android:textStyle="bold" />
 
                 <Button
