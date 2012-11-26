@@ -94,10 +94,7 @@
         <item name="android:textStyle">italic</item>
     </style>
 
-    <style name="Widget.SeriesGuide.ImageButton">
-        <item name="android:focusable">true</item>
-        <item name="android:clickable">true</item>
-        <item name="android:scaleType">center</item>
+    <style name="Widget.SeriesGuide.ImageButton" parent="android:Widget.ImageButton">
         <item name="android:background">@drawable/btn_default_sg</item>
     </style>
 
@@ -339,6 +336,10 @@
         <item name="android:textColor">@color/text_primary_sg</item>
         <item name="android:minHeight">48dip</item>
         <item name="android:minWidth">64dip</item>
+    </style>
+
+    <style name="Widget.Android.ImageButton" parent="android:Widget.ImageButton">
+        <item name="android:background">@drawable/btn_default_holo_dark</item>
     </style>
 
     <!-- Title indicator -->

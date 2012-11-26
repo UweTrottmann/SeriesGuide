@@ -89,8 +89,11 @@
     <style name="ICSBaseTheme" parent="Theme.Sherlock">
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.Dark</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
-        <item name="android:buttonStyle">@style/Widget.Android.Button</item>
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
+
+        <!-- System widgets -->
+        <item name="android:buttonStyle">@style/Widget.Android.Button</item>
+        <item name="android:imageButtonStyle">@style/Widget.Android.ImageButton</item>
 
         <!-- Colors -->
         <item name="textColorSgPrimary">@color/text_primary</item>
