@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<resources>
 
     <!-- SeriesGuides default theme -->
     <style name="SeriesGuideTheme" parent="Theme.Sherlock">
@@ -8,12 +8,12 @@
         <item name="custom_list_selector">@drawable/list_selector_sg</item>
 
         <!-- System widgets -->
-        <item name="android:editTextStyle">@style/Widget.SeriesGuide.EditText</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
         <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
-        <item name="android:checkboxStyle">@style/Widget.SeriesGuide.CheckBox</item>
-        <item name="android:listViewStyle">@style/Widget.SeriesGuide.ListView</item>
-        <item name="android:listViewWhiteStyle">@style/Widget.SeriesGuide.ListView.White</item>
+        <item name="android:editTextBackground">@drawable/edit_text_sg</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_sg</item>
 
         <!-- Colors -->
         <item name="textColorSgPrimary">@color/text_primary</item>
@@ -61,71 +61,6 @@
         <item name="drawableStar">@drawable/ic_favorited</item>
     </style>
 
-    <style name="SeriesGuideTheme.Dialog" parent="SeriesGuideTheme">
-        <item name="android:windowFrame">@null</item>
-        <item name="android:windowTitleStyle">@style/DialogWindowTitle.SeriesGuide</item>
-        <item name="android:windowBackground">@color/background</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
-        <item name="android:windowSoftInputMode">stateUnspecified|adjustResize</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowActionModeOverlay">true</item>
-        <item name="android:windowCloseOnTouchOutside">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:backgroundDimAmount">0.6</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:textColorPrimary">@color/text_primary</item>
-        <item name="android:textColorPrimaryInverse">@color/abs__primary_text_holo_light</item>
-        <item name="android:windowMinWidthMajor">45%</item>
-        <item name="android:windowMinWidthMinor">75%</item>
-    </style>
-
-    <style name="SeriesGuideTheme.Dialog.CheckIn">
-        <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
-    </style>
-
-    <!-- An dark Android theme -->
-    <style name="ICSBaseTheme" parent="Theme.Sherlock">
-        <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.Dark</item>
-        <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
-        <item name="android:buttonStyle">@style/Widget.Android.Button</item>
-        <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
-
-        <!-- Colors -->
-        <item name="textColorSgPrimary">@color/text_primary</item>
-        <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
-        <item name="textColorSgGreen">@color/green_bright</item>
-
-        <!-- Text styles -->
-        <item name="textAppearanceSg">@style/TextAppearance</item>
-        <item name="textAppearanceSgXSmall">@style/TextAppearance.XSmall</item>
-        <item name="textAppearanceSgXSmallDim">@style/TextAppearance.XSmall.Dim</item>
-        <item name="textAppearanceSgSmall">@style/TextAppearance.Small</item>
-        <item name="textAppearanceSgSmallDim">@style/TextAppearance.Small.Dim</item>
-        <item name="textAppearanceSgSmallPrimary">@style/TextAppearance.Small.Primary</item>
-        <item name="textAppearanceSgMedium">@style/TextAppearance.Medium</item>
-        <item name="textAppearanceSgMediumDim">@style/TextAppearance.Medium.Dim</item>
-        <item name="textAppearanceSgMediumLight">@style/TextAppearance.Medium.Light</item>
-        <item name="textAppearanceSgMediumLightDim">@style/TextAppearance.Medium.Light.Dim</item>
-        <item name="textAppearanceSgLarge">@style/TextAppearance.Large</item>
-        <item name="textAppearanceSgLargeLight">@style/TextAppearance.Large.Light</item>
-        <item name="textAppearanceSgXLarge">@style/TextAppearance.XLarge</item>
-        <item name="textAppearanceSgXLargeLight">@style/TextAppearance.XLarge.Light</item>
-
-        <!-- Action bar -->
-        <item name="spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
-        <item name="android:spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
-        <item name="spinnerItemStyle">@style/Widget.SpinnerItem</item>
-        <item name="android:spinnerItemStyle">@style/Widget.SpinnerItem</item>
-
-        <!-- Drawables -->
-        <item name="drawableAddIcon">@drawable/ic_action_add</item>
-        <item name="drawableCalendarIcon">@drawable/ic_action_calendar</item>
-        <item name="drawableDivider">@drawable/divider</item>
-        <item name="drawableStar">@drawable/ic_favorited</item>
-    </style>
-
     <!-- A light Android theme -->
     <style name="SeriesGuideThemeLight" parent="Theme.Sherlock.Light.DarkActionBar">
         <item name="custom_list_selector">@drawable/list_selector_sg</item>
@@ -133,12 +68,12 @@
         <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator.Light</item>
 
         <!-- System widgets -->
-        <item name="android:editTextStyle">@style/Widget.SeriesGuide.Light.EditText</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Light.Button</item>
         <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
-        <item name="android:checkboxStyle">@style/Widget.SeriesGuide.Light.CheckBox</item>
-        <item name="android:listViewStyle">@style/Widget.SeriesGuide.ListView</item>
-        <item name="android:listViewWhiteStyle">@style/Widget.SeriesGuide.ListView.White</item>
+        <item name="android:editTextBackground">@drawable/edit_text_holo_light</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_light</item>
 
         <!-- Colors -->
         <item name="textColorSgPrimary">@color/text_primary_inverse</item>
