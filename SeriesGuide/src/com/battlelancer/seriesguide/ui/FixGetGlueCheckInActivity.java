@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.adapters.GetGlueObjectAdapter;
 import com.battlelancer.seriesguide.getglueapi.GetGlueXmlParser.GetGlueObject;
 import com.battlelancer.seriesguide.loaders.GetGlueObjectLoader;
@@ -51,6 +52,9 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
         setContentView(R.layout.activity_fix_get_glue);
 
         setTitle(R.string.checkin_fixgetglue);
+        
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         setupViews();
 
