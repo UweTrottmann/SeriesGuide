@@ -92,6 +92,7 @@ public class FirstRunFragment extends SherlockFragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), AddActivity.class));
+                setFirstRunDismissed();
             }
         });
 
@@ -119,15 +120,18 @@ public class FirstRunFragment extends SherlockFragment {
         getView().findViewById(R.id.dismissButton).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences prefs = PreferenceManager
-                        .getDefaultSharedPreferences(getActivity());
-                prefs.edit().putBoolean(PREF_KEY_FIRSTRUN, true).commit();
-
-                // display shows fragment again, better use an interface!
-                mListener.onFirstRunDismissed();
+                setFirstRunDismissed();
             }
         });
+    }
 
+    private void setFirstRunDismissed() {
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+        prefs.edit().putBoolean(PREF_KEY_FIRSTRUN, true).commit();
+
+        // display shows fragment again, better use an interface!
+        mListener.onFirstRunDismissed();
     }
 
     public class OnLanguageSelectedListener implements OnItemSelectedListener {
