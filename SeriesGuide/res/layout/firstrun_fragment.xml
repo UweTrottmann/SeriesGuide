@@ -14,106 +14,102 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <RelativeLayout
+        <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/root"
             style="@style/FirstRunColumn"
+            android:orientation="vertical"
             android:padding="@dimen/large_padding" >
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/layoutTop"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="8dp"
-                android:text="@string/welcome_add_part1"
-                android:textAppearance="?attr/textAppearanceSg" />
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginTop="@dimen/default_padding"
+                android:orientation="vertical" >
 
-            <Button
-                android:id="@+id/addbutton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView1"
-                android:layout_centerHorizontal="true"
-                android:background="?custom_list_selector"
-                android:drawableLeft="@drawable/ic_action_add"
-                android:drawablePadding="5dp"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
-                android:text="@string/add_show"
-                android:textAllCaps="true"
-                android:textAppearance="?attr/textAppearanceSgSmall"
-                android:textColor="@color/text_primary"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/welcome_add_part1"
+                    android:textAppearance="?attr/textAppearanceSgXLargeLight" />
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/addbutton"
-                android:text="@string/welcome_add_part2"
-                android:textAppearance="?attr/textAppearanceSg" />
+                <Button
+                    android:id="@+id/addbutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?custom_list_selector"
+                    android:drawableLeft="@drawable/ic_action_add"
+                    android:drawablePadding="5dp"
+                    android:paddingLeft="@dimen/default_padding"
+                    android:paddingRight="@dimen/default_padding"
+                    android:text="@string/add_show"
+                    android:textAllCaps="true"
+                    android:textAppearance="?attr/textAppearanceSgSmall"
+                    android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/dismissButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/textView3"
-                android:layout_marginTop="48dp"
-                android:paddingLeft="32dp"
-                android:paddingRight="32dp"
-                android:text="@string/dismiss" />
+                <Button
+                    android:id="@+id/dismissButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/large_padding"
+                    android:text="@string/dismiss" />
+            </LinearLayout>
 
             <include
                 android:id="@+id/divider1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/dismissButton"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="16dp"
-                layout="@layout/holodivider" />
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/large_padding"
+                layout="@layout/divider_horizontal" />
 
-            <TextView
-                android:id="@+id/language_message"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/layoutBottom"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/divider1"
-                android:layout_marginBottom="8dp"
-                android:layout_marginRight="8dp"
-                android:text="@string/pref_language"
-                android:textAppearance="?attr/textAppearanceSg" />
+                android:layout_marginBottom="@dimen/large_padding"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginTop="@dimen/large_padding"
+                android:orientation="vertical" >
 
-            <Spinner
-                android:id="@+id/welcome_setuplanguage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/language_message"
-                android:layout_centerHorizontal="true"
-                android:prompt="@string/welcome_setuplanguage" />
+                <TextView
+                    android:id="@+id/language_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pref_language"
+                    android:textAppearance="?attr/textAppearanceSg" />
 
-            <TextView
-                android:id="@+id/trakt_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/welcome_setuplanguage"
-                android:layout_marginTop="8dp"
-                android:text="@string/welcome_traktmessage"
-                android:textAppearance="?attr/textAppearanceSg" />
+                <Spinner
+                    android:id="@+id/welcome_setuplanguage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/default_padding"
+                    android:prompt="@string/welcome_setuplanguage" />
 
-            <Button
-                android:id="@+id/welcome_setuptrakt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/trakt_message"
-                android:layout_centerHorizontal="true"
-                android:background="?custom_list_selector"
-                android:drawableLeft="@drawable/ic_trakt"
-                android:drawablePadding="5dp"
-                android:padding="@dimen/default_padding"
-                android:text="@string/welcome_setuptrakt"
-                android:textColor="@color/text_primary" />
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/trakt_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_padding"
+                    android:text="@string/welcome_traktmessage"
+                    android:textAppearance="?attr/textAppearanceSg" />
+
+                <Button
+                    android:id="@+id/welcome_setuptrakt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/default_padding"
+                    android:drawableLeft="@drawable/ic_trakt"
+                    android:drawablePadding="8dp"
+                    android:text="@string/welcome_setuptrakt" />
+            </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 
 </FrameLayout>

@@ -331,7 +331,6 @@
     <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
     <string name="dismiss">Dismiss</string>
     <string name="welcome_add_part1">To get started tap</string>
-    <string name="welcome_add_part2">in the action bar.</string>
 
     <string-array name="showfilter_list">
         <item>All</item>
