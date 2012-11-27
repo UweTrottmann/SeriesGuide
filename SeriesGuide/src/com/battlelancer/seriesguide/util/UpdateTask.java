@@ -35,6 +35,7 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
@@ -54,6 +55,7 @@ import com.uwetrottmann.seriesguide.R;
 import org.xml.sax.SAXException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -84,6 +86,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
     private NotificationManager mNotificationManager;
 
     private Notification mNotification;
+
+    private ArrayList<SearchResult> mNewShows;
 
     private static final int UPDATE_NOTIFICATION_ID = 1;
 
@@ -237,7 +241,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             }
 
             // mark episodes based on trakt activity
-            final UpdateResult traktResult = getTraktActivity(prefs, maxProgress, currentTime);
+            final UpdateResult traktResult = getTraktActivity(prefs, maxProgress, currentTime,
+                    resolver);
             // do not overwrite earlier failure codes
             if (resultCode == UpdateResult.SUCCESS) {
                 resultCode = traktResult;
@@ -282,7 +287,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
         return resultCode;
     }
 
-    private UpdateResult getTraktActivity(SharedPreferences prefs, int maxProgress, long currentTime) {
+    private UpdateResult getTraktActivity(SharedPreferences prefs, int maxProgress,
+            long currentTime, ContentResolver resolver) {
         if (Utils.isTraktCredentialsValid(mAppContext)) {
             // return if we get cancelled or connectivity is lost/forbidden
             if (isCancelled()) {
@@ -325,37 +331,57 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                 return UpdateResult.ERROR;
             }
 
+            // get a list of existing shows
+            final Cursor shows = resolver.query(Shows.CONTENT_URI, new String[] {
+                    Shows._ID
+            }, null, null, null);
+            final HashSet<String> existingShows = new HashSet<String>();
+            if (shows != null) {
+                while (shows.moveToNext()) {
+                    existingShows.add(shows.getString(0));
+                }
+                shows.close();
+            }
+
             // build an update batch
+            mNewShows = Lists.newArrayList();
             final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
             for (ActivityItem item : activity.activity) {
                 // check for null (potential fix for reported crash)
                 if (item.action != null && item.show != null) {
-                    switch (item.action) {
-                        case Seen: {
-                            // seen uses an array of episodes
-                            List<TvShowEpisode> episodes = item.episodes;
-                            for (TvShowEpisode episode : episodes) {
+                    if (!existingShows.contains(item.show.tvdbId)) {
+                        SearchResult show = new SearchResult();
+                        show.title = item.show.title;
+                        show.tvdbid = item.show.tvdbId;
+                        mNewShows.add(show);
+                    } else {
+                        switch (item.action) {
+                            case Seen: {
+                                // seen uses an array of episodes
+                                List<TvShowEpisode> episodes = item.episodes;
+                                for (TvShowEpisode episode : episodes) {
+                                    addEpisodeSeenOp(batch, episode, item.show.tvdbId);
+                                }
+                                break;
+                            }
+                            case Checkin:
+                            case Scrobble: {
+                                // checkin and scrobble use a single episode
+                                TvShowEpisode episode = item.episode;
                                 addEpisodeSeenOp(batch, episode, item.show.tvdbId);
+                                break;
                             }
-                            break;
-                        }
-                        case Checkin:
-                        case Scrobble: {
-                            // checkin and scrobble use a single episode
-                            TvShowEpisode episode = item.episode;
-                            addEpisodeSeenOp(batch, episode, item.show.tvdbId);
-                            break;
-                        }
-                        case Collection: {
-                            // collection uses an array of episodes
-                            List<TvShowEpisode> episodes = item.episodes;
-                            for (TvShowEpisode episode : episodes) {
-                                addEpisodeCollectedOp(batch, episode, item.show.tvdbId);
+                            case Collection: {
+                                // collection uses an array of episodes
+                                List<TvShowEpisode> episodes = item.episodes;
+                                for (TvShowEpisode episode : episodes) {
+                                    addEpisodeCollectedOp(batch, episode, item.show.tvdbId);
+                                }
+                                break;
                             }
-                            break;
+                            default:
+                                break;
                         }
-                        default:
-                            break;
                     }
                 }
             }
@@ -431,6 +457,12 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             Toast.makeText(mAppContext, message, length).show();
         }
         mNotificationManager.cancel(UPDATE_NOTIFICATION_ID);
+
+        // add newly discovered shows to database
+        if (mNewShows.size() > 0) {
+            TaskManager.getInstance(mAppContext).performAddTask(mNewShows);
+        }
+
         TaskManager.getInstance(mAppContext).onTaskCompleted();
     }
 
