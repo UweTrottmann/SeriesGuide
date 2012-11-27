@@ -463,7 +463,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
         mNotificationManager.cancel(UPDATE_NOTIFICATION_ID);
 
         // add newly discovered shows to database
-        if (mNewShows.size() > 0) {
+        if (mNewShows != null && mNewShows.size() > 0) {
             TaskManager.getInstance(mAppContext).performAddTask(mNewShows);
         }
 
