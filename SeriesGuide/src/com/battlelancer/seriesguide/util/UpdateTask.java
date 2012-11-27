@@ -332,15 +332,19 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             }
 
             // get a list of existing shows
-            final Cursor shows = resolver.query(Shows.CONTENT_URI, new String[] {
-                    Shows._ID
-            }, null, null, null);
+            boolean isAutoAddingShows = prefs.getBoolean(
+                    SeriesGuidePreferences.KEY_AUTO_ADD_TRAKT_SHOWS, true);
             final HashSet<String> existingShows = new HashSet<String>();
-            if (shows != null) {
-                while (shows.moveToNext()) {
-                    existingShows.add(shows.getString(0));
+            if (isAutoAddingShows) {
+                final Cursor shows = resolver.query(Shows.CONTENT_URI, new String[] {
+                        Shows._ID
+                }, null, null, null);
+                if (shows != null) {
+                    while (shows.moveToNext()) {
+                        existingShows.add(shows.getString(0));
+                    }
+                    shows.close();
                 }
-                shows.close();
             }
 
             // build an update batch
@@ -349,7 +353,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             for (ActivityItem item : activity.activity) {
                 // check for null (potential fix for reported crash)
                 if (item.action != null && item.show != null) {
-                    if (!existingShows.contains(item.show.tvdbId)) {
+                    if (isAutoAddingShows && !existingShows.contains(item.show.tvdbId)) {
                         SearchResult show = new SearchResult();
                         show.title = item.show.title;
                         show.tvdbid = item.show.tvdbId;

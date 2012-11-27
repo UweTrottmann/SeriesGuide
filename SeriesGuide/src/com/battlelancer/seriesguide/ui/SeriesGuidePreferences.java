@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -144,6 +145,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     public static final String KEY_FAILED_COUNTER = "com.battlelancer.seriesguide.failedcounter";
 
     public static final String KEY_ACTIVITYTAB = "com.battlelancer.seriesguide.activitytab";
+
+    public static final String KEY_AUTO_ADD_TRAKT_SHOWS = "com.battlelancer.seriesguide.autoaddtraktshows";
 
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
 
@@ -351,6 +354,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 + SeriesGuideDatabase.DATABASE_VERSION + ")");
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.settings, target);

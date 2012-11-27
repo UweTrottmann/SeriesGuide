@@ -229,6 +229,8 @@
     <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
     <string name="sendusagedata">Send the developer usage statistics</string>
     <string name="pref_upcominglimit">Upcoming shows within…</string>
+    <string name="pref_autoaddshows">Add new trakt shows</string>
+    <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
 
     <string-array name="shsorting">
         <item>A - Z</item>
