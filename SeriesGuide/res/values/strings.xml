@@ -192,7 +192,7 @@
 
     <!-- Settings -->
     <string name="prefs_category_basic">Basics</string>
-    <string name="prefs_category_sharing">Sharing</string>
+    <string name="prefs_category_sharing">Services</string>
     <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">About</string>
     <string name="help">Help</string>
