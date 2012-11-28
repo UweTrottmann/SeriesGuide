@@ -70,8 +70,6 @@ public class EpisodesFragment extends SherlockListFragment implements
 
     private static final int CONTEXT_FLAG_UNWATCHED_ID = 1;
 
-    private static final int CONTEXT_DELETE_EPISODE_ID = 2;
-
     private static final int CONTEXT_MANAGE_LISTS_ID = 3;
 
     private static final int CONTEXT_FLAG_UNTILHERE_ID = 4;
@@ -293,7 +291,6 @@ public class EpisodesFragment extends SherlockListFragment implements
         }
         menu.add(0, CONTEXT_FLAG_UNTILHERE_ID, 2, R.string.mark_untilhere);
         menu.add(0, CONTEXT_MANAGE_LISTS_ID, 3, R.string.list_item_manage);
-        menu.add(0, CONTEXT_DELETE_EPISODE_ID, 4, R.string.delete_show);
     }
 
     @Override
@@ -319,14 +316,6 @@ public class EpisodesFragment extends SherlockListFragment implements
             case CONTEXT_MANAGE_LISTS_ID: {
                 ListsDialogFragment.showListsDialog(String.valueOf(info.id), 3,
                         getFragmentManager());
-                return true;
-            }
-            case CONTEXT_DELETE_EPISODE_ID: {
-                getActivity().getContentResolver().delete(
-                        Episodes.buildEpisodeUri(String.valueOf(info.id)), null, null);
-                getActivity().getContentResolver().notifyChange(
-                        Episodes.buildEpisodesOfSeasonWithShowUri(String.valueOf(getSeasonId())),
-                        null);
                 return true;
             }
         }
