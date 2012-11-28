@@ -5,6 +5,20 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 2.11.4beta *(2012-11-28)*
+--------------------------------
+
+* FEATURE Automatically add new shows from your trakt activity stream. Can be disabled in settings.
+* FEATURE Experimenting with Google Play and Amazon search links below each episode.
+* TWEAK Use custom drawables for most of the UI on Android 2.3 and lower when using one of the two SeriesGuide themes.
+* TWEAK Updated list widget preview image.
+* TWEAK Updated first run layout.
+* TWEAK Dismiss first run fragment if forwarding to add screen.
+* TWEAK Enable home button in FixGetGlueCheckInActivity.
+* TWEAK Remove episode remove button, SeriesGuide is cleaning up orphaned episodes by itself.
+* TWEAK Postpone launching notifications service on boot for a minute.
+* FIX Shouts now use the selected theme.
+
 Version 2.11.3beta *(2012-11-25)*
 --------------------------------
 
