@@ -4,6 +4,8 @@
     <string name="app_name">SeriesGuide</string>
     <string name="package_name">com.battlelancer.seriesguide</string>
     <string name="helptranslate">Help translate SeriesGuide</string>
+    <string name="googleplay">Google Play</string>
+    <string name="amazon">Amazon</string>
     <string name="imdb">IMDb</string>
     <string name="tvdb">TVDb</string>
     <string name="trakt">trakt.tv</string>
