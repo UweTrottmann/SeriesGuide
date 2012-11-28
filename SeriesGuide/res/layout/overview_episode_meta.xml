@@ -58,6 +58,6 @@
         android:id="@+id/buttonbar_ref"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        layout="@layout/show_info_buttonbar" />
+        layout="@layout/buttonbar_services" />
 
 </merge>
