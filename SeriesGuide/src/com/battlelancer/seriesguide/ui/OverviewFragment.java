@@ -597,6 +597,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     private void onLoadEpisodeDetails(final Cursor episode) {
         final int seasonNumber = episode.getInt(EpisodeQuery.SEASON);
         final int episodeNumber = episode.getInt(EpisodeQuery.NUMBER);
+        final String episodeTitle = episode.getString(EpisodeQuery.TITLE);
 
         // Description, DVD episode number, Directors, Writers
         ((TextView) getView().findViewById(R.id.TextViewEpisodeDescription)).setText(episode
@@ -621,6 +622,14 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                     .valueOf(ratingText) / 0.1));
             ((TextView) getView().findViewById(R.id.value)).setText(ratingText + "/10");
         }
+
+        // Google Play button
+        View playButton = getView().findViewById(R.id.buttonGooglePlay);
+        Utils.setUpGooglePlayButton(episodeTitle, playButton, TAG);
+
+        // Amazon button
+        View amazonButton = getView().findViewById(R.id.buttonAmazon);
+        Utils.setUpAmazonButton(episodeTitle, amazonButton, TAG);
 
         // IMDb button
         String imdbId = episode.getString(EpisodeQuery.IMDBID);
@@ -648,7 +657,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         });
 
         // trakt shouts button
-        final String episodeTitle = episode.getString(EpisodeQuery.TITLE);
         getView().findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

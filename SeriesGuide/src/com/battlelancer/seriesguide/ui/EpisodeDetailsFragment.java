@@ -279,6 +279,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             mSeasonNumber = cursor.getInt(DetailsQuery.SEASON);
             mEpisodeNumber = cursor.getInt(DetailsQuery.NUMBER);
             final String showTitle = cursor.getString(DetailsQuery.SHOW_TITLE);
+            final String episodeTitle = cursor.getString(DetailsQuery.TITLE);
             final String episodeString = ShareUtils.onCreateShareString(
                     getSherlockActivity(), cursor);
             final long airTime = cursor.getLong(DetailsQuery.FIRSTAIREDMS);
@@ -414,6 +415,14 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     cursor.getInt(DetailsQuery.NUMBER));
             AndroidUtils.executeAsyncTask(mTraktTask, new Void[] {});
 
+            // Google Play button
+            View playButton = view.findViewById(R.id.buttonGooglePlay);
+            Utils.setUpGooglePlayButton(showTitle + " " + episodeTitle, playButton, TAG);
+
+            // Amazon button
+            View amazonButton = view.findViewById(R.id.buttonAmazon);
+            Utils.setUpAmazonButton(showTitle + " " + episodeTitle, amazonButton, TAG);
+
             // TVDb button
             final String seasonId = cursor.getString(DetailsQuery.REF_SEASON_ID);
             view.findViewById(R.id.buttonTVDB).setOnClickListener(new OnClickListener() {
@@ -437,7 +446,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     getActivity());
 
             // trakt shouts button
-            final String episodeTitle = cursor.getString(DetailsQuery.TITLE);
             view.findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {

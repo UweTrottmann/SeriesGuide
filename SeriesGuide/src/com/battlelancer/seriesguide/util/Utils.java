@@ -898,6 +898,68 @@ public class Utils {
     }
 
     /**
+     * Sets a {@link OnClickListener} on the given button linking to a Google
+     * Play Store search for the given title or disabling the button if the
+     * title is empty.
+     */
+    public static void setUpGooglePlayButton(final String title, View playButton,
+            final String logTag) {
+        if (playButton != null) {
+
+            if (!TextUtils.isEmpty(title)) {
+                playButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        try {
+                            intent.setData(Uri.parse("market://search?q=" + title));
+                            v.getContext().startActivity(intent);
+                        } catch (ActivityNotFoundException e) {
+                            intent.setData(Uri.parse("http://play.google.com/store/search?q="
+                                    + title));
+                            v.getContext().startActivity(intent);
+                        }
+                        EasyTracker.getTracker()
+                                .trackEvent(logTag, "Click", "Google Play", (long) 0);
+                    }
+                });
+            } else {
+                playButton.setEnabled(false);
+            }
+
+        }
+    }
+
+    /**
+     * Sets a {@link OnClickListener} on the given button linking to a Amazon
+     * web search for the given title or disabling the button if the title is
+     * empty.
+     */
+    public static void setUpAmazonButton(final String title, View amazonButton,
+            final String logTag) {
+        if (amazonButton != null) {
+
+            if (!TextUtils.isEmpty(title)) {
+                amazonButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri
+                                .parse("http://www.amazon.com/gp/search?ie=UTF8&keywords=" + title));
+                        v.getContext().startActivity(intent);
+
+                        EasyTracker.getTracker()
+                                .trackEvent(logTag, "Click", "Amazon", (long) 0);
+                    }
+                });
+            } else {
+                amazonButton.setEnabled(false);
+            }
+
+        }
+    }
+
+    /**
      * Creates the tag of a {@link ViewPager} fragment.
      * 
      * @param viewId of the {@link ViewPager}
