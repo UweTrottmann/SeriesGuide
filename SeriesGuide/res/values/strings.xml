@@ -17,6 +17,7 @@
     <string name="search_description">Episodes</string>
     <string name="description_overview">Overview</string>
     <string name="description_poster">Show poster</string>
+    <string name="description_image">Episode image</string>
     <string name="norating">n/a</string>
     <string name="loading">Loading…</string>
     <string name="done">Done</string>

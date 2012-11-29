@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/imagecontainer_height"
         android:layout_gravity="center_vertical"
-        android:scaleType="fitCenter" />
+        android:contentDescription="@string/description_image"
+        android:scaleType="centerCrop" />
 
 </FrameLayout>
