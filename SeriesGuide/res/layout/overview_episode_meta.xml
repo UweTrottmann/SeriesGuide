@@ -20,29 +20,7 @@
         style="@style/SmallItems.WithSideMargins" />
 
     <TextView
-        android:id="@+id/labelDirectors"
-        style="@style/Label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/episode_directors" />
-
-    <TextView
-        android:id="@+id/TextViewEpisodeDirectors"
-        style="@style/SmallItems.WithSideMargins" />
-
-    <TextView
-        android:id="@+id/labelWriters"
-        style="@style/Label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/episode_writers" />
-
-    <TextView
-        android:id="@+id/TextViewEpisodeWriters"
-        style="@style/SmallItems.WithSideMargins" />
-
-    <TextView
-        android:id="@+id/labelDVD"
+        android:id="@+id/labelDvd"
         style="@style/Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

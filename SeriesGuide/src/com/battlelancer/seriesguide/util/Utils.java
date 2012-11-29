@@ -792,6 +792,17 @@ public class Utils {
         }
     }
 
+    public static void setLabelValueOrHide(View label, TextView text, final String value) {
+        if (TextUtils.isEmpty(value)) {
+            label.setVisibility(View.GONE);
+            text.setVisibility(View.GONE);
+        } else {
+            label.setVisibility(View.VISIBLE);
+            text.setVisibility(View.VISIBLE);
+            text.setText(value);
+        }
+    }
+
     @TargetApi(16)
     @SuppressWarnings("deprecation")
     public static void setPosterBackground(ImageView background, String posterPath, Context context) {

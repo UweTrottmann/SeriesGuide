@@ -430,11 +430,10 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Shows.REF_SHOW_ID, Episodes.OVERVIEW,
-                Episodes.NUMBER,
-                Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIREDMS, Episodes.DIRECTORS,
-                Episodes.GUESTSTARS, Episodes.WRITERS, Tables.EPISODES + "." + Episodes.RATING,
-                Episodes.IMAGE,
-                Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID, Episodes.COLLECTED,
+                Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIREDMS,
+                Episodes.GUESTSTARS, Tables.EPISODES + "." + Episodes.RATING,
+                Episodes.IMAGE, Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID,
+                Episodes.COLLECTED,
                 Episodes.IMDBID
 
         };
@@ -453,25 +452,21 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
         int FIRSTAIREDMS = 6;
 
-        int DIRECTORS = 7;
+        int GUESTSTARS = 7;
 
-        int GUESTSTARS = 8;
+        int RATING = 8;
 
-        int WRITERS = 9;
+        int IMAGE = 9;
 
-        int RATING = 10;
+        int DVDNUMBER = 10;
 
-        int IMAGE = 11;
+        int TITLE = 11;
 
-        int DVDNUMBER = 12;
+        int REF_SEASON_ID = 12;
 
-        int TITLE = 13;
+        int COLLECTED = 13;
 
-        int REF_SEASON_ID = 14;
-
-        int COLLECTED = 15;
-
-        int IMDBID = 16;
+        int IMDBID = 14;
 
     }
 
@@ -602,12 +597,9 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         // Description, DVD episode number, Directors, Writers
         ((TextView) getView().findViewById(R.id.TextViewEpisodeDescription)).setText(episode
                 .getString(EpisodeQuery.OVERVIEW));
-        Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewEpisodeDVDnumber),
-                episode.getString(EpisodeQuery.DVDNUMBER));
-        Utils.setValueOrPlaceholder(getView().findViewById(R.id.TextViewEpisodeDirectors),
-                Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.DIRECTORS)));
-        Utils.setValueOrPlaceholder(getView().findViewById(R.id.TextViewEpisodeWriters),
-                Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.WRITERS)));
+        Utils.setLabelValueOrHide(getView().findViewById(R.id.labelDvd), (TextView) getView()
+                .findViewById(R.id.textViewEpisodeDVDnumber), episode
+                .getString(EpisodeQuery.DVDNUMBER));
 
         // Guest stars
         // don't display an unknown string if there are no guest stars, because
