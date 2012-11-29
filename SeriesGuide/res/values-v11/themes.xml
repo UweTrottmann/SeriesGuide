@@ -69,7 +69,7 @@
 
         <!-- System widgets -->
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background_sg</item>
-        <item name="android:buttonStyle">@style/Widget.SeriesGuide.Light.Button</item>
+        <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
         <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
         <item name="android:editTextBackground">@drawable/edit_text_holo_light</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_sg</item>

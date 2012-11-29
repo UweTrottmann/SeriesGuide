@@ -4,6 +4,8 @@
     <!-- Buttons -->
     <style name="Widget.SeriesGuide.Button" parent="android:Widget.Holo.Button">
         <item name="android:background">@drawable/btn_default_sg</item>
+        <item name="android:textAppearance">@style/TextAppearance.Medium</item>
+        <item name="android:textColor">@color/text_primary_sg</item>
     </style>
 
     <style name="Widget.SeriesGuide.ImageButton" parent="android:Widget.Holo.ImageButton">

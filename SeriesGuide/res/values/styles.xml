@@ -83,6 +83,7 @@
         <item name="android:background">?custom_list_selector</item>
         <item name="android:paddingLeft">4dip</item>
         <item name="android:paddingRight">4dip</item>
+        <item name="android:textColor">?attr/textColorSgPrimary</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Small">
@@ -397,10 +398,6 @@
     </style>
 
     <!-- Buttons -->
-    <style name="Widget.SeriesGuide.Light.Button" parent="Widget.SeriesGuide.Button">
-        <item name="android:textColor">@color/text_primary</item>
-    </style>
-
     <!-- pre v11 -->
     <style name="Widget.SeriesGuide.Light.CheckBox" parent="Widget.SeriesGuide.CheckBox">
         <item name="android:button">@drawable/btn_check_holo_light</item>

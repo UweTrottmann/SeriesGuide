@@ -137,7 +137,7 @@
 
         <!-- System widgets -->
         <item name="android:editTextStyle">@style/Widget.SeriesGuide.Light.EditText</item>
-        <item name="android:buttonStyle">@style/Widget.SeriesGuide.Light.Button</item>
+        <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
         <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
         <item name="android:checkboxStyle">@style/Widget.SeriesGuide.Light.CheckBox</item>
         <item name="android:listViewStyle">@style/Widget.SeriesGuide.ListView</item>
