@@ -93,6 +93,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
     private Cursor mShowCursor;
 
+    private String mShowTitle;
+
     /**
      * All values have to be integer.
      */
@@ -146,8 +148,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             onShowSeasons();
         }
 
-        getLoaderManager().initLoader(EPISODE_LOADER_ID, null, this);
         getLoaderManager().initLoader(SHOW_LOADER_ID, null, this);
+        getLoaderManager().initLoader(EPISODE_LOADER_ID, null, this);
 
         setHasOptionsMenu(true);
     }
@@ -636,11 +638,11 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
         // Google Play button
         View playButton = getView().findViewById(R.id.buttonGooglePlay);
-        Utils.setUpGooglePlayButton(episodeTitle, playButton, TAG);
+        Utils.setUpGooglePlayButton(mShowTitle + " " + episodeTitle, playButton, TAG);
 
         // Amazon button
         View amazonButton = getView().findViewById(R.id.buttonAmazon);
-        Utils.setUpAmazonButton(episodeTitle, amazonButton, TAG);
+        Utils.setUpAmazonButton(mShowTitle + " " + episodeTitle, amazonButton, TAG);
 
         // IMDb button
         String imdbId = episode.getString(EpisodeQuery.IMDBID);
@@ -755,8 +757,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         mShowCursor = show;
 
         // title
-        ((TextView) getView().findViewById(R.id.seriesname)).setText(show
-                .getString(ShowQuery.SHOW_TITLE));
+        mShowTitle = show.getString(ShowQuery.SHOW_TITLE);
+        ((TextView) getView().findViewById(R.id.seriesname)).setText(mShowTitle);
 
         // status
         final TextView statusText = (TextView) getView().findViewById(R.id.showStatus);
