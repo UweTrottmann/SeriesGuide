@@ -54,7 +54,7 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
         setTitle(R.string.checkin_fixgetglue);
         
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
 
         setupViews();
 
