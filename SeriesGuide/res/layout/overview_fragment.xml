@@ -88,10 +88,34 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" >
 
-                        <include
+                        <FrameLayout
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:id="@+id/imageContainer"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            layout="@layout/imagecontainer" />
+                            android:background="@color/background_dim" >
+
+                            <LinearLayout
+                                android:id="@+id/progress_container"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/imagecontainer_height"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:visibility="gone" >
+
+                                <ProgressBar
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/ImageViewEpisodeImage"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/imagecontainer_height"
+                                android:layout_gravity="center_vertical"
+                                android:contentDescription="@string/description_image"
+                                android:scaleType="centerCrop" />
+                        </FrameLayout>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -138,14 +162,13 @@
                             android:focusable="true" />
                     </FrameLayout>
 
-                    <include
-                        android:layout_marginBottom="@dimen/default_padding"
-                        layout="@layout/divider_horizontal" />
+                    <include layout="@layout/divider_horizontal" />
 
                     <LinearLayout
                         android:id="@+id/episode_meta_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_padding"
                         android:orientation="vertical" >
 
                         <include layout="@layout/ratingbar" >
