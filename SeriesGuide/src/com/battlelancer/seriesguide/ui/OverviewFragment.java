@@ -534,6 +534,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         final TextView episodeTime = (TextView) getView().findViewById(R.id.episodeTime);
         final TextView episodeInfo = (TextView) getView().findViewById(R.id.episodeInfo);
         final View episodemeta = getView().findViewById(R.id.episode_meta_container);
+        final View episodePrimaryClicker = getView().findViewById(R.id.episode_primary_click_dummy);
 
         if (episode != null && episode.moveToFirst()) {
             // some episode properties
@@ -566,8 +567,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             }
 
             // make title and image clickable
-            final View episodePrimaryClicker = getView().findViewById(
-                    R.id.episode_primary_click_dummy);
             episodePrimaryClicker.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -577,9 +576,14 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                     startActivity(intent);
                 }
             });
+            episodePrimaryClicker.setFocusable(true);
 
             // load all other info
             onLoadEpisodeDetails(episode);
+
+            // episode image
+            onLoadImage(episode.getString(EpisodeQuery.IMAGE));
+
             episodemeta.setVisibility(View.VISIBLE);
         } else {
             // no next episode: display single line info text, remove other
@@ -588,6 +592,10 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             episodeTime.setVisibility(View.GONE);
             episodeInfo.setVisibility(View.GONE);
             episodemeta.setVisibility(View.GONE);
+            episodePrimaryClicker.setOnClickListener(null);
+            episodePrimaryClicker.setClickable(false);
+            episodePrimaryClicker.setFocusable(false);
+            onLoadImage(null);
         }
 
         // enable/disable applicable menu items
@@ -678,9 +686,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 }
             }
         });
-
-        // episode image
-        onLoadImage(episode.getString(EpisodeQuery.IMAGE));
 
         // trakt ratings
         mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView()).episode(getShowId(),

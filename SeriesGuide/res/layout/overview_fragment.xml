@@ -158,8 +158,7 @@
                             android:id="@+id/episode_primary_click_dummy"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="?attr/custom_list_selector"
-                            android:focusable="true" />
+                            android:background="?attr/custom_list_selector" />
                     </FrameLayout>
 
                     <include layout="@layout/divider_horizontal" />
