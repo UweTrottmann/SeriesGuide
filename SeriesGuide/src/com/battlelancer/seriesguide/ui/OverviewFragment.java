@@ -533,10 +533,11 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         final TextView episodeTitle = (TextView) getView().findViewById(R.id.episodeTitle);
         final TextView episodeTime = (TextView) getView().findViewById(R.id.episodeTime);
         final TextView episodeInfo = (TextView) getView().findViewById(R.id.episodeInfo);
-        final View episodemeta = getView().findViewById(R.id.episodemeta);
+        final View episodemeta = getView().findViewById(R.id.episode_meta_container);
 
         if (episode != null && episode.moveToFirst()) {
             // some episode properties
+            final int episodeId = episode.getInt(EpisodeQuery._ID);
             final int seasonNumber = episode.getInt(EpisodeQuery.SEASON);
             final int episodeNumber = episode.getInt(EpisodeQuery.NUMBER);
             final String title = episode.getString(EpisodeQuery.TITLE);
@@ -563,6 +564,19 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                         .append(")"));
                 episodeTime.setVisibility(View.VISIBLE);
             }
+
+            // make title and image clickable
+            final View episodePrimaryClicker = getView().findViewById(
+                    R.id.episode_primary_click_dummy);
+            episodePrimaryClicker.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // display episode details
+                    Intent intent = new Intent(getActivity(), EpisodeDetailsActivity.class);
+                    intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, episodeId);
+                    startActivity(intent);
+                }
+            });
 
             // load all other info
             onLoadEpisodeDetails(episode);
@@ -594,18 +608,15 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         final int episodeNumber = episode.getInt(EpisodeQuery.NUMBER);
         final String episodeTitle = episode.getString(EpisodeQuery.TITLE);
 
-        // Description, DVD episode number, Directors, Writers
+        // Description, DVD episode number, guest stars
         ((TextView) getView().findViewById(R.id.TextViewEpisodeDescription)).setText(episode
                 .getString(EpisodeQuery.OVERVIEW));
         Utils.setLabelValueOrHide(getView().findViewById(R.id.labelDvd), (TextView) getView()
                 .findViewById(R.id.textViewEpisodeDVDnumber), episode
                 .getString(EpisodeQuery.DVDNUMBER));
-
-        // Guest stars
-        // don't display an unknown string if there are no guest stars, because
-        // then there are none
-        ((TextView) getView().findViewById(R.id.TextViewEpisodeGuestStars)).setText(Utils
-                .splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));
+        Utils.setLabelValueOrHide(getView().findViewById(R.id.labelGuestStars),
+                (TextView) getView().findViewById(R.id.TextViewEpisodeGuestStars), Utils
+                        .splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));
 
         // TVDb rating
         final String ratingText = episode.getString(EpisodeQuery.RATING);
