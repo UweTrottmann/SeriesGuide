@@ -121,7 +121,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
-                            android:background="#ee111111"
+                            android:background="#cc111111"
                             android:paddingBottom="@dimen/default_padding"
                             android:paddingLeft="@dimen/default_padding"
                             android:paddingRight="@dimen/default_padding"
