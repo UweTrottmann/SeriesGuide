@@ -19,6 +19,7 @@
         <item name="textColorSgPrimary">@color/text_primary_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
         <item name="textColorSgGreen">@color/green_bright</item>
+        <item name="colorAccent">@color/accent_primary</item>
         <item name="colorOverlay">@color/overlay</item>
 
         <!-- Text styles -->
@@ -100,6 +101,7 @@
         <item name="textColorSgPrimary">@color/text_primary_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
         <item name="textColorSgGreen">@color/green_bright</item>
+        <item name="colorAccent">@color/accent_primary_android</item>
         <item name="colorOverlay">@color/overlay</item>
 
         <!-- Text styles -->
@@ -149,6 +151,7 @@
         <item name="textColorSgPrimary">@color/text_primary_light_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary</item>
         <item name="textColorSgGreen">@color/green_dark</item>
+        <item name="colorAccent">@color/accent_primary</item>
         <item name="colorOverlay">@color/overlay_inverse</item>
 
         <!-- Text styles -->

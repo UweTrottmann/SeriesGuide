@@ -164,7 +164,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/accent_primary" />
+                        android:background="?attr/colorAccent" />
 
                     <LinearLayout
                         android:id="@+id/episode_meta_container"

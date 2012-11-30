@@ -8,6 +8,7 @@
     <attr name="textColorSgPrimaryInverse" format="reference|color" />
     <attr name="textColorSgGreen" format="reference|color" />
     <attr name="colorOverlay" format="reference|color" />
+    <attr name="colorAccent" format="reference|color" />
 
     <!-- Text -->
     <attr name="textAppearanceSg" format="reference" />
