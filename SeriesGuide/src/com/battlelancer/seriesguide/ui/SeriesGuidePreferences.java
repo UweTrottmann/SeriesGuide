@@ -148,6 +148,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_AUTO_ADD_TRAKT_SHOWS = "com.battlelancer.seriesguide.autoaddtraktshows";
 
+    public static final String KEY_SYNC_UNSEEN_EPISODES = "com.battlelancer.seriesguide.syncunseenepisodes";
+
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
 
     public static final String HELP_URL = "http://seriesgui.de/help";

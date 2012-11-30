@@ -22,9 +22,11 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -112,6 +114,23 @@ public class TraktSyncActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean isSyncUnseenEpisodes = prefs.getBoolean(
+                SeriesGuidePreferences.KEY_SYNC_UNSEEN_EPISODES, false);
+        mSyncUnseenEpisodes.setChecked(isSyncUnseenEpisodes);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.edit().putBoolean(SeriesGuidePreferences.KEY_SYNC_UNSEEN_EPISODES,
+                mSyncUnseenEpisodes.isChecked()).commit();
     }
 
     @Override
