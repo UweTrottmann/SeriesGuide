@@ -121,7 +121,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
-                            android:background="#cc111111"
+                            android:background="?attr/colorOverlay"
                             android:paddingBottom="@dimen/default_padding"
                             android:paddingLeft="@dimen/default_padding"
                             android:paddingRight="@dimen/default_padding"
@@ -133,8 +133,7 @@
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
                                 android:maxLines="2"
-                                android:textAppearance="@style/TextAppearance.Large.Light"
-                                android:textColor="@color/text_primary" />
+                                android:textAppearance="?attr/textAppearanceSgLargeLight" />
 
                             <TextView
                                 android:id="@+id/episodeTime"
@@ -143,8 +142,7 @@
                                 android:layout_below="@+id/episodeTitle"
                                 android:layout_marginRight="@dimen/default_padding"
                                 android:textAllCaps="true"
-                                android:textAppearance="@style/TextAppearance.Small"
-                                android:textColor="@color/text_default" />
+                                android:textAppearance="?attr/textAppearanceSgSmall" />
 
                             <TextView
                                 android:id="@+id/episodeInfo"
@@ -153,8 +151,7 @@
                                 android:layout_below="@+id/episodeTitle"
                                 android:layout_toRightOf="@+id/episodeTime"
                                 android:textAllCaps="true"
-                                android:textAppearance="@style/TextAppearance.Small.Dim"
-                                android:textColor="@color/text_dim" />
+                                android:textAppearance="?attr/textAppearanceSgSmallDim" />
                         </RelativeLayout>
 
                         <View
@@ -164,7 +161,10 @@
                             android:background="?attr/custom_list_selector" />
                     </FrameLayout>
 
-                    <include layout="@layout/divider_horizontal" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/accent_primary" />
 
                     <LinearLayout
                         android:id="@+id/episode_meta_container"
