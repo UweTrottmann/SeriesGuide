@@ -133,7 +133,8 @@
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
                                 android:maxLines="2"
-                                android:textAppearance="?attr/textAppearanceSgLargeLight" />
+                                android:textAppearance="@style/TextAppearance.Large.Light"
+                                android:textColor="@color/text_primary" />
 
                             <TextView
                                 android:id="@+id/episodeTime"
@@ -142,7 +143,8 @@
                                 android:layout_below="@+id/episodeTitle"
                                 android:layout_marginRight="@dimen/default_padding"
                                 android:textAllCaps="true"
-                                android:textAppearance="?attr/textAppearanceSgSmall" />
+                                android:textAppearance="@style/TextAppearance.Small"
+                                android:textColor="@color/text_default" />
 
                             <TextView
                                 android:id="@+id/episodeInfo"
@@ -151,7 +153,8 @@
                                 android:layout_below="@+id/episodeTitle"
                                 android:layout_toRightOf="@+id/episodeTime"
                                 android:textAllCaps="true"
-                                android:textAppearance="?attr/textAppearanceSgSmallDim" />
+                                android:textAppearance="@style/TextAppearance.Small.Dim"
+                                android:textColor="@color/text_dim" />
                         </RelativeLayout>
 
                         <View
