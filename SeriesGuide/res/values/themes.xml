@@ -16,7 +16,7 @@
         <item name="android:listViewWhiteStyle">@style/Widget.SeriesGuide.ListView.White</item>
 
         <!-- Colors -->
-        <item name="textColorSgPrimary">@color/text_primary</item>
+        <item name="textColorSgPrimary">@color/text_primary_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
         <item name="textColorSgGreen">@color/green_bright</item>
 
@@ -96,7 +96,7 @@
         <item name="android:imageButtonStyle">@style/Widget.Android.ImageButton</item>
 
         <!-- Colors -->
-        <item name="textColorSgPrimary">@color/text_primary</item>
+        <item name="textColorSgPrimary">@color/text_primary_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
         <item name="textColorSgGreen">@color/green_bright</item>
 
@@ -144,7 +144,7 @@
         <item name="android:listViewWhiteStyle">@style/Widget.SeriesGuide.ListView.White</item>
 
         <!-- Colors -->
-        <item name="textColorSgPrimary">@color/text_primary_inverse</item>
+        <item name="textColorSgPrimary">@color/text_primary_light_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary</item>
         <item name="textColorSgGreen">@color/green_dark</item>
 

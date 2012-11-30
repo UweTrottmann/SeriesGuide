@@ -16,7 +16,7 @@
         <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_sg</item>
 
         <!-- Colors -->
-        <item name="textColorSgPrimary">@color/text_primary</item>
+        <item name="textColorSgPrimary">@color/text_primary_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
         <item name="textColorSgGreen">@color/green_bright</item>
 
@@ -76,7 +76,7 @@
         <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_light</item>
 
         <!-- Colors -->
-        <item name="textColorSgPrimary">@color/text_primary_inverse</item>
+        <item name="textColorSgPrimary">@color/text_primary_light_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary</item>
         <item name="textColorSgGreen">@color/green_dark</item>
 
