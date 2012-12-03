@@ -41,6 +41,7 @@ import android.widget.Toast;
 
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.Constants.EpisodeSorting;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
@@ -603,7 +604,9 @@ public class Utils {
                 }
             }
 
-            // Adapter gets notified by ContentProvider
+            // Show adapter gets notified by ContentProvider
+            // Lists adapter needs to be notified manually
+            mContext.getContentResolver().notifyChange(ListItems.CONTENT_WITH_DETAILS_URI, null);
         }
     }
 
