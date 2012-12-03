@@ -37,7 +37,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesContract.ShowsColumns;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -316,6 +315,13 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.d(TAG, "Can't downgrade database from version " +
+                oldVersion + " to " + newVersion);
+        onResetDatabase(db);
+    }
+
+    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d(TAG, "onUpgrade() from " + oldVersion + " to " + newVersion);
 
@@ -382,17 +388,24 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         // drop all tables if version is not right
         Log.d(TAG, "after upgrade logic, at version " + version);
         if (version != DATABASE_VERSION) {
-            Log.w(TAG, "Database has incompatible version, starting from scratch");
-            db.execSQL("DROP TABLE IF EXISTS " + Tables.SHOWS);
-            db.execSQL("DROP TABLE IF EXISTS " + Tables.SEASONS);
-            db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES);
-            db.execSQL("DROP TABLE IF EXISTS " + Tables.LISTS);
-            db.execSQL("DROP TABLE IF EXISTS " + Tables.LIST_ITEMS);
-
-            db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
-
-            onCreate(db);
+            onResetDatabase(db);
         }
+    }
+
+    /**
+     * Drops all tables and creates an empty database.
+     */
+    private void onResetDatabase(SQLiteDatabase db) {
+        Log.w(TAG, "Database has incompatible version, starting from scratch");
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.SHOWS);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.SEASONS);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.LISTS);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.LIST_ITEMS);
+
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
+
+        onCreate(db);
     }
 
     /**
