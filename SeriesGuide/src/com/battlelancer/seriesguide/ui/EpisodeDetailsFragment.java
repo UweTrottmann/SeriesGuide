@@ -40,6 +40,7 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -195,9 +196,10 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     private void onShareEpisode(ShareMethod shareMethod, boolean isInvalidateOptionsMenu) {
         // Episode of this fragment is always the first item in the cursor
         final Cursor episode = (Cursor) mAdapter.getItem(0);
-        if (episode != null) {
+        final SherlockFragmentActivity activity = getSherlockActivity();
+        if (episode != null && activity != null) {
             Bundle shareData = new Bundle();
-            String episodestring = ShareUtils.onCreateShareString(getActivity(), episode);
+            String episodestring = ShareUtils.onCreateShareString(activity, episode);
             String sharestring = getString(R.string.share_checkout);
             sharestring += " \"" + episode.getString(DetailsQuery.SHOW_TITLE);
             sharestring += " - " + episodestring + "\"";
@@ -218,12 +220,12 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             // don't close cursor!
             // episode.close();
 
-            ShareUtils.onShareEpisode(getActivity(), shareData, shareMethod, null);
+            ShareUtils.onShareEpisode(activity, shareData, shareMethod, null);
 
             if (isInvalidateOptionsMenu) {
                 // invalidate the options menu so a potentially new
                 // quick share action is displayed
-                getSherlockActivity().invalidateOptionsMenu();
+                activity.invalidateOptionsMenu();
             }
         }
     }
