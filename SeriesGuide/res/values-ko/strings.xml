@@ -16,6 +16,7 @@
   <string name="search_description">에피소드</string>
   <string name="description_overview">개요</string>
   <string name="description_poster">포스터 보이기</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">n/a</string>
   <string name="loading">로드 중</string>
   <string name="done">완료</string>
@@ -83,6 +84,7 @@
   <string name="trakt_notcollected">%s 수집되지 않음.</string>
   <string name="shows_empty">쇼 없음.</string>
   <string name="confirm_delete">%S을 제거 하시겠습니까?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">삭제</string>
   <string name="dontdelete_show">취소</string>
   <string name="no_nextepisode">다음 에피소드가 없습니다</string>
@@ -155,7 +157,7 @@
   <string name="list_item_remove">목록에서 제거</string>
   <string name="list_empty">쇼, 시즌 혹은 에피소드를 목록에 추가할 수 있습니다.</string>
   <string name="prefs_category_basic">기본</string>
-  <string name="prefs_category_sharing">공유</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">고급</string>
   <string name="prefs_category_about">대하여</string>
   <string name="help">도움말</string>
@@ -192,6 +194,8 @@
   <string name="pref_ganalyticssummary">시리즈가이드를 개선시키는데 도움을 주기 위해 사용 이력을 추적합니다</string>
   <string name="sendusagedata">개발자에게 사용 통계 보내기</string>
   <string name="pref_upcominglimit">방영 예정 쇼 표기</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description"><b>백업</b>은 쇼 목록을 아래의 폴더에 <b>seriesdatabase</b> 의 이름으로 저장합니다.\n\n<b>복원</b>할 때 이 파일이 아래의 폴더에 있는지 먼저 확인하세요.\n\n현재의 앱 버전과 같거나 낮은 버전의 백업만 복원이 가능합니다.</string>
   <string name="backup_path"><b>백업 폴더</b></string>
   <string name="backup_version"><b>데이터베이스 버전</b></string>
@@ -256,7 +260,6 @@
   <string name="welcome_traktmessage">track.tv 라이브러리와 친구의 상태를 확인하세요</string>
   <string name="dismiss">취소</string>
   <string name="welcome_add_part1">시작하려면 액션바에 있는</string>
-  <string name="welcome_add_part2">을 누르세요.</string>
   <string name="upcoming_show">%s가 방영 예정입니다</string>
   <string name="upcoming_episodes">새 에피소드 방영예정</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>

@@ -16,6 +16,7 @@
   <string name="search_description">Bölümler</string>
   <string name="description_overview">Genel Bakış</string>
   <string name="description_poster">Posteri göster</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">Geçersiz</string>
   <string name="loading">Yükleniyor…</string>
   <string name="done">Tamamlandı</string>
@@ -24,8 +25,8 @@
   <string name="cancel">Vazgeç</string>
   <string name="share">Paylaş</string>
   <string name="updated">En son sürüme güncellendi.</string>
-  <string name="discard">Discard</string>
-  <string name="save_selection">Save selection</string>
+  <string name="discard">Yoksay</string>
+  <string name="save_selection">Seçimi kaydet</string>
   <string name="offline">Ağ bağlantısı yok. Daha sonra tekrar deneyin.</string>
   <string name="onlyx">Yalnızca SeriesGuide X kullanıcıları için</string>
   <string name="shouts">Notlar</string>
@@ -83,6 +84,7 @@
   <string name="trakt_notcollected">Kolleksiyonda bulunmayan: %s.</string>
   <string name="shows_empty">Gösterilecek dizi yok.</string>
   <string name="confirm_delete">%s öğesini silmek istediğinize emin misiniz?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Kaldır</string>
   <string name="dontdelete_show">Kaldırma</string>
   <string name="no_nextepisode">sonraki bölüm bulunamadı</string>
@@ -155,7 +157,7 @@
   <string name="list_item_remove">Listeden kaldır</string>
   <string name="list_empty">Dizileri, sezonları veya bölümleri listeye ekleyebilirsin.</string>
   <string name="prefs_category_basic">Temel Ayarlar</string>
-  <string name="prefs_category_sharing">Paylaşım</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Gelişmiş</string>
   <string name="prefs_category_about">Hakkında</string>
   <string name="help">Yardım</string>
@@ -192,6 +194,8 @@
   <string name="pref_ganalyticssummary">SeriesGuide geliştirmeye yardımcı olmak için kullanım özelliklerini izler</string>
   <string name="sendusagedata">Geliştirici için kullanım istatistiklerini gönder.</string>
   <string name="pref_upcominglimit">Gelecek bölümleri gösterme süresi</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description"><b>Yedekle</b> dizi veritabanınızın bir kopyasını aşağıdaki klasördeki <b>seriesdatabase</b> isimli dosyaya yazar.\n\n<b>Geri Yükle</b> işlemi için aşağıdaki klasörde bu dosyanın bulunduğundan emin olun.\n\nSadece aynı veya daha eski veritabanı sürümleri geri yüklenebilir.</string>
   <string name="backup_path"><b>Yedek klasörü</b></string>
   <string name="backup_version"><b>Veritabanı sürümü</b></string>
@@ -218,15 +222,15 @@
   <string name="checkin_searchhint">Bir dizi adı yazın</string>
   <string name="checkin_empty">Eşleşen dizi yok</string>
   <string name="checkin_hint">Bir mesaj yazın (isteğe bağlı)</string>
-  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
+  <string name="checkin_fixgetglue">GetGlue girişini düzelt</string>
   <string name="paste_episode">Bölümü yapıştır</string>
   <string name="checkinsuccess">GetGlue ile %s bağlantısı sağlandı.</string>
   <string name="checkinfailed">GetGlue girişi başarısız oldu. GetGlue bağlantısını kesmeyi deneyin.</string>
   <string name="getglue_authfailed">GetGlue kimlik doğrulaması başarısız oldu. Daha sonra yeniden deneyin.</string>
-  <string name="select_show">Select show</string>
-  <string name="check_into">Check into</string>
-  <string name="no_selection">pick one below</string>
-  <string name="looking_for_something_else">Looking for something else?</string>
+  <string name="select_show">Dizi seç</string>
+  <string name="check_into">Giriş yap</string>
+  <string name="no_selection">birini seç</string>
+  <string name="looking_for_something_else">Başka bir şey mi arıyorsun?</string>
   <string name="menu_rate_trakt">Derece (trakt)</string>
   <string name="menu_share_others">Diğer uygulamalar aracılığıyla</string>
   <string name="traktcheckin_cancel">Geçersiz Kıl</string>
@@ -256,7 +260,6 @@
   <string name="welcome_traktmessage">Trakt.tv kütüphanene ve arkadaşlarının hareketlerine eriş</string>
   <string name="dismiss">Kapat</string>
   <string name="welcome_add_part1">Başlamak için ekrana dokun</string>
-  <string name="welcome_add_part2">durum çubuğunda.</string>
   <string name="upcoming_show">%s geliyor</string>
   <string name="upcoming_episodes">Yeni bölümler geliyor</string>
   <string name="upcoming_show_detailed">Yakında yayınlanacak Favori diziler için uyar</string>

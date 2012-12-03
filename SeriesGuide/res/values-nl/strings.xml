@@ -16,6 +16,7 @@
   <string name="search_description">Afleveringen</string>
   <string name="description_overview">Overzicht</string>
   <string name="description_poster">Affiche weergeven</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">n/a</string>
   <string name="loading">Laden…</string>
   <string name="done">Gereed</string>
@@ -83,6 +84,7 @@
   <string name="trakt_notcollected">%s niet verzameld.</string>
   <string name="shows_empty">Geen series.</string>
   <string name="confirm_delete">Wilt u %s echt verwijderen?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Verwijderen</string>
   <string name="dontdelete_show">Niet verwijderen</string>
   <string name="no_nextepisode">Geen volgende aflevering gevonden.</string>
@@ -155,7 +157,7 @@
   <string name="list_item_remove">Verwijder van lijst</string>
   <string name="list_empty">Je kan series, seizoenen of afleveringen toevoegen aan deze lijst.</string>
   <string name="prefs_category_basic">Basis</string>
-  <string name="prefs_category_sharing">Delen</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Geavanceerd</string>
   <string name="prefs_category_about">Over</string>
   <string name="help">Help</string>
@@ -192,6 +194,8 @@
   <string name="pref_ganalyticssummary">Het gebruik van functies volgen om SeriesGuide te helpen te verbeteren</string>
   <string name="sendusagedata">Gebruikersstatistieken naar ontwikkelaar versturen</string>
   <string name="pref_upcominglimit">Toekomstige series over…</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description"><b>Backup</b> maakt een kopie van het gegevensbestand in een bestand genaamd <b>seriesdatabase</b> in onderstaande map.\n\nWees er zeker van dat dit bestand in onderstaande map aanwezig is om te <b>Herstellen</b>.\n\nAlleen back-ups gemaakt met dezelfde of eerdere gegevensbestand versie als onderstaand kunnen worden hersteld.</string>
   <string name="backup_path"><b>Back-up map</b></string>
   <string name="backup_version"><b>Gegevensbestand versie</b></string>
@@ -256,7 +260,6 @@
   <string name="welcome_traktmessage">Toegang tot uw bibliotheek en activiteit van vrienden op trakt.tv</string>
   <string name="dismiss">Afwijzen</string>
   <string name="welcome_add_part1">Om te beginnen druk op</string>
-  <string name="welcome_add_part2">in de action bar.</string>
   <string name="upcoming_show">%s verschijnt binnenkort</string>
   <string name="upcoming_episodes">Nieuwe afleveringen verschijnen binnenkort</string>
   <string name="upcoming_show_detailed">%1$s op %2$s</string>

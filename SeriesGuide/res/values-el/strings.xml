@@ -16,6 +16,7 @@
   <string name="search_description">Επεισόδια</string>
   <string name="description_overview">Επισκόπηση</string>
   <string name="description_poster">Εμφάνιση αφίσας</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">n/a</string>
   <string name="loading">Φόρτωση…</string>
   <string name="done">Ολοκληρώθηκε</string>
@@ -83,6 +84,7 @@
   <string name="trakt_notcollected">%s εκτός συλλογής.</string>
   <string name="shows_empty">Δεν υπάρχουν σειρές εδώ.</string>
   <string name="confirm_delete">Θέλετε πράγματι να αφαιρέσετε %s?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Αφαίρεση</string>
   <string name="dontdelete_show">Να μην αφαιρεθεί</string>
   <string name="no_nextepisode">Δεν βρέθηκε επόμενο επεισόδιο</string>
@@ -155,7 +157,7 @@
   <string name="list_item_remove">Remove from list</string>
   <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
   <string name="prefs_category_basic">Βασικά</string>
-  <string name="prefs_category_sharing">Κοινή χρήση</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Για προχωρημένους</string>
   <string name="prefs_category_about">Σχετικά</string>
   <string name="help">Βοήθεια</string>
@@ -192,6 +194,8 @@
   <string name="pref_ganalyticssummary">Καταγραφή της χρήσης για την βελτίωση του SeriesGuide</string>
   <string name="sendusagedata">Αποστολή στατιστικών στοιχείων χρήσης στον δημιουργό</string>
   <string name="pref_upcominglimit">Επερχόμενες σειρές εντός…</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description">Το <b>αντίγραφο ασφαλείας</b> δημιουργεί ένα αντίγραφο της βάσης δεδομένων των σειρών σας σε ένα αρχείο με όνομα <b>seriesdatabase</b> στον κάτωθι φάκελο.\n\nΓια <b>Επαναφορά</b> βεβαιωθείτε ότι αυτό το αρχείο βρίσκεται στον κάτωθι φάκελο.\n\nΜόνο αρχεία αντιγράφων ασφαλείας με την ίδια ή χαμηλότερη έκδοση βάσης δεδομένων μπορούν να επαναφερθούν.</string>
   <string name="backup_path"><b>Φάκελος αντιγράφων ασφαλείας</b></string>
   <string name="backup_version"><b>Έκδοση βάσης δεδομένων</b></string>
@@ -256,7 +260,6 @@
   <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
   <string name="dismiss">Απόρριψη</string>
   <string name="welcome_add_part1">To get started tap</string>
-  <string name="welcome_add_part2">στη μπάρα ενεργειών.</string>
   <string name="upcoming_show">%s επερχόμενα</string>
   <string name="upcoming_episodes">Νέα επεισόδια έρχονται</string>
   <string name="upcoming_show_detailed">%1$s προς %2$s</string>

@@ -16,6 +16,7 @@
   <string name="search_description">Episodi</string>
   <string name="description_overview">Panoramica</string>
   <string name="description_poster">Mostra poster</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">non disponibile</string>
   <string name="loading">Caricamento in corso...</string>
   <string name="done">Fatto</string>
@@ -83,6 +84,7 @@
   <string name="trakt_notcollected">%s non collezionato.</string>
   <string name="shows_empty">Nessuno spettacolo.</string>
   <string name="confirm_delete">Vuoi davvero rimuovere %s?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Rimuovere</string>
   <string name="dontdelete_show">Non rimuovere</string>
   <string name="no_nextepisode">nessun prossimo episodio trovato</string>
@@ -155,7 +157,7 @@
   <string name="list_item_remove">Rimuovi da lista</string>
   <string name="list_empty">Puoi aggiungere nella lista serie, stagioni o episodi.</string>
   <string name="prefs_category_basic">Base</string>
-  <string name="prefs_category_sharing">Condivisione</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Avanzato</string>
   <string name="prefs_category_about">Info su</string>
   <string name="help">Guida</string>
@@ -192,6 +194,8 @@
   <string name="pref_ganalyticssummary">Traccia l\'uso delle funzionalità per aiutare a migliorare SeriesGuide</string>
   <string name="sendusagedata">Invia allo sviluppatore delle statistiche sull\'utilizzo</string>
   <string name="pref_upcominglimit">Prossimi programmi tra...</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description"><b>Backup</b> crea una copia del vostro database delle serie in un file denominato <b>seriesdatabase</b> nella cartella below.\n\nTo <b>Restore</b> assicurarsi che questo file è nel backup della cartella below.\n\nOnly cartella con lo stesso o una versione inferiore del database come sotto può essere ripristinata.</string>
   <string name="backup_path"><b>Cartella backup</b></string>
   <string name="backup_version"><b>Versione database</b></string>
@@ -256,7 +260,6 @@
   <string name="welcome_traktmessage">Accedi alla tua libreria trakt.tv e alle attività dei tuoi amici</string>
   <string name="dismiss">Cancella</string>
   <string name="welcome_add_part1">Per cominciare premi lo schermo</string>
-  <string name="welcome_add_part2">nella barra delle azioni.</string>
   <string name="upcoming_show">%s sta per essere trasmesso</string>
   <string name="upcoming_episodes">Nuovi episodi stanno per essere trasmessi</string>
   <string name="upcoming_show_detailed">%1$s su %2$s</string>

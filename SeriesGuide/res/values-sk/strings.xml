@@ -16,6 +16,7 @@
   <string name="search_description">Epizódy</string>
   <string name="description_overview">Prehľad</string>
   <string name="description_poster">Zobraziť plagát</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">nedostupné</string>
   <string name="loading">Načítavam…</string>
   <string name="done">Hotovo</string>
@@ -83,6 +84,7 @@
   <string name="trakt_notcollected">%s nezozbieraných.</string>
   <string name="shows_empty">Bez seriálu.</string>
   <string name="confirm_delete">Naozaj chcete odstrániť %s?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Odstrániť</string>
   <string name="dontdelete_show">Neodstraňovať</string>
   <string name="no_nextepisode">žiadne ďalšie epizódy sa nenašli</string>
@@ -155,7 +157,7 @@
   <string name="list_item_remove">Remove from list</string>
   <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
   <string name="prefs_category_basic">Základné</string>
-  <string name="prefs_category_sharing">Zdieľanie</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Pokročilé</string>
   <string name="prefs_category_about">About</string>
   <string name="help">Pomoc</string>
@@ -192,6 +194,8 @@
   <string name="pref_ganalyticssummary">Sledovať používanie aplikácie pre zlepšenie SeriesGuide</string>
   <string name="sendusagedata">Odoslať štatistiky používania vývojárom</string>
   <string name="pref_upcominglimit">Nadchádzajúce seriály počas…</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description"><b>Záloha</b> vytvorí kópiu databázy Vašich seriálov do súboru s názvom <b>seriesdatabase</b> v nižšie uvedenej zložke.\n\nPred <b>Obnovením</b> sa uistite že sa tento súbor nachádza v zložke \n\nObnovené môžu byť zálohy s rovnakou alebo nižšou verziou databázy, ako je uvedené nižšie.</string>
   <string name="backup_path"><b>Zložka záloh</b></string>
   <string name="backup_version"><b>Verzia databázy</b></string>
@@ -256,7 +260,6 @@
   <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
   <string name="dismiss">Zamietnuť</string>
   <string name="welcome_add_part1">To get started tap</string>
-  <string name="welcome_add_part2">V paneli akcií.</string>
   <string name="upcoming_show">%s práve vychádzajú</string>
   <string name="upcoming_episodes">Práve vychádzajú nové epizódy</string>
   <string name="upcoming_show_detailed">%1$s na %2$s</string>

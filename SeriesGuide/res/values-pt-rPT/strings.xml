@@ -16,6 +16,7 @@
   <string name="search_description">Episódios</string>
   <string name="description_overview">Visão geral</string>
   <string name="description_poster">Visualizar cartaz</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">n/a</string>
   <string name="loading">Carregando…</string>
   <string name="done">Concluído</string>
@@ -83,6 +84,7 @@
   <string name="trakt_notcollected">%s não recolhidos.</string>
   <string name="shows_empty">Sem séries adicionadas</string>
   <string name="confirm_delete">Deseja realmente remover %s?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Remover</string>
   <string name="dontdelete_show">Não remover</string>
   <string name="no_nextepisode">Nenhum próximo episódio encontrado</string>
@@ -155,7 +157,7 @@
   <string name="list_item_remove">Remover da lista</string>
   <string name="list_empty">Pode adicionar séries, temporadas ou episódios a esta lista.</string>
   <string name="prefs_category_basic">Básicas</string>
-  <string name="prefs_category_sharing">Partilhar</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Avançado</string>
   <string name="prefs_category_about">Acerca</string>
   <string name="help">Ajuda</string>
@@ -192,6 +194,8 @@
   <string name="pref_ganalyticssummary">Controlar o uso de recursos para ajudar a melhorar o SeriesGuide</string>
   <string name="sendusagedata">Enviar as estatísticas de uso para os desenvolvedores</string>
   <string name="pref_upcominglimit">Próximas séries dentro de…</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description"><b>Backup</b> Cria uma cópia da base de dados das séries num ficheiro chamado <b>seriesdatabase</b> no seguinte directório.\n\nPara <b>Restaurar</b> certifique-se que o ficheiro se encontra no directório.\n\nApenas os backups com a mesma versão ou inferior à base de dados seguinte podem ser resturados.</string>
   <string name="backup_path"><b>Pasta de backup</b></string>
   <string name="backup_version"><b>Versão de banco de dados</b></string>
@@ -256,7 +260,6 @@
   <string name="welcome_traktmessage">Aceda à sua biblioteca trakt.tv e actividade dos amigos</string>
   <string name="dismiss">Recusar</string>
   <string name="welcome_add_part1">Para começar toquem em</string>
-  <string name="welcome_add_part2">na barra de ação.</string>
   <string name="upcoming_show">%s brevemente</string>
   <string name="upcoming_episodes">Novos episódios brevemente</string>
   <string name="upcoming_show_detailed">%1$s em %2$s</string>

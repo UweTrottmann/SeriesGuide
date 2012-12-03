@@ -16,6 +16,7 @@
   <string name="search_description">Avsnitt</string>
   <string name="description_overview">Översikt</string>
   <string name="description_poster">Visa affisch</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">saknas</string>
   <string name="loading">Laddar…</string>
   <string name="done">Klar</string>
@@ -83,6 +84,7 @@
   <string name="trakt_notcollected">%s ej hämtade.</string>
   <string name="shows_empty">Serier saknas.</string>
   <string name="confirm_delete">Vill du verkligen ta bort %s?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Ta bort</string>
   <string name="dontdelete_show">Ta inte bort</string>
   <string name="no_nextepisode">Inga ytterligare avsnitt hittade</string>
@@ -155,7 +157,7 @@
   <string name="list_item_remove">Ta bort från lista</string>
   <string name="list_empty">Du kan lägga till serier, säsonger eller avsnitt till denna lista.</string>
   <string name="prefs_category_basic">Grunder</string>
-  <string name="prefs_category_sharing">Dela</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Avancerat</string>
   <string name="prefs_category_about">Om</string>
   <string name="help">Hjälp</string>
@@ -192,6 +194,8 @@
   <string name="pref_ganalyticssummary">Mäter användningen av funktioner för att förbättra SeriesGuide</string>
   <string name="sendusagedata">Skicka användningsstatistik till utvecklaren</string>
   <string name="pref_upcominglimit">Kommande serier inom…</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description"><b>Säkerhetskopiering</b> skapar en kopia av databasen i en fil med namnet <b>seriesdatabase</b> i mappen nedan.\n\nFör att <b>återställa</b> kontrollera att filen är i mappen nedan.\n\nBara säkerhetskopior med samma eller en lägre databasversion som nedan kan återställas.</string>
   <string name="backup_path"><b>Mapp för säkerhetskopia</b></string>
   <string name="backup_version"><b>Databasversion</b></string>
@@ -256,7 +260,6 @@
   <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
   <string name="dismiss">Avfärda</string>
   <string name="welcome_add_part1">För att starta tryck</string>
-  <string name="welcome_add_part2">på aktivitetsfältet.</string>
   <string name="upcoming_show">%s kommande</string>
   <string name="upcoming_episodes">Nya avsnitt är på gång</string>
   <string name="upcoming_show_detailed">%1$s på %2$s</string>

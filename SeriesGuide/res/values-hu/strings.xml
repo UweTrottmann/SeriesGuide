@@ -16,6 +16,7 @@
   <string name="search_description">Epizódok</string>
   <string name="description_overview">Tartalom</string>
   <string name="description_poster">Borító mutatása</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">n/a</string>
   <string name="loading">Betöltés…</string>
   <string name="done">Kész</string>
@@ -83,6 +84,7 @@
   <string name="trakt_notcollected">%s kivéve a gyűjteményből.</string>
   <string name="shows_empty">Nincsenek sorozatok.</string>
   <string name="confirm_delete">Biztosan törli a következőt: %s?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Törlés</string>
   <string name="dontdelete_show">Mégse</string>
   <string name="no_nextepisode">nem található köv. rész</string>
@@ -155,7 +157,7 @@
   <string name="list_item_remove">Listáról törlés</string>
   <string name="list_empty">Sorozatokat, évadokat vagy epizódokat is adhatsz hozzá ehhez a listához.</string>
   <string name="prefs_category_basic">Alap beállítások</string>
-  <string name="prefs_category_sharing">Megosztás</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Haladó beállítások</string>
   <string name="prefs_category_about">A programról</string>
   <string name="help">Súgó</string>
@@ -192,6 +194,8 @@
   <string name="pref_ganalyticssummary">A SeriesGuide fejlesztése érdekében nyomon követi a használt funkciókat.</string>
   <string name="sendusagedata">Send the developer usage statistics</string>
   <string name="pref_upcominglimit">Közelgő műsörök megjelenítése...</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description">A <b>Mentés</b> gombbal elmentheti a sorozatok adatbázisát <b>seriesdatabase</b> fájlnévvel a lenti mappába.\n\nA <b>Visszaállítás</b> gombbal a lent látható, vagy annál alacsonyabb verziójú adatbázis állítható vissza a biztonsági másolat mappából.</string>
   <string name="backup_path"><b>Biztonsági másolat mappa</b></string>
   <string name="backup_version"><b>Adatbázis verzió</b></string>
@@ -256,7 +260,6 @@
   <string name="welcome_traktmessage">Érd el a barátaidat és a sorozataidat a trakt.tv-n</string>
   <string name="dismiss">Mégsem</string>
   <string name="welcome_add_part1">To get started tap</string>
-  <string name="welcome_add_part2">in the action bar.</string>
   <string name="upcoming_show">%s kezdődik</string>
   <string name="upcoming_episodes">Új epizódok kezdődnek</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>

@@ -16,6 +16,7 @@
   <string name="search_description">Эпизоды</string>
   <string name="description_overview">Обзор</string>
   <string name="description_poster">Показать постер</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">нет данных</string>
   <string name="loading">Загрузка…</string>
   <string name="done">Выполнено</string>
@@ -83,6 +84,7 @@
   <string name="trakt_notcollected">%s не помечен.</string>
   <string name="shows_empty">Нет сериалов.</string>
   <string name="confirm_delete">Вы действительно хотите удалить %s?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Удалить</string>
   <string name="dontdelete_show">Не удалять</string>
   <string name="no_nextepisode">следующий эпизод не найден</string>
@@ -155,7 +157,7 @@
   <string name="list_item_remove">Удалить из списка</string>
   <string name="list_empty">Сериалы, сезоны или эпизоды можно добавить в этот список.</string>
   <string name="prefs_category_basic">Основные</string>
-  <string name="prefs_category_sharing">Поделиться</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Дополнительные</string>
   <string name="prefs_category_about">О программе</string>
   <string name="help">Справка</string>
@@ -192,6 +194,8 @@
   <string name="pref_ganalyticssummary">Отслеживать использование функций, чтобы помочь улучшить SeriesGuide</string>
   <string name="sendusagedata">Отправлять статистику использования разработчику</string>
   <string name="pref_upcominglimit">Показы в ближайшие N дней...</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description"><b>Бекап</b> создает копию базы данных сериалов в файле с именем <b>seriesdatabase</b> в папке.\n\n Для <b>восстановления</b> убедитесь, что этот файл находится в папке.\n\n Только резервные копии с теми же или ниже версии базы данных как ниже могут быть восстановлены.</string>
   <string name="backup_path"><b>Папка резервного копирования</b></string>
   <string name="backup_version"><b>Версия базы данных</b></string>
@@ -256,7 +260,6 @@
   <string name="welcome_traktmessage">Доступ к вашей активности и активности друзей в trakt.tv</string>
   <string name="dismiss">Отменить</string>
   <string name="welcome_add_part1">Для начала нажмите</string>
-  <string name="welcome_add_part2">в панели действий.</string>
   <string name="upcoming_show">%s выпущено</string>
   <string name="upcoming_episodes">Выходят новые эпизоды</string>
   <string name="upcoming_show_detailed">%1$s на %2$s</string>

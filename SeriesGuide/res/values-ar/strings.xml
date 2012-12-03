@@ -16,6 +16,7 @@
   <string name="search_description">الحلقات</string>
   <string name="description_overview">نظرة عامة</string>
   <string name="description_poster">إظهار الملصقات</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">لا يوجد</string>
   <string name="loading">تحميل...</string>
   <string name="done">تم</string>
@@ -83,6 +84,7 @@
   <string name="trakt_notcollected">%s لم يتم جمعها.</string>
   <string name="shows_empty">.لا توجد مسلسلات</string>
   <string name="confirm_delete">هل تريد حقاً إزالة %s؟</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">إزالة</string>
   <string name="dontdelete_show">لا تقم بالإزالة</string>
   <string name="no_nextepisode">لا توجد حلقة قادمة</string>
@@ -155,7 +157,7 @@
   <string name="list_item_remove">إزالة من القائمة</string>
   <string name="list_empty">يمكنك إضافة عروض أو المواسم أو الحلقات لهذه القائمة.</string>
   <string name="prefs_category_basic">أساسي</string>
-  <string name="prefs_category_sharing">مشاركة</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">متقدم</string>
   <string name="prefs_category_about">حول</string>
   <string name="help">مساعدة</string>
@@ -192,6 +194,8 @@
   <string name="pref_ganalyticssummary">تعقب استخدام المميزات للمساعدة في تحسين البرنامج</string>
   <string name="sendusagedata">إرسال إحصائيات الاستخدام المطور</string>
   <string name="pref_upcominglimit">العروض القادمة خلال ...</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description"><b>النسخ الاحتياطي</b> بإنشاء نسخة من قاعدة البيانات الخاصة بك وتظهر في ملف يسمى <b>سيريسداتاباسي</b> في below.\n\nTo مجلد <b>استعادة</b> التأكد من هذا الملف موجود في مجلد النسخ الاحتياطية below.\n\nOnly مع نفسه أو يمكن استعادة قاعدة بيانات إصدار أدنى أدناه.</string>
   <string name="backup_path"><b>مجلد النسخة الاحتياطية</b></string>
   <string name="backup_version"><b>إصدار قاعدة بيانات</b></string>
@@ -256,7 +260,6 @@
   <string name="welcome_traktmessage">الوصول إلى حسابك في التراكت,المكتبة ونشاط الأصدقاء</string>
   <string name="dismiss">إبعاد</string>
   <string name="welcome_add_part1">لبدء الاستخدام اضغط</string>
-  <string name="welcome_add_part2">في شريط الإجراءات.</string>
   <string name="upcoming_show">%s قادم</string>
   <string name="upcoming_episodes">الحلقات الجديدة القادمة</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>

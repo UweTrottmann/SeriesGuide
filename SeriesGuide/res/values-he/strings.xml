@@ -16,6 +16,7 @@
   <string name="search_description">פרקים</string>
   <string name="description_overview">תקציר</string>
   <string name="description_poster">צפה בפוסטר</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">לא ידוע</string>
   <string name="loading">טוען</string>
   <string name="done">בוצע</string>
@@ -83,6 +84,7 @@
   <string name="trakt_notcollected">%s טרם אספת.</string>
   <string name="shows_empty">אין סדרות שבחרת</string>
   <string name="confirm_delete">אתה בטוח שאתה רוצה להסיר %s?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">הסר</string>
   <string name="dontdelete_show">אל תסיר</string>
   <string name="no_nextepisode">אין פרק הבא</string>
@@ -155,7 +157,7 @@
   <string name="list_item_remove">הסר מהרשימה</string>
   <string name="list_empty">באפשרותך להוסיף סדרות, עונות או פרקים לרשימה זו.</string>
   <string name="prefs_category_basic">בסיסי</string>
-  <string name="prefs_category_sharing">שיתוף</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">מתקדם</string>
   <string name="prefs_category_about">אודות</string>
   <string name="help">עזרה</string>
@@ -192,6 +194,8 @@
   <string name="pref_ganalyticssummary">עוקב אחר השימוש בתוכנה על מנת לסייע בשיפור SeriesGuide</string>
   <string name="sendusagedata">שלח סטטיסטיקות שימוש למפתחים</string>
   <string name="pref_upcominglimit">תוכניות המתקרבות תוך</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description"><b>גיבוי</b> יוצר עותק של מאגר הסדרות שלך בקובץ בשם <b>seriesdatabase</b> בתיקייה שלהלן.\n\n<b>לשחזור</b> ודא כי קובץ זה נמצא בתיקייה שלהלן.\n\n ניתן לשחזר רק גיבויים עם גרסת מסד נתונים זהה או ישנה יותר מהכתוב למטה.</string>
   <string name="backup_path"><b>תיקיית גיבויים</b></string>
   <string name="backup_version"><b>גרסת מסד הנתונים</b></string>
@@ -256,7 +260,6 @@
   <string name="welcome_traktmessage">קבל גישה לספריית ה-trakt.tv שלך ופעילות חברייך</string>
   <string name="dismiss">סגור</string>
   <string name="welcome_add_part1">כדי להתחיל, לחץ</string>
-  <string name="welcome_add_part2">בשורת הפעולה.</string>
   <string name="upcoming_show">%s מתקרב</string>
   <string name="upcoming_episodes">פרקים חדשים מתקרבים</string>
   <string name="upcoming_show_detailed">%1$ s ב- %2$ s</string>

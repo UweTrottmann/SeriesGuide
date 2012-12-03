@@ -16,6 +16,7 @@
   <string name="search_description">Episodes</string>
   <string name="description_overview">Overview</string>
   <string name="description_poster">Show poster</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">n/a</string>
   <string name="loading">Loading…</string>
   <string name="done">Done</string>
@@ -83,6 +84,7 @@
   <string name="trakt_notcollected">%s not collected.</string>
   <string name="shows_empty">No shows here.</string>
   <string name="confirm_delete">Do you really want to remove %s?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Remove</string>
   <string name="dontdelete_show">Don\'t remove</string>
   <string name="no_nextepisode">no next episode found</string>
@@ -155,7 +157,7 @@
   <string name="list_item_remove">Remove from list</string>
   <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
   <string name="prefs_category_basic">Basics</string>
-  <string name="prefs_category_sharing">Sharing</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Advanced</string>
   <string name="prefs_category_about">About</string>
   <string name="help">Help</string>
@@ -192,6 +194,8 @@
   <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
   <string name="sendusagedata">Send the developer usage statistics</string>
   <string name="pref_upcominglimit">Upcoming shows within…</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
   <string name="backup_path"><b>Backup folder</b></string>
   <string name="backup_version"><b>Database version</b></string>
@@ -256,7 +260,6 @@
   <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
   <string name="dismiss">Dismiss</string>
   <string name="welcome_add_part1">To get started tap</string>
-  <string name="welcome_add_part2">in the action bar.</string>
   <string name="upcoming_show">%s is coming up</string>
   <string name="upcoming_episodes">New episodes are coming up</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>

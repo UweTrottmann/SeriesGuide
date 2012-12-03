@@ -16,6 +16,7 @@
   <string name="search_description">Odcinki</string>
   <string name="description_overview">Opis</string>
   <string name="description_poster">Pokaż plakat</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">brak danych</string>
   <string name="loading">Wczytywanie…</string>
   <string name="done">Wykonano</string>
@@ -83,6 +84,7 @@
   <string name="trakt_notcollected">%s - brak w kolekcji.</string>
   <string name="shows_empty">Brak seriali.</string>
   <string name="confirm_delete">Czy na pewno chcesz usunąć %s?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Usuń</string>
   <string name="dontdelete_show">Nie usuwaj</string>
   <string name="no_nextepisode">nie znaleziono nowych odcinków</string>
@@ -155,7 +157,7 @@
   <string name="list_item_remove">Usuń z listy</string>
   <string name="list_empty">Do listy można dodać seriale, sezony lub odcinki.</string>
   <string name="prefs_category_basic">Podstawowe</string>
-  <string name="prefs_category_sharing">Udostępnianie</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Zaawansowane</string>
   <string name="prefs_category_about">O programie</string>
   <string name="help">Pomoc</string>
@@ -192,6 +194,8 @@
   <string name="pref_ganalyticssummary">Śledzi wykorzystanie funkcji, aby pomóc w ulepszeniu SeriesGuide</string>
   <string name="sendusagedata">Wyślij statystyki użytkowania</string>
   <string name="pref_upcominglimit">Wyświetlaj odcinki z</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description"><b>Kopia zapasowa</b> tworzy kopię listy seriali w pliku o nazwie <b>seriesdatabase</b> w poniższym folderze.\n\nAby<b>Przywrócić</b> listę upewnij się, że plik jest w poniższym folderze.\n\nTylko archiwa list z tej samej lub niższej wersji (niż poniższa) mogą zostać przywrócone.</string>
   <string name="backup_path"><b>Folder kopii zapasowej</b></string>
   <string name="backup_version"><b>Wersja bazy danych</b></string>
@@ -256,7 +260,6 @@
   <string name="welcome_traktmessage">Uzyskaj dostęp do biblioteki trakt.tv i aktywności przyjaciół</string>
   <string name="dismiss">Zamknij</string>
   <string name="welcome_add_part1">Naciśnij, aby rozpocząć</string>
-  <string name="welcome_add_part2">w pasku akcji.</string>
   <string name="upcoming_show">Nadchodzi odcinek %s</string>
   <string name="upcoming_episodes">Nadchodzą nowe odcinki</string>
   <string name="upcoming_show_detailed">%1$s na %2$s</string>

@@ -16,6 +16,7 @@
   <string name="search_description">Episoder</string>
   <string name="description_overview">Oversikt</string>
   <string name="description_poster">Vis plakat</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">n/a</string>
   <string name="loading">Laster...</string>
   <string name="done">Ferdig</string>
@@ -83,6 +84,7 @@
   <string name="trakt_notcollected">%s ikke anskaffet.</string>
   <string name="shows_empty">Inger serier her.</string>
   <string name="confirm_delete">Vil du virkelig fjerne %s?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Fjern</string>
   <string name="dontdelete_show">Ikke fjern</string>
   <string name="no_nextepisode">ingen ny episode funnet</string>
@@ -155,7 +157,7 @@
   <string name="list_item_remove">Fjern fra liste</string>
   <string name="list_empty">Du kan legge til serier, sesonger eller episoder til denne listen.</string>
   <string name="prefs_category_basic">Grunnleggende</string>
-  <string name="prefs_category_sharing">Deling</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Avansert</string>
   <string name="prefs_category_about">Om</string>
   <string name="help">Hjelp</string>
@@ -192,6 +194,8 @@
   <string name="pref_ganalyticssummary">Overvåker bruken av funksjoner for å forbedre SeriesGuide</string>
   <string name="sendusagedata">Send bruksstatistikk til utvikleren</string>
   <string name="pref_upcominglimit">Kommende serier innen...</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description"><b>Sikkerhetskopiering</b> oppretter en kopi av din seriedatabase i en fil kalt <b>seriedatabase</b> i mappen under.\n\nFor å <b>Gjennopprette</b> sørg for at denne filen ligger i mappen under.\n\nBare sikkerhetskopier med samme eller lavere databaseversjonen enn nedenfor kan gjenopprettes.</string>
   <string name="backup_path"><b>Sikkerhetskopimappe</b></string>
   <string name="backup_version"><b>Databaseversjon</b></string>
@@ -256,7 +260,6 @@
   <string name="welcome_traktmessage">Få tilgang til ditt trakt.tv bibliotek og venners aktiviteter</string>
   <string name="dismiss">Avbryt</string>
   <string name="welcome_add_part1">Trykk for å komme i gang</string>
-  <string name="welcome_add_part2">i aksjonsmenyen.</string>
   <string name="upcoming_show">%s kommer</string>
   <string name="upcoming_episodes">Nye episoder er på vei</string>
   <string name="upcoming_show_detailed">%1$s på %2$s</string>

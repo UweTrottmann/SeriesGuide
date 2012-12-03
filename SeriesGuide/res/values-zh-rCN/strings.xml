@@ -16,6 +16,7 @@
   <string name="search_description">集数</string>
   <string name="description_overview">总览</string>
   <string name="description_poster">显示海报</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">N/A</string>
   <string name="loading">正在载入……</string>
   <string name="done">完成</string>
@@ -83,6 +84,7 @@
   <string name="trakt_notcollected">%s 未收藏。</string>
   <string name="shows_empty">没有可供显示的内容。</string>
   <string name="confirm_delete">您要删除 %s 吗？</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">移除</string>
   <string name="dontdelete_show">保留</string>
   <string name="no_nextepisode">没有找到下一集</string>
@@ -155,7 +157,7 @@
   <string name="list_item_remove">从列表中删除</string>
   <string name="list_empty">您可以将整季或单集添加到列表中。</string>
   <string name="prefs_category_basic">基本</string>
-  <string name="prefs_category_sharing">分享</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">高级</string>
   <string name="prefs_category_about">关于</string>
   <string name="help">帮助</string>
@@ -192,6 +194,8 @@
   <string name="pref_ganalyticssummary">跟踪功能的使用情况来帮助改进 SeriesGuide</string>
   <string name="sendusagedata">发送使用情况至开发者</string>
   <string name="pref_upcominglimit">即将播出的时间限制</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description">使用 <b>备份</b> 功能会在下列文件夹中创建名为 <b>seriesdatabase</b> 的文件。\n\n要进行 <b>还原</b> 操作，请确认备份文件存放在指定目录中。\n\n只有与当前数据相同或更低版本的文件会被还原。</string>
   <string name="backup_path"><b>备份</b> 文件路径</string>
   <string name="backup_version"><b>数据库版本</b></string>
@@ -256,7 +260,6 @@
   <string name="welcome_traktmessage">随时访问您的数据库和好友动态</string>
   <string name="dismiss">忽略</string>
   <string name="welcome_add_part1">第一次使用？轻触……</string>
-  <string name="welcome_add_part2">它可以在动作条中找到。</string>
   <string name="upcoming_show">%s 即将播出</string>
   <string name="upcoming_episodes">即将播出新的剧集</string>
   <string name="upcoming_show_detailed">%1$s 在 %2$s 频道</string>
