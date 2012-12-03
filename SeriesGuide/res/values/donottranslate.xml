@@ -13,7 +13,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">Convenience\n\nAutomatically add new shows from your trakt activity stream, can be disabled in settings.\n\nSeriesGuide themes use more custom UI on Android 2.3 on lower.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">Getting closer\n\nOnly add new trakt shows once.\n\nEpisode image in overview is now clickable.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
