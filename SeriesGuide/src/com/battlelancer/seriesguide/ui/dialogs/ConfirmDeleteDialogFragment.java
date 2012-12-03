@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -59,6 +60,19 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final String showId = getArguments().getString("showid");
 
+        // make sure this show isn't added to any lists
+        boolean hasListItems = false;
+        final Cursor itemsInLists = getActivity().getContentResolver().query(
+                ListItems.CONTENT_WITH_DETAILS_URI, new String[] {
+                    Shows.REF_SHOW_ID
+                }, Shows.REF_SHOW_ID + "=?", new String[] {
+                    showId
+                }, null);
+        if (itemsInLists != null) {
+            hasListItems = itemsInLists.getCount() > 0;
+            itemsInLists.close();
+        }
+
         final Cursor show = getActivity().getContentResolver().query(Shows.buildShowUri(showId),
                 new String[] {
                     Shows.TITLE
@@ -71,23 +85,30 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
 
         show.close();
 
-        return new AlertDialog.Builder(getActivity())
-                .setMessage(getString(R.string.confirm_delete, showName))
-                .setPositiveButton(getString(R.string.delete_show), new OnClickListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setNegativeButton(getString(R.string.dontdelete_show), null);
+        if (hasListItems) {
+            // Prevent deletion, tell user there are still list items
+            builder.setMessage(getString(R.string.delete_has_list_items, showName));
+        } else {
+            builder.setMessage(getString(R.string.confirm_delete, showName)).setPositiveButton(
+                    getString(R.string.delete_show), new OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            final ProgressDialog progress = new ProgressDialog(getActivity());
+                            progress.setCancelable(false);
+                            progress.show();
 
-                    public void onClick(DialogInterface dialog, int which) {
+                            new Thread(new Runnable() {
+                                public void run() {
+                                    DBUtils.deleteShow(getActivity(), getArguments()
+                                            .getString("showid"), progress);
+                                }
+                            }).start();
+                        }
+                    });
+        }
 
-                        final ProgressDialog progress = new ProgressDialog(getActivity());
-                        progress.setCancelable(false);
-                        progress.show();
-
-                        new Thread(new Runnable() {
-                            public void run() {
-                                DBUtils.deleteShow(getActivity(), getArguments()
-                                        .getString("showid"), progress);
-                            }
-                        }).start();
-                    }
-                }).setNegativeButton(getString(R.string.dontdelete_show), null).create();
+        return builder.create();
     }
 }

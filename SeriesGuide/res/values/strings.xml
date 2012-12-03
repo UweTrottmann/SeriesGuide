@@ -105,6 +105,7 @@
     <!-- SeriesGuide mainscreen -->
     <string name="shows_empty">No shows here.</string>
     <string name="confirm_delete">Do you really want to remove %s?</string>
+    <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
     <string name="delete_show">Remove</string>
     <string name="dontdelete_show">Don\'t remove</string>
     <string name="no_nextepisode">no next episode found</string>
