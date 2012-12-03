@@ -5,6 +5,19 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 2.11.5beta *(2012-12-03)*
+--------------------------------
+
+* TWEAK Make episode in overview clickable, new layout.
+* TWEAK Also search with show title in overview (Google Play, Amazon buttons).
+* TWEAK Remember sync unseen episode preference. Closes #195.
+* FIX Enable home button in Fix GetGlue activity, but not as up affordance.
+* FIX Correctly color borderless buttons text, and regular buttons text for v11+.
+* FIX Handle a requested downgrade by reinitializing the database instead of crashing.
+* FIX Prevent adding new trakt shows multiple times. Closes #197.
+* FIX Update lists content provider upon updating next episode. Closes #193.
+* FIX Prevent removing shows which are in any list. Closes #198.
+
 Version 2.11.4beta *(2012-11-28)*
 --------------------------------
 
