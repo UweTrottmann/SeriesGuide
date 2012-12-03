@@ -349,15 +349,18 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
 
             // build an update batch
             mNewShows = Lists.newArrayList();
+            final HashSet<String> newShowIds = new HashSet<String>();
             final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
             for (ActivityItem item : activity.activity) {
                 // check for null (potential fix for reported crash)
                 if (item.action != null && item.show != null) {
-                    if (isAutoAddingShows && !existingShows.contains(item.show.tvdbId)) {
+                    if (isAutoAddingShows && !existingShows.contains(item.show.tvdbId)
+                            && !newShowIds.contains(item.show.tvdbId)) {
                         SearchResult show = new SearchResult();
                         show.title = item.show.title;
                         show.tvdbid = item.show.tvdbId;
                         mNewShows.add(show);
+                        newShowIds.add(item.show.tvdbId); // prevent duplicates
                     } else {
                         switch (item.action) {
                             case Seen: {
