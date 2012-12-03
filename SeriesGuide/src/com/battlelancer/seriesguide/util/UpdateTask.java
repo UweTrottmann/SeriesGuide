@@ -327,7 +327,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                 return UpdateResult.ERROR;
             }
 
-            if (activity == null) {
+            if (activity == null || activity.activity == null) {
                 return UpdateResult.ERROR;
             }
 
