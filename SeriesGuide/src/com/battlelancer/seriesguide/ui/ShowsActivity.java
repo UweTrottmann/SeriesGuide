@@ -153,6 +153,7 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         /* setup navigation */
         CompatActionBarNavHandler handler = new CompatActionBarNavHandler(this);
@@ -286,7 +287,10 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_quickcheckin) {
+        if (itemId == android.R.id.home){
+            toggle();
+            return true;
+        }else if (itemId == R.id.menu_quickcheckin) {
             startActivity(new Intent(this, CheckinActivity.class));
             return true;
         } else if (itemId == R.id.menu_search) {
