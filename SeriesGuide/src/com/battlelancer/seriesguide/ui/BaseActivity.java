@@ -26,19 +26,19 @@ import android.support.v4.app.NavUtils;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
+import com.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.uwetrottmann.seriesguide.R;
 
 /**
  * Provides some common functionality across all activities like setting the
  * theme and navigation shortcuts.
  */
-public abstract class BaseActivity extends SherlockFragmentActivity {
+public abstract class BaseActivity extends SlidingFragmentActivity {
 
     @Override
     protected void onCreate(Bundle arg0) {
