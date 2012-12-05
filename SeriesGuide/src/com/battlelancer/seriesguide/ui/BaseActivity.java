@@ -52,7 +52,6 @@ public abstract class BaseActivity extends SlidingFragmentActivity {
         SlidingMenu sm = getSlidingMenu();
         sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
         sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-        setSlidingActionBarEnabled(false);
     }
 
     @Override
