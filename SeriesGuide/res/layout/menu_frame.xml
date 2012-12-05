@@ -3,5 +3,6 @@
     android:id="@+id/menu_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:background="@color/accent_primary" >
+
 </FrameLayout>
