@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
+import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.uwetrottmann.seriesguide.R;
 
@@ -45,6 +46,13 @@ public abstract class BaseActivity extends SlidingFragmentActivity {
         // set a theme based on user preference
         setTheme(SeriesGuidePreferences.THEME);
         super.onCreate(arg0);
+
+        setBehindContentView(R.layout.menu_frame);
+
+        SlidingMenu sm = getSlidingMenu();
+        sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+        sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        setSlidingActionBarEnabled(false);
     }
 
     @Override
