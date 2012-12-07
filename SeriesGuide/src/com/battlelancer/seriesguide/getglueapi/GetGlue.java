@@ -228,6 +228,8 @@ public class GetGlue {
             Utils.trackExceptionAndLog(context, TAG, e);
         } catch (IOException e) {
             Utils.trackExceptionAndLog(context, TAG, e);
+        } catch (IllegalArgumentException e) {
+            Utils.trackExceptionAndLog(context, TAG, e);
         }
         return null;
     }
