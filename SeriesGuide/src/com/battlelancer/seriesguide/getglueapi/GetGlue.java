@@ -22,9 +22,11 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.battlelancer.seriesguide.getglueapi.GetGlueXmlParser.GetGlueObject;
 import com.battlelancer.seriesguide.getglueapi.GetGlueXmlParser.Interaction;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -49,7 +51,7 @@ public class GetGlue {
 
     private static final String TAG = "GetGlue";
 
-    private static final String GETGLUE_APIPATH_V2 = "http://api.getglue.com/v2/";
+    public static final String GETGLUE_APIPATH_V2 = "http://api.getglue.com/v2/";
 
     private static final String GETGLUE_SOURCE = "&source=http://seriesgui.de/&app=SeriesGuide";
 
@@ -70,7 +72,11 @@ public class GetGlue {
 
     public static final String OAUTH_TOKEN_SECRET = "oauth_token_secret";
 
-    private static final String GETGLUE_CHECKIN_IMDBID = "user/addCheckin?objectId=http://www.imdb.com/title/";
+    public static final String GETGLUE_FIND_OBJECTS = "glue/findObjects?q=";
+
+    private static final String GETGLUE_CHECKIN = "user/addCheckin?objectId=";
+
+    private static final String GETGLUE_CHECKIN_IMDBID_PREFIX = "http://www.imdb.com/title/";
 
     public static boolean isAuthenticated(final SharedPreferences prefs) {
         String token = prefs.getString(OAUTH_TOKEN, "");
@@ -91,19 +97,16 @@ public class GetGlue {
 
         private static final int CHECKIN_OFFLINE = 2;
 
-        private String mImdbId;
+        private String mObjectId;
 
         private String mComment;
 
         private Context mContext;
 
-        private SharedPreferences mPrefs;
-
-        public CheckInTask(String imdbId, String comment, Context context) {
-            mImdbId = imdbId;
+        public CheckInTask(String objectId, String comment, Context context) {
+            mObjectId = objectId;
             mComment = comment;
             mContext = context;
-            mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         }
 
         @Override
@@ -112,40 +115,24 @@ public class GetGlue {
                 return CHECKIN_OFFLINE;
             }
 
-            // Encode only whitespaces
-            mComment = mComment.replace(" ", "%20");
+            // build URL
+            StringBuilder url = new StringBuilder();
+            url.append(GETGLUE_APIPATH_V2).append(GETGLUE_CHECKIN);
+            
+            if (!mObjectId.startsWith(GetGlueObject.TVSHOWS)) {
+                url.append(GETGLUE_CHECKIN_IMDBID_PREFIX);
+            }
+            
+            url.append(mObjectId).append(GETGLUE_SOURCE);
+            
+            if (!TextUtils.isEmpty(mComment)) {
+                // Encode only whitespaces
+                mComment = mComment.replace(" ", "%20");
+                url.append("&comment=").append(mComment);
+            }
 
-            String url = GETGLUE_APIPATH_V2 + GETGLUE_CHECKIN_IMDBID + mImdbId + GETGLUE_SOURCE
-                    + "&comment=" + mComment;
-
-            // create a consumer object and configure it with the access
-            // token and token secret obtained from the service provider
-            final Resources res = mContext.getResources();
-            OAuthConsumer consumer = new DefaultOAuthConsumer(
-                    res.getString(R.string.getglue_consumer_key),
-                    res.getString(R.string.getglue_consumer_secret));
-            consumer.setTokenWithSecret(mPrefs.getString(OAUTH_TOKEN, ""),
-                    mPrefs.getString(OAUTH_TOKEN_SECRET, ""));
-
-            HttpURLConnection request = null;
-            try {
-                request = AndroidUtils.buildHttpUrlConnection(url);
-                consumer.sign(request);
-            } catch (OAuthMessageSignerException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
-                return CHECKIN_FAILED;
-            } catch (OAuthExpectationFailedException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
-                return CHECKIN_FAILED;
-            } catch (OAuthCommunicationException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
-                return CHECKIN_FAILED;
-            } catch (IOException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
+            HttpURLConnection request = buildGetGlueRequest(url.toString(), mContext);
+            if (request == null) {
                 return CHECKIN_FAILED;
             }
 
@@ -173,24 +160,20 @@ public class GetGlue {
                     }
                 }
             } catch (ClientProtocolException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
             } catch (IOException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
             } catch (IllegalStateException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
             } catch (XmlPullParserException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
             } finally {
                 if (responseIn != null) {
                     try {
                         responseIn.close();
                     } catch (IOException e) {
-                        Utils.trackException(mContext, e);
                         Log.w(TAG, e);
+                        Utils.trackExceptionAndLog(mContext, TAG, e);
                     }
                 }
             }
@@ -216,6 +199,39 @@ public class GetGlue {
             }
         }
 
+    }
+
+    /**
+     * Creates a {@link HttpURLConnection} for the given url string and signs it
+     * using the stored GetGlue OAuth consumer credentials.
+     */
+    public static HttpURLConnection buildGetGlueRequest(String url, Context context) {
+        final Resources res = context.getResources();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        OAuthConsumer consumer = new DefaultOAuthConsumer(
+                res.getString(R.string.getglue_consumer_key),
+                res.getString(R.string.getglue_consumer_secret));
+        consumer.setTokenWithSecret(prefs.getString(OAUTH_TOKEN, ""),
+                prefs.getString(OAUTH_TOKEN_SECRET, ""));
+
+        HttpURLConnection request = null;
+        try {
+            request = AndroidUtils.buildHttpUrlConnection(url);
+            consumer.sign(request);
+            return request;
+        } catch (OAuthMessageSignerException e) {
+            Utils.trackExceptionAndLog(context, TAG, e);
+        } catch (OAuthExpectationFailedException e) {
+            Utils.trackExceptionAndLog(context, TAG, e);
+        } catch (OAuthCommunicationException e) {
+            Utils.trackExceptionAndLog(context, TAG, e);
+        } catch (IOException e) {
+            Utils.trackExceptionAndLog(context, TAG, e);
+        } catch (IllegalArgumentException e) {
+            Utils.trackExceptionAndLog(context, TAG, e);
+        }
+        return null;
     }
 
     public static void clearCredentials(final SharedPreferences prefs) {

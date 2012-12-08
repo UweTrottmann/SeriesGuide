@@ -218,6 +218,14 @@ public class ShowInfoActivity extends BaseActivity {
             lastEdit.setText(R.string.unknown);
         }
 
+        // Google Play button
+        View playButton = findViewById(R.id.buttonGooglePlay);
+        Utils.setUpGooglePlayButton(show.getTitle(), playButton, TAG);
+
+        // Amazon button
+        View amazonButton = findViewById(R.id.buttonAmazon);
+        Utils.setUpAmazonButton(show.getTitle(), amazonButton, TAG);
+
         // IMDb button
         View imdbButton = (View) findViewById(R.id.buttonShowInfoIMDB);
         final String imdbId = show.getImdbId();

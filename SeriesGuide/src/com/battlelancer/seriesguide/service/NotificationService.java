@@ -88,6 +88,7 @@ public class NotificationService extends IntentService {
 
     public NotificationService() {
         super("AlarmManagerService");
+        setIntentRedelivery(false);
     }
 
     @TargetApi(16)

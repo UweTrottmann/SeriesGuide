@@ -4,6 +4,8 @@
     <string name="app_name">SeriesGuide</string>
     <string name="package_name">com.battlelancer.seriesguide</string>
     <string name="helptranslate">Help translate SeriesGuide</string>
+    <string name="googleplay">Google Play</string>
+    <string name="amazon">Amazon</string>
     <string name="imdb">IMDb</string>
     <string name="tvdb">TVDb</string>
     <string name="trakt">trakt.tv</string>
@@ -11,7 +13,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">Android 4.2 is coming!\n\nUse the list widget on your Android 4.2 lock screen.\n\nDesign refinements for episode images and button bar.\n\nFixed list widget crash, trakt syncing on 4.2.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">Getting closer\n\nOnly add new trakt shows once.\n\nEpisode image in overview is now clickable.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>

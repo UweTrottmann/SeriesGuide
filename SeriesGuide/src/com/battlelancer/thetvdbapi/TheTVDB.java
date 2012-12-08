@@ -683,7 +683,7 @@ public class TheTVDB {
             }
 
             // try to download, decode and store the image
-            final Bitmap bitmap = downloadBitmap(imageUrl);
+            final Bitmap bitmap = downloadBitmap(imageUrl, context);
             if (bitmap != null) {
                 imageProvider.storeImage(fileName, bitmap, isPoster);
             } else {
@@ -694,7 +694,7 @@ public class TheTVDB {
         return true;
     }
 
-    static Bitmap downloadBitmap(String url) {
+    static Bitmap downloadBitmap(String url, Context context) {
         InputStream inputStream = null;
         try {
             HttpURLConnection conn = AndroidUtils.buildHttpUrlConnection(url);
@@ -711,17 +711,22 @@ public class TheTVDB {
                 return BitmapFactory.decodeStream(new FlushedInputStream(inputStream));
             }
         } catch (IOException e) {
-            Log.w(TAG, "I/O error while retrieving bitmap from " + url, e);
+            Log.w(TAG, "I/O error retrieving bitmap from " + url, e);
+            Utils.trackException(context, TAG + " I/O error retrieving bitmap from " + url, e);
         } catch (IllegalStateException e) {
             Log.w(TAG, "Incorrect URL: " + url);
+            Utils.trackException(context, TAG + " Incorrect URL " + url, e);
         } catch (Exception e) {
             Log.w(TAG, "Error while retrieving bitmap from " + url, e);
+            Utils.trackException(context, TAG + " Error while retrieving bitmap from " + url, e);
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
                     Log.w(TAG, "I/O error while retrieving bitmap from " + url, e);
+                    Utils.trackException(context, TAG + " I/O error retrieving bitmap from " + url,
+                            e);
                 }
             }
         }

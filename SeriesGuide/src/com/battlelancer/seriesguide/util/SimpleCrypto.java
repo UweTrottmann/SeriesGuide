@@ -20,7 +20,6 @@ package com.battlelancer.seriesguide.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 
@@ -60,11 +59,9 @@ public class SimpleCrypto {
             byte[] result = encrypt(key, cleartext.getBytes());
             return toHex(result);
         } catch (GeneralSecurityException e) {
-            Log.w(TAG, "encrypt(): " + e.getMessage());
-            Utils.trackException(context, "encrypt(): " + e.getMessage());
+            Utils.trackExceptionAndLog(context, TAG + ".encrypt()", e);
         } catch (IOException e) {
-            Log.w(TAG, "encrypt(): " + e.getMessage());
-            Utils.trackException(context, "encrypt(): " + e.getMessage());
+            Utils.trackExceptionAndLog(context, TAG + ".encrypt()", e);
         }
         return null;
     }
@@ -80,11 +77,9 @@ public class SimpleCrypto {
             byte[] result = decrypt(key, enc);
             return new String(result);
         } catch (GeneralSecurityException e) {
-            Log.w(TAG, "decrypt(): " + e.getMessage());
-            Utils.trackException(context, "decrypt(): " + e.getMessage());
+            Utils.trackExceptionAndLog(context, TAG + ".decrypt()", e);
         } catch (IOException e) {
-            Log.w(TAG, "decrypt(): " + e.getMessage());
-            Utils.trackException(context, "decrypt(): " + e.getMessage());
+            Utils.trackExceptionAndLog(context, TAG + ".decrypt()", e);
         }
         return null;
     }

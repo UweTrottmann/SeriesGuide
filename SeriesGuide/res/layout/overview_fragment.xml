@@ -73,61 +73,143 @@
                     android:id="@+id/progress_container"
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
-                    layout="@layout/progress_container" />
+                    layout="@layout/progress_container"
+                    android:visibility="visible" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/content_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:visibility="gone" >
 
-                    <TextView
-                        android:id="@+id/episodeTitle"
+                    <FrameLayout
+                        android:id="@+id/episode_primary_container"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/default_padding"
-                        android:layout_marginRight="@dimen/default_padding"
-                        android:layout_marginTop="@dimen/default_padding"
-                        android:textAppearance="?attr/textAppearanceSgXLargeLight" />
+                        android:layout_height="@dimen/imagecontainer_height" >
 
-                    <TextView
-                        android:id="@+id/episodeTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/episodeTitle"
-                        android:layout_marginLeft="@dimen/default_padding"
-                        android:layout_marginRight="@dimen/default_padding"
-                        android:textAppearance="?attr/textAppearanceSgSmallPrimary" />
+                        <FrameLayout
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:id="@+id/imageContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" >
 
-                    <TextView
-                        android:id="@+id/episodeInfo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/episodeTitle"
-                        android:layout_marginBottom="@dimen/default_padding"
-                        android:layout_marginRight="@dimen/default_padding"
-                        android:layout_toRightOf="@+id/episodeTime"
-                        android:textAppearance="?attr/textAppearanceSgSmall" />
+                            <LinearLayout
+                                android:id="@+id/image_progress_container"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/imagecontainer_height"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:visibility="gone" >
 
-                    <LinearLayout
-                        android:id="@+id/episodemeta"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/episodeInfo"
-                        android:orientation="vertical" >
+                                <ProgressBar
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
 
-                        <include
+                            <ImageView
+                                android:id="@+id/ImageViewEpisodeImage"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/imagecontainer_height"
+                                android:layout_gravity="center_vertical"
+                                android:contentDescription="@string/description_image"
+                                android:scaleType="centerCrop" />
+                        </FrameLayout>
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/default_padding"
-                            android:layout_marginLeft="@dimen/default_padding"
-                            android:layout_marginRight="@dimen/default_padding"
-                            layout="@layout/imagecontainer" />
+                            android:layout_gravity="bottom"
+                            android:background="?attr/colorOverlay"
+                            android:paddingBottom="@dimen/default_padding"
+                            android:paddingLeft="@dimen/default_padding"
+                            android:paddingRight="@dimen/default_padding"
+                            android:paddingTop="@dimen/inline_padding" >
 
-                        <include layout="@layout/overview_episode_meta" >
+                            <TextView
+                                android:id="@+id/episodeTitle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                android:textAppearance="?attr/textAppearanceSgLargeLight" />
+
+                            <TextView
+                                android:id="@+id/episodeTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/episodeTitle"
+                                android:layout_marginRight="@dimen/default_padding"
+                                android:textAllCaps="true"
+                                android:textAppearance="?attr/textAppearanceSgSmall" />
+
+                            <TextView
+                                android:id="@+id/episodeInfo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/episodeTitle"
+                                android:layout_toRightOf="@+id/episodeTime"
+                                android:textAllCaps="true"
+                                android:textAppearance="?attr/textAppearanceSgSmallDim" />
+                        </RelativeLayout>
+
+                        <View
+                            android:id="@+id/episode_primary_click_dummy"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?attr/custom_list_selector" />
+                    </FrameLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?attr/colorAccent" />
+
+                    <LinearLayout
+                        android:id="@+id/episode_meta_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_padding"
+                        android:orientation="vertical" >
+
+                        <include layout="@layout/ratingbar" >
                         </include>
+
+                        <TextView
+                            android:id="@+id/TextViewEpisodeDescription"
+                            style="@style/SmallItems.WithSideMargins" />
+
+                        <TextView
+                            android:id="@+id/labelGuestStars"
+                            style="@style/Label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/episode_gueststars" />
+
+                        <TextView
+                            android:id="@+id/TextViewEpisodeGuestStars"
+                            style="@style/SmallItems.WithSideMargins" />
+
+                        <TextView
+                            android:id="@+id/labelDvd"
+                            style="@style/Label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/episode_dvdnumber" />
+
+                        <TextView
+                            android:id="@+id/textViewEpisodeDVDnumber"
+                            style="@style/SmallItems.WithSideMargins" />
+
+                        <include layout="@layout/divider_horizontal" />
+
+                        <include
+                            android:id="@+id/buttonbar_ref"
+                            android:layout_width="wrap_content"
+                            android:layout_height="48dp"
+                            layout="@layout/buttonbar_services" />
                     </LinearLayout>
-                </RelativeLayout>
+                </LinearLayout>
             </FrameLayout>
         </LinearLayout>
     </ScrollView>

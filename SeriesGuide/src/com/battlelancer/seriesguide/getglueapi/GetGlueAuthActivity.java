@@ -217,20 +217,16 @@ public class GetGlueAuthActivity extends BaseActivity {
                 Log.i(TAG, "Popping a browser with the authorize URL");
                 publishProgress(authUrl);
             } catch (OAuthMessageSignerException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
                 return e.getMessage();
             } catch (OAuthNotAuthorizedException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
                 return e.getMessage();
             } catch (OAuthExpectationFailedException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
                 return e.getMessage();
             } catch (OAuthCommunicationException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
                 return e.getMessage();
             }
             return null;

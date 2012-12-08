@@ -16,6 +16,7 @@
   <string name="search_description">Episódios</string>
   <string name="description_overview">Resumo</string>
   <string name="description_poster">Exibir cartaz</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">n/a</string>
   <string name="loading">Carregando...</string>
   <string name="done">Feito</string>
@@ -24,6 +25,8 @@
   <string name="cancel">Cancelar</string>
   <string name="share">Compartilhar</string>
   <string name="updated">Atualizado para a versão mais recente.</string>
+  <string name="discard">Decartar</string>
+  <string name="save_selection">Salvar seleção</string>
   <string name="offline">Sem conexão. Tente novamente mais tarde.</string>
   <string name="onlyx">Somente disponível no SeriesGuide X</string>
   <string name="shouts">Gritos</string>
@@ -81,6 +84,7 @@
   <string name="trakt_notcollected">%s não colecionado.</string>
   <string name="shows_empty">Nenhuma série aqui.</string>
   <string name="confirm_delete">Você quer mesmo remover %s?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Remover</string>
   <string name="dontdelete_show">Não remover</string>
   <string name="no_nextepisode">nenhum próximo episódio encontrado</string>
@@ -141,7 +145,7 @@
   <string name="trending">Tendências</string>
   <string name="recommended">Recomendado</string>
   <string name="library">Biblioteca</string>
-  <string name="watchlist">Watchlist</string>
+  <string name="watchlist">Lista assistida</string>
   <string name="powered_by_thetvdb">fonte: thetvdb.com</string>
   <string name="powered_by_trakt">fonte: trakt.tv</string>
   <string name="first_list">Primeira lista</string>
@@ -153,7 +157,7 @@
   <string name="list_item_remove">Remover da lista</string>
   <string name="list_empty">Você pode adicionar series, temporadas ou episódios para a lista.</string>
   <string name="prefs_category_basic">Básico</string>
-  <string name="prefs_category_sharing">Compartilhamento</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Avançado</string>
   <string name="prefs_category_about">Sobre</string>
   <string name="help">Ajuda</string>
@@ -190,6 +194,8 @@
   <string name="pref_ganalyticssummary">Rastreia o uso de recursos para ajudar a melhorar o SeriesGuide</string>
   <string name="sendusagedata">Enviar as estatísticas de uso para os desenvolvedores</string>
   <string name="pref_upcominglimit">Exibir próximas séries em até…</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description"><b>Backup</b> cria uma cópia do seu banco de dados de séries num arquivo chamado <b>seriesdatabase</b> na pasta abaixo.\n\nPara <b>Restaurar</b> esteja certo de que esse arquivo esteja na pasta abaixo.\n\nApenas backups com banco de dados de versão igual ou anterior a da abaixo podem ser restaurados.</string>
   <string name="backup_path"><b>Pasta de backup</b></string>
   <string name="backup_version"><b>Versão do banco de dados</b></string>
@@ -216,10 +222,15 @@
   <string name="checkin_searchhint">Digite o nome da série</string>
   <string name="checkin_empty">Nenhuma série encontrada</string>
   <string name="checkin_hint">Digite uma mensagem (opcional)</string>
+  <string name="checkin_fixgetglue">Realizar check-in no GetGlue</string>
   <string name="paste_episode">Colar episódio</string>
   <string name="checkinsuccess">Verificado em %s no GetGlue.</string>
   <string name="checkinfailed">Check-in do GetGlue falhou. Tente desconectar do GetGlue.</string>
   <string name="getglue_authfailed">Autenticação com GetGlue falhou. Tente novamente.</string>
+  <string name="select_show">Selecionar seriado</string>
+  <string name="check_into">Realizar check-in</string>
+  <string name="no_selection">Escolha um abaixo</string>
+  <string name="looking_for_something_else">Procurando algo mais?</string>
   <string name="menu_rate_trakt">Avaliar (trakt)</string>
   <string name="menu_share_others">Por outros aplicativos</string>
   <string name="traktcheckin_cancel">Substituir</string>
@@ -249,7 +260,6 @@
   <string name="welcome_traktmessage">Acesse sua biblioteca do trakt.tv e as atividades dos seus amigos</string>
   <string name="dismiss">Recusar</string>
   <string name="welcome_add_part1">Para iniciar aperte</string>
-  <string name="welcome_add_part2">na barra de ações.</string>
   <string name="upcoming_show">%s está chegando</string>
   <string name="upcoming_episodes">Novos episódios estão chegando</string>
   <string name="upcoming_show_detailed">%1$s em %2$s</string>

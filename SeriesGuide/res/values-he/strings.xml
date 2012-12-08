@@ -16,71 +16,75 @@
   <string name="search_description">פרקים</string>
   <string name="description_overview">תקציר</string>
   <string name="description_poster">צפה בפוסטר</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">לא ידוע</string>
   <string name="loading">טוען</string>
   <string name="done">בוצע</string>
   <string name="clear">נקה</string>
-  <string name="more">%s משודר עוד</string>
+  <string name="more">עוד %s</string>
   <string name="cancel">ביטול</string>
   <string name="share">שתף</string>
-  <string name="updated">עדכן לגרסה העדכנית</string>
+  <string name="updated">עדכן לגרסה האחרונה</string>
+  <string name="discard">בטל</string>
+  <string name="save_selection">שמור בחירה</string>
   <string name="offline">אין קישוריות, נסה מאוחר יותר</string>
   <string name="onlyx">זמין רק בגרסת SeriesGuide X</string>
   <string name="shouts">המלצות</string>
-  <string name="shout_hint">סוגי המלצות (באנגלית)</string>
-  <string name="shout">המלץ</string>
+  <string name="shout_hint">הקלד המלצה (באנגלית)</string>
+  <string name="shout">המלץ!</string>
   <string name="isspoiler">אזהרת ספוילר!</string>
-  <string name="no_shouts">תהיה הראשון להמליץ</string>
+  <string name="no_shouts">תהיה הראשון להמליץ!</string>
   <string name="shouts_for">המלצות עבור %s</string>
-  <string name="autorefresh">עדכון אוטומטי</string>
-  <string name="love">לגמרי נינג\'ה</string>
-  <string name="hate">כוכב 1</string>
-  <string name="rating2">2 כוכבים</string>
-  <string name="rating3">3 כוכבים</string>
-  <string name="rating4">4 כוכבים</string>
-  <string name="rating5">5 כוכבים</string>
-  <string name="rating6">6 כוכבים</string>
-  <string name="rating7">7 כוכבים</string>
-  <string name="rating8">8 כוכבים</string>
-  <string name="rating9">9 כוכבים</string>
+  <string name="autorefresh">מרענן אוטומטית</string>
+  <string name="love">לגמרי נינג\'ה!</string>
+  <string name="hate">על הפנים ):</string>
+  <string name="rating2">נוראי</string>
+  <string name="rating3">רע</string>
+  <string name="rating4">עלוב</string>
+  <string name="rating5">אה</string>
+  <string name="rating6">בסדר</string>
+  <string name="rating7">טוב</string>
+  <string name="rating8">טוב מאוד</string>
+  <string name="rating9">מצוין</string>
   <string name="episode_firstaired">זמן שידור</string>
-  <string name="episode_dvdnumber">פרקי DVD</string>
+  <string name="episode_dvdnumber">פרק DVD</string>
   <string name="show_actors">שחקנים</string>
   <string name="show_firstaired">הקרנה ראשונה</string>
   <string name="show_genres">ז\'אנרים</string>
   <string name="show_runtime">זמן ריצה</string>
-  <string name="show_contentrating">דירוג</string>
+  <string name="show_contentrating">דירוג תוכן</string>
   <string name="episode_directors">במאים</string>
-  <string name="episode_gueststars">דירוג צופים</string>
+  <string name="episode_gueststars">כוכבי אורח</string>
   <string name="episode_writers">כותבים</string>
   <string name="show_airtimeunit">מינימום</string>
   <string name="show_isalive">ממשיכה</string>
   <string name="show_isnotalive">הסתיימה</string>
-  <string name="lastEdit">עדכון אחרון TVDb</string>
+  <string name="lastEdit">עדכון אחרון // TVDb</string>
   <string name="sort">מיין לפי</string>
-  <string name="updateall_yes">עדכן הכל</string>
-  <string name="menu_update_delta">עדכן (ישנים)</string>
+  <string name="updateall_yes">(עדכן (הכל</string>
+  <string name="menu_update_delta">עדכן (ישנים בלבד)</string>
   <string name="context_updateshow">עדכן</string>
   <string name="context_showinfo">הצג מידע</string>
   <string name="context_marknext">צפה בפרק הבא</string>
   <string name="today">היום</string>
   <string name="now">עכשיו</string>
   <string name="daily">יומי</string>
-  <string name="mark_episode">צפה בפרק</string>
-  <string name="unmark_episode">טרם צפית בפרק</string>
-  <string name="mark_all">צפית בהכל</string>
+  <string name="mark_episode">פרק נצפה</string>
+  <string name="unmark_episode">פרק שטרם נצפה</string>
+  <string name="mark_all">הכל נצפה</string>
   <string name="unmark_all">סמן הכל כלא נצפה</string>
-  <string name="mark_untilhere">סמן שהכל נצפה עד עכשיו</string>
-  <string name="collect">השגת תסדרה</string>
-  <string name="uncollect">טרם השגת תסדרה</string>
-  <string name="trakt_submitfailed">Not submitted to trakt. Try again later.</string>
-  <string name="trakt_submitsuccess">לשלוח אל trakt.</string>
-  <string name="trakt_seen">%s צפית.</string>
+  <string name="mark_untilhere">כל הפרקים ששודרו נצפו</string>
+  <string name="collect">פרק שהושג</string>
+  <string name="uncollect">פרק שטרם הושג</string>
+  <string name="trakt_submitfailed">לא נשלח אל trakt. נסה שנית מאוחר יותר.</string>
+  <string name="trakt_submitsuccess">נשלח אל trakt.</string>
+  <string name="trakt_seen">%s נצפו.</string>
   <string name="trakt_notseen">%s טרם צפית.</string>
   <string name="trakt_collected">%s אספת.</string>
   <string name="trakt_notcollected">%s טרם אספת.</string>
   <string name="shows_empty">אין סדרות שבחרת</string>
   <string name="confirm_delete">אתה בטוח שאתה רוצה להסיר %s?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">הסר</string>
   <string name="dontdelete_show">אל תסיר</string>
   <string name="no_nextepisode">אין פרק הבא</string>
@@ -94,219 +98,224 @@
   <string name="unhidden">בטל הסתרת סדרות</string>
   <string name="activity">פעיל</string>
   <string name="upcoming">בקרוב</string>
-  <string name="recent">שודרו</string>
+  <string name="recent">חדש</string>
   <string name="friends">חברים</string>
-  <string name="friends_empty">אין לך חברים</string>
-  <string name="noupcoming">אין סדרות שישודרו בקרוב</string>
-  <string name="norecent">אין סדרות ששודרו לאחרונה</string>
-  <string name="only_favorites">הצג סדרות מעודפות</string>
-  <string name="togglewatched">Toggle watched</string>
-  <string name="update_notification">מעדכן סדרות</string>
+  <string name="friends_empty">אין פעילות חברים בtrakt.</string>
+  <string name="noupcoming">אין פרקים שישודרו בקרוב</string>
+  <string name="norecent">אין פרקים חדשים</string>
+  <string name="only_favorites">סדרות מעודפות בלבד</string>
+  <string name="togglewatched">החלף נצפו</string>
+  <string name="update_notification">מעדכן את הסדרות שלך</string>
   <string name="update_single">מעדכן סדרה</string>
-  <string name="update_delta">מעדכן תאריכי שידור</string>
+  <string name="update_delta">מעדכן סדרות לא מעודכנות</string>
   <string name="update_full">מעדכן את כל הסדרות</string>
-  <string name="update_success">עדכונים</string>
-  <string name="update_offline">עדכון נכשל, בדוק את הקישוריות שלך</string>
-  <string name="update_saxerror">עדכון נכשל, נסה מאוחר יותר.</string>
-  <string name="update_inprogress">בתהליך עדכון, נסה אחר כך.</string>
-  <string name="update_rebuildsearch">מעדכן חיפוש סדרות...</string>
-  <string name="update_traktactivity">טעון פעילויות trakt </string>
-  <string name="menu_updateart">טעו פוסטרים</string>
-  <string name="arttask_incomplete">כמה פוסטרים לא נטענו, נסה אחר כך</string>
-  <string name="arttask_start">טוען פוסטרים...</string>
-  <string name="arttask_nosdcard">טעינת פוסטרים דורשת אחסון חיצוני</string>
+  <string name="update_success">הצג עדכונים</string>
+  <string name="update_offline">העדכון נכשל, בדוק את הקישוריות שלך.</string>
+  <string name="update_saxerror">העדכון נכשל, נסה מאוחר יותר.</string>
+  <string name="update_inprogress">מבצע תהליך עדכון, נסה מאוחר יותר.</string>
+  <string name="update_rebuildsearch">מרענן חיפוש פרקים</string>
+  <string name="update_traktactivity">טוען פעילויות trakt </string>
+  <string name="menu_updateart">טען פוסטרים</string>
+  <string name="arttask_incomplete">כמה פוסטרים לא נטענו, נסה שנית מאוחר יותר</string>
+  <string name="arttask_start">טוען פוסטרים</string>
+  <string name="arttask_nosdcard">טעינת פוסטרים דורשת אחסון חיצוני (כרטיס SD)</string>
   <string name="show_network">בערוץ</string>
   <string name="show_noairtime">אין זמני שידור מעודכנים</string>
-  <string name="show_noimdbentry">אין ערך ב- IDMB</string>
-  <string name="season_watchcount">פרקים לא נצפו</string>
-  <string name="season_allwatched">כל הפרקים נצםו</string>
-  <string name="season_onenotwatched">פרק לא נצפה</string>
+  <string name="show_noimdbentry">אין ערך ב- IMDB</string>
+  <string name="season_watchcount">הפרקים לא נצפו</string>
+  <string name="season_allwatched">כל הפרקים נצפו</string>
+  <string name="season_onenotwatched">פרק שטרם נצפה</string>
   <string name="season_unaired">טרם שודרו</string>
   <string name="oneotherepisode">פרק אחר</string>
   <string name="otherepisodes">פרקים אחרים</string>
-  <string name="remaining">%s ץזכורות</string>
+  <string name="remaining">נותרו %s</string>
   <string name="search_button">חפש</string>
   <string name="search_hint_add">שם הסדרה</string>
   <string name="no_results">אין תוצאות, נסה ביטוי אחר</string>
-  <string name="search_error">חיפוש נכשל, נסה אחר כך</string>
+  <string name="search_error">החיפוש הנכשל, נסה מאוחר יותר</string>
   <string name="add_show">הוסף סדרה</string>
   <string name="add_all">הוסף הכל</string>
-  <string name="dont_add_show">לא הוסיף</string>
-  <string name="add_multiple">כל הסדרות יופיעו ברשימה מייד</string>
-  <string name="add_started">יופיע ברשימה מיידית</string>
-  <string name="add_success">הוספה הצליחה</string>
-  <string name="add_error_begin">לא הצליח להוסיף</string>
+  <string name="dont_add_show">אל תוסיף</string>
+  <string name="add_multiple">כל הסדרות יופיעו ברשימת הסדרות שלך בעוד זמן קצר.</string>
+  <string name="add_started">יופיע ברשימת הסדרות שלך בעוד זמן קצר.</string>
+  <string name="add_success">נוסף בהצלחה.</string>
+  <string name="add_error_begin">ההוספה נכשלה</string>
   <string name="add_error_end">\".</string>
-  <string name="add_already_exists">כבר הוספת לרשימה</string>
-  <string name="trending">פופלריי</string>
+  <string name="add_already_exists">כבר נמצא ברשימת הסדרות שלך</string>
+  <string name="trending">פופולרי</string>
   <string name="recommended">מומלץ</string>
   <string name="library">ספרייה</string>
-  <string name="watchlist">הסדרות שלי</string>
-  <string name="powered_by_thetvdb">powered by thetvdb.com</string>
-  <string name="powered_by_trakt">powered by trakt.tv</string>
+  <string name="watchlist">רשימת מעקב</string>
+  <string name="powered_by_thetvdb">בחסות thetvdb.com</string>
+  <string name="powered_by_trakt">בחסות trakt.tv</string>
   <string name="first_list">הרשימה הראשונה</string>
   <string name="list_add">הוסף רשימה</string>
-  <string name="list_title_hint">שם לרשימה</string>
+  <string name="list_title_hint">תן שם לרשימה</string>
   <string name="list_remove">הסר רשימה</string>
   <string name="list_manage">נהל רשימה</string>
   <string name="list_item_manage">נהל רשימות</string>
   <string name="list_item_remove">הסר מהרשימה</string>
-  <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
-  <string name="prefs_category_basic">Basics</string>
-  <string name="prefs_category_sharing">Sharing</string>
-  <string name="prefs_category_advanced">Advanced</string>
-  <string name="prefs_category_about">About</string>
-  <string name="help">Help</string>
-  <string name="preferences">Settings</string>
-  <string name="pref_showsorting">Sort shows by…</string>
-  <string name="pref_onlyfuture">No aired episodes</string>
-  <string name="pref_onlyfuturesummary">Never display already aired episodes</string>
-  <string name="pref_onlyseasoneps">Hide special episodes</string>
-  <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
-  <string name="pref_seasonsorting">Sort seasons by…</string>
-  <string name="pref_episodesorting">Sort episodes by…</string>
-  <string name="backup">Backup/Restore</string>
-  <string name="backup_summary">Backup or restore your shows</string>
-  <string name="pref_language">Content language</string>
-  <string name="pref_number">Number format</string>
-  <string name="pref_offset">Manual time offset</string>
-  <string name="pref_offsetsummary">Offset air times by %s hours</string>
-  <string name="pref_autoupdate">Turn on Auto Update</string>
-  <string name="pref_autoupdatesummary">Periodically update your shows when starting SeriesGuide</string>
-  <string name="pref_updatewifionly">Update over Wi-Fi only</string>
-  <string name="about">About SeriesGuide</string>
-  <string name="pref_credits">Credits</string>
-  <string name="clearGetGlueCredentials">Disconnect GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Check In with GetGlue to reconnect</string>
-  <string name="pref_trakt">trakt.tv credentials</string>
-  <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
-  <string name="pref_traktsync">Sync with trakt.tv</string>
-  <string name="feedback">Send feedback</string>
-  <string name="clear_cache">Clear image caches</string>
-  <string name="clear_cache_summary">Remove all cached images from your device</string>
-  <string name="pref_hideimages">Hide images</string>
-  <string name="pref_hideimagessummary">Hide images from your photo gallery (reboot required)</string>
+  <string name="list_empty">באפשרותך להוסיף סדרות, עונות או פרקים לרשימה זו.</string>
+  <string name="prefs_category_basic">בסיסי</string>
+  <string name="prefs_category_sharing">Services</string>
+  <string name="prefs_category_advanced">מתקדם</string>
+  <string name="prefs_category_about">אודות</string>
+  <string name="help">עזרה</string>
+  <string name="preferences">הגדרות</string>
+  <string name="pref_showsorting">מיין סדרות לפי</string>
+  <string name="pref_onlyfuture">אין פרקים ששודרו</string>
+  <string name="pref_onlyfuturesummary">אל תציג פרקים ששודרו</string>
+  <string name="pref_onlyseasoneps">הסתר פרקים מיוחדים</string>
+  <string name="pref_onlyseasonepssummary">פרקים מיוחדים מועלמים תמיד, פרט לרשימת העונות</string>
+  <string name="pref_seasonsorting">מיין עונות לפי</string>
+  <string name="pref_episodesorting">מיין פרקים לפי</string>
+  <string name="backup">גיבוי/שחזור</string>
+  <string name="backup_summary">גבה או שחזר את סדרותיך</string>
+  <string name="pref_language">שפת תוכן</string>
+  <string name="pref_number">תבנית מספרים</string>
+  <string name="pref_offset">היסט שעה ידני</string>
+  <string name="pref_offsetsummary">הסט זמני שידור ב- %s שעות</string>
+  <string name="pref_autoupdate">הדלק עדכון אוטומטי</string>
+  <string name="pref_autoupdatesummary">עדכן את סדרותיך באופן תקופתי כאשר SeriesGuide מופעל</string>
+  <string name="pref_updatewifionly">עדכון דרך Wi-Fi בלבד</string>
+  <string name="about">אודות SeriesGuide</string>
+  <string name="pref_credits">קרדיטים</string>
+  <string name="clearGetGlueCredentials">נתק את GetGlue</string>
+  <string name="clearGetGlueCredentialssummary">בצע צ\'ק-אין עם GetGlue כדי להתחבר מחדש</string>
+  <string name="pref_trakt">אישורי trakt.tv</string>
+  <string name="pref_traktsummary">הוסף או ערוך את אישורי ה-trakt.tv שלך</string>
+  <string name="pref_traktsync">סנכרן עם trakt.tv</string>
+  <string name="feedback">שלח משוב</string>
+  <string name="clear_cache">נקה מטמוני תמונות</string>
+  <string name="clear_cache_summary">הסר את כל מטמוני התמונות ממכשירך</string>
+  <string name="pref_hideimages">הסתר תמונות</string>
+  <string name="pref_hideimagessummary">הסתר תמונות מגלריית התמונות שלך (נדרש אתחול מחדש)</string>
   <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
-  <string name="sendusagedata">Send the developer usage statistics</string>
-  <string name="pref_upcominglimit">Upcoming shows within…</string>
-  <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
-  <string name="backup_path"><b>Backup folder</b></string>
-  <string name="backup_version"><b>Database version</b></string>
-  <string name="backup_failed_nosd">Can\'t backup. The backup folder is not available.</string>
-  <string name="backup_inprogress">Backing up database…</string>
-  <string name="backup_success">Backup successful.</string>
-  <string name="backup_failed">Backup failed.</string>
-  <string name="import_inprogress">Restoring database…</string>
-  <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
-  <string name="import_failed_nofile">There is no backup file.</string>
-  <string name="import_failed_noread">The backup file is not readable.</string>
-  <string name="dbupgradefailed">Your backup may be too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
-  <string name="import_success">גיבוי בוצע בהצלחה</string>
-  <string name="import_failed">שחזור נכשל</string>
+  <string name="pref_ganalyticssummary">עוקב אחר השימוש בתוכנה על מנת לסייע בשיפור SeriesGuide</string>
+  <string name="sendusagedata">שלח סטטיסטיקות שימוש למפתחים</string>
+  <string name="pref_upcominglimit">תוכניות המתקרבות תוך</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+  <string name="backup_description"><b>גיבוי</b> יוצר עותק של מאגר הסדרות שלך בקובץ בשם <b>seriesdatabase</b> בתיקייה שלהלן.\n\n<b>לשחזור</b> ודא כי קובץ זה נמצא בתיקייה שלהלן.\n\n ניתן לשחזר רק גיבויים עם גרסת מסד נתונים זהה או ישנה יותר מהכתוב למטה.</string>
+  <string name="backup_path"><b>תיקיית גיבויים</b></string>
+  <string name="backup_version"><b>גרסת מסד הנתונים</b></string>
+  <string name="backup_failed_nosd">אין אפשרות לגבות. תיקיית הגיבויים אינה זמינה.</string>
+  <string name="backup_inprogress">מגבה מסד נתונים</string>
+  <string name="backup_success">הגיבוי הושלם בהצלחה.</string>
+  <string name="backup_failed">הגיבוי נכשל.</string>
+  <string name="import_inprogress">משחזר מסד נתונים</string>
+  <string name="import_failed_nosd">אין אפשרות לשחזר. תיקיית הגיבויים אינה זמינה.</string>
+  <string name="import_failed_nofile">אין קובץ גיבוי.</string>
+  <string name="import_failed_noread">קובץ הגיבוי אינו קריא.</string>
+  <string name="dbupgradefailed">ייתכן והגיבוי שלך ישן מדי או ריק. הערה: יבא גיבויי פרה-2.0 בגרסה 1.9.x לפני כן.</string>
+  <string name="import_success">הגיבוי שוחזר בהצלחה</string>
+  <string name="import_failed">שחזור הגיבוי נכשל</string>
   <string name="backup_button">גבה</string>
   <string name="import_button">שחזר</string>
   <string name="backup_question">פעולה זו תחליף את קובץ הגיבוי הנוכחי בתיקיית הגיבוי!</string>
   <string name="backup_yes">גיבוי</string>
   <string name="backup_no">אל תגבה</string>
-  <string name="import_question">רשימת הסדרות שלך אבדה ודא כי קובץ הגיבוי בתוך תיקיית הגיבוי.</string>
-  <string name="import_yes">שחזור</string>
+  <string name="import_question">רשימת הסדרות הנוכחית שלך תאבד! ודא כי קובץ הגיבוי בתוך תיקיית הגיבויים.</string>
+  <string name="import_yes">שחזר</string>
   <string name="import_no">אל תשחזר</string>
-  <string name="checkin">Check in</string>
-  <string name="checkin_searchhint">סוגי שמות</string>
-  <string name="checkin_empty">אין התאמה לסדרות</string>
+  <string name="checkin">צ\'ק-אין</string>
+  <string name="checkin_searchhint">הקלד שם סדרה</string>
+  <string name="checkin_empty">אין סדרות תואמות</string>
   <string name="checkin_hint">הקלד הודעה (אופציונלי)</string>
-  <string name="paste_episode">Paste episode</string>
-  <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
-  <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
-  <string name="menu_rate_trakt">Rate (trakt)</string>
-  <string name="menu_share_others">Via other apps</string>
-  <string name="traktcheckin_cancel">Override</string>
-  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous checkin or wait %s and try again.</string>
-  <string name="traktcheckin_wait">I\'ll wait</string>
-  <string name="oauthmessage">Authenticating SeriesGuide with GetGlue…</string>
-  <string name="addtocalendar">Add to calendar</string>
-  <string name="addtocalendar_failed">Can not create a calendar event.</string>
-  <string name="username">Username</string>
-  <string name="email">Email</string>
-  <string name="password">Password</string>
-  <string name="waitplease">A moment, please…</string>
-  <string name="connect">Connect</string>
-  <string name="disconnect">Disconnect</string>
-  <string name="trakt_error">Interaction with trakt failed</string>
-  <string name="trakt_decryptfail">password could not be decrypted</string>
-  <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
-  <string name="trakt_createaccount">Create new account</string>
-  <string name="trakt_experimental">Only shows in your SeriesGuide show list are synced. \'Sync to SeriesGuide\' fetches watched flags from trakt. \'Sync to trakt\' sends watched flags to trakt.</string>
-  <string name="trakt_synctodevice">Sync to SeriesGuide</string>
-  <string name="trakt_synctotrakt">Sync to trakt.tv</string>
-  <string name="trakt_syncunseen">Include unwatched flags</string>
-  <string name="trakt_howto_title">Set up trakt.tv sync</string>
-  <string name="trakt_howto">To set up your devices:\n\n1. Connect or create your account below on every device.\n2. The first time, use the <b>Sync to trakt.tv</b> button to upload your existing shows.\n3. Add shows from trakt.tv by swiping to the <b>Library</b> tab in the <b>Add Show</b> screen.\n\nNow whenever SeriesGuide updates, your trakt.tv activity is downloaded to each device. This includes flagging episodes as watched or collected and check ins.</string>
-  <string name="welcome_setuplanguage">Choose language</string>
-  <string name="welcome_setuptrakt">Connect to trakt</string>
-  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
-  <string name="dismiss">Dismiss</string>
-  <string name="welcome_add_part1">To get started tap</string>
-  <string name="welcome_add_part2">in the action bar.</string>
-  <string name="upcoming_show">%s is coming up</string>
-  <string name="upcoming_episodes">New episodes are coming up</string>
-  <string name="upcoming_show_detailed">%1$s on %2$s</string>
-  <string name="upcoming_display">Select to display upcoming shows</string>
-  <string name="pref_notifications">Notifications</string>
-  <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
-  <string name="pref_notifyfavonly">Favorites only</string>
-  <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
-  <string name="pref_ringtone">Ringtone</string>
-  <string name="pref_vibrate">Vibrate</string>
-  <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
-  <string name="pref_theme">App Theme</string>
-  <string name="choose_list">Choose activity list</string>
-  <string name="hide_watched">Hide watched episodes</string>
-  <string name="add_widget">Add widget</string>
+  <string name="checkin_fixgetglue">תקן את צ\'ק-אין GetGlue</string>
+  <string name="paste_episode">הדבק פרק</string>
+  <string name="checkinsuccess">בוצע צ\'ק-אין של %s ב-GetGlue.</string>
+  <string name="checkinfailed">צ\'ק-אין GetGlue נכשל. נסה להתנתק מ-GetGlue.</string>
+  <string name="getglue_authfailed">אימות GetGlue נכשל. נסה שנית מאוחר יותר.</string>
+  <string name="select_show">בחר סדרה</string>
+  <string name="check_into">בצע צ\'ק-אין ב</string>
+  <string name="no_selection">בחר אחד להלן</string>
+  <string name="looking_for_something_else">מחפש משהו אחר?</string>
+  <string name="menu_rate_trakt">דרג (trakt)</string>
+  <string name="menu_share_others">באמצעות אפליקציות אחרות</string>
+  <string name="traktcheckin_cancel">דרוס</string>
+  <string name="traktcheckin_inprogress">כבר בצעת צ\'ק-אין לפרק או סרט אחר. דרוס את הצ\'ק-אין הקודם או המתן %s ונסה שנית.</string>
+  <string name="traktcheckin_wait">אני אחכה</string>
+  <string name="oauthmessage">מאמת את SeriesGuide עם GetGlue</string>
+  <string name="addtocalendar">הוסף ללוח השנה</string>
+  <string name="addtocalendar_failed">אין אפשרות ליצור אירוע בלוח השנה.</string>
+  <string name="username">שם משתמש</string>
+  <string name="email">כתובת דוא"ל</string>
+  <string name="password">סיסמא</string>
+  <string name="waitplease">רק רגע, בבקשה</string>
+  <string name="connect">התחבר</string>
+  <string name="disconnect">התנתק</string>
+  <string name="trakt_error">אינטראקציה עם trakt נכשלה</string>
+  <string name="trakt_decryptfail">לא היתה אפשרות לפענח את הסיסמא</string>
+  <string name="trakt_generalerror">משהו השתבש. אנא בדוק את האישורים שלך ונסה שנית.</string>
+  <string name="trakt_createaccount">צור חשבון חדש</string>
+  <string name="trakt_experimental">רק סדרות ברשימת סדרות ה-SeriesGuide שלך מסונכרנים. \'סנכרן עם SeriesGuide\' מחזיר דגלי נצפה מ-trakt. \'סנכרן עם trakt\' שולח דגלי נצפה ל-trakt.</string>
+  <string name="trakt_synctodevice">סנכרן עם SeriesGuide</string>
+  <string name="trakt_synctotrakt">סנכרן עם trakt.tv</string>
+  <string name="trakt_syncunseen">כלול דגלי טרם נצפה</string>
+  <string name="trakt_howto_title">הגדר סנכרון trakt.tv</string>
+  <string name="trakt_howto">כדי להגדיר את מכשירך:\n\n1. התחבר או צור את חשבונך למטה בכל מכשיר.\n2.בפעם הראשונה, השתמש בכפתור <b>סנכרן עם trakt.tv</b> כדי להעלות את סדרותיך הקיימות.\n3. הוסף סדרות מ-trakt.tv ע"י משיכת המסך ללשונית ה<b>ספרייה</b> בחלון <b>הוספת סדרה</b>.\n\nכעת, כאשר SeriesGuide מתעדכן, פעילות ה-trakt.tv שלך מורד לכל מכשיר. זה כולל סימוני דגל של פרקים כנצפו או נאספו וצ\'ק-אינים.</string>
+  <string name="welcome_setuplanguage">בחר שפה</string>
+  <string name="welcome_setuptrakt">התחבר ל-trakt</string>
+  <string name="welcome_traktmessage">קבל גישה לספריית ה-trakt.tv שלך ופעילות חברייך</string>
+  <string name="dismiss">סגור</string>
+  <string name="welcome_add_part1">כדי להתחיל, לחץ</string>
+  <string name="upcoming_show">%s מתקרב</string>
+  <string name="upcoming_episodes">פרקים חדשים מתקרבים</string>
+  <string name="upcoming_display">בחר כדי להציג סדרות שמתקרבות</string>
+  <string name="pref_notifications">התראות</string>
+  <string name="pref_notificationssummary">הודיע לגבי סדרות מועדפות שמשודרות בקרוב</string>
+  <string name="pref_notifyfavonly">מועדפים בלבד</string>
+  <string name="pref_notifyfavonlysummary">קבל התראות לגבי סדרות מעודפות בלבד</string>
+  <string name="pref_ringtone">רינגטון</string>
+  <string name="pref_vibrate">רטט</string>
+  <string name="pref_vibratesummary">רטוט גם בזמן הצגת התראות</string>
+  <string name="pref_theme">נושא אפליקציה</string>
+  <string name="choose_list">בחר רשימת פעילות</string>
+  <string name="hide_watched">הסתר פרקים שנצפו</string>
+  <string name="add_widget">הוסף ווידג\'ט</string>
   <string name="widget_label">SeriesGuide</string>
-  <string name="smallwidget">SeriesGuide (small)</string>
-  <string name="bigwidget">SeriesGuide (middle)</string>
-  <string name="largewidget">SeriesGuide (large)</string>
-  <string name="download_stable">Download SeriesGuide</string>
-  <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
+  <string name="smallwidget">SeriesGuide (קטן)</string>
+  <string name="bigwidget">SeriesGuide (בינוני)</string>
+  <string name="largewidget">SeriesGuide (גדול)</string>
+  <string name="download_stable">הורד SeriesGuide</string>
+  <string name="betawarning"><b>שימו לב!</b> שחרור זה הוא עבור בודקי בטא בלבד! אם יש לך ספק, הורד את הגרסה היציבה שלהלן.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
-    <item>Next episode</item>
-    <item>Favorites (A - Z)</item>
-    <item>Favorites (Next ep.)</item>
+    <item>הפרק הבא</item>
+    <item>מועדפים (A - Z)</item>
+    <item>מועדפים (הפרק הבא)</item>
   </string-array>
   <string-array name="sesorting">
-    <item>Latest first</item>
-    <item>Oldest first</item>
+    <item>אחרון קודם</item>
+    <item>ראשון קודם</item>
   </string-array>
   <string-array name="epsorting">
-    <item>Latest first</item>
-    <item>Oldest first</item>
-    <item>Unwatched first</item>
+    <item>אחרון קודם</item>
+    <item>ראשון קודם</item>
+    <item>לא נצפו קודם</item>
     <item>A - Z</item>
-    <item>Top rated</item>
-    <item>Latest first (DVD)</item>
-    <item>Oldest first (DVD)</item>
+    <item>פופולרים</item>
+    <item>אחרון קודם (DVD)</item>
+    <item>ראשון קודם (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>now</item>
-    <item>a day</item>
-    <item>3 days</item>
-    <item>a week</item>
-    <item>two weeks</item>
-    <item>a month</item>
+    <item>כעת</item>
+    <item>יום</item>
+    <item>3 ימים</item>
+    <item>שבוע אחד</item>
+    <item>שבועיים</item>
+    <item>חודש אחד</item>
   </string-array>
   <string-array name="showfilter_list">
-    <item>All</item>
-    <item>Favorites</item>
-    <item>Unseen/Upcoming</item>
-    <item>Hidden</item>
-    <item>Lists</item>
+    <item>הכל</item>
+    <item>מועדפים</item>
+    <item>לא נראו/עתידיים</item>
+    <item>מוסתרים</item>
+    <item>רשימות</item>
   </string-array>
   <plurals name="votes">
-    <item quantity="one">%d vote</item>
-    <item quantity="other">%d votes</item>
+    <item quantity="one">הצבעה %d</item>
+    <item quantity="other">הצבעות %d</item>
   </plurals>
 </resources>

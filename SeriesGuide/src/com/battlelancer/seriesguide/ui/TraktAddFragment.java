@@ -18,9 +18,11 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -191,7 +193,7 @@ public class TraktAddFragment extends AddFragment {
             }
             existing.close();
 
-            parseTvShowsToSearchResults(shows, showList, existingIds);
+            parseTvShowsToSearchResults(shows, showList, existingIds, mContext);
 
             return showList;
         }
@@ -212,10 +214,11 @@ public class TraktAddFragment extends AddFragment {
      * 
      * @param inputList
      * @param outputList
+     * @param mContext
      * @return
      */
     private static void parseTvShowsToSearchResults(List<TvShow> inputList,
-            List<SearchResult> outputList, HashSet<String> existingIds) {
+            List<SearchResult> outputList, HashSet<String> existingIds, Context context) {
         Iterator<TvShow> shows = inputList.iterator();
         while (shows.hasNext()) {
             TvShow tvShow = (TvShow) shows.next();
@@ -228,7 +231,17 @@ public class TraktAddFragment extends AddFragment {
                 show.overview = tvShow.overview;
                 String posterPath = tvShow.images.poster;
                 if (posterPath != null) {
-                    show.poster = posterPath.substring(0, posterPath.length() - 4) + "-138.jpg";
+                    // use larger images on high-res tablets (e.g. Nexus 10)
+                    Resources res = context.getResources();
+                    String sizeSpec;
+                    if (res.getBoolean(R.bool.isLargeTablet)
+                            && res.getDisplayMetrics().densityDpi >= DisplayMetrics.DENSITY_XHIGH) {
+                        sizeSpec = "-300";
+                    } else {
+                        sizeSpec = "-138";
+                    }
+                    show.poster = posterPath.substring(0, posterPath.length() - 4) + sizeSpec
+                            + ".jpg";
                 }
                 outputList.add(show);
             }

@@ -142,7 +142,11 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
         super.onCreate(savedInstanceState);
 
         // hide title, use custom theme
-        setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
+        if (SeriesGuidePreferences.THEME == R.style.ICSBaseTheme) {
+            setStyle(STYLE_NO_TITLE, 0);
+        } else {
+            setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
+        }
     }
 
     @Override
@@ -435,6 +439,8 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
 
     public static class TraktShoutsLoader extends AsyncTaskLoader<List<Shout>> {
 
+        private static final String TAG = "TraktShoutsLoader";
+
         private Bundle mArgs;
 
         private List<Shout> mResults;
@@ -459,10 +465,10 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
                     shouts = manager.showService().episodeShouts(tvdbId, season, episode).fire();
                 }
             } catch (TraktException e) {
-                Utils.trackException(getContext(), e);
+                Utils.trackExceptionAndLog(getContext(), TAG, e);
                 return null;
             } catch (ApiException e) {
-                Utils.trackException(getContext(), e);
+                Utils.trackExceptionAndLog(getContext(), TAG, e);
                 return null;
             }
 

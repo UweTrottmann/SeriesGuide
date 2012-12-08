@@ -96,6 +96,12 @@ public class SeriesContract {
          */
         String LASTEDIT = "series_lastedit";
 
+        /**
+         * GetGlue object id, added in version 29 to support checking into shows
+         * without IMDb id.
+         */
+        String GETGLUEID = "series_getglueid";
+
     }
 
     interface SeasonsColumns {

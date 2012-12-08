@@ -16,6 +16,7 @@
   <string name="search_description">Episodi</string>
   <string name="description_overview">Panoramica</string>
   <string name="description_poster">Mostra poster</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">non disponibile</string>
   <string name="loading">Caricamento in corso...</string>
   <string name="done">Fatto</string>
@@ -24,6 +25,8 @@
   <string name="cancel">Annulla</string>
   <string name="share">Condividi</string>
   <string name="updated">Updated to latest version.</string>
+  <string name="discard">Discard</string>
+  <string name="save_selection">Save selection</string>
   <string name="offline">Nessuna connessione di rete. Riprova più tardi.</string>
   <string name="onlyx">Disponibile solo in SeriesGuide X</string>
   <string name="shouts">Dì la tua</string>
@@ -81,6 +84,7 @@
   <string name="trakt_notcollected">%s non collezionato.</string>
   <string name="shows_empty">Nessuno spettacolo.</string>
   <string name="confirm_delete">Vuoi davvero rimuovere %s?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Rimuovere</string>
   <string name="dontdelete_show">Non rimuovere</string>
   <string name="no_nextepisode">nessun prossimo episodio trovato</string>
@@ -153,7 +157,7 @@
   <string name="list_item_remove">Rimuovi da lista</string>
   <string name="list_empty">Puoi aggiungere nella lista serie, stagioni o episodi.</string>
   <string name="prefs_category_basic">Base</string>
-  <string name="prefs_category_sharing">Condivisione</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Avanzato</string>
   <string name="prefs_category_about">Info su</string>
   <string name="help">Guida</string>
@@ -190,6 +194,8 @@
   <string name="pref_ganalyticssummary">Traccia l\'uso delle funzionalità per aiutare a migliorare SeriesGuide</string>
   <string name="sendusagedata">Invia allo sviluppatore delle statistiche sull\'utilizzo</string>
   <string name="pref_upcominglimit">Prossimi programmi tra...</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description"><b>Backup</b> crea una copia del vostro database delle serie in un file denominato <b>seriesdatabase</b> nella cartella below.\n\nTo <b>Restore</b> assicurarsi che questo file è nel backup della cartella below.\n\nOnly cartella con lo stesso o una versione inferiore del database come sotto può essere ripristinata.</string>
   <string name="backup_path"><b>Cartella backup</b></string>
   <string name="backup_version"><b>Versione database</b></string>
@@ -216,10 +222,15 @@
   <string name="checkin_searchhint">Digitare il nome della serie</string>
   <string name="checkin_empty">Nessuna corrispondenza serie</string>
   <string name="checkin_hint">Digita un messaggio (opzionale)</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Incolla episodio</string>
   <string name="checkinsuccess">Verificato in %s su GetGlue.</string>
   <string name="checkinfailed">Check-in su GetGlue fallito. Prova a disconnetterti da GetGlue.</string>
   <string name="getglue_authfailed">GetGlue autenticazione non riuscita. Riprovare più tardi.</string>
+  <string name="select_show">Select show</string>
+  <string name="check_into">Check into</string>
+  <string name="no_selection">pick one below</string>
+  <string name="looking_for_something_else">Looking for something else?</string>
   <string name="menu_rate_trakt">Vota (trakt)</string>
   <string name="menu_share_others">Attraverso altre apps</string>
   <string name="traktcheckin_cancel">Sovrascrivi</string>
@@ -249,7 +260,6 @@
   <string name="welcome_traktmessage">Accedi alla tua libreria trakt.tv e alle attività dei tuoi amici</string>
   <string name="dismiss">Cancella</string>
   <string name="welcome_add_part1">Per cominciare premi lo schermo</string>
-  <string name="welcome_add_part2">nella barra delle azioni.</string>
   <string name="upcoming_show">%s sta per essere trasmesso</string>
   <string name="upcoming_episodes">Nuovi episodi stanno per essere trasmessi</string>
   <string name="upcoming_show_detailed">%1$s su %2$s</string>

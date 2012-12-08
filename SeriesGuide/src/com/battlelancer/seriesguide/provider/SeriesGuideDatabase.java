@@ -37,7 +37,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.SeasonsColumns;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesContract.ShowsColumns;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
@@ -74,7 +73,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_LISTS = 28;
 
-    public static final int DATABASE_VERSION = DBVER_LISTS;
+    public static final int DBVER_GETGLUE_CHECKIN_FIX = 29;
+
+    public static final int DATABASE_VERSION = DBVER_GETGLUE_CHECKIN_FIX;
 
     public interface Tables {
         String SHOWS = "series";
@@ -185,7 +186,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ShowsColumns.LASTUPDATED + " INTEGER DEFAULT 0,"
 
-            + ShowsColumns.LASTEDIT + " INTEGER DEFAULT 0"
+            + ShowsColumns.LASTEDIT + " INTEGER DEFAULT 0,"
+
+            + ShowsColumns.GETGLUEID + " TEXT DEFAULT ''"
 
             + ");";
 
@@ -312,6 +315,13 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.d(TAG, "Can't downgrade database from version " +
+                oldVersion + " to " + newVersion);
+        onResetDatabase(db);
+    }
+
+    @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d(TAG, "onUpgrade() from " + oldVersion + " to " + newVersion);
 
@@ -370,22 +380,40 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 27:
                 upgradeToTwentyEight(db);
                 version = 28;
+            case 28:
+                upgradeToTwentyNine(db);
+                version = 29;
         }
 
         // drop all tables if version is not right
         Log.d(TAG, "after upgrade logic, at version " + version);
         if (version != DATABASE_VERSION) {
-            Log.w(TAG, "Database has incompatible version, starting from scratch");
-            db.execSQL("DROP TABLE IF EXISTS " + Tables.SHOWS);
-            db.execSQL("DROP TABLE IF EXISTS " + Tables.SEASONS);
-            db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES);
-            db.execSQL("DROP TABLE IF EXISTS " + Tables.LISTS);
-            db.execSQL("DROP TABLE IF EXISTS " + Tables.LIST_ITEMS);
-
-            db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
-
-            onCreate(db);
+            onResetDatabase(db);
         }
+    }
+
+    /**
+     * Drops all tables and creates an empty database.
+     */
+    private void onResetDatabase(SQLiteDatabase db) {
+        Log.w(TAG, "Database has incompatible version, starting from scratch");
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.SHOWS);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.SEASONS);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.LISTS);
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.LIST_ITEMS);
+
+        db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
+
+        onCreate(db);
+    }
+
+    /**
+     * Add {@link Shows} column to store a GetGlue object id.
+     */
+    private void upgradeToTwentyNine(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.GETGLUEID
+                + " TEXT DEFAULT '';");
     }
 
     /**

@@ -2,7 +2,7 @@
 <resources>
 
     <dimen name="addpager_width">600dp</dimen>
-    <dimen name="imagecontainer_height">230dp</dimen>
+    <dimen name="imagecontainer_height">250dp</dimen>
 
     <integer name="episode_pager_spacer_weight">2</integer>
 

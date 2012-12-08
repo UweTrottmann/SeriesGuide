@@ -15,15 +15,6 @@
 -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:state_multiline="true" android:state_window_focused="false" android:state_enabled="true"  android:drawable="@drawable/textfield_multiline_default_sg" />
-    <item android:state_multiline="true" android:state_window_focused="false" android:state_enabled="false" android:drawable="@drawable/textfield_multiline_disabled_sg" />
-    <item android:state_multiline="true" android:state_enabled="true" android:state_focused="true" android:drawable="@drawable/textfield_multiline_activated_sg" />
-    <item android:state_multiline="true" android:state_enabled="true" android:state_activated="true" android:drawable="@drawable/textfield_multiline_focused_sg" />
-    <item android:state_multiline="true" android:state_enabled="true" android:drawable="@drawable/textfield_multiline_default_sg" />
-    <item android:state_multiline="true" android:state_focused="true" android:drawable="@drawable/textfield_multiline_disabled_focused_sg" />
-    <item android:state_multiline="true" android:drawable="@drawable/textfield_multiline_disabled_sg" />
-
     <item android:state_window_focused="false" android:state_enabled="true" android:drawable="@drawable/textfield_default_sg" />
     <item android:state_window_focused="false" android:state_enabled="false" android:drawable="@drawable/textfield_disabled_sg" />
     <item android:state_enabled="true" android:state_focused="true" android:drawable="@drawable/textfield_activated_sg" />

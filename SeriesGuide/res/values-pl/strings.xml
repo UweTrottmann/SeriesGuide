@@ -16,6 +16,7 @@
   <string name="search_description">Odcinki</string>
   <string name="description_overview">Opis</string>
   <string name="description_poster">Pokaż plakat</string>
+  <string name="description_image">Obraz odcinka</string>
   <string name="norating">brak danych</string>
   <string name="loading">Wczytywanie…</string>
   <string name="done">Wykonano</string>
@@ -24,6 +25,8 @@
   <string name="cancel">Anuluj</string>
   <string name="share">Udostępnij</string>
   <string name="updated">Zaktualizowano do najnowszej wersji.</string>
+  <string name="discard">Anuluj</string>
+  <string name="save_selection">Zapisz zaznaczone</string>
   <string name="offline">Brak połączenia sieciowego. Spróbuj ponownie później.</string>
   <string name="onlyx">Dostępne tylko w SeriesGuide X</string>
   <string name="shouts">Krzyki</string>
@@ -81,6 +84,7 @@
   <string name="trakt_notcollected">%s - brak w kolekcji.</string>
   <string name="shows_empty">Brak seriali.</string>
   <string name="confirm_delete">Czy na pewno chcesz usunąć %s?</string>
+  <string name="delete_has_list_items">Nie można kontynuować, usuń %s z wszystkich list.</string>
   <string name="delete_show">Usuń</string>
   <string name="dontdelete_show">Nie usuwaj</string>
   <string name="no_nextepisode">nie znaleziono nowych odcinków</string>
@@ -153,7 +157,7 @@
   <string name="list_item_remove">Usuń z listy</string>
   <string name="list_empty">Do listy można dodać seriale, sezony lub odcinki.</string>
   <string name="prefs_category_basic">Podstawowe</string>
-  <string name="prefs_category_sharing">Udostępnianie</string>
+  <string name="prefs_category_sharing">Usługi</string>
   <string name="prefs_category_advanced">Zaawansowane</string>
   <string name="prefs_category_about">O programie</string>
   <string name="help">Pomoc</string>
@@ -190,6 +194,8 @@
   <string name="pref_ganalyticssummary">Śledzi wykorzystanie funkcji, aby pomóc w ulepszeniu SeriesGuide</string>
   <string name="sendusagedata">Wyślij statystyki użytkowania</string>
   <string name="pref_upcominglimit">Wyświetlaj odcinki z</string>
+  <string name="pref_autoaddshows">Dodaj nowe seriale trakt</string>
+  <string name="pref_autoaddshowssummary">Automatycznie dodawaj nowe seriale z listy aktywności trakt</string>
   <string name="backup_description"><b>Kopia zapasowa</b> tworzy kopię listy seriali w pliku o nazwie <b>seriesdatabase</b> w poniższym folderze.\n\nAby<b>Przywrócić</b> listę upewnij się, że plik jest w poniższym folderze.\n\nTylko archiwa list z tej samej lub niższej wersji (niż poniższa) mogą zostać przywrócone.</string>
   <string name="backup_path"><b>Folder kopii zapasowej</b></string>
   <string name="backup_version"><b>Wersja bazy danych</b></string>
@@ -216,10 +222,15 @@
   <string name="checkin_searchhint">Wpisz nazwę serialu</string>
   <string name="checkin_empty">Nie odnaleziono serialu</string>
   <string name="checkin_hint">Wpisz wiadomość (opcjonalnie)</string>
+  <string name="checkin_fixgetglue">Napraw podpinanie GetGlue</string>
   <string name="paste_episode">Wklej odcinek</string>
   <string name="checkinsuccess">Podpięty do %s na GetGlue.</string>
   <string name="checkinfailed">Podpięcie do GetGlue nie powiodło się. Spróbuj odłączyć GetGlue.</string>
   <string name="getglue_authfailed">Uwierzytelnianie GetGlue nie powiodło się. Spróbuj ponownie później.</string>
+  <string name="select_show">Wybierz serial</string>
+  <string name="check_into">Podepnij się</string>
+  <string name="no_selection">wybierz z poniższych</string>
+  <string name="looking_for_something_else">Szukasz czegoś innego?</string>
   <string name="menu_rate_trakt">Oceń (trakt)</string>
   <string name="menu_share_others">za pomocą innych aplikacji</string>
   <string name="traktcheckin_cancel">Zastąp</string>
@@ -249,7 +260,6 @@
   <string name="welcome_traktmessage">Uzyskaj dostęp do biblioteki trakt.tv i aktywności przyjaciół</string>
   <string name="dismiss">Zamknij</string>
   <string name="welcome_add_part1">Naciśnij, aby rozpocząć</string>
-  <string name="welcome_add_part2">w pasku akcji.</string>
   <string name="upcoming_show">Nadchodzi odcinek %s</string>
   <string name="upcoming_episodes">Nadchodzą nowe odcinki</string>
   <string name="upcoming_show_detailed">%1$s na %2$s</string>

@@ -29,7 +29,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -42,6 +41,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.loaders.GenericListLoader;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
@@ -182,9 +182,7 @@ public class TraktFriendsFragment extends ListFragment implements
         }
     }
 
-    private static class TraktFriendsLoader extends AsyncTaskLoader<List<UserProfile>> {
-
-        private List<UserProfile> mFriends;
+    private static class TraktFriendsLoader extends GenericListLoader<UserProfile> {
 
         public TraktFriendsLoader(Context context) {
             super(context);
@@ -251,88 +249,6 @@ public class TraktFriendsFragment extends ListFragment implements
             }
 
             return null;
-        }
-
-        /**
-         * Called when there is new data to deliver to the client. The super
-         * class will take care of delivering it; the implementation here just
-         * adds a little more logic.
-         */
-        @Override
-        public void deliverResult(List<UserProfile> friends) {
-            if (isReset()) {
-                // An async query came in while the loader is stopped. We
-                // don't need the result.
-                if (friends != null) {
-                    onReleaseResources(friends);
-                }
-            }
-            List<UserProfile> oldFriends = friends;
-            mFriends = friends;
-
-            if (isStarted()) {
-                // If the Loader is currently started, we can immediately
-                // deliver its results.
-                super.deliverResult(friends);
-            }
-
-            if (oldFriends != null) {
-                onReleaseResources(oldFriends);
-            }
-        }
-
-        @Override
-        protected void onStartLoading() {
-            if (mFriends != null) {
-                deliverResult(mFriends);
-            } else {
-                forceLoad();
-            }
-        }
-
-        /**
-         * Handles a request to stop the Loader.
-         */
-        @Override
-        protected void onStopLoading() {
-            // Attempt to cancel the current load task if possible.
-            cancelLoad();
-        }
-
-        /**
-         * Handles a request to cancel a load.
-         */
-        @Override
-        public void onCanceled(List<UserProfile> friends) {
-            super.onCanceled(friends);
-
-            onReleaseResources(friends);
-        }
-
-        /**
-         * Handles a request to completely reset the Loader.
-         */
-        @Override
-        protected void onReset() {
-            super.onReset();
-
-            // Ensure the loader is stopped
-            onStopLoading();
-
-            // At this point we can release resources
-            if (mFriends != null) {
-                onReleaseResources(mFriends);
-                mFriends = null;
-            }
-        }
-
-        /**
-         * Helper function to take care of releasing resources associated with
-         * an actively loaded data set.
-         */
-        protected void onReleaseResources(List<UserProfile> apps) {
-            // For a simple List<> there is nothing to do. For something
-            // like a Cursor, we would close it here.
         }
     }
 

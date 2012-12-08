@@ -16,15 +16,18 @@
   <string name="search_description">Episoder</string>
   <string name="description_overview">Oversigt</string>
   <string name="description_poster">Show poster</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">ikke tilgængelig</string>
-  <string name="loading">Loading…</string>
+  <string name="loading">Indlæser...</string>
   <string name="done">Udført</string>
   <string name="clear">Clear</string>
   <string name="more">%s more</string>
   <string name="cancel">Annuller</string>
   <string name="share">Del</string>
-  <string name="updated">Updated to latest version.</string>
-  <string name="offline">No network connectivity. Try again later.</string>
+  <string name="updated">Opdateret til nyeste version.</string>
+  <string name="discard">Kassér</string>
+  <string name="save_selection">Save selection</string>
+  <string name="offline">Ingen netværksforbindelse. Prøv igen senere.</string>
   <string name="onlyx">Only available in SeriesGuide X</string>
   <string name="shouts">Shouts</string>
   <string name="shout_hint">Type a shout (in English)</string>
@@ -35,28 +38,28 @@
   <string name="autorefresh">Refreshing automagically</string>
   <string name="love">Totalt ninja!</string>
   <string name="hate">Svag sovs :(</string>
-  <string name="rating2">Terrible</string>
-  <string name="rating3">Bad</string>
-  <string name="rating4">Poor</string>
+  <string name="rating2">Forfærdelige</string>
+  <string name="rating3">Dårlig</string>
+  <string name="rating4">Ringe</string>
   <string name="rating5">Meh</string>
   <string name="rating6">Fair</string>
-  <string name="rating7">Good</string>
-  <string name="rating8">Great</string>
-  <string name="rating9">Superb</string>
-  <string name="episode_firstaired">Airdate</string>
+  <string name="rating7">God</string>
+  <string name="rating8">Fantastisk</string>
+  <string name="rating9">Fremragende</string>
+  <string name="episode_firstaired">Sendetid</string>
   <string name="episode_dvdnumber">DVD Episode</string>
-  <string name="show_actors">Actors</string>
-  <string name="show_firstaired">First Aired</string>
-  <string name="show_genres">Genres</string>
-  <string name="show_runtime">Runtime</string>
-  <string name="show_contentrating">Content Rating</string>
+  <string name="show_actors">Skuespillere</string>
+  <string name="show_firstaired">Sendt første gang</string>
+  <string name="show_genres">Genrer</string>
+  <string name="show_runtime">Spilletid</string>
+  <string name="show_contentrating">Indholdsklassifikation</string>
   <string name="episode_directors">Directors</string>
   <string name="episode_gueststars">Guest Stars</string>
-  <string name="episode_writers">Writers</string>
+  <string name="episode_writers">Forfattere</string>
   <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Fortsætter</string>
   <string name="show_isnotalive">Afsluttet</string>
-  <string name="lastEdit">Last Edit // TVDb</string>
+  <string name="lastEdit">Sidste redigering / / TVDb</string>
   <string name="sort">Sorter efter</string>
   <string name="updateall_yes">Opdatér (alle)</string>
   <string name="menu_update_delta">Opdatér (forældede)</string>
@@ -80,7 +83,8 @@
   <string name="trakt_collected">%s collected.</string>
   <string name="trakt_notcollected">%s not collected.</string>
   <string name="shows_empty">Ingen tv-serier her.</string>
-  <string name="confirm_delete">Do you really want to remove %s?</string>
+  <string name="confirm_delete">Vil du fjerne %s?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Fjern</string>
   <string name="dontdelete_show">Fjern ikke</string>
   <string name="no_nextepisode">ingen næste episode fundet</string>
@@ -91,7 +95,7 @@
   <string name="context_hide">Skjul</string>
   <string name="context_unhide">Vis</string>
   <string name="hidden">Skjult tv-serie</string>
-  <string name="unhidden">Un-Hidden show</string>
+  <string name="unhidden">Ikke-skjult serie</string>
   <string name="activity">Aktuelt</string>
   <string name="upcoming">Kommende</string>
   <string name="recent">Nylige</string>
@@ -99,21 +103,21 @@
   <string name="friends_empty">Ingen venne-aktivitet på trakt.</string>
   <string name="noupcoming">Der er ingen kommende episoder.</string>
   <string name="norecent">Der er ingen nylige episoder.</string>
-  <string name="only_favorites">Only favorite shows</string>
+  <string name="only_favorites">Kun favorit serier</string>
   <string name="togglewatched">Toggle watched</string>
-  <string name="update_notification">Updating your shows…</string>
-  <string name="update_single">Updating show…</string>
-  <string name="update_delta">Updating outdated shows…</string>
-  <string name="update_full">Updating all shows…</string>
-  <string name="update_success">Shows updated.</string>
+  <string name="update_notification">Opdaterer dine serier...</string>
+  <string name="update_single">Opdaterer serier...</string>
+  <string name="update_delta">Opdaterer forældede serier...</string>
+  <string name="update_full">Opdaterer alle serier...</string>
+  <string name="update_success">Serier opdateret.</string>
   <string name="update_offline">Opdatering mislykkedes, tjek din internet/Wi-Fi forbindelse.</string>
   <string name="update_saxerror">Opdatering mislykkedes, prøv igen senere.</string>
-  <string name="update_inprogress">An update is in progress, try again later.</string>
+  <string name="update_inprogress">En opdatering er allerede i gang, prøv igen senere.</string>
   <string name="update_rebuildsearch">Refreshing episode search…</string>
   <string name="update_traktactivity">Loading trakt activity…</string>
   <string name="menu_updateart">Hent plakater</string>
   <string name="arttask_incomplete">Ikke alle plakater blev hentet, prøv igen senere.</string>
-  <string name="arttask_start">Loading posters…</string>
+  <string name="arttask_start">Indlæser plakater...</string>
   <string name="arttask_nosdcard">Hentning af plakater kræver ekstern hukommelse (SDkort).</string>
   <string name="show_network">på</string>
   <string name="show_noairtime">Ingen sendetider tilgængelige</string>
@@ -130,9 +134,9 @@
   <string name="no_results">Ingen resultater, prøv komplette ord.</string>
   <string name="search_error">Søgning mislykkedes, prøv igen senere.</string>
   <string name="add_show">Tilføj tv-serie</string>
-  <string name="add_all">Add all</string>
+  <string name="add_all">Tilføj alle</string>
   <string name="dont_add_show">Tilføj ikke</string>
-  <string name="add_multiple">All shows will appear in your show list shortly.</string>
+  <string name="add_multiple">Alle serier vil blive vist i din liste om lidt.</string>
   <string name="add_started">vil blive vist i din tv-serie oversigt om et øjeblik</string>
   <string name="add_success">tilføjet korrekt.</string>
   <string name="add_error_begin">Kunne ikke tilføje \"</string>
@@ -145,15 +149,15 @@
   <string name="powered_by_thetvdb">powered by thetvdb.com</string>
   <string name="powered_by_trakt">powered by trakt.tv</string>
   <string name="first_list">First list</string>
-  <string name="list_add">Add list</string>
-  <string name="list_title_hint">Name your list</string>
-  <string name="list_remove">Remove list</string>
+  <string name="list_add">Tilføj liste</string>
+  <string name="list_title_hint">Navngiv din liste</string>
+  <string name="list_remove">Fjern liste</string>
   <string name="list_manage">Manage list</string>
   <string name="list_item_manage">Manage lists</string>
   <string name="list_item_remove">Remove from list</string>
   <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
   <string name="prefs_category_basic">Basics</string>
-  <string name="prefs_category_sharing">Sharing</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Advanced</string>
   <string name="prefs_category_about">About</string>
   <string name="help">Hjælp</string>
@@ -163,14 +167,14 @@
   <string name="pref_onlyfuturesummary">Never display already aired episodes</string>
   <string name="pref_onlyseasoneps">Hide special episodes</string>
   <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
-  <string name="pref_seasonsorting">Sort seasons by…</string>
-  <string name="pref_episodesorting">Sort episodes by…</string>
+  <string name="pref_seasonsorting">Sortér sæsoner efter...</string>
+  <string name="pref_episodesorting">Sortér afsnit efter...</string>
   <string name="backup">Sikkerhedskopier/Gendan</string>
   <string name="backup_summary">Sikkerhedskopier eller gendan dine tv-serier</string>
   <string name="pref_language">Sprog (indhold)</string>
   <string name="pref_number">Talformat</string>
   <string name="pref_offset">Manuel tidsforskydning</string>
-  <string name="pref_offsetsummary">Offset air times by %s hours</string>
+  <string name="pref_offsetsummary">Forskyd viste sendetid med %s timer</string>
   <string name="pref_autoupdate">Slå automatisk opdatering til</string>
   <string name="pref_autoupdatesummary">Opdatér periodisk dine tv-serier når SeriesGuide starter</string>
   <string name="pref_updatewifionly">Opdatér kun via Wi-Fi</string>
@@ -190,7 +194,9 @@
   <string name="pref_ganalyticssummary">Registrerer brugen af funktioner for at hjælpe med at forbedre SeriesGuide</string>
   <string name="sendusagedata">Send the developer usage statistics</string>
   <string name="pref_upcominglimit">Upcoming shows within…</string>
-  <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+  <string name="backup_description"><b>Backup</b> laver en kopi af din serie-database i en fil ved navn <b>seriesdatabase</b> i mappen nedenfor.\n\nFor at <b>Gendanne</b>, vær sikker på at denne fil er i mappen nedenfor.\n\nKun backups af samme eller lavere database version, vil blive gendannet.</string>
   <string name="backup_path"><b>Backup-mappe</b></string>
   <string name="backup_version"><b>Database version</b></string>
   <string name="backup_failed_nosd">Kan ikke oprette backup. Backup-mappen er ikke tilgængelig.</string>
@@ -216,10 +222,15 @@
   <string name="checkin_searchhint">Type a show name</string>
   <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Type a message (optional)</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Paste episode</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
   <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
+  <string name="select_show">Select show</string>
+  <string name="check_into">Check into</string>
+  <string name="no_selection">pick one below</string>
+  <string name="looking_for_something_else">Looking for something else?</string>
   <string name="menu_rate_trakt">Vurder (trakt)</string>
   <string name="menu_share_others">Via andre apps</string>
   <string name="traktcheckin_cancel">Override</string>
@@ -249,7 +260,6 @@
   <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
   <string name="dismiss">Dismiss</string>
   <string name="welcome_add_part1">To get started tap</string>
-  <string name="welcome_add_part2">in the action bar.</string>
   <string name="upcoming_show">%s is coming up</string>
   <string name="upcoming_episodes">New episodes are coming up</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>
@@ -261,16 +271,16 @@
   <string name="pref_ringtone">Ringtone</string>
   <string name="pref_vibrate">Vibrate</string>
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
-  <string name="pref_theme">App Theme</string>
+  <string name="pref_theme">App Tema</string>
   <string name="choose_list">Choose activity list</string>
   <string name="hide_watched">Hide watched episodes</string>
-  <string name="add_widget">Add widget</string>
+  <string name="add_widget">Tilføj widget</string>
   <string name="widget_label">SeriesGuide</string>
   <string name="smallwidget">SeriesGuide (small)</string>
   <string name="bigwidget">SeriesGuide (middle)</string>
   <string name="largewidget">SeriesGuide (large)</string>
   <string name="download_stable">Download SeriesGuide</string>
-  <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
+  <string name="betawarning"><b>Vær opmærksom!</b> Denne udgave er kun lavet til beta testere! Hvis du er i tvivl, så hent den stabile version nedenfor.</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Næste episode</item>
@@ -291,19 +301,19 @@
     <item>Ældste først (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>now</item>
-    <item>a day</item>
-    <item>3 days</item>
-    <item>a week</item>
-    <item>two weeks</item>
-    <item>a month</item>
+    <item>nu</item>
+    <item>en dag</item>
+    <item>3 dage</item>
+    <item>en uge</item>
+    <item>to uger</item>
+    <item>en måned</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Alle</item>
     <item>Favoritter</item>
     <item>Uset/Kommende</item>
-    <item>Hidden</item>
-    <item>Lists</item>
+    <item>Skjulte</item>
+    <item>Lister</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d vote</item>

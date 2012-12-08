@@ -19,6 +19,11 @@
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
+    <style name="TextAppearance.Small.Highlight">
+        <item name="android:textColor">@color/text_blue</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
     <style name="TextAppearance.Small.Dim">
         <item name="android:textColor">@color/text_dim</item>
     </style>
@@ -27,7 +32,7 @@
         <item name="android:textColor">@color/text_primary</item>
     </style>
 
-    <style name="TextAppearance.Medium" parent="@android:style/TextAppearance">
+    <style name="TextAppearance.Medium">
         <item name="android:textColor">@color/text_primary_sg</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
@@ -44,7 +49,7 @@
         <item name="android:textColor">@color/text_default</item>
     </style>
 
-    <style name="TextAppearance.Large" parent="@android:style/TextAppearance">
+    <style name="TextAppearance.Large">
         <item name="android:textSize">@dimen/text_size_large</item>
     </style>
 
@@ -52,7 +57,7 @@
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
-    <style name="TextAppearance.XLarge" parent="@android:style/TextAppearance">
+    <style name="TextAppearance.XLarge">
         <item name="android:textSize">@dimen/text_size_xlarge</item>
     </style>
 
@@ -66,12 +71,10 @@
     <style name="Widget.SeriesGuide" parent="Widget"></style>
 
     <!-- Buttons -->
-    <style name="Widget.SeriesGuide.Button">
-        <item name="android:focusable">true</item>
-        <item name="android:clickable">true</item>
-        <item name="android:gravity">center_vertical|center_horizontal</item>
+    <style name="Widget.SeriesGuide.Button" parent="android:Widget.Button">
         <item name="android:background">@drawable/btn_default_sg</item>
         <item name="android:textAppearance">@style/TextAppearance.Medium</item>
+        <item name="android:textColor">@color/text_primary_sg</item>
         <item name="android:minHeight">48dip</item>
         <item name="android:minWidth">64dip</item>
     </style>
@@ -80,17 +83,42 @@
         <item name="android:background">?custom_list_selector</item>
         <item name="android:paddingLeft">4dip</item>
         <item name="android:paddingRight">4dip</item>
+        <item name="android:textColor">?attr/textColorSgPrimary</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Small">
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
-    <style name="Widget.SeriesGuide.ImageButton">
-        <item name="android:focusable">true</item>
-        <item name="android:clickable">true</item>
-        <item name="android:scaleType">center</item>
+    <style name="Widget.SeriesGuide.Button.Borderless.Small.Highlight">
+        <item name="android:textColor">@color/text_blue</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.ImageButton" parent="android:Widget.ImageButton">
         <item name="android:background">@drawable/btn_default_sg</item>
+    </style>
+
+    <!-- pre v11 -->
+    <style name="Widget.SeriesGuide.CheckBox" parent="android:Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/btn_check_sg</item>
+    </style>
+
+    <!-- pre v11 -->
+    <style name="Widget.SeriesGuide.EditText" parent="android:Widget.EditText">
+        <item name="android:background">@drawable/edit_text_sg</item>
+        <item name="android:textColor">@color/text_primary_sg</item>
+    </style>
+
+    <!-- List selectors -->
+    <!-- pre v11 -->
+    <style name="Widget.SeriesGuide.ListView" parent="android:Widget.ListView">
+        <item name="android:listSelector">?custom_list_selector</item>
+    </style>
+
+    <!-- pre v11 -->
+    <style name="Widget.SeriesGuide.ListView.White" parent="android:Widget.ListView.White">
+        <item name="android:listSelector">?custom_list_selector</item>
     </style>
 
     <!-- Dialogs -->
@@ -302,6 +330,19 @@
     <!-- Dark styles -->
 
 
+    <!-- Buttons -->
+    <style name="Widget.Android.Button" parent="android:Widget.Button">
+        <item name="android:background">@drawable/btn_default_holo_dark</item>
+        <item name="android:textAppearance">@style/TextAppearance.Medium</item>
+        <item name="android:textColor">@color/text_primary_sg</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">64dip</item>
+    </style>
+
+    <style name="Widget.Android.ImageButton" parent="android:Widget.ImageButton">
+        <item name="android:background">@drawable/btn_default_holo_dark</item>
+    </style>
+
     <!-- Title indicator -->
     <style name="TitlePageIndicator.Dark" parent="TitlePageIndicator">
         <item name="footerColor">#33B5E5</item>
@@ -348,7 +389,7 @@
         <item name="android:textColor">@color/text_default_inverse</item>
     </style>
 
-    <style name="TextAppearance.Light.XLarge" parent="@style/TextAppearance.XLarge">
+    <style name="TextAppearance.Light.XLarge" parent="TextAppearance.XLarge">
         <item name="android:textColor">@color/text_primary_light_sg</item>
     </style>
 
@@ -357,8 +398,15 @@
     </style>
 
     <!-- Buttons -->
-    <style name="Widget.SeriesGuide.Light.Button" parent="Widget.SeriesGuide.Button">
-        <item name="android:textColor">@color/text_primary</item>
+    <!-- pre v11 -->
+    <style name="Widget.SeriesGuide.Light.CheckBox" parent="Widget.SeriesGuide.CheckBox">
+        <item name="android:button">@drawable/btn_check_holo_light</item>
+    </style>
+
+    <!-- pre v11 -->
+    <style name="Widget.SeriesGuide.Light.EditText" parent="Widget.SeriesGuide.EditText">
+        <item name="android:background">@drawable/edit_text_holo_light</item>
+        <item name="android:textColor">@color/text_primary_light_sg</item>
     </style>
 
     <!-- Title page indicator -->

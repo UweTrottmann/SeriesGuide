@@ -16,6 +16,7 @@
   <string name="search_description">Jaksot</string>
   <string name="description_overview">Yleiskatsaus</string>
   <string name="description_poster">Näytä juliste</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">puuttuu</string>
   <string name="loading">Ladataan…</string>
   <string name="done">Valmis</string>
@@ -24,6 +25,8 @@
   <string name="cancel">Peruuta</string>
   <string name="share">Jaa</string>
   <string name="updated">Päivitetty viimeisimpään versioon.</string>
+  <string name="discard">Hävitä</string>
+  <string name="save_selection">Tallenna valinta</string>
   <string name="offline">Ei verkkoyhteyttä. Yritä myöhemmin uudelleen.</string>
   <string name="onlyx">Saatavilla vain SeriesGuide X:ssä</string>
   <string name="shouts">Huudahdukset</string>
@@ -81,6 +84,7 @@
   <string name="trakt_notcollected">%s ei ole kerätty.</string>
   <string name="shows_empty">Ei ohjelmia täällä.</string>
   <string name="confirm_delete">Haluatko todella poistaa %s?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Poista</string>
   <string name="dontdelete_show">Älä poista</string>
   <string name="no_nextepisode">seuraavaa jaksoa ei löynyt</string>
@@ -153,7 +157,7 @@
   <string name="list_item_remove">Poista listalta</string>
   <string name="list_empty">Voit listä ohjelmia, kausia tai jaksoja tähän listaan.</string>
   <string name="prefs_category_basic">Perustiedot</string>
-  <string name="prefs_category_sharing">Jakaminen</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Edistyneet</string>
   <string name="prefs_category_about">Tietoja</string>
   <string name="help">Apua</string>
@@ -190,6 +194,8 @@
   <string name="pref_ganalyticssummary">Seuraa ominaisuuksien käyttöä, jonka avulla parannetaan SeriesGuidea</string>
   <string name="sendusagedata">Lähetä kehittäjälle käyttötilastoja</string>
   <string name="pref_upcominglimit">Tulevat ohjelmat ajalta…</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description"><b>Varmuuskopio</b> luo kopion ohjelmatietokannastasi tiedostoon nimeltä <b>seriesdatabase</b> alla mainittuun kansioon.\n\n<b>Palauttaaksesi</b> varmista tiedoston olevan alla mainitussa kansiossa.\n\nVain saman tai vanhemman tietokantaversion omaavat varmuuskopiot voidaan palauttaa.</string>
   <string name="backup_path"><b>Varmuuskopiointikansio</b></string>
   <string name="backup_version"><b>Tietokannan versio</b></string>
@@ -216,10 +222,15 @@
   <string name="checkin_searchhint">Kirjoita ohjelman nimi</string>
   <string name="checkin_empty">Ei vastaavia ohjelmia</string>
   <string name="checkin_hint">Kirjoita viesti (valinnainen)</string>
+  <string name="checkin_fixgetglue">Korjaa GetGlue-kirjaus</string>
   <string name="paste_episode">Liitä jakso</string>
   <string name="checkinsuccess">Kirjattu kohteeseen %s GetGluessa.</string>
   <string name="checkinfailed">GetGluen kirjaus epäonnistui. Yritä irrottautua GetGluesta.</string>
   <string name="getglue_authfailed">GetGluen todentaminen epäonnistui. Yritä myöhemmin uudelleen.</string>
+  <string name="select_show">Valitse ohjelma</string>
+  <string name="check_into">Kirjaa</string>
+  <string name="no_selection">Valitse yksi alta</string>
+  <string name="looking_for_something_else">Etsitkö jotain muuta?</string>
   <string name="menu_rate_trakt">Arvostele (trakt)</string>
   <string name="menu_share_others">Muulla sovelluksella</string>
   <string name="traktcheckin_cancel">Korvaa</string>
@@ -249,7 +260,6 @@
   <string name="welcome_traktmessage">Käytä trakt.tv-kirjastoasi ja näe ystäviesi toiminta</string>
   <string name="dismiss">Hylkää</string>
   <string name="welcome_add_part1">Napauta aloittaaksesi</string>
-  <string name="welcome_add_part2">toimintopalkissa.</string>
   <string name="upcoming_show">%s on tulossa</string>
   <string name="upcoming_episodes">Uusia jaksoja tulossa</string>
   <string name="upcoming_show_detailed">%1$s kanavalla %2$s</string>

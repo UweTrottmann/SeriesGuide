@@ -5,12 +5,59 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 2.11 *(2012-12-08)*
+--------------------------------
+
+* FEATURE 'Fix GetGlue check in' in check in dialog for shows without or with wrongly mapped IMDb ids.
+* FEATURE Automatically add new shows from your trakt activity stream. Can be disabled in settings.
+* FEATURE Experimenting with Google Play and Amazon search links below each episode.
+* TWEAK Make episode in overview clickable, new layout.
+* NOTICE Database upgraded to version 29. Starting SeriesGuide the first time after installing the update may take a little longer than usual.
+
+### Detailed changes:
+
+#### 2.11.5beta *(2012-12-03)*
+
+* TWEAK Make episode in overview clickable, new layout.
+* TWEAK Also search with show title in overview (Google Play, Amazon buttons).
+* TWEAK Remember sync unseen episode preference. Closes #195.
+* FIX Enable home button in Fix GetGlue activity, but not as up affordance.
+* FIX Correctly color borderless buttons text, and regular buttons text for v11+.
+* FIX Handle a requested downgrade by reinitializing the database instead of crashing.
+* FIX Prevent adding new trakt shows multiple times. Closes #197.
+* FIX Update lists content provider upon updating next episode. Closes #193.
+* FIX Prevent removing shows which are in any list. Closes #198.
+
+#### 2.11.4beta *(2012-11-28)*
+
+* FEATURE Automatically add new shows from your trakt activity stream. Can be disabled in settings.
+* FEATURE Experimenting with Google Play and Amazon search links below each episode.
+* TWEAK Use custom drawables for most of the UI on Android 2.3 and lower when using one of the two SeriesGuide themes.
+* TWEAK Updated list widget preview image.
+* TWEAK Updated first run layout.
+* TWEAK Dismiss first run fragment if forwarding to add screen.
+* TWEAK Enable home button in FixGetGlueCheckInActivity.
+* TWEAK Remove episode remove button, SeriesGuide is cleaning up orphaned episodes by itself.
+* TWEAK Postpone launching notifications service on boot for a minute.
+* FIX Shouts now use the selected theme.
+
+#### 2.11.3beta *(2012-11-25)*
+
+* FEATURE 'Fix GetGlue check in' in check in dialog for shows without or with wrongly mapped IMDb ids.
+* NOTICE Database upgraded to version 29. Starting SeriesGuide the first time after installing the update may take a little longer than usual.
+* FIX Icons overlap in check in dialog.
+* FIX Never select non-existing activity tab. Fixes #187.
+* TWEAK Trakt add tabs use higher resolution images on high-res tablets (e.g. Nexus 10).
+* TWEAK Add custom button disabled drawable.
+* TWEAK Refresh check box and edit text drawables with more acurate color, higher resolution variants.
+* TWEAK Better exception tracking so problems are easier to pinpoint.
+
 Version 2.10.2 *(2012-11-14)*
 --------------------------------
 
-* FEATURE Lock screen widget support.
+* FEATURE Android 4.2 lock screen widget support.
 * FIX Adding a list widget on Android 4.2 crashes SeriesGuide.
-* FIX Could not interact with trakt as password could not be decrypted.
+* FIX Could not interact with trakt on Android 4.2 as password could not be decrypted.
 
 ### Detailed changes:
 

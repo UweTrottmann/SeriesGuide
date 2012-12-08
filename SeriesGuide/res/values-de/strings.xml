@@ -16,6 +16,7 @@
   <string name="search_description">Folgen</string>
   <string name="description_overview">Übersicht</string>
   <string name="description_poster">Serien-Poster</string>
+  <string name="description_image">Folgen-Bild</string>
   <string name="norating">n/a</string>
   <string name="loading">Lädt…</string>
   <string name="done">Erledigt</string>
@@ -24,6 +25,8 @@
   <string name="cancel">Abbrechen</string>
   <string name="share">Empfehlen</string>
   <string name="updated">Auf neueste Version aktualisiert.</string>
+  <string name="discard">Verwerfen</string>
+  <string name="save_selection">Auswahl speichern</string>
   <string name="offline">Keine Netzwerkverbindung. Versuchen Sie es später erneut.</string>
   <string name="onlyx">Nur verfügbar in SeriesGuide X</string>
   <string name="shouts">Shouts</string>
@@ -81,6 +84,7 @@
   <string name="trakt_notcollected">%s nicht gesammelt.</string>
   <string name="shows_empty">Hier sind keine Serien.</string>
   <string name="confirm_delete">Wollen Sie %s wirklich entfernen?</string>
+  <string name="delete_has_list_items">Ausführung nicht möglich, entferne zuerst %s von allen Listen.</string>
   <string name="delete_show">Löschen</string>
   <string name="dontdelete_show">Nicht löschen</string>
   <string name="no_nextepisode">keine weitere Folge gefunden</string>
@@ -190,6 +194,8 @@
   <string name="pref_ganalyticssummary">Verfolgt die Verwendung von Funktionen zur Verbesserung von SeriesGuide</string>
   <string name="sendusagedata">Nutzungsstatistiken an den Entwickler senden</string>
   <string name="pref_upcominglimit">Kommende Serien innerhalb…</string>
+  <string name="pref_autoaddshows">Neue trakt Serien hinzufügen</string>
+  <string name="pref_autoaddshowssummary">Automatisch neue Serien von deinen trakt-Aktivitäten hinzufügen</string>
   <string name="backup_description"><b>Backup</b> erstellt eine Kopie Ihrer Serien-Datenbank in einer Datei namens <b>seriesdatabase</b> in dem unten angegebenen Ordner.\n\nZum <b>Wiederherstellen</b> stellen Sie sicher, dass diese Datei in diesem Ordner ist.\n\nEs können nur Sicherungen mit der gleichen oder einer niedrigeren Datenbankversion als unten angegeben wiederhergestellt werden.</string>
   <string name="backup_path"><b>Backup-Ordner</b></string>
   <string name="backup_version"><b>Datenbankversion</b></string>
@@ -216,10 +222,15 @@
   <string name="checkin_searchhint">Serientitel eingeben</string>
   <string name="checkin_empty">Keine passenden Serien</string>
   <string name="checkin_hint">Geben Sie eine Nachricht ein (optional)</string>
+  <string name="checkin_fixgetglue">GetGlue Check In korrigieren</string>
   <string name="paste_episode">Folge einfügen</string>
   <string name="checkinsuccess">Auf GetGlue in %s eingecheckt.</string>
   <string name="checkinfailed">GetGlue-Einchecken fehlgeschlagen. Versuchen Sie GetGlue zu trennen.</string>
   <string name="getglue_authfailed">GetGlue-Authentifizierung fehlgeschlagen. Versuchen Sie es später erneut.</string>
+  <string name="select_show">Serie auswählen</string>
+  <string name="check_into">Einchecken in</string>
+  <string name="no_selection">unten auswählen</string>
+  <string name="looking_for_something_else">Sie suchen etwas anderes?</string>
   <string name="menu_rate_trakt">Bewerten (trakt)</string>
   <string name="menu_share_others">Über andere Apps</string>
   <string name="traktcheckin_cancel">Überschreiben</string>
@@ -249,7 +260,6 @@
   <string name="welcome_traktmessage">Zugriff auf Ihre trakt.tv-Bibliothek und Aktivität von Freunden</string>
   <string name="dismiss">Schließen</string>
   <string name="welcome_add_part1">Um loszulegen tippen Sie</string>
-  <string name="welcome_add_part2">in der Action-Bar.</string>
   <string name="upcoming_show">In Kürze läuft %s</string>
   <string name="upcoming_episodes">Neue Folgen laufen in Kürze</string>
   <string name="upcoming_show_detailed">%1$s auf %2$s</string>

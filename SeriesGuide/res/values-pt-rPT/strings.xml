@@ -16,6 +16,7 @@
   <string name="search_description">Episódios</string>
   <string name="description_overview">Visão geral</string>
   <string name="description_poster">Visualizar cartaz</string>
+  <string name="description_image">Imagem do Episódio</string>
   <string name="norating">n/a</string>
   <string name="loading">Carregando…</string>
   <string name="done">Concluído</string>
@@ -23,7 +24,9 @@
   <string name="more">%s mais</string>
   <string name="cancel">Cancelar</string>
   <string name="share">Partilhar</string>
-  <string name="updated">Updated to latest version.</string>
+  <string name="updated">Actualizado para a última versão.</string>
+  <string name="discard">Descartar</string>
+  <string name="save_selection">Salvar Selecção</string>
   <string name="offline">Sem ligação à internet. Tente novamente mais tarde.</string>
   <string name="onlyx">Apenas disponível em SeriesGuide X</string>
   <string name="shouts">Comentários</string>
@@ -81,6 +84,7 @@
   <string name="trakt_notcollected">%s não recolhidos.</string>
   <string name="shows_empty">Sem séries adicionadas</string>
   <string name="confirm_delete">Deseja realmente remover %s?</string>
+  <string name="delete_has_list_items">Remova primeiro o %s de todas as listas.</string>
   <string name="delete_show">Remover</string>
   <string name="dontdelete_show">Não remover</string>
   <string name="no_nextepisode">Nenhum próximo episódio encontrado</string>
@@ -141,7 +145,7 @@
   <string name="trending">Tendências</string>
   <string name="recommended">Recomendado</string>
   <string name="library">Biblioteca</string>
-  <string name="watchlist">Watchlist</string>
+  <string name="watchlist">Lista de Observação</string>
   <string name="powered_by_thetvdb">Powered by thetvdb.com</string>
   <string name="powered_by_trakt">desenvolvido por trakt.tv</string>
   <string name="first_list">Primeira lista</string>
@@ -151,16 +155,16 @@
   <string name="list_manage">Gerir lista</string>
   <string name="list_item_manage">Gerir listas</string>
   <string name="list_item_remove">Remover da lista</string>
-  <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
+  <string name="list_empty">Pode adicionar séries, temporadas ou episódios a esta lista.</string>
   <string name="prefs_category_basic">Básicas</string>
-  <string name="prefs_category_sharing">Partilhar</string>
+  <string name="prefs_category_sharing">Serviços</string>
   <string name="prefs_category_advanced">Avançado</string>
   <string name="prefs_category_about">Acerca</string>
   <string name="help">Ajuda</string>
   <string name="preferences">Definições</string>
   <string name="pref_showsorting">Ordenar séries por…</string>
   <string name="pref_onlyfuture">Sem episódio em exibição</string>
-  <string name="pref_onlyfuturesummary">Never display already aired episodes</string>
+  <string name="pref_onlyfuturesummary">Nunca mostrar episódios que tenham sido lançados</string>
   <string name="pref_onlyseasoneps">Ocultar episódios especiais</string>
   <string name="pref_onlyseasonepssummary">Episódios especiais apenas na lista de temporadas</string>
   <string name="pref_seasonsorting">Ordenar temporadas por…</string>
@@ -190,6 +194,8 @@
   <string name="pref_ganalyticssummary">Controlar o uso de recursos para ajudar a melhorar o SeriesGuide</string>
   <string name="sendusagedata">Enviar as estatísticas de uso para os desenvolvedores</string>
   <string name="pref_upcominglimit">Próximas séries dentro de…</string>
+  <string name="pref_autoaddshows">Adicionar novas séries trakt</string>
+  <string name="pref_autoaddshowssummary">Adicionar séries automaticamente da tua actividade trakt</string>
   <string name="backup_description"><b>Backup</b> Cria uma cópia da base de dados das séries num ficheiro chamado <b>seriesdatabase</b> no seguinte directório.\n\nPara <b>Restaurar</b> certifique-se que o ficheiro se encontra no directório.\n\nApenas os backups com a mesma versão ou inferior à base de dados seguinte podem ser resturados.</string>
   <string name="backup_path"><b>Pasta de backup</b></string>
   <string name="backup_version"><b>Versão de banco de dados</b></string>
@@ -216,10 +222,15 @@
   <string name="checkin_searchhint">Introduza o nome de uma série</string>
   <string name="checkin_empty">Nenhuma série encontrada</string>
   <string name="checkin_hint">Digite uma mensagem (opcional)</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Colar episódio</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">Falha no Check-in do GetGlue. Tente desligar GetGlue.</string>
   <string name="getglue_authfailed">Autenticação em GetGlue falhou. Tente novamente mais tarde.</string>
+  <string name="select_show">Seleccionar série</string>
+  <string name="check_into">Check into</string>
+  <string name="no_selection">escolha uma em baixo</string>
+  <string name="looking_for_something_else">À procura de outra coisa?</string>
   <string name="menu_rate_trakt">Classificar (trakt)</string>
   <string name="menu_share_others">Por outros aplicativos</string>
   <string name="traktcheckin_cancel">Substituir</string>
@@ -246,18 +257,17 @@
   <string name="trakt_howto">To set up your devices:\n\n1. Connect or create your account below on every device.\n2. The first time, use the <b>Sync to trakt.tv</b> button to upload your existing shows.\n3. Add shows from trakt.tv by swiping to the <b>Library</b> tab in the <b>Add Show</b> screen.\n\nNow whenever SeriesGuide updates, your trakt.tv activity is downloaded to each device. This includes flagging episodes as watched or collected and check ins.</string>
   <string name="welcome_setuplanguage">Escolha o idioma</string>
   <string name="welcome_setuptrakt">Conectar ao trakt</string>
-  <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
+  <string name="welcome_traktmessage">Aceda à sua biblioteca trakt.tv e actividade dos amigos</string>
   <string name="dismiss">Recusar</string>
-  <string name="welcome_add_part1">To get started tap</string>
-  <string name="welcome_add_part2">in the action bar.</string>
+  <string name="welcome_add_part1">Para começar toquem em</string>
   <string name="upcoming_show">%s brevemente</string>
   <string name="upcoming_episodes">Novos episódios brevemente</string>
   <string name="upcoming_show_detailed">%1$s em %2$s</string>
   <string name="upcoming_display">Selecione para exibir as próximos séries</string>
   <string name="pref_notifications">Notificações</string>
   <string name="pref_notificationssummary">Notifique sobre as próximas exibições das séries favoritas</string>
-  <string name="pref_notifyfavonly">Favorites only</string>
-  <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
+  <string name="pref_notifyfavonly">Só favoritos</string>
+  <string name="pref_notifyfavonlysummary">Apenas receber notificações para shows favoritos</string>
   <string name="pref_ringtone">Toque</string>
   <string name="pref_vibrate">Vibrar</string>
   <string name="pref_vibratesummary">Também vibrar quando é mostrada uma notificação</string>
@@ -286,17 +296,17 @@
     <item>Mais Antigo primeiro</item>
     <item>Ver os não assistidos primeiro</item>
     <item>A - Z</item>
-    <item>Top rated</item>
+    <item>Mais votados</item>
     <item>Mais recente primeiro (DVD)</item>
     <item>Antigo primeiro (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
-    <item>now</item>
-    <item>a day</item>
+    <item>agora</item>
+    <item>um dia</item>
     <item>3 dias</item>
     <item>uma semana</item>
     <item>duas semanas</item>
-    <item>a month</item>
+    <item>um mês</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Todos</item>

@@ -16,6 +16,7 @@
   <string name="search_description">Епизоди</string>
   <string name="description_overview">Общ преглед</string>
   <string name="description_poster">Обложка</string>
+  <string name="description_image">Episode image</string>
   <string name="norating">няма</string>
   <string name="loading">Зарежда…</string>
   <string name="done">Готово</string>
@@ -24,6 +25,8 @@
   <string name="cancel">Отказ</string>
   <string name="share">Сподели</string>
   <string name="updated">Updated to latest version.</string>
+  <string name="discard">Discard</string>
+  <string name="save_selection">Save selection</string>
   <string name="offline">Няма интернет връзка. Моля опитайте по-късно.</string>
   <string name="onlyx">Само в SeriesGuide X</string>
   <string name="shouts">Мнения</string>
@@ -81,6 +84,7 @@
   <string name="trakt_notcollected">%s не събрани.</string>
   <string name="shows_empty">Няма предавания тук.</string>
   <string name="confirm_delete">Искаш ли да премахнеш %s?</string>
+  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Премахване</string>
   <string name="dontdelete_show">Не изтривайте</string>
   <string name="no_nextepisode">Не може да бъде намерен нов епизод</string>
@@ -153,7 +157,7 @@
   <string name="list_item_remove">Remove from list</string>
   <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
   <string name="prefs_category_basic">Basics</string>
-  <string name="prefs_category_sharing">Sharing</string>
+  <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Advanced</string>
   <string name="prefs_category_about">About</string>
   <string name="help">Помощ</string>
@@ -190,6 +194,8 @@
   <string name="pref_ganalyticssummary">Запивай данни за използването на отделните функции, с цел да подобрим SeriesGuide</string>
   <string name="sendusagedata">Send the developer usage statistics</string>
   <string name="pref_upcominglimit">Upcoming shows within…</string>
+  <string name="pref_autoaddshows">Add new trakt shows</string>
+  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
   <string name="backup_path"><b>Архивиране на папка</b></string>
   <string name="backup_version"><b>Версия на база данни</b></string>
@@ -216,10 +222,15 @@
   <string name="checkin_searchhint">Type a show name</string>
   <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Type a message (optional)</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Paste episode</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
   <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
+  <string name="select_show">Select show</string>
+  <string name="check_into">Check into</string>
+  <string name="no_selection">pick one below</string>
+  <string name="looking_for_something_else">Looking for something else?</string>
   <string name="menu_rate_trakt">Оцени (trakt)</string>
   <string name="menu_share_others">Чрез други приложения</string>
   <string name="traktcheckin_cancel">Override</string>
@@ -249,7 +260,6 @@
   <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
   <string name="dismiss">Dismiss</string>
   <string name="welcome_add_part1">To get started tap</string>
-  <string name="welcome_add_part2">in the action bar.</string>
   <string name="upcoming_show">%s is coming up</string>
   <string name="upcoming_episodes">New episodes are coming up</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>

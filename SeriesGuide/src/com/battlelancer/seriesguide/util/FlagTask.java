@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -202,12 +201,10 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                         break;
                 }
             } catch (TraktException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
                 return FAILED;
             } catch (ApiException e) {
-                Utils.trackException(mContext, e);
-                Log.w(TAG, e);
+                Utils.trackExceptionAndLog(mContext, TAG, e);
                 return FAILED;
             }
         }
@@ -338,19 +335,8 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
             mContext.getContentResolver().update(uri, values, null, null);
         }
 
-        // notify the content provider for certain udpates
-        switch (mAction) {
-            case EPISODE_WATCHED:
-            case EPISODE_COLLECTED:
-            case EPISODE_WATCHED_PREVIOUS:
-                mContext.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
-                break;
-            case SEASON_WATCHED:
-                mContext.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
-                break;
-            default:
-                break;
-        }
+        // notify the content provider for udpates
+        mContext.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
     }
 
     @Override

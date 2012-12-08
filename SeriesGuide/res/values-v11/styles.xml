@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Buttons -->
+    <style name="Widget.SeriesGuide.Button" parent="android:Widget.Holo.Button">
+        <item name="android:background">@drawable/btn_default_sg</item>
+        <item name="android:textAppearance">@style/TextAppearance.Medium</item>
+        <item name="android:textColor">@color/text_primary_sg</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.ImageButton" parent="android:Widget.Holo.ImageButton">
+        <item name="android:background">@drawable/btn_default_sg</item>
+    </style>
+
+    <!-- ////////////////////////////////////////////// -->
+
+
+    <!-- Dark styles -->
+    <style name="Widget.SeriesGuide.ImageButton" parent="android:Widget.Holo.ImageButton"></style>
+
+    <!-- Buttons -->
+    <style name="Widget.Android.Button" parent="android:Widget.Holo.Button"></style>
+
+    <!-- ////////////////////////////////////////////// -->
+
+
+    <!-- Light styles -->
+
+</resources>

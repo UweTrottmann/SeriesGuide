@@ -93,6 +93,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
     private Cursor mShowCursor;
 
+    private String mShowTitle;
+
     /**
      * All values have to be integer.
      */
@@ -146,8 +148,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             onShowSeasons();
         }
 
-        getLoaderManager().initLoader(EPISODE_LOADER_ID, null, this);
         getLoaderManager().initLoader(SHOW_LOADER_ID, null, this);
+        getLoaderManager().initLoader(EPISODE_LOADER_ID, null, this);
 
         setHasOptionsMenu(true);
     }
@@ -430,11 +432,10 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Shows.REF_SHOW_ID, Episodes.OVERVIEW,
-                Episodes.NUMBER,
-                Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIREDMS, Episodes.DIRECTORS,
-                Episodes.GUESTSTARS, Episodes.WRITERS, Tables.EPISODES + "." + Episodes.RATING,
-                Episodes.IMAGE,
-                Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID, Episodes.COLLECTED,
+                Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIREDMS,
+                Episodes.GUESTSTARS, Tables.EPISODES + "." + Episodes.RATING,
+                Episodes.IMAGE, Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID,
+                Episodes.COLLECTED,
                 Episodes.IMDBID
 
         };
@@ -453,25 +454,21 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
         int FIRSTAIREDMS = 6;
 
-        int DIRECTORS = 7;
+        int GUESTSTARS = 7;
 
-        int GUESTSTARS = 8;
+        int RATING = 8;
 
-        int WRITERS = 9;
+        int IMAGE = 9;
 
-        int RATING = 10;
+        int DVDNUMBER = 10;
 
-        int IMAGE = 11;
+        int TITLE = 11;
 
-        int DVDNUMBER = 12;
+        int REF_SEASON_ID = 12;
 
-        int TITLE = 13;
+        int COLLECTED = 13;
 
-        int REF_SEASON_ID = 14;
-
-        int COLLECTED = 15;
-
-        int IMDBID = 16;
+        int IMDBID = 14;
 
     }
 
@@ -538,10 +535,15 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         final TextView episodeTitle = (TextView) getView().findViewById(R.id.episodeTitle);
         final TextView episodeTime = (TextView) getView().findViewById(R.id.episodeTime);
         final TextView episodeInfo = (TextView) getView().findViewById(R.id.episodeInfo);
-        final View episodemeta = getView().findViewById(R.id.episodemeta);
+        final View episodemeta = getView().findViewById(R.id.episode_meta_container);
+        final View episodePrimaryContainer = getView().findViewById(R.id.episode_primary_container);
+        final View episodePrimaryClicker = getView().findViewById(R.id.episode_primary_click_dummy);
 
         if (episode != null && episode.moveToFirst()) {
+            episodePrimaryContainer.setBackgroundResource(0);
+            
             // some episode properties
+            final int episodeId = episode.getInt(EpisodeQuery._ID);
             final int seasonNumber = episode.getInt(EpisodeQuery.SEASON);
             final int episodeNumber = episode.getInt(EpisodeQuery.NUMBER);
             final String title = episode.getString(EpisodeQuery.TITLE);
@@ -569,8 +571,24 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 episodeTime.setVisibility(View.VISIBLE);
             }
 
+            // make title and image clickable
+            episodePrimaryClicker.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // display episode details
+                    Intent intent = new Intent(getActivity(), EpisodeDetailsActivity.class);
+                    intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, episodeId);
+                    startActivity(intent);
+                }
+            });
+            episodePrimaryClicker.setFocusable(true);
+
             // load all other info
             onLoadEpisodeDetails(episode);
+
+            // episode image
+            onLoadImage(episode.getString(EpisodeQuery.IMAGE));
+
             episodemeta.setVisibility(View.VISIBLE);
         } else {
             // no next episode: display single line info text, remove other
@@ -579,6 +597,11 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             episodeTime.setVisibility(View.GONE);
             episodeInfo.setVisibility(View.GONE);
             episodemeta.setVisibility(View.GONE);
+            episodePrimaryContainer.setBackgroundResource(R.color.background_dim);
+            episodePrimaryClicker.setOnClickListener(null);
+            episodePrimaryClicker.setClickable(false);
+            episodePrimaryClicker.setFocusable(false);
+            onLoadImage(null);
         }
 
         // enable/disable applicable menu items
@@ -597,22 +620,17 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     private void onLoadEpisodeDetails(final Cursor episode) {
         final int seasonNumber = episode.getInt(EpisodeQuery.SEASON);
         final int episodeNumber = episode.getInt(EpisodeQuery.NUMBER);
+        final String episodeTitle = episode.getString(EpisodeQuery.TITLE);
 
-        // Description, DVD episode number, Directors, Writers
+        // Description, DVD episode number, guest stars
         ((TextView) getView().findViewById(R.id.TextViewEpisodeDescription)).setText(episode
                 .getString(EpisodeQuery.OVERVIEW));
-        Utils.setValueOrPlaceholder(getView().findViewById(R.id.textViewEpisodeDVDnumber),
-                episode.getString(EpisodeQuery.DVDNUMBER));
-        Utils.setValueOrPlaceholder(getView().findViewById(R.id.TextViewEpisodeDirectors),
-                Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.DIRECTORS)));
-        Utils.setValueOrPlaceholder(getView().findViewById(R.id.TextViewEpisodeWriters),
-                Utils.splitAndKitTVDBStrings(episode.getString(EpisodeQuery.WRITERS)));
-
-        // Guest stars
-        // don't display an unknown string if there are no guest stars, because
-        // then there are none
-        ((TextView) getView().findViewById(R.id.TextViewEpisodeGuestStars)).setText(Utils
-                .splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));
+        Utils.setLabelValueOrHide(getView().findViewById(R.id.labelDvd), (TextView) getView()
+                .findViewById(R.id.textViewEpisodeDVDnumber), episode
+                .getString(EpisodeQuery.DVDNUMBER));
+        Utils.setLabelValueOrHide(getView().findViewById(R.id.labelGuestStars),
+                (TextView) getView().findViewById(R.id.TextViewEpisodeGuestStars), Utils
+                        .splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));
 
         // TVDb rating
         final String ratingText = episode.getString(EpisodeQuery.RATING);
@@ -621,6 +639,14 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                     .valueOf(ratingText) / 0.1));
             ((TextView) getView().findViewById(R.id.value)).setText(ratingText + "/10");
         }
+
+        // Google Play button
+        View playButton = getView().findViewById(R.id.buttonGooglePlay);
+        Utils.setUpGooglePlayButton(mShowTitle + " " + episodeTitle, playButton, TAG);
+
+        // Amazon button
+        View amazonButton = getView().findViewById(R.id.buttonAmazon);
+        Utils.setUpAmazonButton(mShowTitle + " " + episodeTitle, amazonButton, TAG);
 
         // IMDb button
         String imdbId = episode.getString(EpisodeQuery.IMDBID);
@@ -648,7 +674,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         });
 
         // trakt shouts button
-        final String episodeTitle = episode.getString(EpisodeQuery.TITLE);
         getView().findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -667,9 +692,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 }
             }
         });
-
-        // episode image
-        onLoadImage(episode.getString(EpisodeQuery.IMAGE));
 
         // trakt ratings
         mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView()).episode(getShowId(),
@@ -739,8 +761,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         mShowCursor = show;
 
         // title
-        ((TextView) getView().findViewById(R.id.seriesname)).setText(show
-                .getString(ShowQuery.SHOW_TITLE));
+        mShowTitle = show.getString(ShowQuery.SHOW_TITLE);
+        ((TextView) getView().findViewById(R.id.seriesname)).setText(mShowTitle);
 
         // status
         final TextView statusText = (TextView) getView().findViewById(R.id.showStatus);

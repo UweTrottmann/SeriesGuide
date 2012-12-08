@@ -5,16 +5,22 @@
     <style name="SeriesGuideTheme" parent="Theme.Sherlock">
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
-        <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
-        <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
-        <item name="android:editTextBackground">@drawable/edit_text_sg</item>
-        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_sg</item>
         <item name="custom_list_selector">@drawable/list_selector_sg</item>
 
+        <!-- System widgets -->
+        <item name="android:editTextStyle">@style/Widget.SeriesGuide.EditText</item>
+        <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
+        <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
+        <item name="android:checkboxStyle">@style/Widget.SeriesGuide.CheckBox</item>
+        <item name="android:listViewStyle">@style/Widget.SeriesGuide.ListView</item>
+        <item name="android:listViewWhiteStyle">@style/Widget.SeriesGuide.ListView.White</item>
+
         <!-- Colors -->
-        <item name="textColorSgPrimary">@color/text_primary</item>
+        <item name="textColorSgPrimary">@color/text_primary_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
         <item name="textColorSgGreen">@color/green_bright</item>
+        <item name="colorAccent">@color/accent_primary</item>
+        <item name="colorOverlay">@color/overlay</item>
 
         <!-- Text styles -->
         <item name="textAppearanceSg">@style/TextAppearance</item>
@@ -87,10 +93,16 @@
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
         <item name="custom_list_selector">@drawable/list_selector_holo_dark</item>
 
+        <!-- System widgets -->
+        <item name="android:buttonStyle">@style/Widget.Android.Button</item>
+        <item name="android:imageButtonStyle">@style/Widget.Android.ImageButton</item>
+
         <!-- Colors -->
-        <item name="textColorSgPrimary">@color/text_primary</item>
+        <item name="textColorSgPrimary">@color/text_primary_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
         <item name="textColorSgGreen">@color/green_bright</item>
+        <item name="colorAccent">@color/accent_primary_android</item>
+        <item name="colorOverlay">@color/overlay</item>
 
         <!-- Text styles -->
         <item name="textAppearanceSg">@style/TextAppearance</item>
@@ -123,18 +135,24 @@
 
     <!-- A light Android theme -->
     <style name="SeriesGuideThemeLight" parent="Theme.Sherlock.Light.DarkActionBar">
-        <item name="android:buttonStyle">@style/Widget.SeriesGuide.Light.Button</item>
-        <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
-        <item name="android:editTextBackground">@drawable/edit_text_sg</item>
-        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_sg</item>
         <item name="custom_list_selector">@drawable/list_selector_sg</item>
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.Light</item>
         <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator.Light</item>
 
+        <!-- System widgets -->
+        <item name="android:editTextStyle">@style/Widget.SeriesGuide.Light.EditText</item>
+        <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
+        <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
+        <item name="android:checkboxStyle">@style/Widget.SeriesGuide.Light.CheckBox</item>
+        <item name="android:listViewStyle">@style/Widget.SeriesGuide.ListView</item>
+        <item name="android:listViewWhiteStyle">@style/Widget.SeriesGuide.ListView.White</item>
+
         <!-- Colors -->
-        <item name="textColorSgPrimary">@color/text_primary_inverse</item>
+        <item name="textColorSgPrimary">@color/text_primary_light_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary</item>
         <item name="textColorSgGreen">@color/green_dark</item>
+        <item name="colorAccent">@color/accent_primary</item>
+        <item name="colorOverlay">@color/overlay_inverse</item>
 
         <!-- Text styles -->
         <item name="textAppearanceSg">@android:style/TextAppearance</item>

@@ -44,7 +44,7 @@ import java.util.List;
  * to the database.
  */
 public class AddFragment extends SherlockFragment {
-    
+
     protected List<SearchResult> mSearchResults;
 
     protected AddAdapter mAdapter;
@@ -93,12 +93,14 @@ public class AddFragment extends SherlockFragment {
         @Override
         public void onClick(View v) {
             // queue show to be added
-            int position = mGrid.getPositionForView(v);
-            SearchResult show = mAdapter.getItem(position);
-            TaskManager.getInstance(getActivity()).performAddTask(show);
+            if (v != null && v.getParent() != null) {
+                int position = mGrid.getPositionForView(v);
+                SearchResult show = mAdapter.getItem(position);
+                TaskManager.getInstance(getActivity()).performAddTask(show);
 
-            show.isAdded = true;
-            v.setVisibility(View.INVISIBLE);
+                show.isAdded = true;
+                v.setVisibility(View.INVISIBLE);
+            }
         }
     };
 

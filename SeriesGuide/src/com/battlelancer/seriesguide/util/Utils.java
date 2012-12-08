@@ -41,6 +41,7 @@ import android.widget.Toast;
 
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.Constants.EpisodeSorting;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
@@ -603,7 +604,9 @@ public class Utils {
                 }
             }
 
-            // Adapter gets notified by ContentProvider
+            // Show adapter gets notified by ContentProvider
+            // Lists adapter needs to be notified manually
+            mContext.getContentResolver().notifyChange(ListItems.CONTENT_WITH_DETAILS_URI, null);
         }
     }
 
@@ -792,6 +795,17 @@ public class Utils {
         }
     }
 
+    public static void setLabelValueOrHide(View label, TextView text, final String value) {
+        if (TextUtils.isEmpty(value)) {
+            label.setVisibility(View.GONE);
+            text.setVisibility(View.GONE);
+        } else {
+            label.setVisibility(View.VISIBLE);
+            text.setVisibility(View.VISIBLE);
+            text.setText(value);
+        }
+    }
+
     @TargetApi(16)
     @SuppressWarnings("deprecation")
     public static void setPosterBackground(ImageView background, String posterPath, Context context) {
@@ -827,15 +841,17 @@ public class Utils {
     /**
      * Tracks an exception using the Google Analytics {@link EasyTracker}.
      */
-    public static void trackException(Context context, Exception e) {
-        EasyTracker.getTracker().trackException(e.getMessage(), false);
+    public static void trackException(Context context, String tag, Exception e) {
+        EasyTracker.getTracker().trackException(tag + ": " + e.getMessage(), false);
     }
 
     /**
-     * Tracks an exception using the Google Analytics {@link EasyTracker}.
+     * Tracks an exception using the Google Analytics {@link EasyTracker} and
+     * the local log.
      */
-    public static void trackException(Context context, String message) {
-        EasyTracker.getTracker().trackException(message, false);
+    public static void trackExceptionAndLog(Context context, String tag, Exception e) {
+        trackException(context, tag, e);
+        Log.w(tag, e);
     }
 
     /**
@@ -892,6 +908,68 @@ public class Utils {
                     }
                 }
             });
+        }
+    }
+
+    /**
+     * Sets a {@link OnClickListener} on the given button linking to a Google
+     * Play Store search for the given title or disabling the button if the
+     * title is empty.
+     */
+    public static void setUpGooglePlayButton(final String title, View playButton,
+            final String logTag) {
+        if (playButton != null) {
+
+            if (!TextUtils.isEmpty(title)) {
+                playButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        try {
+                            intent.setData(Uri.parse("market://search?q=" + title));
+                            v.getContext().startActivity(intent);
+                        } catch (ActivityNotFoundException e) {
+                            intent.setData(Uri.parse("http://play.google.com/store/search?q="
+                                    + title));
+                            v.getContext().startActivity(intent);
+                        }
+                        EasyTracker.getTracker()
+                                .trackEvent(logTag, "Click", "Google Play", (long) 0);
+                    }
+                });
+            } else {
+                playButton.setEnabled(false);
+            }
+
+        }
+    }
+
+    /**
+     * Sets a {@link OnClickListener} on the given button linking to a Amazon
+     * web search for the given title or disabling the button if the title is
+     * empty.
+     */
+    public static void setUpAmazonButton(final String title, View amazonButton,
+            final String logTag) {
+        if (amazonButton != null) {
+
+            if (!TextUtils.isEmpty(title)) {
+                amazonButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri
+                                .parse("http://www.amazon.com/gp/search?ie=UTF8&keywords=" + title));
+                        v.getContext().startActivity(intent);
+
+                        EasyTracker.getTracker()
+                                .trackEvent(logTag, "Click", "Amazon", (long) 0);
+                    }
+                });
+            } else {
+                amazonButton.setEnabled(false);
+            }
+
         }
     }
 
