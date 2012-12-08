@@ -86,13 +86,13 @@
                     <FrameLayout
                         android:id="@+id/episode_primary_container"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
+                        android:layout_height="@dimen/imagecontainer_height" >
 
                         <FrameLayout
                             xmlns:android="http://schemas.android.com/apk/res/android"
                             android:id="@+id/imageContainer"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" >
+                            android:layout_height="match_parent" >
 
                             <LinearLayout
                                 android:id="@+id/progress_container"
