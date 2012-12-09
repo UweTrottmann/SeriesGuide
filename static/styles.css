@@ -53,12 +53,13 @@ float: left;
 margin-left: 2px;
 }
 
-#content {
-margin-top:60px;
+.follow-button {
+float: left;
+margin-right: 15px;
 }
 
-#flattr {
-margin-top:5px;
+#content {
+margin-top:60px;
 }
 
 #poweredby-ul {

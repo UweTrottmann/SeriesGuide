@@ -68,22 +68,25 @@
     
     <div class="row">
         <div class="span4">
-            <h3>Tell everyone!</h3>
+            <h3>Follow SeriesGuide</h3>
             <div class="well">
-            <div id="share-buttons">
-            	<div id="go" class="share-button">
-    	            <!-- +1 button -->
-    	            <g:plusone size="medium" href="https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide"></g:plusone>	           	            
+            <div id="follow-buttons">
+            	<div id="go-follow" class="follow-button">
+            	    <a href="//plus.google.com/112462818579768957964?prsrc=3" rel="publisher" style="text-decoration:none;display:inline-block;color:#fff;text-align:center; font:13px/16px arial,sans-serif;white-space:nowrap;">
+        	            <span style="display:inline-block;font-weight:bold;vertical-align:top;margin-right:5px; margin-top:0px;">SeriesGuide</span>
+        	            <span style="display:inline-block;vertical-align:top;margin-right:5px; margin-top:0px;">on</span>
+                        <img src="//ssl.gstatic.com/images/icons/gplus-16.png" alt="Google+" style="border:0;width:16px;height:16px;"/>
+                    </a>           	            
     			</div>
     			
-    			<div id="tw" class="share-button">
-    	            <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide" data-text="Check out SeriesGuide Show Manager for Android" data-count="horizontal" data-via="SeriesGuide" data-related="tripmckay">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    			<div id="tw-follow" class="follow-button">
+    			    <a href="https://twitter.com/SeriesGuide" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false" data-lang="en">Follow @SeriesGuide</a>
     	      	</div>
-    	        
-    			<div id="fb" class="share-button">
-                	<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.battlelancer.seriesguide&amp;send=false&amp;layout=button_count&amp;width=100&amp;show_faces=false&amp;action=like&amp;colorscheme=dark&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowTransparency="true"></iframe>
+    	      	
+    			<div id="fb-follow" class="follow-button">
+    			    <div class="fb-like" data-href="https://www.facebook.com/SeriesGuide" data-send="false" data-layout="button_count" data-width="90" data-show-faces="true"></div>
                 </div>
-            </div> <!-- share-buttons -->
+            </div> <!-- follow-buttons -->
             </div>
         </div>
         <div class="span4"> 
@@ -141,6 +144,19 @@
 	var s = document.getElementsByTagName("script")[0];
 	s.parentNode.insertBefore(po, s);
 })();</script>
+
+<!-- Twitter -->
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+<!-- Facebook -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 </body>
 
