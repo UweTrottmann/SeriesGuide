@@ -11,15 +11,16 @@ title: Help
 
     <div class="spacer"></div>
     
-    <p>Check out the <a href="hints"><strong>Getting Started</strong></a> page to learn more about <strong>syncing with trakt</strong>, <strong>backing up your show database</strong> and <strong>keeping your shows up to date</strong>.</p>
+    <p>Check out the <a href="hints"><strong>Getting Started</strong></a> page to learn more about <strong>syncing with trakt</strong>, <strong>how check ins work</strong> and how to <strong>back up your show database</strong>.</p>
 
     <div class="spacer"></div>    
     
     <h2 href="#Known_issues">Known issues</h2>
 		<ul>
-			<li><a href="#getgluecheckin" >GetGlue check-ins issues</li>
+			<li><a href="#getgluecheckin" >GetGlue Check In issues</li>
 			<li><a href="#translation">Language/Translation issues</a></li>
-			<li><a href="#timezone">Time zone issues</a></li>
+			<li><a href="#airtimes">Air time issues</a></li>
+			<li><a href="#timezone">Time zone issues</a></li>			
 			<li><a href="#widget">App widget issues</a></li>
 		</ul>
 		
@@ -34,16 +35,21 @@ title: Help
      
     <a name="getgluecheckin"></a></a>
 	<h2><a name="Known_issues"></a>Known issues</h2>
-	<h3>GetGlue check-ins end up with the wrong show</h3>
-	Most of the time this means GetGlue has mapped a shows IMDb ID to the wrong show on their site. Just drop them a mail about it at support@getglue.com.<br>
-	If you want to be sure, go to <a href="http://thetvdb.com/?tab=advancedsearch">thetvdb.com and search</a> for your show. Look for its IMDb ID by clicking the edit button. Build a URL like http://www.imdb.com/title/tt0204993/ and check if it goes to the right show.
+	<h3>GetGlue Check Ins end up with the wrong show or do not work</h3>
+	Tap the <b>Fix GetGlue check in</b> button at the bottom of the Check In dialog, then either select the show you want to check in there and save. Or tap on <b>Looking for something else?</b> and search for the show you want. Tap on one of the results and select <b>Save selection</b>.<br/>
+	SeriesGuide will now use the GetGlue id you selected to check in with GetGlue.
 	
 	<a name="translation"></a></a>
 	<div class="spacer"></div>
 	
-	
 	<h3>I want to use SeriesGuide in English or I think the translation is wrong/bad</h3>
 	To use the app in English you have to set your devices language to any variant of the English language. Android will take care of the rest. By the way, all translations come from volunteers who translate free of charge (!) on crowdin. Please consider <a href="http://crowdin.net/project/seriesguide-translations/invite">helping to translate or proof read</a>!
+	
+	<a name="airtimes"></a>
+	<div class="spacer"></div>
+	
+	<h3>Air times for some shows are wrong</h3>
+	SeriesGuide gets its data from <a href="http://thetvdb.com" rel="nofollow">thetvdb.com</a>, an open user-maintained TV database. The air times there do not carry any time zone information. So SeriesGuide assumes those to be US Pacific time. For some shows this can sadly be wrong (most of the time for international shows, like e.g. anime or British telly). I hope to come up with a good automatic solution in the future.
 	
 	<a name="timezone"></a>
 	<div class="spacer"></div>
@@ -74,7 +80,7 @@ title: Help
 	<div class="largespacer"></div>
 	
 	<h2>Still lost?</h2>
-	Ask on the <a href="https://groups.google.com/forum/#!forum/seriesguide-discussion" rel="nofollow">SeriesGuide Forums</a>. Or <a href="https://github.com/UweTrottmann/SeriesGuide/issues" rel="nofollow">report a bug on GitHub</a>.<br>
+	Ask on the <a href="https://plus.google.com/u/0/communities/103447253937737054097" rel="nofollow">SeriesGuide Community</a>. Or if you are up to it <a href="https://github.com/UweTrottmann/SeriesGuide/issues" rel="nofollow">report a bug on GitHub</a>.<br>
 	Or just send an email via <strong>Send feedback</strong> in SeriesGuide or the <a href="http://play.google.com/store/apps/details?id=com.battlelancer.seriesguide">Google play page</a>.
 </div> <!-- span -->
 </div> <!-- row -->
