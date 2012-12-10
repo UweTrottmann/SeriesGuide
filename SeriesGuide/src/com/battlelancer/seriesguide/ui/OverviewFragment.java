@@ -25,6 +25,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
@@ -541,7 +542,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
         if (episode != null && episode.moveToFirst()) {
             episodePrimaryContainer.setBackgroundResource(0);
-            
+
             // some episode properties
             final int episodeId = episode.getInt(EpisodeQuery._ID);
             final int seasonNumber = episode.getInt(EpisodeQuery.SEASON);
@@ -573,12 +574,20 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
             // make title and image clickable
             episodePrimaryClicker.setOnClickListener(new OnClickListener() {
+                @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     // display episode details
                     Intent intent = new Intent(getActivity(), EpisodeDetailsActivity.class);
                     intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, episodeId);
-                    startActivity(intent);
+
+                    if (AndroidUtils.isJellyBeanOrHigher()) {
+                        Bundle options = ActivityOptions.makeScaleUpAnimation(view, 0, 0,
+                                view.getWidth(), view.getHeight()).toBundle();
+                        getActivity().startActivity(intent, options);
+                    } else {
+                        startActivity(intent);
+                    }
                 }
             });
             episodePrimaryClicker.setFocusable(true);
