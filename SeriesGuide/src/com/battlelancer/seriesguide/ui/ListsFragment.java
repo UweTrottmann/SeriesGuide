@@ -148,8 +148,8 @@ public class ListsFragment extends SherlockFragment implements
             }
             case 3: {
                 // display episode details
-                Intent intent = new Intent(getActivity(), EpisodeDetailsActivity.class);
-                intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID,
+                Intent intent = new Intent(getActivity(), EpisodesActivity.class);
+                intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                         Integer.valueOf(itemRefId));
                 startActivity(intent);
                 break;

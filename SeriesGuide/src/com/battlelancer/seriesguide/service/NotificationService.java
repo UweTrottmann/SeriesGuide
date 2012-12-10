@@ -38,7 +38,7 @@ import android.text.style.ForegroundColorSpan;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
-import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
+import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.seriesguide.util.ImageProvider;
@@ -178,8 +178,8 @@ public class NotificationService extends IntentService {
                                     upcomingEpisodes.getInt(NotificationQuery.NUMBER));
                     contentText = getString(R.string.upcoming_show_detailed, airs, network);
 
-                    Intent notificationIntent = new Intent(context, EpisodeDetailsActivity.class);
-                    notificationIntent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID,
+                    Intent notificationIntent = new Intent(context, EpisodesActivity.class);
+                    notificationIntent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                             upcomingEpisodes.getInt(NotificationQuery._ID));
                     contentIntent = PendingIntent.getActivity(context, 2, notificationIntent, 0);
                 } else if (count > 1) {

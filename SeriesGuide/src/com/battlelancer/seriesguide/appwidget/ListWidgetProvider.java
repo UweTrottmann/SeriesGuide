@@ -33,7 +33,7 @@ import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 
 import com.battlelancer.seriesguide.enums.WidgetListType;
-import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
+import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -140,8 +140,8 @@ public class ListWidgetProvider extends AppWidgetProvider {
                 PendingIntent.FLAG_UPDATE_CURRENT);
         rv.setOnClickPendingIntent(R.id.widget_title, pendingIntent);
 
-        // Create intents for items to launch an EpisodeDetailsActivity
-        Intent itemIntent = new Intent(context, EpisodeDetailsActivity.class);
+        // Create intents for items to launch an EpisodesActivity
+        Intent itemIntent = new Intent(context, EpisodesActivity.class);
         PendingIntent pendingIntentTemplate = PendingIntent.getActivity(context, 1, itemIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         rv.setPendingIntentTemplate(R.id.list_view, pendingIntentTemplate);
