@@ -578,8 +578,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 @Override
                 public void onClick(View view) {
                     // display episode details
-                    Intent intent = new Intent(getActivity(), EpisodeDetailsActivity.class);
-                    intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, episodeId);
+                    Intent intent = new Intent(getActivity(), EpisodesActivity.class);
+                    intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
 
                     if (AndroidUtils.isJellyBeanOrHigher()) {
                         Bundle options = ActivityOptions.makeScaleUpAnimation(view, 0, 0,

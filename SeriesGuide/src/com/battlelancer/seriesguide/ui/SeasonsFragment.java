@@ -223,11 +223,7 @@ public class SeasonsFragment extends SherlockListFragment implements
     public void onListItemClick(ListView l, View v, int position, long id) {
         Intent intent = new Intent(getActivity(), EpisodesActivity.class);
 
-        final Cursor item = (Cursor) (getListView().getItemAtPosition(position));
-        final int seasonNumber = item.getInt(SeasonsQuery.COMBINED);
-        intent.putExtra(EpisodesActivity.InitBundle.SHOW_TVDBID, getShowId());
         intent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, (int) id);
-        intent.putExtra(EpisodesActivity.InitBundle.SEASON_NUMBER, seasonNumber);
         startActivity(intent);
         getSherlockActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
                 R.anim.fragment_slide_left_exit);

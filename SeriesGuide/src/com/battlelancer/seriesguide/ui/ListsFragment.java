@@ -143,13 +143,6 @@ public class ListsFragment extends SherlockFragment implements
                 Intent intent = new Intent(getActivity(), EpisodesActivity.class);
                 intent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID,
                         Integer.valueOf(itemRefId));
-
-                int showId = listItem.getInt(ListItemsQuery.SHOW_ID);
-                intent.putExtra(EpisodesActivity.InitBundle.SHOW_TVDBID, showId);
-
-                int seasonNumber = listItem.getInt(ListItemsQuery.ITEM_TITLE);
-                intent.putExtra(EpisodesActivity.InitBundle.SEASON_NUMBER, seasonNumber);
-
                 startActivity(intent);
                 break;
             }
