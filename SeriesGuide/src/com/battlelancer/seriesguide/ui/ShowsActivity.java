@@ -24,7 +24,6 @@ import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -289,11 +288,8 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == android.R.id.home){
+        if (itemId == android.R.id.home) {
             toggle();
-            return true;
-        }else if (itemId == R.id.menu_quickcheckin) {
-            startActivity(new Intent(this, CheckinActivity.class));
             return true;
         } else if (itemId == R.id.menu_search) {
             onSearchRequested();
@@ -302,12 +298,6 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         } else if (itemId == R.id.menu_update) {
             performUpdateTask(false, null);
             fireTrackerEvent("Update");
-            return true;
-        } else if (itemId == R.id.menu_upcoming) {
-            startActivity(new Intent(this, UpcomingRecentActivity.class));
-            return true;
-        } else if (itemId == R.id.menu_new_show) {
-            startActivity(new Intent(this, AddActivity.class));
             return true;
         } else if (itemId == R.id.menu_updateart) {
             if (isArtTaskRunning()) {
@@ -322,9 +312,6 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                 mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
             }
             fireTrackerEvent("Fetch missing posters");
-            return true;
-        } else if (itemId == R.id.menu_preferences) {
-            startActivity(new Intent(this, SeriesGuidePreferences.class));
             return true;
         } else if (itemId == R.id.menu_fullupdate) {
             performUpdateTask(true, null);
@@ -341,12 +328,6 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
             intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
             startActivity(Intent.createChooser(intent, "Send mail..."));
             fireTrackerEvent("Feedback");
-            return true;
-        } else if (itemId == R.id.menu_help) {
-            Intent myIntent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse(SeriesGuidePreferences.HELP_URL));
-            startActivity(myIntent);
-            fireTrackerEvent("Help");
             return true;
         } else if (itemId == R.id.menu_showsortby) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
