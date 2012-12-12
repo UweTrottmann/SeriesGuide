@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +78,15 @@ public class SlidingMenuFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         switch (mAdapter.getItem(position).id) {
             case MENU_ITEM_SHOWS_ID:
-                startActivity(new Intent(getActivity(), ShowsActivity.class));
+                if (getActivity() instanceof ShowsActivity) {
+                    break;
+                }
+                NavUtils.navigateUpTo(getActivity(),
+                        new Intent(Intent.ACTION_MAIN).setClass(getActivity(),
+                                ShowsActivity.class));
+                getActivity().overridePendingTransition(R.anim.fragment_slide_right_enter,
+                        R.anim.fragment_slide_right_exit);
+
                 break;
             case MENU_ITEM_ACTIVITY_ID:
                 startActivity(new Intent(getActivity(), UpcomingRecentActivity.class));
