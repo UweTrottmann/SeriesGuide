@@ -37,6 +37,15 @@
     <string name="offline">No network connectivity. Try again later.</string>
     <string name="onlyx">Only available in SeriesGuide X</string>
 
+    <!-- Main Menu -->
+    <string name="shows">Shows</string>
+    <string name="lists">Lists</string>
+    <string name="activity">Activity</string>
+    <string name="search">Search</string>
+    <string name="add_show">Add Show</string>
+    <string name="preferences">Settings</string>
+    <string name="help">Help</string>
+    
     <!-- Shouts -->
     <string name="shouts">Shouts</string>
     <string name="shout_hint">Type a shout (in English)</string>
@@ -119,7 +128,6 @@
     <string name="unhidden">Un-Hidden show</string>
 
     <!-- Activity -->
-    <string name="activity">Activity</string>
     <string name="upcoming">Upcoming</string>
     <string name="recent">Recent</string>
     <string name="friends">Friends</string>
@@ -166,7 +174,6 @@
     <string name="search_hint_add">Show name</string>
     <string name="no_results">No results, try complete words.</string>
     <string name="search_error">Searching failed, try again later.</string>
-    <string name="add_show">Add Show</string>
     <string name="add_all">Add all</string>
     <string name="dont_add_show">Don\'t Add</string>
     <string name="add_multiple">All shows will appear in your show list shortly.</string>
@@ -197,8 +204,6 @@
     <string name="prefs_category_sharing">Services</string>
     <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">About</string>
-    <string name="help">Help</string>
-    <string name="preferences">Settings</string>
     <string name="pref_showsorting">Sort shows by…</string>
     <string name="pref_onlyfuture">No aired episodes</string>
     <string name="pref_onlyfuturesummary">Never display already aired episodes</string>
