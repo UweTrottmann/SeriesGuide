@@ -25,6 +25,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
@@ -536,9 +537,12 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         final TextView episodeTime = (TextView) getView().findViewById(R.id.episodeTime);
         final TextView episodeInfo = (TextView) getView().findViewById(R.id.episodeInfo);
         final View episodemeta = getView().findViewById(R.id.episode_meta_container);
+        final View episodePrimaryContainer = getView().findViewById(R.id.episode_primary_container);
         final View episodePrimaryClicker = getView().findViewById(R.id.episode_primary_click_dummy);
 
         if (episode != null && episode.moveToFirst()) {
+            episodePrimaryContainer.setBackgroundResource(0);
+
             // some episode properties
             final int episodeId = episode.getInt(EpisodeQuery._ID);
             final int seasonNumber = episode.getInt(EpisodeQuery.SEASON);
@@ -570,12 +574,20 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
             // make title and image clickable
             episodePrimaryClicker.setOnClickListener(new OnClickListener() {
+                @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                 @Override
-                public void onClick(View v) {
+                public void onClick(View view) {
                     // display episode details
-                    Intent intent = new Intent(getActivity(), EpisodeDetailsActivity.class);
-                    intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, episodeId);
-                    startActivity(intent);
+                    Intent intent = new Intent(getActivity(), EpisodesActivity.class);
+                    intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
+
+                    if (AndroidUtils.isJellyBeanOrHigher()) {
+                        Bundle options = ActivityOptions.makeScaleUpAnimation(view, 0, 0,
+                                view.getWidth(), view.getHeight()).toBundle();
+                        getActivity().startActivity(intent, options);
+                    } else {
+                        startActivity(intent);
+                    }
                 }
             });
             episodePrimaryClicker.setFocusable(true);
@@ -594,6 +606,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             episodeTime.setVisibility(View.GONE);
             episodeInfo.setVisibility(View.GONE);
             episodemeta.setVisibility(View.GONE);
+            episodePrimaryContainer.setBackgroundResource(R.color.background_dim);
             episodePrimaryClicker.setOnClickListener(null);
             episodePrimaryClicker.setClickable(false);
             episodePrimaryClicker.setFocusable(false);

@@ -262,7 +262,6 @@
   <string name="welcome_add_part1">כדי להתחיל, לחץ</string>
   <string name="upcoming_show">%s מתקרב</string>
   <string name="upcoming_episodes">פרקים חדשים מתקרבים</string>
-  <string name="upcoming_show_detailed">%1$ s ב- %2$ s</string>
   <string name="upcoming_display">בחר כדי להציג סדרות שמתקרבות</string>
   <string name="pref_notifications">התראות</string>
   <string name="pref_notificationssummary">הודיע לגבי סדרות מועדפות שמשודרות בקרוב</string>

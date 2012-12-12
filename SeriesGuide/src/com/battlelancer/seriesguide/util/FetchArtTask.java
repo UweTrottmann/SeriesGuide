@@ -57,7 +57,7 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
 
         mContainer.setVisibility(View.VISIBLE);
         mImageView = (ImageView) mContainer.findViewById(R.id.ImageViewEpisodeImage);
-        mProgressContainer = mContainer.findViewById(R.id.progress_container);
+        mProgressContainer = mContainer.findViewById(R.id.image_progress_container);
 
         if (mImageView == null || mProgressContainer == null) {
             cancel(true);

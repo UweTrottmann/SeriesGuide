@@ -5,8 +5,18 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 2.11.5beta *(2012-12-03)*
+Version 2.11 *(2012-12-08)*
 --------------------------------
+
+* FEATURE 'Fix GetGlue check in' in check in dialog for shows without or with wrongly mapped IMDb ids.
+* FEATURE Automatically add new shows from your trakt activity stream. Can be disabled in settings.
+* FEATURE Experimenting with Google Play and Amazon search links below each episode.
+* TWEAK Make episode in overview clickable, new layout.
+* NOTICE Database upgraded to version 29. Starting SeriesGuide the first time after installing the update may take a little longer than usual.
+
+### Detailed changes:
+
+#### 2.11.5beta *(2012-12-03)*
 
 * TWEAK Make episode in overview clickable, new layout.
 * TWEAK Also search with show title in overview (Google Play, Amazon buttons).
@@ -18,8 +28,7 @@ Version 2.11.5beta *(2012-12-03)*
 * FIX Update lists content provider upon updating next episode. Closes #193.
 * FIX Prevent removing shows which are in any list. Closes #198.
 
-Version 2.11.4beta *(2012-11-28)*
---------------------------------
+#### 2.11.4beta *(2012-11-28)*
 
 * FEATURE Automatically add new shows from your trakt activity stream. Can be disabled in settings.
 * FEATURE Experimenting with Google Play and Amazon search links below each episode.
@@ -32,8 +41,7 @@ Version 2.11.4beta *(2012-11-28)*
 * TWEAK Postpone launching notifications service on boot for a minute.
 * FIX Shouts now use the selected theme.
 
-Version 2.11.3beta *(2012-11-25)*
---------------------------------
+#### 2.11.3beta *(2012-11-25)*
 
 * FEATURE 'Fix GetGlue check in' in check in dialog for shows without or with wrongly mapped IMDb ids.
 * NOTICE Database upgraded to version 29. Starting SeriesGuide the first time after installing the update may take a little longer than usual.

@@ -16,7 +16,7 @@
   <string name="search_description">Episodes</string>
   <string name="description_overview">Aperçu</string>
   <string name="description_poster">Affiche de la série</string>
-  <string name="description_image">Episode image</string>
+  <string name="description_image">Image de l\'épisode</string>
   <string name="norating">s/o</string>
   <string name="loading">Chargement en cours…</string>
   <string name="done">acceptez</string>
@@ -84,7 +84,7 @@
   <string name="trakt_notcollected">%s n\'est pas dans votre collection.</string>
   <string name="shows_empty">Pas de séries.</string>
   <string name="confirm_delete">Voulez-vous vraiment supprimer %s?</string>
-  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
+  <string name="delete_has_list_items">Impossible, supprimez d\'abord %s de toutes les listes.</string>
   <string name="delete_show">Supprimer</string>
   <string name="dontdelete_show">Ne pas supprimer</string>
   <string name="no_nextepisode">pas de prochain épisode trouvé</string>
@@ -194,8 +194,8 @@
   <string name="pref_ganalyticssummary">Suivi de l\'utilisation des fonctionnalités pour aider à améliorer SeriesGuide</string>
   <string name="sendusagedata">Envoyer des statistiques d\'utilisation au développeur</string>
   <string name="pref_upcominglimit">Prochains épisodes dans…</string>
-  <string name="pref_autoaddshows">Add new trakt shows</string>
-  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+  <string name="pref_autoaddshows">Ajouter les nouvelles séries depuis trakt</string>
+  <string name="pref_autoaddshowssummary">Ajouter automatiquement les séries se trouvant dans votre flux d\'activité trakt</string>
   <string name="backup_description"><b>Sauvegarder</b> crée une copie de la base de donnée de vos séries dans un fichier nommé <b>seriesdatabase</b> dans le répertoire ci-dessous.\n\nPour <b>Restaurer</b> assurez-vous que ce fichier soit bien dans ce répertoire.\n\nSeules les sauvegardes d\'une version inférieure ou égale à celle ci-dessous peuvent être restaurées.</string>
   <string name="backup_path"><b>Répertoire de sauvegarde</b></string>
   <string name="backup_version"><b>Version de la base</b></string>

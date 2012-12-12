@@ -82,8 +82,9 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
         if (show != null && show.moveToFirst()) {
             showName = show.getString(0);
         }
-
-        show.close();
+        if (show != null) {
+            show.close();
+        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                 .setNegativeButton(getString(R.string.dontdelete_show), null);

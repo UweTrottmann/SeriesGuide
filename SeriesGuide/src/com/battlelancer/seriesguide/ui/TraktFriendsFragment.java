@@ -166,8 +166,8 @@ public class TraktFriendsFragment extends ListFragment implements
             }
         } else {
             Intent intent = new Intent();
-            intent.setClass(getActivity(), EpisodeDetailsActivity.class);
-            intent.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, episodeId);
+            intent.setClass(getActivity(), EpisodesActivity.class);
+            intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
 
             if (AndroidUtils.isJellyBeanOrHigher()) {
                 Bundle options = ActivityOptions.makeScaleUpAnimation(sourceView, 0, 0,

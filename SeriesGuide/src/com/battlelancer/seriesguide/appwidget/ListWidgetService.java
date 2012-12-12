@@ -30,7 +30,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.battlelancer.seriesguide.enums.WidgetListType;
-import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
+import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
@@ -150,7 +150,7 @@ public class ListWidgetService extends RemoteViewsService {
 
             // Set the fill-in intent for the list items
             Bundle extras = new Bundle();
-            extras.putInt(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID,
+            extras.putInt(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                     mEpisodeCursor.getInt(UpcomingQuery._ID));
             Intent fillInIntent = new Intent();
             fillInIntent.putExtras(extras);

@@ -113,8 +113,8 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void onShowEpisodeDetails(String id) {
-        Intent i = new Intent(this, EpisodeDetailsActivity.class);
-        i.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, Integer.valueOf(id));
+        Intent i = new Intent(this, EpisodesActivity.class);
+        i.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, Integer.valueOf(id));
         startActivity(i);
     }
 
