@@ -41,11 +41,12 @@ public class SlidingMenuFragment extends ListFragment {
 
     private static final int MENU_ITEM_SHOWS_ID = 0;
     private static final int MENU_ITEM_LISTS_ID = 1;
-    private static final int MENU_ITEM_ACTIVITY_ID = 2;
-    private static final int MENU_ITEM_SEARCH_ID = 3;
-    private static final int MENU_ITEM_ADD_SHOWS_ID = 4;
-    private static final int MENU_ITEM_HELP_ID = 5;
-    private static final int MENU_ITEM_SETTINGS_ID = 6;
+    private static final int MENU_ITEM_CHECKIN_ID = 2;
+    private static final int MENU_ITEM_ACTIVITY_ID = 3;
+    private static final int MENU_ITEM_SEARCH_ID = 4;
+    private static final int MENU_ITEM_ADD_SHOWS_ID = 5;
+    private static final int MENU_ITEM_HELP_ID = 6;
+    private static final int MENU_ITEM_SETTINGS_ID = 7;
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -55,6 +56,8 @@ public class SlidingMenuFragment extends ListFragment {
                 MENU_ITEM_SHOWS_ID));
         mAdapter.add(new MenuItem(getString(R.string.lists), R.drawable.ic_action_list,
                 MENU_ITEM_LISTS_ID));
+        mAdapter.add(new MenuItem(getString(R.string.checkin), R.drawable.ic_action_checkin,
+                MENU_ITEM_CHECKIN_ID));
         mAdapter.add(new MenuItem(getString(R.string.activity), R.drawable.ic_action_upcoming,
                 MENU_ITEM_ACTIVITY_ID));
         mAdapter.add(new MenuItem(getString(R.string.search), R.drawable.ic_action_search,
@@ -77,6 +80,9 @@ public class SlidingMenuFragment extends ListFragment {
                 break;
             case MENU_ITEM_ACTIVITY_ID:
                 startActivity(new Intent(getActivity(), UpcomingRecentActivity.class));
+                break;
+            case MENU_ITEM_CHECKIN_ID:
+                startActivity(new Intent(getActivity(), CheckinActivity.class));
                 break;
             case MENU_ITEM_SEARCH_ID:
                 startActivity(new Intent(getActivity(), SearchActivity.class));
