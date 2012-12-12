@@ -32,6 +32,9 @@ import android.widget.TextView;
 
 import com.uwetrottmann.seriesguide.R;
 
+/**
+ * Displays a menu to allow quick navigation within the app.
+ */
 public class SlidingMenuFragment extends ListFragment {
 
     private MenuAdapter mAdapter;
