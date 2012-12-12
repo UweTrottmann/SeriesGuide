@@ -153,7 +153,9 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayUseLogoEnabled(true);
+        actionBar.setLogo(R.drawable.ic_action_menu);
 
         /* setup navigation */
         CompatActionBarNavHandler handler = new CompatActionBarNavHandler(this);
