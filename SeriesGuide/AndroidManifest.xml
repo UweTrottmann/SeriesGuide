@@ -37,8 +37,7 @@
         </provider>
 
         <activity
-            android:name="com.battlelancer.seriesguide.ui.ShowsActivity"
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:name="com.battlelancer.seriesguide.ui.ShowsActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
