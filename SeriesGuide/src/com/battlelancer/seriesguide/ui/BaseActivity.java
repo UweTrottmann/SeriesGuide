@@ -22,6 +22,8 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
@@ -48,8 +50,14 @@ public abstract class BaseActivity extends SlidingFragmentActivity {
         super.onCreate(arg0);
 
         setBehindContentView(R.layout.menu_frame);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment f = new SlidingMenuFragment();
+        ft.replace(R.id.menu_frame, f);
+        ft.commit();
 
         SlidingMenu sm = getSlidingMenu();
+        sm.setShadowWidthRes(R.dimen.slidingmenu_shadow_width);
+        sm.setShadowDrawable(R.drawable.slidingmenu_shadow);
         sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
         sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
     }

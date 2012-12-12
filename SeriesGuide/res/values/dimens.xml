@@ -27,6 +27,7 @@
     <dimen name="showgrid_spacing">0dp</dimen>
     <dimen name="imagecontainer_height">180dp</dimen>
     <dimen name="slidingmenu_offset">48dp</dimen>
+    <dimen name="slidingmenu_shadow_width">16dp</dimen>
     <integer name="episodespane_weight">1</integer>
     <integer name="detailsspane_weight">1</integer>
 
