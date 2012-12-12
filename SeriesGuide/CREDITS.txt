@@ -22,3 +22,5 @@ all the translators on Crowdin
 Jake Wharton for his trakt.tv API (https://github.com/JakeWharton/trakt-java), ActionBarSherlock (http://actionbarsherlock.com) and ViewPagerIndicator (http://viewpagerindicator.com)
 
 the creators of trakt.tv
+
+jfeinstein10 for his SlidingMenu library
