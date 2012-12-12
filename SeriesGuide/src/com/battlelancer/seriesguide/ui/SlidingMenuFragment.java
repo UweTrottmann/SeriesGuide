@@ -18,6 +18,8 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -27,7 +29,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.uwetrottmann.seriesguide.R;
 
@@ -35,27 +36,77 @@ public class SlidingMenuFragment extends ListFragment {
 
     private MenuAdapter mAdapter;
 
+    private static final int MENU_ITEM_SHOWS_ID = 0;
+    private static final int MENU_ITEM_LISTS_ID = 1;
+    private static final int MENU_ITEM_ACTIVITY_ID = 2;
+    private static final int MENU_ITEM_SEARCH_ID = 3;
+    private static final int MENU_ITEM_ADD_SHOWS_ID = 4;
+    private static final int MENU_ITEM_HELP_ID = 5;
+    private static final int MENU_ITEM_SETTINGS_ID = 6;
+
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         mAdapter = new MenuAdapter(getActivity());
-        mAdapter.add(new MenuItem("Sample List", android.R.drawable.ic_menu_search));
+        mAdapter.add(new MenuItem(getString(R.string.shows), R.drawable.ic_launcher,
+                MENU_ITEM_SHOWS_ID));
+        mAdapter.add(new MenuItem(getString(R.string.lists), R.drawable.ic_launcher,
+                MENU_ITEM_LISTS_ID));
+        mAdapter.add(new MenuItem(getString(R.string.activity), R.drawable.ic_action_upcoming,
+                MENU_ITEM_ACTIVITY_ID));
+        mAdapter.add(new MenuItem(getString(R.string.search), R.drawable.ic_action_search,
+                MENU_ITEM_SEARCH_ID));
+        mAdapter.add(new MenuItem(getString(R.string.add_show), R.drawable.ic_action_add,
+                MENU_ITEM_ADD_SHOWS_ID));
+        mAdapter.add(new MenuItem(getString(R.string.preferences), R.drawable.ic_launcher,
+                MENU_ITEM_SETTINGS_ID));
+        mAdapter.add(new MenuItem(getString(R.string.help), R.drawable.ic_launcher,
+                MENU_ITEM_HELP_ID));
 
         setListAdapter(mAdapter);
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Toast.makeText(getActivity(), "Have fun!", Toast.LENGTH_SHORT).show();
+        switch (mAdapter.getItem(position).id) {
+            case MENU_ITEM_SHOWS_ID:
+                startActivity(new Intent(getActivity(), ShowsActivity.class));
+                break;
+            case MENU_ITEM_ACTIVITY_ID:
+                startActivity(new Intent(getActivity(), UpcomingRecentActivity.class));
+                break;
+            case MENU_ITEM_SEARCH_ID:
+                startActivity(new Intent(getActivity(), SearchActivity.class));
+                break;
+            case MENU_ITEM_ADD_SHOWS_ID:
+                startActivity(new Intent(getActivity(), AddActivity.class));
+                break;
+            case MENU_ITEM_SETTINGS_ID:
+                startActivity(new Intent(getActivity(), SeriesGuidePreferences.class));
+                break;
+            case MENU_ITEM_HELP_ID:
+                Intent myIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(SeriesGuidePreferences.HELP_URL));
+                startActivity(myIntent);
+                break;
+        }
+
+        // close menu any way
+        if (getActivity() instanceof BaseActivity) {
+            BaseActivity activity = (BaseActivity) getActivity();
+            activity.showContent();
+        }
     }
 
     private class MenuItem {
         public String tag;
         public int iconRes;
+        public int id;
 
-        public MenuItem(String tag, int iconRes) {
+        public MenuItem(String tag, int iconRes, int id) {
             this.tag = tag;
             this.iconRes = iconRes;
+            this.id = id;
         }
     }
 
