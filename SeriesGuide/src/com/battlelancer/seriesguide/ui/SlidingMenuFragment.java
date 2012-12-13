@@ -84,9 +84,6 @@ public class SlidingMenuFragment extends ListFragment {
                 NavUtils.navigateUpTo(getActivity(),
                         new Intent(Intent.ACTION_MAIN).setClass(getActivity(),
                                 ShowsActivity.class));
-                getActivity().overridePendingTransition(R.anim.fragment_slide_right_enter,
-                        R.anim.fragment_slide_right_exit);
-
                 break;
             case MENU_ITEM_ACTIVITY_ID:
                 startActivity(new Intent(getActivity(), UpcomingRecentActivity.class));
