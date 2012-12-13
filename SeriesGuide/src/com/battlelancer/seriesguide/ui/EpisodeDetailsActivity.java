@@ -25,7 +25,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.widget.ImageView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -72,6 +71,8 @@ public class EpisodeDetailsActivity extends BaseActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
+        
+        getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 
         final int episodeId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, 0);
         if (episodeId == 0) {
@@ -135,27 +136,6 @@ public class EpisodeDetailsActivity extends BaseActivity {
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
-        mPager.setOnPageChangeListener(new OnPageChangeListener() {
-            @Override
-            public void onPageSelected(int arg0) {
-            }
-
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int position) {
-                switch (position) {
-                    case 0:
-                        getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-                        break;
-                    default:
-                        getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-                        break;
-                }
-            }
-        });
 
         TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mPager, startPosition);
