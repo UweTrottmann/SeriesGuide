@@ -38,6 +38,7 @@ import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListen
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.slidingmenu.lib.SlidingMenu;
 import com.uwetrottmann.seriesguide.R;
 
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
 
-        mTabsAdapter = new TabsAdapter(this, actionBar, mViewPager);
+        mTabsAdapter = new TabsAdapter(this, actionBar, mViewPager, getSlidingMenu());
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
         argsUpcoming.putString(UpcomingFragment.InitBundle.QUERY, UpcomingQuery.QUERY_UPCOMING);
@@ -212,6 +213,8 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
         private final ActionBar mActionBar;
 
         private final ViewPager mViewPager;
+        
+        private SlidingMenu mSlidingMenu;
 
         private final ArrayList<String> mTabs = new ArrayList<String>();
 
@@ -219,10 +222,12 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
 
         private SharedPreferences mPrefs;
 
-        public TabsAdapter(FragmentActivity activity, ActionBar actionBar, ViewPager pager) {
+        public TabsAdapter(FragmentActivity activity, ActionBar actionBar, ViewPager pager,
+                SlidingMenu slidingMenu) {
             super(activity.getSupportFragmentManager());
             mContext = activity;
             mActionBar = actionBar;
+            mSlidingMenu = slidingMenu;
             mViewPager = pager;
             mViewPager.setAdapter(this);
             mViewPager.setOnPageChangeListener(this);
@@ -255,6 +260,15 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
             mActionBar.setSelectedNavigationItem(position);
             // save selected tab index
             mPrefs.edit().putInt(SeriesGuidePreferences.KEY_ACTIVITYTAB, position).commit();
+
+            switch (position) {
+                case 0:
+                    mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+                    break;
+                default:
+                    mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+                    break;
+            }
         }
 
         @Override

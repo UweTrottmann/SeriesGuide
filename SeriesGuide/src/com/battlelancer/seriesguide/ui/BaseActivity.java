@@ -58,7 +58,7 @@ public abstract class BaseActivity extends SlidingFragmentActivity {
         SlidingMenu sm = getSlidingMenu();
         sm.setShadowWidthRes(R.dimen.slidingmenu_shadow_width);
         sm.setShadowDrawable(R.drawable.slidingmenu_shadow);
-        sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+        sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         sm.setBehindWidthRes(R.dimen.slidingmenu_width);
     }
 

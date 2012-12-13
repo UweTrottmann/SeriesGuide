@@ -42,6 +42,7 @@ import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapte
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.slidingmenu.lib.SlidingMenu;
 import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TitlePageIndicator;
 
@@ -177,6 +178,8 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
 
         // build the episode pager if we are in a dual-pane layout
         if (mDualPane) {
+            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+            
             // set the pager background
             final ImageView background = (ImageView) findViewById(R.id.background);
             Utils.setPosterBackground(background, show.getPoster(), this);
