@@ -40,7 +40,7 @@ import com.viewpagerindicator.TabPageIndicator;
  * Hosts various fragments in a {@link ViewPager} which allow adding shows to
  * the database.
  */
-public class AddActivity extends BaseActivity implements OnAddShowListener {
+public class AddActivity extends BaseTopActivity implements OnAddShowListener {
 
     private AddPagerAdapter mAdapter;
 
@@ -48,15 +48,13 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         // The TvdbAddFragment uses a progress bar
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        super.onCreate(savedInstanceState);
 
         setContentView(R.layout.addactivity_pager);
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setIcon(R.drawable.ic_action_add);
         setProgressBarIndeterminateVisibility(Boolean.FALSE);
         setSupportProgressBarIndeterminateVisibility(false);

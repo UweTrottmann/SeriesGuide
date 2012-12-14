@@ -64,7 +64,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Provides the apps main screen, displaying a list of shows and their next
  * episodes.
  */
-public class ShowsActivity extends BaseActivity implements CompatActionBarNavListener,
+public class ShowsActivity extends BaseTopActivity implements CompatActionBarNavListener,
         OnFirstRunDismissedListener {
 
     private static final String TAG = "Shows";
@@ -79,8 +79,6 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
     private static final String STATE_ART_PATHS = "seriesguide.art.paths";
 
     private static final String STATE_ART_INDEX = "seriesguide.art.index";
-
-    private static final int LIST_NAV_ITEM_POSITION = 4;
 
     private Bundle mSavedState;
 
@@ -128,8 +126,6 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setIcon(R.drawable.ic_action_menu);
 
         /* setup navigation */
@@ -152,6 +148,9 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
 
         // try to restore previously set show filter
         int navSelection = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
+        if (navSelection < 0 || navSelection > 3) {
+            navSelection = 0;
+        }
         if (getSupportActionBar().getSelectedNavigationIndex() != navSelection) {
             getSupportActionBar().setSelectedNavigationItem(navSelection);
         }
@@ -261,10 +260,7 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == android.R.id.home) {
-            toggle();
-            return true;
-        } else if (itemId == R.id.menu_update) {
+        if (itemId == R.id.menu_update) {
             performUpdateTask(false, null);
             fireTrackerEvent("Update");
             return true;

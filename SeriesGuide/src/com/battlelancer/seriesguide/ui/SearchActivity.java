@@ -32,7 +32,7 @@ import com.uwetrottmann.seriesguide.R;
  * Handles search intents and displays a {@link SearchFragment} when needed or
  * redirects directly to an {@link EpisodeDetailsActivity}.
  */
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends BaseTopActivity {
 
     private static final String TAG = "SearchActivity";
 
@@ -43,8 +43,6 @@ public class SearchActivity extends BaseActivity {
         handleIntent(getIntent());
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        setTitle(R.string.search_title);
         actionBar.setTitle(R.string.search_title);
         actionBar.setDisplayShowTitleEnabled(true);
     }

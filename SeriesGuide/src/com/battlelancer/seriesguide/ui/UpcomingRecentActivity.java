@@ -43,7 +43,7 @@ import com.uwetrottmann.seriesguide.R;
 
 import java.util.ArrayList;
 
-public class UpcomingRecentActivity extends BaseActivity implements OnAddShowListener {
+public class UpcomingRecentActivity extends BaseTopActivity implements OnAddShowListener {
     ViewPager mViewPager;
 
     TabsAdapter mTabsAdapter;
@@ -59,7 +59,6 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setIcon(R.drawable.ic_action_upcoming);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -165,19 +164,6 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
         } else if (itemId == R.id.menu_nowatched) {
             storeBooleanPreference(item, SeriesGuidePreferences.KEY_NOWATCHED);
             return true;
-        } else if (itemId == android.R.id.home) {
-            /*
-             * force creating a new task if necessary as this activity may be
-             * created from the list widget with SeriesGuide not running
-             * already.
-             */
-            Intent i = new Intent(Intent.ACTION_MAIN).setClass(this, ShowsActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
-            finish();
-            overridePendingTransition(R.anim.fragment_slide_right_enter,
-                    R.anim.fragment_slide_right_exit);
-            return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
@@ -214,7 +200,7 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
         private final ActionBar mActionBar;
 
         private final ViewPager mViewPager;
-        
+
         private SlidingMenu mSlidingMenu;
 
         private final ArrayList<String> mTabs = new ArrayList<String>();
