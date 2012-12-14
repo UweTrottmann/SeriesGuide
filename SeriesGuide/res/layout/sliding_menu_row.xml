@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:orientation="horizontal" >
+    android:layout_height="wrap_content" >
 
     <ImageView
         android:id="@+id/menu_icon"
@@ -13,12 +12,26 @@
 
     <TextView
         android:id="@+id/menu_title"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_toRightOf="@+id/menu_icon"
         android:gravity="center_vertical"
         android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.Large.Light"
         android:textColor="@color/text_primary" />
 
-</LinearLayout>
+    <include
+        android:id="@+id/menu_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/menu_icon"
+        layout="@layout/divider_horizontal" />
+
+    <View
+        android:id="@+id/menu_spacer"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_below="@+id/menu_icon"
+        android:visibility="gone" />
+
+</RelativeLayout>

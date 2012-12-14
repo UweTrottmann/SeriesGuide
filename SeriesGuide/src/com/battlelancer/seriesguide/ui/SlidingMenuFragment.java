@@ -54,23 +54,25 @@ public class SlidingMenuFragment extends ListFragment {
 
         mAdapter = new MenuAdapter(getActivity());
         mAdapter.add(new MenuItem(getString(R.string.shows), R.drawable.ic_launcher,
-                MENU_ITEM_SHOWS_ID));
+                MENU_ITEM_SHOWS_ID, false));
         mAdapter.add(new MenuItem(getString(R.string.lists), R.drawable.ic_action_list,
-                MENU_ITEM_LISTS_ID));
-        mAdapter.add(new MenuItem(getString(R.string.checkin), R.drawable.ic_action_checkin,
-                MENU_ITEM_CHECKIN_ID));
+                MENU_ITEM_LISTS_ID, false));
         mAdapter.add(new MenuItem(getString(R.string.activity), R.drawable.ic_action_upcoming,
-                MENU_ITEM_ACTIVITY_ID));
+                MENU_ITEM_ACTIVITY_ID, true));
+        mAdapter.add(new MenuItem(getString(R.string.checkin), R.drawable.ic_action_checkin,
+                MENU_ITEM_CHECKIN_ID, false));
         mAdapter.add(new MenuItem(getString(R.string.search), R.drawable.ic_action_search,
-                MENU_ITEM_SEARCH_ID));
+                MENU_ITEM_SEARCH_ID, true));
         mAdapter.add(new MenuItem(getString(R.string.add_show), R.drawable.ic_action_add,
-                MENU_ITEM_ADD_SHOWS_ID));
+                MENU_ITEM_ADD_SHOWS_ID, true));
         mAdapter.add(new MenuItem(getString(R.string.preferences), R.drawable.ic_action_settings,
-                MENU_ITEM_SETTINGS_ID));
+                MENU_ITEM_SETTINGS_ID, false));
         mAdapter.add(new MenuItem(getString(R.string.help), R.drawable.ic_action_help,
-                MENU_ITEM_HELP_ID));
+                MENU_ITEM_HELP_ID, false));
 
         setListAdapter(mAdapter);
+        
+        getListView().setDivider(null);
     }
 
     @Override
@@ -127,11 +129,13 @@ public class SlidingMenuFragment extends ListFragment {
         public String tag;
         public int iconRes;
         public int id;
+        public boolean hasSpacer;
 
-        public MenuItem(String tag, int iconRes, int id) {
+        public MenuItem(String tag, int iconRes, int id, boolean hasSpacer) {
             this.tag = tag;
             this.iconRes = iconRes;
             this.id = id;
+            this.hasSpacer = hasSpacer;
         }
     }
 
@@ -142,18 +146,46 @@ public class SlidingMenuFragment extends ListFragment {
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.sliding_menu_row,
                         null);
+
+                holder = new ViewHolder();
+                holder.attach(convertView);
+
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
             }
-            ImageView icon = (ImageView) convertView.findViewById(R.id.menu_icon);
-            icon.setImageResource(getItem(position).iconRes);
-            TextView title = (TextView) convertView.findViewById(R.id.menu_title);
-            title.setText(getItem(position).tag);
+
+            MenuItem menuItem = getItem(position);
+            holder.icon.setImageResource(menuItem.iconRes);
+            holder.title.setText(menuItem.tag);
+
+            holder.divider.setVisibility(menuItem.hasSpacer ? View.GONE : View.VISIBLE);
+            holder.spacer.setVisibility(menuItem.hasSpacer ? View.VISIBLE : View.GONE);
 
             return convertView;
         }
+    }
 
+    static class ViewHolder {
+
+        public TextView title;
+
+        public ImageView icon;
+
+        public View divider;
+
+        public View spacer;
+
+        public void attach(View v) {
+            icon = (ImageView) v.findViewById(R.id.menu_icon);
+            title = (TextView) v.findViewById(R.id.menu_title);
+            divider = v.findViewById(R.id.menu_divider);
+            spacer = v.findViewById(R.id.menu_spacer);
+        }
     }
 
 }
