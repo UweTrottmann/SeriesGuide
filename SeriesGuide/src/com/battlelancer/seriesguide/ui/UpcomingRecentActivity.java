@@ -60,6 +60,7 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setIcon(R.drawable.ic_action_upcoming);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         ActionBar.Tab upcomingTab = actionBar.newTab().setText(R.string.upcoming);

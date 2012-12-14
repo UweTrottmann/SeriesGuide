@@ -197,6 +197,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setIcon(R.drawable.ic_action_settings);
     }
 
     protected static void setupSharingSettings(Context context, Preference getGluePref) {
