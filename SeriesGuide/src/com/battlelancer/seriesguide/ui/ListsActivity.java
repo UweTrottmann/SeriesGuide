@@ -37,7 +37,7 @@ public class ListsActivity extends BaseActivity implements OnListsChangedListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shows);
+        setContentView(R.layout.lists);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);

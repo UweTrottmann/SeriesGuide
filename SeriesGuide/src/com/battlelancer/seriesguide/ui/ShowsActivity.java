@@ -27,7 +27,8 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewStub;
@@ -41,13 +42,10 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
-import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
-import com.battlelancer.seriesguide.adapters.ShowsPagerAdapter;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
 import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
 import com.battlelancer.seriesguide.util.CompatActionBarNavListener;
 import com.battlelancer.seriesguide.util.ImageProvider;
@@ -58,8 +56,6 @@ import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
-import com.viewpagerindicator.TabPageIndicator;
-import com.viewpagerindicator.TabPageIndicator.OnTabReselectedListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +66,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * episodes.
  */
 public class ShowsActivity extends BaseActivity implements CompatActionBarNavListener,
-        OnListsChangedListener, OnFirstRunDismissedListener {
+        OnFirstRunDismissedListener {
 
     private static final String TAG = "Shows";
 
@@ -91,20 +87,12 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
 
     private FetchPosterTask mArtTask;
 
-    private ViewPager mPager;
-
     private boolean mIsLoaderStartAllowed;
 
-    private TabPageIndicator mIndicator;
-
-    private ShowsPagerAdapter mShowsAdapter;
-
-    private ListsPagerAdapter mListsAdapter;
+    private Fragment mFragment;
 
     /**
      * Google Analytics helper method for easy event tracking.
-     * 
-     * @param label
      */
     public void fireTrackerEvent(String label) {
         EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
@@ -120,34 +108,23 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
 
         updatePreferences(prefs);
 
-        // set up adapters
-        mShowsAdapter = new ShowsPagerAdapter(getSupportFragmentManager(), this);
-        mListsAdapter = new ListsPagerAdapter(getSupportFragmentManager(), this);
-
-        // try to restore previously set show filter
-        int navSelection = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
-
-        mPager = (ViewPager) findViewById(R.id.pager);
+        // setup fragments
+        if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
+            mFragment = FirstRunFragment.newInstance();
+            getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
+                    .commit();
+        } else if (savedInstanceState == null) {
+            mFragment = ShowsFragment.newInstance();
+            getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
+                    .commit();
+        }
 
         // set up action bar
-        setUpActionBar(navSelection);
+        setUpActionBar(prefs);
 
-        // set up view pager
-        onChangePagerAdapter(navSelection);
-
-        mIndicator = (TabPageIndicator) findViewById(R.id.indicator);
-        mIndicator.setViewPager(mPager);
-        mIndicator.setOnTabReselectedListener(new OnTabReselectedListener() {
-            @Override
-            public void onTabReselected(int position) {
-                String listId = mListsAdapter.getListId(position);
-                ListManageDialogFragment.showListManageDialog(listId, getSupportFragmentManager());
-            }
-        });
-        onDisplayTitleIndicator(navSelection);
     }
 
-    private void setUpActionBar(int navSelection) {
+    private void setUpActionBar(SharedPreferences prefs) {
         mIsLoaderStartAllowed = false;
 
         final ActionBar actionBar = getSupportActionBar();
@@ -175,6 +152,7 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         }
 
         // try to restore previously set show filter
+        int navSelection = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
         if (getSupportActionBar().getSelectedNavigationIndex() != navSelection) {
             getSupportActionBar().setSelectedNavigationItem(navSelection);
         }
@@ -603,17 +581,10 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         if (!mIsLoaderStartAllowed) {
             return;
         } else {
-            // show/hide title indicator
-            onDisplayTitleIndicator(itemPosition);
-
-            // attach correct adapter
-            onChangePagerAdapter(itemPosition);
-
             // pass filter to show fragment
             ShowsFragment fragment;
             try {
-                fragment = (ShowsFragment) getSupportFragmentManager().findFragmentByTag(
-                        Utils.makeViewPagerFragmentName(mPager.getId(), 0));
+                fragment = (ShowsFragment) mFragment;
                 if (fragment != null) {
                     fragment.onFilterChanged(itemPosition);
                 }
@@ -627,55 +598,10 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         }
     }
 
-    private void onDisplayTitleIndicator(int itemPosition) {
-        if (itemPosition < LIST_NAV_ITEM_POSITION) {
-            // displaying shows
-            if (mIndicator.getVisibility() == View.VISIBLE) {
-                mIndicator.startAnimation(AnimationUtils.loadAnimation(this,
-                        android.R.anim.fade_out));
-            }
-            mIndicator.setVisibility(View.GONE);
-        } else {
-            // displaying lists
-            if (mIndicator.getVisibility() != View.VISIBLE) {
-                mIndicator.startAnimation(AnimationUtils
-                        .loadAnimation(this, android.R.anim.fade_in));
-            }
-            mIndicator.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void onChangePagerAdapter(int navItem) {
-        /*
-         * Prevent unnecessary fragment destruction by checking if the right
-         * adapter is already attached.
-         */
-        if (navItem < LIST_NAV_ITEM_POSITION) {
-            if (!(mPager.getAdapter() instanceof ShowsPagerAdapter)) {
-                mPager.setAdapter(mShowsAdapter);
-                mShowsAdapter.notifyDataSetChanged();
-            }
-        } else {
-            if (!(mPager.getAdapter() instanceof ListsPagerAdapter)) {
-                mPager.setAdapter(mListsAdapter);
-                mListsAdapter.notifyDataSetChanged();
-                if (mIndicator != null) {
-                    mIndicator.notifyDataSetChanged();
-                }
-            }
-        }
-    }
-
-    @Override
-    public void onListsChanged() {
-        // refresh list adapter
-        mListsAdapter.onListsChanged();
-        // update indicator and view pager
-        mIndicator.notifyDataSetChanged();
-    }
-
     @Override
     public void onFirstRunDismissed() {
-        mShowsAdapter.notifyDataSetChanged();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        mFragment = ShowsFragment.newInstance();
+        ft.replace(R.id.shows_fragment, mFragment).commit();
     }
 }
