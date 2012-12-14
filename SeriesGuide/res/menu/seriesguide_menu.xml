@@ -1,55 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <!--
-    <item
-        android:id="@+id/menu_quickcheckin"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/checkin"
-        android:orderInCategory="0"/>
-    <item
-        android:id="@+id/menu_new_show"
-        android:icon="@drawable/ic_action_add"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/add_show"
-        android:orderInCategory="1"/>
-    <item
-        android:id="@+id/menu_upcoming"
-        android:icon="@drawable/ic_action_upcoming"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/activity"
-        android:orderInCategory="2"/>
-    <item
-        android:id="@+id/menu_search"
-        android:icon="@drawable/ic_action_search"
-        android:showAsAction="ifRoom"
-        android:title="@string/search_hint"
-        android:orderInCategory="3"/>
-    -->
-    <item
-        android:id="@+id/menu_list_add"
-        android:icon="@drawable/ic_action_list"
-        android:orderInCategory="4"
-        android:showAsAction="never"
-        android:title="@string/list_add"/>
     <item
         android:id="@+id/menu_showsortby"
         android:icon="@drawable/ic_action_sort"
         android:orderInCategory="4"
         android:showAsAction="never"
         android:title="@string/sort"/>
-    <!--
-    <item
-        android:id="@+id/menu_preferences"
-        android:showAsAction="never"
-        android:title="@string/preferences"
-        android:orderInCategory="5"/>
-    <item
-        android:id="@+id/menu_help"
-        android:showAsAction="never"
-        android:title="@string/help"
-        android:orderInCategory="6"/>
-    -->
     <item
         android:id="@+id/menu_feedback"
         android:orderInCategory="7"

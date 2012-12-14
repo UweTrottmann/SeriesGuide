@@ -44,7 +44,6 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
-import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
 import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
 import com.battlelancer.seriesguide.util.CompatActionBarNavListener;
@@ -269,10 +268,6 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         if (itemId == android.R.id.home) {
             toggle();
             return true;
-        } else if (itemId == R.id.menu_search) {
-            onSearchRequested();
-            fireTrackerEvent("Search");
-            return true;
         } else if (itemId == R.id.menu_update) {
             performUpdateTask(false, null);
             fireTrackerEvent("Update");
@@ -315,10 +310,6 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                             ShowSorting.FAVORITES_FIRST.value()));
             ShowsFragment.showSortDialog(getSupportFragmentManager(), sorting);
             fireTrackerEvent("Sort shows");
-            return true;
-        } else if (itemId == R.id.menu_list_add) {
-            AddListDialogFragment.showAddListDialog(getSupportFragmentManager());
-            fireTrackerEvent("Add list");
             return true;
         } else {
             return super.onOptionsItemSelected(item);
