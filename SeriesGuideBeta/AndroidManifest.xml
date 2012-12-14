@@ -42,8 +42,7 @@
         </provider>
 
         <!-- Launch activity -->
-        <activity
-            android:name="com.battlelancer.seriesguide.ui.ShowsActivity" >
+        <activity android:name="com.battlelancer.seriesguide.ui.ShowsActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -167,6 +166,14 @@
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.ListsActivity" >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />

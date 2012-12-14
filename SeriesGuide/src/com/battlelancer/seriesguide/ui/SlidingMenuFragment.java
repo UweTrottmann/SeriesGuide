@@ -55,9 +55,8 @@ public class SlidingMenuFragment extends ListFragment {
         mAdapter = new MenuAdapter(getActivity());
         mAdapter.add(new MenuItem(getString(R.string.shows), R.drawable.ic_launcher,
                 MENU_ITEM_SHOWS_ID));
-        // mAdapter.add(new MenuItem(getString(R.string.lists),
-        // R.drawable.ic_action_list,
-        // MENU_ITEM_LISTS_ID));
+        mAdapter.add(new MenuItem(getString(R.string.lists), R.drawable.ic_action_list,
+                MENU_ITEM_LISTS_ID));
         mAdapter.add(new MenuItem(getString(R.string.checkin), R.drawable.ic_action_checkin,
                 MENU_ITEM_CHECKIN_ID));
         mAdapter.add(new MenuItem(getString(R.string.activity), R.drawable.ic_action_upcoming,
@@ -81,7 +80,7 @@ public class SlidingMenuFragment extends ListFragment {
             BaseActivity activity = (BaseActivity) getActivity();
             activity.showContent();
         }
-        
+
         switch (mAdapter.getItem(position).id) {
             case MENU_ITEM_SHOWS_ID:
                 if (getActivity() instanceof ShowsActivity) {
@@ -90,6 +89,10 @@ public class SlidingMenuFragment extends ListFragment {
                 NavUtils.navigateUpTo(getActivity(),
                         new Intent(Intent.ACTION_MAIN).setClass(getActivity(),
                                 ShowsActivity.class));
+                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                break;
+            case MENU_ITEM_LISTS_ID:
+                startActivity(new Intent(getActivity(), ListsActivity.class));
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case MENU_ITEM_ACTIVITY_ID:
