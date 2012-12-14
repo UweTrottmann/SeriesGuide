@@ -76,6 +76,12 @@ public class SlidingMenuFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
+        // close menu any way
+        if (getActivity() instanceof BaseActivity) {
+            BaseActivity activity = (BaseActivity) getActivity();
+            activity.showContent();
+        }
+        
         switch (mAdapter.getItem(position).id) {
             case MENU_ITEM_SHOWS_ID:
                 if (getActivity() instanceof ShowsActivity) {
@@ -84,33 +90,33 @@ public class SlidingMenuFragment extends ListFragment {
                 NavUtils.navigateUpTo(getActivity(),
                         new Intent(Intent.ACTION_MAIN).setClass(getActivity(),
                                 ShowsActivity.class));
+                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case MENU_ITEM_ACTIVITY_ID:
                 startActivity(new Intent(getActivity(), UpcomingRecentActivity.class));
+                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case MENU_ITEM_CHECKIN_ID:
                 startActivity(new Intent(getActivity(), CheckinActivity.class));
+                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case MENU_ITEM_SEARCH_ID:
                 startActivity(new Intent(getActivity(), SearchActivity.class));
+                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case MENU_ITEM_ADD_SHOWS_ID:
                 startActivity(new Intent(getActivity(), AddActivity.class));
+                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case MENU_ITEM_SETTINGS_ID:
                 startActivity(new Intent(getActivity(), SeriesGuidePreferences.class));
+                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case MENU_ITEM_HELP_ID:
                 Intent myIntent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse(SeriesGuidePreferences.HELP_URL));
                 startActivity(myIntent);
                 break;
-        }
-
-        // close menu any way
-        if (getActivity() instanceof BaseActivity) {
-            BaseActivity activity = (BaseActivity) getActivity();
-            activity.showContent();
         }
     }
 
