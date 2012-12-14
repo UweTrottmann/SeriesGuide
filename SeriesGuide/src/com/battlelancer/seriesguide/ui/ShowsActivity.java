@@ -243,12 +243,8 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean isShowingLists = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0) == LIST_NAV_ITEM_POSITION;
-
-        menu.findItem(R.id.menu_list_add).setEnabled(isShowingLists).setVisible(isShowingLists);
 
         MenuItem sortMenu = menu.findItem(R.id.menu_showsortby);
-        sortMenu.setEnabled(!isShowingLists).setVisible(!isShowingLists);
         if (android.os.Build.VERSION.SDK_INT >= 11) {
             final CharSequence[] items = getResources().getStringArray(R.array.shsorting);
             ShowSorting sorting = ShowSorting
