@@ -29,6 +29,13 @@
   <string name="save_selection">Save selection</string>
   <string name="offline">Nincs hálózati kapcsolat. Próbálja meg később.</string>
   <string name="onlyx">Csak a SeriesGuide X-ben elérhető</string>
+  <string name="shows">Shows</string>
+  <string name="lists">Lists</string>
+  <string name="activity">Tevékenység</string>
+  <string name="search">Search</string>
+  <string name="add_show">Sorozat felvétele</string>
+  <string name="preferences">Beállítások</string>
+  <string name="help">Súgó</string>
   <string name="shouts">Shouts</string>
   <string name="shout_hint">Type a shout (in English)</string>
   <string name="shout">Shout!</string>
@@ -96,7 +103,6 @@
   <string name="context_unhide">Mutat</string>
   <string name="hidden">Rejtett sorozat</string>
   <string name="unhidden">Látható műsor</string>
-  <string name="activity">Tevékenység</string>
   <string name="upcoming">Következő</string>
   <string name="recent">Legutóbbi</string>
   <string name="friends">Barátok</string>
@@ -133,7 +139,6 @@
   <string name="search_hint_add">Sorozatcím</string>
   <string name="no_results">Nincs találat, próbálj teljes szavakat!</string>
   <string name="search_error">A keresés nem sikerült, próbáld meg később!</string>
-  <string name="add_show">Sorozat felvétele</string>
   <string name="add_all">Add hozzá mindet</string>
   <string name="dont_add_show">Mégse</string>
   <string name="add_multiple">Nemsokára megjelenik az összes sorozat a sorozat listádban.</string>
@@ -160,8 +165,6 @@
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Haladó beállítások</string>
   <string name="prefs_category_about">A programról</string>
-  <string name="help">Súgó</string>
-  <string name="preferences">Beállítások</string>
   <string name="pref_showsorting">Sorozatok rendezése</string>
   <string name="pref_onlyfuture">Leadott epizódok nélkül</string>
   <string name="pref_onlyfuturesummary">Soha ne mutassa a már leadott epizódokat</string>
@@ -225,7 +228,7 @@
   <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Epizód beillesztése</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
+  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
   <string name="getglue_authfailed">A GetGlue azonosítás nem sikerült. Próbálja meg később.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
@@ -313,7 +316,6 @@
     <item>Kedvencek</item>
     <item>Nem látott/Következő</item>
     <item>Rejtett</item>
-    <item>Listák</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d szavazat</item>

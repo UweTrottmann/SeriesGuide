@@ -29,6 +29,13 @@
   <string name="save_selection">Save selection</string>
   <string name="offline">无网络，请稍后重试。</string>
   <string name="onlyx">仅 SeriesGuide X 可用</string>
+  <string name="shows">Shows</string>
+  <string name="lists">Lists</string>
+  <string name="activity">活动</string>
+  <string name="search">Search</string>
+  <string name="add_show">添加剧集</string>
+  <string name="preferences">设置</string>
+  <string name="help">帮助</string>
   <string name="shouts">评论</string>
   <string name="shout_hint">输入一段评论（仅英语）</string>
   <string name="shout">提交</string>
@@ -96,7 +103,6 @@
   <string name="context_unhide">取消隐藏</string>
   <string name="hidden">隐藏的剧集</string>
   <string name="unhidden">未隐藏的剧集</string>
-  <string name="activity">活动</string>
   <string name="upcoming">即将播出</string>
   <string name="recent">最近浏览</string>
   <string name="friends">朋友分享</string>
@@ -133,7 +139,6 @@
   <string name="search_hint_add">剧集名称</string>
   <string name="no_results">没有搜索结果，请尝试搜索完整名称。</string>
   <string name="search_error">搜索出错，请稍后再试。</string>
-  <string name="add_show">添加剧集</string>
   <string name="add_all">全部添加</string>
   <string name="dont_add_show">不要添加</string>
   <string name="add_multiple">所有剧集将会出现在您的列表中。</string>
@@ -160,8 +165,6 @@
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">高级</string>
   <string name="prefs_category_about">关于</string>
-  <string name="help">帮助</string>
-  <string name="preferences">设置</string>
   <string name="pref_showsorting">剧集排序依据</string>
   <string name="pref_onlyfuture">仅显示计划中的剧集</string>
   <string name="pref_onlyfuturesummary">不显示已播出剧集</string>
@@ -225,7 +228,7 @@
   <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">粘贴剧集信息</string>
   <string name="checkinsuccess">已在 GetGlue 上评论 %s。</string>
-  <string name="checkinfailed">发送到 GetGlue 失败，请尝试断开帐号关联。</string>
+  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue 认证失败，请稍后重试。</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
@@ -313,7 +316,6 @@
     <item>喜爱</item>
     <item>未观看且即将播出</item>
     <item>隐藏</item>
-    <item>列表</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d 个评价</item>

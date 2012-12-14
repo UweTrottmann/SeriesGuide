@@ -29,6 +29,13 @@
   <string name="save_selection">Save selection</string>
   <string name="offline">Žiadne sieťové pripojenie. Skúste to neskôr.</string>
   <string name="onlyx">K dispozícii len v SeriesGuide X</string>
+  <string name="shows">Shows</string>
+  <string name="lists">Lists</string>
+  <string name="activity">Činnosť</string>
+  <string name="search">Search</string>
+  <string name="add_show">Pridať seriál</string>
+  <string name="preferences">Nastavenia</string>
+  <string name="help">Pomoc</string>
   <string name="shouts">Výkriky</string>
   <string name="shout_hint">Napíšte výkrik (v Angličtine)</string>
   <string name="shout">Zakrič!</string>
@@ -96,7 +103,6 @@
   <string name="context_unhide">Obnoviť</string>
   <string name="hidden">Skrytý seriál</string>
   <string name="unhidden">Obnovený seriál</string>
-  <string name="activity">Činnosť</string>
   <string name="upcoming">Nadchádzajúce</string>
   <string name="recent">Nedávne</string>
   <string name="friends">Priatelia</string>
@@ -133,7 +139,6 @@
   <string name="search_hint_add">Zobraziť názov</string>
   <string name="no_results">Žiadne výsledky, skúste celé slová.</string>
   <string name="search_error">Hľadanie zlyhalo, skúste to neskôr.</string>
-  <string name="add_show">Pridať seriál</string>
   <string name="add_all">Add all</string>
   <string name="dont_add_show">Nepridať</string>
   <string name="add_multiple">All shows will appear in your show list shortly.</string>
@@ -160,8 +165,6 @@
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Pokročilé</string>
   <string name="prefs_category_about">About</string>
-  <string name="help">Pomoc</string>
-  <string name="preferences">Nastavenia</string>
   <string name="pref_showsorting">Zoradiť seriály podľa…</string>
   <string name="pref_onlyfuture">Žiadne odvysielané epizódy</string>
   <string name="pref_onlyfuturesummary">Never display already aired episodes</string>
@@ -225,7 +228,7 @@
   <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Prilepiť epizódu</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-  <string name="checkinfailed">Pridanie ohlasu zlyhalo. Skúste odpojiť GetGlue.</string>
+  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue overenie zlyhalo. Skúste to znova neskôr.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
@@ -313,7 +316,6 @@
     <item>Obľúbené</item>
     <item>Nové/Nadchádzajúce</item>
     <item>Skryté</item>
-    <item>Lists</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d hlas</item>

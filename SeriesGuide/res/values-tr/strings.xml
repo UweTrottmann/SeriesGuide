@@ -29,6 +29,13 @@
   <string name="save_selection">Seçimi kaydet</string>
   <string name="offline">Ağ bağlantısı yok. Daha sonra tekrar deneyin.</string>
   <string name="onlyx">Yalnızca SeriesGuide X kullanıcıları için</string>
+  <string name="shows">Shows</string>
+  <string name="lists">Lists</string>
+  <string name="activity">Etkinlik</string>
+  <string name="search">Search</string>
+  <string name="add_show">Dizi Ekle</string>
+  <string name="preferences">Ayarlar</string>
+  <string name="help">Yardım</string>
   <string name="shouts">Notlar</string>
   <string name="shout_hint">Bir not yazın (İngilizce)</string>
   <string name="shout">Not!</string>
@@ -96,7 +103,6 @@
   <string name="context_unhide">Göster</string>
   <string name="hidden">Gizli dizi</string>
   <string name="unhidden">Gizlenmemiş dizi</string>
-  <string name="activity">Etkinlik</string>
   <string name="upcoming">Yaklaşan</string>
   <string name="recent">En Son</string>
   <string name="friends">Arkadaşlar</string>
@@ -133,7 +139,6 @@
   <string name="search_hint_add">Dizi adı</string>
   <string name="no_results">Sonuç bulunamadı, tam sözcüklerle deneyin.</string>
   <string name="search_error">Arama başarısız oldu, daha sonra tekrar deneyin.</string>
-  <string name="add_show">Dizi Ekle</string>
   <string name="add_all">Tümünü ekle</string>
   <string name="dont_add_show">Ekleme</string>
   <string name="add_multiple">Tüm diziler kısa süre içinde listenizde görünecektir.</string>
@@ -160,8 +165,6 @@
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Gelişmiş</string>
   <string name="prefs_category_about">Hakkında</string>
-  <string name="help">Yardım</string>
-  <string name="preferences">Ayarlar</string>
   <string name="pref_showsorting">Dizileri sırala:</string>
   <string name="pref_onlyfuture">Yayınlanan bölüm yok</string>
   <string name="pref_onlyfuturesummary">Yayınlanmış bölümleri gösterme</string>
@@ -225,7 +228,7 @@
   <string name="checkin_fixgetglue">GetGlue girişini düzelt</string>
   <string name="paste_episode">Bölümü yapıştır</string>
   <string name="checkinsuccess">GetGlue ile %s bağlantısı sağlandı.</string>
-  <string name="checkinfailed">GetGlue girişi başarısız oldu. GetGlue bağlantısını kesmeyi deneyin.</string>
+  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue kimlik doğrulaması başarısız oldu. Daha sonra yeniden deneyin.</string>
   <string name="select_show">Dizi seç</string>
   <string name="check_into">Giriş yap</string>
@@ -313,7 +316,6 @@
     <item>Sık Kullanılanlar</item>
     <item>İzlenmemiş / Yaklaşan</item>
     <item>Gizli</item>
-    <item>Listeler</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d oy</item>

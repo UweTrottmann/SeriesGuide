@@ -29,6 +29,13 @@
   <string name="save_selection">Save selection</string>
   <string name="offline">Nėra tinklo ryšio. Pabandykite vėliau.</string>
   <string name="onlyx">Prieinama tik SeriesGuide X</string>
+  <string name="shows">Shows</string>
+  <string name="lists">Lists</string>
+  <string name="activity">Veikla</string>
+  <string name="search">Search</string>
+  <string name="add_show">Pridėti serialą</string>
+  <string name="preferences">Nustatymai</string>
+  <string name="help">Pagalba</string>
   <string name="shouts">Shouts</string>
   <string name="shout_hint">Type a shout (in English)</string>
   <string name="shout">Shout!</string>
@@ -96,7 +103,6 @@
   <string name="context_unhide">Nebeslėpti</string>
   <string name="hidden">Hidden show</string>
   <string name="unhidden">Un-Hidden show</string>
-  <string name="activity">Veikla</string>
   <string name="upcoming">Artėjančios</string>
   <string name="recent">Paskutinės</string>
   <string name="friends">Draugai</string>
@@ -133,7 +139,6 @@
   <string name="search_hint_add">Serialo pavadinimas</string>
   <string name="no_results">No results, try complete words.</string>
   <string name="search_error">Searching failed, try again later.</string>
-  <string name="add_show">Pridėti serialą</string>
   <string name="add_all">Add all</string>
   <string name="dont_add_show">Don\'t Add</string>
   <string name="add_multiple">All shows will appear in your show list shortly.</string>
@@ -160,8 +165,6 @@
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Išplėstinė</string>
   <string name="prefs_category_about">Apie</string>
-  <string name="help">Pagalba</string>
-  <string name="preferences">Nustatymai</string>
   <string name="pref_showsorting">Rūšiuoti serialus pagal...</string>
   <string name="pref_onlyfuture">Neparodytos serijos</string>
   <string name="pref_onlyfuturesummary">Niekada nerodyti jau parodytų serijų</string>
@@ -225,7 +228,7 @@
   <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Paste episode</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
+  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
@@ -313,7 +316,6 @@
     <item>Mėgstamiausi</item>
     <item>Unseen/Upcoming</item>
     <item>Hidden</item>
-    <item>Lists</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d balsas</item>

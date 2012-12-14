@@ -29,6 +29,13 @@
   <string name="save_selection">Save selection</string>
   <string name="offline">Ingen nettverksforbindelse. Prøv på nytt senere.</string>
   <string name="onlyx">Kun tilgjengelig i SeriesGuide X</string>
+  <string name="shows">Shows</string>
+  <string name="lists">Lists</string>
+  <string name="activity">Aktiviteter</string>
+  <string name="search">Search</string>
+  <string name="add_show">Legg Til</string>
+  <string name="preferences">Innstillinger</string>
+  <string name="help">Hjelp</string>
   <string name="shouts">Shouts</string>
   <string name="shout_hint">Type a shout (in English)</string>
   <string name="shout">Shout!</string>
@@ -96,7 +103,6 @@
   <string name="context_unhide">Vis</string>
   <string name="hidden">Sjulte</string>
   <string name="unhidden">Ikke-skjult program</string>
-  <string name="activity">Aktiviteter</string>
   <string name="upcoming">Kommer snart</string>
   <string name="recent">De siste</string>
   <string name="friends">Venner</string>
@@ -133,7 +139,6 @@
   <string name="search_hint_add">Serienavn</string>
   <string name="no_results">Ingen treff. Prøv hele ord.</string>
   <string name="search_error">Søking mislyktes, prøv på nytt senere.</string>
-  <string name="add_show">Legg Til</string>
   <string name="add_all">Legg til alle</string>
   <string name="dont_add_show">Ikke Legg til</string>
   <string name="add_multiple">Alle programmer vil vises i programlisten straks.</string>
@@ -160,8 +165,6 @@
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Avansert</string>
   <string name="prefs_category_about">Om</string>
-  <string name="help">Hjelp</string>
-  <string name="preferences">Innstillinger</string>
   <string name="pref_showsorting">Sorter serier etter...</string>
   <string name="pref_onlyfuture">Ingen viste episoder</string>
   <string name="pref_onlyfuturesummary">Ikke vis episoder som allerde er sendt</string>
@@ -225,7 +228,7 @@
   <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Lim inn episode</string>
   <string name="checkinsuccess">Sjekket inn %s på GetGlue.</string>
-  <string name="checkinfailed">GetGlue sjekk inn mislyktes. Prøv å koble fra GetGlue.</string>
+  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue autentisering mislyktes. Prøv igjen senere.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
@@ -313,7 +316,6 @@
     <item>Favoritter</item>
     <item>Usett/Kommende</item>
     <item>Skjulte</item>
-    <item>Lister</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d stemme</item>

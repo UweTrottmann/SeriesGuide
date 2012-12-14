@@ -29,6 +29,13 @@
   <string name="save_selection">Zapisz zaznaczone</string>
   <string name="offline">Brak połączenia sieciowego. Spróbuj ponownie później.</string>
   <string name="onlyx">Dostępne tylko w SeriesGuide X</string>
+  <string name="shows">Shows</string>
+  <string name="lists">Lists</string>
+  <string name="activity">Aktywność</string>
+  <string name="search">Search</string>
+  <string name="add_show">Dodaj serial</string>
+  <string name="preferences">Ustawienia</string>
+  <string name="help">Pomoc</string>
   <string name="shouts">Krzyki</string>
   <string name="shout_hint">Wpisz krzyk (w języku angielskim)</string>
   <string name="shout">Krzyk!</string>
@@ -96,7 +103,6 @@
   <string name="context_unhide">Odkryj</string>
   <string name="hidden">Ukryty serial</string>
   <string name="unhidden">Odkryty serial</string>
-  <string name="activity">Aktywność</string>
   <string name="upcoming">Nadchodzące</string>
   <string name="recent">Ostatnie</string>
   <string name="friends">Znajomi</string>
@@ -133,7 +139,6 @@
   <string name="search_hint_add">Nazwa serialu</string>
   <string name="no_results">Brak wyników. Uzupełnij zapytanie.</string>
   <string name="search_error">Wyszukiwanie nie powiodło się. Spróbuj ponownie później.</string>
-  <string name="add_show">Dodaj serial</string>
   <string name="add_all">Dodaj wszystkie</string>
   <string name="dont_add_show">Nie dodawaj</string>
   <string name="add_multiple">Seriale za chwilę zostaną dodane do listy.</string>
@@ -160,8 +165,6 @@
   <string name="prefs_category_sharing">Usługi</string>
   <string name="prefs_category_advanced">Zaawansowane</string>
   <string name="prefs_category_about">O programie</string>
-  <string name="help">Pomoc</string>
-  <string name="preferences">Ustawienia</string>
   <string name="pref_showsorting">Sortuj seriale wg</string>
   <string name="pref_onlyfuture">Bez wyemitowanych</string>
   <string name="pref_onlyfuturesummary">Nigdy nie wyświetlaj wyemitowanych odcinków</string>
@@ -225,7 +228,7 @@
   <string name="checkin_fixgetglue">Napraw podpinanie GetGlue</string>
   <string name="paste_episode">Wklej odcinek</string>
   <string name="checkinsuccess">Podpięty do %s na GetGlue.</string>
-  <string name="checkinfailed">Podpięcie do GetGlue nie powiodło się. Spróbuj odłączyć GetGlue.</string>
+  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
   <string name="getglue_authfailed">Uwierzytelnianie GetGlue nie powiodło się. Spróbuj ponownie później.</string>
   <string name="select_show">Wybierz serial</string>
   <string name="check_into">Podepnij się</string>
@@ -313,7 +316,6 @@
     <item>Ulubione</item>
     <item>Nieobejrzane/nadchodzące</item>
     <item>Ukryte</item>
-    <item>Listy</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">głosy: %d</item>

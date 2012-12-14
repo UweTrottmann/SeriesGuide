@@ -16,7 +16,7 @@
   <string name="search_description">פרקים</string>
   <string name="description_overview">תקציר</string>
   <string name="description_poster">צפה בפוסטר</string>
-  <string name="description_image">Episode image</string>
+  <string name="description_image">תמונת הפרק</string>
   <string name="norating">לא ידוע</string>
   <string name="loading">טוען</string>
   <string name="done">בוצע</string>
@@ -29,6 +29,13 @@
   <string name="save_selection">שמור בחירה</string>
   <string name="offline">אין קישוריות, נסה מאוחר יותר</string>
   <string name="onlyx">זמין רק בגרסת SeriesGuide X</string>
+  <string name="shows">Shows</string>
+  <string name="lists">Lists</string>
+  <string name="activity">פעיל</string>
+  <string name="search">Search</string>
+  <string name="add_show">הוסף סדרה</string>
+  <string name="preferences">הגדרות</string>
+  <string name="help">עזרה</string>
   <string name="shouts">המלצות</string>
   <string name="shout_hint">הקלד המלצה (באנגלית)</string>
   <string name="shout">המלץ!</string>
@@ -84,7 +91,7 @@
   <string name="trakt_notcollected">%s טרם אספת.</string>
   <string name="shows_empty">אין סדרות שבחרת</string>
   <string name="confirm_delete">אתה בטוח שאתה רוצה להסיר %s?</string>
-  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
+  <string name="delete_has_list_items">לא ניתן לבצע, הסר קודם את %s מכל הרשימות </string>
   <string name="delete_show">הסר</string>
   <string name="dontdelete_show">אל תסיר</string>
   <string name="no_nextepisode">אין פרק הבא</string>
@@ -96,7 +103,6 @@
   <string name="context_unhide">בטל הסתרה</string>
   <string name="hidden">סדרה מוסתרת</string>
   <string name="unhidden">בטל הסתרת סדרות</string>
-  <string name="activity">פעיל</string>
   <string name="upcoming">בקרוב</string>
   <string name="recent">חדש</string>
   <string name="friends">חברים</string>
@@ -133,7 +139,6 @@
   <string name="search_hint_add">שם הסדרה</string>
   <string name="no_results">אין תוצאות, נסה ביטוי אחר</string>
   <string name="search_error">החיפוש הנכשל, נסה מאוחר יותר</string>
-  <string name="add_show">הוסף סדרה</string>
   <string name="add_all">הוסף הכל</string>
   <string name="dont_add_show">אל תוסיף</string>
   <string name="add_multiple">כל הסדרות יופיעו ברשימת הסדרות שלך בעוד זמן קצר.</string>
@@ -157,11 +162,9 @@
   <string name="list_item_remove">הסר מהרשימה</string>
   <string name="list_empty">באפשרותך להוסיף סדרות, עונות או פרקים לרשימה זו.</string>
   <string name="prefs_category_basic">בסיסי</string>
-  <string name="prefs_category_sharing">Services</string>
+  <string name="prefs_category_sharing">שירותים</string>
   <string name="prefs_category_advanced">מתקדם</string>
   <string name="prefs_category_about">אודות</string>
-  <string name="help">עזרה</string>
-  <string name="preferences">הגדרות</string>
   <string name="pref_showsorting">מיין סדרות לפי</string>
   <string name="pref_onlyfuture">אין פרקים ששודרו</string>
   <string name="pref_onlyfuturesummary">אל תציג פרקים ששודרו</string>
@@ -194,8 +197,8 @@
   <string name="pref_ganalyticssummary">עוקב אחר השימוש בתוכנה על מנת לסייע בשיפור SeriesGuide</string>
   <string name="sendusagedata">שלח סטטיסטיקות שימוש למפתחים</string>
   <string name="pref_upcominglimit">תוכניות המתקרבות תוך</string>
-  <string name="pref_autoaddshows">Add new trakt shows</string>
-  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+  <string name="pref_autoaddshows">הוסף סדרות trakt חדשות</string>
+  <string name="pref_autoaddshowssummary">הוסף סדרות מפעילות ה-trakt שלך באופן אוטומטי</string>
   <string name="backup_description"><b>גיבוי</b> יוצר עותק של מאגר הסדרות שלך בקובץ בשם <b>seriesdatabase</b> בתיקייה שלהלן.\n\n<b>לשחזור</b> ודא כי קובץ זה נמצא בתיקייה שלהלן.\n\n ניתן לשחזר רק גיבויים עם גרסת מסד נתונים זהה או ישנה יותר מהכתוב למטה.</string>
   <string name="backup_path"><b>תיקיית גיבויים</b></string>
   <string name="backup_version"><b>גרסת מסד הנתונים</b></string>
@@ -225,7 +228,7 @@
   <string name="checkin_fixgetglue">תקן את צ\'ק-אין GetGlue</string>
   <string name="paste_episode">הדבק פרק</string>
   <string name="checkinsuccess">בוצע צ\'ק-אין של %s ב-GetGlue.</string>
-  <string name="checkinfailed">צ\'ק-אין GetGlue נכשל. נסה להתנתק מ-GetGlue.</string>
+  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
   <string name="getglue_authfailed">אימות GetGlue נכשל. נסה שנית מאוחר יותר.</string>
   <string name="select_show">בחר סדרה</string>
   <string name="check_into">בצע צ\'ק-אין ב</string>
@@ -262,6 +265,7 @@
   <string name="welcome_add_part1">כדי להתחיל, לחץ</string>
   <string name="upcoming_show">%s מתקרב</string>
   <string name="upcoming_episodes">פרקים חדשים מתקרבים</string>
+  <string name="upcoming_show_detailed">%1$ s ב- %2$ s</string>
   <string name="upcoming_display">בחר כדי להציג סדרות שמתקרבות</string>
   <string name="pref_notifications">התראות</string>
   <string name="pref_notificationssummary">הודיע לגבי סדרות מועדפות שמשודרות בקרוב</string>
@@ -312,7 +316,6 @@
     <item>מועדפים</item>
     <item>לא נראו/עתידיים</item>
     <item>מוסתרים</item>
-    <item>רשימות</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">הצבעה %d</item>

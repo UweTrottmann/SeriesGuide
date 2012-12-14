@@ -29,6 +29,13 @@
   <string name="save_selection">Save selection</string>
   <string name="offline">Geen netwerk verbinding. Probeer het later opnieuw.</string>
   <string name="onlyx">Alleen beschikbaar in Series Guide X</string>
+  <string name="shows">Shows</string>
+  <string name="lists">Lists</string>
+  <string name="activity">Activiteit</string>
+  <string name="search">Search</string>
+  <string name="add_show">Serie toevoegen</string>
+  <string name="preferences">Instellingen</string>
+  <string name="help">Help</string>
   <string name="shouts">Shouts</string>
   <string name="shout_hint">Voer een shout in (in het Engels)</string>
   <string name="shout">Shout!</string>
@@ -96,7 +103,6 @@
   <string name="context_unhide">Niet verbergen</string>
   <string name="hidden">Verborgen serie</string>
   <string name="unhidden">Niet verborgen serie</string>
-  <string name="activity">Activiteit</string>
   <string name="upcoming">Eerstvolgende</string>
   <string name="recent">Recente</string>
   <string name="friends">Vrienden</string>
@@ -133,7 +139,6 @@
   <string name="search_hint_add">Serie naam</string>
   <string name="no_results">Geen resultaten, probeer complete woorden.</string>
   <string name="search_error">Zoeken mislukt, probeer het later opnieuw.</string>
-  <string name="add_show">Serie toevoegen</string>
   <string name="add_all">Alles toevoegen</string>
   <string name="dont_add_show">Niet toevoegen</string>
   <string name="add_multiple">Alle series worden binnenkort in de lijst weergegeven.</string>
@@ -160,8 +165,6 @@
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Geavanceerd</string>
   <string name="prefs_category_about">Over</string>
-  <string name="help">Help</string>
-  <string name="preferences">Instellingen</string>
   <string name="pref_showsorting">Sorteer series op…</string>
   <string name="pref_onlyfuture">Geen uitgezonden afleveringen</string>
   <string name="pref_onlyfuturesummary">Laat nooit al uitgezonden afleveringen zien</string>
@@ -225,7 +228,7 @@
   <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Aflevering plakken</string>
   <string name="checkinsuccess">Ingecheckt in %s op GetGlue.</string>
-  <string name="checkinfailed">GetGlue Check-in mislukt. Probeer de GetGlue verbinding te verbreken.</string>
+  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue authenticatie mislukt. Probeer het later opnieuw.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
@@ -313,7 +316,6 @@
     <item>Favorieten</item>
     <item>Niet bekeken/Aankomende</item>
     <item>Verborgen</item>
-    <item>Lijsten</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d stem</item>

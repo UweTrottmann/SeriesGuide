@@ -29,6 +29,13 @@
   <string name="save_selection">Save selection</string>
   <string name="offline">خطأ في الاتصال. حاول لاحقاً.</string>
   <string name="onlyx">متوفر فقط في سيريزغايد اكس</string>
+  <string name="shows">Shows</string>
+  <string name="lists">Lists</string>
+  <string name="activity">النشاط</string>
+  <string name="search">Search</string>
+  <string name="add_show">إضافة مسلسل</string>
+  <string name="preferences">إعدادات</string>
+  <string name="help">مساعدة</string>
   <string name="shouts">التعليقات</string>
   <string name="shout_hint">أكتب تعليق(بالإنجليزي)</string>
   <string name="shout">تعليق</string>
@@ -96,7 +103,6 @@
   <string name="context_unhide">إظهار</string>
   <string name="hidden">مسلسل مخفي</string>
   <string name="unhidden">مسلسل غير مخفي</string>
-  <string name="activity">النشاط</string>
   <string name="upcoming">القادم</string>
   <string name="recent">مؤخراً</string>
   <string name="friends">الأصداقاء</string>
@@ -133,7 +139,6 @@
   <string name="search_hint_add">إسم المسلسل</string>
   <string name="no_results">.لا نتائج, جرّب كلمات كاملة</string>
   <string name="search_error">.البحث فشل، حاول مرة أخرى لاحقاً</string>
-  <string name="add_show">إضافة مسلسل</string>
   <string name="add_all">إضافة الكل </string>
   <string name="dont_add_show">لا تقم بالإضافة</string>
   <string name="add_multiple">كافة البرامج سوف تظهر في قائمة برامجك قريبا</string>
@@ -160,8 +165,6 @@
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">متقدم</string>
   <string name="prefs_category_about">حول</string>
-  <string name="help">مساعدة</string>
-  <string name="preferences">إعدادات</string>
   <string name="pref_showsorting">ترتيب حسب</string>
   <string name="pref_onlyfuture">الحلقات لم تُبث بعد</string>
   <string name="pref_onlyfuturesummary">لا تعرض الحلقات التي بثت بالفعل</string>
@@ -225,7 +228,7 @@
   <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">لصق الحلقة</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-  <string name="checkinfailed">GetGlue تسجيل الدخول فشل. حاول قطع الاتصال بـ GetGlue.</string>
+  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
   <string name="getglue_authfailed">فشل GetGlue المصادقة. حاول مرة أخرى في وقت لاحق.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
@@ -313,7 +316,6 @@
     <item>المفضلة</item>
     <item>الغير مُشاهدة/القادمة</item>
     <item>مخفي</item>
-    <item>القوائم</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">صوت % d</item>

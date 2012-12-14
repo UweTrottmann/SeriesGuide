@@ -29,6 +29,13 @@
   <string name="save_selection">Uložit výběr</string>
   <string name="offline">Bez připojení k síti. Zkuste to později.</string>
   <string name="onlyx">Dostupné pouze ve verzi X</string>
+  <string name="shows">Shows</string>
+  <string name="lists">Lists</string>
+  <string name="activity">Aktivita</string>
+  <string name="search">Search</string>
+  <string name="add_show">Přidat pořad</string>
+  <string name="preferences">Nastavení</string>
+  <string name="help">Nápověda</string>
   <string name="shouts">Výkřiky</string>
   <string name="shout_hint">Napište výkřik (v angl.)</string>
   <string name="shout">Zakřičet!</string>
@@ -96,7 +103,6 @@
   <string name="context_unhide">Obnovit</string>
   <string name="hidden">Skytý pořad</string>
   <string name="unhidden">Obnovený pořad</string>
-  <string name="activity">Aktivita</string>
   <string name="upcoming">Nadcházející</string>
   <string name="recent">Nedávné</string>
   <string name="friends">Přátelé</string>
@@ -133,7 +139,6 @@
   <string name="search_hint_add">Název pořadu</string>
   <string name="no_results">Bez výsledku, zkuste celá slova.</string>
   <string name="search_error">Vyhledání selhalo, zkuste to později.</string>
-  <string name="add_show">Přidat pořad</string>
   <string name="add_all">Přidat vše</string>
   <string name="dont_add_show">Nepřidávat</string>
   <string name="add_multiple">Všechny pořady se brzy objeví ve Vašem seznamu pořadů.</string>
@@ -160,8 +165,6 @@
   <string name="prefs_category_sharing">Služby</string>
   <string name="prefs_category_advanced">Pokročilé</string>
   <string name="prefs_category_about">O aplikaci</string>
-  <string name="help">Nápověda</string>
-  <string name="preferences">Nastavení</string>
   <string name="pref_showsorting">Řadit pořady dle…</string>
   <string name="pref_onlyfuture">Žádné odvysílané díly</string>
   <string name="pref_onlyfuturesummary">Nikdy nezobrazovat už vysílané díly</string>
@@ -225,7 +228,7 @@
   <string name="checkin_fixgetglue">Opravit ohlášení do GetGlue</string>
   <string name="paste_episode">Vložte díl</string>
   <string name="checkinsuccess">Ohlášeno do %s na GetGlue.</string>
-  <string name="checkinfailed">Ohlášení se selhalo. Zkuste odpojit GetGlue.</string>
+  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
   <string name="getglue_authfailed">Ověření u GetGlue selhalo. Zkuste to později.</string>
   <string name="select_show">Výběr pořadu</string>
   <string name="check_into">Ohlásit se do</string>
@@ -313,7 +316,6 @@
     <item>Oblíbené</item>
     <item>Nadcházející nové</item>
     <item>Skryté</item>
-    <item>Seznamy</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d hlas</item>

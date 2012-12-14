@@ -29,6 +29,13 @@
   <string name="save_selection">Save selection</string>
   <string name="offline">Ingen nätanslutning. Försök igen senare.</string>
   <string name="onlyx">Endast tillgänglig i SeriesGuide X</string>
+  <string name="shows">Shows</string>
+  <string name="lists">Lists</string>
+  <string name="activity">Aktivitet</string>
+  <string name="search">Search</string>
+  <string name="add_show">Lägg till serie</string>
+  <string name="preferences">Inställningar</string>
+  <string name="help">Hjälp</string>
   <string name="shouts">Rop</string>
   <string name="shout_hint">Skriv ett rop (på engelska)</string>
   <string name="shout">Ropa!</string>
@@ -96,7 +103,6 @@
   <string name="context_unhide">Visa</string>
   <string name="hidden">Dold serie</string>
   <string name="unhidden">Visar serie</string>
-  <string name="activity">Aktivitet</string>
   <string name="upcoming">Kommande</string>
   <string name="recent">Senaste</string>
   <string name="friends">Vänner</string>
@@ -133,7 +139,6 @@
   <string name="search_hint_add">Serienamn</string>
   <string name="no_results">Inga resultat, försök med hela ord.</string>
   <string name="search_error">Sökningen misslyckades, försök igen senare.</string>
-  <string name="add_show">Lägg till serie</string>
   <string name="add_all">Lägg till alla</string>
   <string name="dont_add_show">Lägg inte till</string>
   <string name="add_multiple">All shows will appear in your show list shortly.</string>
@@ -160,8 +165,6 @@
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Avancerat</string>
   <string name="prefs_category_about">Om</string>
-  <string name="help">Hjälp</string>
-  <string name="preferences">Inställningar</string>
   <string name="pref_showsorting">Sortera serier efter…</string>
   <string name="pref_onlyfuture">Inga sända avsnitt</string>
   <string name="pref_onlyfuturesummary">Visa aldrig redan sända avsnitt</string>
@@ -225,7 +228,7 @@
   <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Klistra in avsnitt</string>
   <string name="checkinsuccess">Checka in %s på GetGlue.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
+  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
@@ -313,7 +316,6 @@
     <item>Favoriter</item>
     <item>Osedda/Kommande</item>
     <item>Dolda</item>
-    <item>Listor</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d röst</item>

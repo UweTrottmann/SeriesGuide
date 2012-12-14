@@ -29,6 +29,13 @@
   <string name="save_selection">Save selection</string>
   <string name="offline">Χωρίς σύνδεση δικτύου. Δοκιμάστε αργότερα.</string>
   <string name="onlyx">Διαθέσιμο μόνο στο SeriesGuide X</string>
+  <string name="shows">Shows</string>
+  <string name="lists">Lists</string>
+  <string name="activity">Δραστηριότητα</string>
+  <string name="search">Search</string>
+  <string name="add_show">Προσθήκη σειράς</string>
+  <string name="preferences">Ρυθμίσεις</string>
+  <string name="help">Βοήθεια</string>
   <string name="shouts">Shouts</string>
   <string name="shout_hint">Πληκτρολογήστε ένα shout (στα Αγγλικά)</string>
   <string name="shout">Shout!</string>
@@ -96,7 +103,6 @@
   <string name="context_unhide">Εμφάνιση</string>
   <string name="hidden">Κρυφή σειρα </string>
   <string name="unhidden">μη-κρυφή σειρά</string>
-  <string name="activity">Δραστηριότητα</string>
   <string name="upcoming">Επερχόμενα</string>
   <string name="recent">Πρόσφατο</string>
   <string name="friends">Φίλοι</string>
@@ -133,7 +139,6 @@
   <string name="search_hint_add">Όνομα σειράς</string>
   <string name="no_results">Κανένα αποτέλεσμα, δοκιμάστε ολόκληρες λέξεις.</string>
   <string name="search_error">Η αναζήτηση απέτυχε, δοκιμάστε ξανά αργότερα.</string>
-  <string name="add_show">Προσθήκη σειράς</string>
   <string name="add_all">Add all</string>
   <string name="dont_add_show">Να μην γίνει προσθήκη</string>
   <string name="add_multiple">All shows will appear in your show list shortly.</string>
@@ -160,8 +165,6 @@
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Για προχωρημένους</string>
   <string name="prefs_category_about">Σχετικά</string>
-  <string name="help">Βοήθεια</string>
-  <string name="preferences">Ρυθμίσεις</string>
   <string name="pref_showsorting">Ταξινόμηση σειρών κατα…</string>
   <string name="pref_onlyfuture">Επεισόδια που δεν έχουν προβληθεί</string>
   <string name="pref_onlyfuturesummary">Να μην εμφανίζονται ποτέ τα επεισόδια που έχουν ήδη προβληθεί</string>
@@ -225,7 +228,7 @@
   <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Επικόλληση επεισοδίου</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-  <string name="checkinfailed">Αποτυχία Check-in στο GetGlue. Δοκιμάστε να αποσυνδέσετε το GetGlue.</string>
+  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
   <string name="getglue_authfailed">Αποτυχία ταυτοποίησης στο GetGlue. Δοκιμάστε ξανά αργότερα.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
@@ -313,7 +316,6 @@
     <item>Αγαπημένα</item>
     <item>Μη παρακολουθημένα/Επερχόμενα</item>
     <item>Κρυμμένα</item>
-    <item>Lists</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d ψήφος</item>

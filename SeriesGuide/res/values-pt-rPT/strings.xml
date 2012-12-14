@@ -29,6 +29,13 @@
   <string name="save_selection">Salvar Selecção</string>
   <string name="offline">Sem ligação à internet. Tente novamente mais tarde.</string>
   <string name="onlyx">Apenas disponível em SeriesGuide X</string>
+  <string name="shows">Shows</string>
+  <string name="lists">Lists</string>
+  <string name="activity">Atividade</string>
+  <string name="search">Search</string>
+  <string name="add_show">Adicionar Série</string>
+  <string name="preferences">Definições</string>
+  <string name="help">Ajuda</string>
   <string name="shouts">Comentários</string>
   <string name="shout_hint">Digite um comentário (em inglês)</string>
   <string name="shout">Comente!</string>
@@ -96,7 +103,6 @@
   <string name="context_unhide">Mostrar</string>
   <string name="hidden">Ocultar Série</string>
   <string name="unhidden">Mostrar Série</string>
-  <string name="activity">Atividade</string>
   <string name="upcoming">Próximos</string>
   <string name="recent">Recente</string>
   <string name="friends">Amigos</string>
@@ -133,7 +139,6 @@
   <string name="search_hint_add">Nome da Série</string>
   <string name="no_results">Nenhum resultado, tente palavras completas.</string>
   <string name="search_error">Erro de pesquisa, tente novamente mais tarde.</string>
-  <string name="add_show">Adicionar Série</string>
   <string name="add_all">Adicionar todas</string>
   <string name="dont_add_show">Não adicionar</string>
   <string name="add_multiple">Todas as séries aparecerao na sua lista brevemente.</string>
@@ -160,8 +165,6 @@
   <string name="prefs_category_sharing">Serviços</string>
   <string name="prefs_category_advanced">Avançado</string>
   <string name="prefs_category_about">Acerca</string>
-  <string name="help">Ajuda</string>
-  <string name="preferences">Definições</string>
   <string name="pref_showsorting">Ordenar séries por…</string>
   <string name="pref_onlyfuture">Sem episódio em exibição</string>
   <string name="pref_onlyfuturesummary">Nunca mostrar episódios que tenham sido lançados</string>
@@ -225,7 +228,7 @@
   <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Colar episódio</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-  <string name="checkinfailed">Falha no Check-in do GetGlue. Tente desligar GetGlue.</string>
+  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
   <string name="getglue_authfailed">Autenticação em GetGlue falhou. Tente novamente mais tarde.</string>
   <string name="select_show">Seleccionar série</string>
   <string name="check_into">Check into</string>
@@ -313,7 +316,6 @@
     <item>Favoritos</item>
     <item>Por ver/Por exibir</item>
     <item>Oculto</item>
-    <item>Listas</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d voto</item>

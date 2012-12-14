@@ -29,6 +29,13 @@
   <string name="save_selection">Auswahl speichern</string>
   <string name="offline">Keine Netzwerkverbindung. Versuchen Sie es später erneut.</string>
   <string name="onlyx">Nur verfügbar in SeriesGuide X</string>
+  <string name="shows">Serien</string>
+  <string name="lists">Listen</string>
+  <string name="activity">Aktivität</string>
+  <string name="search">Suche</string>
+  <string name="add_show">Serie hinzufügen</string>
+  <string name="preferences">Einstellungen</string>
+  <string name="help">Hilfe</string>
   <string name="shouts">Shouts</string>
   <string name="shout_hint">Shout eingeben (in Englisch)</string>
   <string name="shout">Shout!</string>
@@ -96,7 +103,6 @@
   <string name="context_unhide">Einblenden</string>
   <string name="hidden">Serie ausgeblendet</string>
   <string name="unhidden">Serie wieder sichtbar</string>
-  <string name="activity">Aktivität</string>
   <string name="upcoming">Demnächst</string>
   <string name="recent">Vor kurzem</string>
   <string name="friends">Freunde</string>
@@ -133,7 +139,6 @@
   <string name="search_hint_add">Serientitel</string>
   <string name="no_results">Keine Ergebnisse, versuchen Sie ganze Wörter.</string>
   <string name="search_error">Suche fehlgeschlagen, versuchen Sie es später erneut.</string>
-  <string name="add_show">Serie hinzufügen</string>
   <string name="add_all">Alle hinzufügen</string>
   <string name="dont_add_show">Nicht hinzufügen</string>
   <string name="add_multiple">Alle Serien werden in Kürze der Serienliste hinzugefügt.</string>
@@ -160,8 +165,6 @@
   <string name="prefs_category_sharing">Dienste</string>
   <string name="prefs_category_advanced">Weiteres</string>
   <string name="prefs_category_about">Über</string>
-  <string name="help">Hilfe</string>
-  <string name="preferences">Einstellungen</string>
   <string name="pref_showsorting">Sortiere Serien nach…</string>
   <string name="pref_onlyfuture">Keine gesendeten Folgen</string>
   <string name="pref_onlyfuturesummary">Zeige nie bereits ausgestrahlte Folgen an</string>
@@ -225,7 +228,7 @@
   <string name="checkin_fixgetglue">GetGlue Check In korrigieren</string>
   <string name="paste_episode">Folge einfügen</string>
   <string name="checkinsuccess">Auf GetGlue in %s eingecheckt.</string>
-  <string name="checkinfailed">GetGlue-Einchecken fehlgeschlagen. Versuchen Sie GetGlue zu trennen.</string>
+  <string name="checkinfailed">GetGlue-Check-in ist fehlgeschlagen. Versuchen Sie es später erneut.</string>
   <string name="getglue_authfailed">GetGlue-Authentifizierung fehlgeschlagen. Versuchen Sie es später erneut.</string>
   <string name="select_show">Serie auswählen</string>
   <string name="check_into">Einchecken in</string>
@@ -313,7 +316,6 @@
     <item>Favoriten</item>
     <item>Ungesehene/Zukünftige</item>
     <item>Ausgeblendete</item>
-    <item>Listen</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d Stimme</item>

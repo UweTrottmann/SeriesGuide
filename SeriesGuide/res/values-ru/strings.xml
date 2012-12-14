@@ -29,6 +29,13 @@
   <string name="save_selection">Save selection</string>
   <string name="offline">Нет соединения. Повторите попытку позже.</string>
   <string name="onlyx">Доступно только в SeriesGuide X</string>
+  <string name="shows">Shows</string>
+  <string name="lists">Lists</string>
+  <string name="activity">Активность</string>
+  <string name="search">Search</string>
+  <string name="add_show">Добавить сериал</string>
+  <string name="preferences">Настройки</string>
+  <string name="help">Справка</string>
   <string name="shouts">Отзывы</string>
   <string name="shout_hint">Напиши отзыв( на английском)</string>
   <string name="shout">Отзыв!</string>
@@ -96,7 +103,6 @@
   <string name="context_unhide">Не скрывать</string>
   <string name="hidden">Скрытые сериалы</string>
   <string name="unhidden">Нескрытые сериалы</string>
-  <string name="activity">Активность</string>
   <string name="upcoming">Следующий</string>
   <string name="recent">Недавние</string>
   <string name="friends">Друзья</string>
@@ -133,7 +139,6 @@
   <string name="search_hint_add">Название сериала</string>
   <string name="no_results">Никаких результатов, попробуйте полные слова.</string>
   <string name="search_error">Поиск не удался, повторите попытку позже.</string>
-  <string name="add_show">Добавить сериал</string>
   <string name="add_all">Добавьте все</string>
   <string name="dont_add_show">Не добавлять</string>
   <string name="add_multiple">Все сериалы скоро появятся в вашем списке.</string>
@@ -160,8 +165,6 @@
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Дополнительные</string>
   <string name="prefs_category_about">О программе</string>
-  <string name="help">Справка</string>
-  <string name="preferences">Настройки</string>
   <string name="pref_showsorting">Сортировка сериалов по</string>
   <string name="pref_onlyfuture">Без показанных эпизодов</string>
   <string name="pref_onlyfuturesummary">Никогда не показывать транслируемые эпизоды</string>
@@ -225,7 +228,7 @@
   <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Вставить эпизод</string>
   <string name="checkinsuccess">Отметил на %s GetGlue.</string>
-  <string name="checkinfailed">Регистрация в GetGlue не удалось. Попробуйте отключить GetGlue.</string>
+  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
   <string name="getglue_authfailed">Ошибка аутентификации GetGlue. Повторите попытку позже.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
@@ -313,7 +316,6 @@
     <item>Избранное</item>
     <item>Не просмотренные/предстоящие</item>
     <item>Скрытые</item>
-    <item>Списки</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d голоса</item>

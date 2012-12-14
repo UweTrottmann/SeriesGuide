@@ -29,6 +29,13 @@
   <string name="save_selection">Save selection</string>
   <string name="offline">Няма интернет връзка. Моля опитайте по-късно.</string>
   <string name="onlyx">Само в SeriesGuide X</string>
+  <string name="shows">Shows</string>
+  <string name="lists">Lists</string>
+  <string name="activity">Дейност</string>
+  <string name="search">Search</string>
+  <string name="add_show">Добавяне на сериал</string>
+  <string name="preferences">Настройки</string>
+  <string name="help">Помощ</string>
   <string name="shouts">Мнения</string>
   <string name="shout_hint">Напишете мнение (in English)</string>
   <string name="shout">Мнение!</string>
@@ -96,7 +103,6 @@
   <string name="context_unhide">Показване</string>
   <string name="hidden">Скрито предаване</string>
   <string name="unhidden">Показано предаване</string>
-  <string name="activity">Дейност</string>
   <string name="upcoming">Предстоящи</string>
   <string name="recent">Последни</string>
   <string name="friends">Приятели</string>
@@ -133,7 +139,6 @@
   <string name="search_hint_add">Име на предаване</string>
   <string name="no_results">Няма резултати, опитайте търсене с цели думи.</string>
   <string name="search_error">Търсенето е неуспешно, опитайте отново по-късно.</string>
-  <string name="add_show">Добавяне на сериал</string>
   <string name="add_all">Add all</string>
   <string name="dont_add_show">Не добавяй</string>
   <string name="add_multiple">All shows will appear in your show list shortly.</string>
@@ -160,8 +165,6 @@
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Advanced</string>
   <string name="prefs_category_about">About</string>
-  <string name="help">Помощ</string>
-  <string name="preferences">Настройки</string>
   <string name="pref_showsorting">Sort shows by…</string>
   <string name="pref_onlyfuture">Няма излъчени епизоди</string>
   <string name="pref_onlyfuturesummary">Never display already aired episodes</string>
@@ -225,7 +228,7 @@
   <string name="checkin_fixgetglue">Fix GetGlue check in</string>
   <string name="paste_episode">Paste episode</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
+  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
@@ -313,7 +316,6 @@
     <item>Любими</item>
     <item>Негледани/Предстоящи</item>
     <item>Hidden</item>
-    <item>Lists</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d vote</item>
