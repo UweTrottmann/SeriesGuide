@@ -9,6 +9,7 @@
         android:title="@string/sort"/>
     <item
         android:id="@+id/menu_updateart"
+        android:icon="@drawable/ic_action_refresh"
         android:orderInCategory="8"
         android:showAsAction="never"
         android:title="@string/menu_updateart"/>
@@ -20,6 +21,7 @@
         android:title="@string/menu_update_delta"/>
     <item
         android:id="@+id/menu_fullupdate"
+        android:icon="@drawable/ic_action_refresh"
         android:orderInCategory="10"
         android:showAsAction="never"
         android:title="@string/updateall_yes"/>
