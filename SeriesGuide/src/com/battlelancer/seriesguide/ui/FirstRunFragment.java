@@ -123,6 +123,20 @@ public class FirstRunFragment extends SherlockFragment {
                 setFirstRunDismissed();
             }
         });
+
+        // peek menu
+        final Runnable peekDoneRunnable = new Runnable() {
+            public void run() {
+                ((BaseActivity) getActivity()).showContent();
+            }
+        };
+        final Runnable peekRunnable = new Runnable() {
+            public void run() {
+                ((BaseActivity) getActivity()).showMenu();
+                getView().postDelayed(peekDoneRunnable, 2000);
+            }
+        };
+        getView().postDelayed(peekRunnable, 2000);
     }
 
     private void setFirstRunDismissed() {
