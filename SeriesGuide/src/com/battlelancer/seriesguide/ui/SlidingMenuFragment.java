@@ -54,25 +54,29 @@ public class SlidingMenuFragment extends ListFragment {
 
         mAdapter = new MenuAdapter(getActivity());
         mAdapter.add(new MenuItem(getString(R.string.shows), R.drawable.ic_launcher,
-                MENU_ITEM_SHOWS_ID, false));
+                MENU_ITEM_SHOWS_ID));
         mAdapter.add(new MenuItem(getString(R.string.lists), R.drawable.ic_action_list,
-                MENU_ITEM_LISTS_ID, false));
+                MENU_ITEM_LISTS_ID));
         mAdapter.add(new MenuItem(getString(R.string.activity), R.drawable.ic_action_upcoming,
-                MENU_ITEM_ACTIVITY_ID, true));
+                MENU_ITEM_ACTIVITY_ID));
+
+        mAdapter.add(new MenuCategory());
         mAdapter.add(new MenuItem(getString(R.string.checkin), R.drawable.ic_action_checkin,
-                MENU_ITEM_CHECKIN_ID, false));
+                MENU_ITEM_CHECKIN_ID));
         mAdapter.add(new MenuItem(getString(R.string.search), R.drawable.ic_action_search,
-                MENU_ITEM_SEARCH_ID, true));
+                MENU_ITEM_SEARCH_ID));
+
+        mAdapter.add(new MenuCategory());
         mAdapter.add(new MenuItem(getString(R.string.add_show), R.drawable.ic_action_add,
-                MENU_ITEM_ADD_SHOWS_ID, true));
+                MENU_ITEM_ADD_SHOWS_ID));
+
+        mAdapter.add(new MenuCategory());
         mAdapter.add(new MenuItem(getString(R.string.preferences), R.drawable.ic_action_settings,
-                MENU_ITEM_SETTINGS_ID, false));
+                MENU_ITEM_SETTINGS_ID));
         mAdapter.add(new MenuItem(getString(R.string.help), R.drawable.ic_action_help,
-                MENU_ITEM_HELP_ID, false));
+                MENU_ITEM_HELP_ID));
 
         setListAdapter(mAdapter);
-        
-        getListView().setDivider(null);
     }
 
     @Override
@@ -83,7 +87,7 @@ public class SlidingMenuFragment extends ListFragment {
             activity.showContent();
         }
 
-        switch (mAdapter.getItem(position).id) {
+        switch (((MenuItem) mAdapter.getItem(position)).mId) {
             case MENU_ITEM_SHOWS_ID:
                 if (getActivity() instanceof ShowsActivity) {
                     break;
@@ -126,45 +130,74 @@ public class SlidingMenuFragment extends ListFragment {
     }
 
     private class MenuItem {
-        public String tag;
-        public int iconRes;
-        public int id;
-        public boolean hasSpacer;
 
-        public MenuItem(String tag, int iconRes, int id, boolean hasSpacer) {
-            this.tag = tag;
-            this.iconRes = iconRes;
-            this.id = id;
-            this.hasSpacer = hasSpacer;
+        String mTitle;
+        int mIconRes;
+        int mId;
+
+        public MenuItem(String title, int iconRes, int id) {
+            mTitle = title;
+            mIconRes = iconRes;
+            mId = id;
         }
     }
 
-    public class MenuAdapter extends ArrayAdapter<MenuItem> {
+    private class MenuCategory {
+
+        public MenuCategory() {
+        }
+    }
+
+    public class MenuAdapter extends ArrayAdapter<Object> {
 
         public MenuAdapter(Context context) {
             super(context, 0);
         }
 
+        @Override
+        public int getItemViewType(int position) {
+            return getItem(position) instanceof MenuItem ? 0 : 1;
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return 2;
+        }
+
+        @Override
+        public boolean isEnabled(int position) {
+            return getItem(position) instanceof MenuItem;
+        }
+
+        @Override
+        public boolean areAllItemsEnabled() {
+            return false;
+        }
+
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.sliding_menu_row,
-                        null);
+            Object item = getItem(position);
 
-                holder = new ViewHolder();
-                holder.attach(convertView);
+            if (item instanceof MenuItem) {
+                ViewHolder holder;
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(getContext()).inflate(
+                            R.layout.sliding_menu_row_item, parent, false);
+                    holder = new ViewHolder();
+                    holder.attach(convertView);
+                    convertView.setTag(holder);
+                } else {
+                    holder = (ViewHolder) convertView.getTag();
+                }
 
-                convertView.setTag(holder);
+                MenuItem menuItem = (MenuItem) item;
+                holder.icon.setImageResource(menuItem.mIconRes);
+                holder.title.setText(menuItem.mTitle);
             } else {
-                holder = (ViewHolder) convertView.getTag();
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(getContext()).inflate(
+                            R.layout.sliding_menu_row_category, parent, false);
+                }
             }
-
-            MenuItem menuItem = getItem(position);
-            holder.icon.setImageResource(menuItem.iconRes);
-            holder.title.setText(menuItem.tag);
-
-            holder.divider.setVisibility(menuItem.hasSpacer ? View.GONE : View.VISIBLE);
-            holder.spacer.setVisibility(menuItem.hasSpacer ? View.VISIBLE : View.GONE);
 
             return convertView;
         }
@@ -176,15 +209,9 @@ public class SlidingMenuFragment extends ListFragment {
 
         public ImageView icon;
 
-        public View divider;
-
-        public View spacer;
-
         public void attach(View v) {
             icon = (ImageView) v.findViewById(R.id.menu_icon);
             title = (TextView) v.findViewById(R.id.menu_title);
-            divider = v.findViewById(R.id.menu_divider);
-            spacer = v.findViewById(R.id.menu_spacer);
         }
     }
 

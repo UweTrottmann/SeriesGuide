@@ -20,18 +20,4 @@
         android:textAppearance="@style/TextAppearance.Large.Light"
         android:textColor="@color/text_primary" />
 
-    <include
-        android:id="@+id/menu_divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/menu_icon"
-        layout="@layout/divider_horizontal" />
-
-    <View
-        android:id="@+id/menu_spacer"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_below="@+id/menu_icon"
-        android:visibility="gone" />
-
 </RelativeLayout>
