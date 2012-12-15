@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,36 +88,39 @@ public class SlidingMenuFragment extends ListFragment {
 
         switch (((MenuItem) mAdapter.getItem(position)).mId) {
             case MENU_ITEM_SHOWS_ID:
-                if (getActivity() instanceof ShowsActivity) {
-                    break;
-                }
-                NavUtils.navigateUpTo(getActivity(),
-                        new Intent(Intent.ACTION_MAIN).setClass(getActivity(),
-                                ShowsActivity.class));
+                startActivity(new Intent(getActivity(), ShowsActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
+                                | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case MENU_ITEM_LISTS_ID:
-                startActivity(new Intent(getActivity(), ListsActivity.class));
+                startActivity(new Intent(getActivity(), ListsActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case MENU_ITEM_ACTIVITY_ID:
-                startActivity(new Intent(getActivity(), UpcomingRecentActivity.class));
+                startActivity(new Intent(getActivity(), UpcomingRecentActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case MENU_ITEM_CHECKIN_ID:
-                startActivity(new Intent(getActivity(), CheckinActivity.class));
+                startActivity(new Intent(getActivity(), CheckinActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case MENU_ITEM_SEARCH_ID:
-                startActivity(new Intent(getActivity(), SearchActivity.class));
+                startActivity(new Intent(getActivity(), SearchActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case MENU_ITEM_ADD_SHOWS_ID:
-                startActivity(new Intent(getActivity(), AddActivity.class));
+                startActivity(new Intent(getActivity(), AddActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case MENU_ITEM_SETTINGS_ID:
-                startActivity(new Intent(getActivity(), SeriesGuidePreferences.class));
+                startActivity(new Intent(getActivity(), SeriesGuidePreferences.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case MENU_ITEM_HELP_ID:
