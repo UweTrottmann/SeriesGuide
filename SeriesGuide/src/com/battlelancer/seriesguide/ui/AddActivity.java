@@ -23,13 +23,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.widget.EditText;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
+import com.battlelancer.seriesguide.util.MenuOnPageChangeListener;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -60,8 +60,6 @@ public class AddActivity extends BaseTopActivity implements OnAddShowListener {
         setProgressBarIndeterminateVisibility(Boolean.FALSE);
         setSupportProgressBarIndeterminateVisibility(false);
 
-        getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-
         mAdapter = new AddPagerAdapter(getSupportFragmentManager(), this);
 
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -69,27 +67,9 @@ public class AddActivity extends BaseTopActivity implements OnAddShowListener {
 
         TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mPager);
-        indicator.setOnPageChangeListener(new OnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                switch (position) {
-                    case 0:
-                        getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-                        break;
-                    default:
-                        getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-                        break;
-                }
-            }
+        indicator.setOnPageChangeListener(new MenuOnPageChangeListener(getSlidingMenu()));
 
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-            }
-        });
+        getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
     }
 
     @Override

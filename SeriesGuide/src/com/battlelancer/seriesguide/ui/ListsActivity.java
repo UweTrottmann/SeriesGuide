@@ -10,6 +10,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
+import com.battlelancer.seriesguide.util.MenuOnPageChangeListener;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.slidingmenu.lib.SlidingMenu;
 import com.uwetrottmann.seriesguide.R;
@@ -43,8 +44,6 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
         actionBar.setIcon(R.drawable.ic_action_list);
         actionBar.setTitle(R.string.lists);
 
-        getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-
         mListsAdapter = new ListsPagerAdapter(getSupportFragmentManager(), this);
 
         mPager = (ViewPager) findViewById(R.id.pager);
@@ -59,6 +58,9 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
                 ListManageDialogFragment.showListManageDialog(listId, getSupportFragmentManager());
             }
         });
+        mIndicator.setOnPageChangeListener(new MenuOnPageChangeListener(getSlidingMenu()));
+
+        getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
     }
 
     @Override
