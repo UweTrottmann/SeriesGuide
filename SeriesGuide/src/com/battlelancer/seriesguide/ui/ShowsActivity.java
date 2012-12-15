@@ -18,7 +18,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
@@ -281,18 +280,6 @@ public class ShowsActivity extends BaseTopActivity implements CompatActionBarNav
         } else if (itemId == R.id.menu_fullupdate) {
             performUpdateTask(true, null);
             fireTrackerEvent("Full Update");
-            return true;
-        } else if (itemId == R.id.menu_feedback) {
-            final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-            intent.setType("plain/text");
-            intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
-                    SeriesGuidePreferences.SUPPORT_MAIL
-            });
-            intent.putExtra(android.content.Intent.EXTRA_SUBJECT,
-                    "SeriesGuide " + Utils.getVersion(this) + " Feedback");
-            intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
-            startActivity(Intent.createChooser(intent, "Send mail..."));
-            fireTrackerEvent("Feedback");
             return true;
         } else if (itemId == R.id.menu_showsortby) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);

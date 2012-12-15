@@ -105,7 +105,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/shouttext"
             android:contentDescription="@string/shout"
-            android:src="@drawable/ic_menu_send" />
+            android:src="@drawable/ic_action_send" />
 
         <CheckBox
             android:id="@+id/checkIsSpoiler"

@@ -30,12 +30,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays a menu to allow quick navigation within the app.
  */
 public class SlidingMenuFragment extends ListFragment {
+
+    public static final String TAG = "Menu";
 
     private MenuAdapter mAdapter;
 
@@ -47,6 +51,14 @@ public class SlidingMenuFragment extends ListFragment {
     private static final int MENU_ITEM_ADD_SHOWS_ID = 5;
     private static final int MENU_ITEM_HELP_ID = 6;
     private static final int MENU_ITEM_SETTINGS_ID = 7;
+    private static final int MENU_ITEM_FEEDBACK_ID = 8;
+
+    /**
+     * Google Analytics helper method for easy event tracking.
+     */
+    public void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
+    }
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -74,6 +86,8 @@ public class SlidingMenuFragment extends ListFragment {
                 MENU_ITEM_SETTINGS_ID));
         mAdapter.add(new MenuItem(getString(R.string.help), R.drawable.ic_action_help,
                 MENU_ITEM_HELP_ID));
+        mAdapter.add(new MenuItem(getString(R.string.feedback), R.drawable.ic_action_send,
+                MENU_ITEM_FEEDBACK_ID));
 
         setListAdapter(mAdapter);
     }
@@ -127,6 +141,19 @@ public class SlidingMenuFragment extends ListFragment {
                 Intent myIntent = new Intent(Intent.ACTION_VIEW,
                         Uri.parse(SeriesGuidePreferences.HELP_URL));
                 startActivity(myIntent);
+                break;
+            case MENU_ITEM_FEEDBACK_ID:
+                final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                intent.setType("plain/text");
+                intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
+                        SeriesGuidePreferences.SUPPORT_MAIL
+                });
+                intent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+                        "SeriesGuide " + Utils.getVersion(getActivity()) + " Feedback");
+                intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
+                startActivity(Intent.createChooser(intent, "Send mail..."));
+
+                fireTrackerEvent("Feedback");
                 break;
         }
     }
