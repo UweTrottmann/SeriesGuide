@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.NFC" />
 
     <uses-feature
         android:name="android.hardware.touchscreen"
@@ -146,10 +147,17 @@
         </activity>
         <activity
             android:name="com.battlelancer.seriesguide.ui.AddActivity"
-            android:label="@string/add_show" >
+            android:label="@string/add_show"
+            android:launchMode="singleTop" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/com.battlelancer.seriesguide.beam" />
+            </intent-filter>
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.TraktShoutsActivity" >
             <meta-data
