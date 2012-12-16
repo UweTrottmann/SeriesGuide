@@ -102,10 +102,6 @@ public class OverviewActivity extends BaseActivity implements CreateNdefMessageC
         EasyTracker.getInstance().activityStop(this);
     }
 
-    private int getShowId() {
-        return getIntent().getIntExtra(OverviewFragment.InitBundle.SHOW_TVDBID, -1);
-    }
-
     private void onUpdate() {
         // only update this show if no global update is running and we have a
         // connection
@@ -134,12 +130,7 @@ public class OverviewActivity extends BaseActivity implements CreateNdefMessageC
     @Override
     public boolean onSearchRequested() {
         // refine search with the show's title
-        int showId = getShowId();
-        if (showId == -1) {
-            return false;
-        }
-
-        final Series show = DBUtils.getShow(this, String.valueOf(showId));
+        final Series show = DBUtils.getShow(this, String.valueOf(mShowId));
         final String showTitle = show.getTitle();
 
         Bundle args = new Bundle();
@@ -151,10 +142,17 @@ public class OverviewActivity extends BaseActivity implements CreateNdefMessageC
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     public NdefMessage createNdefMessage(NfcEvent event) {
+        final Series show = DBUtils.getShow(this, String.valueOf(mShowId));
+        // send id, also title and overview (both can be empty)
         NdefMessage msg = new NdefMessage(new NdefRecord[] {
                 createMimeRecord(
                         "application/com.battlelancer.seriesguide.beam", String.valueOf(mShowId)
-                                .getBytes())
+                                .getBytes()),
+                createMimeRecord("application/com.battlelancer.seriesguide.beam", show.getTitle()
+                        .getBytes()),
+                createMimeRecord("application/com.battlelancer.seriesguide.beam", show
+                        .getOverview()
+                        .getBytes())
         });
         return msg;
     }

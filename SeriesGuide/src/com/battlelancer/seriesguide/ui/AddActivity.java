@@ -17,8 +17,14 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.nfc.NdefMessage;
+import android.nfc.NfcAdapter;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -28,12 +34,14 @@ import android.widget.EditText;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.MenuOnPageChangeListener;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.slidingmenu.lib.SlidingMenu;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TabPageIndicator;
 
@@ -76,6 +84,42 @@ public class AddActivity extends BaseTopActivity implements OnAddShowListener {
     protected void onStart() {
         super.onStart();
         EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (AndroidUtils.isICSOrHigher()) {
+            // Check to see that the Activity started due to an Android Beam
+            if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+                processIntent(getIntent());
+            }
+        }
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        // onResume gets called after this to handle the intent
+        setIntent(intent);
+    }
+
+    /**
+     * Parses the NDEF Message from the intent and prints to the TextView
+     */
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    void processIntent(Intent intent) {
+        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
+                NfcAdapter.EXTRA_NDEF_MESSAGES);
+
+        // only one message sent during the beam
+        NdefMessage msg = (NdefMessage) rawMsgs[0];
+        SearchResult show = new SearchResult();
+        show.tvdbid = new String(msg.getRecords()[0].getPayload());
+        show.title = new String(msg.getRecords()[1].getPayload());
+        show.overview = new String(msg.getRecords()[2].getPayload());
+
+        // display add dialog
+        AddDialogFragment.showAddDialog(show, getSupportFragmentManager());
     }
 
     @Override
