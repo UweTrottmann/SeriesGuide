@@ -134,12 +134,12 @@ public class AddActivity extends BaseTopActivity implements OnAddShowListener {
         private static final int TRAKT_CONNECTED_TABCOUNT = 5;
 
         public static final int TRENDING_TAB_POSITION = 0;
-        public static final int RECOMMENDED_TAB_POSITION = 1;
-        public static final int LIBRARY_TAB_POSITION = 2;
-        public static final int WATCHLIST_TAB_POSITION = 3;
+        public static final int RECOMMENDED_TAB_POSITION = 2;
+        public static final int LIBRARY_TAB_POSITION = 3;
+        public static final int WATCHLIST_TAB_POSITION = 4;
 
         public static final int SEARCH_TAB_DEFAULT_POSITION = 1;
-        public static final int SEARCH_TAB_CONNECTED_POSITION = 4;
+        public static final int SEARCH_TAB_CONNECTED_POSITION = 1;
 
         private Context mContext;
 
