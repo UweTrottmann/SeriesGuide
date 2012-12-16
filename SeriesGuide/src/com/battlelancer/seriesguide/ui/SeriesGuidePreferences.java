@@ -43,6 +43,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -129,6 +130,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     public static final String KEY_NOTIFICATIONS_FAVONLY = "com.battlelancer.seriesguide.notifications.favonly";
 
     public static final String KEY_NOTIFICATIONS_THRESHOLD = "com.battlelancer.seriesguide.notifications.threshold";
+
+    public static final String KEY_NOTIFICATIONS_LATEST_NOTIFIED = "com.battlelancer.seriesguide.notifications.latestnotified";
 
     public static final String KEY_VIBRATE = "com.battlelancer.seriesguide.notifications.vibrate";
 
@@ -223,7 +226,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             Preference noSpecialsPref, Preference notificationsPref,
             final Preference notificationsFavOnlyPref, final Preference vibratePref,
             final Preference ringtonePref,
-            Preference languagePref, Preference notificationsThresholdPref) {
+            Preference languagePref, final Preference notificationsThresholdPref) {
         // No aired episodes
         noAiredPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
@@ -269,6 +272,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                                 (long) 0);
                     }
 
+                    notificationsThresholdPref.setEnabled(isChecked);
                     notificationsFavOnlyPref.setEnabled(isChecked);
                     vibratePref.setEnabled(isChecked);
                     ringtonePref.setEnabled(isChecked);
@@ -280,14 +284,14 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             notificationsFavOnlyPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    // run notifications service to update next notification
-                    Utils.runNotificationService(context);
+                    resetAndRunNotificationsService(context);
                     return true;
                 }
             });
         } else {
             notificationsPref.setEnabled(false);
             notificationsPref.setSummary(R.string.onlyx);
+            notificationsThresholdPref.setEnabled(false);
             notificationsFavOnlyPref.setEnabled(false);
             vibratePref.setEnabled(false);
             ringtonePref.setEnabled(false);
@@ -406,22 +410,37 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Performs certain actions on settings changes. <br>
+     * <b>WARNING This is for older devices. Newer devices should implement
+     * actions in {@link SettingsFragment}s implementation if they require
+     * findPreference() to return non-null values.</b>
+     */
     @SuppressWarnings("deprecation")
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(KEY_UPCOMING_LIMIT) || key.equals(KEY_LANGUAGE)
-                || key.equals(KEY_NUMBERFORMAT) || key.equals(KEY_THEME)) {
+                || key.equals(KEY_NUMBERFORMAT) || key.equals(KEY_THEME)
+                || key.equals(KEY_NOTIFICATIONS_THRESHOLD)) {
             Preference pref = findPreference(key);
             if (pref != null) {
                 setListPreferenceSummary((ListPreference) pref);
             }
         }
 
+        /*
+         * This can run here, as it does not depend on findPreference() which
+         * would return null when using a SettingsFragment.
+         */
         if (key.equals(KEY_LANGUAGE)) {
             // reset last edit date of all episodes so they will get updated
-            ContentValues values = new ContentValues();
-            values.put(Episodes.LASTEDIT, 0);
-            getContentResolver().update(Episodes.CONTENT_URI, values, null, null);
+            new Thread(new Runnable() {
+                public void run() {
+                    ContentValues values = new ContentValues();
+                    values.put(Episodes.LASTEDIT, 0);
+                    getContentResolver().update(Episodes.CONTENT_URI, values, null, null);
+                }
+            }).start();
         }
 
         if (key.equals(KEY_OFFSET)) {
@@ -431,12 +450,26 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 // Set summary to be the user-description for the selected value
                 listPref.setSummary(getString(R.string.pref_offsetsummary, listPref.getEntry()));
 
-                // run notification service to take care of potential time
-                // shifts
-                // when changing the time offset
-                Utils.runNotificationService(SeriesGuidePreferences.this);
+                resetAndRunNotificationsService(SeriesGuidePreferences.this);
             }
         }
+
+        if (key.equals(KEY_NOTIFICATIONS_THRESHOLD)) {
+            Preference pref = findPreference(key);
+            if (pref != null) {
+                resetAndRunNotificationsService(SeriesGuidePreferences.this);
+            }
+        }
+    }
+
+    /**
+     * Resets and runs the notification service to take care of potential time
+     * shifts when e.g. changing the time offset.
+     */
+    private static void resetAndRunNotificationsService(Context context) {
+        NotificationService.resetLastEpisodeAirtime(PreferenceManager
+                .getDefaultSharedPreferences(context));
+        Utils.runNotificationService(context);
     }
 
     public static void setListPreferenceSummary(ListPreference listPref) {
@@ -495,7 +528,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (key.equals(KEY_UPCOMING_LIMIT) || key.equals(KEY_LANGUAGE)
-                    || key.equals(KEY_NUMBERFORMAT) || key.equals(KEY_THEME)) {
+                    || key.equals(KEY_NUMBERFORMAT) || key.equals(KEY_THEME)
+                    || key.equals(KEY_NOTIFICATIONS_THRESHOLD)) {
                 Preference pref = findPreference(key);
                 if (pref != null) {
                     setListPreferenceSummary((ListPreference) pref);
@@ -510,10 +544,14 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                     // value
                     listPref.setSummary(getString(R.string.pref_offsetsummary, listPref.getEntry()));
 
-                    // run notification service to take care of potential time
-                    // shifts
-                    // when changing the time offset
-                    Utils.runNotificationService(getActivity());
+                    resetAndRunNotificationsService(getActivity());
+                }
+            }
+
+            if (key.equals(KEY_NOTIFICATIONS_THRESHOLD)) {
+                Preference pref = findPreference(key);
+                if (pref != null) {
+                    resetAndRunNotificationsService(getActivity());
                 }
             }
         }

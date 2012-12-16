@@ -42,9 +42,12 @@ import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.Lists;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
+
+import java.util.List;
 
 public class NotificationService extends IntentService {
 
@@ -106,6 +109,8 @@ public class NotificationService extends IntentService {
             PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
             am.cancel(pi);
 
+            resetLastEpisodeAirtime(prefs);
+
             return;
         }
 
@@ -125,27 +130,43 @@ public class NotificationService extends IntentService {
             selection.append(Episodes.SELECTION_NOSPECIALS);
         }
 
-        // get episodes which air between 15 mins ago and one hour in the future
+        // get episodes which air from 15 mins ago
         final Cursor upcomingEpisodes = getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 PROJECTION, selection.toString(), new String[] {
                     String.valueOf(fakeNow - 15 * DateUtils.MINUTE_IN_MILLIS)
                 }, SORTING);
 
         if (upcomingEpisodes != null) {
-            // look if we have something to notify about
+            // find episodes which are within the notification threshold (user
+            // set)
             int count = 0;
-            final long inOneHour = fakeNow + DateUtils.HOUR_IN_MILLIS;
+            final List<Integer> notifyPositions = Lists.newArrayList();
+            int notificationThresholdMin = Integer.valueOf(prefs.getString(
+                    SeriesGuidePreferences.KEY_NOTIFICATIONS_THRESHOLD, "60"));
+            final long latestTimeToInclude = fakeNow + DateUtils.MINUTE_IN_MILLIS
+                    * notificationThresholdMin;
+            long latestNotifiedEpisodeTime = prefs.getLong(
+                    SeriesGuidePreferences.KEY_NOTIFICATIONS_LATEST_NOTIFIED, 0);
             while (upcomingEpisodes.moveToNext()) {
                 final long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
-                if (airtime <= inOneHour) {
+                if (airtime <= latestTimeToInclude) {
                     count++;
+                    // only add those we didn't already notify about
+                    if (latestNotifiedEpisodeTime < airtime) {
+                        notifyPositions.add(count);
+                    }
                 } else {
                     break;
                 }
             }
 
             // notify if we found any episodes
-            if (count > 0) {
+            if (notifyPositions.size() > 0) {
+                // store latest air time of all episodes we notified about
+                upcomingEpisodes.moveToPosition(notifyPositions.get(notifyPositions.size() - 1));
+                long latestAirtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
+                prefs.edit().putLong(SeriesGuidePreferences.KEY_NOTIFICATIONS_LATEST_NOTIFIED,
+                        latestAirtime).commit();
 
                 final Context context = getApplicationContext();
                 CharSequence tickerText = "";
@@ -296,13 +317,13 @@ public class NotificationService extends IntentService {
                 nm.notify(R.string.upcoming_show, notification);
             }
 
+            // find wake up time x (user-set) minutes before next episode airs
             upcomingEpisodes.moveToPosition(-1);
             while (upcomingEpisodes.moveToNext()) {
                 final long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
-                if (airtime > inOneHour) {
-                    // wake up an hour before the next episode airs
+                if (airtime > latestTimeToInclude) {
                     wakeUpTime = Utils.convertToFakeTime(airtime, prefs, false)
-                            - DateUtils.HOUR_IN_MILLIS;
+                            - DateUtils.MINUTE_IN_MILLIS * notificationThresholdMin;
                     break;
                 }
             }
@@ -319,5 +340,14 @@ public class NotificationService extends IntentService {
         Intent i = new Intent(this, OnAlarmReceiver.class);
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
         am.set(AlarmManager.RTC_WAKEUP, wakeUpTime, pi);
+    }
+
+    /**
+     * Resets the air time of the last notified about episode. Afterwards
+     * notifications for episodes may appear, which were already notified about.
+     */
+    public static void resetLastEpisodeAirtime(final SharedPreferences prefs) {
+        prefs.edit().putLong(SeriesGuidePreferences.KEY_NOTIFICATIONS_LATEST_NOTIFIED, 0)
+                .commit();
     }
 }
