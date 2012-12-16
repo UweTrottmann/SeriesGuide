@@ -29,6 +29,14 @@
             android:key="com.battlelancer.seriesguide.notifications"
             android:summary="@string/pref_notificationssummary"
             android:title="@string/pref_notifications" />
+
+        <ListPreference
+            android:defaultValue="60"
+            android:entries="@array/notificationThreshold"
+            android:entryValues="@array/notificationThresholdData"
+            android:key="com.battlelancer.seriesguide.notifications.threshold"
+            android:title="@string/pref_notifications_treshold" />
+
         <CheckBoxPreference
             android:defaultValue="True"
             android:key="com.battlelancer.seriesguide.notifications.favonly"

@@ -45,7 +45,7 @@
     <string name="add_show">Add Show</string>
     <string name="preferences">Settings</string>
     <string name="help">Help</string>
-    
+
     <!-- Shouts -->
     <string name="shouts">Shouts</string>
     <string name="shout_hint">Type a shout (in English)</string>
@@ -360,6 +360,13 @@
     <string name="pref_ringtone">Ringtone</string>
     <string name="pref_vibrate">Vibrate</string>
     <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
+<string name="pref_notifications_treshold">When to notify</string>
+    <string-array name="notificationThreshold">
+        <item>on air</item>
+        <item>5 min in advance</item>
+        <item>10 min in advance</item>
+        <item>one hour in advance</item>
+    </string-array>
 
     <!-- Theme switching -->
     <string name="pref_theme">App Theme</string>

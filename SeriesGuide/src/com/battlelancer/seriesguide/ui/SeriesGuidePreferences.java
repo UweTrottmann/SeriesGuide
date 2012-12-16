@@ -128,6 +128,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_NOTIFICATIONS_FAVONLY = "com.battlelancer.seriesguide.notifications.favonly";
 
+    public static final String KEY_NOTIFICATIONS_THRESHOLD = "com.battlelancer.seriesguide.notifications.threshold";
+
     public static final String KEY_VIBRATE = "com.battlelancer.seriesguide.notifications.vibrate";
 
     public static final String KEY_RINGTONE = "com.battlelancer.seriesguide.notifications.ringtone";
@@ -177,7 +179,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                     findPreference(KEY_ONLY_SEASON_EPISODES),
                     findPreference(KEY_NOTIFICATIONS_ENABLED),
                     findPreference(KEY_NOTIFICATIONS_FAVONLY), findPreference(KEY_VIBRATE),
-                    findPreference(KEY_RINGTONE), findPreference(KEY_LANGUAGE));
+                    findPreference(KEY_RINGTONE), findPreference(KEY_LANGUAGE),
+                    findPreference(KEY_NOTIFICATIONS_THRESHOLD));
         } else if (action != null && action.equals(ACTION_PREFS_SHARING)) {
             addPreferencesFromResource(R.xml.settings_sharing);
             setupSharingSettings(this, findPreference(KEY_GETGLUE_DISCONNECT));
@@ -220,7 +223,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             Preference noSpecialsPref, Preference notificationsPref,
             final Preference notificationsFavOnlyPref, final Preference vibratePref,
             final Preference ringtonePref,
-            Preference languagePref) {
+            Preference languagePref, Preference notificationsThresholdPref) {
         // No aired episodes
         noAiredPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
@@ -291,6 +294,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         }
 
         setListPreferenceSummary((ListPreference) languagePref);
+        setListPreferenceSummary((ListPreference) notificationsThresholdPref);
     }
 
     protected static void setupAdvancedSettings(final Activity activity, Preference themePref,
@@ -455,7 +459,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                         findPreference(KEY_ONLY_SEASON_EPISODES),
                         findPreference(KEY_NOTIFICATIONS_ENABLED),
                         findPreference(KEY_NOTIFICATIONS_FAVONLY), findPreference(KEY_VIBRATE),
-                        findPreference(KEY_RINGTONE), findPreference(KEY_LANGUAGE));
+                        findPreference(KEY_RINGTONE), findPreference(KEY_LANGUAGE),
+                        findPreference(KEY_NOTIFICATIONS_THRESHOLD));
             } else if ("sharing".equals(settings)) {
                 addPreferencesFromResource(R.xml.settings_sharing);
                 setupSharingSettings(getActivity(), findPreference(KEY_GETGLUE_DISCONNECT));
