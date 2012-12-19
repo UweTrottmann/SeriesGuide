@@ -18,8 +18,10 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -226,6 +228,15 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     }
                     r = checkinBuilder.fire();
 
+                    if (TraktStatus.SUCCESS.equals(r.status)) {
+                        SharedPreferences prefs = PreferenceManager
+                                .getDefaultSharedPreferences(mContext);
+                        r.message = mContext
+                                .getString(R.string.checkin_success_trakt,
+                                        (r.show != null ? r.show.title + " " : "")
+                                                + Utils.getEpisodeNumber(prefs, season, episode));
+                    }
+
                     break;
                 }
                 case RATE_EPISODE: {
@@ -286,18 +297,25 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         }
 
         if (r != null) {
-            if (r.status.equalsIgnoreCase(TraktStatus.SUCCESS)) {
-
+            if (TraktStatus.SUCCESS.equals(r.status)) {
                 // all good
-                Toast.makeText(mContext,
-                        r.message + " " + mContext.getString(R.string.ontrakt),
-                        Toast.LENGTH_SHORT).show();
+
+                switch (mAction) {
+                    case CHECKIN_EPISODE:
+                        Toast.makeText(mContext, r.message, Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        Toast.makeText(mContext,
+                                r.message + " " + mContext.getString(R.string.ontrakt),
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                }
 
                 if (mListener != null) {
                     mListener.onTraktActionComplete(true);
                 }
 
-            } else if (r.status.equalsIgnoreCase(TraktStatus.FAILURE)) {
+            } else if (TraktStatus.FAILURE.equals(r.status)) {
                 if (r.wait != 0) {
 
                     // looks like a check in is in progress

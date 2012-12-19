@@ -301,6 +301,8 @@
     <string name="checkinsuccess">Checked into %s on GetGlue.</string>
     <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
     <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
+    <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+    <string name="checkin_canceled_success_trakt">Cancelled check in on trakt.</string>
 
     <!-- Fix GetGlue Check In -->
     <string name="select_show">Select show</string>

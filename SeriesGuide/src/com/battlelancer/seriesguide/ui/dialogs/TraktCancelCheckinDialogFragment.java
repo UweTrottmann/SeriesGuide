@@ -115,10 +115,9 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
                     @Override
                     protected void onPostExecute(Response r) {
-                        if (r.status.equalsIgnoreCase(TraktStatus.SUCCESS)) {
+                        if (TraktStatus.SUCCESS.equals(r.status)) {
                             // all good
-                            Toast.makeText(context,
-                                    r.message + " " + context.getString(R.string.ontrakt),
+                            Toast.makeText(context, R.string.checkin_canceled_success_trakt,
                                     Toast.LENGTH_SHORT).show();
 
                             // relaunch the trakt task which called us to
@@ -127,7 +126,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                                     new Void[] {
                                         null
                                     });
-                        } else if (r.status.equalsIgnoreCase(TraktStatus.FAILURE)) {
+                        } else if (TraktStatus.FAILURE.equals(r.status)) {
                             // well, something went wrong
                             Toast.makeText(context,
                                     context.getString(R.string.trakt_error) + ": " + r.error,
