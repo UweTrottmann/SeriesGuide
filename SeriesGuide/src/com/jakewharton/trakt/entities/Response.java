@@ -6,6 +6,7 @@ public class Response implements TraktEntity {
     private static final long serialVersionUID = 5921890886906816035L;
 
     public String status; //TODO: enum
+    public TvShow show;
     public String message;
     public String error;
     public int wait;
