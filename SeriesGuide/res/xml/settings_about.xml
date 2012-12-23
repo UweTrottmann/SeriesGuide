@@ -11,7 +11,7 @@
     <Preference android:title="@string/pref_credits" >
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="https://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt" />
+            android:data="https://raw.github.com/UweTrottmann/SeriesGuide/master/CREDITS.txt" />
     </Preference>
     <Preference android:title="@string/helptranslate" >
         <intent
