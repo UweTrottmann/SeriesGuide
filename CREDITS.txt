@@ -1,0 +1,28 @@
+Credits
+=======
+
+I express my thanks to the following people and projects.
+
+Chris and Craig for testing the thing out. Craig for always pushing and supporting with all his heart and mind.
+
+Jake Wharton for his trakt.tv API (https://github.com/JakeWharton/trakt-java), ActionBarSherlock (http://actionbarsherlock.com) and ViewPagerIndicator (http://viewpagerindicator.com) and general wisdom and support.
+
+The minds of trakt.tv, especially Justin - http://trakt.tv
+
+The creators of the Google I/O app for lots of useful code patterns. - http://code.google.com/p/iosched
+
+The Oxygen Icon Theme Team for the TV Icon on which the logo is based on. - http://www.oxygen-icons.org
+
+Matthew Altman for creating javatvdbapi - http://code.google.com/p/javatvdbapi
+
+Charlie Collins for his Android examples - http://code.google.com/p/and-examples
+
+Matthias Käppler for Droid-Fu - http://github.com/kaeppler/droid-fu
+
+Webdesigner Depot for the Primo Icon Set - http://www.webdesignerdepot.com
+
+Matthias Käppler and Takahiro Horikawa for the Signpost OAuth library - https://github.com/kaeppler/signpost
+
+The translators on Crowdin - http://crowdin.net/project/seriesguide-translations
+
+Jeremy Feinstein for his SlidingMenu library - https://github.com/jfeinstein10/SlidingMenu
