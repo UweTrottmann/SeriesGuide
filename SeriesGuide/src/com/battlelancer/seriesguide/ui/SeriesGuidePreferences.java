@@ -163,6 +163,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     private static final String KEY_ABOUT = "aboutPref";
 
+    public static final String KEY_SELECTED_PAGE = "com.battlelancer.seriesguide.selectedpage";
+
     public static int THEME = R.style.SeriesGuideTheme;
 
     public static void fireTrackerEvent(String label) {

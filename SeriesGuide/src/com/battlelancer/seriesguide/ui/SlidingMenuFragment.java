@@ -19,8 +19,10 @@ package com.battlelancer.seriesguide.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +45,8 @@ public class SlidingMenuFragment extends ListFragment {
 
     private MenuAdapter mAdapter;
 
+    private SharedPreferences mPrefs;
+
     private static final int MENU_ITEM_SHOWS_ID = 0;
     private static final int MENU_ITEM_LISTS_ID = 1;
     private static final int MENU_ITEM_CHECKIN_ID = 2;
@@ -53,6 +57,10 @@ public class SlidingMenuFragment extends ListFragment {
     private static final int MENU_ITEM_SETTINGS_ID = 7;
     private static final int MENU_ITEM_FEEDBACK_ID = 8;
 
+    private static final int PAGE_SHOWS = 0;
+    private static final int PAGE_LISTS = 1;
+    private static final int PAGE_ACTIVITY = 2;
+
     /**
      * Google Analytics helper method for easy event tracking.
      */
@@ -62,7 +70,10 @@ public class SlidingMenuFragment extends ListFragment {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
+        // main views
         mAdapter = new MenuAdapter(getActivity());
         mAdapter.add(new MenuItem(getString(R.string.shows), R.drawable.ic_launcher,
                 MENU_ITEM_SHOWS_ID));
@@ -71,16 +82,19 @@ public class SlidingMenuFragment extends ListFragment {
         mAdapter.add(new MenuItem(getString(R.string.activity), R.drawable.ic_action_upcoming,
                 MENU_ITEM_ACTIVITY_ID));
 
+        // actions
         mAdapter.add(new MenuCategory());
         mAdapter.add(new MenuItem(getString(R.string.checkin), R.drawable.ic_action_checkin,
                 MENU_ITEM_CHECKIN_ID));
         mAdapter.add(new MenuItem(getString(R.string.search), R.drawable.ic_action_search,
                 MENU_ITEM_SEARCH_ID));
 
+        // add shows
         mAdapter.add(new MenuCategory());
         mAdapter.add(new MenuItem(getString(R.string.add_show), R.drawable.ic_action_add,
                 MENU_ITEM_ADD_SHOWS_ID));
 
+        // settings, help, feedback
         mAdapter.add(new MenuCategory());
         mAdapter.add(new MenuItem(getString(R.string.preferences), R.drawable.ic_action_settings,
                 MENU_ITEM_SETTINGS_ID));
@@ -106,16 +120,19 @@ public class SlidingMenuFragment extends ListFragment {
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
                                 | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                storeSelectedPage(PAGE_SHOWS);
                 break;
             case MENU_ITEM_LISTS_ID:
                 startActivity(new Intent(getActivity(), ListsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                storeSelectedPage(PAGE_LISTS);
                 break;
             case MENU_ITEM_ACTIVITY_ID:
                 startActivity(new Intent(getActivity(), UpcomingRecentActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                storeSelectedPage(PAGE_ACTIVITY);
                 break;
             case MENU_ITEM_CHECKIN_ID:
                 startActivity(new Intent(getActivity(), CheckinActivity.class)
@@ -156,6 +173,10 @@ public class SlidingMenuFragment extends ListFragment {
                 fireTrackerEvent("Feedback");
                 break;
         }
+    }
+
+    private void storeSelectedPage(int page) {
+        mPrefs.edit().putInt(SeriesGuidePreferences.KEY_SELECTED_PAGE, page).commit();
     }
 
     private class MenuItem {
