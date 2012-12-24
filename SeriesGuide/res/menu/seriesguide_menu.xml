@@ -2,27 +2,33 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@+id/menu_add_show"
+        android:icon="@drawable/ic_action_add"
+        android:orderInCategory="1"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/add_show"/>
+    <item
         android:id="@+id/menu_showsortby"
         android:icon="@drawable/ic_action_sort"
-        android:orderInCategory="1"
+        android:orderInCategory="2"
         android:showAsAction="never"
         android:title="@string/sort"/>
     <item
         android:id="@+id/menu_updateart"
         android:icon="@drawable/ic_action_refresh"
-        android:orderInCategory="2"
+        android:orderInCategory="3"
         android:showAsAction="never"
         android:title="@string/menu_updateart"/>
     <item
         android:id="@+id/menu_update"
         android:icon="@drawable/ic_action_refresh"
-        android:orderInCategory="3"
+        android:orderInCategory="4"
         android:showAsAction="never"
         android:title="@string/menu_update_delta"/>
     <item
         android:id="@+id/menu_fullupdate"
         android:icon="@drawable/ic_action_refresh"
-        android:orderInCategory="4"
+        android:orderInCategory="5"
         android:showAsAction="never"
         android:title="@string/updateall_yes"/>
 

@@ -50,7 +50,6 @@ public class SlidingMenuFragment extends ListFragment {
     private static final int MENU_ITEM_CHECKIN_ID = 2;
     private static final int MENU_ITEM_ACTIVITY_ID = 3;
     private static final int MENU_ITEM_SEARCH_ID = 4;
-    private static final int MENU_ITEM_ADD_SHOWS_ID = 5;
 
     private static final int PAGE_SHOWS = 0;
     private static final int PAGE_LISTS = 1;
@@ -65,7 +64,7 @@ public class SlidingMenuFragment extends ListFragment {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        
+
         mPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         // main views
@@ -84,12 +83,8 @@ public class SlidingMenuFragment extends ListFragment {
         mAdapter.add(new MenuItem(getString(R.string.search), R.drawable.ic_action_search,
                 MENU_ITEM_SEARCH_ID));
 
-        // add shows
-        mAdapter.add(new MenuCategory());
-        mAdapter.add(new MenuItem(getString(R.string.add_show), R.drawable.ic_action_add,
-                MENU_ITEM_ADD_SHOWS_ID));
-
         setListAdapter(mAdapter);
+        getListView().setDivider(null);
     }
 
     @Override
@@ -127,11 +122,6 @@ public class SlidingMenuFragment extends ListFragment {
                 break;
             case MENU_ITEM_SEARCH_ID:
                 startActivity(new Intent(getActivity(), SearchActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
-                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                break;
-            case MENU_ITEM_ADD_SHOWS_ID:
-                startActivity(new Intent(getActivity(), AddActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;

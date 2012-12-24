@@ -49,7 +49,7 @@ import com.viewpagerindicator.TabPageIndicator;
  * Hosts various fragments in a {@link ViewPager} which allow adding shows to
  * the database.
  */
-public class AddActivity extends BaseTopActivity implements OnAddShowListener {
+public class AddActivity extends BaseActivity implements OnAddShowListener {
 
     private AddPagerAdapter mAdapter;
 
@@ -65,6 +65,7 @@ public class AddActivity extends BaseTopActivity implements OnAddShowListener {
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setIcon(R.drawable.ic_action_add);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         setProgressBarIndeterminateVisibility(Boolean.FALSE);
         setSupportProgressBarIndeterminateVisibility(false);
 

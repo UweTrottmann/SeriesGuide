@@ -18,6 +18,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
@@ -259,7 +260,12 @@ public class ShowsActivity extends BaseTopActivity implements CompatActionBarNav
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_update) {
+        if (itemId == R.id.menu_add_show) {
+            startActivity(new Intent(this, AddActivity.class));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            return true;
+        }
+        else if (itemId == R.id.menu_update) {
             performUpdateTask(false, null);
             fireTrackerEvent("Update");
             return true;

@@ -49,8 +49,7 @@ public abstract class BaseTopActivity extends BaseActivity {
             return true;
         }
         else if (itemId == R.id.menu_preferences) {
-            startActivity(new Intent(this, SeriesGuidePreferences.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+            startActivity(new Intent(this, SeriesGuidePreferences.class));
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
         }
