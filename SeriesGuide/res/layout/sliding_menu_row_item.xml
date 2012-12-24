@@ -17,7 +17,7 @@
         android:layout_toRightOf="@+id/menu_icon"
         android:gravity="center_vertical"
         android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.Large.Light"
+        android:textAppearance="@style/TextAppearance.Medium.Light"
         android:textColor="@color/text_primary" />
 
 </RelativeLayout>
