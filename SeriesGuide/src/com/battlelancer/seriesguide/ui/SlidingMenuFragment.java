@@ -84,7 +84,6 @@ public class SlidingMenuFragment extends ListFragment {
                 MENU_ITEM_SEARCH_ID));
 
         setListAdapter(mAdapter);
-        getListView().setDivider(null);
     }
 
     @Override
