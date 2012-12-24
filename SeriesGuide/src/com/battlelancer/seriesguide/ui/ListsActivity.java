@@ -66,7 +66,7 @@ public class ListsActivity extends BaseTopActivity implements OnListsChangedList
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.lists_menu, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

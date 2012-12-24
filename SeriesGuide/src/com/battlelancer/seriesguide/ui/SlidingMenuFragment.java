@@ -20,7 +20,6 @@ package com.battlelancer.seriesguide.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
@@ -32,7 +31,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
@@ -53,9 +51,6 @@ public class SlidingMenuFragment extends ListFragment {
     private static final int MENU_ITEM_ACTIVITY_ID = 3;
     private static final int MENU_ITEM_SEARCH_ID = 4;
     private static final int MENU_ITEM_ADD_SHOWS_ID = 5;
-    private static final int MENU_ITEM_HELP_ID = 6;
-    private static final int MENU_ITEM_SETTINGS_ID = 7;
-    private static final int MENU_ITEM_FEEDBACK_ID = 8;
 
     private static final int PAGE_SHOWS = 0;
     private static final int PAGE_LISTS = 1;
@@ -93,15 +88,6 @@ public class SlidingMenuFragment extends ListFragment {
         mAdapter.add(new MenuCategory());
         mAdapter.add(new MenuItem(getString(R.string.add_show), R.drawable.ic_action_add,
                 MENU_ITEM_ADD_SHOWS_ID));
-
-        // settings, help, feedback
-        mAdapter.add(new MenuCategory());
-        mAdapter.add(new MenuItem(getString(R.string.preferences), R.drawable.ic_action_settings,
-                MENU_ITEM_SETTINGS_ID));
-        mAdapter.add(new MenuItem(getString(R.string.help), R.drawable.ic_action_help,
-                MENU_ITEM_HELP_ID));
-        mAdapter.add(new MenuItem(getString(R.string.feedback), R.drawable.ic_action_send,
-                MENU_ITEM_FEEDBACK_ID));
 
         setListAdapter(mAdapter);
     }
@@ -148,29 +134,6 @@ public class SlidingMenuFragment extends ListFragment {
                 startActivity(new Intent(getActivity(), AddActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                break;
-            case MENU_ITEM_SETTINGS_ID:
-                startActivity(new Intent(getActivity(), SeriesGuidePreferences.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
-                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                break;
-            case MENU_ITEM_HELP_ID:
-                Intent myIntent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse(SeriesGuidePreferences.HELP_URL));
-                startActivity(myIntent);
-                break;
-            case MENU_ITEM_FEEDBACK_ID:
-                final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-                intent.setType("plain/text");
-                intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
-                        SeriesGuidePreferences.SUPPORT_MAIL
-                });
-                intent.putExtra(android.content.Intent.EXTRA_SUBJECT,
-                        "SeriesGuide " + Utils.getVersion(getActivity()) + " Feedback");
-                intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
-                startActivity(Intent.createChooser(intent, "Send mail..."));
-
-                fireTrackerEvent("Feedback");
                 break;
         }
     }
