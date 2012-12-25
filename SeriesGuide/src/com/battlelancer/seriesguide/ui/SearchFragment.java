@@ -46,7 +46,7 @@ import com.uwetrottmann.seriesguide.R;
  */
 public class SearchFragment extends SherlockListFragment implements LoaderCallbacks<Cursor> {
 
-    private static final int LOADER_ID = R.string.search_title;
+    private static final int LOADER_ID = R.string.search_hint;
 
     private SimpleCursorAdapter mAdapter;
 
