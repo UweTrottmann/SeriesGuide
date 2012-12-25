@@ -10,7 +10,6 @@
   <string name="episode_notwatched">Katsomaton</string>
   <string name="specialseason">Erikoisjaksot</string>
   <string name="search_hint">Hae jaksoja</string>
-  <string name="search_title">Löytyneet jaksot</string>
   <string name="share_episode">Jaa jakso</string>
   <string name="share_checkout">Kuittaa ulos</string>
   <string name="search_description">Jaksot</string>
@@ -184,7 +183,7 @@
   <string name="about">Tietoja SeriesGuidesta</string>
   <string name="pref_credits">Tekijät</string>
   <string name="clearGetGlueCredentials">Irrottaudu GetGluesta</string>
-  <string name="clearGetGlueCredentialssummary">Kuittaa GetGluen kanssa yhdistääksesi uudelleen</string>
+  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
   <string name="pref_trakt">trakt.tv:n käyttäjätiedot</string>
   <string name="pref_traktsummary">Lisää tai muokkaa trakt.tv:n käyttäjätietojasi</string>
   <string name="pref_traktsync">Synkronoi trakt.tv:n kanssa</string>
@@ -225,11 +224,13 @@
   <string name="checkin_searchhint">Kirjoita ohjelman nimi</string>
   <string name="checkin_empty">Ei vastaavia ohjelmia</string>
   <string name="checkin_hint">Kirjoita viesti (valinnainen)</string>
-  <string name="checkin_fixgetglue">Korjaa GetGlue-kuittaus</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
   <string name="paste_episode">Liitä jakso</string>
   <string name="checkinsuccess">Kuitattu kohteeseen %s GetGluessa.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
+  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGluen todentaminen epäonnistui. Yritä myöhemmin uudelleen.</string>
+  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">Valitse ohjelma</string>
   <string name="check_into">Kuittaa</string>
   <string name="no_selection">valitse yksi alta</string>
@@ -237,7 +238,7 @@
   <string name="menu_rate_trakt">Arvostele (trakt)</string>
   <string name="menu_share_others">Muulla sovelluksella</string>
   <string name="traktcheckin_cancel">Korvaa</string>
-  <string name="traktcheckin_inprogress">Olet jo kuitannut toiseen jaksoon tai elokuvaan. Joko korvaa edellinen kuittaus tai odota %s ja yritä uudelleen.</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">Odotetaan</string>
   <string name="oauthmessage">Todennetaan SeriesGuide palveluun GetGlue…</string>
   <string name="addtocalendar">Lisää kalenteriin</string>
@@ -274,6 +275,7 @@
   <string name="pref_ringtone">Soittoääni</string>
   <string name="pref_vibrate">Värinä</string>
   <string name="pref_vibratesummary">Myös värise näytettäessä ilmoitus</string>
+  <string name="pref_notifications_treshold">When to notify</string>
   <string name="pref_theme">Sovelluksen teema</string>
   <string name="choose_list">Valitse toimintalista</string>
   <string name="hide_watched">Piilota katsotut jaksot</string>
@@ -316,6 +318,12 @@
     <item>Suosikit</item>
     <item>Katsomattomat/Tulevat</item>
     <item>Piilotetut</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>on air</item>
+    <item>5 min in advance</item>
+    <item>10 min in advance</item>
+    <item>one hour in advance</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d ääni</item>

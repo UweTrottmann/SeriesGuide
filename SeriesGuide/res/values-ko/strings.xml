@@ -10,7 +10,6 @@
   <string name="episode_notwatched">아직 안봤음</string>
   <string name="specialseason">스페셜 에피소드</string>
   <string name="search_hint">에피소드 검색</string>
-  <string name="search_title">일치하는 에피소드</string>
   <string name="share_episode">에피소드 공유</string>
   <string name="share_checkout">체크 아웃</string>
   <string name="search_description">에피소드</string>
@@ -184,7 +183,7 @@
   <string name="about">시리즈가이드에 대하여</string>
   <string name="pref_credits">만든이</string>
   <string name="clearGetGlueCredentials">GetGlue 연결끊기</string>
-  <string name="clearGetGlueCredentialssummary">다시 연결하기위해 GetClue 체크인</string>
+  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
   <string name="pref_trakt">trakt.tv 로그인 정보</string>
   <string name="pref_traktsummary">trakt.tv 에 로그인 혹은 새계정 생성</string>
   <string name="pref_traktsync">trakt.tv와 동기화</string>
@@ -225,11 +224,13 @@
   <string name="checkin_searchhint">쇼 이름을 입력하세요</string>
   <string name="checkin_empty">일치하는 쇼가 없습니다</string>
   <string name="checkin_hint">메세지 입력 (선택사항)</string>
-  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
   <string name="paste_episode">에피소드 붙여넣기</string>
   <string name="checkinsuccess">%s을 GetGlue에 체크인 완료.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
+  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue 인증이 실패 하였습니다. 나중에 다시 시도 하세요.</string>
+  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
   <string name="no_selection">pick one below</string>
@@ -237,7 +238,7 @@
   <string name="menu_rate_trakt">평가 (trakt)</string>
   <string name="menu_share_others">다른 앱을 통해</string>
   <string name="traktcheckin_cancel">오버라이드</string>
-  <string name="traktcheckin_inprogress">이미 다른 에피소드, 영화에 체크인 하였습니다. 이전 체크인을 해제하거나 %s 기다렸다가 다시 시도하세요.</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">기다리겠소</string>
   <string name="oauthmessage">GetClue에 로그인 중...</string>
   <string name="addtocalendar">캘린더에 추가</string>
@@ -274,6 +275,7 @@
   <string name="pref_ringtone">벨소리</string>
   <string name="pref_vibrate">진동</string>
   <string name="pref_vibratesummary">알림 시 진동</string>
+  <string name="pref_notifications_treshold">When to notify</string>
   <string name="pref_theme">앱 테마</string>
   <string name="choose_list">표시할 목록 선택</string>
   <string name="hide_watched">시청한 에피소드 숨기기</string>
@@ -316,6 +318,12 @@
     <item>즐겨찾기</item>
     <item>미시청/방영예정</item>
     <item>숨겨짐</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>on air</item>
+    <item>5 min in advance</item>
+    <item>10 min in advance</item>
+    <item>one hour in advance</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d명이 투표</item>

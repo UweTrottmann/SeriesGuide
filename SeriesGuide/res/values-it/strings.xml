@@ -10,13 +10,12 @@
   <string name="episode_notwatched">Non ancora visto</string>
   <string name="specialseason">Episodi Speciali</string>
   <string name="search_hint">Cerca episodi</string>
-  <string name="search_title">Episodi corrispondenti</string>
   <string name="share_episode">Condividi episodio</string>
   <string name="share_checkout">Check-out</string>
   <string name="search_description">Episodi</string>
   <string name="description_overview">Panoramica</string>
   <string name="description_poster">Mostra poster</string>
-  <string name="description_image">Episode image</string>
+  <string name="description_image">Immagine dell\'episodio</string>
   <string name="norating">non disponibile</string>
   <string name="loading">Caricamento in corso...</string>
   <string name="done">Fatto</string>
@@ -24,15 +23,15 @@
   <string name="more">%s più</string>
   <string name="cancel">Annulla</string>
   <string name="share">Condividi</string>
-  <string name="updated">Updated to latest version.</string>
-  <string name="discard">Discard</string>
-  <string name="save_selection">Save selection</string>
+  <string name="updated">Aggionato all\'ultima versione.</string>
+  <string name="discard">Scarta</string>
+  <string name="save_selection">Salva selezione</string>
   <string name="offline">Nessuna connessione di rete. Riprova più tardi.</string>
   <string name="onlyx">Disponibile solo in SeriesGuide X</string>
-  <string name="shows">Shows</string>
-  <string name="lists">Lists</string>
+  <string name="shows">Show</string>
+  <string name="lists">Liste</string>
   <string name="activity">Attività</string>
-  <string name="search">Search</string>
+  <string name="search">Cerca</string>
   <string name="add_show">Aggiungi Serie</string>
   <string name="preferences">Impostazioni</string>
   <string name="help">Guida</string>
@@ -91,7 +90,7 @@
   <string name="trakt_notcollected">%s non collezionato.</string>
   <string name="shows_empty">Nessuno spettacolo.</string>
   <string name="confirm_delete">Vuoi davvero rimuovere %s?</string>
-  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
+  <string name="delete_has_list_items">Impossibile procedere, elimina %s dalla lista.</string>
   <string name="delete_show">Rimuovere</string>
   <string name="dontdelete_show">Non rimuovere</string>
   <string name="no_nextepisode">nessun prossimo episodio trovato</string>
@@ -153,7 +152,7 @@
   <string name="watchlist">Watchlist</string>
   <string name="powered_by_thetvdb">powered by thetvdb.com</string>
   <string name="powered_by_trakt">powered by trakt.tv</string>
-  <string name="first_list">First list</string>
+  <string name="first_list">Prima lista</string>
   <string name="list_add">Aggiungi lista</string>
   <string name="list_title_hint">Rinomina lista</string>
   <string name="list_remove">Elimina lista</string>
@@ -162,7 +161,7 @@
   <string name="list_item_remove">Rimuovi da lista</string>
   <string name="list_empty">Puoi aggiungere nella lista serie, stagioni o episodi.</string>
   <string name="prefs_category_basic">Base</string>
-  <string name="prefs_category_sharing">Services</string>
+  <string name="prefs_category_sharing">Servizi</string>
   <string name="prefs_category_advanced">Avanzato</string>
   <string name="prefs_category_about">Info su</string>
   <string name="pref_showsorting">Ordina serie per...</string>
@@ -184,7 +183,7 @@
   <string name="about">Su SeriesGuide</string>
   <string name="pref_credits">Crediti</string>
   <string name="clearGetGlueCredentials">Scollegare da GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Check-In con GetGlue riconnettersi</string>
+  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
   <string name="pref_trakt">Credenziali Trakt.TV</string>
   <string name="pref_traktsummary">Aggiungi o modifica le credenziali Trakt.tv</string>
   <string name="pref_traktsync">Sincronizzazione con Trakt.tv</string>
@@ -197,8 +196,8 @@
   <string name="pref_ganalyticssummary">Traccia l\'uso delle funzionalità per aiutare a migliorare SeriesGuide</string>
   <string name="sendusagedata">Invia allo sviluppatore delle statistiche sull\'utilizzo</string>
   <string name="pref_upcominglimit">Prossimi programmi tra...</string>
-  <string name="pref_autoaddshows">Add new trakt shows</string>
-  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+  <string name="pref_autoaddshows">Agigungi nuovi show trakt</string>
+  <string name="pref_autoaddshowssummary">Aggiungi show automaticamente dal tuo trakt</string>
   <string name="backup_description"><b>Backup</b> crea una copia del vostro database delle serie in un file denominato <b>seriesdatabase</b> nella cartella below.\n\nTo <b>Restore</b> assicurarsi che questo file è nel backup della cartella below.\n\nOnly cartella con lo stesso o una versione inferiore del database come sotto può essere ripristinata.</string>
   <string name="backup_path"><b>Cartella backup</b></string>
   <string name="backup_version"><b>Versione database</b></string>
@@ -225,19 +224,21 @@
   <string name="checkin_searchhint">Digitare il nome della serie</string>
   <string name="checkin_empty">Nessuna corrispondenza serie</string>
   <string name="checkin_hint">Digita un messaggio (opzionale)</string>
-  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
   <string name="paste_episode">Incolla episodio</string>
   <string name="checkinsuccess">Verificato in %s su GetGlue.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
+  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue autenticazione non riuscita. Riprovare più tardi.</string>
-  <string name="select_show">Select show</string>
+  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
+  <string name="select_show">Seleziona show</string>
   <string name="check_into">Check into</string>
-  <string name="no_selection">pick one below</string>
-  <string name="looking_for_something_else">Looking for something else?</string>
+  <string name="no_selection">scegline uno</string>
+  <string name="looking_for_something_else">Cerchi qualcos\'altro?</string>
   <string name="menu_rate_trakt">Vota (trakt)</string>
   <string name="menu_share_others">Attraverso altre apps</string>
   <string name="traktcheckin_cancel">Sovrascrivi</string>
-  <string name="traktcheckin_inprogress">Hai già verificato in un altro episodio o film. Sovrascrivere la precedente verifica o attendere %s e riprovare.</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">Aspetterò</string>
   <string name="oauthmessage">Autenticazione SeriesGuide su GetGlue</string>
   <string name="addtocalendar">Aggiungi al calendario</string>
@@ -274,6 +275,7 @@
   <string name="pref_ringtone">Suoneria</string>
   <string name="pref_vibrate">Vibrazione</string>
   <string name="pref_vibratesummary">Vibra anche alla visualizzazione di una notifica</string>
+  <string name="pref_notifications_treshold">When to notify</string>
   <string name="pref_theme">Tema applicazione</string>
   <string name="choose_list">Scegliere elenco attività</string>
   <string name="hide_watched">Nascondi episodi già visti</string>
@@ -316,6 +318,12 @@
     <item>Preferiti</item>
     <item>Non Visti/Prossimi</item>
     <item>Nascosti</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>on air</item>
+    <item>5 min in advance</item>
+    <item>10 min in advance</item>
+    <item>one hour in advance</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d voto</item>

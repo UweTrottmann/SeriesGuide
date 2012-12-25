@@ -10,7 +10,6 @@
   <string name="episode_notwatched">טרם נצפה</string>
   <string name="specialseason">פרקים מיוחדים</string>
   <string name="search_hint">חפש פרקים</string>
-  <string name="search_title">פרקים מתאימים</string>
   <string name="share_episode">שתף פרק</string>
   <string name="share_checkout">התנתק</string>
   <string name="search_description">פרקים</string>
@@ -29,10 +28,10 @@
   <string name="save_selection">שמור בחירה</string>
   <string name="offline">אין קישוריות, נסה מאוחר יותר</string>
   <string name="onlyx">זמין רק בגרסת SeriesGuide X</string>
-  <string name="shows">Shows</string>
-  <string name="lists">Lists</string>
-  <string name="activity">פעיל</string>
-  <string name="search">Search</string>
+  <string name="shows">סדרות</string>
+  <string name="lists">רשימות</string>
+  <string name="activity">פעילות</string>
+  <string name="search">חיפוש</string>
   <string name="add_show">הוסף סדרה</string>
   <string name="preferences">הגדרות</string>
   <string name="help">עזרה</string>
@@ -184,7 +183,7 @@
   <string name="about">אודות SeriesGuide</string>
   <string name="pref_credits">קרדיטים</string>
   <string name="clearGetGlueCredentials">נתק את GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">בצע צ\'ק-אין עם GetGlue כדי להתחבר מחדש</string>
+  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
   <string name="pref_trakt">אישורי trakt.tv</string>
   <string name="pref_traktsummary">הוסף או ערוך את אישורי ה-trakt.tv שלך</string>
   <string name="pref_traktsync">סנכרן עם trakt.tv</string>
@@ -225,11 +224,13 @@
   <string name="checkin_searchhint">הקלד שם סדרה</string>
   <string name="checkin_empty">אין סדרות תואמות</string>
   <string name="checkin_hint">הקלד הודעה (אופציונלי)</string>
-  <string name="checkin_fixgetglue">תקן את צ\'ק-אין GetGlue</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
   <string name="paste_episode">הדבק פרק</string>
   <string name="checkinsuccess">בוצע צ\'ק-אין של %s ב-GetGlue.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
+  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">אימות GetGlue נכשל. נסה שנית מאוחר יותר.</string>
+  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">בחר סדרה</string>
   <string name="check_into">בצע צ\'ק-אין ב</string>
   <string name="no_selection">בחר אחד להלן</string>
@@ -237,7 +238,7 @@
   <string name="menu_rate_trakt">דרג (trakt)</string>
   <string name="menu_share_others">באמצעות אפליקציות אחרות</string>
   <string name="traktcheckin_cancel">דרוס</string>
-  <string name="traktcheckin_inprogress">כבר בצעת צ\'ק-אין לפרק או סרט אחר. דרוס את הצ\'ק-אין הקודם או המתן %s ונסה שנית.</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">אני אחכה</string>
   <string name="oauthmessage">מאמת את SeriesGuide עם GetGlue</string>
   <string name="addtocalendar">הוסף ללוח השנה</string>
@@ -274,6 +275,7 @@
   <string name="pref_ringtone">רינגטון</string>
   <string name="pref_vibrate">רטט</string>
   <string name="pref_vibratesummary">רטוט גם בזמן הצגת התראות</string>
+  <string name="pref_notifications_treshold">When to notify</string>
   <string name="pref_theme">נושא אפליקציה</string>
   <string name="choose_list">בחר רשימת פעילות</string>
   <string name="hide_watched">הסתר פרקים שנצפו</string>
@@ -316,6 +318,12 @@
     <item>מועדפים</item>
     <item>לא נראו/עתידיים</item>
     <item>מוסתרים</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>on air</item>
+    <item>5 min in advance</item>
+    <item>10 min in advance</item>
+    <item>one hour in advance</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">הצבעה %d</item>

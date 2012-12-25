@@ -10,7 +10,6 @@
   <string name="episode_notwatched">Pas encore regardé</string>
   <string name="specialseason">Épisodes Spéciaux</string>
   <string name="search_hint">Recherche d\'épisodes</string>
-  <string name="search_title">Épisodes correspondants</string>
   <string name="share_episode">Partager l\'épisode</string>
   <string name="share_checkout">Jette un oeil sur</string>
   <string name="search_description">Episodes</string>
@@ -29,10 +28,10 @@
   <string name="save_selection">Enregistrer</string>
   <string name="offline">Pas de connexion. Réessayez plus tard.</string>
   <string name="onlyx">Disponible seulement dans SeriesGuide X</string>
-  <string name="shows">Shows</string>
-  <string name="lists">Lists</string>
+  <string name="shows">Séries</string>
+  <string name="lists">Listes</string>
   <string name="activity">Activité</string>
-  <string name="search">Search</string>
+  <string name="search">Rechercher</string>
   <string name="add_show">Ajouter Série</string>
   <string name="preferences">Paramètres</string>
   <string name="help">Aide</string>
@@ -184,7 +183,7 @@
   <string name="about">A propos de SeriesGuide</string>
   <string name="pref_credits">Crédits</string>
   <string name="clearGetGlueCredentials">Déconnecter GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Faites un Check in avec GetGlue pour le reconnecter</string>
+  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
   <string name="pref_trakt">Identifiants trakt.tv</string>
   <string name="pref_traktsummary">Ajouter ou modifier vos identifiants sur trakt.tv</string>
   <string name="pref_traktsync">Synchroniser avec trakt.tv</string>
@@ -225,11 +224,13 @@
   <string name="checkin_searchhint">Entrez un nom de série</string>
   <string name="checkin_empty">Aucune série correspondante</string>
   <string name="checkin_hint">Écrivez un message (optionnel)</string>
-  <string name="checkin_fixgetglue">Corriger le check-in de GetGlue</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
   <string name="paste_episode">Ajouter l\'épisode</string>
   <string name="checkinsuccess">Check-in de %s sur GetGlue effectué.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
+  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">Authentification à GetGlue échouée. Réessayez plus tard.</string>
+  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">Sélectionnez une série</string>
   <string name="check_into">Faire un check-in de</string>
   <string name="no_selection">choisissez ci-dessous</string>
@@ -237,7 +238,7 @@
   <string name="menu_rate_trakt">Noter (trakt)</string>
   <string name="menu_share_others">Via d\'autres applis</string>
   <string name="traktcheckin_cancel">Annuler</string>
-  <string name="traktcheckin_inprogress">Vous regardez déjà un autre film ou épisode. Annulez ce précédent checkin ou patientez %s et essayez à nouveau.</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">J\'attends</string>
   <string name="oauthmessage">Authentification de SériesGuide avec GetGlue...</string>
   <string name="addtocalendar">Ajouter à l\'agenda</string>
@@ -274,6 +275,7 @@
   <string name="pref_ringtone">Sonnerie</string>
   <string name="pref_vibrate">Vibrer</string>
   <string name="pref_vibratesummary">Vibrer aussi lors d\'un notification</string>
+  <string name="pref_notifications_treshold">When to notify</string>
   <string name="pref_theme">Thème</string>
   <string name="choose_list">Choisissez la liste d\'activités</string>
   <string name="hide_watched">Masquer les épisodes vus</string>
@@ -316,6 +318,12 @@
     <item>Favoris</item>
     <item>Pas vu / Prochains</item>
     <item>Masqués</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>on air</item>
+    <item>5 min in advance</item>
+    <item>10 min in advance</item>
+    <item>one hour in advance</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d vote</item>

@@ -10,7 +10,6 @@
   <string name="episode_notwatched">未观看</string>
   <string name="specialseason">特别剧集</string>
   <string name="search_hint">搜索剧集</string>
-  <string name="search_title">匹配的剧集</string>
   <string name="share_episode">共享剧集</string>
   <string name="share_checkout">标记已观看</string>
   <string name="search_description">集数</string>
@@ -184,9 +183,9 @@
   <string name="about">关于 SeriesGuide 应用</string>
   <string name="pref_credits">制作人员</string>
   <string name="clearGetGlueCredentials">断开与 GetGlue 的连接</string>
-  <string name="clearGetGlueCredentialssummary">登录到 GetGlue 来重新连接</string>
-  <string name="pref_trakt">trakt.tv 证书</string>
-  <string name="pref_traktsummary">添加或编辑您的 trakt.tv 证书</string>
+  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
+  <string name="pref_trakt">trakt.tv 账号</string>
+  <string name="pref_traktsummary">添加或编辑您的 trakt.tv 账号</string>
   <string name="pref_traktsync">与 trakt.tv 同步</string>
   <string name="feedback">发送反馈报告</string>
   <string name="clear_cache">清理图片缓存</string>
@@ -225,11 +224,13 @@
   <string name="checkin_searchhint">输入剧集名称</string>
   <string name="checkin_empty">没有匹配项目</string>
   <string name="checkin_hint">输入一段文字（可选）</string>
-  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
   <string name="paste_episode">粘贴剧集信息</string>
   <string name="checkinsuccess">已在 GetGlue 上评论 %s。</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
+  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue 认证失败，请稍后重试。</string>
+  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
   <string name="no_selection">pick one below</string>
@@ -237,7 +238,7 @@
   <string name="menu_rate_trakt">打分 (trakt)</string>
   <string name="menu_share_others">通过其它应用</string>
   <string name="traktcheckin_cancel">覆盖</string>
-  <string name="traktcheckin_inprogress">您已经评论了另一个剧集或电影。覆盖先前的剧集或等待 %s 之后重试</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">继续等待</string>
   <string name="oauthmessage">关联“美剧指南”与 GetGlue 帐号。</string>
   <string name="addtocalendar">加入日程计划</string>
@@ -274,6 +275,7 @@
   <string name="pref_ringtone">铃声</string>
   <string name="pref_vibrate">振动</string>
   <string name="pref_vibratesummary">显示通知时振动</string>
+  <string name="pref_notifications_treshold">When to notify</string>
   <string name="pref_theme">应用主题</string>
   <string name="choose_list">选择活动列表</string>
   <string name="hide_watched">隐藏已观看剧集</string>
@@ -316,6 +318,12 @@
     <item>喜爱</item>
     <item>未观看且即将播出</item>
     <item>隐藏</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>on air</item>
+    <item>5 min in advance</item>
+    <item>10 min in advance</item>
+    <item>one hour in advance</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d 个评价</item>

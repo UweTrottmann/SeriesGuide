@@ -10,7 +10,6 @@
   <string name="episode_notwatched">尚未觀賞</string>
   <string name="specialseason">特集</string>
   <string name="search_hint">搜尋集數</string>
-  <string name="search_title">符合影集</string>
   <string name="share_episode">分享此集</string>
   <string name="share_checkout">登出</string>
   <string name="search_description">集數</string>
@@ -184,7 +183,7 @@
   <string name="about">關於 SeriesGuide</string>
   <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">中斷GetGlue的連線</string>
-  <string name="clearGetGlueCredentialssummary">Check In with GetGlue to reconnect</string>
+  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
   <string name="pref_trakt">trakt.tv 憑證</string>
   <string name="pref_traktsummary">新增或編輯您的trakt.tv憑證</string>
   <string name="pref_traktsync">與trakt.tv同步</string>
@@ -225,11 +224,13 @@
   <string name="checkin_searchhint">Type a show name</string>
   <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Type a message (optional)</string>
-  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
   <string name="paste_episode">Paste episode</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
+  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
+  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
   <string name="no_selection">pick one below</string>
@@ -237,7 +238,7 @@
   <string name="menu_rate_trakt">等級(trakt)</string>
   <string name="menu_share_others">透過其他應用程式。</string>
   <string name="traktcheckin_cancel">Override</string>
-  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous checkin or wait %s and try again.</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">等待</string>
   <string name="oauthmessage">Authenticating SeriesGuide with GetGlue…</string>
   <string name="addtocalendar">新增至行事曆</string>
@@ -274,6 +275,7 @@
   <string name="pref_ringtone">Ringtone</string>
   <string name="pref_vibrate">Vibrate</string>
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
+  <string name="pref_notifications_treshold">When to notify</string>
   <string name="pref_theme">App Theme</string>
   <string name="choose_list">Choose activity list</string>
   <string name="hide_watched">Hide watched episodes</string>
@@ -316,6 +318,12 @@
     <item>我的最愛</item>
     <item>尚未觀賞/即將播出</item>
     <item>隱藏</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>on air</item>
+    <item>5 min in advance</item>
+    <item>10 min in advance</item>
+    <item>one hour in advance</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d vote</item>

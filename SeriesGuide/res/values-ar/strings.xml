@@ -10,7 +10,6 @@
   <string name="episode_notwatched">لم تُشاهد بعد</string>
   <string name="specialseason">حلقات خاصة</string>
   <string name="search_hint">البحث في الحلقات</string>
-  <string name="search_title">الحلقات المطابقة</string>
   <string name="share_episode">مشاركة الحلقة</string>
   <string name="share_checkout">فحص</string>
   <string name="search_description">الحلقات</string>
@@ -184,7 +183,7 @@
   <string name="about">SeriesGuide حول</string>
   <string name="pref_credits">الاعتمادات</string>
   <string name="clearGetGlueCredentials">GetGlue قطع إتصال</string>
-  <string name="clearGetGlueCredentialssummary">تحقق مع جيتجلوي من إعادة الاتصال</string>
+  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
   <string name="pref_trakt">trakt.tv بيانات</string>
   <string name="pref_traktsummary">trakt.tv أضف أو عدل بياناتك في موقع</string>
   <string name="pref_traktsync">trakt.tv المزامنة مع</string>
@@ -225,11 +224,13 @@
   <string name="checkin_searchhint">اكتب اسم عرض</string>
   <string name="checkin_empty">لا تظهر مطابقة</string>
   <string name="checkin_hint">اكتب رسالة (اختياري)</string>
-  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
   <string name="paste_episode">لصق الحلقة</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
+  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">فشل GetGlue المصادقة. حاول مرة أخرى في وقت لاحق.</string>
+  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
   <string name="no_selection">pick one below</string>
@@ -237,7 +238,7 @@
   <string name="menu_rate_trakt">(قيّم (موقع تراكت</string>
   <string name="menu_share_others">عبر تطبيقات أخرى</string>
   <string name="traktcheckin_cancel">تجاهل</string>
-  <string name="traktcheckin_inprogress">يتم التحقق مسبقا في حلقة أخرى أو الفيلم. تخطي إما الإيداع السابق أو انتظر s٪ وحاول مرة أخرى.</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">سأنتظر</string>
   <string name="oauthmessage">Authenticating SeriesGuide with GetGlue…</string>
   <string name="addtocalendar">إضافة إلى التقويم</string>
@@ -274,6 +275,7 @@
   <string name="pref_ringtone">نغمة التنبيه</string>
   <string name="pref_vibrate">إهتزاز</string>
   <string name="pref_vibratesummary">إهتزاز عند عرض التنبيه</string>
+  <string name="pref_notifications_treshold">When to notify</string>
   <string name="pref_theme">شكل التطبيق</string>
   <string name="choose_list">اختر قائمة النشاط</string>
   <string name="hide_watched">إخفاء الحلقات المشاهدة</string>
@@ -316,6 +318,12 @@
     <item>المفضلة</item>
     <item>الغير مُشاهدة/القادمة</item>
     <item>مخفي</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>on air</item>
+    <item>5 min in advance</item>
+    <item>10 min in advance</item>
+    <item>one hour in advance</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">صوت % d</item>

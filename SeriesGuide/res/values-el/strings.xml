@@ -10,7 +10,6 @@
   <string name="episode_notwatched">Δεν έχει παρακολουθηθεί</string>
   <string name="specialseason">Ειδικά Επεισόδια</string>
   <string name="search_hint">Αναζήτηση επεισοδίων</string>
-  <string name="search_title">Επεισόδια που ταιριάζουν</string>
   <string name="share_episode">Κοινή χρήση επεισοδίου</string>
   <string name="share_checkout">Check out</string>
   <string name="search_description">Επεισόδια</string>
@@ -184,7 +183,7 @@
   <string name="about">Σχετικά με το SeriesGuide</string>
   <string name="pref_credits">Εύσημα</string>
   <string name="clearGetGlueCredentials">Αποσύνδεση GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Κάντε Check in με το GetGlue για επανασύνδεση</string>
+  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
   <string name="pref_trakt">Στοιχεία trakt.tv</string>
   <string name="pref_traktsummary">Προσθέστε ή επεξεργαστείτε τα στοιχεία του trakt.tv</string>
   <string name="pref_traktsync">Συγχρονισμός με trakt.tv</string>
@@ -225,11 +224,13 @@
   <string name="checkin_searchhint">Πληκτρολογήστε το όνομα μιας σειράς</string>
   <string name="checkin_empty">Καμία αντιστοιχία σειρών</string>
   <string name="checkin_hint">Πληκτρολογήστε ένα μήνυμα (προαιρετικό)</string>
-  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
   <string name="paste_episode">Επικόλληση επεισοδίου</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
+  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">Αποτυχία ταυτοποίησης στο GetGlue. Δοκιμάστε ξανά αργότερα.</string>
+  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
   <string name="no_selection">pick one below</string>
@@ -237,7 +238,7 @@
   <string name="menu_rate_trakt">Αξιολόγηση (trakt)</string>
   <string name="menu_share_others">Μέσω άλλων εφαρμογών</string>
   <string name="traktcheckin_cancel">Παράκαμψη</string>
-  <string name="traktcheckin_inprogress">Είστε ήδη μέσα σε άλλο επεισόδιο ή ταινία. Είτε παρακάμψτε στο προηγούμενο check-in ή περιμένετε %s και δοκιμάστε ξανά.</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">Θα περιμένω</string>
   <string name="oauthmessage">Έλεγχος ταυτότητας SeriesGuide με GetGlue…</string>
   <string name="addtocalendar">Προσθήκη στο ημερολόγιο</string>
@@ -274,6 +275,7 @@
   <string name="pref_ringtone">Ήχος κλήσης</string>
   <string name="pref_vibrate">Δόνηση</string>
   <string name="pref_vibratesummary">Δόνηση και κατά την εμφάνιση ειδοποίησης</string>
+  <string name="pref_notifications_treshold">When to notify</string>
   <string name="pref_theme">Θέμα εφαρμογής</string>
   <string name="choose_list">Επιλέξτε λίστα δραστηριότητας</string>
   <string name="hide_watched">Απόκρυψη παρακολουθημένων επεισοδίων</string>
@@ -316,6 +318,12 @@
     <item>Αγαπημένα</item>
     <item>Μη παρακολουθημένα/Επερχόμενα</item>
     <item>Κρυμμένα</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>on air</item>
+    <item>5 min in advance</item>
+    <item>10 min in advance</item>
+    <item>one hour in advance</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d ψήφος</item>

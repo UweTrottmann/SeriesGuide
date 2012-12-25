@@ -10,7 +10,6 @@
   <string name="episode_notwatched">İzlenmedi</string>
   <string name="specialseason">Özel Bölümler</string>
   <string name="search_hint">Bölüm ara</string>
-  <string name="search_title">Eşleşen bölümler</string>
   <string name="share_episode">Bölümü paylaş</string>
   <string name="share_checkout">Kontrol et</string>
   <string name="search_description">Bölümler</string>
@@ -184,7 +183,7 @@
   <string name="about">SeriesGuide Hakkında</string>
   <string name="pref_credits">Katkıda Bulunanlar</string>
   <string name="clearGetGlueCredentials">GetGlue Bağlantısını Kes</string>
-  <string name="clearGetGlueCredentialssummary">Tekrar bağlanabilmek için GetGlue hesabını kullan</string>
+  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
   <string name="pref_trakt">trakt.tv kimliği</string>
   <string name="pref_traktsummary">trakt.tv kimlik bilgilerinizi ekleyin veya düzenleyin</string>
   <string name="pref_traktsync">Trakt.tv ile eşitle</string>
@@ -225,11 +224,13 @@
   <string name="checkin_searchhint">Bir dizi adı yazın</string>
   <string name="checkin_empty">Eşleşen dizi yok</string>
   <string name="checkin_hint">Bir mesaj yazın (isteğe bağlı)</string>
-  <string name="checkin_fixgetglue">GetGlue girişini düzelt</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
   <string name="paste_episode">Bölümü yapıştır</string>
   <string name="checkinsuccess">GetGlue ile %s bağlantısı sağlandı.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
+  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue kimlik doğrulaması başarısız oldu. Daha sonra yeniden deneyin.</string>
+  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">Dizi seç</string>
   <string name="check_into">Giriş yap</string>
   <string name="no_selection">birini seç</string>
@@ -237,7 +238,7 @@
   <string name="menu_rate_trakt">Derece (trakt)</string>
   <string name="menu_share_others">Diğer uygulamalar aracılığıyla</string>
   <string name="traktcheckin_cancel">Geçersiz Kıl</string>
-  <string name="traktcheckin_inprogress">Bir başka bölüm veya filme giriş yapmış durumdasınız. Ya önceki girişinizi geçersiz kılın, ya da %s bekleyin ve tekrar deneyin.</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">Bekleyin</string>
   <string name="oauthmessage">SeriesGuide için GetGlue erişimi sağlanıyor…</string>
   <string name="addtocalendar">Takvime ekle</string>
@@ -274,6 +275,7 @@
   <string name="pref_ringtone">Zil sesi</string>
   <string name="pref_vibrate">Titreşim</string>
   <string name="pref_vibratesummary">Uyarırken aynı zamanda titret</string>
+  <string name="pref_notifications_treshold">When to notify</string>
   <string name="pref_theme">Uygulama teması</string>
   <string name="choose_list">Etkinlik listesi seç</string>
   <string name="hide_watched">İzlenmiş bölümleri gizle</string>
@@ -316,6 +318,12 @@
     <item>Sık Kullanılanlar</item>
     <item>İzlenmemiş / Yaklaşan</item>
     <item>Gizli</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>on air</item>
+    <item>5 min in advance</item>
+    <item>10 min in advance</item>
+    <item>one hour in advance</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d oy</item>

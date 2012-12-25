@@ -10,7 +10,6 @@
   <string name="episode_notwatched">Nieobejrzany</string>
   <string name="specialseason">Odcinki specjalne</string>
   <string name="search_hint">Szukaj odcinków</string>
-  <string name="search_title">Znalezione odcinki</string>
   <string name="share_episode">Udostępnij</string>
   <string name="share_checkout">Odłącz się</string>
   <string name="search_description">Odcinki</string>
@@ -29,10 +28,10 @@
   <string name="save_selection">Zapisz zaznaczone</string>
   <string name="offline">Brak połączenia sieciowego. Spróbuj ponownie później.</string>
   <string name="onlyx">Dostępne tylko w SeriesGuide X</string>
-  <string name="shows">Shows</string>
-  <string name="lists">Lists</string>
+  <string name="shows">Seriale</string>
+  <string name="lists">Listy</string>
   <string name="activity">Aktywność</string>
-  <string name="search">Search</string>
+  <string name="search">Szukaj</string>
   <string name="add_show">Dodaj serial</string>
   <string name="preferences">Ustawienia</string>
   <string name="help">Pomoc</string>
@@ -184,7 +183,7 @@
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Autorzy</string>
   <string name="clearGetGlueCredentials">Odłącz GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Podepnij do GetGlue, aby ponownie połączyć</string>
+  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
   <string name="pref_trakt">Poświadczenia trakt.tv</string>
   <string name="pref_traktsummary">Dodaj lub edytuj dane logowania trakt.tv</string>
   <string name="pref_traktsync">Synchronizuj z trakt.tv</string>
@@ -225,11 +224,13 @@
   <string name="checkin_searchhint">Wpisz nazwę serialu</string>
   <string name="checkin_empty">Nie odnaleziono serialu</string>
   <string name="checkin_hint">Wpisz wiadomość (opcjonalnie)</string>
-  <string name="checkin_fixgetglue">Napraw podpinanie GetGlue</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
   <string name="paste_episode">Wklej odcinek</string>
   <string name="checkinsuccess">Podpięty do %s na GetGlue.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
+  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">Uwierzytelnianie GetGlue nie powiodło się. Spróbuj ponownie później.</string>
+  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">Wybierz serial</string>
   <string name="check_into">Podepnij się</string>
   <string name="no_selection">wybierz z poniższych</string>
@@ -237,7 +238,7 @@
   <string name="menu_rate_trakt">Oceń (trakt)</string>
   <string name="menu_share_others">za pomocą innych aplikacji</string>
   <string name="traktcheckin_cancel">Zastąp</string>
-  <string name="traktcheckin_inprogress">Już podpięto do innego odcinka lub filmu. Można zastąpić poprzednie ustawienie lub poczekać %s i spróbować ponownie.</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">Poczekam</string>
   <string name="oauthmessage">Logowanie SeriesGuide z GetGlue…</string>
   <string name="addtocalendar">Dodaj do kalendarza</string>
@@ -274,6 +275,7 @@
   <string name="pref_ringtone">Dzwonek</string>
   <string name="pref_vibrate">Wibracja</string>
   <string name="pref_vibratesummary">Wibruj również przy wyświetlaniu powiadomienia</string>
+  <string name="pref_notifications_treshold">When to notify</string>
   <string name="pref_theme">Schemat kolorów</string>
   <string name="choose_list">Wybierz listę aktywności</string>
   <string name="hide_watched">Ukryj obejrzane odcinki</string>
@@ -316,6 +318,12 @@
     <item>Ulubione</item>
     <item>Nieobejrzane/nadchodzące</item>
     <item>Ukryte</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>on air</item>
+    <item>5 min in advance</item>
+    <item>10 min in advance</item>
+    <item>one hour in advance</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">głosy: %d</item>

@@ -10,7 +10,6 @@
   <string name="episode_notwatched">Ainda não assistido</string>
   <string name="specialseason">Episódios Especiais</string>
   <string name="search_hint">Pesquisar episódios</string>
-  <string name="search_title">Episódios encontrados</string>
   <string name="share_episode">Compartilhar episódio</string>
   <string name="share_checkout">Assistido</string>
   <string name="search_description">Episódios</string>
@@ -184,7 +183,7 @@
   <string name="about">Sobre o SeriesGuide</string>
   <string name="pref_credits">Créditos</string>
   <string name="clearGetGlueCredentials">Desconectar do GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Faça check-in com o GetGlue para reconectar</string>
+  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
   <string name="pref_trakt">Credenciais trakt.tv</string>
   <string name="pref_traktsummary">Adicionar ou editar suas credenciais trakt.tv</string>
   <string name="pref_traktsync">Sincronizar com trakt.tv</string>
@@ -225,11 +224,13 @@
   <string name="checkin_searchhint">Digite o nome da série</string>
   <string name="checkin_empty">Nenhuma série encontrada</string>
   <string name="checkin_hint">Digite uma mensagem (opcional)</string>
-  <string name="checkin_fixgetglue">Realizar check-in no GetGlue</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
   <string name="paste_episode">Colar episódio</string>
   <string name="checkinsuccess">Verificado em %s no GetGlue.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
+  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">Autenticação com GetGlue falhou. Tente novamente.</string>
+  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">Selecionar seriado</string>
   <string name="check_into">Realizar check-in</string>
   <string name="no_selection">Escolha um abaixo</string>
@@ -237,7 +238,7 @@
   <string name="menu_rate_trakt">Avaliar (trakt)</string>
   <string name="menu_share_others">Por outros aplicativos</string>
   <string name="traktcheckin_cancel">Substituir</string>
-  <string name="traktcheckin_inprogress">Você já está assistindo outro episódio. Substitua o checkin anterior ou espere %s para fazer outro.</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">Vou esperar</string>
   <string name="oauthmessage">Autenticando SeriesGuide com GetGlue…</string>
   <string name="addtocalendar">Adicionar ao calendário</string>
@@ -274,6 +275,7 @@
   <string name="pref_ringtone">Toque</string>
   <string name="pref_vibrate">Vibrar</string>
   <string name="pref_vibratesummary">Vibrar também ao exibir uma notificação</string>
+  <string name="pref_notifications_treshold">When to notify</string>
   <string name="pref_theme">Tema do Aplicativo</string>
   <string name="choose_list">Escolher lista de atividades</string>
   <string name="hide_watched">Ocultar episódios já assistidos</string>
@@ -316,6 +318,12 @@
     <item>Favoritos</item>
     <item>Não visto/Próximo</item>
     <item>Oculto</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>on air</item>
+    <item>5 min in advance</item>
+    <item>10 min in advance</item>
+    <item>one hour in advance</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d votado</item>

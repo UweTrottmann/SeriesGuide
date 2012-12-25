@@ -10,7 +10,6 @@
   <string name="episode_notwatched">Nog niet bekeken</string>
   <string name="specialseason">Speciale afleveringen</string>
   <string name="search_hint">Afleveringen zoeken</string>
-  <string name="search_title">Gevonden afleveringen</string>
   <string name="share_episode">Aflevering delen</string>
   <string name="share_checkout">Uitchecken</string>
   <string name="search_description">Afleveringen</string>
@@ -184,7 +183,7 @@
   <string name="about">Over SeriesGuide</string>
   <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">GetGlue verbinding verbreken</string>
-  <string name="clearGetGlueCredentialssummary">Check-in met GetGlue om te verbinden</string>
+  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
   <string name="pref_trakt">trakt.TV referenties</string>
   <string name="pref_traktsummary">trakt.tv referenties toevoegen of bewerken</string>
   <string name="pref_traktsync">Synchroniseren met trakt.tv</string>
@@ -225,11 +224,13 @@
   <string name="checkin_searchhint">Voer de naam van een serie in</string>
   <string name="checkin_empty">Geen overeenkomende series</string>
   <string name="checkin_hint">Voer een bericht in (optioneel)</string>
-  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
   <string name="paste_episode">Aflevering plakken</string>
   <string name="checkinsuccess">Ingecheckt in %s op GetGlue.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
+  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue authenticatie mislukt. Probeer het later opnieuw.</string>
+  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
   <string name="no_selection">pick one below</string>
@@ -237,7 +238,7 @@
   <string name="menu_rate_trakt">Beoordelen (trakt)</string>
   <string name="menu_share_others">Via andere apps</string>
   <string name="traktcheckin_cancel">Negeren</string>
-  <string name="traktcheckin_inprogress">Je bent al ingecheckt bij een andere aflevering of film. Overschrijf de vorige check-in of wacht %s en probeer het opnieuw.</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">Wachten</string>
   <string name="oauthmessage">SeriesGuide met GetGlue authenticeren…</string>
   <string name="addtocalendar">Aan agenda toevoegen</string>
@@ -274,6 +275,7 @@
   <string name="pref_ringtone">Beltoon</string>
   <string name="pref_vibrate">Trillen</string>
   <string name="pref_vibratesummary">Ook trillen als melding wordt weergegeven</string>
+  <string name="pref_notifications_treshold">When to notify</string>
   <string name="pref_theme">Applicatie thema</string>
   <string name="choose_list">Kies weer te geven lijst</string>
   <string name="hide_watched">Verberg bekeken afleveringen</string>
@@ -316,6 +318,12 @@
     <item>Favorieten</item>
     <item>Niet bekeken/Aankomende</item>
     <item>Verborgen</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>on air</item>
+    <item>5 min in advance</item>
+    <item>10 min in advance</item>
+    <item>one hour in advance</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d stem</item>

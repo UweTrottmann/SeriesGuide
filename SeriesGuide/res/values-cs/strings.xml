@@ -10,7 +10,6 @@
   <string name="episode_notwatched">Nových</string>
   <string name="specialseason">Bonusové díly</string>
   <string name="search_hint">Hledat díly</string>
-  <string name="search_title">Odpovídající díly</string>
   <string name="share_episode">Sdílet díl</string>
   <string name="share_checkout">Mrkni se na</string>
   <string name="search_description">Díly</string>
@@ -29,10 +28,10 @@
   <string name="save_selection">Uložit výběr</string>
   <string name="offline">Bez připojení k síti. Zkuste to později.</string>
   <string name="onlyx">Dostupné pouze ve verzi X</string>
-  <string name="shows">Shows</string>
-  <string name="lists">Lists</string>
+  <string name="shows">Pořady</string>
+  <string name="lists">Seznamy</string>
   <string name="activity">Aktivita</string>
-  <string name="search">Search</string>
+  <string name="search">Hledat</string>
   <string name="add_show">Přidat pořad</string>
   <string name="preferences">Nastavení</string>
   <string name="help">Nápověda</string>
@@ -184,7 +183,7 @@
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Poděkování</string>
   <string name="clearGetGlueCredentials">Odpojit GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Ohlaste se do GetGlue pro připojení</string>
+  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
   <string name="pref_trakt">Přihlášení trakt.tv</string>
   <string name="pref_traktsummary">Přidejte nebo upravte Vaše přihlašovací údaje</string>
   <string name="pref_traktsync">Synchronizovat s trakt.tv</string>
@@ -225,11 +224,13 @@
   <string name="checkin_searchhint">Napište název pořadu</string>
   <string name="checkin_empty">Žádné odpovídající pořady</string>
   <string name="checkin_hint">Napište postřeh (nepovinné)</string>
-  <string name="checkin_fixgetglue">Opravit ohlášení do GetGlue</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
   <string name="paste_episode">Vložte díl</string>
   <string name="checkinsuccess">Ohlášeno do %s na GetGlue.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
+  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">Ověření u GetGlue selhalo. Zkuste to později.</string>
+  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">Výběr pořadu</string>
   <string name="check_into">Ohlásit se do</string>
   <string name="no_selection">vyberte níže</string>
@@ -237,7 +238,7 @@
   <string name="menu_rate_trakt">Hodnotit (trakt)</string>
   <string name="menu_share_others">Skrze jiné aplikace</string>
   <string name="traktcheckin_cancel">Přepsat</string>
-  <string name="traktcheckin_inprogress">Již jste ohlášeni u jiného dílu nebo filmu. Můžete své ohlášení přepsat nebo počkejte %s a zkuste to znovu.</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">Já počkám</string>
   <string name="oauthmessage">Ověřuji SeriesGuide v GetGlue…</string>
   <string name="addtocalendar">Přidat do kalendáře</string>
@@ -274,6 +275,7 @@
   <string name="pref_ringtone">Vyzváněcí tón</string>
   <string name="pref_vibrate">Vibrovat</string>
   <string name="pref_vibratesummary">Při upozornění také vibrovat</string>
+  <string name="pref_notifications_treshold">When to notify</string>
   <string name="pref_theme">Téma aplikace</string>
   <string name="choose_list">Vyberte přehled aktivity</string>
   <string name="hide_watched">Skrýt zhlédnuté díly</string>
@@ -316,6 +318,12 @@
     <item>Oblíbené</item>
     <item>Nadcházející nové</item>
     <item>Skryté</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>on air</item>
+    <item>5 min in advance</item>
+    <item>10 min in advance</item>
+    <item>one hour in advance</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d hlas</item>

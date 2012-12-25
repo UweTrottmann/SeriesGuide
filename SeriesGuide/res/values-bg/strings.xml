@@ -10,7 +10,6 @@
   <string name="episode_notwatched">Все още не е гледан</string>
   <string name="specialseason">Специални епизоди</string>
   <string name="search_hint">Търсене на епизоди</string>
-  <string name="search_title">Съвпадащи епизоди</string>
   <string name="share_episode">Сподели епизод</string>
   <string name="share_checkout">Отписване</string>
   <string name="search_description">Епизоди</string>
@@ -184,7 +183,7 @@
   <string name="about">Относно SeriesGuide</string>
   <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">Прекъсни GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Check In with GetGlue to reconnect</string>
+  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
   <string name="pref_trakt">идентификационни данни за trakt.tv</string>
   <string name="pref_traktsummary">Добавяне или редактиране на вашите идентификационни данни за trakt.tv</string>
   <string name="pref_traktsync">Синхронизирай с trakt.tv</string>
@@ -225,11 +224,13 @@
   <string name="checkin_searchhint">Type a show name</string>
   <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Type a message (optional)</string>
-  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
   <string name="paste_episode">Paste episode</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-  <string name="checkinfailed">GetGlue Check-in failed. Try again later.</string>
+  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
+  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
   <string name="no_selection">pick one below</string>
@@ -237,7 +238,7 @@
   <string name="menu_rate_trakt">Оцени (trakt)</string>
   <string name="menu_share_others">Чрез други приложения</string>
   <string name="traktcheckin_cancel">Override</string>
-  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous checkin or wait %s and try again.</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">Ще изчакам</string>
   <string name="oauthmessage">Authenticating SeriesGuide with GetGlue…</string>
   <string name="addtocalendar">Добавяне в календара</string>
@@ -274,6 +275,7 @@
   <string name="pref_ringtone">Ringtone</string>
   <string name="pref_vibrate">Vibrate</string>
   <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
+  <string name="pref_notifications_treshold">When to notify</string>
   <string name="pref_theme">App Theme</string>
   <string name="choose_list">Choose activity list</string>
   <string name="hide_watched">Hide watched episodes</string>
@@ -316,6 +318,12 @@
     <item>Любими</item>
     <item>Негледани/Предстоящи</item>
     <item>Hidden</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>on air</item>
+    <item>5 min in advance</item>
+    <item>10 min in advance</item>
+    <item>one hour in advance</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d vote</item>
