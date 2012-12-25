@@ -258,7 +258,6 @@
   <string name="trakt_synctotrakt">Sync nach trakt.tv</string>
   <string name="trakt_syncunseen">Ungesehen-Markierungen mit einbeziehen</string>
   <string name="trakt_howto_title">trakt.tv Sync einrichten</string>
-  <string name="trakt_howto">Auf GetGlue in %s eingecheckt.</string>
   <string name="welcome_setuplanguage">Sprache auswählen</string>
   <string name="welcome_setuptrakt">Mit trakt verbinden</string>
   <string name="welcome_traktmessage">Zugriff auf Ihre trakt.tv-Bibliothek und Aktivität von Freunden</string>
