@@ -57,6 +57,8 @@ public abstract class BaseTopActivity extends BaseActivity {
             Intent myIntent = new Intent(Intent.ACTION_VIEW,
                     Uri.parse(SeriesGuidePreferences.HELP_URL));
             startActivity(myIntent);
+            
+            fireTrackerEvent("Help");
             return true;
         }
         else if (itemId == R.id.menu_feedback) {
