@@ -43,7 +43,7 @@ public class SearchActivity extends BaseTopActivity {
         handleIntent(getIntent());
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.search_title);
+        actionBar.setTitle(R.string.search_hint);
         actionBar.setDisplayShowTitleEnabled(true);
     }
 
