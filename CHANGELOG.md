@@ -10,7 +10,7 @@ Version 3 *(TBA)*
 
 ### Detailed changes:
 
-#### 3beta1 *(2012-12-03)*
+#### 3beta1 *(2012-12-25)*
 
 * FEATURE Swipe anywhere to show the new menu drawer for quick navigation within the app. Swipe from the left margin in view pagers.
 * FEATURE Just for fun: beam a show to another device from its overview page.
