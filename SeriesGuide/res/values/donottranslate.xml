@@ -13,7 +13,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">Getting closer\n\nOnly add new trakt shows once.\n\nEpisode image in overview is now clickable.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">The next one\n\nSwipe anywhere to show the new menu drawer for quick navigation, reorganized menus, pages (lists have finally there own page).\n\nSpecify how far in advance to notify about new episodes, does not notify you twice about the same stuff.\n\nBeam a show from its overview page to another Android.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
