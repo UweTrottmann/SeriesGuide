@@ -333,8 +333,14 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 lastEdit.setText(R.string.unknown);
             }
 
+            // Guest stars
+            Utils.setLabelValueOrHide(view.findViewById(R.id.labelGuestStars),
+                    (TextView) view.findViewById(R.id.guestStars),
+                    Utils.splitAndKitTVDBStrings(cursor
+                            .getString(DetailsQuery.GUESTSTARS)));
             // DVD episode number
-            Utils.setValueOrPlaceholder(view.findViewById(R.id.dvdNumber),
+            Utils.setLabelValueOrHide(view.findViewById(R.id.labelDvd),
+                    (TextView) view.findViewById(R.id.dvdNumber),
                     cursor.getString(DetailsQuery.DVDNUMBER));
             // Directors
             String directors = Utils.splitAndKitTVDBStrings(cursor
@@ -344,13 +350,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             String writers = Utils.splitAndKitTVDBStrings(cursor
                     .getString(DetailsQuery.WRITERS));
             Utils.setValueOrPlaceholder(view.findViewById(R.id.writers), writers);
-            /*
-             * Guest stars - don't display an unknown label if there are none,
-             * because then there are none
-             */
-            String guestStars = Utils.splitAndKitTVDBStrings(cursor
-                    .getString(DetailsQuery.GUESTSTARS));
-            ((TextView) view.findViewById(R.id.guestStars)).setText(guestStars);
 
             // Episode image
             FrameLayout imageContainer = (FrameLayout) view.findViewById(R.id.imageContainer);
