@@ -475,6 +475,11 @@ public class TheTVDB {
                 values.put(Episodes.NUMBER, body.trim());
             }
         });
+        episode.getChild("absolute_number").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                values.put(Episodes.ABSOLUTE_NUMBER, body.trim());
+            }
+        });
         episode.getChild("SeasonNumber").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 values.put(Episodes.SEASON, body.trim());
