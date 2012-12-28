@@ -135,10 +135,12 @@ public class EpisodesFragment extends SherlockListFragment implements
         }
 
         String[] from = new String[] {
-                Episodes.WATCHED, Episodes.TITLE, Episodes.NUMBER, Episodes.FIRSTAIREDMS
+                Episodes.WATCHED, Episodes.TITLE, Episodes.NUMBER, Episodes.FIRSTAIREDMS,
+                Episodes.ABSOLUTE_NUMBER
         };
         int[] to = new int[] {
-                R.id.CustomCheckBoxWatched, R.id.title, R.id.number, R.id.airdate
+                R.id.CustomCheckBoxWatched, R.id.title, R.id.number, R.id.airdate,
+                R.id.absoluteNumber
         };
 
         mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.episode_row, null, from, to, 0);
@@ -170,7 +172,7 @@ public class EpisodesFragment extends SherlockListFragment implements
                             .getString(EpisodesQuery.NUMBER));
                     float dvdnumber = cursor.getFloat(EpisodesQuery.DVDNUMBER);
                     if (dvdnumber != 0) {
-                        episodenumber.append("(").append(dvdnumber).append(")");
+                        episodenumber.append(" (").append(dvdnumber).append(")");
                     }
                     tv.setText(episodenumber);
                     return true;
@@ -182,6 +184,13 @@ public class EpisodesFragment extends SherlockListFragment implements
                     } else {
                         tv.setText(getString(R.string.episode_firstaired) + " "
                                 + getString(R.string.unknown));
+                    }
+                    return true;
+                } else if (columnIndex == EpisodesQuery.ABSOLUTE_NUMBER) {
+                    TextView tv = (TextView) view;
+                    int absoluteNumber = cursor.getInt(EpisodesQuery.ABSOLUTE_NUMBER);
+                    if (absoluteNumber > 0) {
+                        tv.setText(String.valueOf(absoluteNumber));
                     }
                     return true;
                 }
@@ -377,9 +386,11 @@ public class EpisodesFragment extends SherlockListFragment implements
     }
 
     interface EpisodesQuery {
+
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.WATCHED, Episodes.TITLE,
-                Episodes.NUMBER, Episodes.FIRSTAIREDMS, Episodes.DVDNUMBER
+                Episodes.NUMBER, Episodes.FIRSTAIREDMS, Episodes.DVDNUMBER,
+                Episodes.ABSOLUTE_NUMBER
         };
 
         int _ID = 0;
@@ -394,6 +405,7 @@ public class EpisodesFragment extends SherlockListFragment implements
 
         int DVDNUMBER = 5;
 
+        int ABSOLUTE_NUMBER = 6;
     }
 
     private void showSortDialog() {

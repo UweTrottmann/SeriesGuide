@@ -75,7 +75,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_GETGLUE_CHECKIN_FIX = 29;
 
-    public static final int DATABASE_VERSION = DBVER_GETGLUE_CHECKIN_FIX;
+    public static final int DBVER_ABSOLUTE_NUMBERS = 30;
+
+    public static final int DATABASE_VERSION = DBVER_ABSOLUTE_NUMBERS;
 
     public interface Tables {
         String SHOWS = "series";
@@ -252,7 +254,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + EpisodesColumns.IMDBID + " TEXT DEFAULT '',"
 
-            + EpisodesColumns.LASTEDIT + " INTEGER DEFAULT 0"
+            + EpisodesColumns.LASTEDIT + " INTEGER DEFAULT 0,"
+
+            + EpisodesColumns.ABSOLUTE_NUMBER + " INTEGER"
 
             + ");";
 
@@ -383,6 +387,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 28:
                 upgradeToTwentyNine(db);
                 version = 29;
+            case 29:
+                upgradeToThirty(db);
+                version = 30;
         }
 
         // drop all tables if version is not right
@@ -406,6 +413,14 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
 
         onCreate(db);
+    }
+
+    /**
+     * Add {@link Episodes} column to store absolute episode number.
+     */
+    private void upgradeToThirty(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN "
+                + EpisodesColumns.ABSOLUTE_NUMBER + " INTEGER;");
     }
 
     /**

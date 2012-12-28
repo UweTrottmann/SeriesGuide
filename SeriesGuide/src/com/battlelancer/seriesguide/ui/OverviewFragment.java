@@ -436,8 +436,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 Episodes.NUMBER, Episodes.SEASON, Episodes.WATCHED, Episodes.FIRSTAIREDMS,
                 Episodes.GUESTSTARS, Tables.EPISODES + "." + Episodes.RATING,
                 Episodes.IMAGE, Episodes.DVDNUMBER, Episodes.TITLE, Seasons.REF_SEASON_ID,
-                Episodes.COLLECTED,
-                Episodes.IMDBID
+                Episodes.COLLECTED, Episodes.IMDBID, Episodes.ABSOLUTE_NUMBER
 
         };
 
@@ -470,6 +469,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         int COLLECTED = 13;
 
         int IMDBID = 14;
+
+        int ABSOLUTE_NUMBER = 15;
 
     }
 
@@ -547,6 +548,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             final int episodeId = episode.getInt(EpisodeQuery._ID);
             final int seasonNumber = episode.getInt(EpisodeQuery.SEASON);
             final int episodeNumber = episode.getInt(EpisodeQuery.NUMBER);
+            final int episodeAbsoluteNumber = episode.getInt(EpisodeQuery.ABSOLUTE_NUMBER);
             final String title = episode.getString(EpisodeQuery.TITLE);
 
             // title
@@ -559,6 +561,9 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             infoText.append(" ");
             infoText.append(getString(R.string.episode)).append(" ")
                     .append(episodeNumber);
+            if (episodeAbsoluteNumber > 0) {
+                infoText.append(" (").append(episodeAbsoluteNumber).append(")");
+            }
             episodeInfo.setText(infoText);
             episodeInfo.setVisibility(View.VISIBLE);
 
@@ -631,7 +636,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         final int episodeNumber = episode.getInt(EpisodeQuery.NUMBER);
         final String episodeTitle = episode.getString(EpisodeQuery.TITLE);
 
-        // Description, DVD episode number, guest stars
+        // Description, DVD episode number, guest stars, absolute number
         ((TextView) getView().findViewById(R.id.TextViewEpisodeDescription)).setText(episode
                 .getString(EpisodeQuery.OVERVIEW));
         Utils.setLabelValueOrHide(getView().findViewById(R.id.labelDvd), (TextView) getView()

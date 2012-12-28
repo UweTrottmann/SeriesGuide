@@ -38,6 +38,16 @@
             android:textAppearance="?attr/textAppearanceSgMediumLightDim" />
 
         <TextView
+            android:id="@+id/absoluteNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/number"
+            android:layout_marginLeft="@dimen/default_padding"
+            android:layout_marginRight="@dimen/default_padding"
+            android:textAppearance="?attr/textAppearanceSgMediumLightDim" />
+
+        <TextView
             android:id="@+id/airdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
