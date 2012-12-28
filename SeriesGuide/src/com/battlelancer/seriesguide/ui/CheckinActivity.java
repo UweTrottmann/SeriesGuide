@@ -102,8 +102,10 @@ public class CheckinActivity extends BaseTopActivity implements LoaderCallbacks<
             @Override
             public void onClick(View v) {
                 mSearchBox.setText(null);
+                mSearchBox.requestFocus();
             }
         });
+        mSearchBox.requestFocus();
 
         // setup adapter
         String[] from = new String[] {
