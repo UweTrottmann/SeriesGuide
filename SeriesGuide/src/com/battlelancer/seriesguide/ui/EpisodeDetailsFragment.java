@@ -27,8 +27,12 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.text.style.TextAppearanceSpan;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -262,12 +266,18 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     private class DetailsAdapter extends CursorAdapter {
 
         private LayoutInflater mLayoutInflater;
+        private int mTextAppearanceSmallDimRes;
 
         public DetailsAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);
 
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            TypedValue textAppearanceSmallDim = new TypedValue();
+            getActivity().getTheme().resolveAttribute(R.attr.textAppearanceSgSmallDim,
+                    textAppearanceSmallDim, true);
+            mTextAppearanceSmallDimRes = textAppearanceSmallDim.resourceId;
         }
 
         @Override
@@ -311,17 +321,34 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         cursor.getString(DetailsQuery.SHOW_POSTER), getActivity());
             }
 
+            SpannableStringBuilder airTimeAndNumberText = new SpannableStringBuilder();
             // Air day and time
             TextView airdateText = (TextView) view.findViewById(R.id.airDay);
             TextView airtimeText = (TextView) view.findViewById(R.id.airTime);
             if (airTime != -1) {
                 airdateText.setText(Utils.formatToDate(airTime, getActivity()));
                 String[] dayAndTime = Utils.formatToTimeAndDay(airTime, getActivity());
-                airtimeText.setText(dayAndTime[2] + " (" + dayAndTime[1] + ")");
+                airTimeAndNumberText.append(dayAndTime[2] + " (" + dayAndTime[1] + ")");
             } else {
                 airdateText.setText(R.string.unknown);
-                airtimeText.setText("");
             }
+
+            // number
+            int numberStartIndex = airTimeAndNumberText.length();
+            airTimeAndNumberText.append("  ").append(getString(R.string.season)).append(" ")
+                    .append(String.valueOf(mSeasonNumber));
+            airTimeAndNumberText.append(" ");
+            airTimeAndNumberText.append(getString(R.string.episode)).append(" ")
+                    .append(String.valueOf(mEpisodeNumber));
+            final int episodeAbsoluteNumber = cursor.getInt(DetailsQuery.ABSOLUTE_NUMBER);
+            if (episodeAbsoluteNumber > 0) {
+                airTimeAndNumberText.append(" (").append(String.valueOf(episodeAbsoluteNumber))
+                        .append(")");
+            }
+            airTimeAndNumberText.setSpan(new TextAppearanceSpan(mContext,
+                    mTextAppearanceSmallDimRes), numberStartIndex,
+                    airTimeAndNumberText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            airtimeText.setText(airTimeAndNumberText);
 
             // Last edit date
             TextView lastEdit = (TextView) view.findViewById(R.id.lastEdit);
@@ -491,7 +518,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
                 Tables.EPISODES + "." + Episodes.RATING, Episodes.IMAGE, Episodes.DVDNUMBER,
                 Episodes.TITLE, Shows.TITLE, Shows.IMDBID, Shows.RUNTIME, Shows.POSTER,
-                Seasons.REF_SEASON_ID, Episodes.COLLECTED, Episodes.IMDBID, Episodes.LASTEDIT
+                Seasons.REF_SEASON_ID, Episodes.COLLECTED, Episodes.IMDBID, Episodes.LASTEDIT,
+                Episodes.ABSOLUTE_NUMBER
         };
 
         int _ID = 0;
@@ -537,6 +565,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         int IMDBID = 20;
 
         int LASTEDIT = 21;
+
+        int ABSOLUTE_NUMBER = 22;
     }
 
     public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
