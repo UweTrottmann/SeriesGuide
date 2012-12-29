@@ -561,7 +561,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             infoText.append(" ");
             infoText.append(getString(R.string.episode)).append(" ")
                     .append(episodeNumber);
-            if (episodeAbsoluteNumber > 0) {
+            if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != episodeNumber) {
                 infoText.append(" (").append(episodeAbsoluteNumber).append(")");
             }
             episodeInfo.setText(infoText);

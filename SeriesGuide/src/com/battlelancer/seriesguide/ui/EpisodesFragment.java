@@ -188,8 +188,9 @@ public class EpisodesFragment extends SherlockListFragment implements
                     return true;
                 } else if (columnIndex == EpisodesQuery.ABSOLUTE_NUMBER) {
                     TextView tv = (TextView) view;
+                    int number = cursor.getInt(EpisodesQuery.NUMBER);
                     int absoluteNumber = cursor.getInt(EpisodesQuery.ABSOLUTE_NUMBER);
-                    if (absoluteNumber > 0) {
+                    if (absoluteNumber > 0 && absoluteNumber != number) {
                         tv.setText(String.valueOf(absoluteNumber));
                     }
                     return true;

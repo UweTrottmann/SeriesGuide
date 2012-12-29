@@ -341,7 +341,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             airTimeAndNumberText.append(getString(R.string.episode)).append(" ")
                     .append(String.valueOf(mEpisodeNumber));
             final int episodeAbsoluteNumber = cursor.getInt(DetailsQuery.ABSOLUTE_NUMBER);
-            if (episodeAbsoluteNumber > 0) {
+            if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != mEpisodeNumber) {
                 airTimeAndNumberText.append(" (").append(String.valueOf(episodeAbsoluteNumber))
                         .append(")");
             }
