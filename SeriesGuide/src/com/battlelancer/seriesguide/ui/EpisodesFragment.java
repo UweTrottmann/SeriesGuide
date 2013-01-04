@@ -170,9 +170,10 @@ public class EpisodesFragment extends SherlockListFragment implements
                     TextView tv = (TextView) view;
                     StringBuilder episodenumber = new StringBuilder(cursor
                             .getString(EpisodesQuery.NUMBER));
-                    float dvdnumber = cursor.getFloat(EpisodesQuery.DVDNUMBER);
-                    if (dvdnumber != 0) {
-                        episodenumber.append(" (").append(dvdnumber).append(")");
+                    float episodeNumber = cursor.getFloat(EpisodesQuery.NUMBER);
+                    float dvdNumber = cursor.getFloat(EpisodesQuery.DVDNUMBER);
+                    if (dvdNumber > 0 && dvdNumber != episodeNumber) {
+                        episodenumber.append(" (").append(dvdNumber).append(")");
                     }
                     tv.setText(episodenumber);
                     return true;
