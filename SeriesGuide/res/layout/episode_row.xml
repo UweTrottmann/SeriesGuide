@@ -45,7 +45,7 @@
             android:layout_below="@id/number"
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
-            android:textAppearance="?attr/textAppearanceSgMediumLightDim" />
+            android:textAppearance="?attr/textAppearanceSgSmall" />
 
         <TextView
             android:id="@+id/airdate"
