@@ -892,14 +892,16 @@ public class Utils {
                             .trackEvent(logTag, "Click", "Show IMDb page", (long) 0);
 
                     if (!TextUtils.isEmpty(imdbId)) {
-                        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("imdb:///title/"
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("imdb:///title/"
                                 + imdbId + "/"));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                         try {
-                            activity.startActivity(myIntent);
+                            activity.startActivity(intent);
                         } catch (ActivityNotFoundException e) {
-                            myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_TITLE_URL
+                            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_TITLE_URL
                                     + imdbId));
-                            activity.startActivity(myIntent);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+                            activity.startActivity(intent);
                         }
                     } else {
                         Toast.makeText(activity,
@@ -925,6 +927,7 @@ public class Utils {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                         try {
                             intent.setData(Uri.parse("market://search?q=" + title));
                             v.getContext().startActivity(intent);
@@ -960,6 +963,7 @@ public class Utils {
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri
                                 .parse("http://www.amazon.com/gp/search?ie=UTF8&keywords=" + title));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                         v.getContext().startActivity(intent);
 
                         EasyTracker.getTracker()
