@@ -296,7 +296,18 @@ public class ShowsActivity extends BaseTopActivity implements CompatActionBarNav
             ShowsFragment.showSortDialog(getSupportFragmentManager(), sorting);
             fireTrackerEvent("Sort shows");
             return true;
-        } else {
+        }
+        else if (itemId == R.id.menu_quickcheckin) {
+            startActivity(new Intent(this, CheckinActivity.class));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            return true;
+        }
+        else if (itemId == R.id.menu_search) {
+            onSearchRequested();
+            fireTrackerEvent("Search");
+            return true;
+        }
+        else {
             return super.onOptionsItemSelected(item);
         }
     }
