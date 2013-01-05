@@ -18,6 +18,7 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -31,6 +32,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -100,6 +102,20 @@ public class OverviewActivity extends BaseActivity implements CreateNdefMessageC
     protected void onStop() {
         super.onStop();
         EasyTracker.getInstance().activityStop(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent upIntent = new Intent(this, ShowsActivity.class);
+                upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(upIntent);
+                overridePendingTransition(R.anim.fragment_slide_right_enter,
+                        R.anim.fragment_slide_right_exit);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void onUpdate() {

@@ -114,7 +114,11 @@ public class ShowInfoActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == android.R.id.home) {
-            navigateToOverview(getShowId());
+            Intent intent = new Intent(this, OverviewActivity.class);
+            intent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, getShowId());
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
         } else if (itemId == R.id.menu_rate_trakt) {
             TraktRateDialogFragment newFragment = TraktRateDialogFragment

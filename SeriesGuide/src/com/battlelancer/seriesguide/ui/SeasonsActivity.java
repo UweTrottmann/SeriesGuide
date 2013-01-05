@@ -17,10 +17,12 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -40,11 +42,10 @@ public class SeasonsActivity extends BaseActivity {
         setContentView(R.layout.activity_singlepane_empty);
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-        Bundle extras = getIntent().getExtras();
-        int showId = extras.getInt(SeasonsFragment.InitBundle.SHOW_TVDBID);
+        int showId = getShowId();
         final Series show = DBUtils.getShow(this, String.valueOf(showId));
         if (show != null) {
             String showname = show.getTitle();
@@ -63,6 +64,10 @@ public class SeasonsActivity extends BaseActivity {
         }
     }
 
+    public int getShowId() {
+        return getIntent().getExtras().getInt(SeasonsFragment.InitBundle.SHOW_TVDBID);
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -73,6 +78,21 @@ public class SeasonsActivity extends BaseActivity {
     protected void onStop() {
         super.onStop();
         EasyTracker.getInstance().activityStop(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            Intent upIntent = new Intent(this, OverviewActivity.class);
+            upIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, getShowId());
+            upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(upIntent);
+            overridePendingTransition(R.anim.fragment_slide_right_enter,
+                    R.anim.fragment_slide_right_exit);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

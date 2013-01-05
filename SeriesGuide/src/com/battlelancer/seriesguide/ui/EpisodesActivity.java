@@ -32,6 +32,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.items.Series;
@@ -158,8 +159,8 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
 
         // setup ActionBar
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         final String seasonTitle = Utils.getSeasonString(this, mSeasonNumber);
         setTitle(show.getTitle() + " " + seasonTitle);
@@ -179,7 +180,7 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
         // build the episode pager if we are in a dual-pane layout
         if (mDualPane) {
             getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-            
+
             // set the pager background
             final ImageView background = (ImageView) findViewById(R.id.background);
             Utils.setPosterBackground(background, show.getPoster(), this);
@@ -264,6 +265,27 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
             }
         }
         return ret;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            Intent upIntent;
+            if (mDualPane) {
+                upIntent = new Intent(this, OverviewActivity.class);
+                upIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, mShowId);
+            } else {
+                upIntent = new Intent(this, SeasonsActivity.class);
+                upIntent.putExtra(SeasonsFragment.InitBundle.SHOW_TVDBID, mShowId);
+            }
+            upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(upIntent);
+            overridePendingTransition(R.anim.fragment_slide_right_enter,
+                    R.anim.fragment_slide_right_exit);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**

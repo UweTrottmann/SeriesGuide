@@ -307,9 +307,14 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             showtitle.setText(showTitle);
             showtitle.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-                    Intent i = new Intent(getActivity(), OverviewActivity.class);
-                    i.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, mShowId);
-                    startActivity(i);
+                    Intent upIntent = new Intent(getActivity(), OverviewActivity.class);
+                    upIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, mShowId);
+                    upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                            | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(upIntent);
+                    getActivity().overridePendingTransition(R.anim.fragment_slide_right_enter,
+                            R.anim.fragment_slide_right_exit);
+                    getActivity().finish();
                 }
             });
 

@@ -72,9 +72,6 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity
             android:name="com.battlelancer.seriesguide.ui.SearchActivity"
@@ -86,9 +83,6 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity
             android:name="com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity"
@@ -101,17 +95,11 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.EpisodesActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity
             android:name="com.battlelancer.seriesguide.ui.OverviewActivity"
@@ -127,9 +115,6 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.TraktSyncActivity" >
             <meta-data
@@ -140,9 +125,6 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity
             android:name="com.battlelancer.seriesguide.ui.AddActivity"
@@ -182,9 +164,6 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
 
         <!-- Notification service -->

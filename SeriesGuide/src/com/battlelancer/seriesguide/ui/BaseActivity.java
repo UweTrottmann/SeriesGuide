@@ -183,16 +183,4 @@ public abstract class BaseActivity extends SlidingFragmentActivity {
         intent.removeExtra("_uri");
         return intent;
     }
-
-    /**
-     * Navigate to the overview activity of the given show.
-     * 
-     * @param showId
-     */
-    protected void navigateToOverview(int showId) {
-        final Intent intent = new Intent(this, OverviewActivity.class);
-        intent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, showId);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
 }
