@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
+import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -77,9 +78,9 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
             updateCheckInButtonState();
             return;
         } else {
-            // TODO check in, use task on thread pool
-            // AndroidUtils.executeAsyncTask(new CheckInTask(objectId, message,
-            // getActivity()), new Void[] {});
+            // check in, use task on thread pool
+            AndroidUtils.executeAsyncTask(new CheckInTask(objectId, message,
+                    getActivity()), new Void[] {});
         }
     }
 
