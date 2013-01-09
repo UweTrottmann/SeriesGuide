@@ -341,7 +341,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     @Override
     protected void onPostExecute(Response r) {
         // dismiss a potential progress dialog
-        if (mAction == TraktAction.CHECKIN_EPISODE) {
+        if (mAction == TraktAction.CHECKIN_EPISODE || mAction == TraktAction.CHECKIN_MOVIE) {
             Fragment prev = mFm.findFragmentByTag("progress-dialog");
             if (prev != null) {
                 FragmentTransaction ft = mFm.beginTransaction();
@@ -356,6 +356,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
                 switch (mAction) {
                     case CHECKIN_EPISODE:
+                    case CHECKIN_MOVIE:
                         Toast.makeText(mContext, r.message, Toast.LENGTH_SHORT).show();
                         break;
                     default:
