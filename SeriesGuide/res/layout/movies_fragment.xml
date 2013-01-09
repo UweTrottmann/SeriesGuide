@@ -42,6 +42,7 @@
         android:layout_below="@+id/empty"
         android:clipToPadding="@bool/gridClipToPadding"
         android:columnWidth="@dimen/showgrid_columnWidth"
+        android:fastScrollEnabled="true"
         android:gravity="center"
         android:horizontalSpacing="@dimen/showgrid_spacing"
         android:listSelector="?custom_list_selector"
