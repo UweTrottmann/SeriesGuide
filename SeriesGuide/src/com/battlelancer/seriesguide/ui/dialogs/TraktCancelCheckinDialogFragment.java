@@ -32,9 +32,9 @@ import android.text.format.DateUtils;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.enums.TraktStatus;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
@@ -87,7 +87,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                     @Override
                     protected Response doInBackground(String... params) {
 
-                        ServiceManager manager = Utils.getServiceManagerWithAuth(context, false);
+                        ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(context, false);
                         if (manager == null) {
                             // password could not be decrypted
                             Response r = new Response();

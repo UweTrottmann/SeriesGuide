@@ -37,8 +37,8 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.MenuOnPageChangeListener;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.slidingmenu.lib.SlidingMenu;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -162,7 +162,7 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
 
         @Override
         public int getCount() {
-            final boolean isValidCredentials = Utils.isTraktCredentialsValid(mContext);
+            final boolean isValidCredentials = ServiceUtils.isTraktCredentialsValid(mContext);
             if (isValidCredentials) {
                 // show trakt recommended and libraried shows, too
                 return TRAKT_CONNECTED_TABCOUNT;

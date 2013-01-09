@@ -45,6 +45,7 @@ import com.battlelancer.seriesguide.loaders.GenericListLoader;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
@@ -190,15 +191,15 @@ public class TraktFriendsFragment extends ListFragment implements
 
         @Override
         public List<UserProfile> loadInBackground() {
-            if (Utils.isTraktCredentialsValid(getContext())) {
-                ServiceManager manager = Utils.getServiceManagerWithAuth(getContext(), false);
+            if (ServiceUtils.isTraktCredentialsValid(getContext())) {
+                ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(getContext(), false);
                 if (manager == null) {
                     return null;
                 }
 
                 try {
                     List<UserProfile> friends = manager.userService()
-                            .friends(Utils.getTraktUsername(getContext())).fire();
+                            .friends(ServiceUtils.getTraktUsername(getContext())).fire();
 
                     // list watching now separately and first
                     List<UserProfile> friendsActivity = new ArrayList<UserProfile>();

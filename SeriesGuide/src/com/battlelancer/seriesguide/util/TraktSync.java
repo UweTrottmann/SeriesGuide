@@ -89,11 +89,11 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected Integer doInBackground(Void... params) {
-        if (!Utils.isTraktCredentialsValid(mContext)) {
+        if (!ServiceUtils.isTraktCredentialsValid(mContext)) {
             return FAILED_CREDENTIALS;
         }
 
-        ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
+        ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
         if (manager == null) {
             // password could not be decrypted
             return FAILED_CREDENTIALS;
@@ -102,7 +102,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
         if (mIsSyncToTrakt) {
             return syncToTrakt(manager);
         } else {
-            return syncToSeriesGuide(manager, Utils.getTraktUsername(mContext));
+            return syncToSeriesGuide(manager, ServiceUtils.getTraktUsername(mContext));
         }
     }
 

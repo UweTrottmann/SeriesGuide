@@ -119,16 +119,16 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
         // already here, so we only have to get it once
         List<TvShow> watched = new ArrayList<TvShow>();
         List<TvShow> collection = new ArrayList<TvShow>();
-        if (Utils.isTraktCredentialsValid(mContext)) {
-            ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
+        if (ServiceUtils.isTraktCredentialsValid(mContext)) {
+            ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
             if (manager != null) {
                 try {
                     watched = manager.userService()
-                            .libraryShowsWatched(Utils.getTraktUsername(mContext))
+                            .libraryShowsWatched(ServiceUtils.getTraktUsername(mContext))
                             .extended(ExtendedParam.Min).fire();
 
                     collection = manager.userService()
-                            .libraryShowsCollection(Utils.getTraktUsername(mContext))
+                            .libraryShowsCollection(ServiceUtils.getTraktUsername(mContext))
                             .extended(ExtendedParam.Min).fire();
                 } catch (ApiException e) {
                     // something went wrong, just go on

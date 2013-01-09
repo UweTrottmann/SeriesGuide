@@ -41,6 +41,7 @@ import android.widget.TextView;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.SimpleCrypto;
@@ -247,7 +248,7 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                         if (response.status.equals(TraktStatus.SUCCESS)
                                 && passwordEncr.length() != 0 && editor.commit()) {
                             // try setting new auth data for service manager
-                            if (Utils.getServiceManagerWithAuth(context, true) == null) {
+                            if (ServiceUtils.getTraktServiceManagerWithAuth(context, true) == null) {
                                 status.setText(R.string.trakt_generalerror);
                                 return;
                             }
@@ -291,7 +292,7 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                         clearTraktCredentials(prefs);
 
                         // force removing credentials from memory
-                        ServiceManager manager = Utils.getServiceManagerWithAuth(context, false);
+                        ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(context, false);
                         if (manager != null) {
                             manager.setAuthentication(null, null);
                         }

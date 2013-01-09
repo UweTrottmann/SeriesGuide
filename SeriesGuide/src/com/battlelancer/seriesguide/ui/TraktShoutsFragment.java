@@ -44,6 +44,7 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
@@ -455,7 +456,7 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
             int tvdbId = mArgs.getInt(ShareItems.TVDBID);
             int episode = mArgs.getInt(ShareItems.EPISODE);
 
-            ServiceManager manager = Utils.getServiceManager(getContext());
+            ServiceManager manager = ServiceUtils.getTraktServiceManager(getContext());
             List<Shout> shouts = new ArrayList<Shout>();
             try {
                 if (episode == 0) {

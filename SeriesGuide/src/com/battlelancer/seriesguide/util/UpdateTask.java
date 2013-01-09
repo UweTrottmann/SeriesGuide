@@ -289,7 +289,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
 
     private UpdateResult getTraktActivity(SharedPreferences prefs, int maxProgress,
             long currentTime, ContentResolver resolver) {
-        if (Utils.isTraktCredentialsValid(mAppContext)) {
+        if (ServiceUtils.isTraktCredentialsValid(mAppContext)) {
             // return if we get cancelled or connectivity is lost/forbidden
             if (isCancelled()) {
                 return UpdateResult.CANCELLED;
@@ -304,7 +304,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             final long startTimeTrakt = prefs.getLong(SeriesGuidePreferences.KEY_LASTTRAKTUPDATE,
                     currentTime) / 1000;
 
-            ServiceManager manager = Utils.getServiceManagerWithAuth(mAppContext, false);
+            ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(mAppContext, false);
             if (manager == null) {
                 return UpdateResult.ERROR;
             }
@@ -314,7 +314,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             try {
                 activity = manager
                         .activityService()
-                        .user(Utils.getTraktUsername(mAppContext))
+                        .user(ServiceUtils.getTraktUsername(mAppContext))
                         .types(ActivityType.Episode)
                         .actions(ActivityAction.Checkin, ActivityAction.Seen,
                                 ActivityAction.Scrobble, ActivityAction.Collection)

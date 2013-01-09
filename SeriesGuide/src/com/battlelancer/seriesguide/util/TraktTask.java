@@ -188,14 +188,14 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         }
 
         // check for valid credentials
-        if (!Utils.isTraktCredentialsValid(mContext)) {
+        if (!ServiceUtils.isTraktCredentialsValid(mContext)) {
             // return null so a credentials dialog is displayed
             // it will call us again with valid credentials
             return null;
         }
 
         // get an authenticated trakt-java ServiceManager
-        ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
+        ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
         if (manager == null) {
             // password could not be decrypted
             Response r = new Response();

@@ -41,10 +41,10 @@ import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -177,7 +177,7 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    if (!Utils.isTraktCredentialsValid(getSherlockActivity())) {
+                    if (!ServiceUtils.isTraktCredentialsValid(getSherlockActivity())) {
                         // authenticate already here
                         TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
                                 .newInstance();
@@ -249,7 +249,7 @@ public class CheckInDialogFragment extends SherlockDialogFragment {
                 }
 
                 if (mTraktChecked) {
-                    if (!Utils.isTraktCredentialsValid(getActivity())) {
+                    if (!ServiceUtils.isTraktCredentialsValid(getActivity())) {
                         // cancel if required auth data is missing
                         mToggleTraktButton.setChecked(false);
                         mTraktChecked = false;
