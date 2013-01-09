@@ -28,7 +28,8 @@ import com.jakewharton.trakt.ServiceManager;
 import com.uwetrottmann.seriesguide.R;
 
 /**
- * Helper methods to interact with third-party services used within SeriesGuide.
+ * Helper methods to interact with third-party services trakt and The Movie
+ * Database used within SeriesGuide.
  */
 public class ServiceUtils {
 
@@ -71,7 +72,7 @@ public class ServiceUtils {
             // this made some problems, so sadly disabled for now
             // manager.setUseSsl(true);
         }
-    
+
         return ServiceUtils.sTraktServiceManagerInstance;
     }
 
