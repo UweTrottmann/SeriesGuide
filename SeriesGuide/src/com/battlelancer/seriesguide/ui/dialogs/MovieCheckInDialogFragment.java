@@ -25,6 +25,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
+import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
+import com.battlelancer.seriesguide.util.TraktTask;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
 
@@ -84,12 +87,12 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
      * Start the trakt check in task.
      */
     protected void onTraktCheckIn(String message) {
-        // TODO trakt movie check in
-        // AndroidUtils.executeAsyncTask(new TraktTask(getActivity(),
-        // getFragmentManager(), null).checkin(tvdbid, season, episode,
-        // message), new Void[] {
-        // null
-        // });
+        final String imdbId = getArguments().getString(ShareItems.IMDBID);
+        AndroidUtils.executeAsyncTask(new TraktTask(getActivity(),
+                getFragmentManager(), null).checkInMovie(imdbId,
+                message), new Void[] {
+                null
+        });
     }
 
     protected void handleGetGlueToggle(final SharedPreferences prefs, final String imdbid,

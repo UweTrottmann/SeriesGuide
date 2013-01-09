@@ -7,6 +7,7 @@ public class Response implements TraktEntity {
 
     public String status; //TODO: enum
     public TvShow show;
+    public Movie movie;
     public String message;
     public String error;
     public int wait;

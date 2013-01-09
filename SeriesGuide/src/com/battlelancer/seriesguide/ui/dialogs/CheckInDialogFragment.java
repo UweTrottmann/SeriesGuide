@@ -119,7 +119,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
         final int episode = getArguments().getInt(ShareItems.EPISODE);
 
         AndroidUtils.executeAsyncTask(new TraktTask(getActivity(),
-                getFragmentManager(), null).checkin(tvdbid, season, episode,
+                getFragmentManager(), null).checkInEpisode(tvdbid, season, episode,
                 message), new Void[] {
                 null
         });
