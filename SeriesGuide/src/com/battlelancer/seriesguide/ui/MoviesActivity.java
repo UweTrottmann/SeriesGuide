@@ -17,10 +17,34 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.uwetrottmann.seriesguide.R;
+
 /**
  * Users can search for a movie, display detailed information and then check in
  * with trakt or GetGlue.
  */
 public class MoviesActivity extends BaseTopActivity {
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.movies);
+
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(getString(R.string.movies));
+        actionBar.setIcon(R.drawable.ic_action_movie);
+
+        if (savedInstanceState == null) {
+            Fragment f = new MovieSearchFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.movies_container, f);
+            ft.commit();
+        }
+    }
 }

@@ -124,6 +124,9 @@ public class SlidingMenuFragment extends ListFragment {
                 storeSelectedPage(PAGE_ACTIVITY);
                 break;
             case MENU_ITEM_MOVIES_ID:
+                startActivity(new Intent(getActivity(), MoviesActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case MENU_ITEM_CHECKIN_ID:
                 startActivity(new Intent(getActivity(), CheckinActivity.class)

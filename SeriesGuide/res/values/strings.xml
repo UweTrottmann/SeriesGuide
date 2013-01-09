@@ -55,6 +55,9 @@
     <string name="shouts_for">Shouts for %s</string>
     <string name="autorefresh">Refreshing automagically</string>
 
+    <!-- Movies -->
+    <string name="movies_search_hint">Type a movie title</string>
+    
     <!-- Trakt ratings -->
     <string name="love">Totally ninja!</string>
     <string name="hate">Weak Sauce :(</string>

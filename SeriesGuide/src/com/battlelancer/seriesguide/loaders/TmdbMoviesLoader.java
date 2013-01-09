@@ -18,6 +18,7 @@
 package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -46,6 +47,10 @@ public class TmdbMoviesLoader extends GenericListLoader<Movie> {
 
     @Override
     public List<Movie> loadInBackground() {
+        if (TextUtils.isEmpty(mQuery)){
+            return null;
+        }
+        
         ServiceManager manager = ServiceUtils.getTmdbServiceManager(getContext());
 
         try {
