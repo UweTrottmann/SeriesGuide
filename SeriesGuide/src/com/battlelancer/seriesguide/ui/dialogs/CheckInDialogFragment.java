@@ -32,7 +32,6 @@ import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -69,7 +68,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
 
     @Override
     protected void onGetGlueCheckin(SharedPreferences prefs, String imdbid, String message) {
-        final int tvdbid = getArguments().getInt(ShareItems.TVDBID);
+        final int tvdbid = getArguments().getInt(InitBundle.TVDB_ID);
         boolean isAbortingCheckIn = false;
         String objectId = null;
 
@@ -114,9 +113,9 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
 
     @Override
     protected void onTraktCheckIn(String message) {
-        final int tvdbid = getArguments().getInt(ShareItems.TVDBID);
-        final int season = getArguments().getInt(ShareItems.SEASON);
-        final int episode = getArguments().getInt(ShareItems.EPISODE);
+        final int tvdbid = getArguments().getInt(InitBundle.TVDB_ID);
+        final int season = getArguments().getInt(InitBundle.SEASON);
+        final int episode = getArguments().getInt(InitBundle.EPISODE);
 
         AndroidUtils.executeAsyncTask(new TraktTask(getActivity(),
                 getFragmentManager(), null).checkInEpisode(tvdbid, season, episode,
