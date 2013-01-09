@@ -12,4 +12,11 @@
         android:textAppearance="?attr/textAppearanceSgLargeLight" >
     </TextView>
 
+    <TextView
+        android:id="@+id/textViewMovieDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceSgSmallDim" >
+    </TextView>
+
 </LinearLayout>

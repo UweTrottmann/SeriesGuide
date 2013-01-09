@@ -18,6 +18,7 @@
 package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
             holder = new ViewHolder();
             holder.title = (TextView) convertView.findViewById(R.id.textViewMovieTitle);
+            holder.date = (TextView) convertView.findViewById(R.id.textViewMovieDate);
 
             convertView.setTag(holder);
         } else {
@@ -64,6 +66,8 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         Movie movie = getItem(position);
 
         holder.title.setText(movie.title);
+        holder.date.setText(DateUtils.formatDateTime(getContext(), movie.release_date.getTime(),
+                DateUtils.FORMAT_SHOW_DATE));
 
         return convertView;
     }
@@ -79,6 +83,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
     static class ViewHolder {
         TextView title;
+        TextView date;
     }
 
 }
