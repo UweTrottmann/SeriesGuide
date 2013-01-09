@@ -32,11 +32,11 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.adapters.MoviesAdapter;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
+import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.tmdb.entities.Movie;
 
@@ -123,8 +123,11 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // TODO Auto-generated method stub
         Movie movie = mAdapter.getItem(position);
-        Toast.makeText(getActivity(), movie.title + " Lovely!", Toast.LENGTH_SHORT).show();
+
+        // display a check-in dialog
+        MovieCheckInDialogFragment f = MovieCheckInDialogFragment.newInstance(movie.imdb_id,
+                movie.title);
+        f.show(getFragmentManager(), "movie-checkin-dialog");
     }
 }
