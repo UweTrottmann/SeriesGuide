@@ -300,7 +300,7 @@
     <string name="checkin_empty">No matching shows</string>
     <string name="checkin_hint">Type a message (optional)</string>
     <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
-    <string name="paste_episode">Paste episode</string>
+    <string name="paste_title">Paste title</string>
     <string name="checkinsuccess">Checked into %s on GetGlue.</string>
     <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
     <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
