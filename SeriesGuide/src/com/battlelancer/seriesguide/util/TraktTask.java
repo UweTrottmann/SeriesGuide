@@ -279,7 +279,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     final String message = mArgs.getString(InitBundle.MESSAGE);
 
                     final MovieService.CheckinBuilder checkinBuilder = manager
-                            .movieService().checking(imdbId);
+                            .movieService().checkin(imdbId);
                     if (!TextUtils.isEmpty(message)) {
                         checkinBuilder.message(message);
                     }
