@@ -66,8 +66,13 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         Movie movie = getItem(position);
 
         holder.title.setText(movie.title);
-        holder.date.setText(DateUtils.formatDateTime(getContext(), movie.release_date.getTime(),
-                DateUtils.FORMAT_SHOW_DATE));
+        if (movie.release_date != null) {
+            holder.date.setText(DateUtils.formatDateTime(getContext(),
+                    movie.release_date.getTime(),
+                    DateUtils.FORMAT_SHOW_DATE));
+        } else {
+            holder.date.setText("");
+        }
 
         return convertView;
     }
