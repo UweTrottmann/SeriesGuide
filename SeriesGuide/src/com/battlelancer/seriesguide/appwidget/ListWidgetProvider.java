@@ -155,6 +155,17 @@ public class ListWidgetProvider extends AppWidgetProvider {
                 .addNextIntent(itemIntent)
                 .getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT);
         rv.setPendingIntentTemplate(R.id.list_view, pendingIntentTemplate);
+
+        // Create an intent to launch show list
+        Intent homeIntent = new Intent(context, ShowsActivity.class);
+        homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP
+                | Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingHomeIntent = TaskStackBuilder
+                .create(context)
+                .addNextIntent(homeIntent)
+                .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
+        rv.setOnClickPendingIntent(R.id.widget_logo, pendingHomeIntent);
+
         return rv;
     }
 }
