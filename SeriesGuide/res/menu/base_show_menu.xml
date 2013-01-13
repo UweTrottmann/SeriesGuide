@@ -5,7 +5,7 @@
         android:id="@+id/menu_checkin"
         android:icon="@drawable/ic_action_checkin"
         android:orderInCategory="0"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="always|withText"
         android:title="@string/checkin"/>
 
 </menu>
