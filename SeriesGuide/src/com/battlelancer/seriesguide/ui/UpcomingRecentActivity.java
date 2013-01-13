@@ -61,8 +61,6 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setIcon(R.drawable.ic_action_upcoming);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        
-        getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 
         ActionBar.Tab upcomingTab = actionBar.newTab().setText(R.string.upcoming);
         ActionBar.Tab recentTab = actionBar.newTab().setText(R.string.recent);
@@ -116,6 +114,12 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
             selection = 0;
         }
         actionBar.setSelectedNavigationItem(selection);
+        
+        if (selection == 0){
+            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        } else {
+            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+        }
     }
 
     @Override
