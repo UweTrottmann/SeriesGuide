@@ -31,6 +31,7 @@
   <string name="shows">סדרות</string>
   <string name="lists">רשימות</string>
   <string name="activity">פעילות</string>
+  <string name="movies">Movies</string>
   <string name="search">חיפוש</string>
   <string name="add_show">הוסף סדרה</string>
   <string name="preferences">הגדרות</string>
@@ -42,6 +43,8 @@
   <string name="no_shouts">תהיה הראשון להמליץ!</string>
   <string name="shouts_for">המלצות עבור %s</string>
   <string name="autorefresh">מרענן אוטומטית</string>
+  <string name="movies_search_hint">Type a movie title</string>
+  <string name="movies_empty">Search for a movie above.</string>
   <string name="love">לגמרי נינג\'ה!</string>
   <string name="hate">על הפנים ):</string>
   <string name="rating2">נוראי</string>
@@ -62,7 +65,7 @@
   <string name="episode_directors">במאים</string>
   <string name="episode_gueststars">כוכבי אורח</string>
   <string name="episode_writers">כותבים</string>
-  <string name="show_airtimeunit">מינימום</string>
+  <string name="show_airtimeunit">דקות</string>
   <string name="show_isalive">ממשיכה</string>
   <string name="show_isnotalive">הסתיימה</string>
   <string name="lastEdit">עדכון אחרון // TVDb</string>
@@ -85,11 +88,13 @@
   <string name="trakt_submitfailed">לא נשלח אל trakt. נסה שנית מאוחר יותר.</string>
   <string name="trakt_submitsuccess">נשלח אל trakt.</string>
   <string name="trakt_seen">%s נצפו.</string>
-  <string name="trakt_notseen">%s טרם צפית.</string>
-  <string name="trakt_collected">%s אספת.</string>
-  <string name="trakt_notcollected">%s טרם אספת.</string>
-  <string name="shows_empty">אין סדרות שבחרת</string>
-  <string name="confirm_delete">אתה בטוח שאתה רוצה להסיר %s?</string>
+  <string name="trakt_notseen">%s שטרם צפית.</string>
+  <string name="trakt_collected">%s שאספת.</string>
+  <string name="trakt_notcollected">%s שטרם אספת.</string>
+  <string name="shows_empty">Look in the menu above to add some shows.</string>
+  <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
+  <string name="hidden_empty">Long-press on a show to hide it here.</string>
+  <string name="confirm_delete">בטוח שאתה רוצה להסיר את %s?</string>
   <string name="delete_has_list_items">לא ניתן לבצע, הסר קודם את %s מכל הרשימות </string>
   <string name="delete_show">הסר</string>
   <string name="dontdelete_show">אל תסיר</string>
@@ -101,7 +106,7 @@
   <string name="context_hide">הסתר</string>
   <string name="context_unhide">בטל הסתרה</string>
   <string name="hidden">סדרה מוסתרת</string>
-  <string name="unhidden">בטל הסתרת סדרות</string>
+  <string name="unhidden">סדרה לא מוסתרת</string>
   <string name="upcoming">בקרוב</string>
   <string name="recent">חדש</string>
   <string name="friends">חברים</string>
@@ -183,7 +188,7 @@
   <string name="about">אודות SeriesGuide</string>
   <string name="pref_credits">קרדיטים</string>
   <string name="clearGetGlueCredentials">נתק את GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
+  <string name="clearGetGlueCredentialssummary">עשה צ\'ק-אין עם GetGlue כדי להתחבר מחדש</string>
   <string name="pref_trakt">אישורי trakt.tv</string>
   <string name="pref_traktsummary">הוסף או ערוך את אישורי ה-trakt.tv שלך</string>
   <string name="pref_traktsync">סנכרן עם trakt.tv</string>
@@ -224,13 +229,13 @@
   <string name="checkin_searchhint">הקלד שם סדרה</string>
   <string name="checkin_empty">אין סדרות תואמות</string>
   <string name="checkin_hint">הקלד הודעה (אופציונלי)</string>
-  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
-  <string name="paste_episode">הדבק פרק</string>
+  <string name="checkin_fixgetglue">תקן את צ\'ק-אין GetGlue</string>
+  <string name="paste_title">Paste title</string>
   <string name="checkinsuccess">בוצע צ\'ק-אין של %s ב-GetGlue.</string>
-  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
+  <string name="checkinfailed">צ\'ק-אין GetGlue נכשל. נסה שנית מאוחר יותר.</string>
   <string name="getglue_authfailed">אימות GetGlue נכשל. נסה שנית מאוחר יותר.</string>
-  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
-  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
+  <string name="checkin_success_trakt">נעשה צ\'ק-אין ל-%s ב-trakt.</string>
+  <string name="checkin_canceled_success_trakt">הצ\'ק-אין ב-trakt בוטל.</string>
   <string name="select_show">בחר סדרה</string>
   <string name="check_into">בצע צ\'ק-אין ב</string>
   <string name="no_selection">בחר אחד להלן</string>
@@ -238,7 +243,7 @@
   <string name="menu_rate_trakt">דרג (trakt)</string>
   <string name="menu_share_others">באמצעות אפליקציות אחרות</string>
   <string name="traktcheckin_cancel">דרוס</string>
-  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
+  <string name="traktcheckin_inprogress">אתה כבר עושה צ\'ק-אין לפרק או סרט אחר. דרוס את הצ\'ק-אין הקודם או חכה %s ונסה שנית.</string>
   <string name="traktcheckin_wait">אני אחכה</string>
   <string name="oauthmessage">מאמת את SeriesGuide עם GetGlue</string>
   <string name="addtocalendar">הוסף ללוח השנה</string>
@@ -269,13 +274,13 @@
   <string name="upcoming_show_detailed">%1$ s ב- %2$ s</string>
   <string name="upcoming_display">בחר כדי להציג סדרות שמתקרבות</string>
   <string name="pref_notifications">התראות</string>
-  <string name="pref_notificationssummary">הודיע לגבי סדרות מועדפות שמשודרות בקרוב</string>
+  <string name="pref_notificationssummary">Notify about new episodes</string>
   <string name="pref_notifyfavonly">מועדפים בלבד</string>
   <string name="pref_notifyfavonlysummary">קבל התראות לגבי סדרות מעודפות בלבד</string>
   <string name="pref_ringtone">רינגטון</string>
   <string name="pref_vibrate">רטט</string>
   <string name="pref_vibratesummary">רטוט גם בזמן הצגת התראות</string>
-  <string name="pref_notifications_treshold">When to notify</string>
+  <string name="pref_notifications_treshold">מתי להתריע</string>
   <string name="pref_theme">נושא אפליקציה</string>
   <string name="choose_list">בחר רשימת פעילות</string>
   <string name="hide_watched">הסתר פרקים שנצפו</string>
@@ -320,10 +325,10 @@
     <item>מוסתרים</item>
   </string-array>
   <string-array name="notificationThreshold">
-    <item>on air</item>
-    <item>5 min in advance</item>
-    <item>10 min in advance</item>
-    <item>one hour in advance</item>
+    <item>משודר</item>
+    <item>5 דקות מראש</item>
+    <item>10 דקות מראש</item>
+    <item>שעה מראש</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">הצבעה %d</item>

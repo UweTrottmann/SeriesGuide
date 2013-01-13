@@ -31,6 +31,7 @@
   <string name="shows">Series</string>
   <string name="lists">Listas</string>
   <string name="activity">Actividad</string>
+  <string name="movies">Movies</string>
   <string name="search">Buscar</string>
   <string name="add_show">Agregar serie</string>
   <string name="preferences">Configuración</string>
@@ -42,6 +43,8 @@
   <string name="no_shouts">¡Sé el primero en gritar!</string>
   <string name="shouts_for">Gritos por %s</string>
   <string name="autorefresh">Actualizando automáticamente</string>
+  <string name="movies_search_hint">Type a movie title</string>
+  <string name="movies_empty">Search for a movie above.</string>
   <string name="love">¡Una pasada!</string>
   <string name="hate">¡Apesta!</string>
   <string name="rating2">Terrible</string>
@@ -88,7 +91,9 @@
   <string name="trakt_notseen">%s no visto.</string>
   <string name="trakt_collected">%s recogidos.</string>
   <string name="trakt_notcollected">%s no recogidos.</string>
-  <string name="shows_empty">No hay shows aquí.</string>
+  <string name="shows_empty">Look in the menu above to add some shows.</string>
+  <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
+  <string name="hidden_empty">Long-press on a show to hide it here.</string>
   <string name="confirm_delete">¿Realmente desea eliminar %s?</string>
   <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Eliminar</string>
@@ -225,7 +230,7 @@
   <string name="checkin_empty">Sin coincidencias</string>
   <string name="checkin_hint">Escriba un mensaje (opcional)</string>
   <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
-  <string name="paste_episode">Pegue episodio</string>
+  <string name="paste_title">Paste title</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">Error de autenticación de GetGlue. Intente más tarde.</string>
@@ -269,7 +274,7 @@
   <string name="upcoming_show_detailed">%1$s en %2$s</string>
   <string name="upcoming_display">Seleccione esta opción para mostrar las series que vienen</string>
   <string name="pref_notifications">Notificaciones</string>
-  <string name="pref_notificationssummary">Notificar sobre programas favoritos por salir</string>
+  <string name="pref_notificationssummary">Notify about new episodes</string>
   <string name="pref_notifyfavonly">Solo favoritos</string>
   <string name="pref_notifyfavonlysummary">Solo recibir notificaciones de los favoritos</string>
   <string name="pref_ringtone">Ringtone</string>
@@ -320,7 +325,7 @@
     <item>Oculto</item>
   </string-array>
   <string-array name="notificationThreshold">
-    <item>on air</item>
+    <item>en directo</item>
     <item>5 min in advance</item>
     <item>10 min in advance</item>
     <item>one hour in advance</item>

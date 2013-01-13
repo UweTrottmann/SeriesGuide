@@ -31,6 +31,7 @@
   <string name="shows">Shows</string>
   <string name="lists">Lists</string>
   <string name="activity">Atividade</string>
+  <string name="movies">Movies</string>
   <string name="search">Search</string>
   <string name="add_show">Adicionar Série</string>
   <string name="preferences">Definições</string>
@@ -42,6 +43,8 @@
   <string name="no_shouts">Seja o primeiro a comentar!</string>
   <string name="shouts_for">Comentários sobre %s</string>
   <string name="autorefresh">Atualizando automaticamente</string>
+  <string name="movies_search_hint">Type a movie title</string>
+  <string name="movies_empty">Search for a movie above.</string>
   <string name="love">Totalmente ninja!</string>
   <string name="hate">Fraco :(</string>
   <string name="rating2">Terrível</string>
@@ -88,7 +91,9 @@
   <string name="trakt_notseen">%s por ver.</string>
   <string name="trakt_collected">%s recolhido.</string>
   <string name="trakt_notcollected">%s não recolhidos.</string>
-  <string name="shows_empty">Sem séries adicionadas</string>
+  <string name="shows_empty">Look in the menu above to add some shows.</string>
+  <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
+  <string name="hidden_empty">Long-press on a show to hide it here.</string>
   <string name="confirm_delete">Deseja realmente remover %s?</string>
   <string name="delete_has_list_items">Remova primeiro o %s de todas as listas.</string>
   <string name="delete_show">Remover</string>
@@ -225,7 +230,7 @@
   <string name="checkin_empty">Nenhuma série encontrada</string>
   <string name="checkin_hint">Digite uma mensagem (opcional)</string>
   <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
-  <string name="paste_episode">Colar episódio</string>
+  <string name="paste_title">Paste title</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">Autenticação em GetGlue falhou. Tente novamente mais tarde.</string>
@@ -269,7 +274,7 @@
   <string name="upcoming_show_detailed">%1$s em %2$s</string>
   <string name="upcoming_display">Selecione para exibir as próximos séries</string>
   <string name="pref_notifications">Notificações</string>
-  <string name="pref_notificationssummary">Notifique sobre as próximas exibições das séries favoritas</string>
+  <string name="pref_notificationssummary">Notify about new episodes</string>
   <string name="pref_notifyfavonly">Só favoritos</string>
   <string name="pref_notifyfavonlysummary">Apenas receber notificações para shows favoritos</string>
   <string name="pref_ringtone">Toque</string>

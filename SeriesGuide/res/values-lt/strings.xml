@@ -31,6 +31,7 @@
   <string name="shows">Shows</string>
   <string name="lists">Lists</string>
   <string name="activity">Veikla</string>
+  <string name="movies">Movies</string>
   <string name="search">Search</string>
   <string name="add_show">Pridėti serialą</string>
   <string name="preferences">Nustatymai</string>
@@ -42,6 +43,8 @@
   <string name="no_shouts">Be the first to shout!</string>
   <string name="shouts_for">Shouts for %s</string>
   <string name="autorefresh">Automatiškai atsinaujinantis</string>
+  <string name="movies_search_hint">Type a movie title</string>
+  <string name="movies_empty">Search for a movie above.</string>
   <string name="love">Totalus nindzė!</string>
   <string name="hate">Weak Sauce :(</string>
   <string name="rating2">Terrible</string>
@@ -88,7 +91,9 @@
   <string name="trakt_notseen">%s not seen.</string>
   <string name="trakt_collected">%s collected.</string>
   <string name="trakt_notcollected">%s not collected.</string>
-  <string name="shows_empty">No shows here.</string>
+  <string name="shows_empty">Look in the menu above to add some shows.</string>
+  <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
+  <string name="hidden_empty">Long-press on a show to hide it here.</string>
   <string name="confirm_delete">Do you really want to remove %s?</string>
   <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Pašalinti</string>
@@ -225,7 +230,7 @@
   <string name="checkin_empty">No matching shows</string>
   <string name="checkin_hint">Type a message (optional)</string>
   <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
-  <string name="paste_episode">Paste episode</string>
+  <string name="paste_title">Paste title</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
@@ -269,7 +274,7 @@
   <string name="upcoming_show_detailed">%1$s %2$s</string>
   <string name="upcoming_display">Select to display upcoming shows</string>
   <string name="pref_notifications">Pranešimai</string>
-  <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
+  <string name="pref_notificationssummary">Notify about new episodes</string>
   <string name="pref_notifyfavonly">Favorites only</string>
   <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
   <string name="pref_ringtone">Melodija</string>

@@ -28,10 +28,11 @@
   <string name="save_selection">Tallenna valinta</string>
   <string name="offline">Ei verkkoyhteyttä. Yritä myöhemmin uudelleen.</string>
   <string name="onlyx">Saatavilla vain SeriesGuide X:ssä</string>
-  <string name="shows">Shows</string>
-  <string name="lists">Lists</string>
+  <string name="shows">Ohjelmat</string>
+  <string name="lists">Listat</string>
   <string name="activity">Toiminta</string>
-  <string name="search">Search</string>
+  <string name="movies">Movies</string>
+  <string name="search">Hae</string>
   <string name="add_show">Lisää ohjelma</string>
   <string name="preferences">Asetukset</string>
   <string name="help">Apua</string>
@@ -42,6 +43,8 @@
   <string name="no_shouts">Huudahda ensimmäisenä!</string>
   <string name="shouts_for">Huudahdukset ohjelmalle %s</string>
   <string name="autorefresh">Päivitetään automaagisesti</string>
+  <string name="movies_search_hint">Type a movie title</string>
+  <string name="movies_empty">Search for a movie above.</string>
   <string name="love">Maailman parasta!</string>
   <string name="hate">Ei sytyttänyt :(</string>
   <string name="rating2">Kauhea</string>
@@ -88,7 +91,9 @@
   <string name="trakt_notseen">%s ei ole katsottu.</string>
   <string name="trakt_collected">%s kerätty.</string>
   <string name="trakt_notcollected">%s ei ole kerätty.</string>
-  <string name="shows_empty">Ei ohjelmia täällä.</string>
+  <string name="shows_empty">Look in the menu above to add some shows.</string>
+  <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
+  <string name="hidden_empty">Long-press on a show to hide it here.</string>
   <string name="confirm_delete">Haluatko todella poistaa %s?</string>
   <string name="delete_has_list_items">Ei onnistu. Poista %s kaikilta listoiltasi ensin.</string>
   <string name="delete_show">Poista</string>
@@ -183,7 +188,7 @@
   <string name="about">Tietoja SeriesGuidesta</string>
   <string name="pref_credits">Tekijät</string>
   <string name="clearGetGlueCredentials">Irrottaudu GetGluesta</string>
-  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
+  <string name="clearGetGlueCredentialssummary">Kuittaa GetGluen kanssa yhdistääksesi uudelleen</string>
   <string name="pref_trakt">trakt.tv:n käyttäjätiedot</string>
   <string name="pref_traktsummary">Lisää tai muokkaa trakt.tv:n käyttäjätietojasi</string>
   <string name="pref_traktsync">Synkronoi trakt.tv:n kanssa</string>
@@ -224,13 +229,13 @@
   <string name="checkin_searchhint">Kirjoita ohjelman nimi</string>
   <string name="checkin_empty">Ei vastaavia ohjelmia</string>
   <string name="checkin_hint">Kirjoita viesti (valinnainen)</string>
-  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
-  <string name="paste_episode">Liitä jakso</string>
+  <string name="checkin_fixgetglue">Korjaa GetGlue-kuittaus</string>
+  <string name="paste_title">Paste title</string>
   <string name="checkinsuccess">Kuitattu kohteeseen %s GetGluessa.</string>
-  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
+  <string name="checkinfailed">GetGlue-kuittaus epäonnistui. Yritä myöhemmin uudelleen.</string>
   <string name="getglue_authfailed">GetGluen todentaminen epäonnistui. Yritä myöhemmin uudelleen.</string>
-  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
-  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
+  <string name="checkin_success_trakt">Kuitattu kohteeseen %s traktissa.</string>
+  <string name="checkin_canceled_success_trakt">Kuittaus peruttu traktissa.</string>
   <string name="select_show">Valitse ohjelma</string>
   <string name="check_into">Kuittaa</string>
   <string name="no_selection">valitse yksi alta</string>
@@ -238,7 +243,7 @@
   <string name="menu_rate_trakt">Arvostele (trakt)</string>
   <string name="menu_share_others">Muulla sovelluksella</string>
   <string name="traktcheckin_cancel">Korvaa</string>
-  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
+  <string name="traktcheckin_inprogress">Olet jo kuitannut toiseen jaksoon tai elokuvaan. Joko korvaa edellinen kuittaus tai odota %s ja yritä uudelleen.</string>
   <string name="traktcheckin_wait">Odotetaan</string>
   <string name="oauthmessage">Todennetaan SeriesGuide palveluun GetGlue…</string>
   <string name="addtocalendar">Lisää kalenteriin</string>
@@ -269,13 +274,13 @@
   <string name="upcoming_show_detailed">%1$s kanavalla %2$s</string>
   <string name="upcoming_display">Valitse näyttääksesi tulevat ohjelmat</string>
   <string name="pref_notifications">Ilmoitukset</string>
-  <string name="pref_notificationssummary">Ilmoita pian esitettävistä suosikkiohjelmista</string>
+  <string name="pref_notificationssummary">Notify about new episodes</string>
   <string name="pref_notifyfavonly">Vain suosikit</string>
   <string name="pref_notifyfavonlysummary">Vastaanota ainoastaan ilmoituksia suosikkiohjelmista</string>
   <string name="pref_ringtone">Soittoääni</string>
   <string name="pref_vibrate">Värinä</string>
   <string name="pref_vibratesummary">Myös värise näytettäessä ilmoitus</string>
-  <string name="pref_notifications_treshold">When to notify</string>
+  <string name="pref_notifications_treshold">Milloin ilmoittaa</string>
   <string name="pref_theme">Sovelluksen teema</string>
   <string name="choose_list">Valitse toimintalista</string>
   <string name="hide_watched">Piilota katsotut jaksot</string>
@@ -320,10 +325,10 @@
     <item>Piilotetut</item>
   </string-array>
   <string-array name="notificationThreshold">
-    <item>on air</item>
-    <item>5 min in advance</item>
-    <item>10 min in advance</item>
-    <item>one hour in advance</item>
+    <item>esitettäessä</item>
+    <item>5 min etukäteen</item>
+    <item>10 min etukäteen</item>
+    <item>yksi tunti etukäteen</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d ääni</item>

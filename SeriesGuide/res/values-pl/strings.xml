@@ -31,6 +31,7 @@
   <string name="shows">Seriale</string>
   <string name="lists">Listy</string>
   <string name="activity">Aktywność</string>
+  <string name="movies">Movies</string>
   <string name="search">Szukaj</string>
   <string name="add_show">Dodaj serial</string>
   <string name="preferences">Ustawienia</string>
@@ -42,6 +43,8 @@
   <string name="no_shouts">Krzycz jako pierwszy!</string>
   <string name="shouts_for">Krzyków: %s</string>
   <string name="autorefresh">Odświeżanie automagicznie ;)</string>
+  <string name="movies_search_hint">Type a movie title</string>
+  <string name="movies_empty">Search for a movie above.</string>
   <string name="love">Uwielbiam to!</string>
   <string name="hate">Słaby :(</string>
   <string name="rating2">Potworny</string>
@@ -88,7 +91,9 @@
   <string name="trakt_notseen">%s nieobejrzane.</string>
   <string name="trakt_collected">%s w kolekcji.</string>
   <string name="trakt_notcollected">%s - brak w kolekcji.</string>
-  <string name="shows_empty">Brak seriali.</string>
+  <string name="shows_empty">Look in the menu above to add some shows.</string>
+  <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
+  <string name="hidden_empty">Long-press on a show to hide it here.</string>
   <string name="confirm_delete">Czy na pewno chcesz usunąć %s?</string>
   <string name="delete_has_list_items">Nie można kontynuować, usuń %s z wszystkich list.</string>
   <string name="delete_show">Usuń</string>
@@ -225,7 +230,7 @@
   <string name="checkin_empty">Nie odnaleziono serialu</string>
   <string name="checkin_hint">Wpisz wiadomość (opcjonalnie)</string>
   <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
-  <string name="paste_episode">Wklej odcinek</string>
+  <string name="paste_title">Paste title</string>
   <string name="checkinsuccess">Podpięty do %s na GetGlue.</string>
   <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">Uwierzytelnianie GetGlue nie powiodło się. Spróbuj ponownie później.</string>
@@ -269,13 +274,13 @@
   <string name="upcoming_show_detailed">%1$s na %2$s</string>
   <string name="upcoming_display">Wyświetl informacje o nadchodzących odcinkach</string>
   <string name="pref_notifications">Powiadomienia</string>
-  <string name="pref_notificationssummary">Powiadamiaj o nadchodzących emisjach ulubionych seriali</string>
+  <string name="pref_notificationssummary">Notify about new episodes</string>
   <string name="pref_notifyfavonly">Tylko ulubione</string>
   <string name="pref_notifyfavonlysummary">Pokazuj powiadomienia tylko dla ulubionych seriali</string>
   <string name="pref_ringtone">Dzwonek</string>
   <string name="pref_vibrate">Wibracja</string>
   <string name="pref_vibratesummary">Wibruj również przy wyświetlaniu powiadomienia</string>
-  <string name="pref_notifications_treshold">When to notify</string>
+  <string name="pref_notifications_treshold">Powiadamiaj</string>
   <string name="pref_theme">Schemat kolorów</string>
   <string name="choose_list">Wybierz listę aktywności</string>
   <string name="hide_watched">Ukryj obejrzane odcinki</string>
@@ -320,10 +325,10 @@
     <item>Ukryte</item>
   </string-array>
   <string-array name="notificationThreshold">
-    <item>on air</item>
-    <item>5 min in advance</item>
-    <item>10 min in advance</item>
-    <item>one hour in advance</item>
+    <item>na antenie</item>
+    <item>5 min wcześniej</item>
+    <item>10 min wcześniej</item>
+    <item>godzinę wcześniej</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">głosy: %d</item>

@@ -31,6 +31,7 @@
   <string name="shows">Shows</string>
   <string name="lists">Lists</string>
   <string name="activity">Činnosť</string>
+  <string name="movies">Movies</string>
   <string name="search">Search</string>
   <string name="add_show">Pridať seriál</string>
   <string name="preferences">Nastavenia</string>
@@ -42,6 +43,8 @@
   <string name="no_shouts">Buď prvý kto zakričí!</string>
   <string name="shouts_for">Výkriky pre %s</string>
   <string name="autorefresh">Automatická obnova</string>
+  <string name="movies_search_hint">Type a movie title</string>
+  <string name="movies_empty">Search for a movie above.</string>
   <string name="love">Totálna pecka!</string>
   <string name="hate">Odpad :(</string>
   <string name="rating2">Otrasný</string>
@@ -88,7 +91,9 @@
   <string name="trakt_notseen">%s nových.</string>
   <string name="trakt_collected">%s zozbieraných.</string>
   <string name="trakt_notcollected">%s nezozbieraných.</string>
-  <string name="shows_empty">Bez seriálu.</string>
+  <string name="shows_empty">Look in the menu above to add some shows.</string>
+  <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
+  <string name="hidden_empty">Long-press on a show to hide it here.</string>
   <string name="confirm_delete">Naozaj chcete odstrániť %s?</string>
   <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Odstrániť</string>
@@ -225,7 +230,7 @@
   <string name="checkin_empty">Seriál sa nenašiel</string>
   <string name="checkin_hint">Napíšte správu (nepovinné)</string>
   <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
-  <string name="paste_episode">Prilepiť epizódu</string>
+  <string name="paste_title">Paste title</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue overenie zlyhalo. Skúste to znova neskôr.</string>
@@ -269,7 +274,7 @@
   <string name="upcoming_show_detailed">%1$s na %2$s</string>
   <string name="upcoming_display">Vyberte pre zobrazenie nadchádzajúcich seriálov</string>
   <string name="pref_notifications">Notifikácie</string>
-  <string name="pref_notificationssummary">Upozorni ma na vysielanie obľúbených seriálov</string>
+  <string name="pref_notificationssummary">Notify about new episodes</string>
   <string name="pref_notifyfavonly">Favorites only</string>
   <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
   <string name="pref_ringtone">Zvonenie</string>
