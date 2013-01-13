@@ -134,6 +134,7 @@ public class ShowsFragment extends SherlockFragment implements
 
         // get settings
         updateSorting(prefs);
+        int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
 
         mAdapter = new SlowAdapter(getActivity(), null, 0);
 
@@ -141,20 +142,40 @@ public class ShowsFragment extends SherlockFragment implements
         mGrid = (GridView) getView().findViewById(R.id.showlist);
         mGrid.setAdapter(mAdapter);
         mGrid.setOnItemClickListener(this);
-        View emptyView = getView().findViewById(R.id.empty);
-        if (emptyView != null) {
-            mGrid.setEmptyView(emptyView);
-        }
+        setEmptyView(showfilter);
         registerForContextMenu(mGrid);
 
         // start loading data, use saved show filter
-        int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
         Bundle args = new Bundle();
         args.putInt(FILTER_ID, showfilter);
         getLoaderManager().initLoader(LOADER_ID, args, this);
 
         // listen for some settings changes
         prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
+    }
+
+    public void setEmptyView(int showfilter) {
+        View oldEmptyView = mGrid.getEmptyView();
+        
+        View emptyView = null;
+        switch (showfilter) {
+            case SHOWFILTER_FAVORITES:
+                emptyView = getView().findViewById(R.id.emptyFavorites);
+                break;
+            case SHOWFILTER_HIDDEN:
+                emptyView = getView().findViewById(R.id.emptyHidden);
+                break;
+            default:
+                emptyView = getView().findViewById(R.id.empty);
+                break;
+        }
+        if (emptyView != null) {
+            mGrid.setEmptyView(emptyView);
+        }
+        
+        if (oldEmptyView != null) {
+            oldEmptyView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -225,9 +246,9 @@ public class ShowsFragment extends SherlockFragment implements
                 if (episode != null) {
                     episode.close();
                 }
-                
+
                 fireTrackerEvent("Check in");
-                
+
                 return true;
             }
             case CONTEXT_FAVORITE_ID: {
@@ -600,6 +621,9 @@ public class ShowsFragment extends SherlockFragment implements
         Bundle args = new Bundle();
         args.putInt(ShowsFragment.FILTER_ID, itemPosition);
         getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, args, this);
+
+        // update the empty view
+        setEmptyView(itemPosition);
     }
 
 }

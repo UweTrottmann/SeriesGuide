@@ -116,7 +116,9 @@
     <string name="trakt_notcollected">%s not collected.</string>
 
     <!-- SeriesGuide mainscreen -->
-    <string name="shows_empty">No shows here.</string>
+    <string name="shows_empty">Look in the menu above to add some shows.</string>
+    <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
+    <string name="hidden_empty">Long-press on a show to hide it here.</string>
     <string name="confirm_delete">Do you really want to remove %s?</string>
     <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
     <string name="delete_show">Remove</string>
