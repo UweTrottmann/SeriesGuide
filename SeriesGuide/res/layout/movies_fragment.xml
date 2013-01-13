@@ -41,7 +41,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/empty"
         android:clipToPadding="@bool/gridClipToPadding"
-        android:columnWidth="@dimen/showgrid_columnWidth"
+        android:columnWidth="144dp"
         android:fastScrollEnabled="true"
         android:gravity="center"
         android:horizontalSpacing="@dimen/showgrid_spacing"

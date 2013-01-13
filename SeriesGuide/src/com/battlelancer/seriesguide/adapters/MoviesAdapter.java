@@ -18,13 +18,19 @@
 package com.battlelancer.seriesguide.adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.tmdb.entities.Movie;
 
@@ -39,9 +45,18 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
     private LayoutInflater mInflater;
 
+    private ImageDownloader mImageDownloader;
+
+    private String mBaseUrl;
+
     public MoviesAdapter(Context context) {
         super(context, LAYOUT);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mImageDownloader = ImageDownloader.getInstance(context);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        mBaseUrl = prefs.getString(SeriesGuidePreferences.KEY_TMDB_BASE_URL,
+                "http://cf2.imgobject.com/t/p/") + "w185";
     }
 
     @Override
@@ -56,6 +71,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
             holder = new ViewHolder();
             holder.title = (TextView) convertView.findViewById(R.id.textViewMovieTitle);
             holder.date = (TextView) convertView.findViewById(R.id.textViewMovieDate);
+            holder.poster = (ImageView) convertView.findViewById(R.id.imageViewMoviePoster);
 
             convertView.setTag(holder);
         } else {
@@ -73,6 +89,10 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         } else {
             holder.date.setText("");
         }
+        if (!TextUtils.isEmpty(movie.poster_path)) {
+            String posterPath = mBaseUrl + movie.poster_path;
+            mImageDownloader.download(posterPath, holder.poster, false);
+        }
 
         return convertView;
     }
@@ -89,6 +109,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
     static class ViewHolder {
         TextView title;
         TextView date;
+        ImageView poster;
     }
 
 }
