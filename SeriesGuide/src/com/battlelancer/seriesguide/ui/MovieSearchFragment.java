@@ -94,7 +94,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
         list.setAdapter(mAdapter);
         list.setOnItemClickListener(this);
         list.setEmptyView(getView().findViewById(R.id.empty));
-        
+
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
@@ -120,17 +120,20 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
         if (args != null) {
             query = args.getString(SEARCH_QUERY_KEY);
         }
+        getSherlockActivity().setProgressBarIndeterminateVisibility(true);
         return new TmdbMoviesLoader(getActivity(), query);
     }
 
     @Override
     public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
         mAdapter.setData(data);
+        getSherlockActivity().setProgressBarIndeterminateVisibility(false);
     }
 
     @Override
     public void onLoaderReset(Loader<List<Movie>> loader) {
         mAdapter.setData(null);
+        getSherlockActivity().setProgressBarIndeterminateVisibility(false);
     }
 
     @Override

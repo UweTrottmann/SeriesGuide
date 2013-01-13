@@ -22,6 +22,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.Window;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -32,8 +33,10 @@ public class MoviesActivity extends BaseTopActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        // MovieSearchFragment needs a progress bar
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.movies);
 
         final ActionBar actionBar = getSupportActionBar();
