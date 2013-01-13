@@ -62,6 +62,7 @@
         <item name="drawableDivider">@drawable/divider</item>
         <item name="drawableStar">@drawable/ic_favorited</item>
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
+        <item name="drawableArrowUp">@drawable/ic_action_arrow_top</item>
     </style>
 
     <!-- A light Android theme -->
@@ -121,6 +122,7 @@
         <item name="drawableDivider">@drawable/divider_light</item>
         <item name="drawableStar">@drawable/ic_favorited_inverse</item>
         <item name="drawableCancel">@drawable/ic_action_cancel_inverse</item>
+        <item name="drawableArrowUp">@drawable/ic_action_arrow_top_inverse</item>
     </style>
 
 </resources>

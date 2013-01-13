@@ -32,5 +32,6 @@
     <attr name="drawableDivider" format="reference" />
     <attr name="drawableStar" format="reference" />
     <attr name="drawableCancel" format="reference" />
+    <attr name="drawableArrowUp" format="reference" />
 
 </resources>
