@@ -61,6 +61,7 @@
         <item name="drawableCalendarIcon">@drawable/ic_action_calendar</item>
         <item name="drawableDivider">@drawable/divider</item>
         <item name="drawableStar">@drawable/ic_favorited</item>
+        <item name="drawableCancel">@drawable/ic_action_cancel</item>
     </style>
 
     <!-- A light Android theme -->
@@ -119,6 +120,7 @@
         <item name="drawableCalendarIcon">@drawable/ic_action_calendar_inverse</item>
         <item name="drawableDivider">@drawable/divider_light</item>
         <item name="drawableStar">@drawable/ic_favorited_inverse</item>
+        <item name="drawableCancel">@drawable/ic_action_cancel_inverse</item>
     </style>
 
 </resources>

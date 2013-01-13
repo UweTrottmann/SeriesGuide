@@ -31,5 +31,6 @@
     <attr name="drawableCalendarIcon" format="reference" />
     <attr name="drawableDivider" format="reference" />
     <attr name="drawableStar" format="reference" />
+    <attr name="drawableCancel" format="reference" />
 
 </resources>
