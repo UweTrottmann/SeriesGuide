@@ -24,6 +24,22 @@ Version 3 *(TBA)*
 * FIX Never notify about an episode twice, except others start airing shortly after.
 * NOTICE Updated credits.
 
+#### 3beta2 *(2013-01-13)*
+
+* TWEAK Hide the guest star and DVD number label for episodes if there is no data.
+* FEATURE Add absolute episode number for episodes to database, parse it on updating.
+* TWEAK Only show DVD number if it is different to episode number.
+* TWEAK Navigation improvements, setting up proper back stacks. Add up navigation for seasons and episodes. Fix some existing ups.
+* TWEAK Add check in and search action back to home activity.
+* FEATURE Add Movies menu item to allow searching for and checking into movies.
+* TWEAK Launch to show list from app icon in list widget.
+* TWEAK Add check-in button to all top shows activities, remove it from global menu.
+* TWEAK Add custom cancel drawables.
+* TWEAK Informative empty views for show list.
+* FIX Fix enabling full-screen swiping in activity activity.
+* NOTICE Latest translations from crowdin.
+* FIX Remove Android Beam until we can resolve pre-GB compatibility.
+
 Version 2.11 *(2012-12-08)*
 --------------------------------
 
