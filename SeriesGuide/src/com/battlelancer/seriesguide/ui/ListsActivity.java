@@ -21,7 +21,7 @@ import com.viewpagerindicator.TabPageIndicator.OnTabReselectedListener;
  * Hosts a view pager to display and manage lists of shows, seasons and
  * episodes.
  */
-public class ListsActivity extends BaseTopActivity implements OnListsChangedListener {
+public class ListsActivity extends BaseTopShowsActivity implements OnListsChangedListener {
 
     public static final String TAG = "ListsActivity";
     private ListsPagerAdapter mListsAdapter;

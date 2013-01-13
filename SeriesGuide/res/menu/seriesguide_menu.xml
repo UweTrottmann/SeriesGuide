@@ -2,12 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/menu_quickcheckin"
-        android:icon="@drawable/ic_action_checkin"
-        android:orderInCategory="0"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/checkin"/>
-    <item
         android:id="@+id/menu_add_show"
         android:icon="@drawable/ic_action_add"
         android:orderInCategory="1"

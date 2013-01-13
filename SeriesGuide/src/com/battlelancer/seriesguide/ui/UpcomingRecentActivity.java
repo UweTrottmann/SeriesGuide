@@ -43,7 +43,7 @@ import com.uwetrottmann.seriesguide.R;
 
 import java.util.ArrayList;
 
-public class UpcomingRecentActivity extends BaseTopActivity implements OnAddShowListener {
+public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAddShowListener {
     ViewPager mViewPager;
 
     TabsAdapter mTabsAdapter;

@@ -47,7 +47,6 @@ public class SlidingMenuFragment extends ListFragment {
 
     private static final int MENU_ITEM_SHOWS_ID = 0;
     private static final int MENU_ITEM_LISTS_ID = 1;
-    private static final int MENU_ITEM_CHECKIN_ID = 2;
     private static final int MENU_ITEM_ACTIVITY_ID = 3;
     private static final int MENU_ITEM_SEARCH_ID = 4;
     private static final int MENU_ITEM_MOVIES_ID = 5;
@@ -87,8 +86,6 @@ public class SlidingMenuFragment extends ListFragment {
 
         // actions
         mAdapter.add(new MenuCategory());
-        mAdapter.add(new MenuItem(getString(R.string.checkin), R.drawable.ic_action_checkin,
-                MENU_ITEM_CHECKIN_ID));
         mAdapter.add(new MenuItem(getString(R.string.search), R.drawable.ic_action_search,
                 MENU_ITEM_SEARCH_ID));
 
@@ -125,11 +122,6 @@ public class SlidingMenuFragment extends ListFragment {
                 break;
             case MENU_ITEM_MOVIES_ID:
                 startActivity(new Intent(getActivity(), MoviesActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
-                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                break;
-            case MENU_ITEM_CHECKIN_ID:
-                startActivity(new Intent(getActivity(), CheckinActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;

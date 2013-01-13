@@ -4,16 +4,19 @@
     <item
         android:id="@+id/menu_onlyfavorites"
         android:checkable="true"
+        android:orderInCategory="1"
         android:title="@string/only_favorites">
     </item>
     <item
         android:id="@+id/menu_nowatched"
         android:checkable="true"
+        android:orderInCategory="2"
         android:title="@string/hide_watched">
     </item>
     <item
         android:id="@+id/menu_nospecials"
         android:checkable="true"
+        android:orderInCategory="3"
         android:title="@string/pref_onlyseasoneps">
     </item>
 

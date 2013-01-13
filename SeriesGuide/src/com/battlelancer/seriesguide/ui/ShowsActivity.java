@@ -64,7 +64,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Provides the apps main screen, displaying a list of shows and their next
  * episodes.
  */
-public class ShowsActivity extends BaseTopActivity implements CompatActionBarNavListener,
+public class ShowsActivity extends BaseTopShowsActivity implements CompatActionBarNavListener,
         OnFirstRunDismissedListener {
 
     private static final String TAG = "Shows";
@@ -295,11 +295,6 @@ public class ShowsActivity extends BaseTopActivity implements CompatActionBarNav
                             ShowSorting.FAVORITES_FIRST.value()));
             ShowsFragment.showSortDialog(getSupportFragmentManager(), sorting);
             fireTrackerEvent("Sort shows");
-            return true;
-        }
-        else if (itemId == R.id.menu_quickcheckin) {
-            startActivity(new Intent(this, CheckinActivity.class));
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
         }
         else if (itemId == R.id.menu_search) {
