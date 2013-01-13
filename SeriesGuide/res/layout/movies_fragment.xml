@@ -23,34 +23,6 @@
         <requestFocus />
     </EditText>
 
-    <TextView
-        android:id="@+id/empty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:drawableTop="?attr/drawableArrowUp"
-        android:padding="10dp"
-        android:text="@string/movies_empty"
-        android:visibility="gone" />
-
-    <GridView
-        android:id="@+id/gridViewMovies"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/editTextCheckinSearch"
-        android:clipToPadding="@bool/gridClipToPadding"
-        android:columnWidth="144dp"
-        android:fastScrollEnabled="true"
-        android:gravity="center"
-        android:horizontalSpacing="@dimen/showgrid_spacing"
-        android:listSelector="?custom_list_selector"
-        android:numColumns="auto_fit"
-        android:padding="@dimen/showgrid_padding"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="@dimen/showgrid_spacing" >
-    </GridView>
-
     <ImageButton
         android:id="@+id/imageButtonClearSearch"
         android:layout_width="wrap_content"
@@ -66,5 +38,32 @@
         android:paddingLeft="@dimen/inline_padding"
         android:paddingRight="@dimen/inline_padding"
         android:src="?attr/drawableCancel" />
+
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:drawableTop="?attr/drawableArrowUp"
+        android:padding="10dp"
+        android:text="@string/movies_empty"
+        android:visibility="gone" />
+
+    <GridView
+        android:id="@+id/gridViewMovies"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/editTextCheckinSearch"
+        android:clipToPadding="@bool/gridClipToPadding"
+        android:columnWidth="144dp"
+        android:fastScrollEnabled="true"
+        android:gravity="center"
+        android:horizontalSpacing="@dimen/showgrid_spacing"
+        android:listSelector="?custom_list_selector"
+        android:numColumns="auto_fit"
+        android:padding="@dimen/showgrid_padding"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="@dimen/showgrid_spacing" >
+    </GridView>
 
 </RelativeLayout>
