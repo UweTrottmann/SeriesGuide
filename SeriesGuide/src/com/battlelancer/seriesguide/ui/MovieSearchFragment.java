@@ -72,6 +72,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
 
         // setup search box
         mSearchBox = (EditText) getView().findViewById(R.id.editTextCheckinSearch);
@@ -120,20 +121,20 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
         if (args != null) {
             query = args.getString(SEARCH_QUERY_KEY);
         }
-        getSherlockActivity().setProgressBarIndeterminateVisibility(true);
+        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(true);
         return new TmdbMoviesLoader(getActivity(), query);
     }
 
     @Override
     public void onLoadFinished(Loader<List<Movie>> loader, List<Movie> data) {
         mAdapter.setData(data);
-        getSherlockActivity().setProgressBarIndeterminateVisibility(false);
+        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
     }
 
     @Override
     public void onLoaderReset(Loader<List<Movie>> loader) {
         mAdapter.setData(null);
-        getSherlockActivity().setProgressBarIndeterminateVisibility(false);
+        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
     }
 
     @Override
