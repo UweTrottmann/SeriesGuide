@@ -94,6 +94,8 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
         list.setAdapter(mAdapter);
         list.setOnItemClickListener(this);
         list.setEmptyView(getView().findViewById(R.id.empty));
+        
+        getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     @Override
