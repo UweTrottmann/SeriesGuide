@@ -7,4 +7,13 @@
         <item name="android:layout_gravity">center</item>
     </style>
 
+    <!-- Panes -->
+    <style name="EpisodesPane">
+        <item name="android:layout_weight">3</item>
+    </style>
+
+    <style name="DetailsPane">
+        <item name="android:layout_weight">4</item>
+    </style>
+
 </resources>
