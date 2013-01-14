@@ -106,12 +106,15 @@ public class ListWidgetService extends RemoteViewsService {
         }
 
         public RemoteViews getViewAt(int position) {
-            // position will always range from 0 to getCount() - 1.
-            mEpisodeCursor.moveToPosition(position);
-
             // We construct a remote views item based on our widget item xml
             // file, and set the text based on the position.
             RemoteViews rv = new RemoteViews(mContext.getPackageName(), R.layout.appwidget_row);
+
+            if (mEpisodeCursor.isClosed()) {
+                return rv;
+            }
+            // position will always range from 0 to getCount() - 1.
+            mEpisodeCursor.moveToPosition(position);
 
             // episode description
             int seasonNumber = mEpisodeCursor.getInt(UpcomingQuery.SEASON);
