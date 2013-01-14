@@ -1,32 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="144dp"
-    android:layout_height="match_parent"
-    android:padding="@dimen/default_padding" >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
 
-    <ImageView
-        android:id="@+id/imageViewMoviePoster"
-        android:layout_width="128dp"
-        android:layout_height="192dp" />
+    <RelativeLayout
+        android:layout_width="144dp"
+        android:layout_height="280dp"
+        android:padding="@dimen/default_padding" >
 
-    <TextView
-        android:id="@+id/textViewMovieTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageViewMoviePoster"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:textAppearance="?attr/textAppearanceSgLargeLight" >
-    </TextView>
+        <ImageView
+            android:id="@+id/imageViewMoviePoster"
+            android:layout_width="128dp"
+            android:layout_height="192dp"
+            android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/textViewMovieDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewMovieTitle"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textAppearance="?attr/textAppearanceSgSmallDim" >
-    </TextView>
+        <TextView
+            android:id="@+id/textViewMovieTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imageViewMoviePoster"
+            android:layout_alignRight="@+id/imageViewMoviePoster"
+            android:layout_below="@+id/imageViewMoviePoster"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAppearance="?attr/textAppearanceSgLargeLight" >
+        </TextView>
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/textViewMovieDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imageViewMoviePoster"
+            android:layout_alignRight="@+id/imageViewMoviePoster"
+            android:layout_below="@+id/textViewMovieTitle"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="?attr/textAppearanceSgSmallDim" >
+        </TextView>
+    </RelativeLayout>
+
+</FrameLayout>
