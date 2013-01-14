@@ -92,7 +92,7 @@ public class TraktAddFragment extends AddFragment {
             mContentContainer.setVisibility(View.GONE);
             mProgressIndicator.setVisibility(View.VISIBLE);
             mAdapter = new AddAdapter(getActivity(), R.layout.add_searchresult,
-                    new ArrayList<SearchResult>(), mAddButtonListener, mDetailsButtonListener);
+                    new ArrayList<SearchResult>(), mDetailsButtonListener);
 
             AndroidUtils.executeAsyncTask(new GetTraktShowsTask(getActivity()), type);
         } else {

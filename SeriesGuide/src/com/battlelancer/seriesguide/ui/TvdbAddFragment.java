@@ -73,7 +73,7 @@ public class TvdbAddFragment extends AddFragment {
         // create an empty adapter to avoid displaying a progress indicator
         if (mAdapter == null) {
             mAdapter = new AddAdapter(getActivity(), R.layout.add_searchresult,
-                    new ArrayList<SearchResult>(), mAddButtonListener, mDetailsButtonListener);
+                    new ArrayList<SearchResult>(), mDetailsButtonListener);
         }
 
         ImageButton searchButton = (ImageButton) getView().findViewById(R.id.clearButton);
