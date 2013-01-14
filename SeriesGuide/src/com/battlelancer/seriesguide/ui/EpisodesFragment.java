@@ -181,7 +181,7 @@ public class EpisodesFragment extends SherlockListFragment implements
                     TextView tv = (TextView) view;
                     long airtime = cursor.getLong(EpisodesQuery.FIRSTAIREDMS);
                     if (airtime != -1) {
-                        tv.setText(Utils.formatToTimeAndDay(airtime, getActivity())[2]);
+                        tv.setText(Utils.formatToTimeAndDay(airtime, tv.getContext())[2]);
                     } else {
                         tv.setText(getString(R.string.episode_firstaired) + " "
                                 + getString(R.string.unknown));
