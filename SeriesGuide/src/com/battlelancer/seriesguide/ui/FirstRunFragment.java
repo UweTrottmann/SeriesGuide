@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -127,13 +128,19 @@ public class FirstRunFragment extends SherlockFragment {
         // peek menu
         final Runnable peekDoneRunnable = new Runnable() {
             public void run() {
-                ((BaseActivity) getActivity()).showContent();
+                FragmentActivity activity = getActivity();
+                if (activity != null) {
+                    ((BaseActivity) activity).showContent();
+                }
             }
         };
         final Runnable peekRunnable = new Runnable() {
             public void run() {
-                ((BaseActivity) getActivity()).showMenu();
-                getView().postDelayed(peekDoneRunnable, 2000);
+                FragmentActivity activity = getActivity();
+                if (activity != null) {
+                    ((BaseActivity) activity).showMenu();
+                    getView().postDelayed(peekDoneRunnable, 2000);
+                }
             }
         };
         getView().postDelayed(peekRunnable, 2000);
