@@ -29,9 +29,9 @@
 
             <View
                 android:id="@+id/spacer_left"
+                style="@style/EpisodePagerSpacer"
                 android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="@integer/episode_pager_spacer_weight" />
+                android:layout_height="match_parent" />
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/pager"
@@ -41,9 +41,9 @@
 
             <View
                 android:id="@+id/spacer_right"
+                style="@style/EpisodePagerSpacer"
                 android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="@integer/episode_pager_spacer_weight" />
+                android:layout_height="match_parent" />
         </LinearLayout>
     </LinearLayout>
 
