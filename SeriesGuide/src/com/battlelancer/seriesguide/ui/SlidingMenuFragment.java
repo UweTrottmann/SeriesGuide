@@ -126,9 +126,7 @@ public class SlidingMenuFragment extends ListFragment {
                 getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 break;
             case MENU_ITEM_SEARCH_ID:
-                startActivity(new Intent(getActivity(), SearchActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
-                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                getActivity().onSearchRequested();
                 break;
         }
     }
