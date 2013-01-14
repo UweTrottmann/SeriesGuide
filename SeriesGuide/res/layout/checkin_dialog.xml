@@ -62,6 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/toggleGetGlue"
         android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/default_padding"
         android:text="@string/checkin" />
 
     <include
@@ -69,7 +70,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toggleGetGlue"
-        android:layout_marginTop="@dimen/default_padding"
         layout="@layout/divider_horizontal" />
 
     <Button

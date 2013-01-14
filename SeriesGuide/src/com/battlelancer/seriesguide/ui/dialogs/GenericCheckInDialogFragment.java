@@ -239,6 +239,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
 
     protected void setupFixGetGlueButton(View layout, boolean isEnabled, final int tvdbId) {
         View fixButton = layout.findViewById(R.id.buttonFixGetGlue);
+        View divider = layout.findViewById(R.id.divider);
         if (isEnabled) {
             fixButton.setOnClickListener(new OnClickListener() {
                 @Override
@@ -250,6 +251,7 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
             });
         } else {
             fixButton.setVisibility(View.GONE);
+            divider.setVisibility(View.GONE);
         }
     }
 
