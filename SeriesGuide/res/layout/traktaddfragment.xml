@@ -26,10 +26,11 @@
 
         <TextView
             android:id="@android:id/empty"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/shows_empty" />
+            android:gravity="center"
+            android:text="@string/add_empty" />
     </FrameLayout>
 
     <ProgressBar

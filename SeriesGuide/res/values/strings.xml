@@ -58,7 +58,7 @@
     <!-- Movies -->
     <string name="movies_search_hint">Type a movie title</string>
     <string name="movies_empty">Search for a movie above.</string>
-    
+
     <!-- Trakt ratings -->
     <string name="love">Totally ninja!</string>
     <string name="hate">Weak Sauce :(</string>
@@ -116,6 +116,7 @@
     <string name="trakt_notcollected">%s not collected.</string>
 
     <!-- SeriesGuide mainscreen -->
+    <string name="add_empty">There are no shows here or your device has no internet connection.</string>
     <string name="shows_empty">Look in the menu above to add some shows.</string>
     <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
     <string name="hidden_empty">Long-press on a show to hide it here.</string>
@@ -368,7 +369,8 @@
     <string name="pref_ringtone">Ringtone</string>
     <string name="pref_vibrate">Vibrate</string>
     <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
-<string name="pref_notifications_treshold">When to notify</string>
+    <string name="pref_notifications_treshold">When to notify</string>
+
     <string-array name="notificationThreshold">
         <item>on air</item>
         <item>5 min in advance</item>
