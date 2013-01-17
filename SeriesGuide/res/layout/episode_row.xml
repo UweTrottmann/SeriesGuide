@@ -8,54 +8,64 @@
         android:layout_height="wrap_content" >
 
         <com.battlelancer.seriesguide.WatchedBox
-            android:id="@+id/CustomCheckBoxWatched"
+            android:id="@+id/watchedBoxEpisode"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:background="?custom_list_selector"
             android:padding="16dp" />
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/textViewEpisodeTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_padding"
-            android:layout_toLeftOf="@+id/number"
-            android:layout_toRightOf="@id/CustomCheckBoxWatched"
+            android:layout_toLeftOf="@+id/textViewEpisodeNumber"
+            android:layout_toRightOf="@id/watchedBoxEpisode"
             android:text="@string/app_name"
             android:textAppearance="?attr/textAppearanceSgMediumLight" />
 
         <TextView
-            android:id="@+id/number"
+            android:id="@+id/textViewEpisodeNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_marginLeft="@dimen/default_padding"
-            android:layout_marginRight="@dimen/default_padding"
             android:layout_marginTop="@dimen/default_padding"
+            android:layout_toLeftOf="@+id/imageViewContextMenu"
             android:text="@string/norating"
             android:textAppearance="?attr/textAppearanceSgMediumLightDim" />
 
         <TextView
-            android:id="@+id/absoluteNumber"
+            android:id="@+id/textViewEpisodeAbsoluteNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/number"
+            android:layout_below="@id/textViewEpisodeNumber"
             android:layout_marginLeft="@dimen/default_padding"
-            android:layout_marginRight="@dimen/default_padding"
+            android:layout_toLeftOf="@+id/imageViewContextMenu"
             android:textAppearance="?attr/textAppearanceSgSmall" />
 
         <TextView
-            android:id="@+id/airdate"
+            android:id="@+id/textViewEpisodeAirdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/title"
-            android:layout_toRightOf="@id/CustomCheckBoxWatched"
+            android:layout_below="@id/textViewEpisodeTitle"
+            android:layout_toRightOf="@id/watchedBoxEpisode"
             android:paddingBottom="@dimen/default_padding"
             android:text="@string/show_noairtime"
             android:textAppearance="?attr/textAppearanceSgSmall" />
+
+        <ImageView
+            android:id="@+id/imageViewContextMenu"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/watchedBoxEpisode"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/watchedBoxEpisode"
+            android:background="?attr/custom_list_selector"
+            android:scaleType="fitXY"
+            android:src="?attr/drawableDropdown" />
     </RelativeLayout>
 
 </com.battlelancer.seriesguide.CheckableFrameLayout>

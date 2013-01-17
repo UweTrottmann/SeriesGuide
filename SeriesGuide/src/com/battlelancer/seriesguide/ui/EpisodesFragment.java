@@ -28,8 +28,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.SimpleCursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -38,7 +36,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
@@ -47,6 +44,8 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.Constants.EpisodeSorting;
 import com.battlelancer.seriesguide.WatchedBox;
+import com.battlelancer.seriesguide.adapters.EpisodesAdapter;
+import com.battlelancer.seriesguide.adapters.EpisodesAdapter.OnFlagEpisodeListener;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
@@ -55,14 +54,13 @@ import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
-import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays a list of episodes of a season.
  */
 public class EpisodesFragment extends SherlockListFragment implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor>, OnClickListener, OnFlagEpisodeListener {
 
     private static final int CONTEXT_FLAG_WATCHED_ID = 0;
 
@@ -78,7 +76,7 @@ public class EpisodesFragment extends SherlockListFragment implements
 
     private boolean mDualPane;
 
-    private SimpleCursorAdapter mAdapter;
+    private EpisodesAdapter mAdapter;
 
     /**
      * All values have to be integer.
@@ -134,73 +132,7 @@ public class EpisodesFragment extends SherlockListFragment implements
             getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         }
 
-        String[] from = new String[] {
-                Episodes.WATCHED, Episodes.TITLE, Episodes.NUMBER, Episodes.FIRSTAIREDMS,
-                Episodes.ABSOLUTE_NUMBER
-        };
-        int[] to = new int[] {
-                R.id.CustomCheckBoxWatched, R.id.title, R.id.number, R.id.airdate,
-                R.id.absoluteNumber
-        };
-
-        mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.episode_row, null, from, to, 0);
-        mAdapter.setViewBinder(new ViewBinder() {
-
-            public boolean setViewValue(View view, final Cursor cursor, int columnIndex) {
-                // binding the watched column? set checkbox to watched value if
-                // yes
-                if (columnIndex == EpisodesQuery.WATCHED) {
-                    WatchedBox wb = (WatchedBox) view;
-                    wb.setChecked(cursor.getInt(columnIndex) > 0);
-
-                    final int episodeId = cursor.getInt(EpisodesQuery._ID);
-                    final int episodeNumber = cursor.getInt(EpisodesQuery.NUMBER);
-                    wb.setOnClickListener(new OnClickListener() {
-                        public void onClick(View v) {
-                            ((WatchedBox) v).toggle();
-                            onFlagEpisodeWatched(episodeId, episodeNumber,
-                                    ((WatchedBox) v).isChecked());
-                        }
-                    });
-                    CheatSheet.setup(wb, wb.isChecked() ? R.string.unmark_episode
-                            : R.string.mark_episode);
-                    return true;
-                } else if (columnIndex == EpisodesQuery.NUMBER) {
-                    // set episode number and if available dvd episode number
-                    TextView tv = (TextView) view;
-                    StringBuilder episodenumber = new StringBuilder(cursor
-                            .getString(EpisodesQuery.NUMBER));
-                    float episodeNumber = cursor.getFloat(EpisodesQuery.NUMBER);
-                    float dvdNumber = cursor.getFloat(EpisodesQuery.DVDNUMBER);
-                    if (dvdNumber > 0 && dvdNumber != episodeNumber) {
-                        episodenumber.append(" (").append(dvdNumber).append(")");
-                    }
-                    tv.setText(episodenumber);
-                    return true;
-                } else if (columnIndex == EpisodesQuery.FIRSTAIREDMS) {
-                    TextView tv = (TextView) view;
-                    long airtime = cursor.getLong(EpisodesQuery.FIRSTAIREDMS);
-                    if (airtime != -1) {
-                        tv.setText(Utils.formatToTimeAndDay(airtime, tv.getContext())[2]);
-                    } else {
-                        tv.setText(getString(R.string.episode_firstaired) + " "
-                                + getString(R.string.unknown));
-                    }
-                    return true;
-                } else if (columnIndex == EpisodesQuery.ABSOLUTE_NUMBER) {
-                    TextView tv = (TextView) view;
-                    int number = cursor.getInt(EpisodesQuery.NUMBER);
-                    int absoluteNumber = cursor.getInt(EpisodesQuery.ABSOLUTE_NUMBER);
-                    if (absoluteNumber > 0 && absoluteNumber != number) {
-                        tv.setText(String.valueOf(absoluteNumber));
-                    }
-                    return true;
-                }
-                // if we did not bind, let the cursor adapter try text and image
-                // views
-                return false;
-            }
-        });
+        mAdapter = new EpisodesAdapter(getActivity(), null, 0, this, this);
         setListAdapter(mAdapter);
 
         getLoaderManager().initLoader(EPISODES_LOADER, null, this);
@@ -275,7 +207,7 @@ public class EpisodesFragment extends SherlockListFragment implements
         // only display the action appropiate for the items current state
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         WatchedBox watchedBox = (WatchedBox) info.targetView
-                .findViewById(R.id.CustomCheckBoxWatched);
+                .findViewById(R.id.watchedBoxEpisode);
         if (watchedBox.isChecked()) {
             menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 1, R.string.unmark_episode);
         } else {
@@ -354,7 +286,8 @@ public class EpisodesFragment extends SherlockListFragment implements
         showDetails(position);
     }
 
-    private void onFlagEpisodeWatched(int episodeId, int episodeNumber, boolean isWatched) {
+    @Override
+    public void onFlagEpisodeWatched(int episodeId, int episodeNumber, boolean isWatched) {
         new FlagTask(getActivity(), getShowId(), null)
                 .episodeWatched(getSeasonNumber(), episodeNumber).setItemId(episodeId)
                 .setFlag(isWatched).execute();
@@ -387,7 +320,7 @@ public class EpisodesFragment extends SherlockListFragment implements
         mAdapter.swapCursor(null);
     }
 
-    interface EpisodesQuery {
+    public interface EpisodesQuery {
 
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.WATCHED, Episodes.TITLE,
@@ -448,5 +381,10 @@ public class EpisodesFragment extends SherlockListFragment implements
                 list.smoothScrollToPosition(position);
             }
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        getActivity().openContextMenu(v);
     }
 }
