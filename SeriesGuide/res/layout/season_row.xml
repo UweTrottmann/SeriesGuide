@@ -20,7 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/default_padding"
         android:layout_toLeftOf="@+id/imageViewContextMenu"
-        android:paddingRight="@dimen/default_padding"
         android:paddingTop="@dimen/default_padding"
         android:text="@string/norating"
         android:textAppearance="?attr/textAppearanceSgMediumLightDim" >
@@ -33,7 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewSeasonTitle"
         android:layout_toLeftOf="@+id/imageViewContextMenu"
-        android:paddingRight="@dimen/default_padding"
         android:progressDrawable="@drawable/progress_horizontal_holo_dark" >
     </ProgressBar>
 
@@ -44,7 +42,6 @@
         android:layout_below="@id/progressBarSeason"
         android:layout_toLeftOf="@+id/imageViewContextMenu"
         android:paddingBottom="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
         android:text="@string/episode_notwatched"
         android:textAllCaps="true"
         android:textAppearance="?attr/textAppearanceSgXSmall" />
