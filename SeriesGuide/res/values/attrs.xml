@@ -33,5 +33,6 @@
     <attr name="drawableStar" format="reference" />
     <attr name="drawableCancel" format="reference" />
     <attr name="drawableArrowUp" format="reference" />
+    <attr name="drawableDropdown" format="reference" />
 
 </resources>

@@ -63,6 +63,7 @@
         <item name="drawableStar">@drawable/ic_favorited</item>
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top</item>
+        <item name="drawableDropdown">@drawable/dropdown_default_sg</item>
     </style>
 
     <style name="SeriesGuideTheme.Dialog" parent="SeriesGuideTheme">
@@ -135,6 +136,7 @@
         <item name="drawableStar">@drawable/ic_favorited</item>
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top</item>
+        <item name="drawableDropdown">@drawable/dropdown_default_sg</item>
     </style>
 
     <!-- A light Android theme -->
@@ -195,6 +197,7 @@
         <item name="drawableStar">@drawable/ic_favorited_inverse</item>
         <item name="drawableCancel">@drawable/ic_action_cancel_inverse</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top_inverse</item>
+        <item name="drawableDropdown">@drawable/dropdown_default_sg_light</item>
     </style>
 
 </resources>
