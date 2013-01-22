@@ -10,20 +10,6 @@ Version 3 *(TBA)*
 
 ### Detailed changes:
 
-#### 3beta1 *(2012-12-25)*
-
-* FEATURE Swipe anywhere to show the new menu drawer for quick navigation within the app. Swipe from the left margin in view pagers.
-* FEATURE Just for fun: beam a show to another device from its overview page.
-* FEATURE Choose when notifications should appear from a hand full of options (one hour until on air).
-* TWEAK Lists have there own page now.
-* TWEAK Proper episode deep linking, now uses dual-pane layout on tablets.
-* TWEAK Add icons for some menu actions.
-* TWEAK Fix search tab in 'Add show' to second position.
-* TWEAK Check in confirmation message for trakt is now localized and uses custom numbering schema.
-* FIX Flagging a whole show now properly updates the screen.
-* FIX Never notify about an episode twice, except others start airing shortly after.
-* NOTICE Updated credits.
-
 #### 3beta2 *(2013-01-13)*
 
 * FEATURE Add Movies menu item to allow searching for and checking into movies.
@@ -39,6 +25,20 @@ Version 3 *(TBA)*
 * FIX Fix enabling full-screen swiping in activity activity.
 * FIX Remove Android Beam until we can resolve pre-GB compatibility.
 * NOTICE Latest translations from crowdin.
+
+#### 3beta1 *(2012-12-25)*
+
+* FEATURE Swipe anywhere to show the new menu drawer for quick navigation within the app. Swipe from the left margin in view pagers.
+* FEATURE Just for fun: beam a show to another device from its overview page.
+* FEATURE Choose when notifications should appear from a hand full of options (one hour until on air).
+* TWEAK Lists have there own page now.
+* TWEAK Proper episode deep linking, now uses dual-pane layout on tablets.
+* TWEAK Add icons for some menu actions.
+* TWEAK Fix search tab in 'Add show' to second position.
+* TWEAK Check in confirmation message for trakt is now localized and uses custom numbering schema.
+* FIX Flagging a whole show now properly updates the screen.
+* FIX Never notify about an episode twice, except others start airing shortly after.
+* NOTICE Updated credits.
 
 Version 2.11 *(2012-12-08)*
 --------------------------------
