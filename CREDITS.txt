@@ -3,15 +3,13 @@ Credits
 
 I express my thanks to the following people and projects.
 
-Chris and Craig for testing the thing out. Craig for always pushing and supporting with all his heart and mind.
+Chris and Craig for testing the thing out. Craig for always pushing and supporting with all his heart and mind. Jake Wharton for his general wisdom and support.
 
-Jake Wharton for his trakt.tv API (https://github.com/JakeWharton/trakt-java), ActionBarSherlock (http://actionbarsherlock.com) and ViewPagerIndicator (http://viewpagerindicator.com) and general wisdom and support.
-
-The minds of trakt.tv, especially Justin - http://trakt.tv
+The minds behind trakt.tv, especially Justin. - http://trakt.tv
 
 The creators of the Google I/O app for lots of useful code patterns. - http://code.google.com/p/iosched
 
-The Oxygen Icon Theme Team for the TV Icon on which the logo is based on. - http://www.oxygen-icons.org
+The Oxygen Icon Theme Team for the TV Icon on which the original logo was based on. - http://www.oxygen-icons.org
 
 Matthew Altman for creating javatvdbapi - http://code.google.com/p/javatvdbapi
 
@@ -19,10 +17,99 @@ Charlie Collins for his Android examples - http://code.google.com/p/and-examples
 
 Matthias Käppler for Droid-Fu - http://github.com/kaeppler/droid-fu
 
-Webdesigner Depot for the Primo Icon Set - http://www.webdesignerdepot.com
-
-Matthias Käppler and Takahiro Horikawa for the Signpost OAuth library - https://github.com/kaeppler/signpost
+Webdesigner Depot for the Primo Icon Set - http://www.webdesignerdepot.com/2009/07/200-free-exclusive-vector-icons-primo/
 
 The translators on Crowdin - http://crowdin.net/project/seriesguide-translations
 
-Jeremy Feinstein for his SlidingMenu library - https://github.com/jfeinstein10/SlidingMenu
+SeriesGuide uses the following libraries or projects:
+
+trakt-java (https://github.com/JakeWharton/trakt-java)
+--------------------------------------------------------
+
+Copyright 2011 Jake Wharton
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+
+ActionBarSherlock (http://actionbarsherlock.com)
+------------------------------------------------
+
+Copyright 2012 Jake Wharton
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+
+ViewPagerIndicator (http://viewpagerindicator.com)
+--------------------------------------------------
+
+Copyright 2012 Jake Wharton
+Copyright 2011 Patrik Åkerfeldt
+Copyright 2011 Francisco Figueiredo Jr.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+
+Signpost OAuth library (maintained by Takahiro Horikawa, https://github.com/kaeppler/signpost)
+----------------------------------------------------------------------------------------------
+
+Copyright 2009 Matthias Kaeppler
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+
+SlidingMenu (https://github.com/jfeinstein10/SlidingMenu)
+---------------------------------------------------------
+
+Copyright 2012 Jeremy Feinstein
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
