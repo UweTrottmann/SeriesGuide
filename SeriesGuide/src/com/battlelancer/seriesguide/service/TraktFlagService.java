@@ -25,7 +25,7 @@ import android.util.Log;
 import com.battlelancer.seriesguide.util.FlagTapedTask;
 import com.battlelancer.seriesguide.util.FlagTapedTask.Callback;
 import com.battlelancer.seriesguide.util.FlagTapedTaskQueue;
-import com.google.myjson.GsonBuilder;
+import com.battlelancer.seriesguide.util.Utils;
 
 public class TraktFlagService extends Service implements Callback {
 
@@ -38,7 +38,7 @@ public class TraktFlagService extends Service implements Callback {
     @Override
     public void onCreate() {
         super.onCreate();
-        mQueue = FlagTapedTaskQueue.create(getApplicationContext(), new GsonBuilder().create());
+        mQueue = FlagTapedTaskQueue.getInstance(getApplicationContext());
         Log.i(TAG, "Starting service.");
     }
 
@@ -71,9 +71,10 @@ public class TraktFlagService extends Service implements Callback {
     }
 
     @Override
-    public void onFailure() {
-        // TODO Auto-generated method stub
-
+    public void onFailure(Exception e) {
+        // TODO Possibly roll back database op related to this task (will
+        // require bigger modifications)
+        Utils.trackExceptionAndLog(getApplicationContext(), TAG, e);
     }
 
     @Override

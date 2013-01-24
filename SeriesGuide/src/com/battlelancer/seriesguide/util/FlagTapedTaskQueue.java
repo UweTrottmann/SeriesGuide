@@ -22,6 +22,7 @@ import android.content.Intent;
 
 import com.battlelancer.seriesguide.service.TraktFlagService;
 import com.google.myjson.Gson;
+import com.google.myjson.GsonBuilder;
 import com.squareup.tape.FileObjectQueue;
 import com.squareup.tape.FileObjectQueue.Converter;
 import com.squareup.tape.ObjectQueue;
@@ -34,9 +35,18 @@ public class FlagTapedTaskQueue extends TaskQueue<FlagTapedTask> {
 
     private static final String FILENAME = "trakt_flag_task_queue";
 
+    private static FlagTapedTaskQueue _instance;
+
     private Context mContext;
 
-    public FlagTapedTaskQueue(ObjectQueue<FlagTapedTask> delegate, Context context) {
+    public static synchronized FlagTapedTaskQueue getInstance(Context context) {
+        if (_instance == null) {
+            _instance = FlagTapedTaskQueue.create(context, new GsonBuilder().create());
+        }
+        return _instance;
+    }
+
+    private FlagTapedTaskQueue(ObjectQueue<FlagTapedTask> delegate, Context context) {
         super(delegate);
         mContext = context;
 
@@ -55,7 +65,7 @@ public class FlagTapedTaskQueue extends TaskQueue<FlagTapedTask> {
         startService();
     }
 
-    public static FlagTapedTaskQueue create(Context context, Gson gson) {
+    private static FlagTapedTaskQueue create(Context context, Gson gson) {
         Converter<FlagTapedTask> converter = new GsonConverter<FlagTapedTask>(gson,
                 FlagTapedTask.class);
         File queueFile = new File(context.getFilesDir(), FILENAME);

@@ -20,10 +20,15 @@ package com.battlelancer.seriesguide.util;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
 import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.TraktApiBuilder;
 import com.jakewharton.trakt.TraktException;
+import com.jakewharton.trakt.services.ShowService;
+import com.jakewharton.trakt.services.ShowService.EpisodeSeenBuilder;
+import com.jakewharton.trakt.services.ShowService.EpisodeUnseenBuilder;
 import com.squareup.tape.Task;
+
+import java.util.List;
 
 public class FlagTapedTask implements Task<FlagTapedTask.Callback> {
     private static final long serialVersionUID = -7699031818939574225L;
@@ -31,15 +36,33 @@ public class FlagTapedTask implements Task<FlagTapedTask.Callback> {
     public interface Callback {
         void onSuccess();
 
-        void onFailure();
+        void onFailure(Exception e);
+    }
+
+    public static class Flag {
+        int season;
+        int episode;
+
+        public Flag(int season, int episode) {
+            this.season = season;
+            this.episode = episode;
+        }
     }
 
     private static final Handler MAIN_THREAD = new Handler(Looper.getMainLooper());
+    private ShowService mShowService;
+    private FlagAction mAction;
+    private int mShowId;
+    private List<Flag> mFlags;
+    private boolean mIsFlag;
 
-    private TraktApiBuilder<Void> mBuilder;
-
-    public FlagTapedTask(TraktApiBuilder<Void> builder) {
-        mBuilder = builder;
+    public FlagTapedTask(ShowService showService, FlagAction action, int showId, List<Flag> flags,
+            boolean isFlag) {
+        mShowService = showService;
+        mAction = action;
+        mShowId = showId;
+        mFlags = flags;
+        mIsFlag = isFlag;
     }
 
     @Override
@@ -48,8 +71,66 @@ public class FlagTapedTask implements Task<FlagTapedTask.Callback> {
 
             @Override
             public void run() {
+                // add Android offline detection?
+
                 try {
-                    mBuilder.fire();
+                    switch (mAction) {
+                        case EPISODE_WATCHED: {
+                            Flag episode = mFlags.get(0);
+                            if (mIsFlag) {
+                                mShowService.episodeSeen(mShowId)
+                                        .episode(episode.season, episode.episode).fire();
+                            } else {
+                                mShowService.episodeUnseen(mShowId).episode(episode.season,
+                                        episode.episode).fire();
+                            }
+                            break;
+                        }
+                        case EPISODE_COLLECTED: {
+                            Flag episode = mFlags.get(0);
+                            if (mIsFlag) {
+                                mShowService.episodeLibrary(mShowId)
+                                        .episode(episode.season, episode.episode).fire();
+                            } else {
+                                mShowService.episodeUnlibrary(mShowId)
+                                        .episode(episode.season, episode.episode).fire();
+                            }
+                            break;
+                        }
+                        case SEASON_WATCHED: {
+                            if (mIsFlag) {
+                                mShowService.seasonSeen(mShowId).season(mFlags.get(0).season)
+                                        .fire();
+                            } else {
+                                EpisodeUnseenBuilder builder = mShowService.episodeUnseen(mShowId);
+                                for (Flag episode : mFlags) {
+                                    builder.episode(episode.season, episode.episode);
+                                }
+                                builder.fire();
+                            }
+                            break;
+                        }
+                        case SHOW_WATCHED: {
+                            if (mIsFlag) {
+                                mShowService.showSeen(mShowId).fire();
+                            } else {
+                                EpisodeUnseenBuilder builder = mShowService.episodeUnseen(mShowId);
+                                for (Flag episode : mFlags) {
+                                    builder.episode(episode.season, episode.episode);
+                                }
+                                builder.fire();
+                            }
+                            break;
+                        }
+                        case EPISODE_WATCHED_PREVIOUS: {
+                            EpisodeSeenBuilder builder = mShowService.episodeSeen(mShowId);
+                            for (Flag episode : mFlags) {
+                                builder.episode(episode.season, episode.episode);
+                            }
+                            builder.fire();
+                            break;
+                        }
+                    }
 
                     // Get back to the main thread before invoking a callback.
                     MAIN_THREAD.post(new Runnable() {
@@ -59,18 +140,18 @@ public class FlagTapedTask implements Task<FlagTapedTask.Callback> {
                         }
                     });
                 } catch (TraktException e) {
-                    postFailure(callback);
+                    postFailure(e);
                 } catch (ApiException e) {
-                    postFailure(callback);
+                    postFailure(e);
                 }
             }
 
-            public void postFailure(final Callback callback) {
+            public void postFailure(final Exception e) {
                 // Get back to the main thread before invoking a callback.
                 MAIN_THREAD.post(new Runnable() {
                     @Override
                     public void run() {
-                        callback.onFailure();
+                        callback.onFailure(e);
                     }
                 });
             }
