@@ -155,6 +155,10 @@
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.MoviesActivity" >
         </activity>
+		
+        <!-- Services -->
+        <service android:name="com.battlelancer.seriesguide.service.TraktFlagService" >
+        </service>
 
         <!-- Notification service -->
         <service android:name="com.battlelancer.seriesguide.service.NotificationService" >
