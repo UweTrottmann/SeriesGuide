@@ -3,10 +3,12 @@ package com.battlelancer.seriesguide.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.uwetrottmann.seriesguide.R;
@@ -44,5 +46,9 @@ public class ConnectTraktFragment extends SherlockFragment {
                 getActivity().finish();
             }
         });
+
+        // make learn more link clickable
+        ((TextView) getView().findViewById(R.id.textViewAbout))
+                .setMovementMethod(LinkMovementMethod.getInstance());
     }
 }
