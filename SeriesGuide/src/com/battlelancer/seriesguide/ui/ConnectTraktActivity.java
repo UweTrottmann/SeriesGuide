@@ -10,7 +10,8 @@ import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.seriesguide.R;
 
 /**
- * Hosts a {@link ConnectTraktFragment}.
+ * Shows a {@link ConnectTraktFragment} or if already connected to trakt a
+ * {@link TraktCredentialsDialogFragment}.
  */
 public class ConnectTraktActivity extends BaseActivity {
 
@@ -25,8 +26,7 @@ public class ConnectTraktActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
             if (ServiceUtils.isTraktCredentialsValid(this)) {
-                // immediately show the credentials fragment to allow
-                // disconnecting
+                // immediately show credentials to allow disconnecting
                 TraktCredentialsDialogFragment f = TraktCredentialsDialogFragment.newInstance();
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.add(R.id.root_container, f);
