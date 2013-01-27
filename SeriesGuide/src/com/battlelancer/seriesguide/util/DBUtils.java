@@ -423,11 +423,6 @@ public class DBUtils {
 
         batch.clear();
 
-        // hide progress dialog now
-        if (progress.isShowing()) {
-            progress.dismiss();
-        }
-
         // delete show poster
         if (posterPath != null) {
             imageProvider.removeImage(posterPath);
@@ -470,6 +465,11 @@ public class DBUtils {
         } catch (OperationApplicationException e) {
             // Failures like constraint violation aren't recoverable
             throw new RuntimeException("Problem applying batch operation", e);
+        }
+        
+        // hide progress dialog now
+        if (progress.isShowing()) {
+            progress.dismiss();
         }
     }
 
