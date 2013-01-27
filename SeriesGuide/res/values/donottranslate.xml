@@ -3,7 +3,6 @@
 
     <string name="app_name">SeriesGuide</string>
     <string name="package_name">com.battlelancer.seriesguide</string>
-    <string name="helptranslate">Help translate SeriesGuide</string>
     <string name="googleplay">Google Play</string>
     <string name="amazon">Amazon</string>
     <string name="imdb">IMDb</string>
@@ -15,6 +14,14 @@
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
     <string name="betamessage">Tweaks and Movies\n\nFurther tweaked navigation, added check-in buttons, go back up from an episode to its season, then its show (use the slide menu or long-press back as always to quickly navigate back to the show list).\n\nCheck into movies on trakt or GetGlue, for now search and check-in only, movie details page coming later.\n\nAbsolute episode numbers are displayed if they do not match the episode number (will take a while until they show up everywhere).\n\nRemove Android Beam due to compatibility problems.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+
+    <!-- Settings -->
+    <string name="pref_translate">Translate SeriesGuide</string>
+    <string name="pref_translatesummary">Translate or proofread on crowdin</string>
+    <string name="pref_community">Google+ community</string>
+    <string name="pref_communitysummary">Share ideas, discuss changes or report problems</string>
+    <string name="pref_suggest_features">Suggest improvements</string>
+    <string name="pref_suggest_featuressummary">Suggest and vote on future improvements</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
