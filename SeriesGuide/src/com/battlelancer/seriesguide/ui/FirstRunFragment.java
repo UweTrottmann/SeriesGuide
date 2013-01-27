@@ -24,7 +24,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,7 +34,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
@@ -109,11 +107,10 @@ public class FirstRunFragment extends SherlockFragment {
         getView().findViewById(R.id.welcome_setuptrakt).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                EasyTracker.getTracker().trackEvent(TAG, "Click", "Setup trakt account", (long) 0);
-                TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
-                        .newInstance();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                newFragment.show(ft, "traktdialog");
+                Intent i = new Intent(getActivity(), ConnectTraktActivity.class);
+                startActivity(i);
+
+                EasyTracker.getTracker().trackEvent(TAG, "Click", "Connect trakt", (long) 0);
             }
         });
 

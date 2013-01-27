@@ -205,6 +205,12 @@
     <string name="list_item_manage">Manage lists</string>
     <string name="list_item_remove">Remove from list</string>
     <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
+    
+    <!-- Connect trakt -->
+    <string name="connect_trakt">Connect trakt</string>
+    <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv/about">Learn more</a></string>
+    <string name="integration_trakt">If you connect trakt:</string>
+    <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced\n\n- new shows you watched are added automatically</string>
 
     <!-- Settings -->
     <string name="prefs_category_basic">Basics</string>

@@ -92,7 +92,6 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getDialog().setTitle(R.string.pref_trakt);
         final Context context = getActivity().getApplicationContext();
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final View layout = inflater.inflate(R.layout.trakt_credentials_dialog, null);
