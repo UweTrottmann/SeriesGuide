@@ -37,6 +37,7 @@ public class EpisodesAdapter extends CursorAdapter {
         mLayoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mOnClickListener = listener;
+        mOnFlagListener = flagListener;
     }
 
     @Override
