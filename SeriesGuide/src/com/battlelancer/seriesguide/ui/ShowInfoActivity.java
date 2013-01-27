@@ -19,7 +19,6 @@ package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -253,17 +252,10 @@ public class ShowInfoActivity extends BaseActivity {
         findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // display in dialog on large or bigger screen
-                if ((getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE) {
-                    TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
-                            show.getTitle(), Integer.valueOf(tvdbId));
-                    newFragment.show(getSupportFragmentManager(), "shouts-dialog");
-                } else {
-                    Intent i = new Intent(ShowInfoActivity.this, TraktShoutsActivity.class);
-                    i.putExtras(TraktShoutsActivity.createInitBundle(getShowId(),
-                            0, 0, show.getTitle()));
-                    startActivity(i);
-                }
+                Intent i = new Intent(ShowInfoActivity.this, TraktShoutsActivity.class);
+                i.putExtras(TraktShoutsActivity.createInitBundle(getShowId(),
+                        0, 0, show.getTitle()));
+                startActivity(i);
                 fireTrackerEvent("Show Trakt Shouts");
             }
         });

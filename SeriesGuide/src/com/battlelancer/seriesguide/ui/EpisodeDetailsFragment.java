@@ -482,20 +482,10 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             view.findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // see if we are attached to a single-pane activity
-                    if (getSherlockActivity() instanceof EpisodeDetailsActivity) {
-                        Intent intent = new Intent(getActivity(), TraktShoutsActivity.class);
-                        intent.putExtras(TraktShoutsActivity.createInitBundle(mShowId,
-                                mSeasonNumber, mEpisodeNumber, episodeTitle));
-                        startActivity(intent);
-                    } else {
-                        // in a multi-pane layout show the shouts in a
-                        // dialog
-                        TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
-                                episodeTitle, mShowId, mSeasonNumber, mEpisodeNumber);
-
-                        newFragment.show(getFragmentManager(), "shouts-dialog");
-                    }
+                    Intent intent = new Intent(getActivity(), TraktShoutsActivity.class);
+                    intent.putExtras(TraktShoutsActivity.createInitBundle(mShowId,
+                            mSeasonNumber, mEpisodeNumber, episodeTitle));
+                    startActivity(intent);
                 }
             });
 

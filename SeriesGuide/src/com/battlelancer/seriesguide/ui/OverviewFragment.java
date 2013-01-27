@@ -692,17 +692,10 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             @Override
             public void onClick(View v) {
                 if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
-
-                    if (!mDualPane) {
-                        Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
-                        i.putExtras(TraktShoutsActivity.createInitBundle(getShowId(),
-                                seasonNumber, episodeNumber, episodeTitle));
-                        startActivity(i);
-                    } else {
-                        TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
-                                episodeTitle, getShowId(), seasonNumber, episodeNumber);
-                        newFragment.show(getFragmentManager(), "shouts-dialog");
-                    }
+                    Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
+                    i.putExtras(TraktShoutsActivity.createInitBundle(getShowId(),
+                            seasonNumber, episodeNumber, episodeTitle));
+                    startActivity(i);
                 }
             }
         });
