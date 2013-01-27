@@ -25,6 +25,7 @@
   <string name="share">Поделиться</string>
   <string name="updated">Обновлено до последней версии.</string>
   <string name="discard">Отменить</string>
+  <string name="close">Close</string>
   <string name="save_selection">Сохранить выбор</string>
   <string name="offline">Нет соединения. Повторите попытку позже.</string>
   <string name="onlyx">Доступно только в SeriesGuide X</string>
@@ -91,6 +92,7 @@
   <string name="trakt_notseen">%s не просмотрено.</string>
   <string name="trakt_collected">%s помечен.</string>
   <string name="trakt_notcollected">%s не помечен.</string>
+  <string name="add_empty">There are no shows here or your device has no internet connection.</string>
   <string name="shows_empty">Look in the menu above to add some shows.</string>
   <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
   <string name="hidden_empty">Long-press on a show to hide it here.</string>
@@ -165,6 +167,21 @@
   <string name="list_item_manage">Редактировать списки</string>
   <string name="list_item_remove">Удалить из списка</string>
   <string name="list_empty">Сериалы, сезоны или эпизоды можно добавить в этот список.</string>
+  <string name="connect_trakt">Connect trakt</string>
+  <string name="connect_trakt_done">Connected to trakt!</string>
+  <string name="add_trakt_shows">Add shows from your library:</string>
+  <string name="show_library">Show your library</string>
+  <string name="upload_shows">Upload your SeriesGuide show list:</string>
+  <string name="upload_existing_shows">Upload existing shows</string>
+  <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
+  <string name="integration_trakt">If you connect trakt:</string>
+  <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
+  <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
+  <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
+  <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
+  <string name="trakt_download">Download to SeriesGuide</string>
+  <string name="trakt_upload">Upload to trakt.tv</string>
+  <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
   <string name="prefs_category_basic">Основные</string>
   <string name="prefs_category_sharing">Сервисы</string>
   <string name="prefs_category_advanced">Дополнительные</string>
@@ -189,9 +206,8 @@
   <string name="pref_credits">Создатели</string>
   <string name="clearGetGlueCredentials">Отключить GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
-  <string name="pref_trakt">учетные данные trakt.tv</string>
   <string name="pref_traktsummary">Добавить или изменить учетные данные trakt.tv</string>
-  <string name="pref_traktsync">Синхронизировать с trakt.tv</string>
+  <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">Отправить отзыв</string>
   <string name="clear_cache">Очистить кэш изображений</string>
   <string name="clear_cache_summary">Удалить все кэшированные изображения с вашего устройства</string>
@@ -258,14 +274,7 @@
   <string name="trakt_decryptfail">не удалось расшифровать пароль</string>
   <string name="trakt_generalerror">Что-то пошло не так. Пожалуйста, проверьте ваши данные и повторите попытку.</string>
   <string name="trakt_createaccount">Создать новую учетную запись</string>
-  <string name="trakt_experimental">Синхронизируются только сериалы из вашего списка SeriesGuide. \'Синхронизация SeriesGuide\' извлекает метки просмотра из trakt. \'Синхронизация trakt\' посылает метки просмотра в trakt.</string>
-  <string name="trakt_synctodevice">Синхронизация с SeriesGuide</string>
-  <string name="trakt_synctotrakt">Синхронизировать с trakt.tv</string>
-  <string name="trakt_syncunseen">Включить непросмотренные метки</string>
-  <string name="trakt_howto_title">Настроить синхронизацию trakt.tv</string>
-  <string name="trakt_howto">Настройка устройства: \n\n1. Подключение или создать учетную запись на каждое устройство. \n2. Первый раз, используйте кнопку <b>Синхронизация trakt.tv</b> для загрузки ваших сериалов. \n3. Добавить сериалы от trakt.tv путем перехода на вкладку <b>Библиотека</b>.<b>Добавить сериал</b> \n\n Всякий раз, когда SeriesGuide обновляется, ваша активность trakt.tv загружается для каждого устройства. Это включает пометка эпизодов как просмотренных или собранных и проверяет их.</string>
   <string name="welcome_setuplanguage">Выбрать язык</string>
-  <string name="welcome_setuptrakt">Подключить trakt.tv аккаунт</string>
   <string name="welcome_traktmessage">Доступ к вашей активности и активности друзей в trakt.tv</string>
   <string name="dismiss">Отменить</string>
   <string name="welcome_add_part1">Для начала нажмите</string>

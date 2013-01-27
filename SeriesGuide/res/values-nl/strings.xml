@@ -25,6 +25,7 @@
   <string name="share">Delen</string>
   <string name="updated">Nieuwste versie is geïnstaleerd.</string>
   <string name="discard">Negeren</string>
+  <string name="close">Close</string>
   <string name="save_selection">Selectie bewaren</string>
   <string name="offline">Geen netwerk verbinding. Probeer het later opnieuw.</string>
   <string name="onlyx">Alleen beschikbaar in Series Guide X</string>
@@ -91,6 +92,7 @@
   <string name="trakt_notseen">%s onbekeken.</string>
   <string name="trakt_collected">%s verzameld.</string>
   <string name="trakt_notcollected">%s niet verzameld.</string>
+  <string name="add_empty">There are no shows here or your device has no internet connection.</string>
   <string name="shows_empty">Look in the menu above to add some shows.</string>
   <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
   <string name="hidden_empty">Long-press on a show to hide it here.</string>
@@ -165,6 +167,21 @@
   <string name="list_item_manage">Beheer lijsten</string>
   <string name="list_item_remove">Verwijder van lijst</string>
   <string name="list_empty">Je kan series, seizoenen of afleveringen toevoegen aan deze lijst.</string>
+  <string name="connect_trakt">Connect trakt</string>
+  <string name="connect_trakt_done">Connected to trakt!</string>
+  <string name="add_trakt_shows">Add shows from your library:</string>
+  <string name="show_library">Show your library</string>
+  <string name="upload_shows">Upload your SeriesGuide show list:</string>
+  <string name="upload_existing_shows">Upload existing shows</string>
+  <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
+  <string name="integration_trakt">If you connect trakt:</string>
+  <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
+  <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
+  <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
+  <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
+  <string name="trakt_download">Download to SeriesGuide</string>
+  <string name="trakt_upload">Upload to trakt.tv</string>
+  <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
   <string name="prefs_category_basic">Basis</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Geavanceerd</string>
@@ -189,9 +206,8 @@
   <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">GetGlue verbinding verbreken</string>
   <string name="clearGetGlueCredentialssummary">Meld aan met GetGlue om opnieuw te verbinden</string>
-  <string name="pref_trakt">trakt.TV referenties</string>
   <string name="pref_traktsummary">trakt.tv referenties toevoegen of bewerken</string>
-  <string name="pref_traktsync">Synchroniseren met trakt.tv</string>
+  <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">Reactie verzenden</string>
   <string name="clear_cache">Afbeeldingenbuffer wissen</string>
   <string name="clear_cache_summary">Alle gebufferde afbeeldingen van het apparaat verwijderen</string>
@@ -258,14 +274,7 @@
   <string name="trakt_decryptfail">wachtwoord kon niet worden gedecodeerd</string>
   <string name="trakt_generalerror">Er ging iets fout. Controleer uw referenties en probeer het opnieuw.</string>
   <string name="trakt_createaccount">Nieuw account aanmaken</string>
-  <string name="trakt_experimental">Alleen series in jouw SeriesGuide serielijst worden gesynchroniseerd. \'Sync met SeriesGuide\' haalt de bekeken afleveringen op van trakt. \'Sync met trakt\' stuurt de bekeken afleveringen naar trakt.</string>
-  <string name="trakt_synctodevice">Synchroniseren naar SeriesGuide</string>
-  <string name="trakt_synctotrakt">Synchroniseren naar trakt.tv</string>
-  <string name="trakt_syncunseen">Inclusief als onbekeken gemarkeerd</string>
-  <string name="trakt_howto_title">Voeg trakt.tv synchronistatie toe</string>
-  <string name="trakt_howto">Om uw apparaten: \n\n1 te configureren. Login of maak hieronder uw account aan op elk apparaat. \n2. Gebruik de eerste keer de knop <b>Synchroniseren naar trakt.tv</b> voor het uploaden van uw bestaande shows. \n3. Voeg shows toe vanuit trakt.tv door te swipen naar het <b>bibliotheek</b> tabblad in het <b>Toevoegen Show</b> scherm. Telkens als SeriesGuide bijwerkt, wordt uw trakt.tv activiteit gedownload naar elk apparaat. Dit is inclusief het markeren van afleveringen als gezien of verzameld en ook checkins.</string>
   <string name="welcome_setuplanguage">Selecteer een taal</string>
-  <string name="welcome_setuptrakt">Verbinden met trakt</string>
   <string name="welcome_traktmessage">Toegang tot uw bibliotheek en activiteit van vrienden op trakt.tv</string>
   <string name="dismiss">Afwijzen</string>
   <string name="welcome_add_part1">Om te beginnen druk op</string>

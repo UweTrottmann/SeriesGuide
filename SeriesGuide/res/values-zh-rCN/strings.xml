@@ -25,6 +25,7 @@
   <string name="share">分享</string>
   <string name="updated">已更新至最新版本。</string>
   <string name="discard">放弃</string>
+  <string name="close">Close</string>
   <string name="save_selection">保存选择</string>
   <string name="offline">无网络，请稍后重试。</string>
   <string name="onlyx">仅 SeriesGuide X 可用</string>
@@ -91,6 +92,7 @@
   <string name="trakt_notseen">%s 未观看。</string>
   <string name="trakt_collected">%s 已收藏。</string>
   <string name="trakt_notcollected">%s 未收藏。</string>
+  <string name="add_empty">There are no shows here or your device has no internet connection.</string>
   <string name="shows_empty">Look in the menu above to add some shows.</string>
   <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
   <string name="hidden_empty">Long-press on a show to hide it here.</string>
@@ -165,6 +167,21 @@
   <string name="list_item_manage">管理多个列表</string>
   <string name="list_item_remove">从列表中删除</string>
   <string name="list_empty">您可以将整季或单集添加到列表中。</string>
+  <string name="connect_trakt">Connect trakt</string>
+  <string name="connect_trakt_done">Connected to trakt!</string>
+  <string name="add_trakt_shows">Add shows from your library:</string>
+  <string name="show_library">Show your library</string>
+  <string name="upload_shows">Upload your SeriesGuide show list:</string>
+  <string name="upload_existing_shows">Upload existing shows</string>
+  <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
+  <string name="integration_trakt">If you connect trakt:</string>
+  <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
+  <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
+  <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
+  <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
+  <string name="trakt_download">Download to SeriesGuide</string>
+  <string name="trakt_upload">Upload to trakt.tv</string>
+  <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
   <string name="prefs_category_basic">基本</string>
   <string name="prefs_category_sharing">关联服务</string>
   <string name="prefs_category_advanced">高级</string>
@@ -189,9 +206,8 @@
   <string name="pref_credits">制作人员</string>
   <string name="clearGetGlueCredentials">断开与 GetGlue 的连接</string>
   <string name="clearGetGlueCredentialssummary">使用GetGlue账户签到并重新连接</string>
-  <string name="pref_trakt">trakt.tv 账号</string>
   <string name="pref_traktsummary">添加或编辑您的 trakt.tv 账号</string>
-  <string name="pref_traktsync">与 trakt.tv 同步</string>
+  <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">发送反馈报告</string>
   <string name="clear_cache">清理图片缓存</string>
   <string name="clear_cache_summary">从您的设备中删除所有缓存的图片</string>
@@ -258,14 +274,7 @@
   <string name="trakt_decryptfail">无法解密密钥</string>
   <string name="trakt_generalerror">出现了一些问题。请检查您的凭据后重试。</string>
   <string name="trakt_createaccount">创建新用户</string>
-  <string name="trakt_experimental">只有“美剧指南”中的列表会被同步。<b>同步到本地</b> 来自 trakt.tv 的观看标记。<b>同步到 trakt.tv</b> 发送观看标记到服务器。</string>
-  <string name="trakt_synctodevice">同步到本地</string>
-  <string name="trakt_synctotrakt">同步到 trakt.tv</string>
-  <string name="trakt_syncunseen">包含未观看标记</string>
-  <string name="trakt_howto_title">设置 trakt.tv 同步</string>
-  <string name="trakt_howto">要设置您的设备：\n\n1. 在所有设备上关联或创建一个下列帐号。\n\n2. 首次同步时，轻触 <b>同步到 trakt.tv</b> 来上传列表。\n\n 3. 滑动到 <b>添加节目</b> 页的 <b>数据库</b> 选项卡以添加 trakt.tv 上的节目。\n\n现在，无论何时“美剧指南”的数据更新，您的 trakt.tv 活动都会下载到每台设备。包括已观看或已收藏等标记也会被同步。</string>
   <string name="welcome_setuplanguage">选择语言</string>
-  <string name="welcome_setuptrakt">关联 trakt.tv 帐号</string>
   <string name="welcome_traktmessage">随时访问您的数据库和好友动态</string>
   <string name="dismiss">忽略</string>
   <string name="welcome_add_part1">第一次使用？轻触……</string>

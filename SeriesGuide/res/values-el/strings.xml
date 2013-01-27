@@ -25,6 +25,7 @@
   <string name="share">Κοινή χρήση</string>
   <string name="updated">Ενημέρωση για την πιο πρόσφατη έκδοση.</string>
   <string name="discard">Απόρριψη</string>
+  <string name="close">Close</string>
   <string name="save_selection">Αποθήκευση επιλογής</string>
   <string name="offline">Χωρίς σύνδεση δικτύου. Δοκιμάστε αργότερα.</string>
   <string name="onlyx">Διαθέσιμο μόνο στο SeriesGuide X</string>
@@ -91,6 +92,7 @@
   <string name="trakt_notseen">το %s δεν έχουν παρακολουθηθεί.</string>
   <string name="trakt_collected">%s εντός συλλογής.</string>
   <string name="trakt_notcollected">%s εκτός συλλογής.</string>
+  <string name="add_empty">There are no shows here or your device has no internet connection.</string>
   <string name="shows_empty">Look in the menu above to add some shows.</string>
   <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
   <string name="hidden_empty">Long-press on a show to hide it here.</string>
@@ -165,6 +167,21 @@
   <string name="list_item_manage">Διαχείριση λιστών</string>
   <string name="list_item_remove">Κατάργηση από τη λίστα</string>
   <string name="list_empty">Μπορείτε να προσθέσετε σειρές, σεζόν ή επεισόδια σε αυτή τη λίστα.</string>
+  <string name="connect_trakt">Connect trakt</string>
+  <string name="connect_trakt_done">Connected to trakt!</string>
+  <string name="add_trakt_shows">Add shows from your library:</string>
+  <string name="show_library">Show your library</string>
+  <string name="upload_shows">Upload your SeriesGuide show list:</string>
+  <string name="upload_existing_shows">Upload existing shows</string>
+  <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
+  <string name="integration_trakt">If you connect trakt:</string>
+  <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
+  <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
+  <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
+  <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
+  <string name="trakt_download">Download to SeriesGuide</string>
+  <string name="trakt_upload">Upload to trakt.tv</string>
+  <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
   <string name="prefs_category_basic">Βασικά</string>
   <string name="prefs_category_sharing">Υπηρεσίες</string>
   <string name="prefs_category_advanced">Για προχωρημένους</string>
@@ -189,9 +206,8 @@
   <string name="pref_credits">Εύσημα</string>
   <string name="clearGetGlueCredentials">Αποσύνδεση GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Συνδεθήτε στο GetGlue για επανασύνδεση</string>
-  <string name="pref_trakt">Στοιχεία trakt.tv</string>
   <string name="pref_traktsummary">Προσθέστε ή επεξεργαστείτε τα στοιχεία του trakt.tv</string>
-  <string name="pref_traktsync">Συγχρονισμός με trakt.tv</string>
+  <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">Αποστολή σχολίων</string>
   <string name="clear_cache">Καθαρισμός προσωρινής μνήμης εικόνων</string>
   <string name="clear_cache_summary">Αφαιρέστε όλες τις προσωρινά αποθηκευμένες εικόνες από τη συσκευή σας</string>
@@ -258,14 +274,7 @@
   <string name="trakt_decryptfail">Ο κωδικός πρόσβασης δεν μπορούσε να αποκρυπτογραφηθεί</string>
   <string name="trakt_generalerror">Κάτι δεν πήγε καλά. Ελέγξτε τα στοιχεία σας και προσπαθήστε ξανά.</string>
   <string name="trakt_createaccount">Δημιουργία νέου λογαριασμού</string>
-  <string name="trakt_experimental">Μόνο οι σειρές στη λίστα σειρών του SeriesGuide συγχρονίζονται. Το \'Συγχρ. προς SeriesGuide\' φέρνει τις σημάνσεις παρακολουθημένων από το trakt. Το \'Συγχρ. προς trakt\' στέλνει τις σημάνσεις παρακολουθημένων στο trakt.</string>
-  <string name="trakt_synctodevice">Συγχρ. προς SeriesGuide</string>
-  <string name="trakt_synctotrakt">Συγχρ. προς trakt.tv</string>
-  <string name="trakt_syncunseen">Συμπερίληψη σημάνσεων μη πρακολουθημένων</string>
-  <string name="trakt_howto_title">Ρύθμιση συγχρονισμού με το trakt.tv</string>
-  <string name="trakt_howto">To set up your devices:\n\n1. Connect or create your account below on every device.\n2. The first time, use the <b>Sync to trakt.tv</b> button to upload your existing shows.\n3. Add shows from trakt.tv by swiping to the <b>Library</b> tab in the <b>Add Show</b> screen.\n\nNow whenever SeriesGuide updates, your trakt.tv activity is downloaded to each device. This includes flagging episodes as watched or collected and check ins.</string>
   <string name="welcome_setuplanguage">Επιλέξτε γλώσσα</string>
-  <string name="welcome_setuptrakt">Σύνδεση στο trakt</string>
   <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
   <string name="dismiss">Απόρριψη</string>
   <string name="welcome_add_part1">Για να ξεκινήσετε πατήστε</string>

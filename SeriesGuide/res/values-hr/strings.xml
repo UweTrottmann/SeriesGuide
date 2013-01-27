@@ -25,6 +25,7 @@
   <string name="share">Dijeli</string>
   <string name="updated">Updated to latest version.</string>
   <string name="discard">Discard</string>
+  <string name="close">Close</string>
   <string name="save_selection">Save selection</string>
   <string name="offline">No network connectivity. Try again later.</string>
   <string name="onlyx">Dostupno samo u SeriesGuide X</string>
@@ -91,6 +92,7 @@
   <string name="trakt_notseen">%s not seen.</string>
   <string name="trakt_collected">%s collected.</string>
   <string name="trakt_notcollected">%s not collected.</string>
+  <string name="add_empty">There are no shows here or your device has no internet connection.</string>
   <string name="shows_empty">Look in the menu above to add some shows.</string>
   <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
   <string name="hidden_empty">Long-press on a show to hide it here.</string>
@@ -165,6 +167,21 @@
   <string name="list_item_manage">Manage lists</string>
   <string name="list_item_remove">Remove from list</string>
   <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
+  <string name="connect_trakt">Connect trakt</string>
+  <string name="connect_trakt_done">Connected to trakt!</string>
+  <string name="add_trakt_shows">Add shows from your library:</string>
+  <string name="show_library">Show your library</string>
+  <string name="upload_shows">Upload your SeriesGuide show list:</string>
+  <string name="upload_existing_shows">Upload existing shows</string>
+  <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
+  <string name="integration_trakt">If you connect trakt:</string>
+  <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
+  <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
+  <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
+  <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
+  <string name="trakt_download">Download to SeriesGuide</string>
+  <string name="trakt_upload">Upload to trakt.tv</string>
+  <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
   <string name="prefs_category_basic">Basics</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Advanced</string>
@@ -189,9 +206,8 @@
   <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">Odjavi se sa GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
-  <string name="pref_trakt">trakt.tv podaci</string>
   <string name="pref_traktsummary">Dodaj ili uredi svoje trakt.tv podatke</string>
-  <string name="pref_traktsync">Sinkroniziraj sa trakt.tv</string>
+  <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">Pošaljite povratnu informaciju</string>
   <string name="clear_cache">Clear image caches</string>
   <string name="clear_cache_summary">Remove all cached images from your device</string>
@@ -258,14 +274,7 @@
   <string name="trakt_decryptfail">lozinka nemože biti dešifrirana</string>
   <string name="trakt_generalerror">Nešto je pošlo po krivu. Molimo provjerite podatke i pokušajte ponovno.</string>
   <string name="trakt_createaccount">Stvori novi račun</string>
-  <string name="trakt_experimental">Only shows in your SeriesGuide show list are synced. \'Sync to SeriesGuide\' fetches watched flags from trakt. \'Sync to trakt\' sends watched flags to trakt.</string>
-  <string name="trakt_synctodevice">Sinkroniziraj sa SeriesGuide</string>
-  <string name="trakt_synctotrakt">Sinkroniziraj sa trakt.tv</string>
-  <string name="trakt_syncunseen">Include unwatched flags</string>
-  <string name="trakt_howto_title">Set up trakt.tv sync</string>
-  <string name="trakt_howto">To set up your devices:\n\n1. Connect or create your account below on every device.\n2. The first time, use the <b>Sync to trakt.tv</b> button to upload your existing shows.\n3. Add shows from trakt.tv by swiping to the <b>Library</b> tab in the <b>Add Show</b> screen.\n\nNow whenever SeriesGuide updates, your trakt.tv activity is downloaded to each device. This includes flagging episodes as watched or collected and check ins.</string>
   <string name="welcome_setuplanguage">Choose language</string>
-  <string name="welcome_setuptrakt">Connect to trakt</string>
   <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
   <string name="dismiss">Dismiss</string>
   <string name="welcome_add_part1">To get started tap</string>
