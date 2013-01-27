@@ -245,7 +245,7 @@
     <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
     <string name="pref_trakt">trakt.tv credentials</string>
     <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
-    <string name="pref_traktsync">Sync with trakt.tv</string>
+    <string name="pref_traktsync">Manual sync with trakt.tv</string>
     <string name="feedback">Send feedback</string>
     <string name="clear_cache">Clear image caches</string>
     <string name="clear_cache_summary">Remove all cached images from your device</string>
@@ -348,10 +348,10 @@
     <string name="trakt_decryptfail">password could not be decrypted</string>
     <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
     <string name="trakt_createaccount">Create new account</string>
-    <string name="trakt_experimental">Only shows in your SeriesGuide show list are synced. \'Sync to SeriesGuide\' fetches watched flags from trakt. \'Sync to trakt\' sends watched flags to trakt.</string>
-    <string name="trakt_synctodevice">Sync to SeriesGuide</string>
-    <string name="trakt_synctotrakt">Sync to trakt.tv</string>
-    <string name="trakt_syncunseen">Include unwatched flags</string>
+    <string name="trakt_experimental">No shows will be added or removed in SeriesGuide, do that from the show list.\n\'Download to SeriesGuide\' flags all watched episodes on trakt as watched in SeriesGuide.\n\'Upload to trakt\' flags episodes watched in SeriesGuide as watched on trakt.</string>
+    <string name="trakt_synctodevice">Download to SeriesGuide</string>
+    <string name="trakt_synctotrakt">Upload to trakt.tv</string>
+    <string name="trakt_syncunseen">Remove watched flags for unwatched episodes</string>
 
     <!-- Welcome dialog -->
     <string name="welcome_setuplanguage">Choose language</string>
