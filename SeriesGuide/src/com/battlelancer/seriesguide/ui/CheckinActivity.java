@@ -77,6 +77,7 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.checkin));
         actionBar.setIcon(R.drawable.ic_action_checkin);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         // setup search box
         mSearchBox = (EditText) findViewById(R.id.editTextCheckinSearch);
