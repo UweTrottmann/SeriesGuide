@@ -21,7 +21,7 @@ public class ConnectTraktActivity extends BaseActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.connect_trakt);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
 
         if (savedInstanceState == null) {
             if (ServiceUtils.isTraktCredentialsValid(this)) {
