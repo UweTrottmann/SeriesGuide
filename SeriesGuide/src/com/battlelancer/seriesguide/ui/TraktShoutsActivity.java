@@ -20,7 +20,7 @@ package com.battlelancer.seriesguide.ui;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockDialogFragment;
+import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.uwetrottmann.seriesguide.R;
 
@@ -47,17 +47,19 @@ public class TraktShoutsActivity extends BaseActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        // embed the shouts fragment dialog
-        SherlockDialogFragment newFragment;
-        int tvdbId = args.getInt(ShareItems.TVDBID);
-        int episode = args.getInt(ShareItems.EPISODE);
-        if (episode == 0) {
-            newFragment = TraktShoutsFragment.newInstance(title, tvdbId);
-        } else {
-            int season = args.getInt(ShareItems.SEASON);
-            newFragment = TraktShoutsFragment.newInstance(title, tvdbId, season, episode);
+        if (savedInstanceState == null) {
+            // embed the shouts fragment dialog
+            SherlockFragment newFragment;
+            int tvdbId = args.getInt(ShareItems.TVDBID);
+            int episode = args.getInt(ShareItems.EPISODE);
+            if (episode == 0) {
+                newFragment = TraktShoutsFragment.newInstance(title, tvdbId);
+            } else {
+                int season = args.getInt(ShareItems.SEASON);
+                newFragment = TraktShoutsFragment.newInstance(title, tvdbId, season, episode);
+            }
+            getSupportFragmentManager().beginTransaction().add(R.id.root_container, newFragment)
+                    .commit();
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.root_container, newFragment)
-                .commit();
     }
 }
