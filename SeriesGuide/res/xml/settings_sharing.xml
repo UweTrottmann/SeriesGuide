@@ -9,7 +9,8 @@
     <PreferenceCategory android:title="@string/trakt" >
         <Preference
             android:key="com.battlelancer.seriesguide.trakt.connect"
-            android:title="@string/connect_trakt" >
+            android:title="@string/connect_trakt"
+            android:summary="@string/pref_traktsummary" >
             <intent
                 android:targetClass="com.battlelancer.seriesguide.ui.ConnectTraktActivity"
                 android:targetPackage="@string/package_name" />

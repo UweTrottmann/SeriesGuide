@@ -11,40 +11,10 @@
         android:padding="10dp" >
 
         <TextView
-            android:id="@+id/textViewTitleCreds"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="@string/pref_trakt"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/textViewSetup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textViewTitleCreds"
-            android:text="@string/pref_traktsummary" >
-        </TextView>
-
-        <Button
-            android:id="@+id/setupAccountButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewSetup"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="@string/pref_trakt" >
-        </Button>
-
-        <TextView
             android:id="@+id/textViewTitleSync"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/setupAccountButton"
-            android:layout_marginTop="10dp"
             android:text="@string/pref_traktsync"
             android:textAppearance="?android:attr/textAppearanceMedium" >
         </TextView>

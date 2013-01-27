@@ -22,7 +22,6 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -90,18 +89,6 @@ public class TraktSyncActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 showDialog(DIALOG_SELECT_SHOWS);
-            }
-        });
-
-        // Trakt.tv credentials
-        final Button setupAccountButton = (Button) findViewById(R.id.setupAccountButton);
-        setupAccountButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // start trakt connection procedure
-                Intent i = new Intent(TraktSyncActivity.this, ConnectTraktActivity.class);
-                startActivity(i);
             }
         });
     }
