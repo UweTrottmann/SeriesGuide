@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -22,10 +24,20 @@ public class ConnectTraktActivity extends BaseActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
-            ConnectTraktFragment f = new ConnectTraktFragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(R.id.root_container, f);
-            ft.commit();
+            if (ServiceUtils.isTraktCredentialsValid(this)) {
+                // immediately show the credentials fragment to allow
+                // disconnecting
+                TraktCredentialsDialogFragment f = TraktCredentialsDialogFragment.newInstance();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.add(R.id.root_container, f);
+                ft.commit();
+            } else {
+                // display trakt introduction
+                ConnectTraktFragment f = new ConnectTraktFragment();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.add(R.id.root_container, f);
+                ft.commit();
+            }
         }
     }
 }

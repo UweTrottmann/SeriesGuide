@@ -21,30 +21,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/default_padding"
-                android:drawableRight="@drawable/ic_trakt"
-                android:text="@string/connect_trakt"
+                android:text="@string/connect_trakt_done"
                 android:textAppearance="?attr/textAppearanceSgXLargeLight" />
 
             <TextView
-                android:id="@+id/textViewAbout"
+                android:id="@+id/textViewAddShows"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_padding"
-                android:linksClickable="true"
-                android:text="@string/about_trakt"
+                android:layout_marginTop="@dimen/large_padding"
+                android:text="@string/add_trakt_shows"
                 android:textAppearance="?attr/textAppearanceSgSmall" />
 
-            <TextView
-                android:id="@+id/textViewIntegrationItems"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/buttonShowLibrary"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/default_padding"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginRight="@dimen/default_padding"
-                android:layout_marginTop="16dp"
-                android:text="@string/integration_trakt_items"
-                android:textAppearance="?attr/textAppearanceSgSmallPrimary" />
+                android:layout_marginTop="@dimen/large_padding"
+                android:text="@string/show_library" />
+
+            <TextView
+                android:id="@+id/textViewUploadShows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/upload_shows"
+                android:textAppearance="?attr/textAppearanceSgSmall" />
+
+            <Button
+                android:id="@+id/buttonUploadShows"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/large_padding"
+                android:text="@string/upload_existing_shows" />
         </LinearLayout>
     </ScrollView>
 
@@ -54,24 +64,11 @@
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/buttonDiscard"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Small"
+            android:id="@+id/buttonClose"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/discard" />
-
-        <include
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            layout="@layout/divider_vertical" />
-
-        <Button
-            android:id="@+id/buttonConnectTrakt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/connect"
+            android:text="@string/close"
             android:textSize="@dimen/text_size_small" />
     </LinearLayout>
 

@@ -26,6 +26,7 @@
     <string name="share">Share</string>
     <string name="updated">Updated to latest version.</string>
     <string name="discard">Discard</string>
+    <string name="close">Close</string>
     <string name="save_selection">Save selection</string>
 
     <plurals name="votes">
@@ -208,6 +209,11 @@
     
     <!-- Connect trakt -->
     <string name="connect_trakt">Connect trakt</string>
+    <string name="connect_trakt_done">Connected to trakt!</string>
+    <string name="add_trakt_shows">Add shows from your library:</string>
+    <string name="show_library">Show your library</string>
+    <string name="upload_shows">Upload your SeriesGuide show list:</string>
+    <string name="upload_existing_shows">Upload existing shows</string>
     <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv/about">Learn more</a></string>
     <string name="integration_trakt">If you connect trakt:</string>
     <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced\n\n- new shows you watched are added automatically</string>

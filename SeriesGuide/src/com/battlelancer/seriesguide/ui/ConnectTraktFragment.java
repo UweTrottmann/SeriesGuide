@@ -13,7 +13,8 @@ import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.uwetrottmann.seriesguide.R;
 
 /**
- * Tells about trakt, allows to proceed to credentials step. 
+ * Tells about trakt and how it integrates with SeriesGuide, allows to proceed
+ * to entering credentials step.
  */
 public class ConnectTraktFragment extends SherlockFragment {
 
