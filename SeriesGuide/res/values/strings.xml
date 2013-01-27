@@ -224,7 +224,7 @@
     <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
     <string name="trakt_download">Download to SeriesGuide</string>
     <string name="trakt_upload">Upload to trakt.tv</string>
-    <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes</string>
+    <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
 
     <!-- Settings -->
     <string name="prefs_category_basic">Basics</string>
