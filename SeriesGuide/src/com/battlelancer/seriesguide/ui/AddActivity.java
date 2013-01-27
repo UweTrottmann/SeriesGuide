@@ -55,6 +55,13 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
 
     private ViewPager mPager;
 
+    public interface InitBundle {
+        /**
+         * Which tab to select upon launch.
+         */
+        String DEFAULT_TAB = "default_tab";
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // The TvdbAddFragment uses a progress bar
@@ -79,6 +86,14 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
         indicator.setOnPageChangeListener(new MenuOnPageChangeListener(getSlidingMenu()));
 
         getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+
+        // set default tab
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            int defaultTab = getIntent().getExtras().getInt(InitBundle.DEFAULT_TAB);
+            if (defaultTab < mAdapter.getCount()) {
+                indicator.setCurrentItem(defaultTab);
+            }
+        }
     }
 
     @Override
