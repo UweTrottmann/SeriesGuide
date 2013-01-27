@@ -27,7 +27,7 @@ public class ConnectTraktFinishedFragment extends SherlockFragment {
         super.onActivityCreated(savedInstanceState);
 
         // library button
-        getView().findViewById(R.id.buttonUploadShows).setOnClickListener(new OnClickListener() {
+        getView().findViewById(R.id.buttonShowLibrary).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO open library tab
