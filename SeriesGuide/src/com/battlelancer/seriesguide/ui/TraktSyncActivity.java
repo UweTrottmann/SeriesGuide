@@ -134,7 +134,7 @@ public class TraktSyncActivity extends BaseActivity {
         switch (id) {
             case DIALOG_SELECT_SHOWS:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle(R.string.trakt_synctotrakt);
+                builder.setTitle(R.string.trakt_upload);
                 final Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[] {
                         Shows._ID, Shows.TITLE, Shows.SYNCENABLED
                 }, null, null, Shows.TITLE + " ASC");
@@ -161,7 +161,7 @@ public class TraktSyncActivity extends BaseActivity {
                                         null, null);
                             }
                         });
-                builder.setPositiveButton(R.string.trakt_synctotrakt,
+                builder.setPositiveButton(R.string.trakt_upload,
                         new DialogInterface.OnClickListener() {
 
                             @Override
