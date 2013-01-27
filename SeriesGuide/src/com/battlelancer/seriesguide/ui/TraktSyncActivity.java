@@ -61,8 +61,6 @@ public class TraktSyncActivity extends BaseActivity {
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
-        actionBar.setTitle(R.string.trakt);
-        setTitle(R.string.trakt);
 
         mContainer = findViewById(R.id.syncbuttons);
 
