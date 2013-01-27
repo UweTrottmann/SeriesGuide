@@ -60,6 +60,7 @@ import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
 import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
@@ -182,11 +183,15 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_rate_trakt) {
-            onShareEpisode(ShareMethod.RATE_TRAKT, true);
-            fireTrackerEvent("Rate (trakt)");
+            if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
+                onShareEpisode(ShareMethod.RATE_TRAKT);
+                fireTrackerEvent("Rate (trakt)");
+            } else {
+                startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
+            }
             return true;
         } else if (itemId == R.id.menu_share) {
-            onShareEpisode(ShareMethod.OTHER_SERVICES, true);
+            onShareEpisode(ShareMethod.OTHER_SERVICES);
             fireTrackerEvent("Share (apps)");
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
@@ -197,7 +202,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         return super.onOptionsItemSelected(item);
     }
 
-    private void onShareEpisode(ShareMethod shareMethod, boolean isInvalidateOptionsMenu) {
+    private void onShareEpisode(ShareMethod shareMethod) {
         // Episode of this fragment is always the first item in the cursor
         final Cursor episode = (Cursor) mAdapter.getItem(0);
         final SherlockFragmentActivity activity = getSherlockActivity();
@@ -226,11 +231,9 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
             ShareUtils.onShareEpisode(activity, shareData, shareMethod, null);
 
-            if (isInvalidateOptionsMenu) {
-                // invalidate the options menu so a potentially new
-                // quick share action is displayed
-                activity.invalidateOptionsMenu();
-            }
+            // invalidate the options menu so a potentially new
+            // quick share action is displayed
+            activity.invalidateOptionsMenu();
         }
     }
 

@@ -59,6 +59,7 @@ import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
 import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
@@ -241,8 +242,12 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             return true;
         } else if (itemId == R.id.menu_rate_trakt) {
             // rate episode on trakt.tv
-            onShareEpisode(ShareMethod.RATE_TRAKT);
-            fireTrackerEvent("Rate (trakt)");
+            if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
+                onShareEpisode(ShareMethod.RATE_TRAKT);
+                fireTrackerEvent("Rate (trakt)");
+            } else {
+                startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
+            }
             return true;
         } else if (itemId == R.id.menu_share) {
             // share episode
