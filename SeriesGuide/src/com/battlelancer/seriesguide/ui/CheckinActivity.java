@@ -58,7 +58,7 @@ import com.uwetrottmann.seriesguide.R;
  * Displays a searchable list of shows to allow quickly checking into a shows
  * next episode.
  */
-public class CheckinActivity extends BaseTopActivity implements LoaderCallbacks<Cursor> {
+public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cursor> {
 
     private static final int LOADER_ID = R.layout.checkin;
 
