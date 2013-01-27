@@ -35,7 +35,6 @@ public class ConnectTraktFinishedFragment extends SherlockFragment {
                 Intent i = new Intent(getActivity(), AddActivity.class);
                 i.putExtra(AddActivity.InitBundle.DEFAULT_TAB, AddPagerAdapter.LIBRARY_TAB_POSITION);
                 startActivity(i);
-                getActivity().finish();
             }
         });
 
@@ -45,7 +44,6 @@ public class ConnectTraktFinishedFragment extends SherlockFragment {
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), TraktSyncActivity.class);
                 startActivity(i);
-                getActivity().finish();
             }
         });
 
