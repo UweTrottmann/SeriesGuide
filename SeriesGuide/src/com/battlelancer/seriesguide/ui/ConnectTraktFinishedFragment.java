@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -30,8 +31,9 @@ public class ConnectTraktFinishedFragment extends SherlockFragment {
         getView().findViewById(R.id.buttonShowLibrary).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO open library tab
+                // open library tab
                 Intent i = new Intent(getActivity(), AddActivity.class);
+                i.putExtra(AddActivity.InitBundle.DEFAULT_TAB, AddPagerAdapter.LIBRARY_TAB_POSITION);
                 startActivity(i);
                 getActivity().finish();
             }
