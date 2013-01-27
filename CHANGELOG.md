@@ -10,8 +10,10 @@ Version 3 *(TBA)*
 
 ### Detailed changes:
 
-#### 3beta3 *(TBA)*
+#### 3beta3 *(2013-01-27)*
 
+* TWEAK New trakt connect wizard.
+* TWEAK Link to community and uservoice page from settings.
 * TWEAK Fix visible but useless divider in movie check in dialog.
 * TWEAK Fix movies grid view size and overlap issues.
 * TWEAK Open search UI after pressing search button in slide menu.
@@ -19,11 +21,17 @@ Version 3 *(TBA)*
 * TWEAK Add visible, easier discoverable context menu buttons for seasons and episodes in lists.
 * TWEAK Enable enter key for movie search (GTV support).
 * TWEAK Add contributing file, update credits with links to licences.
+* TWEAK Clarified manual trakt sync description.
+* TWEAK Show delete progress dialog through the whole removal process again.
+* TWEAK Prevent auto-updater running on first launch.
+* TWEAK Enable up-button for check-in activity.
+* TWEAK Always display shouts in their own activity. No xlarge screen layouts, yet.
 * FIX Avoid crash when rotating in first run fragment.
 * FIX Fix crash due to remaining merge tag in episode details activity.
 * FIX Hopefully finally fix the crash in add fragment by setting the click listener on eac
 * FIX Layout weight should be float (fixed for episode pager).
 * FIX Fix poster download task crash.
+* NOTICE Latest translations from crowdin.
 
 #### 3beta2 *(2013-01-13)*
 
