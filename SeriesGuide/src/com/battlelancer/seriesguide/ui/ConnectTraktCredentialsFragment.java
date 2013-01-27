@@ -82,7 +82,7 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final Context context = getActivity().getApplicationContext();
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        final View layout = inflater.inflate(R.layout.trakt_credentials_dialog, null);
+        final View layout = inflater.inflate(R.layout.trakt_credentials_dialog, container, false);
         final FragmentManager fm = getFragmentManager();
         final Bundle args = getArguments();
 
