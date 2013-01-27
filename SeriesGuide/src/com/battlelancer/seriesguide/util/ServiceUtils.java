@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
@@ -140,5 +141,13 @@ public class ServiceUtils {
         String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
 
         return (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase(""));
+    }
+
+    public static void clearTraktCredentials(Context context) {
+        Editor editor = PreferenceManager.getDefaultSharedPreferences(context
+                .getApplicationContext()).edit();
+        editor.putString(SeriesGuidePreferences.KEY_TRAKTUSER, "").putString(
+                SeriesGuidePreferences.KEY_TRAKTPWD, "");
+        editor.commit();
     }
 }
