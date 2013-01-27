@@ -10,6 +10,21 @@ Version 3 *(TBA)*
 
 ### Detailed changes:
 
+#### 3beta3 *(TBA)*
+
+* TWEAK Fix visible but useless divider in movie check in dialog.
+* TWEAK Fix movies grid view size and overlap issues.
+* TWEAK Open search UI after pressing search button in slide menu.
+* TWEAK Add custom empty message for trakt add tabs
+* TWEAK Add visible, easier discoverable context menu buttons for seasons and episodes in lists.
+* TWEAK Enable enter key for movie search (GTV support).
+* TWEAK Add contributing file, update credits with links to licences.
+* FIX Avoid crash when rotating in first run fragment.
+* FIX Fix crash due to remaining merge tag in episode details activity.
+* FIX Hopefully finally fix the crash in add fragment by setting the click listener on eac
+* FIX Layout weight should be float (fixed for episode pager).
+* FIX Fix poster download task crash.
+
 #### 3beta2 *(2013-01-13)*
 
 * FEATURE Add Movies menu item to allow searching for and checking into movies.
