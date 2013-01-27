@@ -24,7 +24,6 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.jakewharton.trakt.ServiceManager;
 import com.uwetrottmann.seriesguide.R;
 
@@ -102,8 +101,7 @@ public class ServiceUtils {
         }
 
         if (refreshCredentials) {
-            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                    .getApplicationContext());
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
             final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, null);
             String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, null);
@@ -118,7 +116,7 @@ public class ServiceUtils {
                         password);
             } else {
                 // clear all trakt credentials
-                TraktCredentialsDialogFragment.clearTraktCredentials(prefs);
+                clearTraktCredentials(context);
                 ServiceUtils.sTraktServiceManagerWithAuthInstance.setAuthentication(null, null);
                 return null;
             }
