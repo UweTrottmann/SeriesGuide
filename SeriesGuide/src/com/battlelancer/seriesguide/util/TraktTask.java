@@ -390,8 +390,6 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 }
             }
         } else {
-            // TODO fail, gather valid credentials first
-
             // notify that our first run completed, however due to invalid
             // credentials we have not done anything
             if (mListener != null) {
