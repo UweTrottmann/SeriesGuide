@@ -220,8 +220,8 @@
 
     <!-- Manual trakt sync -->
     <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
-    <string name="trakt_download_hint"><b>Download to SeriesGuide</b> flags all watched episodes on trakt as watched in SeriesGuide.</string>
-    <string name="trakt_upload_hint"><b>Upload to trakt</b> flags episodes watched in SeriesGuide as watched on trakt.</string>
+    <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
+    <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
     <string name="trakt_download">Download to SeriesGuide</string>
     <string name="trakt_upload">Upload to trakt.tv</string>
     <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes</string>
