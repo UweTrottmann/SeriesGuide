@@ -13,7 +13,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">Tweaks and Movies\n\nFurther tweaked navigation, added check-in buttons, go back up from an episode to its season, then its show (use the slide menu or long-press back as always to quickly navigate back to the show list).\n\nCheck into movies on trakt or GetGlue, for now search and check-in only, movie details page coming later.\n\nAbsolute episode numbers are displayed if they do not match the episode number (will take a while until they show up everywhere).\n\nRemove Android Beam due to compatibility problems.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">Wizards and Tweaks\n\nConnect with trakt wizard.\n\nLittle helper messages here and there.\n\nA bunch of crash fixes.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <!-- Settings -->
     <string name="pref_translate">Translate SeriesGuide</string>
