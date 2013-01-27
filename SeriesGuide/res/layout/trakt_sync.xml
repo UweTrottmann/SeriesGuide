@@ -20,24 +20,44 @@
         </TextView>
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/textViewIntro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textViewTitleSync"
-            android:text="@string/trakt_experimental" >
+            android:layout_below="@id/textViewTitleSync"
+            android:text="@string/trakt_sync_intro" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/textViewDownloadHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/textViewIntro"
+            android:layout_marginTop="@dimen/default_padding"
+            android:text="@string/trakt_download_hint" >
         </TextView>
 
         <Button
             android:id="@+id/syncToDeviceButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView1"
+            android:layout_below="@id/textViewDownloadHint"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="@string/trakt_synctodevice" >
+            android:layout_marginTop="@dimen/default_padding"
+            android:text="@string/trakt_download" >
         </Button>
+
+        <TextView
+            android:id="@+id/textViewUploadHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/syncToDeviceButton"
+            android:layout_marginTop="@dimen/large_padding"
+            android:text="@string/trakt_upload_hint" >
+        </TextView>
 
         <Button
             android:id="@+id/syncToTraktButton"
@@ -45,9 +65,9 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/syncToDeviceButton"
             android:layout_alignRight="@+id/syncToDeviceButton"
-            android:layout_below="@+id/syncToDeviceButton"
-            android:layout_marginTop="10dp"
-            android:text="@string/trakt_synctotrakt" >
+            android:layout_below="@id/textViewUploadHint"
+            android:layout_marginTop="@dimen/default_padding"
+            android:text="@string/trakt_upload" >
         </Button>
 
         <CheckBox
@@ -58,7 +78,7 @@
             android:layout_alignRight="@+id/syncToTraktButton"
             android:layout_below="@+id/syncToTraktButton"
             android:layout_marginTop="20dp"
-            android:text="@string/trakt_syncunseen" >
+            android:text="@string/trakt_syncunwatched" >
         </CheckBox>
 
         <ProgressBar
