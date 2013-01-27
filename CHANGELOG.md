@@ -17,7 +17,7 @@ Version 3 *(TBA)*
 * TWEAK Fix visible but useless divider in movie check in dialog.
 * TWEAK Fix movies grid view size and overlap issues.
 * TWEAK Open search UI after pressing search button in slide menu.
-* TWEAK Add custom empty message for trakt add tabs
+* TWEAK Add custom empty message for trakt add tabs.
 * TWEAK Add visible, easier discoverable context menu buttons for seasons and episodes in lists.
 * TWEAK Enable enter key for movie search (GTV support).
 * TWEAK Add contributing file, update credits with links to licences.
