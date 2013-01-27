@@ -23,8 +23,32 @@ The translators on Crowdin - http://crowdin.net/project/seriesguide-translations
 
 SeriesGuide uses the following libraries or projects:
 
+TheTVDB.com (http://thetvdb.com)
+--------------------------------
+
+Original database website by Josh Walters (walts81) | Original banner site by Richard Skarsten (t0ffluss)
+Redesign and programming by Scott Zsori and Paul Taylor
+This work is licensed under a Creative Commons Attribution 3.0 United States License.
+
+
+TMDb - The Movie Database (http://themoviedb.org)
+-------------------------------------------------
+
+themoviedb.org is a free and community maintained movie database. It's completely user built by people like you. TMDb is currently used by millions of people every month and with our and powerful API, also used by many popular media centers like XBMC, Plex, MythTV and MediaPortal.
+
+http://www.themoviedb.org/terms-of-use
+
+
+trakt (http://trakt.tv)
+-----------------------
+
+trakt helps keep a record of what TV shows and movies you are watching. Based on your favorites, trakt recommends additional shows and movies you'll enjoy!
+
+http://trakt.tv/terms
+
+
 trakt-java (https://github.com/JakeWharton/trakt-java)
---------------------------------------------------------
+------------------------------------------------------
 
 Copyright 2011 Jake Wharton
 
