@@ -32,7 +32,6 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
@@ -391,11 +390,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 }
             }
         } else {
-            // fail, gather valid credentials first
-            TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
-                    .newInstance(mArgs);
-            FragmentTransaction ft = mFm.beginTransaction();
-            newFragment.show(ft, "traktdialog");
+            // TODO fail, gather valid credentials first
 
             // notify that our first run completed, however due to invalid
             // credentials we have not done anything

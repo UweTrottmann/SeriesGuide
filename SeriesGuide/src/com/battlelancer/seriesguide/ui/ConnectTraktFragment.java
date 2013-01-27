@@ -9,7 +9,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -31,7 +30,7 @@ public class ConnectTraktFragment extends SherlockFragment {
         getView().findViewById(R.id.buttonConnectTrakt).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                TraktCredentialsDialogFragment f = TraktCredentialsDialogFragment.newInstance();
+                ConnectTraktCredentialsFragment f = ConnectTraktCredentialsFragment.newInstance();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.root_container, f);
                 ft.commit();

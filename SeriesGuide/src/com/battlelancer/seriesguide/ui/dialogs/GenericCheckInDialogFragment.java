@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
+import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -175,9 +176,8 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
                 if (isChecked) {
                     if (!ServiceUtils.isTraktCredentialsValid(getSherlockActivity())) {
                         // authenticate already here
-                        TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
-                                .newInstance();
-                        newFragment.show(getFragmentManager(), "traktdialog");
+                        Intent i = new Intent(getActivity(), ConnectTraktActivity.class);
+                        startActivity(i);
                     }
                 }
 

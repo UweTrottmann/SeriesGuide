@@ -22,12 +22,12 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -35,7 +35,6 @@ import android.widget.CheckBox;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.battlelancer.seriesguide.util.TraktSync;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
@@ -100,12 +99,9 @@ public class TraktSyncActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
-                fireTrackerEvent("Setup trakt account");
-                // show the trakt credentials dialog
-                TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
-                        .newInstance();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                newFragment.show(ft, "traktcredentialsdialog");
+                // start trakt connection procedure
+                Intent i = new Intent(TraktSyncActivity.this, ConnectTraktActivity.class);
+                startActivity(i);
             }
         });
     }
