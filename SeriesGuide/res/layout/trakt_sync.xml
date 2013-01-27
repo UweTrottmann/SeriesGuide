@@ -11,31 +11,10 @@
         android:padding="10dp" >
 
         <TextView
-            android:id="@+id/traktHowToTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:autoLink="web"
-            android:text="@string/trakt_howto_title"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/traktHowTo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/traktHowToTitle"
-            android:paddingBottom="@dimen/default_padding"
-            android:text="@string/trakt_howto" >
-        </TextView>
-
-        <TextView
             android:id="@+id/textViewTitleCreds"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/traktHowTo"
             android:text="@string/pref_trakt"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
