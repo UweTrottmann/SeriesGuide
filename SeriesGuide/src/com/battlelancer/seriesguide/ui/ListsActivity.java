@@ -29,13 +29,6 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     private ViewPager mPager;
     private TabPageIndicator mIndicator;
 
-    /**
-     * Google Analytics helper method for easy event tracking.
-     */
-    public void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,13 +56,13 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
 
         getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
     }
-    
+
     @Override
     protected void onStart() {
         super.onStart();
         EasyTracker.getInstance().activityStart(this);
     }
-    
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -86,8 +79,8 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_list_add) {
-            AddListDialogFragment.showAddListDialog(getSupportFragmentManager());
             fireTrackerEvent("Add list");
+            AddListDialogFragment.showAddListDialog(getSupportFragmentManager());
             return true;
         } else {
             return super.onOptionsItemSelected(item);
@@ -100,5 +93,9 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
         mListsAdapter.onListsChanged();
         // update indicator and view pager
         mIndicator.notifyDataSetChanged();
+    }
+
+    protected void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 }
