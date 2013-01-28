@@ -60,7 +60,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
 
     private static final String SEARCH_QUERY_KEY = "search_query";
     private static final int LOADER_ID = R.layout.movies_fragment;
-    protected static final String TAG = "MovieSearchFragment";
+    protected static final String TAG = "Movies Search";
 
     private EditText mSearchBox;
     private MoviesAdapter mAdapter;
@@ -103,7 +103,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().sendView("Movies Search");
+        EasyTracker.getTracker().sendView(TAG);
     }
 
     @Override
