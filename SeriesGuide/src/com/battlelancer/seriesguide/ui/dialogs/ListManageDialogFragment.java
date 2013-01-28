@@ -25,6 +25,9 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
+/**
+ * Dialog to rename or remove a list. 
+ */
 public class ListManageDialogFragment extends DialogFragment {
 
     public static ListManageDialogFragment newInstance(String listId) {
@@ -126,7 +129,7 @@ public class ListManageDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().trackView("List Manage Dialog");
+        EasyTracker.getTracker().sendView("List Manage Dialog");
     }
 
     @Override
