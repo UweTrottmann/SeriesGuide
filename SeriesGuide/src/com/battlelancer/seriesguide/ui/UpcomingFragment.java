@@ -120,7 +120,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     public void onStart() {
         super.onStart();
         final String tag = getArguments().getString("analyticstag");
-        EasyTracker.getTracker().trackView(tag);
+        EasyTracker.getTracker().sendView(tag);
     }
 
     @Override

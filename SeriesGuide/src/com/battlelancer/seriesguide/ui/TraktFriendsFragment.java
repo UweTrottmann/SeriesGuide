@@ -47,6 +47,7 @@ import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -103,6 +104,12 @@ public class TraktFriendsFragment extends ListFragment implements
             getLoaderManager().initLoader(0, null, this);
         }
 
+    }
+    
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().sendView("Friends");
     }
 
     @Override

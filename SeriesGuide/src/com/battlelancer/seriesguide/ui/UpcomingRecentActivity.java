@@ -37,7 +37,6 @@ import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.slidingmenu.lib.SlidingMenu;
 import com.uwetrottmann.seriesguide.R;
 
@@ -120,18 +119,6 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         } else {
             getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EasyTracker.getInstance().activityStart(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EasyTracker.getInstance().activityStop(this);
     }
 
     @Override
