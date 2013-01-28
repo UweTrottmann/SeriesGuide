@@ -43,6 +43,10 @@ import com.jakewharton.trakt.entities.Response;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
+/**
+ * Warns about an ongoing check-in, how long it takes until it is finished.
+ * Offers to override or wait out.
+ */
 public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
     private int mWait;
@@ -57,7 +61,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().trackView("Cancel Check In Dialog");
+        EasyTracker.getTracker().sendView("Cancel Check-In Dialog");
     }
 
     @Override
@@ -87,7 +91,8 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                     @Override
                     protected Response doInBackground(String... params) {
 
-                        ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(context, false);
+                        ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(
+                                context, false);
                         if (manager == null) {
                             // password could not be decrypted
                             Response r = new Response();
