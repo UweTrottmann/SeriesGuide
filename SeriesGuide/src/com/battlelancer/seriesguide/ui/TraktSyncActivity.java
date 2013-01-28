@@ -38,11 +38,15 @@ import com.battlelancer.seriesguide.util.TraktSync;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
+/**
+ * Displays information and offers tools to upload or download watched flags
+ * from trakt.
+ */
 public class TraktSyncActivity extends BaseActivity {
 
     private static final int DIALOG_SELECT_SHOWS = 100;
 
-    private static final String TAG = "TraktSyncActivity";
+    private static final String TAG = "Trakt Sync";
 
     private TraktSync mSyncTask;
 
