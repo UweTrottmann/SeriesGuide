@@ -186,7 +186,7 @@ public class BackupDeleteActivity extends BaseActivity {
                 Toast.makeText(BackupDeleteActivity.this, getString(R.string.backup_success),
                         Toast.LENGTH_SHORT).show();
             } else {
-                EasyTracker.getTracker().sendEvent(TAG, "Backup", errorMsg, (long) 0);
+                EasyTracker.getTracker().sendEvent(TAG, "Backup", "Failure", (long) 0);
                 Toast.makeText(BackupDeleteActivity.this,
                         getString(R.string.backup_failed) + " - " + errorMsg, Toast.LENGTH_LONG)
                         .show();
@@ -278,7 +278,7 @@ public class BackupDeleteActivity extends BaseActivity {
                 Toast.makeText(BackupDeleteActivity.this, getString(R.string.import_success),
                         Toast.LENGTH_SHORT).show();
             } else {
-                EasyTracker.getTracker().sendEvent(TAG, "Import", errMsg, (long) 0);
+                EasyTracker.getTracker().sendEvent(TAG, "Import", "Failure", (long) 0);
                 Toast.makeText(BackupDeleteActivity.this,
                         getString(R.string.import_failed) + " - " + errMsg, Toast.LENGTH_LONG)
                         .show();
