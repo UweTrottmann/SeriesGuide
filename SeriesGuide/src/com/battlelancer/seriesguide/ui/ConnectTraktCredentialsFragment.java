@@ -75,7 +75,7 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().trackView("Trakt Credentials");
+        EasyTracker.getTracker().sendView("Connect Trakt Credentials");
     }
 
     @Override

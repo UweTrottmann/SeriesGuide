@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -54,5 +55,11 @@ public class ConnectTraktFinishedFragment extends SherlockFragment {
                 getActivity().finish();
             }
         });
+    }
+    
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().sendView("Connect Trakt Finished");
     }
 }

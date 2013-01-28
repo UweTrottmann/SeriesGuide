@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -50,5 +51,11 @@ public class ConnectTraktFragment extends SherlockFragment {
         // make learn more link clickable
         ((TextView) getView().findViewById(R.id.textViewAbout))
                 .setMovementMethod(LinkMovementMethod.getInstance());
+    }
+    
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().sendView("Connect Trakt Intro");
     }
 }
