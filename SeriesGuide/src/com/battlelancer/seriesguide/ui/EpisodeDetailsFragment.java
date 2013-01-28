@@ -80,7 +80,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     private static final int EPISODE_LOADER = 3;
 
-    private static final String TAG = "EpisodeDetails";
+    private static final String TAG = "Episode Details";
 
     private FetchArtTask mArtTask;
 
@@ -125,10 +125,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         return f;
     }
 
-    public void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /*
@@ -155,12 +151,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getTracker().trackView("Episode Details");
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         if (mArtTask != null) {
@@ -183,18 +173,19 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_rate_trakt) {
+            fireTrackerEvent("Rate (trakt)");
             if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
                 onShareEpisode(ShareMethod.RATE_TRAKT);
-                fireTrackerEvent("Rate (trakt)");
             } else {
                 startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
             }
             return true;
         } else if (itemId == R.id.menu_share) {
+            fireTrackerEvent("Share");
             onShareEpisode(ShareMethod.OTHER_SERVICES);
-            fireTrackerEvent("Share (apps)");
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
+            fireTrackerEvent("Manage lists");
             ListsDialogFragment.showListsDialog(String.valueOf(getEpisodeId()), 3,
                     getFragmentManager());
             return true;
@@ -584,5 +575,9 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         if (isSuccessful && isAdded()) {
             getLoaderManager().restartLoader(EPISODE_LOADER, null, this);
         }
+    }
+
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 }
