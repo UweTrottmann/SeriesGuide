@@ -42,6 +42,7 @@ import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
 import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.apibuilder.ApiException;
 import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.tmdb.ServiceManager;
@@ -97,6 +98,12 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
         list.setEmptyView(getView().findViewById(R.id.empty));
 
         getLoaderManager().initLoader(LOADER_ID, null, this);
+    }
+    
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().sendView("Movies Search");
     }
 
     @Override
