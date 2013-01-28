@@ -34,7 +34,7 @@ import com.uwetrottmann.seriesguide.R;
  */
 public class SearchActivity extends BaseTopActivity {
 
-    private static final String TAG = "SearchActivity";
+    private static final String TAG = "Search";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
