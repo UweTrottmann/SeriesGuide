@@ -24,6 +24,9 @@ import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment.CharAndD
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
+/**
+ * Displays a dialog to add a new list to lists.
+ */
 public class AddListDialogFragment extends DialogFragment {
 
     public static AddListDialogFragment newInstance() {
@@ -109,7 +112,7 @@ public class AddListDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().trackView("Add List Dialog");
+        EasyTracker.getTracker().sendView("Add List Dialog");
     }
 
     /**
