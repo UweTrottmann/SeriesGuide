@@ -54,10 +54,6 @@ public class TraktSyncActivity extends BaseActivity {
 
     private View mContainer;
 
-    public void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +71,7 @@ public class TraktSyncActivity extends BaseActivity {
         syncToDeviceButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-                fireTrackerEvent("Sync to SeriesGuide");
+                fireTrackerEvent("Download to SeriesGuide");
                 if (mSyncTask == null
                         || (mSyncTask != null && mSyncTask.getStatus() == AsyncTask.Status.FINISHED)) {
                     mSyncTask = (TraktSync) new TraktSync(TraktSyncActivity.this, mContainer,
@@ -170,7 +166,7 @@ public class TraktSyncActivity extends BaseActivity {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                fireTrackerEvent("Sync to trakt");
+                                fireTrackerEvent("Upload to trakt");
                                 if (mSyncTask == null
                                         || (mSyncTask != null && mSyncTask.getStatus() == AsyncTask.Status.FINISHED)) {
                                     mSyncTask = (TraktSync) new TraktSync(TraktSyncActivity.this,
@@ -184,5 +180,9 @@ public class TraktSyncActivity extends BaseActivity {
                 return builder.create();
         }
         return null;
+    }
+
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Click", label, (long) 0);
     }
 }
