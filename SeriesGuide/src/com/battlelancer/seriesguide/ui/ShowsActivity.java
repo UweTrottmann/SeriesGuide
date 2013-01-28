@@ -162,7 +162,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
     @Override
     protected void onStart() {
         super.onStart();
-
         EasyTracker.getInstance().activityStart(this);
     }
 
