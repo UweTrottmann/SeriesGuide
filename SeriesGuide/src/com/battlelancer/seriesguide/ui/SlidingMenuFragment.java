@@ -31,15 +31,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays a menu to allow quick navigation within the app.
  */
 public class SlidingMenuFragment extends ListFragment {
-
-    public static final String TAG = "Menu";
 
     private MenuAdapter mAdapter;
 
@@ -54,13 +51,6 @@ public class SlidingMenuFragment extends ListFragment {
     private static final int PAGE_SHOWS = 0;
     private static final int PAGE_LISTS = 1;
     private static final int PAGE_ACTIVITY = 2;
-
-    /**
-     * Google Analytics helper method for easy event tracking.
-     */
-    public void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
