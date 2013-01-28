@@ -33,6 +33,10 @@ import com.jakewharton.trakt.enumerations.Rating;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
+/**
+ * Displays the trakt advanced rating scale, submits the chosen rating to the
+ * given item on trakt.
+ */
 public class TraktRateDialogFragment extends DialogFragment {
 
     /**
@@ -72,7 +76,7 @@ public class TraktRateDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().trackView("Rate Dialog");
+        EasyTracker.getTracker().sendView("Rate Dialog");
     }
 
     @Override
