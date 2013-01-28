@@ -109,7 +109,25 @@ public class TraktAddFragment extends AddFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().trackView("Add Trakt Shows");
+
+        String tag = null;
+        switch (getListType()) {
+            case AddPagerAdapter.TRENDING_TAB_POSITION:
+                tag = "Trending";
+                break;
+            case AddPagerAdapter.LIBRARY_TAB_POSITION:
+                tag = "Library";
+                break;
+            case AddPagerAdapter.RECOMMENDED_TAB_POSITION:
+                tag = "Recommended";
+                break;
+            case AddPagerAdapter.WATCHLIST_TAB_POSITION:
+                tag = "Watchlist";
+                break;
+        }
+        if (tag != null) {
+            EasyTracker.getTracker().sendView(tag);
+        }
     }
 
     @Override
@@ -153,13 +171,15 @@ public class TraktAddFragment extends AddFragment {
 
             if (type == AddPagerAdapter.TRENDING_TAB_POSITION) {
                 try {
-                    shows = ServiceUtils.getTraktServiceManager(mContext).showService().trending().fire();
+                    shows = ServiceUtils.getTraktServiceManager(mContext).showService().trending()
+                            .fire();
                 } catch (Exception e) {
                     // we don't care
                 }
             } else {
                 try {
-                    ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
+                    ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext,
+                            false);
                     if (manager != null) {
                         switch (type) {
                             case AddPagerAdapter.RECOMMENDED_TAB_POSITION:
@@ -167,11 +187,13 @@ public class TraktAddFragment extends AddFragment {
                                 break;
                             case AddPagerAdapter.LIBRARY_TAB_POSITION:
                                 shows = manager.userService()
-                                        .libraryShowsAll(ServiceUtils.getTraktUsername(mContext)).fire();
+                                        .libraryShowsAll(ServiceUtils.getTraktUsername(mContext))
+                                        .fire();
                                 break;
                             case AddPagerAdapter.WATCHLIST_TAB_POSITION:
                                 shows = manager.userService()
-                                        .watchlistShows(ServiceUtils.getTraktUsername(mContext)).fire();
+                                        .watchlistShows(ServiceUtils.getTraktUsername(mContext))
+                                        .fire();
                                 break;
                         }
                     }

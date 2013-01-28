@@ -39,7 +39,6 @@ import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListen
 import com.battlelancer.seriesguide.util.MenuOnPageChangeListener;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.slidingmenu.lib.SlidingMenu;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -97,12 +96,6 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        EasyTracker.getInstance().activityStart(this);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         if (AndroidUtils.isICSOrHigher()) {
@@ -136,12 +129,6 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
 
         // display add dialog
         AddDialogFragment.showAddDialog(show, getSupportFragmentManager());
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EasyTracker.getInstance().activityStop(this);
     }
 
     public static class AddPagerAdapter extends FragmentPagerAdapter {

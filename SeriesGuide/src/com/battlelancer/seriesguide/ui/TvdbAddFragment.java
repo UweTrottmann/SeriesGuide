@@ -112,7 +112,7 @@ public class TvdbAddFragment extends AddFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().trackView("Add TVDb Shows");
+        EasyTracker.getTracker().sendView("TVDb Search");
     }
 
     protected void search() {
