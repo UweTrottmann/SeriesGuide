@@ -371,7 +371,7 @@ public class EpisodesFragment extends SherlockListFragment implements
         getLoaderManager().restartLoader(EPISODES_LOADER, null, EpisodesFragment.this);
         getSherlockActivity().invalidateOptionsMenu();
 
-        EasyTracker.getTracker().trackEvent("Episodes", "Sorting", mSorting.name(), (long) 0);
+        EasyTracker.getTracker().sendEvent(TAG, "Sorting", mSorting.name(), (long) 0);
     }
 
     @TargetApi(8)
