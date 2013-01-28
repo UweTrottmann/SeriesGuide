@@ -371,7 +371,7 @@ public class SeasonsFragment extends SherlockListFragment implements
         mSorting = SeasonSorting.fromValue(prefs.getString(
                 SeriesGuidePreferences.KEY_SEASON_SORT_ORDER, SeasonSorting.LATEST_FIRST.value()));
 
-        EasyTracker.getTracker().trackEvent("Seasons", "Sorting", mSorting.name(), (long) 0);
+        EasyTracker.getTracker().sendEvent(TAG, "Sorting", mSorting.name(), (long) 0);
 
         // restart loader and update menu description
         getLoaderManager().restartLoader(LOADER_ID, null, SeasonsFragment.this);

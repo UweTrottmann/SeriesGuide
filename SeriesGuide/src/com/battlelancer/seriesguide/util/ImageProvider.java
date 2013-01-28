@@ -154,10 +154,10 @@ public class ImageProvider {
                 if (key.equalsIgnoreCase(SeriesGuidePreferences.KEY_HIDEIMAGES)) {
                     updateNoMediaFile(sharedPreferences);
                     if (prefs.getBoolean(SeriesGuidePreferences.KEY_HIDEIMAGES, true)) {
-                        EasyTracker.getTracker().trackEvent("Settings", "Hide images", "Enabled",
+                        EasyTracker.getTracker().sendEvent("Settings", "Hide images", "Enabled",
                                 (long) 0);
                     } else {
-                        EasyTracker.getTracker().trackEvent("Settings", "Hide images", "Disabled",
+                        EasyTracker.getTracker().sendEvent("Settings", "Hide images", "Disabled",
                                 (long) 0);
                     }
                 }

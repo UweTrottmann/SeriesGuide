@@ -547,7 +547,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
     }
 
     private void fireTrackerEvent(String message) {
-        EasyTracker.getTracker().trackEvent(TAG, "Update result", message, (long) 0);
+        EasyTracker.getTracker().sendEvent(TAG, "Update result", message, (long) 0);
     }
 
 }

@@ -187,12 +187,12 @@ public class GetGlue {
                 case CHECKIN_SUCCESSFUL:
                     Toast.makeText(mContext, mContext.getString(R.string.checkinsuccess, mComment),
                             Toast.LENGTH_SHORT).show();
-                    EasyTracker.getTracker().trackEvent("Sharing", "GetGlue", "Success", (long) 0);
+                    EasyTracker.getTracker().sendEvent(TAG, "Check-In", "Success", (long) 0);
                     break;
                 case CHECKIN_FAILED:
                     Toast.makeText(mContext, mContext.getString(R.string.checkinfailed),
                             Toast.LENGTH_LONG).show();
-                    EasyTracker.getTracker().trackEvent("Sharing", "GetGlue", mComment, (long) 0);
+                    EasyTracker.getTracker().sendEvent(TAG, "Check-In", mComment, (long) 0);
                     break;
                 case CHECKIN_OFFLINE:
                     Toast.makeText(mContext, R.string.offline, Toast.LENGTH_LONG).show();
