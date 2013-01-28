@@ -47,7 +47,7 @@ public class FirstRunFragment extends SherlockFragment {
 
     private static final String PREF_KEY_FIRSTRUN = "accepted_eula";
 
-    protected static final String TAG = "FirstRunFragment";
+    protected static final String TAG = "First Run";
 
     private OnFirstRunDismissedListener mListener;
 
@@ -90,6 +90,7 @@ public class FirstRunFragment extends SherlockFragment {
         getView().findViewById(R.id.addbutton).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                fireTrackerEvent("Add show");
                 startActivity(new Intent(getActivity(), AddActivity.class));
                 setFirstRunDismissed();
             }
@@ -107,10 +108,10 @@ public class FirstRunFragment extends SherlockFragment {
         getView().findViewById(R.id.welcome_setuptrakt).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                fireTrackerEvent("Connect trakt");
+
                 Intent i = new Intent(getActivity(), ConnectTraktActivity.class);
                 startActivity(i);
-
-                EasyTracker.getTracker().trackEvent(TAG, "Click", "Connect trakt", (long) 0);
             }
         });
 
@@ -118,6 +119,7 @@ public class FirstRunFragment extends SherlockFragment {
         getView().findViewById(R.id.dismissButton).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                fireTrackerEvent("Dismiss");
                 setFirstRunDismissed();
             }
         });
@@ -143,6 +145,12 @@ public class FirstRunFragment extends SherlockFragment {
         getView().postDelayed(peekRunnable, 2000);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().sendView(TAG);
+    }
+
     private void setFirstRunDismissed() {
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
@@ -166,4 +174,7 @@ public class FirstRunFragment extends SherlockFragment {
         }
     }
 
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Click", label, (long) 0);
+    }
 }
