@@ -48,6 +48,7 @@ import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Lists;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -602,6 +603,9 @@ public class TheTVDB {
                     existingShowIds.add(shows.getInt(0));
                 }
             }
+            
+            Long showCount = (long) shows.getCount();
+            EasyTracker.getTracker().sendEvent("Statistics", "Shows", String.valueOf(showCount), showCount);
 
             shows.close();
         }
