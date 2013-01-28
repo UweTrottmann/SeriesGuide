@@ -23,7 +23,7 @@ import com.viewpagerindicator.TabPageIndicator.OnTabReselectedListener;
  */
 public class ListsActivity extends BaseTopShowsActivity implements OnListsChangedListener {
 
-    public static final String TAG = "ListsActivity";
+    public static final String TAG = "Lists";
     private ListsPagerAdapter mListsAdapter;
     private ViewPager mPager;
     private TabPageIndicator mIndicator;
@@ -61,6 +61,18 @@ public class ListsActivity extends BaseTopShowsActivity implements OnListsChange
         mIndicator.setOnPageChangeListener(new MenuOnPageChangeListener(getSlidingMenu()));
 
         getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+    }
+    
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EasyTracker.getInstance().activityStart(this);
+    }
+    
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
     }
 
     @Override
