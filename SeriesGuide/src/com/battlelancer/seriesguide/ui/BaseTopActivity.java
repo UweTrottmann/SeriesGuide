@@ -39,19 +39,23 @@ public abstract class BaseTopActivity extends BaseActivity {
             return true;
         }
         else if (itemId == R.id.menu_preferences) {
+            fireTrackerEvent("Settings");
+
             startActivity(new Intent(this, SeriesGuidePreferences.class));
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
         }
         else if (itemId == R.id.menu_help) {
+            fireTrackerEvent("Help");
+
             Intent myIntent = new Intent(Intent.ACTION_VIEW,
                     Uri.parse(SeriesGuidePreferences.HELP_URL));
             startActivity(myIntent);
-            
-            fireTrackerEvent("Help");
             return true;
         }
         else if (itemId == R.id.menu_feedback) {
+            fireTrackerEvent("Feedback");
+
             final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
             intent.setType("plain/text");
             intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
@@ -61,8 +65,6 @@ public abstract class BaseTopActivity extends BaseActivity {
                     "SeriesGuide " + Utils.getVersion(this) + " Feedback");
             intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
             startActivity(Intent.createChooser(intent, getString(R.string.feedback)));
-
-            fireTrackerEvent("Feedback");
             return true;
         }
         return super.onOptionsItemSelected(item);
