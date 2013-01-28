@@ -52,7 +52,7 @@ import java.util.ArrayList;
  * if coming from a search result selection.
  */
 public class EpisodeDetailsActivity extends BaseActivity {
-    protected static final String TAG = "EpisodeDetailsActivity";
+    protected static final String TAG = "Episode Details";
 
     private EpisodePagerAdapter mAdapter;
 
