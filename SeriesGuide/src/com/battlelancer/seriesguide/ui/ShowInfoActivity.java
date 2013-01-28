@@ -54,21 +54,12 @@ import com.uwetrottmann.seriesguide.R;
  */
 public class ShowInfoActivity extends BaseActivity {
 
-    private static final String TAG = "ShowInfoActivity";
+    private static final String TAG = "Show Info";
 
     private IntentBuilder mShareIntentBuilder;
 
     public interface InitBundle {
         String SHOW_TVDBID = "tvdbid";
-    }
-
-    /**
-     * Google Analytics helper method for easy event tracking.
-     * 
-     * @param label
-     */
-    public void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().trackEvent("ShowInfo", "Click", label, (long) 0);
     }
 
     @Override
@@ -240,7 +231,7 @@ public class ShowInfoActivity extends BaseActivity {
         if (tvdbButton != null) {
             tvdbButton.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-                    fireTrackerEvent("Show TVDb page");
+                    fireTrackerEvent("TVDb");
                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TVDB_SHOW_URL
                             + tvdbId));
                     startActivity(i);
@@ -252,11 +243,11 @@ public class ShowInfoActivity extends BaseActivity {
         findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                fireTrackerEvent("Shouts");
                 Intent i = new Intent(ShowInfoActivity.this, TraktShoutsActivity.class);
                 i.putExtras(TraktShoutsActivity.createInitBundle(getShowId(),
                         0, 0, show.getTitle()));
                 startActivity(i);
-                fireTrackerEvent("Show Trakt Shouts");
             }
         });
 
@@ -279,5 +270,9 @@ public class ShowInfoActivity extends BaseActivity {
         AndroidUtils.executeAsyncTask(task, new Void[] {
                 null
         });
+    }
+
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 }
