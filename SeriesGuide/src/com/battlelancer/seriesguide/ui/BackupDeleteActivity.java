@@ -50,6 +50,16 @@ import java.io.IOException;
  */
 public class BackupDeleteActivity extends BaseActivity {
 
+    private static final String TAG = "Backup";
+
+    private static final int EXPORT_DIALOG = 0;
+
+    private static final int IMPORT_DIALOG = 1;
+
+    private static final int EXPORT_PROGRESS = 3;
+
+    private static final int IMPORT_PROGRESS = 4;
+
     private Button exportDbToSdButton;
 
     private Button importDbFromSdButton;
@@ -61,16 +71,6 @@ public class BackupDeleteActivity extends BaseActivity {
     private ProgressDialog importProgress;
 
     private ProgressDialog exportProgress;
-
-    public static final String TAG = "BackupDelete";
-
-    private static final int EXPORT_DIALOG = 0;
-
-    private static final int IMPORT_DIALOG = 1;
-
-    private static final int EXPORT_PROGRESS = 3;
-
-    private static final int IMPORT_PROGRESS = 4;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -182,11 +182,11 @@ public class BackupDeleteActivity extends BaseActivity {
                 exportProgress.dismiss();
             }
             if (errorMsg == null) {
-                EasyTracker.getTracker().trackEvent(TAG, "Backup", "Success", (long) 0);
+                EasyTracker.getTracker().sendEvent(TAG, "Backup", "Success", (long) 0);
                 Toast.makeText(BackupDeleteActivity.this, getString(R.string.backup_success),
                         Toast.LENGTH_SHORT).show();
             } else {
-                EasyTracker.getTracker().trackEvent(TAG, "Backup", errorMsg, (long) 0);
+                EasyTracker.getTracker().sendEvent(TAG, "Backup", errorMsg, (long) 0);
                 Toast.makeText(BackupDeleteActivity.this,
                         getString(R.string.backup_failed) + " - " + errorMsg, Toast.LENGTH_LONG)
                         .show();
@@ -274,11 +274,11 @@ public class BackupDeleteActivity extends BaseActivity {
                 importProgress.dismiss();
             }
             if (errMsg == null) {
-                EasyTracker.getTracker().trackEvent(TAG, "Import", "Success", (long) 0);
+                EasyTracker.getTracker().sendEvent(TAG, "Import", "Success", (long) 0);
                 Toast.makeText(BackupDeleteActivity.this, getString(R.string.import_success),
                         Toast.LENGTH_SHORT).show();
             } else {
-                EasyTracker.getTracker().trackEvent(TAG, "Import", errMsg, (long) 0);
+                EasyTracker.getTracker().sendEvent(TAG, "Import", errMsg, (long) 0);
                 Toast.makeText(BackupDeleteActivity.this,
                         getString(R.string.import_failed) + " - " + errMsg, Toast.LENGTH_LONG)
                         .show();
