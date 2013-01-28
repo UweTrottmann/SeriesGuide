@@ -9,22 +9,12 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
 /**
  * Activities at the top of the navigation hierarchy, show menu on going up.
  */
 public abstract class BaseTopActivity extends BaseActivity {
-
-    protected static final String TAG = "BaseTopActivity";
-
-    /**
-     * Google Analytics helper method for easy event tracking.
-     */
-    public void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
-    }
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -77,4 +67,9 @@ public abstract class BaseTopActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    
+    /**
+     * Google Analytics helper method for easy sending of click events.
+     */
+    protected abstract void fireTrackerEvent(String label);
 }
