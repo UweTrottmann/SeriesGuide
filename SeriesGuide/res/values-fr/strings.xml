@@ -25,7 +25,7 @@
   <string name="share">Partager</string>
   <string name="updated">Mis à jour avec la version la plus récente.</string>
   <string name="discard">Annuler</string>
-  <string name="close">Close</string>
+  <string name="close">Fermer</string>
   <string name="save_selection">Enregistrer</string>
   <string name="offline">Pas de connexion. Réessayez plus tard.</string>
   <string name="onlyx">Disponible seulement dans SeriesGuide X</string>
@@ -167,21 +167,21 @@
   <string name="list_item_manage">Gérer les listes</string>
   <string name="list_item_remove">Retirer de la liste</string>
   <string name="list_empty">Vous pouvez ajouter des séries, des saisons ou des épisodes à cette liste.</string>
-  <string name="connect_trakt">Connect trakt</string>
-  <string name="connect_trakt_done">Connected to trakt!</string>
-  <string name="add_trakt_shows">Add shows from your library:</string>
-  <string name="show_library">Show your library</string>
-  <string name="upload_shows">Upload your SeriesGuide show list:</string>
-  <string name="upload_existing_shows">Upload existing shows</string>
-  <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
-  <string name="integration_trakt">If you connect trakt:</string>
-  <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
-  <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
-  <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
-  <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
-  <string name="trakt_download">Download to SeriesGuide</string>
-  <string name="trakt_upload">Upload to trakt.tv</string>
-  <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
+  <string name="connect_trakt">Me connecter à trakt</string>
+  <string name="connect_trakt_done">Connecté à trakt !</string>
+  <string name="add_trakt_shows">Ajoutez les séries de votre bibliothèque :</string>
+  <string name="show_library">Voir votre bibliothèque</string>
+  <string name="upload_shows">Transférez votre liste de séries de SeriesGuide vers trakt :</string>
+  <string name="upload_existing_shows">Envoyer les séries</string>
+  <string name="about_trakt">trakt vous permet de garder une trace des séries et films que vous regardez. <a href="http://trakt.tv">En savoir plus</a></string>
+  <string name="integration_trakt">En vous connectant à trakt :</string>
+  <string name="integration_trakt_items">- vous pourrez ajouter vos séries depuis votre bibliothèque ou liste de suivi.\n\n- vous pourrez voir vos recommandations et l\'activité de vos amis.\n\n- les épisodes vus et collectés seront synchronisés automatiquement.\n\n- les nouvelles séries que vous regardez seront ajoutées automatiquement.</string>
+  <string name="trakt_sync_intro">Aucune série ne sera ajoutée ou supprimée, vous pouvez le faire depuis la liste des séries.</string>
+  <string name="trakt_download_hint">Marquer tous les épisodes vus sur trakt comme vus sur SeriesGuide :</string>
+  <string name="trakt_upload_hint">Marquer tous les épisodes vus sur SeriesGuide comme vus sur trakt :</string>
+  <string name="trakt_download">Télécharger sur SeriesGuide</string>
+  <string name="trakt_upload">Envoyer vers trakt.tv</string>
+  <string name="trakt_syncunwatched">Synchroniser également les épisodes non vus</string>
   <string name="prefs_category_basic">Paramètres de base</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Avancé</string>
@@ -207,7 +207,7 @@
   <string name="clearGetGlueCredentials">Déconnecter GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Faites un check-in avec GetGlue pour vous reconnecter</string>
   <string name="pref_traktsummary">Ajouter ou modifier vos identifiants sur trakt.tv</string>
-  <string name="pref_traktsync">Manual sync with trakt.tv</string>
+  <string name="pref_traktsync">Synchro manuelle avec trakt.tv</string>
   <string name="feedback">Envoyez vos commentaires</string>
   <string name="clear_cache">Vider le cache d\'images</string>
   <string name="clear_cache_summary">Supprimer toutes les images en cache sur votre périphérique</string>

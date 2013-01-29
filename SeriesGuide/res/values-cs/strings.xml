@@ -25,7 +25,7 @@
   <string name="share">Sdílet</string>
   <string name="updated">Aktualizováno na nejnovější verzi.</string>
   <string name="discard">Zrušit</string>
-  <string name="close">Close</string>
+  <string name="close">Zavřít</string>
   <string name="save_selection">Uložit výběr</string>
   <string name="offline">Bez připojení k síti. Zkuste to později.</string>
   <string name="onlyx">Dostupné pouze ve verzi X</string>
@@ -92,7 +92,7 @@
   <string name="trakt_notseen">%s nových.</string>
   <string name="trakt_collected">%s sebraných.</string>
   <string name="trakt_notcollected">%s zbývá sebrat.</string>
-  <string name="add_empty">There are no shows here or your device has no internet connection.</string>
+  <string name="add_empty">Nejsou tu žádné pořady nebo váš přístroj není připojený k internetu.</string>
   <string name="shows_empty">Použijte horní nabídku pro přidání pořadů.</string>
   <string name="favorites_empty">Klepněte na a podržte pořad pro přidání do oblíbených.</string>
   <string name="hidden_empty">Klepněte na a podržte pořad pro schování sem.</string>
@@ -167,21 +167,21 @@
   <string name="list_item_manage">Vybrat seznamy</string>
   <string name="list_item_remove">Odebrat ze seznamu</string>
   <string name="list_empty">Do seznamu můžete přidat pořady, série nebo díly.</string>
-  <string name="connect_trakt">Connect trakt</string>
-  <string name="connect_trakt_done">Connected to trakt!</string>
-  <string name="add_trakt_shows">Add shows from your library:</string>
-  <string name="show_library">Show your library</string>
-  <string name="upload_shows">Upload your SeriesGuide show list:</string>
-  <string name="upload_existing_shows">Upload existing shows</string>
-  <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
-  <string name="integration_trakt">If you connect trakt:</string>
-  <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
-  <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
-  <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
-  <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
-  <string name="trakt_download">Download to SeriesGuide</string>
-  <string name="trakt_upload">Upload to trakt.tv</string>
-  <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
+  <string name="connect_trakt">Připojit trakt.tv</string>
+  <string name="connect_trakt_done">Připojeno k trakt.tv!</string>
+  <string name="add_trakt_shows">Přidat pořady z vaší knihovny:</string>
+  <string name="show_library">Ukázat vaši knihovnu</string>
+  <string name="upload_shows">Nahrát váš SeriesGuide seznam pořadů:</string>
+  <string name="upload_existing_shows">Nahrát existující pořady</string>
+  <string name="about_trakt">trakt pomáhá se zaznamenáváním jaké TV pořady a filmy sledujete. <a href="http://trakt.tv">Zjistěte více</a></string>
+  <string name="integration_trakt">Pokud připojíte trakt:</string>
+  <string name="integration_trakt_items">- přidejte pořady z vaší knihovny a seznamu na zhlédnutí\n\n- prohlížejte doporučení a aktivitu přátel\n\n- označení zhlédnutých a sebraných dílů je automaticky synchronizováno\n\n- nové zhlédnuté pořady jsou přidány automaticky</string>
+  <string name="trakt_sync_intro">Žádné pořady nebudou přidány nebo odebrány ze SeriesGuide, to lze udělat ze seznamu pořadů.</string>
+  <string name="trakt_download_hint">Označit všechny zhlédnuté díly na trakt jako zhlédnuté v SeriesGuide:</string>
+  <string name="trakt_upload_hint">Označit všechny zhlédnuté díly v SeriesGuide jako zhlédnuté na trakt:</string>
+  <string name="trakt_download">Stáhnout do SeriesGuide</string>
+  <string name="trakt_upload">Nahrát na trakt.tv</string>
+  <string name="trakt_syncunwatched">Odznačit zhlédnutí u nezhlédnutých dílů</string>
   <string name="prefs_category_basic">Základní</string>
   <string name="prefs_category_sharing">Služby</string>
   <string name="prefs_category_advanced">Pokročilé</string>
@@ -207,7 +207,7 @@
   <string name="clearGetGlueCredentials">Odpojit GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Ohlaste se s GetGlue pro opětovné připojení</string>
   <string name="pref_traktsummary">Přidejte nebo upravte Vaše přihlašovací údaje</string>
-  <string name="pref_traktsync">Manual sync with trakt.tv</string>
+  <string name="pref_traktsync">Ruční synchronizace s trakt.tv</string>
   <string name="feedback">Poslat reakci</string>
   <string name="clear_cache">Vymazat paměť pro obrázky</string>
   <string name="clear_cache_summary">Odstranit všechny stažené obrázky ze zařízení</string>
