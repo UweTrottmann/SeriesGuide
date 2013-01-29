@@ -99,7 +99,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
 
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
-    
+
     @Override
     public void onStart() {
         super.onStart();
@@ -108,7 +108,8 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
 
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        if (actionId == EditorInfo.IME_ACTION_SEARCH || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH
+                || event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
             onSearch();
             return true;
         }
@@ -148,18 +149,16 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Movie movie = mAdapter.getItem(position);
 
-        new AsyncTask<Integer, Void, String>() {
-
-            private Movie mMovie;
+        new AsyncTask<Integer, Void, Movie>() {
 
             @Override
-            protected String doInBackground(Integer... params) {
+            protected Movie doInBackground(Integer... params) {
                 ServiceManager manager = ServiceUtils.getTmdbServiceManager(getActivity());
 
                 try {
-                    mMovie = manager.moviesService().summary(params[0]).fire();
-                    if (mMovie != null) {
-                        return mMovie.imdb_id;
+                    Movie movie = manager.moviesService().summary(params[0]).fire();
+                    if (movie != null) {
+                        return movie;
                     }
                 } catch (TmdbException e) {
                     Utils.trackException(getActivity(), TAG, e);
@@ -171,11 +170,11 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
                 return null;
             }
 
-            protected void onPostExecute(String result) {
-                if (!TextUtils.isEmpty(result)) {
+            protected void onPostExecute(Movie movie) {
+                if (movie != null && !TextUtils.isEmpty(movie.imdb_id) && isAdded()) {
                     // display a check-in dialog
                     MovieCheckInDialogFragment f = MovieCheckInDialogFragment.newInstance(
-                            result, mMovie.title);
+                            movie.imdb_id, movie.title);
                     f.show(getFragmentManager(), "checkin-dialog");
                 }
             };
