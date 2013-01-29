@@ -28,7 +28,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewStub;
@@ -104,9 +103,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
             getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
                     .commit();
         } else if (savedInstanceState == null) {
-            mFragment = ShowsFragment.newInstance();
-            getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
-                    .commit();
+            onShowShowsFragment();
+        } else {
+            mFragment = getSupportFragmentManager().findFragmentById(R.id.shows_fragment);
         }
 
         // set up action bar
@@ -568,12 +567,16 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
 
     @Override
     public void onFirstRunDismissed() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        mFragment = ShowsFragment.newInstance();
-        ft.replace(R.id.shows_fragment, mFragment).commit();
+        onShowShowsFragment();
     }
 
     protected void fireTrackerEvent(String label) {
         EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    }
+
+    private void onShowShowsFragment() {
+        mFragment = ShowsFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
+                .commit();
     }
 }
