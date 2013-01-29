@@ -22,29 +22,42 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
+import com.slidingmenu.lib.SlidingMenu;
+import com.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.uwetrottmann.seriesguide.R;
 
 /**
  * Provides some common functionality across all activities like setting the
  * theme and navigation shortcuts.
  */
-public abstract class BaseActivity extends SherlockFragmentActivity {
+public abstract class BaseActivity extends SlidingFragmentActivity {
 
     @Override
     protected void onCreate(Bundle arg0) {
         // set a theme based on user preference
         setTheme(SeriesGuidePreferences.THEME);
         super.onCreate(arg0);
+
+        setBehindContentView(R.layout.menu_frame);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment f = new SlidingMenuFragment();
+        ft.replace(R.id.menu_frame, f);
+        ft.commit();
+
+        SlidingMenu sm = getSlidingMenu();
+        sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        sm.setBehindWidthRes(R.dimen.slidingmenu_width);
     }
 
     @Override
@@ -169,17 +182,5 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
         intent.putExtras(arguments);
         intent.removeExtra("_uri");
         return intent;
-    }
-
-    /**
-     * Navigate to the overview activity of the given show.
-     * 
-     * @param showId
-     */
-    protected void navigateToOverview(int showId) {
-        final Intent intent = new Intent(this, OverviewActivity.class);
-        intent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, showId);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
     }
 }

@@ -1,45 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/season_row_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/default_padding" >
+    android:paddingLeft="@dimen/default_padding" >
 
     <TextView
-        android:id="@+id/TextViewSeasonListTitle"
+        android:id="@+id/textViewSeasonTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/seasonProgressText"
+        android:layout_toLeftOf="@+id/textViewSeasonProgress"
+        android:paddingTop="@dimen/default_padding"
         android:text="@string/season"
         android:textAppearance="?attr/textAppearanceSgMediumLight" />
 
     <TextView
-        android:id="@+id/seasonProgressText"
+        android:id="@+id/textViewSeasonProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_marginLeft="@dimen/default_padding"
+        android:layout_toLeftOf="@+id/imageViewContextMenu"
+        android:paddingTop="@dimen/default_padding"
         android:text="@string/norating"
         android:textAppearance="?attr/textAppearanceSgMediumLightDim" >
     </TextView>
 
     <ProgressBar
-        android:id="@+id/seasonProgressBar"
+        android:id="@+id/progressBarSeason"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/TextViewSeasonListTitle"
+        android:layout_below="@id/textViewSeasonTitle"
+        android:layout_toLeftOf="@+id/imageViewContextMenu"
         android:progressDrawable="@drawable/progress_horizontal_holo_dark" >
     </ProgressBar>
 
     <TextView
-        android:id="@+id/TextViewSeasonListWatchCount"
+        android:id="@+id/textViewSeasonWatchCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/seasonProgressBar"
+        android:layout_below="@id/progressBarSeason"
+        android:layout_toLeftOf="@+id/imageViewContextMenu"
+        android:paddingBottom="@dimen/default_padding"
         android:text="@string/episode_notwatched"
         android:textAllCaps="true"
         android:textAppearance="?attr/textAppearanceSgXSmall" />
+
+    <ImageView
+        android:id="@+id/imageViewContextMenu"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewSeasonWatchCount"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/textViewSeasonTitle"
+        android:background="?attr/custom_list_selector"
+        android:scaleType="fitXY"
+        android:src="?attr/drawableDropdown" />
 
 </RelativeLayout>

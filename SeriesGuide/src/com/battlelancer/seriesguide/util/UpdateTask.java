@@ -30,6 +30,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -51,6 +52,8 @@ import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
 import com.uwetrottmann.seriesguide.R;
+import com.uwetrottmann.tmdb.TmdbException;
+import com.uwetrottmann.tmdb.entities.Configuration;
 
 import org.xml.sax.SAXException;
 
@@ -234,10 +237,28 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
         // do not refresh search table and load trakt activity on each single
         // auto update will run anyhow
         if (mUpdateType != UpdateType.SINGLE) {
-            // try to avoid renewing the search table as it is time consuming
             if (updateCount.get() > 0 && mShows.length > 0) {
+                // try to avoid renewing the search table as it is time
+                // consuming
                 publishProgress(mShows.length, maxProgress);
                 TheTVDB.onRenewFTSTable(mAppContext);
+
+                // get latest TMDb configuration
+                try {
+                    Configuration config = ServiceUtils.getTmdbServiceManager(mAppContext)
+                            .configurationService()
+                            .configuration().fire();
+                    if (config != null && config.images != null
+                            && !TextUtils.isEmpty(config.images.base_url)) {
+                        prefs.edit()
+                                .putString(SeriesGuidePreferences.KEY_TMDB_BASE_URL,
+                                        config.images.base_url).commit();
+                    }
+                } catch (TmdbException e) {
+                    Utils.trackExceptionAndLog(mAppContext, TAG, e);
+                } catch (ApiException e) {
+                    Utils.trackExceptionAndLog(mAppContext, TAG, e);
+                }
             }
 
             // mark episodes based on trakt activity
@@ -289,7 +310,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
 
     private UpdateResult getTraktActivity(SharedPreferences prefs, int maxProgress,
             long currentTime, ContentResolver resolver) {
-        if (Utils.isTraktCredentialsValid(mAppContext)) {
+        if (ServiceUtils.isTraktCredentialsValid(mAppContext)) {
             // return if we get cancelled or connectivity is lost/forbidden
             if (isCancelled()) {
                 return UpdateResult.CANCELLED;
@@ -304,7 +325,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             final long startTimeTrakt = prefs.getLong(SeriesGuidePreferences.KEY_LASTTRAKTUPDATE,
                     currentTime) / 1000;
 
-            ServiceManager manager = Utils.getServiceManagerWithAuth(mAppContext, false);
+            ServiceManager manager = ServiceUtils
+                    .getTraktServiceManagerWithAuth(mAppContext, false);
             if (manager == null) {
                 return UpdateResult.ERROR;
             }
@@ -314,7 +336,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             try {
                 activity = manager
                         .activityService()
-                        .user(Utils.getTraktUsername(mAppContext))
+                        .user(ServiceUtils.getTraktUsername(mAppContext))
                         .types(ActivityType.Episode)
                         .actions(ActivityAction.Checkin, ActivityAction.Seen,
                                 ActivityAction.Scrobble, ActivityAction.Collection)
@@ -525,7 +547,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
     }
 
     private void fireTrackerEvent(String message) {
-        EasyTracker.getTracker().trackEvent(TAG, "Update result", message, (long) 0);
+        EasyTracker.getTracker().sendEvent(TAG, "Update result", message, (long) 0);
     }
 
 }

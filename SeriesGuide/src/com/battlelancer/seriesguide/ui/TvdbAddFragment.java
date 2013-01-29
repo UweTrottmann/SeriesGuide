@@ -73,7 +73,7 @@ public class TvdbAddFragment extends AddFragment {
         // create an empty adapter to avoid displaying a progress indicator
         if (mAdapter == null) {
             mAdapter = new AddAdapter(getActivity(), R.layout.add_searchresult,
-                    new ArrayList<SearchResult>(), mAddButtonListener, mDetailsButtonListener);
+                    new ArrayList<SearchResult>(), mDetailsButtonListener);
         }
 
         ImageButton searchButton = (ImageButton) getView().findViewById(R.id.clearButton);
@@ -112,7 +112,7 @@ public class TvdbAddFragment extends AddFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().trackView("Add TVDb Shows");
+        EasyTracker.getTracker().sendView("TVDb Search");
     }
 
     protected void search() {

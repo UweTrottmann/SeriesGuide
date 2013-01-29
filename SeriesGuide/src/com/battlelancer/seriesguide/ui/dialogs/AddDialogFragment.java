@@ -82,7 +82,7 @@ public class AddDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().trackView("Add Dialog");
+        EasyTracker.getTracker().sendView("Add Dialog");
     }
 
     @Override

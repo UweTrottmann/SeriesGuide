@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/large_padding" >
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/default_padding"
+                android:text="@string/connect_trakt_done"
+                android:textAppearance="?attr/textAppearanceSgXLargeLight" />
+
+            <TextView
+                android:id="@+id/textViewAddShows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/large_padding"
+                android:text="@string/add_trakt_shows"
+                android:textAppearance="?attr/textAppearanceSgSmall" />
+
+            <Button
+                android:id="@+id/buttonShowLibrary"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/large_padding"
+                android:text="@string/show_library" />
+
+            <TextView
+                android:id="@+id/textViewUploadShows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/upload_shows"
+                android:textAppearance="?attr/textAppearanceSgSmall" />
+
+            <Button
+                android:id="@+id/buttonUploadShows"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/large_padding"
+                android:text="@string/upload_existing_shows" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/buttonClose"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/close"
+            android:textSize="@dimen/text_size_small" />
+    </LinearLayout>
+
+</LinearLayout>

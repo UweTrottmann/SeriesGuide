@@ -2,68 +2,40 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/menu_quickcheckin"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/checkin"
-        android:orderInCategory="0"/>
-    <item
-        android:id="@+id/menu_new_show"
+        android:id="@+id/menu_add_show"
         android:icon="@drawable/ic_action_add"
+        android:orderInCategory="1"
         android:showAsAction="ifRoom|withText"
-        android:title="@string/add_show"
-        android:orderInCategory="1"/>
-    <item
-        android:id="@+id/menu_upcoming"
-        android:icon="@drawable/ic_action_upcoming"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/activity"
-        android:orderInCategory="2"/>
+        android:title="@string/add_show"/>
     <item
         android:id="@+id/menu_search"
         android:icon="@drawable/ic_action_search"
-        android:showAsAction="ifRoom"
-        android:title="@string/search_hint"
-        android:orderInCategory="3"/>
+        android:orderInCategory="2"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/search_hint"/>
     <item
-        android:id="@+id/menu_list_add"
-        android:icon="@drawable/ic_action_list"
-        android:orderInCategory="4"
-        android:title="@string/list_add"/>
-   <item
         android:id="@+id/menu_showsortby"
         android:icon="@drawable/ic_action_sort"
-        android:title="@string/sort"
-        android:orderInCategory="4"/>
-    <item
-        android:id="@+id/menu_preferences"
+        android:orderInCategory="3"
         android:showAsAction="never"
-        android:title="@string/preferences"
-        android:orderInCategory="5"/>
-    <item
-        android:id="@+id/menu_help"
-        android:showAsAction="never"
-        android:title="@string/help"
-        android:orderInCategory="6"/>
-    <item
-        android:id="@+id/menu_feedback"
-        android:showAsAction="never"
-        android:title="@string/feedback"
-        android:orderInCategory="7"/>
+        android:title="@string/sort"/>
     <item
         android:id="@+id/menu_updateart"
+        android:icon="@drawable/ic_action_refresh"
+        android:orderInCategory="4"
         android:showAsAction="never"
-        android:title="@string/menu_updateart"
-        android:orderInCategory="8"/>
+        android:title="@string/menu_updateart"/>
     <item
         android:id="@+id/menu_update"
         android:icon="@drawable/ic_action_refresh"
+        android:orderInCategory="5"
         android:showAsAction="never"
-        android:title="@string/menu_update_delta"
-        android:orderInCategory="9"/>
+        android:title="@string/menu_update_delta"/>
     <item
         android:id="@+id/menu_fullupdate"
+        android:icon="@drawable/ic_action_refresh"
+        android:orderInCategory="6"
         android:showAsAction="never"
-        android:title="@string/updateall_yes"
-        android:orderInCategory="10"/>
+        android:title="@string/updateall_yes"/>
 
 </menu>

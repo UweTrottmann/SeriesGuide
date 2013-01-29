@@ -17,8 +17,14 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.nfc.NdefMessage;
+import android.nfc.NfcAdapter;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -28,10 +34,13 @@ import android.widget.EditText;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
+import com.battlelancer.seriesguide.util.MenuOnPageChangeListener;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
+import com.slidingmenu.lib.SlidingMenu;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TabPageIndicator;
 
@@ -45,16 +54,23 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
 
     private ViewPager mPager;
 
+    public interface InitBundle {
+        /**
+         * Which tab to select upon launch.
+         */
+        String DEFAULT_TAB = "default_tab";
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         // The TvdbAddFragment uses a progress bar
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        super.onCreate(savedInstanceState);
 
         setContentView(R.layout.addactivity_pager);
 
         final ActionBar actionBar = getSupportActionBar();
+        actionBar.setIcon(R.drawable.ic_action_add);
         actionBar.setDisplayHomeAsUpEnabled(true);
         setProgressBarIndeterminateVisibility(Boolean.FALSE);
         setSupportProgressBarIndeterminateVisibility(false);
@@ -66,18 +82,53 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
 
         TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mPager);
+        indicator.setOnPageChangeListener(new MenuOnPageChangeListener(getSlidingMenu()));
+
+        getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+
+        // set default tab
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            int defaultTab = getIntent().getExtras().getInt(InitBundle.DEFAULT_TAB);
+            if (defaultTab < mAdapter.getCount()) {
+                indicator.setCurrentItem(defaultTab);
+            }
+        }
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        EasyTracker.getInstance().activityStart(this);
+    public void onResume() {
+        super.onResume();
+        if (AndroidUtils.isICSOrHigher()) {
+            // Check to see that the Activity started due to an Android Beam
+            if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+                processIntent(getIntent());
+            }
+        }
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        EasyTracker.getInstance().activityStop(this);
+    public void onNewIntent(Intent intent) {
+        // onResume gets called after this to handle the intent
+        setIntent(intent);
+    }
+
+    /**
+     * Parses the NDEF Message from the intent and prints to the TextView
+     */
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    void processIntent(Intent intent) {
+        Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
+                NfcAdapter.EXTRA_NDEF_MESSAGES);
+
+        // only one message sent during the beam
+        NdefMessage msg = (NdefMessage) rawMsgs[0];
+        SearchResult show = new SearchResult();
+        show.tvdbid = new String(msg.getRecords()[0].getPayload());
+        show.title = new String(msg.getRecords()[1].getPayload());
+        show.overview = new String(msg.getRecords()[2].getPayload());
+
+        // display add dialog
+        AddDialogFragment.showAddDialog(show, getSupportFragmentManager());
     }
 
     public static class AddPagerAdapter extends FragmentPagerAdapter {
@@ -86,12 +137,12 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
         private static final int TRAKT_CONNECTED_TABCOUNT = 5;
 
         public static final int TRENDING_TAB_POSITION = 0;
-        public static final int RECOMMENDED_TAB_POSITION = 1;
-        public static final int LIBRARY_TAB_POSITION = 2;
-        public static final int WATCHLIST_TAB_POSITION = 3;
+        public static final int RECOMMENDED_TAB_POSITION = 2;
+        public static final int LIBRARY_TAB_POSITION = 3;
+        public static final int WATCHLIST_TAB_POSITION = 4;
 
         public static final int SEARCH_TAB_DEFAULT_POSITION = 1;
-        public static final int SEARCH_TAB_CONNECTED_POSITION = 4;
+        public static final int SEARCH_TAB_CONNECTED_POSITION = 1;
 
         private Context mContext;
 
@@ -113,7 +164,7 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
 
         @Override
         public int getCount() {
-            final boolean isValidCredentials = Utils.isTraktCredentialsValid(mContext);
+            final boolean isValidCredentials = ServiceUtils.isTraktCredentialsValid(mContext);
             if (isValidCredentials) {
                 // show trakt recommended and libraried shows, too
                 return TRAKT_CONNECTED_TABCOUNT;

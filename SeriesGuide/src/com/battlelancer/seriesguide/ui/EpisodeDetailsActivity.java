@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -24,10 +25,13 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.widget.ImageView;
 
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.items.Episode;
@@ -36,6 +40,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.slidingmenu.lib.SlidingMenu;
 import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TitlePageIndicator;
 
@@ -47,11 +52,15 @@ import java.util.ArrayList;
  * if coming from a search result selection.
  */
 public class EpisodeDetailsActivity extends BaseActivity {
-    protected static final String TAG = "EpisodeDetailsActivity";
+    protected static final String TAG = "Episode Details";
 
     private EpisodePagerAdapter mAdapter;
 
     private ViewPager mPager;
+
+    private int mSeasonId;
+
+    private int mShowId;
 
     /**
      * Data which has to be passed when creating this activity. All Bundle
@@ -68,8 +77,10 @@ public class EpisodeDetailsActivity extends BaseActivity {
         setContentView(R.layout.episode_pager);
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+        getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 
         final int episodeId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, 0);
         if (episodeId == 0) {
@@ -84,7 +95,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
         // Lookup show and season of episode
         final Cursor episode = getContentResolver().query(
                 Episodes.buildEpisodeWithShowUri(String.valueOf(episodeId)), new String[] {
-                        Seasons.REF_SEASON_ID, Shows.POSTER
+                        Seasons.REF_SEASON_ID, Shows.POSTER, Shows.REF_SHOW_ID
                 }, null, null, null);
 
         if (episode == null || !episode.moveToFirst()) {
@@ -98,11 +109,12 @@ public class EpisodeDetailsActivity extends BaseActivity {
         Utils.setPosterBackground(background, episode.getString(1), this);
 
         // lookup episodes of season
-        final String seasonId = episode.getString(0);
+        mShowId = episode.getInt(2);
+        mSeasonId = episode.getInt(0);
         Constants.EpisodeSorting sorting = Utils.getEpisodeSorting(this);
 
         Cursor episodeCursor = getContentResolver().query(
-                Episodes.buildEpisodesOfSeasonUri(seasonId), new String[] {
+                Episodes.buildEpisodesOfSeasonUri(String.valueOf(mSeasonId)), new String[] {
                         Episodes._ID, Episodes.NUMBER, Episodes.SEASON
                 }, null, null, sorting.query());
 
@@ -155,6 +167,44 @@ public class EpisodeDetailsActivity extends BaseActivity {
         super.onBackPressed();
         overridePendingTransition(R.anim.fragment_slide_right_enter,
                 R.anim.fragment_slide_right_exit);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            Intent upIntent = new Intent(this, EpisodesActivity.class);
+            upIntent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, mSeasonId);
+            if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                // This activity is not part of the application's task, so
+                // create a new task with a synthesized back stack.
+                TaskStackBuilder
+                        .create(this)
+                        .addNextIntent(new Intent(this, ShowsActivity.class))
+                        .addNextIntent(
+                                new Intent(this, OverviewActivity.class).putExtra(
+                                        OverviewFragment.InitBundle.SHOW_TVDBID, mShowId))
+                        .addNextIntent(
+                                new Intent(this, SeasonsActivity.class).putExtra(
+                                        SeasonsFragment.InitBundle.SHOW_TVDBID, mShowId))
+                        .addNextIntent(upIntent)
+                        .startActivities();
+                finish();
+            } else {
+                /*
+                 * This activity is part of the application's task, so simply
+                 * navigate up to the hierarchical parent activity.
+                 * NavUtils.navigateUpTo() does not seem to work here.
+                 */
+                upIntent.addFlags(
+                        Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(upIntent);
+            }
+            overridePendingTransition(R.anim.fragment_slide_right_enter,
+                    R.anim.fragment_slide_right_exit);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public static class EpisodePagerAdapter extends FragmentStatePagerAdapter {

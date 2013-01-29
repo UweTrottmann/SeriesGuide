@@ -10,7 +10,6 @@
   <string name="episode_notwatched">Ikke sett ennå</string>
   <string name="specialseason">Spesial Episoder</string>
   <string name="search_hint">Søk episoder</string>
-  <string name="search_title">Samsvarende episoder</string>
   <string name="share_episode">Del episode</string>
   <string name="share_checkout">Sjekk ut</string>
   <string name="search_description">Episoder</string>
@@ -26,9 +25,18 @@
   <string name="share">Del</string>
   <string name="updated">Oppdatert til nyeste versjon.</string>
   <string name="discard">Discard</string>
+  <string name="close">Close</string>
   <string name="save_selection">Save selection</string>
   <string name="offline">Ingen nettverksforbindelse. Prøv på nytt senere.</string>
   <string name="onlyx">Kun tilgjengelig i SeriesGuide X</string>
+  <string name="shows">Shows</string>
+  <string name="lists">Lists</string>
+  <string name="activity">Aktiviteter</string>
+  <string name="movies">Movies</string>
+  <string name="search">Search</string>
+  <string name="add_show">Legg Til</string>
+  <string name="preferences">Innstillinger</string>
+  <string name="help">Hjelp</string>
   <string name="shouts">Shouts</string>
   <string name="shout_hint">Type a shout (in English)</string>
   <string name="shout">Shout!</string>
@@ -36,6 +44,8 @@
   <string name="no_shouts">Be the first to shout!</string>
   <string name="shouts_for">Shouts for %s</string>
   <string name="autorefresh">Oppdateres automagisk</string>
+  <string name="movies_search_hint">Type a movie title</string>
+  <string name="movies_empty">Search for a movie above.</string>
   <string name="love">Helt ninja!</string>
   <string name="hate">Svak saus :(</string>
   <string name="rating2">Forferdelig</string>
@@ -82,7 +92,10 @@
   <string name="trakt_notseen">%s ikke sett.</string>
   <string name="trakt_collected">%s anskaffet.</string>
   <string name="trakt_notcollected">%s ikke anskaffet.</string>
-  <string name="shows_empty">Inger serier her.</string>
+  <string name="add_empty">There are no shows here or your device has no internet connection.</string>
+  <string name="shows_empty">Look in the menu above to add some shows.</string>
+  <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
+  <string name="hidden_empty">Long-press on a show to hide it here.</string>
   <string name="confirm_delete">Vil du virkelig fjerne %s?</string>
   <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Fjern</string>
@@ -96,7 +109,6 @@
   <string name="context_unhide">Vis</string>
   <string name="hidden">Sjulte</string>
   <string name="unhidden">Ikke-skjult program</string>
-  <string name="activity">Aktiviteter</string>
   <string name="upcoming">Kommer snart</string>
   <string name="recent">De siste</string>
   <string name="friends">Venner</string>
@@ -133,7 +145,6 @@
   <string name="search_hint_add">Serienavn</string>
   <string name="no_results">Ingen treff. Prøv hele ord.</string>
   <string name="search_error">Søking mislyktes, prøv på nytt senere.</string>
-  <string name="add_show">Legg Til</string>
   <string name="add_all">Legg til alle</string>
   <string name="dont_add_show">Ikke Legg til</string>
   <string name="add_multiple">Alle programmer vil vises i programlisten straks.</string>
@@ -156,12 +167,25 @@
   <string name="list_item_manage">Behandle lister</string>
   <string name="list_item_remove">Fjern fra liste</string>
   <string name="list_empty">Du kan legge til serier, sesonger eller episoder til denne listen.</string>
+  <string name="connect_trakt">Connect trakt</string>
+  <string name="connect_trakt_done">Connected to trakt!</string>
+  <string name="add_trakt_shows">Add shows from your library:</string>
+  <string name="show_library">Show your library</string>
+  <string name="upload_shows">Upload your SeriesGuide show list:</string>
+  <string name="upload_existing_shows">Upload existing shows</string>
+  <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
+  <string name="integration_trakt">If you connect trakt:</string>
+  <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
+  <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
+  <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
+  <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
+  <string name="trakt_download">Download to SeriesGuide</string>
+  <string name="trakt_upload">Upload to trakt.tv</string>
+  <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
   <string name="prefs_category_basic">Grunnleggende</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Avansert</string>
   <string name="prefs_category_about">Om</string>
-  <string name="help">Hjelp</string>
-  <string name="preferences">Innstillinger</string>
   <string name="pref_showsorting">Sorter serier etter...</string>
   <string name="pref_onlyfuture">Ingen viste episoder</string>
   <string name="pref_onlyfuturesummary">Ikke vis episoder som allerde er sendt</string>
@@ -181,10 +205,9 @@
   <string name="about">Om SeriesGuide</string>
   <string name="pref_credits">Krediteringer</string>
   <string name="clearGetGlueCredentials">Koble fra GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Sjekk inn med GetGlue for å koble til på nytt</string>
-  <string name="pref_trakt">trakt.tv påloggingsinformasjon</string>
+  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
   <string name="pref_traktsummary">Legg til eller endre pålogginsinformasjonen for trakt.tv</string>
-  <string name="pref_traktsync">Synkroniser med trakt.tv</string>
+  <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">Gi tilbakemelding</string>
   <string name="clear_cache">Slett bildebufferen</string>
   <string name="clear_cache_summary">Fjern alle hurtigbufrede bilder fra enheten</string>
@@ -222,11 +245,13 @@
   <string name="checkin_searchhint">Skriv inn et serienavn</string>
   <string name="checkin_empty">Ingen treff</string>
   <string name="checkin_hint">Skriv inn en melding (valgfritt)</string>
-  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
-  <string name="paste_episode">Lim inn episode</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
+  <string name="paste_title">Paste title</string>
   <string name="checkinsuccess">Sjekket inn %s på GetGlue.</string>
-  <string name="checkinfailed">GetGlue sjekk inn mislyktes. Prøv å koble fra GetGlue.</string>
+  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue autentisering mislyktes. Prøv igjen senere.</string>
+  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
   <string name="no_selection">pick one below</string>
@@ -234,7 +259,7 @@
   <string name="menu_rate_trakt">Vurder (trakt)</string>
   <string name="menu_share_others">Via andre apper</string>
   <string name="traktcheckin_cancel">Overskriv</string>
-  <string name="traktcheckin_inprogress">Du har allerede sjekket inn en annen episode eller film. Enten skriv over forrige innsjekking eller vent %s og prøv på nytt.</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">Jeg venter</string>
   <string name="oauthmessage">Autentiserer SeriesGuide med GetGlue</string>
   <string name="addtocalendar">Legg til i kalender</string>
@@ -249,14 +274,7 @@
   <string name="trakt_decryptfail">passordet kunne ikke dekrypteres</string>
   <string name="trakt_generalerror">Noe gikk galt. Kontroller påloggingsinformasjonen og prøv om igjen.</string>
   <string name="trakt_createaccount">Opprett ny konto</string>
-  <string name="trakt_experimental">Bare serier i SeriesGuide listen din blir synkronisert. \'Synkroniser til SeriesGuiede\' henter sette episoder fra trakt. \'Synkroniser til trakt\' sender sette episoder til trakt.</string>
-  <string name="trakt_synctodevice">Synkroniser til SeriesGuide</string>
-  <string name="trakt_synctotrakt">Synkroniser til trakt.tv</string>
-  <string name="trakt_syncunseen">Inkluder usette</string>
-  <string name="trakt_howto_title">Sett opp trakt.tv synkronisering</string>
-  <string name="trakt_howto">Slik setter du opp enhetne\n\n1. Koble til eller opprett en kontor under for hver enhet.\n2. Første gangener bruker du <b>Synkroniser til trakt.tv</b> knappen for å laste opp seriene dine.\n3. Legg til serier fra trakt.tv ved å gå til katagorien <b>bibliotek</b> i <b>Legg til</b> skjermbildet.\n\nHver gang SeriesGuide oppdateres blir nå dine trakt.tv aktiviteter lastet ned til hver enhet. Dette inkluderer markering av episoder som sett, samlet og sjekk inn.</string>
   <string name="welcome_setuplanguage">Velg språk</string>
-  <string name="welcome_setuptrakt">Koble til trakt</string>
   <string name="welcome_traktmessage">Få tilgang til ditt trakt.tv bibliotek og venners aktiviteter</string>
   <string name="dismiss">Avbryt</string>
   <string name="welcome_add_part1">Trykk for å komme i gang</string>
@@ -265,12 +283,13 @@
   <string name="upcoming_show_detailed">%1$s på %2$s</string>
   <string name="upcoming_display">Velg for å vise kommende serier</string>
   <string name="pref_notifications">Varsler</string>
-  <string name="pref_notificationssummary">Varsle om kommende favorittserier</string>
+  <string name="pref_notificationssummary">Notify about new episodes</string>
   <string name="pref_notifyfavonly">Bare favoritter</string>
   <string name="pref_notifyfavonlysummary">Bare motta varsler for favorittprogrammer</string>
   <string name="pref_ringtone">Ringetone</string>
   <string name="pref_vibrate">Vibrer</string>
   <string name="pref_vibratesummary">Vibrer også ved visning av varsel</string>
+  <string name="pref_notifications_treshold">When to notify</string>
   <string name="pref_theme">App tema</string>
   <string name="choose_list">Velg aktivitetliste</string>
   <string name="hide_watched">Skjul sette episoder</string>
@@ -313,7 +332,12 @@
     <item>Favoritter</item>
     <item>Usett/Kommende</item>
     <item>Skjulte</item>
-    <item>Lister</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>on air</item>
+    <item>5 min in advance</item>
+    <item>10 min in advance</item>
+    <item>one hour in advance</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d stemme</item>

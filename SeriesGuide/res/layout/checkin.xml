@@ -64,6 +64,6 @@
         android:contentDescription="@string/clear"
         android:paddingLeft="@dimen/inline_padding"
         android:paddingRight="@dimen/inline_padding"
-        android:src="@android:drawable/ic_menu_close_clear_cancel" />
+        android:src="?attr/drawableCancel" />
 
 </RelativeLayout>

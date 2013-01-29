@@ -30,19 +30,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.CursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
-import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
@@ -50,6 +45,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.Constants.SeasonSorting;
+import com.battlelancer.seriesguide.adapters.SeasonsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
@@ -64,7 +60,7 @@ import com.uwetrottmann.seriesguide.R;
  * Displays a list of seasons of one show.
  */
 public class SeasonsFragment extends SherlockListFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, OnFlagListener {
+        LoaderManager.LoaderCallbacks<Cursor>, OnFlagListener, OnClickListener {
 
     private static final int CONTEXT_FLAG_ALL_WATCHED_ID = 0;
 
@@ -74,13 +70,11 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     private static final int LOADER_ID = 1;
 
+    private static final String TAG = "Seasons";
+
     private Constants.SeasonSorting mSorting;
 
-    private SimpleCursorAdapter mAdapter;
-
-    private int mTextAppearanceXSmall;
-
-    private int mTextAppearanceXSmallDim;
+    private SeasonsAdapter mAdapter;
 
     /**
      * All values have to be integer.
@@ -100,10 +94,6 @@ public class SeasonsFragment extends SherlockListFragment implements
         return f;
     }
 
-    public void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().trackEvent("Seasons", "Click", label, (long) 0);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.list_fragment, container, false);
@@ -115,17 +105,11 @@ public class SeasonsFragment extends SherlockListFragment implements
 
         updatePreferences();
 
-        // get some style refs
-        TypedValue outValue = new TypedValue();
-        getActivity().getTheme().resolveAttribute(R.attr.textAppearanceSgXSmall,
-                outValue, true);
-        mTextAppearanceXSmall = outValue.resourceId;
-        getActivity().getTheme().resolveAttribute(R.attr.textAppearanceSgXSmallDim,
-                outValue, true);
-        mTextAppearanceXSmallDim = outValue.resourceId;
-
         // populate list
-        fillData();
+        mAdapter = new SeasonsAdapter(getActivity(), null, 0, this);
+        setListAdapter(mAdapter);
+        // now let's get a loader or reconnect to existing one
+        getLoaderManager().initLoader(LOADER_ID, null, this);
 
         // listen to changes to the sorting preference
         final SharedPreferences prefs = PreferenceManager
@@ -168,14 +152,17 @@ public class SeasonsFragment extends SherlockListFragment implements
 
         switch (item.getItemId()) {
             case CONTEXT_FLAG_ALL_WATCHED_ID: {
+                fireTrackerEventContextMenu("Flag all watched");
                 onFlagSeasonWatched(info.id, season.getInt(SeasonsQuery.COMBINED), true);
                 return true;
             }
             case CONTEXT_FLAG_ALL_UNWATCHED_ID: {
+                fireTrackerEventContextMenu("Flag all unwatched");
                 onFlagSeasonWatched(info.id, season.getInt(SeasonsQuery.COMBINED), false);
                 return true;
             }
             case CONTEXT_MANAGE_LISTS_ID: {
+                fireTrackerEventContextMenu("Manage lists");
                 ListsDialogFragment.showListsDialog(String.valueOf(info.id), 2,
                         getFragmentManager());
                 return true;
@@ -203,15 +190,15 @@ public class SeasonsFragment extends SherlockListFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_markall) {
-            fireTrackerEvent("Mark all seasons");
+            fireTrackerEvent("Flag all watched");
             onFlagShowWatched(true);
             return true;
         } else if (itemId == R.id.menu_unmarkall) {
-            fireTrackerEvent("Unmark all seasons");
+            fireTrackerEvent("Flag all unwatched");
             onFlagShowWatched(false);
             return true;
         } else if (itemId == R.id.menu_sesortby) {
-            fireTrackerEvent("Sort seasons");
+            fireTrackerEvent("Sort");
             showSortDialog();
             return true;
         } else {
@@ -223,103 +210,10 @@ public class SeasonsFragment extends SherlockListFragment implements
     public void onListItemClick(ListView l, View v, int position, long id) {
         Intent intent = new Intent(getActivity(), EpisodesActivity.class);
 
-        final Cursor item = (Cursor) (getListView().getItemAtPosition(position));
-        final int seasonNumber = item.getInt(SeasonsQuery.COMBINED);
-        intent.putExtra(EpisodesActivity.InitBundle.SHOW_TVDBID, getShowId());
         intent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, (int) id);
-        intent.putExtra(EpisodesActivity.InitBundle.SEASON_NUMBER, seasonNumber);
         startActivity(intent);
         getSherlockActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
                 R.anim.fragment_slide_left_exit);
-    }
-
-    private void fillData() {
-        String[] from = new String[] {
-                Seasons.COMBINED, Seasons.WATCHCOUNT, Seasons.TOTALCOUNT
-        };
-        int[] to = new int[] {
-                R.id.TextViewSeasonListTitle, R.id.TextViewSeasonListWatchCount,
-                R.id.season_row_root
-        };
-
-        mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.season_row, null, from, to,
-                CursorAdapter.NO_SELECTION);
-        mAdapter.setViewBinder(new ViewBinder() {
-
-            public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-                if (columnIndex == SeasonsQuery.WATCHCOUNT) {
-                    final TextView watchcount = (TextView) view;
-                    String episodeCount = "";
-                    final int count = cursor.getInt(SeasonsQuery.WATCHCOUNT);
-                    final int unairedCount = cursor.getInt(SeasonsQuery.UNAIREDCOUNT);
-                    final int noairdateCount = cursor.getInt(SeasonsQuery.NOAIRDATECOUNT);
-
-                    // add strings for unwatched episodes
-                    if (count == 0) {
-                        // make sure there are no unchecked episodes that happen
-                        // to have no airdate
-                        if (noairdateCount == 0) {
-                            episodeCount += getString(R.string.season_allwatched);
-                        } else {
-                            episodeCount += noairdateCount + " ";
-                            if (noairdateCount == 1) {
-                                episodeCount += getString(R.string.oneotherepisode);
-                            } else {
-                                episodeCount += getString(R.string.otherepisodes);
-                            }
-                        }
-
-                        watchcount.setTextAppearance(getActivity(), mTextAppearanceXSmallDim);
-                    } else if (count == 1) {
-                        episodeCount += count + " " + getString(R.string.season_onenotwatched);
-                        watchcount.setTextAppearance(getActivity(), mTextAppearanceXSmall);
-                    } else {
-                        episodeCount += count + " " + getString(R.string.season_watchcount);
-                        watchcount.setTextAppearance(getActivity(), mTextAppearanceXSmall);
-                    }
-
-                    // add strings for unaired episodes
-                    if (unairedCount > 0) {
-                        episodeCount += " (+" + unairedCount + " "
-                                + getString(R.string.season_unaired) + ")";
-                    }
-                    watchcount.setText(episodeCount);
-
-                    return true;
-                }
-                if (columnIndex == SeasonsQuery.TOTALCOUNT) {
-                    final int count = cursor.getInt(SeasonsQuery.WATCHCOUNT);
-                    final int unairedCount = cursor.getInt(SeasonsQuery.UNAIREDCOUNT);
-                    final int noairdateCount = cursor.getInt(SeasonsQuery.NOAIRDATECOUNT);
-                    final int max = cursor.getInt(SeasonsQuery.TOTALCOUNT);
-                    final int progress = max - count - unairedCount - noairdateCount;
-                    final ProgressBar bar = (ProgressBar) view.findViewById(R.id.seasonProgressBar);
-                    final TextView text = (TextView) view.findViewById(R.id.seasonProgressText);
-                    bar.setMax(max);
-                    bar.setProgress(progress);
-                    text.setText(progress + "/" + max);
-                    return true;
-                }
-                if (columnIndex == SeasonsQuery.COMBINED) {
-                    final TextView seasonNameTextView = (TextView) view;
-                    final String seasonNumber = cursor.getString(SeasonsQuery.COMBINED);
-                    final String seasonName;
-                    if (seasonNumber.equals("0") || seasonNumber.length() == 0) {
-                        seasonName = getString(R.string.specialseason);
-                    } else {
-                        seasonName = getString(R.string.season) + " " + seasonNumber;
-                    }
-                    seasonNameTextView.setText(seasonName);
-
-                    return true;
-                }
-                return false;
-            }
-        });
-        setListAdapter(mAdapter);
-
-        // now let's get a loader or reconnect to existing one
-        getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     private int getShowId() {
@@ -434,7 +328,7 @@ public class SeasonsFragment extends SherlockListFragment implements
         mAdapter.swapCursor(null);
     }
 
-    private interface SeasonsQuery {
+    public interface SeasonsQuery {
 
         String[] PROJECTION = {
                 BaseColumns._ID, Seasons.COMBINED, Seasons.WATCHCOUNT, Seasons.UNAIREDCOUNT,
@@ -477,7 +371,7 @@ public class SeasonsFragment extends SherlockListFragment implements
         mSorting = SeasonSorting.fromValue(prefs.getString(
                 SeriesGuidePreferences.KEY_SEASON_SORT_ORDER, SeasonSorting.LATEST_FIRST.value()));
 
-        EasyTracker.getTracker().trackEvent("Seasons", "Sorting", mSorting.name(), (long) 0);
+        EasyTracker.getTracker().sendEvent(TAG, "Sorting", mSorting.name(), (long) 0);
 
         // restart loader and update menu description
         getLoaderManager().restartLoader(LOADER_ID, null, SeasonsFragment.this);
@@ -498,5 +392,18 @@ public class SeasonsFragment extends SherlockListFragment implements
                     break;
             }
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        getActivity().openContextMenu(v);
+    }
+
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    }
+    
+    private void fireTrackerEventContextMenu(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Context Item", label, (long) 0);
     }
 }

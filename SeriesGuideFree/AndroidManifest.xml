@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.battlelancer.seriesguide"
     android:installLocation="auto"
-    android:versionCode="150"
-    android:versionName="2.11" >
+    android:versionCode="151"
+    android:versionName="3" >
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -42,8 +42,7 @@
 
         <!-- Launch activity -->
         <activity
-            android:name="com.battlelancer.seriesguide.ui.ShowsActivity"
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:name="com.battlelancer.seriesguide.ui.ShowsActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -146,10 +145,17 @@
         </activity>
         <activity
             android:name="com.battlelancer.seriesguide.ui.AddActivity"
-            android:label="@string/add_show" >
+            android:label="@string/add_show"
+            android:launchMode="singleTop" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/com.battlelancer.seriesguide.beam" />
+            </intent-filter>
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.TraktShoutsActivity" >
             <meta-data
@@ -167,6 +173,21 @@
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
+		<activity android:name="com.battlelancer.seriesguide.ui.ListsActivity" >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
+		<activity android:name="com.battlelancer.seriesguide.ui.MoviesActivity" >
+        </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.ConnectTraktActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />

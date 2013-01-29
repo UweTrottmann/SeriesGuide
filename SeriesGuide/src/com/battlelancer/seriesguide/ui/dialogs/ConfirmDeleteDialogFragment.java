@@ -53,7 +53,7 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().trackView("Delete Dialog");
+        EasyTracker.getTracker().sendView("Delete Dialog");
     }
 
     @Override

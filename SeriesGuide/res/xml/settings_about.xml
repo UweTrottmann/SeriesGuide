@@ -11,12 +11,28 @@
     <Preference android:title="@string/pref_credits" >
         <intent
             android:action="android.intent.action.VIEW"
-            android:data="https://raw.github.com/UweTrottmann/SeriesGuide/master/SeriesGuide/CREDITS.txt" />
+            android:data="https://raw.github.com/UweTrottmann/SeriesGuide/master/CREDITS.txt" />
     </Preference>
-    <Preference android:title="@string/helptranslate" >
+    <Preference
+        android:summary="@string/pref_translatesummary"
+        android:title="@string/pref_translate" >
         <intent
             android:action="android.intent.action.VIEW"
             android:data="http://crowdin.net/project/seriesguide-translations/invite" />
+    </Preference>
+    <Preference
+        android:summary="@string/pref_communitysummary"
+        android:title="@string/pref_community" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://plus.google.com/communities/103447253937737054097" />
+    </Preference>
+    <Preference
+        android:summary="@string/pref_suggest_featuressummary"
+        android:title="@string/pref_suggest_features" >
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="http://seriesguide.uservoice.com" />
     </Preference>
 
 </PreferenceScreen>

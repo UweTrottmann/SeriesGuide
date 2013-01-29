@@ -32,9 +32,9 @@ import android.text.format.DateUtils;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.enums.TraktStatus;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.TraktTask;
-import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
@@ -43,6 +43,10 @@ import com.jakewharton.trakt.entities.Response;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
+/**
+ * Warns about an ongoing check-in, how long it takes until it is finished.
+ * Offers to override or wait out.
+ */
 public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
     private int mWait;
@@ -57,7 +61,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().trackView("Cancel Check In Dialog");
+        EasyTracker.getTracker().sendView("Cancel Check-In Dialog");
     }
 
     @Override
@@ -87,7 +91,8 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                     @Override
                     protected Response doInBackground(String... params) {
 
-                        ServiceManager manager = Utils.getServiceManagerWithAuth(context, false);
+                        ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(
+                                context, false);
                         if (manager == null) {
                             // password could not be decrypted
                             Response r = new Response();
@@ -115,10 +120,9 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
                     @Override
                     protected void onPostExecute(Response r) {
-                        if (r.status.equalsIgnoreCase(TraktStatus.SUCCESS)) {
+                        if (TraktStatus.SUCCESS.equals(r.status)) {
                             // all good
-                            Toast.makeText(context,
-                                    r.message + " " + context.getString(R.string.ontrakt),
+                            Toast.makeText(context, R.string.checkin_canceled_success_trakt,
                                     Toast.LENGTH_SHORT).show();
 
                             // relaunch the trakt task which called us to
@@ -127,7 +131,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                                     new Void[] {
                                         null
                                     });
-                        } else if (r.status.equalsIgnoreCase(TraktStatus.FAILURE)) {
+                        } else if (TraktStatus.FAILURE.equals(r.status)) {
                             // well, something went wrong
                             Toast.makeText(context,
                                     context.getString(R.string.trakt_error) + ": " + r.error,

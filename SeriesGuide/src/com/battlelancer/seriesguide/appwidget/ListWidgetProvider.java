@@ -29,11 +29,13 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.SystemClock;
+import android.support.v4.app.TaskStackBuilder;
 import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 
 import com.battlelancer.seriesguide.enums.WidgetListType;
-import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity;
+import com.battlelancer.seriesguide.ui.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -132,19 +134,38 @@ public class ListWidgetProvider extends AppWidgetProvider {
             rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.upcoming));
         }
 
-        // Create an Intent to launch Upcoming
-        Intent pi = new Intent(context, UpcomingRecentActivity.class);
-        pi.putExtra(UpcomingRecentActivity.InitBundle.SELECTED_TAB, activityTab);
-        pi.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, pi,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+        // Create an intent to launch Upcoming
+        Intent activityIntent = new Intent(context, UpcomingRecentActivity.class);
+        activityIntent.putExtra(UpcomingRecentActivity.InitBundle.SELECTED_TAB, activityTab);
+        PendingIntent pendingIntent = TaskStackBuilder
+                .create(context)
+                .addNextIntent(new Intent(context, ShowsActivity.class))
+                .addNextIntent(activityIntent)
+                .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
         rv.setOnClickPendingIntent(R.id.widget_title, pendingIntent);
 
-        // Create intents for items to launch an EpisodeDetailsActivity
-        Intent itemIntent = new Intent(context, EpisodeDetailsActivity.class);
-        PendingIntent pendingIntentTemplate = PendingIntent.getActivity(context, 1, itemIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+        // Create intent template for items to launch an EpisodesActivity
+        Intent itemIntent = new Intent(context, EpisodesActivity.class);
+        PendingIntent pendingIntentTemplate = TaskStackBuilder
+                .create(context)
+                .addNextIntent(new Intent(context, ShowsActivity.class))
+                .addNextIntent(
+                        new Intent(context, UpcomingRecentActivity.class).putExtra(
+                                UpcomingRecentActivity.InitBundle.SELECTED_TAB, activityTab))
+                .addNextIntent(itemIntent)
+                .getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT);
         rv.setPendingIntentTemplate(R.id.list_view, pendingIntentTemplate);
+
+        // Create an intent to launch show list
+        Intent homeIntent = new Intent(context, ShowsActivity.class);
+        homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP
+                | Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingHomeIntent = TaskStackBuilder
+                .create(context)
+                .addNextIntent(homeIntent)
+                .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
+        rv.setOnClickPendingIntent(R.id.widget_logo, pendingHomeIntent);
+
         return rv;
     }
 }

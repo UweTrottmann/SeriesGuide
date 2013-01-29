@@ -23,7 +23,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,7 +34,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
@@ -48,7 +47,7 @@ public class FirstRunFragment extends SherlockFragment {
 
     private static final String PREF_KEY_FIRSTRUN = "accepted_eula";
 
-    protected static final String TAG = "FirstRunFragment";
+    protected static final String TAG = "First Run";
 
     private OnFirstRunDismissedListener mListener;
 
@@ -91,6 +90,7 @@ public class FirstRunFragment extends SherlockFragment {
         getView().findViewById(R.id.addbutton).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                fireTrackerEvent("Add show");
                 startActivity(new Intent(getActivity(), AddActivity.class));
                 setFirstRunDismissed();
             }
@@ -108,11 +108,10 @@ public class FirstRunFragment extends SherlockFragment {
         getView().findViewById(R.id.welcome_setuptrakt).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                EasyTracker.getTracker().trackEvent(TAG, "Click", "Setup trakt account", (long) 0);
-                TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
-                        .newInstance();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                newFragment.show(ft, "traktdialog");
+                fireTrackerEvent("Connect trakt");
+
+                Intent i = new Intent(getActivity(), ConnectTraktActivity.class);
+                startActivity(i);
             }
         });
 
@@ -120,9 +119,36 @@ public class FirstRunFragment extends SherlockFragment {
         getView().findViewById(R.id.dismissButton).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                fireTrackerEvent("Dismiss");
                 setFirstRunDismissed();
             }
         });
+
+        // peek menu
+        final Runnable peekDoneRunnable = new Runnable() {
+            public void run() {
+                FragmentActivity activity = getActivity();
+                if (activity != null) {
+                    ((BaseActivity) activity).showContent();
+                }
+            }
+        };
+        final Runnable peekRunnable = new Runnable() {
+            public void run() {
+                FragmentActivity activity = getActivity();
+                if (activity != null) {
+                    ((BaseActivity) activity).showMenu();
+                    getView().postDelayed(peekDoneRunnable, 2000);
+                }
+            }
+        };
+        getView().postDelayed(peekRunnable, 2000);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().sendView(TAG);
     }
 
     private void setFirstRunDismissed() {
@@ -148,4 +174,7 @@ public class FirstRunFragment extends SherlockFragment {
         }
     }
 
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Click", label, (long) 0);
+    }
 }

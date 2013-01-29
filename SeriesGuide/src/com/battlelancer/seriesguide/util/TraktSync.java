@@ -24,7 +24,6 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.RemoteException;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Toast;
 
@@ -32,7 +31,6 @@ import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -89,11 +87,11 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected Integer doInBackground(Void... params) {
-        if (!Utils.isTraktCredentialsValid(mContext)) {
+        if (!ServiceUtils.isTraktCredentialsValid(mContext)) {
             return FAILED_CREDENTIALS;
         }
 
-        ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
+        ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
         if (manager == null) {
             // password could not be decrypted
             return FAILED_CREDENTIALS;
@@ -102,7 +100,7 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
         if (mIsSyncToTrakt) {
             return syncToTrakt(manager);
         } else {
-            return syncToSeriesGuide(manager, Utils.getTraktUsername(mContext));
+            return syncToSeriesGuide(manager, ServiceUtils.getTraktUsername(mContext));
         }
     }
 
@@ -318,10 +316,6 @@ public class TraktSync extends AsyncTask<Void, Void, Integer> {
             case FAILED_CREDENTIALS:
                 message = "Your credentials are incomplete. Please enter them again.";
                 duration = Toast.LENGTH_LONG;
-                TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
-                        .newInstance();
-                FragmentTransaction ft = mContext.getSupportFragmentManager().beginTransaction();
-                newFragment.show(ft, "traktcredentialsdialog");
                 break;
             case FAILED_API:
                 message = "Could not communicate with trakt servers. Try again later.";

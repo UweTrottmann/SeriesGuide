@@ -163,6 +163,12 @@ public class SeriesContract {
          * Added in db version 27.
          */
         String LASTEDIT = "episode_lastedit";
+
+        /**
+         * Some shows, mainly anime, use absolute episode numbers instead of the
+         * season/episode grouping. Added in db version 30.
+         */
+        String ABSOLUTE_NUMBER = "absolute_number";
     }
 
     interface EpisodeSearchColumns {

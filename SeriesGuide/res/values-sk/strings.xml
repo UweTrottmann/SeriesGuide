@@ -10,7 +10,6 @@
   <string name="episode_notwatched">Ešte nepozreté</string>
   <string name="specialseason">Špeciálne Epizódy</string>
   <string name="search_hint">Hľadať epizódy</string>
-  <string name="search_title">Zodpovedajúce epizódy</string>
   <string name="share_episode">Zdieľať epizódu</string>
   <string name="share_checkout">Pozrite si</string>
   <string name="search_description">Epizódy</string>
@@ -26,9 +25,18 @@
   <string name="share">Zdieľať</string>
   <string name="updated">Updated to latest version.</string>
   <string name="discard">Discard</string>
+  <string name="close">Close</string>
   <string name="save_selection">Save selection</string>
   <string name="offline">Žiadne sieťové pripojenie. Skúste to neskôr.</string>
   <string name="onlyx">K dispozícii len v SeriesGuide X</string>
+  <string name="shows">Shows</string>
+  <string name="lists">Lists</string>
+  <string name="activity">Činnosť</string>
+  <string name="movies">Movies</string>
+  <string name="search">Search</string>
+  <string name="add_show">Pridať seriál</string>
+  <string name="preferences">Nastavenia</string>
+  <string name="help">Pomoc</string>
   <string name="shouts">Výkriky</string>
   <string name="shout_hint">Napíšte výkrik (v Angličtine)</string>
   <string name="shout">Zakrič!</string>
@@ -36,6 +44,8 @@
   <string name="no_shouts">Buď prvý kto zakričí!</string>
   <string name="shouts_for">Výkriky pre %s</string>
   <string name="autorefresh">Automatická obnova</string>
+  <string name="movies_search_hint">Type a movie title</string>
+  <string name="movies_empty">Search for a movie above.</string>
   <string name="love">Totálna pecka!</string>
   <string name="hate">Odpad :(</string>
   <string name="rating2">Otrasný</string>
@@ -82,7 +92,10 @@
   <string name="trakt_notseen">%s nových.</string>
   <string name="trakt_collected">%s zozbieraných.</string>
   <string name="trakt_notcollected">%s nezozbieraných.</string>
-  <string name="shows_empty">Bez seriálu.</string>
+  <string name="add_empty">There are no shows here or your device has no internet connection.</string>
+  <string name="shows_empty">Look in the menu above to add some shows.</string>
+  <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
+  <string name="hidden_empty">Long-press on a show to hide it here.</string>
   <string name="confirm_delete">Naozaj chcete odstrániť %s?</string>
   <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Odstrániť</string>
@@ -96,7 +109,6 @@
   <string name="context_unhide">Obnoviť</string>
   <string name="hidden">Skrytý seriál</string>
   <string name="unhidden">Obnovený seriál</string>
-  <string name="activity">Činnosť</string>
   <string name="upcoming">Nadchádzajúce</string>
   <string name="recent">Nedávne</string>
   <string name="friends">Priatelia</string>
@@ -133,7 +145,6 @@
   <string name="search_hint_add">Zobraziť názov</string>
   <string name="no_results">Žiadne výsledky, skúste celé slová.</string>
   <string name="search_error">Hľadanie zlyhalo, skúste to neskôr.</string>
-  <string name="add_show">Pridať seriál</string>
   <string name="add_all">Add all</string>
   <string name="dont_add_show">Nepridať</string>
   <string name="add_multiple">All shows will appear in your show list shortly.</string>
@@ -156,12 +167,25 @@
   <string name="list_item_manage">Manage lists</string>
   <string name="list_item_remove">Remove from list</string>
   <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
+  <string name="connect_trakt">Connect trakt</string>
+  <string name="connect_trakt_done">Connected to trakt!</string>
+  <string name="add_trakt_shows">Add shows from your library:</string>
+  <string name="show_library">Show your library</string>
+  <string name="upload_shows">Upload your SeriesGuide show list:</string>
+  <string name="upload_existing_shows">Upload existing shows</string>
+  <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
+  <string name="integration_trakt">If you connect trakt:</string>
+  <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
+  <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
+  <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
+  <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
+  <string name="trakt_download">Download to SeriesGuide</string>
+  <string name="trakt_upload">Upload to trakt.tv</string>
+  <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
   <string name="prefs_category_basic">Základné</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Pokročilé</string>
   <string name="prefs_category_about">About</string>
-  <string name="help">Pomoc</string>
-  <string name="preferences">Nastavenia</string>
   <string name="pref_showsorting">Zoradiť seriály podľa…</string>
   <string name="pref_onlyfuture">Žiadne odvysielané epizódy</string>
   <string name="pref_onlyfuturesummary">Never display already aired episodes</string>
@@ -181,10 +205,9 @@
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">Odpojiť GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Check In with GetGlue to reconnect</string>
-  <string name="pref_trakt">Prihlásenie trakt.tv </string>
+  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
   <string name="pref_traktsummary">Pridajte alebo upravte vaše prihlasovacie údaje</string>
-  <string name="pref_traktsync">Synchronizovať s trakt.tv</string>
+  <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">Poslať reakciu</string>
   <string name="clear_cache">Vymazať vyrovnávaciu pamäť obrázkov</string>
   <string name="clear_cache_summary">Odstrániť všetky obrázky stiahnuté do zariadenia</string>
@@ -222,11 +245,13 @@
   <string name="checkin_searchhint">Napíšte názov seriálu</string>
   <string name="checkin_empty">Seriál sa nenašiel</string>
   <string name="checkin_hint">Napíšte správu (nepovinné)</string>
-  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
-  <string name="paste_episode">Prilepiť epizódu</string>
+  <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
+  <string name="paste_title">Paste title</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-  <string name="checkinfailed">Pridanie ohlasu zlyhalo. Skúste odpojiť GetGlue.</string>
+  <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">GetGlue overenie zlyhalo. Skúste to znova neskôr.</string>
+  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+  <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
   <string name="select_show">Select show</string>
   <string name="check_into">Check into</string>
   <string name="no_selection">pick one below</string>
@@ -234,7 +259,7 @@
   <string name="menu_rate_trakt">Hodnotiť (trakt)</string>
   <string name="menu_share_others">Cez iné aplikácie</string>
   <string name="traktcheckin_cancel">Prepísať</string>
-  <string name="traktcheckin_inprogress">Už ste ohlásený u inej epizódy či filmu. Môžete svoje ohlásenie prepísať alebo počkajte %s a skúste to znovu.</string>
+  <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
   <string name="traktcheckin_wait">Budem čakať</string>
   <string name="oauthmessage">Autentifikácia SeriesGuide s GetGlue</string>
   <string name="addtocalendar">Pridať do kalendára</string>
@@ -249,14 +274,7 @@
   <string name="trakt_decryptfail">Heslo nebolo možné dešifrovať</string>
   <string name="trakt_generalerror">Niečo sa pokazilo. Skontrolujte si prosím prihlasovacie údaje a skúste to znova.</string>
   <string name="trakt_createaccount">Vytvoriť nový účet</string>
-  <string name="trakt_experimental">Only shows in your SeriesGuide show list are synced. \'Sync to SeriesGuide\' fetches watched flags from trakt. \'Sync to trakt\' sends watched flags to trakt.</string>
-  <string name="trakt_synctodevice">Synchronizovať do SeriesGuide</string>
-  <string name="trakt_synctotrakt">Synchronizovať do trakt.tv</string>
-  <string name="trakt_syncunseen">Include unwatched flags</string>
-  <string name="trakt_howto_title">Set up trakt.tv sync</string>
-  <string name="trakt_howto">To set up your devices:\n\n1. Connect or create your account below on every device.\n2. The first time, use the <b>Sync to trakt.tv</b> button to upload your existing shows.\n3. Add shows from trakt.tv by swiping to the <b>Library</b> tab in the <b>Add Show</b> screen.\n\nNow whenever SeriesGuide updates, your trakt.tv activity is downloaded to each device. This includes flagging episodes as watched or collected and check ins.</string>
   <string name="welcome_setuplanguage">Vyberte jazyk</string>
-  <string name="welcome_setuptrakt">Pripojiť k traktu</string>
   <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
   <string name="dismiss">Zamietnuť</string>
   <string name="welcome_add_part1">To get started tap</string>
@@ -265,12 +283,13 @@
   <string name="upcoming_show_detailed">%1$s na %2$s</string>
   <string name="upcoming_display">Vyberte pre zobrazenie nadchádzajúcich seriálov</string>
   <string name="pref_notifications">Notifikácie</string>
-  <string name="pref_notificationssummary">Upozorni ma na vysielanie obľúbených seriálov</string>
+  <string name="pref_notificationssummary">Notify about new episodes</string>
   <string name="pref_notifyfavonly">Favorites only</string>
   <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
   <string name="pref_ringtone">Zvonenie</string>
   <string name="pref_vibrate">Vibrovať</string>
   <string name="pref_vibratesummary">Pri zobrazení notifikácie zavibrovať</string>
+  <string name="pref_notifications_treshold">When to notify</string>
   <string name="pref_theme">Téme aplikácie</string>
   <string name="choose_list">Vyberte zobrazenie</string>
   <string name="hide_watched">Skryť zhliadnuté epizódy</string>
@@ -313,7 +332,12 @@
     <item>Obľúbené</item>
     <item>Nové/Nadchádzajúce</item>
     <item>Skryté</item>
-    <item>Lists</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>on air</item>
+    <item>5 min in advance</item>
+    <item>10 min in advance</item>
+    <item>one hour in advance</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d hlas</item>

@@ -76,7 +76,7 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.checkin));
-        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setIcon(R.drawable.ic_action_checkin);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         // setup search box
@@ -103,8 +103,10 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
             @Override
             public void onClick(View v) {
                 mSearchBox.setText(null);
+                mSearchBox.requestFocus();
             }
         });
+        mSearchBox.requestFocus();
 
         // setup adapter
         String[] from = new String[] {

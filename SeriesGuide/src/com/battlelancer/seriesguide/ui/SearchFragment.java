@@ -46,7 +46,7 @@ import com.uwetrottmann.seriesguide.R;
  */
 public class SearchFragment extends SherlockListFragment implements LoaderCallbacks<Cursor> {
 
-    private static final int LOADER_ID = R.string.search_title;
+    private static final int LOADER_ID = R.string.search_hint;
 
     private SimpleCursorAdapter mAdapter;
 
@@ -123,8 +123,8 @@ public class SearchFragment extends SherlockListFragment implements LoaderCallba
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Intent i = new Intent(getActivity(), EpisodeDetailsActivity.class);
-        i.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, (int) id);
+        Intent i = new Intent(getActivity(), EpisodesActivity.class);
+        i.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, (int) id);
         startActivity(i);
     }
 

@@ -18,25 +18,25 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
-import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.enumerations.Rating;
+import com.jakewharton.trakt.services.MovieService;
 import com.jakewharton.trakt.services.ShowService.CheckinBuilder;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -54,6 +54,24 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     private TraktAction mAction;
 
     private OnTraktActionCompleteListener mListener;
+
+    public interface InitBundle {
+        String TRAKTACTION = "traktaction";
+
+        String IMDB_ID = "imdbid";
+
+        String TVDBID = "tvdbid";
+
+        String SEASON = "season";
+
+        String EPISODE = "episode";
+
+        String MESSAGE = "message";
+
+        String RATING = "rating";
+
+        String ISSPOILER = "isspoiler";
+    }
 
     public interface OnTraktActionCompleteListener {
         public void onTraktActionComplete(boolean wasSuccessfull);
@@ -98,12 +116,28 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      * @param message
      * @return TraktTask
      */
-    public TraktTask checkin(int tvdbid, int season, int episode, String message) {
-        mArgs.putInt(ShareItems.TRAKTACTION, TraktAction.CHECKIN_EPISODE.index);
-        mArgs.putInt(ShareItems.TVDBID, tvdbid);
-        mArgs.putInt(ShareItems.SEASON, season);
-        mArgs.putInt(ShareItems.EPISODE, episode);
-        mArgs.putString(ShareItems.SHARESTRING, message);
+    public TraktTask checkInEpisode(int tvdbid, int season, int episode, String message) {
+        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.CHECKIN_EPISODE.index);
+        mArgs.putInt(InitBundle.TVDBID, tvdbid);
+        mArgs.putInt(InitBundle.SEASON, season);
+        mArgs.putInt(InitBundle.EPISODE, episode);
+        mArgs.putString(InitBundle.MESSAGE, message);
+        return this;
+    }
+
+    /**
+     * Check into an episode. Optionally provide a checkin message.
+     * 
+     * @param tvdbid
+     * @param season
+     * @param episode
+     * @param message
+     * @return TraktTask
+     */
+    public TraktTask checkInMovie(String imdbId, String message) {
+        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.CHECKIN_MOVIE.index);
+        mArgs.putString(InitBundle.IMDB_ID, imdbId);
+        mArgs.putString(InitBundle.MESSAGE, message);
         return this;
     }
 
@@ -117,11 +151,11 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      * @return TraktTask
      */
     public TraktTask rateEpisode(int showTvdbid, int season, int episode, Rating rating) {
-        mArgs.putInt(ShareItems.TRAKTACTION, TraktAction.RATE_EPISODE.index);
-        mArgs.putInt(ShareItems.TVDBID, showTvdbid);
-        mArgs.putInt(ShareItems.SEASON, season);
-        mArgs.putInt(ShareItems.EPISODE, episode);
-        mArgs.putString(ShareItems.RATING, rating.toString());
+        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.RATE_EPISODE.index);
+        mArgs.putInt(InitBundle.TVDBID, showTvdbid);
+        mArgs.putInt(InitBundle.SEASON, season);
+        mArgs.putInt(InitBundle.EPISODE, episode);
+        mArgs.putString(InitBundle.RATING, rating.toString());
         return this;
     }
 
@@ -133,9 +167,9 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      * @return TraktTask
      */
     public TraktTask rateShow(int tvdbid, Rating rating) {
-        mArgs.putInt(ShareItems.TRAKTACTION, TraktAction.RATE_SHOW.index);
-        mArgs.putInt(ShareItems.TVDBID, tvdbid);
-        mArgs.putString(ShareItems.RATING, rating.toString());
+        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.RATE_SHOW.index);
+        mArgs.putInt(InitBundle.TVDBID, tvdbid);
+        mArgs.putString(InitBundle.RATING, rating.toString());
         return this;
     }
 
@@ -148,10 +182,10 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      * @return TraktTask
      */
     public TraktTask shout(int tvdbid, String shout, boolean isSpoiler) {
-        mArgs.putInt(ShareItems.TRAKTACTION, TraktAction.SHOUT.index);
-        mArgs.putInt(ShareItems.TVDBID, tvdbid);
-        mArgs.putString(ShareItems.SHARESTRING, shout);
-        mArgs.putBoolean(ShareItems.ISSPOILER, isSpoiler);
+        mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.SHOUT.index);
+        mArgs.putInt(InitBundle.TVDBID, tvdbid);
+        mArgs.putString(InitBundle.MESSAGE, shout);
+        mArgs.putBoolean(InitBundle.ISSPOILER, isSpoiler);
         return this;
     }
 
@@ -167,15 +201,15 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      */
     public TraktTask shout(int tvdbid, int season, int episode, String shout, boolean isSpoiler) {
         shout(tvdbid, shout, isSpoiler);
-        mArgs.putInt(ShareItems.SEASON, season);
-        mArgs.putInt(ShareItems.EPISODE, episode);
+        mArgs.putInt(InitBundle.SEASON, season);
+        mArgs.putInt(InitBundle.EPISODE, episode);
         return this;
     }
 
     @Override
     protected Response doInBackground(Void... params) {
         // we need this value in onPostExecute, so get it already here
-        mAction = TraktAction.values()[mArgs.getInt(ShareItems.TRAKTACTION)];
+        mAction = TraktAction.values()[mArgs.getInt(InitBundle.TRAKTACTION)];
 
         // check for network connection
         if (!AndroidUtils.isNetworkConnected(mContext)) {
@@ -186,14 +220,14 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         }
 
         // check for valid credentials
-        if (!Utils.isTraktCredentialsValid(mContext)) {
+        if (!ServiceUtils.isTraktCredentialsValid(mContext)) {
             // return null so a credentials dialog is displayed
             // it will call us again with valid credentials
             return null;
         }
 
         // get an authenticated trakt-java ServiceManager
-        ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
+        ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
         if (manager == null) {
             // password could not be decrypted
             Response r = new Response();
@@ -203,9 +237,9 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         }
 
         // get values used by all actions
-        final int tvdbid = mArgs.getInt(ShareItems.TVDBID);
-        final int season = mArgs.getInt(ShareItems.SEASON);
-        final int episode = mArgs.getInt(ShareItems.EPISODE);
+        final int tvdbid = mArgs.getInt(InitBundle.TVDBID);
+        final int season = mArgs.getInt(InitBundle.SEASON);
+        final int episode = mArgs.getInt(InitBundle.EPISODE);
 
         // last chance to abort
         if (isCancelled()) {
@@ -217,31 +251,59 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
             switch (mAction) {
                 case CHECKIN_EPISODE: {
-                    final String message = mArgs.getString(ShareItems.SHARESTRING);
+                    final String message = mArgs.getString(InitBundle.MESSAGE);
 
                     final CheckinBuilder checkinBuilder = manager.showService().checkin(tvdbid)
                             .season(season).episode(episode);
-                    if (message != null && message.length() != 0) {
+                    if (!TextUtils.isEmpty(message)) {
                         checkinBuilder.message(message);
                     }
                     r = checkinBuilder.fire();
 
+                    if (TraktStatus.SUCCESS.equals(r.status)) {
+                        SharedPreferences prefs = PreferenceManager
+                                .getDefaultSharedPreferences(mContext);
+                        r.message = mContext
+                                .getString(R.string.checkin_success_trakt,
+                                        (r.show != null ? r.show.title + " " : "")
+                                                + Utils.getEpisodeNumber(prefs, season, episode));
+                    }
+
+                    break;
+                }
+                case CHECKIN_MOVIE: {
+                    final String imdbId = mArgs.getString(InitBundle.IMDB_ID);
+                    final String message = mArgs.getString(InitBundle.MESSAGE);
+
+                    final MovieService.CheckinBuilder checkinBuilder = manager
+                            .movieService().checkin(imdbId);
+                    if (!TextUtils.isEmpty(message)) {
+                        checkinBuilder.message(message);
+                    }
+                    r = checkinBuilder.fire();
+
+                    if (TraktStatus.SUCCESS.equals(r.status)) {
+                        r.message = mContext
+                                .getString(R.string.checkin_success_trakt,
+                                        (r.movie != null ? r.movie.title + " " : ""));
+                    }
+
                     break;
                 }
                 case RATE_EPISODE: {
-                    final Rating rating = Rating.fromValue(mArgs.getString(ShareItems.RATING));
+                    final Rating rating = Rating.fromValue(mArgs.getString(InitBundle.RATING));
                     r = manager.rateService().episode(tvdbid).season(season).episode(episode)
                             .rating(rating).fire();
                     break;
                 }
                 case RATE_SHOW: {
-                    final Rating rating = Rating.fromValue(mArgs.getString(ShareItems.RATING));
+                    final Rating rating = Rating.fromValue(mArgs.getString(InitBundle.RATING));
                     r = manager.rateService().show(tvdbid).rating(rating).fire();
                     break;
                 }
                 case SHOUT: {
-                    final String shout = mArgs.getString(ShareItems.SHARESTRING);
-                    final boolean isSpoiler = mArgs.getBoolean(ShareItems.ISSPOILER);
+                    final String shout = mArgs.getString(InitBundle.MESSAGE);
+                    final boolean isSpoiler = mArgs.getBoolean(InitBundle.ISSPOILER);
 
                     if (episode == 0) {
                         r = manager.shoutService().show(tvdbid).shout(shout).spoiler(isSpoiler)
@@ -257,15 +319,13 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
             return r;
         } catch (TraktException e) {
-            EasyTracker.getTracker().trackException(e.getMessage(), false);
-            Log.w(TAG, e);
+            Utils.trackExceptionAndLog(mContext, TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.trakt_generalerror);
             return r;
         } catch (ApiException e) {
-            EasyTracker.getTracker().trackException(e.getMessage(), false);
-            Log.w(TAG, e);
+            Utils.trackExceptionAndLog(mContext, TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.trakt_generalerror);
@@ -276,7 +336,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     @Override
     protected void onPostExecute(Response r) {
         // dismiss a potential progress dialog
-        if (mAction == TraktAction.CHECKIN_EPISODE) {
+        if (mAction == TraktAction.CHECKIN_EPISODE || mAction == TraktAction.CHECKIN_MOVIE) {
             Fragment prev = mFm.findFragmentByTag("progress-dialog");
             if (prev != null) {
                 FragmentTransaction ft = mFm.beginTransaction();
@@ -286,18 +346,26 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         }
 
         if (r != null) {
-            if (r.status.equalsIgnoreCase(TraktStatus.SUCCESS)) {
-
+            if (TraktStatus.SUCCESS.equals(r.status)) {
                 // all good
-                Toast.makeText(mContext,
-                        r.message + " " + mContext.getString(R.string.ontrakt),
-                        Toast.LENGTH_SHORT).show();
+
+                switch (mAction) {
+                    case CHECKIN_EPISODE:
+                    case CHECKIN_MOVIE:
+                        Toast.makeText(mContext, r.message, Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        Toast.makeText(mContext,
+                                r.message + " " + mContext.getString(R.string.ontrakt),
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                }
 
                 if (mListener != null) {
                     mListener.onTraktActionComplete(true);
                 }
 
-            } else if (r.status.equalsIgnoreCase(TraktStatus.FAILURE)) {
+            } else if (TraktStatus.FAILURE.equals(r.status)) {
                 if (r.wait != 0) {
 
                     // looks like a check in is in progress
@@ -318,12 +386,6 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 }
             }
         } else {
-            // fail, gather valid credentials first
-            TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
-                    .newInstance(mArgs);
-            FragmentTransaction ft = mFm.beginTransaction();
-            newFragment.show(ft, "traktdialog");
-
             // notify that our first run completed, however due to invalid
             // credentials we have not done anything
             if (mListener != null) {

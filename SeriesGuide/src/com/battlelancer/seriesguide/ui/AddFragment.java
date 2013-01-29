@@ -89,21 +89,6 @@ public class AddFragment extends SherlockFragment {
         mGrid.setAdapter(mAdapter);
     }
 
-    protected OnClickListener mAddButtonListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            // queue show to be added
-            if (v != null && v.getParent() != null) {
-                int position = mGrid.getPositionForView(v);
-                SearchResult show = mAdapter.getItem(position);
-                TaskManager.getInstance(getActivity()).performAddTask(show);
-
-                show.isAdded = true;
-                v.setVisibility(View.INVISIBLE);
-            }
-        }
-    };
-
     protected OnClickListener mDetailsButtonListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -122,18 +107,15 @@ public class AddFragment extends SherlockFragment {
 
         private ImageDownloader mImageDownloader;
 
-        private OnClickListener mAddButtonListener;
-
         private OnClickListener mDetailsButtonListener;
 
         public AddAdapter(Context context, int layout, List<SearchResult> objects,
-                OnClickListener addButtonListener, OnClickListener detailsButtonListener) {
+                OnClickListener detailsButtonListener) {
             super(context, layout, objects);
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             mLayout = layout;
             mImageDownloader = ImageDownloader.getInstance(context);
-            mAddButtonListener = addButtonListener;
             mDetailsButtonListener = detailsButtonListener;
         }
 
@@ -152,7 +134,6 @@ public class AddFragment extends SherlockFragment {
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.poster);
 
                 // add button listeners
-                viewHolder.addbutton.setOnClickListener(mAddButtonListener);
                 viewHolder.details.setOnClickListener(mDetailsButtonListener);
 
                 convertView.setTag(viewHolder);
@@ -160,10 +141,19 @@ public class AddFragment extends SherlockFragment {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
-            SearchResult item = getItem(position);
+            final SearchResult item = getItem(position);
 
             // hide add button if already added that show
             viewHolder.addbutton.setVisibility(item.isAdded ? View.INVISIBLE : View.VISIBLE);
+            viewHolder.addbutton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TaskManager.getInstance(getContext()).performAddTask(item);
+
+                    item.isAdded = true;
+                    v.setVisibility(View.INVISIBLE);
+                }
+            });
 
             // set text properties immediately
             viewHolder.title.setText(item.title);

@@ -33,14 +33,19 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
+/**
+ * Shows recent changes set by the betamessage string. Warns about being on the
+ * beta channel, offers to download stable version or continue.
+ */
 public class ChangesDialogFragment extends DialogFragment {
     private static final String MARKETLINK_HTTP = "http://play.google.com/store/apps/details?id=com.battlelancer.seriesguide";
 
     private static final String MARKETLINK_APP = "market://details?id=com.battlelancer.seriesguide";
 
-    public static final String TAG = "ChangesDialogFragment";
+    public static final String TAG = "Changes Dialog";
 
     public static ChangesDialogFragment show(FragmentManager fm) {
         ChangesDialogFragment f = new ChangesDialogFragment();
@@ -99,5 +104,11 @@ public class ChangesDialogFragment extends DialogFragment {
         });
 
         return layout;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().sendView("Changes Dialog");
     }
 }

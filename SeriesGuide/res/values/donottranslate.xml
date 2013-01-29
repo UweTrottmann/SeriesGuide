@@ -3,17 +3,25 @@
 
     <string name="app_name">SeriesGuide</string>
     <string name="package_name">com.battlelancer.seriesguide</string>
-    <string name="helptranslate">Help translate SeriesGuide</string>
     <string name="googleplay">Google Play</string>
     <string name="amazon">Amazon</string>
     <string name="imdb">IMDb</string>
     <string name="tvdb">TVDb</string>
-    <string name="trakt">trakt.tv</string>
+    <string name="trakt">trakt</string>
+    <string name="powered_by_tmdb">powered by themoviedb.org</string>
     <string name="ontrakt">on trakt</string>
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">Getting closer\n\nOnly add new trakt shows once.\n\nEpisode image in overview is now clickable.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">Thanks again! v3 is out now.\n\nFix crash when flagging episodes watched.\n\nFix show list filter not working after rotating device.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+
+    <!-- Settings -->
+    <string name="pref_translate">Translate SeriesGuide</string>
+    <string name="pref_translatesummary">Translate or proofread on crowdin</string>
+    <string name="pref_community">Google+ community</string>
+    <string name="pref_communitysummary">Share ideas, discuss changes or report problems</string>
+    <string name="pref_suggest_features">Suggest improvements</string>
+    <string name="pref_suggest_featuressummary">Suggest and vote on future improvements</string>
 
     <string-array name="shsortingData">
         <item>alphabetic</item>
@@ -179,6 +187,12 @@
         <item>0</item>
         <item>1</item>
         <item>2</item>
+    </string-array>
+    <string-array name="notificationThresholdData">
+        <item>0</item>
+        <item>5</item>
+        <item>10</item>
+        <item>60</item>
     </string-array>
 
 </resources>

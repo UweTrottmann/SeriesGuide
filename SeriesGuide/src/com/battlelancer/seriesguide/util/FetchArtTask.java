@@ -99,9 +99,11 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
 
     @Override
     protected void onProgressUpdate(Void... values) {
-        // this will only get called if we have to download the image
-        mProgressContainer.setVisibility(View.VISIBLE);
-        mImageView.setVisibility(View.GONE);
+        if (mImageView != null && mProgressContainer != null) {
+            // this will only get called if we have to download the image
+            mProgressContainer.setVisibility(View.VISIBLE);
+            mImageView.setVisibility(View.GONE);
+        }
     }
 
     @Override

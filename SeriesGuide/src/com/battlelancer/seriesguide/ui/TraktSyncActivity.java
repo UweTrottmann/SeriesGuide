@@ -27,7 +27,6 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -35,26 +34,25 @@ import android.widget.CheckBox;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.battlelancer.seriesguide.util.TraktSync;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
+/**
+ * Displays information and offers tools to upload or download watched flags
+ * from trakt.
+ */
 public class TraktSyncActivity extends BaseActivity {
 
     private static final int DIALOG_SELECT_SHOWS = 100;
 
-    private static final String TAG = "TraktSyncActivity";
+    private static final String TAG = "Trakt Sync";
 
     private TraktSync mSyncTask;
 
     private CheckBox mSyncUnseenEpisodes;
 
     private View mContainer;
-
-    public void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +61,6 @@ public class TraktSyncActivity extends BaseActivity {
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
-        actionBar.setTitle(R.string.trakt);
-        setTitle(R.string.trakt);
 
         mContainer = findViewById(R.id.syncbuttons);
 
@@ -75,7 +71,7 @@ public class TraktSyncActivity extends BaseActivity {
         syncToDeviceButton.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
-                fireTrackerEvent("Sync to SeriesGuide");
+                fireTrackerEvent("Download to SeriesGuide");
                 if (mSyncTask == null
                         || (mSyncTask != null && mSyncTask.getStatus() == AsyncTask.Status.FINISHED)) {
                     mSyncTask = (TraktSync) new TraktSync(TraktSyncActivity.this, mContainer,
@@ -91,21 +87,6 @@ public class TraktSyncActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 showDialog(DIALOG_SELECT_SHOWS);
-            }
-        });
-
-        // Trakt.tv credentials
-        final Button setupAccountButton = (Button) findViewById(R.id.setupAccountButton);
-        setupAccountButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                fireTrackerEvent("Setup trakt account");
-                // show the trakt credentials dialog
-                TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
-                        .newInstance();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                newFragment.show(ft, "traktcredentialsdialog");
             }
         });
     }
@@ -153,7 +134,7 @@ public class TraktSyncActivity extends BaseActivity {
         switch (id) {
             case DIALOG_SELECT_SHOWS:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle(R.string.trakt_synctotrakt);
+                builder.setTitle(R.string.trakt_upload);
                 final Cursor shows = getContentResolver().query(Shows.CONTENT_URI, new String[] {
                         Shows._ID, Shows.TITLE, Shows.SYNCENABLED
                 }, null, null, Shows.TITLE + " ASC");
@@ -180,12 +161,12 @@ public class TraktSyncActivity extends BaseActivity {
                                         null, null);
                             }
                         });
-                builder.setPositiveButton(R.string.trakt_synctotrakt,
+                builder.setPositiveButton(R.string.trakt_upload,
                         new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                fireTrackerEvent("Sync to trakt");
+                                fireTrackerEvent("Upload to trakt");
                                 if (mSyncTask == null
                                         || (mSyncTask != null && mSyncTask.getStatus() == AsyncTask.Status.FINISHED)) {
                                     mSyncTask = (TraktSync) new TraktSync(TraktSyncActivity.this,
@@ -199,5 +180,9 @@ public class TraktSyncActivity extends BaseActivity {
                 return builder.create();
         }
         return null;
+    }
+
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Click", label, (long) 0);
     }
 }

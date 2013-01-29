@@ -35,14 +35,17 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.slidingmenu.lib.SlidingMenu;
 import com.uwetrottmann.seriesguide.R;
 
 import java.util.ArrayList;
 
-public class UpcomingRecentActivity extends BaseActivity implements OnAddShowListener {
+public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAddShowListener {
+    private static final String TAG = "Activity";
+
     ViewPager mViewPager;
 
     TabsAdapter mTabsAdapter;
@@ -58,7 +61,7 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setIcon(R.drawable.ic_action_upcoming);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         ActionBar.Tab upcomingTab = actionBar.newTab().setText(R.string.upcoming);
@@ -66,7 +69,7 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
 
-        mTabsAdapter = new TabsAdapter(this, actionBar, mViewPager);
+        mTabsAdapter = new TabsAdapter(this, actionBar, mViewPager, getSlidingMenu());
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
         argsUpcoming.putString(UpcomingFragment.InitBundle.QUERY, UpcomingQuery.QUERY_UPCOMING);
@@ -87,7 +90,7 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
         mTabsAdapter.addTab(recentTab, UpcomingFragment.class, argsRecent);
 
         // trakt friends tab
-        final boolean isTraktSetup = Utils.isTraktCredentialsValid(this);
+        final boolean isTraktSetup = ServiceUtils.isTraktCredentialsValid(this);
         if (isTraktSetup) {
             ActionBar.Tab friendsTab = actionBar.newTab().setText(R.string.friends);
             mTabsAdapter.addTab(friendsTab, TraktFriendsFragment.class, null);
@@ -113,18 +116,12 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
             selection = 0;
         }
         actionBar.setSelectedNavigationItem(selection);
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EasyTracker.getInstance().activityStart(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EasyTracker.getInstance().activityStop(this);
+        if (selection == 0) {
+            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        } else {
+            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+        }
     }
 
     @Override
@@ -155,43 +152,21 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_onlyfavorites) {
+            fireTrackerEvent("Only favorite shows Toggle");
             storeBooleanPreference(item, SeriesGuidePreferences.KEY_ONLYFAVORITES);
             return true;
         } else if (itemId == R.id.menu_nospecials) {
+            fireTrackerEvent("Hide specials Toggle");
             storeBooleanPreference(item, SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES);
             return true;
         } else if (itemId == R.id.menu_nowatched) {
+            fireTrackerEvent("Hide watched Toggle");
             storeBooleanPreference(item, SeriesGuidePreferences.KEY_NOWATCHED);
-            return true;
-        } else if (itemId == android.R.id.home) {
-            /*
-             * force creating a new task if necessary as this activity may be
-             * created from the list widget with SeriesGuide not running
-             * already.
-             */
-            Intent i = new Intent(Intent.ACTION_MAIN).setClass(this, ShowsActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);
-            finish();
-            overridePendingTransition(R.anim.fragment_slide_right_enter,
-                    R.anim.fragment_slide_right_exit);
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
 
-    }
-
-    private void storeBooleanPreference(MenuItem item, String key) {
-        item.setChecked(!item.isChecked());
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-        prefs.edit().putBoolean(key, item.isChecked()).commit();
-    }
-
-    private void readBooleanPreference(SharedPreferences prefs, MenuItem item, String key) {
-        boolean value = prefs.getBoolean(key, false);
-        item.setChecked(value);
     }
 
     /**
@@ -213,16 +188,20 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
 
         private final ViewPager mViewPager;
 
+        private SlidingMenu mSlidingMenu;
+
         private final ArrayList<String> mTabs = new ArrayList<String>();
 
         private final ArrayList<Bundle> mArgs = new ArrayList<Bundle>();
 
         private SharedPreferences mPrefs;
 
-        public TabsAdapter(FragmentActivity activity, ActionBar actionBar, ViewPager pager) {
+        public TabsAdapter(FragmentActivity activity, ActionBar actionBar, ViewPager pager,
+                SlidingMenu slidingMenu) {
             super(activity.getSupportFragmentManager());
             mContext = activity;
             mActionBar = actionBar;
+            mSlidingMenu = slidingMenu;
             mViewPager = pager;
             mViewPager.setAdapter(this);
             mViewPager.setOnPageChangeListener(this);
@@ -255,6 +234,15 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
             mActionBar.setSelectedNavigationItem(position);
             // save selected tab index
             mPrefs.edit().putInt(SeriesGuidePreferences.KEY_ACTIVITYTAB, position).commit();
+
+            switch (position) {
+                case 0:
+                    mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+                    break;
+                default:
+                    mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+                    break;
+            }
         }
 
         @Override
@@ -281,5 +269,22 @@ public class UpcomingRecentActivity extends BaseActivity implements OnAddShowLis
     @Override
     public void onAddShow(SearchResult show) {
         TaskManager.getInstance(this).performAddTask(show);
+    }
+
+    @Override
+    protected void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    }
+
+    private void readBooleanPreference(SharedPreferences prefs, MenuItem item, String key) {
+        boolean value = prefs.getBoolean(key, false);
+        item.setChecked(value);
+    }
+
+    private void storeBooleanPreference(MenuItem item, String key) {
+        item.setChecked(!item.isChecked());
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+        prefs.edit().putBoolean(key, item.isChecked()).commit();
     }
 }

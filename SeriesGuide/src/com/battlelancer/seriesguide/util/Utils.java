@@ -45,9 +45,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.jakewharton.trakt.ServiceManager;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -80,10 +78,6 @@ public class Utils {
     private static final String TIMEZONE_US_PACIFIC = "America/Los_Angeles";
 
     private static final String TIMEZONE_US_MOUNTAIN = "America/Denver";
-
-    private static ServiceManager sServiceManagerWithAuthInstance;
-
-    private static ServiceManager sServiceManagerInstance;
 
     public static final SimpleDateFormat thetvdbTimeFormatAMPM = new SimpleDateFormat("h:mm aa",
             Locale.US);
@@ -610,91 +604,6 @@ public class Utils {
         }
     }
 
-    /**
-     * Get the trakt-java ServiceManger with user credentials and our API key
-     * set.
-     * 
-     * @param context
-     * @param refreshCredentials Set this flag to refresh the user credentials.
-     * @return
-     * @throws Exception When decrypting the password failed.
-     */
-    public static synchronized ServiceManager getServiceManagerWithAuth(Context context,
-            boolean refreshCredentials) {
-        if (sServiceManagerWithAuthInstance == null) {
-            sServiceManagerWithAuthInstance = new ServiceManager();
-            sServiceManagerWithAuthInstance.setReadTimeout(10000);
-            sServiceManagerWithAuthInstance.setConnectionTimeout(15000);
-            sServiceManagerWithAuthInstance.setApiKey(context.getResources().getString(
-                    R.string.trakt_apikey));
-            // this made some problems, so sadly disabled for now
-            // manager.setUseSsl(true);
-
-            refreshCredentials = true;
-        }
-
-        if (refreshCredentials) {
-            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                    .getApplicationContext());
-
-            final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, null);
-            String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, null);
-
-            if (!TextUtils.isEmpty(password)) {
-                // decryption might return null, so wrap in separate condition
-                password = SimpleCrypto.decrypt(password, context);
-            }
-
-            if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
-                sServiceManagerWithAuthInstance.setAuthentication(username, password);
-            } else {
-                // clear all trakt credentials
-                TraktCredentialsDialogFragment.clearTraktCredentials(prefs);
-                sServiceManagerWithAuthInstance.setAuthentication(null, null);
-                return null;
-            }
-        }
-
-        return sServiceManagerWithAuthInstance;
-    }
-
-    /**
-     * Get a trakt-java ServiceManager with just our API key set. NO user auth
-     * data.
-     * 
-     * @param context
-     * @return
-     */
-    public static synchronized ServiceManager getServiceManager(Context context) {
-        if (sServiceManagerInstance == null) {
-            sServiceManagerInstance = new ServiceManager();
-            sServiceManagerInstance.setReadTimeout(10000);
-            sServiceManagerInstance.setConnectionTimeout(15000);
-            sServiceManagerInstance.setApiKey(context.getResources().getString(
-                    R.string.trakt_apikey));
-            // this made some problems, so sadly disabled for now
-            // manager.setUseSsl(true);
-        }
-
-        return sServiceManagerInstance;
-    }
-
-    public static String getTraktUsername(Context context) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                .getApplicationContext());
-
-        return prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
-    }
-
-    public static boolean isTraktCredentialsValid(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                .getApplicationContext());
-        String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, "");
-        String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
-
-        return (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase(""));
-    }
-
     public static String getVersion(Context context) {
         String version;
         try {
@@ -842,7 +751,7 @@ public class Utils {
      * Tracks an exception using the Google Analytics {@link EasyTracker}.
      */
     public static void trackException(Context context, String tag, Exception e) {
-        EasyTracker.getTracker().trackException(tag + ": " + e.getMessage(), false);
+        EasyTracker.getTracker().sendException(tag + ": " + e.getMessage(), false);
     }
 
     /**
@@ -889,17 +798,19 @@ public class Utils {
             imdbButton.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
                     EasyTracker.getTracker()
-                            .trackEvent(logTag, "Click", "Show IMDb page", (long) 0);
+                            .sendEvent(logTag, "Action Item", "IMDb", (long) 0);
 
                     if (!TextUtils.isEmpty(imdbId)) {
-                        Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("imdb:///title/"
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("imdb:///title/"
                                 + imdbId + "/"));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                         try {
-                            activity.startActivity(myIntent);
+                            activity.startActivity(intent);
                         } catch (ActivityNotFoundException e) {
-                            myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_TITLE_URL
+                            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_TITLE_URL
                                     + imdbId));
-                            activity.startActivity(myIntent);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+                            activity.startActivity(intent);
                         }
                     } else {
                         Toast.makeText(activity,
@@ -924,7 +835,11 @@ public class Utils {
                 playButton.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        EasyTracker.getTracker()
+                                .sendEvent(logTag, "Action Item", "Google Play", (long) 0);
+
                         Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                         try {
                             intent.setData(Uri.parse("market://search?q=" + title));
                             v.getContext().startActivity(intent);
@@ -933,8 +848,6 @@ public class Utils {
                                     + title));
                             v.getContext().startActivity(intent);
                         }
-                        EasyTracker.getTracker()
-                                .trackEvent(logTag, "Click", "Google Play", (long) 0);
                     }
                 });
             } else {
@@ -957,13 +870,14 @@ public class Utils {
                 amazonButton.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        EasyTracker.getTracker()
+                                .sendEvent(logTag, "Action Item", "Amazon", (long) 0);
+
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri
                                 .parse("http://www.amazon.com/gp/search?ie=UTF8&keywords=" + title));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                         v.getContext().startActivity(intent);
-
-                        EasyTracker.getTracker()
-                                .trackEvent(logTag, "Click", "Amazon", (long) 0);
                     }
                 });
             } else {

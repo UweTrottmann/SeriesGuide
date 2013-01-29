@@ -171,7 +171,7 @@
     </style>
 
     <style name="Widget.SpinnerItem" parent="Widget">
-        <item name="android:textAppearance">@style/TextAppearance.Medium.Light</item>
+        <item name="android:textAppearance">@style/TextAppearance.Small</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
     </style>
@@ -322,6 +322,20 @@
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:textSize">@dimen/text_size_xmedium</item>
         <item name="android:drawableLeft">@drawable/trakt_heart</item>
+    </style>
+
+    <!-- Episode pager -->
+    <style name="EpisodePagerSpacer">
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <!-- Panes -->
+    <style name="EpisodesPane">
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="DetailsPane">
+        <item name="android:layout_weight">1</item>
     </style>
 
     <!-- ////////////////////////////////////////////// -->

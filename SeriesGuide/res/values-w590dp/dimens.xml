@@ -7,8 +7,4 @@
     <dimen name="widget_text_middle">14sp</dimen>
     <dimen name="widget_text_large">16sp</dimen>
 
-    <integer name="episodespane_weight">3</integer>
-    <integer name="detailsspane_weight">4</integer>
-    <integer name="episode_pager_spacer_weight">1</integer>
-
 </resources>

@@ -24,11 +24,10 @@ import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewStub;
@@ -42,13 +41,9 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
-import com.battlelancer.seriesguide.adapters.ListsPagerAdapter;
-import com.battlelancer.seriesguide.adapters.ShowsPagerAdapter;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
-import com.battlelancer.seriesguide.ui.dialogs.AddListDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.ListManageDialogFragment;
 import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
 import com.battlelancer.seriesguide.util.CompatActionBarNavListener;
 import com.battlelancer.seriesguide.util.ImageProvider;
@@ -59,8 +54,6 @@ import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
-import com.viewpagerindicator.TabPageIndicator;
-import com.viewpagerindicator.TabPageIndicator.OnTabReselectedListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,10 +63,10 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Provides the apps main screen, displaying a list of shows and their next
  * episodes.
  */
-public class ShowsActivity extends BaseActivity implements CompatActionBarNavListener,
-        OnListsChangedListener, OnFirstRunDismissedListener {
+public class ShowsActivity extends BaseTopShowsActivity implements CompatActionBarNavListener,
+        OnFirstRunDismissedListener {
 
-    private static final String TAG = "Shows";
+    protected static final String TAG = "Shows";
 
     private static final int UPDATE_SUCCESS = 100;
 
@@ -86,30 +79,13 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
 
     private static final String STATE_ART_INDEX = "seriesguide.art.index";
 
-    private static final int LIST_NAV_ITEM_POSITION = 4;
-
     private Bundle mSavedState;
 
     private FetchPosterTask mArtTask;
 
-    private ViewPager mPager;
-
     private boolean mIsLoaderStartAllowed;
 
-    private TabPageIndicator mIndicator;
-
-    private ShowsPagerAdapter mShowsAdapter;
-
-    private ListsPagerAdapter mListsAdapter;
-
-    /**
-     * Google Analytics helper method for easy event tracking.
-     * 
-     * @param label
-     */
-    public void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
-    }
+    private Fragment mFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,38 +97,28 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
 
         updatePreferences(prefs);
 
-        // set up adapters
-        mShowsAdapter = new ShowsPagerAdapter(getSupportFragmentManager(), this);
-        mListsAdapter = new ListsPagerAdapter(getSupportFragmentManager(), this);
-
-        // try to restore previously set show filter
-        int navSelection = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
-
-        mPager = (ViewPager) findViewById(R.id.pager);
+        // setup fragments
+        if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
+            mFragment = FirstRunFragment.newInstance();
+            getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
+                    .commit();
+        } else if (savedInstanceState == null) {
+            onShowShowsFragment();
+        } else {
+            mFragment = getSupportFragmentManager().findFragmentById(R.id.shows_fragment);
+        }
 
         // set up action bar
-        setUpActionBar(navSelection);
+        setUpActionBar(prefs);
 
-        // set up view pager
-        onChangePagerAdapter(navSelection);
-
-        mIndicator = (TabPageIndicator) findViewById(R.id.indicator);
-        mIndicator.setViewPager(mPager);
-        mIndicator.setOnTabReselectedListener(new OnTabReselectedListener() {
-            @Override
-            public void onTabReselected(int position) {
-                String listId = mListsAdapter.getListId(position);
-                ListManageDialogFragment.showListManageDialog(listId, getSupportFragmentManager());
-            }
-        });
-        onDisplayTitleIndicator(navSelection);
     }
 
-    private void setUpActionBar(int navSelection) {
+    private void setUpActionBar(SharedPreferences prefs) {
         mIsLoaderStartAllowed = false;
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setIcon(R.drawable.ic_action_menu);
 
         /* setup navigation */
         CompatActionBarNavHandler handler = new CompatActionBarNavHandler(this);
@@ -173,6 +139,10 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         }
 
         // try to restore previously set show filter
+        int navSelection = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
+        if (navSelection < 0 || navSelection > 3) {
+            navSelection = 0;
+        }
         if (getSupportActionBar().getSelectedNavigationIndex() != navSelection) {
             getSupportActionBar().setSelectedNavigationItem(navSelection);
         }
@@ -184,7 +154,6 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
     @Override
     protected void onStart() {
         super.onStart();
-
         EasyTracker.getInstance().activityStart(this);
     }
 
@@ -234,8 +203,6 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
 
             if (paths != null) {
                 mArtTask = (FetchPosterTask) new FetchPosterTask(paths, index).execute();
-                EasyTracker.getTracker().trackEvent(TAG, "Task Lifecycle", "Art Task Restored",
-                        (long) 0);
             }
         }
     }
@@ -250,26 +217,20 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
             outState.putInt(STATE_ART_INDEX, task.mFetchCount.get());
 
             mArtTask = null;
-
-            EasyTracker.getTracker().trackEvent(TAG, "Task Lifecycle", "Art Task Saved", (long) 0);
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.seriesguide_menu, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean isShowingLists = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0) == LIST_NAV_ITEM_POSITION;
-
-        menu.findItem(R.id.menu_list_add).setEnabled(isShowingLists).setVisible(isShowingLists);
 
         MenuItem sortMenu = menu.findItem(R.id.menu_showsortby);
-        sortMenu.setEnabled(!isShowingLists).setVisible(!isShowingLists);
         if (android.os.Build.VERSION.SDK_INT >= 11) {
             final CharSequence[] items = getResources().getStringArray(R.array.shsorting);
             ShowSorting sorting = ShowSorting
@@ -286,24 +247,18 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_quickcheckin) {
-            startActivity(new Intent(this, CheckinActivity.class));
-            return true;
-        } else if (itemId == R.id.menu_search) {
-            onSearchRequested();
-            fireTrackerEvent("Search");
-            return true;
-        } else if (itemId == R.id.menu_update) {
-            performUpdateTask(false, null);
-            fireTrackerEvent("Update");
-            return true;
-        } else if (itemId == R.id.menu_upcoming) {
-            startActivity(new Intent(this, UpcomingRecentActivity.class));
-            return true;
-        } else if (itemId == R.id.menu_new_show) {
+        if (itemId == R.id.menu_add_show) {
+            fireTrackerEvent("Add show");
             startActivity(new Intent(this, AddActivity.class));
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            return true;
+        }
+        else if (itemId == R.id.menu_update) {
+            fireTrackerEvent("Update (outdated)");
+            performUpdateTask(false, null);
             return true;
         } else if (itemId == R.id.menu_updateart) {
+            fireTrackerEvent("Fetch posters");
             if (isArtTaskRunning()) {
                 return true;
             }
@@ -315,47 +270,27 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
                 Toast.makeText(this, getString(R.string.arttask_start), Toast.LENGTH_LONG).show();
                 mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
             }
-            fireTrackerEvent("Fetch missing posters");
-            return true;
-        } else if (itemId == R.id.menu_preferences) {
-            startActivity(new Intent(this, SeriesGuidePreferences.class));
             return true;
         } else if (itemId == R.id.menu_fullupdate) {
+            fireTrackerEvent("Update (all)");
             performUpdateTask(true, null);
-            fireTrackerEvent("Full Update");
-            return true;
-        } else if (itemId == R.id.menu_feedback) {
-            final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-            intent.setType("plain/text");
-            intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {
-                    SeriesGuidePreferences.SUPPORT_MAIL
-            });
-            intent.putExtra(android.content.Intent.EXTRA_SUBJECT,
-                    "SeriesGuide " + Utils.getVersion(this) + " Feedback");
-            intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
-            startActivity(Intent.createChooser(intent, "Send mail..."));
-            fireTrackerEvent("Feedback");
-            return true;
-        } else if (itemId == R.id.menu_help) {
-            Intent myIntent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse(SeriesGuidePreferences.HELP_URL));
-            startActivity(myIntent);
-            fireTrackerEvent("Help");
             return true;
         } else if (itemId == R.id.menu_showsortby) {
+            fireTrackerEvent("Sort shows");
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             ShowSorting sorting = ShowSorting
                     .fromValue(prefs.getString(
                             SeriesGuidePreferences.KEY_SHOW_SORT_ORDER,
                             ShowSorting.FAVORITES_FIRST.value()));
             ShowsFragment.showSortDialog(getSupportFragmentManager(), sorting);
-            fireTrackerEvent("Sort shows");
             return true;
-        } else if (itemId == R.id.menu_list_add) {
-            AddListDialogFragment.showAddListDialog(getSupportFragmentManager());
-            fireTrackerEvent("Add list");
+        }
+        else if (itemId == R.id.menu_search) {
+            fireTrackerEvent("Search");
+            onSearchRequested();
             return true;
-        } else {
+        }
+        else {
             return super.onOptionsItemSelected(item);
         }
     }
@@ -484,14 +419,14 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         protected void onPostExecute(Integer resultCode) {
             switch (resultCode) {
                 case UPDATE_SUCCESS:
-                    EasyTracker.getTracker().trackEvent(TAG, "Fetch missing posters", "Success",
+                    EasyTracker.getTracker().sendEvent(TAG, "Poster Task", "Success",
                             (long) 0);
 
                     Toast.makeText(getApplicationContext(), getString(R.string.update_success),
                             Toast.LENGTH_SHORT).show();
                     break;
                 case UPDATE_INCOMPLETE:
-                    EasyTracker.getTracker().trackEvent(TAG, "Fetch missing posters", "Incomplete",
+                    EasyTracker.getTracker().sendEvent(TAG, "Poster Task", "Incomplete",
                             (long) 0);
 
                     Toast.makeText(getApplicationContext(), getString(R.string.arttask_incomplete),
@@ -521,9 +456,6 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         if (mArtTask != null && mArtTask.getStatus() == AsyncTask.Status.RUNNING) {
             mArtTask.cancel(true);
             mArtTask = null;
-
-            EasyTracker.getTracker().trackEvent(TAG, "Task Lifecycle", "Art Task Canceled",
-                    (long) 0);
         }
     }
 
@@ -616,17 +548,10 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         if (!mIsLoaderStartAllowed) {
             return;
         } else {
-            // show/hide title indicator
-            onDisplayTitleIndicator(itemPosition);
-
-            // attach correct adapter
-            onChangePagerAdapter(itemPosition);
-
             // pass filter to show fragment
             ShowsFragment fragment;
             try {
-                fragment = (ShowsFragment) getSupportFragmentManager().findFragmentByTag(
-                        Utils.makeViewPagerFragmentName(mPager.getId(), 0));
+                fragment = (ShowsFragment) mFragment;
                 if (fragment != null) {
                     fragment.onFilterChanged(itemPosition);
                 }
@@ -640,55 +565,18 @@ public class ShowsActivity extends BaseActivity implements CompatActionBarNavLis
         }
     }
 
-    private void onDisplayTitleIndicator(int itemPosition) {
-        if (itemPosition < LIST_NAV_ITEM_POSITION) {
-            // displaying shows
-            if (mIndicator.getVisibility() == View.VISIBLE) {
-                mIndicator.startAnimation(AnimationUtils.loadAnimation(this,
-                        android.R.anim.fade_out));
-            }
-            mIndicator.setVisibility(View.GONE);
-        } else {
-            // displaying lists
-            if (mIndicator.getVisibility() != View.VISIBLE) {
-                mIndicator.startAnimation(AnimationUtils
-                        .loadAnimation(this, android.R.anim.fade_in));
-            }
-            mIndicator.setVisibility(View.VISIBLE);
-        }
-    }
-
-    private void onChangePagerAdapter(int navItem) {
-        /*
-         * Prevent unnecessary fragment destruction by checking if the right
-         * adapter is already attached.
-         */
-        if (navItem < LIST_NAV_ITEM_POSITION) {
-            if (!(mPager.getAdapter() instanceof ShowsPagerAdapter)) {
-                mPager.setAdapter(mShowsAdapter);
-                mShowsAdapter.notifyDataSetChanged();
-            }
-        } else {
-            if (!(mPager.getAdapter() instanceof ListsPagerAdapter)) {
-                mPager.setAdapter(mListsAdapter);
-                mListsAdapter.notifyDataSetChanged();
-                if (mIndicator != null) {
-                    mIndicator.notifyDataSetChanged();
-                }
-            }
-        }
-    }
-
-    @Override
-    public void onListsChanged() {
-        // refresh list adapter
-        mListsAdapter.onListsChanged();
-        // update indicator and view pager
-        mIndicator.notifyDataSetChanged();
-    }
-
     @Override
     public void onFirstRunDismissed() {
-        mShowsAdapter.notifyDataSetChanged();
+        onShowShowsFragment();
+    }
+
+    protected void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    }
+
+    private void onShowShowsFragment() {
+        mFragment = ShowsFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
+                .commit();
     }
 }

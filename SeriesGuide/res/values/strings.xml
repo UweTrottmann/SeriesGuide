@@ -11,7 +11,6 @@
     <string name="episode_notwatched">Not watched yet</string>
     <string name="specialseason">Special Episodes</string>
     <string name="search_hint">Search episodes</string>
-    <string name="search_title">Matching episodes</string>
     <string name="share_episode">Share episode</string>
     <string name="share_checkout">Check out</string>
     <string name="search_description">Episodes</string>
@@ -27,6 +26,7 @@
     <string name="share">Share</string>
     <string name="updated">Updated to latest version.</string>
     <string name="discard">Discard</string>
+    <string name="close">Close</string>
     <string name="save_selection">Save selection</string>
 
     <plurals name="votes">
@@ -37,6 +37,16 @@
     <string name="offline">No network connectivity. Try again later.</string>
     <string name="onlyx">Only available in SeriesGuide X</string>
 
+    <!-- Main Menu -->
+    <string name="shows">Shows</string>
+    <string name="lists">Lists</string>
+    <string name="activity">Activity</string>
+    <string name="movies">Movies</string>
+    <string name="search">Search</string>
+    <string name="add_show">Add Show</string>
+    <string name="preferences">Settings</string>
+    <string name="help">Help</string>
+
     <!-- Shouts -->
     <string name="shouts">Shouts</string>
     <string name="shout_hint">Type a shout (in English)</string>
@@ -45,6 +55,10 @@
     <string name="no_shouts">Be the first to shout!</string>
     <string name="shouts_for">Shouts for %s</string>
     <string name="autorefresh">Refreshing automagically</string>
+
+    <!-- Movies -->
+    <string name="movies_search_hint">Type a movie title</string>
+    <string name="movies_empty">Search for a movie above.</string>
 
     <!-- Trakt ratings -->
     <string name="love">Totally ninja!</string>
@@ -103,7 +117,10 @@
     <string name="trakt_notcollected">%s not collected.</string>
 
     <!-- SeriesGuide mainscreen -->
-    <string name="shows_empty">No shows here.</string>
+    <string name="add_empty">There are no shows here or your device has no internet connection.</string>
+    <string name="shows_empty">Look in the menu above to add some shows.</string>
+    <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
+    <string name="hidden_empty">Long-press on a show to hide it here.</string>
     <string name="confirm_delete">Do you really want to remove %s?</string>
     <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
     <string name="delete_show">Remove</string>
@@ -119,7 +136,6 @@
     <string name="unhidden">Un-Hidden show</string>
 
     <!-- Activity -->
-    <string name="activity">Activity</string>
     <string name="upcoming">Upcoming</string>
     <string name="recent">Recent</string>
     <string name="friends">Friends</string>
@@ -166,7 +182,6 @@
     <string name="search_hint_add">Show name</string>
     <string name="no_results">No results, try complete words.</string>
     <string name="search_error">Searching failed, try again later.</string>
-    <string name="add_show">Add Show</string>
     <string name="add_all">Add all</string>
     <string name="dont_add_show">Don\'t Add</string>
     <string name="add_multiple">All shows will appear in your show list shortly.</string>
@@ -192,13 +207,30 @@
     <string name="list_item_remove">Remove from list</string>
     <string name="list_empty">You can add shows, seasons or episodes to this list.</string>
 
+    <!-- Connect trakt -->
+    <string name="connect_trakt">Connect trakt</string>
+    <string name="connect_trakt_done">Connected to trakt!</string>
+    <string name="add_trakt_shows">Add shows from your library:</string>
+    <string name="show_library">Show your library</string>
+    <string name="upload_shows">Upload your SeriesGuide show list:</string>
+    <string name="upload_existing_shows">Upload existing shows</string>
+    <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
+    <string name="integration_trakt">If you connect trakt:</string>
+    <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
+
+    <!-- Manual trakt sync -->
+    <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
+    <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
+    <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
+    <string name="trakt_download">Download to SeriesGuide</string>
+    <string name="trakt_upload">Upload to trakt.tv</string>
+    <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
+
     <!-- Settings -->
     <string name="prefs_category_basic">Basics</string>
     <string name="prefs_category_sharing">Services</string>
     <string name="prefs_category_advanced">Advanced</string>
     <string name="prefs_category_about">About</string>
-    <string name="help">Help</string>
-    <string name="preferences">Settings</string>
     <string name="pref_showsorting">Sort shows by…</string>
     <string name="pref_onlyfuture">No aired episodes</string>
     <string name="pref_onlyfuturesummary">Never display already aired episodes</string>
@@ -218,10 +250,9 @@
     <string name="about">About SeriesGuide</string>
     <string name="pref_credits">Credits</string>
     <string name="clearGetGlueCredentials">Disconnect GetGlue</string>
-    <string name="clearGetGlueCredentialssummary">Check In with GetGlue to reconnect</string>
-    <string name="pref_trakt">trakt.tv credentials</string>
+    <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
     <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
-    <string name="pref_traktsync">Sync with trakt.tv</string>
+    <string name="pref_traktsync">Manual sync with trakt.tv</string>
     <string name="feedback">Send feedback</string>
     <string name="clear_cache">Clear image caches</string>
     <string name="clear_cache_summary">Remove all cached images from your device</string>
@@ -291,11 +322,13 @@
     <string name="checkin_searchhint">Type a show name</string>
     <string name="checkin_empty">No matching shows</string>
     <string name="checkin_hint">Type a message (optional)</string>
-    <string name="checkin_fixgetglue">Fix GetGlue check in</string>
-    <string name="paste_episode">Paste episode</string>
+    <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
+    <string name="paste_title">Paste title</string>
     <string name="checkinsuccess">Checked into %s on GetGlue.</string>
-    <string name="checkinfailed">GetGlue Check-in failed. Try disconnecting GetGlue.</string>
+    <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
     <string name="getglue_authfailed">GetGlue authentication failed. Try again later.</string>
+    <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+    <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
 
     <!-- Fix GetGlue Check In -->
     <string name="select_show">Select show</string>
@@ -307,7 +340,7 @@
     <string name="menu_rate_trakt">Rate (trakt)</string>
     <string name="menu_share_others">Via other apps</string>
     <string name="traktcheckin_cancel">Override</string>
-    <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous checkin or wait %s and try again.</string>
+    <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
     <string name="traktcheckin_wait">I\'ll wait</string>
     <string name="oauthmessage">Authenticating SeriesGuide with GetGlue…</string>
     <string name="addtocalendar">Add to calendar</string>
@@ -322,16 +355,9 @@
     <string name="trakt_decryptfail">password could not be decrypted</string>
     <string name="trakt_generalerror">Something went wrong. Please check your credentials and try again.</string>
     <string name="trakt_createaccount">Create new account</string>
-    <string name="trakt_experimental">Only shows in your SeriesGuide show list are synced. \'Sync to SeriesGuide\' fetches watched flags from trakt. \'Sync to trakt\' sends watched flags to trakt.</string>
-    <string name="trakt_synctodevice">Sync to SeriesGuide</string>
-    <string name="trakt_synctotrakt">Sync to trakt.tv</string>
-    <string name="trakt_syncunseen">Include unwatched flags</string>
-    <string name="trakt_howto_title">Set up trakt.tv sync</string>
-    <string name="trakt_howto">To set up your devices:\n\n1. Connect or create your account below on every device.\n2. The first time, use the <b>Sync to trakt.tv</b> button to upload your existing shows.\n3. Add shows from trakt.tv by swiping to the <b>Library</b> tab in the <b>Add Show</b> screen.\n\nNow whenever SeriesGuide updates, your trakt.tv activity is downloaded to each device. This includes flagging episodes as watched or collected and check ins.</string>
 
     <!-- Welcome dialog -->
     <string name="welcome_setuplanguage">Choose language</string>
-    <string name="welcome_setuptrakt">Connect to trakt</string>
     <string name="welcome_traktmessage">Access your trakt.tv library and friends activity</string>
     <string name="dismiss">Dismiss</string>
     <string name="welcome_add_part1">To get started tap</string>
@@ -341,7 +367,6 @@
         <item>Favorites</item>
         <item>Unseen/Upcoming</item>
         <item>Hidden</item>
-        <item>Lists</item>
     </string-array>
 
     <!-- Notifications -->
@@ -350,12 +375,20 @@
     <string name="upcoming_show_detailed">%1$s on %2$s</string>
     <string name="upcoming_display">Select to display upcoming shows</string>
     <string name="pref_notifications">Notifications</string>
-    <string name="pref_notificationssummary">Notify about favorite shows airing soon</string>
+    <string name="pref_notificationssummary">Notify about new episodes</string>
     <string name="pref_notifyfavonly">Favorites only</string>
     <string name="pref_notifyfavonlysummary">Only receive notifications for favorited shows</string>
     <string name="pref_ringtone">Ringtone</string>
     <string name="pref_vibrate">Vibrate</string>
     <string name="pref_vibratesummary">Also vibrate on displaying a notification</string>
+    <string name="pref_notifications_treshold">When to notify</string>
+
+    <string-array name="notificationThreshold">
+        <item>on air</item>
+        <item>5 min in advance</item>
+        <item>10 min in advance</item>
+        <item>one hour in advance</item>
+    </string-array>
 
     <!-- Theme switching -->
     <string name="pref_theme">App Theme</string>

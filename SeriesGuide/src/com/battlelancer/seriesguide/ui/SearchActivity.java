@@ -32,9 +32,9 @@ import com.uwetrottmann.seriesguide.R;
  * Handles search intents and displays a {@link SearchFragment} when needed or
  * redirects directly to an {@link EpisodeDetailsActivity}.
  */
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends BaseTopActivity {
 
-    private static final String TAG = "SearchActivity";
+    private static final String TAG = "Search";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,9 +43,7 @@ public class SearchActivity extends BaseActivity {
         handleIntent(getIntent());
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        setTitle(R.string.search_title);
-        actionBar.setTitle(R.string.search_title);
+        actionBar.setTitle(R.string.search_hint);
         actionBar.setDisplayShowTitleEnabled(true);
     }
 
@@ -72,7 +70,7 @@ public class SearchActivity extends BaseActivity {
             return;
         }
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            EasyTracker.getTracker().trackEvent(TAG, "Search action", "Search", (long) 0);
+            EasyTracker.getTracker().sendEvent(TAG, "Search action", "Search", (long) 0);
             String query = intent.getStringExtra(SearchManager.QUERY);
             getSupportActionBar().setSubtitle("\"" + query + "\"");
 
@@ -88,7 +86,7 @@ public class SearchActivity extends BaseActivity {
                 searchFragment.onPerformSearch(getIntent().getExtras());
             }
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-            EasyTracker.getTracker().trackEvent(TAG, "Search action", "View", (long) 0);
+            EasyTracker.getTracker().sendEvent(TAG, "Search action", "View", (long) 0);
             Uri data = intent.getData();
             String id = data.getLastPathSegment();
             onShowEpisodeDetails(id);
@@ -106,15 +104,21 @@ public class SearchActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_search) {
+            fireTrackerEvent("Search");
             onSearchRequested();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    }
+
     private void onShowEpisodeDetails(String id) {
-        Intent i = new Intent(this, EpisodeDetailsActivity.class);
-        i.putExtra(EpisodeDetailsActivity.InitBundle.EPISODE_TVDBID, Integer.valueOf(id));
+        Intent i = new Intent(this, EpisodesActivity.class);
+        i.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, Integer.valueOf(id));
         startActivity(i);
     }
 

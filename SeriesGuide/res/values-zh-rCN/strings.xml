@@ -10,13 +10,12 @@
   <string name="episode_notwatched">未观看</string>
   <string name="specialseason">特别剧集</string>
   <string name="search_hint">搜索剧集</string>
-  <string name="search_title">匹配的剧集</string>
   <string name="share_episode">共享剧集</string>
   <string name="share_checkout">标记已观看</string>
   <string name="search_description">集数</string>
   <string name="description_overview">总览</string>
   <string name="description_poster">显示海报</string>
-  <string name="description_image">Episode image</string>
+  <string name="description_image">剧集图片</string>
   <string name="norating">N/A</string>
   <string name="loading">正在载入……</string>
   <string name="done">完成</string>
@@ -25,10 +24,19 @@
   <string name="cancel">取消</string>
   <string name="share">分享</string>
   <string name="updated">已更新至最新版本。</string>
-  <string name="discard">Discard</string>
-  <string name="save_selection">Save selection</string>
+  <string name="discard">放弃</string>
+  <string name="close">Close</string>
+  <string name="save_selection">保存选择</string>
   <string name="offline">无网络，请稍后重试。</string>
   <string name="onlyx">仅 SeriesGuide X 可用</string>
+  <string name="shows">剧目</string>
+  <string name="lists">列表</string>
+  <string name="activity">活动</string>
+  <string name="movies">Movies</string>
+  <string name="search">搜索</string>
+  <string name="add_show">添加剧集</string>
+  <string name="preferences">设置</string>
+  <string name="help">帮助</string>
   <string name="shouts">评论</string>
   <string name="shout_hint">输入一段评论（仅英语）</string>
   <string name="shout">提交</string>
@@ -36,6 +44,8 @@
   <string name="no_shouts">做第一个评论者！</string>
   <string name="shouts_for">为 %s 评论</string>
   <string name="autorefresh">自动更新</string>
+  <string name="movies_search_hint">Type a movie title</string>
+  <string name="movies_empty">Search for a movie above.</string>
   <string name="love">超喜欢！</string>
   <string name="hate">弱爆了 :(</string>
   <string name="rating2">糟糕</string>
@@ -82,7 +92,10 @@
   <string name="trakt_notseen">%s 未观看。</string>
   <string name="trakt_collected">%s 已收藏。</string>
   <string name="trakt_notcollected">%s 未收藏。</string>
-  <string name="shows_empty">没有可供显示的内容。</string>
+  <string name="add_empty">There are no shows here or your device has no internet connection.</string>
+  <string name="shows_empty">Look in the menu above to add some shows.</string>
+  <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
+  <string name="hidden_empty">Long-press on a show to hide it here.</string>
   <string name="confirm_delete">您要删除 %s 吗？</string>
   <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">移除</string>
@@ -96,7 +109,6 @@
   <string name="context_unhide">取消隐藏</string>
   <string name="hidden">隐藏的剧集</string>
   <string name="unhidden">未隐藏的剧集</string>
-  <string name="activity">活动</string>
   <string name="upcoming">即将播出</string>
   <string name="recent">最近浏览</string>
   <string name="friends">朋友分享</string>
@@ -133,7 +145,6 @@
   <string name="search_hint_add">剧集名称</string>
   <string name="no_results">没有搜索结果，请尝试搜索完整名称。</string>
   <string name="search_error">搜索出错，请稍后再试。</string>
-  <string name="add_show">添加剧集</string>
   <string name="add_all">全部添加</string>
   <string name="dont_add_show">不要添加</string>
   <string name="add_multiple">所有剧集将会出现在您的列表中。</string>
@@ -156,12 +167,25 @@
   <string name="list_item_manage">管理多个列表</string>
   <string name="list_item_remove">从列表中删除</string>
   <string name="list_empty">您可以将整季或单集添加到列表中。</string>
+  <string name="connect_trakt">Connect trakt</string>
+  <string name="connect_trakt_done">Connected to trakt!</string>
+  <string name="add_trakt_shows">Add shows from your library:</string>
+  <string name="show_library">Show your library</string>
+  <string name="upload_shows">Upload your SeriesGuide show list:</string>
+  <string name="upload_existing_shows">Upload existing shows</string>
+  <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
+  <string name="integration_trakt">If you connect trakt:</string>
+  <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
+  <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
+  <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
+  <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
+  <string name="trakt_download">Download to SeriesGuide</string>
+  <string name="trakt_upload">Upload to trakt.tv</string>
+  <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
   <string name="prefs_category_basic">基本</string>
-  <string name="prefs_category_sharing">Services</string>
+  <string name="prefs_category_sharing">关联服务</string>
   <string name="prefs_category_advanced">高级</string>
   <string name="prefs_category_about">关于</string>
-  <string name="help">帮助</string>
-  <string name="preferences">设置</string>
   <string name="pref_showsorting">剧集排序依据</string>
   <string name="pref_onlyfuture">仅显示计划中的剧集</string>
   <string name="pref_onlyfuturesummary">不显示已播出剧集</string>
@@ -181,10 +205,9 @@
   <string name="about">关于 SeriesGuide 应用</string>
   <string name="pref_credits">制作人员</string>
   <string name="clearGetGlueCredentials">断开与 GetGlue 的连接</string>
-  <string name="clearGetGlueCredentialssummary">登录到 GetGlue 来重新连接</string>
-  <string name="pref_trakt">trakt.tv 证书</string>
-  <string name="pref_traktsummary">添加或编辑您的 trakt.tv 证书</string>
-  <string name="pref_traktsync">与 trakt.tv 同步</string>
+  <string name="clearGetGlueCredentialssummary">使用GetGlue账户签到并重新连接</string>
+  <string name="pref_traktsummary">添加或编辑您的 trakt.tv 账号</string>
+  <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">发送反馈报告</string>
   <string name="clear_cache">清理图片缓存</string>
   <string name="clear_cache_summary">从您的设备中删除所有缓存的图片</string>
@@ -194,8 +217,8 @@
   <string name="pref_ganalyticssummary">跟踪功能的使用情况来帮助改进 SeriesGuide</string>
   <string name="sendusagedata">发送使用情况至开发者</string>
   <string name="pref_upcominglimit">即将播出的时间限制</string>
-  <string name="pref_autoaddshows">Add new trakt shows</string>
-  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+  <string name="pref_autoaddshows">添加新的trakt剧目</string>
+  <string name="pref_autoaddshowssummary">自动从你的trakt正在观看剧目中添加剧目</string>
   <string name="backup_description">使用 <b>备份</b> 功能会在下列文件夹中创建名为 <b>seriesdatabase</b> 的文件。\n\n要进行 <b>还原</b> 操作，请确认备份文件存放在指定目录中。\n\n只有与当前数据相同或更低版本的文件会被还原。</string>
   <string name="backup_path"><b>备份</b> 文件路径</string>
   <string name="backup_version"><b>数据库版本</b></string>
@@ -222,19 +245,21 @@
   <string name="checkin_searchhint">输入剧集名称</string>
   <string name="checkin_empty">没有匹配项目</string>
   <string name="checkin_hint">输入一段文字（可选）</string>
-  <string name="checkin_fixgetglue">Fix GetGlue check in</string>
-  <string name="paste_episode">粘贴剧集信息</string>
+  <string name="checkin_fixgetglue">修改GetGlue签到</string>
+  <string name="paste_title">Paste title</string>
   <string name="checkinsuccess">已在 GetGlue 上评论 %s。</string>
-  <string name="checkinfailed">发送到 GetGlue 失败，请尝试断开帐号关联。</string>
+  <string name="checkinfailed">GetGlue 签到失败。请稍后再试。</string>
   <string name="getglue_authfailed">GetGlue 认证失败，请稍后重试。</string>
-  <string name="select_show">Select show</string>
-  <string name="check_into">Check into</string>
-  <string name="no_selection">pick one below</string>
-  <string name="looking_for_something_else">Looking for something else?</string>
+  <string name="checkin_success_trakt">Checked into %s on trakt.</string>
+  <string name="checkin_canceled_success_trakt">取消trakt上的签到</string>
+  <string name="select_show">选择剧目</string>
+  <string name="check_into">签到</string>
+  <string name="no_selection">从下面当中选一个</string>
+  <string name="looking_for_something_else">不是你想要找的?</string>
   <string name="menu_rate_trakt">打分 (trakt)</string>
   <string name="menu_share_others">通过其它应用</string>
   <string name="traktcheckin_cancel">覆盖</string>
-  <string name="traktcheckin_inprogress">您已经评论了另一个剧集或电影。覆盖先前的剧集或等待 %s 之后重试</string>
+  <string name="traktcheckin_inprogress">你已经对另一个剧集或电影签到了。你可以选择覆盖掉之前的签到或者等待 %s 后重新签到。</string>
   <string name="traktcheckin_wait">继续等待</string>
   <string name="oauthmessage">关联“美剧指南”与 GetGlue 帐号。</string>
   <string name="addtocalendar">加入日程计划</string>
@@ -249,14 +274,7 @@
   <string name="trakt_decryptfail">无法解密密钥</string>
   <string name="trakt_generalerror">出现了一些问题。请检查您的凭据后重试。</string>
   <string name="trakt_createaccount">创建新用户</string>
-  <string name="trakt_experimental">只有“美剧指南”中的列表会被同步。<b>同步到本地</b> 来自 trakt.tv 的观看标记。<b>同步到 trakt.tv</b> 发送观看标记到服务器。</string>
-  <string name="trakt_synctodevice">同步到本地</string>
-  <string name="trakt_synctotrakt">同步到 trakt.tv</string>
-  <string name="trakt_syncunseen">包含未观看标记</string>
-  <string name="trakt_howto_title">设置 trakt.tv 同步</string>
-  <string name="trakt_howto">要设置您的设备：\n\n1. 在所有设备上关联或创建一个下列帐号。\n\n2. 首次同步时，轻触 <b>同步到 trakt.tv</b> 来上传列表。\n\n 3. 滑动到 <b>添加节目</b> 页的 <b>数据库</b> 选项卡以添加 trakt.tv 上的节目。\n\n现在，无论何时“美剧指南”的数据更新，您的 trakt.tv 活动都会下载到每台设备。包括已观看或已收藏等标记也会被同步。</string>
   <string name="welcome_setuplanguage">选择语言</string>
-  <string name="welcome_setuptrakt">关联 trakt.tv 帐号</string>
   <string name="welcome_traktmessage">随时访问您的数据库和好友动态</string>
   <string name="dismiss">忽略</string>
   <string name="welcome_add_part1">第一次使用？轻触……</string>
@@ -265,12 +283,13 @@
   <string name="upcoming_show_detailed">%1$s 在 %2$s 频道</string>
   <string name="upcoming_display">选中来显示即将播出的剧集</string>
   <string name="pref_notifications">通知</string>
-  <string name="pref_notificationssummary">喜爱的节目播放之前发出通知</string>
+  <string name="pref_notificationssummary">Notify about new episodes</string>
   <string name="pref_notifyfavonly">仅喜爱列表</string>
   <string name="pref_notifyfavonlysummary">只接收喜爱节目的通知</string>
   <string name="pref_ringtone">铃声</string>
   <string name="pref_vibrate">振动</string>
   <string name="pref_vibratesummary">显示通知时振动</string>
+  <string name="pref_notifications_treshold">何时通知</string>
   <string name="pref_theme">应用主题</string>
   <string name="choose_list">选择活动列表</string>
   <string name="hide_watched">隐藏已观看剧集</string>
@@ -313,7 +332,12 @@
     <item>喜爱</item>
     <item>未观看且即将播出</item>
     <item>隐藏</item>
-    <item>列表</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>放映</item>
+    <item>提前 5 分钟</item>
+    <item>提前 10 分钟</item>
+    <item>提前一小时</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d 个评价</item>

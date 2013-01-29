@@ -10,13 +10,12 @@
   <string name="episode_notwatched">Katsomaton</string>
   <string name="specialseason">Erikoisjaksot</string>
   <string name="search_hint">Hae jaksoja</string>
-  <string name="search_title">Löytyneet jaksot</string>
   <string name="share_episode">Jaa jakso</string>
-  <string name="share_checkout">Kirjaa ulos</string>
+  <string name="share_checkout">Kuittaa ulos</string>
   <string name="search_description">Jaksot</string>
   <string name="description_overview">Yleiskatsaus</string>
   <string name="description_poster">Näytä juliste</string>
-  <string name="description_image">Episode image</string>
+  <string name="description_image">Jaksokuva</string>
   <string name="norating">puuttuu</string>
   <string name="loading">Ladataan…</string>
   <string name="done">Valmis</string>
@@ -26,16 +25,27 @@
   <string name="share">Jaa</string>
   <string name="updated">Päivitetty viimeisimpään versioon.</string>
   <string name="discard">Hävitä</string>
+  <string name="close">Close</string>
   <string name="save_selection">Tallenna valinta</string>
   <string name="offline">Ei verkkoyhteyttä. Yritä myöhemmin uudelleen.</string>
   <string name="onlyx">Saatavilla vain SeriesGuide X:ssä</string>
+  <string name="shows">Ohjelmat</string>
+  <string name="lists">Listat</string>
+  <string name="activity">Toiminta</string>
+  <string name="movies">Elokuvat</string>
+  <string name="search">Hae</string>
+  <string name="add_show">Lisää ohjelma</string>
+  <string name="preferences">Asetukset</string>
+  <string name="help">Apua</string>
   <string name="shouts">Huudahdukset</string>
   <string name="shout_hint">Kirjoita huudahdus (englanniksi)</string>
-  <string name="shout">Huudahdus!</string>
+  <string name="shout">Huudahda!</string>
   <string name="isspoiler">Juonipaljastusvaroitus!</string>
   <string name="no_shouts">Huudahda ensimmäisenä!</string>
   <string name="shouts_for">Huudahdukset ohjelmalle %s</string>
   <string name="autorefresh">Päivitetään automaagisesti</string>
+  <string name="movies_search_hint">Kirjoita elokuvan nimi</string>
+  <string name="movies_empty">Etsi elokuvaa.</string>
   <string name="love">Maailman parasta!</string>
   <string name="hate">Ei sytyttänyt :(</string>
   <string name="rating2">Kauhea</string>
@@ -82,9 +92,12 @@
   <string name="trakt_notseen">%s ei ole katsottu.</string>
   <string name="trakt_collected">%s kerätty.</string>
   <string name="trakt_notcollected">%s ei ole kerätty.</string>
-  <string name="shows_empty">Ei ohjelmia täällä.</string>
+  <string name="add_empty">There are no shows here or your device has no internet connection.</string>
+  <string name="shows_empty">Katso yllä olevaa valikkoa lisätäksesi ohjelmia.</string>
+  <string name="favorites_empty">Paina ohjelmaa pitkään lisätäksesi Suosikkeihin.</string>
+  <string name="hidden_empty">Paina ohjelmaa pitkään piillottaaksesi se tänne.</string>
   <string name="confirm_delete">Haluatko todella poistaa %s?</string>
-  <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
+  <string name="delete_has_list_items">Ei onnistu. Poista %s kaikilta listoiltasi ensin.</string>
   <string name="delete_show">Poista</string>
   <string name="dontdelete_show">Älä poista</string>
   <string name="no_nextepisode">seuraavaa jaksoa ei löynyt</string>
@@ -93,10 +106,9 @@
   <string name="favorited">Lisätty suosikkeihin</string>
   <string name="unfavorited">Poistettu suosikeista</string>
   <string name="context_hide">Piilota</string>
-  <string name="context_unhide">Näytä</string>
+  <string name="context_unhide">Paljasta</string>
   <string name="hidden">Piilotettu ohjelma</string>
   <string name="unhidden">Paljasta ohjelma</string>
-  <string name="activity">Toiminta</string>
   <string name="upcoming">Tulevat</string>
   <string name="recent">Viimeisimmät</string>
   <string name="friends">Ystävät</string>
@@ -133,10 +145,9 @@
   <string name="search_hint_add">Ohjelman nimi</string>
   <string name="no_results">Ei tuloksia, yritä kokonaisia sanoja.</string>
   <string name="search_error">Haku epäonnistui, yritä myöhemmin uudelleen.</string>
-  <string name="add_show">Lisää ohjelma</string>
   <string name="add_all">Lisää kaikki</string>
   <string name="dont_add_show">Älä lisää</string>
-  <string name="add_multiple">Kaikki ohjelmat ilmaantuvat ohjelmalistaasi pian.</string>
+  <string name="add_multiple">Kaikki ohjelmat ilmaantuvat pian ohjelmalistaasi.</string>
   <string name="add_started">ilmestyy pian ohjelmaluetteloosi.</string>
   <string name="add_success">lisätty onnistuneesti.</string>
   <string name="add_error_begin">Ei voi lisätä ohjelmaa \"</string>
@@ -155,18 +166,31 @@
   <string name="list_manage">Hallitse listaa</string>
   <string name="list_item_manage">Hallitse listoja</string>
   <string name="list_item_remove">Poista listalta</string>
-  <string name="list_empty">Voit listä ohjelmia, kausia tai jaksoja tähän listaan.</string>
+  <string name="list_empty">Voit lisätä ohjelmia, kausia tai jaksoja tähän listaan.</string>
+  <string name="connect_trakt">Connect trakt</string>
+  <string name="connect_trakt_done">Connected to trakt!</string>
+  <string name="add_trakt_shows">Add shows from your library:</string>
+  <string name="show_library">Show your library</string>
+  <string name="upload_shows">Upload your SeriesGuide show list:</string>
+  <string name="upload_existing_shows">Upload existing shows</string>
+  <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
+  <string name="integration_trakt">If you connect trakt:</string>
+  <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
+  <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
+  <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
+  <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
+  <string name="trakt_download">Download to SeriesGuide</string>
+  <string name="trakt_upload">Upload to trakt.tv</string>
+  <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
   <string name="prefs_category_basic">Perustiedot</string>
-  <string name="prefs_category_sharing">Services</string>
+  <string name="prefs_category_sharing">Palvelut</string>
   <string name="prefs_category_advanced">Edistyneet</string>
   <string name="prefs_category_about">Tietoja</string>
-  <string name="help">Apua</string>
-  <string name="preferences">Asetukset</string>
   <string name="pref_showsorting">Lajittele ohjelmat…</string>
   <string name="pref_onlyfuture">Ei esitettyjä jaksoja</string>
   <string name="pref_onlyfuturesummary">Älä koskaan näytä jo esitettyjä jaksoja</string>
   <string name="pref_onlyseasoneps">Piilota erikoisjaksot</string>
-  <string name="pref_onlyseasonepssummary">Erikoisjaksot eivät näy, paitsi kausiluettelosta</string>
+  <string name="pref_onlyseasonepssummary">Erikoisjaksot eivät näy, paitsi kausiluettelossa</string>
   <string name="pref_seasonsorting">Lajittele kaudet…</string>
   <string name="pref_episodesorting">Lajittele jaksot…</string>
   <string name="backup">Varmuuskopioi/Palauta</string>
@@ -182,20 +206,19 @@
   <string name="pref_credits">Tekijät</string>
   <string name="clearGetGlueCredentials">Irrottaudu GetGluesta</string>
   <string name="clearGetGlueCredentialssummary">Kuittaa GetGluen kanssa yhdistääksesi uudelleen</string>
-  <string name="pref_trakt">trakt.tv:n käyttäjätiedot</string>
   <string name="pref_traktsummary">Lisää tai muokkaa trakt.tv:n käyttäjätietojasi</string>
-  <string name="pref_traktsync">Synkronoi trakt.tv:n kanssa</string>
+  <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">Lähetä palautetta</string>
   <string name="clear_cache">Tyhjennä kuvavälimuisti</string>
   <string name="clear_cache_summary">Poista kaikki välimuistiin tallennetut kuvat laitteesta</string>
   <string name="pref_hideimages">Piilota kuvat</string>
-  <string name="pref_hideimagessummary">Piilota kuvat puhelimesi galleriasta (vaatii uudelleenkäynnistyksen)</string>
+  <string name="pref_hideimagessummary">Piilota kuvat kuvagalleriassasi(vaatii uudelleenkäynnistyksen)</string>
   <string name="pref_ganalytics">Google Analytics</string>
   <string name="pref_ganalyticssummary">Seuraa ominaisuuksien käyttöä, jonka avulla parannetaan SeriesGuidea</string>
   <string name="sendusagedata">Lähetä kehittäjälle käyttötilastoja</string>
   <string name="pref_upcominglimit">Tulevat ohjelmat ajalta…</string>
-  <string name="pref_autoaddshows">Add new trakt shows</string>
-  <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+  <string name="pref_autoaddshows">Lisää uudet ohjelmat traktista</string>
+  <string name="pref_autoaddshowssummary">Automaattisesti lisää uudet ohjelmat traktin toimintavirrastasi</string>
   <string name="backup_description"><b>Varmuuskopio</b> luo kopion ohjelmatietokannastasi tiedostoon nimeltä <b>seriesdatabase</b> alla mainittuun kansioon.\n\n<b>Palauttaaksesi</b> varmista tiedoston olevan alla mainitussa kansiossa.\n\nVain saman tai vanhemman tietokantaversion omaavat varmuuskopiot voidaan palauttaa.</string>
   <string name="backup_path"><b>Varmuuskopiointikansio</b></string>
   <string name="backup_version"><b>Tietokannan versio</b></string>
@@ -207,7 +230,7 @@
   <string name="import_failed_nosd">Ei voi palauttaa varmuuskopiota. Varmuuskopiointikansiota ei löydy.</string>
   <string name="import_failed_nofile">Varmuuskopiotiedostoa ei ole.</string>
   <string name="import_failed_noread">Varmuuskopiotiedostoa ei voi lukea.</string>
-  <string name="dbupgradefailed">Varmuuskopiosi saattaa olla liian vanha tai tyhjä. Huom: Tuo 2.0 versiota edeltävät varmuuskopiot ensiin versioon 1.9.x.</string>
+  <string name="dbupgradefailed">Varmuuskopiosi saattaa olla liian vanha tai tyhjä. Huom: Tuo 2.0 versiota edeltävät varmuuskopiot ensin versioon 1.9.x.</string>
   <string name="import_success">Varmuuskopio palautettu onnistuneesti.</string>
   <string name="import_failed">Varmuuskopion palauttaminen epäonnistui.</string>
   <string name="backup_button">Varmuuskopioi</string>
@@ -218,23 +241,25 @@
   <string name="import_question">Nykyinen ohjelmalista menetetään! Varmista, että varmuuskopiotiedosto on varmuuskopiokansiossa.</string>
   <string name="import_yes">Palauta</string>
   <string name="import_no">Älä palauta</string>
-  <string name="checkin">Kirjaus</string>
+  <string name="checkin">Kuittaa</string>
   <string name="checkin_searchhint">Kirjoita ohjelman nimi</string>
   <string name="checkin_empty">Ei vastaavia ohjelmia</string>
   <string name="checkin_hint">Kirjoita viesti (valinnainen)</string>
-  <string name="checkin_fixgetglue">Korjaa GetGlue-kirjaus</string>
-  <string name="paste_episode">Liitä jakso</string>
-  <string name="checkinsuccess">Kirjattu kohteeseen %s GetGluessa.</string>
-  <string name="checkinfailed">GetGluen kirjaus epäonnistui. Yritä irrottautua GetGluesta.</string>
+  <string name="checkin_fixgetglue">Korjaa GetGlue-kuittaus</string>
+  <string name="paste_title">Liitä nimi</string>
+  <string name="checkinsuccess">Kuitattu kohteeseen %s GetGluessa.</string>
+  <string name="checkinfailed">GetGlue-kuittaus epäonnistui. Yritä myöhemmin uudelleen.</string>
   <string name="getglue_authfailed">GetGluen todentaminen epäonnistui. Yritä myöhemmin uudelleen.</string>
+  <string name="checkin_success_trakt">Kuitattu kohteeseen %s traktissa.</string>
+  <string name="checkin_canceled_success_trakt">Kuittaus peruttu traktissa.</string>
   <string name="select_show">Valitse ohjelma</string>
-  <string name="check_into">Kirjaa</string>
-  <string name="no_selection">Valitse yksi alta</string>
+  <string name="check_into">Kuittaa</string>
+  <string name="no_selection">valitse yksi alta</string>
   <string name="looking_for_something_else">Etsitkö jotain muuta?</string>
   <string name="menu_rate_trakt">Arvostele (trakt)</string>
   <string name="menu_share_others">Muulla sovelluksella</string>
   <string name="traktcheckin_cancel">Korvaa</string>
-  <string name="traktcheckin_inprogress">Olet jo kirjautunut toiseen jaksoon tai elokuvaan. Joko korvaa edellinen kirjaus tai odota %s ja yritä uudelleen.</string>
+  <string name="traktcheckin_inprogress">Olet jo kuitannut toiseen jaksoon tai elokuvaan. Joko korvaa edellinen kuittaus tai odota %s ja yritä uudelleen.</string>
   <string name="traktcheckin_wait">Odotetaan</string>
   <string name="oauthmessage">Todennetaan SeriesGuide palveluun GetGlue…</string>
   <string name="addtocalendar">Lisää kalenteriin</string>
@@ -249,15 +274,8 @@
   <string name="trakt_decryptfail">Salasanaa ei voitu purkaa</string>
   <string name="trakt_generalerror">Jokin meni pieleen. Tarkista käyttäjätietosi ja yritä uudelleen.</string>
   <string name="trakt_createaccount">Luo uusi tili</string>
-  <string name="trakt_experimental">Vain SeriesGuidessa olevat ohjelmat synkronoidaan.\'Synkronoi SeriesGuideen\' noutaa katsotuksi merkatut traktista.\'Synkronoi traktiin\' lähettää katsotuksi merkatut traktiin.</string>
-  <string name="trakt_synctodevice">Synkronoi SeriesGuideen</string>
-  <string name="trakt_synctotrakt">Synkronoi traktiin</string>
-  <string name="trakt_syncunseen">Sisällytä katsomattomaksi merkatut</string>
-  <string name="trakt_howto_title">Määritä trakt.tv:n syknronointi</string>
-  <string name="trakt_howto">Määrittääksesi laitteesi:\n\n1. Yhdistä tai luo tilisi alla jokaisella laitteellasi.\n2. Ensimmäisellä kerralla käytä <b>Synkronoi traktiin</b> -nappia lähettääksesi nykyiset ohjelmasi.\n3. Lisää ohjelmat traktista pyyhkäisemällä <b>Kokoelma</b> -välilehteen <b>Lisää ohjelma</b> -näkymässä.\n\nNyt aina SeriesGuiden päivittäessä trakt.tv -toimintasi ladataan jokaiseen laitteeseen. Tähän sisältyy myös jaksojen merkitseminen katsotuiksi, kerätyiksi tai kirjatuiksi.</string>
   <string name="welcome_setuplanguage">Valitse kieli</string>
-  <string name="welcome_setuptrakt">Yhdistä traktiin</string>
-  <string name="welcome_traktmessage">Käytä trakt.tv-kirjastoasi ja näe ystäviesi toiminta</string>
+  <string name="welcome_traktmessage">Käytä trakt.tv-kokoelmaasi ja näe ystäviesi toiminta</string>
   <string name="dismiss">Hylkää</string>
   <string name="welcome_add_part1">Napauta aloittaaksesi</string>
   <string name="upcoming_show">%s on tulossa</string>
@@ -265,12 +283,13 @@
   <string name="upcoming_show_detailed">%1$s kanavalla %2$s</string>
   <string name="upcoming_display">Valitse näyttääksesi tulevat ohjelmat</string>
   <string name="pref_notifications">Ilmoitukset</string>
-  <string name="pref_notificationssummary">Ilmoita pian esitettävistä suosikkiohjelmista</string>
+  <string name="pref_notificationssummary">Ilmoita uusista jaksoista</string>
   <string name="pref_notifyfavonly">Vain suosikit</string>
-  <string name="pref_notifyfavonlysummary">Vastaanota ainoastaan ilmoituksia suosissiohjelmista</string>
+  <string name="pref_notifyfavonlysummary">Vastaanota ainoastaan ilmoituksia suosikkiohjelmista</string>
   <string name="pref_ringtone">Soittoääni</string>
   <string name="pref_vibrate">Värinä</string>
   <string name="pref_vibratesummary">Myös värise näytettäessä ilmoitus</string>
+  <string name="pref_notifications_treshold">Milloin ilmoittaa</string>
   <string name="pref_theme">Sovelluksen teema</string>
   <string name="choose_list">Valitse toimintalista</string>
   <string name="hide_watched">Piilota katsotut jaksot</string>
@@ -297,7 +316,7 @@
     <item>Katsomattomat ensin</item>
     <item>A - Ö</item>
     <item>Suosituimmat</item>
-    <item>Uusimmat ensin (DVD)</item>
+    <item>Uusin ensin (DVD)</item>
     <item>Vanhin ensin (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
@@ -313,7 +332,12 @@
     <item>Suosikit</item>
     <item>Katsomattomat/Tulevat</item>
     <item>Piilotetut</item>
-    <item>Listat</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>esitettäessä</item>
+    <item>5 min etukäteen</item>
+    <item>10 min etukäteen</item>
+    <item>yksi tunti etukäteen</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d ääni</item>

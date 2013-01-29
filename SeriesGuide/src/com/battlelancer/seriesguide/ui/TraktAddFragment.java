@@ -33,8 +33,8 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.AddActivity.AddPagerAdapter;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
@@ -92,7 +92,7 @@ public class TraktAddFragment extends AddFragment {
             mContentContainer.setVisibility(View.GONE);
             mProgressIndicator.setVisibility(View.VISIBLE);
             mAdapter = new AddAdapter(getActivity(), R.layout.add_searchresult,
-                    new ArrayList<SearchResult>(), mAddButtonListener, mDetailsButtonListener);
+                    new ArrayList<SearchResult>(), mDetailsButtonListener);
 
             AndroidUtils.executeAsyncTask(new GetTraktShowsTask(getActivity()), type);
         } else {
@@ -109,7 +109,25 @@ public class TraktAddFragment extends AddFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().trackView("Add Trakt Shows");
+
+        String tag = null;
+        switch (getListType()) {
+            case AddPagerAdapter.TRENDING_TAB_POSITION:
+                tag = "Trending";
+                break;
+            case AddPagerAdapter.LIBRARY_TAB_POSITION:
+                tag = "Library";
+                break;
+            case AddPagerAdapter.RECOMMENDED_TAB_POSITION:
+                tag = "Recommended";
+                break;
+            case AddPagerAdapter.WATCHLIST_TAB_POSITION:
+                tag = "Watchlist";
+                break;
+        }
+        if (tag != null) {
+            EasyTracker.getTracker().sendView(tag);
+        }
     }
 
     @Override
@@ -153,13 +171,15 @@ public class TraktAddFragment extends AddFragment {
 
             if (type == AddPagerAdapter.TRENDING_TAB_POSITION) {
                 try {
-                    shows = Utils.getServiceManager(mContext).showService().trending().fire();
+                    shows = ServiceUtils.getTraktServiceManager(mContext).showService().trending()
+                            .fire();
                 } catch (Exception e) {
                     // we don't care
                 }
             } else {
                 try {
-                    ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
+                    ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext,
+                            false);
                     if (manager != null) {
                         switch (type) {
                             case AddPagerAdapter.RECOMMENDED_TAB_POSITION:
@@ -167,11 +187,13 @@ public class TraktAddFragment extends AddFragment {
                                 break;
                             case AddPagerAdapter.LIBRARY_TAB_POSITION:
                                 shows = manager.userService()
-                                        .libraryShowsAll(Utils.getTraktUsername(mContext)).fire();
+                                        .libraryShowsAll(ServiceUtils.getTraktUsername(mContext))
+                                        .fire();
                                 break;
                             case AddPagerAdapter.WATCHLIST_TAB_POSITION:
                                 shows = manager.userService()
-                                        .watchlistShows(Utils.getTraktUsername(mContext)).fire();
+                                        .watchlistShows(ServiceUtils.getTraktUsername(mContext))
+                                        .fire();
                                 break;
                         }
                     }

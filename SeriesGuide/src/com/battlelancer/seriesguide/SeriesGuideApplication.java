@@ -18,8 +18,10 @@
 package com.battlelancer.seriesguide;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.battlelancer.seriesguide.ui.FirstRunFragment;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
@@ -40,6 +42,7 @@ public class SeriesGuideApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         // set provider authority
         CONTENT_AUTHORITY = getPackageName() + ".provider";
@@ -47,13 +50,18 @@ public class SeriesGuideApplication extends Application {
         // initialize settings on first run
         PreferenceManager.setDefaultValues(this, R.xml.settings_basic, false);
         PreferenceManager.setDefaultValues(this, R.xml.settings_advanced, false);
+        if (!FirstRunFragment.hasSeenFirstRunFragment(this)) {
+            // prevents auto-updater running on first launch
+            prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTUPDATE, System.currentTimeMillis())
+                    .commit();
+        }
 
         // ensure the notifications service is started (we also restart it on
         // boot)
         Utils.runNotificationService(this);
 
         // load the current theme into a global variable
-        final String theme = PreferenceManager.getDefaultSharedPreferences(this).getString(
+        final String theme = prefs.getString(
                 SeriesGuidePreferences.KEY_THEME, "0");
         Utils.updateTheme(theme);
 

@@ -45,6 +45,10 @@ import com.uwetrottmann.seriesguide.R;
 
 import java.util.ArrayList;
 
+/**
+ * Displays a dialog displaying all lists, allowing to add the given show,
+ * season or episode to any number of them.
+ */
 public class ListsDialogFragment extends DialogFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
 
@@ -216,7 +220,7 @@ public class ListsDialogFragment extends DialogFragment implements
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().trackView("Lists Dialog");
+        EasyTracker.getTracker().sendView("Manage Lists Dialog");
     }
 
     @Override

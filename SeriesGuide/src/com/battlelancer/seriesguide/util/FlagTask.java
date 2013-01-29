@@ -144,7 +144,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
     @Override
     protected Integer doInBackground(Void... params) {
-        mIsTraktInvolved = Utils.isTraktCredentialsValid(mContext);
+        mIsTraktInvolved = ServiceUtils.isTraktCredentialsValid(mContext);
 
         // do trakt stuff
         // check for valid trakt credentials
@@ -153,7 +153,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                 return OFFLINE;
             }
 
-            ServiceManager manager = Utils.getServiceManagerWithAuth(mContext, false);
+            ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
             if (manager == null) {
                 return FAILED;
             }

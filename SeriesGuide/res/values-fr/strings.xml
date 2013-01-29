@@ -10,7 +10,6 @@
   <string name="episode_notwatched">Pas encore regardé</string>
   <string name="specialseason">Épisodes Spéciaux</string>
   <string name="search_hint">Recherche d\'épisodes</string>
-  <string name="search_title">Épisodes correspondants</string>
   <string name="share_episode">Partager l\'épisode</string>
   <string name="share_checkout">Jette un oeil sur</string>
   <string name="search_description">Episodes</string>
@@ -26,9 +25,18 @@
   <string name="share">Partager</string>
   <string name="updated">Mis à jour avec la version la plus récente.</string>
   <string name="discard">Annuler</string>
+  <string name="close">Fermer</string>
   <string name="save_selection">Enregistrer</string>
   <string name="offline">Pas de connexion. Réessayez plus tard.</string>
   <string name="onlyx">Disponible seulement dans SeriesGuide X</string>
+  <string name="shows">Séries</string>
+  <string name="lists">Listes</string>
+  <string name="activity">Activité</string>
+  <string name="movies">Films</string>
+  <string name="search">Rechercher</string>
+  <string name="add_show">Ajouter Série</string>
+  <string name="preferences">Paramètres</string>
+  <string name="help">Aide</string>
   <string name="shouts">Commentaires</string>
   <string name="shout_hint">Commenter (en anglais)</string>
   <string name="shout">Commentez !</string>
@@ -36,6 +44,8 @@
   <string name="no_shouts">Soyez le premier à commenter !</string>
   <string name="shouts_for">Commentaires pour %s</string>
   <string name="autorefresh">S\'actualise automagiquement</string>
+  <string name="movies_search_hint">Entrez le titre du film</string>
+  <string name="movies_empty">Recherchez un film ci-dessus.</string>
   <string name="love">Totalement ninja!</string>
   <string name="hate">Un peu fade :(</string>
   <string name="rating2">Nul</string>
@@ -82,7 +92,10 @@
   <string name="trakt_notseen">%s non vu.</string>
   <string name="trakt_collected">%s dans votre collection.</string>
   <string name="trakt_notcollected">%s n\'est pas dans votre collection.</string>
-  <string name="shows_empty">Pas de séries.</string>
+  <string name="add_empty">Il n\'y a aucune série ici ou il n\'y a pas de connection Internet.</string>
+  <string name="shows_empty">Utilisez le menu ci-dessus pour ajouter des séries.</string>
+  <string name="favorites_empty">Faites un appui long sur une série pour l\'ajouter à vos favoris.</string>
+  <string name="hidden_empty">Faites un appui long sur une série pour la cacher ici.</string>
   <string name="confirm_delete">Voulez-vous vraiment supprimer %s?</string>
   <string name="delete_has_list_items">Impossible, supprimez d\'abord %s de toutes les listes.</string>
   <string name="delete_show">Supprimer</string>
@@ -96,7 +109,6 @@
   <string name="context_unhide">Afficher</string>
   <string name="hidden">Série cachée</string>
   <string name="unhidden">Série affichée</string>
-  <string name="activity">Activité</string>
   <string name="upcoming">À venir</string>
   <string name="recent">Dernièrement</string>
   <string name="friends">Amis</string>
@@ -133,7 +145,6 @@
   <string name="search_hint_add">Nom de la série</string>
   <string name="no_results">Pas de résultats, reformulez votre requête.</string>
   <string name="search_error">Recherche échouée, réessayez plus tard.</string>
-  <string name="add_show">Ajouter Série</string>
   <string name="add_all">Tout ajouter</string>
   <string name="dont_add_show">Ne pas ajouter</string>
   <string name="add_multiple">Toutes les séries apparaîtront dans votre liste sous peu.</string>
@@ -156,12 +167,25 @@
   <string name="list_item_manage">Gérer les listes</string>
   <string name="list_item_remove">Retirer de la liste</string>
   <string name="list_empty">Vous pouvez ajouter des séries, des saisons ou des épisodes à cette liste.</string>
+  <string name="connect_trakt">Me connecter à trakt</string>
+  <string name="connect_trakt_done">Connecté à trakt !</string>
+  <string name="add_trakt_shows">Ajoutez les séries de votre bibliothèque :</string>
+  <string name="show_library">Voir votre bibliothèque</string>
+  <string name="upload_shows">Transférez votre liste de séries de SeriesGuide vers trakt :</string>
+  <string name="upload_existing_shows">Envoyer les séries</string>
+  <string name="about_trakt">trakt vous permet de garder une trace des séries et films que vous regardez. <a href="http://trakt.tv">En savoir plus</a></string>
+  <string name="integration_trakt">En vous connectant à trakt :</string>
+  <string name="integration_trakt_items">- vous pourrez ajouter vos séries depuis votre bibliothèque ou liste de suivi.\n\n- vous pourrez voir vos recommandations et l\'activité de vos amis.\n\n- les épisodes vus et collectés seront synchronisés automatiquement.\n\n- les nouvelles séries que vous regardez seront ajoutées automatiquement.</string>
+  <string name="trakt_sync_intro">Aucune série ne sera ajoutée ou supprimée, vous pouvez le faire depuis la liste des séries.</string>
+  <string name="trakt_download_hint">Marquer tous les épisodes vus sur trakt comme vus sur SeriesGuide :</string>
+  <string name="trakt_upload_hint">Marquer tous les épisodes vus sur SeriesGuide comme vus sur trakt :</string>
+  <string name="trakt_download">Télécharger sur SeriesGuide</string>
+  <string name="trakt_upload">Envoyer vers trakt.tv</string>
+  <string name="trakt_syncunwatched">Synchroniser également les épisodes non vus</string>
   <string name="prefs_category_basic">Paramètres de base</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Avancé</string>
   <string name="prefs_category_about">A propos</string>
-  <string name="help">Aide</string>
-  <string name="preferences">Paramètres</string>
   <string name="pref_showsorting">Trier les séries par...</string>
   <string name="pref_onlyfuture">Pas d\'épisodes diffusés</string>
   <string name="pref_onlyfuturesummary">Ne pas afficher les épisodes déjà diffusés</string>
@@ -181,10 +205,9 @@
   <string name="about">A propos de SeriesGuide</string>
   <string name="pref_credits">Crédits</string>
   <string name="clearGetGlueCredentials">Déconnecter GetGlue</string>
-  <string name="clearGetGlueCredentialssummary">Faites un Check in avec GetGlue pour le reconnecter</string>
-  <string name="pref_trakt">Identifiants trakt.tv</string>
+  <string name="clearGetGlueCredentialssummary">Faites un check-in avec GetGlue pour vous reconnecter</string>
   <string name="pref_traktsummary">Ajouter ou modifier vos identifiants sur trakt.tv</string>
-  <string name="pref_traktsync">Synchroniser avec trakt.tv</string>
+  <string name="pref_traktsync">Synchro manuelle avec trakt.tv</string>
   <string name="feedback">Envoyez vos commentaires</string>
   <string name="clear_cache">Vider le cache d\'images</string>
   <string name="clear_cache_summary">Supprimer toutes les images en cache sur votre périphérique</string>
@@ -223,10 +246,12 @@
   <string name="checkin_empty">Aucune série correspondante</string>
   <string name="checkin_hint">Écrivez un message (optionnel)</string>
   <string name="checkin_fixgetglue">Corriger le check-in de GetGlue</string>
-  <string name="paste_episode">Ajouter l\'épisode</string>
+  <string name="paste_title">Ajouter le titre</string>
   <string name="checkinsuccess">Check-in de %s sur GetGlue effectué.</string>
-  <string name="checkinfailed">Le Check-in de GetGlue a échoué. Essayez de déconnecter GetGlue.</string>
+  <string name="checkinfailed">Échec du check-in sur GetGlue. Réessayez plus tard.</string>
   <string name="getglue_authfailed">Authentification à GetGlue échouée. Réessayez plus tard.</string>
+  <string name="checkin_success_trakt">Check-in de %s sur trakt effectué.</string>
+  <string name="checkin_canceled_success_trakt">Check-in sur trakt annulé.</string>
   <string name="select_show">Sélectionnez une série</string>
   <string name="check_into">Faire un check-in de</string>
   <string name="no_selection">choisissez ci-dessous</string>
@@ -234,7 +259,7 @@
   <string name="menu_rate_trakt">Noter (trakt)</string>
   <string name="menu_share_others">Via d\'autres applis</string>
   <string name="traktcheckin_cancel">Annuler</string>
-  <string name="traktcheckin_inprogress">Vous regardez déjà un autre film ou épisode. Annulez ce précédent checkin ou patientez %s et essayez à nouveau.</string>
+  <string name="traktcheckin_inprogress">Vous regardez déjà autre chose. Vous pouvez soit annuler le précédent check-in, soit attendre %s puis réessayer.</string>
   <string name="traktcheckin_wait">J\'attends</string>
   <string name="oauthmessage">Authentification de SériesGuide avec GetGlue...</string>
   <string name="addtocalendar">Ajouter à l\'agenda</string>
@@ -249,14 +274,7 @@
   <string name="trakt_decryptfail">le mot de passe n\'a pas pu être décrypté</string>
   <string name="trakt_generalerror">Quelque chose s\'est mal passé. Veuillez vérifier vos identifiants et essayez à nouveau.</string>
   <string name="trakt_createaccount">Créer un nouveau compte</string>
-  <string name="trakt_experimental">Seuls les séries ajoutées à SeriesGuide sont synchronisées.\'Synchroniser vers SeriesGuide\' récupère les marquages des épisodes vus depuis trakt.\'Synchroniser vers Trakt\' transmet les épisodes vus à trakt.</string>
-  <string name="trakt_synctodevice">Synchroniser vers SeriesGuide</string>
-  <string name="trakt_synctotrakt">Synchroniser vers trakt.tv</string>
-  <string name="trakt_syncunseen">Inclure les épisodes non vus</string>
-  <string name="trakt_howto_title">Mettre en place la synchro trakt.tv</string>
-  <string name="trakt_howto">Pour configurer vos appareils :\n\n1. Créez ou connectez-vous à votre compte ci-dessous sur chaque appareil.\n2. La première fois, utilisez le bouton <b>Synchroniser vers trakt.tv</b> pour transmettre vos séries.\n3. Ajoutez des séries depuis trakt.tv en vous déplaçant dans l\'onglet <b>Bibliothèque</b> dans l\'écran <b>Ajouter Série</b>.\n\nMaintenant, à chaque fois que SeriesGuide se mettra à jour, votre activité sur trakt.tv sera téléchargée sur chaque appareil. Cela inclut le marquage des épisodes comme vus ou collectés et les check-ins.</string>
   <string name="welcome_setuplanguage">Choisissez la langue</string>
-  <string name="welcome_setuptrakt">Se connecter à trakt</string>
   <string name="welcome_traktmessage">Accédez à votre bibliothèque trakt.tv et à l\'activité de vos amis</string>
   <string name="dismiss">Passer</string>
   <string name="welcome_add_part1">Pour commencer, appuyez sur</string>
@@ -265,12 +283,13 @@
   <string name="upcoming_show_detailed">%1$s sur %2$s</string>
   <string name="upcoming_display">Afficher les épisodes à venir</string>
   <string name="pref_notifications">Notifications</string>
-  <string name="pref_notificationssummary">Informe lorsqu\'une série favorite est bientôt diffusée</string>
+  <string name="pref_notificationssummary">M\'informer des nouveaux épisodes</string>
   <string name="pref_notifyfavonly">Favoris seulement</string>
   <string name="pref_notifyfavonlysummary">Recevoir des notifications uniquement pour les séries favorites</string>
   <string name="pref_ringtone">Sonnerie</string>
   <string name="pref_vibrate">Vibrer</string>
   <string name="pref_vibratesummary">Vibrer aussi lors d\'un notification</string>
+  <string name="pref_notifications_treshold">Quand notifier</string>
   <string name="pref_theme">Thème</string>
   <string name="choose_list">Choisissez la liste d\'activités</string>
   <string name="hide_watched">Masquer les épisodes vus</string>
@@ -313,7 +332,12 @@
     <item>Favoris</item>
     <item>Pas vu / Prochains</item>
     <item>Masqués</item>
-    <item>Listes</item>
+  </string-array>
+  <string-array name="notificationThreshold">
+    <item>lors de la diffusion</item>
+    <item>5 minutes avant</item>
+    <item>10 minutes avant</item>
+    <item>1 heure avant</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">%d vote</item>

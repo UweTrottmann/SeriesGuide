@@ -13,14 +13,14 @@
 
     <FrameLayout
         android:id="@+id/fragment_episodes"
+        style="@style/EpisodesPane"
         android:layout_width="0px"
-        android:layout_height="match_parent"
-        android:layout_weight="@integer/episodespane_weight" />
+        android:layout_height="match_parent" />
 
     <FrameLayout
+        style="@style/DetailsPane"
         android:layout_width="0px"
-        android:layout_height="match_parent"
-        android:layout_weight="@integer/detailsspane_weight" >
+        android:layout_height="match_parent" >
 
         <ImageView
             android:id="@+id/background"

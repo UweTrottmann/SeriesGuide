@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="TypographyDashes">
+        <ignore path="res\values\analytics.xml" />
+    </issue>
+    <issue id="UnusedResources">
+        <ignore path="res\values\analytics.xml" />
+    </issue>
+</lint>

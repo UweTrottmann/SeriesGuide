@@ -75,7 +75,7 @@ import com.uwetrottmann.seriesguide.R;
 public class ShowsFragment extends SherlockFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, OnFlagListener {
 
-    private static final String TAG = "ShowsFragment";
+    private static final String TAG = "Shows";
 
     public static final int LOADER_ID = R.layout.shows_fragment;
 
@@ -134,6 +134,7 @@ public class ShowsFragment extends SherlockFragment implements
 
         // get settings
         updateSorting(prefs);
+        int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
 
         mAdapter = new SlowAdapter(getActivity(), null, 0);
 
@@ -141,20 +142,40 @@ public class ShowsFragment extends SherlockFragment implements
         mGrid = (GridView) getView().findViewById(R.id.showlist);
         mGrid.setAdapter(mAdapter);
         mGrid.setOnItemClickListener(this);
-        View emptyView = getView().findViewById(R.id.empty);
-        if (emptyView != null) {
-            mGrid.setEmptyView(emptyView);
-        }
+        setEmptyView(showfilter);
         registerForContextMenu(mGrid);
 
         // start loading data, use saved show filter
-        int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
         Bundle args = new Bundle();
         args.putInt(FILTER_ID, showfilter);
         getLoaderManager().initLoader(LOADER_ID, args, this);
 
         // listen for some settings changes
         prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
+    }
+
+    public void setEmptyView(int showfilter) {
+        View oldEmptyView = mGrid.getEmptyView();
+
+        View emptyView = null;
+        switch (showfilter) {
+            case SHOWFILTER_FAVORITES:
+                emptyView = getView().findViewById(R.id.emptyFavorites);
+                break;
+            case SHOWFILTER_HIDDEN:
+                emptyView = getView().findViewById(R.id.emptyHidden);
+                break;
+            default:
+                emptyView = getView().findViewById(R.id.empty);
+                break;
+        }
+        if (emptyView != null) {
+            mGrid.setEmptyView(emptyView);
+        }
+
+        if (oldEmptyView != null) {
+            oldEmptyView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -200,6 +221,8 @@ public class ShowsFragment extends SherlockFragment implements
 
         switch (item.getItemId()) {
             case CONTEXT_CHECKIN_ID: {
+                fireTrackerEvent("Check in");
+                
                 Cursor show = (Cursor) mAdapter.getItem(info.position);
                 final String episodeId = show.getString(ShowsQuery.NEXTEPISODE);
                 if (TextUtils.isEmpty(episodeId)) {
@@ -225,9 +248,7 @@ public class ShowsFragment extends SherlockFragment implements
                 if (episode != null) {
                     episode.close();
                 }
-                
-                fireTrackerEvent("Check in");
-                
+
                 return true;
             }
             case CONTEXT_FAVORITE_ID: {
@@ -256,7 +277,7 @@ public class ShowsFragment extends SherlockFragment implements
                 return true;
             }
             case CONTEXT_HIDE_ID: {
-                fireTrackerEvent("Hidden show");
+                fireTrackerEvent("Hide show");
 
                 ContentValues values = new ContentValues();
                 values.put(Shows.HIDDEN, true);
@@ -267,7 +288,7 @@ public class ShowsFragment extends SherlockFragment implements
                 return true;
             }
             case CONTEXT_UNHIDE_ID: {
-                fireTrackerEvent("Unhidden show");
+                fireTrackerEvent("Unhide show");
 
                 ContentValues values = new ContentValues();
                 values.put(Shows.HIDDEN, false);
@@ -298,6 +319,8 @@ public class ShowsFragment extends SherlockFragment implements
 
                 return true;
             case CONTEXT_MANAGE_LISTS_ID: {
+                fireTrackerEvent("Manage lists");
+                
                 ListsDialogFragment.showListsDialog(String.valueOf(info.id), 1,
                         getFragmentManager());
                 return true;
@@ -532,10 +555,6 @@ public class ShowsFragment extends SherlockFragment implements
         int IMDB_ID = 11;
     }
 
-    public void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
-    }
-
     private void showDeleteDialog(long showId) {
         FragmentManager fm = getFragmentManager();
         ConfirmDeleteDialogFragment deleteDialog = ConfirmDeleteDialogFragment.newInstance(String
@@ -600,6 +619,13 @@ public class ShowsFragment extends SherlockFragment implements
         Bundle args = new Bundle();
         args.putInt(ShowsFragment.FILTER_ID, itemPosition);
         getLoaderManager().restartLoader(ShowsFragment.LOADER_ID, args, this);
+
+        // update the empty view
+        setEmptyView(itemPosition);
+    }
+
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Context Item", label, (long) 0);
     }
 
 }

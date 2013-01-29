@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/large_padding" >
+
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/default_padding"
+                android:drawableRight="@drawable/ic_trakt"
+                android:text="@string/connect_trakt"
+                android:textAppearance="?attr/textAppearanceSgXLargeLight" />
+
+            <TextView
+                android:id="@+id/textViewAbout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_padding"
+                android:linksClickable="true"
+                android:text="@string/about_trakt"
+                android:textAppearance="?attr/textAppearanceSgSmall" />
+
+            <TextView
+                android:id="@+id/textViewIntegrationItems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/default_padding"
+                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_marginRight="@dimen/default_padding"
+                android:layout_marginTop="16dp"
+                android:text="@string/integration_trakt_items"
+                android:textAppearance="?attr/textAppearanceSgSmallPrimary" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/buttonDiscard"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/discard" />
+
+        <include
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            layout="@layout/divider_vertical" />
+
+        <Button
+            android:id="@+id/buttonConnectTrakt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/connect"
+            android:textSize="@dimen/text_size_small" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -27,6 +27,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
+import android.support.v4.app.TaskStackBuilder;
 import android.widget.RemoteViews;
 
 import com.battlelancer.seriesguide.ui.ShowsActivity;
@@ -162,16 +163,23 @@ public class AppWidget extends AppWidgetProvider {
             }
 
             // Create an Intent to launch Upcoming
-            Intent intent = new Intent(context, UpcomingRecentActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-            views.setOnClickPendingIntent(R.id.LinearLayoutWidget, pendingIntent);
+            Intent activityIntent = new Intent(context, UpcomingRecentActivity.class);
+            activityIntent.putExtra(UpcomingRecentActivity.InitBundle.SELECTED_TAB, 0);
+            PendingIntent activityPendingIntent = TaskStackBuilder
+                    .create(context)
+                    .addNextIntent(new Intent(context, ShowsActivity.class))
+                    .addNextIntent(activityIntent)
+                    .getPendingIntent(0, 0);
+            views.setOnClickPendingIntent(R.id.LinearLayoutWidget, activityPendingIntent);
 
             if (layout != R.layout.appwidget) {
                 // Create an Intent to launch SeriesGuide
-                Intent i = new Intent(context, ShowsActivity.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                pendingIntent = PendingIntent.getActivity(context, 0, i, 0);
+                Intent launchIntent = new Intent(context, ShowsActivity.class);
+                launchIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                PendingIntent pendingIntent = PendingIntent
+                        .getActivity(context, 0, launchIntent, 0);
                 views.setOnClickPendingIntent(R.id.widgetShowlistButton, pendingIntent);
             }
 

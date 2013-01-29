@@ -1,8 +1,9 @@
 ﻿dist
-Thumbs.db
 analytics.xml
 keys.xml
 
+### Android
+###########
 # built application files
 *.apk
 *.ap_
@@ -19,3 +20,21 @@ gen/
 
 # Local configuration file (sdk path, etc)
 local.properties
+
+### Linux
+#########
+.*
+!.gitignore
+*~
+
+### Windows
+############
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/

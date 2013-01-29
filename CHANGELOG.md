@@ -5,6 +5,75 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 3 *(2013-01-29)*
+------------------------
+
+* FEATURE Swipe anywhere to show the new menu drawer for quick navigation within the app. Swipe from the left margin in view pagers.
+* FEATURE Add Movies menu item to allow searching for and checking into movies.
+* FEATURE Choose when notifications should appear from a hand full of options (one hour until on air).
+* TWEAK New trakt connect wizard. Helpful empty messages.
+
+### Detailed changes:
+
+#### 3beta4 *(2013-01-29)*
+
+* FIX Crash when flagging episodes watched in lists.
+* FIX Crash when checking trying to check into a movie, then navigating away.
+* NOTICE Updated Google Analytics Android SDK to 2.0beta4, reduces power consumption.
+
+#### 3beta3 *(2013-01-27)*
+
+* TWEAK New trakt connect wizard.
+* TWEAK Link to community and uservoice page from settings.
+* TWEAK Fix visible but useless divider in movie check in dialog.
+* TWEAK Fix movies grid view size and overlap issues.
+* TWEAK Open search UI after pressing search button in slide menu.
+* TWEAK Add custom empty message for trakt add tabs.
+* TWEAK Add visible, easier discoverable context menu buttons for seasons and episodes in lists.
+* TWEAK Enable enter key for movie search (GTV support).
+* TWEAK Add contributing file, update credits with links to licences.
+* TWEAK Clarified manual trakt sync description.
+* TWEAK Show delete progress dialog through the whole removal process again.
+* TWEAK Prevent auto-updater running on first launch.
+* TWEAK Enable up-button for check-in activity.
+* TWEAK Always display shouts in their own activity. No xlarge screen layouts, yet.
+* FIX Avoid crash when rotating in first run fragment.
+* FIX Fix crash due to remaining merge tag in episode details activity.
+* FIX Hopefully finally fix the crash in add fragment by setting the click listener on eac
+* FIX Layout weight should be float (fixed for episode pager).
+* FIX Fix poster download task crash.
+* NOTICE Latest translations from crowdin.
+
+#### 3beta2 *(2013-01-13)*
+
+* FEATURE Add Movies menu item to allow searching for and checking into movies.
+* FEATURE Add absolute episode number for episodes to database, parse it on updating.
+* TWEAK Hide the guest star and DVD number label for episodes if there is no data.
+* TWEAK Only show DVD number if it is different to episode number.
+* TWEAK Navigation improvements, setting up proper back stacks. Add up navigation for seasons and episodes. Fix some existing ups.
+* TWEAK Add check in and search action back to home activity.
+* TWEAK Launch to show list from app icon in list widget.
+* TWEAK Add check-in button to all top shows activities, remove it from global menu.
+* TWEAK Add custom cancel drawables.
+* TWEAK Informative empty views for show list.
+* FIX Fix enabling full-screen swiping in activity activity.
+* FIX Remove Android Beam until we can resolve pre-GB compatibility.
+* NOTICE Latest translations from crowdin.
+
+#### 3beta1 *(2012-12-25)*
+
+* FEATURE Swipe anywhere to show the new menu drawer for quick navigation within the app. Swipe from the left margin in view pagers.
+* FEATURE Just for fun: beam a show to another device from its overview page.
+* FEATURE Choose when notifications should appear from a hand full of options (one hour until on air).
+* TWEAK Lists have there own page now.
+* TWEAK Proper episode deep linking, now uses dual-pane layout on tablets.
+* TWEAK Add icons for some menu actions.
+* TWEAK Fix search tab in 'Add show' to second position.
+* TWEAK Check in confirmation message for trakt is now localized and uses custom numbering schema.
+* FIX Flagging a whole show now properly updates the screen.
+* FIX Never notify about an episode twice, except others start airing shortly after.
+* NOTICE Updated credits.
+
 Version 2.11 *(2012-12-08)*
 --------------------------------
 
