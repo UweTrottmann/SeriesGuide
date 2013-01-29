@@ -5,10 +5,21 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 3 *(TBA)*
---------------------------------
+Version 3 *(2013-01-29)*
+------------------------
+
+* FEATURE Swipe anywhere to show the new menu drawer for quick navigation within the app. Swipe from the left margin in view pagers.
+* FEATURE Add Movies menu item to allow searching for and checking into movies.
+* FEATURE Choose when notifications should appear from a hand full of options (one hour until on air).
+* TWEAK New trakt connect wizard. Helpful empty messages.
 
 ### Detailed changes:
+
+#### 3beta4 *(2013-01-29)*
+
+* FIX Crash when flagging episodes watched in lists.
+* FIX Crash when checking trying to check into a movie, then navigating away.
+* NOTICE Updated Google Analytics Android SDK to 2.0beta4, reduces power consumption.
 
 #### 3beta3 *(2013-01-27)*
 
