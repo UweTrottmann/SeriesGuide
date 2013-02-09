@@ -22,6 +22,7 @@ import android.provider.BaseColumns;
 
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.util.ParserUtils;
+import com.battlelancer.seriesguide.util.Utils;
 
 public class SeriesContract {
 
@@ -29,12 +30,9 @@ public class SeriesContract {
         /** This column is NOT in this table, it is for reference purposes only. */
         String REF_SHOW_ID = "series_id";
 
-        String NEXTEPISODE = "next";
+        String TITLE = "seriestitle";
 
-        /** Deprecated, use {@link NEXTAIRDATEMS} instead. **/
-        String NEXTAIRDATE = "nextairdate";
-
-        String NEXTTEXT = "nexttext";
+        String OVERVIEW = "overview";
 
         String POSTER = "poster";
 
@@ -44,51 +42,57 @@ public class SeriesContract {
 
         String RUNTIME = "runtime";
 
+        /** Rating value of TVDb as double ranging from 0.0 to 10.0. */
         String RATING = "rating";
 
         String NETWORK = "network";
 
         String GENRES = "genres";
 
+        /** Air date of first episode, e.g. 2009-01-25. */
         String FIRSTAIRED = "firstaired";
 
+        /**
+         * Air time (e.g. 20:00 PM) in ms as parsed by {@link
+         * Utils}.parseTimeToMilliseconds().
+         */
         String AIRSTIME = "airstime";
+
+        /** Added in db version 21 to store the air time in pure text. */
+        String AIRTIME = "series_airtime";
 
         String AIRSDAYOFWEEK = "airsdayofweek";
 
         String ACTORS = "actors";
 
-        String OVERVIEW = "overview";
-
-        String TITLE = "seriestitle";
-
         String IMDBID = "imdbid";
 
+        /** Whether this show has been favorited. */
         String FAVORITE = "series_favorite";
 
-        /**
-         * Added in db version 23 to allow hiding of shows.
-         */
+        /** Whether this show has been hidden. Added in db version 23. */
         String HIDDEN = "series_hidden";
 
-        String NEXTAIRDATETEXT = "series_nextairdatetext";
-
+        /** Whether this show is included in manual trakt upload. */
         String SYNCENABLED = "series_syncenabled";
 
-        /**
-         * Added in db version 21 to store the airtime in pure text.
-         */
-        String AIRTIME = "series_airtime";
+        /** Next episode ID. */
+        String NEXTEPISODE = "next";
 
-        /**
-         * Added in db version 22 to store the last time a show was updated.
-         */
-        String LASTUPDATED = "series_lastupdate";
+        /** Next episode text, e.g. '0x12 Episode Name'. */
+        String NEXTTEXT = "nexttext";
 
-        /**
-         * Added in db version 25 to allow correct sorting by next air date.
-         */
+        /** DEPRECATED. Use {@link NEXTAIRDATEMS} instead. */
+        String NEXTAIRDATE = "nextairdate";
+
+        /** Added in db version 25 to allow correct sorting by next air date. */
         String NEXTAIRDATEMS = "series_nextairdate";
+
+        /** Next air date text, e.g. 'Apr 2 (Mon)'. */
+        String NEXTAIRDATETEXT = "series_nextairdatetext";
+
+        /** Added in db version 22 to store the last time a show was updated. */
+        String LASTUPDATED = "series_lastupdate";
 
         /**
          * Last time show was edited on theTVDb.com (lastupdated field). Added
@@ -108,25 +112,47 @@ public class SeriesContract {
         /** This column is NOT in this table, it is for reference purposes only. */
         String REF_SEASON_ID = "season_id";
 
-        String POSTER = "seasonposter";
-
-        String UNAIREDCOUNT = "willaircount";
-
-        String WATCHCOUNT = "watchcount";
-
-        String NOAIRDATECOUNT = "noairdatecount";
-
+        /** The number of a season. Starting from 0 for Special Episodes. */
         String COMBINED = "combinednr";
 
+        /** Number of all episodes in a season. */
         String TOTALCOUNT = "season_totalcount";
+
+        /** Number of unwatched, aired episodes. */
+        String WATCHCOUNT = "watchcount";
+
+        /** Number of unwatched, future episodes (not aired yet). */
+        String UNAIREDCOUNT = "willaircount";
+
+        /** Number of unwatched episodes with no air date. */
+        String NOAIRDATECOUNT = "noairdatecount";
+
+        /** UNUSED. Path to poster image. */
+        String POSTER = "seasonposter";
     }
 
     interface EpisodesColumns {
+        /** Season number. A reference to the season id is stored separately. */
         String SEASON = "season";
 
+        /** Number of an episode within its season. */
         String NUMBER = "episodenumber";
 
+        /**
+         * Sometimes episodes are ordered differently when released on DVD. Uses
+         * decimal point notation, e.g. 1.0, 1.5.
+         */
         String DVDNUMBER = "dvdnumber";
+
+        /**
+         * Some shows, mainly anime, use absolute episode numbers instead of the
+         * season/episode grouping. Added in db version 30.
+         */
+        String ABSOLUTE_NUMBER = "absolute_number";
+
+        String TITLE = "episodetitle";
+
+        String OVERVIEW = "episodedescription";
 
         String IMAGE = "episodeimage";
 
@@ -136,26 +162,22 @@ public class SeriesContract {
 
         String DIRECTORS = "directors";
 
+        /** Rating value of TVDb as double ranging from 0.0 to 10.0. */
         String RATING = "rating";
 
+        /** First aired date in text as given by TVDb.com */
         String FIRSTAIRED = "epfirstaired";
 
-        String WATCHED = "watched";
-
-        String OVERVIEW = "episodedescription";
-
-        String TITLE = "episodetitle";
-
+        /** First aired date in ms. */
         String FIRSTAIREDMS = "episode_firstairedms";
 
-        /**
-         * Whether an episode has been collected in digital, physical form.
-         */
+        /** Whether an episode has been watched. */
+        String WATCHED = "watched";
+
+        /** Whether an episode has been collected in digital, physical form. */
         String COLLECTED = "episode_collected";
 
-        /**
-         * IMDb id for a single episode. Added in db version 27.
-         */
+        /** IMDb id for a single episode. Added in db version 27. */
         String IMDBID = "episode_imdbid";
 
         /**
@@ -164,11 +186,6 @@ public class SeriesContract {
          */
         String LASTEDIT = "episode_lastedit";
 
-        /**
-         * Some shows, mainly anime, use absolute episode numbers instead of the
-         * season/episode grouping. Added in db version 30.
-         */
-        String ABSOLUTE_NUMBER = "absolute_number";
     }
 
     interface EpisodeSearchColumns {
