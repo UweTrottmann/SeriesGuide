@@ -269,6 +269,7 @@ public class ShowInfoActivity extends BaseActivity {
         // Poster
         final ImageView poster = (ImageView) findViewById(R.id.ImageViewShowInfoPoster);
         ImageProvider.getInstance(this).loadImage(poster, show.getPoster(), false);
+        Utils.setPosterBackground((ImageView) findViewById(R.id.background), show.getPoster(), this);
 
         // trakt ratings
         TraktSummaryTask task = new TraktSummaryTask(this, findViewById(R.id.ratingbar))

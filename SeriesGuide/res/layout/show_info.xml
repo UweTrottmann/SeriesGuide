@@ -3,6 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" >
+    </ImageView>
+
     <ScrollView
         android:id="@+id/showinfo_container"
         android:layout_width="match_parent"
