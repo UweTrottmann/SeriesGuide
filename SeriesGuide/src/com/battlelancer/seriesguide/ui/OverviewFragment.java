@@ -18,7 +18,6 @@ package com.battlelancer.seriesguide.ui;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -308,15 +307,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     private void onShowShowInfo(View sourceView) {
         Intent i = new Intent(getActivity(), ShowInfoActivity.class);
         i.putExtra(ShowInfoActivity.InitBundle.SHOW_TVDBID, getShowId());
-
-        if (AndroidUtils.isJellyBeanOrHigher()) {
-            Bundle options = ActivityOptions.makeScaleUpAnimation(sourceView, 0, 0,
-                    sourceView.getWidth(),
-                    sourceView.getHeight()).toBundle();
-            getActivity().startActivity(i, options);
-        } else {
-            startActivity(i);
-        }
+        startActivity(i);
+        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
     }
 
     private void onShareEpisode(ShareMethod shareMethod) {
