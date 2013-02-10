@@ -18,7 +18,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -105,7 +104,7 @@ public class TraktFriendsFragment extends ListFragment implements
         }
 
     }
-    
+
     @Override
     public void onStart() {
         super.onStart();
@@ -177,16 +176,8 @@ public class TraktFriendsFragment extends ListFragment implements
             intent.setClass(getActivity(), EpisodesActivity.class);
             intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
 
-            if (AndroidUtils.isJellyBeanOrHigher()) {
-                Bundle options = ActivityOptions.makeScaleUpAnimation(sourceView, 0, 0,
-                        sourceView.getWidth(),
-                        sourceView.getHeight()).toBundle();
-                getActivity().startActivity(intent, options);
-            } else {
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
-                        R.anim.fragment_slide_left_exit);
-            }
+            startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
         }
     }
 
@@ -199,7 +190,8 @@ public class TraktFriendsFragment extends ListFragment implements
         @Override
         public List<UserProfile> loadInBackground() {
             if (ServiceUtils.isTraktCredentialsValid(getContext())) {
-                ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(getContext(), false);
+                ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(getContext(),
+                        false);
                 if (manager == null) {
                     return null;
                 }

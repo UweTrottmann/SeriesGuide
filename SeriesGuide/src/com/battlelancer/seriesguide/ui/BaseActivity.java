@@ -70,13 +70,18 @@ public abstract class BaseActivity extends SlidingFragmentActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    @Override
     public boolean onKeyLongPress(int keyCode, KeyEvent event) {
         // always navigate back to the home activity
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             NavUtils.navigateUpTo(this,
                     new Intent(Intent.ACTION_MAIN).setClass(this, ShowsActivity.class));
-            overridePendingTransition(R.anim.fragment_slide_right_enter,
-                    R.anim.fragment_slide_right_exit);
+            overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
             return true;
         }
         return false;
@@ -87,8 +92,7 @@ public abstract class BaseActivity extends SlidingFragmentActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
-                overridePendingTransition(R.anim.fragment_slide_right_enter,
-                        R.anim.fragment_slide_right_exit);
+                overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
                 return true;
         }
         return super.onOptionsItemSelected(item);
