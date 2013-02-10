@@ -38,6 +38,7 @@ import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.MenuOnPageChangeListener;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.slidingmenu.lib.SlidingMenu;
@@ -79,8 +80,6 @@ public class EpisodeDetailsActivity extends BaseActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 
         final int episodeId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, 0);
         if (episodeId == 0) {
@@ -148,6 +147,12 @@ public class EpisodeDetailsActivity extends BaseActivity {
 
         TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mPager, startPosition);
+        
+        // support full-screen swiping if showing first page
+        indicator.setOnPageChangeListener(new MenuOnPageChangeListener(getSlidingMenu()));
+        getSlidingMenu().setTouchModeAbove(
+                startPosition == 0 ? SlidingMenu.TOUCHMODE_FULLSCREEN
+                        : SlidingMenu.TOUCHMODE_MARGIN);
     }
 
     @Override

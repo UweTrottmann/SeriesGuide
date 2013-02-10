@@ -179,7 +179,6 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
 
         // build the episode pager if we are in a dual-pane layout
         if (mDualPane) {
-            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 
             // set the pager background
             final ImageView background = (ImageView) findViewById(R.id.background);
@@ -201,6 +200,14 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
                 @Override
                 public void onPageSelected(int position) {
                     mEpisodesFragment.setItemChecked(position);
+                    switch (position) {
+                        case 0:
+                            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+                            break;
+                        default:
+                            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+                            break;
+                    }
                 }
 
                 @Override
@@ -211,6 +218,10 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
                 public void onPageScrollStateChanged(int arg0) {
                 }
             });
+
+            getSlidingMenu().setTouchModeAbove(
+                    startPosition == 0 ? SlidingMenu.TOUCHMODE_FULLSCREEN
+                            : SlidingMenu.TOUCHMODE_MARGIN);
         } else {
             // FIXME Dirty: make sure no fragments are left over from a config
             // change
