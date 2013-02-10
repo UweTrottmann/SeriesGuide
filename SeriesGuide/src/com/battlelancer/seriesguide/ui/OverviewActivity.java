@@ -18,10 +18,12 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -67,8 +69,9 @@ public class OverviewActivity extends BaseActivity {
             mFragment.setArguments(getIntent().getExtras());
 
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-            ft.replace(R.id.fragment_overview, mFragment).commit();
+            ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+            ft.replace(R.id.fragment_overview, mFragment);
+            ft.commit();
         }
 
         // if (AndroidUtils.isICSOrHigher()) {
@@ -93,6 +96,12 @@ public class OverviewActivity extends BaseActivity {
     protected void onStop() {
         super.onStop();
         EasyTracker.getInstance().activityStop(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
     }
 
     @Override
@@ -121,13 +130,21 @@ public class OverviewActivity extends BaseActivity {
             final boolean isAutoUpdateEnabled = prefs.getBoolean(
                     SeriesGuidePreferences.KEY_AUTOUPDATE, true);
             if (isAutoUpdateEnabled) {
-                String showId = String.valueOf(mShowId);
+                final String showId = String.valueOf(mShowId);
                 boolean isTime = TheTVDB.isUpdateShow(showId, System.currentTimeMillis(), this);
 
                 // look if we need to update
                 if (isTime) {
-                    UpdateTask updateTask = new UpdateTask(showId, this);
-                    TaskManager.getInstance(this).tryUpdateTask(updateTask, false, -1);
+                    final Context context = getApplicationContext();
+                    Handler handler = new Handler();
+                    Runnable r = new Runnable() {
+                        @Override
+                        public void run() {
+                            UpdateTask updateTask = new UpdateTask(showId, context);
+                            TaskManager.getInstance(context).tryUpdateTask(updateTask, false, -1);
+                        }
+                    };
+                    handler.postDelayed(r, 1000);
                 }
             }
 

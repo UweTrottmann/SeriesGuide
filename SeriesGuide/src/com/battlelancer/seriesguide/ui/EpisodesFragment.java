@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -73,7 +74,6 @@ public class EpisodesFragment extends SherlockListFragment implements
     private static final int CONTEXT_FLAG_UNTILHERE_ID = 4;
 
     private static final int EPISODES_LOADER = 4;
-
 
     private Constants.EpisodeSorting mSorting;
 
@@ -178,8 +178,8 @@ public class EpisodesFragment extends SherlockListFragment implements
             intent.setClass(getActivity(), EpisodesActivity.class);
             intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, (int) episodeId);
             startActivity(intent);
-            getSherlockActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
-                    R.anim.fragment_slide_left_exit);
+            getSherlockActivity().overridePendingTransition(R.anim.blow_up_enter,
+                    R.anim.blow_up_exit);
         }
     }
 
@@ -363,6 +363,7 @@ public class EpisodesFragment extends SherlockListFragment implements
         }
     };
 
+    @SuppressLint("NewApi")
     private void updateSorting(SharedPreferences prefs) {
         mSorting = EpisodeSorting
                 .fromValue(prefs.getString(SeriesGuidePreferences.KEY_EPISODE_SORT_ORDER,
@@ -390,11 +391,11 @@ public class EpisodesFragment extends SherlockListFragment implements
     public void onClick(View v) {
         getActivity().openContextMenu(v);
     }
-    
+
     private void fireTrackerEvent(String label) {
         EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
-    
+
     private void fireTrackerEventContextMenu(String label) {
         EasyTracker.getTracker().sendEvent(TAG, "Context Item", label, (long) 0);
     }

@@ -16,6 +16,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActivityOptions;
 import android.content.Context;
@@ -38,6 +39,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -283,8 +285,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 // Execute a transaction, replacing any existing
                 // fragment with this one inside the frame.
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.anim.fragment_slide_left_enter,
-                        R.anim.fragment_slide_left_exit);
                 ft.replace(R.id.fragment_seasons, seasons);
                 ft.commit();
             }
@@ -295,8 +295,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             intent.setClass(getActivity(), SeasonsActivity.class);
             intent.putExtra(SeasonsFragment.InitBundle.SHOW_TVDBID, getShowId());
             startActivity(intent);
-            getSherlockActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
-                    R.anim.fragment_slide_left_exit);
+            getSherlockActivity().overridePendingTransition(R.anim.blow_up_enter,
+                    R.anim.blow_up_exit);
         }
 
     }
@@ -506,6 +506,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         }
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (isAdded()) {
@@ -538,6 +539,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 
+    @SuppressLint("NewApi")
     private void onPopulateEpisodeData(Cursor episode) {
         mEpisodeCursor = episode;
 
@@ -592,14 +594,9 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                     // display episode details
                     Intent intent = new Intent(getActivity(), EpisodesActivity.class);
                     intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
-
-                    if (AndroidUtils.isJellyBeanOrHigher()) {
-                        Bundle options = ActivityOptions.makeScaleUpAnimation(view, 0, 0,
-                                view.getWidth(), view.getHeight()).toBundle();
-                        getActivity().startActivity(intent, options);
-                    } else {
-                        startActivity(intent);
-                    }
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.blow_up_enter,
+                            R.anim.blow_up_exit);
                 }
             });
             episodePrimaryClicker.setFocusable(true);
@@ -611,6 +608,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             onLoadImage(episode.getString(EpisodeQuery.IMAGE));
 
             episodemeta.setVisibility(View.VISIBLE);
+
         } else {
             // no next episode: display single line info text, remove other
             // views
@@ -632,7 +630,11 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         final View contentContainer = getView().findViewById(R.id.content_container);
         if (contentContainer.getVisibility() == View.GONE) {
             final View progressContainer = getView().findViewById(R.id.progress_container);
+            progressContainer.startAnimation(AnimationUtils
+                    .loadAnimation(episodemeta.getContext(), android.R.anim.fade_out));
             progressContainer.setVisibility(View.GONE);
+            contentContainer.startAnimation(AnimationUtils
+                    .loadAnimation(episodemeta.getContext(), android.R.anim.fade_in));
             contentContainer.setVisibility(View.VISIBLE);
         }
 

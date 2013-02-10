@@ -119,9 +119,9 @@ public class FetchArtTask extends AsyncTask<Void, Void, Bitmap> {
         // make image view visible
         if (mImageView.getVisibility() == View.GONE) {
             mProgressContainer.startAnimation(AnimationUtils.loadAnimation(mContext,
-                    android.R.anim.fade_out));
+                    R.anim.fade_out));
             mImageView.startAnimation(AnimationUtils
-                    .loadAnimation(mContext, android.R.anim.fade_in));
+                    .loadAnimation(mContext, R.anim.fade_in));
             mProgressContainer.setVisibility(View.GONE);
             mImageView.setVisibility(View.VISIBLE);
         }

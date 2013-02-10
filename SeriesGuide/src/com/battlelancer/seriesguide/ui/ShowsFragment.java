@@ -18,7 +18,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
-import android.app.ActivityOptions;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -64,7 +63,6 @@ import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -222,7 +220,7 @@ public class ShowsFragment extends SherlockFragment implements
         switch (item.getItemId()) {
             case CONTEXT_CHECKIN_ID: {
                 fireTrackerEvent("Check in");
-                
+
                 Cursor show = (Cursor) mAdapter.getItem(info.position);
                 final String episodeId = show.getString(ShowsQuery.NEXTEPISODE);
                 if (TextUtils.isEmpty(episodeId)) {
@@ -320,7 +318,7 @@ public class ShowsFragment extends SherlockFragment implements
                 return true;
             case CONTEXT_MANAGE_LISTS_ID: {
                 fireTrackerEvent("Manage lists");
-                
+
                 ListsDialogFragment.showListsDialog(String.valueOf(info.id), 1,
                         getFragmentManager());
                 return true;
@@ -336,13 +334,8 @@ public class ShowsFragment extends SherlockFragment implements
 
         Intent i = new Intent(getActivity(), OverviewActivity.class);
         i.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, (int) id);
-        if (AndroidUtils.isJellyBeanOrHigher()) {
-            Bundle options = ActivityOptions.makeScaleUpAnimation(view, 0, 0, view.getWidth(),
-                    view.getHeight()).toBundle();
-            getActivity().startActivity(i, options);
-        } else {
-            startActivity(i);
-        }
+        startActivity(i);
+        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
