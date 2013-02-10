@@ -108,7 +108,7 @@ public class ShowInfoActivity extends BaseActivity {
             intent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, getShowId());
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
             return true;
         } else if (itemId == R.id.menu_rate_trakt) {
             TraktRateDialogFragment newFragment = TraktRateDialogFragment
@@ -121,6 +121,12 @@ public class ShowInfoActivity extends BaseActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
     }
 
     protected int getShowId() {

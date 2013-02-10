@@ -408,6 +408,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
         }
         return super.onOptionsItemSelected(item);
