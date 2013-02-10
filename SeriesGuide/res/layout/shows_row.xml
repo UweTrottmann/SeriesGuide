@@ -76,26 +76,16 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/TextViewShowListAirtime"
+            android:id="@+id/textViewShowsTimeAndNetwork"
             style="?attr/textAppearanceSgXSmallDim"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:gravity="right"
             android:lineSpacingExtra="2sp"
+            android:maxWidth="90dp"
             android:paddingTop="@dimen/inline_padding"
             android:text="@string/norating" />
-
-        <TextView
-            android:id="@+id/TextViewShowListNetwork"
-            style="?attr/textAppearanceSgXSmallDim"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:gravity="right"
-            android:maxWidth="90dp"
-            android:paddingBottom="@dimen/inline_padding"
-            android:text="@string/app_name" />
     </LinearLayout>
 
 </RelativeLayout>

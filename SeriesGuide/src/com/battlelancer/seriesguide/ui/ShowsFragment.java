@@ -425,13 +425,11 @@ public class ShowsFragment extends SherlockFragment implements
 
                 viewHolder = new ViewHolder();
                 viewHolder.name = (TextView) convertView.findViewById(R.id.seriesname);
-                viewHolder.network = (TextView) convertView
-                        .findViewById(R.id.TextViewShowListNetwork);
+                viewHolder.timeAndNetwork = (TextView) convertView
+                        .findViewById(R.id.textViewShowsTimeAndNetwork);
                 viewHolder.episode = (TextView) convertView
                         .findViewById(R.id.TextViewShowListNextEpisode);
                 viewHolder.episodeTime = (TextView) convertView.findViewById(R.id.episodetime);
-                viewHolder.airsTime = (TextView) convertView
-                        .findViewById(R.id.TextViewShowListAirtime);
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.showposter);
                 viewHolder.favorited = convertView.findViewById(R.id.favoritedLabel);
 
@@ -442,7 +440,6 @@ public class ShowsFragment extends SherlockFragment implements
 
             // set text properties immediately
             viewHolder.name.setText(mCursor.getString(ShowsQuery.TITLE));
-            viewHolder.network.setText(mCursor.getString(ShowsQuery.NETWORK));
 
             final boolean isFavorited = mCursor.getInt(ShowsQuery.FAVORITE) == 1;
             viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
@@ -474,9 +471,13 @@ public class ShowsFragment extends SherlockFragment implements
                     mCursor.getLong(ShowsQuery.AIRSTIME),
                     mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), mContext);
             if (getResources().getBoolean(R.bool.isLargeTablet)) {
-                viewHolder.airsTime.setText("/ " + values[1] + " " + values[0]);
+                // network first, then time, one line
+                viewHolder.timeAndNetwork.setText(mCursor.getString(ShowsQuery.NETWORK) + " / "
+                        + values[1] + " " + values[0]);
             } else {
-                viewHolder.airsTime.setText(values[1] + " " + values[0]);
+                // smaller screen, time first, network second line
+                viewHolder.timeAndNetwork.setText(values[1] + " " + values[0] + "/n"
+                        + mCursor.getString(ShowsQuery.NETWORK));
             }
 
             // set poster
@@ -501,13 +502,11 @@ public class ShowsFragment extends SherlockFragment implements
 
         public TextView name;
 
-        public TextView network;
+        public TextView timeAndNetwork;
 
         public TextView episode;
 
         public TextView episodeTime;
-
-        public TextView airsTime;
 
         public ImageView poster;
 

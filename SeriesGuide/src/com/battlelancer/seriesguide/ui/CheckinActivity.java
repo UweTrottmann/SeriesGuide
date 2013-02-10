@@ -26,7 +26,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v4.widget.CursorAdapter;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -44,9 +44,9 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
-import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.ShowsFragment.ViewHolder;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ShareUtils;
@@ -64,7 +64,7 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
 
     private EditText mSearchBox;
 
-    private SimpleCursorAdapter mAdapter;
+    private SlowAdapter mAdapter;
 
     private String mSearchFilter;
 
@@ -109,17 +109,7 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
         mSearchBox.requestFocus();
 
         // setup adapter
-        String[] from = new String[] {
-                SeriesContract.Shows.TITLE, SeriesContract.Shows.NEXTTEXT,
-                SeriesContract.Shows.AIRSTIME, SeriesContract.Shows.NETWORK,
-                SeriesContract.Shows.POSTER
-        };
-        int[] to = new int[] {
-                R.id.seriesname, R.id.TextViewShowListNextEpisode, R.id.TextViewShowListAirtime,
-                R.id.TextViewShowListNetwork, R.id.showposter
-        };
-        int layout = R.layout.shows_row;
-        mAdapter = new SlowAdapter(this, layout, null, from, to, 0);
+        mAdapter = new SlowAdapter(this, null, 0);
 
         // setup grid view
         GridView list = (GridView) findViewById(R.id.gridViewCheckinShows);
@@ -197,17 +187,16 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
         mAdapter.swapCursor(null);
     }
 
-    private class SlowAdapter extends SimpleCursorAdapter {
+    private class SlowAdapter extends CursorAdapter {
 
         private LayoutInflater mLayoutInflater;
 
-        private int mLayout;
+        private final int LAYOUT = R.layout.shows_row;
 
-        public SlowAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
-            super(context, layout, c, from, to, flags);
+        public SlowAdapter(Context context, Cursor c, int flags) {
+            super(context, c, flags);
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            mLayout = layout;
         }
 
         @Override
@@ -223,17 +212,15 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
             final ViewHolder viewHolder;
 
             if (convertView == null) {
-                convertView = mLayoutInflater.inflate(mLayout, null);
+                convertView = mLayoutInflater.inflate(LAYOUT, null);
 
                 viewHolder = new ViewHolder();
                 viewHolder.name = (TextView) convertView.findViewById(R.id.seriesname);
-                viewHolder.network = (TextView) convertView
-                        .findViewById(R.id.TextViewShowListNetwork);
+                viewHolder.timeAndNetwork = (TextView) convertView
+                        .findViewById(R.id.textViewShowsTimeAndNetwork);
                 viewHolder.episode = (TextView) convertView
                         .findViewById(R.id.TextViewShowListNextEpisode);
                 viewHolder.episodeTime = (TextView) convertView.findViewById(R.id.episodetime);
-                viewHolder.airsTime = (TextView) convertView
-                        .findViewById(R.id.TextViewShowListAirtime);
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.showposter);
                 viewHolder.favorited = convertView.findViewById(R.id.favoritedLabel);
 
@@ -244,7 +231,6 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
 
             // set text properties immediately
             viewHolder.name.setText(mCursor.getString(CheckinQuery.TITLE));
-            viewHolder.network.setText(mCursor.getString(CheckinQuery.NETWORK));
 
             final boolean isFavorited = mCursor.getInt(CheckinQuery.FAVORITE) == 1;
             viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
@@ -275,7 +261,15 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
             final String[] values = Utils.parseMillisecondsToTime(
                     mCursor.getLong(CheckinQuery.AIRSTIME),
                     mCursor.getString(CheckinQuery.AIRSDAYOFWEEK), mContext);
-            viewHolder.airsTime.setText(values[1] + " " + values[0]);
+            if (getResources().getBoolean(R.bool.isLargeTablet)) {
+                // network first, then time, one line
+                viewHolder.timeAndNetwork.setText(mCursor.getString(CheckinQuery.NETWORK) + " / "
+                        + values[1] + " " + values[0]);
+            } else {
+                // smaller screen, time first, network second line
+                viewHolder.timeAndNetwork.setText(values[1] + " " + values[0] + "/n"
+                        + mCursor.getString(CheckinQuery.NETWORK));
+            }
 
             // set poster
             final String imagePath = mCursor.getString(CheckinQuery.POSTER);
@@ -283,24 +277,16 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
 
             return convertView;
         }
-    }
 
-    static class ViewHolder {
+        @Override
+        public void bindView(View arg0, Context arg1, Cursor arg2) {
+            // do nothing here
+        }
 
-        public TextView name;
-
-        public TextView network;
-
-        public TextView episode;
-
-        public TextView episodeTime;
-
-        public TextView airsTime;
-
-        public ImageView poster;
-
-        public View favorited;
-
+        @Override
+        public View newView(Context arg0, Cursor arg1, ViewGroup arg2) {
+            return null;
+        }
     }
 
     interface CheckinQuery {
