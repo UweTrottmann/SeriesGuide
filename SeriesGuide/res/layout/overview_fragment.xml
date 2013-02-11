@@ -39,7 +39,7 @@
                     android:layout_marginLeft="@dimen/default_padding"
                     android:layout_marginRight="@dimen/default_padding"
                     android:ellipsize="marquee"
-                    android:textAppearance="?attr/textAppearanceSgMediumLight" />
+                    android:textAppearance="?attr/textAppearanceSgLargeLight" />
 
                 <TextView
                     android:id="@+id/showStatus"
@@ -89,7 +89,6 @@
                         android:layout_height="@dimen/imagecontainer_height" >
 
                         <FrameLayout
-                            xmlns:android="http://schemas.android.com/apk/res/android"
                             android:id="@+id/imageContainer"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" >
@@ -132,7 +131,7 @@
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
                                 android:maxLines="2"
-                                android:textAppearance="?attr/textAppearanceSgLargeLight" />
+                                android:textAppearance="?attr/textAppearanceSgXLargeLight" />
 
                             <TextView
                                 android:id="@+id/episodeTime"
@@ -177,7 +176,8 @@
 
                         <TextView
                             android:id="@+id/TextViewEpisodeDescription"
-                            style="@style/SmallItems.WithSideMargins" />
+                            style="@style/SmallItems.WithSideMargins"
+                            android:textIsSelectable="true" />
 
                         <TextView
                             android:id="@+id/labelGuestStars"
@@ -188,7 +188,8 @@
 
                         <TextView
                             android:id="@+id/TextViewEpisodeGuestStars"
-                            style="@style/SmallItems.WithSideMargins" />
+                            style="@style/SmallItems.WithSideMargins"
+                            android:textIsSelectable="true" />
 
                         <TextView
                             android:id="@+id/labelDvd"
