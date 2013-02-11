@@ -5,6 +5,21 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 3.1/3beta5 *(TBA)*
+--------------------------
+
+* TWEAK Text in detail views is mostly selectable (Android 3.0+). Easily copy actor names or descriptions.
+* TWEAK New screen animations.
+* TWEAK New side-attached large-screen layout for activity screen.
+* TWEAK Link to app settings from Android network manager tool (Android 4.0+).
+* TWEAK Smoother transition after pressing swipe-menu item.
+* TWEAK Display show poster in show info, other tweaks for more prettiness.
+* TWEAK Display type of list item if it is an episode or a season.
+* FIX Full screen swipe opens menu if first episode detail page is shown.
+* FIX Very long network names wrap correctly in show list.
+* FIX Crash with list widget.
+* NOTICE Latest translations from crowdin.
+
 Version 3 *(2013-01-29)*
 ------------------------
 
