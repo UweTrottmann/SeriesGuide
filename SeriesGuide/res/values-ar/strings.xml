@@ -121,7 +121,7 @@
   <string name="update_single">تحديث العرض...</string>
   <string name="update_delta">تحديث البرامج القديمة ...</string>
   <string name="update_full">تحديث كافة العروض...</string>
-  <string name="update_success">إظهار التحديث</string>
+  <string name="update_success">تم التحديث</string>
   <string name="update_offline">.فشل التحديث، تحقق من اتصال إنترنت/وأي فأي الخاص بك</string>
   <string name="update_saxerror">.فشل التحديث، حاول مرة أخرى لاحقاً</string>
   <string name="update_inprogress">التحديث قيد التقدم, حاول مرة أخرى.</string>
@@ -167,23 +167,23 @@
   <string name="list_item_manage">إدارة القوائم</string>
   <string name="list_item_remove">إزالة من القائمة</string>
   <string name="list_empty">يمكنك إضافة عروض أو المواسم أو الحلقات لهذه القائمة.</string>
-  <string name="connect_trakt">Connect trakt</string>
-  <string name="connect_trakt_done">Connected to trakt!</string>
+  <string name="connect_trakt">traktإنصل ب</string>
+  <string name="connect_trakt_done">trakt!متصل ب</string>
   <string name="add_trakt_shows">أضف مسلسلات من مكتبتك</string>
-  <string name="show_library">Show your library</string>
-  <string name="upload_shows">Upload your SeriesGuide show list:</string>
-  <string name="upload_existing_shows">Upload existing shows</string>
+  <string name="show_library">إظهار المكتبة الخاصة بك</string>
+  <string name="upload_shows">إرفع قائمة مسلسلاتك الخاصة</string>
+  <string name="upload_existing_shows">إرفع مسلسلات موجودة</string>
   <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
-  <string name="integration_trakt">If you connect trakt:</string>
+  <string name="integration_trakt">:tract إذا أوصلت</string>
   <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
   <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
   <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
   <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
-  <string name="trakt_download">Download to SeriesGuide</string>
-  <string name="trakt_upload">Upload to trakt.tv</string>
-  <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
+  <string name="trakt_download">تنزيل على السيريس جايد</string>
+  <string name="trakt_upload">رفع على موقع التراكت تي في </string>
+  <string name="trakt_syncunwatched">أزل أعلام المشاهدة للحلقات الغير مشاهدة</string>
   <string name="prefs_category_basic">أساسي</string>
-  <string name="prefs_category_sharing">Services</string>
+  <string name="prefs_category_sharing">خدمات</string>
   <string name="prefs_category_advanced">متقدم</string>
   <string name="prefs_category_about">حول</string>
   <string name="pref_showsorting">ترتيب حسب</string>
@@ -205,9 +205,9 @@
   <string name="about">SeriesGuide حول</string>
   <string name="pref_credits">الاعتمادات</string>
   <string name="clearGetGlueCredentials">GetGlue قطع إتصال</string>
-  <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
+  <string name="clearGetGlueCredentialssummary">تحقق مع جيت جلوي لأإعادة الاتصال</string>
   <string name="pref_traktsummary">trakt.tv أضف أو عدل بياناتك في موقع</string>
-  <string name="pref_traktsync">Manual sync with trakt.tv</string>
+  <string name="pref_traktsync">المزامنة يدويا مع التراكت تي في </string>
   <string name="feedback">أرسل ملاحظاتك</string>
   <string name="clear_cache">مسح ذاكرة التخزين المؤقتة للصور</string>
   <string name="clear_cache_summary">إزالة جميع الصور المخزنة مؤقتا من جهازك</string>
@@ -246,16 +246,16 @@
   <string name="checkin_empty">لا تظهر مطابقة</string>
   <string name="checkin_hint">اكتب رسالة (اختياري)</string>
   <string name="checkin_fixgetglue">Fix GetGlue check-in</string>
-  <string name="paste_title">Paste title</string>
+  <string name="paste_title">إلصق عنوان</string>
   <string name="checkinsuccess">Checked into %s on GetGlue.</string>
   <string name="checkinfailed">GetGlue check-in failed. Try again later.</string>
   <string name="getglue_authfailed">فشل GetGlue المصادقة. حاول مرة أخرى في وقت لاحق.</string>
   <string name="checkin_success_trakt">Checked into %s on trakt.</string>
   <string name="checkin_canceled_success_trakt">Cancelled check-in on trakt.</string>
-  <string name="select_show">Select show</string>
+  <string name="select_show">إختر مسلسل</string>
   <string name="check_into">Check into</string>
-  <string name="no_selection">pick one below</string>
-  <string name="looking_for_something_else">Looking for something else?</string>
+  <string name="no_selection">اختر واحد أدناه</string>
+  <string name="looking_for_something_else">هل تبحث عن شئ آخر؟</string>
   <string name="menu_rate_trakt">(قيّم (موقع تراكت</string>
   <string name="menu_share_others">عبر تطبيقات أخرى</string>
   <string name="traktcheckin_cancel">تجاهل</string>
@@ -283,13 +283,13 @@
   <string name="upcoming_show_detailed">%1$s on %2$s</string>
   <string name="upcoming_display">حدد هذا الخيار لعرض المسلسلات القادمة</string>
   <string name="pref_notifications">التنبيهات</string>
-  <string name="pref_notificationssummary">Notify about new episodes</string>
+  <string name="pref_notificationssummary">إخطار عن حلقات جديدة</string>
   <string name="pref_notifyfavonly">المفضلة فقط</string>
   <string name="pref_notifyfavonlysummary">تلقي التنبيهات في العروض المفضلة فقط</string>
   <string name="pref_ringtone">نغمة التنبيه</string>
   <string name="pref_vibrate">إهتزاز</string>
   <string name="pref_vibratesummary">إهتزاز عند عرض التنبيه</string>
-  <string name="pref_notifications_treshold">When to notify</string>
+  <string name="pref_notifications_treshold">متى يتم إخطار</string>
   <string name="pref_theme">شكل التطبيق</string>
   <string name="choose_list">اختر قائمة النشاط</string>
   <string name="hide_watched">إخفاء الحلقات المشاهدة</string>
@@ -334,10 +334,10 @@
     <item>مخفي</item>
   </string-array>
   <string-array name="notificationThreshold">
-    <item>on air</item>
-    <item>5 min in advance</item>
-    <item>10 min in advance</item>
-    <item>one hour in advance</item>
+    <item>على الهواء</item>
+    <item>قبل 5 دقائق</item>
+    <item>قبل 10 دقائق</item>
+    <item>قبل ساعة</item>
   </string-array>
   <plurals name="votes">
     <item quantity="one">صوت % d</item>
