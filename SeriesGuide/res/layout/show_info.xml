@@ -30,7 +30,8 @@
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginRight="@dimen/default_padding"
                 android:text="@string/app_name"
-                android:textAppearance="?attr/textAppearanceSgXLargeLight" />
+                android:textAppearance="?attr/textAppearanceSgXLargeLight"
+                android:textIsSelectable="true" />
 
             <include layout="@layout/show_info_meta" >
             </include>
