@@ -240,7 +240,7 @@ public class ListsFragment extends SherlockFragment implements
                                 + values[1] + " " + values[0]);
                     } else {
                         // smaller screen, time first, network second line
-                        viewHolder.timeAndNetwork.setText(values[1] + " " + values[0] + "/n"
+                        viewHolder.timeAndNetwork.setText(values[1] + " " + values[0] + "\n"
                                 + mCursor.getString(ListItemsQuery.SHOW_NETWORK));
                     }
 
