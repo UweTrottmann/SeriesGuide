@@ -205,7 +205,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                 // Execute a transaction, replacing any existing
                 // fragment with this one inside the frame.
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.anim.fragment_slide_right_enter,
+                ft.setCustomAnimations(R.anim.fragment_slide_left_enter,
                         R.anim.fragment_slide_right_exit);
                 ft.replace(R.id.fragment_details, detailsFragment, "fragmentDetails").commit();
             }
