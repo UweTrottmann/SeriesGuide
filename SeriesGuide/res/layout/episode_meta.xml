@@ -11,7 +11,8 @@
         android:id="@+id/description"
         style="@style/SmallItems.WithSideMargins"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/labelGuestStars"
@@ -24,7 +25,8 @@
         android:id="@+id/guestStars"
         style="@style/SmallItems.WithSideMargins"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/labelDirectors"
@@ -37,7 +39,8 @@
         android:id="@+id/directors"
         style="@style/SmallItems.WithSideMargins"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/labelWriters"
@@ -50,7 +53,8 @@
         android:id="@+id/writers"
         style="@style/SmallItems.WithSideMargins"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/labelDvd"
@@ -63,7 +67,8 @@
         android:id="@+id/dvdNumber"
         style="@style/SmallItems.WithSideMargins"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/labelAirDay"
@@ -76,7 +81,8 @@
         android:id="@+id/airDay"
         style="@style/SmallItems.WithSideMargins"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/labelLastEdit"
@@ -89,6 +95,7 @@
         android:id="@+id/lastEdit"
         style="@style/SmallItems.WithSideMargins"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true" />
 
 </merge>
