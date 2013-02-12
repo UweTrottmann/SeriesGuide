@@ -19,30 +19,37 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
         super.onInitialize(isReconnect);
         setUpdateWhenScreenOn(true);
     }
-    
+
     @Override
     protected void onUpdateData(int arg0) {
         final Cursor upcomingEpisodes = DBUtils.getUpcomingEpisodes(true, getApplicationContext());
 
         if (upcomingEpisodes != null && upcomingEpisodes.getCount() > 0
                 && upcomingEpisodes.moveToFirst()) {
+            long firstairedms = upcomingEpisodes.getLong(UpcomingQuery.FIRSTAIREDMS);
             final String[] timeAndDay = Utils.formatToTimeAndDay(
-                    upcomingEpisodes.getLong(UpcomingQuery.FIRSTAIREDMS), this);
+                    firstairedms, this);
+
+            // Community, NBC
+            String expandedBody = upcomingEpisodes.getString(UpcomingQuery.SHOW_TITLE) + ", "
+                    + upcomingEpisodes.getString(UpcomingQuery.SHOW_NETWORK);
+            // all episodes airing the same time as the first one
+            while (upcomingEpisodes.moveToNext()
+                    && firstairedms == upcomingEpisodes.getLong(UpcomingQuery.FIRSTAIREDMS)) {
+                expandedBody += "\n" + upcomingEpisodes.getString(UpcomingQuery.SHOW_TITLE) + ", "
+                        + upcomingEpisodes.getString(UpcomingQuery.SHOW_NETWORK);
+            }
 
             publishUpdate(new ExtensionData()
                     .visible(true)
                     .icon(R.drawable.ic_notification)
-                    .status(timeAndDay[2])
-                    .expandedTitle(
-                            timeAndDay[2] + " - "
-                                    + upcomingEpisodes.getString(UpcomingQuery.SHOW_TITLE))
-                    .expandedBody(
-                            getString(R.string.upcoming_show_detailed, timeAndDay[0],
-                                    upcomingEpisodes.getString(UpcomingQuery.SHOW_NETWORK)))
+                    // Fri \n 15:00
+                    .status(timeAndDay[1] + "\n" + timeAndDay[0])
+                    // in 10 mins, Fri 15:00
+                    .expandedTitle(timeAndDay[2] + ", " + timeAndDay[1] + " " + timeAndDay[0])
+                    .expandedBody(expandedBody)
                     .clickIntent(
-                            new Intent(getApplicationContext(), UpcomingRecentActivity.class)
-                                    .putExtra(
-                                            UpcomingRecentActivity.InitBundle.SELECTED_TAB, 1)));
+                            new Intent(getApplicationContext(), UpcomingRecentActivity.class)));
         } else {
             // nothing to show
             publishUpdate(null);
