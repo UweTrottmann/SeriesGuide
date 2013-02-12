@@ -49,7 +49,9 @@ public class UpcomingEpisodeExtension extends DashClockExtension {
                     .expandedTitle(timeAndDay[2] + ", " + timeAndDay[1] + " " + timeAndDay[0])
                     .expandedBody(expandedBody)
                     .clickIntent(
-                            new Intent(getApplicationContext(), UpcomingRecentActivity.class)));
+                            new Intent(getApplicationContext(), UpcomingRecentActivity.class)
+                                    .putExtra(
+                                            UpcomingRecentActivity.InitBundle.SELECTED_TAB, 0)));
         } else {
             // nothing to show
             publishUpdate(null);
