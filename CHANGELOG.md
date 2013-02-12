@@ -5,9 +5,12 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 3.1/3beta5 *(TBA)*
+Version 4 *(TBA)*
 --------------------------
 
+#### 4beta1 *(2013-02-12)*
+
+* FEATURE Supply extension for Roman Nurik's DashClock.
 * TWEAK Text in detail views is mostly selectable (Android 3.0+). Easily copy actor names or descriptions.
 * TWEAK New screen animations.
 * TWEAK New side-attached large-screen layout for activity screen.
