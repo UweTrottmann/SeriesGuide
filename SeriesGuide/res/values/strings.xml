@@ -402,6 +402,10 @@
     <string name="bigwidget">SeriesGuide (middle)</string>
     <string name="largewidget">SeriesGuide (large)</string>
 
+    <!-- DashClock extension -->
+    <string name="dashclock_extension_label">Upcoming episode</string>
+    <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
+
     <!-- strings for BETA release -->
     <string name="download_stable">Download SeriesGuide</string>
     <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
