@@ -5,8 +5,13 @@ background: #fff;
 color:#333;
 }
 
-h1, h2, h3, h4, h5, h6 {
-font-weight: normal;
+h1, h2 {
+font-weight: 300;
+color:#2B00AA;
+}
+
+h3, h4, h5, h6 {
+font-weight: 300;
 color:#333;
 }
 
@@ -16,15 +21,20 @@ font-size: 14px;
 }
 
 a {
-color:#0099cc;
+color:#333;
 text-decoration:none;
 line-height:inherit;
-font-weight:inherit;
+font-weight:bold;
 }
 
 a:hover {
-color:#2B9BC3;
 text-decoration:underline;
+}
+
+.link-button {
+font-weight:300;
+color:#333;
+font-size:2em;
 }
 
 .navbar .brand {
@@ -33,6 +43,7 @@ color: #eee;
 
 .navbar .nav > li > a {
 font-size: 1.2em;
+font-weight:400;
 color: #eee;
 }
 
@@ -50,6 +61,10 @@ height:80px;
 
 .well {
 background:#111111;
+color: #ffffff;
+}
+
+.well a {
 color: #ffffff;
 }
 
