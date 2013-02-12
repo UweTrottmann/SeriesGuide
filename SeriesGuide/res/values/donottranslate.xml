@@ -13,7 +13,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">Thanks again! v3 is out now.\n\nFix crash when flagging episodes watched.\n\nFix show list filter not working after rotating device.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">DashClock is awesome!\n\nSeriesGuide provides a DashClock extension for the next upcoming episode. If you have Android 4.2 check it out (obviously requires DashClock to be installed).\n\nOn Android 3.0+ descriptions, actors and similar text is now selectable.\n\nNew animations.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
 
     <!-- Settings -->
     <string name="pref_translate">Translate SeriesGuide</string>
