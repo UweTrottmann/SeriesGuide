@@ -285,13 +285,26 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         return builder;
     }
 
+    /** Lower season or if season is equal has to have a lower episode number. */
+    private static final String SELECTION_PREVIOUS_WATCHED = Episodes.SEASON + "<? OR "
+            + "(" + Episodes.SEASON + "=? AND " + Episodes.NUMBER + "<?)";
+
+    private static final String ORDER_PREVIOUS_WATCHED = Episodes.FIRSTAIREDMS + " DESC,"
+            + Episodes.SEASON + " DESC,"
+            + Episodes.NUMBER + " DESC";
+
+    private static final String[] PROJECTION_EPISODE = new String[] {
+            Episodes._ID
+    };
+
     /**
      * Determines the latest watched episode and stores it for the show.
      */
     private void setLastWatchedEpisode() {
+        int lastWatchedId = -1;
+
         if (mIsFlag) {
             // adding watched flag
-            int lastWatchedId;
             switch (mAction) {
                 case EPISODE_WATCHED:
                 case EPISODE_WATCHED_PREVIOUS:
@@ -302,20 +315,14 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                     // get the last flagged episode of the season
                     final Cursor seasonEpisodes = mContext.getContentResolver().query(
                             Episodes.buildEpisodesOfSeasonUri(String.valueOf(mItemId)),
-                            new String[] {
-                                Episodes._ID
-                            }, null, null, Episodes.NUMBER + " DESC");
-                    if (seasonEpisodes == null) {
-                        return;
-                    }
-                    if (!seasonEpisodes.moveToFirst()) {
+                            PROJECTION_EPISODE, null, null, Episodes.NUMBER + " DESC");
+                    if (seasonEpisodes != null) {
+                        if (!seasonEpisodes.moveToFirst()) {
+                            lastWatchedId = seasonEpisodes.getInt(0);
+                        }
+
                         seasonEpisodes.close();
-                        return;
                     }
-
-                    lastWatchedId = seasonEpisodes.getInt(0);
-
-                    seasonEpisodes.close();
                     break;
                 case EPISODE_COLLECTED:
                 case SHOW_WATCHED:
@@ -323,15 +330,59 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                     // we don't care
                     return;
             }
+        } else {
+            // removing watched flag
+            switch (mAction) {
+                case EPISODE_WATCHED:
+                    final Cursor show = mContext.getContentResolver().query(
+                            Shows.buildShowUri(String.valueOf(mShowId)),
+                            new String[] {
+                                    Shows._ID, Shows.LASTWATCHEDID
+                            }, null, null, null);
+                    if (show != null) {
+                        // identical to last watched episode?
+                        if (show.moveToFirst() && show.getInt(1) == mItemId) {
+                            // get latest watched before this one
+                            String season = String.valueOf(mSeason);
+                            final Cursor latestWatchedEpisode = mContext.getContentResolver()
+                                    .query(Episodes.buildEpisodesOfShowUri(String
+                                            .valueOf(mShowId)),
+                                            PROJECTION_EPISODE, SELECTION_PREVIOUS_WATCHED,
+                                            new String[] {
+                                                    season, season, String.valueOf(mEpisode)
+                                            }, ORDER_PREVIOUS_WATCHED);
+                            if (latestWatchedEpisode != null) {
+                                if (latestWatchedEpisode.moveToFirst()) {
+                                    lastWatchedId = latestWatchedEpisode.getInt(0);
+                                }
 
+                                latestWatchedEpisode.close();
+                            }
+                        }
+
+                        show.close();
+                    }
+                    break;
+                case SEASON_WATCHED:
+                case SHOW_WATCHED:
+                    // just reset
+                    lastWatchedId = 0;
+                    break;
+                case EPISODE_COLLECTED:
+                case EPISODE_WATCHED_PREVIOUS:
+                default:
+                    // not relevant to us
+                    return;
+            }
+        }
+
+        if (lastWatchedId != -1) {
+            // set latest watched
             ContentValues values = new ContentValues();
             values.put(Shows.LASTWATCHEDID, lastWatchedId);
             mContext.getContentResolver().update(Shows.buildShowUri(String.valueOf(mShowId)),
                     values,
                     null, null);
-        } else {
-            // removing watched flag
-            
         }
     }
 
