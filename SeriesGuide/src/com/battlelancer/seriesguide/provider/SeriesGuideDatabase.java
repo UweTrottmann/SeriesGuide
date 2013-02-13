@@ -424,7 +424,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     // Must be watched and have an airdate
     private static final String LATEST_SELECTION = Episodes.WATCHED + "=1 AND "
-            + Episodes.FIRSTAIREDMS + "!=-1";
+            + Episodes.FIRSTAIREDMS + "!=-1 AND " + Shows.REF_SHOW_ID + "=?";
     // Latest aired first (ensures we get specials), if equal sort by season,
     // then number
     private static final String LATEST_ORDER = Episodes.FIRSTAIREDMS + " DESC,"
@@ -453,7 +453,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                     final String showId = shows.getString(0);
                     final Cursor highestWatchedEpisode = db.query(Tables.EPISODES, new String[] {
                             Episodes._ID
-                    }, LATEST_SELECTION, null, null, null, LATEST_ORDER);
+                    }, LATEST_SELECTION, new String[] {
+                        showId
+                    }, null, null, LATEST_ORDER);
 
                     if (highestWatchedEpisode != null) {
                         if (highestWatchedEpisode.moveToFirst()) {
