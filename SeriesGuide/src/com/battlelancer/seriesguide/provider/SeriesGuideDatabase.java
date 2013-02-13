@@ -422,9 +422,13 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    // Must be watched and have an airdate
     private static final String LATEST_SELECTION = Episodes.WATCHED + "=1 AND "
             + Episodes.FIRSTAIREDMS + "!=-1";
-    private static final String LATEST_ORDER = Episodes.SEASON + " DESC,"
+    // Latest aired first (ensures we get specials), if equal sort by season,
+    // then number
+    private static final String LATEST_ORDER = Episodes.FIRSTAIREDMS + " DESC,"
+            + Episodes.SEASON + " DESC,"
             + Episodes.NUMBER + " DESC";
 
     /**
