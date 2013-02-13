@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -211,6 +212,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
         // update local database if trakt did not fail or if it is not used
         updateDatabase(mItemId);
+        setLastWatchedEpisode();
 
         return SUCCESS;
     }
@@ -281,6 +283,56 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         }
 
         return builder;
+    }
+
+    /**
+     * Determines the latest watched episode and stores it for the show.
+     */
+    private void setLastWatchedEpisode() {
+        if (mIsFlag) {
+            // adding watched flag
+            int lastWatchedId;
+            switch (mAction) {
+                case EPISODE_WATCHED:
+                case EPISODE_WATCHED_PREVIOUS:
+                    // take the given episode id
+                    lastWatchedId = mItemId;
+                    break;
+                case SEASON_WATCHED:
+                    // get the last flagged episode of the season
+                    final Cursor seasonEpisodes = mContext.getContentResolver().query(
+                            Episodes.buildEpisodesOfSeasonUri(String.valueOf(mItemId)),
+                            new String[] {
+                                Episodes._ID
+                            }, null, null, Episodes.NUMBER + " DESC");
+                    if (seasonEpisodes == null) {
+                        return;
+                    }
+                    if (!seasonEpisodes.moveToFirst()) {
+                        seasonEpisodes.close();
+                        return;
+                    }
+
+                    lastWatchedId = seasonEpisodes.getInt(0);
+
+                    seasonEpisodes.close();
+                    break;
+                case EPISODE_COLLECTED:
+                case SHOW_WATCHED:
+                default:
+                    // we don't care
+                    return;
+            }
+
+            ContentValues values = new ContentValues();
+            values.put(Shows.LASTWATCHEDID, lastWatchedId);
+            mContext.getContentResolver().update(Shows.buildShowUri(String.valueOf(mShowId)),
+                    values,
+                    null, null);
+        } else {
+            // removing watched flag
+            
+        }
     }
 
     private void updateDatabase(int itemId) {
