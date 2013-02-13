@@ -422,6 +422,11 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    private static final String LATEST_SELECTION = Episodes.WATCHED + "=1 AND "
+            + Episodes.FIRSTAIREDMS + "!=-1";
+    private static final String LATEST_ORDER = Episodes.SEASON + " DESC,"
+            + Episodes.NUMBER + " DESC";
+
     /**
      * Add {@link Shows} column to store the last watched episode id for better
      * prediction of next episode.
@@ -429,6 +434,43 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     private void upgradeToThirtyOne(SQLiteDatabase db) {
         db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.LASTWATCHEDID
                 + " INTEGER DEFAULT 0;");
+
+        // pre populate with latest watched episode ids
+        ContentValues values = new ContentValues();
+        final Cursor shows = db.query(Tables.SHOWS, new String[] {
+                Shows._ID,
+        }, null, null, null, null, null);
+        if (shows != null) {
+
+            db.beginTransaction();
+            try {
+
+                while (shows.moveToNext()) {
+                    final String showId = shows.getString(0);
+                    final Cursor highestWatchedEpisode = db.query(Tables.EPISODES, new String[] {
+                            Episodes._ID
+                    }, LATEST_SELECTION, null, null, null, LATEST_ORDER);
+
+                    if (highestWatchedEpisode != null) {
+                        if (highestWatchedEpisode.moveToFirst()) {
+                            values.put(Shows.LASTWATCHEDID, highestWatchedEpisode.getInt(0));
+                            db.update(Tables.SHOWS, values, Shows._ID + "=?", new String[] {
+                                    showId
+                            });
+                            values.clear();
+                        }
+
+                        highestWatchedEpisode.close();
+                    }
+                }
+
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+
+            shows.close();
+        }
     }
 
     /**
