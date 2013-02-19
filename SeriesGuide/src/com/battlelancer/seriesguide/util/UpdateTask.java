@@ -220,6 +220,10 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
 
                 try {
                     TheTVDB.updateShow(id, mAppContext);
+                    
+                    // make sure overview and details loaders are notified
+                    resolver.notifyChange(Episodes.CONTENT_URI_WITHSHOW, null);
+                    
                     break;
                 } catch (SAXException e) {
                     if (itry == 1) {
@@ -388,8 +392,20 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                             case Seen: {
                                 // seen uses an array of episodes
                                 List<TvShowEpisode> episodes = item.episodes;
+                                int season = -1;
+                                int number = -1;
                                 for (TvShowEpisode episode : episodes) {
-                                    addEpisodeSeenOp(batch, episode, item.show.tvdbId);
+                                    if (episode.season > season || episode.number > number) {
+                                        season = episode.season;
+                                        number = episode.number;
+                                    }
+                                    addEpisodeSeenUpdateOp(batch, episode, item.show.tvdbId);
+                                }
+                                // set highest season + number combo as last
+                                // watched
+                                if (season != -1 && number != -1) {
+                                    addLastWatchedUpdateOp(resolver, batch, season, number,
+                                            item.show.tvdbId);
                                 }
                                 break;
                             }
@@ -397,14 +413,16 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                             case Scrobble: {
                                 // checkin and scrobble use a single episode
                                 TvShowEpisode episode = item.episode;
-                                addEpisodeSeenOp(batch, episode, item.show.tvdbId);
+                                addEpisodeSeenUpdateOp(batch, episode, item.show.tvdbId);
+                                addLastWatchedUpdateOp(resolver, batch, episode.season,
+                                        episode.number, item.show.tvdbId);
                                 break;
                             }
                             case Collection: {
                                 // collection uses an array of episodes
                                 List<TvShowEpisode> episodes = item.episodes;
                                 for (TvShowEpisode episode : episodes) {
-                                    addEpisodeCollectedOp(batch, episode, item.show.tvdbId);
+                                    addEpisodeCollectedUpdateOp(batch, episode, item.show.tvdbId);
                                 }
                                 break;
                             }
@@ -530,7 +548,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
         mFailedShows += seriesName;
     }
 
-    private static void addEpisodeSeenOp(final ArrayList<ContentProviderOperation> batch,
+    private static void addEpisodeSeenUpdateOp(final ArrayList<ContentProviderOperation> batch,
             TvShowEpisode episode, String showTvdbId) {
         batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodesOfShowUri(showTvdbId))
                 .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[] {
@@ -538,7 +556,33 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                 }).withValue(Episodes.WATCHED, true).build());
     }
 
-    private static void addEpisodeCollectedOp(ArrayList<ContentProviderOperation> batch,
+    /**
+     * Queries for an episode id and adds a content provider op to set it as
+     * last watched for the given show.
+     */
+    private void addLastWatchedUpdateOp(ContentResolver resolver,
+            ArrayList<ContentProviderOperation> batch, int season, int number, String showTvdbId) {
+        // query for the episode id
+        final Cursor episode = resolver.query(
+                Episodes.buildEpisodesOfShowUri(showTvdbId),
+                new String[] {
+                    Episodes._ID
+                }, Episodes.SEASON + "=" + season + " AND "
+                        + Episodes.NUMBER + "=" + number, null, null);
+
+        // store the episode id as last watched for the given show
+        if (episode != null) {
+            if (episode.moveToFirst()) {
+                batch.add(ContentProviderOperation.newUpdate(Shows.buildShowUri(showTvdbId))
+                        .withValue(Shows.LASTWATCHEDID, episode.getInt(0)).build());
+            }
+
+            episode.close();
+        }
+
+    }
+
+    private static void addEpisodeCollectedUpdateOp(ArrayList<ContentProviderOperation> batch,
             TvShowEpisode episode, String showTvdbId) {
         batch.add(ContentProviderOperation.newUpdate(Episodes.buildEpisodesOfShowUri(showTvdbId))
                 .withSelection(Episodes.NUMBER + "=? AND " + Episodes.SEASON + "=?", new String[] {
@@ -547,7 +591,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
     }
 
     private void fireTrackerEvent(String message) {
-        EasyTracker.getTracker().trackEvent(TAG, "Update result", message, (long) 0);
+        EasyTracker.getTracker().sendEvent(TAG, "Update result", message, (long) 0);
     }
 
 }

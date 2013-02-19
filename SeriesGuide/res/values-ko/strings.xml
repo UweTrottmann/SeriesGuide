@@ -25,6 +25,7 @@
   <string name="share">공유</string>
   <string name="updated">최신버전으로 업데이트 완료.</string>
   <string name="discard">취소</string>
+  <string name="close">Close</string>
   <string name="save_selection">선택한 것 저장</string>
   <string name="offline">네트워크에 연결에 실패하였습니다. 나중에 다시 시도해주세요.</string>
   <string name="onlyx">시리즈가이드 X 에서만 사용가능</string>
@@ -91,6 +92,7 @@
   <string name="trakt_notseen">%s 미시청.</string>
   <string name="trakt_collected">%s 수집됨.</string>
   <string name="trakt_notcollected">%s 수집되지 않음.</string>
+  <string name="add_empty">There are no shows here or your device has no internet connection.</string>
   <string name="shows_empty">Look in the menu above to add some shows.</string>
   <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
   <string name="hidden_empty">Long-press on a show to hide it here.</string>
@@ -165,6 +167,21 @@
   <string name="list_item_manage">목록 관리</string>
   <string name="list_item_remove">목록에서 제거</string>
   <string name="list_empty">쇼, 시즌 혹은 에피소드를 목록에 추가할 수 있습니다.</string>
+  <string name="connect_trakt">Connect trakt</string>
+  <string name="connect_trakt_done">Connected to trakt!</string>
+  <string name="add_trakt_shows">Add shows from your library:</string>
+  <string name="show_library">Show your library</string>
+  <string name="upload_shows">Upload your SeriesGuide show list:</string>
+  <string name="upload_existing_shows">Upload existing shows</string>
+  <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
+  <string name="integration_trakt">If you connect trakt:</string>
+  <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
+  <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
+  <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
+  <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
+  <string name="trakt_download">Download to SeriesGuide</string>
+  <string name="trakt_upload">Upload to trakt.tv</string>
+  <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
   <string name="prefs_category_basic">기본</string>
   <string name="prefs_category_sharing">서비스</string>
   <string name="prefs_category_advanced">고급</string>
@@ -189,9 +206,8 @@
   <string name="pref_credits">만든이</string>
   <string name="clearGetGlueCredentials">GetGlue 연결끊기</string>
   <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
-  <string name="pref_trakt">trakt.tv 로그인 정보</string>
   <string name="pref_traktsummary">trakt.tv 에 로그인 혹은 새계정 생성</string>
-  <string name="pref_traktsync">trakt.tv와 동기화</string>
+  <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">사용자 의견 보내기</string>
   <string name="clear_cache">이미지 캐쉬 삭제</string>
   <string name="clear_cache_summary">디바이스에 있는 모든 캐쉬된 이미지를 제거합니다</string>
@@ -258,14 +274,7 @@
   <string name="trakt_decryptfail">암호 복호화 실패</string>
   <string name="trakt_generalerror">오류가 있습니다. 계정정보를 확인하여 재시도해주세요.</string>
   <string name="trakt_createaccount">새 계정 만들기</string>
-  <string name="trakt_experimental">시리즈가이드에 등록된 쇼 목록만 동기화됩니다. \'시리즈가이드에 동기화\'는 trakt에 있는 정보를 얻어옵니다. \'trakt.tv에 동기화\' 버튼을 누르면 시리즈가이드에 있는 정보가 trakt로 전송됩니다.</string>
-  <string name="trakt_synctodevice">시리즈가이드에 동기화</string>
-  <string name="trakt_synctotrakt">trakt.tv에 동기화</string>
-  <string name="trakt_syncunseen">미시청 여부 포함</string>
-  <string name="trakt_howto_title">trakt.tv 싱크설정</string>
-  <string name="trakt_howto">셋업 방법:\n\n1.아래의 버튼을 이용해 모든 기기에서 로그인합니다.(새계정 생성도 가능)\n2. 처음 이용할 때, <b>trakt.tv에 동기화</b>를 눌러 기기에 있는 쇼를 동기화합니다.\n3. <b>라이브러리</b>탭에 있는 <b>쇼 추가</b>화면을 통해 trakt.tv 에 있는 쇼를 추가합니다.\n\n이제 시리즈가이드가 업데이트될 때마다 당신의 trakt.tv 활동내역이 장각각의 기기에 추가됩니다. 업데이트에는 에피소드 시청여부, 에피소드 수집여부 및 체크인 여부가 포함됩니다.</string>
   <string name="welcome_setuplanguage">언어 선택</string>
-  <string name="welcome_setuptrakt">trakt에 연결</string>
   <string name="welcome_traktmessage">track.tv 라이브러리와 친구의 상태를 확인하세요</string>
   <string name="dismiss">취소</string>
   <string name="welcome_add_part1">시작하려면 액션바에 있는</string>

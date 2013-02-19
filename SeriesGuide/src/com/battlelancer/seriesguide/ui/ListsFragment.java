@@ -45,6 +45,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.ShowsFragment.ViewHolder;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
@@ -206,13 +207,11 @@ public class ListsFragment extends SherlockFragment implements
 
                 viewHolder = new ViewHolder();
                 viewHolder.name = (TextView) convertView.findViewById(R.id.seriesname);
-                viewHolder.network = (TextView) convertView
-                        .findViewById(R.id.TextViewShowListNetwork);
+                viewHolder.timeAndNetwork = (TextView) convertView
+                        .findViewById(R.id.textViewShowsTimeAndNetwork);
                 viewHolder.episode = (TextView) convertView
                         .findViewById(R.id.TextViewShowListNextEpisode);
                 viewHolder.episodeTime = (TextView) convertView.findViewById(R.id.episodetime);
-                viewHolder.airsTime = (TextView) convertView
-                        .findViewById(R.id.TextViewShowListAirtime);
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.showposter);
 
                 convertView.setTag(viewHolder);
@@ -229,16 +228,20 @@ public class ListsFragment extends SherlockFragment implements
                 default:
                 case 1:
                     // shows
-                    viewHolder.network.setText(mCursor.getString(ListItemsQuery.SHOW_NETWORK));
 
-                    // airday
+                    // air time and network
                     final String[] values = Utils.parseMillisecondsToTime(
                             mCursor.getLong(ListItemsQuery.AIRSTIME),
                             mCursor.getString(ListItemsQuery.SHOW_AIRSDAY), mContext);
                     if (getResources().getBoolean(R.bool.isLargeTablet)) {
-                        viewHolder.airsTime.setText("/ " + values[1] + " " + values[0]);
+                        // network first, then time, one line
+                        viewHolder.timeAndNetwork.setText(mCursor
+                                .getString(ListItemsQuery.SHOW_NETWORK) + " / "
+                                + values[1] + " " + values[0]);
                     } else {
-                        viewHolder.airsTime.setText(values[1] + " " + values[0]);
+                        // smaller screen, time first, network second line
+                        viewHolder.timeAndNetwork.setText(values[1] + " " + values[0] + "\n"
+                                + mCursor.getString(ListItemsQuery.SHOW_NETWORK));
                     }
 
                     // next episode info
@@ -265,16 +268,14 @@ public class ListsFragment extends SherlockFragment implements
                     break;
                 case 2:
                     // seasons
-                    viewHolder.network.setText("");
-                    viewHolder.airsTime.setText("");
+                    viewHolder.timeAndNetwork.setText(R.string.season);
                     viewHolder.episode.setText(Utils.getSeasonString(mContext,
                             mCursor.getInt(ListItemsQuery.ITEM_TITLE)));
                     viewHolder.episodeTime.setText("");
                     break;
                 case 3:
                     // episodes
-                    viewHolder.network.setText("");
-                    viewHolder.airsTime.setText("");
+                    viewHolder.timeAndNetwork.setText(R.string.episode);
                     viewHolder.episode.setText(Utils.getNextEpisodeString(mPrefs,
                             mCursor.getInt(ListItemsQuery.SHOW_NEXTTEXT),
                             mCursor.getInt(ListItemsQuery.SHOW_NEXTAIRDATETEXT),
@@ -300,6 +301,7 @@ public class ListsFragment extends SherlockFragment implements
 
         @Override
         public void bindView(View arg0, Context arg1, Cursor arg2) {
+            // do nothing here
         }
 
         @Override
@@ -307,21 +309,6 @@ public class ListsFragment extends SherlockFragment implements
             return null;
         }
 
-    }
-
-    static class ViewHolder {
-
-        public TextView name;
-
-        public TextView network;
-
-        public TextView episode;
-
-        public TextView episodeTime;
-
-        public TextView airsTime;
-
-        public ImageView poster;
     }
 
     interface ListItemsQuery {

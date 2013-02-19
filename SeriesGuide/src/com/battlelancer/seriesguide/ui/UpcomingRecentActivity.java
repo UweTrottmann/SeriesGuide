@@ -44,6 +44,8 @@ import com.uwetrottmann.seriesguide.R;
 import java.util.ArrayList;
 
 public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAddShowListener {
+    private static final String TAG = "Activity";
+
     ViewPager mViewPager;
 
     TabsAdapter mTabsAdapter;
@@ -114,24 +116,12 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
             selection = 0;
         }
         actionBar.setSelectedNavigationItem(selection);
-        
-        if (selection == 0){
+
+        if (selection == 0) {
             getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         } else {
             getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EasyTracker.getInstance().activityStart(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EasyTracker.getInstance().activityStop(this);
     }
 
     @Override
@@ -162,30 +152,21 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_onlyfavorites) {
+            fireTrackerEvent("Only favorite shows Toggle");
             storeBooleanPreference(item, SeriesGuidePreferences.KEY_ONLYFAVORITES);
             return true;
         } else if (itemId == R.id.menu_nospecials) {
+            fireTrackerEvent("Hide specials Toggle");
             storeBooleanPreference(item, SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES);
             return true;
         } else if (itemId == R.id.menu_nowatched) {
+            fireTrackerEvent("Hide watched Toggle");
             storeBooleanPreference(item, SeriesGuidePreferences.KEY_NOWATCHED);
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
 
-    }
-
-    private void storeBooleanPreference(MenuItem item, String key) {
-        item.setChecked(!item.isChecked());
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getApplicationContext());
-        prefs.edit().putBoolean(key, item.isChecked()).commit();
-    }
-
-    private void readBooleanPreference(SharedPreferences prefs, MenuItem item, String key) {
-        boolean value = prefs.getBoolean(key, false);
-        item.setChecked(value);
     }
 
     /**
@@ -288,5 +269,22 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
     @Override
     public void onAddShow(SearchResult show) {
         TaskManager.getInstance(this).performAddTask(show);
+    }
+
+    @Override
+    protected void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    }
+
+    private void readBooleanPreference(SharedPreferences prefs, MenuItem item, String key) {
+        boolean value = prefs.getBoolean(key, false);
+        item.setChecked(value);
+    }
+
+    private void storeBooleanPreference(MenuItem item, String key) {
+        item.setChecked(!item.isChecked());
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
+        prefs.edit().putBoolean(key, item.isChecked()).commit();
     }
 }

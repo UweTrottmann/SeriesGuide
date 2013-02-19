@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.battlelancer.seriesguide"
     android:installLocation="auto"
-    android:versionCode="150"
-    android:versionName="2.11" >
+    android:versionCode="139"
+    android:versionName="3" >
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -13,7 +13,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.NFC" />
 
     <uses-feature
         android:name="android.hardware.touchscreen"
@@ -155,6 +154,16 @@
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.MoviesActivity" >
         </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.ConnectTraktActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.HelpActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
 		
         <!-- Services -->
         <service android:name="com.battlelancer.seriesguide.service.TraktFlagService" >
@@ -170,7 +179,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver>
+        </receiver>
         -->
 
 

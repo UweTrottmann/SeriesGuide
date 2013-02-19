@@ -34,7 +34,7 @@ import com.uwetrottmann.seriesguide.R;
  */
 public class SearchActivity extends BaseTopActivity {
 
-    private static final String TAG = "SearchActivity";
+    private static final String TAG = "Search";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,7 +70,7 @@ public class SearchActivity extends BaseTopActivity {
             return;
         }
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            EasyTracker.getTracker().trackEvent(TAG, "Search action", "Search", (long) 0);
+            EasyTracker.getTracker().sendEvent(TAG, "Search action", "Search", (long) 0);
             String query = intent.getStringExtra(SearchManager.QUERY);
             getSupportActionBar().setSubtitle("\"" + query + "\"");
 
@@ -86,7 +86,7 @@ public class SearchActivity extends BaseTopActivity {
                 searchFragment.onPerformSearch(getIntent().getExtras());
             }
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-            EasyTracker.getTracker().trackEvent(TAG, "Search action", "View", (long) 0);
+            EasyTracker.getTracker().sendEvent(TAG, "Search action", "View", (long) 0);
             Uri data = intent.getData();
             String id = data.getLastPathSegment();
             onShowEpisodeDetails(id);
@@ -104,10 +104,16 @@ public class SearchActivity extends BaseTopActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_search) {
+            fireTrackerEvent("Search");
             onSearchRequested();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 
     private void onShowEpisodeDetails(String id) {

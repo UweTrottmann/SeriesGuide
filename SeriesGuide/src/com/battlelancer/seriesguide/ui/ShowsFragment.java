@@ -18,7 +18,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
-import android.app.ActivityOptions;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -64,7 +63,6 @@ import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -75,7 +73,7 @@ import com.uwetrottmann.seriesguide.R;
 public class ShowsFragment extends SherlockFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, OnFlagListener {
 
-    private static final String TAG = "ShowsFragment";
+    private static final String TAG = "Shows";
 
     public static final int LOADER_ID = R.layout.shows_fragment;
 
@@ -156,7 +154,7 @@ public class ShowsFragment extends SherlockFragment implements
 
     public void setEmptyView(int showfilter) {
         View oldEmptyView = mGrid.getEmptyView();
-        
+
         View emptyView = null;
         switch (showfilter) {
             case SHOWFILTER_FAVORITES:
@@ -172,7 +170,7 @@ public class ShowsFragment extends SherlockFragment implements
         if (emptyView != null) {
             mGrid.setEmptyView(emptyView);
         }
-        
+
         if (oldEmptyView != null) {
             oldEmptyView.setVisibility(View.GONE);
         }
@@ -221,6 +219,8 @@ public class ShowsFragment extends SherlockFragment implements
 
         switch (item.getItemId()) {
             case CONTEXT_CHECKIN_ID: {
+                fireTrackerEvent("Check in");
+
                 Cursor show = (Cursor) mAdapter.getItem(info.position);
                 final String episodeId = show.getString(ShowsQuery.NEXTEPISODE);
                 if (TextUtils.isEmpty(episodeId)) {
@@ -246,8 +246,6 @@ public class ShowsFragment extends SherlockFragment implements
                 if (episode != null) {
                     episode.close();
                 }
-
-                fireTrackerEvent("Check in");
 
                 return true;
             }
@@ -277,7 +275,7 @@ public class ShowsFragment extends SherlockFragment implements
                 return true;
             }
             case CONTEXT_HIDE_ID: {
-                fireTrackerEvent("Hidden show");
+                fireTrackerEvent("Hide show");
 
                 ContentValues values = new ContentValues();
                 values.put(Shows.HIDDEN, true);
@@ -288,7 +286,7 @@ public class ShowsFragment extends SherlockFragment implements
                 return true;
             }
             case CONTEXT_UNHIDE_ID: {
-                fireTrackerEvent("Unhidden show");
+                fireTrackerEvent("Unhide show");
 
                 ContentValues values = new ContentValues();
                 values.put(Shows.HIDDEN, false);
@@ -319,6 +317,8 @@ public class ShowsFragment extends SherlockFragment implements
 
                 return true;
             case CONTEXT_MANAGE_LISTS_ID: {
+                fireTrackerEvent("Manage lists");
+
                 ListsDialogFragment.showListsDialog(String.valueOf(info.id), 1,
                         getFragmentManager());
                 return true;
@@ -334,13 +334,8 @@ public class ShowsFragment extends SherlockFragment implements
 
         Intent i = new Intent(getActivity(), OverviewActivity.class);
         i.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, (int) id);
-        if (AndroidUtils.isJellyBeanOrHigher()) {
-            Bundle options = ActivityOptions.makeScaleUpAnimation(view, 0, 0, view.getWidth(),
-                    view.getHeight()).toBundle();
-            getActivity().startActivity(i, options);
-        } else {
-            startActivity(i);
-        }
+        startActivity(i);
+        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -430,13 +425,11 @@ public class ShowsFragment extends SherlockFragment implements
 
                 viewHolder = new ViewHolder();
                 viewHolder.name = (TextView) convertView.findViewById(R.id.seriesname);
-                viewHolder.network = (TextView) convertView
-                        .findViewById(R.id.TextViewShowListNetwork);
+                viewHolder.timeAndNetwork = (TextView) convertView
+                        .findViewById(R.id.textViewShowsTimeAndNetwork);
                 viewHolder.episode = (TextView) convertView
                         .findViewById(R.id.TextViewShowListNextEpisode);
                 viewHolder.episodeTime = (TextView) convertView.findViewById(R.id.episodetime);
-                viewHolder.airsTime = (TextView) convertView
-                        .findViewById(R.id.TextViewShowListAirtime);
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.showposter);
                 viewHolder.favorited = convertView.findViewById(R.id.favoritedLabel);
 
@@ -447,7 +440,6 @@ public class ShowsFragment extends SherlockFragment implements
 
             // set text properties immediately
             viewHolder.name.setText(mCursor.getString(ShowsQuery.TITLE));
-            viewHolder.network.setText(mCursor.getString(ShowsQuery.NETWORK));
 
             final boolean isFavorited = mCursor.getInt(ShowsQuery.FAVORITE) == 1;
             viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
@@ -479,9 +471,13 @@ public class ShowsFragment extends SherlockFragment implements
                     mCursor.getLong(ShowsQuery.AIRSTIME),
                     mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), mContext);
             if (getResources().getBoolean(R.bool.isLargeTablet)) {
-                viewHolder.airsTime.setText("/ " + values[1] + " " + values[0]);
+                // network first, then time, one line
+                viewHolder.timeAndNetwork.setText(mCursor.getString(ShowsQuery.NETWORK) + " / "
+                        + values[1] + " " + values[0]);
             } else {
-                viewHolder.airsTime.setText(values[1] + " " + values[0]);
+                // smaller screen, time first, network second line
+                viewHolder.timeAndNetwork.setText(values[1] + " " + values[0] + "\n"
+                        + mCursor.getString(ShowsQuery.NETWORK));
             }
 
             // set poster
@@ -506,13 +502,11 @@ public class ShowsFragment extends SherlockFragment implements
 
         public TextView name;
 
-        public TextView network;
+        public TextView timeAndNetwork;
 
         public TextView episode;
 
         public TextView episodeTime;
-
-        public TextView airsTime;
 
         public ImageView poster;
 
@@ -551,10 +545,6 @@ public class ShowsFragment extends SherlockFragment implements
         int NEXTEPISODE = 10;
 
         int IMDB_ID = 11;
-    }
-
-    public void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
     }
 
     private void showDeleteDialog(long showId) {
@@ -624,6 +614,10 @@ public class ShowsFragment extends SherlockFragment implements
 
         // update the empty view
         setEmptyView(itemPosition);
+    }
+
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Context Item", label, (long) 0);
     }
 
 }

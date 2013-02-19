@@ -22,6 +22,7 @@ import com.battlelancer.seriesguide.adapters.GetGlueObjectAdapter;
 import com.battlelancer.seriesguide.getglueapi.GetGlueXmlParser.GetGlueObject;
 import com.battlelancer.seriesguide.loaders.GetGlueObjectLoader;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
 import java.util.List;
@@ -96,6 +97,18 @@ public class FixGetGlueCheckInActivity extends BaseActivity implements
             show.close();
         }
 
+    }
+    
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EasyTracker.getInstance().activityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance().activityStop(this);
     }
 
     private void setupViews() {

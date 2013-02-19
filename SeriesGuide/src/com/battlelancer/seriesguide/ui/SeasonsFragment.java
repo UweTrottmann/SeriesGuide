@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -30,7 +31,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -71,13 +71,11 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     private static final int LOADER_ID = 1;
 
+    private static final String TAG = "Seasons";
+
     private Constants.SeasonSorting mSorting;
 
     private SeasonsAdapter mAdapter;
-
-    private int mTextAppearanceXSmall;
-
-    private int mTextAppearanceXSmallDim;
 
     /**
      * All values have to be integer.
@@ -97,10 +95,6 @@ public class SeasonsFragment extends SherlockListFragment implements
         return f;
     }
 
-    public void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().trackEvent("Seasons", "Click", label, (long) 0);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.list_fragment, container, false);
@@ -111,15 +105,6 @@ public class SeasonsFragment extends SherlockListFragment implements
         super.onActivityCreated(savedInstanceState);
 
         updatePreferences();
-
-        // get some style refs
-        TypedValue outValue = new TypedValue();
-        getActivity().getTheme().resolveAttribute(R.attr.textAppearanceSgXSmall,
-                outValue, true);
-        mTextAppearanceXSmall = outValue.resourceId;
-        getActivity().getTheme().resolveAttribute(R.attr.textAppearanceSgXSmallDim,
-                outValue, true);
-        mTextAppearanceXSmallDim = outValue.resourceId;
 
         // populate list
         mAdapter = new SeasonsAdapter(getActivity(), null, 0, this);
@@ -168,14 +153,17 @@ public class SeasonsFragment extends SherlockListFragment implements
 
         switch (item.getItemId()) {
             case CONTEXT_FLAG_ALL_WATCHED_ID: {
+                fireTrackerEventContextMenu("Flag all watched");
                 onFlagSeasonWatched(info.id, season.getInt(SeasonsQuery.COMBINED), true);
                 return true;
             }
             case CONTEXT_FLAG_ALL_UNWATCHED_ID: {
+                fireTrackerEventContextMenu("Flag all unwatched");
                 onFlagSeasonWatched(info.id, season.getInt(SeasonsQuery.COMBINED), false);
                 return true;
             }
             case CONTEXT_MANAGE_LISTS_ID: {
+                fireTrackerEventContextMenu("Manage lists");
                 ListsDialogFragment.showListsDialog(String.valueOf(info.id), 2,
                         getFragmentManager());
                 return true;
@@ -203,15 +191,15 @@ public class SeasonsFragment extends SherlockListFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_markall) {
-            fireTrackerEvent("Mark all seasons");
+            fireTrackerEvent("Flag all watched");
             onFlagShowWatched(true);
             return true;
         } else if (itemId == R.id.menu_unmarkall) {
-            fireTrackerEvent("Unmark all seasons");
+            fireTrackerEvent("Flag all unwatched");
             onFlagShowWatched(false);
             return true;
         } else if (itemId == R.id.menu_sesortby) {
-            fireTrackerEvent("Sort seasons");
+            fireTrackerEvent("Sort");
             showSortDialog();
             return true;
         } else {
@@ -225,8 +213,8 @@ public class SeasonsFragment extends SherlockListFragment implements
 
         intent.putExtra(EpisodesActivity.InitBundle.SEASON_TVDBID, (int) id);
         startActivity(intent);
-        getSherlockActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
-                R.anim.fragment_slide_left_exit);
+        getSherlockActivity().overridePendingTransition(R.anim.blow_up_enter,
+                R.anim.blow_up_exit);
     }
 
     private int getShowId() {
@@ -380,11 +368,12 @@ public class SeasonsFragment extends SherlockListFragment implements
         }
     };
 
+    @SuppressLint("NewApi")
     private void updateSorting(SharedPreferences prefs) {
         mSorting = SeasonSorting.fromValue(prefs.getString(
                 SeriesGuidePreferences.KEY_SEASON_SORT_ORDER, SeasonSorting.LATEST_FIRST.value()));
 
-        EasyTracker.getTracker().trackEvent("Seasons", "Sorting", mSorting.name(), (long) 0);
+        EasyTracker.getTracker().sendEvent(TAG, "Sorting", mSorting.name(), (long) 0);
 
         // restart loader and update menu description
         getLoaderManager().restartLoader(LOADER_ID, null, SeasonsFragment.this);
@@ -410,5 +399,13 @@ public class SeasonsFragment extends SherlockListFragment implements
     @Override
     public void onClick(View v) {
         getActivity().openContextMenu(v);
+    }
+
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    }
+
+    private void fireTrackerEventContextMenu(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Context Item", label, (long) 0);
     }
 }

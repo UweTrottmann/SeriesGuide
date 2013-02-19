@@ -26,14 +26,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
-import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -322,15 +319,13 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
             return r;
         } catch (TraktException e) {
-            EasyTracker.getTracker().trackException(e.getMessage(), false);
-            Log.w(TAG, e);
+            Utils.trackExceptionAndLog(mContext, TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.trakt_generalerror);
             return r;
         } catch (ApiException e) {
-            EasyTracker.getTracker().trackException(e.getMessage(), false);
-            Log.w(TAG, e);
+            Utils.trackExceptionAndLog(mContext, TAG, e);
             Response r = new Response();
             r.status = TraktStatus.FAILURE;
             r.error = mContext.getString(R.string.trakt_generalerror);
@@ -391,12 +386,6 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 }
             }
         } else {
-            // fail, gather valid credentials first
-            TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
-                    .newInstance(mArgs);
-            FragmentTransaction ft = mFm.beginTransaction();
-            newFragment.show(ft, "traktdialog");
-
             // notify that our first run completed, however due to invalid
             // credentials we have not done anything
             if (mListener != null) {

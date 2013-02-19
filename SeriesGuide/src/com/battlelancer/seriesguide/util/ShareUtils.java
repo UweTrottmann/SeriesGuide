@@ -165,7 +165,7 @@ public class ShareUtils {
         try {
             context.startActivity(intent);
         } catch (ActivityNotFoundException e) {
-            EasyTracker.getTracker().trackEvent(TAG, "Calendar", "Failed", (long) 0);
+            EasyTracker.getTracker().sendEvent(TAG, "Calendar", "Failed", (long) 0);
             Toast.makeText(context, context.getString(R.string.addtocalendar_failed),
                     Toast.LENGTH_SHORT).show();
         }

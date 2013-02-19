@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
@@ -42,14 +41,13 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockDialogFragment;
+import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.battlelancer.seriesguide.util.Utils;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -61,10 +59,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A hybrid of {@link DialogFragment} and {@link ListFragment} to display show
- * or episode shouts and for posting own shouts.
+ * A custom {@link ListFragment} to display show or episode shouts and for
+ * posting own shouts.
  */
-public class TraktShoutsFragment extends SherlockDialogFragment implements
+public class TraktShoutsFragment extends SherlockFragment implements
         LoaderCallbacks<List<Shout>>, OnTraktActionCompleteListener {
 
     /**
@@ -137,18 +135,6 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
     CharSequence mEmptyText;
 
     boolean mListShown;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // hide title, use custom theme
-        if (SeriesGuidePreferences.THEME == R.style.ICSBaseTheme) {
-            setStyle(STYLE_NO_TITLE, 0);
-        } else {
-            setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -225,12 +211,6 @@ public class TraktShoutsFragment extends SherlockDialogFragment implements
             getLoaderManager().initLoader(0, getArguments(), this);
             mHandler.postDelayed(mUpdateShoutsRunnable, DateUtils.MINUTE_IN_MILLIS);
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getTracker().trackView("Shouts");
     }
 
     private Runnable mUpdateShoutsRunnable = new Runnable() {

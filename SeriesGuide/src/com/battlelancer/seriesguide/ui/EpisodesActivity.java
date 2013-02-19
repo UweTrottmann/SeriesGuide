@@ -179,7 +179,6 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
 
         // build the episode pager if we are in a dual-pane layout
         if (mDualPane) {
-            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 
             // set the pager background
             final ImageView background = (ImageView) findViewById(R.id.background);
@@ -201,6 +200,14 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
                 @Override
                 public void onPageSelected(int position) {
                     mEpisodesFragment.setItemChecked(position);
+                    switch (position) {
+                        case 0:
+                            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+                            break;
+                        default:
+                            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+                            break;
+                    }
                 }
 
                 @Override
@@ -211,6 +218,10 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
                 public void onPageScrollStateChanged(int arg0) {
                 }
             });
+
+            getSlidingMenu().setTouchModeAbove(
+                    startPosition == 0 ? SlidingMenu.TOUCHMODE_FULLSCREEN
+                            : SlidingMenu.TOUCHMODE_MARGIN);
         } else {
             // FIXME Dirty: make sure no fragments are left over from a config
             // change
@@ -281,8 +292,7 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
             }
             upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(upIntent);
-            overridePendingTransition(R.anim.fragment_slide_right_enter,
-                    R.anim.fragment_slide_right_exit);
+            overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -311,8 +321,7 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.fragment_slide_right_enter,
-                R.anim.fragment_slide_right_exit);
+        overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
     }
 
     @Override

@@ -39,7 +39,6 @@ import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListen
 import com.battlelancer.seriesguide.util.MenuOnPageChangeListener;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.slidingmenu.lib.SlidingMenu;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -54,6 +53,13 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
     private AddPagerAdapter mAdapter;
 
     private ViewPager mPager;
+
+    public interface InitBundle {
+        /**
+         * Which tab to select upon launch.
+         */
+        String DEFAULT_TAB = "default_tab";
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,12 +85,14 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
         indicator.setOnPageChangeListener(new MenuOnPageChangeListener(getSlidingMenu()));
 
         getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EasyTracker.getInstance().activityStart(this);
+        // set default tab
+        if (getIntent() != null && getIntent().getExtras() != null) {
+            int defaultTab = getIntent().getExtras().getInt(InitBundle.DEFAULT_TAB);
+            if (defaultTab < mAdapter.getCount()) {
+                indicator.setCurrentItem(defaultTab);
+            }
+        }
     }
 
     @Override
@@ -121,12 +129,6 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
 
         // display add dialog
         AddDialogFragment.showAddDialog(show, getSupportFragmentManager());
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EasyTracker.getInstance().activityStop(this);
     }
 
     public static class AddPagerAdapter extends FragmentPagerAdapter {

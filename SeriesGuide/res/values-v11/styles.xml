@@ -16,7 +16,7 @@
 
 
     <!-- Dark styles -->
-    <style name="Widget.SeriesGuide.ImageButton" parent="android:Widget.Holo.ImageButton"></style>
+    <style name="Widget.Android.ImageButton" parent="android:Widget.Holo.ImageButton"></style>
 
     <!-- Buttons -->
     <style name="Widget.Android.Button" parent="android:Widget.Holo.Button"></style>

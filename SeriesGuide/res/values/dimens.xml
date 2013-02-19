@@ -27,4 +27,7 @@
     <dimen name="showgrid_spacing">0dp</dimen>
     <dimen name="imagecontainer_height">180dp</dimen>
     <dimen name="slidingmenu_width">240dp</dimen>
-</resources>
+
+    <integer name="animation_duration">400</integer>
+
+</resources>

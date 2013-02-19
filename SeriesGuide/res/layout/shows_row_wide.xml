@@ -25,7 +25,7 @@
         android:textAppearance="?attr/textAppearanceSgXLargeLight" />
 
     <TextView
-        android:id="@+id/TextViewShowListNetwork"
+        android:id="@+id/textViewShowsTimeAndNetwork"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/seriesname"
@@ -35,21 +35,10 @@
         android:textAppearance="?attr/textAppearanceSgSmallDim" />
 
     <TextView
-        android:id="@+id/TextViewShowListAirtime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/seriesname"
-        android:layout_toRightOf="@id/TextViewShowListNetwork"
-        android:paddingBottom="@dimen/default_padding"
-        android:paddingLeft="@dimen/inline_padding"
-        android:text="@string/norating"
-        android:textAppearance="?attr/textAppearanceSgSmallDim" />
-
-    <TextView
         android:id="@+id/TextViewShowListNextEpisode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/TextViewShowListAirtime"
+        android:layout_below="@id/textViewShowsTimeAndNetwork"
         android:layout_toRightOf="@id/showposter"
         android:text="@string/no_nextepisode"
         android:textAppearance="?attr/textAppearanceSgMediumDim" />

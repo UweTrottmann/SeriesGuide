@@ -60,6 +60,7 @@ import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
 import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
@@ -79,7 +80,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     private static final int EPISODE_LOADER = 3;
 
-    private static final String TAG = "EpisodeDetails";
+    private static final String TAG = "Episode Details";
 
     private FetchArtTask mArtTask;
 
@@ -124,10 +125,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         return f;
     }
 
-    public void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /*
@@ -154,12 +151,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getTracker().trackView("Episode Details");
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         if (mArtTask != null) {
@@ -182,14 +173,19 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_rate_trakt) {
-            onShareEpisode(ShareMethod.RATE_TRAKT, true);
             fireTrackerEvent("Rate (trakt)");
+            if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
+                onShareEpisode(ShareMethod.RATE_TRAKT);
+            } else {
+                startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
+            }
             return true;
         } else if (itemId == R.id.menu_share) {
-            onShareEpisode(ShareMethod.OTHER_SERVICES, true);
-            fireTrackerEvent("Share (apps)");
+            fireTrackerEvent("Share");
+            onShareEpisode(ShareMethod.OTHER_SERVICES);
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
+            fireTrackerEvent("Manage lists");
             ListsDialogFragment.showListsDialog(String.valueOf(getEpisodeId()), 3,
                     getFragmentManager());
             return true;
@@ -197,7 +193,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         return super.onOptionsItemSelected(item);
     }
 
-    private void onShareEpisode(ShareMethod shareMethod, boolean isInvalidateOptionsMenu) {
+    private void onShareEpisode(ShareMethod shareMethod) {
         // Episode of this fragment is always the first item in the cursor
         final Cursor episode = (Cursor) mAdapter.getItem(0);
         final SherlockFragmentActivity activity = getSherlockActivity();
@@ -226,11 +222,9 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
             ShareUtils.onShareEpisode(activity, shareData, shareMethod, null);
 
-            if (isInvalidateOptionsMenu) {
-                // invalidate the options menu so a potentially new
-                // quick share action is displayed
-                activity.invalidateOptionsMenu();
-            }
+            // invalidate the options menu so a potentially new
+            // quick share action is displayed
+            activity.invalidateOptionsMenu();
         }
     }
 
@@ -482,20 +476,10 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             view.findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // see if we are attached to a single-pane activity
-                    if (getSherlockActivity() instanceof EpisodeDetailsActivity) {
-                        Intent intent = new Intent(getActivity(), TraktShoutsActivity.class);
-                        intent.putExtras(TraktShoutsActivity.createInitBundle(mShowId,
-                                mSeasonNumber, mEpisodeNumber, episodeTitle));
-                        startActivity(intent);
-                    } else {
-                        // in a multi-pane layout show the shouts in a
-                        // dialog
-                        TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
-                                episodeTitle, mShowId, mSeasonNumber, mEpisodeNumber);
-
-                        newFragment.show(getFragmentManager(), "shouts-dialog");
-                    }
+                    Intent intent = new Intent(getActivity(), TraktShoutsActivity.class);
+                    intent.putExtras(TraktShoutsActivity.createInitBundle(mShowId,
+                            mSeasonNumber, mEpisodeNumber, episodeTitle));
+                    startActivity(intent);
                 }
             });
 
@@ -591,5 +575,9 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         if (isSuccessful && isAdded()) {
             getLoaderManager().restartLoader(EPISODE_LOADER, null, this);
         }
+    }
+
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 }

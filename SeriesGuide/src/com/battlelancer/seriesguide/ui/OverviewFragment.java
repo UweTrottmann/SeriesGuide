@@ -16,8 +16,8 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -38,6 +38,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -59,6 +60,7 @@ import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
 import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
@@ -76,7 +78,7 @@ import com.uwetrottmann.seriesguide.R;
 public class OverviewFragment extends SherlockFragment implements OnTraktActionCompleteListener,
         OnFlagListener, LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final String TAG = "OverviewFragment";
+    private static final String TAG = "Overview";
 
     private static final int EPISODE_LOADER_ID = 100;
 
@@ -101,10 +103,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
      */
     public interface InitBundle {
         String SHOW_TVDBID = "show_tvdbid";
-    }
-
-    public void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().trackEvent("Overview", "Click", label, (long) 0);
     }
 
     @Override
@@ -196,6 +194,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_checkin) {
+            fireTrackerEvent("Check-In");
+
             if (mShowCursor != null && mShowCursor.moveToFirst() && mEpisodeCursor != null
                     && mEpisodeCursor.moveToFirst()) {
                 final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
@@ -209,21 +209,21 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                         buildEpisodeString(seasonNumber, episodeNumber,
                                 mEpisodeCursor.getString(EpisodeQuery.TITLE)));
                 f.show(getFragmentManager(), "checkin-dialog");
-
             }
-            fireTrackerEvent("Check In");
             return true;
         } else if (itemId == R.id.menu_flag_watched) {
             // flag watched
-            onFlagWatched();
             fireTrackerEvent("Flag Watched");
+            onFlagWatched();
             return true;
         } else if (itemId == R.id.menu_flag_collected) {
             // toggle collected
-            onToggleCollected(item);
             fireTrackerEvent("Toggle Collected");
+            onToggleCollected(item);
             return true;
         } else if (itemId == R.id.menu_calendarevent) {
+            fireTrackerEvent("Add to calendar");
+
             if (mShowCursor != null && mShowCursor.moveToFirst() && mEpisodeCursor != null
                     && mEpisodeCursor.moveToFirst()) {
                 final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
@@ -237,19 +237,23 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                                 episodeTitle), mEpisodeCursor.getLong(EpisodeQuery.FIRSTAIREDMS),
                         mShowCursor.getInt(ShowQuery.SHOW_RUNTIME));
             }
-            fireTrackerEvent("Add to calendar");
             return true;
         } else if (itemId == R.id.menu_rate_trakt) {
             // rate episode on trakt.tv
-            onShareEpisode(ShareMethod.RATE_TRAKT);
             fireTrackerEvent("Rate (trakt)");
+            if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
+                onShareEpisode(ShareMethod.RATE_TRAKT);
+            } else {
+                startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
+            }
             return true;
         } else if (itemId == R.id.menu_share) {
             // share episode
+            fireTrackerEvent("Share");
             onShareEpisode(ShareMethod.OTHER_SERVICES);
-            fireTrackerEvent("Share (apps)");
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
+            fireTrackerEvent("Manage lists");
             if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
                 ListsDialogFragment.showListsDialog(mEpisodeCursor.getString(EpisodeQuery._ID),
                         3, getFragmentManager());
@@ -257,8 +261,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             return true;
         } else if (itemId == R.id.menu_search) {
             // search through this shows episodes
+            fireTrackerEvent("Search");
             getActivity().onSearchRequested();
-            fireTrackerEvent("Search show episodes");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -280,8 +284,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 // Execute a transaction, replacing any existing
                 // fragment with this one inside the frame.
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.anim.fragment_slide_left_enter,
-                        R.anim.fragment_slide_left_exit);
                 ft.replace(R.id.fragment_seasons, seasons);
                 ft.commit();
             }
@@ -292,8 +294,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             intent.setClass(getActivity(), SeasonsActivity.class);
             intent.putExtra(SeasonsFragment.InitBundle.SHOW_TVDBID, getShowId());
             startActivity(intent);
-            getSherlockActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
-                    R.anim.fragment_slide_left_exit);
+            getSherlockActivity().overridePendingTransition(R.anim.blow_up_enter,
+                    R.anim.blow_up_exit);
         }
 
     }
@@ -305,15 +307,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
     private void onShowShowInfo(View sourceView) {
         Intent i = new Intent(getActivity(), ShowInfoActivity.class);
         i.putExtra(ShowInfoActivity.InitBundle.SHOW_TVDBID, getShowId());
-
-        if (AndroidUtils.isJellyBeanOrHigher()) {
-            Bundle options = ActivityOptions.makeScaleUpAnimation(sourceView, 0, 0,
-                    sourceView.getWidth(),
-                    sourceView.getHeight()).toBundle();
-            getActivity().startActivity(i, options);
-        } else {
-            startActivity(i);
-        }
+        startActivity(i);
+        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
     }
 
     private void onShareEpisode(ShareMethod shareMethod) {
@@ -503,6 +498,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         }
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (isAdded()) {
@@ -531,6 +527,11 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         }
     }
 
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    }
+
+    @SuppressLint("NewApi")
     private void onPopulateEpisodeData(Cursor episode) {
         mEpisodeCursor = episode;
 
@@ -585,14 +586,9 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                     // display episode details
                     Intent intent = new Intent(getActivity(), EpisodesActivity.class);
                     intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
-
-                    if (AndroidUtils.isJellyBeanOrHigher()) {
-                        Bundle options = ActivityOptions.makeScaleUpAnimation(view, 0, 0,
-                                view.getWidth(), view.getHeight()).toBundle();
-                        getActivity().startActivity(intent, options);
-                    } else {
-                        startActivity(intent);
-                    }
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.blow_up_enter,
+                            R.anim.blow_up_exit);
                 }
             });
             episodePrimaryClicker.setFocusable(true);
@@ -604,6 +600,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             onLoadImage(episode.getString(EpisodeQuery.IMAGE));
 
             episodemeta.setVisibility(View.VISIBLE);
+
         } else {
             // no next episode: display single line info text, remove other
             // views
@@ -625,7 +622,11 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         final View contentContainer = getView().findViewById(R.id.content_container);
         if (contentContainer.getVisibility() == View.GONE) {
             final View progressContainer = getView().findViewById(R.id.progress_container);
+            progressContainer.startAnimation(AnimationUtils
+                    .loadAnimation(episodemeta.getContext(), android.R.anim.fade_out));
             progressContainer.setVisibility(View.GONE);
+            contentContainer.startAnimation(AnimationUtils
+                    .loadAnimation(episodemeta.getContext(), android.R.anim.fade_in));
             contentContainer.setVisibility(View.VISIBLE);
         }
 
@@ -692,17 +693,10 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             @Override
             public void onClick(View v) {
                 if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
-
-                    if (!mDualPane) {
-                        Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
-                        i.putExtras(TraktShoutsActivity.createInitBundle(getShowId(),
-                                seasonNumber, episodeNumber, episodeTitle));
-                        startActivity(i);
-                    } else {
-                        TraktShoutsFragment newFragment = TraktShoutsFragment.newInstance(
-                                episodeTitle, getShowId(), seasonNumber, episodeNumber);
-                        newFragment.show(getFragmentManager(), "shouts-dialog");
-                    }
+                    Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
+                    i.putExtras(TraktShoutsActivity.createInitBundle(getShowId(),
+                            seasonNumber, episodeNumber, episodeTitle));
+                    startActivity(i);
                 }
             }
         });

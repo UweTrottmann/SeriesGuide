@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -31,15 +32,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays a menu to allow quick navigation within the app.
  */
 public class SlidingMenuFragment extends ListFragment {
-
-    public static final String TAG = "Menu";
 
     private MenuAdapter mAdapter;
 
@@ -54,13 +52,6 @@ public class SlidingMenuFragment extends ListFragment {
     private static final int PAGE_SHOWS = 0;
     private static final int PAGE_LISTS = 1;
     private static final int PAGE_ACTIVITY = 2;
-
-    /**
-     * Google Analytics helper method for easy event tracking.
-     */
-    public void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,8 +87,14 @@ public class SlidingMenuFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         // close menu any way
         if (getActivity() instanceof BaseActivity) {
-            BaseActivity activity = (BaseActivity) getActivity();
-            activity.showContent();
+            final BaseActivity activity = (BaseActivity) getActivity();
+            Handler h = new Handler();
+            h.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    activity.showContent();
+                }
+            }, 200);
         }
 
         switch (((MenuItem) mAdapter.getItem(position)).mId) {

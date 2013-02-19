@@ -5,10 +5,62 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 3 *(TBA)*
---------------------------------
+Version 4 *(TBA)*
+--------------------------
+
+#### 4beta1 *(2013-02-12)*
+
+* FEATURE Supply extension for Roman Nurik's DashClock.
+* TWEAK Text in detail views is mostly selectable (Android 3.0+). Easily copy actor names or descriptions.
+* TWEAK New screen animations.
+* TWEAK New side-attached large-screen layout for activity screen.
+* TWEAK Link to app settings from Android network manager tool (Android 4.0+).
+* TWEAK Smoother transition after pressing swipe-menu item.
+* TWEAK Display show poster in show info, other tweaks for more prettiness.
+* TWEAK Display type of list item if it is an episode or a season.
+* FIX Full screen swipe opens menu if first episode detail page is shown.
+* FIX Very long network names wrap correctly in show list.
+* FIX Crash with list widget.
+* NOTICE Latest translations from crowdin.
+
+Version 3 *(2013-01-29)*
+------------------------
+
+* FEATURE Swipe anywhere to show the new menu drawer for quick navigation within the app. Swipe from the left margin in view pagers.
+* FEATURE Add Movies menu item to allow searching for and checking into movies.
+* FEATURE Choose when notifications should appear from a hand full of options (one hour until on air).
+* TWEAK New trakt connect wizard. Helpful empty messages.
 
 ### Detailed changes:
+
+#### 3beta4 *(2013-01-29)*
+
+* FIX Crash when flagging episodes watched in lists.
+* FIX Crash when checking trying to check into a movie, then navigating away.
+* NOTICE Updated Google Analytics Android SDK to 2.0beta4, reduces power consumption.
+
+#### 3beta3 *(2013-01-27)*
+
+* TWEAK New trakt connect wizard.
+* TWEAK Link to community and uservoice page from settings.
+* TWEAK Fix visible but useless divider in movie check in dialog.
+* TWEAK Fix movies grid view size and overlap issues.
+* TWEAK Open search UI after pressing search button in slide menu.
+* TWEAK Add custom empty message for trakt add tabs.
+* TWEAK Add visible, easier discoverable context menu buttons for seasons and episodes in lists.
+* TWEAK Enable enter key for movie search (GTV support).
+* TWEAK Add contributing file, update credits with links to licences.
+* TWEAK Clarified manual trakt sync description.
+* TWEAK Show delete progress dialog through the whole removal process again.
+* TWEAK Prevent auto-updater running on first launch.
+* TWEAK Enable up-button for check-in activity.
+* TWEAK Always display shouts in their own activity. No xlarge screen layouts, yet.
+* FIX Avoid crash when rotating in first run fragment.
+* FIX Fix crash due to remaining merge tag in episode details activity.
+* FIX Hopefully finally fix the crash in add fragment by setting the click listener on eac
+* FIX Layout weight should be float (fixed for episode pager).
+* FIX Fix poster download task crash.
+* NOTICE Latest translations from crowdin.
 
 #### 3beta2 *(2013-01-13)*
 

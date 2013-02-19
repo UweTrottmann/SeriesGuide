@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <!-- SeriesGuides default theme -->
     <style name="SeriesGuideTheme" parent="Theme.Sherlock">
@@ -42,15 +42,15 @@
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator</item>
         <item name="actionBarStyle">@style/ActionBar</item>
-        <item name="android:actionBarStyle">@style/ActionBar</item>
+        <item name="android:actionBarStyle" tools:targetApi="honeycomb">@style/ActionBar</item>
         <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
-        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="android:actionBarTabStyle" tools:targetApi="honeycomb">@style/ActionBarTabStyle</item>
         <item name="dropDownListViewStyle">@style/DropDownListView</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
         <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
-        <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
+        <item name="android:actionBarItemBackground" tools:targetApi="ice_cream_sandwich">@drawable/list_selector_sg</item>
         <item name="actionDropDownStyle">@style/DropDownNav</item>
-        <item name="android:actionDropDownStyle">@style/DropDownNav</item>
+        <item name="android:actionDropDownStyle" tools:targetApi="honeycomb">@style/DropDownNav</item>
         <item name="spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
         <item name="android:spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
         <item name="spinnerItemStyle">@style/Widget.SpinnerItem</item>
@@ -74,16 +74,16 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
         <item name="android:windowSoftInputMode">stateUnspecified|adjustResize</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowActionModeOverlay">true</item>
-        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowActionBar" tools:targetApi="honeycomb">false</item>
+        <item name="android:windowActionModeOverlay" tools:targetApi="honeycomb">true</item>
+        <item name="android:windowCloseOnTouchOutside" tools:targetApi="honeycomb">true</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:backgroundDimAmount">0.6</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorPrimaryInverse">@color/abs__primary_text_holo_light</item>
-        <item name="android:windowMinWidthMajor">45%</item>
-        <item name="android:windowMinWidthMinor">75%</item>
+        <item name="android:windowMinWidthMajor" tools:targetApi="honeycomb">45%</item>
+        <item name="android:windowMinWidthMinor" tools:targetApi="honeycomb">75%</item>
     </style>
 
     <style name="SeriesGuideTheme.Dialog.CheckIn">
@@ -178,11 +178,11 @@
 
         <!-- Action bar -->
         <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
-        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="android:actionBarTabStyle" tools:targetApi="honeycomb">@style/ActionBarTabStyle</item>
         <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
-        <item name="android:actionBarItemBackground">@drawable/list_selector_sg</item>
+        <item name="android:actionBarItemBackground" tools:targetApi="ice_cream_sandwich">@drawable/list_selector_sg</item>
         <item name="actionDropDownStyle">@style/DropDownNav</item>
-        <item name="android:actionDropDownStyle">@style/DropDownNav</item>
+        <item name="android:actionDropDownStyle" tools:targetApi="honeycomb">@style/DropDownNav</item>
         <item name="dropDownListViewStyle">@style/DropDownListView</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
         <item name="spinnerDropDownItemStyle">@style/Widget.Light.DropDownItem</item>

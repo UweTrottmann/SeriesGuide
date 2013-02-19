@@ -19,11 +19,11 @@ package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.ui.dialogs.TraktCredentialsDialogFragment;
 import com.jakewharton.trakt.ServiceManager;
 import com.uwetrottmann.seriesguide.R;
 
@@ -101,8 +101,7 @@ public class ServiceUtils {
         }
 
         if (refreshCredentials) {
-            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                    .getApplicationContext());
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
             final String username = prefs.getString(SeriesGuidePreferences.KEY_TRAKTUSER, null);
             String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, null);
@@ -117,7 +116,7 @@ public class ServiceUtils {
                         password);
             } else {
                 // clear all trakt credentials
-                TraktCredentialsDialogFragment.clearTraktCredentials(prefs);
+                clearTraktCredentials(context);
                 ServiceUtils.sTraktServiceManagerWithAuthInstance.setAuthentication(null, null);
                 return null;
             }
@@ -140,5 +139,13 @@ public class ServiceUtils {
         String password = prefs.getString(SeriesGuidePreferences.KEY_TRAKTPWD, "");
 
         return (!username.equalsIgnoreCase("") && !password.equalsIgnoreCase(""));
+    }
+
+    public static void clearTraktCredentials(Context context) {
+        Editor editor = PreferenceManager.getDefaultSharedPreferences(context
+                .getApplicationContext()).edit();
+        editor.putString(SeriesGuidePreferences.KEY_TRAKTUSER, "").putString(
+                SeriesGuidePreferences.KEY_TRAKTPWD, "");
+        editor.commit();
     }
 }

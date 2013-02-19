@@ -102,7 +102,11 @@ public class ListWidgetService extends RemoteViewsService {
         }
 
         public int getCount() {
-            return mEpisodeCursor.getCount();
+            if (mEpisodeCursor != null) {
+                return mEpisodeCursor.getCount();
+            } else {
+                return 0;
+            }
         }
 
         public RemoteViews getViewAt(int position) {

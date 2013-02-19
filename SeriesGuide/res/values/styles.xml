@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Text styles -->
     <style name="TextAppearance" parent="@android:style/TextAppearance">
@@ -42,7 +42,7 @@
     </style>
 
     <style name="TextAppearance.Medium.Light">
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
     </style>
 
     <style name="TextAppearance.Medium.Light.Dim">
@@ -54,7 +54,7 @@
     </style>
 
     <style name="TextAppearance.Large.Light">
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
     </style>
 
     <style name="TextAppearance.XLarge">
@@ -62,7 +62,7 @@
     </style>
 
     <style name="TextAppearance.XLarge.Light">
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
     </style>
 
     <!-- Widget styles -->
@@ -255,13 +255,13 @@
         <item name="android:layout_marginLeft">@dimen/default_padding</item>
         <item name="android:layout_marginRight">@dimen/default_padding</item>
         <item name="android:layout_marginTop">@dimen/inline_padding</item>
-        <item name="android:textAllCaps">true</item>
+        <item name="android:textAllCaps" tools:targetApi="ice_cream_sandwich">true</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="LabelBase">
         <item name="android:textSize">@dimen/text_size_small</item>
-        <item name="android:textAllCaps">true</item>
+        <item name="android:textAllCaps" tools:targetApi="ice_cream_sandwich">true</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -396,7 +396,7 @@
     </style>
 
     <style name="TextAppearance.Light.Medium.Light">
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
     </style>
 
     <style name="TextAppearance.Light.Medium.Light.Dim">
@@ -408,7 +408,7 @@
     </style>
 
     <style name="TextAppearance.Light.XLarge.Light">
-        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
     </style>
 
     <!-- Buttons -->

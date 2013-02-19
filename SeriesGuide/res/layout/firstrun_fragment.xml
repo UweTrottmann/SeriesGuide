@@ -15,7 +15,6 @@
         android:layout_height="match_parent" >
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/root"
             style="@style/FirstRunColumn"
             android:orientation="vertical"
@@ -107,7 +106,7 @@
                     android:layout_marginTop="@dimen/default_padding"
                     android:drawableLeft="@drawable/ic_trakt"
                     android:drawablePadding="8dp"
-                    android:text="@string/welcome_setuptrakt" />
+                    android:text="@string/connect_trakt" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

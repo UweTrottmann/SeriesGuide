@@ -3,6 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" >
+    </ImageView>
+
     <ScrollView
         android:id="@+id/showinfo_container"
         android:layout_width="match_parent"
@@ -23,7 +30,8 @@
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginRight="@dimen/default_padding"
                 android:text="@string/app_name"
-                android:textAppearance="?attr/textAppearanceSgXLargeLight" />
+                android:textAppearance="?attr/textAppearanceSgXLargeLight"
+                android:textIsSelectable="true" />
 
             <include layout="@layout/show_info_meta" >
             </include>

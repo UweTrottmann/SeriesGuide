@@ -28,7 +28,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewStub;
@@ -67,7 +66,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ShowsActivity extends BaseTopShowsActivity implements CompatActionBarNavListener,
         OnFirstRunDismissedListener {
 
-    private static final String TAG = "Shows";
+    protected static final String TAG = "Shows";
 
     private static final int UPDATE_SUCCESS = 100;
 
@@ -88,13 +87,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
 
     private Fragment mFragment;
 
-    /**
-     * Google Analytics helper method for easy event tracking.
-     */
-    public void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().trackEvent(TAG, "Click", label, (long) 0);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,9 +103,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
             getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
                     .commit();
         } else if (savedInstanceState == null) {
-            mFragment = ShowsFragment.newInstance();
-            getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
-                    .commit();
+            onShowShowsFragment();
+        } else {
+            mFragment = getSupportFragmentManager().findFragmentById(R.id.shows_fragment);
         }
 
         // set up action bar
@@ -162,7 +154,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
     @Override
     protected void onStart() {
         super.onStart();
-
         EasyTracker.getInstance().activityStart(this);
     }
 
@@ -212,8 +203,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
 
             if (paths != null) {
                 mArtTask = (FetchPosterTask) new FetchPosterTask(paths, index).execute();
-                EasyTracker.getTracker().trackEvent(TAG, "Task Lifecycle", "Art Task Restored",
-                        (long) 0);
             }
         }
     }
@@ -228,8 +217,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
             outState.putInt(STATE_ART_INDEX, task.mFetchCount.get());
 
             mArtTask = null;
-
-            EasyTracker.getTracker().trackEvent(TAG, "Task Lifecycle", "Art Task Saved", (long) 0);
         }
     }
 
@@ -261,15 +248,17 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_add_show) {
+            fireTrackerEvent("Add show");
             startActivity(new Intent(this, AddActivity.class));
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             return true;
         }
         else if (itemId == R.id.menu_update) {
+            fireTrackerEvent("Update (outdated)");
             performUpdateTask(false, null);
-            fireTrackerEvent("Update");
             return true;
         } else if (itemId == R.id.menu_updateart) {
+            fireTrackerEvent("Fetch posters");
             if (isArtTaskRunning()) {
                 return true;
             }
@@ -281,25 +270,24 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
                 Toast.makeText(this, getString(R.string.arttask_start), Toast.LENGTH_LONG).show();
                 mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
             }
-            fireTrackerEvent("Fetch missing posters");
             return true;
         } else if (itemId == R.id.menu_fullupdate) {
+            fireTrackerEvent("Update (all)");
             performUpdateTask(true, null);
-            fireTrackerEvent("Full Update");
             return true;
         } else if (itemId == R.id.menu_showsortby) {
+            fireTrackerEvent("Sort shows");
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             ShowSorting sorting = ShowSorting
                     .fromValue(prefs.getString(
                             SeriesGuidePreferences.KEY_SHOW_SORT_ORDER,
                             ShowSorting.FAVORITES_FIRST.value()));
             ShowsFragment.showSortDialog(getSupportFragmentManager(), sorting);
-            fireTrackerEvent("Sort shows");
             return true;
         }
         else if (itemId == R.id.menu_search) {
-            onSearchRequested();
             fireTrackerEvent("Search");
+            onSearchRequested();
             return true;
         }
         else {
@@ -431,14 +419,14 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
         protected void onPostExecute(Integer resultCode) {
             switch (resultCode) {
                 case UPDATE_SUCCESS:
-                    EasyTracker.getTracker().trackEvent(TAG, "Fetch missing posters", "Success",
+                    EasyTracker.getTracker().sendEvent(TAG, "Poster Task", "Success",
                             (long) 0);
 
                     Toast.makeText(getApplicationContext(), getString(R.string.update_success),
                             Toast.LENGTH_SHORT).show();
                     break;
                 case UPDATE_INCOMPLETE:
-                    EasyTracker.getTracker().trackEvent(TAG, "Fetch missing posters", "Incomplete",
+                    EasyTracker.getTracker().sendEvent(TAG, "Poster Task", "Incomplete",
                             (long) 0);
 
                     Toast.makeText(getApplicationContext(), getString(R.string.arttask_incomplete),
@@ -468,9 +456,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
         if (mArtTask != null && mArtTask.getStatus() == AsyncTask.Status.RUNNING) {
             mArtTask.cancel(true);
             mArtTask = null;
-
-            EasyTracker.getTracker().trackEvent(TAG, "Task Lifecycle", "Art Task Canceled",
-                    (long) 0);
         }
     }
 
@@ -582,8 +567,16 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
 
     @Override
     public void onFirstRunDismissed() {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        onShowShowsFragment();
+    }
+
+    protected void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    }
+
+    private void onShowShowsFragment() {
         mFragment = ShowsFragment.newInstance();
-        ft.replace(R.id.shows_fragment, mFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.shows_fragment, mFragment)
+                .commit();
     }
 }

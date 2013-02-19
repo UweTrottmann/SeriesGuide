@@ -7,7 +7,8 @@
     <TextView
         android:id="@+id/TextViewShowInfoOverview"
         style="@style/SmallItems.WithSideMargins"
-        android:text="@string/description_overview" />
+        android:text="@string/description_overview"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/labelGenres"
@@ -18,7 +19,8 @@
 
     <TextView
         android:id="@+id/TextViewShowInfoGenres"
-        style="@style/SmallItems.WithSideMargins" />
+        style="@style/SmallItems.WithSideMargins"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/labelActors"
@@ -29,7 +31,8 @@
 
     <TextView
         android:id="@+id/TextViewShowInfoActors"
-        style="@style/SmallItems.WithSideMargins" />
+        style="@style/SmallItems.WithSideMargins"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/labelContentRating"
@@ -40,7 +43,8 @@
 
     <TextView
         android:id="@+id/TextViewShowInfoContentRating"
-        style="@style/SmallItems.WithSideMargins" />
+        style="@style/SmallItems.WithSideMargins"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/labelRuntime"
@@ -51,7 +55,8 @@
 
     <TextView
         android:id="@+id/TextViewShowInfoRuntime"
-        style="@style/SmallItems.WithSideMargins" />
+        style="@style/SmallItems.WithSideMargins"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/labelFirstAirdate"
@@ -62,7 +67,8 @@
 
     <TextView
         android:id="@+id/TextViewShowInfoFirstAirdate"
-        style="@style/SmallItems.WithSideMargins" />
+        style="@style/SmallItems.WithSideMargins"
+        android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/labelLastEdit"
@@ -73,6 +79,7 @@
 
     <TextView
         android:id="@+id/lastEdit"
-        style="@style/SmallItems.WithSideMargins" />
+        style="@style/SmallItems.WithSideMargins"
+        android:textIsSelectable="true" />
 
 </merge>

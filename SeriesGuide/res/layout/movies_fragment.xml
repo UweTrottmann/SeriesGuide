@@ -54,6 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/editTextCheckinSearch"
+        android:animateLayoutChanges="true"
         android:clipToPadding="@bool/gridClipToPadding"
         android:columnWidth="144dp"
         android:fastScrollEnabled="true"

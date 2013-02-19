@@ -25,6 +25,7 @@
   <string name="share">Paylaş</string>
   <string name="updated">En son sürüme güncellendi.</string>
   <string name="discard">Yoksay</string>
+  <string name="close">Close</string>
   <string name="save_selection">Seçimi kaydet</string>
   <string name="offline">Ağ bağlantısı yok. Daha sonra tekrar deneyin.</string>
   <string name="onlyx">Yalnızca SeriesGuide X kullanıcıları için</string>
@@ -91,6 +92,7 @@
   <string name="trakt_notseen">%s görülmedi.</string>
   <string name="trakt_collected">Kolleksiyona dahil edilen: %s.</string>
   <string name="trakt_notcollected">Kolleksiyonda bulunmayan: %s.</string>
+  <string name="add_empty">There are no shows here or your device has no internet connection.</string>
   <string name="shows_empty">Look in the menu above to add some shows.</string>
   <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
   <string name="hidden_empty">Long-press on a show to hide it here.</string>
@@ -165,6 +167,21 @@
   <string name="list_item_manage">Listeleri yönet</string>
   <string name="list_item_remove">Listeden kaldır</string>
   <string name="list_empty">Dizileri, sezonları veya bölümleri listeye ekleyebilirsin.</string>
+  <string name="connect_trakt">Connect trakt</string>
+  <string name="connect_trakt_done">Connected to trakt!</string>
+  <string name="add_trakt_shows">Add shows from your library:</string>
+  <string name="show_library">Show your library</string>
+  <string name="upload_shows">Upload your SeriesGuide show list:</string>
+  <string name="upload_existing_shows">Upload existing shows</string>
+  <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
+  <string name="integration_trakt">If you connect trakt:</string>
+  <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
+  <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
+  <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
+  <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
+  <string name="trakt_download">Download to SeriesGuide</string>
+  <string name="trakt_upload">Upload to trakt.tv</string>
+  <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
   <string name="prefs_category_basic">Temel Ayarlar</string>
   <string name="prefs_category_sharing">Services</string>
   <string name="prefs_category_advanced">Gelişmiş</string>
@@ -189,9 +206,8 @@
   <string name="pref_credits">Katkıda Bulunanlar</string>
   <string name="clearGetGlueCredentials">GetGlue Bağlantısını Kes</string>
   <string name="clearGetGlueCredentialssummary">Check in with GetGlue to reconnect</string>
-  <string name="pref_trakt">trakt.tv kimliği</string>
   <string name="pref_traktsummary">trakt.tv kimlik bilgilerinizi ekleyin veya düzenleyin</string>
-  <string name="pref_traktsync">Trakt.tv ile eşitle</string>
+  <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">Geribildirim Gönder</string>
   <string name="clear_cache">Resim önbelleğini temizle</string>
   <string name="clear_cache_summary">Tüm resim önbelleğini cihazınızdan silin</string>
@@ -258,14 +274,7 @@
   <string name="trakt_decryptfail">parola çözümlenemedi</string>
   <string name="trakt_generalerror">Bir şeyler ters gitti. Lütfen kimlik bilgilerinizi denetleyin ve yeniden deneyin.</string>
   <string name="trakt_createaccount">Yeni hesap oluştur</string>
-  <string name="trakt_experimental">Sadece SeriesGuide listenizdeki diziler eşitlenecektir. \'SeriesGuide\'ı eşitle\' seçeneği trakt\'taki bilgileri içe aktarır. \'trakt.tv\'ı eşitle\' seçeneği bilgilerinizi dışa aktarır.</string>
-  <string name="trakt_synctodevice">SeriesGuide\'a eşitle</string>
-  <string name="trakt_synctotrakt">trakt.tv\'ye eşitle</string>
-  <string name="trakt_syncunseen">İzlenmemiş bayraklarını dahil et</string>
-  <string name="trakt_howto_title">Trakt.tv ile eşitlemeyi kur</string>
-  <string name="trakt_howto">Cihazlarınızı yapılandırmak için:\n\n1. Tüm cihazlarınızda oturum açın veya kayıt olun.\n2. Önce <b>trakt.tv\'ı eşitle</b> butonunu kullanarak bilgilerinizi gönderin.\n3. Trakt.tv\'deki dizileri eklemek için <b>Dizi Ekle</b> ekranındaki <b>Kitaplık</b> sekmesine gidin.\n\nArtık SeriesGuide\'ın her güncellemesinde bilgileriniz tüm cihazlarınıza indirilecektir. Bu bilgilere izlenmiş veya koleksiyona alınmış olarak işaretlenen diziler ve yapılan girişleriniz de dahildir.</string>
   <string name="welcome_setuplanguage">Dil seçin</string>
-  <string name="welcome_setuptrakt">trakt\'a bağlan</string>
   <string name="welcome_traktmessage">Trakt.tv kütüphanene ve arkadaşlarının hareketlerine eriş</string>
   <string name="dismiss">Kapat</string>
   <string name="welcome_add_part1">Başlamak için ekrana dokun</string>

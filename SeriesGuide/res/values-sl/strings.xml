@@ -11,29 +11,30 @@
   <string name="specialseason">Posebne epizode</string>
   <string name="search_hint">Iskanje epizode</string>
   <string name="share_episode">Deli epizodo</string>
-  <string name="share_checkout">Preveri</string>
+  <string name="share_checkout">Odjavi</string>
   <string name="search_description">Epizode</string>
   <string name="description_overview">Pregled</string>
   <string name="description_poster">Prikaži poster</string>
   <string name="description_image">Slika epizode</string>
   <string name="norating">n/a</string>
   <string name="loading">Nalaganje...</string>
-  <string name="done">Urejeno</string>
+  <string name="done">Končano</string>
   <string name="clear">Zbriši</string>
   <string name="more">%s več</string>
-  <string name="cancel">Prekini</string>
+  <string name="cancel">Razveljavi</string>
   <string name="share">Deli</string>
   <string name="updated">Posodobljeno na najnovejšo verzijo.</string>
   <string name="discard">Zavrzi</string>
+  <string name="close">Zapri</string>
   <string name="save_selection">Shrani izbiro</string>
   <string name="offline">Ni mrežne povezave. Poizkusi ponovno kasneje.</string>
   <string name="onlyx">Na voljo samo v SeriesGuide X</string>
   <string name="shows">Oddaje</string>
   <string name="lists">Spiski</string>
   <string name="activity">Aktivnost</string>
-  <string name="movies">Movies</string>
+  <string name="movies">Filmi</string>
   <string name="search">Išči</string>
-  <string name="add_show">Dodaj oddajo.</string>
+  <string name="add_show">Dodaj oddajo</string>
   <string name="preferences">Nastavitve</string>
   <string name="help">Pomoč</string>
   <string name="shouts">Vzkliki</string>
@@ -43,13 +44,13 @@
   <string name="no_shouts">Bodi prvi(a), ki bo zaklical(a)!</string>
   <string name="shouts_for">Klici za %s</string>
   <string name="autorefresh">Osvežujem automagično</string>
-  <string name="movies_search_hint">Type a movie title</string>
-  <string name="movies_empty">Search for a movie above.</string>
-  <string name="love">Totally ninja!</string>
-  <string name="hate">Weak Sauce :(</string>
+  <string name="movies_search_hint">Vpiši naslov filma</string>
+  <string name="movies_empty">Išči film zgoraj.</string>
+  <string name="love">Totalno nindža!</string>
+  <string name="hate">Bedno :(</string>
   <string name="rating2">Obupno</string>
   <string name="rating3">Slabo</string>
-  <string name="rating4">Poor</string>
+  <string name="rating4">ne-dobro</string>
   <string name="rating5">Kr nekaj</string>
   <string name="rating6">OK</string>
   <string name="rating7">Dobro</string>
@@ -61,24 +62,24 @@
   <string name="show_firstaired">Prvič predvajano</string>
   <string name="show_genres">Žanri</string>
   <string name="show_runtime">Dolžina</string>
-  <string name="show_contentrating">Content Rating</string>
+  <string name="show_contentrating">Primernost vsebine</string>
   <string name="episode_directors">Režiserji</string>
   <string name="episode_gueststars">Gostujoči igralci</string>
   <string name="episode_writers">Pisci</string>
   <string name="show_airtimeunit">min</string>
-  <string name="show_isalive">Se nadaljuje...</string>
-  <string name="show_isnotalive">Končala</string>
+  <string name="show_isalive">Se nadaljuje</string>
+  <string name="show_isnotalive">Končano</string>
   <string name="lastEdit">Zadnja sprememba // TVDb</string>
   <string name="sort">Razvrsti po</string>
-  <string name="updateall_yes">Posodobitev (vse)</string>
-  <string name="menu_update_delta">Posodobitev (samo zastarelih)</string>
-  <string name="context_updateshow">Posodobitev</string>
-  <string name="context_showinfo">Pokaži Informacije</string>
+  <string name="updateall_yes">Posodobi (vse)</string>
+  <string name="menu_update_delta">Posodobi (samo zastarele)</string>
+  <string name="context_updateshow">Posodobi</string>
+  <string name="context_showinfo">Informacije o oddaji</string>
   <string name="context_marknext">Pogledana naslednja epizoda</string>
   <string name="today">danes</string>
   <string name="now">zdaj</string>
   <string name="daily">Dnevno</string>
-  <string name="mark_episode">Ogledana epizoda</string>
+  <string name="mark_episode">Pogledana epizoda</string>
   <string name="unmark_episode">Še ne pogledana epizoda</string>
   <string name="mark_all">Vse pogledane</string>
   <string name="unmark_all">Nobena pogledana</string>
@@ -91,17 +92,18 @@
   <string name="trakt_notseen">%s še ni pogledana.</string>
   <string name="trakt_collected">%s nabrana.</string>
   <string name="trakt_notcollected">%s ne nabrana.</string>
-  <string name="shows_empty">Look in the menu above to add some shows.</string>
-  <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
-  <string name="hidden_empty">Long-press on a show to hide it here.</string>
+  <string name="add_empty">Tu ni oddaj ali pa je naprava brez internetne povezave.</string>
+  <string name="shows_empty">Preišči gornji menu, za dodajanje oddaj.</string>
+  <string name="favorites_empty">Dolgo pritisni na oddajo, da jo dodaš med priljubljene.</string>
+  <string name="hidden_empty">Dolgo pritisni na oddajo da jo tu skriješ.</string>
   <string name="confirm_delete">Ali res želiš odstraniti %s?</string>
   <string name="delete_has_list_items">Ne morem izvesti zahteve. Prvo odstrani %s z vseh spiskov.</string>
   <string name="delete_show">odstrani</string>
-  <string name="dontdelete_show">Ne odstrani.</string>
+  <string name="dontdelete_show">Ne odstrani</string>
   <string name="no_nextepisode">ni naslednje epizode</string>
-  <string name="context_favorite">Dodaj priljubljenim</string>
-  <string name="context_unfavorite">Odstrani s priljubljenih</string>
-  <string name="favorited">Dodano priljubljenim</string>
+  <string name="context_favorite">Dodaj med priljubljene</string>
+  <string name="context_unfavorite">Odstrani iz priljubljenih</string>
+  <string name="favorited">Dodano med priljubljene</string>
   <string name="unfavorited">Odstrani iz priljubljenih</string>
   <string name="context_hide">Skrij</string>
   <string name="context_unhide">Prikaži</string>
@@ -129,12 +131,12 @@
   <string name="arttask_incomplete">Nekateri posterji se niso naložili. Poizkusi ponovno kasneje.</string>
   <string name="arttask_start">Nalagam posterje...</string>
   <string name="arttask_nosdcard">Nalaganje posterjev zahteva zunanjo podatkovno shrambo (kartico SD).</string>
-  <string name="show_network">dne</string>
+  <string name="show_network">ob</string>
   <string name="show_noairtime">Časa oddajanja ni na voljo</string>
   <string name="show_noimdbentry">Stran na IMDB ni bila najdena.</string>
-  <string name="season_watchcount">Neogledane epizode.</string>
-  <string name="season_allwatched">Vse epizode ogledal</string>
-  <string name="season_onenotwatched">Neogledana epizoda.</string>
+  <string name="season_watchcount">Nepogledane epizode.</string>
+  <string name="season_allwatched">Vse epizode pogledane</string>
+  <string name="season_onenotwatched">Nepogledana epizoda.</string>
   <string name="season_unaired">Nepredvajano</string>
   <string name="oneotherepisode">druga epizoda</string>
   <string name="otherepisodes">druge epizode</string>
@@ -146,17 +148,17 @@
   <string name="add_all">Dodaj vse</string>
   <string name="dont_add_show">Ne dodaj</string>
   <string name="add_multiple">Vse oddaje se bodo v kratkem pojavile v tvojem spisku oddaj.</string>
-  <string name="add_started">se bo pojavilo kmalu na tvoji listi serij.</string>
+  <string name="add_started">se bo kmalu pojavilo na tvoji listi oddaj.</string>
   <string name="add_success">Uspešno dodano.</string>
-  <string name="add_error_begin">Ne morem dodati \ "</string>
-  <string name="add_error_end">\ ".</string>
-  <string name="add_already_exists">je že na vašem seznamu.</string>
+  <string name="add_error_begin">Ne morem dodati \"</string>
+  <string name="add_error_end">\".</string>
+  <string name="add_already_exists">je že na vašem spisku oddaj.</string>
   <string name="trending">V porastu</string>
   <string name="recommended">Priporočeno</string>
   <string name="library">Knjižnjica</string>
   <string name="watchlist">Spisek za gledanje</string>
-  <string name="powered_by_thetvdb">powered by thetvdb.com</string>
-  <string name="powered_by_trakt">Powered by trakt.tv</string>
+  <string name="powered_by_thetvdb">omogoča thetvdb.com</string>
+  <string name="powered_by_trakt">omogoča trakt.tv</string>
   <string name="first_list">Prvi spisek</string>
   <string name="list_add">Dodaj spisek</string>
   <string name="list_title_hint">Poimenuj spisek</string>
@@ -165,40 +167,54 @@
   <string name="list_item_manage">Uredi spiske</string>
   <string name="list_item_remove">Odstrani s spiska</string>
   <string name="list_empty">Na ta spisek lahko dodaš oddaje, sezone ali epizode.</string>
+  <string name="connect_trakt">Poveži trakt</string>
+  <string name="connect_trakt_done">Povezan na trakt!</string>
+  <string name="add_trakt_shows">Dodaj oddaje iz svoje knjižnjice:</string>
+  <string name="show_library">Prikaži knjižnjico</string>
+  <string name="upload_shows">Naloži na strežnik svoj spisek SeriesGuide oddaj:</string>
+  <string name="upload_existing_shows">Naloži na strežnik obstoječe oddaje</string>
+  <string name="about_trakt">trakt pomaga pri sledenju TV oddaj in filmov, ki jih gledaš.<a href="http://trakt.tv">Izvedi več</a></string>
+  <string name="integration_trakt">če povežeš trakt:</string>
+  <string name="integration_trakt_items">- dodaj oddaje iz svoje knjižnjice in spiska\n\n- poglej svoja priporočila in aktivnost prijateljev\n\n- gledane in zbrane oznake so avtomatsko sinhronizirane\n\n- nove oddaje, ki si jih gledal so avtomatsko dodane</string>
+  <string name="trakt_sync_intro">Oddaje ne bodo dodane ali odstranjene v SeriesGuide. To stori iz spiska oddaj.</string>
+  <string name="trakt_download_hint">Označi vse pogledane oddaje na traktu, kot pogledane v SeriesGuide:</string>
+  <string name="trakt_upload_hint">Označi pogledane epizode v SeriesGuide, kot pogledane na traktu:</string>
+  <string name="trakt_download">Naloži na SeriesGuide</string>
+  <string name="trakt_upload">Naloži na strežnik trakt.tv</string>
+  <string name="trakt_syncunwatched">Odstrani oznake gledanih ali ne-gledanih epizod ob sinhronizaciji</string>
   <string name="prefs_category_basic">Osnove</string>
   <string name="prefs_category_sharing">Storitve</string>
   <string name="prefs_category_advanced">Napredno</string>
   <string name="prefs_category_about">O programu</string>
   <string name="pref_showsorting">Oddaje razporedi po...</string>
-  <string name="pref_onlyfuture">Nepredvajane epizode</string>
+  <string name="pref_onlyfuture">Ni predvajanih epizod</string>
   <string name="pref_onlyfuturesummary">Nikoli ne prikaži že objavljenih epizod</string>
   <string name="pref_onlyseasoneps">Skrij posebne epizode</string>
   <string name="pref_onlyseasonepssummary">Posebne epizode izginejo od povsod, razen s spiska sezone</string>
   <string name="pref_seasonsorting">Sezono razporedi po...</string>
   <string name="pref_episodesorting">Epizode razporedi po...</string>
   <string name="backup">Varnostno kopiranje/Obnovitev</string>
-  <string name="backup_summary">Varnostno kopiranje ali obnovitev vaših oddaj</string>
+  <string name="backup_summary">Naredite varnostno kopijo ali obnovite vaše oddaje</string>
   <string name="pref_language">Jezik vsebine</string>
   <string name="pref_number">Oblika števil</string>
-  <string name="pref_offset">Ročna nast. čas. odmik</string>
+  <string name="pref_offset">Ročna nastavitev časovnega zamika</string>
   <string name="pref_offsetsummary">Zamakni čas predvajanja za %s ur</string>
-  <string name="pref_autoupdate">Vklopite samodejno posodobitev</string>
+  <string name="pref_autoupdate">Vklopite samodejne posodobitve</string>
   <string name="pref_autoupdatesummary">Občasno posodobi svoje oddaje ob zagonu SeriesGuide</string>
-  <string name="pref_updatewifionly">Posodobitev samo preko Wi-Fi</string>
+  <string name="pref_updatewifionly">Posodobitve samo preko Wi-Fi</string>
   <string name="about">O SeriesGuide</string>
-  <string name="pref_credits">Credits</string>
+  <string name="pref_credits">Ekipa in igralci</string>
   <string name="clearGetGlueCredentials">Odklopi GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Prijavi se z GetGlue, da se ponovno povežeš</string>
-  <string name="pref_trakt">trakt.TV poverilnice</string>
-  <string name="pref_traktsummary">Dodajanje ali urejanje poverilnice trakt.tv</string>
-  <string name="pref_traktsync">Sinh. z trakt.tv</string>
+  <string name="pref_traktsummary">Dodajanje ali urejanje prijavnih podatkov trakt.tv</string>
+  <string name="pref_traktsync">Ročna sinhronizacija s trakt.tv</string>
   <string name="feedback">Pošlji povratno informacijo</string>
   <string name="clear_cache">Izbriši predp. slik</string>
-  <string name="clear_cache_summary">Odstranite vse predpomnjene slike iz naprave</string>
+  <string name="clear_cache_summary">Odstrani vse predpomnjene slike iz naprave</string>
   <string name="pref_hideimages">Skrij slike</string>
   <string name="pref_hideimagessummary">Skrij slike iz svoje foto galerije (zahteva ponovni zagon)</string>
   <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_ganalyticssummary">Sledenje uporabe funkcije za izboljšanje SeriesGuide</string>
+  <string name="pref_ganalyticssummary">Sledenje uporabe funkcij za izboljšanje SeriesGuide</string>
   <string name="sendusagedata">Pošlji razvijalcu statistike o uporabi</string>
   <string name="pref_upcominglimit">Prihajajoče oddaje v...</string>
   <string name="pref_autoaddshows">Dodaj nove trakt oddaje</string>
@@ -208,21 +224,21 @@
   <string name="backup_version"><b>Verzija baze</b></string>
   <string name="backup_failed_nosd">Ne morem ustvariti varnostne kopije. Mapa za varnostno kopijo ni na voljo.</string>
   <string name="backup_inprogress">Ustvarjam varnostno kopijo baze...</string>
-  <string name="backup_success">Uspešno varnostno kopiranje.</string>
-  <string name="backup_failed">Varnostno kopiranje ni uspelo.</string>
+  <string name="backup_success">Varnostna kopija uspela.</string>
+  <string name="backup_failed">Varnostna kopija ni uspela.</string>
   <string name="import_inprogress">Obnavljam bazo iz varnostne kopije...</string>
   <string name="import_failed_nosd">Ne morem obnoviti podatkov iz varnostne kopije. Mapa varnostne kopije ni na voljo.</string>
-  <string name="import_failed_nofile">Ni backup datoteke.</string>
-  <string name="import_failed_noread">Varnostna kopija datoteke ni berljiva.</string>
+  <string name="import_failed_nofile">Ni datoteke z varnostno kopijo.</string>
+  <string name="import_failed_noread">Datoteka varnostne kopije ni berljiva.</string>
   <string name="dbupgradefailed">Tvoja varnostna kopija je morda prestara ali pa je prazna. Opomba: uvozi varnostne kopije iz verzije, ki je mlajša od 2.0, prvo v verzijo 1.9.x.</string>
-  <string name="import_success">Varnostno kopiranje uspešno obnovljeno.</string>
+  <string name="import_success">Podatki iz varnostne kopije uspešno obnovljeni.</string>
   <string name="import_failed">Obnovitev varnostne kopije ni uspela.</string>
   <string name="backup_button">Varnostna kopija</string>
   <string name="import_button">Obnovitev iz varnostne kopije</string>
-  <string name="backup_question">To bo prepisalo trenutno varnostno kopijo v mapo za varnostne kopije!</string>
-  <string name="backup_yes">Varnostno kopiranje</string>
-  <string name="backup_no">Brez varnostne kopije</string>
-  <string name="import_question">Trenutna lista oddaj bo izgubljena! Poskrbite, da bo varnostna datoteka znotraj varnostne mape.</string>
+  <string name="backup_question">To bo prepisalo trenutno varnostno kopijo v mapi za varnostne kopije!</string>
+  <string name="backup_yes">Izdelaj varnostno kopijo</string>
+  <string name="backup_no">Ne izdelaj varnostne kopije</string>
+  <string name="import_question">Trenutni spisek oddaj bo izgubljen! Poskrbite, da bo datoteka z varnostno kopijo znotraj mape varnostnih kopij.</string>
   <string name="import_yes">Obnovitev</string>
   <string name="import_no">Ne obnovi</string>
   <string name="checkin">Prijava</string>
@@ -230,7 +246,7 @@
   <string name="checkin_empty">Ni ustreznih oddaj</string>
   <string name="checkin_hint">Natipkaj sporočilo (opcijsko)</string>
   <string name="checkin_fixgetglue">Popravi GetGlue prijavo</string>
-  <string name="paste_title">Paste title</string>
+  <string name="paste_title">Prilepi naslov</string>
   <string name="checkinsuccess">Prijavljen v %s na GetGlue.</string>
   <string name="checkinfailed">GetGlue prijava ni uspela. Poizkusi ponovno kasneje.</string>
   <string name="getglue_authfailed">GetGlue avtentikacija ni uspela. Poizkusi ponovno kasneje.</string>
@@ -240,32 +256,25 @@
   <string name="check_into">Prijavi se v</string>
   <string name="no_selection">Izberi možnost spodaj</string>
   <string name="looking_for_something_else">Iščeš nekaj drugega?</string>
-  <string name="menu_rate_trakt">Ocena (trakt)</string>
-  <string name="menu_share_others">Preko drugih apps</string>
+  <string name="menu_rate_trakt">Oceni (trakt)</string>
+  <string name="menu_share_others">Preko drugih appsov</string>
   <string name="traktcheckin_cancel">Razveljavi</string>
   <string name="traktcheckin_inprogress">Prijavljen si že v drugo epizodo ali film. Ali razveljavi prejšnji vnos ali pa počakaj %s in poizkusi ponovno.</string>
   <string name="traktcheckin_wait">Počakal bom</string>
   <string name="oauthmessage">Prijavljam SeriesGuide v GetGlue</string>
   <string name="addtocalendar">Dodaj v koledar</string>
   <string name="addtocalendar_failed">Dogodka v koledarju ni bilo mogoče ustvariti.</string>
-  <string name="username">Upor. ime</string>
-  <string name="email">Email</string>
+  <string name="username">Uporabniško ime</string>
+  <string name="email">Elektronska pošta</string>
   <string name="password">Geslo</string>
   <string name="waitplease">Trenutek, prosim...</string>
   <string name="connect">Poveži</string>
   <string name="disconnect">Odklopi</string>
   <string name="trakt_error">Interakcija s trakt-om ni uspela</string>
-  <string name="trakt_decryptfail">gesla ni bilo mogoče šifrirati</string>
-  <string name="trakt_generalerror">Nekaj je šlo narobe. Preverite vaše poverilnice in poskusite znova.</string>
+  <string name="trakt_decryptfail">gesla ni bilo mogoče dešifrirati</string>
+  <string name="trakt_generalerror">Prišlo je do napake. Prosimo preverite vaše prijavne podatke in poizkusite znova.</string>
   <string name="trakt_createaccount">Izdelaj nov račun</string>
-  <string name="trakt_experimental">Samo oddaje na tvojem SeriesGuide spisku oddaj so sinhronizirane. \'Sinhroniziraj SeriesGuide\' potegne spisek gledanih oznak s trakt-a. \'Sinhroniziraj na trakt\' pošlje gledane oznake na trakt.</string>
-  <string name="trakt_synctodevice">Sinh. z SeriesGuide</string>
-  <string name="trakt_synctotrakt">Sinh. z trakt.tv</string>
-  <string name="trakt_syncunseen">Vključi ne-gledane oznake</string>
-  <string name="trakt_howto_title">Vzpostavi trakt.tv sinhronizacijo</string>
-  <string name="trakt_howto">Da nastaviš svoje naprave:\n\n1. Poveži ali ustvari svoj spodnji račun na vsaki napravi.\n2. Prvič uporabi <b>sinhroniziraj na trakt.tv</b> gumb, da na trakt naložiš svoje obstoječe oddaje.\n3. Dodaj oddaje s trakt.tv s premikom na zavihek <b>Knjižnjica</b> na zaslonu <b>Dodaj oddajo</b>.\n\nVsakič, ko se bo SerisGuide posodobil bo tvoja aktivnost s trakt.tv naložena na vsako napravo. To vključuje označevanje epizod kot gledanih ali nabranih in prijavljenih.</string>
   <string name="welcome_setuplanguage">Izberi jezik</string>
-  <string name="welcome_setuptrakt">Poveži s trakt-om</string>
   <string name="welcome_traktmessage">Dostopaj do svoje trakt.tv knjižnjice in aktivnosti prijateljev</string>
   <string name="dismiss">Razveljavi</string>
   <string name="welcome_add_part1">Za začetek tapni</string>
@@ -274,7 +283,7 @@
   <string name="upcoming_show_detailed">%1$s na %2$s</string>
   <string name="upcoming_display">Izberi za prikaz prihajajočih oddaj</string>
   <string name="pref_notifications">Obvestila</string>
-  <string name="pref_notificationssummary">Notify about new episodes</string>
+  <string name="pref_notificationssummary">Obvesti me o novih epizodah</string>
   <string name="pref_notifyfavonly">Samo priljubljene</string>
   <string name="pref_notifyfavonlysummary">Prejemaj obvestila samo za priljubljene oddaje</string>
   <string name="pref_ringtone">Zvonenje</string>
@@ -284,7 +293,7 @@
   <string name="pref_theme">Slikovna tema aplikacije</string>
   <string name="choose_list">Izberi spisek aktivnosti</string>
   <string name="hide_watched">Skrij gledane epizode</string>
-  <string name="add_widget">Add widget</string>
+  <string name="add_widget">Dodaj widget</string>
   <string name="widget_label">SeriesGuide</string>
   <string name="smallwidget">SeriesGuide (majhen)</string>
   <string name="bigwidget">SeriesGuide (srednji)</string>
@@ -292,23 +301,23 @@
   <string name="download_stable">Prenesi SeriesGuide</string>
   <string name="betawarning"><b>Pozor!</b> Ta verzija je namenjea samo beta preizkuševalcem! Če si v dvomih prenesi spodnjo, stabilno verzijo.</string>
   <string-array name="shsorting">
-    <item>A - Z</item>
+    <item>A - Ž</item>
     <item>Naslednja epizoda</item>
-    <item>Priljubljene (A - Z)</item>
+    <item>Priljubljene (A - Ž)</item>
     <item>Priljubljene (Nasl. ep.)</item>
   </string-array>
   <string-array name="sesorting">
-    <item>Novejša prva</item>
-    <item>Starejša prva</item>
+    <item>Najnovejša prva</item>
+    <item>Najstarejša prva</item>
   </string-array>
   <string-array name="epsorting">
-    <item>Najprej zadnje</item>
-    <item>Najprej najstarejše</item>
+    <item>Najnovejša prva</item>
+    <item>Najstarejša prva</item>
     <item>Najprej nepogledane</item>
     <item>A - Ž</item>
     <item>Najvišje ocenjene</item>
-    <item>Najprej zadnje (DVD)</item>
-    <item>Najprej najstarejše (DVD)</item>
+    <item>Najstarejša prva (DVD)</item>
+    <item>Najstarejša prva (DVD)</item>
   </string-array>
   <string-array name="upcominglimit">
     <item>sedaj</item>

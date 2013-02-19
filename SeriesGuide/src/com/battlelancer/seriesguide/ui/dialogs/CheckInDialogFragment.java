@@ -33,6 +33,7 @@ import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
 import com.battlelancer.seriesguide.util.TraktTask;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -64,6 +65,12 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
         setupFixGetGlueButton(layout, true, tvdbId);
 
         return layout;
+    }
+    
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getTracker().sendView("Show Check-In Dialog");
     }
 
     @Override

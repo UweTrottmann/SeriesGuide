@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.battlelancer.seriesguide.x"
     android:installLocation="auto"
-    android:versionCode="151"
-    android:versionName="2.11x" >
+    android:versionCode="152"
+    android:versionName="3x" >
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -22,7 +22,7 @@
 
     <application
         android:name="com.battlelancer.seriesguide.SeriesGuideApplication"
-		android:allowBackup="true"
+        android:allowBackup="true"
         android:backupAgent="com.battlelancer.seriesguide.PrefBackupHelper"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
@@ -42,8 +42,7 @@
         </provider>
 
         <!-- Launch activity -->
-        <activity
-            android:name="com.battlelancer.seriesguide.ui.ShowsActivity" >
+        <activity android:name="com.battlelancer.seriesguide.ui.ShowsActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -60,6 +59,12 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.MANAGE_NETWORK_USAGE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.battlelancer.seriesguide.ui.BackupDeleteActivity"
@@ -154,7 +159,9 @@
 
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="application/com.battlelancer.seriesguide.beam" />
             </intent-filter>
         </activity>
@@ -186,7 +193,17 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
-		<activity android:name="com.battlelancer.seriesguide.ui.MoviesActivity" >
+        <activity android:name="com.battlelancer.seriesguide.ui.MoviesActivity" >
+        </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.ConnectTraktActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.HelpActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
 		
         <!-- Services -->

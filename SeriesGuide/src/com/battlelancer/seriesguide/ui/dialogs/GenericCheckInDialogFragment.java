@@ -35,11 +35,11 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
+import com.battlelancer.seriesguide.ui.ConnectTraktActivity;
 import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -77,8 +77,6 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         String EPISODE = "episode";
     }
 
-    protected final static String TAG = "Check-In Dialog";
-
     protected boolean mGetGlueChecked;
 
     protected boolean mTraktChecked;
@@ -101,12 +99,6 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         } else {
             setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog_CheckIn);
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EasyTracker.getTracker().trackView(TAG);
     }
 
     @Override
@@ -175,9 +167,8 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
                 if (isChecked) {
                     if (!ServiceUtils.isTraktCredentialsValid(getSherlockActivity())) {
                         // authenticate already here
-                        TraktCredentialsDialogFragment newFragment = TraktCredentialsDialogFragment
-                                .newInstance();
-                        newFragment.show(getFragmentManager(), "traktdialog");
+                        Intent i = new Intent(getActivity(), ConnectTraktActivity.class);
+                        startActivity(i);
                     }
                 }
 

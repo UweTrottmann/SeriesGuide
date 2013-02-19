@@ -15,7 +15,7 @@
  * 
  */
 
-package com.battlelancer.seriesguide.ui.dialogs;
+package com.battlelancer.seriesguide.ui;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -23,8 +23,8 @@ import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
@@ -38,9 +38,9 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
@@ -55,19 +55,19 @@ import com.jakewharton.trakt.entities.Response;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
-public class TraktCredentialsDialogFragment extends DialogFragment {
+public class ConnectTraktCredentialsFragment extends SherlockFragment {
 
     private boolean isForwardingGivenTask;
 
-    public static TraktCredentialsDialogFragment newInstance(Bundle traktData) {
-        TraktCredentialsDialogFragment f = new TraktCredentialsDialogFragment();
+    public static ConnectTraktCredentialsFragment newInstance(Bundle traktData) {
+        ConnectTraktCredentialsFragment f = new ConnectTraktCredentialsFragment();
         f.setArguments(traktData);
         f.isForwardingGivenTask = true;
         return f;
     }
 
-    public static TraktCredentialsDialogFragment newInstance() {
-        TraktCredentialsDialogFragment f = new TraktCredentialsDialogFragment();
+    public static ConnectTraktCredentialsFragment newInstance() {
+        ConnectTraktCredentialsFragment f = new ConnectTraktCredentialsFragment();
         f.isForwardingGivenTask = false;
         return f;
     }
@@ -75,27 +75,14 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().trackView("Trakt Credentials Dialog");
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // hide title, use custom theme
-        if (SeriesGuidePreferences.THEME == R.style.ICSBaseTheme) {
-            setStyle(STYLE_NO_TITLE, 0);
-        } else {
-            setStyle(STYLE_NO_TITLE, R.style.SeriesGuideTheme_Dialog);
-        }
+        EasyTracker.getTracker().sendView("Connect Trakt Credentials");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        getDialog().setTitle(R.string.pref_trakt);
         final Context context = getActivity().getApplicationContext();
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        final View layout = inflater.inflate(R.layout.trakt_credentials_dialog, null);
+        final View layout = inflater.inflate(R.layout.trakt_credentials_dialog, container, false);
         final FragmentManager fm = getFragmentManager();
         final Bundle args = getArguments();
 
@@ -152,9 +139,6 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                 // prevent multiple instances
                 connectbtn.setEnabled(false);
                 disconnectbtn.setEnabled(false);
-
-                // prevent user canceling the dialog
-                setCancelable(false);
 
                 final String username = ((EditText) layout.findViewById(R.id.username)).getText()
                         .toString();
@@ -221,7 +205,6 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                     protected void onPostExecute(Response response) {
                         progressbar.setVisibility(View.GONE);
                         connectbtn.setEnabled(true);
-                        setCancelable(true);
 
                         if (response == null) {
                             status.setText(R.string.trakt_generalerror);
@@ -253,10 +236,8 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                                 return;
                             }
 
-                            // all went through
-                            dismiss();
-
                             if (isForwardingGivenTask) {
+                                // continue with original task
                                 if (TraktAction.values()[args.getInt(ShareItems.TRAKTACTION)] == TraktAction.CHECKIN_EPISODE) {
                                     FragmentTransaction ft = fm.beginTransaction();
                                     Fragment prev = fm.findFragmentByTag("progress-dialog");
@@ -272,6 +253,17 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                                         new TraktTask(context, fm, args, null), new Void[] {
                                             null
                                         });
+
+                                FragmentActivity activity = getActivity();
+                                if (activity != null) {
+                                    activity.finish();
+                                }
+                            } else {
+                                // show options after successful connection
+                                ConnectTraktFinishedFragment f = new ConnectTraktFinishedFragment();
+                                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                ft.replace(R.id.root_container, f);
+                                ft.commit();
                             }
                         }
                     }
@@ -289,10 +281,11 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                 new AsyncTask<Void, Void, Void>() {
                     @Override
                     protected Void doInBackground(Void... params) {
-                        clearTraktCredentials(prefs);
+                        ServiceUtils.clearTraktCredentials(context);
 
                         // force removing credentials from memory
-                        ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(context, false);
+                        ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(
+                                context, false);
                         if (manager != null) {
                             manager.setAuthentication(null, null);
                         }
@@ -301,17 +294,10 @@ public class TraktCredentialsDialogFragment extends DialogFragment {
                     }
                 }.execute();
 
-                dismiss();
+                getActivity().finish();
             }
         });
 
         return layout;
-    }
-
-    public static void clearTraktCredentials(final SharedPreferences prefs) {
-        Editor editor = prefs.edit();
-        editor.putString(SeriesGuidePreferences.KEY_TRAKTUSER, "").putString(
-                SeriesGuidePreferences.KEY_TRAKTPWD, "");
-        editor.commit();
     }
 }

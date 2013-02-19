@@ -27,6 +27,10 @@ import android.support.v4.app.DialogFragment;
 
 import com.google.analytics.tracking.android.EasyTracker;
 
+/**
+ * A dialog displaying various given sorting methods, saving them to the given
+ * preference upon selection by the user.
+ */
 public class SortDialogFragment extends DialogFragment {
 
     public static SortDialogFragment newInstance(int itemArrayResource, int itemDataArrayResource,
@@ -47,7 +51,7 @@ public class SortDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getTracker().trackView("Sort Dialog");
+        EasyTracker.getTracker().sendView("Sort Dialog");
     }
 
     @Override
