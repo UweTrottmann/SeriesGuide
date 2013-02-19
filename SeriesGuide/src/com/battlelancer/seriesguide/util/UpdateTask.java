@@ -220,6 +220,10 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
 
                 try {
                     TheTVDB.updateShow(id, mAppContext);
+                    
+                    // make sure overview and details loaders are notified
+                    resolver.notifyChange(Episodes.CONTENT_URI_WITHSHOW, null);
+                    
                     break;
                 } catch (SAXException e) {
                     if (itry == 1) {
