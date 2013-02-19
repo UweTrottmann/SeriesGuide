@@ -466,7 +466,7 @@ public class DBUtils {
             // Failures like constraint violation aren't recoverable
             throw new RuntimeException("Problem applying batch operation", e);
         }
-        
+
         // hide progress dialog now
         if (progress.isShowing()) {
             progress.dismiss();
@@ -585,37 +585,37 @@ public class DBUtils {
      * Update the latest episode fields of the show where {@link Shows._ID}
      * equals the given {@code id}.
      * 
-     * @param context
-     * @param showId
-     * @param isOnlyFutureEpisodes
-     * @param isNoSpecials
-     * @param prefs
+     * @return The id of the calculated next episode.
      */
     public static long updateLatestEpisode(Context context, String showId,
             boolean isOnlyFutureEpisodes, boolean isNoSpecials, SharedPreferences prefs) {
         final Uri episodesWithShow = Episodes.buildEpisodesOfShowUri(showId);
         final StringBuilder selectQuery = new StringBuilder();
 
-        // STEP 1: get youngest watched episode
-        selectQuery.append(NextEpisodeQuery.SELECT_WATCHED);
-        if (isNoSpecials) {
-            // do not take specials into account
-            selectQuery.append(Episodes.SELECTION_NOSPECIALS);
+        // STEP 1: get last watched episode
+        final Cursor show = context.getContentResolver().query(Shows.buildShowUri(showId),
+                new String[] {
+                        Shows._ID, Shows.LASTWATCHEDID
+                }, null, null, null);
+        if (show == null || !show.moveToFirst()) {
+            if (show != null) {
+                show.close();
+            }
+            return 0;
         }
-        // only get episodes which have an air date
-        selectQuery.append(NextEpisodeQuery.SELECT_WITHAIRDATE);
+        final String lastEpisodeId = show.getString(1);
+        show.close();
 
-        final Cursor watched = context.getContentResolver().query(episodesWithShow,
-                NextEpisodeQuery.PROJECTION_WATCHED, selectQuery.toString(), null,
-                NextEpisodeQuery.SORTING_WATCHED);
-
+        final Cursor lastEpisode = context.getContentResolver().query(
+                Episodes.buildEpisodeUri(lastEpisodeId), NextEpisodeQuery.PROJECTION_WATCHED, null,
+                null, null);
         final String season;
         final String number;
         final String airtime;
-        if (watched != null && watched.moveToFirst()) {
-            season = watched.getString(NextEpisodeQuery.SEASON);
-            number = watched.getString(NextEpisodeQuery.NUMBER);
-            airtime = watched.getString(NextEpisodeQuery.FIRSTAIREDMS);
+        if (lastEpisode != null && lastEpisode.moveToFirst()) {
+            season = lastEpisode.getString(NextEpisodeQuery.SEASON);
+            number = lastEpisode.getString(NextEpisodeQuery.NUMBER);
+            airtime = lastEpisode.getString(NextEpisodeQuery.FIRSTAIREDMS);
         } else {
             // no watched episodes, include all starting with
             // special 0
@@ -623,8 +623,8 @@ public class DBUtils {
             number = "-1";
             airtime = String.valueOf(Long.MIN_VALUE);
         }
-        if (watched != null) {
-            watched.close();
+        if (lastEpisode != null) {
+            lastEpisode.close();
         }
 
         // STEP 2: get episode airing closest afterwards or at the same time,
@@ -692,8 +692,6 @@ public class DBUtils {
     }
 
     private interface NextEpisodeQuery {
-        String SELECT_WATCHED = Episodes.WATCHED + "=1";
-
         /**
          * Unwatched, airing later or has a different number or season if airing
          * the same time.
@@ -715,11 +713,6 @@ public class DBUtils {
                 Episodes._ID, Episodes.SEASON, Episodes.NUMBER, Episodes.FIRSTAIREDMS,
                 Episodes.TITLE
         };
-
-        /**
-         * Highest season, or if identical highest episode number.
-         */
-        String SORTING_WATCHED = Episodes.SEASON + " DESC," + Episodes.NUMBER + " DESC";
 
         /**
          * Air time, then lowest season, or if identical lowest episode number.

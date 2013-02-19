@@ -53,8 +53,8 @@ public class SeriesContract {
         String FIRSTAIRED = "firstaired";
 
         /**
-         * Air time (e.g. 20:00 PM) in ms as parsed by {@link
-         * Utils}.parseTimeToMilliseconds().
+         * Air time (e.g. 20:00 PM) in ms as parsed by {@link Utils}
+         * .parseTimeToMilliseconds().
          */
         String AIRSTIME = "airstime";
 
@@ -105,6 +105,12 @@ public class SeriesContract {
          * without IMDb id.
          */
         String GETGLUEID = "series_getglueid";
+
+        /**
+         * Id of the last watched episode, used to calculate the next to watche
+         * episode. Added in db version 31.
+         */
+        String LASTWATCHEDID = "series_lastwatchedid";
 
     }
 

@@ -77,7 +77,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_ABSOLUTE_NUMBERS = 30;
 
-    public static final int DATABASE_VERSION = DBVER_ABSOLUTE_NUMBERS;
+    public static final int DBVER_LASTWATCHEDID = 31;
+
+    public static final int DATABASE_VERSION = DBVER_LASTWATCHEDID;
 
     public interface Tables {
         String SHOWS = "series";
@@ -190,7 +192,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ShowsColumns.LASTEDIT + " INTEGER DEFAULT 0,"
 
-            + ShowsColumns.GETGLUEID + " TEXT DEFAULT ''"
+            + ShowsColumns.GETGLUEID + " TEXT DEFAULT '',"
+
+            + ShowsColumns.LASTWATCHEDID + " INTEGER DEFAULT 0"
 
             + ");";
 
@@ -390,6 +394,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 29:
                 upgradeToThirty(db);
                 version = 30;
+            case 30:
+                upgradeToThirtyOne(db);
+                version = 31;
         }
 
         // drop all tables if version is not right
@@ -413,6 +420,15 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
 
         onCreate(db);
+    }
+
+    /**
+     * Add {@link Shows} column to store the last watched episode id for better
+     * prediction of next episode.
+     */
+    private void upgradeToThirtyOne(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.LASTWATCHEDID
+                + " INTEGER DEFAULT 0;");
     }
 
     /**
