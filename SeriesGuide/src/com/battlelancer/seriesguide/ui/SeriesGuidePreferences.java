@@ -157,8 +157,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
 
-    public static final String HELP_URL = "http://seriesgui.de/help";
-
     private static final String TAG = "Settings";
 
     private static final String KEY_ABOUT = "aboutPref";

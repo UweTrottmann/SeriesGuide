@@ -13,11 +13,5 @@
         android:orderInCategory="98"
         android:showAsAction="never"
         android:title="@string/help"/>
-    <item
-        android:id="@+id/menu_feedback"
-        android:icon="@drawable/ic_action_send"
-        android:orderInCategory="99"
-        android:showAsAction="never"
-        android:title="@string/feedback"/>
 
 </menu>
