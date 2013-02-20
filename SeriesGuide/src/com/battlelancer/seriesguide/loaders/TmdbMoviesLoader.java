@@ -47,14 +47,15 @@ public class TmdbMoviesLoader extends GenericListLoader<Movie> {
 
     @Override
     public List<Movie> loadInBackground() {
-        if (TextUtils.isEmpty(mQuery)){
-            return null;
-        }
-        
         ServiceManager manager = ServiceUtils.getTmdbServiceManager(getContext());
 
         try {
-            ResultsPage page = manager.searchService().movieSearch(mQuery).fire();
+            ResultsPage page;
+            if (TextUtils.isEmpty(mQuery)) {
+                page = manager.moviesService().nowPlaying().fire();
+            } else {
+                page = manager.searchService().movieSearch(mQuery).fire();
+            }
             if (page != null && page.results != null) {
                 return page.results;
             }
