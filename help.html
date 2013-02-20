@@ -11,76 +11,139 @@ title: Help
 
     <div class="spacer"></div>
     
-    <p>Check out the <a href="hints"><strong>Getting Started</strong></a> page to learn more about <strong>syncing with trakt</strong>, <strong>how check ins work</strong> and how to <strong>back up your show database</strong>.</p>
-
-    <div class="spacer"></div>    
+    <h2 href="#howto">How to</h2>
+		<ul>
+            <li><a href="#buttons">Check in, flag watched and collected</a></li>
+			<li><a href="#checkins">How check-ins work</a></li>
+			<li><a href="#udpate">Manually update shows</a></li>
+			<li><a href="#lanuage">Change the app language</a></li>
+		</ul>
     
-    <h2 href="#Known_issues">Known issues</h2>
+    <h2 href="#fixes">Fix an issue</h2>
 		<ul>
-			<li><a href="#getgluecheckin" >GetGlue Check In issues</li>
-			<li><a href="#translation">Language/Translation issues</a></li>
-			<li><a href="#airtimes">Air time issues</a></li>
-			<li><a href="#timezone">Time zone issues</a></li>			
-			<li><a href="#widget">App widget issues</a></li>
-		</ul>
+			<li><a href="#translation" >Quality of translations</li>
+			<li><a href="#playing">Playing episodes or movies</a></li>
+			<li><a href="#missing">Missing or incorrect information</a></li>
+			<li><a href="#airtimes">Wrong air times for some shows</a></li>
+			<li><a href="#fixcheckin">GetGlue check-ins end up with the wrong show or do not work</a></li>
+			<li><a href="#widget">The app widget displays no data or is missing in the list of available widgets</a></li>
+			<li><a href="#timezone">Changing the device time zone leads to wrong air times</a></li>
+		</ul>		
 		
-    <h2 href="#Frequently_Asked_Questions">Frequently Asked Questions</h2>
-		<ul>
-			<li><a href="#play_epidodes">Why does SeriesGuide not play episodes?</a></li>
-			<li><a href="#tvdb_info_missing">Why can't I find a specific show or episode?</a></li>
-			<li><a href="#tvdb_info_missing">How do I correct wrong information about a show or episode?</a></li>
-		</ul>
+	<h2>Still lost?</h2>
+	<ul>
+        <li><a href="https://plus.google.com/u/0/communities/103447253937737054097">Ask for help on the Google+ community</a></li>
+        <li><a href="http://seriesguide.uservoice.com/">Suggest a feature</a></li>
+	</ul>
 
     <div class="spacer"></div>
      
-    <a name="getgluecheckin"></a></a>
-	<h2><a name="Known_issues"></a>Known issues</h2>
-	<h3>GetGlue Check Ins end up with the wrong show or do not work</h3>
-	Tap the <b>Fix GetGlue check in</b> button at the bottom of the Check In dialog, then either select the show you want to check in there and save. Or tap on <b>Looking for something else?</b> and search for the show you want. Tap on one of the results and select <b>Save selection</b>.<br/>
-	SeriesGuide will now use the GetGlue id you selected to check in with GetGlue.
+    <a name="buttons"></a>
+	<h2><a name="howto"></a>How to</h2>
 	
-	<a name="translation"></a></a>
+	<h3>Check in, flag watched and collected</h3>
+    <p>Each episode displays a button bar with four actions:</p>
+    <p><img src="images/episode-bar.png" width="50%" alt="Episode action bar" ></img></p>
+    <ul>
+        <li><b>Check in</b> (via GetGlue or trakt)</li>
+        <li><b>Watched</b> flag toggle</li>
+        <li><b>Collected</b> flag toggle</li>
+        <li><b>Create calendar event</b></li>
+    </ul>
+	
+	<a name="checkins"></a></a>
 	<div class="spacer"></div>
 	
-	<h3>I want to use SeriesGuide in English or I think the translation is wrong/bad</h3>
-	To use the app in English you have to set your devices language to any variant of the English language. Android will take care of the rest. By the way, all translations come from volunteers who translate free of charge (!) on crowdin. Please consider <a href="http://crowdin.net/project/seriesguide-translations/invite">helping to translate or proof read</a>!
+    <h3>How check-ins work</h3>
+    <p>Check-in to let friends or the world know what you are watching right now. With SeriesGuide, depending on which service you use, check-ins behave a little differently.</p>
+    <dt>trakt</dt>
+    <dd>Checks into <strong>single episodes</strong>, so look out which episode is displayed when you check in.</dd>
+    <dt>GetGlue</dt>
+    <dd>Checks into a <strong>show</strong>. You can use the <em>Paste episode</em> button to include the watched episode title in your check in comment.</dd>
+    
+	<a name="update"></a></a>
+	<div class="spacer"></div>	
+	
+	<h3>Manually update shows</h3>
+	<p>Update all shows:</p>
+	<ol>
+	   <li>From the show list, touch <strong>Menu</strong> <img src="images/optionsmenu.png" width="8" height="20">.</li>
+	   <li>Touch <strong>Update (outdated only)</strong> or <strong>Update (all)</strong>.</li>
+	</ol>
+	<p>Update just a single show:</p>
+	<ol>
+	   <li>From the show list, touch and hold the show.</li>
+	   <li>Select <strong>Update</strong>.</li>
+	</ol>
+	
+	<a name="language"></a></a>
+	<div class="spacer"></div>
+	
+	<h3>Change the app language</h3>
+	<p>To use the app in English you have to set your devices language to any variant of the English language. Android will take care of the rest. By the way, all translations come from volunteers who translate free of charge (!) on crowdin. Please consider <a href="http://crowdin.net/project/seriesguide-translations/invite">helping to translate or proof read</a>!</p>
+	
+	<div class="largespacer"></div>
+	
+	
+	<a name="translation"></a></a>
+	<h2><a name="fixes"></a>Fix an issue</h2>
+
+	<h3>Quality of translations</h3>
+	<p>All translations come from volunteers who translate free of charge (!) on crowdin. Sometimes these are not as accurate as they could be. Please consider <a href="http://crowdin.net/project/seriesguide-translations/invite">helping to translate or proof read</a>!</p>
+    
+    <a name="playing"></a>
+    <div class="spacer"></div>
+	<h3>Playing episodes or movies</h3>
+	<p>Sorry, SeriesGuide does not offer shows and movies for viewing.<br>
+	However, <strong>below each episode</strong> you will find <strong>links to popular services like Google Play or Amazon</strong> where you can (depending on your country) watch episodes.</p>
+	
+	<a name="missing"></a>
+    <div class="spacer"></div>    	
+	
+	<h3>Missing or incorrect information about shows, episodes or movies</h3>
+	<p>First of all try updating (see <a href="hints">here</a>). Otherwise the information on thetvdb.com (shows) or themoviedb.org (movies) might be wrong or outdated. SeriesGuide gets its data from <a href="http://thetvdb.com" rel="nofollow">thetvdb.com</a>, an open user-maintained TV database and <a href="http://www.themoviedb.org/" >themoviedb.org</a>, an open user-maintained movie database.<br>You may consider helping those projects to add or update show and movie information. Look on their websites for further information: <a href="http://forums.thetvdb.com/viewtopic.php?f=7&t=4076">Guidelines for thetvdb.com</a>, <a href="https://www.themoviedb.org/content/about">About themoviedb.org</a>.</p>
 	
 	<a name="airtimes"></a>
 	<div class="spacer"></div>
 	
-	<h3>Air times for some shows are wrong</h3>
-	SeriesGuide gets its data from <a href="http://thetvdb.com" rel="nofollow">thetvdb.com</a>, an open user-maintained TV database. The air times there do not carry any time zone information. So SeriesGuide assumes those to be US Pacific time. For some shows this can sadly be wrong (most of the time for international shows, like e.g. anime or British telly). I hope to come up with a good automatic solution in the future.
+	<h3>Wrong air times for some shows</h3>
+	<p>SeriesGuide gets its data from <a href="http://thetvdb.com" rel="nofollow">thetvdb.com</a>, an open user-maintained TV database (see above). The air times there do not carry any time zone information. For now SeriesGuide <strong>assumes those to be US Pacific time</strong> and from there <strong>converts it to your time zone</strong>. For some shows this can be wrong (most of the time for international shows, like e.g. anime or British telly).</p>
 	
-	<a name="timezone"></a>
+	<a name="fixcheckin"></a>
 	<div class="spacer"></div>
 	
-	<h3>After I change the time zone on my device the time and days are wrong</h3>
-	Please stop SeriesGuide and restart it. (From your home screen, go into Settings &gt;&gt; Applications &gt;&gt; Manage Applications. Find SeriesGuide and stop it.)  
+	<h3>GetGlue check-ins end up with the wrong show or do not work</h3>
+	<ol>
+        <li>From the check-in dialog, touch <b>Fix GetGlue check-in</b>.</li>
+        <li>Select the show you want to check in to. If it is not listed, touch <b>Looking for something else?</b> and enter a search term, then press Enter or Search on your keyboard.</li>
+        <li>Touch <strong>Save selection</strong>.</li>
+        <li>Touch <strong>Check-In</strong> to repeat the check-in.</li>	
+	</ol>
 	
 	<a name="widget"></a>
 	<div class="spacer"></div>
 	
 	<h3>The app widget displays no data or is missing in the list of available widgets</h3>
-	You may have moved SeriesGuide to the SD card. For the widget to work, SeriesGuide has to be on your phone or internal memory. Move it back and everything should be fine again (if not, try rebooting your device). 
+	<p>You may have moved SeriesGuide to the SD card. For the widget to work, SeriesGuide has to be on your phone or internal memory. Move it back and everything should be fine again (if not, try rebooting your device).</p> 
 	
-	<div class="largespacer"></div>
+	<a name="timezone"></a>
+	<div class="spacer"></div>
 	
-	<a name="play_epidodes"></a>
-	<h2><a name="Frequently_Asked_Questions"></a>Frequently Asked Questions</h2>
-	<h3>Why does SeriesGuide not play episodes?</h3>
-	Sorry, not possible. SeriesGuide <em>just</em> allows you to keep track of your favorite TV shows on pretty much any Android device, it displays episode information and let&#x27;s you quickly check in with services like trakt.tv and GetGlue. 
-	
-	<a name="tvdb_info_missing"></a>
-    <div class="spacer"></div>    	
-	
-	<h3>Why can't I find a specific show or episode? How do I correct wrong information about a show or episode?</h3>
-	First of all try updating (see <a href="hints">here</a>). Otherwise the information on <a href="http://thetvdb.com" rel="nofollow">thetvdb.com</a> might be wrong or outdated. SeriesGuide gets its data from <a href="http://thetvdb.com" rel="nofollow">thetvdb.com</a>, an open user-maintained TV database. If you want to help them you can add or edit show information and episodes yourself at thetvdb.com (make sure to <a href="http://forums.thetvdb.com/viewtopic.php?f=7&amp;t=4076" rel="nofollow">read their guidelines</a> first).
+	<h3>Changing the device time zone leads to wrong air times</h3>
+	<p>Please stop SeriesGuide and restart it:</p>
+	<ol>
+	   <li>From your home screen, go into Settings.</li>
+	   <li>Touch on <strong>Apps</strong>.</li>
+	   <li>Find SeriesGuide in the list of downloaded apps and tap on it.</li>
+	   <li>Touch <strong>Force stop</strong>.</li>
+	   <li>From your launcher, start SeriesGuide <img src="images/icon_inline.png" alt="SeriesGuide icon" /> again.</li>
+	</ol>
 	
 	<a name="Still_lost?"></a>
 	<div class="largespacer"></div>
 	
 	<h2>Still lost?</h2>
-	Ask on the <a href="https://plus.google.com/u/0/communities/103447253937737054097" rel="nofollow">SeriesGuide Community</a>. Or if you are up to it <a href="https://github.com/UweTrottmann/SeriesGuide/issues" rel="nofollow">report a bug on GitHub</a>.<br>
-	Or just send an email via <strong>Send feedback</strong> in SeriesGuide or the <a href="http://play.google.com/store/apps/details?id=com.battlelancer.seriesguide">Google play page</a>.
+	<p>Ask on the <a href="https://plus.google.com/u/0/communities/103447253937737054097" rel="nofollow">SeriesGuide Community</a>. Or if you are up to it <a href="https://github.com/UweTrottmann/SeriesGuide/issues" rel="nofollow">report a bug on GitHub</a>.<br>
+	Or send an email via <strong>Send feedback</strong> in SeriesGuide or the <a href="http://play.google.com/store/apps/details?id=com.battlelancer.seriesguide">Google play page</a>.</p>
 </div> <!-- span -->
 </div> <!-- row -->
