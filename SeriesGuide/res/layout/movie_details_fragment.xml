@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/imageViewMoviePoster"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/textViewMovieTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/default_padding"
+            android:textAppearance="?attr/textAppearanceSgXLargeLight" />
+
+        <Button
+            android:id="@+id/buttonMovieCheckIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textViewMovieTitle"
+            android:layout_margin="@dimen/default_padding"
+            android:text="@string/checkin" />
+
+        <TextView
+            android:id="@+id/textViewMovieDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/buttonMovieCheckIn"
+            android:layout_margin="@dimen/default_padding"
+            android:textIsSelectable="true"
+            android:textSize="@dimen/text_size_xmedium" />
+    </RelativeLayout>
+
+</ScrollView>

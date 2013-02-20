@@ -51,9 +51,9 @@ public class TmdbMovieDetailsLoader extends GenericSimpleLoader<MovieDetails> {
 
         try {
             MovieDetails details = new MovieDetails();
-            details.movie = manager.moviesService().summary(mTmdbId).fire();
-            details.trailers = manager.moviesService().trailers(mTmdbId).fire();
-            details.casts = manager.moviesService().casts(mTmdbId).fire();
+            details.movie(manager.moviesService().summary(mTmdbId).fire());
+            details.trailers(manager.moviesService().trailers(mTmdbId).fire());
+            details.casts(manager.moviesService().casts(mTmdbId).fire());
             return details;
         } catch (TmdbException e) {
             Utils.trackException(getContext(), TAG, e);
@@ -67,9 +67,36 @@ public class TmdbMovieDetailsLoader extends GenericSimpleLoader<MovieDetails> {
     }
 
     public static class MovieDetails {
-        Movie movie;
-        Trailers trailers;
-        Casts casts;
+        private Movie mMovie;
+        private Trailers mTrailers;
+        private Casts mCasts;
+
+        public Movie movie() {
+            return mMovie;
+        }
+
+        public MovieDetails movie(Movie movie) {
+            mMovie = movie;
+            return this;
+        }
+
+        public Trailers trailers() {
+            return mTrailers;
+        }
+
+        public MovieDetails trailers(Trailers trailers) {
+            mTrailers = trailers;
+            return this;
+        }
+
+        public Casts casts() {
+            return mCasts;
+        }
+
+        public MovieDetails casts(Casts casts) {
+            mCasts = casts;
+            return this;
+        }
     }
 
 }

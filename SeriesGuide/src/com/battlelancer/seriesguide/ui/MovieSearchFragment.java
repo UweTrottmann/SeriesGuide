@@ -17,12 +17,10 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,14 +37,8 @@ import android.widget.TextView.OnEditorActionListener;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.adapters.MoviesAdapter;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
-import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
-import com.battlelancer.seriesguide.util.ServiceUtils;
-import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.jakewharton.apibuilder.ApiException;
 import com.uwetrottmann.seriesguide.R;
-import com.uwetrottmann.tmdb.ServiceManager;
-import com.uwetrottmann.tmdb.TmdbException;
 import com.uwetrottmann.tmdb.entities.Movie;
 
 import java.util.List;
@@ -148,38 +140,15 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Movie movie = mAdapter.getItem(position);
-
-        new AsyncTask<Integer, Void, Movie>() {
-
-            @Override
-            protected Movie doInBackground(Integer... params) {
-                ServiceManager manager = ServiceUtils.getTmdbServiceManager(getActivity());
-
-                try {
-                    Movie movie = manager.moviesService().summary(params[0]).fire();
-                    if (movie != null) {
-                        return movie;
-                    }
-                } catch (TmdbException e) {
-                    Utils.trackException(getActivity(), TAG, e);
-                    Log.w(TAG, e);
-                } catch (ApiException e) {
-                    Utils.trackException(getActivity(), TAG, e);
-                    Log.w(TAG, e);
-                }
-                return null;
-            }
-
-            protected void onPostExecute(Movie movie) {
-                if (movie != null && !TextUtils.isEmpty(movie.imdb_id) && isAdded()) {
-                    // display a check-in dialog
-                    MovieCheckInDialogFragment f = MovieCheckInDialogFragment.newInstance(
-                            movie.imdb_id, movie.title);
-                    f.show(getFragmentManager(), "checkin-dialog");
-                }
-            };
-
-        }.execute(movie.id);
-
+        
+        // launch details fragment
+        MovieDetailsFragment f = new MovieDetailsFragment();
+        Bundle args = new Bundle();
+        args.putInt(MovieDetailsFragment.InitBundle.TMDB_ID, movie.id);
+        f.setArguments(args);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.movies_container, f);
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }
