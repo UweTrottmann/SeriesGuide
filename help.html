@@ -11,36 +11,44 @@ title: Help
 
     <div class="spacer"></div>
     
-    <h2 href="#howto">How to</h2>
-		<ul>
-            <li><a href="#buttons">Check in, flag watched and collected</a></li>
-			<li><a href="#checkins">How check-ins work</a></li>
-			<li><a href="#update">Manually update shows</a></li>
-			<li><a href="#backup" >Backup or restore your show database</a></li>
-			<li><a href="#language">Change the app language</a></li>
-		</ul>
+    <a href="#howto"><h2>How to</h2></a>
+	<ul class="toc">
+        <li><a href="#buttons">Check in, flag watched and collected</a></li>
+		<li><a href="#checkins">How check-ins work</a></li>
+		<li><a href="#update">Manually update shows</a></li>
+		<li><a href="#backup" >Backup or restore your show database</a></li>
+		<li><a href="#language">Change the app language</a></li>
+	</ul>
     
-    <h2 href="#fixes">Fix an issue</h2>
-		<ul>
-			<li><a href="#translation" >Quality of translations</li>
-			<li><a href="#playing">Playing episodes or movies</a></li>
-			<li><a href="#missing">Missing or incorrect information</a></li>
-			<li><a href="#airtimes">Wrong air times for some shows</a></li>
-			<li><a href="#fixcheckin">GetGlue check-ins end up with the wrong show or do not work</a></li>
-			<li><a href="#widget">The app widget displays no data or is missing in the list of available widgets</a></li>
-			<li><a href="#timezone">Changing the device time zone leads to wrong air times</a></li>
-		</ul>		
+    <a href="#fixes"><h2>Fix an issue</h2></a>
+	<ul class="toc">
+		<li><a href="#translation" >Quality of translations</li>
+		<li><a href="#playing">Playing episodes or movies</a></li>
+		<li><a href="#missing">Missing or incorrect information</a></li>
+		<li><a href="#airtimes">Wrong air times for some shows</a></li>
+		<li><a href="#fixcheckin">GetGlue check-ins end up with the wrong show or do not work</a></li>
+		<li><a href="#widget">The app widget displays no data or is missing in the list of available widgets</a></li>
+		<li><a href="#timezone">Changing the device time zone leads to wrong air times</a></li>
+	</ul>
+		
+	<a href="#trakt"><h2 >trakt integration</h2></a>
+	<ul class="toc">
+        <li><a href="#library">Add shows from your trakt library</a></li>
+        <li><a href="#whatissynced">What is synced</a></li>
+        <li><a href="#manualsync">Manual sync with trakt</a></li>	
+	</ul>
 		
 	<h2>Still lost?</h2>
-	<ul>
+	<ul class="toc">
         <li><a href="https://plus.google.com/u/0/communities/103447253937737054097"><img src="images/gplus-16.png"/> Ask for help on the Google+ community</a></li>
         <li><a href="http://seriesguide.uservoice.com/">Suggest a feature</a></li>
 	</ul>
 
+    <a name="howto"></a> 
     <div class="spacer"></div>
-     
+    
     <a name="buttons"></a>
-	<h2><a name="howto"></a>How to</h2>
+	<h2>How to</h2>
 	
 	<h3>Check in, flag watched and collected</h3>
     <p>Each episode displays a button bar with four actions:</p>
@@ -96,11 +104,11 @@ title: Help
 	<h3>Change the app language</h3>
 	<p>To use the app in English you have to set your devices language to any variant of the English language. Android will take care of the rest. By the way, all translations come from volunteers who translate free of charge (!) on crowdin. Please consider <a href="http://crowdin.net/project/seriesguide-translations/invite">helping to translate or proof read</a>!</p>
 	
-	<div class="largespacer"></div>
-	
+	<a name="fixes"></a>
+	<div class="largespacer"></div>	
 	
 	<a name="translation"></a></a>
-	<h2><a name="fixes"></a>Fix an issue</h2>
+	<h2>Fix an issue</h2>
 
 	<h3>Quality of translations</h3>
 	<p>All translations come from volunteers who translate free of charge (!) on crowdin. Sometimes these are not as accurate as they could be. Please consider <a href="http://crowdin.net/project/seriesguide-translations/invite">helping to translate or proof read</a>!</p>
@@ -150,14 +158,60 @@ title: Help
 	   <li>Touch on <strong>Apps</strong>.</li>
 	   <li>Find SeriesGuide in the list of downloaded apps and tap on it.</li>
 	   <li>Touch <strong>Force stop</strong>.</li>
-	   <li>From your launcher, start SeriesGuide <img src="images/icon_inline.png" alt="SeriesGuide icon" /> again.</li>
+	   <li>From your launcher, start SeriesGuide <img src="images/icon_inline.png" alt="SeriesGuide icon" width="32" height="32"/> again.</li>
 	</ol>
+	
+	<a name="trakt"></a>
+	<div class="largespacer"></div>
+	
+	<a name="library"></a>
+	<h2>trakt integration</h2>
+    <p>If you want to know exactly what is going on with trakt.tv integration, read ahead!</p>
+        
+    <h3>Add shows from your trakt library</h3>
+    <ol>
+        <li>From the show list, touch + .</li>
+        <li>Swipe to the <strong>Library</strong> tab.</li>
+        <li>Touch on the + next to a show to add it to SeriesGuide.</li>
+    </ol>
+    <p><span class="label label-info">Info</span> SeriesGuide will try to load which episodes are already watched and collected from trakt when adding a show.</p>
+
+        <a name="whatissynced"></a>
+        <div class="spacer"></div> 
+        
+        <h3>What is synced</h3>
+        <div class="row">
+            <div class="span4">
+                <dl>
+                	<dt>Check-Ins</dt>
+                	<dd>Submitted to trakt. On the next update checked-in episodes are marked as watched.</dd>
+                	<br/>
+                	<dt>Watched flag</dt>
+                	<dd>Changes are sent to trakt. Other SeriesGuide installations will mark episodes as watched, but never remove the watched flag on the next update.</dd>
+                	<br/>
+                	<dt>Collected flag</dt>
+                	<dd>Changes are sent to trakt. Other SeriesGuide installations will mark episodes as collected, but never remove the collected flag on the next update.</dd>
+                </dl>
+            </div>
+        </div>
+        <p><span class="label label-info">Info</span> If you want to <strong>match up unwatched episodes</strong>, read the section below.</p>
+        
+        <a name="manualsync"></a>
+        <div class="spacer"></div> 
+                            
+        <h3>Manual sync with trakt</h3>
+        <p>Sometimes you might be in need of manually syncing watched flags, for example to <strong>match up unwatched episodes</strong> with your trakt library.</p>
+        <ol>
+            <li>From the show list, touch <strong>Menu</strong> <img src="images/optionsmenu.png" width="8" height="20" />.</li>
+            <li>Touch <strong>Services</strong>.</li>
+            <li>Touch <strong>Manual sync with trakt</strong>.</li>
+            <li>Follow the given instructions. If you want to match up unwatched episodes, check the box on the bottom before syncing.</li>
+        </ol>
 	
 	<a name="Still_lost?"></a>
 	<div class="largespacer"></div>
 	
 	<h2>Still lost?</h2>
-	<p>Ask on the <a href="https://plus.google.com/u/0/communities/103447253937737054097" rel="nofollow">SeriesGuide Community</a>. Or if you are up to it <a href="https://github.com/UweTrottmann/SeriesGuide/issues" rel="nofollow">report a bug on GitHub</a>.<br>
-	Or send an email via <strong>Send feedback</strong> in SeriesGuide or the <a href="http://play.google.com/store/apps/details?id=com.battlelancer.seriesguide">Google play page</a>.</p>
+	<p>Ask on the <a href="https://plus.google.com/u/0/communities/103447253937737054097" rel="nofollow"><img src="images/gplus-16.png" width="16" height="16"/> SeriesGuide Google+ Community</a>. Or if you are up to it <a href="https://github.com/UweTrottmann/SeriesGuide/issues" rel="nofollow">report a bug on GitHub</a>.</p>
 </div> <!-- span -->
 </div> <!-- row -->
