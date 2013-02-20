@@ -18,7 +18,9 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -40,6 +42,7 @@ import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.tmdb.entities.Movie;
+import com.uwetrottmann.tmdb.entities.Trailers;
 
 /**
  * Displays details about one movie including plot, ratings, trailers and a
@@ -135,6 +138,26 @@ public class MovieDetailsFragment extends SherlockFragment implements
                             }
                         }
                     });
+        }
+
+        // Trailer button
+        // TODO use new YouTube API to display inline
+        final Trailers trailers = details.trailers();
+        View buttonTrailer = getView().findViewById(R.id.buttonMovieTrailer);
+        if (trailers != null) {
+            if (trailers.youtube.size() > 0) {
+                buttonTrailer.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent myIntent = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse("http://www.youtube.com/watch?v="
+                                        + trailers.youtube.get(0).source));
+                        startActivity(myIntent);
+                    }
+                });
+            }
+        } else {
+            buttonTrailer.setVisibility(View.GONE);
         }
     }
 

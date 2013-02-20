@@ -45,6 +45,15 @@
                 android:layout_margin="@dimen/default_padding"
                 android:textIsSelectable="true"
                 android:textSize="@dimen/text_size_xmedium" />
+
+            <Button
+                android:id="@+id/buttonMovieTrailer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/textViewMovieDescription"
+                android:layout_margin="@dimen/default_padding"
+                android:text="@string/trailer" />
         </RelativeLayout>
     </ScrollView>
 
