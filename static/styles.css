@@ -3,6 +3,7 @@ font-family: 'Roboto', sans-serif;
 text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
 background: #fff;
 color:#333;
+font-size: 14px;
 }
 
 h1, h2 {
@@ -17,7 +18,14 @@ color:#333;
 
 p {
 font-family: 'Roboto', sans-serif;
-font-size: 14px;
+}
+
+li {
+line-height: 24px;
+}
+
+dt {
+line-height: 24px;    
 }
 
 a {
@@ -45,6 +53,11 @@ color: #eee;
 font-size: 1.2em;
 font-weight:400;
 color: #eee;
+}
+
+.toc > li > a {
+color:#333;
+font-weight:400;
 }
 
 .spacer {
