@@ -17,19 +17,27 @@
 
 package com.battlelancer.seriesguide.service;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
+import android.text.format.DateUtils;
 import android.util.Log;
 
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.FlagTapedTask;
 import com.battlelancer.seriesguide.util.FlagTapedTask.Callback;
 import com.battlelancer.seriesguide.util.FlagTapedTaskQueue;
-import com.battlelancer.seriesguide.util.Utils;
 
 public class TraktFlagService extends Service implements Callback {
 
     private static final String TAG = "TraktFlagService";
+
+    private static final long MAX_RETRY_INTERVAL = 15 * DateUtils.MINUTE_IN_MILLIS;
 
     private FlagTapedTaskQueue mQueue;
 
@@ -71,10 +79,27 @@ public class TraktFlagService extends Service implements Callback {
     }
 
     @Override
-    public void onFailure(Exception e) {
-        // TODO Possibly roll back database op related to this task (will
-        // require bigger modifications)
-        Utils.trackExceptionAndLog(getApplicationContext(), TAG, e);
+    public void onFailure(boolean isNotConnected) {
+        stopSelf();
+        if (!isNotConnected) {
+            // back off exponentially if something went wrong (and we are
+            // not just offline)
+            SharedPreferences prefs = PreferenceManager
+                    .getDefaultSharedPreferences(getApplicationContext());
+            long interval = prefs.getLong(SeriesGuidePreferences.KEY_TAPE_INTERVAL,
+                    DateUtils.MINUTE_IN_MILLIS);
+            if ((interval *= 2) > MAX_RETRY_INTERVAL) {
+                interval = MAX_RETRY_INTERVAL;
+            }
+            prefs.edit().putLong(SeriesGuidePreferences.KEY_TAPE_INTERVAL, interval).commit();
+
+            long wakeUpTime = System.currentTimeMillis() + interval;
+
+            AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Intent i = new Intent(this, OnTapeRestartReceiver.class);
+            PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
+            am.set(AlarmManager.RTC, wakeUpTime, pi);
+        }
     }
 
     @Override

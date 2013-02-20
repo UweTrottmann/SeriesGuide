@@ -198,7 +198,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
             // Add a new taped flag task to the tape queue
             FlagTapedTaskQueue.getInstance(mContext).add(
-                    new FlagTapedTask(showService, mAction, mShowId, episodes, mIsFlag));
+                    new FlagTapedTask(mContext, showService, mAction, mShowId, episodes, mIsFlag));
         }
 
         // always update local database

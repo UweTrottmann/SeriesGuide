@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -27,6 +28,7 @@ import com.jakewharton.trakt.services.ShowService;
 import com.jakewharton.trakt.services.ShowService.EpisodeSeenBuilder;
 import com.jakewharton.trakt.services.ShowService.EpisodeUnseenBuilder;
 import com.squareup.tape.Task;
+import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.util.List;
 
@@ -36,7 +38,7 @@ public class FlagTapedTask implements Task<FlagTapedTask.Callback> {
     public interface Callback {
         void onSuccess();
 
-        void onFailure(Exception e);
+        void onFailure(boolean isNotConnected);
     }
 
     public static class Flag {
@@ -50,14 +52,17 @@ public class FlagTapedTask implements Task<FlagTapedTask.Callback> {
     }
 
     private static final Handler MAIN_THREAD = new Handler(Looper.getMainLooper());
+    private Context mContext;
     private ShowService mShowService;
     private FlagAction mAction;
     private int mShowId;
     private List<Flag> mFlags;
     private boolean mIsFlag;
 
-    public FlagTapedTask(ShowService showService, FlagAction action, int showId, List<Flag> flags,
+    public FlagTapedTask(Context context, ShowService showService, FlagAction action, int showId,
+            List<Flag> flags,
             boolean isFlag) {
+        mContext = context;
         mShowService = showService;
         mAction = action;
         mShowId = showId;
@@ -71,7 +76,11 @@ public class FlagTapedTask implements Task<FlagTapedTask.Callback> {
 
             @Override
             public void run() {
-                // add Android offline detection?
+                // do not even try if we are offline
+                if (!AndroidUtils.isNetworkConnected(mContext)) {
+                    postFailure(true);
+                    return;
+                }
 
                 try {
                     switch (mAction) {
@@ -140,18 +149,18 @@ public class FlagTapedTask implements Task<FlagTapedTask.Callback> {
                         }
                     });
                 } catch (TraktException e) {
-                    postFailure(e);
+                    postFailure(false);
                 } catch (ApiException e) {
-                    postFailure(e);
+                    postFailure(false);
                 }
             }
 
-            public void postFailure(final Exception e) {
+            public void postFailure(final boolean isNotConnected) {
                 // Get back to the main thread before invoking a callback.
                 MAIN_THREAD.post(new Runnable() {
                     @Override
                     public void run() {
-                        callback.onFailure(e);
+                        callback.onFailure(isNotConnected);
                     }
                 });
             }
