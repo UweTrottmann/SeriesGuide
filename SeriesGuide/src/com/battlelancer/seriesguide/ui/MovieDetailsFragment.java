@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Uwe Trottmann
+ * Copyright 2013 Uwe Trottmann
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,40 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.support.v4.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.actionbarsherlock.app.SherlockFragment;
+import com.uwetrottmann.seriesguide.R;
 
 /**
  * Displays details about one movie including plot, ratings, trailers and a
  * poster.
  */
-public class MovieDetailsFragment extends Fragment {
+public class MovieDetailsFragment extends SherlockFragment {
+    
+    public interface InitBundle {
+        String TMDB_ID = "tmdbid";
+    }
+    
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.movie_details_fragment, container, false);
+    }
+    
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        
+        int tmdbId = getArguments().getInt(InitBundle.TMDB_ID);
+        if (tmdbId == 0) {
+            getSherlockActivity().getSupportFragmentManager().popBackStack();
+            return;
+        }
+        
+        
+    }
 
 }

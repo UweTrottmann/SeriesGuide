@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * Loads a list of movies from TMDb.
  */
-public class TmdbMoviesLoader extends GenericListLoader<Movie> {
+public class TmdbMoviesLoader extends GenericSimpleLoader<List<Movie>> {
 
     private static final String TAG = "TmdbMoviesLoader";
 
