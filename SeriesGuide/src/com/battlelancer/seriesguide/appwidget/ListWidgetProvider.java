@@ -37,7 +37,7 @@ import com.battlelancer.seriesguide.enums.WidgetListType;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
-import com.battlelancer.seriesguide.util.Settings;
+import com.battlelancer.seriesguide.util.AppSettings;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -136,7 +136,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
         }
         
         // set the background color
-        int bgColor = Settings.getWidgetBackgroundColor(context);
+        int bgColor = AppSettings.getWidgetBackgroundColor(context);
         rv.setInt(R.id.container, "setBackgroundColor", bgColor);
         
         // Create an intent to launch Upcoming

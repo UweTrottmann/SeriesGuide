@@ -22,9 +22,9 @@ import android.preference.PreferenceManager;
 /**
  * Retrieve settings values.
  */
-public class Settings {
+public class AppSettings {
 
-    private static final String KEY_WIDGET_BACKGROUND_COLOR = "widget_background_color";
+    public static final String KEY_WIDGET_BACKGROUND_COLOR = "widget_background_color";
 
     public static int getWidgetBackgroundColor(Context context) {
         // taken from https://code.google.com/p/dashclock
