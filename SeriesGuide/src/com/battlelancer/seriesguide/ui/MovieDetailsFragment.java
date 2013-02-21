@@ -138,19 +138,20 @@ public class MovieDetailsFragment extends SherlockFragment implements
 
             View checkinButton = getView().findViewById(R.id.buttonMovieCheckIn);
             checkinButton.setVisibility(View.VISIBLE);
-            checkinButton.setOnClickListener(
-                    new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // show check-in dialog
-                            if (!TextUtils.isEmpty(movie.imdb_id)) {
+            if (!TextUtils.isEmpty(movie.imdb_id)) {
+                checkinButton.setOnClickListener(
+                        new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
                                 // display a check-in dialog
                                 MovieCheckInDialogFragment f = MovieCheckInDialogFragment
                                         .newInstance(movie.imdb_id, movie.title);
                                 f.show(getFragmentManager(), "checkin-dialog");
                             }
-                        }
-                    });
+                        });
+            } else {
+                checkinButton.setEnabled(false);
+            }
         }
 
         // Trailer button
