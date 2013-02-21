@@ -32,12 +32,23 @@
                 android:textIsSelectable="true"
                 android:textSize="@dimen/text_size_ultralarge" />
 
+            <TextView
+                android:id="@+id/textViewMovieDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/textViewMovieTitle"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="?attr/textAppearanceSgSmallDim"
+                android:textIsSelectable="true" />
+
             <Button
                 android:id="@+id/buttonMovieCheckIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/textViewMovieTitle"
+                android:layout_below="@+id/textViewMovieDate"
                 android:layout_marginBottom="@dimen/large_padding"
                 android:text="@string/checkin"
                 android:visibility="gone" />

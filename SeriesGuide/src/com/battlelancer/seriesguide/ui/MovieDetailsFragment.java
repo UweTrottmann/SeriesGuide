@@ -27,6 +27,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -109,6 +110,16 @@ public class MovieDetailsFragment extends SherlockFragment implements
         final Movie movie = details.movie();
         if (movie != null) {
             ((TextView) getView().findViewById(R.id.textViewMovieTitle)).setText(movie.title);
+
+            TextView textViewDate = (TextView) getView().findViewById(R.id.textViewMovieDate);
+            if (movie.release_date != null) {
+                textViewDate.setText(DateUtils.formatDateTime(getActivity(),
+                        movie.release_date.getTime(),
+                        DateUtils.FORMAT_SHOW_DATE));
+            } else {
+                textViewDate.setText("");
+            }
+
             ((TextView) getView().findViewById(R.id.textViewMovieDescription))
                     .setText(movie.overview);
 
