@@ -125,7 +125,9 @@ public class MovieDetailsFragment extends SherlockFragment implements
                 mImageDownloader.download(posterPath, background, false);
             }
 
-            getView().findViewById(R.id.buttonMovieCheckIn).setOnClickListener(
+            View checkinButton = getView().findViewById(R.id.buttonMovieCheckIn);
+            checkinButton.setVisibility(View.VISIBLE);
+            checkinButton.setOnClickListener(
                     new OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -144,21 +146,24 @@ public class MovieDetailsFragment extends SherlockFragment implements
         // TODO use new YouTube API to display inline
         final Trailers trailers = details.trailers();
         View buttonTrailer = getView().findViewById(R.id.buttonMovieTrailer);
-        if (trailers != null) {
-            if (trailers.youtube.size() > 0) {
-                buttonTrailer.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent myIntent = new Intent(Intent.ACTION_VIEW,
-                                Uri.parse("http://www.youtube.com/watch?v="
-                                        + trailers.youtube.get(0).source));
-                        startActivity(myIntent);
-                    }
-                });
-            }
+        View divider = getView().findViewById(R.id.divider);
+        if (trailers != null && trailers.youtube.size() > 0) {
+            buttonTrailer.setVisibility(View.VISIBLE);
+            divider.setVisibility(View.VISIBLE);
+            buttonTrailer.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent myIntent = new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://www.youtube.com/watch?v="
+                                    + trailers.youtube.get(0).source));
+                    startActivity(myIntent);
+                }
+            });
         } else {
             buttonTrailer.setVisibility(View.GONE);
+            divider.setVisibility(View.GONE);
         }
+        
     }
 
     @Override

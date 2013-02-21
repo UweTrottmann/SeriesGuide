@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
@@ -7,15 +8,18 @@
         android:id="@+id/imageViewMoviePoster"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:padding="@dimen/large_padding" >
 
             <TextView
                 android:id="@+id/textViewMovieTitle"
@@ -23,9 +27,10 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_margin="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/default_padding"
                 android:textAppearance="?attr/textAppearanceSgXLargeLight"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                android:textSize="@dimen/text_size_ultralarge" />
 
             <Button
                 android:id="@+id/buttonMovieCheckIn"
@@ -33,8 +38,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/textViewMovieTitle"
-                android:layout_margin="@dimen/default_padding"
-                android:text="@string/checkin" />
+                android:layout_marginBottom="@dimen/large_padding"
+                android:text="@string/checkin"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/textViewMovieDescription"
@@ -42,18 +48,42 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/buttonMovieCheckIn"
-                android:layout_margin="@dimen/default_padding"
+                android:layout_marginBottom="@dimen/default_padding"
+                android:maxWidth="400dp"
                 android:textIsSelectable="true"
                 android:textSize="@dimen/text_size_xmedium" />
 
-            <Button
-                android:id="@+id/buttonMovieTrailer"
+            <include
+                android:id="@+id/divider"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
+                android:layout_alignLeft="@+id/textViewMovieDescription"
+                android:layout_alignRight="@+id/textViewMovieDescription"
                 android:layout_below="@+id/textViewMovieDescription"
-                android:layout_margin="@dimen/default_padding"
-                android:text="@string/trailer" />
+                layout="@layout/divider_horizontal"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/buttonbar"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/divider"
+                android:baselineAligned="false"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/buttonMovieTrailer"
+                    style="@style/Widget.SeriesGuide.Button.Borderless.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/default_padding"
+                    android:paddingRight="@dimen/default_padding"
+                    android:text="@string/trailer"
+                    android:textAllCaps="true"
+                    android:visibility="gone" />
+            </LinearLayout>
         </RelativeLayout>
     </ScrollView>
 
