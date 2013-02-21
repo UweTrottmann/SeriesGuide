@@ -239,14 +239,7 @@
     <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
     <string name="pref_seasonsorting">Sort seasons by…</string>
     <string name="pref_episodesorting">Sort episodes by…</string>
-    <string name="backup">Backup/Restore</string>
-    <string name="backup_summary">Backup or restore your shows</string>
     <string name="pref_language">Content language</string>
-    <string name="pref_number">Number format</string>
-    <string name="pref_offset">Manual time offset</string>
-    <string name="pref_offsetsummary">Offset air times by %s hours</string>
-    <string name="pref_autoupdate">Turn on Auto Update</string>
-    <string name="pref_autoupdatesummary">Periodically update your shows when starting SeriesGuide</string>
     <string name="pref_updatewifionly">Update over Wi-Fi only</string>
     <string name="about">About SeriesGuide</string>
     <string name="pref_credits">Credits</string>
@@ -255,14 +248,7 @@
     <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
     <string name="pref_traktsync">Manual sync with trakt.tv</string>
     <string name="feedback">Send feedback</string>
-    <string name="clear_cache">Clear image caches</string>
-    <string name="clear_cache_summary">Remove all cached images from your device</string>
-    <string name="pref_hideimages">Hide images</string>
-    <string name="pref_hideimagessummary">Hide images from your photo gallery (reboot required)</string>
-    <string name="pref_ganalytics">Google Analytics</string>
-    <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
     <string name="sendusagedata">Send the developer usage statistics</string>
-    <string name="pref_upcominglimit">Upcoming shows within…</string>
     <string name="pref_autoaddshows">Add new trakt shows</string>
     <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
 
@@ -306,6 +292,23 @@
         <item>75% black</item>
         <item>Black</item>
     </string-array>
+
+    <!-- Other advanced settings -->
+    <string name="pref_other">Other</string>
+    <string name="pref_autoupdate">Turn on Auto Update</string>
+    <string name="pref_autoupdatesummary">Periodically update your shows when starting SeriesGuide</string>
+    <string name="backup">Backup/Restore</string>
+    <string name="backup_summary">Backup or restore your shows</string>
+    <string name="pref_upcominglimit">Upcoming shows within…</string>
+    <string name="pref_number">Number format</string>
+    <string name="pref_offset">Manual time offset</string>
+    <string name="pref_offsetsummary">Offset air times by %s hours</string>
+    <string name="clear_cache">Clear image caches</string>
+    <string name="clear_cache_summary">Remove all cached images from your device</string>
+    <string name="pref_ganalytics">Google Analytics</string>
+    <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
+    <string name="pref_hideimages">Hide images</string>
+    <string name="pref_hideimagessummary">Hide images from your photo gallery (reboot required)</string>
 
     <!-- Backup and Restore -->
     <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
