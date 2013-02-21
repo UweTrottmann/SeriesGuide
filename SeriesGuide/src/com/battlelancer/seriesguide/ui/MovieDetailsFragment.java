@@ -153,17 +153,18 @@ public class MovieDetailsFragment extends SherlockFragment implements
             buttonTrailer.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent myIntent = new Intent(Intent.ACTION_VIEW,
+                    Intent intent = new Intent(Intent.ACTION_VIEW,
                             Uri.parse("http://www.youtube.com/watch?v="
                                     + trailers.youtube.get(0).source));
-                    startActivity(myIntent);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+                    startActivity(intent);
                 }
             });
         } else {
             buttonTrailer.setVisibility(View.GONE);
             divider.setVisibility(View.GONE);
         }
-        
+
     }
 
     @Override
