@@ -27,7 +27,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginBottom="@dimen/default_padding"
                 android:textAppearance="?attr/textAppearanceSgXLargeLight"
                 android:textIsSelectable="true"
                 android:textSize="@dimen/text_size_ultralarge" />
@@ -38,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/textViewMovieTitle"
+                android:layout_marginBottom="@dimen/large_padding"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textAppearance="?attr/textAppearanceSgSmallDim"
