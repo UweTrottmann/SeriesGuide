@@ -34,19 +34,23 @@
         android:entryValues="@array/offsetData"
         android:key="com.battlelancer.seriesguide.timeoffset"
         android:title="@string/pref_offset" />
-    <ListPreference
-        android:defaultValue="0"
-        android:entries="@array/themeSelection"
-        android:entryValues="@array/themeSelectionData"
-        android:key="com.battlelancer.seriesguide.theme"
-        android:title="@string/pref_theme" />
-    <ListPreference
-        android:defaultValue="50"
-        android:entries="@array/widgetOpacity"
-        android:entryValues="@array/widgetOpacityData"
-        android:key="widget_background_color"
-        android:title="@string/pref_widget_opacity" />
-    <Preference
+
+    <PreferenceCategory android:title="@string/pref_appearance" >
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/themeSelection"
+            android:entryValues="@array/themeSelectionData"
+            android:key="com.battlelancer.seriesguide.theme"
+            android:title="@string/pref_theme" />
+        <ListPreference
+            android:defaultValue="50"
+            android:entries="@array/widgetOpacity"
+            android:entryValues="@array/widgetOpacityData"
+            android:key="widget_background_color"
+            android:title="@string/pref_widget_opacity" />
+    </PreferenceCategory>
+
+    <Preference
         android:key="clearCache"
         android:summary="@string/clear_cache_summary"
         android:title="@string/clear_cache" />
