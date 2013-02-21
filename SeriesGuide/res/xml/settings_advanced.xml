@@ -40,8 +40,13 @@
         android:entryValues="@array/themeSelectionData"
         android:key="com.battlelancer.seriesguide.theme"
         android:title="@string/pref_theme" />
-
-    <Preference
+    <ListPreference
+        android:defaultValue="50"
+        android:entries="@array/widgetOpacity"
+        android:entryValues="@array/widgetOpacityData"
+        android:key="widget_background_color"
+        android:title="@string/pref_widget_opacity" />
+    <Preference
         android:key="clearCache"
         android:summary="@string/clear_cache_summary"
         android:title="@string/clear_cache" />

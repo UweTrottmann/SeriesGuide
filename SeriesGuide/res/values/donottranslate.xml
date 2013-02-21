@@ -15,7 +15,7 @@
     <string name="gobreak">Go break things</string>
     <string name="betamessage">DashClock is awesome!\n\nSeriesGuide provides a DashClock extension for the next upcoming episode. If you have Android 4.2 check it out (obviously requires DashClock to be installed).\n\nOn Android 3.0+ descriptions, actors and similar text is now selectable.\n\nNew animations.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
     <string name="help_url">http://seriesgui.de/help</string>
-    
+
     <!-- Settings -->
     <string name="pref_translate">Translate SeriesGuide</string>
     <string name="pref_translatesummary">Translate or proofread on crowdin</string>
@@ -194,6 +194,13 @@
         <item>5</item>
         <item>10</item>
         <item>60</item>
+    </string-array>
+    <string-array name="widgetOpacityData">
+        <item>0</item>
+        <item>25</item>
+        <item>50</item>
+        <item>75</item>
+        <item>100</item>
     </string-array>
 
 </resources>

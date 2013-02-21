@@ -265,6 +265,7 @@
     <string name="pref_upcominglimit">Upcoming shows within…</string>
     <string name="pref_autoaddshows">Add new trakt shows</string>
     <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+    <string name="pref_widget_opacity">Widget background</string>
 
     <string-array name="shsorting">
         <item>A - Z</item>
@@ -292,6 +293,13 @@
         <item>a week</item>
         <item>two weeks</item>
         <item>a month</item>
+    </string-array>
+    <string-array name="widgetOpacity">
+        <item>Transparent</item>
+        <item>25% black</item>
+        <item>50% black</item>
+        <item>75% black</item>
+        <item>Black</item>
     </string-array>
 
     <!-- Backup and Restore -->
