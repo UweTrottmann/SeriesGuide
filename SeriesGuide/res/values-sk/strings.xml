@@ -46,6 +46,7 @@
   <string name="autorefresh">Automatická obnova</string>
   <string name="movies_search_hint">Type a movie title</string>
   <string name="movies_empty">Search for a movie above.</string>
+  <string name="trailer">Trailer</string>
   <string name="love">Totálna pecka!</string>
   <string name="hate">Odpad :(</string>
   <string name="rating2">Otrasný</string>
@@ -123,7 +124,7 @@
   <string name="update_full">Aktualizujem všetky seriály…</string>
   <string name="update_success">Shows updated.</string>
   <string name="update_offline">Aktualizácia zlyhala, skontrolujte pripojenie k internetu.</string>
-  <string name="update_saxerror">Aktualizácia zlyhala, skúste to neskôr.</string>
+  <string name="update_saxerror">Updating failed, trying again later.</string>
   <string name="update_inprogress">Prebieha aktualizácia, skúste to neskôr.</string>
   <string name="update_rebuildsearch">Obnovujem hľadanie epizód…</string>
   <string name="update_traktactivity">Nahrávam aktivitu z trakt.tv…</string>
@@ -193,14 +194,7 @@
   <string name="pref_onlyseasonepssummary">Špeciálne epizódy budú iba v sezónnom zozname</string>
   <string name="pref_seasonsorting">Zoradiť série podľa…</string>
   <string name="pref_episodesorting">Zoradiť epizódy podľa…</string>
-  <string name="backup">Zálohovanie / obnovenie</string>
-  <string name="backup_summary">Zálohovanie alebo obnovenie vašich relácií</string>
   <string name="pref_language">Jazyk obsahu</string>
-  <string name="pref_number">Formát čísla</string>
-  <string name="pref_offset">Manuálny časový posun</string>
-  <string name="pref_offsetsummary">Kompenzácia času [offset] %s hodín</string>
-  <string name="pref_autoupdate">Aktualizovať automaticky</string>
-  <string name="pref_autoupdatesummary">Po spustení SeriesGuide priebežne aktualizuje Vaše seriály</string>
   <string name="pref_updatewifionly">Aktualizovať iba cez Wi-Fi</string>
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Credits</string>
@@ -209,16 +203,27 @@
   <string name="pref_traktsummary">Pridajte alebo upravte vaše prihlasovacie údaje</string>
   <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">Poslať reakciu</string>
-  <string name="clear_cache">Vymazať vyrovnávaciu pamäť obrázkov</string>
-  <string name="clear_cache_summary">Odstrániť všetky obrázky stiahnuté do zariadenia</string>
-  <string name="pref_hideimages">Skryť obrázky</string>
-  <string name="pref_hideimagessummary">Skryť obrázky v galérii. (potrebný reštart)</string>
-  <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_ganalyticssummary">Sledovať používanie aplikácie pre zlepšenie SeriesGuide</string>
   <string name="sendusagedata">Odoslať štatistiky používania vývojárom</string>
-  <string name="pref_upcominglimit">Nadchádzajúce seriály počas…</string>
   <string name="pref_autoaddshows">Add new trakt shows</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+  <string name="pref_appearance">Appearance</string>
+  <string name="pref_theme">Téme aplikácie</string>
+  <string name="pref_widget_opacity">Widget background</string>
+  <string name="pref_other">Other</string>
+  <string name="pref_autoupdate">Aktualizovať automaticky</string>
+  <string name="pref_autoupdatesummary">Po spustení SeriesGuide priebežne aktualizuje Vaše seriály</string>
+  <string name="backup">Zálohovanie / obnovenie</string>
+  <string name="backup_summary">Zálohovanie alebo obnovenie vašich relácií</string>
+  <string name="pref_upcominglimit">Nadchádzajúce seriály počas…</string>
+  <string name="pref_number">Formát čísla</string>
+  <string name="pref_offset">Manuálny časový posun</string>
+  <string name="pref_offsetsummary">Kompenzácia času [offset] %s hodín</string>
+  <string name="clear_cache">Vymazať vyrovnávaciu pamäť obrázkov</string>
+  <string name="clear_cache_summary">Odstrániť všetky obrázky stiahnuté do zariadenia</string>
+  <string name="pref_ganalytics">Google Analytics</string>
+  <string name="pref_ganalyticssummary">Sledovať používanie aplikácie pre zlepšenie SeriesGuide</string>
+  <string name="pref_hideimages">Skryť obrázky</string>
+  <string name="pref_hideimagessummary">Skryť obrázky v galérii. (potrebný reštart)</string>
   <string name="backup_description"><b>Záloha</b> vytvorí kópiu databázy Vašich seriálov do súboru s názvom <b>seriesdatabase</b> v nižšie uvedenej zložke.\n\nPred <b>Obnovením</b> sa uistite že sa tento súbor nachádza v zložke \n\nObnovené môžu byť zálohy s rovnakou alebo nižšou verziou databázy, ako je uvedené nižšie.</string>
   <string name="backup_path"><b>Zložka záloh</b></string>
   <string name="backup_version"><b>Verzia databázy</b></string>
@@ -290,7 +295,6 @@
   <string name="pref_vibrate">Vibrovať</string>
   <string name="pref_vibratesummary">Pri zobrazení notifikácie zavibrovať</string>
   <string name="pref_notifications_treshold">When to notify</string>
-  <string name="pref_theme">Téme aplikácie</string>
   <string name="choose_list">Vyberte zobrazenie</string>
   <string name="hide_watched">Skryť zhliadnuté epizódy</string>
   <string name="add_widget">Pridať widget</string>
@@ -298,6 +302,8 @@
   <string name="smallwidget">SeriesGuide (malý)</string>
   <string name="bigwidget">SeriesGuide (stredný)</string>
   <string name="largewidget">SeriesGuide (veľký)</string>
+  <string name="dashclock_extension_label">Upcoming episode</string>
+  <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="download_stable">Stiahnuť SeriesGuide</string>
   <string name="betawarning"><b>Upozornenie!</b> Táto verzia je výlučne pre beta testerov! Ak si nie ste istý, stiahnite si stabilnú verziu nižšie.</string>
   <string-array name="shsorting">
@@ -326,6 +332,13 @@
     <item>týždenne</item>
     <item>dva týždne</item>
     <item>mesačne</item>
+  </string-array>
+  <string-array name="widgetOpacity">
+    <item>Transparent</item>
+    <item>25% black</item>
+    <item>50% black</item>
+    <item>75% black</item>
+    <item>Black</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Všetky</item>

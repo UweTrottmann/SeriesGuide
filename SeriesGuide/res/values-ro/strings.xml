@@ -46,6 +46,7 @@
   <string name="autorefresh">Reîmprospătare automată</string>
   <string name="movies_search_hint">Type a movie title</string>
   <string name="movies_empty">Search for a movie above.</string>
+  <string name="trailer">Trailer</string>
   <string name="love">Totally ninja!</string>
   <string name="hate">Slab :(</string>
   <string name="rating2">Teribil</string>
@@ -123,7 +124,7 @@
   <string name="update_full">Se actualizează toate emisiunile...</string>
   <string name="update_success">Emisiunile sînt actualizate.</string>
   <string name="update_offline">Actualizarea nu a reușit, verificaţi conexiunea la internet/Wi-Fi.</string>
-  <string name="update_saxerror">Actualizarea nu a reuşit, încercaţi din nou mai târziu.</string>
+  <string name="update_saxerror">Updating failed, trying again later.</string>
   <string name="update_inprogress">O actualizare este în progres, încercaţi din nou mai târziu.</string>
   <string name="update_rebuildsearch">Refreshing episode search…</string>
   <string name="update_traktactivity">Loading trakt activity…</string>
@@ -193,14 +194,7 @@
   <string name="pref_onlyseasonepssummary">Episoadele speciale dispar dde peste tot, cu excepţia din lista sezonului</string>
   <string name="pref_seasonsorting">Sortare sezoane după...</string>
   <string name="pref_episodesorting">Sortare episoade după...</string>
-  <string name="backup">Copiere de rezervă/restaurare</string>
-  <string name="backup_summary">Backup or restore your shows</string>
   <string name="pref_language">Content language</string>
-  <string name="pref_number">Number format</string>
-  <string name="pref_offset">Manual time offset</string>
-  <string name="pref_offsetsummary">Offset air times by %s hours</string>
-  <string name="pref_autoupdate">Porniţi Actualizarea Automată</string>
-  <string name="pref_autoupdatesummary">Periodically update your shows when starting SeriesGuide</string>
   <string name="pref_updatewifionly">Update over Wi-Fi only</string>
   <string name="about">Despre SeriesGuide</string>
   <string name="pref_credits">Credits</string>
@@ -209,16 +203,27 @@
   <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
   <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">Trimiteţi feedback</string>
-  <string name="clear_cache">Clear image caches</string>
-  <string name="clear_cache_summary">Remove all cached images from your device</string>
-  <string name="pref_hideimages">Ascundeți imaginile</string>
-  <string name="pref_hideimagessummary">Ascundeți imaginile din Galeria foto (restartarea e necesară)</string>
-  <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
   <string name="sendusagedata">Send the developer usage statistics</string>
-  <string name="pref_upcominglimit">Upcoming shows within…</string>
   <string name="pref_autoaddshows">Add new trakt shows</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+  <string name="pref_appearance">Appearance</string>
+  <string name="pref_theme">Tema aplicației</string>
+  <string name="pref_widget_opacity">Widget background</string>
+  <string name="pref_other">Other</string>
+  <string name="pref_autoupdate">Porniţi Actualizarea Automată</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows when starting SeriesGuide</string>
+  <string name="backup">Copiere de rezervă/restaurare</string>
+  <string name="backup_summary">Backup or restore your shows</string>
+  <string name="pref_upcominglimit">Upcoming shows within…</string>
+  <string name="pref_number">Number format</string>
+  <string name="pref_offset">Manual time offset</string>
+  <string name="pref_offsetsummary">Offset air times by %s hours</string>
+  <string name="clear_cache">Clear image caches</string>
+  <string name="clear_cache_summary">Remove all cached images from your device</string>
+  <string name="pref_ganalytics">Google Analytics</string>
+  <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
+  <string name="pref_hideimages">Ascundeți imaginile</string>
+  <string name="pref_hideimagessummary">Ascundeți imaginile din Galeria foto (restartarea e necesară)</string>
   <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
   <string name="backup_path"><b>Backup folder</b></string>
   <string name="backup_version"><b>Database version</b></string>
@@ -290,7 +295,6 @@
   <string name="pref_vibrate">Vibrează</string>
   <string name="pref_vibratesummary">De asemenea, vibrează la afişarea unei notificări</string>
   <string name="pref_notifications_treshold">When to notify</string>
-  <string name="pref_theme">Tema aplicației</string>
   <string name="choose_list">Selectaţi lista de activitate</string>
   <string name="hide_watched">Ascundeți episoadele vizionate</string>
   <string name="add_widget">Adăugaţi widget</string>
@@ -298,6 +302,8 @@
   <string name="smallwidget">SeriesGuide (mic)</string>
   <string name="bigwidget">SeriesGuide (mediu)</string>
   <string name="largewidget">SeriesGuide (mare)</string>
+  <string name="dashclock_extension_label">Upcoming episode</string>
+  <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="download_stable">Descărcați SeriesGuide</string>
   <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
   <string-array name="shsorting">
@@ -326,6 +332,13 @@
     <item>a week</item>
     <item>two weeks</item>
     <item>a month</item>
+  </string-array>
+  <string-array name="widgetOpacity">
+    <item>Transparent</item>
+    <item>25% black</item>
+    <item>50% black</item>
+    <item>75% black</item>
+    <item>Black</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>All</item>

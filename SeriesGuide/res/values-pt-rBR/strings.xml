@@ -46,6 +46,7 @@
   <string name="autorefresh">Atualizando automagicamente</string>
   <string name="movies_search_hint">Digite o título de um filme</string>
   <string name="movies_empty">Procure por um filme acima.</string>
+  <string name="trailer">Trailer</string>
   <string name="love">Muito show!</string>
   <string name="hate">Horrível :(</string>
   <string name="rating2">Péssimo</string>
@@ -123,7 +124,7 @@
   <string name="update_full">Atualizando todas as séries…</string>
   <string name="update_success">Séries atualizadas.</string>
   <string name="update_offline">Atualização falhou, cheque sua conexão de internet.</string>
-  <string name="update_saxerror">Falha na atualização, tente novamente mais tarde.</string>
+  <string name="update_saxerror">Updating failed, trying again later.</string>
   <string name="update_inprogress">Atualização em andamento, tente novamente mais tarde.</string>
   <string name="update_rebuildsearch">Recarregando pesquisa de episódios…</string>
   <string name="update_traktactivity">Carregando atividade do trakt…</string>
@@ -193,14 +194,7 @@
   <string name="pref_onlyseasonepssummary">Ocultar todos episódios especiais exceto da lista de temporadas</string>
   <string name="pref_seasonsorting">Ordenar temporadas por…</string>
   <string name="pref_episodesorting">Ordenar episódios por…</string>
-  <string name="backup">Backup/Restauração</string>
-  <string name="backup_summary">Fazer backup ou restaurar as suas séries</string>
   <string name="pref_language">Idioma do conteúdo</string>
-  <string name="pref_number">Formato de número</string>
-  <string name="pref_offset">Deslocamento de tempo manual</string>
-  <string name="pref_offsetsummary">Deslocar horário de exibição em %s horas</string>
-  <string name="pref_autoupdate">Ativar atualização automática</string>
-  <string name="pref_autoupdatesummary">Atualizar séries periodicamente ao iniciar o SeriesGuide</string>
   <string name="pref_updatewifionly">Atualizar apenas via Wi-Fi</string>
   <string name="about">Sobre o SeriesGuide</string>
   <string name="pref_credits">Créditos</string>
@@ -209,16 +203,27 @@
   <string name="pref_traktsummary">Adicionar ou editar suas credenciais trakt.tv</string>
   <string name="pref_traktsync">Sincr. manual com trakt.tv</string>
   <string name="feedback">Enviar comentários</string>
-  <string name="clear_cache">Apagar cache de imagens</string>
-  <string name="clear_cache_summary">Remover todas as imagens em cache do seu dispositivo</string>
-  <string name="pref_hideimages">Ocultar imagens</string>
-  <string name="pref_hideimagessummary">Ocultar imagens de sua galeria de fotos (será necessário reiniciar)</string>
-  <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_ganalyticssummary">Rastreia o uso de recursos para ajudar a melhorar o SeriesGuide</string>
   <string name="sendusagedata">Enviar as estatísticas de uso para os desenvolvedores</string>
-  <string name="pref_upcominglimit">Exibir próximas séries em até…</string>
   <string name="pref_autoaddshows">Adicionar novas séries do trakt</string>
   <string name="pref_autoaddshowssummary">Adiciona automaticamente séries do seu fluxo de atividades do trakt</string>
+  <string name="pref_appearance">Appearance</string>
+  <string name="pref_theme">Tema do Aplicativo</string>
+  <string name="pref_widget_opacity">Widget background</string>
+  <string name="pref_other">Other</string>
+  <string name="pref_autoupdate">Ativar atualização automática</string>
+  <string name="pref_autoupdatesummary">Atualizar séries periodicamente ao iniciar o SeriesGuide</string>
+  <string name="backup">Backup/Restauração</string>
+  <string name="backup_summary">Fazer backup ou restaurar as suas séries</string>
+  <string name="pref_upcominglimit">Exibir próximas séries em até…</string>
+  <string name="pref_number">Formato de número</string>
+  <string name="pref_offset">Deslocamento de tempo manual</string>
+  <string name="pref_offsetsummary">Deslocar horário de exibição em %s horas</string>
+  <string name="clear_cache">Apagar cache de imagens</string>
+  <string name="clear_cache_summary">Remover todas as imagens em cache do seu dispositivo</string>
+  <string name="pref_ganalytics">Google Analytics</string>
+  <string name="pref_ganalyticssummary">Rastreia o uso de recursos para ajudar a melhorar o SeriesGuide</string>
+  <string name="pref_hideimages">Ocultar imagens</string>
+  <string name="pref_hideimagessummary">Ocultar imagens de sua galeria de fotos (será necessário reiniciar)</string>
   <string name="backup_description"><b>Backup</b> cria uma cópia do seu banco de dados de séries num arquivo chamado <b>seriesdatabase</b> na pasta abaixo.\n\nPara <b>Restaurar</b> esteja certo de que esse arquivo esteja na pasta abaixo.\n\nApenas backups com banco de dados de versão igual ou anterior a da abaixo podem ser restaurados.</string>
   <string name="backup_path"><b>Pasta de backup</b></string>
   <string name="backup_version"><b>Versão do banco de dados</b></string>
@@ -290,7 +295,6 @@
   <string name="pref_vibrate">Vibrar</string>
   <string name="pref_vibratesummary">Também vibrar ao exibir uma notificação</string>
   <string name="pref_notifications_treshold">Quando notificar</string>
-  <string name="pref_theme">Tema do Aplicativo</string>
   <string name="choose_list">Escolher lista de atividades</string>
   <string name="hide_watched">Ocultar episódios já assistidos</string>
   <string name="add_widget">Adicionar widget</string>
@@ -298,6 +302,8 @@
   <string name="smallwidget">SeriesGuide (pequeno)</string>
   <string name="bigwidget">SeriesGuide (médio)</string>
   <string name="largewidget">SeriesGuide (grande)</string>
+  <string name="dashclock_extension_label">Upcoming episode</string>
+  <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="download_stable">Baixar SeriesGuide</string>
   <string name="betawarning"><b>Atenção!</b> Esta versão é para beta testers! Se você estiver em dúvida baixe a versão estável abaixo.</string>
   <string-array name="shsorting">
@@ -326,6 +332,13 @@
     <item>uma semana</item>
     <item>duas semanas</item>
     <item>um mês</item>
+  </string-array>
+  <string-array name="widgetOpacity">
+    <item>Transparent</item>
+    <item>25% black</item>
+    <item>50% black</item>
+    <item>75% black</item>
+    <item>Black</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Todos</item>

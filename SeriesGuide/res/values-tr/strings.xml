@@ -46,6 +46,7 @@
   <string name="autorefresh">Otomatik yenileme</string>
   <string name="movies_search_hint">Type a movie title</string>
   <string name="movies_empty">Search for a movie above.</string>
+  <string name="trailer">Trailer</string>
   <string name="love">Harikulade!</string>
   <string name="hate">Eh işte :(</string>
   <string name="rating2">Berbat</string>
@@ -123,7 +124,7 @@
   <string name="update_full">Tüm diziler güncelleniyor...</string>
   <string name="update_success">Diziler güncellendi.</string>
   <string name="update_offline">Güncelleştirme başarısız oldu, İnternet/Wi-Fi bağlantınızı kontrol edin.</string>
-  <string name="update_saxerror">Güncelleştirme başarısız oldu, daha sonra yeniden deneyin.</string>
+  <string name="update_saxerror">Updating failed, trying again later.</string>
   <string name="update_inprogress">Devam eden bir güncelleme var, daha sonra tekrar deneyin.</string>
   <string name="update_rebuildsearch">Bölüm araması yenileniyor…</string>
   <string name="update_traktactivity">Trakt etinlikleri yükleniyor...</string>
@@ -193,14 +194,7 @@
   <string name="pref_onlyseasonepssummary">Özel bölümler sezon listesi haricinde hiçbir yerde görünmez</string>
   <string name="pref_seasonsorting">Sezonları sırala:...</string>
   <string name="pref_episodesorting">Bölümleri sırala:...</string>
-  <string name="backup">Yedekle/Geri Yükle</string>
-  <string name="backup_summary">Dizilerinizi yedekleyin veya geri yükleyin</string>
   <string name="pref_language">İçerik dili</string>
-  <string name="pref_number">Sayı biçimi</string>
-  <string name="pref_offset">El ile saat farkı</string>
-  <string name="pref_offsetsummary">Yayınlanma süresini %s saat ötele</string>
-  <string name="pref_autoupdate">Oto. Güncelleme Aç</string>
-  <string name="pref_autoupdatesummary">SeriesGuide başlatılırken dizilerinizi düzenli aralıklarla güncelleştirin</string>
   <string name="pref_updatewifionly">Yalnızca Wi-Fi ile güncelleştir.</string>
   <string name="about">SeriesGuide Hakkında</string>
   <string name="pref_credits">Katkıda Bulunanlar</string>
@@ -209,16 +203,27 @@
   <string name="pref_traktsummary">trakt.tv kimlik bilgilerinizi ekleyin veya düzenleyin</string>
   <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">Geribildirim Gönder</string>
-  <string name="clear_cache">Resim önbelleğini temizle</string>
-  <string name="clear_cache_summary">Tüm resim önbelleğini cihazınızdan silin</string>
-  <string name="pref_hideimages">Resimleri gizle</string>
-  <string name="pref_hideimagessummary">Resimleri galerinizden gizleyin (Yeniden başlatma gerekiyor)</string>
-  <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_ganalyticssummary">SeriesGuide geliştirmeye yardımcı olmak için kullanım özelliklerini izler</string>
   <string name="sendusagedata">Geliştirici için kullanım istatistiklerini gönder.</string>
-  <string name="pref_upcominglimit">Gelecek bölümleri gösterme süresi</string>
   <string name="pref_autoaddshows">Add new trakt shows</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+  <string name="pref_appearance">Appearance</string>
+  <string name="pref_theme">Uygulama teması</string>
+  <string name="pref_widget_opacity">Widget background</string>
+  <string name="pref_other">Other</string>
+  <string name="pref_autoupdate">Oto. Güncelleme Aç</string>
+  <string name="pref_autoupdatesummary">SeriesGuide başlatılırken dizilerinizi düzenli aralıklarla güncelleştirin</string>
+  <string name="backup">Yedekle/Geri Yükle</string>
+  <string name="backup_summary">Dizilerinizi yedekleyin veya geri yükleyin</string>
+  <string name="pref_upcominglimit">Gelecek bölümleri gösterme süresi</string>
+  <string name="pref_number">Sayı biçimi</string>
+  <string name="pref_offset">El ile saat farkı</string>
+  <string name="pref_offsetsummary">Yayınlanma süresini %s saat ötele</string>
+  <string name="clear_cache">Resim önbelleğini temizle</string>
+  <string name="clear_cache_summary">Tüm resim önbelleğini cihazınızdan silin</string>
+  <string name="pref_ganalytics">Google Analytics</string>
+  <string name="pref_ganalyticssummary">SeriesGuide geliştirmeye yardımcı olmak için kullanım özelliklerini izler</string>
+  <string name="pref_hideimages">Resimleri gizle</string>
+  <string name="pref_hideimagessummary">Resimleri galerinizden gizleyin (Yeniden başlatma gerekiyor)</string>
   <string name="backup_description"><b>Yedekle</b> dizi veritabanınızın bir kopyasını aşağıdaki klasördeki <b>seriesdatabase</b> isimli dosyaya yazar.\n\n<b>Geri Yükle</b> işlemi için aşağıdaki klasörde bu dosyanın bulunduğundan emin olun.\n\nSadece aynı veya daha eski veritabanı sürümleri geri yüklenebilir.</string>
   <string name="backup_path"><b>Yedek klasörü</b></string>
   <string name="backup_version"><b>Veritabanı sürümü</b></string>
@@ -290,7 +295,6 @@
   <string name="pref_vibrate">Titreşim</string>
   <string name="pref_vibratesummary">Uyarırken aynı zamanda titret</string>
   <string name="pref_notifications_treshold">When to notify</string>
-  <string name="pref_theme">Uygulama teması</string>
   <string name="choose_list">Etkinlik listesi seç</string>
   <string name="hide_watched">İzlenmiş bölümleri gizle</string>
   <string name="add_widget">Widget ekle</string>
@@ -298,6 +302,8 @@
   <string name="smallwidget">SeriesGuide (dar)</string>
   <string name="bigwidget">SeriesGuide (orta)</string>
   <string name="largewidget">SeriesGuide (geniş)</string>
+  <string name="dashclock_extension_label">Upcoming episode</string>
+  <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="download_stable">SeriesGuide indir</string>
   <string name="betawarning"><b>Ön bilgi!</b> Bu yayımlama sadece beta testi yapanlar içindir! Eğer sizin için doğru yayımlama olduğundan şüpheliyseniz, alttaki kararlı sürümü indirin.</string>
   <string-array name="shsorting">
@@ -326,6 +332,13 @@
     <item>bir hafta</item>
     <item>iki hafta</item>
     <item>bir ay</item>
+  </string-array>
+  <string-array name="widgetOpacity">
+    <item>Transparent</item>
+    <item>25% black</item>
+    <item>50% black</item>
+    <item>75% black</item>
+    <item>Black</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Tümü</item>

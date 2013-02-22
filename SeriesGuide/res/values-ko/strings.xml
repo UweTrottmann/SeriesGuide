@@ -46,6 +46,7 @@
   <string name="autorefresh">자동으로 새로고침</string>
   <string name="movies_search_hint">Type a movie title</string>
   <string name="movies_empty">Search for a movie above.</string>
+  <string name="trailer">Trailer</string>
   <string name="love">킹왕짱!</string>
   <string name="hate">쓰레기 :(</string>
   <string name="rating2">끔찍해</string>
@@ -123,7 +124,7 @@
   <string name="update_full">모든 쇼 목록 업데이트 중...</string>
   <string name="update_success">쇼 업데이트 완료.</string>
   <string name="update_offline">업데이트 실패, 인터넷/Wi-Fi 연결을 확인하세요.</string>
-  <string name="update_saxerror">업데이트 실패, 나중에 다시 시도하세요.</string>
+  <string name="update_saxerror">Updating failed, trying again later.</string>
   <string name="update_inprogress">업데이트가 진행 중 입니다. 잠시 후 다시 시도해주세요.</string>
   <string name="update_rebuildsearch">에피소드 검색 새로고치는 중...</string>
   <string name="update_traktactivity">Trakt 활동을 로드 중</string>
@@ -193,14 +194,7 @@
   <string name="pref_onlyseasonepssummary">시즌목록을 제외한 모든 목록에서 스페셜 에피소드를 나타내지 않습니다</string>
   <string name="pref_seasonsorting">시즌 정렬</string>
   <string name="pref_episodesorting">에피소드 정렬</string>
-  <string name="backup">백업/복원</string>
-  <string name="backup_summary">쇼 목록을 백업학거나 복원합니다</string>
   <string name="pref_language">콘텐츠 언어</string>
-  <string name="pref_number">에피소드 표시 형식</string>
-  <string name="pref_offset">시차 수동 설정</string>
-  <string name="pref_offsetsummary">방영 시간을 %s시간 시차 변경하여 나타냅니다</string>
-  <string name="pref_autoupdate">자동 업데이트 켜기</string>
-  <string name="pref_autoupdatesummary">시리즈가이드를 시작할 때 주기적으로 쇼 목록을 업데이트합니다</string>
   <string name="pref_updatewifionly">와이파이가 켜져있을 때 업데이트</string>
   <string name="about">시리즈가이드에 대하여</string>
   <string name="pref_credits">만든이</string>
@@ -209,16 +203,27 @@
   <string name="pref_traktsummary">trakt.tv 에 로그인 혹은 새계정 생성</string>
   <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">사용자 의견 보내기</string>
-  <string name="clear_cache">이미지 캐쉬 삭제</string>
-  <string name="clear_cache_summary">디바이스에 있는 모든 캐쉬된 이미지를 제거합니다</string>
-  <string name="pref_hideimages">이미지 숨기기</string>
-  <string name="pref_hideimagessummary">갤러리에 있는 이미지를 숨깁니다 (재부팅 필요)</string>
-  <string name="pref_ganalytics">구글 통계</string>
-  <string name="pref_ganalyticssummary">시리즈가이드를 개선시키는데 도움을 주기 위해 사용 이력을 추적합니다</string>
   <string name="sendusagedata">개발자에게 사용 통계 보내기</string>
-  <string name="pref_upcominglimit">방영 예정 쇼 표기</string>
   <string name="pref_autoaddshows">새로운 trakt 쇼를 추가합니다</string>
   <string name="pref_autoaddshowssummary">trakt 활동 스트림으로부터 자동으로 쇼를 추가합니다</string>
+  <string name="pref_appearance">Appearance</string>
+  <string name="pref_theme">앱 테마</string>
+  <string name="pref_widget_opacity">Widget background</string>
+  <string name="pref_other">Other</string>
+  <string name="pref_autoupdate">자동 업데이트 켜기</string>
+  <string name="pref_autoupdatesummary">시리즈가이드를 시작할 때 주기적으로 쇼 목록을 업데이트합니다</string>
+  <string name="backup">백업/복원</string>
+  <string name="backup_summary">쇼 목록을 백업학거나 복원합니다</string>
+  <string name="pref_upcominglimit">방영 예정 쇼 표기</string>
+  <string name="pref_number">에피소드 표시 형식</string>
+  <string name="pref_offset">시차 수동 설정</string>
+  <string name="pref_offsetsummary">방영 시간을 %s시간 시차 변경하여 나타냅니다</string>
+  <string name="clear_cache">이미지 캐쉬 삭제</string>
+  <string name="clear_cache_summary">디바이스에 있는 모든 캐쉬된 이미지를 제거합니다</string>
+  <string name="pref_ganalytics">구글 통계</string>
+  <string name="pref_ganalyticssummary">시리즈가이드를 개선시키는데 도움을 주기 위해 사용 이력을 추적합니다</string>
+  <string name="pref_hideimages">이미지 숨기기</string>
+  <string name="pref_hideimagessummary">갤러리에 있는 이미지를 숨깁니다 (재부팅 필요)</string>
   <string name="backup_description"><b>백업</b>은 쇼 목록을 아래의 폴더에 <b>seriesdatabase</b> 의 이름으로 저장합니다.\n\n<b>복원</b>할 때 이 파일이 아래의 폴더에 있는지 먼저 확인하세요.\n\n현재의 앱 버전과 같거나 낮은 버전의 백업만 복원이 가능합니다.</string>
   <string name="backup_path"><b>백업 폴더</b></string>
   <string name="backup_version"><b>데이터베이스 버전</b></string>
@@ -290,7 +295,6 @@
   <string name="pref_vibrate">진동</string>
   <string name="pref_vibratesummary">알림 시 진동</string>
   <string name="pref_notifications_treshold">알람시기</string>
-  <string name="pref_theme">앱 테마</string>
   <string name="choose_list">표시할 목록 선택</string>
   <string name="hide_watched">시청한 에피소드 숨기기</string>
   <string name="add_widget">위젯 추가</string>
@@ -298,6 +302,8 @@
   <string name="smallwidget">시리즈가이드 (소형)</string>
   <string name="bigwidget">시리즈가이드 (중형)</string>
   <string name="largewidget">시리즈가이드 (대형)</string>
+  <string name="dashclock_extension_label">Upcoming episode</string>
+  <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="download_stable">시리즈가이드 다운로드</string>
   <string name="betawarning"><b>주목!</b> 이 버전은 베타테스터를 위한 버전입니다! 기분이 찝찝하다면 아래의 안정판을 다운받으세요.</string>
   <string-array name="shsorting">
@@ -326,6 +332,13 @@
     <item>1주</item>
     <item>2주</item>
     <item>한달</item>
+  </string-array>
+  <string-array name="widgetOpacity">
+    <item>Transparent</item>
+    <item>25% black</item>
+    <item>50% black</item>
+    <item>75% black</item>
+    <item>Black</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>모두</item>

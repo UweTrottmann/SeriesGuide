@@ -46,6 +46,7 @@
   <string name="autorefresh">تحديث تلقائي</string>
   <string name="movies_search_hint">اكتب عنوان الفيلم</string>
   <string name="movies_empty">البحث عن فيلم أعلاه.</string>
+  <string name="trailer">Trailer</string>
   <string name="love">!أعجبني</string>
   <string name="hate">):لم يعجبني</string>
   <string name="rating2">رهيب</string>
@@ -123,7 +124,7 @@
   <string name="update_full">تحديث كافة العروض...</string>
   <string name="update_success">تم التحديث</string>
   <string name="update_offline">.فشل التحديث، تحقق من اتصال إنترنت/وأي فأي الخاص بك</string>
-  <string name="update_saxerror">.فشل التحديث، حاول مرة أخرى لاحقاً</string>
+  <string name="update_saxerror">Updating failed, trying again later.</string>
   <string name="update_inprogress">التحديث قيد التقدم, حاول مرة أخرى.</string>
   <string name="update_rebuildsearch">تحديث البحث عن الحلقات...</string>
   <string name="update_traktactivity">تحميل أنشطة التراكت...</string>
@@ -193,14 +194,7 @@
   <string name="pref_onlyseasonepssummary">الحلقة الخاصة تختفي من كل مكان ما عدا قائمة الموسم</string>
   <string name="pref_seasonsorting">ترتيب المواسم حسب...</string>
   <string name="pref_episodesorting">ترتيب الحلقات حسب...</string>
-  <string name="backup">النسخ الاحتياطي / الاستعادة</string>
-  <string name="backup_summary">النسخ الاحتياطي أو استعادة مسلسلاتك</string>
   <string name="pref_language">لغة المحتوى</string>
-  <string name="pref_number">تنسيق الأرقام</string>
-  <string name="pref_offset">تغيير التوقيت يدوياً</string>
-  <string name="pref_offsetsummary">بدأت أوقات العرض من الساعة٪ S</string>
-  <string name="pref_autoupdate">تشغيل التحديث التلقائي</string>
-  <string name="pref_autoupdatesummary">حدّث المسلسلات دورياً عند بدء البرنامج</string>
   <string name="pref_updatewifionly">التحديث عبر واي فاي فقط</string>
   <string name="about">SeriesGuide حول</string>
   <string name="pref_credits">الاعتمادات</string>
@@ -209,16 +203,27 @@
   <string name="pref_traktsummary">trakt.tv أضف أو عدل بياناتك في موقع</string>
   <string name="pref_traktsync">المزامنة يدويا مع التراكت تي في </string>
   <string name="feedback">أرسل ملاحظاتك</string>
-  <string name="clear_cache">مسح ذاكرة التخزين المؤقتة للصور</string>
-  <string name="clear_cache_summary">إزالة جميع الصور المخزنة مؤقتا من جهازك</string>
-  <string name="pref_hideimages">إخفاء الصور</string>
-  <string name="pref_hideimagessummary">(إخفاء الصور من معرض الصور الخاص بك (يتطلب إعادة التشغيل</string>
-  <string name="pref_ganalytics">تحليلات قوقل</string>
-  <string name="pref_ganalyticssummary">تعقب استخدام المميزات للمساعدة في تحسين البرنامج</string>
   <string name="sendusagedata">إرسال إحصائيات الاستخدام المطور</string>
-  <string name="pref_upcominglimit">العروض القادمة خلال ...</string>
   <string name="pref_autoaddshows">Add new trakt shows</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+  <string name="pref_appearance">Appearance</string>
+  <string name="pref_theme">شكل التطبيق</string>
+  <string name="pref_widget_opacity">Widget background</string>
+  <string name="pref_other">Other</string>
+  <string name="pref_autoupdate">تشغيل التحديث التلقائي</string>
+  <string name="pref_autoupdatesummary">حدّث المسلسلات دورياً عند بدء البرنامج</string>
+  <string name="backup">النسخ الاحتياطي / الاستعادة</string>
+  <string name="backup_summary">النسخ الاحتياطي أو استعادة مسلسلاتك</string>
+  <string name="pref_upcominglimit">العروض القادمة خلال ...</string>
+  <string name="pref_number">تنسيق الأرقام</string>
+  <string name="pref_offset">تغيير التوقيت يدوياً</string>
+  <string name="pref_offsetsummary">بدأت أوقات العرض من الساعة٪ S</string>
+  <string name="clear_cache">مسح ذاكرة التخزين المؤقتة للصور</string>
+  <string name="clear_cache_summary">إزالة جميع الصور المخزنة مؤقتا من جهازك</string>
+  <string name="pref_ganalytics">تحليلات قوقل</string>
+  <string name="pref_ganalyticssummary">تعقب استخدام المميزات للمساعدة في تحسين البرنامج</string>
+  <string name="pref_hideimages">إخفاء الصور</string>
+  <string name="pref_hideimagessummary">(إخفاء الصور من معرض الصور الخاص بك (يتطلب إعادة التشغيل</string>
   <string name="backup_description"><b>النسخ الاحتياطي</b> بإنشاء نسخة من قاعدة البيانات الخاصة بك وتظهر في ملف يسمى <b>سيريسداتاباسي</b> في below.\n\nTo مجلد <b>استعادة</b> التأكد من هذا الملف موجود في مجلد النسخ الاحتياطية below.\n\nOnly مع نفسه أو يمكن استعادة قاعدة بيانات إصدار أدنى أدناه.</string>
   <string name="backup_path"><b>مجلد النسخة الاحتياطية</b></string>
   <string name="backup_version"><b>إصدار قاعدة بيانات</b></string>
@@ -290,7 +295,6 @@
   <string name="pref_vibrate">إهتزاز</string>
   <string name="pref_vibratesummary">إهتزاز عند عرض التنبيه</string>
   <string name="pref_notifications_treshold">متى يتم إخطار</string>
-  <string name="pref_theme">شكل التطبيق</string>
   <string name="choose_list">اختر قائمة النشاط</string>
   <string name="hide_watched">إخفاء الحلقات المشاهدة</string>
   <string name="add_widget">إضافة تطبيق مصغر</string>
@@ -298,6 +302,8 @@
   <string name="smallwidget">سيريس جايد (صغير)</string>
   <string name="bigwidget">سيريس جايد (وسط)</string>
   <string name="largewidget">سيريس جايد (كبير)</string>
+  <string name="dashclock_extension_label">Upcoming episode</string>
+  <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="download_stable">حمّل دليل الحلقات</string>
   <string name="betawarning"><b>انتبه!</b> هذا الإصدار لاختبار بيتا فقط! إذا كنت في شك حمل النسخة مستقرة أدناه.</string>
   <string-array name="shsorting">
@@ -326,6 +332,13 @@
     <item>أسبوع</item>
     <item>أسبوعين</item>
     <item>شهر</item>
+  </string-array>
+  <string-array name="widgetOpacity">
+    <item>Transparent</item>
+    <item>25% black</item>
+    <item>50% black</item>
+    <item>75% black</item>
+    <item>Black</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>الكل</item>

@@ -25,7 +25,7 @@
   <string name="share">Jaa</string>
   <string name="updated">Päivitetty viimeisimpään versioon.</string>
   <string name="discard">Hävitä</string>
-  <string name="close">Close</string>
+  <string name="close">Sulje</string>
   <string name="save_selection">Tallenna valinta</string>
   <string name="offline">Ei verkkoyhteyttä. Yritä myöhemmin uudelleen.</string>
   <string name="onlyx">Saatavilla vain SeriesGuide X:ssä</string>
@@ -46,6 +46,7 @@
   <string name="autorefresh">Päivitetään automaagisesti</string>
   <string name="movies_search_hint">Kirjoita elokuvan nimi</string>
   <string name="movies_empty">Etsi elokuvaa.</string>
+  <string name="trailer">Trailer</string>
   <string name="love">Maailman parasta!</string>
   <string name="hate">Ei sytyttänyt :(</string>
   <string name="rating2">Kauhea</string>
@@ -92,7 +93,7 @@
   <string name="trakt_notseen">%s ei ole katsottu.</string>
   <string name="trakt_collected">%s kerätty.</string>
   <string name="trakt_notcollected">%s ei ole kerätty.</string>
-  <string name="add_empty">There are no shows here or your device has no internet connection.</string>
+  <string name="add_empty">Täällä ei ole ohjelmia tai laitteellasi ei ole yhteyttä internetiin.</string>
   <string name="shows_empty">Katso yllä olevaa valikkoa lisätäksesi ohjelmia.</string>
   <string name="favorites_empty">Paina ohjelmaa pitkään lisätäksesi Suosikkeihin.</string>
   <string name="hidden_empty">Paina ohjelmaa pitkään piillottaaksesi se tänne.</string>
@@ -123,7 +124,7 @@
   <string name="update_full">Päivitetään kaikkia ohjelmia…</string>
   <string name="update_success">Ohjelmat päivitetty.</string>
   <string name="update_offline">Päivitys epäonnistui, tarkista internet/Wi-Fi-yhteytesi.</string>
-  <string name="update_saxerror">Päivitys epäonnistui, yritä myöhemmin uudelleen.</string>
+  <string name="update_saxerror">Updating failed, trying again later.</string>
   <string name="update_inprogress">Päivitys on käynnissä, yritä myöhemmin uudelleen.</string>
   <string name="update_rebuildsearch">Päivitetään jaksohakua…</string>
   <string name="update_traktactivity">Ladataan toimintaa traktista…</string>
@@ -167,21 +168,21 @@
   <string name="list_item_manage">Hallitse listoja</string>
   <string name="list_item_remove">Poista listalta</string>
   <string name="list_empty">Voit lisätä ohjelmia, kausia tai jaksoja tähän listaan.</string>
-  <string name="connect_trakt">Connect trakt</string>
-  <string name="connect_trakt_done">Connected to trakt!</string>
-  <string name="add_trakt_shows">Add shows from your library:</string>
-  <string name="show_library">Show your library</string>
-  <string name="upload_shows">Upload your SeriesGuide show list:</string>
-  <string name="upload_existing_shows">Upload existing shows</string>
-  <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
-  <string name="integration_trakt">If you connect trakt:</string>
-  <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
-  <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
-  <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
-  <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
-  <string name="trakt_download">Download to SeriesGuide</string>
-  <string name="trakt_upload">Upload to trakt.tv</string>
-  <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
+  <string name="connect_trakt">Yhdistä traktiin</string>
+  <string name="connect_trakt_done">Yhdistetty traktiin!</string>
+  <string name="add_trakt_shows">Lisää ohjelmat kokoelmastasi:</string>
+  <string name="show_library">Näytä kokoelmasi</string>
+  <string name="upload_shows">Lähetä SeriesGuiden ohjelmalistasi:</string>
+  <string name="upload_existing_shows">Lähetä nykyiset ohjelmat</string>
+  <string name="about_trakt">Trakt auttaa sinua pitämään kirjaa katsomistasi TV-ohjelmista ja elokuvista. <a href="http://trakt.tv">Lisätietoa</a></string>
+  <string name="integration_trakt">Jos yhdistät traktiin:</string>
+  <string name="integration_trakt_items">- lisää ohjelmat kokoelmastasi ja seurantalistastasi\n\n- näe suosittelusi ja ystäviesi toiminta\n\n- katsonta- ja keräysmerkinnät synkronoidaan automaattisesti\n\n- katsomasi uudet ohjelmat lisätään automaattisesti</string>
+  <string name="trakt_sync_intro">Ohjelmia ei lisätä tai poisteta SeriesGuidesta. Tämä tehdään ohjelmalistassa.</string>
+  <string name="trakt_download_hint">Merkitse kaikki jaksot katstotuiksi traktissa samoin kuin SeriesGuidessa:</string>
+  <string name="trakt_upload_hint">Merkitse jaksot katstotuiksi SeriesGuidessa samoin kuin traktissa:</string>
+  <string name="trakt_download">Lataa SeriesGuideen</string>
+  <string name="trakt_upload">Lähetä trakt.tv:een</string>
+  <string name="trakt_syncunwatched">Poista katsontamerkinnät katsomattomilta jaksoilta synkronoitaessa</string>
   <string name="prefs_category_basic">Perustiedot</string>
   <string name="prefs_category_sharing">Palvelut</string>
   <string name="prefs_category_advanced">Edistyneet</string>
@@ -193,32 +194,36 @@
   <string name="pref_onlyseasonepssummary">Erikoisjaksot eivät näy, paitsi kausiluettelossa</string>
   <string name="pref_seasonsorting">Lajittele kaudet…</string>
   <string name="pref_episodesorting">Lajittele jaksot…</string>
-  <string name="backup">Varmuuskopioi/Palauta</string>
-  <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
   <string name="pref_language">Sisällön kieli</string>
-  <string name="pref_number">Lukumuoto</string>
-  <string name="pref_offset">Manuaalinen ajansiirto</string>
-  <string name="pref_offsetsummary">Siirrä lähetysaikoja %s tunnilla</string>
-  <string name="pref_autoupdate">Ota automaattiset päivitykset käyttöön</string>
-  <string name="pref_autoupdatesummary">Päivitä ohjelmasi ajoittain SeriesGuiden käynnistyessä</string>
   <string name="pref_updatewifionly">Päivitä vain Wi-Fi-verkossa</string>
   <string name="about">Tietoja SeriesGuidesta</string>
   <string name="pref_credits">Tekijät</string>
   <string name="clearGetGlueCredentials">Irrottaudu GetGluesta</string>
   <string name="clearGetGlueCredentialssummary">Kuittaa GetGluen kanssa yhdistääksesi uudelleen</string>
   <string name="pref_traktsummary">Lisää tai muokkaa trakt.tv:n käyttäjätietojasi</string>
-  <string name="pref_traktsync">Manual sync with trakt.tv</string>
+  <string name="pref_traktsync">Manuaalinen synkronointi trakt.tv:n kanssa</string>
   <string name="feedback">Lähetä palautetta</string>
-  <string name="clear_cache">Tyhjennä kuvavälimuisti</string>
-  <string name="clear_cache_summary">Poista kaikki välimuistiin tallennetut kuvat laitteesta</string>
-  <string name="pref_hideimages">Piilota kuvat</string>
-  <string name="pref_hideimagessummary">Piilota kuvat kuvagalleriassasi(vaatii uudelleenkäynnistyksen)</string>
-  <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_ganalyticssummary">Seuraa ominaisuuksien käyttöä, jonka avulla parannetaan SeriesGuidea</string>
   <string name="sendusagedata">Lähetä kehittäjälle käyttötilastoja</string>
-  <string name="pref_upcominglimit">Tulevat ohjelmat ajalta…</string>
   <string name="pref_autoaddshows">Lisää uudet ohjelmat traktista</string>
   <string name="pref_autoaddshowssummary">Automaattisesti lisää uudet ohjelmat traktin toimintavirrastasi</string>
+  <string name="pref_appearance">Appearance</string>
+  <string name="pref_theme">Sovelluksen teema</string>
+  <string name="pref_widget_opacity">Widget background</string>
+  <string name="pref_other">Other</string>
+  <string name="pref_autoupdate">Ota automaattiset päivitykset käyttöön</string>
+  <string name="pref_autoupdatesummary">Päivitä ohjelmasi ajoittain SeriesGuiden käynnistyessä</string>
+  <string name="backup">Varmuuskopioi/Palauta</string>
+  <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
+  <string name="pref_upcominglimit">Tulevat ohjelmat ajalta…</string>
+  <string name="pref_number">Lukumuoto</string>
+  <string name="pref_offset">Manuaalinen ajansiirto</string>
+  <string name="pref_offsetsummary">Siirrä lähetysaikoja %s tunnilla</string>
+  <string name="clear_cache">Tyhjennä kuvavälimuisti</string>
+  <string name="clear_cache_summary">Poista kaikki välimuistiin tallennetut kuvat laitteesta</string>
+  <string name="pref_ganalytics">Google Analytics</string>
+  <string name="pref_ganalyticssummary">Seuraa ominaisuuksien käyttöä, jonka avulla parannetaan SeriesGuidea</string>
+  <string name="pref_hideimages">Piilota kuvat</string>
+  <string name="pref_hideimagessummary">Piilota kuvat kuvagalleriassasi(vaatii uudelleenkäynnistyksen)</string>
   <string name="backup_description"><b>Varmuuskopio</b> luo kopion ohjelmatietokannastasi tiedostoon nimeltä <b>seriesdatabase</b> alla mainittuun kansioon.\n\n<b>Palauttaaksesi</b> varmista tiedoston olevan alla mainitussa kansiossa.\n\nVain saman tai vanhemman tietokantaversion omaavat varmuuskopiot voidaan palauttaa.</string>
   <string name="backup_path"><b>Varmuuskopiointikansio</b></string>
   <string name="backup_version"><b>Tietokannan versio</b></string>
@@ -290,7 +295,6 @@
   <string name="pref_vibrate">Värinä</string>
   <string name="pref_vibratesummary">Myös värise näytettäessä ilmoitus</string>
   <string name="pref_notifications_treshold">Milloin ilmoittaa</string>
-  <string name="pref_theme">Sovelluksen teema</string>
   <string name="choose_list">Valitse toimintalista</string>
   <string name="hide_watched">Piilota katsotut jaksot</string>
   <string name="add_widget">Lisää widget</string>
@@ -298,6 +302,8 @@
   <string name="smallwidget">SeriesGuide (pieni)</string>
   <string name="bigwidget">SeriesGuide (keski)</string>
   <string name="largewidget">SeriesGuide (suuri)</string>
+  <string name="dashclock_extension_label">Upcoming episode</string>
+  <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="download_stable">Lataa SeriesGuide</string>
   <string name="betawarning"><b>Varoitus!</b> Tämä julkaisu on vain beeta-testaajille! Jos epäröit, lataa vakaa versio alta.</string>
   <string-array name="shsorting">
@@ -326,6 +332,13 @@
     <item>viikko</item>
     <item>kaksi viikkoa</item>
     <item>kuukausi</item>
+  </string-array>
+  <string-array name="widgetOpacity">
+    <item>Transparent</item>
+    <item>25% black</item>
+    <item>50% black</item>
+    <item>75% black</item>
+    <item>Black</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Kaikki</item>

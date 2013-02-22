@@ -46,6 +46,7 @@
   <string name="autorefresh">Automatski osveži</string>
   <string name="movies_search_hint">Unesi ime filma</string>
   <string name="movies_empty">Pretraži film iznad.</string>
+  <string name="trailer">Trailer</string>
   <string name="love">Vrhunski!</string>
   <string name="hate">Očajno :(</string>
   <string name="rating2">Jadno</string>
@@ -123,7 +124,7 @@
   <string name="update_full">Ažuriranje svih serija…</string>
   <string name="update_success">Serije ažurirane.</string>
   <string name="update_offline">Ažuriranje nije uspelo, proverite vašu internet/Wi-Fi konekciju.</string>
-  <string name="update_saxerror">Ažuriranje nije uspelo, pokušajte kasnije.</string>
+  <string name="update_saxerror">Updating failed, trying again later.</string>
   <string name="update_inprogress">Ažuriranje je u toku, pokušajte kasnije.</string>
   <string name="update_rebuildsearch">Osvežavanje pretrage epizode…</string>
   <string name="update_traktactivity">Učitavanje aktivnosti sa trakta…</string>
@@ -193,14 +194,7 @@
   <string name="pref_onlyseasonepssummary">Specijali vidljivi samo u spisku sezona</string>
   <string name="pref_seasonsorting">Poređaj sezone po…</string>
   <string name="pref_episodesorting">Poređajte epizode po…</string>
-  <string name="backup">Pravljenje i povraćaj rezervne kopije</string>
-  <string name="backup_summary">Sačuvaj ili vrati rezervnu kopiju vaših serija</string>
   <string name="pref_language">Jezik sadržaja</string>
-  <string name="pref_number">Oblik numerisanja</string>
-  <string name="pref_offset">Ručno podesi vremensku razliku</string>
-  <string name="pref_offsetsummary">Razlika u emitovanju je %s sati</string>
-  <string name="pref_autoupdate">Uključi automatsko ažuriranje</string>
-  <string name="pref_autoupdatesummary">Povremeno ažururaj serije po pokretanju SeriesGuidea</string>
   <string name="pref_updatewifionly">Ažuriraj samo preko Wi-Fia</string>
   <string name="about">O SeriesGuideu</string>
   <string name="pref_credits">Zasluge</string>
@@ -209,16 +203,27 @@
   <string name="pref_traktsummary">Dodajte ili izmenite svoje trakt.tv podatke</string>
   <string name="pref_traktsync">Ručno sinhronizuj sa trakt.tv</string>
   <string name="feedback">Pošalji povrate informacije</string>
-  <string name="clear_cache">Obriši keš slika</string>
-  <string name="clear_cache_summary">Ukloni sve slike u kešu sa vašeg aparata</string>
-  <string name="pref_hideimages">Sakrij slike</string>
-  <string name="pref_hideimagessummary">Sakrij slike u galeriji (zahteva restart)</string>
-  <string name="pref_ganalytics">Google Analitika</string>
-  <string name="pref_ganalyticssummary">Prati korišćenje funkcija za poboljšavanje SeriesGuidea</string>
   <string name="sendusagedata">Pošalji programeru statistiku korišćenja</string>
-  <string name="pref_upcominglimit">Predstojeće serije za…</string>
   <string name="pref_autoaddshows">Dodajte nove serije trakta</string>
   <string name="pref_autoaddshowssummary">Automatski dodaj serije sa vaših aktivnosti na traktu</string>
+  <string name="pref_appearance">Appearance</string>
+  <string name="pref_theme">Tema</string>
+  <string name="pref_widget_opacity">Widget background</string>
+  <string name="pref_other">Other</string>
+  <string name="pref_autoupdate">Uključi automatsko ažuriranje</string>
+  <string name="pref_autoupdatesummary">Povremeno ažururaj serije po pokretanju SeriesGuidea</string>
+  <string name="backup">Pravljenje i povraćaj rezervne kopije</string>
+  <string name="backup_summary">Sačuvaj ili vrati rezervnu kopiju vaših serija</string>
+  <string name="pref_upcominglimit">Predstojeće serije za…</string>
+  <string name="pref_number">Oblik numerisanja</string>
+  <string name="pref_offset">Ručno podesi vremensku razliku</string>
+  <string name="pref_offsetsummary">Razlika u emitovanju je %s sati</string>
+  <string name="clear_cache">Obriši keš slika</string>
+  <string name="clear_cache_summary">Ukloni sve slike u kešu sa vašeg aparata</string>
+  <string name="pref_ganalytics">Google Analitika</string>
+  <string name="pref_ganalyticssummary">Prati korišćenje funkcija za poboljšavanje SeriesGuidea</string>
+  <string name="pref_hideimages">Sakrij slike</string>
+  <string name="pref_hideimagessummary">Sakrij slike u galeriji (zahteva restart)</string>
   <string name="backup_description"><b>Rezervna kopija</b> pravi kopiju baze vaših serija u datoteci <b>seriesdatabase</b> u fascikli ispod.\n\n Za <b>Obnavljanje kopije</b> postarajte se da je datoteka u fascikli ispod.\n\n Obnovljene mogu biti kopije iste ili manje verzije baze.</string>
   <string name="backup_path"><b>Direktorijum za rezervnu kopiju</b></string>
   <string name="backup_version"><b>Verzija baze podataka</b></string>
@@ -290,7 +295,6 @@
   <string name="pref_vibrate">Vibracija</string>
   <string name="pref_vibratesummary">Vibriraj i pri obaveštenju</string>
   <string name="pref_notifications_treshold">Kad da obaveštava</string>
-  <string name="pref_theme">Tema</string>
   <string name="choose_list">Izaberi listu aktivnosti</string>
   <string name="hide_watched">Sakrij pogledane epizode</string>
   <string name="add_widget">Dodaj vidžet</string>
@@ -298,6 +302,8 @@
   <string name="smallwidget">SeriesGuide (mali)</string>
   <string name="bigwidget">SeriesGuide (srednji)</string>
   <string name="largewidget">SeriesGuide (veliki)</string>
+  <string name="dashclock_extension_label">Upcoming episode</string>
+  <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="download_stable">Preuzmi SeriesGuide</string>
   <string name="betawarning"><b>Pažnja!</b> Ovo verzija je samo za beta testere! Ako niste sigurni preuzmite stabilni verziju ispod.</string>
   <string-array name="shsorting">
@@ -326,6 +332,13 @@
     <item>nedelju dana</item>
     <item>2 nedelje</item>
     <item>mesec</item>
+  </string-array>
+  <string-array name="widgetOpacity">
+    <item>Transparent</item>
+    <item>25% black</item>
+    <item>50% black</item>
+    <item>75% black</item>
+    <item>Black</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Sve</item>

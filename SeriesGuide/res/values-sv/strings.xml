@@ -46,6 +46,7 @@
   <string name="autorefresh">Uppdatera automatiskt</string>
   <string name="movies_search_hint">Type a movie title</string>
   <string name="movies_empty">Search for a movie above.</string>
+  <string name="trailer">Trailer</string>
   <string name="love">Helt ninja!</string>
   <string name="hate">Svag sås :(</string>
   <string name="rating2">Usel</string>
@@ -123,7 +124,7 @@
   <string name="update_full">Uppdaterar alla serier…</string>
   <string name="update_success">Serier uppdaterade.</string>
   <string name="update_offline">Uppdatering misslyckades, kontrollera din Internet- eller WiFi-anslutning.</string>
-  <string name="update_saxerror">Uppdatering misslyckades, försök igen senare.</string>
+  <string name="update_saxerror">Updating failed, trying again later.</string>
   <string name="update_inprogress">En uppdatering pågår, försök igen senare.</string>
   <string name="update_rebuildsearch">Förnyar avsnittssökning…</string>
   <string name="update_traktactivity">Laddar aktivitet från trakt…</string>
@@ -193,14 +194,7 @@
   <string name="pref_onlyseasonepssummary">Specialavsnitt döljs överallt utom i säsongslistan</string>
   <string name="pref_seasonsorting">Sortera säsonger efter…</string>
   <string name="pref_episodesorting">Sortera avsnitt efter…</string>
-  <string name="backup">Säkerhetskopiering/återställning</string>
-  <string name="backup_summary">Säkerhetskopiera eller återställ dina serier</string>
   <string name="pref_language">Innehållsspråk</string>
-  <string name="pref_number">Nummerformat</string>
-  <string name="pref_offset">Manuell tidsskillnad</string>
-  <string name="pref_offsetsummary">Förskjut sändningstiden med %s timmar</string>
-  <string name="pref_autoupdate">Automatisk uppdatering</string>
-  <string name="pref_autoupdatesummary">Uppdatera dina serier regelbundet när SeriesGuide startas</string>
   <string name="pref_updatewifionly">Uppdatera endast över Wi-Fi</string>
   <string name="about">Om SeriesGuide</string>
   <string name="pref_credits">Bidragsgivare</string>
@@ -209,16 +203,27 @@
   <string name="pref_traktsummary">Lägg till eller redigera dina trakt.tv-uppgifter</string>
   <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">Skicka feedback</string>
-  <string name="clear_cache">Töm bildcache</string>
-  <string name="clear_cache_summary">Ta bort alla cachade bilder från enheten</string>
-  <string name="pref_hideimages">Dölj bilder</string>
-  <string name="pref_hideimagessummary">Dölj bilderna i ditt fotogalleri (kräver omstart av systemet)</string>
-  <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_ganalyticssummary">Mäter användningen av funktioner för att förbättra SeriesGuide</string>
   <string name="sendusagedata">Skicka användningsstatistik till utvecklaren</string>
-  <string name="pref_upcominglimit">Kommande serier inom…</string>
   <string name="pref_autoaddshows">Add new trakt shows</string>
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
+  <string name="pref_appearance">Appearance</string>
+  <string name="pref_theme">Tema</string>
+  <string name="pref_widget_opacity">Widget background</string>
+  <string name="pref_other">Other</string>
+  <string name="pref_autoupdate">Automatisk uppdatering</string>
+  <string name="pref_autoupdatesummary">Uppdatera dina serier regelbundet när SeriesGuide startas</string>
+  <string name="backup">Säkerhetskopiering/återställning</string>
+  <string name="backup_summary">Säkerhetskopiera eller återställ dina serier</string>
+  <string name="pref_upcominglimit">Kommande serier inom…</string>
+  <string name="pref_number">Nummerformat</string>
+  <string name="pref_offset">Manuell tidsskillnad</string>
+  <string name="pref_offsetsummary">Förskjut sändningstiden med %s timmar</string>
+  <string name="clear_cache">Töm bildcache</string>
+  <string name="clear_cache_summary">Ta bort alla cachade bilder från enheten</string>
+  <string name="pref_ganalytics">Google Analytics</string>
+  <string name="pref_ganalyticssummary">Mäter användningen av funktioner för att förbättra SeriesGuide</string>
+  <string name="pref_hideimages">Dölj bilder</string>
+  <string name="pref_hideimagessummary">Dölj bilderna i ditt fotogalleri (kräver omstart av systemet)</string>
   <string name="backup_description"><b>Säkerhetskopiering</b> skapar en kopia av databasen i en fil med namnet <b>seriesdatabase</b> i mappen nedan.\n\nFör att <b>återställa</b> kontrollera att filen är i mappen nedan.\n\nBara säkerhetskopior med samma eller en lägre databasversion som nedan kan återställas.</string>
   <string name="backup_path"><b>Mapp för säkerhetskopia</b></string>
   <string name="backup_version"><b>Databasversion</b></string>
@@ -290,7 +295,6 @@
   <string name="pref_vibrate">Vibrera</string>
   <string name="pref_vibratesummary">Vibrerar även när meddelande visas</string>
   <string name="pref_notifications_treshold">When to notify</string>
-  <string name="pref_theme">Tema</string>
   <string name="choose_list">Välj aktivitetslista</string>
   <string name="hide_watched">Dölj sedda avsnitt</string>
   <string name="add_widget">Lägg till widget</string>
@@ -298,6 +302,8 @@
   <string name="smallwidget">SeriesGuide (liten)</string>
   <string name="bigwidget">SeriesGuide (mellan)</string>
   <string name="largewidget">SeriesGuide (stor)</string>
+  <string name="dashclock_extension_label">Upcoming episode</string>
+  <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="download_stable">Hämta SeriesGuide</string>
   <string name="betawarning"><b>Varning!</b> Den här versionen är endast för betatestare! Om du är tveksam kan du hämta den stabila versionen nedan.</string>
   <string-array name="shsorting">
@@ -326,6 +332,13 @@
     <item>en vecka</item>
     <item>två veckor</item>
     <item>en månad</item>
+  </string-array>
+  <string-array name="widgetOpacity">
+    <item>Transparent</item>
+    <item>25% black</item>
+    <item>50% black</item>
+    <item>75% black</item>
+    <item>Black</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Alla</item>

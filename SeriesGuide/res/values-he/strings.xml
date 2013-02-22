@@ -46,6 +46,7 @@
   <string name="autorefresh">מרענן אוטומטית</string>
   <string name="movies_search_hint">הקלד שם סרט</string>
   <string name="movies_empty">חפש סרט.</string>
+  <string name="trailer">Trailer</string>
   <string name="love">לגמרי נינג\'ה!</string>
   <string name="hate">על הפנים ):</string>
   <string name="rating2">נוראי</string>
@@ -123,7 +124,7 @@
   <string name="update_full">מעדכן את כל הסדרות</string>
   <string name="update_success">הצג עדכונים</string>
   <string name="update_offline">העדכון נכשל, בדוק את הקישוריות שלך.</string>
-  <string name="update_saxerror">העדכון נכשל, נסה מאוחר יותר.</string>
+  <string name="update_saxerror">Updating failed, trying again later.</string>
   <string name="update_inprogress">מבצע תהליך עדכון, נסה מאוחר יותר.</string>
   <string name="update_rebuildsearch">מרענן חיפוש פרקים</string>
   <string name="update_traktactivity">טוען פעילויות trakt </string>
@@ -193,14 +194,7 @@
   <string name="pref_onlyseasonepssummary">פרקים מיוחדים מועלמים תמיד, פרט לרשימת העונות</string>
   <string name="pref_seasonsorting">מיין עונות לפי</string>
   <string name="pref_episodesorting">מיין פרקים לפי</string>
-  <string name="backup">גיבוי/שחזור</string>
-  <string name="backup_summary">גבה או שחזר את סדרותיך</string>
   <string name="pref_language">שפת תוכן</string>
-  <string name="pref_number">תבנית מספרים</string>
-  <string name="pref_offset">היסט שעה ידני</string>
-  <string name="pref_offsetsummary">הסט זמני שידור ב- %s שעות</string>
-  <string name="pref_autoupdate">הדלק עדכון אוטומטי</string>
-  <string name="pref_autoupdatesummary">עדכן את סדרותיך באופן תקופתי כאשר SeriesGuide מופעל</string>
   <string name="pref_updatewifionly">עדכון דרך Wi-Fi בלבד</string>
   <string name="about">אודות SeriesGuide</string>
   <string name="pref_credits">קרדיטים</string>
@@ -209,16 +203,27 @@
   <string name="pref_traktsummary">הוסף או ערוך את אישורי ה-trakt.tv שלך</string>
   <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">שלח משוב</string>
-  <string name="clear_cache">נקה מטמוני תמונות</string>
-  <string name="clear_cache_summary">הסר את כל מטמוני התמונות ממכשירך</string>
-  <string name="pref_hideimages">הסתר תמונות</string>
-  <string name="pref_hideimagessummary">הסתר תמונות מגלריית התמונות שלך (נדרש אתחול מחדש)</string>
-  <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_ganalyticssummary">עוקב אחר השימוש בתוכנה על מנת לסייע בשיפור SeriesGuide</string>
   <string name="sendusagedata">שלח סטטיסטיקות שימוש למפתחים</string>
-  <string name="pref_upcominglimit">תוכניות המתקרבות תוך</string>
   <string name="pref_autoaddshows">הוסף סדרות trakt חדשות</string>
   <string name="pref_autoaddshowssummary">הוסף סדרות מפעילות ה-trakt שלך באופן אוטומטי</string>
+  <string name="pref_appearance">Appearance</string>
+  <string name="pref_theme">נושא אפליקציה</string>
+  <string name="pref_widget_opacity">Widget background</string>
+  <string name="pref_other">Other</string>
+  <string name="pref_autoupdate">הדלק עדכון אוטומטי</string>
+  <string name="pref_autoupdatesummary">עדכן את סדרותיך באופן תקופתי כאשר SeriesGuide מופעל</string>
+  <string name="backup">גיבוי/שחזור</string>
+  <string name="backup_summary">גבה או שחזר את סדרותיך</string>
+  <string name="pref_upcominglimit">תוכניות המתקרבות תוך</string>
+  <string name="pref_number">תבנית מספרים</string>
+  <string name="pref_offset">היסט שעה ידני</string>
+  <string name="pref_offsetsummary">הסט זמני שידור ב- %s שעות</string>
+  <string name="clear_cache">נקה מטמוני תמונות</string>
+  <string name="clear_cache_summary">הסר את כל מטמוני התמונות ממכשירך</string>
+  <string name="pref_ganalytics">Google Analytics</string>
+  <string name="pref_ganalyticssummary">עוקב אחר השימוש בתוכנה על מנת לסייע בשיפור SeriesGuide</string>
+  <string name="pref_hideimages">הסתר תמונות</string>
+  <string name="pref_hideimagessummary">הסתר תמונות מגלריית התמונות שלך (נדרש אתחול מחדש)</string>
   <string name="backup_description"><b>גיבוי</b> יוצר עותק של מאגר הסדרות שלך בקובץ בשם <b>seriesdatabase</b> בתיקייה שלהלן.\n\n<b>לשחזור</b> ודא כי קובץ זה נמצא בתיקייה שלהלן.\n\n ניתן לשחזר רק גיבויים עם גרסת מסד נתונים זהה או ישנה יותר מהכתוב למטה.</string>
   <string name="backup_path"><b>תיקיית גיבויים</b></string>
   <string name="backup_version"><b>גרסת מסד הנתונים</b></string>
@@ -280,6 +285,7 @@
   <string name="welcome_add_part1">כדי להתחיל, לחץ</string>
   <string name="upcoming_show">%s מתקרב</string>
   <string name="upcoming_episodes">פרקים חדשים מתקרבים</string>
+  <string name="upcoming_show_detailed">%1$ s ב- %2$ s</string>
   <string name="upcoming_display">בחר כדי להציג סדרות שמתקרבות</string>
   <string name="pref_notifications">התראות</string>
   <string name="pref_notificationssummary">עדכן אותי על פרקים חדשים</string>
@@ -289,7 +295,6 @@
   <string name="pref_vibrate">רטט</string>
   <string name="pref_vibratesummary">רטוט גם בזמן הצגת התראות</string>
   <string name="pref_notifications_treshold">מתי להתריע</string>
-  <string name="pref_theme">נושא אפליקציה</string>
   <string name="choose_list">בחר רשימת פעילות</string>
   <string name="hide_watched">הסתר פרקים שנצפו</string>
   <string name="add_widget">הוסף ווידג\'ט</string>
@@ -297,6 +302,8 @@
   <string name="smallwidget">SeriesGuide (קטן)</string>
   <string name="bigwidget">SeriesGuide (בינוני)</string>
   <string name="largewidget">SeriesGuide (גדול)</string>
+  <string name="dashclock_extension_label">Upcoming episode</string>
+  <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="download_stable">הורד SeriesGuide</string>
   <string name="betawarning"><b>שימו לב!</b> שחרור זה הוא עבור בודקי בטא בלבד! אם יש לך ספק, הורד את הגרסה היציבה שלהלן.</string>
   <string-array name="shsorting">
@@ -325,6 +332,13 @@
     <item>שבוע אחד</item>
     <item>שבועיים</item>
     <item>חודש אחד</item>
+  </string-array>
+  <string-array name="widgetOpacity">
+    <item>Transparent</item>
+    <item>25% black</item>
+    <item>50% black</item>
+    <item>75% black</item>
+    <item>Black</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>הכל</item>

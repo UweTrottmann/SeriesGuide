@@ -46,6 +46,7 @@
   <string name="autorefresh">Automágikus frissítés</string>
   <string name="movies_search_hint">Type a movie title</string>
   <string name="movies_empty">Search for a movie above.</string>
+  <string name="trailer">Trailer</string>
   <string name="love">Totally ninja!</string>
   <string name="hate">Weak Sauce :(</string>
   <string name="rating2">Szörnyű</string>
@@ -123,7 +124,7 @@
   <string name="update_full">Minden sorozat frissítése…</string>
   <string name="update_success">Műsorok frissítve.</string>
   <string name="update_offline">A frissítés nem sikerült, ellenőrizze az internet/Wi-Fi kapcsolatot.</string>
-  <string name="update_saxerror">A frissítés nem sikerült, próbáld meg később!</string>
+  <string name="update_saxerror">Updating failed, trying again later.</string>
   <string name="update_inprogress">Egy frissítés folyamatban, próbálja később.</string>
   <string name="update_rebuildsearch">Epizódkeresés frissítése…</string>
   <string name="update_traktactivity">Trakt változások betöltése</string>
@@ -193,14 +194,7 @@
   <string name="pref_onlyseasonepssummary">Mindenhonnan elrejti a speciális epizódokat, kivéve az évad listából</string>
   <string name="pref_seasonsorting">Évadok rendezése</string>
   <string name="pref_episodesorting">Epizódok rendezése</string>
-  <string name="backup">Biztonsági másolat</string>
-  <string name="backup_summary">Biztonsági mentés készítése a sorozatokról, vagy visszaállítás</string>
   <string name="pref_language">Tartalom nyelve</string>
-  <string name="pref_number">Számozás formátuma</string>
-  <string name="pref_offset">Időeltolás</string>
-  <string name="pref_offsetsummary">Vetítési időhöz képest időeltolás %s órával</string>
-  <string name="pref_autoupdate">Automatikus frissítés bekapcsolása</string>
-  <string name="pref_autoupdatesummary">Bizonyos időnként frissíti a sorozatokat a SeriesGuide indításakor</string>
   <string name="pref_updatewifionly">Frissítés csak Wi-Fi hálózaton keresztül</string>
   <string name="about">A SeriesGuide-ról</string>
   <string name="pref_credits">Készítők listája</string>
@@ -209,16 +203,27 @@
   <string name="pref_traktsummary">trakt.tv fiók hozzáadása vagy szerkesztése</string>
   <string name="pref_traktsync">Manual sync with trakt.tv</string>
   <string name="feedback">Visszajelzés küldése</string>
-  <string name="clear_cache">Képtároló törlése</string>
-  <string name="clear_cache_summary">Az összes tárolt kép törlése az eszközről</string>
-  <string name="pref_hideimages">Képek elrejtése</string>
-  <string name="pref_hideimagessummary">A képek ne jelenjenek meg a Képtárban (újraindítás szükséges)</string>
-  <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_ganalyticssummary">A SeriesGuide fejlesztése érdekében nyomon követi a használt funkciókat.</string>
   <string name="sendusagedata">Használati információk küldése a fejlesztőnek</string>
-  <string name="pref_upcominglimit">Közelgő műsorok megjelenítése…</string>
   <string name="pref_autoaddshows">Új trakt sorozatok hozzáadása</string>
   <string name="pref_autoaddshowssummary">Trakt aktivitása és adatai alapján sorozatai bekerülnek az adatbázisba</string>
+  <string name="pref_appearance">Appearance</string>
+  <string name="pref_theme">Alkalmazás téma</string>
+  <string name="pref_widget_opacity">Widget background</string>
+  <string name="pref_other">Other</string>
+  <string name="pref_autoupdate">Automatikus frissítés bekapcsolása</string>
+  <string name="pref_autoupdatesummary">Bizonyos időnként frissíti a sorozatokat a SeriesGuide indításakor</string>
+  <string name="backup">Biztonsági másolat</string>
+  <string name="backup_summary">Biztonsági mentés készítése a sorozatokról, vagy visszaállítás</string>
+  <string name="pref_upcominglimit">Közelgő műsorok megjelenítése…</string>
+  <string name="pref_number">Számozás formátuma</string>
+  <string name="pref_offset">Időeltolás</string>
+  <string name="pref_offsetsummary">Vetítési időhöz képest időeltolás %s órával</string>
+  <string name="clear_cache">Képtároló törlése</string>
+  <string name="clear_cache_summary">Az összes tárolt kép törlése az eszközről</string>
+  <string name="pref_ganalytics">Google Analytics</string>
+  <string name="pref_ganalyticssummary">A SeriesGuide fejlesztése érdekében nyomon követi a használt funkciókat.</string>
+  <string name="pref_hideimages">Képek elrejtése</string>
+  <string name="pref_hideimagessummary">A képek ne jelenjenek meg a Képtárban (újraindítás szükséges)</string>
   <string name="backup_description">A <b>Mentés</b> gombbal elmentheti a sorozatok adatbázisát <b>seriesdatabase</b> fájlnévvel a lenti mappába.\n\nA <b>Visszaállítás</b> gombbal a lent látható, vagy annál alacsonyabb verziójú adatbázis állítható vissza a biztonsági másolat mappából.</string>
   <string name="backup_path"><b>Biztonsági másolat mappa</b></string>
   <string name="backup_version"><b>Adatbázis verzió</b></string>
@@ -290,7 +295,6 @@
   <string name="pref_vibrate">Vibra</string>
   <string name="pref_vibratesummary">Vibrálás értesítések megjelenítésekor</string>
   <string name="pref_notifications_treshold">Mikor értesítsen</string>
-  <string name="pref_theme">Alkalmazás téma</string>
   <string name="choose_list">Válassz a listák közül</string>
   <string name="hide_watched">Megnézett epizódok elrejtése</string>
   <string name="add_widget">Widget hozzáadása</string>
@@ -298,6 +302,8 @@
   <string name="smallwidget">SeriesGuide (kicsi)</string>
   <string name="bigwidget">SeriesGuide (közepes)</string>
   <string name="largewidget">SeriesGuide (nagy)</string>
+  <string name="dashclock_extension_label">Upcoming episode</string>
+  <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="download_stable">A SeriesGuide letöltése</string>
   <string name="betawarning"><b>Figyelem!</b> Ez a kiadás csak béta tesztelők számára készült! Ha nem vagy biztos a dolgodban, inkább válaszd a stabil verziót alább.</string>
   <string-array name="shsorting">
@@ -326,6 +332,13 @@
     <item>egy hét</item>
     <item>két hét</item>
     <item>egy hónap</item>
+  </string-array>
+  <string-array name="widgetOpacity">
+    <item>Transparent</item>
+    <item>25% black</item>
+    <item>50% black</item>
+    <item>75% black</item>
+    <item>Black</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Mind</item>

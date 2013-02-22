@@ -46,6 +46,7 @@
   <string name="autorefresh">Odświeżanie automagicznie ;)</string>
   <string name="movies_search_hint">Wpisz tytuł filmu</string>
   <string name="movies_empty">Szukaj filmu.</string>
+  <string name="trailer">Trailer</string>
   <string name="love">Uwielbiam to!</string>
   <string name="hate">Słaby :(</string>
   <string name="rating2">Potworny</string>
@@ -123,7 +124,7 @@
   <string name="update_full">Aktualizacja wszystkich</string>
   <string name="update_success">Seriale zostały zaktualizowane.</string>
   <string name="update_offline">Aktualizacja nie powiodła się. Sprawdź połączenie internetowe/Wi-Fi.</string>
-  <string name="update_saxerror">Aktualizacja nie powiodła się. Spróbuj ponownie później.</string>
+  <string name="update_saxerror">Updating failed, trying again later.</string>
   <string name="update_inprogress">Aktualizacja w toku, spróbuj ponownie później.</string>
   <string name="update_rebuildsearch">Odświeżanie indeksu wyszukiwania</string>
   <string name="update_traktactivity">Ładowanie aktywności trakt</string>
@@ -173,15 +174,15 @@
   <string name="show_library">Pokaż bibliotekę</string>
   <string name="upload_shows">Prześlij listę seriali SeriesGuide:</string>
   <string name="upload_existing_shows">Prześlij istniejące seriale</string>
-  <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
-  <string name="integration_trakt">If you connect trakt:</string>
+  <string name="about_trakt">trakt.tv pomaga zarządzać jakie seriale i filmy oglądasz. <a href="http://trakt.tv">Dowiedz się więcej</a></string>
+  <string name="integration_trakt">Jeśli połączysz się z trakt.tv:</string>
   <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
   <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
-  <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
-  <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
-  <string name="trakt_download">Download to SeriesGuide</string>
-  <string name="trakt_upload">Upload to trakt.tv</string>
-  <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
+  <string name="trakt_download_hint">Oznacz odcinki obejrzane na trakt jako obejrzane w SeriesGuide</string>
+  <string name="trakt_upload_hint">Oznacz odcinki jako obejrzane w SeriesGuide jeśli są obejrzane na trakt</string>
+  <string name="trakt_download">Pobierz do SeriesGuide</string>
+  <string name="trakt_upload">Wyślij do trakt.tv</string>
+  <string name="trakt_syncunwatched">Usuń znaczniki obejrzenia dla nieobejrzanych odcinków podczas synchronizacji</string>
   <string name="prefs_category_basic">Podstawowe</string>
   <string name="prefs_category_sharing">Usługi</string>
   <string name="prefs_category_advanced">Zaawansowane</string>
@@ -193,32 +194,36 @@
   <string name="pref_onlyseasonepssummary">Odcinki specjalne będą widoczne tylko na liście sezonów</string>
   <string name="pref_seasonsorting">Sortuj sezony wg</string>
   <string name="pref_episodesorting">Sortuj odcinki wg</string>
-  <string name="backup">Kopia zapasowa</string>
-  <string name="backup_summary">Utwórz/Przywróć kopię bazy seriali</string>
   <string name="pref_language">Język treści</string>
-  <string name="pref_number">Format numeracji</string>
-  <string name="pref_offset">Ręczne przesunięcie czasu</string>
-  <string name="pref_offsetsummary">Przesuń czas emisji o %s godzin</string>
-  <string name="pref_autoupdate">Aktualizacje automatyczne</string>
-  <string name="pref_autoupdatesummary">Okresowo aktualizuje seriale podczas startu SeriesGuide</string>
   <string name="pref_updatewifionly">Aktual. tylko przez WiFi</string>
   <string name="about">O SeriesGuide</string>
   <string name="pref_credits">Autorzy</string>
   <string name="clearGetGlueCredentials">Odłącz GetGlue</string>
   <string name="clearGetGlueCredentialssummary">Podepnij do GetGlue, aby ponownie połączyć</string>
   <string name="pref_traktsummary">Dodaj lub edytuj dane logowania trakt.tv</string>
-  <string name="pref_traktsync">Manual sync with trakt.tv</string>
+  <string name="pref_traktsync">Ręczna synchronizacja z trakt.tv</string>
   <string name="feedback">Wyślij opinię</string>
-  <string name="clear_cache">Usuń bufor obrazów</string>
-  <string name="clear_cache_summary">Usuwa wszystkie buforowane obrazy z urządzenia</string>
-  <string name="pref_hideimages">Ukryj obrazy</string>
-  <string name="pref_hideimagessummary">Ukrywa obrazy przed standardową przeglądarką grafik (wymagany restart)</string>
-  <string name="pref_ganalytics">Google Analytics</string>
-  <string name="pref_ganalyticssummary">Śledzi wykorzystanie funkcji, aby pomóc w ulepszeniu SeriesGuide</string>
   <string name="sendusagedata">Wyślij statystyki użytkowania</string>
-  <string name="pref_upcominglimit">Wyświetlaj odcinki z</string>
   <string name="pref_autoaddshows">Dodaj nowe seriale trakt</string>
   <string name="pref_autoaddshowssummary">Automatycznie dodawaj nowe seriale z listy aktywności trakt</string>
+  <string name="pref_appearance">Appearance</string>
+  <string name="pref_theme">Schemat kolorów</string>
+  <string name="pref_widget_opacity">Widget background</string>
+  <string name="pref_other">Other</string>
+  <string name="pref_autoupdate">Aktualizacje automatyczne</string>
+  <string name="pref_autoupdatesummary">Okresowo aktualizuje seriale podczas startu SeriesGuide</string>
+  <string name="backup">Kopia zapasowa</string>
+  <string name="backup_summary">Utwórz/Przywróć kopię bazy seriali</string>
+  <string name="pref_upcominglimit">Wyświetlaj odcinki z</string>
+  <string name="pref_number">Format numeracji</string>
+  <string name="pref_offset">Ręczne przesunięcie czasu</string>
+  <string name="pref_offsetsummary">Przesuń czas emisji o %s godzin</string>
+  <string name="clear_cache">Usuń bufor obrazów</string>
+  <string name="clear_cache_summary">Usuwa wszystkie buforowane obrazy z urządzenia</string>
+  <string name="pref_ganalytics">Google Analytics</string>
+  <string name="pref_ganalyticssummary">Śledzi wykorzystanie funkcji, aby pomóc w ulepszeniu SeriesGuide</string>
+  <string name="pref_hideimages">Ukryj obrazy</string>
+  <string name="pref_hideimagessummary">Ukrywa obrazy przed standardową przeglądarką grafik (wymagany restart)</string>
   <string name="backup_description"><b>Kopia zapasowa</b> tworzy kopię listy seriali w pliku o nazwie <b>seriesdatabase</b> w poniższym folderze.\n\nAby<b>Przywrócić</b> listę upewnij się, że plik jest w poniższym folderze.\n\nTylko archiwa list z tej samej lub niższej wersji (niż poniższa) mogą zostać przywrócone.</string>
   <string name="backup_path"><b>Folder kopii zapasowej</b></string>
   <string name="backup_version"><b>Wersja bazy danych</b></string>
@@ -290,7 +295,6 @@
   <string name="pref_vibrate">Wibracja</string>
   <string name="pref_vibratesummary">Wibruj również przy wyświetlaniu powiadomienia</string>
   <string name="pref_notifications_treshold">Powiadamiaj</string>
-  <string name="pref_theme">Schemat kolorów</string>
   <string name="choose_list">Wybierz listę aktywności</string>
   <string name="hide_watched">Ukryj obejrzane odcinki</string>
   <string name="add_widget">Dodaj widżet</string>
@@ -298,6 +302,8 @@
   <string name="smallwidget">SeriesGuide (mały)</string>
   <string name="bigwidget">SeriesGuide (średni)</string>
   <string name="largewidget">SeriesGuide (duży)</string>
+  <string name="dashclock_extension_label">Upcoming episode</string>
+  <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
   <string name="download_stable">Pobierz SeriesGuide</string>
   <string name="betawarning"><b>Uwaga!</b> To wydanie jest tylko dla beta testerów! Wersję stabilną można pobrać poniżej.</string>
   <string-array name="shsorting">
@@ -326,6 +332,13 @@
     <item>Tygodnia</item>
     <item>Dwóch tygodni</item>
     <item>Miesiąca</item>
+  </string-array>
+  <string-array name="widgetOpacity">
+    <item>Transparent</item>
+    <item>25% black</item>
+    <item>50% black</item>
+    <item>75% black</item>
+    <item>Black</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Wszystkie</item>
