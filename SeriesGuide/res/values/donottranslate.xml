@@ -13,7 +13,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">DashClock is awesome!\n\nSeriesGuide provides a DashClock extension for the next upcoming episode. If you have Android 4.2 check it out (obviously requires DashClock to be installed).\n\nOn Android 3.0+ descriptions, actors and similar text is now selectable.\n\nNew animations.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">Remember the past\n\nNew next episode algorithm: remembers what you last watched and offers later episodes as next. Improves watching older seasons.\n\nAllow setting the widget opacity level, for X only.\n\nStarted movie details pages, adds description and a trailer button.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
     <string name="help_url">http://seriesgui.de/help</string>
 
     <!-- Settings -->
