@@ -8,6 +8,17 @@ All dates are in the European Central timezone.
 Version 4 *(TBA)*
 --------------------------
 
+#### 4beta2 *(2013-02-22)*
+
+* FEATURE New next episode algorithm: remembers what you last watched and offers later episodes as next. Improves watching older seasons.
+* FEATURE Allow setting the widget opacity level, for X only.
+* FEATURE Started movie details pages, adds description and a trailer button.
+* TWEAK Display the online help page inline, revamped the online help page.
+* TWEAK Overview updates on new information (e.g. a picture).
+* TWEAK Load movies playing now for empty search query.
+* FIX Restore correct text styles for season watch count.
+* NOTICE Database upgraded to version 31. Starting SeriesGuide the first time after installing the update may take a little longer than usual.
+
 #### 4beta1 *(2013-02-12)*
 
 * FEATURE Supply extension for Roman Nurik's DashClock.
