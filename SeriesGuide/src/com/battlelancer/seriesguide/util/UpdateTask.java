@@ -63,7 +63,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 enum UpdateResult {
-    SUCCESS, SILENT_SUCCESS, ERROR, OFFLINE, CANCELLED;
+    SILENT_SUCCESS, ERROR, OFFLINE, CANCELLED;
 }
 
 enum UpdateType {
@@ -185,7 +185,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
         }
 
         final int maxProgress = mShows.length + 2;
-        UpdateResult resultCode = UpdateResult.SUCCESS;
+        UpdateResult resultCode = UpdateResult.SILENT_SUCCESS;
         String id;
 
         // actually update the shows
@@ -269,7 +269,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             final UpdateResult traktResult = getTraktActivity(prefs, maxProgress, currentTime,
                     resolver);
             // do not overwrite earlier failure codes
-            if (resultCode == UpdateResult.SUCCESS) {
+            if (resultCode == UpdateResult.SILENT_SUCCESS) {
                 resultCode = traktResult;
             }
 
@@ -279,7 +279,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             Utils.updateLatestEpisodes(mAppContext);
 
             // store time for triggering next update 15min after
-            if (resultCode == UpdateResult.SUCCESS) {
+            if (resultCode == UpdateResult.SILENT_SUCCESS) {
                 // now, if we were successful, reset failed counter
                 prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTUPDATE, currentTime)
                         .putInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, 0).commit();
@@ -302,11 +302,6 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             }
         } else {
             publishProgress(maxProgress, maxProgress);
-        }
-
-        // do not display a disturbing info toast for specific updates
-        if (mUpdateType == UpdateType.SINGLE && resultCode == UpdateResult.SUCCESS) {
-            resultCode = UpdateResult.SILENT_SUCCESS;
         }
 
         return resultCode;
@@ -455,7 +450,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
 
         }
 
-        return UpdateResult.SUCCESS;
+        return UpdateResult.SILENT_SUCCESS;
     }
 
     private void setCurrentShowName(final ContentResolver resolver, String id) {
@@ -473,10 +468,6 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
         String message = null;
         int length = 0;
         switch (result) {
-            case SUCCESS:
-                message = mAppContext.getString(R.string.update_success);
-                length = Toast.LENGTH_SHORT;
-                // fall through one case here
             case SILENT_SUCCESS:
                 fireTrackerEvent("Success");
                 break;
