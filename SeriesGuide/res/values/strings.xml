@@ -3,7 +3,8 @@
 
     <!-- Generic -->
     <string name="episode">Episode</string>
-    <string name="episodes">All episodes</string>
+    <string name="episodes">Episodes</string>
+    <string name="all_episodes">All episodes</string>
     <string name="season">Season</string>
     <string name="seasons">Seasons</string>
     <string name="unknown">unknown</string>
@@ -61,6 +62,24 @@
     <string name="movies_search_hint">Type a movie title</string>
     <string name="movies_empty">Search for a movie above.</string>
     <string name="trailer">Trailer</string>
+    
+    <!-- Statistics -->
+    <string name="shows_watched">%s completely watched</string>
+    <string name="shows_continuing">%s continuing</string>
+    <string name="episodes_watched">%s watched</string>
+    <string name="runtime_all_episodes">Runtime of all watched episodes</string>
+    <plurals name="days_plural">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <plurals name="hours_plural">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="minutes_plural">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
 
     <!-- Trakt ratings -->
     <string name="love">Totally ninja!</string>

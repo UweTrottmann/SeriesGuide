@@ -1,18 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:animateLayoutChanges="true" >
+    android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@+id/textViewNumberOfShows"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
-        android:textAppearance="?attr/textAppearanceSgXLargeLight"
-        android:textIsSelectable="true"
-        android:textSize="@dimen/text_size_ultralarge" />
+        android:animateLayoutChanges="true"
+        android:padding="@dimen/large_padding" >
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/textViewShows"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/norating"
+            android:textAppearance="?attr/textAppearanceSgXLargeLight"
+            android:textIsSelectable="true"
+            android:textSize="@dimen/text_size_ultralarge" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewShows"
+            android:layout_centerHorizontal="true"
+            android:text="@string/shows" />
+
+        <ProgressBar
+            android:id="@+id/progressBarShowsWatched"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView1"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/textViewShowsWatched"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/progressBarShowsWatched"
+            android:textIsSelectable="true" />
+
+        <ProgressBar
+            android:id="@+id/progressBarShowsContinuing"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewShowsWatched"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/textViewShowsContinuing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/progressBarShowsContinuing"
+            android:textIsSelectable="true" />
+
+        <TextView
+            android:id="@+id/textViewEpisodes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewShowsContinuing"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:text="@string/norating"
+            android:textAppearance="?attr/textAppearanceSgXLargeLight"
+            android:textIsSelectable="true"
+            android:textSize="@dimen/text_size_ultralarge" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewEpisodes"
+            android:layout_centerHorizontal="true"
+            android:text="@string/episodes" />
+
+        <ProgressBar
+            android:id="@+id/progressBarEpisodesWatched"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView2"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/textViewEpisodesWatched"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/progressBarEpisodesWatched"
+            android:textIsSelectable="true" />
+
+        <TextView
+            android:id="@+id/textViewEpisodesRuntime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewEpisodesWatched"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:text="@string/norating"
+            android:textAppearance="?attr/textAppearanceSgXLargeLight"
+            android:textIsSelectable="true" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewEpisodesRuntime"
+            android:layout_centerHorizontal="true"
+            android:text="@string/runtime_all_episodes" />
+    </RelativeLayout>
+
+</ScrollView>

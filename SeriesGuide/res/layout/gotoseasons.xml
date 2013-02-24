@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/default_padding"
-            android:text="@string/episodes"
+            android:text="@string/all_episodes"
             android:textAllCaps="true"
             android:textAppearance="?attr/textAppearanceSgSmallPrimary" >
         </TextView>
