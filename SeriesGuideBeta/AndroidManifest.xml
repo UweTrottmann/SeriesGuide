@@ -186,6 +186,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.StatsActivity" >
+        </activity>
 
         <!-- Notification service -->
         <service android:name="com.battlelancer.seriesguide.service.NotificationService" >
