@@ -29,7 +29,7 @@ public class MenuOnPageChangeListener implements OnPageChangeListener {
     public void onPageSelected(int position) {
         mMenuDrawer.setTouchMode(position == 0
                 ? MenuDrawer.TOUCH_MODE_FULLSCREEN
-                : MenuDrawer.TOUCH_MODE_NONE);
+                : MenuDrawer.TOUCH_MODE_BEZEL);
     }
 
 }
