@@ -33,7 +33,7 @@ public abstract class BaseTopActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == android.R.id.home) {
-            toggle();
+            toggleMenu();
             return true;
         }
         else if (itemId == R.id.menu_preferences) {

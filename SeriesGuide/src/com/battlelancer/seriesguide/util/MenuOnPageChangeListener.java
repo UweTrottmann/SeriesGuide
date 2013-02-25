@@ -3,18 +3,18 @@ package com.battlelancer.seriesguide.util;
 
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 
-import com.slidingmenu.lib.SlidingMenu;
+import net.simonvt.menudrawer.MenuDrawer;
 
 /**
- * {@link OnPageChangeListener} which allows to open a {@link SlidingMenu} by
+ * {@link OnPageChangeListener} which allows to open a {@link MenuDrawer} by
  * swiping once more to the left if displaying the first page.
  */
 public class MenuOnPageChangeListener implements OnPageChangeListener {
 
-    private SlidingMenu mSm;
+    private MenuDrawer mMenuDrawer;
 
-    public MenuOnPageChangeListener(SlidingMenu sm) {
-        mSm = sm;
+    public MenuOnPageChangeListener(MenuDrawer menuDrawer) {
+        mMenuDrawer = menuDrawer;
     }
 
     @Override
@@ -27,14 +27,9 @@ public class MenuOnPageChangeListener implements OnPageChangeListener {
 
     @Override
     public void onPageSelected(int position) {
-        switch (position) {
-            case 0:
-                mSm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-                break;
-            default:
-                mSm.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-                break;
-        }
+        mMenuDrawer.setTouchMode(position == 0
+                ? MenuDrawer.TOUCH_MODE_FULLSCREEN
+                : MenuDrawer.TOUCH_MODE_NONE);
     }
 
 }

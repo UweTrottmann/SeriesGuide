@@ -39,10 +39,11 @@ import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListen
 import com.battlelancer.seriesguide.util.MenuOnPageChangeListener;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
-import com.slidingmenu.lib.SlidingMenu;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TabPageIndicator;
+
+import net.simonvt.menudrawer.MenuDrawer;
 
 /**
  * Hosts various fragments in a {@link ViewPager} which allow adding shows to
@@ -82,9 +83,9 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
 
         TabPageIndicator indicator = (TabPageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mPager);
-        indicator.setOnPageChangeListener(new MenuOnPageChangeListener(getSlidingMenu()));
+        indicator.setOnPageChangeListener(new MenuOnPageChangeListener(getMenu()));
 
-        getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        getMenu().setTouchMode(MenuDrawer.TOUCH_MODE_FULLSCREEN);
 
         // set default tab
         if (getIntent() != null && getIntent().getExtras() != null) {

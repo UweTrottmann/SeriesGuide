@@ -43,9 +43,10 @@ import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapte
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.slidingmenu.lib.SlidingMenu;
 import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TitlePageIndicator;
+
+import net.simonvt.menudrawer.MenuDrawer;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -200,14 +201,9 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
                 @Override
                 public void onPageSelected(int position) {
                     mEpisodesFragment.setItemChecked(position);
-                    switch (position) {
-                        case 0:
-                            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-                            break;
-                        default:
-                            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-                            break;
-                    }
+                    getMenu().setTouchMode(position == 0
+                            ? MenuDrawer.TOUCH_MODE_FULLSCREEN
+                            : MenuDrawer.TOUCH_MODE_BEZEL);
                 }
 
                 @Override
@@ -219,9 +215,9 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
                 }
             });
 
-            getSlidingMenu().setTouchModeAbove(
-                    startPosition == 0 ? SlidingMenu.TOUCHMODE_FULLSCREEN
-                            : SlidingMenu.TOUCHMODE_MARGIN);
+            getMenu().setTouchMode(startPosition == 0
+                    ? MenuDrawer.TOUCH_MODE_FULLSCREEN
+                    : MenuDrawer.TOUCH_MODE_BEZEL);
         } else {
             // FIXME Dirty: make sure no fragments are left over from a config
             // change
