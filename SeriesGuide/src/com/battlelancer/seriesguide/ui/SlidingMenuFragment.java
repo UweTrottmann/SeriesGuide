@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -90,14 +91,13 @@ public class SlidingMenuFragment extends ListFragment {
         // close menu any way
         if (getActivity() instanceof BaseActivity) {
             final BaseActivity activity = (BaseActivity) getActivity();
-            activity.getMenu().closeMenu(false);
-            // Handler h = new Handler();
-            // h.postDelayed(new Runnable() {
-            // @Override
-            // public void run() {
-            // activity.showContent();
-            // }
-            // }, 200);
+            Handler h = new Handler();
+            h.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    activity.getMenu().closeMenu();
+                }
+            }, 200);
         }
 
         int itemId = ((MenuItem) mAdapter.getItem(position)).mId;
