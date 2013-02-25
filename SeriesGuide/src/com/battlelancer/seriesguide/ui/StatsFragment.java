@@ -51,7 +51,7 @@ public class StatsFragment extends SherlockFragment {
         new StatsTask(getActivity().getContentResolver()).execute();
     }
 
-    private class StatsTask extends AsyncTask<Void, Void, Stats> {
+    private class StatsTask extends AsyncTask<Void, Long, Stats> {
 
         private ContentResolver mResolver;
 
@@ -64,20 +64,38 @@ public class StatsFragment extends SherlockFragment {
             Stats stats = new Stats();
 
             // number of...
-            // all shows
+            // ...all shows
             final Cursor shows = mResolver.query(Shows.CONTENT_URI, new String[] {
-                    Shows._ID, Shows.STATUS, Shows.NEXTEPISODE
+                    Shows._ID, Shows.STATUS, Shows.NEXTEPISODE, Shows.RUNTIME
             }, null, null, null);
             if (shows != null) {
                 int continuing = 0;
                 int withnext = 0;
                 while (shows.moveToNext()) {
+                    // ...continuing shows
                     if (shows.getInt(1) == 1) {
                         continuing++;
                     }
+                    // ...shows with next episodes
                     if (shows.getInt(2) != 0) {
                         withnext++;
+
                     }
+
+                    // calculate runtime of watched episodes per show
+                    final Cursor episodesWatched = mResolver.query(
+                            Episodes.buildEpisodesOfShowUri(shows.getString(0)), new String[] {
+                                Episodes._ID
+                            }, Episodes.WATCHED + "=1", null, null);
+                    if (episodesWatched != null) {
+                        long runtimeOfShow = shows.getInt(3) * DateUtils.MINUTE_IN_MILLIS;
+                        long runtimeOfEpisodes = episodesWatched.getCount() * runtimeOfShow;
+                        stats.episodesWatchedRuntime(stats.episodesWatchedRuntime()
+                                + runtimeOfEpisodes);
+
+                        episodesWatched.close();
+                    }
+
                 }
 
                 stats.shows(shows.getCount()).showsContinuing(continuing)
@@ -86,7 +104,7 @@ public class StatsFragment extends SherlockFragment {
                 shows.close();
             }
 
-            // all episodes
+            // ...all episodes
             final Cursor episodes = mResolver.query(Episodes.CONTENT_URI, new String[] {
                     Episodes._ID
             }, null, null, null);
@@ -95,7 +113,7 @@ public class StatsFragment extends SherlockFragment {
                 episodes.close();
             }
 
-            // watched episodes
+            // ...watched episodes
             final Cursor episodesWatched = mResolver.query(Episodes.CONTENT_URI, new String[] {
                     Episodes._ID
             }, Episodes.WATCHED + "=1", null, null);
@@ -148,8 +166,7 @@ public class StatsFragment extends SherlockFragment {
                                 stats.episodesWatched()));
 
                 // runtime
-                String watchedDuration = getTimeDuration(stats.episodesWatched()
-                        * DateUtils.HOUR_IN_MILLIS);
+                String watchedDuration = getTimeDuration(stats.episodesWatchedRuntime());
                 ((TextView) getView().findViewById(R.id.textViewEpisodesRuntime))
                         .setText(watchedDuration);
             }
@@ -193,7 +210,7 @@ public class StatsFragment extends SherlockFragment {
         private int mShowsWithNext;
         private int mEpisodes;
         private int mEpisodesWatched;
-        private int mEpisodesWatchedRuntime;
+        private long mEpisodesWatchedRuntime;
 
         public int shows() {
             return mShows;
@@ -231,11 +248,11 @@ public class StatsFragment extends SherlockFragment {
             return this;
         }
 
-        public int episodesWatchedRuntime() {
+        public long episodesWatchedRuntime() {
             return mEpisodesWatchedRuntime;
         }
 
-        public Stats episodesWatchedRuntime(int runtime) {
+        public Stats episodesWatchedRuntime(long runtime) {
             mEpisodesWatchedRuntime = runtime;
             return this;
         }
