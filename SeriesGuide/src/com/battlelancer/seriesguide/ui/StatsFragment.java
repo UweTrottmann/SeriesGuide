@@ -33,11 +33,15 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.uwetrottmann.androidutils.AsyncTask;
 import com.uwetrottmann.seriesguide.R;
 
+import java.util.Locale;
+
 /**
  * Displays some statistics about the users show database, e.g. number of shows,
  * episodes, share of watched episodes, etc.
  */
 public class StatsFragment extends SherlockFragment {
+
+    private AsyncTask<Void, Stats, Stats> mStatsTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,10 +52,19 @@ public class StatsFragment extends SherlockFragment {
     public void onStart() {
         super.onStart();
 
-        new StatsTask(getActivity().getContentResolver()).execute();
+        mStatsTask = new StatsTask(getActivity().getContentResolver()).execute();
     }
 
-    private class StatsTask extends AsyncTask<Void, Long, Stats> {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mStatsTask != null && mStatsTask.getStatus() != AsyncTask.Status.FINISHED) {
+            mStatsTask.cancel(true);
+            mStatsTask = null;
+        }
+    }
+
+    private class StatsTask extends AsyncTask<Void, Stats, Stats> {
 
         private ContentResolver mResolver;
 
@@ -81,89 +94,112 @@ public class StatsFragment extends SherlockFragment {
                         withnext++;
 
                     }
-
-                    // calculate runtime of watched episodes per show
-                    final Cursor episodesWatched = mResolver.query(
-                            Episodes.buildEpisodesOfShowUri(shows.getString(0)), new String[] {
-                                Episodes._ID
-                            }, Episodes.WATCHED + "=1", null, null);
-                    if (episodesWatched != null) {
-                        long runtimeOfShow = shows.getInt(3) * DateUtils.MINUTE_IN_MILLIS;
-                        long runtimeOfEpisodes = episodesWatched.getCount() * runtimeOfShow;
-                        stats.episodesWatchedRuntime(stats.episodesWatchedRuntime()
-                                + runtimeOfEpisodes);
-
-                        episodesWatched.close();
-                    }
-
                 }
-
                 stats.shows(shows.getCount()).showsContinuing(continuing)
                         .showsWithNextEpisodes(withnext);
 
+                // ...all episodes
+                final Cursor episodes = mResolver.query(Episodes.CONTENT_URI, new String[] {
+                        Episodes._ID
+                }, null, null, null);
+                if (episodes != null) {
+                    stats.episodes(episodes.getCount());
+                    episodes.close();
+                }
+
+                // ...watched episodes
+                final Cursor episodesWatched = mResolver.query(Episodes.CONTENT_URI, new String[] {
+                        Episodes._ID
+                }, Episodes.WATCHED + "=1", null, null);
+                if (episodesWatched != null) {
+                    stats.episodesWatched(episodesWatched.getCount());
+                    episodesWatched.close();
+                }
+
+                // report intermediate results before longer running op
+                publishProgress(stats);
+
+                // calculate runtime of watched episodes per show
+                shows.moveToPosition(-1);
+                long totalRuntime = 0;
+                while (shows.moveToNext()) {
+                    final Cursor episodesWatchedOfShow = mResolver.query(
+                            Episodes.buildEpisodesOfShowUri(shows.getString(0)), new String[] {
+                                Episodes._ID
+                            }, Episodes.WATCHED + "=1", null, null);
+                    if (episodesWatchedOfShow != null) {
+                        long runtimeOfShow = shows.getInt(3) * DateUtils.MINUTE_IN_MILLIS;
+                        long runtimeOfEpisodes = episodesWatchedOfShow.getCount() * runtimeOfShow;
+                        totalRuntime += runtimeOfEpisodes;
+
+                        episodesWatchedOfShow.close();
+                    }
+                }
+                stats.episodesWatchedRuntime(totalRuntime);
+
                 shows.close();
-            }
-
-            // ...all episodes
-            final Cursor episodes = mResolver.query(Episodes.CONTENT_URI, new String[] {
-                    Episodes._ID
-            }, null, null, null);
-            if (episodes != null) {
-                stats.episodes(episodes.getCount());
-                episodes.close();
-            }
-
-            // ...watched episodes
-            final Cursor episodesWatched = mResolver.query(Episodes.CONTENT_URI, new String[] {
-                    Episodes._ID
-            }, Episodes.WATCHED + "=1", null, null);
-            if (episodesWatched != null) {
-                stats.episodesWatched(episodesWatched.getCount());
-                episodesWatched.close();
             }
 
             return stats;
         }
 
         @Override
-        protected void onPostExecute(Stats stats) {
+        protected void onProgressUpdate(Stats... values) {
             if (isAdded()) {
+                Stats stats = values[0];
+
                 // all shows
-                ((TextView) getView().findViewById(R.id.textViewShows)).setText(String
-                        .valueOf(stats
-                                .shows()));
+                ((TextView) getView().findViewById(R.id.textViewShows)).setText(
+                        String.valueOf(stats.shows()));
 
                 // shows with next episodes
-                ProgressBar progressShowsWithNext = (ProgressBar) getView().findViewById(
-                        R.id.progressBarShowsWithNext);
+                ProgressBar progressShowsWithNext = (ProgressBar) findAndShowView(R.id.progressBarShowsWithNext);
                 progressShowsWithNext.setMax(stats.shows());
                 progressShowsWithNext.setProgress(stats.showsWithNextEpisodes());
-                ((TextView) getView().findViewById(R.id.textViewShowsWithNext)).setText(getString(
-                        R.string.shows_with_next, stats.showsWithNextEpisodes()));
+
+                ((TextView) findAndShowView(R.id.textViewShowsWithNext)).setText(getString(
+                        R.string.shows_with_next,
+                        stats.showsWithNextEpisodes()).toUpperCase(Locale.getDefault()));
 
                 // continuing shows
-                ProgressBar progressShowsContinuing = (ProgressBar) getView().findViewById(
-                        R.id.progressBarShowsContinuing);
+                ProgressBar progressShowsContinuing = (ProgressBar) findAndShowView(R.id.progressBarShowsContinuing);
                 progressShowsContinuing.setMax(stats.shows());
                 progressShowsContinuing.setProgress(stats.showsContinuing());
-                ((TextView) getView().findViewById(R.id.textViewShowsContinuing))
-                        .setText(getString(R.string.shows_continuing,
-                                stats.showsContinuing()));
+
+                ((TextView) findAndShowView(R.id.textViewShowsContinuing)).setText(getString(
+                        R.string.shows_continuing,
+                        stats.showsContinuing()).toUpperCase(Locale.getDefault()));
 
                 // all episodes
-                ((TextView) getView().findViewById(R.id.textViewEpisodes)).setText(String
-                        .valueOf(stats
-                                .episodes()));
+                ((TextView) getView().findViewById(R.id.textViewEpisodes)).setText(
+                        String.valueOf(stats.episodes()));
 
                 // watched episodes
-                ProgressBar progressEpisodesWatched = (ProgressBar) getView().findViewById(
-                        R.id.progressBarEpisodesWatched);
+                ProgressBar progressEpisodesWatched = (ProgressBar) findAndShowView(R.id.progressBarEpisodesWatched);
                 progressEpisodesWatched.setMax(stats.episodes());
                 progressEpisodesWatched.setProgress(stats.episodesWatched());
 
-                ((TextView) getView().findViewById(R.id.textViewEpisodesWatched))
-                        .setText(getString(R.string.episodes_watched,
-                                stats.episodesWatched()));
+                ((TextView) findAndShowView(R.id.textViewEpisodesWatched)).setText(getString(
+                        R.string.episodes_watched,
+                        stats.episodesWatched()).toUpperCase(Locale.getDefault()));
+            }
+        }
+
+        private View findAndShowView(int viewResId) {
+            View v = getView().findViewById(viewResId);
+            if (v.getVisibility() != View.VISIBLE) {
+                v.setVisibility(View.VISIBLE);
+            }
+            return v;
+        }
+
+        @Override
+        protected void onPostExecute(Stats stats) {
+            if (isAdded()) {
+                View progress = getView().findViewById(R.id.progressEpisodesRuntime);
+                if (progress.getVisibility() == View.VISIBLE) {
+                    progress.setVisibility(View.GONE);
+                }
 
                 // runtime
                 String watchedDuration = getTimeDuration(stats.episodesWatchedRuntime());

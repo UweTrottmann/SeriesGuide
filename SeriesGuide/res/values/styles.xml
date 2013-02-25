@@ -65,6 +65,11 @@
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
     </style>
 
+    <style name="TextAppearance.HyperLarge">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-thin</item>
+        <item name="android:textSize">@dimen/text_size_hyperlarge</item>
+    </style>
+
     <!-- Widget styles -->
     <style name="Widget"></style>
 
@@ -305,6 +310,12 @@
     <style name="CenteredColumn">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">fill</item>
+    </style>
+
+    <style name="CenteredWrappingColumn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">fill</item>
     </style>
 

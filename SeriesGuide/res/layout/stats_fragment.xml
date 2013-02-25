@@ -4,8 +4,7 @@
     android:layout_height="match_parent" >
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/CenteredColumn"
         android:animateLayoutChanges="true"
         android:padding="@dimen/large_padding" >
 
@@ -15,12 +14,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="@string/norating"
-            android:textAppearance="?attr/textAppearanceSgXLargeLight"
-            android:textIsSelectable="true"
-            android:textSize="@dimen/text_size_ultralarge" />
+            android:textAppearance="@style/TextAppearance.HyperLarge"
+            android:textIsSelectable="true" />
 
         <TextView
             android:id="@+id/textView1"
@@ -28,7 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewShows"
             android:layout_centerHorizontal="true"
-            android:text="@string/shows" />
+            android:text="@string/shows"
+            android:textAllCaps="true" />
 
         <ProgressBar
             android:id="@+id/progressBarShowsWithNext"
@@ -36,7 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView1"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/textViewShowsWithNext"
@@ -44,7 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/progressBarShowsWithNext"
-            android:textIsSelectable="true" />
+            android:textIsSelectable="true"
+            android:visibility="invisible" />
 
         <ProgressBar
             android:id="@+id/progressBarShowsContinuing"
@@ -52,7 +53,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewShowsWithNext"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/textViewShowsContinuing"
@@ -60,7 +62,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/progressBarShowsContinuing"
-            android:textIsSelectable="true" />
+            android:textIsSelectable="true"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/textViewEpisodes"
@@ -71,9 +74,8 @@
             android:layout_marginTop="32dp"
             android:gravity="center"
             android:text="@string/norating"
-            android:textAppearance="?attr/textAppearanceSgXLargeLight"
-            android:textIsSelectable="true"
-            android:textSize="@dimen/text_size_ultralarge" />
+            android:textAppearance="@style/TextAppearance.HyperLarge"
+            android:textIsSelectable="true" />
 
         <TextView
             android:id="@+id/textView2"
@@ -81,7 +83,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewEpisodes"
             android:layout_centerHorizontal="true"
-            android:text="@string/episodes" />
+            android:text="@string/episodes"
+            android:textAllCaps="true" />
 
         <ProgressBar
             android:id="@+id/progressBarEpisodesWatched"
@@ -89,7 +92,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView2"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/textViewEpisodesWatched"
@@ -97,7 +101,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/progressBarEpisodesWatched"
-            android:textIsSelectable="true" />
+            android:textIsSelectable="true"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/textViewEpisodesRuntime"
@@ -106,10 +111,19 @@
             android:layout_below="@+id/textViewEpisodesWatched"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="32dp"
+            android:fontFamily="sans-serif-thin"
             android:gravity="center"
             android:text="@string/norating"
             android:textAppearance="?attr/textAppearanceSgXLargeLight"
             android:textIsSelectable="true" />
+
+        <ProgressBar
+            android:id="@+id/progressEpisodesRuntime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/textViewEpisodesRuntime"
+            android:layout_alignTop="@+id/textViewEpisodesRuntime"
+            android:layout_toRightOf="@+id/textViewEpisodesRuntime" />
 
         <TextView
             android:id="@+id/textView3"
@@ -117,7 +131,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewEpisodesRuntime"
             android:layout_centerHorizontal="true"
-            android:text="@string/runtime_all_episodes" />
+            android:text="@string/runtime_all_episodes"
+            android:textAllCaps="true" />
     </RelativeLayout>
 
 </ScrollView>
