@@ -44,6 +44,7 @@ import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TabPageIndicator;
 
 import net.simonvt.menudrawer.MenuDrawer;
+import java.util.Locale;
 
 /**
  * Hosts various fragments in a {@link ViewPager} which allow adding shows to
@@ -180,22 +181,29 @@ public class AddActivity extends BaseActivity implements OnAddShowListener {
             if (getCount() == TRAKT_CONNECTED_TABCOUNT) {
                 switch (position) {
                     case TRENDING_TAB_POSITION:
-                        return mContext.getString(R.string.trending).toUpperCase();
+                        return mContext.getString(R.string.trending).toUpperCase(
+                                Locale.getDefault());
                     case RECOMMENDED_TAB_POSITION:
-                        return mContext.getString(R.string.recommended).toUpperCase();
+                        return mContext.getString(R.string.recommended).toUpperCase(
+                                Locale.getDefault());
                     case LIBRARY_TAB_POSITION:
-                        return mContext.getString(R.string.library).toUpperCase();
+                        return mContext.getString(R.string.library)
+                                .toUpperCase(Locale.getDefault());
                     case WATCHLIST_TAB_POSITION:
-                        return mContext.getString(R.string.watchlist).toUpperCase();
+                        return mContext.getString(R.string.watchlist).toUpperCase(
+                                Locale.getDefault());
                     case SEARCH_TAB_CONNECTED_POSITION:
-                        return mContext.getString(R.string.search_button).toUpperCase();
+                        return mContext.getString(R.string.search_button).toUpperCase(
+                                Locale.getDefault());
                 }
             } else {
                 switch (position) {
                     case TRENDING_TAB_POSITION:
-                        return mContext.getString(R.string.trending).toUpperCase();
+                        return mContext.getString(R.string.trending).toUpperCase(
+                                Locale.getDefault());
                     case SEARCH_TAB_DEFAULT_POSITION:
-                        return mContext.getString(R.string.search_button).toUpperCase();
+                        return mContext.getString(R.string.search_button).toUpperCase(
+                                Locale.getDefault());
                 }
             }
             return "";
