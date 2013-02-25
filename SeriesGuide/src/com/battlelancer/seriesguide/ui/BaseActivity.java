@@ -55,6 +55,8 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
         mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);
         mMenuDrawer.setMenuView(R.layout.menu_frame);
         mMenuDrawer.setTouchMode(MenuDrawer.TOUCH_MODE_FULLSCREEN);
+        // setting size in pixels, oh come on...
+        // mMenuDrawer.setMenuSize(R.dimen.slidingmenu_width);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment f = new SlidingMenuFragment();
