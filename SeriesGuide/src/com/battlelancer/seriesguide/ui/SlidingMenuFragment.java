@@ -90,7 +90,7 @@ public class SlidingMenuFragment extends ListFragment {
         // close menu any way
         if (getActivity() instanceof BaseActivity) {
             final BaseActivity activity = (BaseActivity) getActivity();
-            activity.getMenu().closeMenu();
+            activity.getMenu().closeMenu(false);
             // Handler h = new Handler();
             // h.postDelayed(new Runnable() {
             // @Override
