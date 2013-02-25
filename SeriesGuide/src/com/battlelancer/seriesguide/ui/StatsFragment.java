@@ -66,20 +66,24 @@ public class StatsFragment extends SherlockFragment {
             // number of...
             // all shows
             final Cursor shows = mResolver.query(Shows.CONTENT_URI, new String[] {
-                    Shows._ID
+                    Shows._ID, Shows.STATUS, Shows.NEXTEPISODE
             }, null, null, null);
             if (shows != null) {
-                stats.shows(shows.getCount());
-                shows.close();
-            }
+                int continuing = 0;
+                int withnext = 0;
+                while (shows.moveToNext()) {
+                    if (shows.getInt(1) == 1) {
+                        continuing++;
+                    }
+                    if (shows.getInt(2) != 0) {
+                        withnext++;
+                    }
+                }
 
-            // continuing shows
-            final Cursor showsContinuing = mResolver.query(Shows.CONTENT_URI, new String[] {
-                    Shows._ID
-            }, Shows.STATUS + "=1", null, null);
-            if (showsContinuing != null) {
-                stats.showsContinuing(showsContinuing.getCount());
-                showsContinuing.close();
+                stats.shows(shows.getCount()).showsContinuing(continuing)
+                        .showsWithNextEpisodes(withnext);
+
+                shows.close();
             }
 
             // all episodes
@@ -110,6 +114,14 @@ public class StatsFragment extends SherlockFragment {
                 ((TextView) getView().findViewById(R.id.textViewShows)).setText(String
                         .valueOf(stats
                                 .shows()));
+
+                // shows with next episodes
+                ProgressBar progressShowsWithNext = (ProgressBar) getView().findViewById(
+                        R.id.progressBarShowsWithNext);
+                progressShowsWithNext.setMax(stats.shows());
+                progressShowsWithNext.setProgress(stats.showsWithNextEpisodes());
+                ((TextView) getView().findViewById(R.id.textViewShowsWithNext)).setText(getString(
+                        R.string.shows_with_next, stats.showsWithNextEpisodes()));
 
                 // continuing shows
                 ProgressBar progressShowsContinuing = (ProgressBar) getView().findViewById(
@@ -178,6 +190,7 @@ public class StatsFragment extends SherlockFragment {
     private static class Stats {
         private int mShows;
         private int mShowsContinuing;
+        private int mShowsWithNext;
         private int mEpisodes;
         private int mEpisodesWatched;
         private int mEpisodesWatchedRuntime;
@@ -188,6 +201,15 @@ public class StatsFragment extends SherlockFragment {
 
         public Stats shows(int number) {
             mShows = number;
+            return this;
+        }
+
+        public int showsWithNextEpisodes() {
+            return mShowsWithNext;
+        }
+
+        public Stats showsWithNextEpisodes(int number) {
+            mShowsWithNext = number;
             return this;
         }
 

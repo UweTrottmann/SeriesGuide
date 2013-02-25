@@ -31,7 +31,7 @@
             android:text="@string/shows" />
 
         <ProgressBar
-            android:id="@+id/progressBarShowsWatched"
+            android:id="@+id/progressBarShowsWithNext"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,11 +39,11 @@
             android:layout_centerHorizontal="true" />
 
         <TextView
-            android:id="@+id/textViewShowsWatched"
+            android:id="@+id/textViewShowsWithNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/progressBarShowsWatched"
+            android:layout_below="@+id/progressBarShowsWithNext"
             android:textIsSelectable="true" />
 
         <ProgressBar
@@ -51,7 +51,7 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewShowsWatched"
+            android:layout_below="@+id/textViewShowsWithNext"
             android:layout_centerHorizontal="true" />
 
         <TextView

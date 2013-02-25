@@ -64,7 +64,7 @@
     <string name="trailer">Trailer</string>
     
     <!-- Statistics -->
-    <string name="shows_watched">%s completely watched</string>
+    <string name="shows_with_next">%s with next episodes</string>
     <string name="shows_continuing">%s continuing</string>
     <string name="episodes_watched">%s watched</string>
     <string name="runtime_all_episodes">Runtime of all watched episodes</string>
