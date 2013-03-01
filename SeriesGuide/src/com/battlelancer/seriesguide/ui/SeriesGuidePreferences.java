@@ -44,7 +44,6 @@ import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
-import com.battlelancer.seriesguide.util.AppSettings;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -195,8 +194,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             setupAdvancedSettings(this, findPreference(KEY_THEME), getIntent(),
                     findPreference(KEY_UPCOMING_LIMIT), findPreference(KEY_NUMBERFORMAT),
                     findPreference(KEY_OFFSET), findPreference(KEY_GOOGLEANALYTICS),
-                    findPreference(KEY_CLEAR_CACHE),
-                    findPreference(AppSettings.KEY_WIDGET_BACKGROUND_COLOR));
+                    findPreference(KEY_CLEAR_CACHE));
         } else if (action != null && action.equals(ACTION_PREFS_ABOUT)) {
             addPreferencesFromResource(R.xml.settings_about);
             setupAboutSettings(this, findPreference(KEY_ABOUT));
@@ -306,8 +304,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     protected static void setupAdvancedSettings(final Activity activity, Preference themePref,
             final Intent startIntent, Preference upcomingPref, Preference numberFormatPref,
-            Preference offsetPref, Preference analyticsPref, Preference clearCachePref,
-            Preference widgetBackground) {
+            Preference offsetPref, Preference analyticsPref, Preference clearCachePref) {
         // Theme switcher
         themePref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
@@ -350,14 +347,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 return false;
             }
         });
-
-        // widget background
-        if (Utils.isSupporterChannel(activity)) {
-            setListPreferenceSummary((ListPreference) widgetBackground);
-        } else {
-            widgetBackground.setEnabled(false);
-            widgetBackground.setSummary(R.string.onlyx);
-        }
 
         // show currently set values for list prefs
         setListPreferenceSummary((ListPreference) themePref);
@@ -434,8 +423,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(KEY_UPCOMING_LIMIT) || key.equals(KEY_LANGUAGE)
                 || key.equals(KEY_NUMBERFORMAT) || key.equals(KEY_THEME)
-                || key.equals(KEY_NOTIFICATIONS_THRESHOLD)
-                || key.equals(AppSettings.KEY_WIDGET_BACKGROUND_COLOR)) {
+                || key.equals(KEY_NOTIFICATIONS_THRESHOLD)) {
             Preference pref = findPreference(key);
             if (pref != null) {
                 setListPreferenceSummary((ListPreference) pref);
@@ -516,8 +504,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 setupAdvancedSettings(getActivity(), findPreference(KEY_THEME), getActivity()
                         .getIntent(), findPreference(KEY_UPCOMING_LIMIT),
                         findPreference(KEY_NUMBERFORMAT), findPreference(KEY_OFFSET),
-                        findPreference(KEY_GOOGLEANALYTICS), findPreference(KEY_CLEAR_CACHE),
-                        findPreference(AppSettings.KEY_WIDGET_BACKGROUND_COLOR));
+                        findPreference(KEY_GOOGLEANALYTICS), findPreference(KEY_CLEAR_CACHE));
             } else if ("about".equals(settings)) {
                 addPreferencesFromResource(R.xml.settings_about);
                 setupAboutSettings(getActivity(), findPreference(KEY_ABOUT));
@@ -544,8 +531,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (key.equals(KEY_UPCOMING_LIMIT) || key.equals(KEY_LANGUAGE)
                     || key.equals(KEY_NUMBERFORMAT) || key.equals(KEY_THEME)
-                    || key.equals(KEY_NOTIFICATIONS_THRESHOLD)
-                    || key.equals(AppSettings.KEY_WIDGET_BACKGROUND_COLOR)) {
+                    || key.equals(KEY_NOTIFICATIONS_THRESHOLD)) {
                 Preference pref = findPreference(key);
                 if (pref != null) {
                     setListPreferenceSummary((ListPreference) pref);

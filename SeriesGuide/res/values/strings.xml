@@ -62,13 +62,14 @@
     <string name="movies_search_hint">Type a movie title</string>
     <string name="movies_empty">Search for a movie above.</string>
     <string name="trailer">Trailer</string>
-    
+
     <!-- Statistics -->
     <string name="shows_with_next">%s with next episodes</string>
     <string name="shows_continuing">%s continuing</string>
     <string name="episodes_watched">%s watched</string>
     <string name="runtime_all_episodes">Runtime of all watched episodes</string>
-    <plurals name="days_plural">
+
+    <plurals name="days_plural">
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>
     </plurals>
@@ -303,15 +304,6 @@
     <!-- Appearance settings -->
     <string name="pref_appearance">Appearance</string>
     <string name="pref_theme">App Theme</string>
-    <string name="pref_widget_opacity">Widget background</string>
-
-    <string-array name="widgetOpacity">
-        <item>Transparent</item>
-        <item>25% black</item>
-        <item>50% black</item>
-        <item>75% black</item>
-        <item>Black</item>
-    </string-array>
 
     <!-- Other advanced settings -->
     <string name="pref_other">Other</string>
@@ -427,14 +419,30 @@
         <item>one hour in advance</item>
     </string-array>
 
-    <!-- Widgets -->
-    <string name="choose_list">Choose activity list</string>
-    <string name="hide_watched">Hide watched episodes</string>
-    <string name="add_widget">Add widget</string>
-    <string name="widget_label">SeriesGuide</string>
+    <!-- Legacy Widgets -->
     <string name="smallwidget">SeriesGuide (small)</string>
     <string name="bigwidget">SeriesGuide (middle)</string>
     <string name="largewidget">SeriesGuide (large)</string>
+
+    <!-- List Widget -->
+    <string name="widget_label">SeriesGuide</string>
+    <string name="hide_watched">Hide watched episodes</string>
+    <string name="pref_widget_opacity">Widget background</string>
+
+    <string-array name="widgetOpacity">
+        <item>Transparent</item>
+        <item>25% black</item>
+        <item>50% black</item>
+        <item>75% black</item>
+        <item>Black</item>
+    </string-array>
+
+    <string name="pref_widget_type">Widget type</string>
+
+    <string-array name="widgetType">
+        <item>Upcoming</item>
+        <item>Recent</item>
+    </string-array>
 
     <!-- DashClock extension -->
     <string name="dashclock_extension_label">Upcoming episode</string>

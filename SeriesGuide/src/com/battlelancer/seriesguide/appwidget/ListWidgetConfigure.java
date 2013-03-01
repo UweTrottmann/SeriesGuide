@@ -17,32 +17,28 @@
 
 package com.battlelancer.seriesguide.appwidget;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.widget.CheckBox;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.RemoteViews;
 
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.battlelancer.seriesguide.enums.WidgetListType;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
-import com.battlelancer.seriesguide.util.AppSettings;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
-public class ListWidgetConfigure extends SherlockActivity {
+/**
+ * Hosts a {@link ListWidgetPreferenceFragment} to allow changing settings of
+ * the associated app widget.
+ */
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+public class ListWidgetConfigure extends Activity {
 
     private int mAppWidgetId;
-
-    private RadioGroup mRadioGroupType;
-
-    private RadioButton mRadioButtonRecent;
-
-    private CheckBox mCheckUnwatched;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,17 +51,6 @@ public class ListWidgetConfigure extends SherlockActivity {
         // if the user backs out, no widget gets added
         setResult(RESULT_CANCELED);
 
-        mRadioGroupType = (RadioGroup) findViewById(R.id.radioGroupListType);
-        mRadioButtonRecent = (RadioButton) findViewById(R.id.radioRecent);
-        mCheckUnwatched = (CheckBox) findViewById(R.id.checkBoxUnwatched);
-
-        // non-supporters need to click the widget to get to recent
-        if (!Utils.isSupporterChannel(this)) {
-            mRadioButtonRecent.setEnabled(false);
-            mRadioButtonRecent.setText(getString(R.string.recent) + " ("
-                    + getString(R.string.onlyx) + ")");
-        }
-
         // get given app widget id
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -77,19 +62,18 @@ public class ListWidgetConfigure extends SherlockActivity {
         // If they gave us an intent without the widget id, just bail.
         if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish();
+            return;
         }
 
-        // restore settings for this widget
-        int listType = AppSettings.getWidgetListType(this, mAppWidgetId);
-        mRadioGroupType.check(WidgetListType.values()[listType].id);
-
-        boolean hidesWatched = AppSettings.getWidgetHidesWatched(this, mAppWidgetId);
-        mCheckUnwatched.setChecked(hidesWatched);
+        ListWidgetPreferenceFragment f = ListWidgetPreferenceFragment.newInstance(mAppWidgetId);
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.content_container, f);
+        ft.commit();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportMenuInflater().inflate(R.menu.widget_config_menu, menu);
+        getMenuInflater().inflate(R.menu.widget_config_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -103,12 +87,6 @@ public class ListWidgetConfigure extends SherlockActivity {
     }
 
     private void onUpdateWidget() {
-        // save values for this widget to be used by ListWidgetService
-        AppSettings.saveWidgetConfiguration(this, mAppWidgetId,
-                WidgetListType.fromId(mRadioGroupType.getCheckedRadioButtonId()).index,
-                mCheckUnwatched.isChecked());
-
-        // update widget
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         RemoteViews views = ListWidgetProvider.buildRemoteViews(this, mAppWidgetId);
         appWidgetManager.updateAppWidget(mAppWidgetId, views);

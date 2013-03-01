@@ -18,23 +18,44 @@ package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
-import com.battlelancer.seriesguide.enums.WidgetListType;
 
 /**
  * Retrieve settings values.
  */
 public class AppSettings {
 
-    public static final String KEY_WIDGET_BACKGROUND_COLOR = "widget_background_color";
+    public static final String SETTINGS_LIST_WIDGETS = "ListWidgetPreferences";
 
-    public static int getWidgetBackgroundColor(Context context) {
-        // taken from https://code.google.com/p/dashclock
-        int opacity = 50;
+    public static final String KEY_PREFIX_WIDGET_BACKGROUND_COLOR = "background_color_";
+
+    public static final String KEY_PREFIX_WIDGET_LISTTYPE = "type_";
+
+    public static final String KEY_PREFIX_WIDGET_HIDE_WATCHED = "unwatched_";
+
+    private static final int DEFAULT_WIDGET_BACKGROUND_OPACITY = 50;
+
+    public static int getWidgetListType(Context context, int appWidgetId) {
+        int type = 0;
         try {
-            opacity = Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context)
-                    .getString(KEY_WIDGET_BACKGROUND_COLOR, "50"));
+            type = Integer.parseInt(context.getSharedPreferences(SETTINGS_LIST_WIDGETS, 0)
+                    .getString(KEY_PREFIX_WIDGET_LISTTYPE + appWidgetId, "0"));
+        } catch (NumberFormatException ignored) {
+        }
+
+        return type;
+    }
+
+    public static boolean getWidgetHidesWatched(Context context, int appWidgetId) {
+        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_LIST_WIDGETS, 0);
+        return prefs.getBoolean(KEY_PREFIX_WIDGET_HIDE_WATCHED + appWidgetId, false);
+    }
+
+    public static int getWidgetBackgroundColor(Context context, int appWidgetId) {
+        // taken from https://code.google.com/p/dashclock
+        int opacity = DEFAULT_WIDGET_BACKGROUND_OPACITY;
+        try {
+            opacity = Integer.parseInt(context.getSharedPreferences(SETTINGS_LIST_WIDGETS, 0)
+                    .getString(KEY_PREFIX_WIDGET_BACKGROUND_COLOR + appWidgetId, "50"));
         } catch (NumberFormatException ignored) {
         }
 
@@ -43,33 +64,6 @@ public class AppSettings {
         } else {
             return (opacity * 256 / 100) << 24;
         }
-    }
-
-    public static final String SETTINGS_LIST_WIDGETS = "ListWidgetPreferences";
-
-    public static final String KEY_PREFIX_LISTTYPE = "listtype_";
-
-    public static final String KEY_PREFIX_HIDE_WATCHED = "unwatched_";
-
-    public static int getWidgetListType(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_LIST_WIDGETS, 0);
-        return prefs.getInt(KEY_PREFIX_LISTTYPE + appWidgetId, WidgetListType.UPCOMING.index);
-    }
-
-    public static boolean getWidgetHidesWatched(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_LIST_WIDGETS, 0);
-        return prefs.getBoolean(KEY_PREFIX_HIDE_WATCHED + appWidgetId, false);
-    }
-
-    public static boolean saveWidgetConfiguration(Context context, int appWidgetId, int listType,
-            boolean displaysWatched) {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(SETTINGS_LIST_WIDGETS, 0)
-                .edit();
-
-        prefs.putInt(KEY_PREFIX_LISTTYPE + appWidgetId, listType);
-        prefs.putBoolean(KEY_PREFIX_HIDE_WATCHED + appWidgetId, displaysWatched);
-
-        return prefs.commit();
     }
 
 }

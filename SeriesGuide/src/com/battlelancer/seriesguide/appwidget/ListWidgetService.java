@@ -29,7 +29,6 @@ import android.preference.PreferenceManager;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.battlelancer.seriesguide.enums.WidgetListType;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.util.AppSettings;
@@ -72,7 +71,7 @@ public class ListWidgetService extends RemoteViewsService {
             boolean isHideWatched = AppSettings.getWidgetHidesWatched(mContext, mAppWidgetId);
             final int typeIndex = AppSettings.getWidgetListType(mContext, mAppWidgetId);
 
-            if (typeIndex == WidgetListType.RECENT.index) {
+            if (typeIndex == 1) {
                 mEpisodeCursor = DBUtils.getRecentEpisodes(isHideWatched, mContext);
             } else {
                 mEpisodeCursor = DBUtils.getUpcomingEpisodes(isHideWatched, mContext);

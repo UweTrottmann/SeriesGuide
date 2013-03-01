@@ -32,7 +32,6 @@ import android.support.v4.app.TaskStackBuilder;
 import android.text.format.DateUtils;
 import android.widget.RemoteViews;
 
-import com.battlelancer.seriesguide.enums.WidgetListType;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
@@ -124,7 +123,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
         // change title based on config
         int typeIndex = AppSettings.getWidgetListType(context, appWidgetId);
         int activityTab = 0;
-        if (typeIndex == WidgetListType.RECENT.index) {
+        if (typeIndex == 1) {
             activityTab = 1;
             rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.recent));
         } else {
@@ -133,7 +132,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
         }
 
         // set the background color
-        int bgColor = AppSettings.getWidgetBackgroundColor(context);
+        int bgColor = AppSettings.getWidgetBackgroundColor(context, appWidgetId);
         rv.setInt(R.id.container, "setBackgroundColor", bgColor);
 
         // Activity button

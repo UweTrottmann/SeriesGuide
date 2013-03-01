@@ -1,48 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <LinearLayout
-        style="@style/ScrollingLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/textViewListType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/choose_list"
-            android:textAllCaps="true"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <RadioGroup
-            android:id="@+id/radioGroupListType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <RadioButton
-                android:id="@+id/radioUpcoming"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/upcoming" />
-
-            <RadioButton
-                android:id="@+id/radioRecent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/recent" />
-        </RadioGroup>
-
-        <CheckBox
-            android:id="@+id/checkBoxUnwatched"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_padding"
-            android:layout_marginTop="@dimen/default_padding"
-            android:text="@string/hide_watched" />
-    </LinearLayout>
-
-</ScrollView>
+</FrameLayout>
