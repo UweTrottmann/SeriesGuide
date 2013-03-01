@@ -43,13 +43,6 @@
             android:layout_marginBottom="@dimen/default_padding"
             android:layout_marginTop="@dimen/default_padding"
             android:text="@string/hide_watched" />
-
-        <Button
-            android:id="@+id/buttonConfigDone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/add_widget" />
     </LinearLayout>
 
 </ScrollView>

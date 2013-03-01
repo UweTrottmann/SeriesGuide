@@ -20,14 +20,14 @@ package com.battlelancer.seriesguide.appwidget;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RemoteViews;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.enums.WidgetListType;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.AppSettings;
@@ -54,13 +54,6 @@ public class ListWidgetConfigure extends SherlockActivity {
 
         // if the user backs out, no widget gets added
         setResult(RESULT_CANCELED);
-
-        findViewById(R.id.buttonConfigDone).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onUpdateWidget();
-            }
-        });
 
         mRadioGroupType = (RadioGroup) findViewById(R.id.radioGroupListType);
         mRadioButtonRecent = (RadioButton) findViewById(R.id.radioRecent);
@@ -92,6 +85,21 @@ public class ListWidgetConfigure extends SherlockActivity {
 
         boolean hidesWatched = AppSettings.getWidgetHidesWatched(this, mAppWidgetId);
         mCheckUnwatched.setChecked(hidesWatched);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.widget_config_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_save) {
+            onUpdateWidget();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void onUpdateWidget() {
