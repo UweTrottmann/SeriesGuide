@@ -76,6 +76,13 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
 
     @Override
     public void onBackPressed() {
+        // close an open menu first
+        final int drawerState = mMenuDrawer.getDrawerState();
+        if (drawerState == MenuDrawer.STATE_OPEN || drawerState == MenuDrawer.STATE_OPENING) {
+            mMenuDrawer.closeMenu();
+            return;
+        }
+
         super.onBackPressed();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
