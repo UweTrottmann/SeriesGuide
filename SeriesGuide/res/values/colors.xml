@@ -36,5 +36,7 @@
 
     <color name="green_bright">#ff65f526</color>
     <color name="green_dark">#ff05A30D</color>
+    
+    <color name="widget_default_background">#80000000</color>
 
 </resources>
