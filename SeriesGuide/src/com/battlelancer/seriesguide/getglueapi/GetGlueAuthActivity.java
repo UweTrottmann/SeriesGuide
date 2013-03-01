@@ -62,9 +62,10 @@ public class GetGlueAuthActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+        // webview uses a progress bar
         requestWindowFeature(Window.FEATURE_PROGRESS);
+
+        super.onCreate(savedInstanceState);
 
         mWebview = new WebView(this);
         setContentView(mWebview);
