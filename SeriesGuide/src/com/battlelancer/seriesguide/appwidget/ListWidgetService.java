@@ -32,6 +32,7 @@ import android.widget.RemoteViewsService;
 import com.battlelancer.seriesguide.enums.WidgetListType;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
+import com.battlelancer.seriesguide.util.AppSettings;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
@@ -52,10 +53,6 @@ public class ListWidgetService extends RemoteViewsService {
 
         private Cursor mEpisodeCursor;
 
-        private WidgetListType mType;
-
-        private boolean mIsOnlyUnwatched;
-
         public ListRemoteViewsFactory(Context context, Intent intent) {
             mContext = context;
             mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
@@ -68,30 +65,17 @@ public class ListWidgetService extends RemoteViewsService {
             // content etc, should be deferred to onDataSetChanged() or
             // getViewAt(). Taking more than 20 seconds in this call will result
             // in an ANR.
-            final SharedPreferences prefs = getSharedPreferences(ListWidgetConfigure.PREFS_NAME, 0);
-            final int typeIndex = prefs.getInt(
-                    ListWidgetConfigure.PREF_LISTTYPE_KEY + mAppWidgetId,
-                    WidgetListType.UPCOMING.index);
-            if (typeIndex == WidgetListType.RECENT.index) {
-                mType = WidgetListType.RECENT;
-            } else {
-                mType = WidgetListType.UPCOMING;
-            }
-            mIsOnlyUnwatched = prefs.getBoolean(ListWidgetConfigure.PREF_WATCHEDONLY_KEY
-                    + mAppWidgetId, false);
-
-            queryForData();
+            onQueryForData();
         }
 
-        private void queryForData() {
-            switch (mType) {
-                case RECENT:
-                    mEpisodeCursor = DBUtils.getRecentEpisodes(mIsOnlyUnwatched, mContext);
-                    break;
-                case UPCOMING:
-                default:
-                    mEpisodeCursor = DBUtils.getUpcomingEpisodes(mIsOnlyUnwatched, mContext);
-                    break;
+        private void onQueryForData() {
+            boolean isHideWatched = AppSettings.getWidgetHidesWatched(mContext, mAppWidgetId);
+            final int typeIndex = AppSettings.getWidgetListType(mContext, mAppWidgetId);
+
+            if (typeIndex == WidgetListType.RECENT.index) {
+                mEpisodeCursor = DBUtils.getRecentEpisodes(isHideWatched, mContext);
+            } else {
+                mEpisodeCursor = DBUtils.getUpcomingEpisodes(isHideWatched, mContext);
             }
         }
 
@@ -200,7 +184,7 @@ public class ListWidgetService extends RemoteViewsService {
             if (mEpisodeCursor != null) {
                 mEpisodeCursor.close();
             }
-            queryForData();
+            onQueryForData();
         }
     }
 }

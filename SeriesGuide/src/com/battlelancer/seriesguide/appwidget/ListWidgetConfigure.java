@@ -19,7 +19,6 @@ package com.battlelancer.seriesguide.appwidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,16 +30,11 @@ import android.widget.RemoteViews;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.battlelancer.seriesguide.enums.WidgetListType;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.AppSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
 public class ListWidgetConfigure extends SherlockActivity {
-
-    public static final String PREFS_NAME = "ListWidgetPreferences";
-
-    public static final String PREF_LISTTYPE_KEY = "listtype_";
-
-    public static final String PREF_WATCHEDONLY_KEY = "unwatched_";
 
     private int mAppWidgetId;
 
@@ -64,12 +58,11 @@ public class ListWidgetConfigure extends SherlockActivity {
         findViewById(R.id.buttonConfigDone).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                onSetupWidget();
+                onUpdateWidget();
             }
         });
 
         mRadioGroupType = (RadioGroup) findViewById(R.id.radioGroupListType);
-        mRadioGroupType.check(R.id.radioUpcoming);
         mRadioButtonRecent = (RadioButton) findViewById(R.id.radioRecent);
         mCheckUnwatched = (CheckBox) findViewById(R.id.checkBoxUnwatched);
 
@@ -92,15 +85,20 @@ public class ListWidgetConfigure extends SherlockActivity {
         if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish();
         }
+
+        // restore settings for this widget
+        int listType = AppSettings.getWidgetListType(this, mAppWidgetId);
+        mRadioGroupType.check(WidgetListType.values()[listType].id);
+
+        boolean hidesWatched = AppSettings.getWidgetHidesWatched(this, mAppWidgetId);
+        mCheckUnwatched.setChecked(hidesWatched);
     }
 
-    private void onSetupWidget() {
+    private void onUpdateWidget() {
         // save values for this widget to be used by ListWidgetService
-        SharedPreferences.Editor prefs = getSharedPreferences(PREFS_NAME, 0).edit();
-        prefs.putInt(PREF_LISTTYPE_KEY + mAppWidgetId,
-                WidgetListType.fromId(mRadioGroupType.getCheckedRadioButtonId()).index);
-        prefs.putBoolean(PREF_WATCHEDONLY_KEY + mAppWidgetId, mCheckUnwatched.isChecked());
-        prefs.commit();
+        AppSettings.saveWidgetConfiguration(this, mAppWidgetId,
+                WidgetListType.fromId(mRadioGroupType.getCheckedRadioButtonId()).index,
+                mCheckUnwatched.isChecked());
 
         // update widget
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);

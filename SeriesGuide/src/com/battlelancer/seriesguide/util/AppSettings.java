@@ -17,7 +17,10 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import com.battlelancer.seriesguide.enums.WidgetListType;
 
 /**
  * Retrieve settings values.
@@ -41,4 +44,32 @@ public class AppSettings {
             return (opacity * 256 / 100) << 24;
         }
     }
+
+    public static final String SETTINGS_LIST_WIDGETS = "ListWidgetPreferences";
+
+    public static final String KEY_PREFIX_LISTTYPE = "listtype_";
+
+    public static final String KEY_PREFIX_HIDE_WATCHED = "unwatched_";
+
+    public static int getWidgetListType(Context context, int appWidgetId) {
+        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_LIST_WIDGETS, 0);
+        return prefs.getInt(KEY_PREFIX_LISTTYPE + appWidgetId, WidgetListType.UPCOMING.index);
+    }
+
+    public static boolean getWidgetHidesWatched(Context context, int appWidgetId) {
+        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_LIST_WIDGETS, 0);
+        return prefs.getBoolean(KEY_PREFIX_HIDE_WATCHED + appWidgetId, false);
+    }
+
+    public static boolean saveWidgetConfiguration(Context context, int appWidgetId, int listType,
+            boolean displaysWatched) {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(SETTINGS_LIST_WIDGETS, 0)
+                .edit();
+
+        prefs.putInt(KEY_PREFIX_LISTTYPE + appWidgetId, listType);
+        prefs.putBoolean(KEY_PREFIX_HIDE_WATCHED + appWidgetId, displaysWatched);
+
+        return prefs.commit();
+    }
+
 }

@@ -25,7 +25,6 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.SystemClock;
@@ -123,9 +122,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
         rv.setEmptyView(R.id.list_view, R.id.empty_view);
 
         // change title based on config
-        SharedPreferences prefs = context.getSharedPreferences(ListWidgetConfigure.PREFS_NAME, 0);
-        int typeIndex = prefs.getInt(ListWidgetConfigure.PREF_LISTTYPE_KEY + appWidgetId,
-                WidgetListType.UPCOMING.index);
+        int typeIndex = AppSettings.getWidgetListType(context, appWidgetId);
         int activityTab = 0;
         if (typeIndex == WidgetListType.RECENT.index) {
             activityTab = 1;
@@ -134,12 +131,12 @@ public class ListWidgetProvider extends AppWidgetProvider {
             activityTab = 0;
             rv.setTextViewText(R.id.widgetTitle, context.getString(R.string.upcoming));
         }
-        
+
         // set the background color
         int bgColor = AppSettings.getWidgetBackgroundColor(context);
         rv.setInt(R.id.container, "setBackgroundColor", bgColor);
-        
-        // Create an intent to launch Upcoming
+
+        // Activity button
         Intent activityIntent = new Intent(context, UpcomingRecentActivity.class);
         activityIntent.putExtra(UpcomingRecentActivity.InitBundle.SELECTED_TAB, activityTab);
         PendingIntent pendingIntent = TaskStackBuilder
@@ -149,7 +146,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
                 .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
         rv.setOnClickPendingIntent(R.id.widget_title, pendingIntent);
 
-        // Create intent template for items to launch an EpisodesActivity
+        // Intent template for items to launch an EpisodesActivity
         Intent itemIntent = new Intent(context, EpisodesActivity.class);
         PendingIntent pendingIntentTemplate = TaskStackBuilder
                 .create(context)
@@ -161,15 +158,21 @@ public class ListWidgetProvider extends AppWidgetProvider {
                 .getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT);
         rv.setPendingIntentTemplate(R.id.list_view, pendingIntentTemplate);
 
-        // Create an intent to launch show list
+        // Show list button
         Intent homeIntent = new Intent(context, ShowsActivity.class);
-        homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP
-                | Intent.FLAG_ACTIVITY_NEW_TASK);
+        homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingHomeIntent = TaskStackBuilder
                 .create(context)
                 .addNextIntent(homeIntent)
                 .getPendingIntent(appWidgetId, PendingIntent.FLAG_UPDATE_CURRENT);
         rv.setOnClickPendingIntent(R.id.widget_logo, pendingHomeIntent);
+
+        // Settings button
+        Intent settingsIntent = new Intent(context, ListWidgetConfigure.class)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+                .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        rv.setOnClickPendingIntent(R.id.widget_settings, PendingIntent.getActivity(context, 0,
+                settingsIntent, PendingIntent.FLAG_UPDATE_CURRENT));
 
         return rv;
     }
