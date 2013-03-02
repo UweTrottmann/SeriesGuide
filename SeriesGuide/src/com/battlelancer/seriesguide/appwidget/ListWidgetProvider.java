@@ -170,8 +170,9 @@ public class ListWidgetProvider extends AppWidgetProvider {
         Intent settingsIntent = new Intent(context, ListWidgetConfigure.class)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                 .putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        rv.setOnClickPendingIntent(R.id.widget_settings, PendingIntent.getActivity(context, 0,
-                settingsIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+        rv.setOnClickPendingIntent(R.id.widget_settings,
+                PendingIntent.getActivity(context, appWidgetId,
+                        settingsIntent, PendingIntent.FLAG_UPDATE_CURRENT));
 
         return rv;
     }
