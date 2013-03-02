@@ -61,7 +61,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         setContentView(R.layout.upcoming);
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setTitle(R.string.activity);
         actionBar.setIcon(R.drawable.ic_action_upcoming);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
