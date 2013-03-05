@@ -18,8 +18,8 @@
         android:id="@+id/textViewSeasonProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_marginLeft="@dimen/default_padding"
-        android:layout_toLeftOf="@+id/imageViewContextMenu"
         android:paddingTop="@dimen/default_padding"
         android:text="@string/norating"
         android:textAppearance="@style/TextAppearance.Medium.Light.Dim" >
@@ -30,8 +30,8 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/textViewSeasonTitle"
-        android:layout_toLeftOf="@+id/imageViewContextMenu"
         android:progressDrawable="@drawable/progress_horizontal_holo_dark" >
     </ProgressBar>
 
@@ -39,8 +39,8 @@
         android:id="@+id/textViewSeasonWatchCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/progressBarSeason"
-        android:layout_toLeftOf="@+id/imageViewContextMenu"
         android:paddingBottom="@dimen/default_padding"
         android:text="@string/episode_notwatched"
         android:textAllCaps="true"
