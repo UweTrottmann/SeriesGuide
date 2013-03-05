@@ -2,18 +2,31 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <!-- SeriesGuides default theme -->
-    <style name="SeriesGuideTheme" parent="Theme.Sherlock">
+    <style name="SeriesGuideTheme" parent="SeriesGuideBaseTheme">
+
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+
         <item name="android:colorBackground">@color/background</item>
         <item name="android:windowBackground">@color/background</item>
         <item name="custom_list_selector">@drawable/list_selector_sg</item>
 
-        <!-- System widgets -->
-        <item name="android:editTextStyle">@style/Widget.SeriesGuide.EditText</item>
+        <!-- System widgets (ABS) -->
+        <item name="dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
+        <item name="spinnerItemStyle">@style/Widget.SpinnerItem</item>
+
+        <!-- System widgets (native) -->
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
         <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
-        <item name="android:checkboxStyle">@style/Widget.SeriesGuide.CheckBox</item>
-        <item name="android:listViewStyle">@style/Widget.SeriesGuide.ListView</item>
-        <item name="android:listViewWhiteStyle">@style/Widget.SeriesGuide.ListView.White</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="android:spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
+        <item name="android:spinnerItemStyle">@style/Widget.SpinnerItem</item>
+
+        <!-- Action bar (ABS) -->
+        <item name="actionBarStyle">@style/ActionBar</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
+        <item name="actionDropDownStyle">@style/DropDownNav</item>
 
         <!-- Colors -->
         <item name="textColorSgPrimary">@color/text_primary_sg</item>
@@ -38,23 +51,9 @@
         <item name="textAppearanceSgXLarge">@style/TextAppearance.XLarge</item>
         <item name="textAppearanceSgXLargeLight">@style/TextAppearance.XLarge.Light</item>
 
-        <!-- Action bar -->
+        <!-- Title page Indicator -->
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator</item>
-        <item name="actionBarStyle">@style/ActionBar</item>
-        <item name="android:actionBarStyle" tools:targetApi="honeycomb">@style/ActionBar</item>
-        <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
-        <item name="android:actionBarTabStyle" tools:targetApi="honeycomb">@style/ActionBarTabStyle</item>
-        <item name="dropDownListViewStyle">@style/DropDownListView</item>
-        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
-        <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
-        <item name="android:actionBarItemBackground" tools:targetApi="ice_cream_sandwich">@drawable/list_selector_sg</item>
-        <item name="actionDropDownStyle">@style/DropDownNav</item>
-        <item name="android:actionDropDownStyle" tools:targetApi="honeycomb">@style/DropDownNav</item>
-        <item name="spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
-        <item name="android:spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
-        <item name="spinnerItemStyle">@style/Widget.SpinnerItem</item>
-        <item name="android:spinnerItemStyle">@style/Widget.SpinnerItem</item>
 
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
@@ -64,6 +63,15 @@
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top</item>
         <item name="drawableDropdown">@drawable/dropdown_default_sg</item>
+    </style>
+
+    <style name="SeriesGuideBaseTheme" parent="Theme.Sherlock">
+
+        <!-- System widgets (native) -->
+        <item name="android:editTextStyle">@style/Widget.SeriesGuide.EditText</item>
+        <item name="android:checkboxStyle">@style/Widget.SeriesGuide.CheckBox</item>
+        <item name="android:listViewStyle">@style/Widget.SeriesGuide.ListView</item>
+        <item name="android:listViewWhiteStyle">@style/Widget.SeriesGuide.ListView.White</item>
     </style>
 
     <style name="SeriesGuideTheme.Dialog" parent="SeriesGuideTheme">
@@ -139,19 +147,31 @@
         <item name="drawableDropdown">@drawable/dropdown_default_sg</item>
     </style>
 
-    <!-- A light Android theme -->
-    <style name="SeriesGuideThemeLight" parent="Theme.Sherlock.Light.DarkActionBar">
+    <!-- SeriesGuide Light theme -->
+    <style name="SeriesGuideThemeLight" parent="SeriesGuideBaseThemeLight">
+
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+
         <item name="custom_list_selector">@drawable/list_selector_sg</item>
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.Light</item>
         <item name="vpiTabPageIndicatorStyle">@style/TabPageIndicator.Light</item>
 
-        <!-- System widgets -->
-        <item name="android:editTextStyle">@style/Widget.SeriesGuide.Light.EditText</item>
+        <!-- System widgets (ABS) -->
+        <item name="dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="spinnerDropDownItemStyle">@style/Widget.Light.DropDownItem</item>
+        <item name="spinnerItemStyle">@style/Widget.Light.SpinnerItem</item>
+
+        <!-- System widgets (native) -->
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
         <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
-        <item name="android:checkboxStyle">@style/Widget.SeriesGuide.Light.CheckBox</item>
-        <item name="android:listViewStyle">@style/Widget.SeriesGuide.ListView</item>
-        <item name="android:listViewWhiteStyle">@style/Widget.SeriesGuide.ListView.White</item>
+        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
+        <item name="android:spinnerDropDownItemStyle">@style/Widget.Light.DropDownItem</item>
+        <item name="android:spinnerItemStyle">@style/Widget.Light.SpinnerItem</item>
+
+        <!-- Action bar (ABS) -->
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
+        <item name="actionDropDownStyle">@style/DropDownNav</item>
 
         <!-- Colors -->
         <item name="textColorSgPrimary">@color/text_primary_light_sg</item>
@@ -176,20 +196,6 @@
         <item name="textAppearanceSgXLarge">@style/TextAppearance.Light.XLarge</item>
         <item name="textAppearanceSgXLargeLight">@style/TextAppearance.Light.XLarge.Light</item>
 
-        <!-- Action bar -->
-        <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
-        <item name="android:actionBarTabStyle" tools:targetApi="honeycomb">@style/ActionBarTabStyle</item>
-        <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
-        <item name="android:actionBarItemBackground" tools:targetApi="ice_cream_sandwich">@drawable/list_selector_sg</item>
-        <item name="actionDropDownStyle">@style/DropDownNav</item>
-        <item name="android:actionDropDownStyle" tools:targetApi="honeycomb">@style/DropDownNav</item>
-        <item name="dropDownListViewStyle">@style/DropDownListView</item>
-        <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
-        <item name="spinnerDropDownItemStyle">@style/Widget.Light.DropDownItem</item>
-        <item name="android:spinnerDropDownItemStyle">@style/Widget.Light.DropDownItem</item>
-        <item name="spinnerItemStyle">@style/Widget.Light.SpinnerItem</item>
-        <item name="android:spinnerItemStyle">@style/Widget.Light.SpinnerItem</item>
-
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add_inverse</item>
         <item name="drawableCalendarIcon">@drawable/ic_action_calendar_inverse</item>
@@ -198,6 +204,15 @@
         <item name="drawableCancel">@drawable/ic_action_cancel_inverse</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top_inverse</item>
         <item name="drawableDropdown">@drawable/dropdown_default_sg_light</item>
+    </style>
+
+    <style name="SeriesGuideBaseThemeLight" parent="Theme.Sherlock.Light.DarkActionBar">
+
+        <!-- System widgets -->
+        <item name="android:editTextStyle">@style/Widget.SeriesGuide.Light.EditText</item>
+        <item name="android:checkboxStyle">@style/Widget.SeriesGuide.Light.CheckBox</item>
+        <item name="android:listViewStyle">@style/Widget.SeriesGuide.ListView</item>
+        <item name="android:listViewWhiteStyle">@style/Widget.SeriesGuide.ListView.White</item>
     </style>
 
 </resources>
