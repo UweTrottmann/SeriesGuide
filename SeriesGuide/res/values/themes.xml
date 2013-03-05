@@ -19,8 +19,6 @@
         <item name="android:buttonStyle">@style/Widget.SeriesGuide.Button</item>
         <item name="android:imageButtonStyle">@style/Widget.SeriesGuide.ImageButton</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView</item>
-        <item name="android:spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
-        <item name="android:spinnerItemStyle">@style/Widget.SpinnerItem</item>
 
         <!-- Action bar (ABS) -->
         <item name="actionBarStyle">@style/ActionBar</item>
