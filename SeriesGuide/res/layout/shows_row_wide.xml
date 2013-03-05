@@ -32,7 +32,7 @@
         android:layout_toRightOf="@id/showposter"
         android:paddingBottom="@dimen/default_padding"
         android:text="@string/norating"
-        android:textAppearance="?attr/textAppearanceSgSmallDim" />
+        android:textAppearance="@style/TextAppearance.Small.Dim" />
 
     <TextView
         android:id="@+id/TextViewShowListNextEpisode"
@@ -51,7 +51,7 @@
         android:layout_toRightOf="@id/showposter"
         android:paddingBottom="@dimen/item_padding"
         android:text="@string/show_noairtime"
-        android:textAppearance="?attr/textAppearanceSgSmall" />
+        android:textAppearance="@style/TextAppearance.Small" />
 
     <LinearLayout
         android:id="@+id/timestamp"

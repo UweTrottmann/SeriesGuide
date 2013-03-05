@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:paddingRight="@dimen/default_padding"
             android:text="in X days"
-            android:textAppearance="?attr/textAppearanceSgXSmallDim" />
+            android:textAppearance="@style/TextAppearance.XSmall.Dim" />
 
         <View
             android:layout_width="0dp"
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:text="10:00 PM on Very Long Network Name (VLNN)"
-            android:textAppearance="?attr/textAppearanceSgXSmallDim" />
+            android:textAppearance="@style/TextAppearance.XSmall.Dim" />
     </LinearLayout>
 
     <TextView

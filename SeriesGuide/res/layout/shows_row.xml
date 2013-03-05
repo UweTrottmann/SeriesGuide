@@ -42,7 +42,7 @@
 
     <TextView
         android:id="@+id/episodetime"
-        style="?attr/textAppearanceSgXSmallDim"
+        style="@style/TextAppearance.XSmall.Dim"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/TextViewShowListNextEpisode"
@@ -77,7 +77,7 @@
 
         <TextView
             android:id="@+id/textViewShowsTimeAndNetwork"
-            style="?attr/textAppearanceSgXSmallDim"
+            style="@style/TextAppearance.XSmall.Dim"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"

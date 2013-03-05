@@ -27,7 +27,7 @@
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
             android:layout_marginBottom="@dimen/default_padding"
-            android:textAppearance="?attr/textAppearanceSgSmallPrimary" />
+            android:textAppearance="@style/TextAppearance.Small.Primary" />
         <include layout="@layout/divider_horizontal" />
 
         <ListView

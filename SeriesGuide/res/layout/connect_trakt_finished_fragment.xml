@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/large_padding"
                 android:text="@string/add_trakt_shows"
-                android:textAppearance="?attr/textAppearanceSgSmall" />
+                android:textAppearance="@style/TextAppearance.Small" />
 
             <Button
                 android:id="@+id/buttonShowLibrary"
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:text="@string/upload_shows"
-                android:textAppearance="?attr/textAppearanceSgSmall" />
+                android:textAppearance="@style/TextAppearance.Small" />
 
             <Button
                 android:id="@+id/buttonUploadShows"

@@ -44,7 +44,7 @@
             android:layout_below="@id/textViewEpisodeNumber"
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_toLeftOf="@+id/imageViewContextMenu"
-            android:textAppearance="?attr/textAppearanceSgSmall" />
+            android:textAppearance="@style/TextAppearance.Small" />
 
         <TextView
             android:id="@+id/textViewEpisodeAirdate"
@@ -54,7 +54,7 @@
             android:layout_toRightOf="@id/watchedBoxEpisode"
             android:paddingBottom="@dimen/default_padding"
             android:text="@string/show_noairtime"
-            android:textAppearance="?attr/textAppearanceSgSmall" />
+            android:textAppearance="@style/TextAppearance.Small" />
 
         <ImageView
             android:id="@+id/imageViewContextMenu"

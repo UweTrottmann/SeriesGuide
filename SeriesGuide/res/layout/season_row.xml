@@ -44,7 +44,7 @@
         android:paddingBottom="@dimen/default_padding"
         android:text="@string/episode_notwatched"
         android:textAllCaps="true"
-        android:textAppearance="?attr/textAppearanceSgXSmall" />
+        android:textAppearance="@style/TextAppearance.XSmall" />
 
     <ImageView
         android:id="@+id/imageViewContextMenu"

@@ -32,7 +32,7 @@
                 android:layout_marginTop="@dimen/default_padding"
                 android:linksClickable="true"
                 android:text="@string/about_trakt"
-                android:textAppearance="?attr/textAppearanceSgSmall" />
+                android:textAppearance="@style/TextAppearance.Small" />
 
             <TextView
                 android:id="@+id/textViewIntegrationItems"
@@ -44,7 +44,7 @@
                 android:layout_marginRight="@dimen/default_padding"
                 android:layout_marginTop="16dp"
                 android:text="@string/integration_trakt_items"
-                android:textAppearance="?attr/textAppearanceSgSmallPrimary" />
+                android:textAppearance="@style/TextAppearance.Small.Primary" />
         </LinearLayout>
     </ScrollView>
 

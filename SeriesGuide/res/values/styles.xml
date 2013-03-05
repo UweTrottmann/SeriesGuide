@@ -12,7 +12,7 @@
     </style>
 
     <style name="TextAppearance.XSmall.Dim">
-        <item name="android:textColor">@color/text_dim</item>
+        <item name="android:textColor">?attr/textColorSgDim</item>
     </style>
 
     <style name="TextAppearance.Small" parent="@android:style/TextAppearance.Small">
@@ -25,11 +25,11 @@
     </style>
 
     <style name="TextAppearance.Small.Dim">
-        <item name="android:textColor">@color/text_dim</item>
+        <item name="android:textColor">?attr/textColorSgDim</item>
     </style>
 
     <style name="TextAppearance.Small.Primary">
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">?attr/textColorSgPrimary</item>
     </style>
 
     <style name="TextAppearance.Medium">
@@ -381,22 +381,6 @@
 
     <!-- Text styles -->
     <style name="TextAppearance.Light" parent="TextAppearance"></style>
-
-    <style name="TextAppearance.Light.XSmall" parent="TextAppearance.XSmall"></style>
-
-    <style name="TextAppearance.Light.XSmall.Dim">
-        <item name="android:textColor">@color/text_dim_light</item>
-    </style>
-
-    <style name="TextAppearance.Light.Small" parent="TextAppearance.Small"></style>
-
-    <style name="TextAppearance.Light.Small.Dim">
-        <item name="android:textColor">@color/text_dim_light</item>
-    </style>
-
-    <style name="TextAppearance.Light.Small.Primary">
-        <item name="android:textColor">@color/text_primary_light_sg</item>
-    </style>
 
     <style name="TextAppearance.Light.Medium" parent="TextAppearance.Medium">
         <item name="android:textColor">@color/text_primary_light_sg</item>

@@ -17,11 +17,13 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -32,7 +34,6 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.style.TextAppearanceSpan;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -193,6 +194,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         return super.onOptionsItemSelected(item);
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void onShareEpisode(ShareMethod shareMethod) {
         // Episode of this fragment is always the first item in the cursor
         final Cursor episode = (Cursor) mAdapter.getItem(0);
@@ -260,18 +262,12 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     private class DetailsAdapter extends CursorAdapter {
 
         private LayoutInflater mLayoutInflater;
-        private int mTextAppearanceSmallDimRes;
 
         public DetailsAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);
 
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            TypedValue textAppearanceSmallDim = new TypedValue();
-            getActivity().getTheme().resolveAttribute(R.attr.textAppearanceSgSmallDim,
-                    textAppearanceSmallDim, true);
-            mTextAppearanceSmallDimRes = textAppearanceSmallDim.resourceId;
         }
 
         @Override
@@ -345,7 +341,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         .append(")");
             }
             airTimeAndNumberText.setSpan(new TextAppearanceSpan(mContext,
-                    mTextAppearanceSmallDimRes), numberStartIndex,
+                    R.style.TextAppearance_Small_Dim), numberStartIndex,
                     airTimeAndNumberText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             airtimeText.setText(airTimeAndNumberText);
 

@@ -21,7 +21,7 @@
         android:layout_marginLeft="@dimen/layout_padding"
         android:layout_marginRight="@dimen/layout_padding"
         android:text="@string/shouts_for"
-        android:textAppearance="?attr/textAppearanceSgSmallPrimary" />
+        android:textAppearance="@style/TextAppearance.Small.Primary" />
 
     <FrameLayout
         android:id="@+id/shouts_container"

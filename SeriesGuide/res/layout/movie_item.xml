@@ -35,7 +35,7 @@
             android:layout_below="@+id/textViewMovieTitle"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textAppearance="?attr/textAppearanceSgSmallDim" >
+            android:textAppearance="@style/TextAppearance.Small.Dim" >
         </TextView>
     </RelativeLayout>
 

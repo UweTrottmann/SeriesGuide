@@ -40,7 +40,7 @@
                 android:layout_marginBottom="@dimen/large_padding"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textAppearance="?attr/textAppearanceSgSmallDim"
+                android:textAppearance="@style/TextAppearance.Small.Dim"
                 android:textIsSelectable="true" />
 
             <Button
