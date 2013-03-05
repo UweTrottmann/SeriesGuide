@@ -176,7 +176,7 @@
 
                         <TextView
                             android:id="@+id/TextViewEpisodeDescription"
-                            style="@style/SmallItems.WithSideMargins"
+                            style="@style/SmallItems.WithSideMargins.FlowText"
                             android:textIsSelectable="true" />
 
                         <TextView

@@ -6,7 +6,8 @@
 
     <TextView
         android:id="@+id/TextViewShowInfoOverview"
-        style="@style/SmallItems.WithSideMargins"
+        style="@style/SmallItems.WithSideMargins.FlowText"
+        android:maxEms="20"
         android:text="@string/description_overview"
         android:textIsSelectable="true" />
 

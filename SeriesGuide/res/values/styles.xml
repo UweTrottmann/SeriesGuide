@@ -255,6 +255,10 @@
         <item name="android:layout_marginRight">@dimen/default_padding</item>
     </style>
 
+    <style name="SmallItems.WithSideMargins.FlowText">
+        <item name="android:lineSpacingMultiplier">1.2</item>
+    </style>
+
     <style name="Label">
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:layout_marginLeft">@dimen/default_padding</item>
