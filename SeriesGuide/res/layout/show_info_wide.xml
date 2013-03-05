@@ -34,7 +34,7 @@
                     android:layout_marginLeft="@dimen/default_padding"
                     android:layout_marginRight="@dimen/default_padding"
                     android:text="@string/app_name"
-                    android:textAppearance="?attr/textAppearanceSgXLargeLight"
+                    android:textAppearance="@style/TextAppearance.XLarge.Light"
                     android:textIsSelectable="true"
                     android:textSize="@dimen/text_size_ultralarge" />
 

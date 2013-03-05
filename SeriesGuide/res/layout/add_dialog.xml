@@ -23,7 +23,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/poster"
                 android:text="@string/add_show"
-                android:textAppearance="?attr/textAppearanceSgXLargeLight" />
+                android:textAppearance="@style/TextAppearance.XLarge.Light" />
 
             <TextView
                 android:id="@+id/description"

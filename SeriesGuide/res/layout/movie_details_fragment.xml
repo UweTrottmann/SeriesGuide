@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:textAppearance="?attr/textAppearanceSgXLargeLight"
+                android:textAppearance="@style/TextAppearance.XLarge.Light"
                 android:textIsSelectable="true"
                 android:textSize="@dimen/text_size_ultralarge" />
 

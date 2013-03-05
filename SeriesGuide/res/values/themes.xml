@@ -27,6 +27,7 @@
         <item name="actionDropDownStyle">@style/DropDownNav</item>
 
         <!-- Colors -->
+        <item name="textColorSgDefault">@color/text_default</item>
         <item name="textColorSgPrimary">@color/text_primary_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
         <item name="textColorSgGreen">@color/green_bright</item>
@@ -34,16 +35,8 @@
         <item name="colorAccent">@color/accent_primary</item>
         <item name="colorOverlay">@color/overlay</item>
 
-        <!-- Text styles -->
-        <item name="textAppearanceSg">@style/TextAppearance</item>
-        <item name="textAppearanceSgMedium">@style/TextAppearance.Medium</item>
-        <item name="textAppearanceSgMediumDim">@style/TextAppearance.Medium.Dim</item>
-        <item name="textAppearanceSgMediumLight">@style/TextAppearance.Medium.Light</item>
-        <item name="textAppearanceSgMediumLightDim">@style/TextAppearance.Medium.Light.Dim</item>
-        <item name="textAppearanceSgLarge">@style/TextAppearance.Large</item>
-        <item name="textAppearanceSgLargeLight">@style/TextAppearance.Large.Light</item>
-        <item name="textAppearanceSgXLarge">@style/TextAppearance.XLarge</item>
-        <item name="textAppearanceSgXLargeLight">@style/TextAppearance.XLarge.Light</item>
+        <!-- Text -->
+        <item name="android:textAppearance">@style/TextAppearance</item>
 
         <!-- Title page Indicator -->
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator</item>
@@ -103,23 +96,13 @@
         <item name="android:imageButtonStyle">@style/Widget.Android.ImageButton</item>
 
         <!-- Colors -->
+        <item name="textColorSgDefault">@color/text_default</item>
         <item name="textColorSgPrimary">@color/text_primary_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary_inverse</item>
         <item name="textColorSgGreen">@color/green_bright</item>
         <item name="textColorSgDim">@color/text_dim</item>
         <item name="colorAccent">@color/accent_primary_android</item>
         <item name="colorOverlay">@color/overlay</item>
-
-        <!-- Text styles -->
-        <item name="textAppearanceSg">@style/TextAppearance</item>
-        <item name="textAppearanceSgMedium">@style/TextAppearance.Medium</item>
-        <item name="textAppearanceSgMediumDim">@style/TextAppearance.Medium.Dim</item>
-        <item name="textAppearanceSgMediumLight">@style/TextAppearance.Medium.Light</item>
-        <item name="textAppearanceSgMediumLightDim">@style/TextAppearance.Medium.Light.Dim</item>
-        <item name="textAppearanceSgLarge">@style/TextAppearance.Large</item>
-        <item name="textAppearanceSgLargeLight">@style/TextAppearance.Large.Light</item>
-        <item name="textAppearanceSgXLarge">@style/TextAppearance.XLarge</item>
-        <item name="textAppearanceSgXLargeLight">@style/TextAppearance.XLarge.Light</item>
 
         <!-- Action bar -->
         <item name="spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
@@ -164,6 +147,7 @@
         <item name="actionDropDownStyle">@style/DropDownNav</item>
 
         <!-- Colors -->
+        <item name="textColorSgDefault">@color/text_default_inverse</item>
         <item name="textColorSgPrimary">@color/text_primary_light_sg</item>
         <item name="textColorSgPrimaryInverse">@color/text_primary</item>
         <item name="textColorSgGreen">@color/green_dark</item>
@@ -171,16 +155,8 @@
         <item name="colorAccent">@color/accent_primary</item>
         <item name="colorOverlay">@color/overlay_inverse</item>
 
-        <!-- Text styles -->
-        <item name="textAppearanceSg">@android:style/TextAppearance</item>
-        <item name="textAppearanceSgMedium">@style/TextAppearance.Light.Medium</item>
-        <item name="textAppearanceSgMediumDim">@style/TextAppearance.Light.Medium.Dim</item>
-        <item name="textAppearanceSgMediumLight">@style/TextAppearance.Light.Medium.Light</item>
-        <item name="textAppearanceSgMediumLightDim">@style/TextAppearance.Light.Medium.Light.Dim</item>
-        <item name="textAppearanceSgLarge">@style/TextAppearance.Large</item>
-        <item name="textAppearanceSgLargeLight">@style/TextAppearance.Large.Light</item>
-        <item name="textAppearanceSgXLarge">@style/TextAppearance.Light.XLarge</item>
-        <item name="textAppearanceSgXLargeLight">@style/TextAppearance.Light.XLarge.Light</item>
+        <!-- Text -->
+        <item name="android:textAppearance">@style/TextAppearance</item>
 
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add_inverse</item>

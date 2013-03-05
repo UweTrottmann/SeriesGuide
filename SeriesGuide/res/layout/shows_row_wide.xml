@@ -22,7 +22,7 @@
         android:layout_toRightOf="@id/showposter"
         android:paddingTop="@dimen/inline_padding"
         android:text="@string/app_name"
-        android:textAppearance="?attr/textAppearanceSgXLargeLight" />
+        android:textAppearance="@style/TextAppearance.XLarge.Light" />
 
     <TextView
         android:id="@+id/textViewShowsTimeAndNetwork"
@@ -41,7 +41,7 @@
         android:layout_below="@id/textViewShowsTimeAndNetwork"
         android:layout_toRightOf="@id/showposter"
         android:text="@string/no_nextepisode"
-        android:textAppearance="?attr/textAppearanceSgMediumDim" />
+        android:textAppearance="@style/TextAppearance.Medium.Dim" />
 
     <TextView
         android:id="@+id/episodetime"

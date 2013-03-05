@@ -39,7 +39,7 @@
                     android:layout_marginLeft="@dimen/default_padding"
                     android:layout_marginRight="@dimen/default_padding"
                     android:ellipsize="marquee"
-                    android:textAppearance="?attr/textAppearanceSgLargeLight" />
+                    android:textAppearance="@style/TextAppearance.Large.Light" />
 
                 <TextView
                     android:id="@+id/showStatus"
@@ -131,7 +131,7 @@
                                 android:layout_height="wrap_content"
                                 android:ellipsize="end"
                                 android:maxLines="2"
-                                android:textAppearance="?attr/textAppearanceSgXLargeLight" />
+                                android:textAppearance="@style/TextAppearance.XLarge.Light" />
 
                             <TextView
                                 android:id="@+id/episodeTime"

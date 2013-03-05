@@ -33,12 +33,12 @@
     </style>
 
     <style name="TextAppearance.Medium">
-        <item name="android:textColor">@color/text_primary_sg</item>
+        <item name="android:textColor">?attr/textColorSgPrimary</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
 
     <style name="TextAppearance.Medium.Dim">
-        <item name="android:textColor">@color/text_default</item>
+        <item name="android:textColor">?attr/textColorSgDim</item>
     </style>
 
     <style name="TextAppearance.Medium.Light">
@@ -46,7 +46,7 @@
     </style>
 
     <style name="TextAppearance.Medium.Light.Dim">
-        <item name="android:textColor">@color/text_default</item>
+        <item name="android:textColor">?attr/textColorSgDefault</item>
     </style>
 
     <style name="TextAppearance.Large">
@@ -59,6 +59,7 @@
 
     <style name="TextAppearance.XLarge">
         <item name="android:textSize">@dimen/text_size_xlarge</item>
+        <item name="android:textColor">?attr/textColorSgPrimary</item>
     </style>
 
     <style name="TextAppearance.XLarge.Light">
@@ -382,33 +383,6 @@
 
     <!-- Light styles -->
 
-
-    <!-- Text styles -->
-    <style name="TextAppearance.Light" parent="TextAppearance"></style>
-
-    <style name="TextAppearance.Light.Medium" parent="TextAppearance.Medium">
-        <item name="android:textColor">@color/text_primary_light_sg</item>
-    </style>
-
-    <style name="TextAppearance.Light.Medium.Dim">
-        <item name="android:textColor">@color/text_default_inverse</item>
-    </style>
-
-    <style name="TextAppearance.Light.Medium.Light">
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
-    </style>
-
-    <style name="TextAppearance.Light.Medium.Light.Dim">
-        <item name="android:textColor">@color/text_default_inverse</item>
-    </style>
-
-    <style name="TextAppearance.Light.XLarge" parent="TextAppearance.XLarge">
-        <item name="android:textColor">@color/text_primary_light_sg</item>
-    </style>
-
-    <style name="TextAppearance.Light.XLarge.Light">
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
-    </style>
 
     <!-- Buttons -->
     <!-- pre v11 -->

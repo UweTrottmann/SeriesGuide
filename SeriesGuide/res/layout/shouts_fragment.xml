@@ -12,7 +12,7 @@
         android:layout_marginRight="@dimen/layout_padding"
         android:layout_marginTop="@dimen/layout_padding"
         android:text="@string/shouts"
-        android:textAppearance="?attr/textAppearanceSgLargeLight" />
+        android:textAppearance="@style/TextAppearance.Large.Light" />
 
     <TextView
         android:id="@+id/shouts_item"

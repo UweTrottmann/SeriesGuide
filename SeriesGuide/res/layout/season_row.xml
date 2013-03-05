@@ -12,7 +12,7 @@
         android:layout_toLeftOf="@+id/textViewSeasonProgress"
         android:paddingTop="@dimen/default_padding"
         android:text="@string/season"
-        android:textAppearance="?attr/textAppearanceSgMediumLight" />
+        android:textAppearance="@style/TextAppearance.Medium.Light" />
 
     <TextView
         android:id="@+id/textViewSeasonProgress"
@@ -22,7 +22,7 @@
         android:layout_toLeftOf="@+id/imageViewContextMenu"
         android:paddingTop="@dimen/default_padding"
         android:text="@string/norating"
-        android:textAppearance="?attr/textAppearanceSgMediumLightDim" >
+        android:textAppearance="@style/TextAppearance.Medium.Light.Dim" >
     </TextView>
 
     <ProgressBar

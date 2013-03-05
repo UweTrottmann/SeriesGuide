@@ -4,23 +4,13 @@
     <attr name="custom_list_selector" format="reference" />
 
     <!-- Colors -->
+    <attr name="textColorSgDefault" format="reference|color" />
     <attr name="textColorSgPrimary" format="reference|color" />
     <attr name="textColorSgPrimaryInverse" format="reference|color" />
     <attr name="textColorSgGreen" format="reference|color" />
     <attr name="textColorSgDim" format="reference|color" />
     <attr name="colorOverlay" format="reference|color" />
     <attr name="colorAccent" format="reference|color" />
-
-    <!-- Text -->
-    <attr name="textAppearanceSg" format="reference" />
-    <attr name="textAppearanceSgMedium" format="reference" />
-    <attr name="textAppearanceSgMediumDim" format="reference" />
-    <attr name="textAppearanceSgMediumLight" format="reference" />
-    <attr name="textAppearanceSgMediumLightDim" format="reference" />
-    <attr name="textAppearanceSgLarge" format="reference" />
-    <attr name="textAppearanceSgLargeLight" format="reference" />
-    <attr name="textAppearanceSgXLarge" format="reference" />
-    <attr name="textAppearanceSgXLargeLight" format="reference" />
 
     <!-- Drawables -->
     <attr name="drawableAddIcon" format="reference" />

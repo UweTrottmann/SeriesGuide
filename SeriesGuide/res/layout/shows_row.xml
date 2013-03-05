@@ -26,7 +26,7 @@
         android:paddingRight="@dimen/inline_padding"
         android:paddingTop="2dp"
         android:text="@string/app_name"
-        android:textAppearance="?attr/textAppearanceSgMediumLight" />
+        android:textAppearance="@style/TextAppearance.Medium.Light" />
 
     <TextView
         android:id="@+id/TextViewShowListNextEpisode"

@@ -23,7 +23,7 @@
                 android:drawablePadding="@dimen/default_padding"
                 android:drawableRight="@drawable/ic_trakt"
                 android:text="@string/connect_trakt"
-                android:textAppearance="?attr/textAppearanceSgXLargeLight" />
+                android:textAppearance="@style/TextAppearance.XLarge.Light" />
 
             <TextView
                 android:id="@+id/textViewAbout"

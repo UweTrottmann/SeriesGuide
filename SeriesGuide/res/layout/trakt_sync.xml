@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="@string/pref_traktsync"
-            android:textAppearance="?attr/textAppearanceSgXLargeLight" >
+            android:textAppearance="@style/TextAppearance.XLarge.Light" >
         </TextView>
 
         <TextView
