@@ -20,7 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/timestamp"
         android:layout_toRightOf="@id/showposter"
-        android:paddingTop="@dimen/inline_padding"
         android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.XLarge.Light" />
 
@@ -32,7 +31,7 @@
         android:layout_toRightOf="@id/showposter"
         android:paddingBottom="@dimen/default_padding"
         android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.Small.Dim" />
+        android:textAppearance="@style/TextAppearance.XSmall.Dim" />
 
     <TextView
         android:id="@+id/TextViewShowListNextEpisode"
@@ -41,7 +40,8 @@
         android:layout_below="@id/textViewShowsTimeAndNetwork"
         android:layout_toRightOf="@id/showposter"
         android:text="@string/no_nextepisode"
-        android:textAppearance="@style/TextAppearance.Medium.Dim" />
+        android:textAppearance="@style/TextAppearance"
+        android:textColor="?attr/textColorSgDim" />
 
     <TextView
         android:id="@+id/episodetime"
@@ -51,7 +51,7 @@
         android:layout_toRightOf="@id/showposter"
         android:paddingBottom="@dimen/item_padding"
         android:text="@string/show_noairtime"
-        android:textAppearance="@style/TextAppearance.Small" />
+        android:textAppearance="@style/TextAppearance.XSmall.Dim" />
 
     <LinearLayout
         android:id="@+id/timestamp"
