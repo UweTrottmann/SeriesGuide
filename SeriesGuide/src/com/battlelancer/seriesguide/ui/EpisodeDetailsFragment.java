@@ -72,6 +72,8 @@ import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
 
+import java.util.Locale;
+
 /**
  * Displays details about a single episode like summary, ratings and episode
  * image if available.
@@ -341,9 +343,9 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         .append(")");
             }
             airTimeAndNumberText.setSpan(new TextAppearanceSpan(mContext,
-                    R.style.TextAppearance_Small_Dim), numberStartIndex,
+                    R.style.TextAppearance_XSmall_Dim), numberStartIndex,
                     airTimeAndNumberText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            airtimeText.setText(airTimeAndNumberText);
+            airtimeText.setText(airTimeAndNumberText.toString().toUpperCase(Locale.getDefault()));
 
             // Last edit date
             TextView lastEdit = (TextView) view.findViewById(R.id.lastEdit);

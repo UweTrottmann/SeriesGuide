@@ -49,7 +49,8 @@
                     android:layout_below="@id/seriesname"
                     android:layout_marginBottom="@dimen/default_padding"
                     android:layout_marginLeft="@dimen/default_padding"
-                    android:layout_marginRight="@dimen/default_padding" />
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:textAppearance="@style/TextAppearance.XSmall" />
 
                 <TextView
                     android:id="@+id/showmeta"
@@ -58,7 +59,8 @@
                     android:layout_below="@id/seriesname"
                     android:layout_marginBottom="@dimen/default_padding"
                     android:layout_marginRight="@dimen/default_padding"
-                    android:layout_toRightOf="@+id/showStatus" />
+                    android:layout_toRightOf="@+id/showStatus"
+                    android:textAppearance="@style/TextAppearance.XSmall" />
             </RelativeLayout>
 
             <include layout="@layout/divider_horizontal" />
@@ -140,7 +142,7 @@
                                 android:layout_below="@+id/episodeTitle"
                                 android:layout_marginRight="@dimen/default_padding"
                                 android:textAllCaps="true"
-                                android:textAppearance="@style/TextAppearance.Small" />
+                                android:textAppearance="@style/TextAppearance.XSmall" />
 
                             <TextView
                                 android:id="@+id/episodeInfo"
@@ -149,7 +151,7 @@
                                 android:layout_below="@+id/episodeTitle"
                                 android:layout_toRightOf="@+id/episodeTime"
                                 android:textAllCaps="true"
-                                android:textAppearance="@style/TextAppearance.Small.Dim" />
+                                android:textAppearance="@style/TextAppearance.XSmall.Dim" />
                         </RelativeLayout>
 
                         <View

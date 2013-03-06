@@ -9,14 +9,16 @@
 
     <style name="TextAppearance.XSmall">
         <item name="android:textSize">@dimen/text_size_xsmall</item>
+        <item name="android:textColor">?attr/textColorSgDefault</item>
     </style>
 
     <style name="TextAppearance.XSmall.Dim">
         <item name="android:textColor">?attr/textColorSgDim</item>
     </style>
 
-    <style name="TextAppearance.Small" parent="@android:style/TextAppearance.Small">
+    <style name="TextAppearance.Small">
         <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">?attr/textColorSgDefault</item>
     </style>
 
     <style name="TextAppearance.Small.Highlight">
@@ -94,6 +96,10 @@
 
     <style name="Widget.SeriesGuide.Button.Borderless.Small">
         <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="Widget.SeriesGuide.Button.Borderless.Small.Default">
+        <item name="android:textColor">?attr/textColorSgDefault</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Small.Highlight">
