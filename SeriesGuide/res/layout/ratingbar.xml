@@ -47,6 +47,15 @@
         android:layout_below="@id/bar"
         android:layout_marginTop="@dimen/default_padding" >
 
+        <ImageView
+            android:id="@+id/traktlove"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/inline_padding"
+            android:contentDescription="@string/love"
+            android:src="@drawable/trakt_love_large" />
+
         <TextView
             android:id="@+id/traktvalue"
             android:layout_width="wrap_content"
@@ -55,13 +64,6 @@
             android:layout_marginRight="@dimen/inline_padding"
             android:text="@string/notraktrating"
             android:textAppearance="@style/TextAppearance" />
-
-        <ImageView
-            android:id="@+id/traktlove"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/trakt_love_large" />
 
         <TextView
             android:id="@+id/traktvotes"
