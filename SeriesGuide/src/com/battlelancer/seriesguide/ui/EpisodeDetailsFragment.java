@@ -348,7 +348,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         .append(")");
             }
             airTimeAndNumberText.setSpan(new TextAppearanceSpan(mContext,
-                    R.style.TextAppearance_XSmall_Dim), numberStartIndex,
+                    R.style.TextAppearance_Small_Dim), numberStartIndex,
                     airTimeAndNumberText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             airtimeText.setText(airTimeAndNumberText);
 
