@@ -5,5 +5,6 @@
     <dimen name="text_size_medium">20sp</dimen>
     <dimen name="text_size_large">24sp</dimen>
     <dimen name="text_size_ultralarge">48sp</dimen>
+    <dimen name="movie_item_height">288dp</dimen>
 
 </resources>
