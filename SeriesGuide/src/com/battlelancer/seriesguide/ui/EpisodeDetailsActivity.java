@@ -229,7 +229,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return EpisodeDetailsFragment.newInstance(mEpisodes.get(position).episodeId, true,
+            return EpisodeDetailsFragment.newInstance(mEpisodes.get(position).episodeId, false,
                     mIsMultiPane);
         }
 
