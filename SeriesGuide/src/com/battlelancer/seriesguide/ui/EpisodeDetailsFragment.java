@@ -116,13 +116,15 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         String IS_POSTERBACKGROUND = "showposter";
     }
 
-    public static EpisodeDetailsFragment newInstance(int episodeId, boolean isShowingPoster) {
+    public static EpisodeDetailsFragment newInstance(int episodeId, boolean isShowingPoster,
+            boolean isMultiPane) {
         EpisodeDetailsFragment f = new EpisodeDetailsFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
         args.putInt(InitBundle.EPISODE_TVDBID, episodeId);
         args.putBoolean("showposter", isShowingPoster);
+        args.putBoolean("multipane", isMultiPane);
         f.setArguments(args);
 
         return f;
@@ -245,6 +247,10 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         }
     }
 
+    private boolean isMultiPane() {
+        return getArguments().getBoolean("multipane");
+    }
+
     private void onToggleWatched() {
         mWatched = !mWatched;
         new FlagTask(getActivity(), mShowId, this).episodeWatched(mSeasonNumber, mEpisodeNumber)
@@ -296,19 +302,24 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
             // Show title button
             TextView showtitle = (TextView) view.findViewById(R.id.showTitle);
-            showtitle.setText(showTitle);
-            showtitle.setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    Intent upIntent = new Intent(getActivity(), OverviewActivity.class);
-                    upIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, mShowId);
-                    upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                            | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(upIntent);
-                    getActivity().overridePendingTransition(R.anim.fragment_slide_right_enter,
-                            R.anim.fragment_slide_right_exit);
-                    getActivity().finish();
-                }
-            });
+            if (isMultiPane()) {
+                showtitle.setVisibility(View.GONE);
+            } else {
+                showtitle.setVisibility(View.VISIBLE);
+                showtitle.setText(showTitle);
+                showtitle.setOnClickListener(new OnClickListener() {
+                    public void onClick(View v) {
+                        Intent upIntent = new Intent(getActivity(), OverviewActivity.class);
+                        upIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, mShowId);
+                        upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(upIntent);
+                        getActivity().overridePendingTransition(R.anim.fragment_slide_right_enter,
+                                R.anim.fragment_slide_right_exit);
+                        getActivity().finish();
+                    }
+                });
+            }
 
             // Show poster background
             if (getArguments().getBoolean("showposter")) {

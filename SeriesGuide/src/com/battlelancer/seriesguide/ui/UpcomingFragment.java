@@ -200,7 +200,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                     .findFragmentById(R.id.fragment_details);
             if (detailsFragment == null || detailsFragment.getEpisodeId() != episodeId) {
                 // Make new fragment to show this selection.
-                detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true);
+                detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true, true);
 
                 // Execute a transaction, replacing any existing
                 // fragment with this one inside the frame.
