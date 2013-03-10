@@ -14,12 +14,23 @@
         android:text="@string/season"
         android:textAppearance="@style/TextAppearance.Medium.Light" />
 
+    <ImageView
+        android:id="@+id/imageViewContextMenu"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewSeasonWatchCount"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/textViewSeasonTitle"
+        android:background="?attr/custom_list_selector"
+        android:scaleType="fitXY"
+        android:src="?attr/drawableDropdown" />
+
     <TextView
         android:id="@+id/textViewSeasonProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/default_padding"
-        android:layout_toLeftOf="@+id/imageViewContextMenu"
+        android:layout_toLeftOf="@id/imageViewContextMenu"
         android:paddingTop="@dimen/default_padding"
         android:text="@string/norating"
         android:textAppearance="@style/TextAppearance.Medium.Light.Dim" >
@@ -31,7 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewSeasonTitle"
-        android:layout_toLeftOf="@+id/imageViewContextMenu"
+        android:layout_toLeftOf="@id/imageViewContextMenu"
         android:progressDrawable="@drawable/progress_horizontal_holo_dark" >
     </ProgressBar>
 
@@ -40,21 +51,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/progressBarSeason"
-        android:layout_toLeftOf="@+id/imageViewContextMenu"
+        android:layout_toLeftOf="@id/imageViewContextMenu"
         android:paddingBottom="@dimen/default_padding"
         android:text="@string/episode_notwatched"
         android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.XSmall" />
-
-    <ImageView
-        android:id="@+id/imageViewContextMenu"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textViewSeasonWatchCount"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/textViewSeasonTitle"
-        android:background="?attr/custom_list_selector"
-        android:scaleType="fitXY"
-        android:src="?attr/drawableDropdown" />
 
 </RelativeLayout>
