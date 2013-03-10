@@ -19,7 +19,7 @@
         android:numStars="10"
         android:rating="0"
         android:stepSize="0.1"
-        android:textAppearance="@style/TextAppearance.XSmall" >
+        android:textAppearance="@style/TextAppearance" >
     </RatingBar>
 
     <TextView
@@ -29,7 +29,7 @@
         android:layout_marginLeft="@dimen/inline_padding"
         android:layout_toRightOf="@id/bar"
         android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.XSmall" />
+        android:textAppearance="@style/TextAppearance" />
 
     <TextView
         android:id="@+id/tvdblabel"
@@ -38,7 +38,7 @@
         android:layout_marginLeft="@dimen/inline_padding"
         android:layout_toRightOf="@id/value"
         android:text="@string/tvdb"
-        android:textAppearance="@style/TextAppearance.XSmall.Dim" />
+        android:textAppearance="@style/TextAppearance.Dim" />
 
     <LinearLayout
         android:id="@+id/traktrating"
@@ -54,7 +54,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/inline_padding"
             android:text="@string/notraktrating"
-            android:textAppearance="@style/TextAppearance.XSmall" />
+            android:textAppearance="@style/TextAppearance" />
 
         <ImageView
             android:id="@+id/traktlove"
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/inline_padding"
-            android:textAppearance="@style/TextAppearance.XSmall" />
+            android:textAppearance="@style/TextAppearance" />
 
         <TextView
             android:id="@+id/traktlabel"
@@ -78,7 +78,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/inline_padding"
             android:text="@string/trakt"
-            android:textAppearance="@style/TextAppearance.XSmall.Dim" />
+            android:textAppearance="@style/TextAppearance.Dim" />
     </LinearLayout>
 
 </RelativeLayout>
