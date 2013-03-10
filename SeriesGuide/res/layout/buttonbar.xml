@@ -1,52 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/buttonbar"
-    android:layout_width="wrap_content"
-    android:layout_height="48dp"
-    android:layout_marginBottom="@dimen/default_padding"
-    android:layout_marginLeft="@dimen/default_padding"
-    android:layout_marginRight="@dimen/default_padding" >
+<merge xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <Button
-        android:id="@+id/checkinButton"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:nextFocusLeft="@+id/calendarButton"
-        android:text="@string/checkin" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/colorAccent" />
 
-    <ImageButton
-        android:id="@+id/watchedButton"
-        style="@style/Widget.SeriesGuide.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/togglewatched"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
-        android:src="@drawable/ic_action_watched" />
+    <LinearLayout
+        android:id="@+id/buttonbar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="@dimen/default_padding"
+        android:background="@color/background_dim" >
 
-    <include layout="@layout/divider_vertical" />
+        <Button
+            android:id="@+id/checkinButton"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:text="@string/checkin"
+            android:textAllCaps="true"
+            android:textStyle="bold" />
 
-    <ImageButton
-        android:id="@+id/collectedButton"
-        style="@style/Widget.SeriesGuide.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/collect"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
-        android:src="@drawable/ic_action_collect" />
+        <include layout="@layout/divider_vertical" />
 
-    <include layout="@layout/divider_vertical" />
+        <ImageButton
+            android:id="@+id/watchedButton"
+            style="@style/Widget.SeriesGuide.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/togglewatched"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:src="@drawable/ic_action_watched" />
 
-    <ImageButton
-        android:id="@+id/calendarButton"
-        style="@style/Widget.SeriesGuide.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/addtocalendar"
-        android:nextFocusRight="@+id/checkinButton"
-        android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/default_padding"
-        android:src="?attr/drawableCalendarIcon" />
+        <include layout="@layout/divider_vertical" />
 
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/collectedButton"
+            style="@style/Widget.SeriesGuide.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/collect"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:src="@drawable/ic_action_collect" />
+
+        <include layout="@layout/divider_vertical" />
+
+        <ImageButton
+            android:id="@+id/calendarButton"
+            style="@style/Widget.SeriesGuide.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/addtocalendar"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:src="?attr/drawableCalendarIcon" />
+    </LinearLayout>
+
+</merge>
