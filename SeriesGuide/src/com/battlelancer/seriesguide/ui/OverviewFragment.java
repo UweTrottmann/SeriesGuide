@@ -18,6 +18,7 @@ package com.battlelancer.seriesguide.ui;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -115,6 +116,12 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         v.findViewById(R.id.showinfo).setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 onShowShowInfo(v);
+            }
+        });
+        v.findViewById(R.id.imageViewFavorite).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onToggleShowFavorited(v);
             }
         });
         mSeasonsButton = v.findViewById(R.id.gotoseasons);
@@ -311,6 +318,22 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
     }
 
+    private void onToggleShowFavorited(View v) {
+        if (v.getTag() == null) {
+            return;
+        }
+
+        boolean isFavorited = (Boolean) v.getTag();
+
+        ContentValues values = new ContentValues();
+        values.put(Shows.FAVORITE, !isFavorited);
+
+        getActivity().getContentResolver().update(
+                Shows.buildShowUri(String.valueOf(getShowId())), values, null, null);
+
+        Utils.runNotificationService(getActivity());
+    }
+
     private void onShareEpisode(ShareMethod shareMethod) {
         if (mShowCursor != null && mShowCursor.moveToFirst() && mEpisodeCursor != null
                 && mEpisodeCursor.moveToFirst()) {
@@ -473,7 +496,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
         String[] PROJECTION = new String[] {
                 Shows._ID, Shows.TITLE, Shows.STATUS, Shows.AIRSTIME, Shows.AIRSDAYOFWEEK,
-                Shows.NETWORK, Shows.POSTER, Shows.IMDBID, Shows.RUNTIME
+                Shows.NETWORK, Shows.POSTER, Shows.IMDBID, Shows.RUNTIME, Shows.FAVORITE
         };
 
         int SHOW_TITLE = 1;
@@ -484,6 +507,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         int SHOW_POSTER = 6;
         int SHOW_IMDBID = 7;
         int SHOW_RUNTIME = 8;
+        int SHOW_FAVORITE = 9;
     }
 
     @Override
@@ -785,6 +809,18 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             statusText.setTextColor(Color.GRAY);
             statusText.setText(getString(R.string.show_isnotalive));
         }
+
+        // favorite
+        final ImageView favorited = (ImageView) getView().findViewById(R.id.imageViewFavorite);
+        boolean isFavorited = show.getInt(ShowQuery.SHOW_FAVORITE) == 1;
+        if (isFavorited) {
+            TypedValue outValue = new TypedValue();
+            getSherlockActivity().getTheme().resolveAttribute(R.attr.drawableStar, outValue, true);
+            favorited.setImageResource(outValue.resourceId);
+        } else {
+            favorited.setImageResource(R.drawable.ic_action_star_0);
+        }
+        favorited.setTag(isFavorited);
 
         // poster
         final ImageView background = (ImageView) getView().findViewById(R.id.background);
