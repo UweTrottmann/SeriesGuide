@@ -3,8 +3,13 @@
 
     <!-- Text styles -->
     <style name="TextAppearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">?attr/textColorSgDefault</item>
         <item name="android:textSize">@dimen/text_size_xmedium</item>
         <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="TextAppearance.Dim">
+        <item name="android:textColor">?attr/textColorSgDim</item>
     </style>
 
     <style name="TextAppearance.XSmall">
