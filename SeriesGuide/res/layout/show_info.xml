@@ -31,7 +31,8 @@
                 android:layout_marginRight="@dimen/default_padding"
                 android:text="@string/app_name"
                 android:textAppearance="@style/TextAppearance.Large.Light"
-                android:textIsSelectable="true" />
+                android:textIsSelectable="true"
+                android:textSize="@dimen/text_size_ultralarge" />
 
             <include layout="@layout/show_info_meta" >
             </include>
