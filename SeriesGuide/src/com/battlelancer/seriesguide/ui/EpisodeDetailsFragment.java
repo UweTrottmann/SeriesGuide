@@ -325,17 +325,22 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             if (airTime != -1) {
                 airdateText.setText(Utils.formatToDate(airTime, getActivity()));
                 String[] dayAndTime = Utils.formatToTimeAndDay(airTime, getActivity());
-                airTimeAndNumberText.append(dayAndTime[2] + " (" + dayAndTime[1] + ")");
+                airTimeAndNumberText.append((dayAndTime[2] + " (" + dayAndTime[1] + ")")
+                        .toUpperCase(Locale.getDefault()));
             } else {
                 airdateText.setText(R.string.unknown);
             }
 
             // number
             int numberStartIndex = airTimeAndNumberText.length();
-            airTimeAndNumberText.append("  ").append(getString(R.string.season)).append(" ")
+            airTimeAndNumberText.append("  ")
+                    .append(getString(R.string.season).toUpperCase(Locale.getDefault()))
+                    .append(" ")
                     .append(String.valueOf(mSeasonNumber));
             airTimeAndNumberText.append(" ");
-            airTimeAndNumberText.append(getString(R.string.episode)).append(" ")
+            airTimeAndNumberText
+                    .append(getString(R.string.episode).toUpperCase(Locale.getDefault()))
+                    .append(" ")
                     .append(String.valueOf(mEpisodeNumber));
             final int episodeAbsoluteNumber = cursor.getInt(DetailsQuery.ABSOLUTE_NUMBER);
             if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != mEpisodeNumber) {
@@ -345,7 +350,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             airTimeAndNumberText.setSpan(new TextAppearanceSpan(mContext,
                     R.style.TextAppearance_XSmall_Dim), numberStartIndex,
                     airTimeAndNumberText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-            airtimeText.setText(airTimeAndNumberText.toString().toUpperCase(Locale.getDefault()));
+            airtimeText.setText(airTimeAndNumberText);
 
             // Last edit date
             TextView lastEdit = (TextView) view.findViewById(R.id.lastEdit);
