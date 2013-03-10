@@ -21,7 +21,7 @@
         android:layout_toLeftOf="@id/timestamp"
         android:layout_toRightOf="@id/showposter"
         android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.XLarge.Light" />
+        android:textAppearance="@style/TextAppearance.Large.Light" />
 
     <TextView
         android:id="@+id/textViewShowsTimeAndNetwork"

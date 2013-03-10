@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/default_padding"
                 android:text="@string/connect_trakt_done"
-                android:textAppearance="@style/TextAppearance.XLarge.Light" />
+                android:textAppearance="@style/TextAppearance.Large.Light" />
 
             <TextView
                 android:id="@+id/textViewAddShows"

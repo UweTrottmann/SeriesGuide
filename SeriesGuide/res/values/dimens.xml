@@ -10,8 +10,7 @@
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_xmedium">16sp</dimen>
     <dimen name="text_size_medium">18sp</dimen>
-    <dimen name="text_size_large">20sp</dimen>
-    <dimen name="text_size_xlarge">22sp</dimen>
+    <dimen name="text_size_large">22sp</dimen>
     <dimen name="text_size_ultralarge">32sp</dimen>
     <dimen name="text_size_hyperlarge">72sp</dimen>
     <dimen name="widget_item_width">28dp</dimen>

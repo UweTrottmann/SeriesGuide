@@ -53,18 +53,10 @@
 
     <style name="TextAppearance.Large">
         <item name="android:textSize">@dimen/text_size_large</item>
-    </style>
-
-    <style name="TextAppearance.Large.Light">
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
-    </style>
-
-    <style name="TextAppearance.XLarge">
-        <item name="android:textSize">@dimen/text_size_xlarge</item>
         <item name="android:textColor">?attr/textColorSgPrimary</item>
     </style>
 
-    <style name="TextAppearance.XLarge.Light">
+    <style name="TextAppearance.Large.Light">
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
     </style>
 
@@ -219,7 +211,7 @@
     </style>
 
     <style name="Header">
-        <item name="android:textSize">@dimen/text_size_xlarge</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:layout_marginLeft">@dimen/default_padding</item>
         <item name="android:layout_marginRight">@dimen/default_padding</item>

@@ -40,7 +40,7 @@
                 android:paddingBottom="@dimen/inline_padding"
                 android:paddingRight="@dimen/default_padding"
                 android:text="@string/app_name"
-                android:textAppearance="@style/TextAppearance.XLarge.Light" />
+                android:textAppearance="@style/TextAppearance.Large.Light" />
 
             <TextView
                 android:id="@+id/description"

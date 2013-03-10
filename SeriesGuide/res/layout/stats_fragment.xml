@@ -114,7 +114,7 @@
             android:fontFamily="sans-serif-thin"
             android:gravity="center"
             android:text="@string/norating"
-            android:textAppearance="@style/TextAppearance.XLarge.Light"
+            android:textAppearance="@style/TextAppearance.Large.Light"
             android:textIsSelectable="true" />
 
         <ProgressBar

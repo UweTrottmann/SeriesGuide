@@ -24,7 +24,7 @@
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
                 android:text="@string/add_show"
-                android:textAppearance="@style/TextAppearance.XLarge.Light" />
+                android:textAppearance="@style/TextAppearance.Large.Light" />
 
             <TextView
                 android:id="@+id/message"

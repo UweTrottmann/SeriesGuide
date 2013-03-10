@@ -18,7 +18,7 @@
             android:layout_marginRight="@dimen/default_padding"
             android:layout_marginTop="@dimen/default_padding"
             android:text="@string/list_item_manage"
-            android:textAppearance="@style/TextAppearance.XLarge.Light" />
+            android:textAppearance="@style/TextAppearance.Large.Light" />
 
         <TextView
             android:id="@+id/item"
