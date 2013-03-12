@@ -63,6 +63,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/buttonMovieCheckIn"
                 android:maxWidth="400dp"
+                android:textAppearance="@style/TextAppearance"
                 android:textIsSelectable="true" />
 
             <include
