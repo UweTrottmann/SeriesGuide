@@ -16,13 +16,14 @@
         android:layout_height="match_parent" >
 
         <RelativeLayout
+            style="@style/DefaultPadding.Page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
-            android:padding="@dimen/large_padding" >
+            android:animateLayoutChanges="true" >
 
             <TextView
                 android:id="@+id/textViewMovieTitle"
+                style="@style/DefaultPadding.Blocks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -33,6 +34,7 @@
 
             <TextView
                 android:id="@+id/textViewMovieDate"
+                style="@style/DefaultPadding.Blocks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -55,14 +57,13 @@
 
             <TextView
                 android:id="@+id/textViewMovieDescription"
+                style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/buttonMovieCheckIn"
-                android:layout_marginBottom="@dimen/default_padding"
                 android:maxWidth="400dp"
-                android:textIsSelectable="true"
-                android:textSize="@dimen/text_size_xmedium" />
+                android:textIsSelectable="true" />
 
             <include
                 android:id="@+id/divider"

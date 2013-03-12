@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/episodedetails_root"
+    style="@style/DefaultPadding.Page"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/large_padding" >
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/showTitle"
@@ -38,7 +38,7 @@
 
     <TextView
         android:id="@+id/airTime"
-        style="@style/Subtitle"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
@@ -56,93 +56,106 @@
 
     <TextView
         android:id="@+id/description"
-        style="@style/SmallItems.WithSideMargins.FlowText"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance"
         android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/labelGuestStars"
-        style="@style/Label"
+        style="@style/DefaultPadding.Blocks.WithTopMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/episode_gueststars" />
+        android:text="@string/episode_gueststars"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
 
     <TextView
         android:id="@+id/guestStars"
-        style="@style/SmallItems.WithSideMargins"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance"
         android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/labelDirectors"
-        style="@style/Label"
+        style="@style/DefaultPadding.Blocks.WithTopMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/episode_directors" />
+        android:text="@string/episode_directors"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
 
     <TextView
         android:id="@+id/directors"
-        style="@style/SmallItems.WithSideMargins"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance"
         android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/labelWriters"
-        style="@style/Label"
+        style="@style/DefaultPadding.Blocks.WithTopMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/episode_writers" />
+        android:text="@string/episode_writers"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
 
     <TextView
         android:id="@+id/writers"
-        style="@style/SmallItems.WithSideMargins"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance"
         android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/labelDvd"
-        style="@style/Label"
+        style="@style/DefaultPadding.Blocks.WithTopMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/episode_dvdnumber" />
+        android:text="@string/episode_dvdnumber"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
 
     <TextView
         android:id="@+id/dvdNumber"
-        style="@style/SmallItems.WithSideMargins"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance"
         android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/labelAirDay"
-        style="@style/Label"
+        style="@style/DefaultPadding.Blocks.WithTopMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/episode_firstaired" />
+        android:text="@string/episode_firstaired"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
 
     <TextView
         android:id="@+id/airDay"
-        style="@style/SmallItems.WithSideMargins"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance"
         android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/labelLastEdit"
-        style="@style/Label"
+        style="@style/DefaultPadding.Blocks.WithTopMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/lastEdit" />
+        android:text="@string/lastEdit"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
 
     <TextView
         android:id="@+id/lastEdit"
-        style="@style/SmallItems.WithSideMargins"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance"
         android:textIsSelectable="true" />
 
     <include layout="@layout/divider_horizontal" />

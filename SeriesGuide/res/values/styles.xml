@@ -39,6 +39,11 @@
         <item name="android:textColor">?attr/textColorSgPrimary</item>
     </style>
 
+    <style name="TextAppearance.Small.Label">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps" tools:targetApi="ice_cream_sandwich">true</item>
+    </style>
+
     <style name="TextAppearance.Medium">
         <item name="android:textColor">?attr/textColorSgPrimary</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
@@ -246,49 +251,31 @@
         <item name="android:textColor">@color/text_dim</item>
     </style>
 
-    <!-- Used for metadata in detail views. -->
-    <style name="SmallItems">
-        <item name="android:textSize">@dimen/text_size_xmedium</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">@dimen/default_padding</item>
-    </style>
+    <!-- Easy layouting -->
+    <style name="DefaultPadding"></style>
 
-    <style name="SmallItems.WithSideMargins">
-        <item name="android:layout_marginLeft">@dimen/default_padding</item>
-        <item name="android:layout_marginRight">@dimen/default_padding</item>
-    </style>
-
-    <style name="SmallItems.WithSideMargins.FlowText">
-        <item name="android:lineSpacingMultiplier">1.2</item>
-    </style>
-
-    <style name="Label">
-        <item name="android:textSize">@dimen/text_size_small</item>
-        <item name="android:layout_marginLeft">@dimen/default_padding</item>
-        <item name="android:layout_marginRight">@dimen/default_padding</item>
-        <item name="android:layout_marginTop">@dimen/inline_padding</item>
-        <item name="android:textAllCaps" tools:targetApi="ice_cream_sandwich">true</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="LabelBase">
-        <item name="android:textSize">@dimen/text_size_small</item>
-        <item name="android:textAllCaps" tools:targetApi="ice_cream_sandwich">true</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="ScrollingLayout">
+    <style name="DefaultPadding.Page">
+        <item name="android:paddingTop">@dimen/default_padding</item>
         <item name="android:paddingBottom">@dimen/default_padding</item>
-        <item name="android:paddingLeft">@dimen/layout_padding</item>
-        <item name="android:paddingRight">@dimen/layout_padding</item>
-        <item name="android:paddingTop">@dimen/layout_padding</item>
+        <item name="android:paddingLeft">@dimen/large_padding</item>
+        <item name="android:paddingRight">@dimen/large_padding</item>
     </style>
 
-    <style name="Subtitle">
-        <item name="android:layout_marginLeft">@dimen/default_padding</item>
-        <item name="android:layout_marginRight">@dimen/default_padding</item>
+    <style name="DefaultPadding.Blocks">
+        <item name="android:paddingLeft">@dimen/default_padding</item>
+        <item name="android:paddingRight">@dimen/default_padding</item>
+    </style>
+
+    <style name="DefaultPadding.Blocks.WithTopMargin">
+        <item name="android:layout_marginTop">@dimen/inline_padding</item>
+    </style>
+
+    <style name="DefaultPadding.Blocks.WithBottomMargin">
         <item name="android:layout_marginBottom">@dimen/default_padding</item>
+    </style>
+
+    <style name="DefaultPadding.Blocks.WithBottomMargin.FlowText">
+        <item name="android:lineSpacingMultiplier">1.2</item>
     </style>
 
     <!-- Used for longer passages of text -->

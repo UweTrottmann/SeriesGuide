@@ -18,7 +18,7 @@
 
         <LinearLayout
             android:id="@+id/overview_container"
-            style="@style/ScrollingLayout"
+            style="@style/DefaultPadding.Page"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
@@ -194,31 +194,42 @@
 
                         <TextView
                             android:id="@+id/TextViewEpisodeDescription"
-                            style="@style/SmallItems.WithSideMargins.FlowText"
+                            style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance"
                             android:textIsSelectable="true" />
 
                         <TextView
                             android:id="@+id/labelGuestStars"
-                            style="@style/Label"
+                            style="@style/DefaultPadding.Blocks.WithTopMargin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/episode_gueststars" />
+                            android:text="@string/episode_gueststars"
+                            android:textAppearance="@style/TextAppearance.Small.Label" />
 
                         <TextView
                             android:id="@+id/TextViewEpisodeGuestStars"
-                            style="@style/SmallItems.WithSideMargins"
+                            style="@style/DefaultPadding.Blocks.WithBottomMargin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance"
                             android:textIsSelectable="true" />
 
                         <TextView
                             android:id="@+id/labelDvd"
-                            style="@style/Label"
+                            style="@style/DefaultPadding.Blocks.WithTopMargin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/episode_dvdnumber" />
+                            android:text="@string/episode_dvdnumber"
+                            android:textAppearance="@style/TextAppearance.Small.Label" />
 
                         <TextView
                             android:id="@+id/textViewEpisodeDVDnumber"
-                            style="@style/SmallItems.WithSideMargins" />
+                            style="@style/DefaultPadding.Blocks.WithBottomMargin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance" />
 
                         <include layout="@layout/divider_horizontal" />
 
