@@ -246,13 +246,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             }
             return true;
         } else if (itemId == R.id.menu_rate_trakt) {
-            // rate episode on trakt.tv
-            fireTrackerEvent("Rate (trakt)");
-            if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
-                onShareEpisode(ShareMethod.RATE_TRAKT);
-            } else {
-                startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
-            }
+            onRateOnTrakt();
             return true;
         } else if (itemId == R.id.menu_share) {
             // share episode
@@ -364,6 +358,16 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             shareData.putString(ShareItems.IMDBID, imdbId);
 
             ShareUtils.onShareEpisode(getActivity(), shareData, shareMethod, this);
+        }
+    }
+
+    private void onRateOnTrakt() {
+        // rate episode on trakt.tv
+        fireTrackerEvent("Rate (trakt)");
+        if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
+            onShareEpisode(ShareMethod.RATE_TRAKT);
+        } else {
+            startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
         }
     }
 
@@ -565,6 +569,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         final View episodemeta = getView().findViewById(R.id.episode_meta_container);
         final View episodePrimaryContainer = getView().findViewById(R.id.episode_primary_container);
         final View episodePrimaryClicker = getView().findViewById(R.id.episode_primary_click_dummy);
+        final View ratings = getView().findViewById(R.id.ratingbar);
 
         if (episode != null && episode.moveToFirst()) {
             episodePrimaryContainer.setBackgroundResource(0);
@@ -617,6 +622,14 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             });
             episodePrimaryClicker.setFocusable(true);
 
+            ratings.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onRateOnTrakt();
+                }
+            });
+            ratings.setFocusable(true);
+
             // load all other info
             onLoadEpisodeDetails(episode);
 
@@ -636,6 +649,9 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             episodePrimaryClicker.setOnClickListener(null);
             episodePrimaryClicker.setClickable(false);
             episodePrimaryClicker.setFocusable(false);
+            ratings.setOnClickListener(null);
+            ratings.setClickable(false);
+            ratings.setFocusable(false);
             onLoadImage(null);
         }
 

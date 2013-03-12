@@ -178,12 +178,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_rate_trakt) {
-            fireTrackerEvent("Rate (trakt)");
-            if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
-                onShareEpisode(ShareMethod.RATE_TRAKT);
-            } else {
-                startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
-            }
+            onRateOnTrakt();
             return true;
         } else if (itemId == R.id.menu_share) {
             fireTrackerEvent("Share");
@@ -196,6 +191,15 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void onRateOnTrakt() {
+        fireTrackerEvent("Rate (trakt)");
+        if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
+            onShareEpisode(ShareMethod.RATE_TRAKT);
+        } else {
+            startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -449,6 +453,14 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 ratingBar.setProgress((int) (Double.valueOf(ratingText) / 0.1));
                 ratingValue.setText(ratingText + "/10");
             }
+            rating.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onRateOnTrakt();
+                }
+            });
+            rating.setFocusable(true);
+
             // fetch trakt ratings
             mTraktTask = new TraktSummaryTask(getSherlockActivity(), rating).episode(
                     cursor.getInt(DetailsQuery.REF_SHOW_ID),
