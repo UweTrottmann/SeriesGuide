@@ -111,9 +111,7 @@ public class ShowInfoActivity extends BaseActivity {
             overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
             return true;
         } else if (itemId == R.id.menu_rate_trakt) {
-            TraktRateDialogFragment newFragment = TraktRateDialogFragment
-                    .newInstance(getShowId());
-            newFragment.show(getSupportFragmentManager(), "traktratedialog");
+            onRateOnTrakt();
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
             ListsDialogFragment.showListsDialog(String.valueOf(getShowId()), 1,
@@ -121,6 +119,12 @@ public class ShowInfoActivity extends BaseActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void onRateOnTrakt() {
+        TraktRateDialogFragment newFragment = TraktRateDialogFragment
+                .newInstance(getShowId());
+        newFragment.show(getSupportFragmentManager(), "traktratedialog");
     }
 
     @Override
@@ -207,6 +211,14 @@ public class ShowInfoActivity extends BaseActivity {
             TextView rating = (TextView) findViewById(R.id.value);
             rating.setText(ratingText + "/10");
         }
+        View ratingBar = findViewById(R.id.ratingbar);
+        ratingBar.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRateOnTrakt();
+            }
+        });
+        ratingBar.setFocusable(true);
 
         // Last edit date
         TextView lastEdit = (TextView) findViewById(R.id.lastEdit);
