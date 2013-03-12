@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginBottom="@dimen/default_padding"
-        android:background="@color/background_dim" >
+        android:background="?attr/colorBackgroundDim" >
 
         <Button
             android:id="@+id/checkinButton"

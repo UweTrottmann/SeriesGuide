@@ -34,6 +34,7 @@
         <item name="textColorSgDim">@color/text_dim</item>
         <item name="colorAccent">@color/accent_primary</item>
         <item name="colorOverlay">@color/overlay</item>
+        <item name="colorBackgroundDim">@color/background_dim</item>
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
@@ -103,6 +104,7 @@
         <item name="textColorSgDim">@color/text_dim</item>
         <item name="colorAccent">@color/accent_primary_android</item>
         <item name="colorOverlay">@color/overlay</item>
+        <item name="colorBackgroundDim">@color/background_dim</item>
 
         <!-- Action bar -->
         <item name="spinnerDropDownItemStyle">@style/Widget.DropDownItem</item>
@@ -154,6 +156,7 @@
         <item name="textColorSgDim">@color/text_dim_light</item>
         <item name="colorAccent">@color/accent_primary</item>
         <item name="colorOverlay">@color/overlay_inverse</item>
+        <item name="colorBackgroundDim">@color/background_dim_inverse</item>
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>

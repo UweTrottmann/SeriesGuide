@@ -10,6 +10,7 @@
     <attr name="textColorSgGreen" format="reference|color" />
     <attr name="textColorSgDim" format="reference|color" />
     <attr name="colorOverlay" format="reference|color" />
+    <attr name="colorBackgroundDim" format="reference|color" />
     <attr name="colorAccent" format="reference|color" />
 
     <!-- Drawables -->
