@@ -445,24 +445,25 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             CheatSheet.setup(calendarButton);
 
             // TVDb rating
-            RelativeLayout rating = (RelativeLayout) view.findViewById(R.id.ratingbar);
+            RelativeLayout ratings = (RelativeLayout) view.findViewById(R.id.ratingbar);
             String ratingText = cursor.getString(DetailsQuery.RATING);
             if (ratingText != null && ratingText.length() != 0) {
-                RatingBar ratingBar = (RatingBar) rating.findViewById(R.id.bar);
-                TextView ratingValue = (TextView) rating.findViewById(R.id.value);
+                RatingBar ratingBar = (RatingBar) ratings.findViewById(R.id.bar);
+                TextView ratingValue = (TextView) ratings.findViewById(R.id.value);
                 ratingBar.setProgress((int) (Double.valueOf(ratingText) / 0.1));
                 ratingValue.setText(ratingText + "/10");
             }
-            rating.setOnClickListener(new OnClickListener() {
+            ratings.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onRateOnTrakt();
                 }
             });
-            rating.setFocusable(true);
+            ratings.setFocusable(true);
+            CheatSheet.setup(ratings, R.string.menu_rate_trakt);
 
             // fetch trakt ratings
-            mTraktTask = new TraktSummaryTask(getSherlockActivity(), rating).episode(
+            mTraktTask = new TraktSummaryTask(getSherlockActivity(), ratings).episode(
                     cursor.getInt(DetailsQuery.REF_SHOW_ID),
                     cursor.getInt(DetailsQuery.SEASON),
                     cursor.getInt(DetailsQuery.NUMBER));

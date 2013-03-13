@@ -47,6 +47,7 @@ import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -211,14 +212,15 @@ public class ShowInfoActivity extends BaseActivity {
             TextView rating = (TextView) findViewById(R.id.value);
             rating.setText(ratingText + "/10");
         }
-        View ratingBar = findViewById(R.id.ratingbar);
-        ratingBar.setOnClickListener(new OnClickListener() {
+        View ratings = findViewById(R.id.ratingbar);
+        ratings.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 onRateOnTrakt();
             }
         });
-        ratingBar.setFocusable(true);
+        ratings.setFocusable(true);
+        CheatSheet.setup(ratings, R.string.menu_rate_trakt);
 
         // Last edit date
         TextView lastEdit = (TextView) findViewById(R.id.lastEdit);

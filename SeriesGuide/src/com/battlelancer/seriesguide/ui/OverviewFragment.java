@@ -70,6 +70,7 @@ import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -629,6 +630,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 }
             });
             ratings.setFocusable(true);
+            CheatSheet.setup(ratings, R.string.menu_rate_trakt);
 
             // load all other info
             onLoadEpisodeDetails(episode);
@@ -836,6 +838,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         } else {
             favorited.setImageResource(R.drawable.ic_action_star_0);
         }
+        CheatSheet.setup(favorited, isFavorited ? R.string.context_unfavorite
+                : R.string.context_favorite);
         favorited.setTag(isFavorited);
 
         // poster
