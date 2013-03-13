@@ -182,6 +182,8 @@
                         android:layout_height="1dp"
                         android:background="?attr/colorAccent" />
 
+                    <include layout="@layout/buttonbar" />
+
                     <LinearLayout
                         android:id="@+id/episode_meta_container"
                         android:layout_width="match_parent"

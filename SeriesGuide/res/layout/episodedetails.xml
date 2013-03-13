@@ -50,6 +50,11 @@
         android:layout_height="wrap_content"
         layout="@layout/imagecontainer" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/colorAccent" />
+
     <include layout="@layout/buttonbar" />
 
     <include layout="@layout/ratingbar" />
