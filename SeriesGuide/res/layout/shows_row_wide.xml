@@ -14,11 +14,21 @@
         android:scaleType="centerCrop"
         android:src="@drawable/show_generic" />
 
+    <ImageButton
+        android:id="@+id/favoritedLabel"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/inline_padding"
+        android:background="?attr/custom_list_selector"
+        android:contentDescription="@string/favorited"
+        android:src="?attr/drawableStar" />
+
     <TextView
         android:id="@+id/seriesname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/timestamp"
+        android:layout_toLeftOf="@id/favoritedLabel"
         android:layout_toRightOf="@id/showposter"
         android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.Large.Light" />
@@ -51,22 +61,5 @@
         android:paddingBottom="@dimen/item_padding"
         android:text="@string/show_noairtime"
         android:textAppearance="@style/TextAppearance.Small" />
-
-    <LinearLayout
-        android:id="@+id/timestamp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:paddingRight="@dimen/inline_padding"
-        android:paddingTop="@dimen/default_padding" >
-
-        <ImageView
-            android:id="@+id/favoritedLabel"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
-            android:contentDescription="@string/favorited"
-            android:src="?attr/drawableStar"
-            android:visibility="gone" />
-    </LinearLayout>
 
 </RelativeLayout>
