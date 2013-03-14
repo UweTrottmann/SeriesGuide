@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView1"
             android:layout_centerHorizontal="true"
+            android:progressDrawable="@drawable/progress_horizontal_holo_dark"
             android:visibility="invisible" />
 
         <TextView
@@ -54,6 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewShowsWithNext"
             android:layout_centerHorizontal="true"
+            android:progressDrawable="@drawable/progress_horizontal_holo_dark"
             android:visibility="invisible" />
 
         <TextView
@@ -93,6 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView2"
             android:layout_centerHorizontal="true"
+            android:progressDrawable="@drawable/progress_horizontal_holo_dark"
             android:visibility="invisible" />
 
         <TextView
@@ -123,7 +126,8 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textViewEpisodesRuntime"
             android:layout_alignTop="@+id/textViewEpisodesRuntime"
-            android:layout_toRightOf="@+id/textViewEpisodesRuntime" />
+            android:layout_toRightOf="@+id/textViewEpisodesRuntime"
+            android:progressDrawable="@drawable/progress_horizontal_holo_dark" />
 
         <TextView
             android:id="@+id/textView3"
