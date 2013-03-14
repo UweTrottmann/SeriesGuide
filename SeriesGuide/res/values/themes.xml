@@ -47,7 +47,8 @@
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
         <item name="drawableCalendarIcon">@drawable/ic_action_calendar</item>
         <item name="drawableDivider">@drawable/divider</item>
-        <item name="drawableStar">@drawable/ic_favorited</item>
+        <item name="drawableStar">@drawable/ic_action_star_10</item>
+        <item name="drawableStar0">@drawable/ic_action_star_0</item>
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top</item>
         <item name="drawableDropdown">@drawable/dropdown_default_sg</item>
@@ -116,7 +117,8 @@
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
         <item name="drawableCalendarIcon">@drawable/ic_action_calendar</item>
         <item name="drawableDivider">@drawable/divider</item>
-        <item name="drawableStar">@drawable/ic_favorited</item>
+        <item name="drawableStar">@drawable/ic_action_star_10</item>
+        <item name="drawableStar0">@drawable/ic_action_star_0</item>
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top</item>
         <item name="drawableDropdown">@drawable/dropdown_default_sg</item>
@@ -165,7 +167,8 @@
         <item name="drawableAddIcon">@drawable/ic_action_add_inverse</item>
         <item name="drawableCalendarIcon">@drawable/ic_action_calendar_inverse</item>
         <item name="drawableDivider">@drawable/divider_light</item>
-        <item name="drawableStar">@drawable/ic_favorited_inverse</item>
+        <item name="drawableStar">@drawable/ic_action_star_10_inverse</item>
+        <item name="drawableStar0">@drawable/ic_action_star_0_inverse</item>
         <item name="drawableCancel">@drawable/ic_action_cancel_inverse</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top_inverse</item>
         <item name="drawableDropdown">@drawable/dropdown_default_sg_light</item>

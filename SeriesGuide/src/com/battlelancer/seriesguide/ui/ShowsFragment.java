@@ -136,9 +136,13 @@ public class ShowsFragment extends SherlockFragment implements
         updateSorting(prefs);
         int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
 
-        TypedValue outValue = new TypedValue();
-        getSherlockActivity().getTheme().resolveAttribute(R.attr.drawableStar, outValue, true);
-        mAdapter = new SlowAdapter(getActivity(), null, 0, outValue.resourceId);
+        TypedValue outValueStar = new TypedValue();
+        getSherlockActivity().getTheme().resolveAttribute(R.attr.drawableStar, outValueStar, true);
+        TypedValue outValueStarZero = new TypedValue();
+        getSherlockActivity().getTheme().resolveAttribute(R.attr.drawableStar0, outValueStarZero,
+                true);
+        mAdapter = new SlowAdapter(getActivity(), null, 0, outValueStar.resourceId,
+                outValueStarZero.resourceId);
 
         // setup grid view
         mGrid = (GridView) getView().findViewById(R.id.showlist);
@@ -389,13 +393,17 @@ public class ShowsFragment extends SherlockFragment implements
 
         private final int LAYOUT = R.layout.shows_row;
 
-        private int mFavoritedDrawableId;
+        private int mStarDrawableId;
 
-        public SlowAdapter(Context context, Cursor c, int flags, int favoritedDrawableResId) {
+        private int mStarZeroDrawableId;
+
+        public SlowAdapter(Context context, Cursor c, int flags, int starDrawableResId,
+                int starZeroDrawableId) {
             super(context, c, flags);
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            mFavoritedDrawableId = favoritedDrawableResId;
+            mStarDrawableId = starDrawableResId;
+            mStarZeroDrawableId = starZeroDrawableId;
         }
 
         @Override
@@ -434,8 +442,8 @@ public class ShowsFragment extends SherlockFragment implements
             // favorite toggle
             final String showId = mCursor.getString(ShowsQuery._ID);
             final boolean isFavorited = mCursor.getInt(ShowsQuery.FAVORITE) == 1;
-            viewHolder.favorited.setImageResource(isFavorited ? mFavoritedDrawableId
-                    : R.drawable.ic_action_star_0);
+            viewHolder.favorited.setImageResource(isFavorited ? mStarDrawableId
+                    : mStarZeroDrawableId);
             viewHolder.favorited.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
