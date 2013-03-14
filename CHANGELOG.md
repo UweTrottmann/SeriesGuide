@@ -8,6 +8,21 @@ All dates are in the European Central timezone.
 Version 4 *(TBA)*
 --------------------------
 
+#### 4beta3 *(2013-03-14)*
+
+* FEATURE Add statistics.
+* TWEAK Use new improved swipe menu library (MenuDrawer from SimonVT).
+* TWEAK Change widget settings from new widget settings shortcut.
+* TWEAK Show title in activity activity.
+* FIX Spinner on Gingerbread (Android 2.3) and below was not readable (reverted to platform style).
+* TWEAK Increase line height for description text for easier reading.
+* TWEAK Rate on trakt by just tapping on the rating values.
+* TWEAK Overall design tweaks (removals, text size improvements, layout changes).
+* TWEAK Add favorite button in overview.
+* TWEAK Make favorite stars in the show list touchable.
+* TWEAK Improve TVDb reliability by removing www from TVDB API url.
+* TWEAK Displays your own trakt ratings in brackets.
+
 #### 4beta2 *(2013-02-22)*
 
 * FEATURE New next episode algorithm: remembers what you last watched and offers later episodes as next. Improves watching older seasons.
