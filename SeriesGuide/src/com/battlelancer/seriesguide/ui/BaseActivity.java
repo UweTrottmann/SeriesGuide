@@ -59,6 +59,9 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
         int menuSize = (int) getResources().getDimension(R.dimen.slidingmenu_width);
         mMenuDrawer.setMenuSize(menuSize);
 
+        // hack to reduce overdraw caused by menu drawer by one layer
+        getWindow().getDecorView().setBackgroundDrawable(null);
+
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment f = new SlidingMenuFragment();
         ft.replace(R.id.menu_frame, f);
