@@ -1,66 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <LinearLayout
-        style="@style/ScrollingLayout"
+    <ImageView
+        android:id="@+id/background"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:orientation="horizontal" >
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" >
+    </ImageView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
         <LinearLayout
-            android:layout_width="0dp"
+            style="@style/DefaultPadding.Page"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:orientation="vertical" >
+            android:baselineAligned="false"
+            android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/default_padding"
-                android:layout_marginRight="@dimen/default_padding"
-                android:text="@string/app_name"
-                android:textAppearance="?attr/textAppearanceSgXLargeLight" />
+                android:layout_weight="2"
+                android:orientation="vertical" >
 
-            <include layout="@layout/show_info_meta" >
-            </include>
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginRight="@dimen/default_padding"
+                    android:text="@string/app_name"
+                    android:textAppearance="@style/TextAppearance.Large.Light"
+                    android:textIsSelectable="true"
+                    android:textSize="@dimen/text_size_ultralarge" />
 
-            <include layout="@layout/show_info_metamore" >
-            </include>
+                <include layout="@layout/show_info_meta" >
+                </include>
 
-            <include
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/divider_horizontal" />
+                <include layout="@layout/show_info_metamore" >
+                </include>
 
-            <include
-                android:id="@+id/buttonbar_ref"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                layout="@layout/buttonbar_services" />
+                <include
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/divider_horizontal" />
+
+                <include
+                    android:id="@+id/buttonbar_ref"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    layout="@layout/buttonbar_services" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/large_padding"
+                android:layout_marginRight="@dimen/large_padding"
+                android:layout_marginTop="@dimen/default_padding"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/ImageViewShowInfoPoster"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/description_poster"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/fringe_test" >
+                </ImageView>
+            </LinearLayout>
         </LinearLayout>
+    </ScrollView>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/large_padding"
-            android:layout_marginRight="@dimen/large_padding"
-            android:layout_marginTop="@dimen/default_padding"
-            android:layout_weight="1" >
-
-            <ImageView
-                android:id="@+id/ImageViewShowInfoPoster"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/description_poster"
-                android:src="@drawable/fringe_test" >
-            </ImageView>
-        </LinearLayout>
-    </LinearLayout>
-
-</ScrollView>
+</FrameLayout>

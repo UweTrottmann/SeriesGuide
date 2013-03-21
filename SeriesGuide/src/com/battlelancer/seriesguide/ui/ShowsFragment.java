@@ -18,7 +18,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
-import android.app.ActivityOptions;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -35,10 +34,12 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -64,7 +65,6 @@ import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -136,7 +136,13 @@ public class ShowsFragment extends SherlockFragment implements
         updateSorting(prefs);
         int showfilter = prefs.getInt(SeriesGuidePreferences.KEY_SHOWFILTER, 0);
 
-        mAdapter = new SlowAdapter(getActivity(), null, 0);
+        TypedValue outValueStar = new TypedValue();
+        getSherlockActivity().getTheme().resolveAttribute(R.attr.drawableStar, outValueStar, true);
+        TypedValue outValueStarZero = new TypedValue();
+        getSherlockActivity().getTheme().resolveAttribute(R.attr.drawableStar0, outValueStarZero,
+                true);
+        mAdapter = new SlowAdapter(getActivity(), null, 0, outValueStar.resourceId,
+                outValueStarZero.resourceId);
 
         // setup grid view
         mGrid = (GridView) getView().findViewById(R.id.showlist);
@@ -222,7 +228,7 @@ public class ShowsFragment extends SherlockFragment implements
         switch (item.getItemId()) {
             case CONTEXT_CHECKIN_ID: {
                 fireTrackerEvent("Check in");
-                
+
                 Cursor show = (Cursor) mAdapter.getItem(info.position);
                 final String episodeId = show.getString(ShowsQuery.NEXTEPISODE);
                 if (TextUtils.isEmpty(episodeId)) {
@@ -252,28 +258,11 @@ public class ShowsFragment extends SherlockFragment implements
                 return true;
             }
             case CONTEXT_FAVORITE_ID: {
-                fireTrackerEvent("Favorite show");
-
-                ContentValues values = new ContentValues();
-                values.put(Shows.FAVORITE, true);
-                getActivity().getContentResolver().update(
-                        Shows.buildShowUri(String.valueOf(info.id)), values, null, null);
-
-                Utils.runNotificationService(getActivity());
-
-                Toast.makeText(getActivity(), getString(R.string.favorited), Toast.LENGTH_SHORT)
-                        .show();
+                onFavoriteShow(String.valueOf(info.id), true);
                 return true;
             }
             case CONTEXT_UNFAVORITE_ID: {
-                fireTrackerEvent("Unfavorite show");
-
-                ContentValues values = new ContentValues();
-                values.put(Shows.FAVORITE, false);
-                getActivity().getContentResolver().update(
-                        Shows.buildShowUri(String.valueOf(info.id)), values, null, null);
-                Toast.makeText(getActivity(), getString(R.string.unfavorited), Toast.LENGTH_SHORT)
-                        .show();
+                onFavoriteShow(String.valueOf(info.id), false);
                 return true;
             }
             case CONTEXT_HIDE_ID: {
@@ -320,7 +309,7 @@ public class ShowsFragment extends SherlockFragment implements
                 return true;
             case CONTEXT_MANAGE_LISTS_ID: {
                 fireTrackerEvent("Manage lists");
-                
+
                 ListsDialogFragment.showListsDialog(String.valueOf(info.id), 1,
                         getFragmentManager());
                 return true;
@@ -336,13 +325,8 @@ public class ShowsFragment extends SherlockFragment implements
 
         Intent i = new Intent(getActivity(), OverviewActivity.class);
         i.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, (int) id);
-        if (AndroidUtils.isJellyBeanOrHigher()) {
-            Bundle options = ActivityOptions.makeScaleUpAnimation(view, 0, 0, view.getWidth(),
-                    view.getHeight()).toBundle();
-            getActivity().startActivity(i, options);
-        } else {
-            startActivity(i);
-        }
+        startActivity(i);
+        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
@@ -409,10 +393,17 @@ public class ShowsFragment extends SherlockFragment implements
 
         private final int LAYOUT = R.layout.shows_row;
 
-        public SlowAdapter(Context context, Cursor c, int flags) {
+        private int mStarDrawableId;
+
+        private int mStarZeroDrawableId;
+
+        public SlowAdapter(Context context, Cursor c, int flags, int starDrawableResId,
+                int starZeroDrawableId) {
             super(context, c, flags);
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            mStarDrawableId = starDrawableResId;
+            mStarZeroDrawableId = starZeroDrawableId;
         }
 
         @Override
@@ -432,15 +423,13 @@ public class ShowsFragment extends SherlockFragment implements
 
                 viewHolder = new ViewHolder();
                 viewHolder.name = (TextView) convertView.findViewById(R.id.seriesname);
-                viewHolder.network = (TextView) convertView
-                        .findViewById(R.id.TextViewShowListNetwork);
+                viewHolder.timeAndNetwork = (TextView) convertView
+                        .findViewById(R.id.textViewShowsTimeAndNetwork);
                 viewHolder.episode = (TextView) convertView
                         .findViewById(R.id.TextViewShowListNextEpisode);
                 viewHolder.episodeTime = (TextView) convertView.findViewById(R.id.episodetime);
-                viewHolder.airsTime = (TextView) convertView
-                        .findViewById(R.id.TextViewShowListAirtime);
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.showposter);
-                viewHolder.favorited = convertView.findViewById(R.id.favoritedLabel);
+                viewHolder.favorited = (ImageView) convertView.findViewById(R.id.favoritedLabel);
 
                 convertView.setTag(viewHolder);
             } else {
@@ -449,10 +438,18 @@ public class ShowsFragment extends SherlockFragment implements
 
             // set text properties immediately
             viewHolder.name.setText(mCursor.getString(ShowsQuery.TITLE));
-            viewHolder.network.setText(mCursor.getString(ShowsQuery.NETWORK));
 
+            // favorite toggle
+            final String showId = mCursor.getString(ShowsQuery._ID);
             final boolean isFavorited = mCursor.getInt(ShowsQuery.FAVORITE) == 1;
-            viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
+            viewHolder.favorited.setImageResource(isFavorited ? mStarDrawableId
+                    : mStarZeroDrawableId);
+            viewHolder.favorited.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onFavoriteShow(showId, !isFavorited);
+                }
+            });
 
             // next episode info
             String fieldValue = mCursor.getString(ShowsQuery.NEXTTEXT);
@@ -481,9 +478,13 @@ public class ShowsFragment extends SherlockFragment implements
                     mCursor.getLong(ShowsQuery.AIRSTIME),
                     mCursor.getString(ShowsQuery.AIRSDAYOFWEEK), mContext);
             if (getResources().getBoolean(R.bool.isLargeTablet)) {
-                viewHolder.airsTime.setText("/ " + values[1] + " " + values[0]);
+                // network first, then time, one line
+                viewHolder.timeAndNetwork.setText(mCursor.getString(ShowsQuery.NETWORK) + " / "
+                        + values[1] + " " + values[0]);
             } else {
-                viewHolder.airsTime.setText(values[1] + " " + values[0]);
+                // smaller screen, time first, network second line
+                viewHolder.timeAndNetwork.setText(values[1] + " " + values[0] + "\n"
+                        + mCursor.getString(ShowsQuery.NETWORK));
             }
 
             // set poster
@@ -508,17 +509,15 @@ public class ShowsFragment extends SherlockFragment implements
 
         public TextView name;
 
-        public TextView network;
+        public TextView timeAndNetwork;
 
         public TextView episode;
 
         public TextView episodeTime;
 
-        public TextView airsTime;
-
         public ImageView poster;
 
-        public View favorited;
+        public ImageView favorited;
 
     }
 
@@ -530,7 +529,7 @@ public class ShowsFragment extends SherlockFragment implements
                 Shows.FAVORITE, Shows.NEXTEPISODE, Shows.IMDBID
         };
 
-        // int _ID = 0;
+        int _ID = 0;
 
         int TITLE = 1;
 
@@ -553,6 +552,22 @@ public class ShowsFragment extends SherlockFragment implements
         int NEXTEPISODE = 10;
 
         int IMDB_ID = 11;
+    }
+
+    private void onFavoriteShow(String showId, boolean isFavorite) {
+        ContentValues values = new ContentValues();
+        values.put(Shows.FAVORITE, isFavorite);
+        getActivity().getContentResolver().update(
+                Shows.buildShowUri(showId), values, null, null);
+
+        Utils.runNotificationService(getActivity());
+
+        Toast.makeText(getActivity(),
+                getString(isFavorite ? R.string.favorited : R.string.unfavorited),
+                Toast.LENGTH_SHORT)
+                .show();
+
+        fireTrackerEvent(isFavorite ? "Favorite show" : "Unfavorite show");
     }
 
     private void showDeleteDialog(long showId) {

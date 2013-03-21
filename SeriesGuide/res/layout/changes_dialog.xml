@@ -24,7 +24,7 @@
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
                 android:text="@string/add_show"
-                android:textAppearance="?attr/textAppearanceSgXLargeLight" />
+                android:textAppearance="@style/TextAppearance.Large.Light" />
 
             <TextView
                 android:id="@+id/message"
@@ -34,7 +34,7 @@
                 android:layout_marginLeft="@dimen/large_padding"
                 android:layout_marginRight="@dimen/large_padding"
                 android:text="@string/betamessage"
-                android:textAppearance="?attr/textAppearanceSg" />
+                android:textAppearance="@style/TextAppearance" />
 
             <include layout="@layout/divider_horizontal" />
 
@@ -46,7 +46,7 @@
                 android:layout_marginRight="@dimen/large_padding"
                 android:layout_marginTop="@dimen/default_padding"
                 android:text="@string/betawarning"
-                android:textAppearance="?attr/textAppearanceSg" />
+                android:textAppearance="@style/TextAppearance" />
         </LinearLayout>
     </ScrollView>
 

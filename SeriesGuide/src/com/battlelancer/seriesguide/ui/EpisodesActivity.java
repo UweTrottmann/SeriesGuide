@@ -43,9 +43,10 @@ import com.battlelancer.seriesguide.ui.EpisodeDetailsActivity.EpisodePagerAdapte
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.slidingmenu.lib.SlidingMenu;
 import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TitlePageIndicator;
+
+import net.simonvt.menudrawer.MenuDrawer;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -179,7 +180,6 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
 
         // build the episode pager if we are in a dual-pane layout
         if (mDualPane) {
-            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 
             // set the pager background
             final ImageView background = (ImageView) findViewById(R.id.background);
@@ -190,7 +190,7 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
 
             // set adapters for pager and indicator
             int startPosition = updateEpisodeList(episodeId);
-            mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), mEpisodes, prefs);
+            mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), mEpisodes, prefs, true);
             mPager = (ViewPager) pagerFragment;
             mPager.setAdapter(mAdapter);
 
@@ -201,6 +201,9 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
                 @Override
                 public void onPageSelected(int position) {
                     mEpisodesFragment.setItemChecked(position);
+                    getMenu().setTouchMode(position == 0
+                            ? MenuDrawer.TOUCH_MODE_FULLSCREEN
+                            : MenuDrawer.TOUCH_MODE_BEZEL);
                 }
 
                 @Override
@@ -211,6 +214,10 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
                 public void onPageScrollStateChanged(int arg0) {
                 }
             });
+
+            getMenu().setTouchMode(startPosition == 0
+                    ? MenuDrawer.TOUCH_MODE_FULLSCREEN
+                    : MenuDrawer.TOUCH_MODE_BEZEL);
         } else {
             // FIXME Dirty: make sure no fragments are left over from a config
             // change
@@ -281,8 +288,7 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
             }
             upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(upIntent);
-            overridePendingTransition(R.anim.fragment_slide_right_enter,
-                    R.anim.fragment_slide_right_exit);
+            overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -311,8 +317,7 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.fragment_slide_right_enter,
-                R.anim.fragment_slide_right_exit);
+        overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
     }
 
     @Override

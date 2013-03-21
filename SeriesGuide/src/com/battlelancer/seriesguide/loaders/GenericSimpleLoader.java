@@ -7,15 +7,16 @@ import android.support.v4.content.AsyncTaskLoader;
 import java.util.List;
 
 /**
- * A generic {@link AsyncTaskLoader} loading any {@link List} of things. It
- * takes care of delivering and reseting results, so you only have to implement
- * <code>loadInBackground()</code>.
+ * A generic {@link AsyncTaskLoader} loading any {@link List} or single object
+ * of things (beware for e.g. Cursors you need to override onReleaseResources in
+ * a meaningful way). It takes care of delivering and reseting results, so you
+ * only have to implement <code>loadInBackground()</code>.
  */
-public abstract class GenericListLoader<T> extends AsyncTaskLoader<List<T>> {
+public abstract class GenericSimpleLoader<T> extends AsyncTaskLoader<T> {
 
-    protected List<T> mItems;
+    protected T mItems;
 
-    public GenericListLoader(Context context) {
+    public GenericSimpleLoader(Context context) {
         super(context);
     }
 
@@ -25,7 +26,7 @@ public abstract class GenericListLoader<T> extends AsyncTaskLoader<List<T>> {
      * little more logic.
      */
     @Override
-    public void deliverResult(List<T> items) {
+    public void deliverResult(T items) {
         if (isReset()) {
             // An async query came in while the loader is stopped. We
             // don't need the result.
@@ -33,7 +34,7 @@ public abstract class GenericListLoader<T> extends AsyncTaskLoader<List<T>> {
                 onReleaseResources(items);
             }
         }
-        List<T> oldItems = items;
+        T oldItems = items;
         mItems = items;
 
         if (isStarted()) {
@@ -69,7 +70,7 @@ public abstract class GenericListLoader<T> extends AsyncTaskLoader<List<T>> {
      * Handles a request to cancel a load.
      */
     @Override
-    public void onCanceled(List<T> items) {
+    public void onCanceled(T items) {
         super.onCanceled(items);
 
         onReleaseResources(items);
@@ -96,8 +97,8 @@ public abstract class GenericListLoader<T> extends AsyncTaskLoader<List<T>> {
      * Helper function to take care of releasing resources associated with an
      * actively loaded data set.
      */
-    protected void onReleaseResources(List<T> apps) {
-        // For a simple List<> there is nothing to do. For something
+    protected void onReleaseResources(T items) {
+        // For simple items there is nothing to do. For something
         // like a Cursor, we would close it here.
     }
 

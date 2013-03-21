@@ -38,11 +38,13 @@ import com.battlelancer.seriesguide.items.Episode;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.util.MenuOnPageChangeListener;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.slidingmenu.lib.SlidingMenu;
 import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TitlePageIndicator;
+
+import net.simonvt.menudrawer.MenuDrawer;
 
 import java.util.ArrayList;
 
@@ -79,8 +81,6 @@ public class EpisodeDetailsActivity extends BaseActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
 
         final int episodeId = getIntent().getIntExtra(InitBundle.EPISODE_TVDBID, 0);
         if (episodeId == 0) {
@@ -141,13 +141,19 @@ public class EpisodeDetailsActivity extends BaseActivity {
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
 
-        mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), episodes, prefs);
+        mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), episodes, prefs, false);
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
 
         TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mPager, startPosition);
+
+        // support full-screen swiping if showing first page
+        indicator.setOnPageChangeListener(new MenuOnPageChangeListener(getMenu()));
+        getMenu().setTouchMode(startPosition == 0
+                ? MenuDrawer.TOUCH_MODE_FULLSCREEN
+                : MenuDrawer.TOUCH_MODE_BEZEL);
     }
 
     @Override
@@ -165,8 +171,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.fragment_slide_right_enter,
-                R.anim.fragment_slide_right_exit);
+        overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
     }
 
     @Override
@@ -200,8 +205,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
                         Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(upIntent);
             }
-            overridePendingTransition(R.anim.fragment_slide_right_enter,
-                    R.anim.fragment_slide_right_exit);
+            overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -213,16 +217,20 @@ public class EpisodeDetailsActivity extends BaseActivity {
 
         private SharedPreferences mPrefs;
 
+        private boolean mIsMultiPane;
+
         public EpisodePagerAdapter(FragmentManager fm, ArrayList<Episode> episodes,
-                SharedPreferences prefs) {
+                SharedPreferences prefs, boolean isMultiPane) {
             super(fm);
             mEpisodes = episodes;
             mPrefs = prefs;
+            mIsMultiPane = isMultiPane;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return EpisodeDetailsFragment.newInstance(mEpisodes.get(position).episodeId, false);
+            return EpisodeDetailsFragment.newInstance(mEpisodes.get(position).episodeId, false,
+                    mIsMultiPane);
         }
 
         @Override

@@ -5,6 +5,67 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 4 *(2013-03-21)*
+--------------------------
+
+### Notable changes:
+
+* FEATURE Add statistics.
+* FEATURE New next episode algorithm: remembers what you last watched and offers later episodes as next. Improves watching older seasons.
+* FEATURE Supply extension for Roman Nurik's DashClock.
+* TWEAK Change widget settings from new widget settings shortcut.
+* TWEAK Rate on trakt by just tapping on the rating values.
+* TWEAK Make favorite stars touchable.
+* TWEAK Text in detail views is mostly selectable (Android 3.0+). Easily copy actor names or descriptions.
+* NOTICE Database upgraded to version 31. Starting SeriesGuide the first time after installing the update may take a little longer than usual.
+
+### Detailed changes:
+
+#### 4beta4 *(2013-03-21)*
+
+* FIX Remove decor view background to reduce overdraw due to android-menudrawer usage, should very slightly improve performance.
+
+#### 4beta3 *(2013-03-14)*
+
+* FEATURE Add statistics.
+* TWEAK Use new improved swipe menu library (MenuDrawer from SimonVT).
+* TWEAK Change widget settings from new widget settings shortcut.
+* TWEAK Show title in activity activity.
+* FIX Spinner on Gingerbread (Android 2.3) and below was not readable (reverted to platform style).
+* TWEAK Increase line height for description text for easier reading.
+* TWEAK Rate on trakt by just tapping on the rating values.
+* TWEAK Overall design tweaks (removals, text size improvements, layout changes).
+* TWEAK Add favorite button in overview.
+* TWEAK Make favorite stars in the show list touchable.
+* TWEAK Improve TVDb reliability by removing www from TVDB API url.
+* TWEAK Displays your own trakt ratings in brackets.
+
+#### 4beta2 *(2013-02-22)*
+
+* FEATURE New next episode algorithm: remembers what you last watched and offers later episodes as next. Improves watching older seasons.
+* FEATURE Allow setting the widget opacity level, for X only.
+* FEATURE Started movie details pages, adds description and a trailer button.
+* TWEAK Display the online help page inline, revamped the online help page.
+* TWEAK Overview updates on new information (e.g. a picture).
+* TWEAK Load movies playing now for empty search query.
+* FIX Restore correct text styles for season watch count.
+* NOTICE Database upgraded to version 31. Starting SeriesGuide the first time after installing the update may take a little longer than usual.
+
+#### 4beta1 *(2013-02-12)*
+
+* FEATURE Supply extension for Roman Nurik's DashClock.
+* TWEAK Text in detail views is mostly selectable (Android 3.0+). Easily copy actor names or descriptions.
+* TWEAK New screen animations.
+* TWEAK New side-attached large-screen layout for activity screen.
+* TWEAK Link to app settings from Android network manager tool (Android 4.0+).
+* TWEAK Smoother transition after pressing swipe-menu item.
+* TWEAK Display show poster in show info, other tweaks for more prettiness.
+* TWEAK Display type of list item if it is an episode or a season.
+* FIX Full screen swipe opens menu if first episode detail page is shown.
+* FIX Very long network names wrap correctly in show list.
+* FIX Crash with list widget.
+* NOTICE Latest translations from crowdin.
+
 Version 3 *(2013-01-29)*
 ------------------------
 

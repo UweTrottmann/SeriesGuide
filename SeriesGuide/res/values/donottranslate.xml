@@ -13,7 +13,8 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">Thanks again! v3 is out now.\n\nFix crash when flagging episodes watched.\n\nFix show list filter not working after rotating device.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">v4 is out\n\nThanks again for all the feedback.\n\nThere is a small tweak to reduce overdraw which might slightly improve performance.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="help_url">http://seriesgui.de/help</string>
 
     <!-- Settings -->
     <string name="pref_translate">Translate SeriesGuide</string>
@@ -193,6 +194,17 @@
         <item>5</item>
         <item>10</item>
         <item>60</item>
+    </string-array>
+    <string-array name="widgetOpacityData">
+        <item>0</item>
+        <item>25</item>
+        <item>50</item>
+        <item>75</item>
+        <item>100</item>
+    </string-array>
+    <string-array name="widgetTypeData">
+        <item>0</item>
+        <item>1</item>
     </string-array>
 
 </resources>

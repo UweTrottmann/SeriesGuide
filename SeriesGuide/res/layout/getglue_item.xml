@@ -9,13 +9,13 @@
         android:id="@+id/textViewGetGlueShowTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceSgSmall" >
+        android:textAppearance="@style/TextAppearance.Small" >
     </TextView>
 
     <TextView
         android:id="@+id/textViewGetGlueShowId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceSgSmallDim" />
+        android:textAppearance="@style/TextAppearance.Small.Dim" />
 
 </LinearLayout>

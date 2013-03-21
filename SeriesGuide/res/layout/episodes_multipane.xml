@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:baselineAligned="false"
     android:orientation="horizontal" >
 
+    <!-- Weight is added through styles depending on screen -->
+
     <FrameLayout
         android:id="@+id/fragment_episodes"
         style="@style/EpisodesPane"
         android:layout_width="0px"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:ignore="Suspicious0dp" />
+
+    <!-- Weight is added through styles depending on screen -->
 
     <FrameLayout
         style="@style/DetailsPane"
         android:layout_width="0px"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        tools:ignore="Suspicious0dp" >
 
         <ImageView
             android:id="@+id/background"

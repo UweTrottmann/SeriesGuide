@@ -25,7 +25,7 @@
             android:layout_toLeftOf="@+id/textViewEpisodeNumber"
             android:layout_toRightOf="@id/watchedBoxEpisode"
             android:text="@string/app_name"
-            android:textAppearance="?attr/textAppearanceSgMediumLight" />
+            android:textAppearance="@style/TextAppearance.Medium.Light" />
 
         <TextView
             android:id="@+id/textViewEpisodeNumber"
@@ -35,7 +35,7 @@
             android:layout_marginTop="@dimen/default_padding"
             android:layout_toLeftOf="@+id/imageViewContextMenu"
             android:text="@string/norating"
-            android:textAppearance="?attr/textAppearanceSgMediumLightDim" />
+            android:textAppearance="@style/TextAppearance.Medium.Light.Dim" />
 
         <TextView
             android:id="@+id/textViewEpisodeAbsoluteNumber"
@@ -44,7 +44,7 @@
             android:layout_below="@id/textViewEpisodeNumber"
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_toLeftOf="@+id/imageViewContextMenu"
-            android:textAppearance="?attr/textAppearanceSgSmall" />
+            android:textAppearance="@style/TextAppearance.Small" />
 
         <TextView
             android:id="@+id/textViewEpisodeAirdate"
@@ -54,7 +54,7 @@
             android:layout_toRightOf="@id/watchedBoxEpisode"
             android:paddingBottom="@dimen/default_padding"
             android:text="@string/show_noairtime"
-            android:textAppearance="?attr/textAppearanceSgSmall" />
+            android:textAppearance="@style/TextAppearance.Small" />
 
         <ImageView
             android:id="@+id/imageViewContextMenu"

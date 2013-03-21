@@ -28,20 +28,23 @@ import android.support.v4.app.NavUtils;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
-import com.slidingmenu.lib.SlidingMenu;
-import com.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.uwetrottmann.seriesguide.R;
+
+import net.simonvt.menudrawer.MenuDrawer;
 
 /**
  * Provides some common functionality across all activities like setting the
  * theme and navigation shortcuts.
  */
-public abstract class BaseActivity extends SlidingFragmentActivity {
+public abstract class BaseActivity extends SherlockFragmentActivity {
+
+    private MenuDrawer mMenuDrawer;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -49,15 +52,20 @@ public abstract class BaseActivity extends SlidingFragmentActivity {
         setTheme(SeriesGuidePreferences.THEME);
         super.onCreate(arg0);
 
-        setBehindContentView(R.layout.menu_frame);
+        mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);
+        mMenuDrawer.setMenuView(R.layout.menu_frame);
+        mMenuDrawer.setTouchMode(MenuDrawer.TOUCH_MODE_FULLSCREEN);
+        // setting size in pixels, oh come on...
+        int menuSize = (int) getResources().getDimension(R.dimen.slidingmenu_width);
+        mMenuDrawer.setMenuSize(menuSize);
+
+        // hack to reduce overdraw caused by menu drawer by one layer
+        getWindow().getDecorView().setBackgroundDrawable(null);
+
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment f = new SlidingMenuFragment();
         ft.replace(R.id.menu_frame, f);
         ft.commit();
-
-        SlidingMenu sm = getSlidingMenu();
-        sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        sm.setBehindWidthRes(R.dimen.slidingmenu_width);
     }
 
     @Override
@@ -70,13 +78,25 @@ public abstract class BaseActivity extends SlidingFragmentActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        // close an open menu first
+        final int drawerState = mMenuDrawer.getDrawerState();
+        if (drawerState == MenuDrawer.STATE_OPEN || drawerState == MenuDrawer.STATE_OPENING) {
+            mMenuDrawer.closeMenu();
+            return;
+        }
+
+        super.onBackPressed();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    @Override
     public boolean onKeyLongPress(int keyCode, KeyEvent event) {
         // always navigate back to the home activity
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             NavUtils.navigateUpTo(this,
                     new Intent(Intent.ACTION_MAIN).setClass(this, ShowsActivity.class));
-            overridePendingTransition(R.anim.fragment_slide_right_enter,
-                    R.anim.fragment_slide_right_exit);
+            overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
             return true;
         }
         return false;
@@ -87,11 +107,18 @@ public abstract class BaseActivity extends SlidingFragmentActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
-                overridePendingTransition(R.anim.fragment_slide_right_enter,
-                        R.anim.fragment_slide_right_exit);
+                overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    protected MenuDrawer getMenu() {
+        return mMenuDrawer;
+    }
+
+    protected void toggleMenu() {
+        mMenuDrawer.toggleMenu();
     }
 
     /**

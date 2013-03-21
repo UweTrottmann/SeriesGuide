@@ -15,7 +15,6 @@
         android:layout_height="match_parent" >
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/root"
             style="@style/FirstRunColumn"
             android:orientation="vertical"
@@ -35,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/welcome_add_part1"
-                    android:textAppearance="?attr/textAppearanceSgXLargeLight" />
+                    android:textAppearance="@style/TextAppearance.Large.Light" />
 
                 <Button
                     android:id="@+id/addbutton"
@@ -81,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/pref_language"
-                    android:textAppearance="?attr/textAppearanceSg" />
+                    android:textAppearance="@style/TextAppearance" />
 
                 <Spinner
                     android:id="@+id/welcome_setuplanguage"
@@ -97,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_padding"
                     android:text="@string/welcome_traktmessage"
-                    android:textAppearance="?attr/textAppearanceSg" />
+                    android:textAppearance="@style/TextAppearance" />
 
                 <Button
                     android:id="@+id/welcome_setuptrakt"

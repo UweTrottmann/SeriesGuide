@@ -18,7 +18,7 @@
             android:layout_marginRight="@dimen/default_padding"
             android:layout_marginTop="@dimen/default_padding"
             android:text="@string/list_item_manage"
-            android:textAppearance="?attr/textAppearanceSgXLargeLight" />
+            android:textAppearance="@style/TextAppearance.Large.Light" />
 
         <TextView
             android:id="@+id/item"
@@ -27,7 +27,7 @@
             android:layout_marginLeft="@dimen/default_padding"
             android:layout_marginRight="@dimen/default_padding"
             android:layout_marginBottom="@dimen/default_padding"
-            android:textAppearance="?attr/textAppearanceSgSmallPrimary" />
+            android:textAppearance="@style/TextAppearance.Small.Primary" />
         <include layout="@layout/divider_horizontal" />
 
         <ListView

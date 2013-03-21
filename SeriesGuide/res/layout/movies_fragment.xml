@@ -54,6 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/editTextCheckinSearch"
+        android:animateLayoutChanges="true"
         android:clipToPadding="@bool/gridClipToPadding"
         android:columnWidth="144dp"
         android:fastScrollEnabled="true"
@@ -74,7 +75,7 @@
         android:background="#bf000000"
         android:padding="@dimen/default_padding"
         android:text="@string/powered_by_tmdb"
-        android:textAppearance="?attr/textAppearanceSgXSmall"
+        android:textAppearance="@style/TextAppearance.XSmall"
         android:textColor="@color/text_default" />
 
 </RelativeLayout>

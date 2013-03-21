@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * Loads a list of movies from TMDb.
  */
-public class TmdbMoviesLoader extends GenericListLoader<Movie> {
+public class TmdbMoviesLoader extends GenericSimpleLoader<List<Movie>> {
 
     private static final String TAG = "TmdbMoviesLoader";
 
@@ -47,14 +47,15 @@ public class TmdbMoviesLoader extends GenericListLoader<Movie> {
 
     @Override
     public List<Movie> loadInBackground() {
-        if (TextUtils.isEmpty(mQuery)){
-            return null;
-        }
-        
         ServiceManager manager = ServiceUtils.getTmdbServiceManager(getContext());
 
         try {
-            ResultsPage page = manager.searchService().movieSearch(mQuery).fire();
+            ResultsPage page;
+            if (TextUtils.isEmpty(mQuery)) {
+                page = manager.moviesService().nowPlaying().fire();
+            } else {
+                page = manager.searchService().movieSearch(mQuery).fire();
+            }
             if (page != null && page.results != null) {
                 return page.results;
             }

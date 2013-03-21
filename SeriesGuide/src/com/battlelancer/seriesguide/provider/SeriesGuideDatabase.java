@@ -77,7 +77,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
     public static final int DBVER_ABSOLUTE_NUMBERS = 30;
 
-    public static final int DATABASE_VERSION = DBVER_ABSOLUTE_NUMBERS;
+    public static final int DBVER_LASTWATCHEDID = 31;
+
+    public static final int DATABASE_VERSION = DBVER_LASTWATCHEDID;
 
     public interface Tables {
         String SHOWS = "series";
@@ -190,7 +192,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + ShowsColumns.LASTEDIT + " INTEGER DEFAULT 0,"
 
-            + ShowsColumns.GETGLUEID + " TEXT DEFAULT ''"
+            + ShowsColumns.GETGLUEID + " TEXT DEFAULT '',"
+
+            + ShowsColumns.LASTWATCHEDID + " INTEGER DEFAULT 0"
 
             + ");";
 
@@ -390,6 +394,9 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
             case 29:
                 upgradeToThirty(db);
                 version = 30;
+            case 30:
+                upgradeToThirtyOne(db);
+                version = 31;
         }
 
         // drop all tables if version is not right
@@ -413,6 +420,63 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + Tables.EPISODES_SEARCH);
 
         onCreate(db);
+    }
+
+    // Must be watched and have an airdate
+    private static final String LATEST_SELECTION = Episodes.WATCHED + "=1 AND "
+            + Episodes.FIRSTAIREDMS + "!=-1 AND " + Shows.REF_SHOW_ID + "=?";
+    // Latest aired first (ensures we get specials), if equal sort by season,
+    // then number
+    private static final String LATEST_ORDER = Episodes.FIRSTAIREDMS + " DESC,"
+            + Episodes.SEASON + " DESC,"
+            + Episodes.NUMBER + " DESC";
+
+    /**
+     * Add {@link Shows} column to store the last watched episode id for better
+     * prediction of next episode.
+     */
+    private void upgradeToThirtyOne(SQLiteDatabase db) {
+        db.execSQL("ALTER TABLE " + Tables.SHOWS + " ADD COLUMN " + ShowsColumns.LASTWATCHEDID
+                + " INTEGER DEFAULT 0;");
+
+        // pre populate with latest watched episode ids
+        ContentValues values = new ContentValues();
+        final Cursor shows = db.query(Tables.SHOWS, new String[] {
+                Shows._ID,
+        }, null, null, null, null, null);
+        if (shows != null) {
+
+            db.beginTransaction();
+            try {
+
+                while (shows.moveToNext()) {
+                    final String showId = shows.getString(0);
+                    final Cursor highestWatchedEpisode = db.query(Tables.EPISODES, new String[] {
+                            Episodes._ID
+                    }, LATEST_SELECTION, new String[] {
+                        showId
+                    }, null, null, LATEST_ORDER);
+
+                    if (highestWatchedEpisode != null) {
+                        if (highestWatchedEpisode.moveToFirst()) {
+                            values.put(Shows.LASTWATCHEDID, highestWatchedEpisode.getInt(0));
+                            db.update(Tables.SHOWS, values, Shows._ID + "=?", new String[] {
+                                    showId
+                            });
+                            values.clear();
+                        }
+
+                        highestWatchedEpisode.close();
+                    }
+                }
+
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+            }
+
+            shows.close();
+        }
     }
 
     /**

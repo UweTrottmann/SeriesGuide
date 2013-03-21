@@ -38,8 +38,9 @@ import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListen
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.slidingmenu.lib.SlidingMenu;
 import com.uwetrottmann.seriesguide.R;
+
+import net.simonvt.menudrawer.MenuDrawer;
 
 import java.util.ArrayList;
 
@@ -60,7 +61,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         setContentView(R.layout.upcoming);
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setTitle(R.string.activity);
         actionBar.setIcon(R.drawable.ic_action_upcoming);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -69,7 +70,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
 
-        mTabsAdapter = new TabsAdapter(this, actionBar, mViewPager, getSlidingMenu());
+        mTabsAdapter = new TabsAdapter(this, actionBar, mViewPager, getMenu());
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
         argsUpcoming.putString(UpcomingFragment.InitBundle.QUERY, UpcomingQuery.QUERY_UPCOMING);
@@ -117,11 +118,9 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         }
         actionBar.setSelectedNavigationItem(selection);
 
-        if (selection == 0) {
-            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        } else {
-            getSlidingMenu().setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-        }
+        getMenu().setTouchMode(selection == 0
+                ? MenuDrawer.TOUCH_MODE_FULLSCREEN
+                : MenuDrawer.TOUCH_MODE_BEZEL);
     }
 
     @Override
@@ -188,7 +187,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
 
         private final ViewPager mViewPager;
 
-        private SlidingMenu mSlidingMenu;
+        private MenuDrawer mMenu;
 
         private final ArrayList<String> mTabs = new ArrayList<String>();
 
@@ -197,11 +196,11 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         private SharedPreferences mPrefs;
 
         public TabsAdapter(FragmentActivity activity, ActionBar actionBar, ViewPager pager,
-                SlidingMenu slidingMenu) {
+                MenuDrawer menu) {
             super(activity.getSupportFragmentManager());
             mContext = activity;
             mActionBar = actionBar;
-            mSlidingMenu = slidingMenu;
+            mMenu = menu;
             mViewPager = pager;
             mViewPager.setAdapter(this);
             mViewPager.setOnPageChangeListener(this);
@@ -235,14 +234,9 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
             // save selected tab index
             mPrefs.edit().putInt(SeriesGuidePreferences.KEY_ACTIVITYTAB, position).commit();
 
-            switch (position) {
-                case 0:
-                    mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-                    break;
-                default:
-                    mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-                    break;
-            }
+            mMenu.setTouchMode(position == 0
+                    ? MenuDrawer.TOUCH_MODE_FULLSCREEN
+                    : MenuDrawer.TOUCH_MODE_BEZEL);
         }
 
         @Override

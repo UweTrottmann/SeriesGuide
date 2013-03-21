@@ -47,6 +47,7 @@ import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -108,12 +109,10 @@ public class ShowInfoActivity extends BaseActivity {
             intent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, getShowId());
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-            overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
             return true;
         } else if (itemId == R.id.menu_rate_trakt) {
-            TraktRateDialogFragment newFragment = TraktRateDialogFragment
-                    .newInstance(getShowId());
-            newFragment.show(getSupportFragmentManager(), "traktratedialog");
+            onRateOnTrakt();
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
             ListsDialogFragment.showListsDialog(String.valueOf(getShowId()), 1,
@@ -121,6 +120,18 @@ public class ShowInfoActivity extends BaseActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void onRateOnTrakt() {
+        TraktRateDialogFragment newFragment = TraktRateDialogFragment
+                .newInstance(getShowId());
+        newFragment.show(getSupportFragmentManager(), "traktratedialog");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
     }
 
     protected int getShowId() {
@@ -201,6 +212,15 @@ public class ShowInfoActivity extends BaseActivity {
             TextView rating = (TextView) findViewById(R.id.value);
             rating.setText(ratingText + "/10");
         }
+        View ratings = findViewById(R.id.ratingbar);
+        ratings.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRateOnTrakt();
+            }
+        });
+        ratings.setFocusable(true);
+        CheatSheet.setup(ratings, R.string.menu_rate_trakt);
 
         // Last edit date
         TextView lastEdit = (TextView) findViewById(R.id.lastEdit);
@@ -263,6 +283,7 @@ public class ShowInfoActivity extends BaseActivity {
         // Poster
         final ImageView poster = (ImageView) findViewById(R.id.ImageViewShowInfoPoster);
         ImageProvider.getInstance(this).loadImage(poster, show.getPoster(), false);
+        Utils.setPosterBackground((ImageView) findViewById(R.id.background), show.getPoster(), this);
 
         // trakt ratings
         TraktSummaryTask task = new TraktSummaryTask(this, findViewById(R.id.ratingbar))

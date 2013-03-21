@@ -16,8 +16,9 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.ActivityOptions;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -38,7 +39,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -68,6 +71,7 @@ import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -114,6 +118,12 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         v.findViewById(R.id.showinfo).setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 onShowShowInfo(v);
+            }
+        });
+        v.findViewById(R.id.imageViewFavorite).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onToggleShowFavorited(v);
             }
         });
         mSeasonsButton = v.findViewById(R.id.gotoseasons);
@@ -174,77 +184,45 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         boolean isEpisodeVisible;
         if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
             isEpisodeVisible = true;
-            boolean isCollected = mEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1 ? true : false;
+            boolean isCollected = mEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1 ? true
+                    : false;
             menu.findItem(R.id.menu_flag_collected).setIcon(
                     isCollected ? R.drawable.ic_collected : R.drawable.ic_action_collect);
         } else {
             isEpisodeVisible = false;
         }
-        menu.findItem(R.id.menu_checkin).setEnabled(isEpisodeVisible);
-        menu.findItem(R.id.menu_flag_watched).setEnabled(isEpisodeVisible);
-        menu.findItem(R.id.menu_flag_collected).setEnabled(isEpisodeVisible);
-        menu.findItem(R.id.menu_calendarevent).setEnabled(isEpisodeVisible);
+        menu.findItem(R.id.menu_checkin).setEnabled(isEpisodeVisible && !mDualPane);
+        menu.findItem(R.id.menu_flag_watched).setEnabled(isEpisodeVisible && !mDualPane);
+        menu.findItem(R.id.menu_flag_collected).setEnabled(isEpisodeVisible && !mDualPane);
+        menu.findItem(R.id.menu_calendarevent).setEnabled(isEpisodeVisible && !mDualPane);
         menu.findItem(R.id.menu_share).setEnabled(isEpisodeVisible);
         menu.findItem(R.id.menu_rate_trakt).setEnabled(isEpisodeVisible);
         menu.findItem(R.id.menu_manage_lists).setEnabled(isEpisodeVisible);
+
+        // hide some items on larger screens, we use inline buttons there
+        menu.findItem(R.id.menu_checkin).setVisible(!mDualPane);
+        menu.findItem(R.id.menu_flag_watched).setVisible(!mDualPane);
+        menu.findItem(R.id.menu_flag_collected).setVisible(!mDualPane);
+        menu.findItem(R.id.menu_calendarevent).setVisible(!mDualPane);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_checkin) {
-            fireTrackerEvent("Check-In");
-
-            if (mShowCursor != null && mShowCursor.moveToFirst() && mEpisodeCursor != null
-                    && mEpisodeCursor.moveToFirst()) {
-                final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
-                final int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-                // check in
-                CheckInDialogFragment f = CheckInDialogFragment.newInstance(
-                        mShowCursor.getString(ShowQuery.SHOW_IMDBID),
-                        getShowId(),
-                        seasonNumber,
-                        episodeNumber,
-                        buildEpisodeString(seasonNumber, episodeNumber,
-                                mEpisodeCursor.getString(EpisodeQuery.TITLE)));
-                f.show(getFragmentManager(), "checkin-dialog");
-            }
+            onCheckIn();
             return true;
         } else if (itemId == R.id.menu_flag_watched) {
-            // flag watched
-            fireTrackerEvent("Flag Watched");
             onFlagWatched();
             return true;
         } else if (itemId == R.id.menu_flag_collected) {
-            // toggle collected
-            fireTrackerEvent("Toggle Collected");
-            onToggleCollected(item);
+            onToggleCollected();
             return true;
         } else if (itemId == R.id.menu_calendarevent) {
-            fireTrackerEvent("Add to calendar");
-
-            if (mShowCursor != null && mShowCursor.moveToFirst() && mEpisodeCursor != null
-                    && mEpisodeCursor.moveToFirst()) {
-                final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
-                final int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-                final String episodeTitle = mEpisodeCursor.getString(EpisodeQuery.TITLE);
-                // add calendar event
-                ShareUtils.onAddCalendarEvent(
-                        getActivity(),
-                        mShowCursor.getString(ShowQuery.SHOW_TITLE),
-                        buildEpisodeString(seasonNumber, episodeNumber,
-                                episodeTitle), mEpisodeCursor.getLong(EpisodeQuery.FIRSTAIREDMS),
-                        mShowCursor.getInt(ShowQuery.SHOW_RUNTIME));
-            }
+            onAddCalendarEvent();
             return true;
         } else if (itemId == R.id.menu_rate_trakt) {
-            // rate episode on trakt.tv
-            fireTrackerEvent("Rate (trakt)");
-            if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
-                onShareEpisode(ShareMethod.RATE_TRAKT);
-            } else {
-                startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
-            }
+            onRateOnTrakt();
             return true;
         } else if (itemId == R.id.menu_share) {
             // share episode
@@ -271,51 +249,62 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         return getArguments().getInt(InitBundle.SHOW_TVDBID);
     }
 
-    private void onShowSeasons() {
-        if (mDualPane) {
-            // Check if fragment is shown, create new if needed.
-            SeasonsFragment seasons = (SeasonsFragment) getFragmentManager().findFragmentById(
-                    R.id.fragment_seasons);
-            if (seasons == null) {
-                // Make new fragment to show this selection.
-                seasons = SeasonsFragment.newInstance(getShowId());
+    private void onAddCalendarEvent() {
+        fireTrackerEvent("Add to calendar");
 
-                // Execute a transaction, replacing any existing
-                // fragment with this one inside the frame.
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.anim.fragment_slide_left_enter,
-                        R.anim.fragment_slide_left_exit);
-                ft.replace(R.id.fragment_seasons, seasons);
-                ft.commit();
-            }
-        } else {
-            // Otherwise we need to launch a new activity to display
-            // the dialog fragment with selected text.
-            Intent intent = new Intent();
-            intent.setClass(getActivity(), SeasonsActivity.class);
-            intent.putExtra(SeasonsFragment.InitBundle.SHOW_TVDBID, getShowId());
-            startActivity(intent);
-            getSherlockActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
-                    R.anim.fragment_slide_left_exit);
+        if (mShowCursor != null && mShowCursor.moveToFirst() && mEpisodeCursor != null
+                && mEpisodeCursor.moveToFirst()) {
+            final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
+            final int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+            final String episodeTitle = mEpisodeCursor.getString(EpisodeQuery.TITLE);
+            // add calendar event
+            ShareUtils.onAddCalendarEvent(
+                    getActivity(),
+                    mShowCursor.getString(ShowQuery.SHOW_TITLE),
+                    buildEpisodeString(seasonNumber, episodeNumber,
+                            episodeTitle), mEpisodeCursor.getLong(EpisodeQuery.FIRSTAIREDMS),
+                    mShowCursor.getInt(ShowQuery.SHOW_RUNTIME));
         }
-
     }
 
-    /**
-     * Launch show info activity.
-     */
-    @TargetApi(16)
-    private void onShowShowInfo(View sourceView) {
-        Intent i = new Intent(getActivity(), ShowInfoActivity.class);
-        i.putExtra(ShowInfoActivity.InitBundle.SHOW_TVDBID, getShowId());
+    private void onCheckIn() {
+        fireTrackerEvent("Check-In");
 
-        if (AndroidUtils.isJellyBeanOrHigher()) {
-            Bundle options = ActivityOptions.makeScaleUpAnimation(sourceView, 0, 0,
-                    sourceView.getWidth(),
-                    sourceView.getHeight()).toBundle();
-            getActivity().startActivity(i, options);
+        if (mShowCursor != null && mShowCursor.moveToFirst() && mEpisodeCursor != null
+                && mEpisodeCursor.moveToFirst()) {
+            final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
+            final int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+            // check in
+            CheckInDialogFragment f = CheckInDialogFragment.newInstance(
+                    mShowCursor.getString(ShowQuery.SHOW_IMDBID),
+                    getShowId(),
+                    seasonNumber,
+                    episodeNumber,
+                    buildEpisodeString(seasonNumber, episodeNumber,
+                            mEpisodeCursor.getString(EpisodeQuery.TITLE)));
+            f.show(getFragmentManager(), "checkin-dialog");
+        }
+    }
+
+    private void onFlagWatched() {
+        fireTrackerEvent("Flag Watched");
+        if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
+            final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
+            final int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+            new FlagTask(getActivity(), getShowId(), this)
+                    .episodeWatched(seasonNumber, episodeNumber)
+                    .setItemId(mEpisodeCursor.getInt(EpisodeQuery._ID)).setFlag(true)
+                    .execute();
+        }
+    }
+
+    private void onRateOnTrakt() {
+        // rate episode on trakt.tv
+        fireTrackerEvent("Rate (trakt)");
+        if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
+            onShareEpisode(ShareMethod.RATE_TRAKT);
         } else {
-            startActivity(i);
+            startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
         }
     }
 
@@ -352,25 +341,47 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         }
     }
 
-    private String buildEpisodeString(int seasonNumber, int episodeNumber, String episodeTitle) {
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
-        return Utils.getNextEpisodeString(prefs, seasonNumber,
-                episodeNumber, episodeTitle);
-    }
+    private void onShowSeasons() {
+        if (mDualPane) {
+            // Check if fragment is shown, create new if needed.
+            SeasonsFragment seasons = (SeasonsFragment) getFragmentManager().findFragmentById(
+                    R.id.fragment_seasons);
+            if (seasons == null) {
+                // Make new fragment to show this selection.
+                seasons = SeasonsFragment.newInstance(getShowId());
 
-    private void onFlagWatched() {
-        if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
-            final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
-            final int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-            new FlagTask(getActivity(), getShowId(), this)
-                    .episodeWatched(seasonNumber, episodeNumber)
-                    .setItemId(mEpisodeCursor.getInt(EpisodeQuery._ID)).setFlag(true)
-                    .execute();
+                // Execute a transaction, replacing any existing
+                // fragment with this one inside the frame.
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_seasons, seasons);
+                ft.commit();
+            }
+        } else {
+            // Otherwise we need to launch a new activity to display
+            // the dialog fragment with selected text.
+            Intent intent = new Intent();
+            intent.setClass(getActivity(), SeasonsActivity.class);
+            intent.putExtra(SeasonsFragment.InitBundle.SHOW_TVDBID, getShowId());
+            startActivity(intent);
+            getSherlockActivity().overridePendingTransition(R.anim.blow_up_enter,
+                    R.anim.blow_up_exit);
         }
+
     }
 
-    private void onToggleCollected(MenuItem item) {
+    /**
+     * Launch show info activity.
+     */
+    @TargetApi(16)
+    private void onShowShowInfo(View sourceView) {
+        Intent i = new Intent(getActivity(), ShowInfoActivity.class);
+        i.putExtra(ShowInfoActivity.InitBundle.SHOW_TVDBID, getShowId());
+        startActivity(i);
+        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
+    }
+
+    private void onToggleCollected() {
+        fireTrackerEvent("Toggle Collected");
         if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
             final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
             final int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
@@ -380,9 +391,23 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                     .episodeCollected(seasonNumber, episodeNumber)
                     .setItemId(mEpisodeCursor.getInt(EpisodeQuery._ID))
                     .setFlag(!isCollected).execute();
-
-            item.setIcon(isCollected ? R.drawable.ic_collected : R.drawable.ic_action_collect);
         }
+    }
+
+    private void onToggleShowFavorited(View v) {
+        if (v.getTag() == null) {
+            return;
+        }
+
+        boolean isFavorited = (Boolean) v.getTag();
+
+        ContentValues values = new ContentValues();
+        values.put(Shows.FAVORITE, !isFavorited);
+
+        getActivity().getContentResolver().update(
+                Shows.buildShowUri(String.valueOf(getShowId())), values, null, null);
+
+        Utils.runNotificationService(getActivity());
     }
 
     private void onUpdateSeasons() {
@@ -391,6 +416,13 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         if (seasons != null) {
             seasons.updateUnwatchedCounts();
         }
+    }
+
+    private String buildEpisodeString(int seasonNumber, int episodeNumber, String episodeTitle) {
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+        return Utils.getNextEpisodeString(prefs, seasonNumber,
+                episodeNumber, episodeTitle);
     }
 
     @Override
@@ -481,7 +513,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
 
         String[] PROJECTION = new String[] {
                 Shows._ID, Shows.TITLE, Shows.STATUS, Shows.AIRSTIME, Shows.AIRSDAYOFWEEK,
-                Shows.NETWORK, Shows.POSTER, Shows.IMDBID, Shows.RUNTIME
+                Shows.NETWORK, Shows.POSTER, Shows.IMDBID, Shows.RUNTIME, Shows.FAVORITE
         };
 
         int SHOW_TITLE = 1;
@@ -492,6 +524,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         int SHOW_POSTER = 6;
         int SHOW_IMDBID = 7;
         int SHOW_RUNTIME = 8;
+        int SHOW_FAVORITE = 9;
     }
 
     @Override
@@ -506,6 +539,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         }
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         if (isAdded()) {
@@ -538,6 +572,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 
+    @SuppressLint("NewApi")
     private void onPopulateEpisodeData(Cursor episode) {
         mEpisodeCursor = episode;
 
@@ -547,6 +582,8 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         final View episodemeta = getView().findViewById(R.id.episode_meta_container);
         final View episodePrimaryContainer = getView().findViewById(R.id.episode_primary_container);
         final View episodePrimaryClicker = getView().findViewById(R.id.episode_primary_click_dummy);
+        final View buttons = getView().findViewById(R.id.buttonbar);
+        final View ratings = getView().findViewById(R.id.ratingbar);
 
         if (episode != null && episode.moveToFirst()) {
             episodePrimaryContainer.setBackgroundResource(0);
@@ -592,17 +629,70 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                     // display episode details
                     Intent intent = new Intent(getActivity(), EpisodesActivity.class);
                     intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
-
-                    if (AndroidUtils.isJellyBeanOrHigher()) {
-                        Bundle options = ActivityOptions.makeScaleUpAnimation(view, 0, 0,
-                                view.getWidth(), view.getHeight()).toBundle();
-                        getActivity().startActivity(intent, options);
-                    } else {
-                        startActivity(intent);
-                    }
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.blow_up_enter,
+                            R.anim.blow_up_exit);
                 }
             });
             episodePrimaryClicker.setFocusable(true);
+
+            if (mDualPane) {
+                buttons.setVisibility(View.VISIBLE);
+                
+                // check-in button
+                buttons.findViewById(R.id.checkinButton).setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onCheckIn();
+                    }
+                });
+
+                // watched button
+                View watchedButton = buttons.findViewById(R.id.watchedButton);
+                watchedButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onFlagWatched();
+                    }
+                });
+                CheatSheet.setup(watchedButton, R.string.mark_episode);
+
+                // collected button
+                boolean isCollected = episode.getInt(EpisodeQuery.COLLECTED) == 1;
+                ImageButton collectedButton = (ImageButton) buttons
+                        .findViewById(R.id.collectedButton);
+                collectedButton.setImageResource(isCollected ? R.drawable.ic_collected
+                        : R.drawable.ic_action_collect);
+                collectedButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onToggleCollected();
+                    }
+                });
+                CheatSheet.setup(collectedButton, isCollected ? R.string.uncollect
+                        : R.string.collect);
+
+                // calendar button
+                View calendarButton = buttons.findViewById(R.id.calendarButton);
+                calendarButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onAddCalendarEvent();
+                    }
+                });
+                CheatSheet.setup(calendarButton);
+            } else {
+                buttons.setVisibility(View.GONE);
+            }
+
+            ratings.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onRateOnTrakt();
+                }
+            });
+            ratings.setFocusable(true);
+            CheatSheet.setup(ratings, R.string.menu_rate_trakt);
 
             // load all other info
             onLoadEpisodeDetails(episode);
@@ -611,6 +701,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             onLoadImage(episode.getString(EpisodeQuery.IMAGE));
 
             episodemeta.setVisibility(View.VISIBLE);
+
         } else {
             // no next episode: display single line info text, remove other
             // views
@@ -622,6 +713,10 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             episodePrimaryClicker.setOnClickListener(null);
             episodePrimaryClicker.setClickable(false);
             episodePrimaryClicker.setFocusable(false);
+            buttons.setVisibility(View.GONE);
+            ratings.setOnClickListener(null);
+            ratings.setClickable(false);
+            ratings.setFocusable(false);
             onLoadImage(null);
         }
 
@@ -632,7 +727,11 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
         final View contentContainer = getView().findViewById(R.id.content_container);
         if (contentContainer.getVisibility() == View.GONE) {
             final View progressContainer = getView().findViewById(R.id.progress_container);
+            progressContainer.startAnimation(AnimationUtils
+                    .loadAnimation(episodemeta.getContext(), android.R.anim.fade_out));
             progressContainer.setVisibility(View.GONE);
+            contentContainer.startAnimation(AnimationUtils
+                    .loadAnimation(episodemeta.getContext(), android.R.anim.fade_in));
             contentContainer.setVisibility(View.VISIBLE);
         }
 
@@ -791,6 +890,20 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             statusText.setTextColor(Color.GRAY);
             statusText.setText(getString(R.string.show_isnotalive));
         }
+
+        // favorite
+        final ImageView favorited = (ImageView) getView().findViewById(R.id.imageViewFavorite);
+        boolean isFavorited = show.getInt(ShowQuery.SHOW_FAVORITE) == 1;
+        if (isFavorited) {
+            TypedValue outValue = new TypedValue();
+            getSherlockActivity().getTheme().resolveAttribute(R.attr.drawableStar, outValue, true);
+            favorited.setImageResource(outValue.resourceId);
+        } else {
+            favorited.setImageResource(R.drawable.ic_action_star_0);
+        }
+        CheatSheet.setup(favorited, isFavorited ? R.string.context_unfavorite
+                : R.string.context_favorite);
+        favorited.setTag(isFavorited);
 
         // poster
         final ImageView background = (ImageView) getView().findViewById(R.id.background);

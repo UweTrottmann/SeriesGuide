@@ -18,7 +18,6 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.annotation.TargetApi;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -41,7 +40,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.loaders.GenericListLoader;
+import com.battlelancer.seriesguide.loaders.GenericSimpleLoader;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
@@ -105,7 +104,7 @@ public class TraktFriendsFragment extends ListFragment implements
         }
 
     }
-    
+
     @Override
     public void onStart() {
         super.onStart();
@@ -163,7 +162,7 @@ public class TraktFriendsFragment extends ListFragment implements
                     .findFragmentById(R.id.fragment_details);
             if (detailsFragment == null || detailsFragment.getEpisodeId() != episodeId) {
                 // Make new fragment to show this selection.
-                detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true);
+                detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true, true);
 
                 // Execute a transaction, replacing any existing
                 // fragment with this one inside the frame.
@@ -177,20 +176,12 @@ public class TraktFriendsFragment extends ListFragment implements
             intent.setClass(getActivity(), EpisodesActivity.class);
             intent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID, episodeId);
 
-            if (AndroidUtils.isJellyBeanOrHigher()) {
-                Bundle options = ActivityOptions.makeScaleUpAnimation(sourceView, 0, 0,
-                        sourceView.getWidth(),
-                        sourceView.getHeight()).toBundle();
-                getActivity().startActivity(intent, options);
-            } else {
-                startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.fragment_slide_left_enter,
-                        R.anim.fragment_slide_left_exit);
-            }
+            startActivity(intent);
+            getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
         }
     }
 
-    private static class TraktFriendsLoader extends GenericListLoader<UserProfile> {
+    private static class TraktFriendsLoader extends GenericSimpleLoader<List<UserProfile>> {
 
         public TraktFriendsLoader(Context context) {
             super(context);
@@ -199,7 +190,8 @@ public class TraktFriendsFragment extends ListFragment implements
         @Override
         public List<UserProfile> loadInBackground() {
             if (ServiceUtils.isTraktCredentialsValid(getContext())) {
-                ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(getContext(), false);
+                ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(getContext(),
+                        false);
                 if (manager == null) {
                     return null;
                 }

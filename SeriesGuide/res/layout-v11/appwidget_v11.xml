@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/widget_margin" >
 
+    <!-- Need parent FrameLayout for padding backwards compatibility -->
+
     <LinearLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/appwidget_bg"
-        android:orientation="vertical" >
+        android:background="@color/widget_default_background"
+        android:orientation="vertical"
+        tools:ignore="UselessParent" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -33,9 +38,31 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:fontFamily="sans-serif-light"
                     android:text="@string/upcoming"
                     android:textAllCaps="true"
-                    android:textAppearance="@style/TextAppearance.Medium.Light" />
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/text_size_medium" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/widget_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/list_selector_sg"
+                android:focusable="true"
+                android:paddingBottom="@dimen/inline_padding"
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingRight="@dimen/default_padding"
+                android:paddingTop="@dimen/inline_padding" >
+
+                <ImageView
+                    android:id="@+id/imageViewSettings"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/preferences"
+                    android:src="@drawable/ic_action_settings" />
             </FrameLayout>
 
             <FrameLayout
@@ -50,7 +77,7 @@
                 android:paddingTop="@dimen/inline_padding" >
 
                 <ImageView
-                    android:id="@+id/imageView1"
+                    android:id="@+id/imageViewLauncher"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
@@ -73,9 +100,9 @@
             android:id="@+id/empty_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fontFamily="sans-serif-light"
             android:gravity="center"
-            android:text="@string/no_nextepisode"
-            android:textAppearance="@style/TextAppearance.Medium.Light" />
+            android:text="@string/no_nextepisode" />
     </LinearLayout>
 
 </FrameLayout>

@@ -21,10 +21,6 @@ public class SeasonsAdapter extends CursorAdapter {
 
     private LayoutInflater mLayoutInflater;
 
-    private int mTextAppearanceXSmallDim;
-
-    private int mTextAppearanceXSmall;
-
     private OnClickListener mOnClickListener;
 
     public SeasonsAdapter(Context context, Cursor c, int flags, OnClickListener listener) {
@@ -101,13 +97,14 @@ public class SeasonsAdapter extends CursorAdapter {
                 }
             }
 
-            viewHolder.seasonWatchCount.setTextAppearance(mContext, mTextAppearanceXSmallDim);
+            viewHolder.seasonWatchCount.setTextAppearance(mContext,
+                    R.style.TextAppearance_XSmall_Dim);
         } else if (count == 1) {
             episodeCount += count + " " + mContext.getString(R.string.season_onenotwatched);
-            viewHolder.seasonWatchCount.setTextAppearance(mContext, mTextAppearanceXSmall);
+            viewHolder.seasonWatchCount.setTextAppearance(mContext, R.style.TextAppearance_XSmall);
         } else {
             episodeCount += count + " " + mContext.getString(R.string.season_watchcount);
-            viewHolder.seasonWatchCount.setTextAppearance(mContext, mTextAppearanceXSmall);
+            viewHolder.seasonWatchCount.setTextAppearance(mContext, R.style.TextAppearance_XSmall);
         }
 
         // add strings for unaired episodes

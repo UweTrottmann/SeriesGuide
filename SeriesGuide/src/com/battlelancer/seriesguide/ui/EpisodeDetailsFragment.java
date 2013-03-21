@@ -17,11 +17,13 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -32,7 +34,6 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.style.TextAppearanceSpan;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,6 +71,8 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
+
+import java.util.Locale;
 
 /**
  * Displays details about a single episode like summary, ratings and episode
@@ -113,13 +116,15 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         String IS_POSTERBACKGROUND = "showposter";
     }
 
-    public static EpisodeDetailsFragment newInstance(int episodeId, boolean isShowingPoster) {
+    public static EpisodeDetailsFragment newInstance(int episodeId, boolean isShowingPoster,
+            boolean isMultiPane) {
         EpisodeDetailsFragment f = new EpisodeDetailsFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
         args.putInt(InitBundle.EPISODE_TVDBID, episodeId);
         args.putBoolean("showposter", isShowingPoster);
+        args.putBoolean("multipane", isMultiPane);
         f.setArguments(args);
 
         return f;
@@ -173,12 +178,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_rate_trakt) {
-            fireTrackerEvent("Rate (trakt)");
-            if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
-                onShareEpisode(ShareMethod.RATE_TRAKT);
-            } else {
-                startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
-            }
+            onRateOnTrakt();
             return true;
         } else if (itemId == R.id.menu_share) {
             fireTrackerEvent("Share");
@@ -193,6 +193,16 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         return super.onOptionsItemSelected(item);
     }
 
+    private void onRateOnTrakt() {
+        fireTrackerEvent("Rate (trakt)");
+        if (ServiceUtils.isTraktCredentialsValid(getActivity())) {
+            onShareEpisode(ShareMethod.RATE_TRAKT);
+        } else {
+            startActivity(new Intent(getActivity(), ConnectTraktActivity.class));
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void onShareEpisode(ShareMethod shareMethod) {
         // Episode of this fragment is always the first item in the cursor
         final Cursor episode = (Cursor) mAdapter.getItem(0);
@@ -241,6 +251,10 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         }
     }
 
+    private boolean isMultiPane() {
+        return getArguments().getBoolean("multipane");
+    }
+
     private void onToggleWatched() {
         mWatched = !mWatched;
         new FlagTask(getActivity(), mShowId, this).episodeWatched(mSeasonNumber, mEpisodeNumber)
@@ -260,18 +274,12 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     private class DetailsAdapter extends CursorAdapter {
 
         private LayoutInflater mLayoutInflater;
-        private int mTextAppearanceSmallDimRes;
 
         public DetailsAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);
 
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            TypedValue textAppearanceSmallDim = new TypedValue();
-            getActivity().getTheme().resolveAttribute(R.attr.textAppearanceSgSmallDim,
-                    textAppearanceSmallDim, true);
-            mTextAppearanceSmallDimRes = textAppearanceSmallDim.resourceId;
         }
 
         @Override
@@ -298,19 +306,24 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
             // Show title button
             TextView showtitle = (TextView) view.findViewById(R.id.showTitle);
-            showtitle.setText(showTitle);
-            showtitle.setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    Intent upIntent = new Intent(getActivity(), OverviewActivity.class);
-                    upIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, mShowId);
-                    upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                            | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(upIntent);
-                    getActivity().overridePendingTransition(R.anim.fragment_slide_right_enter,
-                            R.anim.fragment_slide_right_exit);
-                    getActivity().finish();
-                }
-            });
+            if (isMultiPane()) {
+                showtitle.setVisibility(View.GONE);
+            } else {
+                showtitle.setVisibility(View.VISIBLE);
+                showtitle.setText(showTitle);
+                showtitle.setOnClickListener(new OnClickListener() {
+                    public void onClick(View v) {
+                        Intent upIntent = new Intent(getActivity(), OverviewActivity.class);
+                        upIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, mShowId);
+                        upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(upIntent);
+                        getActivity().overridePendingTransition(R.anim.fragment_slide_right_enter,
+                                R.anim.fragment_slide_right_exit);
+                        getActivity().finish();
+                    }
+                });
+            }
 
             // Show poster background
             if (getArguments().getBoolean("showposter")) {
@@ -327,17 +340,22 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             if (airTime != -1) {
                 airdateText.setText(Utils.formatToDate(airTime, getActivity()));
                 String[] dayAndTime = Utils.formatToTimeAndDay(airTime, getActivity());
-                airTimeAndNumberText.append(dayAndTime[2] + " (" + dayAndTime[1] + ")");
+                airTimeAndNumberText.append((dayAndTime[2] + " (" + dayAndTime[1] + ")")
+                        .toUpperCase(Locale.getDefault()));
             } else {
                 airdateText.setText(R.string.unknown);
             }
 
             // number
             int numberStartIndex = airTimeAndNumberText.length();
-            airTimeAndNumberText.append("  ").append(getString(R.string.season)).append(" ")
+            airTimeAndNumberText.append("  ")
+                    .append(getString(R.string.season).toUpperCase(Locale.getDefault()))
+                    .append(" ")
                     .append(String.valueOf(mSeasonNumber));
             airTimeAndNumberText.append(" ");
-            airTimeAndNumberText.append(getString(R.string.episode)).append(" ")
+            airTimeAndNumberText
+                    .append(getString(R.string.episode).toUpperCase(Locale.getDefault()))
+                    .append(" ")
                     .append(String.valueOf(mEpisodeNumber));
             final int episodeAbsoluteNumber = cursor.getInt(DetailsQuery.ABSOLUTE_NUMBER);
             if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != mEpisodeNumber) {
@@ -345,7 +363,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                         .append(")");
             }
             airTimeAndNumberText.setSpan(new TextAppearanceSpan(mContext,
-                    mTextAppearanceSmallDimRes), numberStartIndex,
+                    R.style.TextAppearance_Small_Dim), numberStartIndex,
                     airTimeAndNumberText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             airtimeText.setText(airTimeAndNumberText);
 
@@ -427,16 +445,25 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             CheatSheet.setup(calendarButton);
 
             // TVDb rating
-            RelativeLayout rating = (RelativeLayout) view.findViewById(R.id.ratingbar);
+            RelativeLayout ratings = (RelativeLayout) view.findViewById(R.id.ratingbar);
             String ratingText = cursor.getString(DetailsQuery.RATING);
             if (ratingText != null && ratingText.length() != 0) {
-                RatingBar ratingBar = (RatingBar) rating.findViewById(R.id.bar);
-                TextView ratingValue = (TextView) rating.findViewById(R.id.value);
+                RatingBar ratingBar = (RatingBar) ratings.findViewById(R.id.bar);
+                TextView ratingValue = (TextView) ratings.findViewById(R.id.value);
                 ratingBar.setProgress((int) (Double.valueOf(ratingText) / 0.1));
                 ratingValue.setText(ratingText + "/10");
             }
+            ratings.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onRateOnTrakt();
+                }
+            });
+            ratings.setFocusable(true);
+            CheatSheet.setup(ratings, R.string.menu_rate_trakt);
+
             // fetch trakt ratings
-            mTraktTask = new TraktSummaryTask(getSherlockActivity(), rating).episode(
+            mTraktTask = new TraktSummaryTask(getSherlockActivity(), ratings).episode(
                     cursor.getInt(DetailsQuery.REF_SHOW_ID),
                     cursor.getInt(DetailsQuery.SEASON),
                     cursor.getInt(DetailsQuery.NUMBER));

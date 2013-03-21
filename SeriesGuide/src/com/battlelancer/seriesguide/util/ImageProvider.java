@@ -27,7 +27,6 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -39,6 +38,7 @@ import android.widget.ImageView.ScaleType;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.AsyncTask;
 import com.uwetrottmann.seriesguide.R;
 
 import java.io.File;
@@ -219,7 +219,13 @@ public class ImageProvider {
         final ImageLoaderTask task = new ImageLoaderTask(imageView);
         imageView.setImageBitmap(null);
         imageView.setTag(task);
-        AndroidUtils.executeAsyncTask(task, imagePath);
+        
+        /*
+         * NOTE: This uses a custom version of AsyncTask that has been
+         * pulled from the framework and slightly modified. Refer to the
+         * docs at the top of the class for more info on what was changed.
+         */
+        task.executeOnExecutor(AsyncTask.DUAL_THREAD_EXECUTOR, imagePath);
     }
 
     /**

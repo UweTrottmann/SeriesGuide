@@ -157,8 +157,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String SUPPORT_MAIL = "support@seriesgui.de";
 
-    public static final String HELP_URL = "http://seriesgui.de/help";
-
     private static final String TAG = "Settings";
 
     private static final String KEY_ABOUT = "aboutPref";
@@ -207,7 +205,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setIcon(R.drawable.ic_action_settings);
     }
 
     protected static void setupSharingSettings(Context context, Preference getGluePref) {
@@ -409,6 +406,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -478,7 +476,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static void setListPreferenceSummary(ListPreference listPref) {
         // Set summary to be the user-description for the selected value
-        listPref.setSummary(listPref.getEntry());
+        listPref.setSummary(listPref.getEntry().toString().replaceAll("%", "%%"));
     }
 
     @TargetApi(11)
