@@ -13,7 +13,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">It\'s been a while...\n\nSorry for the long wait, but here is the next and probably last beta for v4 (this stuff has to ship).\n\nThere are a lot of small tweaks here and there, most notably a new menu drawer library and an initial statistics page.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">v4 is out\n\nThanks again for all the feedback.\n\nThere is a small tweak to reduce overdraw which might slightly improve performance.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
     <string name="help_url">http://seriesgui.de/help</string>
 
     <!-- Settings -->
