@@ -5,8 +5,25 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 4 *(TBA)*
+Version 4 *(2013-03-21)*
 --------------------------
+
+### Notable changes:
+
+* FEATURE Add statistics.
+* FEATURE New next episode algorithm: remembers what you last watched and offers later episodes as next. Improves watching older seasons.
+* FEATURE Supply extension for Roman Nurik's DashClock.
+* TWEAK Change widget settings from new widget settings shortcut.
+* TWEAK Rate on trakt by just tapping on the rating values.
+* TWEAK Make favorite stars touchable.
+* TWEAK Text in detail views is mostly selectable (Android 3.0+). Easily copy actor names or descriptions.
+* NOTICE Database upgraded to version 31. Starting SeriesGuide the first time after installing the update may take a little longer than usual.
+
+### Detailed changes:
+
+#### 4beta4 *(2013-03-21)*
+
+* FIX Remove decor view background to reduce overdraw due to android-menudrawer usage, should very slightly improve performance.
 
 #### 4beta3 *(2013-03-14)*
 
