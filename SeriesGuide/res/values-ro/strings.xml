@@ -3,7 +3,7 @@
 <resources>
   <string name="episode">Episod</string>
   <string name="episodes">Episodes</string>
-  <string name="all_episodes">All episodes</string>
+  <string name="all_episodes">Toate episoadele</string>
   <string name="season">Sezon</string>
   <string name="seasons">Sezoane</string>
   <string name="unknown">necunoscut</string>
@@ -25,10 +25,10 @@
   <string name="cancel">Revocare</string>
   <string name="share">Share</string>
   <string name="updated">Actualizat la ultima versiune.</string>
-  <string name="discard">Renunțați</string>
+  <string name="discard">Renunță</string>
   <string name="close">Close</string>
-  <string name="save_selection">Salvați selecția</string>
-  <string name="offline">Nici o conectivitate în reţea. Încercaţi din nou mai târziu.</string>
+  <string name="save_selection">Salvează selecția</string>
+  <string name="offline">Nici o conexiune la internet. Încercaţi din nou mai târziu.</string>
   <string name="onlyx">Disponibil doar în SeriesGuide X</string>
   <string name="shows">Emisiuni</string>
   <string name="lists">Liste</string>
@@ -36,7 +36,7 @@
   <string name="movies">Movies</string>
   <string name="statistics">Statistics</string>
   <string name="search">Căutare</string>
-  <string name="add_show">Adăugați emisiuni</string>
+  <string name="add_show">Adăugă emisiuni</string>
   <string name="preferences">Setări</string>
   <string name="help">Ajutor</string>
   <string name="shouts">Shouts</string>
@@ -53,7 +53,7 @@
   <string name="shows_continuing">%s continuing</string>
   <string name="episodes_watched">%s watched</string>
   <string name="runtime_all_episodes">Runtime of all watched episodes</string>
-  <string name="love">Totally ninja!</string>
+  <string name="love">Super tare!</string>
   <string name="hate">Slab :(</string>
   <string name="rating2">Teribil</string>
   <string name="rating3">Rău</string>
@@ -71,17 +71,17 @@
   <string name="show_runtime">Durata</string>
   <string name="show_contentrating">Content Rating</string>
   <string name="episode_directors">Regizori</string>
-  <string name="episode_gueststars">Guest Stars</string>
-  <string name="episode_writers">Writers</string>
+  <string name="episode_gueststars">Invitaţi Speciali</string>
+  <string name="episode_writers">Scenarişti</string>
   <string name="show_airtimeunit">min</string>
   <string name="show_isalive">Continuă</string>
-  <string name="show_isnotalive">S-a încheiat</string>
+  <string name="show_isnotalive">Terminat</string>
   <string name="lastEdit">Ultima editare//TVDb</string>
   <string name="sort">Sortați după</string>
-  <string name="updateall_yes">Actualizare(toate)</string>
-  <string name="menu_update_delta">Actualizare(doar cele învechite)</string>
+  <string name="updateall_yes">Actualizare (toate)</string>
+  <string name="menu_update_delta">Actualizare (doar pe cele învechite)</string>
   <string name="context_updateshow">Actualizare</string>
-  <string name="context_showinfo">Informații despre emisiune</string>
+  <string name="context_showinfo">Arată Informaţii</string>
   <string name="context_marknext">Episodul următor a fost vizionat</string>
   <string name="today">astăzi</string>
   <string name="now">acum</string>
@@ -180,7 +180,7 @@
   <string name="show_library">Show your library</string>
   <string name="upload_shows">Upload your SeriesGuide show list:</string>
   <string name="upload_existing_shows">Upload existing shows</string>
-  <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
+  <string name="about_trakt">Trakt ajută la păstrarea unei evidenţe a emisiunilor TV şi a filmelor la care te uiţi.  <a href="http://trakt.tv">Află mai multe</a></string>
   <string name="integration_trakt">If you connect trakt:</string>
   <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
   <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>

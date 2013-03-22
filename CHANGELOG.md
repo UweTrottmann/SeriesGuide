@@ -5,6 +5,13 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 4.1 *(2013-03-22)*
+--------------------------
+
+* FIX Properly register DashClock extension for stable versions.
+* FIX Remove wrong parent activity tags.
+* NOTICE Latest translations from crowdin.
+
 Version 4 *(2013-03-21)*
 --------------------------
 
@@ -24,6 +31,7 @@ Version 4 *(2013-03-21)*
 #### 4beta4 *(2013-03-21)*
 
 * FIX Remove decor view background to reduce overdraw due to android-menudrawer usage, should very slightly improve performance.
+* NOTICE Latest translations from crowdin.
 
 #### 4beta3 *(2013-03-14)*
 
