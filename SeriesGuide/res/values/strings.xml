@@ -31,7 +31,11 @@
     <string name="save_selection">Save selection</string>
 
     <plurals name="votes">
+	    <item quantity="zero">%d votes</item>
         <item quantity="one">%d vote</item>
+        <item quantity="two">%d votes</item>
+        <item quantity="few">%d votes</item>
+        <item quantity="many">%d votes</item>
         <item quantity="other">%d votes</item>
     </plurals>
 
@@ -71,14 +75,26 @@
 
     <plurals name="days_plural">
         <item quantity="one">%d day</item>
+        <item quantity="zero">%d days</item>
+        <item quantity="two">%d days</item>
+        <item quantity="few">%d days</item>
+        <item quantity="many">%d days</item>
         <item quantity="other">%d days</item>
     </plurals>
     <plurals name="hours_plural">
+        <item quantity="zero">%d hours</item>
         <item quantity="one">%d hour</item>
+        <item quantity="two">%d hours</item>
+        <item quantity="few">%d hours</item>
+        <item quantity="many">%d hours</item>
         <item quantity="other">%d hours</item>
     </plurals>
     <plurals name="minutes_plural">
+        <item quantity="zero">%d minutes</item>
         <item quantity="one">%d minute</item>
+        <item quantity="two">%d minutes</item>
+        <item quantity="few">%d minutes</item>
+        <item quantity="many">%d minutes</item>
         <item quantity="other">%d minutes</item>
     </plurals>
 
