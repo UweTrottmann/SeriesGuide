@@ -5,6 +5,12 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 4.1 *(2013-03-22)*
+--------------------------
+
+* FIX Properly register DashClock extension for stable versions.
+* FIX Remove wrong parent activity tags.
+
 Version 4 *(2013-03-21)*
 --------------------------
 
