@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -50,11 +51,14 @@ import com.uwetrottmann.seriesguide.R;
 public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
     private int mWait;
+    private boolean mIsEpisodeNotMovie;
 
-    public static TraktCancelCheckinDialogFragment newInstance(Bundle traktData, int wait) {
+    public static TraktCancelCheckinDialogFragment newInstance(Bundle traktData, int wait,
+            boolean isEpisodeNotMovie) {
         TraktCancelCheckinDialogFragment f = new TraktCancelCheckinDialogFragment();
         f.setArguments(traktData);
         f.mWait = wait;
+        f.mIsEpisodeNotMovie = isEpisodeNotMovie;
         return f;
     }
 
@@ -77,8 +81,10 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
         builder.setPositiveButton(R.string.traktcheckin_cancel, new OnClickListener() {
 
+            @SuppressLint("CommitTransaction")
             public void onClick(DialogInterface dialog, int which) {
                 FragmentTransaction ft = fm.beginTransaction();
+                // ft is commited with .show()
                 Fragment prev = fm.findFragmentByTag("progress-dialog");
                 if (prev != null) {
                     ft.remove(prev);
@@ -103,7 +109,11 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
                         Response response;
                         try {
-                            response = manager.showService().cancelCheckin().fire();
+                            if (mIsEpisodeNotMovie) {
+                                response = manager.showService().cancelCheckin().fire();
+                            } else {
+                                response = manager.movieService().cancelCheckin().fire();
+                            }
                         } catch (TraktException te) {
                             Response r = new Response();
                             r.status = TraktStatus.FAILURE;

@@ -378,7 +378,8 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
                     // looks like a check in is in progress
                     TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment
-                            .newInstance(mArgs, r.wait);
+                            .newInstance(mArgs, r.wait,
+                                    mAction == TraktAction.CHECKIN_EPISODE ? true : false);
                     FragmentTransaction ft = mFm.beginTransaction();
                     newFragment.show(ft, "cancel-checkin-dialog");
 
