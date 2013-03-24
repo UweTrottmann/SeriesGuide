@@ -799,7 +799,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             public void onClick(View v) {
                 if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
                     Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
-                    i.putExtras(TraktShoutsActivity.createInitBundle(getShowId(),
+                    i.putExtras(TraktShoutsActivity.createInitBundleEpisode(getShowId(),
                             seasonNumber, episodeNumber, episodeTitle));
                     startActivity(i);
                 }

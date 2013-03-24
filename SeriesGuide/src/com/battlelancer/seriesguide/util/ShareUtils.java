@@ -87,6 +87,8 @@ public class ShareUtils {
         String EPISODE = "episode";
 
         String TVDBID = "tvdbid";
+        
+        String TMDBID = "tmdbid";
 
         String RATING = "rating";
 

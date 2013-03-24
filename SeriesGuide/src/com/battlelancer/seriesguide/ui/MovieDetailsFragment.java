@@ -152,6 +152,18 @@ public class MovieDetailsFragment extends SherlockFragment implements
             } else {
                 checkinButton.setEnabled(false);
             }
+
+            View commentButton = getView().findViewById(R.id.buttonMovieComments);
+            commentButton.setVisibility(View.VISIBLE);
+            commentButton.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
+                    i.putExtras(TraktShoutsActivity.createInitBundleMovie(movie.title, movie.id));
+                    startActivity(i);
+                }
+            });
         }
 
         // Trailer button

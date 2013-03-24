@@ -504,7 +504,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), TraktShoutsActivity.class);
-                    intent.putExtras(TraktShoutsActivity.createInitBundle(mShowId,
+                    intent.putExtras(TraktShoutsActivity.createInitBundleEpisode(mShowId,
                             mSeasonNumber, mEpisodeNumber, episodeTitle));
                     startActivity(intent);
                 }

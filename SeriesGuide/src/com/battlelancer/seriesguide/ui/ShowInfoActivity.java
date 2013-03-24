@@ -265,8 +265,7 @@ public class ShowInfoActivity extends BaseActivity {
             public void onClick(View v) {
                 fireTrackerEvent("Shouts");
                 Intent i = new Intent(ShowInfoActivity.this, TraktShoutsActivity.class);
-                i.putExtras(TraktShoutsActivity.createInitBundle(getShowId(),
-                        0, 0, show.getTitle()));
+                i.putExtras(TraktShoutsActivity.createInitBundleShow(show.getTitle(), getShowId()));
                 startActivity(i);
             }
         });
