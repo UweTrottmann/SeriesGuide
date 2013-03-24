@@ -20,22 +20,17 @@ package com.battlelancer.seriesguide.ui;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.SimpleCursorAdapter;
-import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
-import android.text.Html;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.battlelancer.seriesguide.adapters.SearchResultsAdapter;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -48,7 +43,7 @@ public class SearchFragment extends SherlockListFragment implements LoaderCallba
 
     private static final int LOADER_ID = R.string.search_hint;
 
-    private SimpleCursorAdapter mAdapter;
+    private SearchResultsAdapter mAdapter;
 
     private String mShowTitle;
 
@@ -67,51 +62,7 @@ public class SearchFragment extends SherlockListFragment implements LoaderCallba
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // get color attribute
-        final TypedValue greenValue = new TypedValue();
-        getActivity().getTheme().resolveAttribute(R.attr.textColorSgGreen,
-                greenValue, true);
-
-        String[] from = new String[] {
-                Episodes.TITLE, Episodes.OVERVIEW, Episodes.NUMBER, Episodes.WATCHED, Shows.TITLE
-        };
-        int[] to = new int[] {
-                R.id.TextViewSearchRow, R.id.TextViewSearchSnippet, R.id.TextViewSearchEpNumbers,
-                R.id.TextViewSearchEpWatchedState, R.id.TextViewSearchSeriesName
-        };
-
-        mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.search_row, null, from, to, 0);
-        mAdapter.setViewBinder(new ViewBinder() {
-
-            public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-                if (columnIndex == SearchQuery.NUMBER) {
-                    TextView numbers = (TextView) view;
-                    String epnumber = getString(R.string.episode) + " "
-                            + cursor.getString(columnIndex);
-                    String senumber = getString(R.string.season) + " "
-                            + cursor.getString(SearchQuery.SEASON);
-                    numbers.setText(senumber + " " + epnumber);
-                    return true;
-                }
-                if (columnIndex == SearchQuery.WATCHED) {
-                    boolean isWatched = (1 == cursor.getInt(columnIndex));
-                    TextView watchedState = (TextView) view;
-                    watchedState.setText(isWatched ? getString(R.string.episode_iswatched)
-                            : getString(R.string.episode_notwatched));
-                    watchedState.setTextColor(isWatched ? getResources().getColor(
-                            greenValue.resourceId) : Color.GRAY);
-                    return true;
-                }
-                if (columnIndex == SearchQuery.OVERVIEW) {
-                    TextView watchedState = (TextView) view;
-                    // make matched term bold
-                    watchedState.setText(Html.fromHtml(cursor.getString(SearchQuery.OVERVIEW)));
-                    return true;
-                }
-
-                return false;
-            }
-        });
+        mAdapter = new SearchResultsAdapter(getActivity(), null, 0);
         setListAdapter(mAdapter);
 
         getLoaderManager().initLoader(LOADER_ID, getArguments(), this);
@@ -172,7 +123,7 @@ public class SearchFragment extends SherlockListFragment implements LoaderCallba
         mAdapter.swapCursor(null);
     }
 
-    interface SearchQuery {
+    public interface SearchQuery {
         String[] PROJECTION = new String[] {
                 Episodes._ID, Episodes.TITLE, Episodes.OVERVIEW, Episodes.NUMBER, Episodes.SEASON,
                 Episodes.WATCHED, Shows.TITLE
