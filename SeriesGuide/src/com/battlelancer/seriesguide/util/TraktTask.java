@@ -306,11 +306,19 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     final boolean isSpoiler = mArgs.getBoolean(InitBundle.ISSPOILER);
 
                     if (episode == 0) {
-                        r = manager.shoutService().show(tvdbid).shout(shout).spoiler(isSpoiler)
+                        r = manager.commentService()
+                                .show(tvdbid)
+                                .comment(shout)
+                                .spoiler(isSpoiler)
                                 .fire();
                     } else {
-                        r = manager.shoutService().episode(tvdbid).season(season).episode(episode)
-                                .shout(shout).spoiler(isSpoiler).fire();
+                        r = manager.commentService()
+                                .episode(tvdbid)
+                                .season(season)
+                                .episode(episode)
+                                .comment(shout)
+                                .spoiler(isSpoiler)
+                                .fire();
                     }
                 }
                 default:
