@@ -30,8 +30,12 @@ import android.view.KeyEvent;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
+import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
@@ -42,7 +46,8 @@ import net.simonvt.menudrawer.MenuDrawer;
  * Provides some common functionality across all activities like setting the
  * theme and navigation shortcuts.
  */
-public abstract class BaseActivity extends SherlockFragmentActivity {
+public abstract class BaseActivity extends SherlockFragmentActivity implements
+        OnTraktActionCompleteListener {
 
     private MenuDrawer mMenuDrawer;
 
@@ -119,6 +124,34 @@ public abstract class BaseActivity extends SherlockFragmentActivity {
 
     protected void toggleMenu() {
         mMenuDrawer.toggleMenu();
+    }
+
+    @Override
+    public void onTraktActionComplete(Bundle traktTaskArgs, boolean wasSuccessfull) {
+        dismissProgressDialog(traktTaskArgs);
+    }
+
+    @Override
+    public void onCheckinBlocked(Bundle traktTaskArgs, int wait) {
+        dismissProgressDialog(traktTaskArgs);
+        TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment
+                .newInstance(traktTaskArgs, wait);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        newFragment.show(ft, "cancel-checkin-dialog");
+    }
+
+    private void dismissProgressDialog(Bundle traktTaskArgs) {
+        TraktAction action = TraktAction.values()[traktTaskArgs.getInt(InitBundle.TRAKTACTION)];
+        // dismiss a potential progress dialog
+        if (action == TraktAction.CHECKIN_EPISODE || action ==
+                TraktAction.CHECKIN_MOVIE) {
+            Fragment prev = getSupportFragmentManager().findFragmentByTag("progress-dialog");
+            if (prev != null) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.remove(prev);
+                ft.commit();
+            }
+        }
     }
 
     /**

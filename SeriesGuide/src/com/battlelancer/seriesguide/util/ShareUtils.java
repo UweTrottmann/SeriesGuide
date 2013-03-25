@@ -37,7 +37,6 @@ import android.widget.Toast;
 
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
-import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
@@ -87,7 +86,7 @@ public class ShareUtils {
         String EPISODE = "episode";
 
         String TVDBID = "tvdbid";
-        
+
         String TMDBID = "tmdbid";
 
         String RATING = "rating";
@@ -104,11 +103,9 @@ public class ShareUtils {
      * @param args - a {@link Bundle} including all
      *            {@link ShareUtils.ShareItems}
      * @param shareMethod the {@link ShareMethod} to use
-     * @param listener listener will be notified once trakt task is finished
-     *            (only first time)
      */
     public static void onShareEpisode(FragmentActivity activity, Bundle args,
-            ShareMethod shareMethod, OnTraktActionCompleteListener listener) {
+            ShareMethod shareMethod) {
         final FragmentManager fm = activity.getSupportFragmentManager();
 
         switch (shareMethod) {

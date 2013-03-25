@@ -67,7 +67,6 @@ import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
-import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -78,7 +77,7 @@ import com.uwetrottmann.seriesguide.R;
  * Displays general information about a show and its next episode. Displays a
  * {@link SeasonsFragment} on larger screens.
  */
-public class OverviewFragment extends SherlockFragment implements OnTraktActionCompleteListener,
+public class OverviewFragment extends SherlockFragment implements 
         OnFlagListener, LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String TAG = "Overview";
@@ -337,7 +336,7 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
             }
             shareData.putString(ShareItems.IMDBID, imdbId);
 
-            ShareUtils.onShareEpisode(getActivity(), shareData, shareMethod, this);
+            ShareUtils.onShareEpisode(getActivity(), shareData, shareMethod);
         }
     }
 
@@ -423,15 +422,6 @@ public class OverviewFragment extends SherlockFragment implements OnTraktActionC
                 .getDefaultSharedPreferences(getActivity());
         return Utils.getNextEpisodeString(prefs, seasonNumber,
                 episodeNumber, episodeTitle);
-    }
-
-    @Override
-    public void onTraktActionComplete(boolean wasSuccessfull) {
-        if (isAdded()) {
-            // load new episode, update seasons (if shown)
-            // TODO onLoadEpisode();
-            onUpdateSeasons();
-        }
     }
 
     @Override

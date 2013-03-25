@@ -230,7 +230,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             // don't close cursor!
             // episode.close();
 
-            ShareUtils.onShareEpisode(activity, shareData, shareMethod, null);
+            ShareUtils.onShareEpisode(activity, shareData, shareMethod);
 
             // invalidate the options menu so a potentially new
             // quick share action is displayed

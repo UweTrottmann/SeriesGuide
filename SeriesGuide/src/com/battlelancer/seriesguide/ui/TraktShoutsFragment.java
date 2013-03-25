@@ -176,19 +176,21 @@ public class TraktShoutsFragment extends SherlockFragment implements
 
                 if (episode == 0) {
                     // shout for a show
-                    AndroidUtils.executeAsyncTask(new TraktTask(getSherlockActivity(),
-                            getFragmentManager(), TraktShoutsFragment.this).shout(tvdbid, shout,
-                            isSpoiler), new Void[] {
-                            null
-                    });
+                    AndroidUtils.executeAsyncTask(
+                            new TraktTask(getSherlockActivity(), TraktShoutsFragment.this)
+                                    .shout(tvdbid, shout, isSpoiler),
+                            new Void[] {
+                                null
+                            });
                 } else {
                     // shout for an episode
                     int season = args.getInt(ShareItems.SEASON);
-                    AndroidUtils.executeAsyncTask(new TraktTask(getSherlockActivity(),
-                            getFragmentManager(), TraktShoutsFragment.this).shout(tvdbid, season,
-                            episode, shout, isSpoiler), new Void[] {
-                            null
-                    });
+                    AndroidUtils.executeAsyncTask(
+                            new TraktTask(getSherlockActivity(), TraktShoutsFragment.this)
+                                    .shout(tvdbid, season, episode, shout, isSpoiler),
+                            new Void[] {
+                                null
+                            });
                 }
             }
         });
@@ -442,7 +444,7 @@ public class TraktShoutsFragment extends SherlockFragment implements
     }
 
     @Override
-    public void onTraktActionComplete(boolean wasSuccessfull) {
+    public void onTraktActionComplete(Bundle traktTaskArgs, boolean wasSuccessfull) {
         if (getView() != null) {
 
             EditText shoutText = (EditText) getView().findViewById(R.id.shouttext);
@@ -459,5 +461,10 @@ public class TraktShoutsFragment extends SherlockFragment implements
                 }
             }
         }
+    }
+
+    @Override
+    public void onCheckinBlocked(Bundle traktTaskArgs, int wait) {
+        // not relevant for us
     }
 }
