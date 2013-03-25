@@ -52,6 +52,8 @@ import java.util.List;
 
 public class NotificationService extends IntentService {
 
+    private static final boolean DEBUG = false;
+
     private static final int REQUEST_CODE_SINGLE_EPISODE = 2;
 
     private static final int REQUEST_CODE_MULTIPLE_EPISODES = 3;
@@ -150,6 +152,13 @@ public class NotificationService extends IntentService {
             final List<Integer> notifyPositions = Lists.newArrayList();
             int notificationThreshold = Integer.parseInt(prefs.getString(
                     SeriesGuidePreferences.KEY_NOTIFICATIONS_THRESHOLD, "60"));
+            if (DEBUG) {
+                // a week, for debugging (use only one show to get single
+                // episode notifications)
+                notificationThreshold = 10080;
+                // notify again for same episodes
+                resetLastEpisodeAirtime(prefs);
+            }
             final long latestTimeToInclude = fakeNow + DateUtils.MINUTE_IN_MILLIS
                     * notificationThreshold;
             long latestTimeNotifiedAbout = prefs.getLong(
