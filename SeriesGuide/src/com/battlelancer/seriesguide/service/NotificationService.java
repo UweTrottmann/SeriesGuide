@@ -39,6 +39,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.QuickCheckInActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.seriesguide.util.ImageProvider;
@@ -50,6 +51,12 @@ import com.uwetrottmann.seriesguide.R;
 import java.util.List;
 
 public class NotificationService extends IntentService {
+
+    private static final int REQUEST_CODE_SINGLE_EPISODE = 2;
+
+    private static final int REQUEST_CODE_MULTIPLE_EPISODES = 3;
+
+    private static final int REQUEST_CODE_ACTION_CHECKIN = 4;
 
     private static final long[] VIBRATION_PATTERN = new long[] {
             0, 100, 200, 100, 100, 100
@@ -240,7 +247,8 @@ public class NotificationService extends IntentService {
             Intent notificationIntent = new Intent(context, EpisodesActivity.class);
             notificationIntent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                     upcomingEpisodes.getInt(NotificationQuery._ID));
-            contentIntent = PendingIntent.getActivity(context, 2, notificationIntent, 0);
+            contentIntent = PendingIntent.getActivity(context, REQUEST_CODE_SINGLE_EPISODE,
+                    notificationIntent, 0);
         } else if (count > 1) {
             // notify about multiple episodes
             tickerText = getString(R.string.upcoming_episodes);
@@ -249,7 +257,8 @@ public class NotificationService extends IntentService {
             contentText = getString(R.string.upcoming_display);
 
             Intent notificationIntent = new Intent(context, UpcomingRecentActivity.class);
-            contentIntent = PendingIntent.getActivity(context, 3, notificationIntent, 0);
+            contentIntent = PendingIntent.getActivity(context, REQUEST_CODE_MULTIPLE_EPISODES,
+                    notificationIntent, 0);
         }
 
         final NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
@@ -280,9 +289,15 @@ public class NotificationService extends IntentService {
                 nb.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText)
                         .setSummaryText(contentText));
 
-                // TODO allow check ins via intent
-                // anb.addAction(R.drawable.ic_notification,
-                // getString(R.string.checkin), null);
+                // Action button to check in
+                Intent checkInActionIntent = new Intent(context, QuickCheckInActivity.class);
+                checkInActionIntent.putExtra(QuickCheckInActivity.InitBundle.EPISODE_TVDBID,
+                        upcomingEpisodes.getInt(NotificationQuery._ID));
+                PendingIntent checkInIntent = PendingIntent.getActivity(context,
+                        REQUEST_CODE_ACTION_CHECKIN,
+                        checkInActionIntent, 0);
+                nb.addAction(R.drawable.ic_action_checkin, getString(R.string.checkin),
+                        checkInIntent);
             } else {
                 // multiple episodes
                 NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();

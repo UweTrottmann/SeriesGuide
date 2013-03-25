@@ -157,7 +157,13 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                 cancelCheckinTask.execute();
             }
         });
-        builder.setNegativeButton(R.string.traktcheckin_wait, null);
+        builder.setNegativeButton(R.string.traktcheckin_wait, new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // we did not override, but that is what the user wanted
+                mListener.onTraktActionComplete(args, true);
+            }
+        });
 
         return builder.create();
     }

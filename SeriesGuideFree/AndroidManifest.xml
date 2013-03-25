@@ -189,6 +189,10 @@
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.StatsActivity" >
         </activity>
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.QuickCheckInActivity"
+            android:exported="true" >
+        </activity>
 
         <!-- Notification service -->
         <service android:name="com.battlelancer.seriesguide.service.NotificationService" >
