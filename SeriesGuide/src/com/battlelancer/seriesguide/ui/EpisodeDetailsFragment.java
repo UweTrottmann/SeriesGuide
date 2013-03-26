@@ -117,14 +117,14 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     public static EpisodeDetailsFragment newInstance(int episodeId, boolean isShowingPoster,
-            boolean isMultiPane) {
+            boolean isShowingShowLink) {
         EpisodeDetailsFragment f = new EpisodeDetailsFragment();
 
         // Supply index input as an argument.
         Bundle args = new Bundle();
         args.putInt(InitBundle.EPISODE_TVDBID, episodeId);
         args.putBoolean("showposter", isShowingPoster);
-        args.putBoolean("multipane", isMultiPane);
+        args.putBoolean("showlink", isShowingShowLink);
         f.setArguments(args);
 
         return f;
@@ -251,8 +251,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         }
     }
 
-    private boolean isMultiPane() {
-        return getArguments().getBoolean("multipane");
+    private boolean isShowingShowLink() {
+        return getArguments().getBoolean("showlink");
     }
 
     private void onToggleWatched() {
@@ -306,7 +306,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
             // Show title button
             TextView showtitle = (TextView) view.findViewById(R.id.showTitle);
-            if (isMultiPane()) {
+            if (!isShowingShowLink()) {
                 showtitle.setVisibility(View.GONE);
             } else {
                 showtitle.setVisibility(View.VISIBLE);

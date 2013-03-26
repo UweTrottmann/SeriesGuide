@@ -190,7 +190,7 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
 
             // set adapters for pager and indicator
             int startPosition = updateEpisodeList(episodeId);
-            mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), mEpisodes, prefs, true);
+            mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), mEpisodes, prefs, false);
             mPager = (ViewPager) pagerFragment;
             mPager.setAdapter(mAdapter);
 

@@ -141,7 +141,7 @@ public class EpisodeDetailsActivity extends BaseActivity {
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
 
-        mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), episodes, prefs, false);
+        mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), episodes, prefs, true);
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
@@ -217,20 +217,20 @@ public class EpisodeDetailsActivity extends BaseActivity {
 
         private SharedPreferences mPrefs;
 
-        private boolean mIsMultiPane;
+        private boolean mIsShowingShowLink;
 
         public EpisodePagerAdapter(FragmentManager fm, ArrayList<Episode> episodes,
-                SharedPreferences prefs, boolean isMultiPane) {
+                SharedPreferences prefs, boolean isShowingShowLink) {
             super(fm);
             mEpisodes = episodes;
             mPrefs = prefs;
-            mIsMultiPane = isMultiPane;
+            mIsShowingShowLink = isShowingShowLink;
         }
 
         @Override
         public Fragment getItem(int position) {
             return EpisodeDetailsFragment.newInstance(mEpisodes.get(position).episodeId, false,
-                    mIsMultiPane);
+                    mIsShowingShowLink);
         }
 
         @Override
