@@ -53,6 +53,8 @@ public class UpcomingEpisodeSettingsActivity extends PreferenceActivity {
         // use the older PreferenceActivity APIs.
 
         // Add 'general' preferences.
+        getPreferenceManager().setSharedPreferencesName(DashClockSettings.SETTINGS_FILE);
+        getPreferenceManager().setSharedPreferencesMode(0);
         addPreferencesFromResource(R.xml.settings_dashclock);
 
         // Bind the summaries of EditText/List/Dialog/Ringtone preferences to
