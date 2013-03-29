@@ -206,11 +206,11 @@ public class SeasonsFragment extends SherlockListFragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_markall) {
+        if (itemId == R.id.menu_watched_all) {
             fireTrackerEvent("Flag all watched");
             onFlagShowWatched(true);
             return true;
-        } else if (itemId == R.id.menu_unmarkall) {
+        } else if (itemId == R.id.menu_unwatched_all) {
             fireTrackerEvent("Flag all unwatched");
             onFlagShowWatched(false);
             return true;

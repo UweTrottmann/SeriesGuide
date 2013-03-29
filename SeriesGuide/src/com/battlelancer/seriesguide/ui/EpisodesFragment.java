@@ -267,13 +267,21 @@ public class EpisodesFragment extends SherlockListFragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.mark_all) {
+        if (itemId == R.id.menu_watched_all) {
             fireTrackerEvent("Flag all watched");
             onFlagSeasonWatched(true);
             return true;
-        } else if (itemId == R.id.unmark_all) {
+        } else if (itemId == R.id.menu_unwatched_all) {
             fireTrackerEvent("Flag all unwatched");
             onFlagSeasonWatched(false);
+            return true;
+        } else if (itemId == R.id.menu_collect_all) {
+            fireTrackerEvent("Flag all collected");
+            onFlagSeasonCollected(true);
+            return true;
+        } else if (itemId == R.id.menu_uncollect_all) {
+            fireTrackerEvent("Flag all uncollected");
+            onFlagSeasonCollected(false);
             return true;
         } else if (itemId == R.id.menu_epsorting) {
             fireTrackerEvent("Sort");
@@ -299,6 +307,11 @@ public class EpisodesFragment extends SherlockListFragment implements
     private void onFlagSeasonWatched(boolean isWatched) {
         new FlagTask(getActivity(), getShowId(), null).seasonWatched(getSeasonNumber())
                 .setItemId(getSeasonId()).setFlag(isWatched).execute();
+    }
+
+    private void onFlagSeasonCollected(boolean isCollected) {
+        new FlagTask(getActivity(), getShowId(), null).seasonCollected(getSeasonNumber())
+                .setItemId(getSeasonId()).setFlag(isCollected).execute();
     }
 
     private void onMarkUntilHere(int episodeId, long firstaired) {
