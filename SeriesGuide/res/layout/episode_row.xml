@@ -57,6 +57,17 @@
             android:textAppearance="@style/TextAppearance.Small" />
 
         <ImageView
+            android:id="@+id/imageViewCollected"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_collected"
+            android:visibility="gone" />
+
+        <ImageView
             android:id="@+id/imageViewContextMenu"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
