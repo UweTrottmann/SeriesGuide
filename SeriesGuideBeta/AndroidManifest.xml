@@ -2,7 +2,7 @@
     package="com.battlelancer.seriesguide.beta"
     android:installLocation="auto"
     android:versionCode="205"
-    android:versionName="4beta5" >
+    android:versionName="5beta1" >
 
     <uses-sdk
         android:minSdkVersion="8"
