@@ -40,6 +40,7 @@
   <string name="preferences">Настройки</string>
   <string name="help">Справка</string>
   <string name="shouts">Отзывы</string>
+  <string name="comments">Comments</string>
   <string name="shout_hint">Напишите отзыв (на английском)</string>
   <string name="shout">Отзыв!</string>
   <string name="isspoiler">Внимание, спойлер!</string>
@@ -252,6 +253,7 @@
   <string name="import_yes">Восстановление</string>
   <string name="import_no">Не востановлять</string>
   <string name="checkin">Отметить</string>
+  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Введите название сериала</string>
   <string name="checkin_empty">Сериалы не найдены</string>
   <string name="checkin_hint">Введите сообщение (необязательно)</string>
@@ -309,6 +311,7 @@
   <string name="pref_widget_type">Тип виджета</string>
   <string name="dashclock_extension_label">Предстоящий</string>
   <string name="dashclock_extension_description">Отображает следующий предстоящийего SeriesGuide сериала.</string>
+  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">Скачать SeriesGuide</string>
   <string name="betawarning"><b>Посмотрите!</b> Этот релиз предназначен для бета-тестеров только! Если вы сомневаетесь Скачайте стабильную версию ниже.</string>
   <string-array name="shsorting">
@@ -361,20 +364,44 @@
     <item>Следующие эпизоды</item>
     <item>Недавние</item>
   </string-array>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>hour</item>
+    <item>6 hours</item>
+    <item>12 hours</item>
+    <item>24 hours</item>
+    <item>3 days</item>
+    <item>week</item>
+  </string-array>
   <plurals name="votes">
+    <item quantity="zero">%d votes</item>
     <item quantity="one">%d голоса</item>
+    <item quantity="two">%d votes</item>
+    <item quantity="few">%d votes</item>
+    <item quantity="many">%d votes</item>
     <item quantity="other">%d голосов</item>
   </plurals>
   <plurals name="days_plural">
     <item quantity="one">%d день</item>
+    <item quantity="zero">%d days</item>
+    <item quantity="two">%d days</item>
+    <item quantity="few">%d days</item>
+    <item quantity="many">%d days</item>
     <item quantity="other">%d дней</item>
   </plurals>
   <plurals name="hours_plural">
+    <item quantity="zero">%d hours</item>
     <item quantity="one">%d час</item>
+    <item quantity="two">%d hours</item>
+    <item quantity="few">%d hours</item>
+    <item quantity="many">%d hours</item>
     <item quantity="other">%d часов</item>
   </plurals>
   <plurals name="minutes_plural">
+    <item quantity="zero">%d minutes</item>
     <item quantity="one">%d минута</item>
+    <item quantity="two">%d minutes</item>
+    <item quantity="few">%d minutes</item>
+    <item quantity="many">%d minutes</item>
     <item quantity="other">%d минут</item>
   </plurals>
 </resources>

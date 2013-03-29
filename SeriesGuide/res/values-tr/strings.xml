@@ -40,6 +40,7 @@
   <string name="preferences">Ayarlar</string>
   <string name="help">Yardım</string>
   <string name="shouts">Notlar</string>
+  <string name="comments">Comments</string>
   <string name="shout_hint">Bir not yazın (İngilizce)</string>
   <string name="shout">Not!</string>
   <string name="isspoiler">Spoiler Uyarısı!</string>
@@ -252,6 +253,7 @@
   <string name="import_yes">Geri Yükle</string>
   <string name="import_no">Geri Yükleme</string>
   <string name="checkin">Giriş yap</string>
+  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Bir dizi adı yazın</string>
   <string name="checkin_empty">Eşleşen dizi yok</string>
   <string name="checkin_hint">Bir mesaj yazın (isteğe bağlı)</string>
@@ -309,6 +311,7 @@
   <string name="pref_widget_type">Widget type</string>
   <string name="dashclock_extension_label">Gelecek bölüm</string>
   <string name="dashclock_extension_description">SeriesGuide dizilerinizin gelecek bölümünü gösterir.</string>
+  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">SeriesGuide indir</string>
   <string name="betawarning"><b>Ön bilgi!</b> Bu yayımlama sadece beta testi yapanlar içindir! Eğer sizin için doğru yayımlama olduğundan şüpheliyseniz, alttaki kararlı sürümü indirin.</string>
   <string-array name="shsorting">
@@ -361,20 +364,44 @@
     <item>Upcoming</item>
     <item>Recent</item>
   </string-array>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>hour</item>
+    <item>6 hours</item>
+    <item>12 hours</item>
+    <item>24 hours</item>
+    <item>3 days</item>
+    <item>week</item>
+  </string-array>
   <plurals name="votes">
+    <item quantity="zero">%d votes</item>
     <item quantity="one">%d oy</item>
+    <item quantity="two">%d votes</item>
+    <item quantity="few">%d votes</item>
+    <item quantity="many">%d votes</item>
     <item quantity="other">%d oylar</item>
   </plurals>
   <plurals name="days_plural">
     <item quantity="one">%d day</item>
+    <item quantity="zero">%d days</item>
+    <item quantity="two">%d days</item>
+    <item quantity="few">%d days</item>
+    <item quantity="many">%d days</item>
     <item quantity="other">%d days</item>
   </plurals>
   <plurals name="hours_plural">
+    <item quantity="zero">%d hours</item>
     <item quantity="one">%d hour</item>
+    <item quantity="two">%d hours</item>
+    <item quantity="few">%d hours</item>
+    <item quantity="many">%d hours</item>
     <item quantity="other">%d hours</item>
   </plurals>
   <plurals name="minutes_plural">
+    <item quantity="zero">%d minutes</item>
     <item quantity="one">%d minute</item>
+    <item quantity="two">%d minutes</item>
+    <item quantity="few">%d minutes</item>
+    <item quantity="many">%d minutes</item>
     <item quantity="other">%d minutes</item>
   </plurals>
 </resources>

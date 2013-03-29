@@ -40,6 +40,7 @@
   <string name="preferences">Asetukset</string>
   <string name="help">Apua</string>
   <string name="shouts">Huudahdukset</string>
+  <string name="comments">Comments</string>
   <string name="shout_hint">Kirjoita huudahdus (englanniksi)</string>
   <string name="shout">Huudahda!</string>
   <string name="isspoiler">Juonipaljastusvaroitus!</string>
@@ -252,6 +253,7 @@
   <string name="import_yes">Palauta</string>
   <string name="import_no">Älä palauta</string>
   <string name="checkin">Kuittaa</string>
+  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Kirjoita ohjelman nimi</string>
   <string name="checkin_empty">Ei vastaavia ohjelmia</string>
   <string name="checkin_hint">Kirjoita viesti (valinnainen)</string>
@@ -309,6 +311,7 @@
   <string name="pref_widget_type">Widgetin tyyppi</string>
   <string name="dashclock_extension_label">Tuleva jakso</string>
   <string name="dashclock_extension_description">Näyttää seuraavan tulevan jakson SeriesGuide-ohjelmistasi.</string>
+  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">Lataa SeriesGuide</string>
   <string name="betawarning"><b>Varoitus!</b> Tämä julkaisu on vain beeta-testaajille! Jos epäröit, lataa vakaa versio alta.</string>
   <string-array name="shsorting">
@@ -361,20 +364,44 @@
     <item>Tulevat</item>
     <item>Viimeisimmät</item>
   </string-array>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>hour</item>
+    <item>6 hours</item>
+    <item>12 hours</item>
+    <item>24 hours</item>
+    <item>3 days</item>
+    <item>week</item>
+  </string-array>
   <plurals name="votes">
+    <item quantity="zero">%d ääntä</item>
     <item quantity="one">%d ääni</item>
+    <item quantity="two">%d ääntä</item>
+    <item quantity="few">%d ääntä</item>
+    <item quantity="many">%d ääntä</item>
     <item quantity="other">%d ääntä</item>
   </plurals>
   <plurals name="days_plural">
     <item quantity="one">%d päivä</item>
+    <item quantity="zero">%d päivää</item>
+    <item quantity="two">%d päivää</item>
+    <item quantity="few">%d päivää</item>
+    <item quantity="many">%d päivää</item>
     <item quantity="other">%d päivää</item>
   </plurals>
   <plurals name="hours_plural">
+    <item quantity="zero">%d tuntia</item>
     <item quantity="one">%d tunti</item>
+    <item quantity="two">%d tuntia</item>
+    <item quantity="few">%d tuntia</item>
+    <item quantity="many">%d tuntia</item>
     <item quantity="other">%d tuntia</item>
   </plurals>
   <plurals name="minutes_plural">
+    <item quantity="zero">%d minuuttia</item>
     <item quantity="one">%d minuutti</item>
+    <item quantity="two">%d minuuttia</item>
+    <item quantity="few">%d minuuttia</item>
+    <item quantity="many">%d minuuttia</item>
     <item quantity="other">%d minuuttia</item>
   </plurals>
 </resources>

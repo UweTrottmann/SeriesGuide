@@ -40,6 +40,7 @@
   <string name="preferences">Ustawienia</string>
   <string name="help">Pomoc</string>
   <string name="shouts">Krzyki</string>
+  <string name="comments">Comments</string>
   <string name="shout_hint">Wpisz krzyk (w języku angielskim)</string>
   <string name="shout">Krzyk!</string>
   <string name="isspoiler">Ostrzeżenie o spoilerach!</string>
@@ -252,6 +253,7 @@
   <string name="import_yes">Przywróć</string>
   <string name="import_no">Nie przywracaj</string>
   <string name="checkin">Podepnij się</string>
+  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Wpisz nazwę serialu</string>
   <string name="checkin_empty">Nie odnaleziono serialu</string>
   <string name="checkin_hint">Wpisz wiadomość (opcjonalnie)</string>
@@ -309,6 +311,7 @@
   <string name="pref_widget_type">Typ widżetu</string>
   <string name="dashclock_extension_label">Nadchodzące odcinki</string>
   <string name="dashclock_extension_description">Wyświetla nadchodzące odcinki seriali z SeriesGuide.</string>
+  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">Pobierz SeriesGuide</string>
   <string name="betawarning"><b>Uwaga!</b> To wydanie jest tylko dla beta testerów! Wersję stabilną można pobrać poniżej.</string>
   <string-array name="shsorting">
@@ -361,20 +364,44 @@
     <item>Nadchodzące</item>
     <item>Ostatnie</item>
   </string-array>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>hour</item>
+    <item>6 hours</item>
+    <item>12 hours</item>
+    <item>24 hours</item>
+    <item>3 days</item>
+    <item>week</item>
+  </string-array>
   <plurals name="votes">
+    <item quantity="zero">%d głosów</item>
     <item quantity="one">głosy: %d</item>
+    <item quantity="two">%d głosy</item>
+    <item quantity="few">%d głosów</item>
+    <item quantity="many">%d głosów</item>
     <item quantity="other">głosów: %d</item>
   </plurals>
   <plurals name="days_plural">
     <item quantity="one">%d dzień</item>
+    <item quantity="zero">%d dni</item>
+    <item quantity="two">%d dni</item>
+    <item quantity="few">%d dni</item>
+    <item quantity="many">%d dni</item>
     <item quantity="other">%d dni</item>
   </plurals>
   <plurals name="hours_plural">
+    <item quantity="zero">%d godzin</item>
     <item quantity="one">%d godziny</item>
+    <item quantity="two">%d godziny</item>
+    <item quantity="few">%d godziny</item>
+    <item quantity="many">%d godzin</item>
     <item quantity="other">%d godzin</item>
   </plurals>
   <plurals name="minutes_plural">
+    <item quantity="zero">%d minut</item>
     <item quantity="one">%d minuta</item>
+    <item quantity="two">%d minuty</item>
+    <item quantity="few">%d minuty</item>
+    <item quantity="many">%d minut</item>
     <item quantity="other">%d minut</item>
   </plurals>
 </resources>

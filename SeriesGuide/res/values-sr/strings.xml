@@ -40,6 +40,7 @@
   <string name="preferences">Podešavanja</string>
   <string name="help">Pomoć</string>
   <string name="shouts">Komentari</string>
+  <string name="comments">Comments</string>
   <string name="shout_hint">Otkucaj komentar (na Engleskom)</string>
   <string name="shout">Komentariši!</string>
   <string name="isspoiler">Pažnja spojler!</string>
@@ -252,6 +253,7 @@
   <string name="import_yes">Povrati</string>
   <string name="import_no">Nemoj</string>
   <string name="checkin">Prijavi gledanje</string>
+  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Ukucaj naziv serije</string>
   <string name="checkin_empty">Nema odgovarajućih serija</string>
   <string name="checkin_hint">Otkucaj poruku (po izboru)</string>
@@ -309,6 +311,7 @@
   <string name="pref_widget_type">Widget type</string>
   <string name="dashclock_extension_label">Upcoming episode</string>
   <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
+  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">Preuzmi SeriesGuide</string>
   <string name="betawarning"><b>Pažnja!</b> Ovo verzija je samo za beta testere! Ako niste sigurni preuzmite stabilni verziju ispod.</string>
   <string-array name="shsorting">
@@ -361,20 +364,44 @@
     <item>Upcoming</item>
     <item>Recent</item>
   </string-array>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>hour</item>
+    <item>6 hours</item>
+    <item>12 hours</item>
+    <item>24 hours</item>
+    <item>3 days</item>
+    <item>week</item>
+  </string-array>
   <plurals name="votes">
+    <item quantity="zero">%d votes</item>
     <item quantity="one">%d glas</item>
+    <item quantity="two">%d votes</item>
+    <item quantity="few">%d votes</item>
+    <item quantity="many">%d votes</item>
     <item quantity="other">%d glasova</item>
   </plurals>
   <plurals name="days_plural">
     <item quantity="one">%d day</item>
+    <item quantity="zero">%d days</item>
+    <item quantity="two">%d days</item>
+    <item quantity="few">%d days</item>
+    <item quantity="many">%d days</item>
     <item quantity="other">%d days</item>
   </plurals>
   <plurals name="hours_plural">
+    <item quantity="zero">%d hours</item>
     <item quantity="one">%d hour</item>
+    <item quantity="two">%d hours</item>
+    <item quantity="few">%d hours</item>
+    <item quantity="many">%d hours</item>
     <item quantity="other">%d hours</item>
   </plurals>
   <plurals name="minutes_plural">
+    <item quantity="zero">%d minutes</item>
     <item quantity="one">%d minute</item>
+    <item quantity="two">%d minutes</item>
+    <item quantity="few">%d minutes</item>
+    <item quantity="many">%d minutes</item>
     <item quantity="other">%d minutes</item>
   </plurals>
 </resources>

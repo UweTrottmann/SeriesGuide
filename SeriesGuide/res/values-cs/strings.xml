@@ -40,6 +40,7 @@
   <string name="preferences">Nastavení</string>
   <string name="help">Nápověda</string>
   <string name="shouts">Výkřiky</string>
+  <string name="comments">Comments</string>
   <string name="shout_hint">Napište výkřik (v angl.)</string>
   <string name="shout">Zakřičet!</string>
   <string name="isspoiler">Vyzrazení děje!</string>
@@ -252,6 +253,7 @@
   <string name="import_yes">Obnovit</string>
   <string name="import_no">Neobnovovat</string>
   <string name="checkin">Ohlásit se</string>
+  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Napište název pořadu</string>
   <string name="checkin_empty">Žádné odpovídající pořady</string>
   <string name="checkin_hint">Napište postřeh (nepovinné)</string>
@@ -309,6 +311,7 @@
   <string name="pref_widget_type">Typ widgetu</string>
   <string name="dashclock_extension_label">Nadcházející díl</string>
   <string name="dashclock_extension_description">Zobrazuje nadcházející díl z pořadů v SeriesGuide.</string>
+  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">Stáhnout SeriesGuide</string>
   <string name="betawarning"><b>Upozornění!</b> Toto je verze pouze pro beta-testery! Nejste-li si jistí, stáhněte si raději stabilní verzi níže.</string>
   <string-array name="shsorting">
@@ -361,20 +364,44 @@
     <item>Nadcházející</item>
     <item>Nedávné</item>
   </string-array>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>hour</item>
+    <item>6 hours</item>
+    <item>12 hours</item>
+    <item>24 hours</item>
+    <item>3 days</item>
+    <item>week</item>
+  </string-array>
   <plurals name="votes">
+    <item quantity="zero">%d hlasů</item>
     <item quantity="one">%d hlas</item>
+    <item quantity="two">%d hlasy</item>
+    <item quantity="few">%d hlasy</item>
+    <item quantity="many">%d hlasů</item>
     <item quantity="other">%d hlasů</item>
   </plurals>
   <plurals name="days_plural">
     <item quantity="one">%d den</item>
+    <item quantity="zero">%d dnů</item>
+    <item quantity="two">%d dny</item>
+    <item quantity="few">%d dny</item>
+    <item quantity="many">%d dnů</item>
     <item quantity="other">%d dnů</item>
   </plurals>
   <plurals name="hours_plural">
+    <item quantity="zero">%d hodin</item>
     <item quantity="one">%d hodina</item>
+    <item quantity="two">%d hodiny</item>
+    <item quantity="few">%d hodiny</item>
+    <item quantity="many">%d hodin</item>
     <item quantity="other">%d hodin</item>
   </plurals>
   <plurals name="minutes_plural">
+    <item quantity="zero">%d minut</item>
     <item quantity="one">%d minuta</item>
+    <item quantity="two">%d minuty</item>
+    <item quantity="few">%d minuty</item>
+    <item quantity="many">%d minut</item>
     <item quantity="other">%d minut</item>
   </plurals>
 </resources>

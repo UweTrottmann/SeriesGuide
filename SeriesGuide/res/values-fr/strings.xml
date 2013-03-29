@@ -40,6 +40,7 @@
   <string name="preferences">Paramètres</string>
   <string name="help">Aide</string>
   <string name="shouts">Commentaires</string>
+  <string name="comments">Comments</string>
   <string name="shout_hint">Commenter (en anglais)</string>
   <string name="shout">Commentez !</string>
   <string name="isspoiler">Alerte au spoiler !</string>
@@ -252,6 +253,7 @@
   <string name="import_yes">Restaurer</string>
   <string name="import_no">Ne pas restaurer</string>
   <string name="checkin">Check-in</string>
+  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Entrez un nom de série</string>
   <string name="checkin_empty">Aucune série correspondante</string>
   <string name="checkin_hint">Écrivez un message (optionnel)</string>
@@ -309,6 +311,7 @@
   <string name="pref_widget_type">Type du widget</string>
   <string name="dashclock_extension_label">Prochain épisode</string>
   <string name="dashclock_extension_description">Affiche le prochain épisode à venir parmi vos séries.</string>
+  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">Télécharger SeriesGuide</string>
   <string name="betawarning"><b>Attention !</b> Cette version est pour les bêta-testeurs seulement ! Si vous êtes dans le doute, téléchargez la version stable ci-dessous.</string>
   <string-array name="shsorting">
@@ -361,20 +364,44 @@
     <item>À venir</item>
     <item>Dernièrement</item>
   </string-array>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>hour</item>
+    <item>6 hours</item>
+    <item>12 hours</item>
+    <item>24 hours</item>
+    <item>3 days</item>
+    <item>week</item>
+  </string-array>
   <plurals name="votes">
+    <item quantity="zero">%d votes</item>
     <item quantity="one">%d vote</item>
+    <item quantity="two">%d votes</item>
+    <item quantity="few">%d votes</item>
+    <item quantity="many">%d votes</item>
     <item quantity="other">%d votes</item>
   </plurals>
   <plurals name="days_plural">
     <item quantity="one">%d jour</item>
+    <item quantity="zero">%d jours</item>
+    <item quantity="two">%d jours</item>
+    <item quantity="few">%d jours</item>
+    <item quantity="many">%d jours</item>
     <item quantity="other">%d jours</item>
   </plurals>
   <plurals name="hours_plural">
+    <item quantity="zero">%d heures</item>
     <item quantity="one">%d heure</item>
+    <item quantity="two">%d heures</item>
+    <item quantity="few">%d heures</item>
+    <item quantity="many">%d heures</item>
     <item quantity="other">%d heures</item>
   </plurals>
   <plurals name="minutes_plural">
+    <item quantity="zero">%d minute</item>
     <item quantity="one">%d minute</item>
+    <item quantity="two">%d minutes</item>
+    <item quantity="few">%d minutes</item>
+    <item quantity="many">%d minutes</item>
     <item quantity="other">%d minutes</item>
   </plurals>
 </resources>

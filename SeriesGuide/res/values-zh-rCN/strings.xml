@@ -40,6 +40,7 @@
   <string name="preferences">设置</string>
   <string name="help">帮助</string>
   <string name="shouts">评论</string>
+  <string name="comments">Comments</string>
   <string name="shout_hint">输入一段评论（仅英语）</string>
   <string name="shout">提交</string>
   <string name="isspoiler">剧透警告！</string>
@@ -252,6 +253,7 @@
   <string name="import_yes">还原</string>
   <string name="import_no">不要还原</string>
   <string name="checkin">登录</string>
+  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">输入剧集名称</string>
   <string name="checkin_empty">没有匹配项目</string>
   <string name="checkin_hint">输入一段文字（可选）</string>
@@ -309,6 +311,7 @@
   <string name="pref_widget_type">Widget type</string>
   <string name="dashclock_extension_label">即将播出</string>
   <string name="dashclock_extension_description">在 SeriesGuide 节目列表中显示即将播出的剧集。</string>
+  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">下载“美剧指南”</string>
   <string name="betawarning"><b>注意</b> 这是一个仅供测试的版本。如果您有任何疑问，请下载稳定版本。</string>
   <string-array name="shsorting">
@@ -361,20 +364,44 @@
     <item>Upcoming</item>
     <item>Recent</item>
   </string-array>
+  <string-array name="dashclockUpcomingThresholds">
+    <item>hour</item>
+    <item>6 hours</item>
+    <item>12 hours</item>
+    <item>24 hours</item>
+    <item>3 days</item>
+    <item>week</item>
+  </string-array>
   <plurals name="votes">
+    <item quantity="zero">%d votes</item>
     <item quantity="one">%d 个评价</item>
+    <item quantity="two">%d votes</item>
+    <item quantity="few">%d votes</item>
+    <item quantity="many">%d votes</item>
     <item quantity="other">%d 个评价</item>
   </plurals>
   <plurals name="days_plural">
     <item quantity="one">%d day</item>
+    <item quantity="zero">%d days</item>
+    <item quantity="two">%d days</item>
+    <item quantity="few">%d days</item>
+    <item quantity="many">%d days</item>
     <item quantity="other">%d days</item>
   </plurals>
   <plurals name="hours_plural">
+    <item quantity="zero">%d hours</item>
     <item quantity="one">%d hour</item>
+    <item quantity="two">%d hours</item>
+    <item quantity="few">%d hours</item>
+    <item quantity="many">%d hours</item>
     <item quantity="other">%d hours</item>
   </plurals>
   <plurals name="minutes_plural">
+    <item quantity="zero">%d minutes</item>
     <item quantity="one">%d minute</item>
+    <item quantity="two">%d minutes</item>
+    <item quantity="few">%d minutes</item>
+    <item quantity="many">%d minutes</item>
     <item quantity="other">%d minutes</item>
   </plurals>
 </resources>
