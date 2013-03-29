@@ -162,7 +162,11 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
         long now = System.currentTimeMillis();
         // use now as default value, so a re-install won't overwrite the old
         // auto-backup right away
-        final long previousBackupTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTBACKUP, now);
+        long previousBackupTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTBACKUP, 0);
+        if (previousBackupTime == 0) {
+            previousBackupTime = now;
+            prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTBACKUP, now).commit();
+        }
         final boolean isTime = (now - previousBackupTime) > 7 * DateUtils.DAY_IN_MILLIS;
 
         if (isTime) {
