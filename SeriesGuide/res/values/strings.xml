@@ -148,6 +148,8 @@
     <string name="mark_untilhere">Watched all previously aired</string>
     <string name="collect">Collected episode</string>
     <string name="uncollect">Not yet collected episode</string>
+    <string name="collect_all">Collected all</string>
+    <string name="uncollect_all">Collected none</string>
     <string name="trakt_submitfailed">Not submitted to trakt. Try again later.</string>
     <string name="trakt_submitsuccess">Submitted to trakt.</string>
     <string name="trakt_seen">%s seen.</string>

@@ -15,5 +15,13 @@
         android:id="@+id/menu_unmarkall"
         android:showAsAction="never"
         android:title="@string/unmark_all"/>
+    <item
+        android:id="@+id/menu_collect_all"
+        android:showAsAction="never"
+        android:title="@string/collect_all"/>
+    <item
+        android:id="@+id/menu_uncollect_all"
+        android:showAsAction="never"
+        android:title="@string/uncollect_all"/>
 
 </menu>
