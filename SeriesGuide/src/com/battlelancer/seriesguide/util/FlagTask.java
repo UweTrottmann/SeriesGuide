@@ -526,6 +526,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                     }
                     break;
                 case EPISODE_COLLECTED:
+                case SEASON_COLLECTED:
                     if (mIsFlag) {
                         message = R.string.trakt_collected;
                     } else {
@@ -557,7 +558,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                 }
             }
 
-            if (mAction == FlagAction.SHOW_WATCHED
+            if (mAction == FlagAction.SHOW_WATCHED || mAction == FlagAction.SHOW_COLLECTED
                     || mAction == FlagAction.EPISODE_WATCHED_PREVIOUS) {
                 // simple ack
                 Toast.makeText(mContext,
