@@ -31,7 +31,7 @@
     <string name="save_selection">Save selection</string>
 
     <plurals name="votes">
-	    <item quantity="zero">%d votes</item>
+        <item quantity="zero">%d votes</item>
         <item quantity="one">%d vote</item>
         <item quantity="two">%d votes</item>
         <item quantity="few">%d votes</item>
@@ -465,6 +465,16 @@
     <!-- DashClock extension -->
     <string name="dashclock_extension_label">Upcoming episode</string>
     <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
+    <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
+
+    <string-array name="dashclockUpcomingThresholds">
+        <item>hour</item>
+        <item>6 hours</item>
+        <item>12 hours</item>
+        <item>24 hours</item>
+        <item>3 days</item>
+        <item>week</item>
+    </string-array>
 
     <!-- strings for BETA release -->
     <string name="download_stable">Download SeriesGuide</string>

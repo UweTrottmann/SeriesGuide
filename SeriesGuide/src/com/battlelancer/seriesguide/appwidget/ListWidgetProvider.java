@@ -35,7 +35,7 @@ import android.widget.RemoteViews;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.ShowsActivity;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
-import com.battlelancer.seriesguide.util.AppSettings;
+import com.battlelancer.seriesguide.util.WidgetSettings;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -121,7 +121,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
         rv.setEmptyView(R.id.list_view, R.id.empty_view);
 
         // change title based on config
-        int typeIndex = AppSettings.getWidgetListType(context, appWidgetId);
+        int typeIndex = WidgetSettings.getWidgetListType(context, appWidgetId);
         int activityTab = 0;
         if (typeIndex == 1) {
             activityTab = 1;
@@ -132,7 +132,7 @@ public class ListWidgetProvider extends AppWidgetProvider {
         }
 
         // set the background color
-        int bgColor = AppSettings.getWidgetBackgroundColor(context, appWidgetId);
+        int bgColor = WidgetSettings.getWidgetBackgroundColor(context, appWidgetId);
         rv.setInt(R.id.container, "setBackgroundColor", bgColor);
 
         // Activity button

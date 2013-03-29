@@ -20,11 +20,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Retrieve settings values.
+ * Access some widget related settings values.
  */
-public class AppSettings {
+public class WidgetSettings {
 
-    public static final String SETTINGS_LIST_WIDGETS = "ListWidgetPreferences";
+    public static final String SETTINGS_FILE = "ListWidgetPreferences";
 
     public static final String KEY_PREFIX_WIDGET_BACKGROUND_COLOR = "background_color_";
 
@@ -37,7 +37,7 @@ public class AppSettings {
     public static int getWidgetListType(Context context, int appWidgetId) {
         int type = 0;
         try {
-            type = Integer.parseInt(context.getSharedPreferences(SETTINGS_LIST_WIDGETS, 0)
+            type = Integer.parseInt(context.getSharedPreferences(SETTINGS_FILE, 0)
                     .getString(KEY_PREFIX_WIDGET_LISTTYPE + appWidgetId, "0"));
         } catch (NumberFormatException ignored) {
         }
@@ -46,7 +46,7 @@ public class AppSettings {
     }
 
     public static boolean getWidgetHidesWatched(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_LIST_WIDGETS, 0);
+        SharedPreferences prefs = context.getSharedPreferences(SETTINGS_FILE, 0);
         return prefs.getBoolean(KEY_PREFIX_WIDGET_HIDE_WATCHED + appWidgetId, false);
     }
 
@@ -54,7 +54,7 @@ public class AppSettings {
         // taken from https://code.google.com/p/dashclock
         int opacity = DEFAULT_WIDGET_BACKGROUND_OPACITY;
         try {
-            opacity = Integer.parseInt(context.getSharedPreferences(SETTINGS_LIST_WIDGETS, 0)
+            opacity = Integer.parseInt(context.getSharedPreferences(SETTINGS_FILE, 0)
                     .getString(KEY_PREFIX_WIDGET_BACKGROUND_COLOR + appWidgetId, "50"));
         } catch (NumberFormatException ignored) {
         }

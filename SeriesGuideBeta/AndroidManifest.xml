@@ -293,7 +293,15 @@
             <meta-data
                 android:name="description"
                 android:value="@string/dashclock_extension_description" />
+            <meta-data
+                android:name="settingsActivity"
+                android:value="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity" />
         </service>
+
+        <activity
+            android:name="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity"
+            android:exported="true" >
+        </activity>
     </application>
 
 </manifest>
