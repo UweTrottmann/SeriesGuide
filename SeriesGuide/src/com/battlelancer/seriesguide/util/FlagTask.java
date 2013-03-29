@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
@@ -509,6 +510,11 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
         // notify the content provider for udpates
         mContext.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
+        // notify the list uri only if watched flags changed
+        if (mAction == FlagAction.EPISODE_WATCHED || mAction == FlagAction.SEASON_WATCHED
+                || mAction == FlagAction.SHOW_WATCHED) {
+            mContext.getContentResolver().notifyChange(ListItems.CONTENT_WITH_DETAILS_URI, null);
+        }
     }
 
     @Override
