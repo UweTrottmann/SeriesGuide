@@ -194,8 +194,16 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
             if (isAutoUpdateEnabled) {
                 // only update if at least 15mins have passed since last one
                 long now = System.currentTimeMillis();
-                final long previousUpdateTime = prefs.getLong(
+                long previousUpdateTime = prefs.getLong(
                         SeriesGuidePreferences.KEY_LASTUPDATE, 0);
+                // set the last update time to now if we don't have one yet,
+                // avoids auto-update at first launch
+                if (previousUpdateTime == 0) {
+                    previousUpdateTime = now;
+                    prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTUPDATE, now)
+                            .commit();
+                }
+
                 final boolean isTime = (now - previousUpdateTime) > 15 * DateUtils.MINUTE_IN_MILLIS;
 
                 if (isTime) {
