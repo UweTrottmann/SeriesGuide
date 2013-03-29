@@ -5,6 +5,21 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 5 *(TBD)*
+--------------------------
+
+#### 5beta1 *(2013-03-29)*
+
+* FEATURE Support Quick-Check-In action from single episode notifications.
+* FEATURE Add episodes within setting to DashClock extension.
+* FEATURE Trakt comments for movies.
+* TWEAK Trakt comments now link to their page on trakt.tv.
+* TWEAK Display show link in episode details in activity tablet layout.
+* TWEAK New search results layout, use Search view on Android 3+.
+* FIX Support canceling movie check-ins.
+* NOTICE Bump minimum supported version to Android 2.2 (from 2.1).
+* NOTICE Latest translations from crowdin.
+
 Version 4.1 *(2013-03-22)*
 --------------------------
 
