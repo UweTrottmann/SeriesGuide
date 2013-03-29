@@ -271,7 +271,7 @@
   <string name="menu_rate_trakt">Califícalo (trakt)</string>
   <string name="menu_share_others">Vía otras apps</string>
   <string name="traktcheckin_cancel">Reemplace</string>
-  <string name="traktcheckin_inprogress">Ya te has registrado en otro episodio o película. %sSobrescribe el registro anterior o espere %s e inténtelo de nuevo.</string>
+  <string name="traktcheckin_inprogress">Ya te has registrado en otro episodio o película. Sobrescribe el registro anterior o espere %s e inténtelo de nuevo.</string>
   <string name="traktcheckin_wait">﻿Esperaré</string>
   <string name="oauthmessage">Autenticación de SeriesGuide con GetGlue…</string>
   <string name="addtocalendar">Añadir al calendario</string>
