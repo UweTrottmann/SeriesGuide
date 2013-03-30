@@ -207,7 +207,10 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
                 final boolean isTime = (now - previousUpdateTime) > 15 * DateUtils.MINUTE_IN_MILLIS;
 
                 if (isTime) {
-                    TaskManager.getInstance(this).tryUpdateTask(new UpdateTask(false, this), false,
+                    // start UpdateTask to get latest episode info
+                    TaskManager.getInstance(this).tryUpdateTask(
+                            new UpdateTask(false, this),
+                            false,
                             -1);
                 }
             }

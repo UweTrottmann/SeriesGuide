@@ -195,6 +195,10 @@
             android:exported="true" >
         </activity>
 
+        <!-- Services -->
+        <service android:name="com.battlelancer.seriesguide.service.TraktFlagService" >
+        </service>
+
         <!-- Notification service -->
         <service android:name="com.battlelancer.seriesguide.service.NotificationService" >
         </service>

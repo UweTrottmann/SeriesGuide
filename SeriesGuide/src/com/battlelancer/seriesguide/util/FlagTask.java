@@ -1,3 +1,19 @@
+/*
+ * Copyright 2013 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.util;
 
@@ -13,15 +29,11 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.services.ShowService;
-import com.jakewharton.trakt.services.ShowService.EpisodeSeenBuilder;
-import com.jakewharton.trakt.services.ShowService.EpisodeUnlibraryBuilder;
-import com.jakewharton.trakt.services.ShowService.EpisodeUnseenBuilder;
+import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
+
+import java.util.List;
 
 /**
  * Helps flag episodes in the local database and on trakt.tv.
@@ -30,11 +42,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
     private static final int FAILED = -1;
 
-    private static final int OFFLINE = -2;
-
     private static final int SUCCESS = 0;
-
-    private static final String TAG = "FlagTask";
 
     public interface OnFlagListener {
         /**
@@ -82,7 +90,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
     private boolean mIsTraktInvolved;
 
     public FlagTask(Context context, int showId, OnFlagListener listener) {
-        mContext = context;
+        mContext = context.getApplicationContext();
         mShowId = showId;
         mListener = listener;
     }
@@ -163,192 +171,91 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
     @Override
     protected Integer doInBackground(Void... params) {
+        // check for valid trakt credentials
         mIsTraktInvolved = ServiceUtils.isTraktCredentialsValid(mContext);
 
-        // do trakt stuff
-        // check for valid trakt credentials
+        // prepare trakt stuff
         if (mIsTraktInvolved) {
-            if (!AndroidUtils.isNetworkConnected(mContext)) {
-                return OFFLINE;
+            List<Flag> episodes = Lists.newArrayList();
+            switch (mAction) {
+                case EPISODE_WATCHED:
+                case EPISODE_COLLECTED:
+                    // flag a single episode
+                    episodes.add(new Flag(mSeason, mEpisode));
+                    break;
+                case SEASON_WATCHED:
+                case SEASON_COLLECTED:
+                    // flag a whole season
+                    if (mIsFlag) {
+                        episodes.add(new Flag(mSeason, -1));
+                    } else {
+                        // only for removing flags we need single episodes
+                        addEpisodeFlags(episodes);
+                    }
+                    break;
+                case SHOW_WATCHED:
+                case SHOW_COLLECTED:
+                    // flag a whole show
+                    if (!mIsFlag) {
+                        // only for removing flags we need single episodes
+                        addEpisodeFlags(episodes);
+                    }
+                    break;
+                case EPISODE_WATCHED_PREVIOUS:
+                    // flag episodes up to one episode
+                    addEpisodeFlags(episodes);
+                    break;
             }
 
-            ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
-            if (manager == null) {
-                return FAILED;
-            }
-
-            ShowService showService = manager.showService();
-            try {
-                switch (mAction) {
-                    case EPISODE_WATCHED:
-                        // flag a single episode watched
-                        if (mIsFlag) {
-                            showService.episodeSeen(mShowId).episode(mSeason, mEpisode).fire();
-                        } else {
-                            showService.episodeUnseen(mShowId).episode(mSeason, mEpisode).fire();
-                        }
-                        break;
-                    case EPISODE_COLLECTED:
-                        // flag a single episode collected
-                        if (mIsFlag) {
-                            showService.episodeLibrary(mShowId).episode(mSeason, mEpisode).fire();
-                        } else {
-                            showService.episodeUnlibrary(mShowId).episode(mSeason, mEpisode).fire();
-                        }
-                        break;
-                    case SEASON_WATCHED:
-                        // flag a whole season watched
-                        if (mIsFlag) {
-                            showService.seasonSeen(mShowId).season(mSeason).fire();
-                        } else {
-                            removeEpisodeWatchedFlags(showService).fire();
-                        }
-                        break;
-                    case SEASON_COLLECTED:
-                        // flag a whole season collected
-                        if (mIsFlag) {
-                            showService.seasonLibrary(mShowId).season(mSeason).fire();
-                        } else {
-                            removeEpisodeCollectedFlags(showService).fire();
-                        }
-                        break;
-                    case SHOW_WATCHED:
-                        // flag a whole show watched
-                        if (mIsFlag) {
-                            showService.showSeen(mShowId).fire();
-                        } else {
-                            removeEpisodeWatchedFlags(showService).fire();
-                        }
-                        break;
-                    case SHOW_COLLECTED:
-                        // flag a whole show collected
-                        if (mIsFlag) {
-                            showService.showLibrary(mShowId).fire();
-                        } else {
-                            removeEpisodeCollectedFlags(showService).fire();
-                        }
-                        break;
-                    case EPISODE_WATCHED_PREVIOUS:
-                        // flag episodes up to one episode
-                        addEpisodeWatchedFlags(showService).fire();
-                        break;
-                    default:
-                        break;
-                }
-            } catch (TraktException e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
-                return FAILED;
-            } catch (ApiException e) {
-                Utils.trackExceptionAndLog(mContext, TAG, e);
-                return FAILED;
-            }
+            // Add a new taped flag task to the tape queue
+            FlagTapeEntryQueue.getInstance(mContext).add(
+                    new FlagTapeEntry(mAction, mShowId, episodes, mIsFlag));
         }
 
-        // update local database if trakt did not fail or if it is not used
+        // always update local database
         updateDatabase(mItemId);
         setLastWatchedEpisode();
 
         return SUCCESS;
     }
 
-    private EpisodeSeenBuilder addEpisodeWatchedFlags(ShowService showService) {
-        EpisodeSeenBuilder builder = showService.episodeSeen(mShowId);
-
+    private void addEpisodeFlags(List<Flag> episodes) {
         // determine uri
         Uri uri;
-        String selection;
+        String selection = null;
         switch (mAction) {
+            case SEASON_WATCHED:
+            case SEASON_COLLECTED:
+                uri = Episodes.buildEpisodesOfSeasonUri(String.valueOf(mItemId));
+                break;
+            case SHOW_WATCHED:
+            case SHOW_COLLECTED:
+                uri = Episodes.buildEpisodesOfShowUri(String.valueOf(mShowId));
+                break;
             case EPISODE_WATCHED_PREVIOUS:
                 if (mFirstAired <= 0) {
-                    return builder;
+                    return;
                 }
                 uri = Episodes.buildEpisodesOfShowUri(String.valueOf(mShowId));
                 selection = Episodes.FIRSTAIREDMS + "<" + mFirstAired + " AND "
                         + Episodes.FIRSTAIREDMS
                         + ">0";
-                break;
             default:
-                return builder;
+                return;
         }
 
-        // query and add episodes to builder
-        final Cursor episodes = mContext.getContentResolver().query(
+        // query and add episodes to list
+        final Cursor episodeCursor = mContext.getContentResolver().query(
                 uri,
                 new String[] {
                         Episodes.SEASON, Episodes.NUMBER
                 }, selection, null, null);
-        if (episodes != null) {
-            while (episodes.moveToNext()) {
-                builder.episode(episodes.getInt(0), episodes.getInt(1));
+        if (episodeCursor != null) {
+            while (episodeCursor.moveToNext()) {
+                episodes.add(new Flag(episodeCursor.getInt(0), episodeCursor.getInt(1)));
             }
-            episodes.close();
+            episodeCursor.close();
         }
-
-        return builder;
-    }
-
-    private EpisodeUnseenBuilder removeEpisodeWatchedFlags(ShowService showService) {
-        EpisodeUnseenBuilder builder = showService.episodeUnseen(mShowId);
-
-        // determine uri
-        Uri uri;
-        switch (mAction) {
-            case SEASON_WATCHED:
-                uri = Episodes.buildEpisodesOfSeasonUri(String.valueOf(mItemId));
-                break;
-            case SHOW_WATCHED:
-                uri = Episodes.buildEpisodesOfShowUri(String.valueOf(mShowId));
-                break;
-            default:
-                return builder;
-        }
-
-        // query and add episodes to builder
-        final Cursor episodes = mContext.getContentResolver().query(
-                uri,
-                new String[] {
-                        Episodes.SEASON, Episodes.NUMBER
-                }, null, null, null);
-        if (episodes != null) {
-            while (episodes.moveToNext()) {
-                builder.episode(episodes.getInt(0), episodes.getInt(1));
-            }
-            episodes.close();
-        }
-
-        return builder;
-    }
-
-    private EpisodeUnlibraryBuilder removeEpisodeCollectedFlags(ShowService showService) {
-        EpisodeUnlibraryBuilder builder = showService.episodeUnlibrary(mShowId);
-
-        // determine uri
-        Uri uri;
-        switch (mAction) {
-            case SEASON_COLLECTED:
-                uri = Episodes.buildEpisodesOfSeasonUri(String.valueOf(mItemId));
-                break;
-            case SHOW_COLLECTED:
-                uri = Episodes.buildEpisodesOfShowUri(String.valueOf(mShowId));
-                break;
-            default:
-                return builder;
-        }
-
-        // query and add episodes to builder
-        final Cursor episodes = mContext.getContentResolver().query(
-                uri,
-                new String[] {
-                        Episodes.SEASON, Episodes.NUMBER
-                }, null, null, null);
-        if (episodes != null) {
-            while (episodes.moveToNext()) {
-                builder.episode(episodes.getInt(0), episodes.getInt(1));
-            }
-            episodes.close();
-        }
-
-        return builder;
     }
 
     /** Lower season or if season is equal has to have a lower episode number. */
@@ -554,11 +461,6 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                 }
                 case FAILED: {
                     status = R.string.trakt_submitfailed;
-                    duration = Toast.LENGTH_LONG;
-                    break;
-                }
-                case OFFLINE: {
-                    status = R.string.offline;
                     duration = Toast.LENGTH_LONG;
                     break;
                 }

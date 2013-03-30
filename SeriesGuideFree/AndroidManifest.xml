@@ -177,6 +177,7 @@
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.MoviesActivity" >
         </activity>
+
         <activity android:name="com.battlelancer.seriesguide.ui.ConnectTraktActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -193,6 +194,10 @@
             android:name="com.battlelancer.seriesguide.ui.QuickCheckInActivity"
             android:exported="true" >
         </activity>
+		
+        <!-- Services -->
+        <service android:name="com.battlelancer.seriesguide.service.TraktFlagService" >
+        </service>
 
         <!-- Notification service -->
         <service android:name="com.battlelancer.seriesguide.service.NotificationService" >
@@ -204,8 +209,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver>
-        -->
+        </receiver>        -->
 
         <!-- Widgets -->
         <receiver

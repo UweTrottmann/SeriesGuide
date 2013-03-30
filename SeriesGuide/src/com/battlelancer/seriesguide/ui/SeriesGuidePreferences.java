@@ -165,6 +165,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_TMDB_BASE_URL = "com.battlelancer.seriesguide.tmdb.baseurl";
 
+    public static final String KEY_TAPE_INTERVAL = "com.battlelancer.seriesguide.tapeinterval";
+
     public static int THEME = R.style.SeriesGuideTheme;
 
     private static void fireTrackerEvent(String label) {
