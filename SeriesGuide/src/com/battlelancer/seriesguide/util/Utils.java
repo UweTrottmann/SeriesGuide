@@ -19,6 +19,8 @@ package com.battlelancer.seriesguide.util;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -44,6 +46,7 @@ import com.battlelancer.seriesguide.Constants.EpisodeSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
+import com.battlelancer.seriesguide.service.OnAlarmReceiver;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -634,12 +637,23 @@ public class Utils {
     /**
      * Run the notification service to display and (re)schedule upcoming episode
      * alarms.
-     * 
-     * @param context
      */
     public static void runNotificationService(Context context) {
         Intent i = new Intent(context, NotificationService.class);
         context.startService(i);
+    }
+
+    /**
+     * Run the notification service delayed by a minute to display and
+     * (re)schedule upcoming episode alarms.
+     */
+    public static void runNotificationServiceDelayed(Context context) {
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent i = new Intent(context, OnAlarmReceiver.class);
+        PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
+        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1
+                * DateUtils.MINUTE_IN_MILLIS, pi);
+        Log.d("OnAlarmReceiver", "Postponing service launch");
     }
 
     public static String toSHA1(byte[] convertme) {

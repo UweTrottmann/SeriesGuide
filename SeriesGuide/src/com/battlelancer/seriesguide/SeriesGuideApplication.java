@@ -52,7 +52,7 @@ public class SeriesGuideApplication extends Application {
 
         // ensure the notifications service is started (we also restart it on
         // boot)
-        Utils.runNotificationService(this);
+        Utils.runNotificationServiceDelayed(this);
 
         // load the current theme into a global variable
         final String theme = prefs.getString(
