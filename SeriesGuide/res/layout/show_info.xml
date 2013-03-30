@@ -18,7 +18,7 @@
         android:layout_alignParentTop="true" >
 
         <LinearLayout
-            style="@style/ScrollingLayout"
+            style="@style/DefaultPadding.Page"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
@@ -30,8 +30,9 @@
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginRight="@dimen/default_padding"
                 android:text="@string/app_name"
-                android:textAppearance="?attr/textAppearanceSgXLargeLight"
-                android:textIsSelectable="true" />
+                android:textAppearance="@style/TextAppearance.Large.Light"
+                android:textIsSelectable="true"
+                android:textSize="@dimen/text_size_ultralarge" />
 
             <include layout="@layout/show_info_meta" >
             </include>

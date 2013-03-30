@@ -23,7 +23,6 @@ local.properties
 
 ### Linux
 #########
-.*
 !.gitignore
 *~
 

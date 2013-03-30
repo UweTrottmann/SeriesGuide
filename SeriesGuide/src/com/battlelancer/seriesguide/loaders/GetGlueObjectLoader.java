@@ -23,7 +23,7 @@ import java.util.List;
  * @see <a
  *      href="http://getglue.com/api#networkwide-methods">http://getglue.com/api#networkwide-methods</a>
  */
-public class GetGlueObjectLoader extends GenericListLoader<GetGlueObject> {
+public class GetGlueObjectLoader extends GenericSimpleLoader<List<GetGlueObject>> {
 
     private static final String TAG = "GetGlueObjectLoader";
     private String mQuery;

@@ -55,7 +55,8 @@ public class EpisodesAdapter extends CursorAdapter {
             convertView = newView(mContext, mCursor, parent);
 
             viewHolder = new ViewHolder();
-            viewHolder.watchedBox = (WatchedBox) convertView.findViewById(R.id.watchedBoxEpisode);
+            viewHolder.watchedBox = (WatchedBox) convertView
+                    .findViewById(R.id.watchedBoxEpisode);
             viewHolder.episodeTitle = (TextView) convertView
                     .findViewById(R.id.textViewEpisodeTitle);
             viewHolder.episodeNumber = (TextView) convertView
@@ -64,6 +65,8 @@ public class EpisodesAdapter extends CursorAdapter {
                     .findViewById(R.id.textViewEpisodeAirdate);
             viewHolder.episodeAbsoluteNumber = (TextView) convertView
                     .findViewById(R.id.textViewEpisodeAbsoluteNumber);
+            viewHolder.collected = (ImageView) convertView
+                    .findViewById(R.id.imageViewCollected);
             viewHolder.contextMenu = (ImageView) convertView
                     .findViewById(R.id.imageViewContextMenu);
 
@@ -90,6 +93,10 @@ public class EpisodesAdapter extends CursorAdapter {
         CheatSheet.setup(viewHolder.watchedBox,
                 viewHolder.watchedBox.isChecked() ? R.string.unmark_episode
                         : R.string.mark_episode);
+
+        viewHolder.collected
+                .setVisibility(mCursor.getInt(EpisodesQuery.COLLECTED) == 1 ? View.VISIBLE
+                        : View.INVISIBLE);
 
         // number
         StringBuilder episodenumberValue = new StringBuilder(String.valueOf(episodeNumber));
@@ -137,6 +144,7 @@ public class EpisodesAdapter extends CursorAdapter {
         TextView episodeNumber;
         TextView episodeTitle;
         WatchedBox watchedBox;
+        ImageView collected;
         ImageView contextMenu;
     }
 

@@ -5,8 +5,74 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 4 *(TBA)*
+Version 5 *(TBD)*
 --------------------------
+
+#### 5beta1 *(2013-03-29)*
+
+* FEATURE Support Quick-Check-In action from single episode notifications.
+* FEATURE Add episodes within setting to DashClock extension.
+* FEATURE Trakt comments for movies.
+* TWEAK Trakt comments now link to their page on trakt.tv.
+* TWEAK Display show link in episode details in activity tablet layout.
+* TWEAK New search results layout, use Search view on Android 3+.
+* FIX Support canceling movie check-ins.
+* NOTICE Bump minimum supported version to Android 2.2 (from 2.1).
+* NOTICE Latest translations from crowdin.
+
+Version 4.1 *(2013-03-22)*
+--------------------------
+
+* FIX Properly register DashClock extension for stable versions.
+* FIX Remove wrong parent activity tags.
+* NOTICE Latest translations from crowdin.
+
+Version 4 *(2013-03-21)*
+--------------------------
+
+### Notable changes:
+
+* FEATURE Add statistics.
+* FEATURE New next episode algorithm: remembers what you last watched and offers later episodes as next. Improves watching older seasons.
+* FEATURE Supply extension for Roman Nurik's DashClock.
+* TWEAK Change widget settings from new widget settings shortcut.
+* TWEAK Rate on trakt by just tapping on the rating values.
+* TWEAK Make favorite stars touchable.
+* TWEAK Text in detail views is mostly selectable (Android 3.0+). Easily copy actor names or descriptions.
+* NOTICE Database upgraded to version 31. Starting SeriesGuide the first time after installing the update may take a little longer than usual.
+
+### Detailed changes:
+
+#### 4beta4 *(2013-03-21)*
+
+* FIX Remove decor view background to reduce overdraw due to android-menudrawer usage, should very slightly improve performance.
+* NOTICE Latest translations from crowdin.
+
+#### 4beta3 *(2013-03-14)*
+
+* FEATURE Add statistics.
+* TWEAK Use new improved swipe menu library (MenuDrawer from SimonVT).
+* TWEAK Change widget settings from new widget settings shortcut.
+* TWEAK Show title in activity activity.
+* FIX Spinner on Gingerbread (Android 2.3) and below was not readable (reverted to platform style).
+* TWEAK Increase line height for description text for easier reading.
+* TWEAK Rate on trakt by just tapping on the rating values.
+* TWEAK Overall design tweaks (removals, text size improvements, layout changes).
+* TWEAK Add favorite button in overview.
+* TWEAK Make favorite stars in the show list touchable.
+* TWEAK Improve TVDb reliability by removing www from TVDB API url.
+* TWEAK Displays your own trakt ratings in brackets.
+
+#### 4beta2 *(2013-02-22)*
+
+* FEATURE New next episode algorithm: remembers what you last watched and offers later episodes as next. Improves watching older seasons.
+* FEATURE Allow setting the widget opacity level, for X only.
+* FEATURE Started movie details pages, adds description and a trailer button.
+* TWEAK Display the online help page inline, revamped the online help page.
+* TWEAK Overview updates on new information (e.g. a picture).
+* TWEAK Load movies playing now for empty search query.
+* FIX Restore correct text styles for season watch count.
+* NOTICE Database upgraded to version 31. Starting SeriesGuide the first time after installing the update may take a little longer than usual.
 
 #### 4beta1 *(2013-02-12)*
 

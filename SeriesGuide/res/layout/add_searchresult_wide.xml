@@ -40,7 +40,7 @@
                 android:paddingBottom="@dimen/inline_padding"
                 android:paddingRight="@dimen/default_padding"
                 android:text="@string/app_name"
-                android:textAppearance="?attr/textAppearanceSgXLargeLight" />
+                android:textAppearance="@style/TextAppearance.Large.Light" />
 
             <TextView
                 android:id="@+id/description"
@@ -52,7 +52,7 @@
                 android:paddingBottom="@dimen/inline_padding"
                 android:paddingRight="@dimen/default_padding"
                 android:text="@string/app_name"
-                android:textAppearance="?attr/textAppearanceSgSmall" />
+                android:textAppearance="@style/TextAppearance.Small" />
         </LinearLayout>
 
         <include layout="@layout/divider_horizontal" />

@@ -72,11 +72,11 @@ import java.util.zip.ZipInputStream;
 
 public class TheTVDB {
 
-    private static final String mirror = "http://www.thetvdb.com";
+    private static final String TVDB_MIRROR = "http://thetvdb.com";
 
-    private static final String mirror_banners = "http://www.thetvdb.com/banners";
+    private static final String TVDB_MIRROR_BANNERS = "http://thetvdb.com/banners";
 
-    private static final String xmlMirror = mirror + "/api/";
+    private static final String xmlMirror = TVDB_MIRROR + "/api/";
 
     private static final String TAG = "TheTVDB";
 
@@ -664,7 +664,7 @@ public class TheTVDB {
     }
 
     /**
-     * Tries to download art from the thetvdb banner mirror. Ignores blank ("")
+     * Tries to download art from the thetvdb banner TVDB_MIRROR. Ignores blank ("")
      * or null paths and skips existing images. Returns true even if there was
      * no art downloaded.
      * 
@@ -686,9 +686,9 @@ public class TheTVDB {
             if (isPoster) {
                 // the cached version is a lot smaller, but still big enough for
                 // our purposes
-                imageUrl = mirror_banners + "/_cache/" + fileName;
+                imageUrl = TVDB_MIRROR_BANNERS + "/_cache/" + fileName;
             } else {
-                imageUrl = mirror_banners + "/" + fileName;
+                imageUrl = TVDB_MIRROR_BANNERS + "/" + fileName;
             }
 
             // try to download, decode and store the image

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/episodedetails_root"
-    style="@style/ScrollingLayout"
+    style="@style/DefaultPadding.Page"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
 
     <TextView
@@ -11,12 +11,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginRight="@dimen/default_padding"
         android:background="?custom_list_selector"
         android:clickable="true"
         android:focusable="true"
         android:nextFocusDown="@+id/checkinButton"
-        android:nextFocusLeft="@+id/textViewEpisodeDetailsShowName"
-        android:nextFocusRight="@+id/textViewEpisodeDetailsShowName"
+        android:nextFocusLeft="@+id/showTitle"
+        android:nextFocusRight="@+id/showTitle"
         android:paddingBottom="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:paddingTop="@dimen/default_padding"
@@ -32,26 +33,135 @@
         android:layout_marginLeft="@dimen/default_padding"
         android:layout_marginRight="@dimen/default_padding"
         android:text="@string/app_name"
-        android:textAppearance="?attr/textAppearanceSgXLargeLight"
+        android:textAppearance="@style/TextAppearance.Large.Light"
         android:textIsSelectable="true" />
 
     <TextView
         android:id="@+id/airTime"
-        style="@style/Subtitle"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
+        android:textAppearance="@style/TextAppearance.Small"
         android:textIsSelectable="true" />
 
     <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/default_padding"
-        android:layout_marginLeft="@dimen/default_padding"
-        android:layout_marginRight="@dimen/default_padding"
         layout="@layout/imagecontainer" />
 
-    <include layout="@layout/episode_meta" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?attr/colorAccent" />
+
+    <include layout="@layout/buttonbar" />
+
+    <include layout="@layout/ratingbar" />
+
+    <TextView
+        android:id="@+id/description"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance"
+        android:textIsSelectable="true" />
+
+    <TextView
+        android:id="@+id/labelGuestStars"
+        style="@style/DefaultPadding.Blocks.WithTopMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/episode_gueststars"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
+
+    <TextView
+        android:id="@+id/guestStars"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance"
+        android:textIsSelectable="true" />
+
+    <TextView
+        android:id="@+id/labelDirectors"
+        style="@style/DefaultPadding.Blocks.WithTopMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/episode_directors"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
+
+    <TextView
+        android:id="@+id/directors"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance"
+        android:textIsSelectable="true" />
+
+    <TextView
+        android:id="@+id/labelWriters"
+        style="@style/DefaultPadding.Blocks.WithTopMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/episode_writers"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
+
+    <TextView
+        android:id="@+id/writers"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance"
+        android:textIsSelectable="true" />
+
+    <TextView
+        android:id="@+id/labelDvd"
+        style="@style/DefaultPadding.Blocks.WithTopMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/episode_dvdnumber"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
+
+    <TextView
+        android:id="@+id/dvdNumber"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance"
+        android:textIsSelectable="true" />
+
+    <TextView
+        android:id="@+id/labelAirDay"
+        style="@style/DefaultPadding.Blocks.WithTopMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/episode_firstaired"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
+
+    <TextView
+        android:id="@+id/airDay"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance"
+        android:textIsSelectable="true" />
+
+    <TextView
+        android:id="@+id/labelLastEdit"
+        style="@style/DefaultPadding.Blocks.WithTopMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lastEdit"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
+
+    <TextView
+        android:id="@+id/lastEdit"
+        style="@style/DefaultPadding.Blocks.WithBottomMargin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance"
+        android:textIsSelectable="true" />
 
     <include layout="@layout/divider_horizontal" />
 

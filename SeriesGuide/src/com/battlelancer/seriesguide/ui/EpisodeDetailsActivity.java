@@ -41,9 +41,10 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.MenuOnPageChangeListener;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.slidingmenu.lib.SlidingMenu;
 import com.uwetrottmann.seriesguide.R;
 import com.viewpagerindicator.TitlePageIndicator;
+
+import net.simonvt.menudrawer.MenuDrawer;
 
 import java.util.ArrayList;
 
@@ -140,19 +141,19 @@ public class EpisodeDetailsActivity extends BaseActivity {
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getApplicationContext());
 
-        mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), episodes, prefs);
+        mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), episodes, prefs, true);
 
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
 
         TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.indicator);
         indicator.setViewPager(mPager, startPosition);
-        
+
         // support full-screen swiping if showing first page
-        indicator.setOnPageChangeListener(new MenuOnPageChangeListener(getSlidingMenu()));
-        getSlidingMenu().setTouchModeAbove(
-                startPosition == 0 ? SlidingMenu.TOUCHMODE_FULLSCREEN
-                        : SlidingMenu.TOUCHMODE_MARGIN);
+        indicator.setOnPageChangeListener(new MenuOnPageChangeListener(getMenu()));
+        getMenu().setTouchMode(startPosition == 0
+                ? MenuDrawer.TOUCH_MODE_FULLSCREEN
+                : MenuDrawer.TOUCH_MODE_BEZEL);
     }
 
     @Override
@@ -216,16 +217,20 @@ public class EpisodeDetailsActivity extends BaseActivity {
 
         private SharedPreferences mPrefs;
 
+        private boolean mIsShowingShowLink;
+
         public EpisodePagerAdapter(FragmentManager fm, ArrayList<Episode> episodes,
-                SharedPreferences prefs) {
+                SharedPreferences prefs, boolean isShowingShowLink) {
             super(fm);
             mEpisodes = episodes;
             mPrefs = prefs;
+            mIsShowingShowLink = isShowingShowLink;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return EpisodeDetailsFragment.newInstance(mEpisodes.get(position).episodeId, false);
+            return EpisodeDetailsFragment.newInstance(mEpisodes.get(position).episodeId, false,
+                    mIsShowingShowLink);
         }
 
         @Override

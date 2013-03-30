@@ -132,7 +132,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure" >
+        <activity
+            android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure"
+            android:taskAffinity="com.battlelancer.seriesguide.widgetconfiguration" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -164,6 +166,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.StatsActivity" >
+        </activity>
 		
         <!-- Services -->
         <service android:name="com.battlelancer.seriesguide.service.TraktFlagService" >
@@ -179,8 +183,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver>
-        -->
+        </receiver>        -->
 
 
         <!-- Widgets -->

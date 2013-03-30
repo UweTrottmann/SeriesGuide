@@ -25,9 +25,10 @@ public class HelpActivity extends BaseActivity {
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle arg0) {
-        super.onCreate(arg0);
-
+        // webview uses a progress bar
         requestWindowFeature(Window.FEATURE_PROGRESS);
+
+        super.onCreate(arg0);
 
         mWebview = new WebView(this);
         setContentView(mWebview);

@@ -22,15 +22,11 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
-import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
@@ -48,8 +44,6 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     private Bundle mArgs;
 
     private final Context mContext;
-
-    private final FragmentManager mFm;
 
     private TraktAction mAction;
 
@@ -74,7 +68,9 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     }
 
     public interface OnTraktActionCompleteListener {
-        public void onTraktActionComplete(boolean wasSuccessfull);
+        public void onTraktActionComplete(Bundle traktTaskArgs, boolean wasSuccessfull);
+
+        public void onCheckinBlocked(Bundle traktTaskArgs, int wait);
     }
 
     /**
@@ -85,9 +81,8 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      * @param fm
      * @param listener
      */
-    public TraktTask(Context context, FragmentManager fm, OnTraktActionCompleteListener listener) {
+    public TraktTask(Context context, OnTraktActionCompleteListener listener) {
         mContext = context;
-        mFm = fm;
         mListener = listener;
         mArgs = new Bundle();
     }
@@ -101,9 +96,8 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      * @param args
      * @param listener
      */
-    public TraktTask(Context context, FragmentManager manager, Bundle args,
-            OnTraktActionCompleteListener listener) {
-        this(context, manager, listener);
+    public TraktTask(Context context, Bundle args, OnTraktActionCompleteListener listener) {
+        this(context, listener);
         mArgs = args;
     }
 
@@ -306,11 +300,19 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                     final boolean isSpoiler = mArgs.getBoolean(InitBundle.ISSPOILER);
 
                     if (episode == 0) {
-                        r = manager.shoutService().show(tvdbid).shout(shout).spoiler(isSpoiler)
+                        r = manager.commentService()
+                                .show(tvdbid)
+                                .comment(shout)
+                                .spoiler(isSpoiler)
                                 .fire();
                     } else {
-                        r = manager.shoutService().episode(tvdbid).season(season).episode(episode)
-                                .shout(shout).spoiler(isSpoiler).fire();
+                        r = manager.commentService()
+                                .episode(tvdbid)
+                                .season(season)
+                                .episode(episode)
+                                .comment(shout)
+                                .spoiler(isSpoiler)
+                                .fire();
                     }
                 }
                 default:
@@ -335,16 +337,6 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
     @Override
     protected void onPostExecute(Response r) {
-        // dismiss a potential progress dialog
-        if (mAction == TraktAction.CHECKIN_EPISODE || mAction == TraktAction.CHECKIN_MOVIE) {
-            Fragment prev = mFm.findFragmentByTag("progress-dialog");
-            if (prev != null) {
-                FragmentTransaction ft = mFm.beginTransaction();
-                ft.remove(prev);
-                ft.commit();
-            }
-        }
-
         if (r != null) {
             if (TraktStatus.SUCCESS.equals(r.status)) {
                 // all good
@@ -362,34 +354,32 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 }
 
                 if (mListener != null) {
-                    mListener.onTraktActionComplete(true);
+                    mListener.onTraktActionComplete(mArgs, true);
                 }
 
             } else if (TraktStatus.FAILURE.equals(r.status)) {
                 if (r.wait != 0) {
-
                     // looks like a check in is in progress
-                    TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment
-                            .newInstance(mArgs, r.wait);
-                    FragmentTransaction ft = mFm.beginTransaction();
-                    newFragment.show(ft, "cancel-checkin-dialog");
 
+                    if (mListener != null) {
+                        mListener.onCheckinBlocked(mArgs, r.wait);
+                    }
                 } else {
-
                     // well, something went wrong
+
                     Toast.makeText(mContext, r.error, Toast.LENGTH_LONG).show();
 
+                    if (mListener != null) {
+                        mListener.onTraktActionComplete(mArgs, false);
+                    }
                 }
 
-                if (mListener != null) {
-                    mListener.onTraktActionComplete(false);
-                }
             }
         } else {
             // notify that our first run completed, however due to invalid
             // credentials we have not done anything
             if (mListener != null) {
-                mListener.onTraktActionComplete(true);
+                mListener.onTraktActionComplete(mArgs, false);
             }
         }
     }

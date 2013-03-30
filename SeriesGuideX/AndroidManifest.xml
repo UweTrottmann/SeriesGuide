@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.battlelancer.seriesguide.x"
     android:installLocation="auto"
-    android:versionCode="152"
-    android:versionName="3x" >
+    android:versionCode="154"
+    android:versionName="4.1x" >
 
     <uses-sdk
-        android:minSdkVersion="7"
+        android:minSdkVersion="8"
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -77,9 +77,6 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity
             android:name="com.battlelancer.seriesguide.ui.SearchActivity"
@@ -91,9 +88,6 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity
             android:name="com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity"
@@ -106,17 +100,11 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.EpisodesActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity
             android:name="com.battlelancer.seriesguide.ui.OverviewActivity"
@@ -132,22 +120,18 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.TraktSyncActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.UpcomingRecentActivity" >
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.UpcomingRecentActivity"
+            android:exported="true" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity
             android:name="com.battlelancer.seriesguide.ui.AddActivity"
@@ -170,7 +154,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure" >
+        <activity
+            android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure"
+            android:taskAffinity="com.battlelancer.seriesguide.x.widgetconfiguration" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -189,9 +175,6 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.MoviesActivity" >
         </activity>
@@ -204,6 +187,12 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.StatsActivity" >
+        </activity>
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.QuickCheckInActivity"
+            android:exported="true" >
         </activity>
 		
         <!-- Services -->
@@ -291,6 +280,32 @@
             android:name="com.battlelancer.seriesguide.appwidget.AppWidgetLarge$UpdateServiceLarge"
             android:enabled="@bool/isFroyoOrLower" >
         </service>
+
+        <!-- DashClock Extension -->
+        <service
+            android:name="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeExtension"
+            android:icon="@drawable/ic_notification"
+            android:label="@string/dashclock_extension_label"
+            android:permission="com.google.android.apps.dashclock.permission.READ_EXTENSION_DATA" >
+            <intent-filter>
+                <action android:name="com.google.android.apps.dashclock.Extension" />
+            </intent-filter>
+
+            <meta-data
+                android:name="protocolVersion"
+                android:value="1" />
+            <meta-data
+                android:name="description"
+                android:value="@string/dashclock_extension_description" />
+            <meta-data
+                android:name="settingsActivity"
+                android:value="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity" />
+        </service>
+        
+        <activity
+            android:name="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity"
+            android:exported="true" >
+        </activity>
     </application>
 
 </manifest>

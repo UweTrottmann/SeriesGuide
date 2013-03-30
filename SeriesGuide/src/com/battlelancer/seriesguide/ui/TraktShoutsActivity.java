@@ -27,12 +27,26 @@ import com.uwetrottmann.seriesguide.R;
 
 public class TraktShoutsActivity extends BaseActivity {
 
-    public static Bundle createInitBundle(int showTvdbid, int seasonNumber, int episodeNumber,
-            String title) {
+    public static Bundle createInitBundleEpisode(int showTvdbid, int seasonNumber,
+            int episodeNumber, String title) {
         Bundle extras = new Bundle();
         extras.putInt(ShareItems.TVDBID, showTvdbid);
         extras.putInt(ShareItems.SEASON, seasonNumber);
         extras.putInt(ShareItems.EPISODE, episodeNumber);
+        extras.putString(ShareItems.SHARESTRING, title);
+        return extras;
+    }
+
+    public static Bundle createInitBundleShow(String title, int tvdbId) {
+        Bundle extras = new Bundle();
+        extras.putInt(ShareItems.TVDBID, tvdbId);
+        extras.putString(ShareItems.SHARESTRING, title);
+        return extras;
+    }
+
+    public static Bundle createInitBundleMovie(String title, int tmdbId) {
+        Bundle extras = new Bundle();
+        extras.putInt(ShareItems.TMDBID, tmdbId);
         extras.putString(ShareItems.SHARESTRING, title);
         return extras;
     }
@@ -53,17 +67,21 @@ public class TraktShoutsActivity extends BaseActivity {
             SherlockFragment newFragment;
             int tvdbId = args.getInt(ShareItems.TVDBID);
             int episode = args.getInt(ShareItems.EPISODE);
-            if (episode == 0) {
-                newFragment = TraktShoutsFragment.newInstance(title, tvdbId);
+            if (tvdbId == 0) {
+                int tmdbId = args.getInt(ShareItems.TMDBID);
+                newFragment = TraktShoutsFragment.newInstanceMovie(title, tmdbId);
+            } else if (episode == 0) {
+                newFragment = TraktShoutsFragment.newInstanceShow(title, tvdbId);
             } else {
                 int season = args.getInt(ShareItems.SEASON);
-                newFragment = TraktShoutsFragment.newInstance(title, tvdbId, season, episode);
+                newFragment = TraktShoutsFragment
+                        .newInstanceEpisode(title, tvdbId, season, episode);
             }
             getSupportFragmentManager().beginTransaction().add(R.id.root_container, newFragment)
                     .commit();
         }
     }
-    
+
     @Override
     protected void onStart() {
         super.onStart();

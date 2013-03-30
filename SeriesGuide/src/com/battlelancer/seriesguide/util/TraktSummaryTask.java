@@ -22,17 +22,20 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.TextView;
 
+import com.battlelancer.seriesguide.util.TraktSummaryTask.RatingsWrapper;
 import com.jakewharton.apibuilder.ApiException;
+import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Ratings;
 import com.jakewharton.trakt.entities.TvEntity;
 import com.jakewharton.trakt.entities.TvShow;
+import com.jakewharton.trakt.enumerations.Rating;
 import com.uwetrottmann.seriesguide.R;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
+public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
 
     private static final int HARD_CACHE_CAPACITY = 10;
 
@@ -104,7 +107,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
     }
 
     @Override
-    protected Ratings doInBackground(Void... params) {
+    protected RatingsWrapper doInBackground(Void... params) {
 
         if (isCancelled()) {
             return null;
@@ -115,10 +118,15 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
             if (mTvdbIdString != null) {
                 if (Utils.isAllowedConnection(mContext)) {
                     // get the shows summary from trakt
-                    TvShow entity = ServiceUtils.getTraktServiceManager(mContext).showService()
-                            .summary(mTvdbIdString).fire();
+                    TvShow entity = getServiceManager()
+                            .showService()
+                            .summary(mTvdbIdString)
+                            .fire();
                     if (entity != null) {
-                        return entity.ratings;
+                        RatingsWrapper results = new RatingsWrapper();
+                        results.rating = entity.rating_advanced;
+                        results.ratings = entity.ratings;
+                        return results;
                     }
                 }
             } else {
@@ -133,15 +141,20 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
 
                 // on cache miss load the summary from trakt
                 if (entity == null && Utils.isAllowedConnection(mContext)) {
-                    entity = ServiceUtils.getTraktServiceManager(mContext).showService()
-                            .episodeSummary(mTvdbId, mSeason, mEpisode).fire();
+                    entity = getServiceManager()
+                            .showService()
+                            .episodeSummary(mTvdbId, mSeason, mEpisode)
+                            .fire();
                 }
 
                 if (entity != null) {
                     synchronized (sHardEntityCache) {
                         sHardEntityCache.put(key, entity);
                     }
-                    return entity.episode.ratings;
+                    RatingsWrapper results = new RatingsWrapper();
+                    results.rating = entity.episode.rating_advanced;
+                    results.ratings = entity.episode.ratings;
+                    return results;
                 }
             }
         } catch (TraktException te) {
@@ -153,18 +166,70 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
         return null;
     }
 
+    private ServiceManager getServiceManager() {
+        ServiceManager serviceManager;
+        if (ServiceUtils.isTraktCredentialsValid(mContext)) {
+            serviceManager = ServiceUtils.getTraktServiceManagerWithAuth(mContext,
+                    false);
+        } else {
+            serviceManager = ServiceUtils.getTraktServiceManager(mContext);
+        }
+        return serviceManager;
+    }
+
     @Override
     protected void onCancelled() {
         releaseReferences();
     }
 
     @Override
-    protected void onPostExecute(Ratings ratings) {
+    protected void onPostExecute(RatingsWrapper results) {
         // set the final rating values
-        if (ratings != null && mTraktLoves != null && mTraktVotes != null) {
-            mTraktLoves.setText(ratings.percentage + "%");
+        if (results != null && mTraktLoves != null && mTraktVotes != null) {
+            String rating = results.ratings.percentage + "%";
+            if (results.rating != null) {
+                int resId = 0;
+                switch (results.rating) {
+                    case WeakSauce:
+                        resId = R.string.hate;
+                        break;
+                    case Terrible:
+                        resId = R.string.rating2;
+                        break;
+                    case Bad:
+                        resId = R.string.rating3;
+                        break;
+                    case Poor:
+                        resId = R.string.rating4;
+                        break;
+                    case Meh:
+                        resId = R.string.rating5;
+                        break;
+                    case Fair:
+                        resId = R.string.rating6;
+                        break;
+                    case Good:
+                        resId = R.string.rating7;
+                        break;
+                    case Great:
+                        resId = R.string.rating8;
+                        break;
+                    case Superb:
+                        resId = R.string.rating9;
+                        break;
+                    case TotallyNinja:
+                        resId = R.string.love;
+                        break;
+                    default:
+                        break;
+                }
+                if (resId != 0) {
+                    rating += " (" + mContext.getString(resId) + ")";
+                }
+            }
+            mTraktLoves.setText(rating);
             mTraktVotes.setText(mContext.getResources().getQuantityString(R.plurals.votes,
-                    ratings.votes, ratings.votes));
+                    results.ratings.votes, results.ratings.votes));
         }
 
         releaseReferences();
@@ -175,6 +240,11 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, Ratings> {
         mTraktLoves = null;
         mTraktVotes = null;
         mView = null;
+    }
+
+    static class RatingsWrapper {
+        Ratings ratings;
+        Rating rating;
     }
 
 }

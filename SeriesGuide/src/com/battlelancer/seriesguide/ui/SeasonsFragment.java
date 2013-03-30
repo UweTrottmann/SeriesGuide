@@ -67,7 +67,11 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     private static final int CONTEXT_FLAG_ALL_UNWATCHED_ID = 1;
 
-    private static final int CONTEXT_MANAGE_LISTS_ID = 2;
+    private static final int CONTEXT_FLAG_ALL_COLLECTED_ID = 2;
+
+    private static final int CONTEXT_FLAG_ALL_UNCOLLECTED_ID = 3;
+
+    private static final int CONTEXT_MANAGE_LISTS_ID = 4;
 
     private static final int LOADER_ID = 1;
 
@@ -143,7 +147,9 @@ public class SeasonsFragment extends SherlockListFragment implements
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.add(0, CONTEXT_FLAG_ALL_WATCHED_ID, 0, R.string.mark_all);
         menu.add(0, CONTEXT_FLAG_ALL_UNWATCHED_ID, 1, R.string.unmark_all);
-        menu.add(0, CONTEXT_MANAGE_LISTS_ID, 2, R.string.list_item_manage);
+        menu.add(0, CONTEXT_FLAG_ALL_COLLECTED_ID, 2, R.string.collect_all);
+        menu.add(0, CONTEXT_FLAG_ALL_UNCOLLECTED_ID, 3, R.string.uncollect_all);
+        menu.add(0, CONTEXT_MANAGE_LISTS_ID, 4, R.string.list_item_manage);
     }
 
     @Override
@@ -153,13 +159,23 @@ public class SeasonsFragment extends SherlockListFragment implements
 
         switch (item.getItemId()) {
             case CONTEXT_FLAG_ALL_WATCHED_ID: {
-                fireTrackerEventContextMenu("Flag all watched");
                 onFlagSeasonWatched(info.id, season.getInt(SeasonsQuery.COMBINED), true);
+                fireTrackerEventContextMenu("Flag all watched");
                 return true;
             }
             case CONTEXT_FLAG_ALL_UNWATCHED_ID: {
-                fireTrackerEventContextMenu("Flag all unwatched");
                 onFlagSeasonWatched(info.id, season.getInt(SeasonsQuery.COMBINED), false);
+                fireTrackerEventContextMenu("Flag all unwatched");
+                return true;
+            }
+            case CONTEXT_FLAG_ALL_COLLECTED_ID: {
+                onFlagSeasonCollected(info.id, season.getInt(SeasonsQuery.COMBINED), true);
+                fireTrackerEventContextMenu("Flag all collected");
+                return true;
+            }
+            case CONTEXT_FLAG_ALL_UNCOLLECTED_ID: {
+                onFlagSeasonCollected(info.id, season.getInt(SeasonsQuery.COMBINED), false);
+                fireTrackerEventContextMenu("Flag all uncollected");
                 return true;
             }
             case CONTEXT_MANAGE_LISTS_ID: {
@@ -190,13 +206,21 @@ public class SeasonsFragment extends SherlockListFragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_markall) {
+        if (itemId == R.id.menu_watched_all) {
             fireTrackerEvent("Flag all watched");
             onFlagShowWatched(true);
             return true;
-        } else if (itemId == R.id.menu_unmarkall) {
+        } else if (itemId == R.id.menu_unwatched_all) {
             fireTrackerEvent("Flag all unwatched");
             onFlagShowWatched(false);
+            return true;
+        } else if (itemId == R.id.menu_collect_all) {
+            fireTrackerEvent("Flag all collected");
+            onFlagShowCollected(true);
+            return true;
+        } else if (itemId == R.id.menu_uncollect_all) {
+            fireTrackerEvent("Flag all uncollected");
+            onFlagShowCollected(false);
             return true;
         } else if (itemId == R.id.menu_sesortby) {
             fireTrackerEvent("Sort");
@@ -224,9 +248,6 @@ public class SeasonsFragment extends SherlockListFragment implements
     /**
      * Changes the seasons episodes watched flags, updates the status label of
      * the season.
-     * 
-     * @param seasonId
-     * @param isWatched
      */
     private void onFlagSeasonWatched(long seasonId, int seasonNumber, boolean isWatched) {
         new FlagTask(getActivity(), getShowId(), this).seasonWatched(seasonNumber)
@@ -234,14 +255,28 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     /**
+     * Changes the seasons episodes collected flags.
+     */
+    private void onFlagSeasonCollected(long seasonId, int seasonNumber, boolean isCollected) {
+        new FlagTask(getActivity(), getShowId(), this).seasonCollected(seasonNumber)
+                .setItemId((int) seasonId).setFlag(isCollected).execute();
+    }
+
+    /**
      * Changes the watched flag for all episodes of the given show, updates the
      * status labels of all seasons.
-     * 
-     * @param seasonid
-     * @param isWatched
      */
     private void onFlagShowWatched(boolean isWatched) {
         new FlagTask(getActivity(), getShowId(), this).showWatched().setFlag(isWatched).execute();
+    }
+
+    /**
+     * Changes the collected flag for all episodes of the given show, updates
+     * the status labels of all seasons.
+     */
+    private void onFlagShowCollected(boolean isCollected) {
+        new FlagTask(getActivity(), getShowId(), this).showCollected().setFlag(isCollected)
+                .execute();
     }
 
     /**

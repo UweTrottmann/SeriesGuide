@@ -17,14 +17,12 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -33,29 +31,22 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
-import com.battlelancer.seriesguide.util.ImageDownloader;
-import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.battlelancer.seriesguide.adapters.TraktCommentsAdapter;
+import com.battlelancer.seriesguide.loaders.TraktCommentsLoader;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
-import com.battlelancer.seriesguide.util.Utils;
-import com.jakewharton.apibuilder.ApiException;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.TraktException;
-import com.jakewharton.trakt.entities.Shout;
+import com.jakewharton.trakt.entities.Comment;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -63,7 +54,7 @@ import java.util.List;
  * posting own shouts.
  */
 public class TraktShoutsFragment extends SherlockFragment implements
-        LoaderCallbacks<List<Shout>>, OnTraktActionCompleteListener {
+        LoaderCallbacks<List<Comment>>, OnTraktActionCompleteListener {
 
     /**
      * Build a {@link TraktShoutsFragment} for shouts of an episode.
@@ -74,7 +65,8 @@ public class TraktShoutsFragment extends SherlockFragment implements
      * @param episode
      * @return
      */
-    public static TraktShoutsFragment newInstance(String title, int tvdbId, int season, int episode) {
+    public static TraktShoutsFragment newInstanceEpisode(String title, int tvdbId, int season,
+            int episode) {
         TraktShoutsFragment f = new TraktShoutsFragment();
         Bundle args = new Bundle();
         args.putString(ShareItems.SHARESTRING, title);
@@ -92,7 +84,7 @@ public class TraktShoutsFragment extends SherlockFragment implements
      * @param tvdbId
      * @return
      */
-    public static TraktShoutsFragment newInstance(String title, int tvdbId) {
+    public static TraktShoutsFragment newInstanceShow(String title, int tvdbId) {
         TraktShoutsFragment f = new TraktShoutsFragment();
         Bundle args = new Bundle();
         args.putString(ShareItems.SHARESTRING, title);
@@ -102,9 +94,31 @@ public class TraktShoutsFragment extends SherlockFragment implements
         return f;
     }
 
+    /**
+     * Build a {@link TraktShoutsFragment} for shouts of a movie.
+     * 
+     * @param title
+     * @param tmdbId
+     * @return
+     */
+    public static TraktShoutsFragment newInstanceMovie(String title, int tmdbId) {
+        TraktShoutsFragment f = new TraktShoutsFragment();
+        Bundle args = new Bundle();
+        args.putString(ShareItems.SHARESTRING, title);
+        args.putInt(ShareItems.TMDBID, tmdbId);
+        args.putInt(ShareItems.TVDBID, 0);
+        args.putInt(ShareItems.EPISODE, 0);
+        f.setArguments(args);
+        return f;
+    }
+
     static final int INTERNAL_EMPTY_ID = 0x00ff0001;
 
     static final int INTERNAL_LIST_CONTAINER_ID = 0x00ff0003;
+
+    private static final String TRAKT_MOVIE_COMMENT_PAGE_URL = "http://trakt.tv/comment/movie/";
+    private static final String TRAKT_EPISODE_COMMENT_PAGE_URL = "http://trakt.tv/comment/episode/";
+    private static final String TRAKT_SHOW_COMMENT_PAGE_URL = "http://trakt.tv/comment/show/";
 
     final private Handler mHandler = new Handler();
 
@@ -120,7 +134,7 @@ public class TraktShoutsFragment extends SherlockFragment implements
         }
     };
 
-    TraktShoutsAdapter mAdapter;
+    TraktCommentsAdapter mAdapter;
 
     ListView mList;
 
@@ -162,19 +176,21 @@ public class TraktShoutsFragment extends SherlockFragment implements
 
                 if (episode == 0) {
                     // shout for a show
-                    AndroidUtils.executeAsyncTask(new TraktTask(getSherlockActivity(),
-                            getFragmentManager(), TraktShoutsFragment.this).shout(tvdbid, shout,
-                            isSpoiler), new Void[] {
-                            null
-                    });
+                    AndroidUtils.executeAsyncTask(
+                            new TraktTask(getSherlockActivity(), TraktShoutsFragment.this)
+                                    .shout(tvdbid, shout, isSpoiler),
+                            new Void[] {
+                                null
+                            });
                 } else {
                     // shout for an episode
                     int season = args.getInt(ShareItems.SEASON);
-                    AndroidUtils.executeAsyncTask(new TraktTask(getSherlockActivity(),
-                            getFragmentManager(), TraktShoutsFragment.this).shout(tvdbid, season,
-                            episode, shout, isSpoiler), new Void[] {
-                            null
-                    });
+                    AndroidUtils.executeAsyncTask(
+                            new TraktTask(getSherlockActivity(), TraktShoutsFragment.this)
+                                    .shout(tvdbid, season, episode, shout, isSpoiler),
+                            new Void[] {
+                                null
+                            });
                 }
             }
         });
@@ -199,7 +215,7 @@ public class TraktShoutsFragment extends SherlockFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new TraktShoutsAdapter(getActivity());
+        mAdapter = new TraktCommentsAdapter(getActivity());
         setListAdapter(mAdapter);
 
         // nag about no connectivity
@@ -238,7 +254,7 @@ public class TraktShoutsFragment extends SherlockFragment implements
     /**
      * Provide the cursor for the list view.
      */
-    public void setListAdapter(TraktShoutsAdapter adapter) {
+    public void setListAdapter(TraktCommentsAdapter adapter) {
         boolean hadAdapter = mAdapter != null;
         mAdapter = adapter;
         if (mList != null) {
@@ -252,31 +268,40 @@ public class TraktShoutsFragment extends SherlockFragment implements
     }
 
     public void onListItemClick(ListView l, View v, int position, long id) {
-        final Shout shout = (Shout) l.getItemAtPosition(position);
+        final Comment comment = (Comment) l.getItemAtPosition(position);
 
-        if (shout.spoiler) {
+        if (comment.spoiler) {
             // if shout is a spoiler, first click will reveal the shout
-            shout.spoiler = false;
+            comment.spoiler = false;
             TextView shoutText = (TextView) v.findViewById(R.id.shout);
             if (shoutText != null) {
-                shoutText.setText(shout.shout);
+                shoutText.setText(comment.text);
             }
         } else {
-            // open trakt user profile web page
-            if (shout.user.url != null) {
-                Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(shout.user.url));
-                startActivity(myIntent);
+            // open shout or review page
+            int tvdbId = getArguments().getInt(ShareItems.TVDBID);
+            int episode = getArguments().getInt(ShareItems.EPISODE);
+            String typeUrl;
+            if (tvdbId == 0) {
+                typeUrl = TRAKT_MOVIE_COMMENT_PAGE_URL;
+            } else if (episode == 0) {
+                typeUrl = TRAKT_SHOW_COMMENT_PAGE_URL;
+            } else {
+                typeUrl = TRAKT_EPISODE_COMMENT_PAGE_URL;
             }
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(typeUrl + comment.id));
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+            startActivity(intent);
         }
     }
 
     @Override
-    public Loader<List<Shout>> onCreateLoader(int id, Bundle args) {
-        return new TraktShoutsLoader(getSherlockActivity(), args);
+    public Loader<List<Comment>> onCreateLoader(int id, Bundle args) {
+        return new TraktCommentsLoader(getSherlockActivity(), args);
     }
 
     @Override
-    public void onLoadFinished(Loader<List<Shout>> loader, List<Shout> data) {
+    public void onLoadFinished(Loader<List<Comment>> loader, List<Comment> data) {
         mAdapter.setData(data);
 
         if (isResumed()) {
@@ -287,7 +312,7 @@ public class TraktShoutsFragment extends SherlockFragment implements
     }
 
     @Override
-    public void onLoaderReset(Loader<List<Shout>> data) {
+    public void onLoaderReset(Loader<List<Comment>> data) {
         mAdapter.setData(null);
     }
 
@@ -405,7 +430,7 @@ public class TraktShoutsFragment extends SherlockFragment implements
         mListShown = true;
         mList.setOnItemClickListener(mOnClickListener);
         if (mAdapter != null) {
-            TraktShoutsAdapter adapter = mAdapter;
+            TraktCommentsAdapter adapter = mAdapter;
             mAdapter = null;
             setListAdapter(adapter);
         } else {
@@ -418,205 +443,8 @@ public class TraktShoutsFragment extends SherlockFragment implements
         mHandler.post(mRequestFocus);
     }
 
-    public static class TraktShoutsLoader extends AsyncTaskLoader<List<Shout>> {
-
-        private static final String TAG = "TraktShoutsLoader";
-
-        private Bundle mArgs;
-
-        private List<Shout> mResults;
-
-        public TraktShoutsLoader(Context context, Bundle args) {
-            super(context);
-            mArgs = args;
-        }
-
-        @Override
-        public List<Shout> loadInBackground() {
-            int tvdbId = mArgs.getInt(ShareItems.TVDBID);
-            int episode = mArgs.getInt(ShareItems.EPISODE);
-
-            ServiceManager manager = ServiceUtils.getTraktServiceManager(getContext());
-            List<Shout> shouts = new ArrayList<Shout>();
-            try {
-                if (episode == 0) {
-                    shouts = manager.showService().shouts(tvdbId).fire();
-                } else {
-                    int season = mArgs.getInt(ShareItems.SEASON);
-                    shouts = manager.showService().episodeShouts(tvdbId, season, episode).fire();
-                }
-            } catch (TraktException e) {
-                Utils.trackExceptionAndLog(getContext(), TAG, e);
-                return null;
-            } catch (ApiException e) {
-                Utils.trackExceptionAndLog(getContext(), TAG, e);
-                return null;
-            }
-
-            return shouts;
-        }
-
-        /**
-         * Called when there is new data to deliver to the client. The super
-         * class will take care of delivering it; the implementation here just
-         * adds a little more logic.
-         */
-        @Override
-        public void deliverResult(List<Shout> results) {
-            if (isReset()) {
-                // An async query came in while the loader is stopped. We
-                // don't need the result.
-                if (results != null) {
-                    onReleaseResources(results);
-                }
-            }
-            List<Shout> oldResults = results;
-            mResults = results;
-
-            if (isStarted()) {
-                // If the Loader is currently started, we can immediately
-                // deliver its results.
-                super.deliverResult(results);
-            }
-
-            if (oldResults != null) {
-                onReleaseResources(oldResults);
-            }
-        }
-
-        @Override
-        protected void onStartLoading() {
-            if (mResults != null) {
-                deliverResult(mResults);
-            } else {
-                forceLoad();
-            }
-        }
-
-        /**
-         * Handles a request to stop the Loader.
-         */
-        @Override
-        protected void onStopLoading() {
-            // Attempt to cancel the current load task if possible.
-            cancelLoad();
-        }
-
-        /**
-         * Handles a request to cancel a load.
-         */
-        @Override
-        public void onCanceled(List<Shout> data) {
-            super.onCanceled(data);
-
-            onReleaseResources(data);
-        }
-
-        /**
-         * Handles a request to completely reset the Loader.
-         */
-        @Override
-        protected void onReset() {
-            super.onReset();
-
-            // Ensure the loader is stopped
-            onStopLoading();
-
-            // At this point we can release resources
-            if (mResults != null) {
-                onReleaseResources(mResults);
-                mResults = null;
-            }
-        }
-
-        /**
-         * Helper function to take care of releasing resources associated with
-         * an actively loaded data set.
-         */
-        protected void onReleaseResources(List<Shout> apps) {
-            // For a simple List<> there is nothing to do. For something
-            // like a Cursor, we would close it here.
-        }
-    }
-
-    /**
-     * Custom ArrayAdapter which binds {@link Shout} items to views using the
-     * ViewHolder pattern and downloads avatars using the
-     * {@link ImageDownloader}.
-     */
-    private static class TraktShoutsAdapter extends ArrayAdapter<Shout> {
-        private final ImageDownloader mImageDownloader;
-
-        private final LayoutInflater mInflater;
-
-        public TraktShoutsAdapter(Context context) {
-            super(context, R.layout.shout);
-            mImageDownloader = ImageDownloader.getInstance(context);
-            mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-        public void setData(List<Shout> data) {
-            clear();
-            if (data != null) {
-                for (Shout item : data) {
-                    add(item);
-                }
-            }
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            // A ViewHolder keeps references to children views to avoid
-            // unneccessary calls to findViewById() on each row.
-            ViewHolder holder;
-
-            if (convertView == null) {
-                convertView = mInflater.inflate(R.layout.shout, null);
-
-                holder = new ViewHolder();
-                holder.name = (TextView) convertView.findViewById(R.id.name);
-                holder.shout = (TextView) convertView.findViewById(R.id.shout);
-                holder.timestamp = (TextView) convertView.findViewById(R.id.timestamp);
-                holder.avatar = (ImageView) convertView.findViewById(R.id.avatar);
-
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-
-            // Bind the data efficiently with the holder.
-            final Shout shout = getItem(position);
-
-            holder.name.setText(shout.user.username);
-            mImageDownloader.download(shout.user.avatar, holder.avatar, false);
-
-            if (shout.spoiler) {
-                holder.shout.setText(R.string.isspoiler);
-            } else {
-                holder.shout.setText(shout.shout);
-            }
-
-            String timestamp = (String) DateUtils.getRelativeTimeSpanString(
-                    shout.inserted.getTimeInMillis(), System.currentTimeMillis(),
-                    DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL);
-            holder.timestamp.setText(timestamp);
-
-            return convertView;
-        }
-
-        static class ViewHolder {
-            TextView name;
-
-            TextView shout;
-
-            TextView timestamp;
-
-            ImageView avatar;
-        }
-    }
-
     @Override
-    public void onTraktActionComplete(boolean wasSuccessfull) {
+    public void onTraktActionComplete(Bundle traktTaskArgs, boolean wasSuccessfull) {
         if (getView() != null) {
 
             EditText shoutText = (EditText) getView().findViewById(R.id.shouttext);
@@ -633,5 +461,10 @@ public class TraktShoutsFragment extends SherlockFragment implements
                 }
             }
         }
+    }
+
+    @Override
+    public void onCheckinBlocked(Bundle traktTaskArgs, int wait) {
+        // not relevant for us
     }
 }

@@ -40,7 +40,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.loaders.GenericListLoader;
+import com.battlelancer.seriesguide.loaders.GenericSimpleLoader;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
@@ -162,7 +162,7 @@ public class TraktFriendsFragment extends ListFragment implements
                     .findFragmentById(R.id.fragment_details);
             if (detailsFragment == null || detailsFragment.getEpisodeId() != episodeId) {
                 // Make new fragment to show this selection.
-                detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true);
+                detailsFragment = EpisodeDetailsFragment.newInstance(episodeId, true, true);
 
                 // Execute a transaction, replacing any existing
                 // fragment with this one inside the frame.
@@ -181,7 +181,7 @@ public class TraktFriendsFragment extends ListFragment implements
         }
     }
 
-    private static class TraktFriendsLoader extends GenericListLoader<UserProfile> {
+    private static class TraktFriendsLoader extends GenericSimpleLoader<List<UserProfile>> {
 
         public TraktFriendsLoader(Context context) {
             super(context);

@@ -478,7 +478,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static void setListPreferenceSummary(ListPreference listPref) {
         // Set summary to be the user-description for the selected value
-        listPref.setSummary(listPref.getEntry());
+        listPref.setSummary(listPref.getEntry().toString().replaceAll("%", "%%"));
     }
 
     @TargetApi(11)

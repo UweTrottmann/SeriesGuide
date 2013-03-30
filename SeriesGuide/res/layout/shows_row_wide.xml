@@ -14,15 +14,24 @@
         android:scaleType="centerCrop"
         android:src="@drawable/show_generic" />
 
+    <ImageView
+        android:id="@+id/favoritedLabel"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/inline_padding"
+        android:background="?attr/custom_list_selector"
+        android:contentDescription="@string/favorited"
+        android:src="?attr/drawableStar" />
+
     <TextView
         android:id="@+id/seriesname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/timestamp"
+        android:layout_toLeftOf="@id/favoritedLabel"
         android:layout_toRightOf="@id/showposter"
-        android:paddingTop="@dimen/inline_padding"
         android:text="@string/app_name"
-        android:textAppearance="?attr/textAppearanceSgXLargeLight" />
+        android:textAppearance="@style/TextAppearance.Large.Light" />
 
     <TextView
         android:id="@+id/textViewShowsTimeAndNetwork"
@@ -32,7 +41,7 @@
         android:layout_toRightOf="@id/showposter"
         android:paddingBottom="@dimen/default_padding"
         android:text="@string/norating"
-        android:textAppearance="?attr/textAppearanceSgSmallDim" />
+        android:textAppearance="@style/TextAppearance.Small.Dim" />
 
     <TextView
         android:id="@+id/TextViewShowListNextEpisode"
@@ -41,7 +50,7 @@
         android:layout_below="@id/textViewShowsTimeAndNetwork"
         android:layout_toRightOf="@id/showposter"
         android:text="@string/no_nextepisode"
-        android:textAppearance="?attr/textAppearanceSgMediumDim" />
+        android:textAppearance="@style/TextAppearance" />
 
     <TextView
         android:id="@+id/episodetime"
@@ -51,23 +60,6 @@
         android:layout_toRightOf="@id/showposter"
         android:paddingBottom="@dimen/item_padding"
         android:text="@string/show_noairtime"
-        android:textAppearance="?attr/textAppearanceSgSmall" />
-
-    <LinearLayout
-        android:id="@+id/timestamp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:paddingRight="@dimen/inline_padding"
-        android:paddingTop="@dimen/default_padding" >
-
-        <ImageView
-            android:id="@+id/favoritedLabel"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
-            android:contentDescription="@string/favorited"
-            android:src="?attr/drawableStar"
-            android:visibility="gone" />
-    </LinearLayout>
+        android:textAppearance="@style/TextAppearance.Small" />
 
 </RelativeLayout>

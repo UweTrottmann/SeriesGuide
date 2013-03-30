@@ -17,6 +17,8 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -31,10 +33,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 
+import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.enums.TraktStatus;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
 import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
+import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
@@ -45,15 +50,17 @@ import com.uwetrottmann.seriesguide.R;
 
 /**
  * Warns about an ongoing check-in, how long it takes until it is finished.
- * Offers to override or wait out.
+ * Offers to override or wait out. Launching activities must implement
+ * {@link OnTraktActionCompleteListener}.
  */
 public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
+    private OnTraktActionCompleteListener mListener;
     private int mWait;
 
-    public static TraktCancelCheckinDialogFragment newInstance(Bundle traktData, int wait) {
+    public static TraktCancelCheckinDialogFragment newInstance(Bundle traktTaskData, int wait) {
         TraktCancelCheckinDialogFragment f = new TraktCancelCheckinDialogFragment();
-        f.setArguments(traktData);
+        f.setArguments(traktTaskData);
         f.mWait = wait;
         return f;
     }
@@ -69,6 +76,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
         final Context context = getActivity().getApplicationContext();
         final FragmentManager fm = getFragmentManager();
         final Bundle args = getArguments();
+        final boolean isEpisodeNotMovie = args.getInt(InitBundle.TRAKTACTION) == TraktAction.CHECKIN_EPISODE.index;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -77,8 +85,10 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
         builder.setPositiveButton(R.string.traktcheckin_cancel, new OnClickListener() {
 
+            @SuppressLint("CommitTransaction")
             public void onClick(DialogInterface dialog, int which) {
                 FragmentTransaction ft = fm.beginTransaction();
+                // ft is commited with .show()
                 Fragment prev = fm.findFragmentByTag("progress-dialog");
                 if (prev != null) {
                     ft.remove(prev);
@@ -103,7 +113,11 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
                         Response response;
                         try {
-                            response = manager.showService().cancelCheckin().fire();
+                            if (isEpisodeNotMovie) {
+                                response = manager.showService().cancelCheckin().fire();
+                            } else {
+                                response = manager.movieService().cancelCheckin().fire();
+                            }
                         } catch (TraktException te) {
                             Response r = new Response();
                             r.status = TraktStatus.FAILURE;
@@ -127,7 +141,7 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
 
                             // relaunch the trakt task which called us to
                             // try the check in again
-                            AndroidUtils.executeAsyncTask(new TraktTask(context, fm, args, null),
+                            AndroidUtils.executeAsyncTask(new TraktTask(context, args, mListener),
                                     new Void[] {
                                         null
                                     });
@@ -143,8 +157,26 @@ public class TraktCancelCheckinDialogFragment extends DialogFragment {
                 cancelCheckinTask.execute();
             }
         });
-        builder.setNegativeButton(R.string.traktcheckin_wait, null);
+        builder.setNegativeButton(R.string.traktcheckin_wait, new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // we did not override, but that is what the user wanted
+                mListener.onTraktActionComplete(args, true);
+            }
+        });
 
         return builder.create();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            mListener = (OnTraktActionCompleteListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnTraktActionCompleteListener");
+        }
     }
 }

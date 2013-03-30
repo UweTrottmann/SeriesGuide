@@ -222,7 +222,7 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
                         .findViewById(R.id.TextViewShowListNextEpisode);
                 viewHolder.episodeTime = (TextView) convertView.findViewById(R.id.episodetime);
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.showposter);
-                viewHolder.favorited = convertView.findViewById(R.id.favoritedLabel);
+                viewHolder.favorited = (ImageView) convertView.findViewById(R.id.favoritedLabel);
 
                 convertView.setTag(viewHolder);
             } else {

@@ -3,7 +3,8 @@
 
     <!-- Generic -->
     <string name="episode">Episode</string>
-    <string name="episodes">All episodes</string>
+    <string name="episodes">Episodes</string>
+    <string name="all_episodes">All episodes</string>
     <string name="season">Season</string>
     <string name="seasons">Seasons</string>
     <string name="unknown">unknown</string>
@@ -30,7 +31,11 @@
     <string name="save_selection">Save selection</string>
 
     <plurals name="votes">
+        <item quantity="zero">%d votes</item>
         <item quantity="one">%d vote</item>
+        <item quantity="two">%d votes</item>
+        <item quantity="few">%d votes</item>
+        <item quantity="many">%d votes</item>
         <item quantity="other">%d votes</item>
     </plurals>
 
@@ -42,6 +47,7 @@
     <string name="lists">Lists</string>
     <string name="activity">Activity</string>
     <string name="movies">Movies</string>
+    <string name="statistics">Statistics</string>
     <string name="search">Search</string>
     <string name="add_show">Add Show</string>
     <string name="preferences">Settings</string>
@@ -49,6 +55,7 @@
 
     <!-- Shouts -->
     <string name="shouts">Shouts</string>
+    <string name="comments">Comments</string>
     <string name="shout_hint">Type a shout (in English)</string>
     <string name="shout">Shout!</string>
     <string name="isspoiler">Spoiler alert!</string>
@@ -59,6 +66,38 @@
     <!-- Movies -->
     <string name="movies_search_hint">Type a movie title</string>
     <string name="movies_empty">Search for a movie above.</string>
+    <string name="trailer">Trailer</string>
+
+    <!-- Statistics -->
+    <string name="shows_with_next">%s with next episodes</string>
+    <string name="shows_continuing">%s continuing</string>
+    <string name="episodes_watched">%s watched</string>
+    <string name="runtime_all_episodes">Runtime of all watched episodes</string>
+
+    <plurals name="days_plural">
+        <item quantity="one">%d day</item>
+        <item quantity="zero">%d days</item>
+        <item quantity="two">%d days</item>
+        <item quantity="few">%d days</item>
+        <item quantity="many">%d days</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <plurals name="hours_plural">
+        <item quantity="zero">%d hours</item>
+        <item quantity="one">%d hour</item>
+        <item quantity="two">%d hours</item>
+        <item quantity="few">%d hours</item>
+        <item quantity="many">%d hours</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="minutes_plural">
+        <item quantity="zero">%d minutes</item>
+        <item quantity="one">%d minute</item>
+        <item quantity="two">%d minutes</item>
+        <item quantity="few">%d minutes</item>
+        <item quantity="many">%d minutes</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
 
     <!-- Trakt ratings -->
     <string name="love">Totally ninja!</string>
@@ -109,6 +148,8 @@
     <string name="mark_untilhere">Watched all previously aired</string>
     <string name="collect">Collected episode</string>
     <string name="uncollect">Not yet collected episode</string>
+    <string name="collect_all">Collected all</string>
+    <string name="uncollect_all">Collected none</string>
     <string name="trakt_submitfailed">Not submitted to trakt. Try again later.</string>
     <string name="trakt_submitsuccess">Submitted to trakt.</string>
     <string name="trakt_seen">%s seen.</string>
@@ -152,7 +193,7 @@
     <string name="update_full">Updating all shows…</string>
     <string name="update_success">Shows updated.</string>
     <string name="update_offline">Updating failed, check your internet/Wi-Fi connection.</string>
-    <string name="update_saxerror">Updating failed, try again later.</string>
+    <string name="update_saxerror">Updating failed, trying again later.</string>
     <string name="update_inprogress">An update is in progress, try again later.</string>
     <string name="update_rebuildsearch">Refreshing episode search…</string>
     <string name="update_traktactivity">Loading trakt activity…</string>
@@ -238,14 +279,7 @@
     <string name="pref_onlyseasonepssummary">Special episodes disappear from everywhere except season list</string>
     <string name="pref_seasonsorting">Sort seasons by…</string>
     <string name="pref_episodesorting">Sort episodes by…</string>
-    <string name="backup">Backup/Restore</string>
-    <string name="backup_summary">Backup or restore your shows</string>
     <string name="pref_language">Content language</string>
-    <string name="pref_number">Number format</string>
-    <string name="pref_offset">Manual time offset</string>
-    <string name="pref_offsetsummary">Offset air times by %s hours</string>
-    <string name="pref_autoupdate">Turn on Auto Update</string>
-    <string name="pref_autoupdatesummary">Periodically update your shows when starting SeriesGuide</string>
     <string name="pref_updatewifionly">Update over Wi-Fi only</string>
     <string name="about">About SeriesGuide</string>
     <string name="pref_credits">Credits</string>
@@ -254,14 +288,7 @@
     <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
     <string name="pref_traktsync">Manual sync with trakt.tv</string>
     <string name="feedback">Send feedback</string>
-    <string name="clear_cache">Clear image caches</string>
-    <string name="clear_cache_summary">Remove all cached images from your device</string>
-    <string name="pref_hideimages">Hide images</string>
-    <string name="pref_hideimagessummary">Hide images from your photo gallery (reboot required)</string>
-    <string name="pref_ganalytics">Google Analytics</string>
-    <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
     <string name="sendusagedata">Send the developer usage statistics</string>
-    <string name="pref_upcominglimit">Upcoming shows within…</string>
     <string name="pref_autoaddshows">Add new trakt shows</string>
     <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
 
@@ -293,6 +320,27 @@
         <item>a month</item>
     </string-array>
 
+    <!-- Appearance settings -->
+    <string name="pref_appearance">Appearance</string>
+    <string name="pref_theme">App Theme</string>
+
+    <!-- Other advanced settings -->
+    <string name="pref_other">Other</string>
+    <string name="pref_autoupdate">Turn on Auto Update</string>
+    <string name="pref_autoupdatesummary">Periodically update your shows when starting SeriesGuide</string>
+    <string name="backup">Backup/Restore</string>
+    <string name="backup_summary">Backup or restore your shows</string>
+    <string name="pref_upcominglimit">Upcoming shows within…</string>
+    <string name="pref_number">Number format</string>
+    <string name="pref_offset">Manual time offset</string>
+    <string name="pref_offsetsummary">Offset air times by %s hours</string>
+    <string name="clear_cache">Clear image caches</string>
+    <string name="clear_cache_summary">Remove all cached images from your device</string>
+    <string name="pref_ganalytics">Google Analytics</string>
+    <string name="pref_ganalyticssummary">Tracks the usage of features to help improve SeriesGuide</string>
+    <string name="pref_hideimages">Hide images</string>
+    <string name="pref_hideimagessummary">Hide images from your photo gallery (reboot required)</string>
+
     <!-- Backup and Restore -->
     <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
     <string name="backup_path"><b>Backup folder</b></string>
@@ -319,6 +367,7 @@
 
     <!-- Check Ins -->
     <string name="checkin">Check in</string>
+    <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
     <string name="checkin_searchhint">Type a show name</string>
     <string name="checkin_empty">No matching shows</string>
     <string name="checkin_hint">Type a message (optional)</string>
@@ -390,21 +439,44 @@
         <item>one hour in advance</item>
     </string-array>
 
-    <!-- Theme switching -->
-    <string name="pref_theme">App Theme</string>
-
-    <!-- Widgets -->
-    <string name="choose_list">Choose activity list</string>
-    <string name="hide_watched">Hide watched episodes</string>
-    <string name="add_widget">Add widget</string>
-    <string name="widget_label">SeriesGuide</string>
+    <!-- Legacy Widgets -->
     <string name="smallwidget">SeriesGuide (small)</string>
     <string name="bigwidget">SeriesGuide (middle)</string>
     <string name="largewidget">SeriesGuide (large)</string>
 
+    <!-- List Widget -->
+    <string name="widget_label">SeriesGuide</string>
+    <string name="hide_watched">Hide watched episodes</string>
+    <string name="pref_widget_opacity">Widget background</string>
+
+    <string-array name="widgetOpacity">
+        <item>Transparent</item>
+        <item>25% black</item>
+        <item>50% black</item>
+        <item>75% black</item>
+        <item>Black</item>
+    </string-array>
+
+    <string name="pref_widget_type">Widget type</string>
+
+    <string-array name="widgetType">
+        <item>Upcoming</item>
+        <item>Recent</item>
+    </string-array>
+
     <!-- DashClock extension -->
     <string name="dashclock_extension_label">Upcoming episode</string>
     <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
+    <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
+
+    <string-array name="dashclockUpcomingThresholds">
+        <item>hour</item>
+        <item>6 hours</item>
+        <item>12 hours</item>
+        <item>24 hours</item>
+        <item>3 days</item>
+        <item>week</item>
+    </string-array>
 
     <!-- strings for BETA release -->
     <string name="download_stable">Download SeriesGuide</string>

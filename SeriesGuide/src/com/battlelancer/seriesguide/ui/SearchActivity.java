@@ -17,15 +17,20 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.annotation.TargetApi;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.widget.SearchView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -70,7 +75,6 @@ public class SearchActivity extends BaseTopActivity {
             return;
         }
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            EasyTracker.getTracker().sendEvent(TAG, "Search action", "Search", (long) 0);
             String query = intent.getStringExtra(SearchManager.QUERY);
             getSupportActionBar().setSubtitle("\"" + query + "\"");
 
@@ -85,18 +89,32 @@ public class SearchActivity extends BaseTopActivity {
             } else {
                 searchFragment.onPerformSearch(getIntent().getExtras());
             }
+            EasyTracker.getTracker().sendEvent(TAG, "Search action", "Search", (long) 0);
         } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-            EasyTracker.getTracker().sendEvent(TAG, "Search action", "View", (long) 0);
             Uri data = intent.getData();
             String id = data.getLastPathSegment();
             onShowEpisodeDetails(id);
+            EasyTracker.getTracker().sendEvent(TAG, "Search action", "View", (long) 0);
             finish();
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportMenuInflater().inflate(R.menu.search_menu, menu);
+
+        if (AndroidUtils.isHoneycombOrHigher()) {
+            SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+            SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            searchView.setIconifiedByDefault(false);
+
+            // set incoming query
+            String query = getIntent().getStringExtra(SearchManager.QUERY);
+            searchView.setQuery(query, false);
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 

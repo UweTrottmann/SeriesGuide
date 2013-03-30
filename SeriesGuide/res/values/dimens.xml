@@ -10,8 +10,9 @@
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_xmedium">16sp</dimen>
     <dimen name="text_size_medium">18sp</dimen>
-    <dimen name="text_size_large">20sp</dimen>
-    <dimen name="text_size_xlarge">22sp</dimen>
+    <dimen name="text_size_large">22sp</dimen>
+    <dimen name="text_size_ultralarge">32sp</dimen>
+    <dimen name="text_size_hyperlarge">72sp</dimen>
     <dimen name="widget_item_width">28dp</dimen>
     <dimen name="widget_margin">5dp</dimen>
     <dimen name="widget_paddingTop">8dp</dimen>
@@ -27,6 +28,7 @@
     <dimen name="showgrid_spacing">0dp</dimen>
     <dimen name="imagecontainer_height">180dp</dimen>
     <dimen name="slidingmenu_width">240dp</dimen>
+    <dimen name="movie_item_height">282dp</dimen>
 
     <integer name="animation_duration">400</integer>
 

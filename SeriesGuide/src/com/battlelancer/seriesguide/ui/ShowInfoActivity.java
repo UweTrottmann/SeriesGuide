@@ -47,6 +47,7 @@ import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -111,9 +112,7 @@ public class ShowInfoActivity extends BaseActivity {
             overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
             return true;
         } else if (itemId == R.id.menu_rate_trakt) {
-            TraktRateDialogFragment newFragment = TraktRateDialogFragment
-                    .newInstance(getShowId());
-            newFragment.show(getSupportFragmentManager(), "traktratedialog");
+            onRateOnTrakt();
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
             ListsDialogFragment.showListsDialog(String.valueOf(getShowId()), 1,
@@ -121,6 +120,12 @@ public class ShowInfoActivity extends BaseActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void onRateOnTrakt() {
+        TraktRateDialogFragment newFragment = TraktRateDialogFragment
+                .newInstance(getShowId());
+        newFragment.show(getSupportFragmentManager(), "traktratedialog");
     }
 
     @Override
@@ -207,6 +212,15 @@ public class ShowInfoActivity extends BaseActivity {
             TextView rating = (TextView) findViewById(R.id.value);
             rating.setText(ratingText + "/10");
         }
+        View ratings = findViewById(R.id.ratingbar);
+        ratings.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRateOnTrakt();
+            }
+        });
+        ratings.setFocusable(true);
+        CheatSheet.setup(ratings, R.string.menu_rate_trakt);
 
         // Last edit date
         TextView lastEdit = (TextView) findViewById(R.id.lastEdit);
@@ -251,8 +265,7 @@ public class ShowInfoActivity extends BaseActivity {
             public void onClick(View v) {
                 fireTrackerEvent("Shouts");
                 Intent i = new Intent(ShowInfoActivity.this, TraktShoutsActivity.class);
-                i.putExtras(TraktShoutsActivity.createInitBundle(getShowId(),
-                        0, 0, show.getTitle()));
+                i.putExtras(TraktShoutsActivity.createInitBundleShow(show.getTitle(), getShowId()));
                 startActivity(i);
             }
         });

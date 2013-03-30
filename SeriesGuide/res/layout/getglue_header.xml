@@ -13,7 +13,7 @@
         android:paddingLeft="@dimen/default_padding"
         android:paddingRight="@dimen/default_padding"
         android:text="@string/select_show"
-        android:textAppearance="?attr/textAppearanceSgXLargeLight" />
+        android:textAppearance="@style/TextAppearance.Large.Light" />
 
     <TextView
         android:id="@+id/textViewSelectedShowHeader"

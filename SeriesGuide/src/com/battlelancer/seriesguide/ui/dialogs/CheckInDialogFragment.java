@@ -33,10 +33,15 @@ import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
 import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
+/**
+ * Allows to check into an episode on trakt, into a show on GetGlue. Launching
+ * activities must implement {@link OnTraktActionCompleteListener}.
+ */
 public class CheckInDialogFragment extends GenericCheckInDialogFragment {
 
     public static CheckInDialogFragment newInstance(String imdbid, int tvdbid, int season,
@@ -66,7 +71,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
 
         return layout;
     }
-    
+
     @Override
     public void onStart() {
         super.onStart();
@@ -124,11 +129,12 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
         final int season = getArguments().getInt(InitBundle.SEASON);
         final int episode = getArguments().getInt(InitBundle.EPISODE);
 
-        AndroidUtils.executeAsyncTask(new TraktTask(getActivity(),
-                getFragmentManager(), null).checkInEpisode(tvdbid, season, episode,
-                message), new Void[] {
-                null
-        });
+        AndroidUtils.executeAsyncTask(
+                new TraktTask(getActivity(), mListener)
+                        .checkInEpisode(tvdbid, season, episode, message),
+                new Void[] {
+                    null
+                });
     }
 
     @Override

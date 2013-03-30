@@ -27,6 +27,7 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.FlagTapedTask.Flag;
 import com.jakewharton.trakt.ServiceManager;
@@ -63,7 +64,11 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
         SEASON_WATCHED,
 
-        SHOW_WATCHED;
+        SEASON_COLLECTED,
+
+        SHOW_WATCHED,
+
+        SHOW_COLLECTED;
     }
 
     private Context mContext;
@@ -142,8 +147,20 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         return this;
     }
 
+    public FlagTask seasonCollected(int seasonNumber) {
+        mSeason = seasonNumber;
+        mEpisode = -1;
+        mAction = FlagAction.SEASON_COLLECTED;
+        return this;
+    }
+
     public FlagTask showWatched() {
         mAction = FlagAction.SHOW_WATCHED;
+        return this;
+    }
+
+    public FlagTask showCollected() {
+        mAction = FlagAction.SHOW_COLLECTED;
         return this;
     }
 
@@ -175,24 +192,26 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                     episodes.add(new Flag(mSeason, mEpisode));
                     break;
                 case SEASON_WATCHED:
+                case SEASON_COLLECTED:
                     // flag a whole season
                     if (mIsFlag) {
                         episodes.add(new Flag(mSeason, -1));
                     } else {
                         // only for removing flags we need single episodes
-                        insertEpisodeFlags(episodes);
+                        addEpisodeFlags(episodes);
                     }
                     break;
                 case SHOW_WATCHED:
+                case SHOW_COLLECTED:
                     // flag a whole show
                     if (!mIsFlag) {
                         // only for removing flags we need single episodes
-                        insertEpisodeFlags(episodes);
+                        addEpisodeFlags(episodes);
                     }
                     break;
                 case EPISODE_WATCHED_PREVIOUS:
                     // flag episodes up to one episode
-                    insertEpisodeFlags(episodes);
+                    addEpisodeFlags(episodes);
                     break;
             }
 
@@ -208,15 +227,17 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
         return SUCCESS;
     }
 
-    private void insertEpisodeFlags(List<Flag> episodes) {
+    private void addEpisodeFlags(List<Flag> episodes) {
         // determine uri
         Uri uri;
         String selection = null;
         switch (mAction) {
             case SEASON_WATCHED:
+            case SEASON_COLLECTED:
                 uri = Episodes.buildEpisodesOfSeasonUri(String.valueOf(mItemId));
                 break;
             case SHOW_WATCHED:
+            case SHOW_COLLECTED:
                 uri = Episodes.buildEpisodesOfShowUri(String.valueOf(mShowId));
                 break;
             case EPISODE_WATCHED_PREVIOUS:
@@ -357,6 +378,8 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                 column = Episodes.WATCHED;
                 break;
             case EPISODE_COLLECTED:
+            case SEASON_COLLECTED:
+            case SHOW_COLLECTED:
                 column = Episodes.COLLECTED;
                 break;
             default:
@@ -371,10 +394,12 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                 uri = Episodes.buildEpisodeUri(String.valueOf(itemId));
                 break;
             case SEASON_WATCHED:
+            case SEASON_COLLECTED:
                 uri = Episodes.buildEpisodesOfSeasonUri(String.valueOf(itemId));
                 break;
             case EPISODE_WATCHED_PREVIOUS:
             case SHOW_WATCHED:
+            case SHOW_COLLECTED:
                 uri = Episodes.buildEpisodesOfShowUri(String.valueOf(mShowId));
                 break;
             default:
@@ -400,6 +425,11 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
         // notify the content provider for udpates
         mContext.getContentResolver().notifyChange(Episodes.CONTENT_URI, null);
+        // notify the list uri only if watched flags changed
+        if (mAction == FlagAction.EPISODE_WATCHED || mAction == FlagAction.SEASON_WATCHED
+                || mAction == FlagAction.SHOW_WATCHED) {
+            mContext.getContentResolver().notifyChange(ListItems.CONTENT_WITH_DETAILS_URI, null);
+        }
     }
 
     @Override
@@ -417,6 +447,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                     }
                     break;
                 case EPISODE_COLLECTED:
+                case SEASON_COLLECTED:
                     if (mIsFlag) {
                         message = R.string.trakt_collected;
                     } else {
@@ -443,7 +474,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                 }
             }
 
-            if (mAction == FlagAction.SHOW_WATCHED
+            if (mAction == FlagAction.SHOW_WATCHED || mAction == FlagAction.SHOW_COLLECTED
                     || mAction == FlagAction.EPISODE_WATCHED_PREVIOUS) {
                 // simple ack
                 Toast.makeText(mContext,

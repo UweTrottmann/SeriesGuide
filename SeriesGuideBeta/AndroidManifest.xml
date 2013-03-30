@@ -1,11 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.battlelancer.seriesguide.beta"
     android:installLocation="auto"
-    android:versionCode="201"
-    android:versionName="4beta1" >
+    android:versionCode="205"
+    android:versionName="5beta1" >
 
     <uses-sdk
-        android:minSdkVersion="7"
+        android:minSdkVersion="8"
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -154,7 +154,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure" >
+        <activity
+            android:name="com.battlelancer.seriesguide.appwidget.ListWidgetConfigure"
+            android:taskAffinity="com.battlelancer.seriesguide.beta.widgetconfiguration" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -185,6 +187,12 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
+        </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.StatsActivity" >
+        </activity>
+        <activity
+            android:name="com.battlelancer.seriesguide.ui.QuickCheckInActivity"
+            android:exported="true" >
         </activity>
 
         <!-- Services -->
@@ -289,7 +297,15 @@
             <meta-data
                 android:name="description"
                 android:value="@string/dashclock_extension_description" />
+            <meta-data
+                android:name="settingsActivity"
+                android:value="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity" />
         </service>
+
+        <activity
+            android:name="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity"
+            android:exported="true" >
+        </activity>
     </application>
 
 </manifest>

@@ -12,39 +12,7 @@
         android:layout_toLeftOf="@+id/textViewSeasonProgress"
         android:paddingTop="@dimen/default_padding"
         android:text="@string/season"
-        android:textAppearance="?attr/textAppearanceSgMediumLight" />
-
-    <TextView
-        android:id="@+id/textViewSeasonProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/default_padding"
-        android:layout_toLeftOf="@+id/imageViewContextMenu"
-        android:paddingTop="@dimen/default_padding"
-        android:text="@string/norating"
-        android:textAppearance="?attr/textAppearanceSgMediumLightDim" >
-    </TextView>
-
-    <ProgressBar
-        android:id="@+id/progressBarSeason"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewSeasonTitle"
-        android:layout_toLeftOf="@+id/imageViewContextMenu"
-        android:progressDrawable="@drawable/progress_horizontal_holo_dark" >
-    </ProgressBar>
-
-    <TextView
-        android:id="@+id/textViewSeasonWatchCount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/progressBarSeason"
-        android:layout_toLeftOf="@+id/imageViewContextMenu"
-        android:paddingBottom="@dimen/default_padding"
-        android:text="@string/episode_notwatched"
-        android:textAllCaps="true"
-        android:textAppearance="?attr/textAppearanceSgXSmall" />
+        android:textAppearance="@style/TextAppearance.Medium.Light" />
 
     <ImageView
         android:id="@+id/imageViewContextMenu"
@@ -56,5 +24,37 @@
         android:background="?attr/custom_list_selector"
         android:scaleType="fitXY"
         android:src="?attr/drawableDropdown" />
+
+    <TextView
+        android:id="@+id/textViewSeasonProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_toLeftOf="@id/imageViewContextMenu"
+        android:paddingTop="@dimen/default_padding"
+        android:text="@string/norating"
+        android:textAppearance="@style/TextAppearance.Medium.Light.Dim" >
+    </TextView>
+
+    <ProgressBar
+        android:id="@+id/progressBarSeason"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewSeasonTitle"
+        android:layout_toLeftOf="@id/imageViewContextMenu"
+        android:progressDrawable="@drawable/progress_horizontal_holo_dark" >
+    </ProgressBar>
+
+    <TextView
+        android:id="@+id/textViewSeasonWatchCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/progressBarSeason"
+        android:layout_toLeftOf="@id/imageViewContextMenu"
+        android:paddingBottom="@dimen/default_padding"
+        android:text="@string/episode_notwatched"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.XSmall" />
 
 </RelativeLayout>

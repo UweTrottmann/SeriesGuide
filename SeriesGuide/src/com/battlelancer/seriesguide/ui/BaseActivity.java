@@ -28,20 +28,28 @@ import android.support.v4.app.NavUtils;
 import android.text.format.DateUtils;
 import android.view.KeyEvent;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
+import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
-import com.slidingmenu.lib.SlidingMenu;
-import com.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.uwetrottmann.seriesguide.R;
+
+import net.simonvt.menudrawer.MenuDrawer;
 
 /**
  * Provides some common functionality across all activities like setting the
  * theme and navigation shortcuts.
  */
-public abstract class BaseActivity extends SlidingFragmentActivity {
+public abstract class BaseActivity extends SherlockFragmentActivity implements
+        OnTraktActionCompleteListener {
+
+    private MenuDrawer mMenuDrawer;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -49,15 +57,20 @@ public abstract class BaseActivity extends SlidingFragmentActivity {
         setTheme(SeriesGuidePreferences.THEME);
         super.onCreate(arg0);
 
-        setBehindContentView(R.layout.menu_frame);
+        mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);
+        mMenuDrawer.setMenuView(R.layout.menu_frame);
+        mMenuDrawer.setTouchMode(MenuDrawer.TOUCH_MODE_FULLSCREEN);
+        // setting size in pixels, oh come on...
+        int menuSize = (int) getResources().getDimension(R.dimen.slidingmenu_width);
+        mMenuDrawer.setMenuSize(menuSize);
+
+        // hack to reduce overdraw caused by menu drawer by one layer
+        getWindow().getDecorView().setBackgroundDrawable(null);
+
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment f = new SlidingMenuFragment();
         ft.replace(R.id.menu_frame, f);
         ft.commit();
-
-        SlidingMenu sm = getSlidingMenu();
-        sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        sm.setBehindWidthRes(R.dimen.slidingmenu_width);
     }
 
     @Override
@@ -71,6 +84,13 @@ public abstract class BaseActivity extends SlidingFragmentActivity {
 
     @Override
     public void onBackPressed() {
+        // close an open menu first
+        final int drawerState = mMenuDrawer.getDrawerState();
+        if (drawerState == MenuDrawer.STATE_OPEN || drawerState == MenuDrawer.STATE_OPENING) {
+            mMenuDrawer.closeMenu();
+            return;
+        }
+
         super.onBackPressed();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
@@ -98,6 +118,42 @@ public abstract class BaseActivity extends SlidingFragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    protected MenuDrawer getMenu() {
+        return mMenuDrawer;
+    }
+
+    protected void toggleMenu() {
+        mMenuDrawer.toggleMenu();
+    }
+
+    @Override
+    public void onTraktActionComplete(Bundle traktTaskArgs, boolean wasSuccessfull) {
+        dismissProgressDialog(traktTaskArgs);
+    }
+
+    @Override
+    public void onCheckinBlocked(Bundle traktTaskArgs, int wait) {
+        dismissProgressDialog(traktTaskArgs);
+        TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment
+                .newInstance(traktTaskArgs, wait);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        newFragment.show(ft, "cancel-checkin-dialog");
+    }
+
+    private void dismissProgressDialog(Bundle traktTaskArgs) {
+        TraktAction action = TraktAction.values()[traktTaskArgs.getInt(InitBundle.TRAKTACTION)];
+        // dismiss a potential progress dialog
+        if (action == TraktAction.CHECKIN_EPISODE || action ==
+                TraktAction.CHECKIN_MOVIE) {
+            Fragment prev = getSupportFragmentManager().findFragmentByTag("progress-dialog");
+            if (prev != null) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.remove(prev);
+                ft.commit();
+            }
+        }
+    }
+
     /**
      * Periodically do an automatic backup of the show database.
      */
@@ -106,7 +162,11 @@ public abstract class BaseActivity extends SlidingFragmentActivity {
         long now = System.currentTimeMillis();
         // use now as default value, so a re-install won't overwrite the old
         // auto-backup right away
-        final long previousBackupTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTBACKUP, now);
+        long previousBackupTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTBACKUP, 0);
+        if (previousBackupTime == 0) {
+            previousBackupTime = now;
+            prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTBACKUP, now).commit();
+        }
         final boolean isTime = (now - previousBackupTime) > 7 * DateUtils.DAY_IN_MILLIS;
 
         if (isTime) {
@@ -134,8 +194,16 @@ public abstract class BaseActivity extends SlidingFragmentActivity {
             if (isAutoUpdateEnabled) {
                 // only update if at least 15mins have passed since last one
                 long now = System.currentTimeMillis();
-                final long previousUpdateTime = prefs.getLong(
+                long previousUpdateTime = prefs.getLong(
                         SeriesGuidePreferences.KEY_LASTUPDATE, 0);
+                // set the last update time to now if we don't have one yet,
+                // avoids auto-update at first launch
+                if (previousUpdateTime == 0) {
+                    previousUpdateTime = now;
+                    prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTUPDATE, now)
+                            .commit();
+                }
+
                 final boolean isTime = (now - previousUpdateTime) > 15 * DateUtils.MINUTE_IN_MILLIS;
 
                 if (isTime) {

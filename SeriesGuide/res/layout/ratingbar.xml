@@ -5,30 +5,22 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="@dimen/default_padding"
     android:layout_marginLeft="@dimen/default_padding"
-    android:layout_marginRight="@dimen/default_padding" >
-
-    <TextView
-        android:id="@+id/tvdblabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="@dimen/inline_padding"
-        android:text="@string/tvdb"
-        android:textSize="@dimen/text_size_xmedium" />
+    android:layout_marginRight="@dimen/default_padding"
+    android:background="?attr/custom_list_selector" >
 
     <RatingBar
         android:id="@+id/bar"
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/tvdblabel"
+        android:layout_marginTop="2dp"
         android:isIndicator="true"
         android:numStars="10"
         android:rating="0"
         android:stepSize="0.1"
-        android:textSize="@dimen/text_size_xmedium" >
+        android:textAppearance="@style/TextAppearance" >
     </RatingBar>
 
     <TextView
@@ -38,23 +30,32 @@
         android:layout_marginLeft="@dimen/inline_padding"
         android:layout_toRightOf="@id/bar"
         android:text="@string/norating"
-        android:textSize="@dimen/text_size_xmedium" />
+        android:textAppearance="@style/TextAppearance" />
+
+    <TextView
+        android:id="@+id/tvdblabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/inline_padding"
+        android:layout_toRightOf="@id/value"
+        android:text="@string/tvdb"
+        android:textAppearance="@style/TextAppearance.Dim" />
 
     <LinearLayout
         android:id="@+id/traktrating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bar"
+        android:layout_below="@id/bar"
         android:layout_marginTop="@dimen/default_padding" >
 
-        <TextView
-            android:id="@+id/traktlabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/traktlove"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/inline_padding"
-            android:text="@string/trakt"
-            android:textSize="@dimen/text_size_xmedium" />
+            android:contentDescription="@string/love"
+            android:src="@drawable/trakt_love_large" />
 
         <TextView
             android:id="@+id/traktvalue"
@@ -62,16 +63,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/inline_padding"
-            android:paddingBottom="2dp"
             android:text="@string/notraktrating"
-            android:textSize="@dimen/text_size_xlarge" />
-
-        <ImageView
-            android:id="@+id/traktlove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/trakt_love_large" />
+            android:textAppearance="@style/TextAppearance" />
 
         <TextView
             android:id="@+id/traktvotes"
@@ -79,7 +72,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/inline_padding"
-            android:textSize="@dimen/text_size_xmedium" />
+            android:textAppearance="@style/TextAppearance" />
+
+        <TextView
+            android:id="@+id/traktlabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/inline_padding"
+            android:text="@string/trakt"
+            android:textAppearance="@style/TextAppearance.Dim" />
     </LinearLayout>
 
 </RelativeLayout>

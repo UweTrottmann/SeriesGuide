@@ -48,6 +48,7 @@ public class SlidingMenuFragment extends ListFragment {
     private static final int MENU_ITEM_ACTIVITY_ID = 3;
     private static final int MENU_ITEM_SEARCH_ID = 4;
     private static final int MENU_ITEM_MOVIES_ID = 5;
+    private static final int MENU_ITEM_STATS_ID = 6;
 
     private static final int PAGE_SHOWS = 0;
     private static final int PAGE_LISTS = 1;
@@ -74,6 +75,8 @@ public class SlidingMenuFragment extends ListFragment {
                 MENU_ITEM_ACTIVITY_ID));
         mAdapter.add(new MenuItem(getString(R.string.movies), R.drawable.ic_action_movie,
                 MENU_ITEM_MOVIES_ID));
+        mAdapter.add(new MenuItem(getString(R.string.statistics), R.drawable.ic_action_bargraph,
+                MENU_ITEM_STATS_ID));
 
         // actions
         mAdapter.add(new MenuCategory());
@@ -92,39 +95,44 @@ public class SlidingMenuFragment extends ListFragment {
             h.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    activity.showContent();
+                    activity.getMenu().closeMenu();
                 }
             }, 200);
         }
 
-        switch (((MenuItem) mAdapter.getItem(position)).mId) {
+        int itemId = ((MenuItem) mAdapter.getItem(position)).mId;
+        switch (itemId) {
             case MENU_ITEM_SHOWS_ID:
                 startActivity(new Intent(getActivity(), ShowsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
                                 | Intent.FLAG_ACTIVITY_SINGLE_TOP));
-                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 storeSelectedPage(PAGE_SHOWS);
                 break;
             case MENU_ITEM_LISTS_ID:
                 startActivity(new Intent(getActivity(), ListsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
-                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 storeSelectedPage(PAGE_LISTS);
                 break;
             case MENU_ITEM_ACTIVITY_ID:
                 startActivity(new Intent(getActivity(), UpcomingRecentActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
-                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 storeSelectedPage(PAGE_ACTIVITY);
                 break;
             case MENU_ITEM_MOVIES_ID:
                 startActivity(new Intent(getActivity(), MoviesActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
-                getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                break;
+            case MENU_ITEM_STATS_ID:
+                startActivity(new Intent(getActivity(), StatsActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 break;
             case MENU_ITEM_SEARCH_ID:
                 getActivity().onSearchRequested();
                 break;
+        }
+
+        if (itemId != MENU_ITEM_SEARCH_ID) {
+            getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
     }
 

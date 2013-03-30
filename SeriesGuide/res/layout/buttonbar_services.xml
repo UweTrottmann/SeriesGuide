@@ -14,7 +14,7 @@
 
         <Button
             android:id="@+id/buttonGooglePlay"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Small"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Small.Default"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/default_padding"
@@ -26,7 +26,7 @@
 
         <Button
             android:id="@+id/buttonAmazon"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Small"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Small.Default"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/default_padding"
@@ -38,7 +38,7 @@
 
         <Button
             android:id="@+id/buttonShowInfoIMDB"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Small"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Small.Default"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/default_padding"
@@ -50,7 +50,7 @@
 
         <Button
             android:id="@+id/buttonTVDB"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Small"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Small.Default"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/default_padding"
@@ -62,7 +62,7 @@
 
         <Button
             android:id="@+id/buttonShouts"
-            style="@style/Widget.SeriesGuide.Button.Borderless.Small"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Small.Default"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:paddingLeft="@dimen/default_padding"
