@@ -140,7 +140,7 @@ public class NotificationService extends IntentService {
         long wakeUpTime = 0;
 
         /*
-         * Get pool of episodes which air from an hour ago until eternity which
+         * Get pool of episodes which air from 24 hours ago until eternity which
          * match the users settings.
          */
         StringBuilder selection = new StringBuilder(SELECTION);
@@ -156,7 +156,7 @@ public class NotificationService extends IntentService {
         }
         final Cursor upcomingEpisodes = getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 PROJECTION, selection.toString(), new String[] {
-                    String.valueOf(fakeNow - DateUtils.HOUR_IN_MILLIS)
+                    String.valueOf(fakeNow - DateUtils.DAY_IN_MILLIS)
                 }, SORTING);
 
         if (upcomingEpisodes != null) {
@@ -170,9 +170,6 @@ public class NotificationService extends IntentService {
             }
             final long latestTimeToInclude = fakeNow
                     + DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
-            // add a minute if we were woke up late
-            final long earliestTimeToInclude = fakeNow
-                    - DateUtils.MINUTE_IN_MILLIS * (notificationThreshold + 1);
             final long latestTimeCleared = NotificationSettings.getLastCleared(this);
             final long nextTimePlanned = NotificationSettings.getNextToNotifyAbout(this);
             final long nextWakeUpPlanned = Utils.convertToFakeTime(nextTimePlanned, prefs, false)
@@ -191,7 +188,7 @@ public class NotificationService extends IntentService {
                 // Check if there are any earlier episodes to notify about
                 while (upcomingEpisodes.moveToNext()) {
                     final long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
-                    if (airtime <= nextTimePlanned) {
+                    if (airtime < nextTimePlanned) {
                         if (airtime > latestTimeCleared) {
                             /**
                              * This will not get new episodes which would have
@@ -212,7 +209,7 @@ public class NotificationService extends IntentService {
                 wakeUpTime = nextWakeUpPlanned;
             } else {
                 // Get episodes which are within the notification threshold
-                // (user set)
+                // (user set) and not yet cleared
                 int count = 0;
                 final List<Integer> notifyPositions = Lists.newArrayList();
 
@@ -221,23 +218,12 @@ public class NotificationService extends IntentService {
                     final long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
                     if (airtime <= latestTimeToInclude) {
                         count++;
-                        if (newEpisodesAvailable == -1) {
-                            /*
-                             * Only add those after the last one the user
-                             * cleared. At most those of the last hour (see
-                             * query above).
-                             */
-                            if (airtime > latestTimeCleared) {
-                                notifyPositions.add(count);
-                            }
-                        } else {
-                            /*
-                             * Include all earlier episodes within a sensible
-                             * threshold.
-                             */
-                            if (airtime >= earliestTimeToInclude) {
-                                notifyPositions.add(count);
-                            }
+                        /*
+                         * Only add those after the last one the user cleared.
+                         * At most those of the last 24 hours (see query above).
+                         */
+                        if (airtime > latestTimeCleared) {
+                            notifyPositions.add(count);
                         }
                     } else {
                         // Too far into the future, stop!
