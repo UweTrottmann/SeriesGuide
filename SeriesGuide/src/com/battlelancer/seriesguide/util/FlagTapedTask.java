@@ -29,7 +29,6 @@ import com.jakewharton.trakt.services.ShowService.EpisodeSeenBuilder;
 import com.jakewharton.trakt.services.ShowService.EpisodeUnlibraryBuilder;
 import com.jakewharton.trakt.services.ShowService.EpisodeUnseenBuilder;
 import com.squareup.tape.Task;
-import com.uwetrottmann.androidutils.AndroidUtils;
 
 import java.util.List;
 
@@ -78,7 +77,7 @@ public class FlagTapedTask implements Task<FlagTapedTask.Callback> {
             @Override
             public void run() {
                 // do not even try if we are offline
-                if (!AndroidUtils.isNetworkConnected(mContext)) {
+                if (!Utils.isAllowedConnection(mContext)) {
                     postFailure(true);
                     return;
                 }
