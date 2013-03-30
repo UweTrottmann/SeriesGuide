@@ -44,6 +44,7 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Lists;
+import com.battlelancer.seriesguide.util.NotificationSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -110,8 +111,7 @@ public class NotificationService extends IntentService {
 
         // unschedule notification service wake-ups for disabled notifications
         // and non-supporters
-        if (!prefs.getBoolean(SeriesGuidePreferences.KEY_NOTIFICATIONS_ENABLED, true)
-                || !Utils.isSupporterChannel(this)) {
+        if (!NotificationSettings.isNotificationsEnabled(this) || !Utils.isSupporterChannel(this)) {
             // cancel any pending alarm
             AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent i = new Intent(this, OnAlarmReceiver.class);
@@ -127,8 +127,7 @@ public class NotificationService extends IntentService {
         final long fakeNow = Utils.getFakeCurrentTime(prefs);
         StringBuilder selection = new StringBuilder(SELECTION);
 
-        boolean isFavsOnly = prefs.getBoolean(SeriesGuidePreferences.KEY_NOTIFICATIONS_FAVONLY,
-                true);
+        boolean isFavsOnly = NotificationSettings.isNotifyAboutFavoritesOnly(this);
         if (isFavsOnly) {
             selection.append(Shows.SELECTION_FAVORITES);
         }
@@ -150,8 +149,7 @@ public class NotificationService extends IntentService {
             // set)
             int count = 0;
             final List<Integer> notifyPositions = Lists.newArrayList();
-            int notificationThreshold = Integer.parseInt(prefs.getString(
-                    SeriesGuidePreferences.KEY_NOTIFICATIONS_THRESHOLD, "60"));
+            int notificationThreshold = NotificationSettings.getLatestToIncludeTreshold(this);
             if (DEBUG) {
                 // a week, for debugging (use only one show to get single
                 // episode notifications)
@@ -161,8 +159,7 @@ public class NotificationService extends IntentService {
             }
             final long latestTimeToInclude = fakeNow + DateUtils.MINUTE_IN_MILLIS
                     * notificationThreshold;
-            long latestTimeNotifiedAbout = prefs.getLong(
-                    SeriesGuidePreferences.KEY_NOTIFICATIONS_LATEST_NOTIFIED, 0);
+            long latestTimeNotifiedAbout = NotificationSettings.getLatestNotifiedAbout(this); 
             while (upcomingEpisodes.moveToNext()) {
                 final long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
                 if (airtime <= latestTimeToInclude) {
@@ -181,7 +178,7 @@ public class NotificationService extends IntentService {
                 // store latest air time of all episodes we notified about
                 upcomingEpisodes.moveToPosition(notifyPositions.get(notifyPositions.size() - 1));
                 long latestAirtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
-                prefs.edit().putLong(SeriesGuidePreferences.KEY_NOTIFICATIONS_LATEST_NOTIFIED,
+                prefs.edit().putLong(NotificationSettings.KEY_LATEST_NOTIFIED,
                         latestAirtime).commit();
 
                 onNotify(prefs, upcomingEpisodes, count);
@@ -217,7 +214,7 @@ public class NotificationService extends IntentService {
      * notifications for episodes may appear, which were already notified about.
      */
     public static void resetLastEpisodeAirtime(final SharedPreferences prefs) {
-        prefs.edit().putLong(SeriesGuidePreferences.KEY_NOTIFICATIONS_LATEST_NOTIFIED, 0)
+        prefs.edit().putLong(NotificationSettings.KEY_LATEST_NOTIFIED, 0)
                 .commit();
     }
 
@@ -229,11 +226,9 @@ public class NotificationService extends IntentService {
         PendingIntent contentIntent = null;
 
         // notification sound
-        final String ringtoneUri = prefs.getString(SeriesGuidePreferences.KEY_RINGTONE,
-                "content://settings/system/notification_sound");
+        final String ringtoneUri = NotificationSettings.getNotificationsRingtone(context);
         // vibration
-        final boolean isVibrating = prefs.getBoolean(SeriesGuidePreferences.KEY_VIBRATE,
-                false);
+        final boolean isVibrating = NotificationSettings.isNotificationVibrating(context);
 
         if (count == 1) {
             // notify in detail about one episode
