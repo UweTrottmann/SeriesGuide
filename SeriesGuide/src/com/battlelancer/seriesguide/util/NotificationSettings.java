@@ -10,13 +10,13 @@ import android.preference.PreferenceManager;
 public class NotificationSettings {
     public static final String KEY_ENABLED = "com.battlelancer.seriesguide.notifications";
 
-    public static final String KEY_LAST_RUN = "com.battlelancer.seriesguide.notifications.lastrun";
-
     public static final String KEY_FAVONLY = "com.battlelancer.seriesguide.notifications.favonly";
 
     public static final String KEY_THRESHOLD = "com.battlelancer.seriesguide.notifications.threshold";
 
     public static final String KEY_LATEST_NOTIFIED = "com.battlelancer.seriesguide.notifications.latestnotified";
+
+    public static final String KEY_NEXT_TO_NOTIFY = "com.battlelancer.seriesguide.notifications.next";
 
     public static final String KEY_RINGTONE = "com.battlelancer.seriesguide.notifications.ringtone";
 
@@ -48,17 +48,17 @@ public class NotificationSettings {
     }
 
     /**
-     * Get the last time the notification service did run.
+     * Get the air time of the next episode we plan to notify about.
      */
-    public static long getLastTimeExecuted(Context context) {
+    public static long getNextToNotifyAbout(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getLong(KEY_LAST_RUN, 0);
+                .getLong(KEY_NEXT_TO_NOTIFY, 0);
     }
 
     /**
-     * The air time of the latest episode which we notified about last.
+     * Get the air time of the latest episode we notified about last.
      */
-    public static long getLatestNotifiedAbout(Context context) {
+    public static long getLastNotifiedAbout(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getLong(KEY_LATEST_NOTIFIED, 0);
     }
