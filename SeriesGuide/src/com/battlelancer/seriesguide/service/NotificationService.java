@@ -101,7 +101,7 @@ public class NotificationService extends IntentService {
 
     public NotificationService() {
         super("Episode Notification Service");
-        setIntentRedelivery(false);
+        setIntentRedelivery(true);
     }
 
     @TargetApi(16)
@@ -128,14 +128,11 @@ public class NotificationService extends IntentService {
         long wakeUpTime = 0;
 
         /*
-         * Get pool of episodes which air from a while ago until eternity which
-         * match the users notification settings.
+         * Get pool of episodes which air from an hour ago until eternity which
+         * match the users settings.
          */
         StringBuilder selection = new StringBuilder(SELECTION);
         final long fakeNow = Utils.getFakeCurrentTime(prefs);
-        int notificationThreshold = NotificationSettings.getLatestToIncludeTreshold(this);
-        final long earliestTimeToInclude = fakeNow
-                - DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
         boolean isFavsOnly = NotificationSettings.isNotifyAboutFavoritesOnly(this);
         if (isFavsOnly) {
             selection.append(Shows.SELECTION_FAVORITES);
@@ -147,10 +144,11 @@ public class NotificationService extends IntentService {
         }
         final Cursor upcomingEpisodes = getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 PROJECTION, selection.toString(), new String[] {
-                    String.valueOf(earliestTimeToInclude)
+                    String.valueOf(fakeNow - DateUtils.HOUR_IN_MILLIS)
                 }, SORTING);
 
         if (upcomingEpisodes != null) {
+            int notificationThreshold = NotificationSettings.getLatestToIncludeTreshold(this);
             if (DEBUG) {
                 // a week, for debugging (use only one show to get single
                 // episode notifications)
@@ -160,6 +158,9 @@ public class NotificationService extends IntentService {
             }
             final long latestTimeToInclude = fakeNow
                     + DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
+            // add a minute if we were woke up late
+            final long earliestTimeToInclude = fakeNow
+                    - DateUtils.MINUTE_IN_MILLIS * (notificationThreshold + 1);
             final long latestTimeNotifiedAbout = NotificationSettings.getLastNotifiedAbout(this);
             final long nextTimePlanned = NotificationSettings.getNextToNotifyAbout(this);
             final long nextWakeUpPlanned = Utils.convertToFakeTime(nextTimePlanned, prefs, false)
@@ -215,11 +216,12 @@ public class NotificationService extends IntentService {
                             }
                         } else {
                             /*
-                             * Include all if first run or found new episodes
-                             * (look above: we queried all episodes from a while
-                             * ago until eternity).
+                             * Include all earlier episodes within a sensible
+                             * threshold.
                              */
-                            notifyPositions.add(count);
+                            if (airtime >= earliestTimeToInclude) {
+                                notifyPositions.add(count);
+                            }
                         }
                     } else {
                         // Too far into the future, stop!
