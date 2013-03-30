@@ -41,7 +41,9 @@ public class FlagTapedTaskQueue extends TaskQueue<FlagTapedTask> {
 
     public static synchronized FlagTapedTaskQueue getInstance(Context context) {
         if (_instance == null) {
-            _instance = FlagTapedTaskQueue.create(context, new GsonBuilder().create());
+            // Make sure to use the application context as this is a singleton
+            _instance = FlagTapedTaskQueue.create(context.getApplicationContext(),
+                    new GsonBuilder().create());
         }
         return _instance;
     }

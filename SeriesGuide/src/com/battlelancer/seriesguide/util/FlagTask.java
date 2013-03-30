@@ -92,7 +92,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
     private boolean mIsTraktInvolved;
 
     public FlagTask(Context context, int showId, OnFlagListener listener) {
-        mContext = context;
+        mContext = context.getApplicationContext();
         mShowId = showId;
         mListener = listener;
     }

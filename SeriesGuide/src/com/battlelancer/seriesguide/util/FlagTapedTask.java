@@ -33,7 +33,7 @@ import com.squareup.tape.Task;
 import java.util.List;
 
 public class FlagTapedTask implements Task<FlagTapedTask.Callback> {
-    private static final long serialVersionUID = -7699031818939574225L;
+    private static final long serialVersionUID = 2419738019139527110L;
 
     public interface Callback {
         void onSuccess();
