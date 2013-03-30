@@ -324,7 +324,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
                 }, 0, "", this);
             }
         }
-        TaskManager.getInstance(this).tryUpdateTask(task, true, messageId);
+        TaskManager.getInstance(this).tryUpdateTask(this, task, true, messageId);
     }
 
     private class FetchPosterTask extends AsyncTask<Void, Void, Integer> {

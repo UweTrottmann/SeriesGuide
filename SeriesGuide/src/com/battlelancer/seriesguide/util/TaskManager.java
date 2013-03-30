@@ -18,10 +18,12 @@
 package com.battlelancer.seriesguide.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.service.TraktFlagService;
 import com.uwetrottmann.seriesguide.R;
 
 import java.util.List;
@@ -96,13 +98,20 @@ public class TaskManager {
      * be displayed by setting displayWarning. If not the given
      * {@link UpdateTask} is stored and executed. If messageId is not -1 this
      * string resource will be displayed as a toast after the {@link UpdateTask}
-     * is started.
+     * is started.<br>
+     * Also sends all remaining trakt actions queued up in
+     * {@link FlagTapeEntryQueue}.
      * 
      * @param task
      * @param displayWarning
      * @param messageId
      */
-    public synchronized void tryUpdateTask(UpdateTask task, boolean displayWarning, int messageId) {
+    public synchronized void tryUpdateTask(Context context, UpdateTask task,
+            boolean displayWarning, int messageId) {
+        // transmit any remaining trakt actions
+        context.startService(new Intent(context, TraktFlagService.class));
+
+        // try to start an update task
         if (!isUpdateTaskRunning(displayWarning)) {
             mUpdateTask = task;
             task.execute();

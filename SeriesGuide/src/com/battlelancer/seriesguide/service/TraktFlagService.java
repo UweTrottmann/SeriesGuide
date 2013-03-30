@@ -100,8 +100,6 @@ public class TraktFlagService extends Service implements Callback {
 
     @Override
     public void onFailure(boolean isNotConnected) {
-        stop();
-
         // The user has disconnected from trakt in the meanwhile
         if (!ServiceUtils.isTraktCredentialsValid(getApplicationContext())) {
             // clear all remaining tasks
@@ -135,6 +133,8 @@ public class TraktFlagService extends Service implements Callback {
             PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
             am.set(AlarmManager.RTC, wakeUpTime, pi);
         }
+
+        stop();
     }
 
     @Override

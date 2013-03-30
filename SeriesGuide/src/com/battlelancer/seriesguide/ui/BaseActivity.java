@@ -32,9 +32,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
-import com.battlelancer.seriesguide.service.TraktFlagService;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
-import com.battlelancer.seriesguide.util.FlagTapeEntryQueue;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
@@ -182,8 +180,7 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
     }
 
     /**
-     * Try to launch a delta-update task if certain conditions are met. Send all
-     * remaining trakt actions queued up in {@link FlagTapeEntryQueue}.
+     * Try to launch a delta-update task if certain conditions are met.
      */
     private void onAutoUpdate() {
         // try to run auto-update
@@ -210,10 +207,11 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
                 final boolean isTime = (now - previousUpdateTime) > 15 * DateUtils.MINUTE_IN_MILLIS;
 
                 if (isTime) {
-                    // transmit any remaining trakt actions
-                    startService(new Intent(this, TraktFlagService.class));
                     // start UpdateTask to get latest episode info
-                    TaskManager.getInstance(this).tryUpdateTask(new UpdateTask(false, this), false,
+                    TaskManager.getInstance(this).tryUpdateTask(
+                            this,
+                            new UpdateTask(false, this),
+                            false,
                             -1);
                 }
             }
