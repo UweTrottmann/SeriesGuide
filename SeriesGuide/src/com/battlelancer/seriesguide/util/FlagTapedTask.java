@@ -26,6 +26,7 @@ import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.services.ShowService;
 import com.jakewharton.trakt.services.ShowService.EpisodeSeenBuilder;
+import com.jakewharton.trakt.services.ShowService.EpisodeUnlibraryBuilder;
 import com.jakewharton.trakt.services.ShowService.EpisodeUnseenBuilder;
 import com.squareup.tape.Task;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -119,6 +120,19 @@ public class FlagTapedTask implements Task<FlagTapedTask.Callback> {
                             }
                             break;
                         }
+                        case SEASON_COLLECTED: {
+                            if (mIsFlag) {
+                                mShowService.seasonLibrary(mShowId).season(mFlags.get(0).season)
+                                        .fire();
+                            } else {
+                                EpisodeUnlibraryBuilder builder = mShowService
+                                        .episodeUnlibrary(mShowId);
+                                for (Flag episode : mFlags) {
+                                    builder.episode(episode.season, episode.episode);
+                                }
+                                builder.fire();
+                            }
+                        }
                         case SHOW_WATCHED: {
                             if (mIsFlag) {
                                 mShowService.showSeen(mShowId).fire();
@@ -130,6 +144,18 @@ public class FlagTapedTask implements Task<FlagTapedTask.Callback> {
                                 builder.fire();
                             }
                             break;
+                        }
+                        case SHOW_COLLECTED: {
+                            if (mIsFlag) {
+                                mShowService.showLibrary(mShowId).fire();
+                            } else {
+                                EpisodeUnlibraryBuilder builder = mShowService
+                                        .episodeUnlibrary(mShowId);
+                                for (Flag episode : mFlags) {
+                                    builder.episode(episode.season, episode.episode);
+                                }
+                                builder.fire();
+                            }
                         }
                         case EPISODE_WATCHED_PREVIOUS: {
                             EpisodeSeenBuilder builder = mShowService.episodeSeen(mShowId);
