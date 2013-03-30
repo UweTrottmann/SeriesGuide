@@ -21,6 +21,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
 import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
 import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.TraktException;
@@ -28,27 +29,15 @@ import com.jakewharton.trakt.services.ShowService;
 import com.jakewharton.trakt.services.ShowService.EpisodeSeenBuilder;
 import com.jakewharton.trakt.services.ShowService.EpisodeUnlibraryBuilder;
 import com.jakewharton.trakt.services.ShowService.EpisodeUnseenBuilder;
-import com.squareup.tape.Task;
 
 import java.util.List;
 
-public class FlagTapedTask implements Task<FlagTapedTask.Callback> {
-    private static final long serialVersionUID = 2419738019139527110L;
+public class FlagTapedTask {
 
     public interface Callback {
         void onSuccess();
 
         void onFailure(boolean isNotConnected);
-    }
-
-    public static class Flag {
-        int season;
-        int episode;
-
-        public Flag(int season, int episode) {
-            this.season = season;
-            this.episode = episode;
-        }
     }
 
     private static final Handler MAIN_THREAD = new Handler(Looper.getMainLooper());
@@ -60,8 +49,7 @@ public class FlagTapedTask implements Task<FlagTapedTask.Callback> {
     private boolean mIsFlag;
 
     public FlagTapedTask(Context context, ShowService showService, FlagAction action, int showId,
-            List<Flag> flags,
-            boolean isFlag) {
+            List<Flag> flags, boolean isFlag) {
         mContext = context;
         mShowService = showService;
         mAction = action;
@@ -70,7 +58,6 @@ public class FlagTapedTask implements Task<FlagTapedTask.Callback> {
         mIsFlag = isFlag;
     }
 
-    @Override
     public void execute(final Callback callback) {
         new Thread(new Runnable() {
 

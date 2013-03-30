@@ -29,9 +29,7 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.util.FlagTapedTask.Flag;
-import com.jakewharton.trakt.ServiceManager;
-import com.jakewharton.trakt.services.ShowService;
+import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -178,13 +176,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
         // prepare trakt stuff
         if (mIsTraktInvolved) {
-            ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(mContext, false);
-            if (manager == null) {
-                return FAILED;
-            }
-
             List<Flag> episodes = Lists.newArrayList();
-            ShowService showService = manager.showService();
             switch (mAction) {
                 case EPISODE_WATCHED:
                 case EPISODE_COLLECTED:
@@ -216,8 +208,8 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
             }
 
             // Add a new taped flag task to the tape queue
-            FlagTapedTaskQueue.getInstance(mContext).add(
-                    new FlagTapedTask(mContext, showService, mAction, mShowId, episodes, mIsFlag));
+            FlagTapeEntryQueue.getInstance(mContext).add(
+                    new FlagTapeEntry(mAction, mShowId, episodes, mIsFlag));
         }
 
         // always update local database

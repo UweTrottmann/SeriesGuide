@@ -34,7 +34,7 @@ import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.TraktFlagService;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
-import com.battlelancer.seriesguide.util.FlagTapedTaskQueue;
+import com.battlelancer.seriesguide.util.FlagTapeEntryQueue;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
@@ -183,7 +183,7 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
 
     /**
      * Try to launch a delta-update task if certain conditions are met. Send all
-     * remaining trakt actions queued up in {@link FlagTapedTaskQueue}.
+     * remaining trakt actions queued up in {@link FlagTapeEntryQueue}.
      */
     private void onAutoUpdate() {
         // try to run auto-update

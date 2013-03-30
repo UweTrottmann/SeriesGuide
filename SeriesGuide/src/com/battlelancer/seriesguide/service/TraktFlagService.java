@@ -29,10 +29,13 @@ import android.text.format.DateUtils;
 import android.util.Log;
 
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.FlagTapeEntry;
+import com.battlelancer.seriesguide.util.FlagTapeEntryQueue;
 import com.battlelancer.seriesguide.util.FlagTapedTask;
 import com.battlelancer.seriesguide.util.FlagTapedTask.Callback;
-import com.battlelancer.seriesguide.util.FlagTapedTaskQueue;
 import com.battlelancer.seriesguide.util.ServiceUtils;
+import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.services.ShowService;
 
 public class TraktFlagService extends Service implements Callback {
 
@@ -40,14 +43,14 @@ public class TraktFlagService extends Service implements Callback {
 
     private static final long MAX_RETRY_INTERVAL = 15 * DateUtils.MINUTE_IN_MILLIS;
 
-    private FlagTapedTaskQueue mQueue;
+    private FlagTapeEntryQueue mQueue;
 
     private boolean running;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mQueue = FlagTapedTaskQueue.getInstance(getApplicationContext());
+        mQueue = FlagTapeEntryQueue.getInstance(getApplicationContext());
         Log.i(TAG, "Starting service.");
     }
 
@@ -62,14 +65,30 @@ public class TraktFlagService extends Service implements Callback {
             return;
         }
 
-        FlagTapedTask task = mQueue.peek();
-        if (task != null) {
+        FlagTapeEntry entry = mQueue.peek();
+        if (entry != null) {
             running = true;
-            task.execute(this);
+
+            // build a new FlagTapedTask and execute it
+            ServiceManager manager = ServiceUtils.getTraktServiceManagerWithAuth(
+                    getApplicationContext(), false);
+            if (manager == null) {
+                stop();
+                return;
+            }
+            ShowService showService = manager.showService();
+
+            new FlagTapedTask(getApplicationContext(), showService, entry.action, entry.showId,
+                    entry.flags, entry.isFlag)
+                    .execute(this);
         } else {
-            Log.i(TAG, "Stopping service.");
-            stopSelf();
+            stop();
         }
+    }
+
+    private void stop() {
+        Log.i(TAG, "Stopping service.");
+        stopSelf();
     }
 
     @Override
@@ -81,7 +100,7 @@ public class TraktFlagService extends Service implements Callback {
 
     @Override
     public void onFailure(boolean isNotConnected) {
-        stopSelf();
+        stop();
 
         // The user has disconnected from trakt in the meanwhile
         if (!ServiceUtils.isTraktCredentialsValid(getApplicationContext())) {
