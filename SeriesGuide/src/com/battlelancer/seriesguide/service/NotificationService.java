@@ -53,6 +53,8 @@ import java.util.List;
 
 public class NotificationService extends IntentService {
 
+    private static final String KEY_EPISODE_CLEARED_TIME = "com.battlelancer.seriesguide.episode_cleared_time";
+
     private static final boolean DEBUG = false;
 
     private static final int REQUEST_CODE_SINGLE_EPISODE = 2;
@@ -110,6 +112,16 @@ public class NotificationService extends IntentService {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         /*
+         * Handle a possible delete intent.
+         */
+        long clearedTime = intent.getLongExtra(KEY_EPISODE_CLEARED_TIME, 0);
+        if (clearedTime != 0) {
+            // Never show the cleared episode(s) again
+            prefs.edit().putLong(NotificationSettings.KEY_LAST_CLEARED, clearedTime).commit();
+            return;
+        }
+
+        /*
          * Unschedule notification service wake-ups for disabled notifications
          * and non-supporters.
          */
@@ -161,7 +173,7 @@ public class NotificationService extends IntentService {
             // add a minute if we were woke up late
             final long earliestTimeToInclude = fakeNow
                     - DateUtils.MINUTE_IN_MILLIS * (notificationThreshold + 1);
-            final long latestTimeNotifiedAbout = NotificationSettings.getLastNotifiedAbout(this);
+            final long latestTimeCleared = NotificationSettings.getLastCleared(this);
             final long nextTimePlanned = NotificationSettings.getNextToNotifyAbout(this);
             final long nextWakeUpPlanned = Utils.convertToFakeTime(nextTimePlanned, prefs, false)
                     - DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
@@ -180,11 +192,11 @@ public class NotificationService extends IntentService {
                 while (upcomingEpisodes.moveToNext()) {
                     final long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
                     if (airtime <= nextTimePlanned) {
-                        if (airtime > latestTimeNotifiedAbout) {
+                        if (airtime > latestTimeCleared) {
                             /**
                              * This will not get new episodes which would have
-                             * aired the same time as the last one we notified
-                             * about. Sad, but the best we can do right now.
+                             * aired the same time as the last one the user
+                             * cleared. Sad, but the best we can do right now.
                              */
                             newEpisodesAvailable = 1;
                             break;
@@ -210,8 +222,12 @@ public class NotificationService extends IntentService {
                     if (airtime <= latestTimeToInclude) {
                         count++;
                         if (newEpisodesAvailable == -1) {
-                            // Only add those we didn't already notify about
-                            if (airtime > latestTimeNotifiedAbout) {
+                            /*
+                             * Only add those after the last one the user
+                             * cleared. At most those of the last hour (see
+                             * query above).
+                             */
+                            if (airtime > latestTimeCleared) {
                                 notifyPositions.add(count);
                             }
                         } else {
@@ -235,10 +251,16 @@ public class NotificationService extends IntentService {
                     upcomingEpisodes
                             .moveToPosition(notifyPositions.get(notifyPositions.size() - 1));
                     long latestAirtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
-                    prefs.edit().putLong(NotificationSettings.KEY_LATEST_NOTIFIED,
-                            latestAirtime).commit();
+                    if (!AndroidUtils.isHoneycombOrHigher()) {
+                        /*
+                         * Everything below HC does not have delete intents, so
+                         * we just never notify about the same episode twice.
+                         */
+                        prefs.edit().putLong(NotificationSettings.KEY_LAST_CLEARED,
+                                latestAirtime).commit();
+                    }
 
-                    onNotify(prefs, upcomingEpisodes, count);
+                    onNotify(prefs, upcomingEpisodes, count, latestAirtime);
                 }
 
                 /*
@@ -282,11 +304,12 @@ public class NotificationService extends IntentService {
      * notifications for episodes may appear, which were already notified about.
      */
     public static void resetLastEpisodeAirtime(final SharedPreferences prefs) {
-        prefs.edit().putLong(NotificationSettings.KEY_LATEST_NOTIFIED, 0)
+        prefs.edit().putLong(NotificationSettings.KEY_LAST_CLEARED, 0)
                 .commit();
     }
 
-    private void onNotify(final SharedPreferences prefs, final Cursor upcomingEpisodes, int count) {
+    private void onNotify(final SharedPreferences prefs, final Cursor upcomingEpisodes, int count,
+            long latestAirtime) {
         final Context context = getApplicationContext();
         CharSequence tickerText = "";
         CharSequence contentTitle = "";
@@ -433,6 +456,11 @@ public class NotificationService extends IntentService {
         nb.setContentIntent(contentIntent);
         nb.setSmallIcon(R.drawable.ic_notification);
         nb.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        Intent i = new Intent(this, NotificationService.class);
+        i.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime);
+        PendingIntent deleteIntent = PendingIntent.getService(this, 1, i, 0);
+        nb.setDeleteIntent(deleteIntent);
 
         // build the notification
         Notification notification = nb.build();
