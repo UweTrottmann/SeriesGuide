@@ -101,15 +101,10 @@ public class TaskManager {
      * is started.<br>
      * Also sends all remaining trakt actions queued up in
      * {@link FlagTapeEntryQueue}.
-     * 
-     * @param task
-     * @param displayWarning
-     * @param messageId
      */
-    public synchronized void tryUpdateTask(Context context, UpdateTask task,
-            boolean displayWarning, int messageId) {
+    public synchronized void tryUpdateTask(UpdateTask task, boolean displayWarning, int messageId) {
         // transmit any remaining trakt actions
-        context.startService(new Intent(context, TraktFlagService.class));
+        mContext.startService(new Intent(mContext, TraktFlagService.class));
 
         // try to start an update task
         if (!isUpdateTaskRunning(displayWarning)) {

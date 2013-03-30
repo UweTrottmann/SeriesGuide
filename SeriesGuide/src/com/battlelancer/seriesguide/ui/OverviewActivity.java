@@ -140,7 +140,7 @@ public class OverviewActivity extends BaseActivity {
                         @Override
                         public void run() {
                             UpdateTask updateTask = new UpdateTask(showId, context);
-                            TaskManager.getInstance(context).tryUpdateTask(context, updateTask, false, -1);
+                            TaskManager.getInstance(context).tryUpdateTask(updateTask, false, -1);
                         }
                     };
                     handler.postDelayed(r, 1000);

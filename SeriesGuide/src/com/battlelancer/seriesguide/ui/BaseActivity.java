@@ -209,7 +209,6 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
                 if (isTime) {
                     // start UpdateTask to get latest episode info
                     TaskManager.getInstance(this).tryUpdateTask(
-                            this,
                             new UpdateTask(false, this),
                             false,
                             -1);
