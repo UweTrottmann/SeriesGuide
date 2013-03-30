@@ -17,7 +17,6 @@
 
 package com.battlelancer.seriesguide.util;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentProviderOperation;
@@ -30,9 +29,10 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat.Builder;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.SeriesGuideApplication;
@@ -88,9 +88,9 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
 
     private NotificationManager mNotificationManager;
 
-    private Notification mNotification;
-
     private ArrayList<SearchResult> mNewShows;
+
+    private Builder mBuilder;
 
     private static final int UPDATE_NOTIFICATION_ID = 1;
 
@@ -119,35 +119,30 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
         mUpdateType = UpdateType.DELTA;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     protected void onPreExecute() {
         // create a notification (holy crap is that a lot of code)
         String ns = Context.NOTIFICATION_SERVICE;
         mNotificationManager = (NotificationManager) mAppContext.getSystemService(ns);
 
-        CharSequence tickerText = mAppContext.getString(R.string.update_notification);
-        long when = System.currentTimeMillis();
-        final int icon = R.drawable.stat_sys_download;
+        mBuilder = new NotificationCompat.Builder(mAppContext)
+                .setContentTitle(mAppContext.getString(R.string.update_notification))
+                .setSmallIcon(R.drawable.stat_sys_download)
+                .setContentText(mAppContext.getString(R.string.update_notification));
 
-        mNotification = new Notification(icon, tickerText, when);
-        mNotification.flags |= Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR
-                | Notification.FLAG_ONLY_ALERT_ONCE;
-
-        // content view
-        RemoteViews contentView = new RemoteViews(mAppContext.getPackageName(),
-                R.layout.update_notification);
-        contentView.setTextViewText(R.id.text, mAppContext.getString(R.string.update_notification));
-        contentView.setProgressBar(R.id.progressbar, 0, 0, true);
-        mNotification.contentView = contentView;
+        mBuilder.setWhen(System.currentTimeMillis())
+                .setTicker(mAppContext.getString(R.string.update_notification))
+                .setOngoing(true)
+                .setOnlyAlertOnce(true)
+                .setProgress(0, 0, true);
 
         // content intent
         Intent notificationIntent = new Intent(mAppContext, ShowsActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(mAppContext, 0, notificationIntent,
                 0);
-        mNotification.contentIntent = contentIntent;
+        mBuilder.setContentIntent(contentIntent);
 
-        mNotificationManager.notify(UPDATE_NOTIFICATION_ID, mNotification);
+        mNotificationManager.notify(UPDATE_NOTIFICATION_ID, mBuilder.build());
     }
 
     @Override
@@ -220,10 +215,10 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
 
                 try {
                     TheTVDB.updateShow(id, mAppContext);
-                    
+
                     // make sure overview and details loaders are notified
                     resolver.notifyChange(Episodes.CONTENT_URI_WITHSHOW, null);
-                    
+
                     break;
                 } catch (SAXException e) {
                     if (itry == 1) {
@@ -527,9 +522,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             text = mCurrentShowName + "...";
         }
 
-        mNotification.contentView.setTextViewText(R.id.text, text);
-        mNotification.contentView.setProgressBar(R.id.progressbar, values[1], values[0], false);
-        mNotificationManager.notify(UPDATE_NOTIFICATION_ID, mNotification);
+        mBuilder.setContentText(text).setProgress(values[1], values[0], false);
+        mNotificationManager.notify(UPDATE_NOTIFICATION_ID, mBuilder.build());
     }
 
     private void addFailedShow(String seriesName) {
