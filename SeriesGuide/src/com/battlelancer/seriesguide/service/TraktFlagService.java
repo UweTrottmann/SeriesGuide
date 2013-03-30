@@ -32,6 +32,7 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.FlagTapedTask;
 import com.battlelancer.seriesguide.util.FlagTapedTask.Callback;
 import com.battlelancer.seriesguide.util.FlagTapedTaskQueue;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 
 public class TraktFlagService extends Service implements Callback {
 
@@ -81,9 +82,24 @@ public class TraktFlagService extends Service implements Callback {
     @Override
     public void onFailure(boolean isNotConnected) {
         stopSelf();
+
+        // The user has disconnected from trakt in the meanwhile
+        if (!ServiceUtils.isTraktCredentialsValid(getApplicationContext())) {
+            // clear all remaining tasks
+            while (mQueue.size() > 0) {
+                mQueue.remove();
+            }
+        }
+
+        /*
+         * If the device is not connected to an allowed connection we rely on
+         * BaseActivity.onAutoUpdate() to start this service again at most every
+         * 15 minutes when the user opens the app.
+         */
+
+        // back off exponentially if something went wrong (and we are
+        // not just offline)
         if (!isNotConnected) {
-            // back off exponentially if something went wrong (and we are
-            // not just offline)
             SharedPreferences prefs = PreferenceManager
                     .getDefaultSharedPreferences(getApplicationContext());
             long interval = prefs.getLong(SeriesGuidePreferences.KEY_TAPE_INTERVAL,
