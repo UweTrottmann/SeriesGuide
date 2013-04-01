@@ -32,6 +32,9 @@ import java.io.OutputStreamWriter;
  */
 public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
 
+    public static final String EXPORT_FOLDER = "SeriesGuide";
+    public static final String EXPORT_JSON_FILE = "sg-database-export.json";
+
     public interface OnExportTaskFinishedListener {
         public void onExportTaskFinished();
     }
@@ -60,25 +63,25 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
 
         File path = new File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                "SeriesGuide");
+                EXPORT_FOLDER);
         // Ensure the directory exists
         path.mkdirs();
 
-        File backup = new File(path, "sg-database-export.json");
+        File backup = new File(path, EXPORT_JSON_FILE);
 
         try {
             OutputStream out = new FileOutputStream(backup);
 
             writeJsonStream(out, shows);
 
-            shows.close();
-
-            return 1;
         } catch (IOException e) {
             // Backup failed
+            return -1;
+        } finally {
+            shows.close();
         }
 
-        return -1;
+        return 1;
     }
 
     @Override
