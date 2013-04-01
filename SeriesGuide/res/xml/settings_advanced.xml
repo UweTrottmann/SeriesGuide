@@ -24,6 +24,14 @@
                 android:targetClass="com.battlelancer.seriesguide.ui.BackupDeleteActivity"
                 android:targetPackage="@string/package_name" />
         </Preference>
+        <Preference
+            android:key="dataliberation"
+            android:summary="@string/backup_summary"
+            android:title="@string/backup" >
+            <intent
+                android:targetClass="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity"
+                android:targetPackage="@string/package_name" />
+        </Preference>
 
         <ListPreference
             android:defaultValue="1"

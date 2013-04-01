@@ -29,24 +29,32 @@ import java.util.List;
  * By default meta-data like descriptions, ratings, actors, etc. will not be
  * included.
  */
-public class JsonExportTask extends AsyncTask<Void, Void, Void> {
+public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
+
+    public interface OnExportTaskFinishedListener {
+        public void onExportTaskFinished(boolean isSuccessful);
+    }
 
     private Context mContext;
+    private OnExportTaskFinishedListener mListener;
+
+    public JsonExportTask(Context context, OnExportTaskFinishedListener listener) {
+        mContext = context;
+        mListener = listener;
+    }
 
     @Override
-    protected Void doInBackground(Void... params) {
+    protected Integer doInBackground(Void... params) {
+        if (!AndroidUtils.isExtStorageAvailable()) {
+            return -1;
+        }
 
         final Cursor shows = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[] {
                 Shows._ID, Shows.TITLE, Shows.FAVORITE, Shows.HIDDEN
         }, null, null, null);
 
         if (shows == null) {
-            return null;
-        }
-
-        if (!AndroidUtils.isExtStorageAvailable()) {
-            shows.close();
-            return null;
+            return -1;
         }
 
         File path = new File(
@@ -61,13 +69,22 @@ public class JsonExportTask extends AsyncTask<Void, Void, Void> {
             OutputStream out = new FileOutputStream(backup);
 
             writeJsonStream(out, shows);
+
+            shows.close();
+
+            return 1;
         } catch (IOException e) {
             // Backup failed
         }
 
-        shows.close();
+        return -1;
+    }
 
-        return null;
+    @Override
+    protected void onPostExecute(Integer result) {
+        if (mListener != null) {
+            mListener.onExportTaskFinished(result == 1);
+        }
     }
 
     private void writeJsonStream(OutputStream out, Cursor shows) throws IOException {
@@ -75,19 +92,19 @@ public class JsonExportTask extends AsyncTask<Void, Void, Void> {
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
         writer.setIndent("  ");
         writer.beginArray();
-    
+
         while (shows.moveToNext()) {
             Show show = new Show();
             show.tvdbId = shows.getInt(0);
             show.title = shows.getString(1);
             show.favorite = shows.getInt(2) == 1;
             show.hidden = shows.getInt(3) == 1;
-    
+
             addSeasons(show);
-    
+
             gson.toJson(show, Show.class, writer);
         }
-    
+
         writer.endArray();
         writer.close();
     }

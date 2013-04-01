@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        style="@style/CenteredColumn"
+        android:animateLayoutChanges="true"
+        android:padding="@dimen/large_padding" >
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="@string/backup"
+            android:textAppearance="@style/TextAppearance.Large.Light" />
+
+        <Button
+            android:id="@+id/buttonExport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textViewTitle"
+            android:layout_marginTop="@dimen/default_padding"
+            android:text="@string/backup_button" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/buttonExport"
+            android:layout_alignTop="@+id/buttonExport"
+            android:layout_toRightOf="@+id/buttonExport"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</ScrollView>
