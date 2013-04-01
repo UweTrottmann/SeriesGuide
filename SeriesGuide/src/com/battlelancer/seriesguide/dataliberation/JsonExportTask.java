@@ -35,14 +35,10 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
     public static final String EXPORT_FOLDER = "SeriesGuide";
     public static final String EXPORT_JSON_FILE = "sg-database-export.json";
 
-    public interface OnExportTaskFinishedListener {
-        public void onExportTaskFinished();
-    }
-
     private Context mContext;
-    private OnExportTaskFinishedListener mListener;
+    private OnTaskFinishedListener mListener;
 
-    public JsonExportTask(Context context, OnExportTaskFinishedListener listener) {
+    public JsonExportTask(Context context, OnTaskFinishedListener listener) {
         mContext = context;
         mListener = listener;
     }
@@ -85,9 +81,9 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
     }
 
     @Override
-    protected void onPostExecute(Integer resultCode) {
+    protected void onPostExecute(Integer result) {
         int messageId;
-        switch (resultCode) {
+        switch (result) {
             case 1:
                 messageId = R.string.backup_success;
                 break;
@@ -101,7 +97,7 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
         Toast.makeText(mContext, messageId, Toast.LENGTH_LONG).show();
 
         if (mListener != null) {
-            mListener.onExportTaskFinished();
+            mListener.onTaskFinished();
         }
     }
 

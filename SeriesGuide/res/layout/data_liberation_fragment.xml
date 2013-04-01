@@ -16,22 +16,36 @@
             android:text="@string/backup"
             android:textAppearance="@style/TextAppearance.Large.Light" />
 
-        <Button
-            android:id="@+id/buttonExport"
+        <LinearLayout
+            android:id="@+id/buttons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_below="@+id/textViewTitle"
-            android:layout_marginTop="@dimen/default_padding"
-            android:text="@string/backup_button" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/default_padding"
+            android:layout_marginTop="@dimen/default_padding" >
+
+            <Button
+                android:id="@+id/buttonExport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/inline_padding"
+                android:text="@string/backup_button" />
+
+            <Button
+                android:id="@+id/buttonImport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/inline_padding"
+                android:text="@string/import_button" />
+        </LinearLayout>
 
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/buttonExport"
-            android:layout_alignTop="@+id/buttonExport"
-            android:layout_toRightOf="@+id/buttonExport"
+            android:layout_below="@+id/buttons"
+            android:layout_centerHorizontal="true"
             android:visibility="gone" />
     </RelativeLayout>
 
