@@ -22,7 +22,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.util.List;
 
 /**
  * Export the show database to a human-readable JSON file on external storage.
@@ -110,7 +109,7 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
     }
 
     private void addSeasons(Show show) {
-        List<Season> seasons = Lists.newArrayList();
+        show.seasons = Lists.newArrayList();
         final Cursor seasonsCursor = mContext.getContentResolver().query(
                 Seasons.buildSeasonsOfShowUri(String.valueOf(show.tvdbId)),
                 new String[] {
@@ -129,14 +128,14 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
 
             addEpisodes(season);
 
-            seasons.add(season);
+            show.seasons.add(season);
         }
 
         seasonsCursor.close();
     }
 
     private void addEpisodes(Season season) {
-        List<Episode> episodes = Lists.newArrayList();
+        season.episodes = Lists.newArrayList();
         final Cursor episodesCursor = mContext.getContentResolver().query(
                 Episodes.buildEpisodesOfSeasonUri(String.valueOf(season.tvdbId)),
                 new String[] {
@@ -158,7 +157,7 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
             episode.title = episodesCursor.getString(5);
             episode.firstAired = episodesCursor.getLong(6);
 
-            episodes.add(episode);
+            season.episodes.add(episode);
         }
 
         episodesCursor.close();
