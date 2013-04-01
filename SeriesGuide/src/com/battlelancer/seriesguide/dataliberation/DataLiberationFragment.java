@@ -75,7 +75,7 @@ public class DataLiberationFragment extends SherlockFragment implements
     }
 
     @Override
-    public void onExportTaskFinished(boolean isSuccessful) {
+    public void onExportTaskFinished() {
         mButtonExport.setEnabled(true);
         mProgressBar.setVisibility(View.INVISIBLE);
     }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.widget.Toast;
 
 import com.battlelancer.seriesguide.dataliberation.model.Episode;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
@@ -16,6 +17,7 @@ import com.battlelancer.seriesguide.util.Lists;
 import com.google.myjson.Gson;
 import com.google.myjson.stream.JsonWriter;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,7 +33,7 @@ import java.io.OutputStreamWriter;
 public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
 
     public interface OnExportTaskFinishedListener {
-        public void onExportTaskFinished(boolean isSuccessful);
+        public void onExportTaskFinished();
     }
 
     private Context mContext;
@@ -45,7 +47,7 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
     @Override
     protected Integer doInBackground(Void... params) {
         if (!AndroidUtils.isExtStorageAvailable()) {
-            return -1;
+            return 0;
         }
 
         final Cursor shows = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[] {
@@ -80,9 +82,23 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
     }
 
     @Override
-    protected void onPostExecute(Integer result) {
+    protected void onPostExecute(Integer resultCode) {
+        int messageId;
+        switch (resultCode) {
+            case 1:
+                messageId = R.string.backup_success;
+                break;
+            case 0:
+                messageId = R.string.backup_failed_nosd;
+                break;
+            default:
+                messageId = R.string.backup_failed;
+                break;
+        }
+        Toast.makeText(mContext, messageId, Toast.LENGTH_LONG).show();
+
         if (mListener != null) {
-            mListener.onExportTaskFinished(result == 1);
+            mListener.onExportTaskFinished();
         }
     }
 
