@@ -65,9 +65,12 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
             return 0;
         }
 
-        final Cursor shows = mContext.getContentResolver().query(Shows.CONTENT_URI, new String[] {
-                Shows._ID, Shows.TITLE, Shows.FAVORITE, Shows.HIDDEN
-        }, null, null, null);
+        final Cursor shows = mContext.getContentResolver().query(
+                Shows.CONTENT_URI,
+                new String[] {
+                        Shows._ID, Shows.TITLE, Shows.FAVORITE, Shows.HIDDEN, Shows.AIRSTIME,
+                        Shows.AIRSDAYOFWEEK, Shows.GETGLUEID, Shows.LASTWATCHEDID
+                }, null, null, null);
 
         if (shows == null) {
             return -1;
@@ -129,6 +132,10 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
             show.title = shows.getString(1);
             show.favorite = shows.getInt(2) == 1;
             show.hidden = shows.getInt(3) == 1;
+            show.airtime = shows.getLong(4);
+            show.airday = shows.getString(5);
+            show.checkInGetGlueId = shows.getString(6);
+            show.lastWatchedEpisode = shows.getInt(7);
 
             addSeasons(show);
 

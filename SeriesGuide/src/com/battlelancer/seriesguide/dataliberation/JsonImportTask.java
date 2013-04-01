@@ -133,6 +133,10 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
         showValues.put(Shows.TITLE, show.title);
         showValues.put(Shows.FAVORITE, show.favorite);
         showValues.put(Shows.HIDDEN, show.hidden);
+        showValues.put(Shows.AIRSTIME, show.airtime);
+        showValues.put(Shows.AIRSDAYOFWEEK, show.airday);
+        showValues.put(Shows.GETGLUEID, show.checkInGetGlueId);
+        showValues.put(Shows.LASTWATCHEDID, show.lastWatchedEpisode);
         mContext.getContentResolver().insert(Shows.CONTENT_URI, showValues);
 
         if (show.seasons == null) {

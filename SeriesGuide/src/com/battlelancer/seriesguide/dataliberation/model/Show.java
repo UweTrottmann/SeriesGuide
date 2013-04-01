@@ -16,4 +16,14 @@ public class Show {
     public boolean favorite;
 
     public boolean hidden;
+    
+    public long airtime;
+    
+    public String airday;
+
+    @SerializedName("check_in_getglue_id")
+    public String checkInGetGlueId;
+
+    @SerializedName("last_watched_episode")
+    public int lastWatchedEpisode;
 }
