@@ -1,3 +1,19 @@
+/*
+ * Copyright 2013 Uwe Trottmann
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
 
 package com.battlelancer.seriesguide.dataliberation;
 
@@ -15,7 +31,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.util.Lists;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.myjson.Gson;
 import com.google.myjson.stream.JsonReader;
@@ -27,7 +42,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 /**
  * Import a show database from a human-readable JSON file on external storage.
@@ -106,7 +120,7 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
                 break;
         }
         Toast.makeText(mContext, messageId, Toast.LENGTH_LONG).show();
-        
+
         if (mListener != null) {
             mListener.onTaskFinished();
         }
@@ -121,31 +135,60 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
         showValues.put(Shows.HIDDEN, show.hidden);
         mContext.getContentResolver().insert(Shows.CONTENT_URI, showValues);
 
-        final ArrayList<ContentValues> seasonBatch = Lists.newArrayList();
-        final ArrayList<ContentValues> episodeBatch = Lists.newArrayList();
-        buildSeasonAndEpisodeBatches(show, seasonBatch, episodeBatch);
+        if (show.seasons == null) {
+            return;
+        }
+
+        ContentValues[][] seasonsAndEpisodes = buildSeasonAndEpisodeBatches(show);
 
         // Insert all seasons
         mContext.getContentResolver().bulkInsert(Seasons.CONTENT_URI,
-                (ContentValues[]) seasonBatch.toArray());
+                (ContentValues[]) seasonsAndEpisodes[0]);
 
         // Insert all episodes
         mContext.getContentResolver().bulkInsert(Episodes.CONTENT_URI,
-                (ContentValues[]) episodeBatch.toArray());
+                (ContentValues[]) seasonsAndEpisodes[1]);
     }
 
-    private void buildSeasonAndEpisodeBatches(Show show, ArrayList<ContentValues> seasonBatch,
-            ArrayList<ContentValues> episodeBatch) {
+    /**
+     * Returns all seasons and episodes of this show in neat
+     * {@link ContentValues} packages put into arrays. The first array returned
+     * includes all seasons, the second array all episodes.
+     */
+    private ContentValues[][] buildSeasonAndEpisodeBatches(Show show) {
+        // Initialize arrays
+        ContentValues[] seasonBatch = new ContentValues[show.seasons.size()];
+        int episodesSize = 0;
         for (Season season : show.seasons) {
+            if (season.episodes != null) {
+                episodesSize += season.episodes.size();
+            }
+        }
+        ContentValues[] episodeBatch = new ContentValues[episodesSize];
+
+        // Populate arrays...
+        int seasonIdx = 0;
+        int episodeIdx = 0;
+        for (Season season : show.seasons) {
+            // ...with each season
             ContentValues seasonValues = new ContentValues();
             seasonValues.put(Seasons._ID, season.tvdbId);
+            seasonValues.put(Shows.REF_SHOW_ID, show.tvdbId);
             seasonValues.put(Seasons.COMBINED, season.season);
 
-            seasonBatch.add(seasonValues);
+            seasonBatch[seasonIdx] = seasonValues;
+            seasonIdx++;
 
+            if (season.episodes == null) {
+                continue;
+            }
+
+            // ...and its episodes
             for (Episode episode : season.episodes) {
                 ContentValues episodeValues = new ContentValues();
                 episodeValues.put(Episodes._ID, episode.tvdbId);
+                episodeValues.put(Shows.REF_SHOW_ID, show.tvdbId);
+                episodeValues.put(Seasons.REF_SEASON_ID, season.tvdbId);
                 episodeValues.put(Episodes.NUMBER, episode.episode);
                 episodeValues.put(Episodes.ABSOLUTE_NUMBER, episode.episodeAbsolute);
                 episodeValues.put(Episodes.TITLE, episode.title);
@@ -153,9 +196,14 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
                 episodeValues.put(Episodes.COLLECTED, episode.collected);
                 episodeValues.put(Episodes.FIRSTAIREDMS, episode.firstAired);
 
-                episodeBatch.add(episodeValues);
+                episodeBatch[episodeIdx] = episodeValues;
+                episodeIdx++;
             }
         }
+
+        return new ContentValues[][] {
+                seasonBatch, episodeBatch
+        };
     }
 
 }
