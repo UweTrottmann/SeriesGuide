@@ -18,9 +18,11 @@
 package com.battlelancer.seriesguide.loaders;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.apibuilder.ApiException;
@@ -48,13 +50,15 @@ public class TmdbMoviesLoader extends GenericSimpleLoader<List<Movie>> {
     @Override
     public List<Movie> loadInBackground() {
         ServiceManager manager = ServiceUtils.getTmdbServiceManager(getContext());
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String language = prefs.getString(SeriesGuidePreferences.KEY_LANGUAGE, "en");
 
         try {
             ResultsPage page;
             if (TextUtils.isEmpty(mQuery)) {
-                page = manager.moviesService().nowPlaying().fire();
+                page = manager.moviesService().nowPlaying().language(language)fire();
             } else {
-                page = manager.searchService().movieSearch(mQuery).fire();
+                page = manager.searchService().movieSearch(mQuery).language(language).fire();
             }
             if (page != null && page.results != null) {
                 return page.results;
