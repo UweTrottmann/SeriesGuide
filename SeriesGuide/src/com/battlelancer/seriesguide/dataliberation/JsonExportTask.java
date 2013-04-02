@@ -274,10 +274,8 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
         season.episodes = Lists.newArrayList();
         final Cursor episodesCursor = mContext.getContentResolver().query(
                 Episodes.buildEpisodesOfSeasonUri(String.valueOf(season.tvdbId)),
-                new String[] {
-                        Episodes._ID, Episodes.NUMBER, Episodes.ABSOLUTE_NUMBER, Episodes.WATCHED,
-                        Episodes.COLLECTED, Episodes.TITLE, Episodes.FIRSTAIREDMS
-                }, null, null, null);
+                mIsFullDump ? EpisodesQuery.PROJECTION_FULL : EpisodesQuery.PROJECTION, null, null,
+                EpisodesQuery.SORT);
 
         if (episodesCursor == null) {
             return;
@@ -285,13 +283,24 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
 
         while (episodesCursor.moveToNext()) {
             Episode episode = new Episode();
-            episode.tvdbId = episodesCursor.getInt(0);
-            episode.episode = episodesCursor.getInt(1);
-            episode.episodeAbsolute = episodesCursor.getInt(2);
-            episode.watched = episodesCursor.getInt(3) == 1;
-            episode.collected = episodesCursor.getInt(4) == 1;
-            episode.title = episodesCursor.getString(5);
-            episode.firstAired = episodesCursor.getLong(6);
+            episode.tvdbId = episodesCursor.getInt(EpisodesQuery.ID);
+            episode.episode = episodesCursor.getInt(EpisodesQuery.NUMBER);
+            episode.episodeAbsolute = episodesCursor.getInt(EpisodesQuery.NUMBER_ABSOLUTE);
+            episode.watched = episodesCursor.getInt(EpisodesQuery.WATCHED) == 1;
+            episode.collected = episodesCursor.getInt(EpisodesQuery.COLLECTED) == 1;
+            episode.title = episodesCursor.getString(EpisodesQuery.TITLE);
+            episode.firstAired = episodesCursor.getLong(EpisodesQuery.FIRSTAIRED);
+            episode.imdbId = episodesCursor.getString(EpisodesQuery.IMDBID);
+            if (mIsFullDump) {
+                episode.episodeDvd = episodesCursor.getDouble(EpisodesQuery.NUMBER_DVD);
+                episode.overview = episodesCursor.getString(EpisodesQuery.OVERVIEW);
+                episode.image = episodesCursor.getString(EpisodesQuery.IMAGE);
+                episode.writers = episodesCursor.getString(EpisodesQuery.WRITERS);
+                episode.gueststars = episodesCursor.getString(EpisodesQuery.GUESTSTARS);
+                episode.directors = episodesCursor.getString(EpisodesQuery.DIRECTORS);
+                episode.rating = episodesCursor.getDouble(EpisodesQuery.RATING);
+                episode.lastEdited = episodesCursor.getLong(EpisodesQuery.LAST_EDITED);
+            }
 
             season.episodes.add(episode);
         }
@@ -394,6 +403,40 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
         int ACTORS = 19;
         int LAST_UPDATED = 20;
         int LAST_EDITED = 21;
+    }
+
+    public interface EpisodesQuery {
+        String[] PROJECTION = new String[] {
+                Episodes._ID, Episodes.NUMBER, Episodes.ABSOLUTE_NUMBER, Episodes.WATCHED,
+                Episodes.COLLECTED, Episodes.TITLE, Episodes.FIRSTAIREDMS, Episodes.IMDBID
+        };
+        String[] PROJECTION_FULL = new String[] {
+                Episodes._ID, Episodes.NUMBER, Episodes.ABSOLUTE_NUMBER, Episodes.WATCHED,
+                Episodes.COLLECTED, Episodes.TITLE, Episodes.FIRSTAIREDMS, Episodes.IMDBID,
+                Episodes.DVDNUMBER, Episodes.OVERVIEW, Episodes.IMAGE, Episodes.WRITERS,
+                Episodes.GUESTSTARS, Episodes.DIRECTORS, Episodes.RATING, Episodes.LASTEDIT
+        };
+
+        String SORT = Episodes.NUMBER + " ASC";
+
+        int ID = 0;
+        int NUMBER = 1;
+        int NUMBER_ABSOLUTE = 2;
+        int WATCHED = 3;
+        int COLLECTED = 4;
+        int TITLE = 5;
+        int FIRSTAIRED = 6;
+        int IMDBID = 7;
+        // Full dump only
+        int NUMBER_DVD = 8;
+        int OVERVIEW = 9;
+        int IMAGE = 10;
+        int WRITERS = 11;
+        int GUESTSTARS = 12;
+        int DIRECTORS = 13;
+        int RATING = 14;
+        int LAST_EDITED = 15;
+
     }
 
     public interface ListsQuery {
