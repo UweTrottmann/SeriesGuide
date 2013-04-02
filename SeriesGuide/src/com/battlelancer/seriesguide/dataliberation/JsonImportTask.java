@@ -276,7 +276,7 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
         }
 
         // Insert the lists items
-        ArrayList<ListItem> items = com.battlelancer.seriesguide.util.Lists.newArrayList();
+        ArrayList<ContentValues> items = com.battlelancer.seriesguide.util.Lists.newArrayList();
         for (ListItem item : list.items) {
             int type;
             if (ListItemTypesExport.SHOW.equals(item.type)) {
@@ -295,7 +295,7 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
             itemValues.put(ListItems.ITEM_REF_ID, item.tvdbId);
             itemValues.put(ListItems.TYPE, type);
 
-            items.add(item);
+            items.add(itemValues);
         }
 
         ContentValues[] itemsArray = new ContentValues[items.size()];
