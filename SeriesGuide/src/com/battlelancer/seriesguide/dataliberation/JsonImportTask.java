@@ -195,6 +195,7 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
                 episodeValues.put(Seasons.REF_SEASON_ID, season.tvdbId);
                 episodeValues.put(Episodes.NUMBER, episode.episode);
                 episodeValues.put(Episodes.ABSOLUTE_NUMBER, episode.episodeAbsolute);
+                episodeValues.put(Episodes.SEASON, season.season);
                 episodeValues.put(Episodes.TITLE, episode.title);
                 episodeValues.put(Episodes.WATCHED, episode.watched);
                 episodeValues.put(Episodes.COLLECTED, episode.collected);
