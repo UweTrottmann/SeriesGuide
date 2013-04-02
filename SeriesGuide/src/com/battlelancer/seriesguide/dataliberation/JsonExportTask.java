@@ -55,6 +55,7 @@ import java.io.OutputStreamWriter;
 public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
 
     public static final String EXPORT_FOLDER = "SeriesGuide";
+    public static final String EXPORT_FOLDER_AUTO = "SeriesGuide" + File.separator + "AutoBackup";
     public static final String EXPORT_JSON_FILE_SHOWS = "sg-shows-export.json";
     public static final String EXPORT_JSON_FILE_LISTS = "sg-lists-export.json";
 
@@ -77,7 +78,7 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
     private Context mContext;
     private OnTaskFinishedListener mListener;
     private boolean mIsFullDump;
-    private boolean mIsSilentMode;
+    private boolean mIsAutoBackupMode;
 
     /**
      * Exports the show and lists database to a JSON file each into the
@@ -100,7 +101,7 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
             boolean isSilentMode) {
         this(context, listener);
         mIsFullDump = isFullDump;
-        mIsSilentMode = isSilentMode;
+        mIsAutoBackupMode = isSilentMode;
     }
 
     @Override
@@ -113,7 +114,7 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
         // Ensure the export directory exists
         File path = new File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                EXPORT_FOLDER);
+                mIsAutoBackupMode ? EXPORT_FOLDER_AUTO : EXPORT_FOLDER);
         path.mkdirs();
 
         /*
@@ -172,7 +173,7 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected void onPostExecute(Integer result) {
-        if (!mIsSilentMode) {
+        if (!mIsAutoBackupMode) {
             int messageId;
             switch (result) {
                 case SUCCESS:
