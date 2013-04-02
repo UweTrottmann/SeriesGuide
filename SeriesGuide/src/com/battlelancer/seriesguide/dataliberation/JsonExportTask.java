@@ -69,10 +69,16 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
 
     private Context mContext;
     private OnTaskFinishedListener mListener;
+    private boolean mIsSilentMode;
 
     public JsonExportTask(Context context, OnTaskFinishedListener listener) {
         mContext = context;
         mListener = listener;
+    }
+
+    public JsonExportTask(Context context, OnTaskFinishedListener listener, boolean isSilentMode) {
+        this(context, listener);
+        mIsSilentMode = isSilentMode;
     }
 
     @Override
@@ -143,19 +149,21 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected void onPostExecute(Integer result) {
-        int messageId;
-        switch (result) {
-            case SUCCESS:
-                messageId = R.string.backup_success;
-                break;
-            case ERROR_STORAGE_ACCESS:
-                messageId = R.string.backup_failed_nosd;
-                break;
-            default:
-                messageId = R.string.backup_failed;
-                break;
+        if (!mIsSilentMode) {
+            int messageId;
+            switch (result) {
+                case SUCCESS:
+                    messageId = R.string.backup_success;
+                    break;
+                case ERROR_STORAGE_ACCESS:
+                    messageId = R.string.backup_failed_nosd;
+                    break;
+                default:
+                    messageId = R.string.backup_failed;
+                    break;
+            }
+            Toast.makeText(mContext, messageId, Toast.LENGTH_LONG).show();
         }
-        Toast.makeText(mContext, messageId, Toast.LENGTH_LONG).show();
 
         if (mListener != null) {
             mListener.onTaskFinished();
