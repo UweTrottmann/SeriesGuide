@@ -61,6 +61,12 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
     private static final int ERROR_STORAGE_ACCESS = 0;
     private static final int ERROR = -1;
 
+    public interface ListItemTypesExport {
+        String SHOW = "show";
+        String SEASON = "season";
+        String EPISODE = "episode";
+    }
+
     private Context mContext;
     private OnTaskFinishedListener mListener;
 
@@ -245,7 +251,7 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
 
         while (lists.moveToNext()) {
             List list = new List();
-            list.id = lists.getString(ListsQuery.ID);
+            list.listId = lists.getString(ListsQuery.ID);
             list.name = lists.getString(ListsQuery.NAME);
 
             addListItems(list);
@@ -262,7 +268,7 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
                 ListItems.CONTENT_URI, ListItemsQuery.PROJECTION,
                 ListItemsQuery.SELECTION,
                 new String[] {
-                    list.id
+                    list.listId
                 }, null);
         if (listItems == null) {
             return;
@@ -271,17 +277,17 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
         list.items = Lists.newArrayList();
         while (listItems.moveToNext()) {
             ListItem item = new ListItem();
-            item.id = listItems.getString(ListItemsQuery.ID);
+            item.listItemId = listItems.getString(ListItemsQuery.ID);
             item.tvdbId = listItems.getInt(ListItemsQuery.ITEM_REF_ID);
             switch (listItems.getInt(ListItemsQuery.TYPE)) {
                 case ListItemTypes.SHOW:
-                    item.type = "show";
+                    item.type = ListItemTypesExport.SHOW;
                     break;
                 case ListItemTypes.SEASON:
-                    item.type = "season";
+                    item.type = ListItemTypesExport.SEASON;
                     break;
                 case ListItemTypes.EPISODE:
-                    item.type = "episode";
+                    item.type = ListItemTypesExport.EPISODE;
                     break;
             }
 
@@ -322,14 +328,16 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
 
     public interface ListItemsQuery {
         String[] PROJECTION = new String[] {
-                ListItems.LIST_ITEM_ID, ListItems.ITEM_REF_ID, ListItems.TYPE
+                ListItems.LIST_ITEM_ID, SeriesContract.Lists.LIST_ID, ListItems.ITEM_REF_ID,
+                ListItems.TYPE
         };
 
         String SELECTION = SeriesContract.Lists.LIST_ID + "=?";
 
         int ID = 0;
-        int ITEM_REF_ID = 1;
-        int TYPE = 2;
+        int LIST_ID = 1;
+        int ITEM_REF_ID = 2;
+        int TYPE = 3;
     }
 
 }

@@ -5,7 +5,8 @@ import com.google.myjson.annotations.SerializedName;
 
 public class ListItem {
 
-    public String id;
+    @SerializedName("list_item_id")
+    public String listItemId;
 
     @SerializedName("tvdb_id")
     public int tvdbId;

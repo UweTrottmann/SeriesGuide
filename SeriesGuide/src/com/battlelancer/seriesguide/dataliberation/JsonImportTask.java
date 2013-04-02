@@ -23,12 +23,17 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.widget.Toast;
 
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport;
 import com.battlelancer.seriesguide.dataliberation.model.Episode;
+import com.battlelancer.seriesguide.dataliberation.model.List;
+import com.battlelancer.seriesguide.dataliberation.model.ListItem;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
+import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -42,6 +47,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 /**
  * Import a show database from a human-readable JSON file on external storage.
@@ -104,6 +110,36 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
             while (reader.hasNext()) {
                 Show show = gson.fromJson(reader, Show.class);
                 addShowToDatabase(show);
+            }
+
+            reader.endArray();
+            reader.close();
+
+        } catch (IOException e) {
+            return ERROR;
+        }
+
+        /*
+         * Lists
+         */
+        File backupLists = new File(path, JsonExportTask.EXPORT_JSON_FILE_LISTS);
+        if (!backupLists.exists() || !backupLists.canRead()) {
+            // Skip lists if the file is not accessible
+            return SUCCESS;
+        }
+
+        // Access JSON from backup folder to create new database
+        try {
+            InputStream in = new FileInputStream(backupLists);
+
+            Gson gson = new Gson();
+
+            JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+            reader.beginArray();
+
+            while (reader.hasNext()) {
+                List list = gson.fromJson(reader, List.class);
+                addListToDatabase(list);
             }
 
             reader.endArray();
@@ -228,4 +264,41 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
         };
     }
 
+    private void addListToDatabase(List list) {
+        // Insert the list
+        ContentValues values = new ContentValues();
+        values.put(Lists.LIST_ID, list.listId);
+        values.put(Lists.NAME, list.name);
+        mContext.getContentResolver().insert(Lists.CONTENT_URI, values);
+
+        if (list.items == null || list.items.isEmpty()) {
+            return;
+        }
+
+        // Insert the lists items
+        ArrayList<ListItem> items = com.battlelancer.seriesguide.util.Lists.newArrayList();
+        for (ListItem item : list.items) {
+            int type;
+            if (ListItemTypesExport.SHOW.equals(item.type)) {
+                type = ListItemTypes.SHOW;
+            } else if (ListItemTypesExport.SEASON.equals(item.type)) {
+                type = ListItemTypes.SEASON;
+            } else if (ListItemTypesExport.EPISODE.equals(item.type)) {
+                type = ListItemTypes.EPISODE;
+            } else {
+                // Unknown item type, skip
+                continue;
+            }
+            ContentValues itemValues = new ContentValues();
+            itemValues.put(ListItems.LIST_ITEM_ID, item.listItemId);
+            itemValues.put(Lists.LIST_ID, list.listId);
+            itemValues.put(ListItems.ITEM_REF_ID, item.tvdbId);
+            itemValues.put(ListItems.TYPE, type);
+
+            items.add(item);
+        }
+
+        ContentValues[] itemsArray = new ContentValues[items.size()];
+        mContext.getContentResolver().bulkInsert(ListItems.CONTENT_URI, items.toArray(itemsArray));
+    }
 }
