@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ProgressBar;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -39,6 +40,7 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
     private Button mButtonExport;
     private Button mButtonImport;
     private ProgressBar mProgressBar;
+    private CheckBox mCheckBoxFullDump;
     private AsyncTask<Void, Void, Integer> mTask;
 
     @Override
@@ -59,6 +61,7 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
         mButtonExport = (Button) v.findViewById(R.id.buttonExport);
         mButtonImport = (Button) v.findViewById(R.id.buttonImport);
         mProgressBar = (ProgressBar) v.findViewById(R.id.progressBar);
+        mCheckBoxFullDump = (CheckBox) v.findViewById(R.id.checkBoxFullDump);
 
         return v;
     }
@@ -73,7 +76,8 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
             public void onClick(View v) {
                 setProgressLock(true);
 
-                mTask = new JsonExportTask(context, DataLiberationFragment.this);
+                mTask = new JsonExportTask(context, DataLiberationFragment.this, mCheckBoxFullDump
+                        .isChecked(), false);
                 mTask.execute();
             }
         });

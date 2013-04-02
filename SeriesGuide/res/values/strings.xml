@@ -343,6 +343,7 @@
 
     <!-- Backup and Restore -->
     <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
+    <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
     <string name="backup_path"><b>Backup folder</b></string>
     <string name="backup_version"><b>Database version</b></string>
     <string name="backup_failed_nosd">Can\'t backup. The backup folder is not available.</string>

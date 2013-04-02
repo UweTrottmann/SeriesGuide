@@ -16,11 +16,19 @@
             android:text="@string/backup"
             android:textAppearance="@style/TextAppearance.Large.Light" />
 
+        <CheckBox
+            android:id="@+id/checkBoxFullDump"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewTitle"
+            android:layout_centerHorizontal="true"
+            android:text="@string/backup_full_dump" />
+
         <LinearLayout
             android:id="@+id/buttons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textViewTitle"
+            android:layout_below="@+id/checkBoxFullDump"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/default_padding"
             android:layout_marginTop="@dimen/default_padding" >
