@@ -146,7 +146,7 @@ public class TaskManager {
      */
     public void tryBackupTask() {
         if (!isUpdateTaskRunning(false) && !isAddTaskRunning()) {
-            mBackupTask = new JsonExportTask(mContext, null, true);
+            mBackupTask = new JsonExportTask(mContext, null, false, true);
             mBackupTask.execute();
         }
     }

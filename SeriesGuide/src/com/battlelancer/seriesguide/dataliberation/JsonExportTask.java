@@ -35,6 +35,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.Lists;
+import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 import com.google.myjson.Gson;
 import com.google.myjson.stream.JsonWriter;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -61,6 +62,12 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
     private static final int ERROR_STORAGE_ACCESS = 0;
     private static final int ERROR = -1;
 
+    public interface ShowStatusExport {
+        String CONTINUING = "continuing";
+        String ENDED = "ended";
+        String UNKNOWN = "unknown";
+    }
+
     public interface ListItemTypesExport {
         String SHOW = "show";
         String SEASON = "season";
@@ -69,15 +76,30 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
 
     private Context mContext;
     private OnTaskFinishedListener mListener;
+    private boolean mIsFullDump;
     private boolean mIsSilentMode;
 
+    /**
+     * Exports the show and lists database to a JSON file each into the
+     * Downloads folder on external storage. By default dumps only minimum
+     * required data and shows result toasts.
+     */
     public JsonExportTask(Context context, OnTaskFinishedListener listener) {
         mContext = context;
         mListener = listener;
     }
 
-    public JsonExportTask(Context context, OnTaskFinishedListener listener, boolean isSilentMode) {
+    /**
+     * Same as {@link JsonExportTask} but allows to set parameters.
+     * 
+     * @param isFullDump Whether to also export meta-data like descriptions,
+     *            ratings, actors, etc. Increases file size about 2-4 times.
+     * @param isSilentMode Whether to show result toasts.
+     */
+    public JsonExportTask(Context context, OnTaskFinishedListener listener, boolean isFullDump,
+            boolean isSilentMode) {
         this(context, listener);
+        mIsFullDump = isFullDump;
         mIsSilentMode = isSilentMode;
     }
 
@@ -99,7 +121,8 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
          */
         final Cursor shows = mContext.getContentResolver().query(
                 Shows.CONTENT_URI,
-                ShowsQuery.PROJECTION, null, null, ShowsQuery.SORT);
+                mIsFullDump ? ShowsQuery.PROJECTION_FULL : ShowsQuery.PROJECTION,
+                null, null, ShowsQuery.SORT);
         if (shows == null) {
             return ERROR;
         }
@@ -112,7 +135,7 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
         try {
             OutputStream out = new FileOutputStream(backup);
 
-            writeJsonStream(out, shows);
+            writeJsonStreamShows(out, shows);
         } catch (IOException e) {
             // Backup failed
             return ERROR;
@@ -170,7 +193,7 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
         }
     }
 
-    private void writeJsonStream(OutputStream out, Cursor shows) throws IOException {
+    private void writeJsonStreamShows(OutputStream out, Cursor shows) throws IOException {
         Gson gson = new Gson();
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
         writer.setIndent("  ");
@@ -186,6 +209,31 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
             show.airday = shows.getString(ShowsQuery.AIRDAY);
             show.checkInGetGlueId = shows.getString(ShowsQuery.GETGLUEID);
             show.lastWatchedEpisode = shows.getInt(ShowsQuery.LASTWATCHEDID);
+            show.poster = shows.getString(ShowsQuery.POSTER);
+            show.contentRating = shows.getString(ShowsQuery.CONTENTRATING);
+            switch (shows.getInt(ShowsQuery.STATUS)) {
+                case ShowStatus.CONTINUING:
+                    show.status = ShowStatusExport.CONTINUING;
+                    break;
+                case ShowStatus.ENDED:
+                    show.status = ShowStatusExport.ENDED;
+                    break;
+                default:
+                    show.status = ShowStatusExport.UNKNOWN;
+                    break;
+            }
+            show.runtime = shows.getInt(ShowsQuery.RUNTIME);
+            show.network = shows.getString(ShowsQuery.NETWORK);
+            show.imdbId = shows.getString(ShowsQuery.IMDBID);
+            show.firstAired = shows.getString(ShowsQuery.FIRSTAIRED);
+            if (mIsFullDump) {
+                show.overview = shows.getString(ShowsQuery.OVERVIEW);
+                show.rating = shows.getDouble(ShowsQuery.RATING);
+                show.genres = shows.getString(ShowsQuery.GENRES);
+                show.actors = shows.getString(ShowsQuery.ACTORS);
+                show.lastUpdated = shows.getLong(ShowsQuery.LAST_UPDATED);
+                show.lastEdited = shows.getLong(ShowsQuery.LAST_EDITED);
+            }
 
             addSeasons(show);
 
@@ -308,7 +356,17 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
     public interface ShowsQuery {
         String[] PROJECTION = new String[] {
                 Shows._ID, Shows.TITLE, Shows.FAVORITE, Shows.HIDDEN, Shows.AIRSTIME,
-                Shows.AIRSDAYOFWEEK, Shows.GETGLUEID, Shows.LASTWATCHEDID
+                Shows.AIRSDAYOFWEEK, Shows.GETGLUEID, Shows.LASTWATCHEDID,
+                Shows.POSTER, Shows.CONTENTRATING, Shows.STATUS, Shows.RUNTIME, Shows.NETWORK,
+                Shows.IMDBID, Shows.SYNCENABLED, Shows.FIRSTAIRED,
+        };
+        String[] PROJECTION_FULL = new String[] {
+                Shows._ID, Shows.TITLE, Shows.FAVORITE, Shows.HIDDEN, Shows.AIRSTIME,
+                Shows.AIRSDAYOFWEEK, Shows.GETGLUEID, Shows.LASTWATCHEDID,
+                Shows.POSTER, Shows.CONTENTRATING, Shows.STATUS, Shows.RUNTIME, Shows.NETWORK,
+                Shows.IMDBID, Shows.SYNCENABLED, Shows.FIRSTAIRED,
+                Shows.OVERVIEW, Shows.RATING, Shows.GENRES, Shows.ACTORS,
+                Shows.LASTUPDATED, Shows.LASTEDIT
         };
 
         String SORT = Shows.TITLE + " COLLATE NOCASE ASC";
@@ -321,6 +379,21 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
         int AIRDAY = 5;
         int GETGLUEID = 6;
         int LASTWATCHEDID = 7;
+        int POSTER = 8;
+        int CONTENTRATING = 9;
+        int STATUS = 10;
+        int RUNTIME = 11;
+        int NETWORK = 12;
+        int IMDBID = 13;
+        int SYNC = 14;
+        int FIRSTAIRED = 15;
+        // Full dump only
+        int OVERVIEW = 16;
+        int RATING = 17;
+        int GENRES = 18;
+        int ACTORS = 19;
+        int LAST_UPDATED = 20;
+        int LAST_EDITED = 21;
     }
 
     public interface ListsQuery {
