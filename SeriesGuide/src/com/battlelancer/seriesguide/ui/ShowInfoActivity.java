@@ -39,6 +39,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.widget.ShareActionProvider;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.items.Series;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -115,7 +116,7 @@ public class ShowInfoActivity extends BaseActivity {
             onRateOnTrakt();
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
-            ListsDialogFragment.showListsDialog(String.valueOf(getShowId()), 1,
+            ListsDialogFragment.showListsDialog(String.valueOf(getShowId()), ListItemTypes.SHOW,
                     getSupportFragmentManager());
             return true;
         }

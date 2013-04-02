@@ -52,6 +52,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
@@ -186,8 +187,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
             fireTrackerEvent("Manage lists");
-            ListsDialogFragment.showListsDialog(String.valueOf(getEpisodeId()), 3,
-                    getFragmentManager());
+            ListsDialogFragment.showListsDialog(String.valueOf(getEpisodeId()),
+                    ListItemTypes.EPISODE, getFragmentManager());
             return true;
         }
         return super.onOptionsItemSelected(item);

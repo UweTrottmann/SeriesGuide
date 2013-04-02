@@ -224,6 +224,12 @@ public class SeriesContract {
          */
         String TYPE = "item_type";
     }
+    
+    public interface ListItemTypes {
+        int SHOW = 1;
+        int SEASON = 2;
+        int EPISODE = 3;
+    }
 
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://"
             + SeriesGuideApplication.CONTENT_AUTHORITY);
