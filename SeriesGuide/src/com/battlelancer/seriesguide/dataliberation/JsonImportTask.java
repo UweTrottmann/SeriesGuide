@@ -50,6 +50,11 @@ import java.io.InputStreamReader;
  */
 public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
 
+    private static final int SUCCESS = 1;
+    private static final int ERROR_STORAGE_ACCESS = 0;
+    private static final int ERROR = -1;
+    private static final int ERROR_LARGE_DB_OP = -2;
+    private static final int ERROR_FILE_ACCESS = -3;
     private Context mContext;
     private OnTaskFinishedListener mListener;
 
@@ -60,13 +65,24 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected Integer doInBackground(Void... params) {
+        // Ensure external storage
         if (!AndroidUtils.isExtStorageAvailable()) {
-            return 0;
+            return ERROR_STORAGE_ACCESS;
         }
 
+        // Ensure no large database ops are running
         TaskManager tm = TaskManager.getInstance(mContext);
         if (tm.isUpdateTaskRunning(false) || tm.isAddTaskRunning()) {
-            return -1;
+            return ERROR_LARGE_DB_OP;
+        }
+
+        // Ensure JSON file is available
+        File path = new File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                JsonExportTask.EXPORT_FOLDER);
+        File backup = new File(path, JsonExportTask.EXPORT_JSON_FILE_SHOWS);
+        if (!backup.exists() || !backup.canRead()) {
+            return ERROR_FILE_ACCESS;
         }
 
         // Clean out all existing tables
@@ -77,11 +93,6 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
         mContext.getContentResolver().delete(ListItems.CONTENT_URI, null, null);
 
         // Access JSON from backup folder to create new database
-        File path = new File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                JsonExportTask.EXPORT_FOLDER);
-        File backup = new File(path, JsonExportTask.EXPORT_JSON_FILE);
-
         try {
             InputStream in = new FileInputStream(backup);
 
@@ -99,21 +110,27 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
             reader.close();
 
         } catch (IOException e) {
-            return -1;
+            return ERROR;
         }
 
-        return 1;
+        return SUCCESS;
     }
 
     @Override
     protected void onPostExecute(Integer result) {
         int messageId;
         switch (result) {
-            case 1:
+            case SUCCESS:
                 messageId = R.string.import_success;
                 break;
-            case 0:
+            case ERROR_STORAGE_ACCESS:
                 messageId = R.string.import_failed_nosd;
+                break;
+            case ERROR_FILE_ACCESS:
+                messageId = R.string.import_failed_nofile;
+                break;
+            case ERROR_LARGE_DB_OP:
+                messageId = R.string.update_inprogress;
                 break;
             default:
                 messageId = R.string.import_failed;

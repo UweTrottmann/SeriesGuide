@@ -24,9 +24,14 @@ import android.os.Environment;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.dataliberation.model.Episode;
+import com.battlelancer.seriesguide.dataliberation.model.List;
+import com.battlelancer.seriesguide.dataliberation.model.ListItem;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
+import com.battlelancer.seriesguide.provider.SeriesContract;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.Lists;
@@ -49,7 +54,12 @@ import java.io.OutputStreamWriter;
 public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
 
     public static final String EXPORT_FOLDER = "SeriesGuide";
-    public static final String EXPORT_JSON_FILE = "sg-database-export.json";
+    public static final String EXPORT_JSON_FILE_SHOWS = "sg-shows-export.json";
+    public static final String EXPORT_JSON_FILE_LISTS = "sg-lists-export.json";
+
+    private static final int SUCCESS = 1;
+    private static final int ERROR_STORAGE_ACCESS = 0;
+    private static final int ERROR = -1;
 
     private Context mContext;
     private OnTaskFinishedListener mListener;
@@ -61,52 +71,78 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected Integer doInBackground(Void... params) {
+        // Ensure external storage is available
         if (!AndroidUtils.isExtStorageAvailable()) {
-            return 0;
+            return ERROR_STORAGE_ACCESS;
         }
 
-        final Cursor shows = mContext.getContentResolver().query(
-                Shows.CONTENT_URI,
-                new String[] {
-                        Shows._ID, Shows.TITLE, Shows.FAVORITE, Shows.HIDDEN, Shows.AIRSTIME,
-                        Shows.AIRSDAYOFWEEK, Shows.GETGLUEID, Shows.LASTWATCHEDID
-                }, null, null, null);
-
-        if (shows == null) {
-            return -1;
-        }
-
+        // Ensure the export directory exists
         File path = new File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
                 EXPORT_FOLDER);
-        // Ensure the directory exists
         path.mkdirs();
 
-        File backup = new File(path, EXPORT_JSON_FILE);
+        /*
+         * Export shows.
+         */
+        final Cursor shows = mContext.getContentResolver().query(
+                Shows.CONTENT_URI,
+                ShowsQuery.PROJECTION, null, null, ShowsQuery.SORT);
+        if (shows == null) {
+            return ERROR;
+        }
+        if (shows.getCount() == 0) {
+            // There are no shows? Done.
+            return SUCCESS;
+        }
 
+        File backup = new File(path, EXPORT_JSON_FILE_SHOWS);
         try {
             OutputStream out = new FileOutputStream(backup);
 
             writeJsonStream(out, shows);
-
         } catch (IOException e) {
             // Backup failed
-            return -1;
+            return ERROR;
         } finally {
             shows.close();
         }
 
-        return 1;
+        /*
+         * Export lists.
+         */
+        final Cursor lists = mContext.getContentResolver().query(SeriesContract.Lists.CONTENT_URI,
+                ListsQuery.PROJECTION, null, null, ListsQuery.SORT);
+        if (lists == null) {
+            return ERROR;
+        }
+        if (lists.getCount() == 0) {
+            // There are no lists? Done.
+            return SUCCESS;
+        }
+
+        File backupLists = new File(path, EXPORT_JSON_FILE_LISTS);
+        try {
+            OutputStream out = new FileOutputStream(backupLists);
+
+            writeJsonStreamLists(out, lists);
+        } catch (IOException e) {
+            return ERROR;
+        } finally {
+            lists.close();
+        }
+
+        return SUCCESS;
     }
 
     @Override
     protected void onPostExecute(Integer result) {
         int messageId;
         switch (result) {
-            case 1:
+            case SUCCESS:
                 messageId = R.string.backup_success;
                 break;
-            case 0:
+            case ERROR_STORAGE_ACCESS:
                 messageId = R.string.backup_failed_nosd;
                 break;
             default:
@@ -128,14 +164,14 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
 
         while (shows.moveToNext()) {
             Show show = new Show();
-            show.tvdbId = shows.getInt(0);
-            show.title = shows.getString(1);
-            show.favorite = shows.getInt(2) == 1;
-            show.hidden = shows.getInt(3) == 1;
-            show.airtime = shows.getLong(4);
-            show.airday = shows.getString(5);
-            show.checkInGetGlueId = shows.getString(6);
-            show.lastWatchedEpisode = shows.getInt(7);
+            show.tvdbId = shows.getInt(ShowsQuery.ID);
+            show.title = shows.getString(ShowsQuery.TITLE);
+            show.favorite = shows.getInt(ShowsQuery.FAVORITE) == 1;
+            show.hidden = shows.getInt(ShowsQuery.HIDDEN) == 1;
+            show.airtime = shows.getLong(ShowsQuery.AIRTIME);
+            show.airday = shows.getString(ShowsQuery.AIRDAY);
+            show.checkInGetGlueId = shows.getString(ShowsQuery.GETGLUEID);
+            show.lastWatchedEpisode = shows.getInt(ShowsQuery.LASTWATCHEDID);
 
             addSeasons(show);
 
@@ -199,6 +235,101 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
         }
 
         episodesCursor.close();
+    }
+
+    private void writeJsonStreamLists(OutputStream out, Cursor lists) throws IOException {
+        Gson gson = new Gson();
+        JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
+        writer.setIndent("  ");
+        writer.beginArray();
+
+        while (lists.moveToNext()) {
+            List list = new List();
+            list.id = lists.getString(ListsQuery.ID);
+            list.name = lists.getString(ListsQuery.NAME);
+
+            addListItems(list);
+
+            gson.toJson(list, List.class, writer);
+        }
+
+        writer.endArray();
+        writer.close();
+    }
+
+    private void addListItems(List list) {
+        final Cursor listItems = mContext.getContentResolver().query(
+                ListItems.CONTENT_URI, ListItemsQuery.PROJECTION,
+                ListItemsQuery.SELECTION,
+                new String[] {
+                    list.id
+                }, null);
+        if (listItems == null) {
+            return;
+        }
+
+        list.items = Lists.newArrayList();
+        while (listItems.moveToNext()) {
+            ListItem item = new ListItem();
+            item.id = listItems.getString(ListItemsQuery.ID);
+            item.tvdbId = listItems.getInt(ListItemsQuery.ITEM_REF_ID);
+            switch (listItems.getInt(ListItemsQuery.TYPE)) {
+                case ListItemTypes.SHOW:
+                    item.type = "show";
+                    break;
+                case ListItemTypes.SEASON:
+                    item.type = "season";
+                    break;
+                case ListItemTypes.EPISODE:
+                    item.type = "episode";
+                    break;
+            }
+
+            list.items.add(item);
+        }
+
+        listItems.close();
+    }
+
+    public interface ShowsQuery {
+        String[] PROJECTION = new String[] {
+                Shows._ID, Shows.TITLE, Shows.FAVORITE, Shows.HIDDEN, Shows.AIRSTIME,
+                Shows.AIRSDAYOFWEEK, Shows.GETGLUEID, Shows.LASTWATCHEDID
+        };
+
+        String SORT = Shows.TITLE + " COLLATE NOCASE ASC";
+
+        int ID = 0;
+        int TITLE = 1;
+        int FAVORITE = 2;
+        int HIDDEN = 3;
+        int AIRTIME = 4;
+        int AIRDAY = 5;
+        int GETGLUEID = 6;
+        int LASTWATCHEDID = 7;
+    }
+
+    public interface ListsQuery {
+        String[] PROJECTION = new String[] {
+                SeriesContract.Lists.LIST_ID, SeriesContract.Lists.NAME
+        };
+
+        String SORT = SeriesContract.Lists.NAME + " COLLATE NOCASE ASC";
+
+        int ID = 0;
+        int NAME = 1;
+    }
+
+    public interface ListItemsQuery {
+        String[] PROJECTION = new String[] {
+                ListItems.LIST_ITEM_ID, ListItems.ITEM_REF_ID, ListItems.TYPE
+        };
+
+        String SELECTION = SeriesContract.Lists.LIST_ID + "=?";
+
+        int ID = 0;
+        int ITEM_REF_ID = 1;
+        int TYPE = 2;
     }
 
 }

@@ -351,7 +351,7 @@
     <string name="backup_failed">Backup failed.</string>
     <string name="import_inprogress">Restoring database…</string>
     <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
-    <string name="import_failed_nofile">There is no backup file.</string>
+    <string name="import_failed_nofile">There is no readable backup file.</string>
     <string name="import_failed_noread">The backup file is not readable.</string>
     <string name="dbupgradefailed">Your backup may be too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
     <string name="import_success">Backup successfully restored.</string>
