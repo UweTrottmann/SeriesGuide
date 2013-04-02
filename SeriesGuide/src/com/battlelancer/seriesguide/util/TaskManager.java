@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.service.TraktFlagService;
 import com.uwetrottmann.seriesguide.R;
@@ -43,7 +44,7 @@ public class TaskManager {
 
     private UpdateTask mUpdateTask;
 
-    private BackupTask mBackupTask;
+    private JsonExportTask mBackupTask;
 
     private Context mContext;
 
@@ -139,12 +140,14 @@ public class TaskManager {
         }
     }
 
-    public void tryBackupTask(String filePath) {
+    /**
+     * If no {@link UpdateTask} or {@link AddShowTask} is running a
+     * {@link JsonExportTask} is started in silent mode.
+     */
+    public void tryBackupTask() {
         if (!isUpdateTaskRunning(false) && !isAddTaskRunning()) {
-            mBackupTask = new BackupTask(mContext);
-            mBackupTask.execute(new String[] {
-                    filePath
-            });
+            mBackupTask = new JsonExportTask(mContext, null, true);
+            mBackupTask.execute();
         }
     }
 

@@ -31,7 +31,6 @@ import android.view.KeyEvent;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.enums.TraktAction;
-import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
@@ -170,9 +169,7 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
         final boolean isTime = (now - previousBackupTime) > 7 * DateUtils.DAY_IN_MILLIS;
 
         if (isTime) {
-            TaskManager.getInstance(this).tryBackupTask(
-                    getApplication().getDatabasePath(SeriesGuideDatabase.DATABASE_NAME)
-                            .getAbsolutePath());
+            TaskManager.getInstance(this).tryBackupTask();
             return true;
         } else {
             return false;
