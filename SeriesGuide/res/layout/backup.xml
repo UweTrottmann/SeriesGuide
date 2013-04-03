@@ -12,26 +12,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/default_padding"
-            android:text="@string/backup_description"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/backuppath"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_padding"
-            android:layout_marginTop="@dimen/default_padding"
-            android:text="Backup folder: n/a"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/dbversion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_padding"
-            android:layout_marginTop="@dimen/default_padding"
-            android:text="Database version: n/a"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:text="@string/backup_legacy_warning"
+            android:textAppearance="@style/TextAppearance.Medium" />
 
         <LinearLayout
             android:id="@+id/buttons"
