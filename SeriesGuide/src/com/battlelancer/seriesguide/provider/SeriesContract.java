@@ -190,7 +190,7 @@ public class SeriesContract {
          * Last time episode was edited on theTVDb.com (lastupdated field).
          * Added in db version 27.
          */
-        String LASTEDIT = "episode_lastedit";
+        String LAST_EDITED = "episode_lastedit";
 
     }
 

@@ -490,7 +490,7 @@ public class DBUtils {
     public static HashMap<Long, Long> getEpisodeMapForShow(String showId, Context context) {
         Cursor eptest = context.getContentResolver().query(
                 Episodes.buildEpisodesOfShowUri(showId), new String[] {
-                        Episodes._ID, Episodes.LASTEDIT
+                        Episodes._ID, Episodes.LAST_EDITED
                 }, null, null, null);
         HashMap<Long, Long> episodeMap = new HashMap<Long, Long>();
         if (eptest != null) {

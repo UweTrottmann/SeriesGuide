@@ -442,7 +442,7 @@ public class TheTVDB {
                      * always update last years episodes
                      */
                     long lastEditEpoch = episodeIDs.get(episodeId);
-                    if (lastEditEpoch < values.getAsLong(Episodes.LASTEDIT)
+                    if (lastEditEpoch < values.getAsLong(Episodes.LAST_EDITED)
                             || oneYearAgoEpoch < lastEditEpoch) {
                         // complete update op for episode
                         batch.add(DBUtils.buildEpisodeOp(values, false));
@@ -550,9 +550,9 @@ public class TheTVDB {
             public void end(String body) {
                 // system populated field, trimming not necessary
                 try {
-                    values.put(Episodes.LASTEDIT, Long.valueOf(body));
+                    values.put(Episodes.LAST_EDITED, Long.valueOf(body));
                 } catch (NumberFormatException e) {
-                    values.put(Episodes.LASTEDIT, 0);
+                    values.put(Episodes.LAST_EDITED, 0);
                 }
             }
         });

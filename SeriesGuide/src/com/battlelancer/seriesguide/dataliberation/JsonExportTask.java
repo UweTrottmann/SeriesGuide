@@ -415,7 +415,7 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
                 Episodes._ID, Episodes.NUMBER, Episodes.ABSOLUTE_NUMBER, Episodes.WATCHED,
                 Episodes.COLLECTED, Episodes.TITLE, Episodes.FIRSTAIREDMS, Episodes.IMDBID,
                 Episodes.DVDNUMBER, Episodes.OVERVIEW, Episodes.IMAGE, Episodes.WRITERS,
-                Episodes.GUESTSTARS, Episodes.DIRECTORS, Episodes.RATING, Episodes.LASTEDIT
+                Episodes.GUESTSTARS, Episodes.DIRECTORS, Episodes.RATING, Episodes.LAST_EDITED
         };
 
         String SORT = Episodes.NUMBER + " ASC";

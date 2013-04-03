@@ -258,7 +258,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + EpisodesColumns.IMDBID + " TEXT DEFAULT '',"
 
-            + EpisodesColumns.LASTEDIT + " INTEGER DEFAULT 0,"
+            + EpisodesColumns.LAST_EDITED + " INTEGER DEFAULT 0,"
 
             + EpisodesColumns.ABSOLUTE_NUMBER + " INTEGER"
 
@@ -516,7 +516,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + " INTEGER DEFAULT 0;");
         db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN " + EpisodesColumns.IMDBID
                 + " TEXT DEFAULT '';");
-        db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN " + EpisodesColumns.LASTEDIT
+        db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN " + EpisodesColumns.LAST_EDITED
                 + " INTEGER DEFAULT 0;");
     }
 
