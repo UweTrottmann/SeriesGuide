@@ -61,12 +61,20 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
         final String showId = getArguments().getString("showid");
 
         // make sure this show isn't added to any lists
-        boolean hasListItems = false;
+        boolean hasListItems = true;
+        /*
+         * Filter for type when looking for show list items as it looks like the
+         * where is pushed down as far as possible excluding all shows in the
+         * original list items query.
+         */
         final Cursor itemsInLists = getActivity().getContentResolver().query(
-                ListItems.CONTENT_WITH_DETAILS_URI, new String[] {
-                    Shows.REF_SHOW_ID
-                }, Shows.REF_SHOW_ID + "=?", new String[] {
-                    showId
+                ListItems.CONTENT_WITH_DETAILS_URI,
+                new String[] {
+                    ListItems.LIST_ITEM_ID
+                },
+                Shows.REF_SHOW_ID + "=? OR (" + ListItems.TYPE + "=1 AND " + ListItems.ITEM_REF_ID
+                        + "=?)", new String[] {
+                        showId, showId
                 }, null);
         if (itemsInLists != null) {
             hasListItems = itemsInLists.getCount() > 0;
