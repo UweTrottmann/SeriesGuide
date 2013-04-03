@@ -23,7 +23,6 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.seriesguide.R;
 
 public class TraktShoutsActivity extends BaseActivity {
 
@@ -54,7 +53,6 @@ public class TraktShoutsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_singlepane_empty);
 
         Bundle args = getIntent().getExtras();
         String title = args.getString(ShareItems.SHARESTRING);
@@ -64,20 +62,20 @@ public class TraktShoutsActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
             // embed the shouts fragment dialog
-            SherlockFragment newFragment;
+            SherlockFragment f;
             int tvdbId = args.getInt(ShareItems.TVDBID);
             int episode = args.getInt(ShareItems.EPISODE);
             if (tvdbId == 0) {
                 int tmdbId = args.getInt(ShareItems.TMDBID);
-                newFragment = TraktShoutsFragment.newInstanceMovie(title, tmdbId);
+                f = TraktShoutsFragment.newInstanceMovie(title, tmdbId);
             } else if (episode == 0) {
-                newFragment = TraktShoutsFragment.newInstanceShow(title, tvdbId);
+                f = TraktShoutsFragment.newInstanceShow(title, tvdbId);
             } else {
                 int season = args.getInt(ShareItems.SEASON);
-                newFragment = TraktShoutsFragment
+                f = TraktShoutsFragment
                         .newInstanceEpisode(title, tvdbId, season, episode);
             }
-            getSupportFragmentManager().beginTransaction().add(R.id.root_container, newFragment)
+            getSupportFragmentManager().beginTransaction().add(android.R.id.content, f)
                     .commit();
         }
     }

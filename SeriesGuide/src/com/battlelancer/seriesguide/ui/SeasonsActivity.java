@@ -39,7 +39,6 @@ public class SeasonsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_singlepane_empty);
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
@@ -59,7 +58,7 @@ public class SeasonsActivity extends BaseActivity {
         if (savedInstanceState == null) {
             mFragment = SeasonsFragment.newInstance(showId);
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.root_container, mFragment)
+            getSupportFragmentManager().beginTransaction().add(android.R.id.content, mFragment)
                     .commit();
         }
     }
