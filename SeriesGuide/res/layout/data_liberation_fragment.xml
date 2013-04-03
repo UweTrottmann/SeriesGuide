@@ -16,45 +16,70 @@
             android:text="@string/backup"
             android:textAppearance="@style/TextAppearance.Large.Light" />
 
-        <CheckBox
-            android:id="@+id/checkBoxFullDump"
-            android:layout_width="wrap_content"
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewTitle"
-            android:layout_centerHorizontal="true"
-            android:text="@string/backup_full_dump" />
+            android:visibility="gone" />
 
-        <LinearLayout
-            android:id="@+id/buttons"
+        <TextView
+            android:id="@+id/textViewBackupOverview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/checkBoxFullDump"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/default_padding"
+            android:layout_below="@+id/progressBar"
+            android:layout_marginTop="@dimen/default_padding"
+            android:progressDrawable="@drawable/progress_horizontal_holo_dark"
+            android:text="@string/backup_description"
+            android:textAppearance="@style/TextAppearance.Small" />
+
+        <TextView
+            android:id="@+id/textViewBackupPath"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewBackupOverview"
+            android:layout_marginTop="@dimen/default_padding"
+            android:text="@string/backup_path"
+            android:textAppearance="@style/TextAppearance.Small" />
+
+        <TextView
+            android:id="@+id/textViewBackupDatabaseVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewBackupPath"
+            android:layout_marginTop="@dimen/default_padding"
+            android:text="@string/backup_version"
+            android:textAppearance="@style/TextAppearance.Small" />
+
+        <LinearLayout
+            android:id="@+id/export"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewBackupDatabaseVersion"
             android:layout_marginTop="@dimen/default_padding" >
 
             <Button
                 android:id="@+id/buttonExport"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/inline_padding"
+                android:layout_gravity="center_vertical"
                 android:text="@string/backup_button" />
 
-            <Button
-                android:id="@+id/buttonImport"
+            <CheckBox
+                android:id="@+id/checkBoxFullDump"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/inline_padding"
-                android:text="@string/import_button" />
+                android:text="@string/backup_full_dump" />
         </LinearLayout>
 
-        <ProgressBar
-            android:id="@+id/progressBar"
+        <Button
+            android:id="@+id/buttonImport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/buttons"
-            android:layout_centerHorizontal="true"
-            android:visibility="gone" />
+            android:layout_below="@+id/export"
+            android:layout_marginTop="@dimen/large_padding"
+            android:text="@string/import_button" />
     </RelativeLayout>
 
 </ScrollView>

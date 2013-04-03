@@ -27,8 +27,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -62,6 +64,14 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
         mButtonImport = (Button) v.findViewById(R.id.buttonImport);
         mProgressBar = (ProgressBar) v.findViewById(R.id.progressBar);
         mCheckBoxFullDump = (CheckBox) v.findViewById(R.id.checkBoxFullDump);
+
+        TextView backuppath = (TextView) v.findViewById(R.id.textViewBackupPath);
+        String path = JsonExportTask.getExportPath(false).toString();
+        backuppath.setText(getString(R.string.backup_path) + ": " + path);
+
+        TextView dbVersion = (TextView) v.findViewById(R.id.textViewBackupDatabaseVersion);
+        dbVersion.setText(getString(R.string.backup_version) + ": "
+                + SeriesGuideDatabase.DATABASE_VERSION);
 
         return v;
     }
