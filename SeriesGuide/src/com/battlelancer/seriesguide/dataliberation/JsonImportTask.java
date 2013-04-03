@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.dataliberation.model.ListItem;
 import com.battlelancer.seriesguide.dataliberation.model.Season;
 import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.provider.SeriesContract;
+import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
@@ -150,6 +151,10 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
         } catch (IOException e) {
             return ERROR;
         }
+
+        // Renew search table
+        mContext.getContentResolver().query(EpisodeSearch.CONTENT_URI_RENEWFTSTABLE, null, null,
+                null, null);
 
         return SUCCESS;
     }
