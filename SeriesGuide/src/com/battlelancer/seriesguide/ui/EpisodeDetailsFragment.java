@@ -52,6 +52,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
@@ -186,8 +187,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             return true;
         } else if (itemId == R.id.menu_manage_lists) {
             fireTrackerEvent("Manage lists");
-            ListsDialogFragment.showListsDialog(String.valueOf(getEpisodeId()), 3,
-                    getFragmentManager());
+            ListsDialogFragment.showListsDialog(String.valueOf(getEpisodeId()),
+                    ListItemTypes.EPISODE, getFragmentManager());
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -385,7 +386,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             // DVD episode number
             Utils.setLabelValueOrHide(view.findViewById(R.id.labelDvd),
                     (TextView) view.findViewById(R.id.dvdNumber),
-                    cursor.getString(DetailsQuery.DVDNUMBER));
+                    cursor.getDouble(DetailsQuery.DVDNUMBER));
             // Directors
             String directors = Utils.splitAndKitTVDBStrings(cursor
                     .getString(DetailsQuery.DIRECTORS));
@@ -533,7 +534,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 Episodes.DIRECTORS, Episodes.GUESTSTARS, Episodes.WRITERS,
                 Tables.EPISODES + "." + Episodes.RATING, Episodes.IMAGE, Episodes.DVDNUMBER,
                 Episodes.TITLE, Shows.TITLE, Shows.IMDBID, Shows.RUNTIME, Shows.POSTER,
-                Seasons.REF_SEASON_ID, Episodes.COLLECTED, Episodes.IMDBID, Episodes.LASTEDIT,
+                Seasons.REF_SEASON_ID, Episodes.COLLECTED, Episodes.IMDBID, Episodes.LAST_EDITED,
                 Episodes.ABSOLUTE_NUMBER
         };
 

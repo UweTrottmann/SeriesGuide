@@ -513,6 +513,9 @@ public class Utils {
      * @return
      */
     public static String splitAndKitTVDBStrings(String tvdbstring) {
+        if (tvdbstring == null) {
+            tvdbstring = "";
+        }
         String[] splitted = tvdbstring.split("\\|");
         tvdbstring = "";
         for (String item : splitted) {
@@ -726,6 +729,17 @@ public class Utils {
             label.setVisibility(View.VISIBLE);
             text.setVisibility(View.VISIBLE);
             text.setText(value);
+        }
+    }
+
+    public static void setLabelValueOrHide(View label, TextView text, double value) {
+        if (value > 0.0) {
+            label.setVisibility(View.VISIBLE);
+            text.setVisibility(View.VISIBLE);
+            text.setText(String.valueOf(value));
+        } else {
+            label.setVisibility(View.GONE);
+            text.setVisibility(View.GONE);
         }
     }
 

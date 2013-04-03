@@ -342,16 +342,17 @@
     <string name="pref_hideimagessummary">Hide images from your photo gallery (reboot required)</string>
 
     <!-- Backup and Restore -->
-    <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
-    <string name="backup_path"><b>Backup folder</b></string>
-    <string name="backup_version"><b>Database version</b></string>
+    <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\n\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
+    <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
+    <string name="backup_path">Backup folder</string>
+    <string name="backup_version">Database version</string>
     <string name="backup_failed_nosd">Can\'t backup. The backup folder is not available.</string>
     <string name="backup_inprogress">Backing up database…</string>
     <string name="backup_success">Backup successful.</string>
     <string name="backup_failed">Backup failed.</string>
     <string name="import_inprogress">Restoring database…</string>
     <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
-    <string name="import_failed_nofile">There is no backup file.</string>
+    <string name="import_failed_nofile">There is no readable backup file.</string>
     <string name="import_failed_noread">The backup file is not readable.</string>
     <string name="dbupgradefailed">Your backup may be too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
     <string name="import_success">Backup successfully restored.</string>
@@ -364,6 +365,7 @@
     <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
     <string name="import_yes">Restore</string>
     <string name="import_no">Don\'t Restore</string>
+    <string name="import_warning">I understand my current shows and lists will be lost!</string>
 
     <!-- Check Ins -->
     <string name="checkin">Check in</string>

@@ -52,6 +52,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
@@ -77,7 +78,7 @@ import com.uwetrottmann.seriesguide.R;
  * Displays general information about a show and its next episode. Displays a
  * {@link SeasonsFragment} on larger screens.
  */
-public class OverviewFragment extends SherlockFragment implements 
+public class OverviewFragment extends SherlockFragment implements
         OnFlagListener, LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String TAG = "Overview";
@@ -232,7 +233,7 @@ public class OverviewFragment extends SherlockFragment implements
             fireTrackerEvent("Manage lists");
             if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
                 ListsDialogFragment.showListsDialog(mEpisodeCursor.getString(EpisodeQuery._ID),
-                        3, getFragmentManager());
+                        ListItemTypes.EPISODE, getFragmentManager());
             }
             return true;
         } else if (itemId == R.id.menu_search) {
@@ -628,7 +629,7 @@ public class OverviewFragment extends SherlockFragment implements
 
             if (mDualPane) {
                 buttons.setVisibility(View.VISIBLE);
-                
+
                 // check-in button
                 buttons.findViewById(R.id.checkinButton).setOnClickListener(new OnClickListener() {
                     @Override
@@ -737,7 +738,7 @@ public class OverviewFragment extends SherlockFragment implements
                 .getString(EpisodeQuery.OVERVIEW));
         Utils.setLabelValueOrHide(getView().findViewById(R.id.labelDvd), (TextView) getView()
                 .findViewById(R.id.textViewEpisodeDVDnumber), episode
-                .getString(EpisodeQuery.DVDNUMBER));
+                .getDouble(EpisodeQuery.DVDNUMBER));
         Utils.setLabelValueOrHide(getView().findViewById(R.id.labelGuestStars),
                 (TextView) getView().findViewById(R.id.TextViewEpisodeGuestStars), Utils
                         .splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));

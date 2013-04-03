@@ -47,6 +47,7 @@ import com.battlelancer.seriesguide.Constants.EpisodeSorting;
 import com.battlelancer.seriesguide.adapters.EpisodesAdapter;
 import com.battlelancer.seriesguide.adapters.EpisodesAdapter.OnFlagEpisodeListener;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
@@ -261,7 +262,7 @@ public class EpisodesFragment extends SherlockListFragment implements
             }
             case CONTEXT_MANAGE_LISTS_ID: {
                 fireTrackerEventContextMenu("Manage lists");
-                ListsDialogFragment.showListsDialog(String.valueOf(info.id), 3,
+                ListsDialogFragment.showListsDialog(String.valueOf(info.id), ListItemTypes.EPISODE,
                         getFragmentManager());
                 return true;
             }

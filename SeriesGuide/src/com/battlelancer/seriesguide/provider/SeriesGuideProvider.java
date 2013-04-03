@@ -352,6 +352,64 @@ public class SeriesGuideProvider extends ContentProvider {
         }
     }
 
+    @Override
+    public int bulkInsert(Uri uri, ContentValues[] values) {
+        /*
+         * A more efficient version of bulkInsert which matches the URI only
+         * once.
+         */
+        int numValues;
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case SHOWS: {
+                numValues = bulkInsertHelper(Tables.SHOWS, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                break;
+            }
+            case SEASONS: {
+                numValues = bulkInsertHelper(Tables.SEASONS, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                break;
+            }
+            case EPISODES: {
+                numValues = bulkInsertHelper(Tables.EPISODES, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                break;
+            }
+            case LISTS: {
+                numValues = bulkInsertHelper(Tables.LISTS, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                break;
+            }
+            case LIST_ITEMS: {
+                numValues = bulkInsertHelper(Tables.LIST_ITEMS, values);
+                getContext().getContentResolver().notifyChange(uri, null);
+                break;
+            }
+            default: {
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+            }
+        }
+
+        return numValues;
+    }
+
+    private int bulkInsertHelper(String table, ContentValues[] values) {
+        final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            int numValues = values.length;
+            for (int i = 0; i < numValues; i++) {
+                db.insertOrThrow(table, null, values[i]);
+                db.yieldIfContendedSafely();
+            }
+            db.setTransactionSuccessful();
+            return numValues;
+        } finally {
+            db.endTransaction();
+        }
+    }
+
     /**
      * Build a simple {@link SelectionBuilder} to match the requested
      * {@link Uri}. This is usually enough to support {@link #insert},
@@ -386,6 +444,9 @@ public class SeriesGuideProvider extends ContentProvider {
             case SEASONS_OFSHOW: {
                 final String showId = uri.getPathSegments().get(2);
                 return builder.table(Tables.SEASONS).where(Shows.REF_SHOW_ID + "=?", showId);
+            }
+            case SEASONS: {
+                return builder.table(Tables.SEASONS);
             }
             case SEASONS_ID: {
                 final String seasonId = Seasons.getSeasonId(uri);
@@ -470,6 +531,9 @@ public class SeriesGuideProvider extends ContentProvider {
                         .mapToTable(Episodes._ID, Tables.EPISODES)
                         .mapToTable(Episodes.RATING, Tables.EPISODES)
                         .where(Qualified.EPISODES_EPISODE_ID + "=?", episodeId);
+            }
+            case SEASONS: {
+                return builder.table(Tables.SEASONS);
             }
             case SEASONS_ID: {
                 final String seasonId = Seasons.getSeasonId(uri);
