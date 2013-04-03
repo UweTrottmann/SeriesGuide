@@ -19,6 +19,7 @@ package com.battlelancer.seriesguide.dataliberation;
 
 import android.os.Bundle;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 
 public class DataLiberationActivity extends BaseActivity {
@@ -26,6 +27,9 @@ public class DataLiberationActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
             DataLiberationFragment f = new DataLiberationFragment();
