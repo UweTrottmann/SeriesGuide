@@ -20,7 +20,6 @@ package com.battlelancer.seriesguide.dataliberation;
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport;
@@ -86,9 +85,7 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
         }
 
         // Ensure JSON file is available
-        File path = new File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                JsonExportTask.EXPORT_FOLDER);
+        File path = JsonExportTask.getExportPath(false);
         File backup = new File(path, JsonExportTask.EXPORT_JSON_FILE_SHOWS);
         if (!backup.exists() || !backup.canRead()) {
             return ERROR_FILE_ACCESS;

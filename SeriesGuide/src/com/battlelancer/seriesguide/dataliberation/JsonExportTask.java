@@ -80,6 +80,12 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
     private boolean mIsFullDump;
     private boolean mIsAutoBackupMode;
 
+    public static File getExportPath(boolean isAutoBackupMode) {
+        return new File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                isAutoBackupMode ? EXPORT_FOLDER_AUTO : EXPORT_FOLDER);
+    }
+
     /**
      * Exports the show and lists database to a JSON file each into the
      * Downloads folder on external storage. By default dumps only minimum
@@ -112,9 +118,7 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
         }
 
         // Ensure the export directory exists
-        File path = new File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                mIsAutoBackupMode ? EXPORT_FOLDER_AUTO : EXPORT_FOLDER);
+        File path = getExportPath(mIsAutoBackupMode);
         path.mkdirs();
 
         /*
