@@ -24,6 +24,7 @@ import android.os.Environment;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ListItemTypesExport;
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
 import com.battlelancer.seriesguide.dataliberation.model.Episode;
 import com.battlelancer.seriesguide.dataliberation.model.List;
 import com.battlelancer.seriesguide.dataliberation.model.ListItem;
@@ -37,6 +38,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.TaskManager;
+import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 import com.google.myjson.Gson;
 import com.google.myjson.stream.JsonReader;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -190,6 +192,29 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
         showValues.put(Shows.AIRSDAYOFWEEK, show.airday);
         showValues.put(Shows.GETGLUEID, show.checkInGetGlueId);
         showValues.put(Shows.LASTWATCHEDID, show.lastWatchedEpisode);
+        showValues.put(Shows.POSTER, show.poster);
+        showValues.put(Shows.CONTENTRATING, show.contentRating);
+        showValues.put(Shows.RUNTIME, show.runtime);
+        showValues.put(Shows.NETWORK, show.network);
+        showValues.put(Shows.IMDBID, show.imdbId);
+        showValues.put(Shows.FIRSTAIRED, show.firstAired);
+        int status;
+        if (ShowStatusExport.CONTINUING.equals(show.status)) {
+            status = ShowStatus.CONTINUING;
+        } else if (ShowStatusExport.ENDED.equals(show.status)) {
+            status = ShowStatus.ENDED;
+        } else {
+            status = ShowStatus.UNKNOWN;
+        }
+        showValues.put(Shows.STATUS, status);
+        // Full dump values
+        showValues.put(Shows.OVERVIEW, show.overview);
+        showValues.put(Shows.RATING, show.rating);
+        showValues.put(Shows.GENRES, show.genres);
+        showValues.put(Shows.ACTORS, show.actors);
+        showValues.put(Shows.LASTUPDATED, show.lastUpdated);
+        showValues.put(Shows.LASTEDIT, show.lastEdited);
+
         mContext.getContentResolver().insert(Shows.CONTENT_URI, showValues);
 
         if (show.seasons == null) {
@@ -253,6 +278,16 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
                 episodeValues.put(Episodes.WATCHED, episode.watched);
                 episodeValues.put(Episodes.COLLECTED, episode.collected);
                 episodeValues.put(Episodes.FIRSTAIREDMS, episode.firstAired);
+                episodeValues.put(Episodes.IMDBID, episode.imdbId);
+                // Full dump values
+                episodeValues.put(Episodes.DVDNUMBER, episode.episodeDvd);
+                episodeValues.put(Episodes.OVERVIEW, episode.overview);
+                episodeValues.put(Episodes.IMAGE, episode.image);
+                episodeValues.put(Episodes.WRITERS, episode.writers);
+                episodeValues.put(Episodes.GUESTSTARS, episode.gueststars);
+                episodeValues.put(Episodes.DIRECTORS, episode.directors);
+                episodeValues.put(Episodes.RATING, episode.rating);
+                episodeValues.put(Episodes.LASTEDIT, episode.lastEdited);
 
                 episodeBatch[episodeIdx] = episodeValues;
                 episodeIdx++;
