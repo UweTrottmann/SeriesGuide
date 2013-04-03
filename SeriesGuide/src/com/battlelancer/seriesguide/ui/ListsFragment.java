@@ -117,6 +117,15 @@ public class ListsFragment extends SherlockFragment implements
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        /*
+         * This fixes all fragments receiving the context menu dispatch, see
+         * http://stackoverflow.com/questions/5297842/how-to-handle-
+         * oncontextitemselected-in-a-multi-fragment-activity and others.
+         */
+        if (!getUserVisibleHint()) {
+            return super.onContextItemSelected(item);
+        }
+
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
