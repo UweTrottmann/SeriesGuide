@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.DBUtils;
@@ -72,7 +73,8 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
                 new String[] {
                     ListItems.LIST_ITEM_ID
                 },
-                Shows.REF_SHOW_ID + "=? OR (" + ListItems.TYPE + "=1 AND " + ListItems.ITEM_REF_ID
+                Shows.REF_SHOW_ID + "=? OR (" + ListItems.TYPE + "=" + ListItemTypes.SHOW + " AND "
+                        + ListItems.ITEM_REF_ID
                         + "=?)", new String[] {
                         showId, showId
                 }, null);
