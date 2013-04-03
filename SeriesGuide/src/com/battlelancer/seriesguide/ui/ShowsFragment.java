@@ -52,6 +52,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
@@ -310,7 +311,7 @@ public class ShowsFragment extends SherlockFragment implements
             case CONTEXT_MANAGE_LISTS_ID: {
                 fireTrackerEvent("Manage lists");
 
-                ListsDialogFragment.showListsDialog(String.valueOf(info.id), 1,
+                ListsDialogFragment.showListsDialog(String.valueOf(info.id), ListItemTypes.SHOW,
                         getFragmentManager());
                 return true;
             }

@@ -194,6 +194,8 @@
             android:name="com.battlelancer.seriesguide.ui.QuickCheckInActivity"
             android:exported="true" >
         </activity>
+        <activity android:name="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity" >
+        </activity>
 		
         <!-- Services -->
         <service android:name="com.battlelancer.seriesguide.service.TraktFlagService" >

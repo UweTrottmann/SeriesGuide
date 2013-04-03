@@ -190,7 +190,7 @@ public class SeriesContract {
          * Last time episode was edited on theTVDb.com (lastupdated field).
          * Added in db version 27.
          */
-        String LASTEDIT = "episode_lastedit";
+        String LAST_EDITED = "episode_lastedit";
 
     }
 
@@ -223,6 +223,12 @@ public class SeriesContract {
          * Type of item: show, season or episode.
          */
         String TYPE = "item_type";
+    }
+    
+    public interface ListItemTypes {
+        int SHOW = 1;
+        int SEASON = 2;
+        int EPISODE = 3;
     }
 
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://"

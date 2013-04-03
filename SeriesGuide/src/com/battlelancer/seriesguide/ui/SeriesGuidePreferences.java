@@ -432,7 +432,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             new Thread(new Runnable() {
                 public void run() {
                     ContentValues values = new ContentValues();
-                    values.put(Episodes.LASTEDIT, 0);
+                    values.put(Episodes.LAST_EDITED, 0);
                     getContentResolver().update(Episodes.CONTENT_URI, values, null, null);
                 }
             }).start();

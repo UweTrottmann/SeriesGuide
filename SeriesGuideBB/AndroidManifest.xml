@@ -168,6 +168,8 @@
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.StatsActivity" >
         </activity>
+        <activity android:name="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity" >
+        </activity>
 		
         <!-- Services -->
         <service android:name="com.battlelancer.seriesguide.service.TraktFlagService" >
@@ -183,7 +185,10 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver>        -->
+        </receiver>
+
+
+        -->
 
 
         <!-- Widgets -->

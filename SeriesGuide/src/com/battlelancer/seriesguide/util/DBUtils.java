@@ -31,6 +31,8 @@ import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 
 import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
+import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
@@ -39,10 +41,10 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
+import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 import com.uwetrottmann.seriesguide.R;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -341,44 +343,49 @@ public class DBUtils {
      * @param isNew
      * @return
      */
-    public static ContentProviderOperation buildShowOp(Series show, Context context, boolean isNew) {
+    public static ContentProviderOperation buildShowOp(Show show, Context context, boolean isNew) {
         ContentValues values = new ContentValues();
         values = putCommonShowValues(show, values);
 
         if (isNew) {
-            values.put(Shows._ID, show.getId());
+            values.put(Shows._ID, show.tvdbId);
             return ContentProviderOperation.newInsert(Shows.CONTENT_URI).withValues(values).build();
         } else {
-            return ContentProviderOperation.newUpdate(Shows.buildShowUri(show.getId()))
+            return ContentProviderOperation
+                    .newUpdate(Shows.buildShowUri(String.valueOf(show.tvdbId)))
                     .withValues(values).build();
         }
     }
 
     /**
-     * Adds default show information from given Series object to given
-     * ContentValues.
-     * 
-     * @param show
-     * @param values
-     * @return
+     * Transforms a {@link Show} objects attributes into {@link ContentValues}
+     * using the correct {@link Shows} columns.
      */
-    private static ContentValues putCommonShowValues(Series show, ContentValues values) {
-        values.put(Shows.TITLE, show.getTitle());
-        values.put(Shows.OVERVIEW, show.getOverview());
-        values.put(Shows.ACTORS, show.getActors());
-        values.put(Shows.AIRSDAYOFWEEK, show.getAirsDayOfWeek());
-        values.put(Shows.AIRSTIME, show.getAirsTime());
-        values.put(Shows.FIRSTAIRED, show.getFirstAired());
-        values.put(Shows.GENRES, show.getGenres());
-        values.put(Shows.NETWORK, show.getNetwork());
-        values.put(Shows.RATING, show.getRating());
-        values.put(Shows.RUNTIME, show.getRuntime());
-        values.put(Shows.STATUS, show.getStatus());
-        values.put(Shows.CONTENTRATING, show.getContentRating());
-        values.put(Shows.POSTER, show.getPoster());
-        values.put(Shows.IMDBID, show.getImdbId());
-        values.put(Shows.LASTUPDATED, new Date().getTime());
-        values.put(Shows.LASTEDIT, show.getLastEdit());
+    private static ContentValues putCommonShowValues(Show show, ContentValues values) {
+        values.put(Shows.TITLE, show.title);
+        values.put(Shows.OVERVIEW, show.overview);
+        values.put(Shows.ACTORS, show.actors);
+        values.put(Shows.AIRSDAYOFWEEK, show.airday);
+        values.put(Shows.AIRSTIME, show.airtime);
+        values.put(Shows.FIRSTAIRED, show.firstAired);
+        values.put(Shows.GENRES, show.genres);
+        values.put(Shows.NETWORK, show.network);
+        values.put(Shows.RATING, show.rating);
+        values.put(Shows.RUNTIME, show.runtime);
+        values.put(Shows.CONTENTRATING, show.contentRating);
+        values.put(Shows.POSTER, show.poster);
+        values.put(Shows.IMDBID, show.imdbId);
+        values.put(Shows.LASTEDIT, show.lastEdited);
+        values.put(Shows.LASTUPDATED, System.currentTimeMillis());
+        int status;
+        if (ShowStatusExport.CONTINUING.equals(show.status)) {
+            status = ShowStatus.CONTINUING;
+        } else if (ShowStatusExport.ENDED.equals(show.status)) {
+            status = ShowStatus.ENDED;
+        } else {
+            status = ShowStatus.UNKNOWN;
+        }
+        values.put(Shows.STATUS, status);
         return values;
     }
 
@@ -483,7 +490,7 @@ public class DBUtils {
     public static HashMap<Long, Long> getEpisodeMapForShow(String showId, Context context) {
         Cursor eptest = context.getContentResolver().query(
                 Episodes.buildEpisodesOfShowUri(showId), new String[] {
-                        Episodes._ID, Episodes.LASTEDIT
+                        Episodes._ID, Episodes.LAST_EDITED
                 }, null, null, null);
         HashMap<Long, Long> episodeMap = new HashMap<Long, Long>();
         if (eptest != null) {
