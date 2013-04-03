@@ -413,7 +413,8 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
     public interface EpisodesQuery {
         String[] PROJECTION = new String[] {
                 Episodes._ID, Episodes.NUMBER, Episodes.ABSOLUTE_NUMBER, Episodes.WATCHED,
-                Episodes.COLLECTED, Episodes.TITLE, Episodes.FIRSTAIREDMS, Episodes.IMDBID
+                Episodes.COLLECTED, Episodes.TITLE, Episodes.FIRSTAIREDMS, Episodes.IMDBID,
+                Episodes.DVDNUMBER
         };
         String[] PROJECTION_FULL = new String[] {
                 Episodes._ID, Episodes.NUMBER, Episodes.ABSOLUTE_NUMBER, Episodes.WATCHED,
@@ -432,8 +433,8 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
         int TITLE = 5;
         int FIRSTAIRED = 6;
         int IMDBID = 7;
-        // Full dump only
         int NUMBER_DVD = 8;
+        // Full dump only
         int OVERVIEW = 9;
         int IMAGE = 10;
         int WRITERS = 11;
