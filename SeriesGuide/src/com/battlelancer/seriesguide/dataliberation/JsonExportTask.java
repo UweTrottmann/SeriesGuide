@@ -287,13 +287,13 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
             episode.tvdbId = episodesCursor.getInt(EpisodesQuery.ID);
             episode.episode = episodesCursor.getInt(EpisodesQuery.NUMBER);
             episode.episodeAbsolute = episodesCursor.getInt(EpisodesQuery.NUMBER_ABSOLUTE);
+            episode.episodeDvd = episodesCursor.getDouble(EpisodesQuery.NUMBER_DVD);
             episode.watched = episodesCursor.getInt(EpisodesQuery.WATCHED) == 1;
             episode.collected = episodesCursor.getInt(EpisodesQuery.COLLECTED) == 1;
             episode.title = episodesCursor.getString(EpisodesQuery.TITLE);
             episode.firstAired = episodesCursor.getLong(EpisodesQuery.FIRSTAIRED);
             episode.imdbId = episodesCursor.getString(EpisodesQuery.IMDBID);
             if (mIsFullDump) {
-                episode.episodeDvd = episodesCursor.getDouble(EpisodesQuery.NUMBER_DVD);
                 episode.overview = episodesCursor.getString(EpisodesQuery.OVERVIEW);
                 episode.image = episodesCursor.getString(EpisodesQuery.IMAGE);
                 episode.writers = episodesCursor.getString(EpisodesQuery.WRITERS);
