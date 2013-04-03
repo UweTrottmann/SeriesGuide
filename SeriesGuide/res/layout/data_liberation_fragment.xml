@@ -22,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewTitle"
+            android:indeterminate="true"
             android:visibility="gone" />
 
         <TextView
@@ -32,7 +33,7 @@
             android:layout_marginTop="@dimen/default_padding"
             android:progressDrawable="@drawable/progress_horizontal_holo_dark"
             android:text="@string/backup_description"
-            android:textAppearance="@style/TextAppearance.Small" />
+            android:textAppearance="@style/TextAppearance" />
 
         <TextView
             android:id="@+id/textViewBackupPath"
@@ -52,33 +53,38 @@
             android:text="@string/backup_version"
             android:textAppearance="@style/TextAppearance.Small" />
 
-        <LinearLayout
-            android:id="@+id/export"
+        <CheckBox
+            android:id="@+id/checkBoxFullDump"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewBackupDatabaseVersion"
-            android:layout_marginTop="@dimen/default_padding" >
+            android:layout_marginTop="@dimen/large_padding"
+            android:text="@string/backup_full_dump" />
 
-            <Button
-                android:id="@+id/buttonExport"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/backup_button" />
+        <Button
+            android:id="@+id/buttonExport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/checkBoxFullDump"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/default_padding"
+            android:text="@string/backup_button" />
 
-            <CheckBox
-                android:id="@+id/checkBoxFullDump"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/backup_full_dump" />
-        </LinearLayout>
+        <CheckBox
+            android:id="@+id/checkBoxImportWarning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/buttonExport"
+            android:layout_marginTop="@dimen/large_padding"
+            android:text="@string/import_warning" />
 
         <Button
             android:id="@+id/buttonImport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/export"
-            android:layout_marginTop="@dimen/large_padding"
+            android:layout_below="@+id/checkBoxImportWarning"
+            android:layout_marginTop="@dimen/default_padding"
+            android:enabled="false"
             android:text="@string/import_button" />
     </RelativeLayout>
 

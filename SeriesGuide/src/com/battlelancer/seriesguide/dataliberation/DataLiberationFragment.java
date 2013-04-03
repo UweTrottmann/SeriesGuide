@@ -26,6 +26,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -43,6 +45,7 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
     private Button mButtonImport;
     private ProgressBar mProgressBar;
     private CheckBox mCheckBoxFullDump;
+    private CheckBox mCheckBoxImportWarning;
     private AsyncTask<Void, Void, Integer> mTask;
 
     @Override
@@ -64,6 +67,7 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
         mButtonImport = (Button) v.findViewById(R.id.buttonImport);
         mProgressBar = (ProgressBar) v.findViewById(R.id.progressBar);
         mCheckBoxFullDump = (CheckBox) v.findViewById(R.id.checkBoxFullDump);
+        mCheckBoxImportWarning = (CheckBox) v.findViewById(R.id.checkBoxImportWarning);
 
         TextView backuppath = (TextView) v.findViewById(R.id.textViewBackupPath);
         String path = JsonExportTask.getExportPath(false).toString();
@@ -89,6 +93,12 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
                 mTask = new JsonExportTask(context, DataLiberationFragment.this, mCheckBoxFullDump
                         .isChecked(), false);
                 mTask.execute();
+            }
+        });
+        mCheckBoxImportWarning.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mButtonImport.setEnabled(isChecked);
             }
         });
         mButtonImport.setOnClickListener(new OnClickListener() {
