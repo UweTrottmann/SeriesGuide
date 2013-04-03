@@ -128,8 +128,12 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
     }
 
     private void setProgressLock(boolean isEnable) {
+        if (isEnable) {
+            mButtonImport.setEnabled(false);
+        } else {
+            mButtonImport.setEnabled(mCheckBoxImportWarning.isChecked());
+        }
         mButtonExport.setEnabled(!isEnable);
-        mButtonImport.setEnabled(!isEnable);
         mProgressBar.setVisibility(isEnable ? View.VISIBLE : View.GONE);
     }
 
