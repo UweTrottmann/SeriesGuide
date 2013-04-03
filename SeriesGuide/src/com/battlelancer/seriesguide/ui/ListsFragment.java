@@ -213,6 +213,7 @@ public class ListsFragment extends SherlockFragment implements
                         .findViewById(R.id.TextViewShowListNextEpisode);
                 viewHolder.episodeTime = (TextView) convertView.findViewById(R.id.episodetime);
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.showposter);
+                viewHolder.favorited = (ImageView) convertView.findViewById(R.id.favoritedLabel);
 
                 convertView.setTag(viewHolder);
             } else {
@@ -221,6 +222,10 @@ public class ListsFragment extends SherlockFragment implements
 
             // show title
             viewHolder.name.setText(mCursor.getString(ListItemsQuery.SHOW_TITLE));
+
+            // favorite star
+            final boolean isFavorited = mCursor.getInt(ListItemsQuery.SHOW_FAVORITE) == 1;
+            viewHolder.favorited.setVisibility(isFavorited ? View.VISIBLE : View.GONE);
 
             // item title
             int itemType = mCursor.getInt(ListItemsQuery.ITEM_TYPE);
@@ -317,7 +322,7 @@ public class ListsFragment extends SherlockFragment implements
                 ListItems._ID, ListItems.LIST_ITEM_ID, ListItems.ITEM_REF_ID, ListItems.TYPE,
                 Shows.REF_SHOW_ID, Shows.TITLE, Shows.OVERVIEW, Shows.POSTER, Shows.NETWORK,
                 Shows.AIRSTIME, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTTEXT,
-                Shows.NEXTAIRDATETEXT
+                Shows.NEXTAIRDATETEXT, Shows.FAVORITE
         };
 
         String SORTING = Shows.TITLE + " COLLATE NOCASE ASC, " + ListItems.TYPE + " ASC";
@@ -347,6 +352,8 @@ public class ListsFragment extends SherlockFragment implements
         int SHOW_NEXTTEXT = 12;
 
         int SHOW_NEXTAIRDATETEXT = 13;
+
+        int SHOW_FAVORITE = 14;
 
     }
 
