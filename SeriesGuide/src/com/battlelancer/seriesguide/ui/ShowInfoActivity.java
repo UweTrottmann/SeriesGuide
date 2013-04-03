@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.app.ShareCompat.IntentBuilder;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
 import android.view.View;
@@ -156,7 +157,7 @@ public class ShowInfoActivity extends BaseActivity {
         seriesname.setText(show.getTitle());
 
         // Overview
-        if (show.getOverview().length() == 0) {
+        if (TextUtils.isEmpty(show.getOverview())) {
             overview.setText("");
         } else {
             overview.setText(show.getOverview());

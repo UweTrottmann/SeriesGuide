@@ -738,7 +738,7 @@ public class OverviewFragment extends SherlockFragment implements
                 .getString(EpisodeQuery.OVERVIEW));
         Utils.setLabelValueOrHide(getView().findViewById(R.id.labelDvd), (TextView) getView()
                 .findViewById(R.id.textViewEpisodeDVDnumber), episode
-                .getString(EpisodeQuery.DVDNUMBER));
+                .getDouble(EpisodeQuery.DVDNUMBER));
         Utils.setLabelValueOrHide(getView().findViewById(R.id.labelGuestStars),
                 (TextView) getView().findViewById(R.id.TextViewEpisodeGuestStars), Utils
                         .splitAndKitTVDBStrings(episode.getString(EpisodeQuery.GUESTSTARS)));

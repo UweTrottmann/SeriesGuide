@@ -386,7 +386,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             // DVD episode number
             Utils.setLabelValueOrHide(view.findViewById(R.id.labelDvd),
                     (TextView) view.findViewById(R.id.dvdNumber),
-                    cursor.getString(DetailsQuery.DVDNUMBER));
+                    cursor.getDouble(DetailsQuery.DVDNUMBER));
             // Directors
             String directors = Utils.splitAndKitTVDBStrings(cursor
                     .getString(DetailsQuery.DIRECTORS));
