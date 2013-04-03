@@ -46,13 +46,15 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Lists;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.ShowsFragment.ViewHolder;
+import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
 /**
- * Displays one user created list which includes a mixture of shows, seasons and
- * episodes.
+ * Displays one user created mList which includes a mixture of shows, seasons
+ * and episodes.
  */
 public class ListsFragment extends SherlockFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
@@ -60,6 +62,10 @@ public class ListsFragment extends SherlockFragment implements
     private static final int LOADER_ID = R.layout.lists_fragment;
 
     private static final int CONTEXT_REMOVE_ID = 300;
+
+    private static final int CONTEXT_MANAGE_LISTS_ID = 301;
+
+    private static final String TAG = "Lists";
 
     public static ListsFragment newInstance(String list_id) {
         ListsFragment f = new ListsFragment();
@@ -77,6 +83,8 @@ public class ListsFragment extends SherlockFragment implements
 
     private ListItemAdapter mAdapter;
 
+    private GridView mList;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.lists_fragment, container, false);
@@ -89,11 +97,12 @@ public class ListsFragment extends SherlockFragment implements
         mAdapter = new ListItemAdapter(getActivity(), null, 0);
 
         // setup grid view
-        GridView list = (GridView) getView().findViewById(android.R.id.list);
-        list.setAdapter(mAdapter);
-        list.setOnItemClickListener(this);
-        list.setEmptyView(getView().findViewById(android.R.id.empty));
-        registerForContextMenu(list);
+        mList = (GridView) getView().findViewById(android.R.id.list);
+        mList.setAdapter(mAdapter);
+        mList.setOnItemClickListener(this);
+        mList.setEmptyView(getView().findViewById(android.R.id.empty));
+
+        registerForContextMenu(mList);
 
         getLoaderManager().initLoader(LOADER_ID, getArguments(), this);
     }
@@ -102,21 +111,34 @@ public class ListsFragment extends SherlockFragment implements
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
-        menu.add(0, CONTEXT_REMOVE_ID, 0, R.string.list_item_remove);
+        menu.add(0, CONTEXT_MANAGE_LISTS_ID, 0, R.string.list_item_manage);
+        menu.add(0, CONTEXT_REMOVE_ID, 1, R.string.list_item_remove);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+
         switch (item.getItemId()) {
             case CONTEXT_REMOVE_ID: {
-                AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-
                 String itemId = ((Cursor) mAdapter.getItem(info.position))
                         .getString(ListItemsQuery.LIST_ITEM_ID);
                 getActivity().getContentResolver().delete(ListItems.buildListItemUri(itemId), null,
                         null);
                 getActivity().getContentResolver().notifyChange(ListItems.CONTENT_WITH_DETAILS_URI,
                         null);
+
+                fireTrackerEvent("Remove from mList");
+                return true;
+            }
+            case CONTEXT_MANAGE_LISTS_ID: {
+                final Cursor listItem = (Cursor) mAdapter.getItem(info.position);
+                String tvdbId = listItem.getString(ListItemsQuery.ITEM_REF_ID);
+                int type = listItem.getInt(ListItemsQuery.ITEM_TYPE);
+                ListsDialogFragment.showListsDialog(tvdbId, type,
+                        getFragmentManager());
+
+                fireTrackerEvent("Manage lists");
                 return true;
             }
             default:
@@ -357,4 +379,7 @@ public class ListsFragment extends SherlockFragment implements
 
     }
 
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Context Item", label, (long) 0);
+    }
 }
