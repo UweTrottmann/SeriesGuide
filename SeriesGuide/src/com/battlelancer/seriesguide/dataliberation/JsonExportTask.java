@@ -18,9 +18,11 @@
 package com.battlelancer.seriesguide.dataliberation;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.dataliberation.model.Episode;
@@ -34,6 +36,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.Lists;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 import com.google.myjson.Gson;
@@ -170,6 +173,13 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
             return ERROR;
         } finally {
             lists.close();
+        }
+
+        if (mIsAutoBackupMode) {
+            // store current time = last backup time
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+            prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTBACKUP, System.currentTimeMillis())
+                    .commit();
         }
 
         return SUCCESS;
