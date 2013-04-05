@@ -59,10 +59,15 @@ public class MovieDetailsFragment extends SherlockFragment implements
     private static final int LOADER_ID = R.layout.movie_details_fragment;
     private ImageDownloader mImageDownloader;
     private String mBaseUrl;
+    private View mProgressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.movie_details_fragment, container, false);
+        View v = inflater.inflate(R.layout.movie_details_fragment, container, false);
+
+        mProgressBar = v.findViewById(R.id.progressBar);
+
+        return v;
     }
 
     @Override
@@ -107,6 +112,8 @@ public class MovieDetailsFragment extends SherlockFragment implements
     @SuppressWarnings("deprecation")
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void onPopulateMovieDetails(MovieDetails details) {
+        mProgressBar.setVisibility(View.GONE);
+        
         final Movie movie = details.movie();
         if (movie != null) {
             ((TextView) getView().findViewById(R.id.textViewMovieTitle)).setText(movie.title);
