@@ -118,6 +118,7 @@ public class FlagTapedTask {
                                 }
                                 builder.fire();
                             }
+                            break;
                         }
                         case SHOW_WATCHED: {
                             if (mIsFlag) {
@@ -142,6 +143,7 @@ public class FlagTapedTask {
                                 }
                                 builder.fire();
                             }
+                            break;
                         }
                         case EPISODE_WATCHED_PREVIOUS: {
                             EpisodeSeenBuilder builder = mShowService.episodeSeen(mShowId);

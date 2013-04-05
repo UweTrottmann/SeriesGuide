@@ -240,6 +240,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                 selection = Episodes.FIRSTAIREDMS + "<" + mFirstAired + " AND "
                         + Episodes.FIRSTAIREDMS
                         + ">0";
+                break;
             default:
                 return;
         }
