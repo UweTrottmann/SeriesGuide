@@ -8,6 +8,20 @@ All dates are in the European Central timezone.
 Version 5 *(TBD)*
 --------------------------
 
+#### 5beta2 *(2013-04-05)*
+
+* NOTICE The old backup system will go away with v6. Restore your old backups and export them with the new backup tool.
+* FEATURE The old backup assistant is now deprecated in favor of a new JSON exporter. Backups will take a little longer, but will be completely compatible between devices and less prone to version issues. Also you can easily edit or reuse the JSON files yourself. New (auto-)backups will for now be stored in your Downloads folder. Auto-Backups will dump a minimal export which does not include descriptions, actors, ratings, etc. These will get filled in on your next update after restoring.
+* FEATURE Flagging watched and collected now works offline when connected to a trakt account. Once you open the app with a working connection your last actions will be sent to trakt. Also if you set SeriesGuide to use Wi-Fi only that will apply to those trakt actions now, too. Once you have an allowed connection you can force sending by manually updating.
+* TWEAK Collect entire seasons or shows. Display collected flags in episode lists.
+* TWEAK Episodes in notifications will now persist until you either clear the notification (Android 3.0+), watch the episode or more than 24 hours have passed since it aired.
+* TWEAK List items have a 'Manage lists' context menu option.
+* FIX Shows in lists now always update their next episode.
+* FIX Auto backup did not work correctly, now, it does. Once a week.
+* FIX List items only display stars for favorited shows.
+* FIX Remove list item from correct list when having more than one list.
+* FIX Really prevent shows from getting removed when they are added to a list.
+
 #### 5beta1 *(2013-03-29)*
 
 * FEATURE Support Quick-Check-In action from single episode notifications.
