@@ -38,6 +38,7 @@ public class MoviesActivity extends BaseTopActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // MovieSearchFragment needs a progress bar
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        setSupportProgressBarIndeterminateVisibility(false);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movies);

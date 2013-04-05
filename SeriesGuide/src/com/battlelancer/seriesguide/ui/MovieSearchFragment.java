@@ -58,21 +58,22 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     private MoviesAdapter mAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.movies_fragment, container, false);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setRetainInstance(true);
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.movies_fragment, container, false);
 
         // setup search box
-        mSearchBox = (EditText) getView().findViewById(R.id.editTextCheckinSearch);
+        mSearchBox = (EditText) v.findViewById(R.id.editTextCheckinSearch);
         mSearchBox.setOnEditorActionListener(this);
 
         // setup clear button
-        getView().findViewById(R.id.imageButtonClearSearch).setOnClickListener(
+        v.findViewById(R.id.imageButtonClearSearch).setOnClickListener(
                 new OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -80,6 +81,14 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
                         mSearchBox.requestFocus();
                     }
                 });
+
+        return v;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
 
         mAdapter = new MoviesAdapter(getActivity());
 
@@ -140,7 +149,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Movie movie = mAdapter.getItem(position);
-        
+
         // launch details fragment
         MovieDetailsFragment f = new MovieDetailsFragment();
         Bundle args = new Bundle();
