@@ -13,7 +13,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">Here, there, everywhere\n\nThis is the first beta for v5, it includes:\n\nDashClock extension \'episodes within\' setting.\n\nQuick-Check-In action for single episode notifications (Android 4.1+).\n\nThe minimum supported version is now Android 2.2.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">New backup tool, more offline support\n\nThe old backup tool will be deprecated in favor of a new JSON export/import tool.\n\nEpisodes in notifications stick around until cleared (Android 3.0+), watched or 24 hours passed.\n\nCollect entire seasons or shows, collected flags in episode lists.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
     <string name="help_url">http://seriesgui.de/help</string>
     <string name="backup_legacy_warning">This is the legacy backup system. It will get removed with the next update. If you want to restore an old backup, now would be the time. You can then export again using the new export tool.</string>
 
