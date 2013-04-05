@@ -342,7 +342,7 @@
     <string name="pref_hideimagessummary">Hide images from your photo gallery (reboot required)</string>
 
     <!-- Backup and Restore -->
-    <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\n\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
+    <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
     <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
     <string name="backup_path">Backup folder</string>
     <string name="backup_version">Database version</string>
