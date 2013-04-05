@@ -8,6 +8,10 @@ All dates are in the European Central timezone.
 Version 5 *(TBD)*
 --------------------------
 
+#### 5beta3 *(2013-04-05)*
+
+* FIX Collecting whole seasons and shows was broken, as well as flagging seen all previously aired episodes.
+
 #### 5beta2 *(2013-04-05)*
 
 * NOTICE The old backup system will go away with v6. Restore your old backups and export them with the new backup tool.
