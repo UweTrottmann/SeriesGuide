@@ -40,7 +40,7 @@
   <string name="preferences">Nastavení</string>
   <string name="help">Nápověda</string>
   <string name="shouts">Výkřiky</string>
-  <string name="comments">Comments</string>
+  <string name="comments">Komentáře</string>
   <string name="shout_hint">Napište výkřik (v angl.)</string>
   <string name="shout">Zakřičet!</string>
   <string name="isspoiler">Vyzrazení děje!</string>
@@ -94,6 +94,8 @@
   <string name="mark_untilhere">Zhlédnuto až sem</string>
   <string name="collect">Sebraný díl</string>
   <string name="uncollect">Prozatím nesebraný díl</string>
+  <string name="collect_all">Collected all</string>
+  <string name="uncollect_all">Collected none</string>
   <string name="trakt_submitfailed">Zaslání do traktu se nezdařilo. Zkuste to později.</string>
   <string name="trakt_submitsuccess">Zasláno do traktu.</string>
   <string name="trakt_seen">%s zhlédnuto.</string>
@@ -230,16 +232,17 @@
   <string name="pref_ganalyticssummary">Sledovat užívání aplikace pro zlepšování SeriesGuide</string>
   <string name="pref_hideimages">Skrýt obrázky</string>
   <string name="pref_hideimagessummary">Skrývat obrázky v galerii (nutný restart)</string>
-  <string name="backup_description"><b>Záloha</b> vytvoří obraz databáze Vašich pořadů do souboru <b>seriesdatabase</b> v níže uvedené složce.\n\nPřed <b>Obnovením</b> se ujistěte, že se tento soubor ve složce nachází.\n\nObnoveny mohou být pouze zálohy se stejnou nebo nižší verzí databáze, než je uvedená níže.</string>
-  <string name="backup_path"><b>Adresář záloh</b></string>
-  <string name="backup_version"><b>Verze databáze</b></string>
+  <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
+  <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
+  <string name="backup_path">Backup folder</string>
+  <string name="backup_version">Database version</string>
   <string name="backup_failed_nosd">Nelze zálohovat. Adresář pro zálohy není dostupný.</string>
   <string name="backup_inprogress">Zálohuji databázi…</string>
   <string name="backup_success">Zálohování bylo úspěšné.</string>
   <string name="backup_failed">Zálohování selhalo.</string>
   <string name="import_inprogress">Obnovuji databázi…</string>
   <string name="import_failed_nosd">Nelze obnovit ze zálohy. Adresář se zálohou není dostupný.</string>
-  <string name="import_failed_nofile">Takový soubor není.</string>
+  <string name="import_failed_nofile">There is no readable backup file.</string>
   <string name="import_failed_noread">Soubor zálohy není čitelný.</string>
   <string name="dbupgradefailed">Vaše záloha je buď příliš stará nebo prázdná. Poznámka: Zálohy verze nižší než 2.0 obnovujte nejdříve ve verzi 1.9.X.</string>
   <string name="import_success">Obnovení ze zálohy bylo úspěšné.</string>
@@ -252,8 +255,9 @@
   <string name="import_question">Stávající seznam pořadů bude ztracen! Ujistěte se, že máte zálohu Vašich pořadů.</string>
   <string name="import_yes">Obnovit</string>
   <string name="import_no">Neobnovovat</string>
+  <string name="import_warning">I understand my current shows and lists will be lost!</string>
   <string name="checkin">Ohlásit se</string>
-  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
+  <string name="checkin_noaction">Žádné povolené služby, ohlaste se napřed z SeriesGuide.</string>
   <string name="checkin_searchhint">Napište název pořadu</string>
   <string name="checkin_empty">Žádné odpovídající pořady</string>
   <string name="checkin_hint">Napište postřeh (nepovinné)</string>
@@ -311,7 +315,7 @@
   <string name="pref_widget_type">Typ widgetu</string>
   <string name="dashclock_extension_label">Nadcházející díl</string>
   <string name="dashclock_extension_description">Zobrazuje nadcházející díl z pořadů v SeriesGuide.</string>
-  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
+  <string name="dashclock_pref_upcoming_threshold">Zobrazovat díly nadcházející během</string>
   <string name="download_stable">Stáhnout SeriesGuide</string>
   <string name="betawarning"><b>Upozornění!</b> Toto je verze pouze pro beta-testery! Nejste-li si jistí, stáhněte si raději stabilní verzi níže.</string>
   <string-array name="shsorting">
@@ -365,12 +369,12 @@
     <item>Nedávné</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
-    <item>hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>24 hours</item>
-    <item>3 days</item>
-    <item>week</item>
+    <item>hodiny</item>
+    <item>6 hodin</item>
+    <item>12 hodin</item>
+    <item>24 hodin</item>
+    <item>3 dnů</item>
+    <item>týdne</item>
   </string-array>
   <plurals name="votes">
     <item quantity="zero">%d hlasů</item>

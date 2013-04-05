@@ -40,7 +40,7 @@
   <string name="preferences">Instellingen</string>
   <string name="help">Help</string>
   <string name="shouts">Shouts</string>
-  <string name="comments">Comments</string>
+  <string name="comments">Opmerkingen</string>
   <string name="shout_hint">Typ een shout (in het Engels)</string>
   <string name="shout">Shout!</string>
   <string name="isspoiler">Spoiler waarschuwing!</string>
@@ -94,6 +94,8 @@
   <string name="mark_untilhere">Alle eerder uitgezonden bekijken</string>
   <string name="collect">Verzamelde aflevering</string>
   <string name="uncollect">Nog niet verzamelde aflevering</string>
+  <string name="collect_all">Collected all</string>
+  <string name="uncollect_all">Collected none</string>
   <string name="trakt_submitfailed">Niet aan trakt toegevoegd. Probeer later nog een keer.</string>
   <string name="trakt_submitsuccess">Aan trakt toegevoegd.</string>
   <string name="trakt_seen">%s bekeken.</string>
@@ -230,16 +232,17 @@
   <string name="pref_ganalyticssummary">Het gebruik van functies volgen om SeriesGuide te helpen te verbeteren</string>
   <string name="pref_hideimages">Afbeeldingen verbergen</string>
   <string name="pref_hideimagessummary">Afbeeldingen voor de fotogalerij verbergen (opnieuw opstarten vereist)</string>
-  <string name="backup_description"><b>Backup</b> maakt een kopie van het gegevensbestand in een bestand genaamd <b>seriesdatabase</b> in onderstaande map.\n\nWees er zeker van dat dit bestand in onderstaande map aanwezig is om te <b>Herstellen</b>.\n\nAlleen back-ups gemaakt met dezelfde of eerdere gegevensbestand versie als onderstaand kunnen worden hersteld.</string>
-  <string name="backup_path"><b>Back-up map</b></string>
-  <string name="backup_version"><b>Versie van de database</b></string>
+  <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
+  <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
+  <string name="backup_path">Backup folder</string>
+  <string name="backup_version">Database version</string>
   <string name="backup_failed_nosd">Back-up maken niet mogelijk. De back-up map is niet beschikbaar.</string>
   <string name="backup_inprogress">Gegevensbestand back-uppen…</string>
   <string name="backup_success">Maken back-up succesvol.</string>
   <string name="backup_failed">Maken back-up mislukt.</string>
   <string name="import_inprogress">Gegevensbestand herstellen…</string>
   <string name="import_failed_nosd">Back-up herstellen niet mogelijk. De back-up map is niet beschikbaar.</string>
-  <string name="import_failed_nofile">Er is geen back-up bestand.</string>
+  <string name="import_failed_nofile">There is no readable backup file.</string>
   <string name="import_failed_noread">Het back-up bestand is niet leesbaar.</string>
   <string name="dbupgradefailed">Deze back-up kan te oud zijn of niet bestaan. Opmerking: Back-ups van voor versie 2.0 eerst in een 1.9.x versie importeren.</string>
   <string name="import_success">Back-up met succes hersteld.</string>
@@ -252,8 +255,9 @@
   <string name="import_question">De huidige serieslijst zal verloren gaan! Zorg ervoor dat het back-up bestand in de back-up map aanwezig is.</string>
   <string name="import_yes">Herstellen</string>
   <string name="import_no">Niet herstellen</string>
+  <string name="import_warning">I understand my current shows and lists will be lost!</string>
   <string name="checkin">Check-in</string>
-  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
+  <string name="checkin_noaction">Er is geen service ingeschakeld, checken eenmaal in in SeriesGuide.</string>
   <string name="checkin_searchhint">Voer de naam van een serie in</string>
   <string name="checkin_empty">Geen overeenkomende series</string>
   <string name="checkin_hint">Voer een bericht in (optioneel)</string>
@@ -311,7 +315,7 @@
   <string name="pref_widget_type">Widget type</string>
   <string name="dashclock_extension_label">Komende aflevering</string>
   <string name="dashclock_extension_description">Geeft de eerstvolgende aflevering van je SeriesGuide shows weer.</string>
-  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
+  <string name="dashclock_pref_upcoming_threshold">Toon  aankomende afleveringen</string>
   <string name="download_stable">SeriesGuide downloaden</string>
   <string name="betawarning"><b>Let op!</b> Deze versie is uitsluitend voor beta testers! Bij twijfel de stabiele versie hieronder gebruiken.</string>
   <string-array name="shsorting">
@@ -365,11 +369,11 @@
     <item>Recent</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
-    <item>hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>24 hours</item>
-    <item>3 days</item>
+    <item>uur</item>
+    <item>6 uur</item>
+    <item>12 uur</item>
+    <item>24 uur</item>
+    <item>3 dagen</item>
     <item>week</item>
   </string-array>
   <plurals name="votes">

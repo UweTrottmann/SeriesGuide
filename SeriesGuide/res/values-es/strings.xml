@@ -40,7 +40,7 @@
   <string name="preferences">Configuración</string>
   <string name="help">Ayuda</string>
   <string name="shouts">Gritos</string>
-  <string name="comments">Comments</string>
+  <string name="comments">Comentarios</string>
   <string name="shout_hint">Escriba un grito (en inglés)</string>
   <string name="shout">¡Gritar!</string>
   <string name="isspoiler">¡Alerta de spoiler!</string>
@@ -94,6 +94,8 @@
   <string name="mark_untilhere">Visto todo lo previamente emitido</string>
   <string name="collect">Episodio recopilado</string>
   <string name="uncollect">Aún no se ha recogido el episodio</string>
+  <string name="collect_all">Collected all</string>
+  <string name="uncollect_all">Collected none</string>
   <string name="trakt_submitfailed">No se envió a trakt. Intente más tarde.</string>
   <string name="trakt_submitsuccess">Enviado a trakt.</string>
   <string name="trakt_seen">%s visto.</string>
@@ -230,16 +232,17 @@
   <string name="pref_ganalyticssummary">Hacer un seguimiento del uso para ayudar a mejorar Series Guide</string>
   <string name="pref_hideimages">Ocultar imágenes</string>
   <string name="pref_hideimagessummary">Ocultar imágenes a la Galería de fotografías (se requiere reiniciar)</string>
-  <string name="backup_description"><b>Backup</b> crea una copia de la base de datos de sus programas en un archivo llamado <b>seriesdatabase</b> en elfolder de abajo.\n\nPara<b>Restaurar</b>compruebe que este archivo está en las copias de seguridad de abajo.\n\nSólo las copias de seguridad con la misma o menor versión pueden ser restauradas.</string>
-  <string name="backup_path"><b>Carpeta de respaldo</b></string>
-  <string name="backup_version"><b>Versión de la base de datos</b></string>
+  <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
+  <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
+  <string name="backup_path">Backup folder</string>
+  <string name="backup_version">Database version</string>
   <string name="backup_failed_nosd">No se puede respaldar. La carpeta de respaldo no esta disponible.</string>
   <string name="backup_inprogress">Guardando copia de seguridad de la base de datos…</string>
   <string name="backup_success">Copia de seguridad correcta.</string>
   <string name="backup_failed">Falló la copia de seguridad.</string>
   <string name="import_inprogress">Restaurando base de datos…</string>
   <string name="import_failed_nosd">No se puede restaurar la copia de seguridad. La carpeta de copia de seguridad no está disponible.</string>
-  <string name="import_failed_nofile">No hay ningún archivo de copia de seguridad.</string>
+  <string name="import_failed_nofile">There is no readable backup file.</string>
   <string name="import_failed_noread">El archivo de copia de seguridad no es legible.</string>
   <string name="dbupgradefailed">La copia de seguridad puede ser demasiado viejo o estar vacía. Nota: Importar primero pre-2.0 backups en una versión 1.9.</string>
   <string name="import_success">Copia de seguridad restaurada correctamente.</string>
@@ -252,6 +255,7 @@
   <string name="import_question">¡La lista actual de series se perderá! Asegúrese de que el archivo de copia de seguridad está dentro de la carpeta de copia de seguridad.</string>
   <string name="import_yes">Restaurar</string>
   <string name="import_no">No Restaurar</string>
+  <string name="import_warning">I understand my current shows and lists will be lost!</string>
   <string name="checkin">Check-in</string>
   <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Escriba el nombre de la serie</string>
@@ -365,12 +369,12 @@
     <item>Recientes</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
-    <item>hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>24 hours</item>
-    <item>3 days</item>
-    <item>week</item>
+    <item>hora</item>
+    <item>6 horas</item>
+    <item>12 horas</item>
+    <item>24 horas</item>
+    <item>3 días</item>
+    <item>semana</item>
   </string-array>
   <plurals name="votes">
     <item quantity="zero">%d votos</item>

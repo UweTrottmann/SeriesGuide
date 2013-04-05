@@ -40,7 +40,7 @@
   <string name="preferences">Impostazioni</string>
   <string name="help">Guida</string>
   <string name="shouts">Dì la tua</string>
-  <string name="comments">Comments</string>
+  <string name="comments">Commenti</string>
   <string name="shout_hint">Digitare un messaggio (in inglese)</string>
   <string name="shout">Segnalato!</string>
   <string name="isspoiler">Attenzione Spoiler!</string>
@@ -94,6 +94,8 @@
   <string name="mark_untilhere">Guardati tutti quelli già trasmessi</string>
   <string name="collect">Episodio raccolto</string>
   <string name="uncollect">Episodio non ancora raccolto</string>
+  <string name="collect_all">Collected all</string>
+  <string name="uncollect_all">Collected none</string>
   <string name="trakt_submitfailed">Non abbonato a Trakt. Riprovare più tardi.</string>
   <string name="trakt_submitsuccess">Inviato a trakt.</string>
   <string name="trakt_seen">%s visto.</string>
@@ -230,16 +232,17 @@
   <string name="pref_ganalyticssummary">Traccia l\'uso delle funzionalità per aiutare a migliorare SeriesGuide</string>
   <string name="pref_hideimages">Nascondi le immagini</string>
   <string name="pref_hideimagessummary">Nascondi le immagine presenti nella gallery (riavvio richiesto)</string>
-  <string name="backup_description"><b>Backup</b> crea una copia del vostro database delle serie in un file denominato <b>seriesdatabase</b> nella cartella below.\n\nTo <b>Restore</b> assicurarsi che questo file è nel backup della cartella below.\n\nOnly cartella con lo stesso o una versione inferiore del database come sotto può essere ripristinata.</string>
-  <string name="backup_path"><b>Cartella backup</b></string>
-  <string name="backup_version"><b>Versione database</b></string>
+  <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
+  <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
+  <string name="backup_path">Backup folder</string>
+  <string name="backup_version">Database version</string>
   <string name="backup_failed_nosd">Impossibile effettuare il backup. La cartella non è disponibile.</string>
   <string name="backup_inprogress">Backup del database in corso...</string>
   <string name="backup_success">Backup eseguito con successo.</string>
   <string name="backup_failed">Backup fallito.</string>
   <string name="import_inprogress">Ripristino del database...</string>
   <string name="import_failed_nosd">Impossibile ripristinare il backup. La cartella non è disponibile.</string>
-  <string name="import_failed_nofile">File di backup non trovato.</string>
+  <string name="import_failed_nofile">There is no readable backup file.</string>
   <string name="import_failed_noread">Il file di backup è illeggibile.</string>
   <string name="dbupgradefailed">Il tuo backup potrebbe essere troppo vecchio. Nota: Se il tuo backup è di una versione precedente alla 2.0, importalo prima nella 1.9.x.</string>
   <string name="import_success">Backup ripristinato con successo.</string>
@@ -252,6 +255,7 @@
   <string name="import_question">L\'attuale lista degli spettacoli andrà persa! Assicurati che il file di backup sia all\'interno della cartella di backup.</string>
   <string name="import_yes">Ripristina</string>
   <string name="import_no">Non Ripristinare</string>
+  <string name="import_warning">I understand my current shows and lists will be lost!</string>
   <string name="checkin">Check-In</string>
   <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Digitare il nome della serie</string>
@@ -365,12 +369,12 @@
     <item>Recenti</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
-    <item>hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>24 hours</item>
-    <item>3 days</item>
-    <item>week</item>
+    <item>ora</item>
+    <item>6 ore</item>
+    <item>12 ore</item>
+    <item>24 ore</item>
+    <item>3 giorni</item>
+    <item>settimana</item>
   </string-array>
   <plurals name="votes">
     <item quantity="zero">%d voti</item>

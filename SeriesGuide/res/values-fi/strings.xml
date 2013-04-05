@@ -40,7 +40,7 @@
   <string name="preferences">Asetukset</string>
   <string name="help">Apua</string>
   <string name="shouts">Huudahdukset</string>
-  <string name="comments">Comments</string>
+  <string name="comments">Kommentit</string>
   <string name="shout_hint">Kirjoita huudahdus (englanniksi)</string>
   <string name="shout">Huudahda!</string>
   <string name="isspoiler">Juonipaljastusvaroitus!</string>
@@ -94,6 +94,8 @@
   <string name="mark_untilhere">Kaikki aiemmin esitetyt katsottu</string>
   <string name="collect">Kerätty jakso</string>
   <string name="uncollect">Vielä keräämätön jakso</string>
+  <string name="collect_all">Collected all</string>
+  <string name="uncollect_all">Collected none</string>
   <string name="trakt_submitfailed">Ei lähetetty traktiin. Yritä myöhemmin uudelleen.</string>
   <string name="trakt_submitsuccess">Lähetetty traktiin.</string>
   <string name="trakt_seen">%s katsottu.</string>
@@ -230,16 +232,17 @@
   <string name="pref_ganalyticssummary">Seuraa ominaisuuksien käyttöä, jonka avulla parannetaan SeriesGuidea</string>
   <string name="pref_hideimages">Piilota kuvat</string>
   <string name="pref_hideimagessummary">Piilota kuvat kuvagalleriassasi(vaatii uudelleenkäynnistyksen)</string>
-  <string name="backup_description"><b>Varmuuskopio</b> luo kopion ohjelmatietokannastasi tiedostoon nimeltä <b>seriesdatabase</b> alla mainittuun kansioon.\n\n<b>Palauttaaksesi</b> varmista tiedoston olevan alla mainitussa kansiossa.\n\nVain saman tai vanhemman tietokantaversion omaavat varmuuskopiot voidaan palauttaa.</string>
-  <string name="backup_path"><b>Varmuuskopiointikansio</b></string>
-  <string name="backup_version"><b>Tietokannan versio</b></string>
+  <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
+  <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
+  <string name="backup_path">Backup folder</string>
+  <string name="backup_version">Database version</string>
   <string name="backup_failed_nosd">Ei voi varmuuskopioida. Varmuuskopiointikansiota ei löydy.</string>
   <string name="backup_inprogress">Varmuuskopioidaan tietokantaa…</string>
   <string name="backup_success">Varmuuskopiointi onnistui.</string>
   <string name="backup_failed">Varmuuskopiointi epäonnistui.</string>
   <string name="import_inprogress">Palautetaan tietokantaa…</string>
   <string name="import_failed_nosd">Ei voi palauttaa varmuuskopiota. Varmuuskopiointikansiota ei löydy.</string>
-  <string name="import_failed_nofile">Varmuuskopiotiedostoa ei ole.</string>
+  <string name="import_failed_nofile">There is no readable backup file.</string>
   <string name="import_failed_noread">Varmuuskopiotiedostoa ei voi lukea.</string>
   <string name="dbupgradefailed">Varmuuskopiosi saattaa olla liian vanha tai tyhjä. Huom: Tuo 2.0 versiota edeltävät varmuuskopiot ensin versioon 1.9.x.</string>
   <string name="import_success">Varmuuskopio palautettu onnistuneesti.</string>
@@ -252,8 +255,9 @@
   <string name="import_question">Nykyinen ohjelmalista menetetään! Varmista, että varmuuskopiotiedosto on varmuuskopiokansiossa.</string>
   <string name="import_yes">Palauta</string>
   <string name="import_no">Älä palauta</string>
+  <string name="import_warning">I understand my current shows and lists will be lost!</string>
   <string name="checkin">Kuittaa</string>
-  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
+  <string name="checkin_noaction">Palveluita ei ole käytössä. Kuittaa kerran SeriesGuidessa.</string>
   <string name="checkin_searchhint">Kirjoita ohjelman nimi</string>
   <string name="checkin_empty">Ei vastaavia ohjelmia</string>
   <string name="checkin_hint">Kirjoita viesti (valinnainen)</string>
@@ -311,7 +315,7 @@
   <string name="pref_widget_type">Widgetin tyyppi</string>
   <string name="dashclock_extension_label">Tuleva jakso</string>
   <string name="dashclock_extension_description">Näyttää seuraavan tulevan jakson SeriesGuide-ohjelmistasi.</string>
-  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
+  <string name="dashclock_pref_upcoming_threshold">Näytä jaksot ajalta</string>
   <string name="download_stable">Lataa SeriesGuide</string>
   <string name="betawarning"><b>Varoitus!</b> Tämä julkaisu on vain beeta-testaajille! Jos epäröit, lataa vakaa versio alta.</string>
   <string-array name="shsorting">
@@ -365,12 +369,12 @@
     <item>Viimeisimmät</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
-    <item>hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>24 hours</item>
-    <item>3 days</item>
-    <item>week</item>
+    <item>tunti</item>
+    <item>6 tuntia</item>
+    <item>12 tuntia</item>
+    <item>24 tuntia</item>
+    <item>3 päivää</item>
+    <item>viikko</item>
   </string-array>
   <plurals name="votes">
     <item quantity="zero">%d ääntä</item>

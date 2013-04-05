@@ -40,7 +40,7 @@
   <string name="preferences">Paramètres</string>
   <string name="help">Aide</string>
   <string name="shouts">Commentaires</string>
-  <string name="comments">Comments</string>
+  <string name="comments">Commentaires</string>
   <string name="shout_hint">Commenter (en anglais)</string>
   <string name="shout">Commentez !</string>
   <string name="isspoiler">Alerte au spoiler !</string>
@@ -94,6 +94,8 @@
   <string name="mark_untilhere">Précédemment diffusés déjà vus</string>
   <string name="collect">Épisode collecté</string>
   <string name="uncollect">Épisode pas encore collecté</string>
+  <string name="collect_all">Collected all</string>
+  <string name="uncollect_all">Collected none</string>
   <string name="trakt_submitfailed">Envoi à trakt échoué. Essayez plus tard.</string>
   <string name="trakt_submitsuccess">Envoyé à trakt.</string>
   <string name="trakt_seen">%s vu.</string>
@@ -230,16 +232,17 @@
   <string name="pref_ganalyticssummary">Suivi de l\'utilisation des fonctionnalités pour aider à améliorer SeriesGuide</string>
   <string name="pref_hideimages">Masquer les images</string>
   <string name="pref_hideimagessummary">Masquer les images de votre galerie photos (redémarrage nécessaire)</string>
-  <string name="backup_description"><b>Sauvegarder</b> crée une copie de la base de donnée de vos séries dans un fichier nommé <b>seriesdatabase</b> dans le répertoire ci-dessous.\n\nPour <b>Restaurer</b> assurez-vous que ce fichier soit bien dans ce répertoire.\n\nSeules les sauvegardes d\'une version inférieure ou égale à celle ci-dessous peuvent être restaurées.</string>
-  <string name="backup_path"><b>Répertoire de sauvegarde</b></string>
-  <string name="backup_version"><b>Version de la base</b></string>
+  <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
+  <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
+  <string name="backup_path">Backup folder</string>
+  <string name="backup_version">Database version</string>
   <string name="backup_failed_nosd">Sauvegarde impossible. Le répertoire de sauvegarde est indisponible.</string>
   <string name="backup_inprogress">Sauvegarde de la base de données...</string>
   <string name="backup_success">Sauvegarde réussie.</string>
   <string name="backup_failed">Sauvegarde échouée.</string>
   <string name="import_inprogress">Restauration de la base de données...</string>
   <string name="import_failed_nosd">Restauration impossible. Le répertoire de sauvegarde est indisponible.</string>
-  <string name="import_failed_nofile">Il n\'y a pas de fichier de sauvegarde.</string>
+  <string name="import_failed_nofile">There is no readable backup file.</string>
   <string name="import_failed_noread">La sauvegarde est illisible.</string>
   <string name="dbupgradefailed">Votre sauvegarde peut être trop vieille ou vide. Note : Importer des sauvegardes de pre-2.0 dans une version 1.9.x tout d\'abord.</string>
   <string name="import_success">Restauration réussie.</string>
@@ -252,8 +255,9 @@
   <string name="import_question">La liste de séries actuelle sera perdue! Assurez-vous que le fichier de sauvegarde est bien dans le répertoire.</string>
   <string name="import_yes">Restaurer</string>
   <string name="import_no">Ne pas restaurer</string>
+  <string name="import_warning">I understand my current shows and lists will be lost!</string>
   <string name="checkin">Check-in</string>
-  <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
+  <string name="checkin_noaction">Aucun service actif, faites un check-in avec SeriesGuide.</string>
   <string name="checkin_searchhint">Entrez un nom de série</string>
   <string name="checkin_empty">Aucune série correspondante</string>
   <string name="checkin_hint">Écrivez un message (optionnel)</string>
@@ -311,7 +315,7 @@
   <string name="pref_widget_type">Type du widget</string>
   <string name="dashclock_extension_label">Prochain épisode</string>
   <string name="dashclock_extension_description">Affiche le prochain épisode à venir parmi vos séries.</string>
-  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
+  <string name="dashclock_pref_upcoming_threshold">Montrer les épisodes à venir dans</string>
   <string name="download_stable">Télécharger SeriesGuide</string>
   <string name="betawarning"><b>Attention !</b> Cette version est pour les bêta-testeurs seulement ! Si vous êtes dans le doute, téléchargez la version stable ci-dessous.</string>
   <string-array name="shsorting">
@@ -365,12 +369,12 @@
     <item>Dernièrement</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
-    <item>hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>24 hours</item>
-    <item>3 days</item>
-    <item>week</item>
+    <item>1 heure</item>
+    <item>6 heures</item>
+    <item>12 heures</item>
+    <item>24 heures</item>
+    <item>3 jours</item>
+    <item>une semaine</item>
   </string-array>
   <plurals name="votes">
     <item quantity="zero">%d votes</item>

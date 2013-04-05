@@ -30,7 +30,7 @@
   <string name="save_selection">Spara valda</string>
   <string name="offline">Ingen nätanslutning. Försök igen senare.</string>
   <string name="onlyx">Endast tillgänglig i SeriesGuide X</string>
-  <string name="shows">Program</string>
+  <string name="shows">Serier</string>
   <string name="lists">Listor</string>
   <string name="activity">Aktivitet</string>
   <string name="movies">Filmer</string>
@@ -40,7 +40,7 @@
   <string name="preferences">Inställningar</string>
   <string name="help">Hjälp</string>
   <string name="shouts">Rop</string>
-  <string name="comments">Comments</string>
+  <string name="comments">Kommentarer</string>
   <string name="shout_hint">Skriv ett rop (på engelska)</string>
   <string name="shout">Ropa!</string>
   <string name="isspoiler">Varning för spoiler!</string>
@@ -50,9 +50,9 @@
   <string name="movies_search_hint">Skriv en filmtitel</string>
   <string name="movies_empty">Sök efter en film ovan.</string>
   <string name="trailer">Trailer</string>
-  <string name="shows_with_next">%s with next episodes</string>
+  <string name="shows_with_next">%s med kommande avsnitt</string>
   <string name="shows_continuing">%s fortsätter</string>
-  <string name="episodes_watched">%s watched</string>
+  <string name="episodes_watched">%s sedda</string>
   <string name="runtime_all_episodes">Speltid på alla sedda avsnitt</string>
   <string name="love">Helt ninja!</string>
   <string name="hate">Svag sås :(</string>
@@ -94,6 +94,8 @@
   <string name="mark_untilhere">Sett alla sända avsnitt</string>
   <string name="collect">Hämtat avsnitt</string>
   <string name="uncollect">Ännu ej hämtat avsnitt</string>
+  <string name="collect_all">Collected all</string>
+  <string name="uncollect_all">Collected none</string>
   <string name="trakt_submitfailed">Ej skickad till trakt. Försök igen senare.</string>
   <string name="trakt_submitsuccess">Skickad till trakt.</string>
   <string name="trakt_seen">%s sedda.</string>
@@ -215,7 +217,7 @@
   <string name="pref_autoaddshowssummary">Lägg automatiskt till program från din trakt activity stream</string>
   <string name="pref_appearance">Utseende</string>
   <string name="pref_theme">Tema</string>
-  <string name="pref_other">Other</string>
+  <string name="pref_other">Övrigt</string>
   <string name="pref_autoupdate">Automatisk uppdatering</string>
   <string name="pref_autoupdatesummary">Uppdatera dina serier regelbundet när SeriesGuide startas</string>
   <string name="backup">Säkerhetskopiering/återställning</string>
@@ -230,16 +232,17 @@
   <string name="pref_ganalyticssummary">Mäter användningen av funktioner för att förbättra SeriesGuide</string>
   <string name="pref_hideimages">Dölj bilder</string>
   <string name="pref_hideimagessummary">Dölj bilderna i ditt fotogalleri (kräver omstart av systemet)</string>
-  <string name="backup_description"><b>Säkerhetskopiering</b> skapar en kopia av databasen i en fil med namnet <b>seriesdatabase</b> i mappen nedan.\n\nFör att <b>återställa</b> kontrollera att filen är i mappen nedan.\n\nBara säkerhetskopior med samma eller en lägre databasversion som nedan kan återställas.</string>
-  <string name="backup_path"><b>Mapp för säkerhetskopia</b></string>
-  <string name="backup_version"><b>Databasversion</b></string>
+  <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
+  <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
+  <string name="backup_path">Backup folder</string>
+  <string name="backup_version">Database version</string>
   <string name="backup_failed_nosd">Kan inte säkerhetskopiera. Mappen är inte tillgänglig.</string>
   <string name="backup_inprogress">Säkerhetskopierar databas…</string>
   <string name="backup_success">Säkerhetskopieringen lyckades.</string>
   <string name="backup_failed">Säkerhetskopieringen misslyckades.</string>
   <string name="import_inprogress">Återställer databasen…</string>
   <string name="import_failed_nosd">Kan inte återställa säkerhetskopian. Mappen är inte tillgänglig.</string>
-  <string name="import_failed_nofile">Det finns ingen säkerhetskopia.</string>
+  <string name="import_failed_nofile">There is no readable backup file.</string>
   <string name="import_failed_noread">Säkerhetskopian är oläslig.</string>
   <string name="dbupgradefailed">Din säkerhetskopia kan vara för gammal eller tom. Obs: Importera säkerhetskopior äldre än version 2.0 i en 1.9.x-version först.</string>
   <string name="import_success">Säkerhetskopian återställdes.</string>
@@ -252,6 +255,7 @@
   <string name="import_question">Den nuvarande serielistan försvinner! Se till så att säkerhetskopian finns i mappen för säkerhetskopior.</string>
   <string name="import_yes">Återställ</string>
   <string name="import_no">Återställ inte</string>
+  <string name="import_warning">I understand my current shows and lists will be lost!</string>
   <string name="checkin">Checka in</string>
   <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Skriv ett serienamn</string>
@@ -348,7 +352,7 @@
     <item>Dolda</item>
   </string-array>
   <string-array name="notificationThreshold">
-    <item>on air</item>
+    <item>sänds nu</item>
     <item>5 min i förväg</item>
     <item>10 min i förväg</item>
     <item>en timme i förväg</item>
@@ -365,12 +369,12 @@
     <item>De senaste</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
-    <item>hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>24 hours</item>
-    <item>3 days</item>
-    <item>week</item>
+    <item>timme</item>
+    <item>6 timmar</item>
+    <item>12 timmar</item>
+    <item>24 timmar</item>
+    <item>3 dagar</item>
+    <item>vecka</item>
   </string-array>
   <plurals name="votes">
     <item quantity="zero">%d röster</item>

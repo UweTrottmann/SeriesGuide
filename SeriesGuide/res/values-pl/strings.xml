@@ -40,7 +40,7 @@
   <string name="preferences">Ustawienia</string>
   <string name="help">Pomoc</string>
   <string name="shouts">Krzyki</string>
-  <string name="comments">Comments</string>
+  <string name="comments">Komentarze</string>
   <string name="shout_hint">Wpisz krzyk (w języku angielskim)</string>
   <string name="shout">Krzyk!</string>
   <string name="isspoiler">Ostrzeżenie o spoilerach!</string>
@@ -94,6 +94,8 @@
   <string name="mark_untilhere">Oznacz wcześniej wyemitowane odcinki jako obejrzane</string>
   <string name="collect">Odcinek jest w kolekcji</string>
   <string name="uncollect">Odcinka nie ma w kolekcji</string>
+  <string name="collect_all">Collected all</string>
+  <string name="uncollect_all">Collected none</string>
   <string name="trakt_submitfailed">Nie wysłano do trakt. Spróbuj ponownie później.</string>
   <string name="trakt_submitsuccess">Wysłane do trakt.</string>
   <string name="trakt_seen">%s obejrzane.</string>
@@ -230,16 +232,17 @@
   <string name="pref_ganalyticssummary">Śledzi wykorzystanie funkcji, aby pomóc w ulepszeniu SeriesGuide</string>
   <string name="pref_hideimages">Ukryj obrazy</string>
   <string name="pref_hideimagessummary">Ukrywa obrazy przed standardową przeglądarką grafik (wymagany restart)</string>
-  <string name="backup_description"><b>Kopia zapasowa</b> tworzy kopię listy seriali w pliku o nazwie <b>seriesdatabase</b> w poniższym folderze.\n\nAby<b>Przywrócić</b> listę upewnij się, że plik jest w poniższym folderze.\n\nTylko archiwa list z tej samej lub niższej wersji (niż poniższa) mogą zostać przywrócone.</string>
-  <string name="backup_path"><b>Folder kopii zapasowej</b></string>
-  <string name="backup_version"><b>Wersja bazy danych</b></string>
+  <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
+  <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
+  <string name="backup_path">Backup folder</string>
+  <string name="backup_version">Database version</string>
   <string name="backup_failed_nosd">Nie można utworzyć kopii zapasowej. Wskazany folder jest niedostępny.</string>
   <string name="backup_inprogress">Tworzenie kopii bazy…</string>
   <string name="backup_success">Archiwizacja zakończona.</string>
   <string name="backup_failed">Archiwizacja nieudana.</string>
   <string name="import_inprogress">Przywracanie bazy…</string>
   <string name="import_failed_nosd">Nie można przywrócić kopii zapasowej. Wskazany folder jest niedostępny.</string>
-  <string name="import_failed_nofile">Brak pliku archiwum.</string>
+  <string name="import_failed_nofile">There is no readable backup file.</string>
   <string name="import_failed_noread">Plik archiwum jest nieodczytywalny.</string>
   <string name="dbupgradefailed">Kopia zapasowa jest za stara lub pusta. Uwaga: najpierw zaimportuj archiwa wersji przed 2.0 w wersji 1.9.x.</string>
   <string name="import_success">Zakończono przywracanie.</string>
@@ -252,6 +255,7 @@
   <string name="import_question">Bieżąca lista seriali zostanie utracona! Upewnij się, że plik kopii zapasowej jest we wskazanym folderze.</string>
   <string name="import_yes">Przywróć</string>
   <string name="import_no">Nie przywracaj</string>
+  <string name="import_warning">I understand my current shows and lists will be lost!</string>
   <string name="checkin">Podepnij się</string>
   <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Wpisz nazwę serialu</string>
@@ -311,7 +315,7 @@
   <string name="pref_widget_type">Typ widżetu</string>
   <string name="dashclock_extension_label">Nadchodzące odcinki</string>
   <string name="dashclock_extension_description">Wyświetla nadchodzące odcinki seriali z SeriesGuide.</string>
-  <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
+  <string name="dashclock_pref_upcoming_threshold">Pokaż odcinki emitowane za</string>
   <string name="download_stable">Pobierz SeriesGuide</string>
   <string name="betawarning"><b>Uwaga!</b> To wydanie jest tylko dla beta testerów! Wersję stabilną można pobrać poniżej.</string>
   <string-array name="shsorting">
@@ -365,12 +369,12 @@
     <item>Ostatnie</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
-    <item>hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>24 hours</item>
-    <item>3 days</item>
-    <item>week</item>
+    <item>godzinę</item>
+    <item>6 godzin</item>
+    <item>12 godzin</item>
+    <item>24 godziny</item>
+    <item>3 dni</item>
+    <item>tydzień</item>
   </string-array>
   <plurals name="votes">
     <item quantity="zero">%d głosów</item>
