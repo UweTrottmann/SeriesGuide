@@ -319,31 +319,34 @@ public class EpisodesFragment extends SherlockListFragment implements
     }
 
     @Override
-    public void onFlagEpisodeWatched(int episodeId, int episodeNumber, boolean isWatched) {
+    public void onFlagEpisodeWatched(int episodeTvdbId, int episode, boolean isWatched) {
         new FlagTask(getActivity(), getShowId(), null)
-                .episodeWatched(getSeasonNumber(), episodeNumber).setItemId(episodeId)
-                .setFlag(isWatched).execute();
+                .episodeWatched(episodeTvdbId, getSeasonNumber(), episode, isWatched)
+                .execute();
     }
 
-    public void onFlagEpisodeCollected(int episodeId, int episodeNumber, boolean isCollected) {
+    public void onFlagEpisodeCollected(int episodeTvdbId, int episode, boolean isCollected) {
         new FlagTask(getActivity(), getShowId(), null)
-                .episodeCollected(getSeasonNumber(), episodeNumber).setItemId(episodeId)
-                .setFlag(isCollected).execute();
+                .episodeCollected(episodeTvdbId, getSeasonNumber(), episode, isCollected)
+                .execute();
     }
 
     private void onFlagSeasonWatched(boolean isWatched) {
-        new FlagTask(getActivity(), getShowId(), null).seasonWatched(getSeasonNumber())
-                .setItemId(getSeasonId()).setFlag(isWatched).execute();
+        new FlagTask(getActivity(), getShowId(), null)
+                .seasonWatched(getSeasonId(), getSeasonNumber(), isWatched)
+                .execute();
     }
 
     private void onFlagSeasonCollected(boolean isCollected) {
-        new FlagTask(getActivity(), getShowId(), null).seasonCollected(getSeasonNumber())
-                .setItemId(getSeasonId()).setFlag(isCollected).execute();
+        new FlagTask(getActivity(), getShowId(), null)
+                .seasonCollected(getSeasonId(), getSeasonNumber(), isCollected)
+                .execute();
     }
 
     private void onMarkUntilHere(int episodeId, long firstaired) {
-        new FlagTask(getActivity(), getShowId(), null).episodeWatchedPrevious(firstaired)
-                .setItemId(episodeId).execute();
+        new FlagTask(getActivity(), getShowId(), null)
+                .episodeWatchedPrevious(firstaired)
+                .execute();
     }
 
     private void updatePreferences() {

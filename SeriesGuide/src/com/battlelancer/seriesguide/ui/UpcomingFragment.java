@@ -165,9 +165,9 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         Cursor item = (Cursor) mAdapter.getItem(info.position);
 
         new FlagTask(getActivity(), item.getInt(UpcomingQuery.REF_SHOW_ID), null)
-                .episodeWatched(item.getInt(UpcomingQuery.SEASON),
-                        item.getInt(UpcomingQuery.NUMBER)).setItemId((int) info.id)
-                .setFlag(isWatched).execute();
+                .episodeWatched((int) info.id, item.getInt(UpcomingQuery.SEASON),
+                        item.getInt(UpcomingQuery.NUMBER), isWatched)
+                .execute();
     }
 
     private void setupAdapter() {
@@ -361,18 +361,18 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
             // watched box
             // save rowid to hand over to OnClick event listener
-            final int showId = mCursor.getInt(UpcomingQuery.REF_SHOW_ID);
-            final int seasonNumber = mCursor.getInt(UpcomingQuery.SEASON);
-            final int episodeId = mCursor.getInt(UpcomingQuery._ID);
-            final int episodeNumber = mCursor.getInt(UpcomingQuery.NUMBER);
+            final int showTvdbId = mCursor.getInt(UpcomingQuery.REF_SHOW_ID);
+            final int season = mCursor.getInt(UpcomingQuery.SEASON);
+            final int episodeTvdbId = mCursor.getInt(UpcomingQuery._ID);
+            final int episode = mCursor.getInt(UpcomingQuery.NUMBER);
             viewHolder.watchedBox.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
                     WatchedBox checkBox = (WatchedBox) v;
                     checkBox.toggle();
 
-                    new FlagTask(mContext, showId, null)
-                            .episodeWatched(seasonNumber, episodeNumber).setItemId(episodeId)
-                            .setFlag(checkBox.isChecked()).execute();
+                    new FlagTask(mContext, showTvdbId, null)
+                            .episodeWatched(episodeTvdbId, season, episode, checkBox.isChecked())
+                            .execute();
                 }
             });
             viewHolder.watchedBox.setChecked(mCursor.getInt(UpcomingQuery.WATCHED) > 0);
@@ -399,7 +399,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
             viewHolder.show.setText(mCursor.getString(UpcomingQuery.SHOW_TITLE));
 
             // episode number and title
-            final String number = Utils.getEpisodeNumber(mPrefs, seasonNumber, episodeNumber);
+            final String number = Utils.getEpisodeNumber(mPrefs, season, episode);
             viewHolder.episode.setText(number + " " + mCursor.getString(UpcomingQuery.TITLE));
 
             // add network

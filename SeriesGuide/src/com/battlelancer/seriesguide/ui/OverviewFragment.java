@@ -61,7 +61,7 @@ import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
+import com.battlelancer.seriesguide.util.FlagTask.FlagTaskType;
 import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
@@ -289,11 +289,11 @@ public class OverviewFragment extends SherlockFragment implements
     private void onFlagWatched() {
         fireTrackerEvent("Flag Watched");
         if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
-            final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
-            final int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+            final int season = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
+            final int episode = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
             new FlagTask(getActivity(), getShowId(), this)
-                    .episodeWatched(seasonNumber, episodeNumber)
-                    .setItemId(mEpisodeCursor.getInt(EpisodeQuery._ID)).setFlag(true)
+                    .episodeWatched(mEpisodeCursor.getInt(EpisodeQuery._ID), season,
+                            episode, true)
                     .execute();
         }
     }
@@ -383,14 +383,14 @@ public class OverviewFragment extends SherlockFragment implements
     private void onToggleCollected() {
         fireTrackerEvent("Toggle Collected");
         if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
-            final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
-            final int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+            final int season = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
+            final int episode = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
             final boolean isCollected = mEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1 ? true
                     : false;
             new FlagTask(getActivity(), getShowId(), null)
-                    .episodeCollected(seasonNumber, episodeNumber)
-                    .setItemId(mEpisodeCursor.getInt(EpisodeQuery._ID))
-                    .setFlag(!isCollected).execute();
+                    .episodeCollected(mEpisodeCursor.getInt(EpisodeQuery._ID), season, episode,
+                            !isCollected)
+                    .execute();
         }
     }
 
@@ -426,10 +426,9 @@ public class OverviewFragment extends SherlockFragment implements
     }
 
     @Override
-    public void onFlagCompleted(FlagAction action, int showId, int itemId, boolean isSuccessful) {
-        if (isSuccessful && isAdded()) {
-            // load new episode, update seasons (if shown)
-            // TODO onLoadEpisode();
+    public void onFlagCompleted(FlagTaskType type) {
+        if (isAdded()) {
+            // update seasons (if shown)
             onUpdateSeasons();
         }
     }

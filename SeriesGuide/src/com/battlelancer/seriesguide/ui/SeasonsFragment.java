@@ -53,8 +53,9 @@ import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
+import com.battlelancer.seriesguide.util.FlagTask.FlagTaskType;
 import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
+import com.battlelancer.seriesguide.util.FlagTask.SeasonWatchedType;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
@@ -251,16 +252,18 @@ public class SeasonsFragment extends SherlockListFragment implements
      * the season.
      */
     private void onFlagSeasonWatched(long seasonId, int seasonNumber, boolean isWatched) {
-        new FlagTask(getActivity(), getShowId(), this).seasonWatched(seasonNumber)
-                .setItemId((int) seasonId).setFlag(isWatched).execute();
+        new FlagTask(getActivity(), getShowId(), this)
+                .seasonWatched((int) seasonId, seasonNumber, isWatched)
+                .execute();
     }
 
     /**
      * Changes the seasons episodes collected flags.
      */
     private void onFlagSeasonCollected(long seasonId, int seasonNumber, boolean isCollected) {
-        new FlagTask(getActivity(), getShowId(), this).seasonCollected(seasonNumber)
-                .setItemId((int) seasonId).setFlag(isCollected).execute();
+        new FlagTask(getActivity(), getShowId(), this)
+                .seasonCollected((int) seasonId, seasonNumber, isCollected)
+                .execute();
     }
 
     /**
@@ -268,7 +271,9 @@ public class SeasonsFragment extends SherlockListFragment implements
      * status labels of all seasons.
      */
     private void onFlagShowWatched(boolean isWatched) {
-        new FlagTask(getActivity(), getShowId(), this).showWatched().setFlag(isWatched).execute();
+        new FlagTask(getActivity(), getShowId(), this)
+                .showWatched(isWatched)
+                .execute();
     }
 
     /**
@@ -276,7 +281,8 @@ public class SeasonsFragment extends SherlockListFragment implements
      * the status labels of all seasons.
      */
     private void onFlagShowCollected(boolean isCollected) {
-        new FlagTask(getActivity(), getShowId(), this).showCollected().setFlag(isCollected)
+        new FlagTask(getActivity(), getShowId(), this)
+                .showCollected(isCollected)
                 .execute();
     }
 
@@ -417,17 +423,15 @@ public class SeasonsFragment extends SherlockListFragment implements
     }
 
     @Override
-    public void onFlagCompleted(FlagAction action, int showId, int itemId, boolean isSuccessful) {
-        if (isSuccessful && isAdded()) {
-            switch (action) {
-                case SEASON_WATCHED:
-                    Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()),
-                            String.valueOf(itemId));
-                    t.start();
-                    break;
-                default:
-                    updateUnwatchedCounts();
-                    break;
+    public void onFlagCompleted(FlagTaskType type) {
+        if (isAdded()) {
+            if (type instanceof SeasonWatchedType) {
+                SeasonWatchedType seasonWatchedType = (SeasonWatchedType) type;
+                Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()),
+                        String.valueOf(seasonWatchedType.getSeasonTvdbId()));
+                t.start();
+            } else {
+                updateUnwatchedCounts();
             }
         }
     }

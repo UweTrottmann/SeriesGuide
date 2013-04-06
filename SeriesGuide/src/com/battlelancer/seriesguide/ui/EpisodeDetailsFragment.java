@@ -60,7 +60,7 @@ import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
+import com.battlelancer.seriesguide.util.FlagTask.FlagTaskType;
 import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
@@ -258,14 +258,16 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     private void onToggleWatched() {
         mWatched = !mWatched;
-        new FlagTask(getActivity(), mShowId, this).episodeWatched(mSeasonNumber, mEpisodeNumber)
-                .setItemId(getEpisodeId()).setFlag(mWatched).execute();
+        new FlagTask(getActivity(), mShowId, this)
+                .episodeWatched(getEpisodeId(), mSeasonNumber, mEpisodeNumber, mWatched)
+                .execute();
     }
 
     private void onToggleCollected() {
         mCollected = !mCollected;
-        new FlagTask(getActivity(), mShowId, this).episodeCollected(mSeasonNumber, mEpisodeNumber)
-                .setItemId(getEpisodeId()).setFlag(mCollected).execute();
+        new FlagTask(getActivity(), mShowId, this)
+                .episodeCollected(getEpisodeId(), mSeasonNumber, mEpisodeNumber, mCollected)
+                .execute();
     }
 
     /**
@@ -599,8 +601,8 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     }
 
     @Override
-    public void onFlagCompleted(FlagAction action, int showId, int itemId, boolean isSuccessful) {
-        if (isSuccessful && isAdded()) {
+    public void onFlagCompleted(FlagTaskType type) {
+        if (isAdded()) {
             getLoaderManager().restartLoader(EPISODE_LOADER, null, this);
         }
     }

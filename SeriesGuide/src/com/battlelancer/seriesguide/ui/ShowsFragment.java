@@ -59,7 +59,7 @@ import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
+import com.battlelancer.seriesguide.util.FlagTask.FlagTaskType;
 import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ShareUtils;
@@ -624,9 +624,9 @@ public class ShowsFragment extends SherlockFragment implements
     };
 
     @Override
-    public void onFlagCompleted(FlagAction action, int showId, int itemId, boolean isSuccessful) {
-        if (isSuccessful && isAdded()) {
-            Utils.updateLatestEpisode(getActivity(), String.valueOf(showId));
+    public void onFlagCompleted(FlagTaskType type) {
+        if (isAdded()) {
+            Utils.updateLatestEpisode(getActivity(), String.valueOf(type.getShowTvdbId()));
         }
     }
 

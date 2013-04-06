@@ -150,8 +150,7 @@
     <string name="uncollect">Not yet collected episode</string>
     <string name="collect_all">Collected all</string>
     <string name="uncollect_all">Collected none</string>
-    <string name="trakt_submitfailed">Not submitted to trakt. Try again later.</string>
-    <string name="trakt_submitsuccess">Submitted to trakt.</string>
+    <string name="trakt_submitqueued">Submitting to trakt.</string>
     <string name="trakt_seen">%s seen.</string>
     <string name="trakt_notseen">%s not seen.</string>
     <string name="trakt_collected">%s collected.</string>

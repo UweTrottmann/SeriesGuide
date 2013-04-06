@@ -269,9 +269,9 @@ public class DBUtils {
                     }, null, null, null);
             if (episode != null) {
                 if (episode.moveToFirst()) {
-                    new FlagTask(context, (int) showId, listener)
-                            .episodeWatched(episode.getInt(0), episode.getInt(1))
-                            .setItemId(episodeId).setFlag(true).execute();
+                    new FlagTask(context, showId, listener)
+                            .episodeWatched(episodeId, episode.getInt(0), episode.getInt(1), true)
+                            .execute();
                 }
                 episode.close();
             }
