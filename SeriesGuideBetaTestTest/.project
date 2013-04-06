@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>SeriesGuideTest</name>
+	<name>SeriesGuideBetaTest</name>
 	<comment></comment>
 	<projects>
-		<project>SeriesGuide</project>
+		<project>SeriesGuideBeta</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
