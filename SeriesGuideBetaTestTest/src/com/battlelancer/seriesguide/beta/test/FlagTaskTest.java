@@ -1,9 +1,11 @@
 
 package com.battlelancer.seriesguide.beta.test;
 
+import static org.fest.assertions.api.Assertions.assertThat;
+
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.test.ActivityUnitTestCase;
+import android.test.ActivityInstrumentationTestCase2;
 
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
@@ -18,19 +20,24 @@ import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-public class FlagTaskTest extends ActivityUnitTestCase<ShowsActivity> implements OnFlagListener {
+public class FlagTaskTest extends ActivityInstrumentationTestCase2<ShowsActivity> implements
+        OnFlagListener {
 
     private int showTvdbId;
     private int seasonId;
     private CountDownLatch mFlagTaskSignal;
+    private int firstEpisodeTvdbId;
+    private ShowsActivity mActivity;
 
-    public FlagTaskTest(Class<ShowsActivity> activityClass) {
-        super(activityClass);
+    public FlagTaskTest() {
+        super(ShowsActivity.class);
     }
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+
+        mActivity = getActivity();
 
         insertSampleShowIntoDatabase();
     }
@@ -38,6 +45,7 @@ public class FlagTaskTest extends ActivityUnitTestCase<ShowsActivity> implements
     private void insertSampleShowIntoDatabase() {
         showTvdbId = 987654321;
         seasonId = 987654321;
+        firstEpisodeTvdbId = 987654321;
         long showAirtime = Utils.parseTimeToMilliseconds("20:00 PM");
 
         ContentValues sampleShow = new ContentValues();
@@ -49,18 +57,18 @@ public class FlagTaskTest extends ActivityUnitTestCase<ShowsActivity> implements
         sampleShow.put(Shows.RUNTIME, 5);
         sampleShow.put(Shows.AIRSDAYOFWEEK, "Monday");
         sampleShow.put(Shows.AIRSTIME, showAirtime);
-        getActivity().getContentResolver().insert(Shows.CONTENT_URI, sampleShow);
+        mActivity.getContentResolver().insert(Shows.CONTENT_URI, sampleShow);
 
         ContentValues sampleSeason = new ContentValues();
         sampleSeason.put(Seasons._ID, seasonId);
         sampleSeason.put(Seasons.COMBINED, 1);
         sampleSeason.put(Shows.REF_SHOW_ID, showTvdbId);
-        getActivity().getContentResolver().insert(Seasons.CONTENT_URI, sampleSeason);
+        mActivity.getContentResolver().insert(Seasons.CONTENT_URI, sampleSeason);
 
         ContentValues[] sampleEpisodes = new ContentValues[10];
         for (int i = 0; i < sampleEpisodes.length; i++) {
             ContentValues sampleEpisode = new ContentValues();
-            sampleEpisode.put(Episodes._ID, 987654321 + i);
+            sampleEpisode.put(Episodes._ID, firstEpisodeTvdbId + i);
             sampleEpisode.put(Episodes.TITLE, "Sample Episode " + i);
             sampleEpisode.put(Shows.REF_SHOW_ID, showTvdbId);
             sampleEpisode.put(Seasons.REF_SEASON_ID, seasonId);
@@ -70,18 +78,33 @@ public class FlagTaskTest extends ActivityUnitTestCase<ShowsActivity> implements
                     Utils.buildEpisodeAirtime("2013-01-0" + i, showAirtime));
             sampleEpisodes[i] = sampleEpisode;
         }
-        getActivity().getContentResolver().bulkInsert(Episodes.CONTENT_URI, sampleEpisodes);
+        mActivity.getContentResolver().bulkInsert(Episodes.CONTENT_URI, sampleEpisodes);
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        String showId = String.valueOf(showTvdbId);
+        // Remove show
+        mActivity.getContentResolver().delete(Shows.buildShowUri(String.valueOf(showId)),
+                null, null);
+        // Remove seasons
+        mActivity.getContentResolver()
+                .delete(Seasons.buildSeasonsOfShowUri(showId), null, null);
+        // Remove episodes
+        mActivity.getContentResolver().delete(Episodes.buildEpisodesOfShowUri(showId), null,
+                null);
+
+        super.tearDown();
     }
 
     public void testEpisodeWatched() throws Throwable {
-        int episodeId = 987654321;
-
         // create a signal to let us know when our task is done.
         mFlagTaskSignal = new CountDownLatch(1);
 
         final FlagTask task = new FlagTask(getActivity(), showTvdbId, this)
-                .episodeWatched(episodeId, 1, 1, true);
+                .episodeWatched(firstEpisodeTvdbId, 1, 1, true);
 
+        // run on UI thread to ensure pre and post execution will run
         runTestOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -91,12 +114,20 @@ public class FlagTaskTest extends ActivityUnitTestCase<ShowsActivity> implements
 
         mFlagTaskSignal.await(30, TimeUnit.SECONDS);
 
-        Cursor episode = getActivity().getContentResolver().query(
-                Episodes.buildEpisodeUri(String.valueOf(episodeId)), new String[] {
+        // Assert
+        Cursor episodesWatched = mActivity.getContentResolver().query(
+                Episodes.buildEpisodesOfShowUri(String.valueOf(showTvdbId)), new String[] {
                         Episodes._ID, Episodes.WATCHED
-                }, null, null, null);
+                }, Episodes.WATCHED + "=1", null, Episodes._ID + " ASC");
 
-        // TODO Assert
+        assertThat(episodesWatched).isNotNull();
+        // only one watched?
+        assertThat(episodesWatched.getCount()).isEqualTo(1);
+        assertThat(episodesWatched.moveToFirst()).isEqualTo(true);
+        // correct one is watched?
+        assertThat(episodesWatched.getInt(0)).isEqualTo(firstEpisodeTvdbId);
+
+        episodesWatched.close();
     }
 
     @Override
