@@ -67,7 +67,7 @@ enum UpdateResult {
 }
 
 enum UpdateType {
-    SINGLE, DELTA, FULL
+    AUTO_SINGLE, DELTA, FULL
 }
 
 public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
@@ -108,7 +108,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
         mShows = new String[] {
                 showId
         };
-        mUpdateType = UpdateType.SINGLE;
+        mUpdateType = UpdateType.AUTO_SINGLE;
     }
 
     public UpdateTask(String[] showIds, int index, String failedShows, Context context) {
@@ -122,19 +122,19 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
     @Override
     protected void onPreExecute() {
         // create a notification (holy crap is that a lot of code)
-        String ns = Context.NOTIFICATION_SERVICE;
-        mNotificationManager = (NotificationManager) mAppContext.getSystemService(ns);
-
         mBuilder = new NotificationCompat.Builder(mAppContext)
                 .setContentTitle(mAppContext.getString(R.string.update_notification))
                 .setSmallIcon(R.drawable.stat_sys_download)
                 .setContentText(mAppContext.getString(R.string.update_notification));
 
         mBuilder.setWhen(System.currentTimeMillis())
-                .setTicker(mAppContext.getString(R.string.update_notification))
                 .setOngoing(true)
                 .setOnlyAlertOnce(true)
                 .setProgress(0, 0, true);
+        // no disturbing ticker text when auto-updating in overview
+        if (mUpdateType != UpdateType.AUTO_SINGLE) {
+            mBuilder.setTicker(mAppContext.getString(R.string.update_notification));
+        }
 
         // content intent
         Intent notificationIntent = new Intent(mAppContext, ShowsActivity.class);
@@ -142,6 +142,8 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                 0);
         mBuilder.setContentIntent(contentIntent);
 
+        mNotificationManager = (NotificationManager) mAppContext
+                .getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(UPDATE_NOTIFICATION_ID, mBuilder.build());
     }
 
@@ -235,7 +237,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
 
         // do not refresh search table and load trakt activity on each single
         // auto update will run anyhow
-        if (mUpdateType != UpdateType.SINGLE) {
+        if (mUpdateType != UpdateType.AUTO_SINGLE) {
             if (updateCount.get() > 0 && mShows.length > 0) {
                 // try to avoid renewing the search table as it is time
                 // consuming
