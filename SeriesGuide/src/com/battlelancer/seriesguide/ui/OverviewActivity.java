@@ -66,6 +66,10 @@ public class OverviewActivity extends BaseActivity {
         // look if we are on a multi-pane or single-pane layout...
         View pagerView = findViewById(R.id.pager);
         if (pagerView != null && pagerView.getVisibility() == View.VISIBLE) {
+            // clear up left-over fragments from multi-pane layout
+            findAndRemoveFragment(R.id.fragment_overview);
+            findAndRemoveFragment(R.id.fragment_seasons);
+
             // ...single pane layout with view pager
             ViewPager pager = (ViewPager) pagerView;
 
@@ -81,6 +85,7 @@ public class OverviewActivity extends BaseActivity {
             args.putInt(SeasonsFragment.InitBundle.SHOW_TVDBID, mShowId);
             tabsAdapter.addTab(R.string.seasons, SeasonsFragment.class, args);
         } else {
+            // FIXME: crashes if coming from single-pane layout due to left-over fragments
             // ...multi-pane overview and seasons fragment
             if (savedInstanceState == null) {
                 Fragment overviewFragment = OverviewFragment.newInstance(mShowId);
@@ -108,6 +113,13 @@ public class OverviewActivity extends BaseActivity {
 
         // try to update this show
         onUpdate();
+    }
+
+    private void findAndRemoveFragment(int fragmentId) {
+        Fragment overviewFragment = getSupportFragmentManager().findFragmentById(fragmentId);
+        if (overviewFragment != null) {
+            getSupportFragmentManager().beginTransaction().remove(overviewFragment).commit();
+        }
     }
 
     @Override
