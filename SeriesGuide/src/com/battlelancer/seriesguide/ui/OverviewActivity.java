@@ -40,6 +40,10 @@ import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Hosts an {@link OverviewFragment}.
  */
@@ -59,48 +63,33 @@ public class OverviewActivity extends BaseActivity {
         }
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.description_overview));
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         // look if we are on a multi-pane or single-pane layout...
         View pagerView = findViewById(R.id.pager);
         if (pagerView != null && pagerView.getVisibility() == View.VISIBLE) {
+            // ...single pane layout with view pager
+
             // clear up left-over fragments from multi-pane layout
             findAndRemoveFragment(R.id.fragment_overview);
             findAndRemoveFragment(R.id.fragment_seasons);
 
-            // ...single pane layout with view pager
-            ViewPager pager = (ViewPager) pagerView;
-
-            // setup action bar tabs
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-            TabPagerAdapter tabsAdapter = new TabPagerAdapter(getSupportFragmentManager(), this,
-                    actionBar, pager, getMenu());
-            tabsAdapter.addTab(R.string.description_overview, OverviewFragment.class, getIntent()
-                    .getExtras());
-
-            Bundle args = new Bundle();
-            args.putInt(SeasonsFragment.InitBundle.SHOW_TVDBID, mShowId);
-            tabsAdapter.addTab(R.string.seasons, SeasonsFragment.class, args);
+            setupViewPager(pagerView);
         } else {
-            // FIXME: crashes if coming from single-pane layout due to left-over fragments
             // ...multi-pane overview and seasons fragment
-            if (savedInstanceState == null) {
-                Fragment overviewFragment = OverviewFragment.newInstance(mShowId);
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
-                ft.replace(R.id.fragment_overview, overviewFragment);
-                ft.commit();
 
-                Fragment seasonsFragment = SeasonsFragment.newInstance(mShowId);
-                FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
-                ft2.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
-                ft2.replace(R.id.fragment_seasons, seasonsFragment);
-                ft2.commit();
+            // clear up left-over fragments from single-pane layout
+            boolean isSwitchingLayouts = getActiveFragments().size() != 0;
+            for (Fragment fragment : getActiveFragments()) {
+                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
             }
 
+            // attach new fragments if there are none or if we just switched
+            // layouts
+            if (savedInstanceState == null || isSwitchingLayouts) {
+                setupPanes();
+            }
         }
 
         // if (AndroidUtils.isICSOrHigher()) {
@@ -115,11 +104,70 @@ public class OverviewActivity extends BaseActivity {
         onUpdate();
     }
 
+    private void setupPanes() {
+        Fragment overviewFragment = OverviewFragment.newInstance(mShowId);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        ft.replace(R.id.fragment_overview, overviewFragment);
+        ft.commit();
+
+        Fragment seasonsFragment = SeasonsFragment.newInstance(mShowId);
+        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+        ft2.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        ft2.replace(R.id.fragment_seasons, seasonsFragment);
+        ft2.commit();
+    }
+
+    private void setupViewPager(View pagerView) {
+        final ActionBar actionBar = getSupportActionBar();
+
+        ViewPager pager = (ViewPager) pagerView;
+
+        // setup action bar tabs
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        TabPagerAdapter tabsAdapter = new TabPagerAdapter(getSupportFragmentManager(), this,
+                actionBar, pager, getMenu());
+        tabsAdapter.addTab(R.string.description_overview, OverviewFragment.class, getIntent()
+                .getExtras());
+
+        Bundle args = new Bundle();
+        args.putInt(SeasonsFragment.InitBundle.SHOW_TVDBID, mShowId);
+        tabsAdapter.addTab(R.string.seasons, SeasonsFragment.class, args);
+    }
+
     private void findAndRemoveFragment(int fragmentId) {
         Fragment overviewFragment = getSupportFragmentManager().findFragmentById(fragmentId);
         if (overviewFragment != null) {
             getSupportFragmentManager().beginTransaction().remove(overviewFragment).commit();
         }
+    }
+
+    List<WeakReference<Fragment>> mFragments = new ArrayList<WeakReference<Fragment>>();
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        /*
+         * View pager fragments have tags set by the pager, we can use this to
+         * only add refs to those then, making them available to get removed if
+         * we switch to a non-pager layout.
+         */
+        if (fragment.getTag() != null) {
+            mFragments.add(new WeakReference<Fragment>(fragment));
+        }
+    }
+
+    public ArrayList<Fragment> getActiveFragments() {
+        ArrayList<Fragment> ret = new ArrayList<Fragment>();
+        for (WeakReference<Fragment> ref : mFragments) {
+            Fragment f = ref.get();
+            if (f != null) {
+                if (f.isAdded()) {
+                    ret.add(f);
+                }
+            }
+        }
+        return ret;
     }
 
     @Override
