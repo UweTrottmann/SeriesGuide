@@ -17,19 +17,20 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.adapters.TabPagerAdapter;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -44,11 +45,9 @@ import com.uwetrottmann.seriesguide.R;
  */
 public class OverviewActivity extends BaseActivity {
 
-    private Fragment mFragment;
     private int mShowId;
 
     @Override
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.overview);
@@ -64,14 +63,39 @@ public class OverviewActivity extends BaseActivity {
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        if (savedInstanceState == null) {
-            mFragment = new OverviewFragment();
-            mFragment.setArguments(getIntent().getExtras());
+        // look if we are on a multi-pane or single-pane layout...
+        View pagerView = findViewById(R.id.pager);
+        if (pagerView != null && pagerView.getVisibility() == View.VISIBLE) {
+            // ...single pane layout with view pager
+            ViewPager pager = (ViewPager) pagerView;
 
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
-            ft.replace(R.id.fragment_overview, mFragment);
-            ft.commit();
+            // setup action bar tabs
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+            TabPagerAdapter tabsAdapter = new TabPagerAdapter(getSupportFragmentManager(), this,
+                    actionBar, pager, getMenu());
+            tabsAdapter.addTab(R.string.description_overview, OverviewFragment.class, getIntent()
+                    .getExtras());
+
+            Bundle args = new Bundle();
+            args.putInt(SeasonsFragment.InitBundle.SHOW_TVDBID, mShowId);
+            tabsAdapter.addTab(R.string.seasons, SeasonsFragment.class, args);
+        } else {
+            // ...multi-pane overview and seasons fragment
+            if (savedInstanceState == null) {
+                Fragment overviewFragment = OverviewFragment.newInstance(mShowId);
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+                ft.replace(R.id.fragment_overview, overviewFragment);
+                ft.commit();
+
+                Fragment seasonsFragment = SeasonsFragment.newInstance(mShowId);
+                FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+                ft2.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+                ft2.replace(R.id.fragment_seasons, seasonsFragment);
+                ft2.commit();
+            }
+
         }
 
         // if (AndroidUtils.isICSOrHigher()) {
@@ -193,4 +217,5 @@ public class OverviewActivity extends BaseActivity {
     // NdefRecord.TNF_MIME_MEDIA, mimeBytes, new byte[0], payload);
     // return mimeRecord;
     // }
+
 }

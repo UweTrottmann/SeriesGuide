@@ -29,7 +29,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -75,8 +74,7 @@ import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
 
 /**
- * Displays general information about a show and its next episode. Displays a
- * {@link SeasonsFragment} on larger screens.
+ * Displays general information about a show and its next episode.
  */
 public class OverviewFragment extends SherlockFragment implements
         OnFlagListener, LoaderManager.LoaderCallbacks<Cursor> {
@@ -93,8 +91,6 @@ public class OverviewFragment extends SherlockFragment implements
 
     private TraktSummaryTask mTraktTask;
 
-    private View mSeasonsButton;
-
     private Cursor mEpisodeCursor;
 
     private Cursor mShowCursor;
@@ -106,6 +102,17 @@ public class OverviewFragment extends SherlockFragment implements
      */
     public interface InitBundle {
         String SHOW_TVDBID = "show_tvdbid";
+    }
+
+    public static OverviewFragment newInstance(int showId) {
+        OverviewFragment f = new OverviewFragment();
+
+        // Supply index input as an argument.
+        Bundle args = new Bundle();
+        args.putInt(InitBundle.SHOW_TVDBID, showId);
+        f.setArguments(args);
+
+        return f;
     }
 
     @Override
@@ -126,15 +133,6 @@ public class OverviewFragment extends SherlockFragment implements
                 onToggleShowFavorited(v);
             }
         });
-        mSeasonsButton = v.findViewById(R.id.gotoseasons);
-        if (mSeasonsButton != null) {
-            mSeasonsButton.setOnClickListener(new OnClickListener() {
-
-                public void onClick(View v) {
-                    onShowSeasons();
-                }
-            });
-        }
 
         return v;
     }
@@ -143,18 +141,9 @@ public class OverviewFragment extends SherlockFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        if (getShowId() == 0) {
-            getActivity().finish();
-            return;
-        }
-
-        // Check to see if we have a frame in which to embed the details
-        // fragment directly in the containing UI.
+        // Are we in a multi-pane layout?
         View seasonsFragment = getActivity().findViewById(R.id.fragment_seasons);
         mDualPane = seasonsFragment != null && seasonsFragment.getVisibility() == View.VISIBLE;
-        if (mDualPane) {
-            onShowSeasons();
-        }
 
         getLoaderManager().initLoader(SHOW_LOADER_ID, null, this);
         getLoaderManager().initLoader(EPISODE_LOADER_ID, null, this);
@@ -339,34 +328,6 @@ public class OverviewFragment extends SherlockFragment implements
 
             ShareUtils.onShareEpisode(getActivity(), shareData, shareMethod);
         }
-    }
-
-    private void onShowSeasons() {
-        if (mDualPane) {
-            // Check if fragment is shown, create new if needed.
-            SeasonsFragment seasons = (SeasonsFragment) getFragmentManager().findFragmentById(
-                    R.id.fragment_seasons);
-            if (seasons == null) {
-                // Make new fragment to show this selection.
-                seasons = SeasonsFragment.newInstance(getShowId());
-
-                // Execute a transaction, replacing any existing
-                // fragment with this one inside the frame.
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_seasons, seasons);
-                ft.commit();
-            }
-        } else {
-            // Otherwise we need to launch a new activity to display
-            // the dialog fragment with selected text.
-            Intent intent = new Intent();
-            intent.setClass(getActivity(), SeasonsActivity.class);
-            intent.putExtra(SeasonsFragment.InitBundle.SHOW_TVDBID, getShowId());
-            startActivity(intent);
-            getSherlockActivity().overridePendingTransition(R.anim.blow_up_enter,
-                    R.anim.blow_up_exit);
-        }
-
     }
 
     /**
@@ -819,42 +780,40 @@ public class OverviewFragment extends SherlockFragment implements
     }
 
     private void onLoadRemainingCounter() {
-        if (!mDualPane) {
-            final SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(getActivity());
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
 
-            AsyncTask<String, Void, String> task = new AsyncTask<String, Void, String>() {
+        AsyncTask<String, Void, String> task = new AsyncTask<String, Void, String>() {
 
-                private TextView mRemainingView;
+            private TextView mRemainingView;
 
-                @Override
-                protected void onPreExecute() {
-                    final View view = getView().findViewById(R.id.textViewRemaining);
-                    if (view == null) {
-                        cancel(true);
-                    }
-
-                    mRemainingView = (TextView) view;
+            @Override
+            protected void onPreExecute() {
+                final View view = getView().findViewById(R.id.textViewRemaining);
+                if (view == null) {
+                    cancel(true);
                 }
 
-                @Override
-                protected String doInBackground(String... params) {
-                    if (isCancelled()) {
-                        return null;
-                    }
-                    return DBUtils.getUnwatchedEpisodesOfShow(getActivity(),
-                            params[0],
-                            prefs);
-                }
+                mRemainingView = (TextView) view;
+            }
 
-                @Override
-                protected void onPostExecute(String result) {
-                    mRemainingView.setText(result);
+            @Override
+            protected String doInBackground(String... params) {
+                if (isCancelled()) {
+                    return null;
                 }
+                return DBUtils.getUnwatchedEpisodesOfShow(getActivity(),
+                        params[0],
+                        prefs);
+            }
 
-            };
-            AndroidUtils.executeAsyncTask(task, String.valueOf(getShowId()));
-        }
+            @Override
+            protected void onPostExecute(String result) {
+                mRemainingView.setText(result);
+            }
+
+        };
+        AndroidUtils.executeAsyncTask(task, String.valueOf(getShowId()));
     }
 
     private void onPopulateShowData(Cursor show) {

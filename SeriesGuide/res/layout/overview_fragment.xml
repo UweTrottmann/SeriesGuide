@@ -53,7 +53,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_below="@id/seriesname"
-                        android:layout_marginBottom="@dimen/default_padding"
                         android:layout_marginLeft="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
                         android:textAppearance="@style/TextAppearance.Small" />
@@ -63,9 +62,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/seriesname"
-                        android:layout_marginBottom="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
                         android:layout_toRightOf="@+id/showStatus"
+                        android:textAppearance="@style/TextAppearance.Small" />
+
+                    <TextView
+                        android:id="@+id/textViewRemaining"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/showmeta"
+                        android:layout_marginBottom="@dimen/default_padding"
+                        android:layout_marginLeft="@dimen/default_padding"
+                        android:layout_marginRight="@dimen/default_padding"
+                        android:textAllCaps="true"
                         android:textAppearance="@style/TextAppearance.Small" />
                 </RelativeLayout>
 
@@ -80,8 +89,6 @@
             </LinearLayout>
 
             <include layout="@layout/divider_horizontal" />
-
-            <include layout="@layout/gotoseasons" />
 
             <FrameLayout
                 android:layout_width="match_parent"
