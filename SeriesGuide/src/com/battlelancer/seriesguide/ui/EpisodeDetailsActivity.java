@@ -189,9 +189,6 @@ public class EpisodeDetailsActivity extends BaseActivity {
                         .addNextIntent(
                                 new Intent(this, OverviewActivity.class).putExtra(
                                         OverviewFragment.InitBundle.SHOW_TVDBID, mShowId))
-                        .addNextIntent(
-                                new Intent(this, SeasonsActivity.class).putExtra(
-                                        SeasonsFragment.InitBundle.SHOW_TVDBID, mShowId))
                         .addNextIntent(upIntent)
                         .startActivities();
                 finish();

@@ -279,13 +279,8 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
         int itemId = item.getItemId();
         if (itemId == android.R.id.home) {
             Intent upIntent;
-            if (mDualPane) {
-                upIntent = new Intent(this, OverviewActivity.class);
-                upIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, mShowId);
-            } else {
-                upIntent = new Intent(this, SeasonsActivity.class);
-                upIntent.putExtra(SeasonsFragment.InitBundle.SHOW_TVDBID, mShowId);
-            }
+            upIntent = new Intent(this, OverviewActivity.class);
+            upIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, mShowId);
             upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(upIntent);
             overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
