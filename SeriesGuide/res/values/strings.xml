@@ -2,6 +2,7 @@
 <resources>
 
     <!-- Generic -->
+    <string name="show">Show</string>
     <string name="episode">Episode</string>
     <string name="episodes">Episodes</string>
     <string name="all_episodes">All episodes</string>

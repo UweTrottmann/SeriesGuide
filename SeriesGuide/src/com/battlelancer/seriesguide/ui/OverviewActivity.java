@@ -128,12 +128,19 @@ public class OverviewActivity extends BaseActivity {
 
         TabPagerAdapter tabsAdapter = new TabPagerAdapter(getSupportFragmentManager(), this,
                 actionBar, pager, getMenu());
+        Bundle argsShow = new Bundle();
+        argsShow.putInt(ShowInfoFragment.InitBundle.SHOW_TVDBID, mShowId);
+        tabsAdapter.addTab(R.string.show, ShowInfoFragment.class, argsShow);
+
         tabsAdapter.addTab(R.string.description_overview, OverviewFragment.class, getIntent()
                 .getExtras());
 
-        Bundle args = new Bundle();
-        args.putInt(SeasonsFragment.InitBundle.SHOW_TVDBID, mShowId);
-        tabsAdapter.addTab(R.string.seasons, SeasonsFragment.class, args);
+        Bundle argsSeason = new Bundle();
+        argsSeason.putInt(SeasonsFragment.InitBundle.SHOW_TVDBID, mShowId);
+        tabsAdapter.addTab(R.string.seasons, SeasonsFragment.class, argsSeason);
+
+        // select overview to be shown initially
+        actionBar.setSelectedNavigationItem(1);
     }
 
     private void findAndRemoveFragment(int fragmentId) {
