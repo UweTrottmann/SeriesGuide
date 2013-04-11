@@ -50,7 +50,7 @@
         android:layout_below="@id/textViewShowsTimeAndNetwork"
         android:layout_toRightOf="@id/showposter"
         android:text="@string/no_nextepisode"
-        android:textAppearance="@style/TextAppearance" />
+        android:textAppearance="@style/TextAppearance.Light" />
 
     <TextView
         android:id="@+id/episodetime"
