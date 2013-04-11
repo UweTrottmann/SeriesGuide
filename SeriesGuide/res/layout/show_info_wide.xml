@@ -53,7 +53,7 @@
                 <include
                     android:id="@+id/buttonbar_ref"
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     layout="@layout/buttonbar_services" />
             </LinearLayout>
 
