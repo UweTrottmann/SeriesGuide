@@ -12,6 +12,10 @@
         <item name="android:textColor">?attr/textColorSgDim</item>
     </style>
 
+    <style name="TextAppearance.Light">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
+    </style>
+
     <style name="TextAppearance.XSmall">
         <item name="android:textSize">@dimen/text_size_xsmall</item>
         <item name="android:textColor">?attr/textColorSgDefault</item>

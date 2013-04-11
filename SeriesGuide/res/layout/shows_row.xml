@@ -45,7 +45,7 @@
         android:layout_toLeftOf="@id/favoritedLabel"
         android:layout_toRightOf="@id/showposter"
         android:ellipsize="end"
-        android:maxLines="2"
+        android:maxLines="1"
         android:paddingBottom="0dp"
         android:paddingRight="@dimen/inline_padding"
         android:paddingTop="2dp"
@@ -62,17 +62,18 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:paddingRight="@dimen/inline_padding"
-        android:text="@string/app_name" />
+        android:text="@string/app_name"
+        android:textAppearance="@style/TextAppearance.Light" />
 
     <TextView
         android:id="@+id/episodetime"
-        style="@style/TextAppearance.XSmall.Dim"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/TextViewShowListNextEpisode"
         android:layout_toLeftOf="@id/textViewShowsTimeAndNetwork"
         android:layout_toRightOf="@id/showposter"
         android:paddingRight="@dimen/inline_padding"
-        android:text="@string/app_name" />
+        android:text="@string/app_name"
+        android:textAppearance="@style/TextAppearance.XSmall.Dim" />
 
 </RelativeLayout>
