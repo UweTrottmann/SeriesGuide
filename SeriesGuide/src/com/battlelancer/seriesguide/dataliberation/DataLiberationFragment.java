@@ -110,6 +110,11 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
                 mTask.execute();
             }
         });
+        
+        // restore UI state
+        if (mTask != null && mTask.getStatus() != AsyncTask.Status.FINISHED) {
+            setProgressLock(true);
+        }
     }
 
     @Override

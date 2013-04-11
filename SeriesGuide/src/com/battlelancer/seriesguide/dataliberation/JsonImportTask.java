@@ -67,7 +67,7 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
     private OnTaskFinishedListener mListener;
 
     public JsonImportTask(Context context, OnTaskFinishedListener listener) {
-        mContext = context;
+        mContext = context.getApplicationContext();
         mListener = listener;
     }
 

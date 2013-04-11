@@ -95,7 +95,7 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
      * required data and shows result toasts.
      */
     public JsonExportTask(Context context, OnTaskFinishedListener listener) {
-        mContext = context;
+        mContext = context.getApplicationContext();
         mListener = listener;
     }
 
