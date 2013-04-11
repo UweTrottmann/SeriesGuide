@@ -30,7 +30,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.adapters.TabPagerAdapter;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
+import com.battlelancer.seriesguide.ui.UpcomingFragment.ActivityType;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -62,9 +62,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
                 viewPager, getMenu());
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
-        argsUpcoming.putString(UpcomingFragment.InitBundle.QUERY, UpcomingQuery.QUERY_UPCOMING);
-        argsUpcoming.putString(UpcomingFragment.InitBundle.SORTORDER,
-                UpcomingQuery.SORTING_UPCOMING);
+        argsUpcoming.putString(UpcomingFragment.InitBundle.TYPE, ActivityType.UPCOMING);
         argsUpcoming.putString(UpcomingFragment.InitBundle.ANALYTICS_TAG, "Upcoming");
         argsUpcoming.putInt(UpcomingFragment.InitBundle.LOADER_ID, 10);
         argsUpcoming.putInt(UpcomingFragment.InitBundle.EMPTY_STRING_ID, R.string.noupcoming);
@@ -72,8 +70,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
 
         // recent tab
         final Bundle argsRecent = new Bundle();
-        argsRecent.putString(UpcomingFragment.InitBundle.QUERY, UpcomingQuery.QUERY_RECENT);
-        argsRecent.putString(UpcomingFragment.InitBundle.SORTORDER, UpcomingQuery.SORTING_RECENT);
+        argsRecent.putString(UpcomingFragment.InitBundle.TYPE, ActivityType.RECENT);
         argsRecent.putString(UpcomingFragment.InitBundle.ANALYTICS_TAG, "Recent");
         argsRecent.putInt(UpcomingFragment.InitBundle.LOADER_ID, 20);
         argsRecent.putInt(UpcomingFragment.InitBundle.EMPTY_STRING_ID, R.string.norecent);

@@ -31,6 +31,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -73,15 +74,18 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
      * Bundle extras are strings, except LOADER_ID and EMPTY_STRING_ID.
      */
     public interface InitBundle {
-        String QUERY = "query";
-
-        String SORTORDER = "sortorder";
+        String TYPE = "type";
 
         String ANALYTICS_TAG = "analyticstag";
 
         String LOADER_ID = "loaderid";
 
         String EMPTY_STRING_ID = "emptyid";
+    }
+
+    public interface ActivityType {
+        public String UPCOMING = "upcoming";
+        public String RECENT = "recent";
     }
 
     @Override
@@ -228,15 +232,26 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        // TODO look to merge this with DBUtils.buildActivityQuery
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         long fakeNow = Utils.getFakeCurrentTime(prefs);
         // go an hour back in time, so episodes move to recent one hour late
         fakeNow -= DateUtils.HOUR_IN_MILLIS;
         final String recentThreshold = String.valueOf(fakeNow);
 
-        final String sortOrder = getArguments().getString("sortorder");
-        String query = getArguments().getString("query");
+        String sortOrder;
+        String query;
+        long monthThreshold;
+
+        String type = getArguments().getString(InitBundle.TYPE);
+        if (ActivityType.UPCOMING.equals(type)) {
+            query = UpcomingQuery.QUERY_UPCOMING;
+            sortOrder = UpcomingQuery.SORTING_UPCOMING;
+            monthThreshold = System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS * 30;
+        } else {
+            query = UpcomingQuery.QUERY_RECENT;
+            sortOrder = UpcomingQuery.SORTING_RECENT;
+            monthThreshold = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS * 30;
+        }
 
         boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
         if (isOnlyFavorites) {
@@ -257,7 +272,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
         return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
                 UpcomingQuery.PROJECTION, query, new String[] {
-                        recentThreshold, "0"
+                        recentThreshold, String.valueOf(monthThreshold)
                 }, sortOrder);
     }
 
@@ -276,10 +291,11 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                 Shows.AIRSTIME, Shows.NETWORK, Shows.POSTER, Shows.REF_SHOW_ID
         };
 
-        String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND " + Shows.HIDDEN + "=?";
+        String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND " + Episodes.FIRSTAIREDMS
+                + "<? AND " + Shows.HIDDEN + "=0";
 
-        String QUERY_RECENT = Episodes.FIRSTAIREDMS + "<? AND " + Episodes.FIRSTAIREDMS + ">0 AND "
-                + Shows.HIDDEN + "=?";
+        String QUERY_RECENT = Episodes.FIRSTAIREDMS + "<? AND " + Episodes.FIRSTAIREDMS + ">? AND "
+                + Shows.HIDDEN + "=0";
 
         String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC,"
                 + Episodes.NUMBER + " ASC";
@@ -348,10 +364,8 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                 viewHolder.show = (TextView) convertView.findViewById(R.id.textViewUpcomingShow);
                 viewHolder.watchedBox = (WatchedBox) convertView
                         .findViewById(R.id.watchedBoxUpcoming);
-                viewHolder.airdate = (TextView) convertView
-                        .findViewById(R.id.textViewUpcomingAirdate);
-                viewHolder.network = (TextView) convertView
-                        .findViewById(R.id.textViewUpcomingNetwork);
+                viewHolder.meta = (TextView) convertView
+                        .findViewById(R.id.textViewUpcomingMeta);
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.poster);
 
                 convertView.setTag(viewHolder);
@@ -395,29 +409,27 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                 }
             });
 
-            // show
-            viewHolder.show.setText(mCursor.getString(UpcomingQuery.SHOW_TITLE));
-
-            // episode number and title
+            // number and show
             final String number = Utils.getEpisodeNumber(mPrefs, season, episode);
-            viewHolder.episode.setText(number + " " + mCursor.getString(UpcomingQuery.TITLE));
+            viewHolder.show.setText(number + " | " + mCursor.getString(UpcomingQuery.SHOW_TITLE));
 
-            // add network
-            String network = "";
-            final String value = mCursor.getString(UpcomingQuery.SHOW_NETWORK);
-            if (value.length() != 0) {
-                network = value + " / ";
-            }
-            // airdate and time
+            // title
+            viewHolder.episode.setText(mCursor.getString(UpcomingQuery.TITLE));
+
+            // meta data: time, day and network
+            StringBuilder metaText = new StringBuilder();
             final long airtime = mCursor.getLong(UpcomingQuery.FIRSTAIREDMS);
             if (airtime != -1) {
                 String[] timeAndDay = Utils.formatToTimeAndDay(airtime, mContext);
-                viewHolder.airdate.setText(timeAndDay[2]);
-                network += timeAndDay[1] + " " + timeAndDay[0];
-            } else {
-                viewHolder.airdate.setText("");
+                // 10:00 | Fri in 3 days, 10:00 PM | Mon 23 Jul
+                metaText.append(timeAndDay[0]).append(" | ").append(timeAndDay[1]).append(" ")
+                        .append(timeAndDay[2]);
             }
-            viewHolder.network.setText(network);
+            final String network = mCursor.getString(UpcomingQuery.SHOW_NETWORK);
+            if (!TextUtils.isEmpty(network)) {
+                metaText.append("\n").append(network);
+            }
+            viewHolder.meta.setText(metaText);
 
             // set poster
             final String imagePath = mCursor.getString(UpcomingQuery.SHOW_POSTER);
@@ -445,9 +457,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
         public WatchedBox watchedBox;
 
-        public TextView airdate;
-
-        public TextView network;
+        public TextView meta;
 
         public ImageView poster;
     }
