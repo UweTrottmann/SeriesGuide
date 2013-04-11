@@ -18,7 +18,6 @@
 package com.battlelancer.seriesguide.util;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
@@ -818,10 +817,10 @@ public class Utils {
      * @param imdbId
      * @param imdbButton
      * @param logTag
-     * @param activity
+     * @param context
      */
     public static void setUpImdbButton(final String imdbId, View imdbButton, final String logTag,
-            final Activity activity) {
+            final Context context) {
         if (imdbButton != null) {
             imdbButton.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
@@ -833,16 +832,16 @@ public class Utils {
                                 + imdbId + "/"));
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                         try {
-                            activity.startActivity(intent);
+                            context.startActivity(intent);
                         } catch (ActivityNotFoundException e) {
                             intent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_TITLE_URL
                                     + imdbId));
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                            activity.startActivity(intent);
+                            context.startActivity(intent);
                         }
                     } else {
-                        Toast.makeText(activity,
-                                activity.getString(R.string.show_noimdbentry), Toast.LENGTH_LONG)
+                        Toast.makeText(context,
+                                context.getString(R.string.show_noimdbentry), Toast.LENGTH_LONG)
                                 .show();
                     }
                 }
