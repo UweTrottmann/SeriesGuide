@@ -162,6 +162,12 @@
     <style name="ActionBar" parent="Widget.Sherlock.ActionBar">
         <item name="background">@drawable/sg_actionbar_background</item>
         <item name="android:background">@drawable/sg_actionbar_background</item>
+        <item name="titleTextStyle">@style/ActionBarTitleText</item>
+        <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/ActionBarTitleText</item>
+    </style>
+
+    <style name="ActionBarTitleText" parent="TextAppearance.Sherlock.Widget.ActionBar.Title">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
     </style>
 
     <style name="ActionBarTabStyle" parent="Widget.Sherlock.ActionBar.TabBar">
@@ -403,6 +409,16 @@
 
     <style name="TextAppearance.Light.TabPageIndicator" parent="TextAppearance.TabPageIndicator">
         <item name="android:textColor">@color/vpi__light_theme</item>
+    </style>
+
+    <!-- ActionBar -->
+    <style name="ActionBar.Light" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+        <item name="titleTextStyle">@style/ActionBarTitleText.Light</item>
+        <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/ActionBarTitleText.Light</item>
+    </style>
+
+    <style name="ActionBarTitleText.Light" parent="TextAppearance.Sherlock.Widget.ActionBar.Title.Inverse">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
     </style>
 
     <!-- ActionBar Spinner -->

@@ -29,6 +29,7 @@
         <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_light</item>
 
         <!-- Action bar (native, v11+) -->
+        <item name="android:actionBarStyle">@style/ActionBar.Light</item>
         <item name="android:actionBarTabStyle">@style/ActionBarTabStyle</item>
         <item name="android:actionBarItemBackground" tools:targetApi="ice_cream_sandwich">@drawable/list_selector_sg</item>
         <item name="android:actionDropDownStyle">@style/DropDownNav</item>
