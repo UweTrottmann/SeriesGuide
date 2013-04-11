@@ -48,8 +48,12 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Lists;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.jakewharton.apibuilder.ApiException;
+import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -212,14 +216,45 @@ public class TheTVDB {
     }
 
     /**
-     * Get details for one show, identified by the given series TVDb id.
+     * Get details for one show, identified by the given series TVDb id. Tries
+     * to fetch additional information from trakt.
+     * 
+     * @param language A TVDb language code (see <a
+     *            href="http://www.thetvdb.com/wiki/index.php/API:languages.xml"
+     *            >TVDb wiki</a>).
      */
-    public static Show fetchShow(String seriesid, String language, Context context)
+    public static Show fetchShow(String showTvdbId, String language, Context context)
             throws SAXException {
-        String url = xmlMirror + context.getResources().getString(R.string.tvdb_apikey)
-                + "/series/" + seriesid + "/" + (language != null ? language + ".xml" : "");
+        // Try to get some show details from trakt
+        TvShow traktShow = null;
+        ServiceManager manager = ServiceUtils.getTraktServiceManager(context);
+        if (manager != null) {
+            try {
+                traktShow = manager.showService().summary(showTvdbId).fire();
+            } catch (TraktException e) {
+                Utils.trackExceptionAndLog(context, TAG, e);
+            } catch (ApiException e) {
+                Utils.trackExceptionAndLog(context, TAG, e);
+            }
+        }
 
-        return parseShow(url, context);
+        String url = xmlMirror + context.getResources().getString(R.string.tvdb_apikey)
+                + "/series/" + showTvdbId + "/" + (language != null ? language + ".xml" : "");
+
+        Show show = parseShow(url, context);
+
+        // correct air times for non-US shows
+        if (traktShow != null && traktShow.country != null) {
+            if ("United States".equals(traktShow.country)) {
+                // catch US, is already correct then
+            } else if ("United Kingdom".equals(traktShow.country)) {
+                // Correct to BST (no summer time)
+                // Sample: Doctor Who (2005)
+                show.airtime -= 8 * DateUtils.HOUR_IN_MILLIS;
+            }
+        }
+
+        return show;
     }
 
     /**
