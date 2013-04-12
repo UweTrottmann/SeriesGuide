@@ -194,6 +194,16 @@ public class OverviewFragment extends SherlockFragment implements
         menu.findItem(R.id.menu_flag_watched).setVisible(!mDualPane);
         menu.findItem(R.id.menu_flag_collected).setVisible(!mDualPane);
         menu.findItem(R.id.menu_calendarevent).setVisible(!mDualPane);
+
+        // move some items to the overflow menu on smaller screens
+        menu.findItem(R.id.menu_rate_trakt).setShowAsAction(
+                mDualPane ?
+                        MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT
+                        : MenuItem.SHOW_AS_ACTION_NEVER);
+        menu.findItem(R.id.menu_manage_lists).setShowAsAction(
+                mDualPane ?
+                        MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT
+                        : MenuItem.SHOW_AS_ACTION_NEVER);
     }
 
     @Override

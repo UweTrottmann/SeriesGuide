@@ -7,14 +7,14 @@
         android:showAsAction="ifRoom|withText"
         android:title="@string/menu_rate_trakt"/>
     <item
-        android:id="@+id/menu_share"
-        android:icon="@drawable/ic_action_share"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/share_episode"/>
-    <item
         android:id="@+id/menu_manage_lists"
         android:icon="@drawable/ic_action_list"
         android:showAsAction="ifRoom|withText"
         android:title="@string/list_item_manage"/>
+    <item
+        android:id="@+id/menu_share"
+        android:icon="@drawable/ic_action_share"
+        android:showAsAction="ifRoom"
+        android:title="@string/share_episode"/>
 
 </menu>
