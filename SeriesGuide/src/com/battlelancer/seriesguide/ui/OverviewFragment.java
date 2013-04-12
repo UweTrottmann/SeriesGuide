@@ -45,6 +45,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -825,6 +826,10 @@ public class OverviewFragment extends SherlockFragment implements
         // title
         mShowTitle = show.getString(ShowQuery.SHOW_TITLE);
         ((TextView) getView().findViewById(R.id.seriesname)).setText(mShowTitle);
+        
+        // set show title in action bar
+        final ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+        actionBar.setTitle(mShowTitle);
 
         // status
         final TextView statusText = (TextView) getView().findViewById(R.id.showStatus);
