@@ -42,7 +42,6 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
-import com.uwetrottmann.seriesguide.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -127,17 +126,13 @@ public class DBUtils {
     }
 
     /**
-     * Returns a string of how many episodes of a show are left to watch (only
-     * aired and not watched, exclusive episodes with no air date).
-     * 
-     * @param context
-     * @param showId
-     * @param prefs
+     * Returns how many episodes of a show are left to watch (only aired and not
+     * watched, exclusive episodes with no air date).
      */
-    public static String getUnwatchedEpisodesOfShow(Context context, String showId,
+    public static int getUnwatchedEpisodesOfShow(Context context, String showId,
             SharedPreferences prefs) {
         if (context == null) {
-            return "";
+            return -1;
         }
         final ContentResolver resolver = context.getContentResolver();
         final String fakenow = String.valueOf(Utils.getFakeCurrentTime(prefs));
@@ -151,7 +146,7 @@ public class DBUtils {
         final int count = unwatched.getCount();
         unwatched.close();
 
-        return context.getString(R.string.remaining, count);
+        return count;
     }
 
     /**

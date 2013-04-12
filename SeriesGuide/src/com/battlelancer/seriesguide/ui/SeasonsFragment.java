@@ -39,6 +39,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -87,6 +88,12 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     private SeasonsAdapter mAdapter;
 
+    private TextView mTextViewRemaining;
+
+    private View mButtonCollectedAll;
+
+    private ImageView mButtonWatchedAll;
+
     /**
      * All values have to be integer.
      */
@@ -109,25 +116,43 @@ public class SeasonsFragment extends SherlockListFragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.seasons_fragment, container, false);
 
-        View buttonWatchedAll = v.findViewById(R.id.imageViewSeasonsWatchedToggle);
-        buttonWatchedAll.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onFlagShowWatched(true);
-            }
-        });
-        CheatSheet.setup(buttonWatchedAll, R.string.mark_all);
+        mButtonWatchedAll = (ImageView) v.findViewById(R.id.imageViewSeasonsWatchedToggle);
 
-        View buttonCollectedAll = v.findViewById(R.id.imageViewSeasonsCollectedToggle);
-        buttonCollectedAll.setOnClickListener(new OnClickListener() {
+        mButtonCollectedAll = v.findViewById(R.id.imageViewSeasonsCollectedToggle);
+        mButtonCollectedAll.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 onFlagShowCollected(true);
             }
         });
-        CheatSheet.setup(buttonCollectedAll, R.string.collect_all);
+        CheatSheet.setup(mButtonCollectedAll, R.string.collect_all);
+
+        mTextViewRemaining = (TextView) v.findViewById(R.id.textViewSeasonsRemaining);
 
         return v;
+    }
+
+    OnClickListener mListenerFlagAllWatched = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            onFlagShowWatched(true);
+        }
+    };
+    OnClickListener mListenerFlagAllUnwatched = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            onFlagShowWatched(false);
+        }
+    };
+
+    private void setWatchedToggleState(Integer result) {
+        mButtonWatchedAll.setImageResource(result == 0 ? R.drawable.ic_watched
+                : R.drawable.ic_action_watched);
+        mButtonWatchedAll
+                .setOnClickListener(result == 0 ? mListenerFlagAllUnwatched
+                        : mListenerFlagAllWatched);
+        CheatSheet.setup(mButtonWatchedAll, result == 0 ? R.string.unmark_all
+                : R.string.mark_all);
     }
 
     @Override
@@ -401,22 +426,10 @@ public class SeasonsFragment extends SherlockListFragment implements
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
 
-        AsyncTask<String, Void, String> task = new AsyncTask<String, Void, String>() {
-
-            private TextView mRemainingView;
+        AsyncTask<String, Void, Integer> task = new AsyncTask<String, Void, Integer>() {
 
             @Override
-            protected void onPreExecute() {
-                final View view = getView().findViewById(R.id.textViewSeasonsRemaining);
-                if (view == null) {
-                    cancel(true);
-                }
-
-                mRemainingView = (TextView) view;
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
+            protected Integer doInBackground(String... params) {
                 if (isCancelled()) {
                     return null;
                 }
@@ -426,8 +439,20 @@ public class SeasonsFragment extends SherlockListFragment implements
             }
 
             @Override
-            protected void onPostExecute(String result) {
-                mRemainingView.setText(result);
+            protected void onPostExecute(Integer result) {
+                if (isAdded()) {
+                    if (mTextViewRemaining != null) {
+                        if (result == -1) {
+                            mTextViewRemaining.setText(getString(R.string.remaining,
+                                    getString(R.string.norating)));
+                        } else {
+                            mTextViewRemaining.setText(getString(R.string.remaining, result));
+                        }
+                    }
+                    if (mButtonWatchedAll != null) {
+                        setWatchedToggleState(result);
+                    }
+                }
             }
 
         };
