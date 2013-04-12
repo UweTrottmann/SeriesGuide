@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -39,6 +40,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
@@ -57,6 +59,7 @@ import com.battlelancer.seriesguide.util.FlagTask.FlagTaskType;
 import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
 import com.battlelancer.seriesguide.util.FlagTask.SeasonWatchedType;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -103,7 +106,7 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.list_fragment, container, false);
+        return inflater.inflate(R.layout.seasons_fragment, container, false);
     }
 
     @Override
@@ -117,6 +120,8 @@ public class SeasonsFragment extends SherlockListFragment implements
         setListAdapter(mAdapter);
         // now let's get a loader or reconnect to existing one
         getLoaderManager().initLoader(LOADER_ID, null, this);
+
+        onLoadRemainingCounter();
 
         // listen to changes to the sorting preference
         final SharedPreferences prefs = PreferenceManager
@@ -369,6 +374,43 @@ public class SeasonsFragment extends SherlockListFragment implements
         // above is about to be closed. We need to make sure we are no
         // longer using it.
         mAdapter.swapCursor(null);
+    }
+
+    private void onLoadRemainingCounter() {
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+
+        AsyncTask<String, Void, String> task = new AsyncTask<String, Void, String>() {
+
+            private TextView mRemainingView;
+
+            @Override
+            protected void onPreExecute() {
+                final View view = getView().findViewById(R.id.textViewSeasonsRemaining);
+                if (view == null) {
+                    cancel(true);
+                }
+
+                mRemainingView = (TextView) view;
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+                if (isCancelled()) {
+                    return null;
+                }
+                return DBUtils.getUnwatchedEpisodesOfShow(getActivity(),
+                        params[0],
+                        prefs);
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                mRemainingView.setText(result);
+            }
+
+        };
+        AndroidUtils.executeAsyncTask(task, String.valueOf(getShowId()));
     }
 
     public interface SeasonsQuery {

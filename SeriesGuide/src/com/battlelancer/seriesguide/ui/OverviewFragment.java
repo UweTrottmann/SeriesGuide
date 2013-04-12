@@ -25,7 +25,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -504,7 +503,6 @@ public class OverviewFragment extends SherlockFragment implements
                 case EPISODE_LOADER_ID:
                     getSherlockActivity().invalidateOptionsMenu();
                     onPopulateEpisodeData(data);
-                    onLoadRemainingCounter();
                     break;
                 case SHOW_LOADER_ID:
                     onPopulateShowData(data);
@@ -783,43 +781,6 @@ public class OverviewFragment extends SherlockFragment implements
         AndroidUtils.executeAsyncTask(mArtTask, new Void[] {
                 null
         });
-    }
-
-    private void onLoadRemainingCounter() {
-        final SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
-
-        AsyncTask<String, Void, String> task = new AsyncTask<String, Void, String>() {
-
-            private TextView mRemainingView;
-
-            @Override
-            protected void onPreExecute() {
-                final View view = getView().findViewById(R.id.textViewRemaining);
-                if (view == null) {
-                    cancel(true);
-                }
-
-                mRemainingView = (TextView) view;
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-                if (isCancelled()) {
-                    return null;
-                }
-                return DBUtils.getUnwatchedEpisodesOfShow(getActivity(),
-                        params[0],
-                        prefs);
-            }
-
-            @Override
-            protected void onPostExecute(String result) {
-                mRemainingView.setText(result);
-            }
-
-        };
-        AndroidUtils.executeAsyncTask(task, String.valueOf(getShowId()));
     }
 
     private void onPopulateShowData(Cursor show) {
