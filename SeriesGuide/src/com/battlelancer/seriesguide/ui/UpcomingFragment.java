@@ -52,11 +52,14 @@ import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
 
 public class UpcomingFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -175,7 +178,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     }
 
     private void setupAdapter() {
-        mAdapter = new SlowAdapter(getActivity(), null, 0);
+        mAdapter = new SlowAdapter(getActivity(), null, 0, mCheckinButtonListener);
 
         setListAdapter(mAdapter);
 
@@ -288,7 +291,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
                 Episodes.NUMBER, Episodes.SEASON, Episodes.FIRSTAIREDMS, Shows.TITLE,
-                Shows.AIRSTIME, Shows.NETWORK, Shows.POSTER, Shows.REF_SHOW_ID
+                Shows.AIRSTIME, Shows.NETWORK, Shows.POSTER, Shows.REF_SHOW_ID, Shows.IMDBID
         };
 
         String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND " + Episodes.FIRSTAIREDMS
@@ -325,7 +328,24 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
         int REF_SHOW_ID = 10;
 
+        int IMDBID = 11;
+
     }
+
+    protected OnClickListener mCheckinButtonListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // display more details in a dialog
+            int position = getListView().getPositionForView(v);
+            Cursor episode = (Cursor) mAdapter.getItem(position);
+            CheckInDialogFragment f = CheckInDialogFragment.newInstance(
+                    episode.getString(UpcomingQuery.IMDBID),
+                    episode.getInt(UpcomingQuery.REF_SHOW_ID),
+                    episode.getInt(UpcomingQuery.SEASON), episode.getInt(UpcomingQuery.NUMBER),
+                    ShareUtils.onCreateShareString(getActivity(), episode));
+            f.show(getFragmentManager(), "checkin-dialog");
+        }
+    };
 
     private class SlowAdapter extends CursorAdapter {
 
@@ -333,11 +353,14 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
         private SharedPreferences mPrefs;
 
+        private OnClickListener mCheckinButtonListener;
+
         private final int LAYOUT = R.layout.upcoming_row;
 
-        public SlowAdapter(Context context, Cursor c, int flags) {
+        public SlowAdapter(Context context, Cursor c, int flags,
+                OnClickListener checkinButtonListener) {
             super(context, c, flags);
-
+            mCheckinButtonListener = checkinButtonListener;
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -367,6 +390,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                 viewHolder.meta = (TextView) convertView
                         .findViewById(R.id.textViewUpcomingMeta);
                 viewHolder.poster = (ImageView) convertView.findViewById(R.id.poster);
+                viewHolder.buttonCheckin = convertView.findViewById(R.id.imageViewUpcomingCheckIn);
 
                 convertView.setTag(viewHolder);
             } else {
@@ -408,6 +432,12 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                     return true;
                 }
             });
+
+            // checkin button (not avail in all layouts)
+            if (viewHolder.buttonCheckin != null) {
+                viewHolder.buttonCheckin.setOnClickListener(mCheckinButtonListener);
+                CheatSheet.setup(viewHolder.buttonCheckin, R.string.checkin);
+            }
 
             // number and show
             final String number = Utils.getEpisodeNumber(mPrefs, season, episode);
@@ -456,6 +486,8 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         public TextView episode;
 
         public WatchedBox watchedBox;
+
+        public View buttonCheckin;
 
         public TextView meta;
 
