@@ -226,11 +226,6 @@ public class OverviewFragment extends SherlockFragment implements
                         ListItemTypes.EPISODE, getFragmentManager());
             }
             return true;
-        } else if (itemId == R.id.menu_search) {
-            // search through this shows episodes
-            fireTrackerEvent("Search");
-            getActivity().onSearchRequested();
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -826,7 +821,7 @@ public class OverviewFragment extends SherlockFragment implements
         // title
         mShowTitle = show.getString(ShowQuery.SHOW_TITLE);
         ((TextView) getView().findViewById(R.id.seriesname)).setText(mShowTitle);
-        
+
         // set show title in action bar
         final ActionBar actionBar = getSherlockActivity().getSupportActionBar();
         actionBar.setTitle(mShowTitle);
