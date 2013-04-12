@@ -151,7 +151,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         } else {
             menu.add(0, CONTEXT_FLAG_WATCHED_ID, 0, R.string.mark_episode);
         }
-        menu.add(1, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
+        menu.add(0, CONTEXT_CHECKIN_ID, 2, R.string.checkin);
     }
 
     @Override
