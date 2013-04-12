@@ -60,6 +60,7 @@ import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
 import com.battlelancer.seriesguide.util.FlagTask.SeasonWatchedType;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -106,7 +107,27 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.seasons_fragment, container, false);
+        View v = inflater.inflate(R.layout.seasons_fragment, container, false);
+
+        View buttonWatchedAll = v.findViewById(R.id.imageViewSeasonsWatchedToggle);
+        buttonWatchedAll.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFlagShowWatched(true);
+            }
+        });
+        CheatSheet.setup(buttonWatchedAll, R.string.mark_all);
+
+        View buttonCollectedAll = v.findViewById(R.id.imageViewSeasonsCollectedToggle);
+        buttonCollectedAll.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFlagShowCollected(true);
+            }
+        });
+        CheatSheet.setup(buttonCollectedAll, R.string.collect_all);
+
+        return v;
     }
 
     @Override
@@ -467,6 +488,7 @@ public class SeasonsFragment extends SherlockListFragment implements
     @Override
     public void onFlagCompleted(FlagTaskType type) {
         if (isAdded()) {
+            onLoadRemainingCounter();
             if (type instanceof SeasonWatchedType) {
                 SeasonWatchedType seasonWatchedType = (SeasonWatchedType) type;
                 Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()),
