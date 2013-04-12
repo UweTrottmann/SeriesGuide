@@ -37,6 +37,8 @@ import com.jakewharton.trakt.services.ShowService.CheckinBuilder;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
+import de.greenrobot.event.EventBus;
+
 public class TraktTask extends AsyncTask<Void, Void, Response> {
 
     private static final String TAG = "TraktTask";
@@ -71,6 +73,16 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         public void onTraktActionComplete(Bundle traktTaskArgs, boolean wasSuccessfull);
 
         public void onCheckinBlocked(Bundle traktTaskArgs, int wait);
+    }
+
+    public static class TraktActionCompleteEvent {
+        public Bundle mTraktTaskArgs;
+        public boolean mWasSuccessful;
+
+        public TraktActionCompleteEvent(Bundle traktTaskArgs, boolean wasSuccessful) {
+            mTraktTaskArgs = traktTaskArgs;
+            mWasSuccessful = wasSuccessful;
+        }
     }
 
     /**
@@ -353,6 +365,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                         break;
                 }
 
+                EventBus.getDefault().post(new TraktActionCompleteEvent(mArgs, true));
                 if (mListener != null) {
                     mListener.onTraktActionComplete(mArgs, true);
                 }

@@ -104,13 +104,6 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
         mTraktLoves = (TextView) mView.findViewById(R.id.textViewRatingsTraktValue);
         mTraktVotes = (TextView) mView.findViewById(R.id.textViewRatingsTraktVotes);
         mTraktUserRating = (TextView) mView.findViewById(R.id.textViewRatingsTraktUser);
-
-        // set place-holder values
-        if (mTraktLoves != null && mTraktVotes != null && mTraktUserRating != null) {
-            mTraktLoves.setText(R.string.notraktrating);
-            mTraktVotes.setText("");
-            mTraktVotes.setText("");
-        }
     }
 
     @Override
