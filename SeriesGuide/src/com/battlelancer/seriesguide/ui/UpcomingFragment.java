@@ -68,6 +68,8 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
 
     private static final int CONTEXT_FLAG_UNWATCHED_ID = 1;
 
+    private static final int CONTEXT_CHECKIN_ID = 2;
+
     private CursorAdapter mAdapter;
 
     private boolean mDualPane;
@@ -149,6 +151,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         } else {
             menu.add(0, CONTEXT_FLAG_WATCHED_ID, 0, R.string.mark_episode);
         }
+        menu.add(1, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
     }
 
     @Override
@@ -164,8 +167,21 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                 onFlagEpisodeWatched(info, false);
                 return true;
             }
+            case CONTEXT_CHECKIN_ID: {
+                onCheckinEpisode((Cursor) mAdapter.getItem(info.position));
+                return true;
+            }
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void onCheckinEpisode(Cursor episode) {
+        CheckInDialogFragment f = CheckInDialogFragment.newInstance(
+                episode.getString(UpcomingQuery.IMDBID),
+                episode.getInt(UpcomingQuery.REF_SHOW_ID),
+                episode.getInt(UpcomingQuery.SEASON), episode.getInt(UpcomingQuery.NUMBER),
+                ShareUtils.onCreateShareString(getActivity(), episode));
+        f.show(getFragmentManager(), "checkin-dialog");
     }
 
     private void onFlagEpisodeWatched(AdapterContextMenuInfo info, boolean isWatched) {
@@ -335,15 +351,9 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     protected OnClickListener mCheckinButtonListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            // display more details in a dialog
             int position = getListView().getPositionForView(v);
             Cursor episode = (Cursor) mAdapter.getItem(position);
-            CheckInDialogFragment f = CheckInDialogFragment.newInstance(
-                    episode.getString(UpcomingQuery.IMDBID),
-                    episode.getInt(UpcomingQuery.REF_SHOW_ID),
-                    episode.getInt(UpcomingQuery.SEASON), episode.getInt(UpcomingQuery.NUMBER),
-                    ShareUtils.onCreateShareString(getActivity(), episode));
-            f.show(getFragmentManager(), "checkin-dialog");
+            onCheckinEpisode(episode);
         }
     };
 
