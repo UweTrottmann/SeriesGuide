@@ -51,6 +51,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
@@ -67,11 +68,15 @@ import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareMethod;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
+import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
+
+import de.greenrobot.event.EventBus;
 
 import java.util.Locale;
 
@@ -154,6 +159,18 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         getLoaderManager().initLoader(EPISODE_LOADER, null, this);
 
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -466,11 +483,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             CheatSheet.setup(ratings, R.string.menu_rate_trakt);
 
             // fetch trakt ratings
-            mTraktTask = new TraktSummaryTask(getSherlockActivity(), ratings, true).episode(
-                    cursor.getInt(DetailsQuery.REF_SHOW_ID),
-                    cursor.getInt(DetailsQuery.SEASON),
-                    cursor.getInt(DetailsQuery.NUMBER));
-            AndroidUtils.executeAsyncTask(mTraktTask, new Void[] {});
+            onLoadTraktRatings(ratings, true);
 
             // Google Play button
             View playButton = view.findViewById(R.id.buttonGooglePlay);
@@ -526,6 +539,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             });
 
         }
+
     }
 
     interface DetailsQuery {
@@ -600,6 +614,12 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
         mAdapter.swapCursor(null);
     }
 
+    public void onEvent(TraktActionCompleteEvent event) {
+        if (event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION) == TraktAction.RATE_EPISODE.index) {
+            onLoadTraktRatings(getView().findViewById(R.id.ratingbar), false);
+        }
+    }
+
     @Override
     public void onFlagCompleted(FlagTaskType type) {
         if (isAdded()) {
@@ -609,5 +629,15 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     private void fireTrackerEvent(String label) {
         EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
+    }
+
+    private void onLoadTraktRatings(View ratingBar, boolean isUseCachedValues) {
+        if (mAdapter.getCursor() != null
+                && (mTraktTask == null || mTraktTask.getStatus() != AsyncTask.Status.RUNNING)) {
+            mTraktTask = new TraktSummaryTask(getSherlockActivity(), ratingBar, isUseCachedValues)
+                    .episode(
+                            mShowId, mSeasonNumber, mEpisodeNumber);
+            AndroidUtils.executeAsyncTask(mTraktTask, new Void[] {});
+        }
     }
 }

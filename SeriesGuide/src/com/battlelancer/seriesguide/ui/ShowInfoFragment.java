@@ -4,6 +4,7 @@ package com.battlelancer.seriesguide.ui;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.app.ShareCompat.IntentBuilder;
@@ -23,6 +24,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
+import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
@@ -30,11 +32,15 @@ import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
+import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
+
+import de.greenrobot.event.EventBus;
 
 public class ShowInfoFragment extends SherlockFragment {
 
@@ -55,6 +61,7 @@ public class ShowInfoFragment extends SherlockFragment {
     }
 
     private Series mShow;
+    private TraktSummaryTask mTraktTask;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,6 +75,18 @@ public class ShowInfoFragment extends SherlockFragment {
         onPopulateShowData();
 
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -91,6 +110,12 @@ public class ShowInfoFragment extends SherlockFragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onEvent(TraktActionCompleteEvent event) {
+        if (event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION) == TraktAction.RATE_EPISODE.index) {
+            onLoadTraktRatings(false);
+        }
     }
 
     private void onPopulateShowData() {
@@ -232,11 +257,7 @@ public class ShowInfoFragment extends SherlockFragment {
                 mShow.getPoster(), getActivity());
 
         // trakt ratings
-        TraktSummaryTask task = new TraktSummaryTask(getActivity(), getView().findViewById(
-                R.id.ratingbar), true).show(tvdbId);
-        AndroidUtils.executeAsyncTask(task, new Void[] {
-                null
-        });
+        onLoadTraktRatings(true);
     }
 
     private void fireTrackerEvent(String label) {
@@ -251,6 +272,15 @@ public class ShowInfoFragment extends SherlockFragment {
         TraktRateDialogFragment newFragment = TraktRateDialogFragment
                 .newInstance(getShowTvdbId());
         newFragment.show(getFragmentManager(), "traktratedialog");
+    }
+
+    private void onLoadTraktRatings(boolean isUseCachedValues) {
+        if (mShow != null
+                && (mTraktTask == null || mTraktTask.getStatus() != AsyncTask.Status.RUNNING)) {
+            mTraktTask = new TraktSummaryTask(getActivity(), getView().findViewById(
+                    R.id.ratingbar), isUseCachedValues).show(getShowTvdbId());
+            AndroidUtils.executeAsyncTask(mTraktTask, new Void[] {});
+        }
     }
 
     private void onShareShow() {

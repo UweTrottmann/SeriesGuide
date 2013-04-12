@@ -25,6 +25,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -789,14 +790,13 @@ public class OverviewFragment extends SherlockFragment implements
     }
 
     private void onLoadTraktRatings(boolean isUseCachedValues) {
-        if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
+        if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()
+                && (mTraktTask == null || mTraktTask.getStatus() != AsyncTask.Status.RUNNING)) {
             int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
             int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
             mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView(), isUseCachedValues)
                     .episode(getShowId(), seasonNumber, episodeNumber);
-            AndroidUtils.executeAsyncTask(mTraktTask, new Void[] {
-                    null
-            });
+            AndroidUtils.executeAsyncTask(mTraktTask, new Void[] {});
         }
     }
 

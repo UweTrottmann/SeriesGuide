@@ -87,8 +87,8 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
         mIsDoCacheLookup = isUseCachedValue;
     }
 
-    public TraktSummaryTask show(String tvdbId) {
-        mTvdbIdString = tvdbId;
+    public TraktSummaryTask show(int tvdbId) {
+        mTvdbIdString = String.valueOf(tvdbId);
         return this;
     }
 
