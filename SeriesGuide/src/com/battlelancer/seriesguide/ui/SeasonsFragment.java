@@ -90,7 +90,7 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     private TextView mTextViewRemaining;
 
-    private View mButtonCollectedAll;
+    private ImageView mButtonCollectedAll;
 
     private ImageView mButtonWatchedAll;
 
@@ -118,14 +118,7 @@ public class SeasonsFragment extends SherlockListFragment implements
 
         mButtonWatchedAll = (ImageView) v.findViewById(R.id.imageViewSeasonsWatchedToggle);
 
-        mButtonCollectedAll = v.findViewById(R.id.imageViewSeasonsCollectedToggle);
-        mButtonCollectedAll.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onFlagShowCollected(true);
-            }
-        });
-        CheatSheet.setup(mButtonCollectedAll, R.string.collect_all);
+        mButtonCollectedAll = (ImageView) v.findViewById(R.id.imageViewSeasonsCollectedToggle);
 
         mTextViewRemaining = (TextView) v.findViewById(R.id.textViewSeasonsRemaining);
 
@@ -144,6 +137,18 @@ public class SeasonsFragment extends SherlockListFragment implements
             onFlagShowWatched(false);
         }
     };
+    OnClickListener mListenerFlagAllCollected = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            onFlagShowCollected(true);
+        }
+    };
+    OnClickListener mListenerFlagAllUncollected = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            onFlagShowCollected(false);
+        }
+    };
 
     private void setWatchedToggleState(Integer result) {
         mButtonWatchedAll.setImageResource(result == 0 ? R.drawable.ic_watched
@@ -153,6 +158,16 @@ public class SeasonsFragment extends SherlockListFragment implements
                         : mListenerFlagAllWatched);
         CheatSheet.setup(mButtonWatchedAll, result == 0 ? R.string.unmark_all
                 : R.string.mark_all);
+    }
+
+    private void setCollectedToggleState(Integer result) {
+        mButtonCollectedAll.setImageResource(result == 0 ? R.drawable.ic_collected
+                : R.drawable.ic_action_collect);
+        mButtonCollectedAll
+                .setOnClickListener(result == 0 ? mListenerFlagAllUncollected
+                        : mListenerFlagAllCollected);
+        CheatSheet.setup(mButtonCollectedAll, result == 0 ? R.string.uncollect_all
+                : R.string.collect_all);
     }
 
     @Override
@@ -166,8 +181,6 @@ public class SeasonsFragment extends SherlockListFragment implements
         setListAdapter(mAdapter);
         // now let's get a loader or reconnect to existing one
         getLoaderManager().initLoader(LOADER_ID, null, this);
-
-        onLoadRemainingCounter();
 
         // listen to changes to the sorting preference
         final SharedPreferences prefs = PreferenceManager
@@ -183,6 +196,7 @@ public class SeasonsFragment extends SherlockListFragment implements
         super.onResume();
         updatePreferences();
         updateUnwatchedCounts();
+        onLoadRemainingCounter();
     }
 
     @Override
@@ -426,31 +440,40 @@ public class SeasonsFragment extends SherlockListFragment implements
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
 
-        AsyncTask<String, Void, Integer> task = new AsyncTask<String, Void, Integer>() {
+        AsyncTask<String, Void, int[]> task = new AsyncTask<String, Void, int[]>() {
 
             @Override
-            protected Integer doInBackground(String... params) {
+            protected int[] doInBackground(String... params) {
                 if (isCancelled()) {
                     return null;
                 }
-                return DBUtils.getUnwatchedEpisodesOfShow(getActivity(),
+
+                int[] counts = new int[2];
+
+                counts[0] = DBUtils.getUnwatchedEpisodesOfShow(getActivity(),
                         params[0],
                         prefs);
+                counts[1] = DBUtils.getUncollectedEpisodesOfShow(getActivity(), params[0]);
+
+                return counts;
             }
 
             @Override
-            protected void onPostExecute(Integer result) {
+            protected void onPostExecute(int[] result) {
                 if (isAdded()) {
                     if (mTextViewRemaining != null) {
-                        if (result == -1) {
+                        if (result[0] == -1) {
                             mTextViewRemaining.setText(getString(R.string.remaining,
                                     getString(R.string.norating)));
                         } else {
-                            mTextViewRemaining.setText(getString(R.string.remaining, result));
+                            mTextViewRemaining.setText(getString(R.string.remaining, result[0]));
                         }
                     }
                     if (mButtonWatchedAll != null) {
-                        setWatchedToggleState(result);
+                        setWatchedToggleState(result[0]);
+                    }
+                    if (mButtonCollectedAll != null) {
+                        setCollectedToggleState(result[1]);
                     }
                 }
             }

@@ -143,8 +143,35 @@ public class DBUtils {
                 UnwatchedQuery.AIRED_SELECTION, new String[] {
                         "0", "-1", fakenow
                 }, null);
+        if (unwatched == null) {
+            return -1;
+        }
         final int count = unwatched.getCount();
         unwatched.close();
+
+        return count;
+    }
+
+    /**
+     * Returns how many episodes of a show are left to collect.
+     */
+    public static int getUncollectedEpisodesOfShow(Context context, String showId) {
+        if (context == null) {
+            return -1;
+        }
+        final ContentResolver resolver = context.getContentResolver();
+        final Uri episodesOfShowUri = Episodes.buildEpisodesOfShowUri(showId);
+
+        // unwatched, aired episodes
+        final Cursor uncollected = resolver.query(episodesOfShowUri, new String[] {
+                Episodes._ID, Episodes.COLLECTED
+        },
+                Episodes.COLLECTED + "=0", null, null);
+        if (uncollected == null) {
+            return -1;
+        }
+        final int count = uncollected.getCount();
+        uncollected.close();
 
         return count;
     }
