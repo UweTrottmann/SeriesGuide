@@ -69,6 +69,8 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
 
     private String mTvdbIdString;
 
+    private TextView mTraktUserRating;
+
     /**
      * Sets values for predefined views which have to be children of the given
      * view. Make sure to call either {@code show(tvdbId)} or
@@ -96,12 +98,14 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
 
     @Override
     protected void onPreExecute() {
-        mTraktLoves = (TextView) mView.findViewById(R.id.traktvalue);
-        mTraktVotes = (TextView) mView.findViewById(R.id.traktvotes);
+        mTraktLoves = (TextView) mView.findViewById(R.id.textViewRatingsTraktValue);
+        mTraktVotes = (TextView) mView.findViewById(R.id.textViewRatingsTraktVotes);
+        mTraktUserRating = (TextView) mView.findViewById(R.id.textViewRatingsTraktUser);
 
         // set place-holder values
-        if (mTraktLoves != null && mTraktVotes != null) {
+        if (mTraktLoves != null && mTraktVotes != null && mTraktUserRating != null) {
             mTraktLoves.setText(R.string.notraktrating);
+            mTraktVotes.setText("");
             mTraktVotes.setText("");
         }
     }
@@ -185,7 +189,8 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
     @Override
     protected void onPostExecute(RatingsWrapper results) {
         // set the final rating values
-        if (results != null && mTraktLoves != null && mTraktVotes != null) {
+        if (results != null && mTraktLoves != null && mTraktVotes != null
+                && mTraktUserRating != null) {
             String rating = results.ratings.percentage + "%";
             if (results.rating != null) {
                 int resId = 0;
@@ -224,7 +229,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
                         break;
                 }
                 if (resId != 0) {
-                    rating += " (" + mContext.getString(resId) + ")";
+                    mTraktUserRating.setText(mContext.getString(resId));
                 }
             }
             mTraktLoves.setText(rating);

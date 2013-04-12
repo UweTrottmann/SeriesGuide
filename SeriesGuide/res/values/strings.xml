@@ -101,6 +101,7 @@
     </plurals>
 
     <!-- Trakt ratings -->
+    <string name="your_rating">Your rating</string>
     <string name="love">Totally ninja!</string>
     <string name="hate">Weak Sauce :(</string>
     <string name="rating2">Terrible</string>
