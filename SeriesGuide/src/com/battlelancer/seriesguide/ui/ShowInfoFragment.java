@@ -233,7 +233,7 @@ public class ShowInfoFragment extends SherlockFragment {
 
         // trakt ratings
         TraktSummaryTask task = new TraktSummaryTask(getActivity(), getView().findViewById(
-                R.id.ratingbar)).show(tvdbId);
+                R.id.ratingbar), true).show(tvdbId);
         AndroidUtils.executeAsyncTask(task, new Void[] {
                 null
         });

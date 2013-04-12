@@ -762,11 +762,19 @@ public class OverviewFragment extends SherlockFragment implements
         });
 
         // trakt ratings
-        mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView()).episode(getShowId(),
-                seasonNumber, episodeNumber);
-        AndroidUtils.executeAsyncTask(mTraktTask, new Void[] {
-                null
-        });
+        onLoadTraktRatings(true);
+    }
+
+    private void onLoadTraktRatings(boolean isUseCachedValues) {
+        if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
+            int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
+            int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+            mTraktTask = new TraktSummaryTask(getSherlockActivity(), getView(), isUseCachedValues)
+                    .episode(getShowId(), seasonNumber, episodeNumber);
+            AndroidUtils.executeAsyncTask(mTraktTask, new Void[] {
+                    null
+            });
+        }
     }
 
     private void onLoadImage(String imagePath) {

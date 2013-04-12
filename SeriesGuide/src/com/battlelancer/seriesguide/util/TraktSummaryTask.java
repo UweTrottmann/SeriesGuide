@@ -71,6 +71,8 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
 
     private TextView mTraktUserRating;
 
+    private boolean mIsDoCacheLookup;
+
     /**
      * Sets values for predefined views which have to be children of the given
      * view. Make sure to call either {@code show(tvdbId)} or
@@ -79,9 +81,10 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
      * @param context
      * @param view
      */
-    public TraktSummaryTask(Context context, View view) {
+    public TraktSummaryTask(Context context, View view, boolean isUseCachedValue) {
         mView = view;
         mContext = context;
+        mIsDoCacheLookup = isUseCachedValue;
     }
 
     public TraktSummaryTask show(String tvdbId) {
@@ -134,13 +137,16 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
                     }
                 }
             } else {
-                // look if the episode summary is cached
+                TvEntity entity = null;
                 String key = String.valueOf(mTvdbId) + String.valueOf(mSeason)
                         + String.valueOf(mEpisode);
 
-                TvEntity entity;
-                synchronized (sHardEntityCache) {
-                    entity = sHardEntityCache.remove(key);
+                if (mIsDoCacheLookup) {
+                    // look if the episode summary is cached
+
+                    synchronized (sHardEntityCache) {
+                        entity = sHardEntityCache.remove(key);
+                    }
                 }
 
                 // on cache miss load the summary from trakt

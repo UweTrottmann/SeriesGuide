@@ -466,7 +466,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             CheatSheet.setup(ratings, R.string.menu_rate_trakt);
 
             // fetch trakt ratings
-            mTraktTask = new TraktSummaryTask(getSherlockActivity(), ratings).episode(
+            mTraktTask = new TraktSummaryTask(getSherlockActivity(), ratings, true).episode(
                     cursor.getInt(DetailsQuery.REF_SHOW_ID),
                     cursor.getInt(DetailsQuery.SEASON),
                     cursor.getInt(DetailsQuery.NUMBER));
