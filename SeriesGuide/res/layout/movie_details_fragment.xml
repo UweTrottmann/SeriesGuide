@@ -70,7 +70,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/buttonMovieCheckIn"
                 android:maxWidth="400dp"
-                android:textAppearance="@style/TextAppearance"
+                android:textAppearance="@style/TextAppearance.Light"
                 android:textIsSelectable="true" />
 
             <include
