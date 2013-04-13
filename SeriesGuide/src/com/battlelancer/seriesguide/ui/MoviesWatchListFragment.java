@@ -17,12 +17,15 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -37,7 +40,7 @@ import java.util.List;
  * Loads and displays the users trakt movie watchlist.
  */
 public class MoviesWatchListFragment extends SherlockFragment implements
-        LoaderCallbacks<List<Movie>> {
+        LoaderCallbacks<List<Movie>>, OnItemClickListener {
 
     private MoviesWatchListAdapter mAdapter;
     private GridView mGridView;
@@ -59,8 +62,19 @@ public class MoviesWatchListFragment extends SherlockFragment implements
         mAdapter = new MoviesWatchListAdapter(getActivity());
 
         mGridView.setAdapter(mAdapter);
+        mGridView.setOnItemClickListener(this);
 
         getLoaderManager().initLoader(R.layout.movies_watchlist_fragment, null, this);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Movie movie = mAdapter.getItem(position);
+
+        // launch details activity
+        Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
+        i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, Integer.valueOf(movie.tmdbId));
+        startActivity(i);
     }
 
     @Override
