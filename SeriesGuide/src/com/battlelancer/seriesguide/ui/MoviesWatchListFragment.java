@@ -52,6 +52,7 @@ import java.util.List;
 public class MoviesWatchListFragment extends SherlockFragment implements
         LoaderCallbacks<List<Movie>>, OnItemClickListener {
 
+    private static final int LOADER_ID = R.layout.movies_watchlist_fragment;
     private static final int CONTEXT_REMOVE_ID = 0;
     private MoviesWatchListAdapter mAdapter;
     private GridView mGridView;
@@ -77,7 +78,7 @@ public class MoviesWatchListFragment extends SherlockFragment implements
 
         registerForContextMenu(mGridView);
 
-        getLoaderManager().initLoader(R.layout.movies_watchlist_fragment, null, this);
+        getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     @Override
@@ -160,7 +161,7 @@ public class MoviesWatchListFragment extends SherlockFragment implements
         if (traktAction == TraktAction.WATCHLIST_MOVIE.index
                 || traktAction == TraktAction.UNWATCHLIST_MOVIE.index) {
             // reload movie watchlist after user added/removed
-            getLoaderManager().restartLoader(R.layout.movies_watchlist_fragment, null, this);
+            getLoaderManager().restartLoader(LOADER_ID, null, this);
         }
     }
 }
