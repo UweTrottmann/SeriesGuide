@@ -18,10 +18,7 @@
         android:hint="@string/movies_search_hint"
         android:imeOptions="actionSearch"
         android:inputType="text"
-        android:paddingBottom="@dimen/default_padding" >
-
-        <requestFocus />
-    </EditText>
+        android:paddingBottom="@dimen/default_padding" />
 
     <ImageButton
         android:id="@+id/imageButtonClearSearch"
