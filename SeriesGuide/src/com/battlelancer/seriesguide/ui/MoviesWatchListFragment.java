@@ -82,7 +82,7 @@ public class MoviesWatchListFragment extends SherlockFragment implements
 
     @Override
     public void onStart() {
-        super.onResume();
+        super.onStart();
         /*
          * Already register here instead of onResume() because watchlist might
          * be modified by search fragment adjacent in view pager
@@ -92,7 +92,7 @@ public class MoviesWatchListFragment extends SherlockFragment implements
 
     @Override
     public void onStop() {
-        super.onPause();
+        super.onStop();
         EventBus.getDefault().unregister(this);
     }
 
