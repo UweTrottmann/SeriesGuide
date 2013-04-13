@@ -61,7 +61,7 @@ public class MoviesActivity extends BaseTopActivity {
                 actionBar, pager, getMenu());
         // only show the trakt watchlist with valid credentials
         if (ServiceUtils.isTraktCredentialsValid(this)) {
-            tabsAdapter.addTab(R.string.watchlist, MoviesWatchListFragment.class, null);
+            tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
         }
         // movie search
         tabsAdapter.addTab(R.string.search, MovieSearchFragment.class, null);

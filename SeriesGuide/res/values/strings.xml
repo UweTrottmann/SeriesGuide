@@ -65,6 +65,7 @@
     <string name="autorefresh">Refreshing automagically</string>
 
     <!-- Movies -->
+    <string name="movies_watchlist">Watchlist (trakt)</string>
     <string name="movies_search_hint">Type a movie title</string>
     <string name="movies_empty">Search for a movie above.</string>
     <string name="movies_watchlist_empty">You have no internet connection or not added movies to your trakt watchlist.</string>
