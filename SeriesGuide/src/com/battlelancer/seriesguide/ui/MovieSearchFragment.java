@@ -21,13 +21,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -53,6 +57,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     private static final String SEARCH_QUERY_KEY = "search_query";
     private static final int LOADER_ID = R.layout.movies_fragment;
     protected static final String TAG = "Movies Search";
+    private static final int CONTEXT_ADD_TO_WATCHLIST_ID = 0;
 
     private EditText mSearchBox;
     private MoviesAdapter mAdapter;
@@ -98,6 +103,8 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
         list.setOnItemClickListener(this);
         list.setEmptyView(getView().findViewById(R.id.empty));
 
+        registerForContextMenu(list);
+
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
@@ -105,6 +112,27 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     public void onStart() {
         super.onStart();
         EasyTracker.getTracker().sendView(TAG);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        menu.add(0, CONTEXT_ADD_TO_WATCHLIST_ID, 0, R.string.watchlist_add);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+
+        switch (item.getItemId()) {
+            case CONTEXT_ADD_TO_WATCHLIST_ID: {
+                // TODO add item to watchlist
+                return true;
+            }
+        }
+
+        return super.onContextItemSelected(item);
     }
 
     @Override
