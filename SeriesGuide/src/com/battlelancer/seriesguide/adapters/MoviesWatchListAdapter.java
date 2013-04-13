@@ -97,7 +97,7 @@ public class MoviesWatchListAdapter extends ArrayAdapter<Movie> {
         if (movie.images != null && !TextUtils.isEmpty(movie.images.poster)) {
             String posterPath = movie.images.poster.substring(0, movie.images.poster.length() - 4)
                     + mSizeSpec;
-            mImageDownloader.download(posterPath, holder.poster, false);
+            mImageDownloader.download(posterPath, holder.poster, true);
         }
 
         return convertView;
