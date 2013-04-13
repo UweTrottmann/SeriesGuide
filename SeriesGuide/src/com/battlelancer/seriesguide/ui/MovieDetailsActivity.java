@@ -17,7 +17,12 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.view.MenuItem;
+import com.uwetrottmann.seriesguide.R;
 
 /**
  * Hosts a {@link MovieDetailsFragment} displaying details about the movie
@@ -40,9 +45,28 @@ public class MovieDetailsActivity extends BaseActivity {
             return;
         }
 
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         if (savedInstanceState == null) {
             MovieDetailsFragment f = MovieDetailsFragment.newInstance(tmdbId);
             getSupportFragmentManager().beginTransaction().add(android.R.id.content, f).commit();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            Intent parentActivityIntent = new Intent(this, MoviesActivity.class);
+            parentActivityIntent.addFlags(
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(parentActivityIntent);
+            overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
