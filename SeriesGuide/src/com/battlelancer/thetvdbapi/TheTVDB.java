@@ -251,6 +251,10 @@ public class TheTVDB {
                 // Correct to BST (no summer time)
                 // Sample: Doctor Who (2005)
                 show.airtime -= 8 * DateUtils.HOUR_IN_MILLIS;
+            } else if ("Germany".equals(traktShow.country)) {
+                // Correct to EST
+                // Sample: heute-show
+                show.airtime -= 9 * DateUtils.HOUR_IN_MILLIS;
             }
         }
 
