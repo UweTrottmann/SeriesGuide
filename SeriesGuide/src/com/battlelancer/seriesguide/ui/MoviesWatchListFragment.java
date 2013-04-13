@@ -30,14 +30,19 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.GridView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.adapters.MoviesWatchListAdapter;
+import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.loaders.TraktMoviesWatchlistLoader;
+import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
 import com.jakewharton.trakt.entities.Movie;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
+
+import de.greenrobot.event.EventBus;
 
 import java.util.List;
 
@@ -45,7 +50,7 @@ import java.util.List;
  * Loads and displays the users trakt movie watchlist.
  */
 public class MoviesWatchListFragment extends SherlockFragment implements
-        LoaderCallbacks<List<Movie>>, OnItemClickListener, OnItemLongClickListener {
+        LoaderCallbacks<List<Movie>>, OnItemClickListener {
 
     private static final int CONTEXT_REMOVE_ID = 0;
     private MoviesWatchListAdapter mAdapter;
@@ -76,6 +81,22 @@ public class MoviesWatchListFragment extends SherlockFragment implements
     }
 
     @Override
+    public void onStart() {
+        super.onResume();
+        /*
+         * Already register here instead of onResume() because watchlist might
+         * be modified by search fragment adjacent in view pager
+         */
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
 
@@ -84,11 +105,16 @@ public class MoviesWatchListFragment extends SherlockFragment implements
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
 
         switch (item.getItemId()) {
             case CONTEXT_REMOVE_ID: {
-                // TODO remove item from watchlist
+                // Remove movie from watchlist
+                AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+                Movie movie = mAdapter.getItem(info.position);
+                AndroidUtils.executeAsyncTask(
+                        new TraktTask(getActivity(), null)
+                                .unwatchlistMovie(Integer.valueOf(movie.tmdbId)),
+                        new Void[] {});
                 return true;
             }
         }
@@ -119,5 +145,14 @@ public class MoviesWatchListFragment extends SherlockFragment implements
     @Override
     public void onLoaderReset(Loader<List<Movie>> loader) {
         mAdapter.setData(null);
+    }
+
+    public void onEvent(TraktActionCompleteEvent event) {
+        int traktAction = event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION);
+        if (traktAction == TraktAction.WATCHLIST_MOVIE.index
+                || traktAction == TraktAction.UNWATCHLIST_MOVIE.index) {
+            // reload movie watchlist after user added/removed
+            getLoaderManager().restartLoader(R.layout.movies_watchlist_fragment, null, this);
+        }
     }
 }
