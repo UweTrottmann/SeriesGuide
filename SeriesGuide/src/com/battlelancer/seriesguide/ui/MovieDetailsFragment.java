@@ -35,6 +35,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader;
 import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader.MovieDetails;
@@ -126,6 +127,10 @@ public class MovieDetailsFragment extends SherlockFragment implements
 
         final Movie movie = details.movie();
         if (movie != null) {
+            // display movie title in action bar
+            final ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+            actionBar.setTitle(movie.title);
+
             ((TextView) getView().findViewById(R.id.textViewMovieTitle)).setText(movie.title);
 
             TextView textViewDate = (TextView) getView().findViewById(R.id.textViewMovieDate);
