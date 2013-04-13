@@ -7,7 +7,14 @@ import com.battlelancer.seriesguide.util.TraktTask;
  * The trakt action to be performed by {@link TraktTask}.
  */
 public enum TraktAction {
-    SEEN_EPISODE(0), RATE_EPISODE(1), CHECKIN_EPISODE(2), SHOUT(3), RATE_SHOW(4), CHECKIN_MOVIE(5);
+    SEEN_EPISODE(0),
+    RATE_EPISODE(1),
+    CHECKIN_EPISODE(2),
+    SHOUT(3),
+    RATE_SHOW(4),
+    CHECKIN_MOVIE(5),
+    WATCHLIST_MOVIE(6),
+    UNWATCHLIST_MOVIE(7);
 
     public final int index;
 
