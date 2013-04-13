@@ -52,6 +52,16 @@ import com.uwetrottmann.tmdb.entities.Trailers;
 public class MovieDetailsFragment extends SherlockFragment implements
         LoaderManager.LoaderCallbacks<MovieDetails> {
 
+    public static MovieDetailsFragment newInstance(int tmdbId) {
+        MovieDetailsFragment f = new MovieDetailsFragment();
+
+        Bundle args = new Bundle();
+        args.putInt(InitBundle.TMDB_ID, tmdbId);
+        f.setArguments(args);
+
+        return f;
+    }
+
     public interface InitBundle {
         String TMDB_ID = "tmdbid";
     }
@@ -113,7 +123,7 @@ public class MovieDetailsFragment extends SherlockFragment implements
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void onPopulateMovieDetails(MovieDetails details) {
         mProgressBar.setVisibility(View.GONE);
-        
+
         final Movie movie = details.movie();
         if (movie != null) {
             ((TextView) getView().findViewById(R.id.textViewMovieTitle)).setText(movie.title);

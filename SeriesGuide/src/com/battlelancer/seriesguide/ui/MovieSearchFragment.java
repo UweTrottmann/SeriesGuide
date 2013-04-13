@@ -17,8 +17,8 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.view.KeyEvent;
@@ -150,14 +150,9 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Movie movie = mAdapter.getItem(position);
 
-        // launch details fragment
-        MovieDetailsFragment f = new MovieDetailsFragment();
-        Bundle args = new Bundle();
-        args.putInt(MovieDetailsFragment.InitBundle.TMDB_ID, movie.id);
-        f.setArguments(args);
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.movies_container, f);
-        ft.addToBackStack(null);
-        ft.commit();
+        // launch details activity
+        Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
+        i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, movie.id);
+        startActivity(i);
     }
 }

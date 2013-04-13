@@ -151,6 +151,8 @@
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.MoviesActivity" >
         </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.MovieDetailsActivity" >
+        </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.ConnectTraktActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
