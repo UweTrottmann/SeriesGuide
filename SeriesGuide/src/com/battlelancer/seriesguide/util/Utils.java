@@ -826,27 +826,36 @@ public class Utils {
                 imdbButton.setEnabled(true);
                 imdbButton.setOnClickListener(new OnClickListener() {
                     public void onClick(View v) {
-                        EasyTracker.getTracker()
-                                .sendEvent(logTag, "Action Item", "IMDb", (long) 0);
-
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri
-                                .parse("imdb:///title/"
-                                        + imdbId + "/"));
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                        try {
-                            context.startActivity(intent);
-                        } catch (ActivityNotFoundException e) {
-                            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_TITLE_URL
-                                    + imdbId));
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                            context.startActivity(intent);
-                        }
+                        openImdb(imdbId, logTag, context);
                     }
                 });
             } else {
                 imdbButton.setEnabled(false);
             }
         }
+    }
+
+    /**
+     * Open the IMDb app or web page for the given IMDb id.
+     */
+    public static void openImdb(String imdbId, String logTag, Context context) {
+        if (context == null || TextUtils.isEmpty(imdbId)) {
+            return;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri
+                .parse("imdb:///title/" + imdbId + "/"));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_TITLE_URL
+                    + imdbId));
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+            context.startActivity(intent);
+        }
+
+        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "IMDb", (long) 0);
     }
 
     /**

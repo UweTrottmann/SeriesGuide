@@ -74,7 +74,7 @@
                 android:textIsSelectable="true" />
 
             <include
-                android:id="@+id/divider"
+                android:id="@+id/dividerHorizontalMovieDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/textViewMovieDescription"
@@ -88,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/divider"
+                android:layout_below="@+id/dividerHorizontalMovieDetails"
                 android:baselineAligned="false"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
@@ -101,19 +101,6 @@
                     android:paddingLeft="@dimen/default_padding"
                     android:paddingRight="@dimen/default_padding"
                     android:text="@string/comments"
-                    android:textAllCaps="true"
-                    android:visibility="gone" />
-
-                <include layout="@layout/divider_vertical" />
-
-                <Button
-                    android:id="@+id/buttonMovieTrailer"
-                    style="@style/Widget.SeriesGuide.Button.Borderless.Small"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/default_padding"
-                    android:paddingRight="@dimen/default_padding"
-                    android:text="@string/trailer"
                     android:textAllCaps="true"
                     android:visibility="gone" />
             </LinearLayout>
