@@ -38,7 +38,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.Constants.EpisodeSorting;
@@ -812,7 +811,8 @@ public class Utils {
 
     /**
      * Displays the IMDb page for the given id (show or episode) in the IMDb app
-     * or on the imdb.com web page.
+     * or on the imdb.com web page. If the IMDb id is empty, disables the
+     * button.
      * 
      * @param imdbId
      * @param imdbButton
@@ -822,14 +822,16 @@ public class Utils {
     public static void setUpImdbButton(final String imdbId, View imdbButton, final String logTag,
             final Context context) {
         if (imdbButton != null) {
-            imdbButton.setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    EasyTracker.getTracker()
-                            .sendEvent(logTag, "Action Item", "IMDb", (long) 0);
+            if (!TextUtils.isEmpty(imdbId)) {
+                imdbButton.setEnabled(true);
+                imdbButton.setOnClickListener(new OnClickListener() {
+                    public void onClick(View v) {
+                        EasyTracker.getTracker()
+                                .sendEvent(logTag, "Action Item", "IMDb", (long) 0);
 
-                    if (!TextUtils.isEmpty(imdbId)) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("imdb:///title/"
-                                + imdbId + "/"));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri
+                                .parse("imdb:///title/"
+                                        + imdbId + "/"));
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                         try {
                             context.startActivity(intent);
@@ -839,13 +841,11 @@ public class Utils {
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                             context.startActivity(intent);
                         }
-                    } else {
-                        Toast.makeText(context,
-                                context.getString(R.string.show_noimdbentry), Toast.LENGTH_LONG)
-                                .show();
                     }
-                }
-            });
+                });
+            } else {
+                imdbButton.setEnabled(false);
+            }
         }
     }
 

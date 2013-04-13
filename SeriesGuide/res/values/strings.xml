@@ -212,7 +212,6 @@
     <!-- Show info -->
     <string name="show_network">on</string>
     <string name="show_noairtime">No air times available</string>
-    <string name="show_noimdbentry">No IMDB page found.</string>
 
     <!-- Season list -->
     <string name="season_watchcount">episodes not watched</string>
