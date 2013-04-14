@@ -75,6 +75,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.zip.ZipInputStream;
 
+/**
+ * Provides access to the TheTVDb.com XML API throwing in some additional data
+ * from trakt.tv here and there.
+ */
 public class TheTVDB {
 
     public interface ShowStatus {
@@ -83,11 +87,9 @@ public class TheTVDB {
         int UNKNOWN = -1;
     }
 
-    private static final String TVDB_MIRROR = "http://thetvdb.com";
-
     private static final String TVDB_MIRROR_BANNERS = "http://thetvdb.com/banners";
 
-    private static final String xmlMirror = TVDB_MIRROR + "/api/";
+    private static final String TVDB_API_URL = "http://thetvdb.com/api/";
 
     private static final String TAG = "TheTVDB";
 
@@ -168,7 +170,7 @@ public class TheTVDB {
 
         URL url;
         try {
-            url = new URL(xmlMirror + "GetSeries.php?seriesname="
+            url = new URL(TVDB_API_URL + "GetSeries.php?seriesname="
                     + URLEncoder.encode(title, "UTF-8")
                     + (language != null ? "&language=" + language : ""));
         } catch (Exception e) {
@@ -366,7 +368,7 @@ public class TheTVDB {
             }
         }
 
-        String url = xmlMirror + context.getResources().getString(R.string.tvdb_apikey)
+        String url = TVDB_API_URL + context.getResources().getString(R.string.tvdb_apikey)
                 + "/series/" + showTvdbId + "/" + (language != null ? language + ".xml" : "");
 
         Show show = parseShow(url, context);
@@ -515,7 +517,7 @@ public class TheTVDB {
     private static ArrayList<ContentValues> fetchEpisodes(
             ArrayList<ContentProviderOperation> batch, Show show, String language, Context context)
             throws SAXException {
-        String url = xmlMirror + context.getResources().getString(R.string.tvdb_apikey)
+        String url = TVDB_API_URL + context.getResources().getString(R.string.tvdb_apikey)
                 + "/series/" + show.tvdbId + "/all/"
                 + (language != null ? language + ".zip" : "en.zip");
 
