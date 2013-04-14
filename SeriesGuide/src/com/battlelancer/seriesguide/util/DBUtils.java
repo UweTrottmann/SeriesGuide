@@ -506,20 +506,17 @@ public class DBUtils {
      * Returns the episode IDs and their last edit time for a given show as a
      * efficiently searchable HashMap.
      * 
-     * @param showId
      * @return HashMap containing the shows existing episodes
      */
-    public static HashMap<Long, Long> getEpisodeMapForShow(String showId, Context context) {
+    public static HashMap<Long, Long> getEpisodeMapForShow(Context context, int showTvdbId) {
         Cursor eptest = context.getContentResolver().query(
-                Episodes.buildEpisodesOfShowUri(showId), new String[] {
+                Episodes.buildEpisodesOfShowUri(showTvdbId), new String[] {
                         Episodes._ID, Episodes.LAST_EDITED
                 }, null, null, null);
         HashMap<Long, Long> episodeMap = new HashMap<Long, Long>();
         if (eptest != null) {
-            eptest.moveToFirst();
-            while (!eptest.isAfterLast()) {
+            while (eptest.moveToNext()) {
                 episodeMap.put(eptest.getLong(0), eptest.getLong(1));
-                eptest.moveToNext();
             }
             eptest.close();
         }
@@ -530,40 +527,33 @@ public class DBUtils {
      * Returns the season IDs for a given show as a efficiently searchable
      * HashMap.
      * 
-     * @param seriesid
      * @return HashMap containing the shows existing seasons
      */
-    public static HashSet<Long> getSeasonIDsForShow(String seriesid, Context context) {
-        Cursor setest = context.getContentResolver().query(Seasons.buildSeasonsOfShowUri(seriesid),
+    public static HashSet<Long> getSeasonIDsForShow(Context context, int showTvdbId) {
+        Cursor setest = context.getContentResolver().query(
+                Seasons.buildSeasonsOfShowUri(showTvdbId),
                 new String[] {
                     Seasons._ID
                 }, null, null, null);
         HashSet<Long> seasonIDs = new HashSet<Long>();
-        while (setest.moveToNext()) {
-            seasonIDs.add(setest.getLong(0));
+        if (setest != null) {
+            while (setest.moveToNext()) {
+                seasonIDs.add(setest.getLong(0));
+            }
+            setest.close();
         }
-        setest.close();
         return seasonIDs;
     }
 
     /**
-     * Creates a {@link ContentProviderOperation} for insert if isNew, or update
-     * instead for with the given episode values.
-     * 
-     * @param values
-     * @param isNew
-     * @return
+     * Creates an update {@link ContentProviderOperation} for the given episode
+     * values.
      */
-    public static ContentProviderOperation buildEpisodeOp(ContentValues values, boolean isNew) {
-        ContentProviderOperation op;
-        if (isNew) {
-            op = ContentProviderOperation.newInsert(Episodes.CONTENT_URI).withValues(values)
-                    .build();
-        } else {
-            final String episodeId = values.getAsString(Episodes._ID);
-            op = ContentProviderOperation.newUpdate(Episodes.buildEpisodeUri(episodeId))
-                    .withValues(values).build();
-        }
+    public static ContentProviderOperation buildEpisodeUpdateOp(ContentValues values) {
+        final String episodeId = values.getAsString(Episodes._ID);
+        ContentProviderOperation op = ContentProviderOperation
+                .newUpdate(Episodes.buildEpisodeUri(episodeId))
+                .withValues(values).build();
         return op;
     }
 

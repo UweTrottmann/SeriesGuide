@@ -224,7 +224,7 @@ public class SeriesContract {
          */
         String TYPE = "item_type";
     }
-    
+
     public interface ListItemTypes {
         int SHOW = 1;
         int SEASON = 2;
@@ -322,8 +322,12 @@ public class SeriesContract {
                     .appendPath(seasonId).build();
         }
 
-        public static Uri buildEpisodesOfShowUri(String showId) {
-            return CONTENT_URI.buildUpon().appendPath(PATH_OFSHOW).appendPath(showId).build();
+        public static Uri buildEpisodesOfShowUri(String showTvdbId) {
+            return CONTENT_URI.buildUpon().appendPath(PATH_OFSHOW).appendPath(showTvdbId).build();
+        }
+
+        public static Uri buildEpisodesOfShowUri(int showTvdbId) {
+            return buildEpisodesOfShowUri(String.valueOf(showTvdbId));
         }
 
         public static Uri buildEpisodeWithShowUri(String episodeId) {
@@ -349,8 +353,12 @@ public class SeriesContract {
             return uri.getLastPathSegment();
         }
 
-        public static Uri buildSeasonsOfShowUri(String showId) {
-            return CONTENT_URI.buildUpon().appendPath(PATH_OFSHOW).appendPath(showId).build();
+        public static Uri buildSeasonsOfShowUri(String showTvdbId) {
+            return CONTENT_URI.buildUpon().appendPath(PATH_OFSHOW).appendPath(showTvdbId).build();
+        }
+
+        public static Uri buildSeasonsOfShowUri(int showTvdbId) {
+            return buildSeasonsOfShowUri(String.valueOf(showTvdbId));
         }
     }
 
