@@ -6,8 +6,10 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.app.ShareCompat.IntentBuilder;
+import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
@@ -26,10 +28,10 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.items.Series;
+import com.battlelancer.seriesguide.loaders.ShowLoader;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
-import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask;
@@ -42,13 +44,14 @@ import com.uwetrottmann.seriesguide.R;
 
 import de.greenrobot.event.EventBus;
 
-public class ShowInfoFragment extends SherlockFragment {
+public class ShowInfoFragment extends SherlockFragment implements LoaderCallbacks<Series> {
 
     public interface InitBundle {
         String SHOW_TVDBID = "tvdbid";
     }
 
     private static final String TAG = "Show Info";
+    private static final int LOADER_ID = R.layout.show_info;
 
     public static ShowInfoFragment newInstance(int showTvdbId) {
         ShowInfoFragment f = new ShowInfoFragment();
@@ -72,7 +75,7 @@ public class ShowInfoFragment extends SherlockFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        onPopulateShowData();
+        getLoaderManager().initLoader(LOADER_ID, null, this);
 
         setHasOptionsMenu(true);
     }
@@ -112,6 +115,23 @@ public class ShowInfoFragment extends SherlockFragment {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public Loader<Series> onCreateLoader(int loaderId, Bundle args) {
+        return new ShowLoader(getActivity(), getShowTvdbId());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Series> loader, Series data) {
+        if (data != null) {
+            mShow = data;
+            onPopulateShowData();
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Series> loader) {
+    }
+
     public void onEvent(TraktActionCompleteEvent event) {
         if (event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION) == TraktAction.RATE_EPISODE.index) {
             onLoadTraktRatings(false);
@@ -119,7 +139,6 @@ public class ShowInfoFragment extends SherlockFragment {
     }
 
     private void onPopulateShowData() {
-        mShow = DBUtils.getShow(getActivity(), String.valueOf(getShowTvdbId()));
         if (mShow == null) {
             return;
         }

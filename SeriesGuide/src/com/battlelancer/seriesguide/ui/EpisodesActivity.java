@@ -152,7 +152,7 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
             return;
         }
 
-        final Series show = DBUtils.getShow(this, String.valueOf(mShowId));
+        final Series show = DBUtils.getShow(this, mShowId);
         if (show == null) {
             finish();
             return;

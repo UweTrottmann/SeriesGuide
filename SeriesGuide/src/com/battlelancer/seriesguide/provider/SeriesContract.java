@@ -283,6 +283,10 @@ public class SeriesContract {
             return CONTENT_URI.buildUpon().appendPath(showId).build();
         }
 
+        public static Uri buildShowUri(int showTvdbId) {
+            return buildShowUri(String.valueOf(showTvdbId));
+        }
+
         public static String getShowId(Uri uri) {
             return uri.getLastPathSegment();
         }

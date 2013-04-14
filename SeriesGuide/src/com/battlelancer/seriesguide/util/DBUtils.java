@@ -308,11 +308,11 @@ public class DBUtils {
     };
 
     /**
-     * Returns a {@link Series} object populated with all needed fields, but not
-     * all of them! Might Return {@code null} if there is no show with that id.
+     * Returns a {@link Series} object. Might return {@code null} if there is no
+     * show with that TVDb id.
      */
-    public static Series getShow(Context context, String showId) {
-        Cursor details = context.getContentResolver().query(Shows.buildShowUri(showId),
+    public static Series getShow(Context context, int showTvdbId) {
+        Cursor details = context.getContentResolver().query(Shows.buildShowUri(showTvdbId),
                 SHOW_PROJECTION, null,
                 null, null);
 

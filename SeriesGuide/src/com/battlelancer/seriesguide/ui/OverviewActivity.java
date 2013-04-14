@@ -244,7 +244,7 @@ public class OverviewActivity extends BaseActivity {
     @Override
     public boolean onSearchRequested() {
         // refine search with the show's title
-        final Series show = DBUtils.getShow(this, String.valueOf(mShowId));
+        final Series show = DBUtils.getShow(this, mShowId);
         final String showTitle = show.getTitle();
 
         Bundle args = new Bundle();
