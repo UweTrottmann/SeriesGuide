@@ -460,7 +460,6 @@ public class TheTVDB {
             final long showAirtime, Context context) throws SAXException {
         RootElement root = new RootElement("Data");
         Element episode = root.getChild("Episode");
-        final long oneYearAgoEpoch = (System.currentTimeMillis() - DateUtils.YEAR_IN_MILLIS) / 1000;
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
         final HashMap<Long, Long> episodeIDs = DBUtils.getEpisodeMapForShow(showId, context);
         final HashMap<Long, Long> existingEpisodeIds = new HashMap<Long, Long>(episodeIDs);
@@ -476,13 +475,9 @@ public class TheTVDB {
                 existingEpisodeIds.remove(episodeId);
 
                 if (episodeIDs.containsKey(episodeId)) {
-                    /*
-                     * check if this is newer information than we have, however
-                     * always update last years episodes
-                     */
+                    // Check if this is newer information than we have
                     long lastEditEpoch = episodeIDs.get(episodeId);
-                    if (lastEditEpoch < values.getAsLong(Episodes.LAST_EDITED)
-                            || oneYearAgoEpoch < lastEditEpoch) {
+                    if (lastEditEpoch < values.getAsLong(Episodes.LAST_EDITED)) {
                         // complete update op for episode
                         batch.add(DBUtils.buildEpisodeOp(values, false));
                     }
