@@ -9,3 +9,5 @@ NOTE: Information is United States (Pacific time) based. You can't watch episode
 No sign-in required.
 
 Offline support (Internet connection may be required for adding or updating shows, downloading episode images, sharing).
+
+DashClock extension.
