@@ -32,7 +32,6 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
@@ -53,6 +52,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
+import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ShareUtils;
@@ -251,48 +251,11 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     }
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        long fakeNow = Utils.getFakeCurrentTime(prefs);
-        // go an hour back in time, so episodes move to recent one hour late
-        fakeNow -= DateUtils.HOUR_IN_MILLIS;
-        final String recentThreshold = String.valueOf(fakeNow);
-
-        String sortOrder;
-        String query;
-        long monthThreshold;
-
         String type = getArguments().getString(InitBundle.TYPE);
-        if (ActivityType.UPCOMING.equals(type)) {
-            query = UpcomingQuery.QUERY_UPCOMING;
-            sortOrder = UpcomingQuery.SORTING_UPCOMING;
-            monthThreshold = System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS * 30;
-        } else {
-            query = UpcomingQuery.QUERY_RECENT;
-            sortOrder = UpcomingQuery.SORTING_RECENT;
-            monthThreshold = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS * 30;
-        }
-
-        boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
-        if (isOnlyFavorites) {
-            query += Shows.SELECTION_FAVORITES;
-        }
-
-        // append nospecials selection if necessary
-        boolean isNoSpecials = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES,
-                false);
-        if (isNoSpecials) {
-            query += Episodes.SELECTION_NOSPECIALS;
-        }
-
-        boolean isNoWatched = prefs.getBoolean(SeriesGuidePreferences.KEY_NOWATCHED, false);
-        if (isNoWatched) {
-            query += Episodes.SELECTION_NOWATCHED;
-        }
+        String[][] queryArgs = DBUtils.buildActivityQuery(getActivity(), type);
 
         return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
-                UpcomingQuery.PROJECTION, query, new String[] {
-                        recentThreshold, String.valueOf(monthThreshold)
-                }, sortOrder);
+                UpcomingQuery.PROJECTION, queryArgs[0][0], queryArgs[1], queryArgs[2][0]);
     }
 
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {

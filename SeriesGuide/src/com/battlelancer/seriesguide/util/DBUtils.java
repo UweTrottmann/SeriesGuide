@@ -39,6 +39,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.ui.UpcomingFragment.ActivityType;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 
@@ -189,63 +190,66 @@ public class DBUtils {
      * Returns all episodes that air today or later. Using Pacific Time to
      * determine today. Excludes shows that are hidden.
      * 
-     * @return Cursor including episodes with show title, network, airtime and
-     *         posterpath.
+     * @return Cursor using the projection of {@link UpcomingQuery}.
      */
     public static Cursor getUpcomingEpisodes(boolean isOnlyUnwatched, Context context) {
-        String[][] args = buildActivityQuery(UpcomingQuery.QUERY_UPCOMING, isOnlyUnwatched, context);
+        String[][] args = buildActivityQuery(context, ActivityType.UPCOMING, isOnlyUnwatched);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
-                UpcomingQuery.PROJECTION, args[0][0], args[1], UpcomingQuery.SORTING_UPCOMING);
-    }
-
-    /**
-     * Calls {@code getRecentEpisodes(false, context)}.
-     * 
-     * @param context
-     * @return
-     */
-    public static Cursor getRecentEpisodes(Context context) {
-        return getRecentEpisodes(false, context);
+                UpcomingQuery.PROJECTION, args[0][0], args[1], args[2][0]);
     }
 
     /**
      * Return all episodes that aired the day before and earlier. Using Pacific
      * Time to determine today. Excludes shows that are hidden.
      * 
-     * @param context
-     * @return Cursor including episodes with show title, network, airtime and
-     *         posterpath.
+     * @return Cursor using the projection of {@link UpcomingQuery}.
      */
     public static Cursor getRecentEpisodes(boolean isOnlyUnwatched, Context context) {
-        String[][] args = buildActivityQuery(UpcomingQuery.QUERY_RECENT, isOnlyUnwatched, context);
+        String[][] args = buildActivityQuery(context, ActivityType.RECENT, isOnlyUnwatched);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
-                UpcomingQuery.PROJECTION, args[0][0], args[1], UpcomingQuery.SORTING_RECENT);
+                UpcomingQuery.PROJECTION, args[0][0], args[1], args[2][0]);
     }
 
     /**
-     * Returns an array of size 2. The built query is stored in {@code [0][0]},
-     * the built selection args in {@code [1]}.
-     * 
-     * @param query
-     * @param isOnlyUnwatched
-     * @param context
-     * @return
+     * Returns an array of size 3. The built query is stored in {@code [0][0]},
+     * the built selection args in {@code [1]} and the sort order in
+     * {@code [2][0]}.
      */
-    private static String[][] buildActivityQuery(String query, boolean isOnlyUnwatched,
-            Context context) {
+    public static String[][] buildActivityQuery(Context context, String type) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        // calc time threshold
+        boolean isNoWatched = prefs.getBoolean(SeriesGuidePreferences.KEY_NOWATCHED, false);
+
+        return buildActivityQuery(context, type, isNoWatched);
+    }
+
+    private static String[][] buildActivityQuery(Context context, String type,
+            boolean isOnlyUnwatched) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
         long fakeNow = Utils.getFakeCurrentTime(prefs);
         // go an hour back in time, so episodes move to recent one hour late
-        fakeNow -= DateUtils.HOUR_IN_MILLIS;
-        final String recentThreshold = String.valueOf(fakeNow);
+        long recentThreshold = fakeNow - DateUtils.HOUR_IN_MILLIS;
+
+        String sortOrder;
+        String query;
+        long monthThreshold;
+
+        if (ActivityType.UPCOMING.equals(type)) {
+            query = UpcomingQuery.QUERY_UPCOMING;
+            sortOrder = UpcomingQuery.SORTING_UPCOMING;
+            monthThreshold = System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS * 30;
+        } else {
+            query = UpcomingQuery.QUERY_RECENT;
+            sortOrder = UpcomingQuery.SORTING_RECENT;
+            monthThreshold = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS * 30;
+        }
 
         // build selection args
         String[] selectionArgs = new String[] {
-                recentThreshold, "0"
+                String.valueOf(recentThreshold), String.valueOf(monthThreshold)
         };
 
         // append only favorites selection if necessary
@@ -267,11 +271,14 @@ public class DBUtils {
         }
 
         // build result array
-        String[][] results = new String[2][];
+        String[][] results = new String[3][];
         results[0] = new String[] {
                 query
         };
         results[1] = selectionArgs;
+        results[2] = new String[] {
+                sortOrder
+        };
         return results;
     }
 
