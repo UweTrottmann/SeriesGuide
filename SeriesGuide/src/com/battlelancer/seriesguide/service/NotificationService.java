@@ -140,7 +140,7 @@ public class NotificationService extends IntentService {
         long wakeUpTime = 0;
 
         /*
-         * Get pool of episodes which air from 24 hours ago until eternity which
+         * Get pool of episodes which air from 12 hours ago until eternity which
          * match the users settings.
          */
         StringBuilder selection = new StringBuilder(SELECTION);
@@ -156,7 +156,7 @@ public class NotificationService extends IntentService {
         }
         final Cursor upcomingEpisodes = getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 PROJECTION, selection.toString(), new String[] {
-                    String.valueOf(fakeNow - DateUtils.DAY_IN_MILLIS)
+                    String.valueOf(fakeNow - 12 * DateUtils.HOUR_IN_MILLIS)
                 }, SORTING);
 
         if (upcomingEpisodes != null) {
