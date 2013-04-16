@@ -162,7 +162,7 @@ public class ShowsFragment extends SherlockFragment implements
         prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
     }
 
-    public void setEmptyView(int showfilter) {
+    private void setEmptyView(int showfilter) {
         View oldEmptyView = mGrid.getEmptyView();
 
         View emptyView = null;
