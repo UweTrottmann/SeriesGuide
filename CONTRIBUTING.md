@@ -14,7 +14,9 @@ The repository is made up of two main branches: master (stable) and beta (develo
 Setup
 -----
 
-This project is built with ADT using the Android library concept for dependency management. First, clone this repository. You will also need clones of my [AndroidUtils][5], [ActionBarSherlock][6], [ViewPagerIndicator][7] and [SlidingMenu][8] forks. Check out their seriesguide branches. See the project.properties files on how the projects depend on another.
+**If anyone wants to help me to switch this setup to Maven, feel free to contact me!**
+
+This project is built with ADT using the Android library concept for dependency management. First, clone this repository. You will also need clones of my [AndroidUtils][5], [ActionBarSherlock][6], [ViewPagerIndicator][7] and [android-menudrawer][8] forks. Check out their seriesguide branches. See the project.properties files on how the projects depend on another.
 To successfully build, you should also create a keys.xml file in the SeriesGuide/res/values folder and add the string values 
 
     <resources>
@@ -36,4 +38,4 @@ To build any of the free, X or beta version use the appropiate flavor project. T
  [5]: https://github.com/UweTrottmann/AndroidUtils
  [6]: https://github.com/UweTrottmann/ActionBarSherlock
  [7]: https://github.com/UweTrottmann/Android-ViewPagerIndicator
- [8]: https://github.com/UweTrottmann/SlidingMenu
+ [8]: https://github.com/SimonVT/android-menudrawer
