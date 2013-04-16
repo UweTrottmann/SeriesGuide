@@ -534,6 +534,8 @@ public class TheTVDB {
             final ArrayList<ContentProviderOperation> batch, String url, final Show show,
             Context context) throws SAXException {
         final ArrayList<ContentValues> newEpisodesValues = Lists.newArrayList();
+        final long dateLastMonthEpoch = (System.currentTimeMillis()
+                - (DateUtils.DAY_IN_MILLIS * 30)) / 1000;
 
         RootElement root = new RootElement("Data");
         Element episode = root.getChild("Episode");
@@ -552,9 +554,14 @@ public class TheTVDB {
                 existingEpisodeIds.remove(episodeId);
 
                 if (episodeIDs.containsKey(episodeId)) {
-                    // Check if this is newer information than we have
+                    /*
+                     * Update uses provider ops which take a long time. Only
+                     * update if episode was edited on TVDb or is not older than
+                     * a month (ensures show air time changes get stored).
+                     */
                     long lastEditEpoch = episodeIDs.get(episodeId);
-                    if (lastEditEpoch < values.getAsLong(Episodes.LAST_EDITED)) {
+                    if (lastEditEpoch < values.getAsLong(Episodes.LAST_EDITED)
+                            || dateLastMonthEpoch < lastEditEpoch) {
                         // complete update op for episode
                         batch.add(DBUtils.buildEpisodeUpdateOp(values));
                     }
