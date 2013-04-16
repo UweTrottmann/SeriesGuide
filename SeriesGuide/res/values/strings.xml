@@ -5,7 +5,6 @@
     <string name="show">Show</string>
     <string name="episode">Episode</string>
     <string name="episodes">Episodes</string>
-    <string name="all_episodes">All episodes</string>
     <string name="season">Season</string>
     <string name="seasons">Seasons</string>
     <string name="unknown">unknown</string>
@@ -266,7 +265,6 @@
     <string name="upload_shows">Upload your SeriesGuide show list:</string>
     <string name="upload_existing_shows">Upload existing shows</string>
     <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
-    <string name="integration_trakt">If you connect trakt:</string>
     <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
 
     <!-- Manual trakt sync -->
@@ -298,7 +296,6 @@
     <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
     <string name="pref_traktsync">Manual sync with trakt.tv</string>
     <string name="feedback">Send feedback</string>
-    <string name="sendusagedata">Send the developer usage statistics</string>
     <string name="pref_autoaddshows">Add new trakt shows</string>
     <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
 
@@ -457,7 +454,6 @@
     <string name="largewidget">SeriesGuide (large)</string>
 
     <!-- List Widget -->
-    <string name="widget_label">SeriesGuide</string>
     <string name="hide_watched">Hide watched episodes</string>
     <string name="pref_widget_opacity">Widget background</string>
 
