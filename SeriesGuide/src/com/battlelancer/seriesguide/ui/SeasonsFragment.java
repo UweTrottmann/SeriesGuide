@@ -56,19 +56,20 @@ import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.FlagTask.FlagTaskType;
-import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
+import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
 import com.battlelancer.seriesguide.util.FlagTask.SeasonWatchedType;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Displays a list of seasons of one show.
  */
 public class SeasonsFragment extends SherlockListFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, OnFlagListener, OnClickListener {
+        LoaderManager.LoaderCallbacks<Cursor>, OnClickListener {
 
     private static final int CONTEXT_FLAG_ALL_WATCHED_ID = 0;
 
@@ -197,6 +198,13 @@ public class SeasonsFragment extends SherlockListFragment implements
         updatePreferences();
         updateUnwatchedCounts();
         onLoadRemainingCounter();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -317,7 +325,7 @@ public class SeasonsFragment extends SherlockListFragment implements
      * the season.
      */
     private void onFlagSeasonWatched(long seasonId, int seasonNumber, boolean isWatched) {
-        new FlagTask(getActivity(), getShowId(), this)
+        new FlagTask(getActivity(), getShowId(), null)
                 .seasonWatched((int) seasonId, seasonNumber, isWatched)
                 .execute();
     }
@@ -326,7 +334,7 @@ public class SeasonsFragment extends SherlockListFragment implements
      * Changes the seasons episodes collected flags.
      */
     private void onFlagSeasonCollected(long seasonId, int seasonNumber, boolean isCollected) {
-        new FlagTask(getActivity(), getShowId(), this)
+        new FlagTask(getActivity(), getShowId(), null)
                 .seasonCollected((int) seasonId, seasonNumber, isCollected)
                 .execute();
     }
@@ -336,7 +344,7 @@ public class SeasonsFragment extends SherlockListFragment implements
      * status labels of all seasons.
      */
     private void onFlagShowWatched(boolean isWatched) {
-        new FlagTask(getActivity(), getShowId(), this)
+        new FlagTask(getActivity(), getShowId(), null)
                 .showWatched(isWatched)
                 .execute();
     }
@@ -346,7 +354,7 @@ public class SeasonsFragment extends SherlockListFragment implements
      * the status labels of all seasons.
      */
     private void onFlagShowCollected(boolean isCollected) {
-        new FlagTask(getActivity(), getShowId(), this)
+        new FlagTask(getActivity(), getShowId(), null)
                 .showCollected(isCollected)
                 .execute();
     }
@@ -533,12 +541,16 @@ public class SeasonsFragment extends SherlockListFragment implements
         getSherlockActivity().invalidateOptionsMenu();
     }
 
-    @Override
-    public void onFlagCompleted(FlagTaskType type) {
+    public void onEvent(FlagTaskCompletedEvent event) {
+        /**
+         * Updates the total remaining episodes counter, updates season
+         * counters.
+         */
         if (isAdded()) {
             onLoadRemainingCounter();
-            if (type instanceof SeasonWatchedType) {
-                SeasonWatchedType seasonWatchedType = (SeasonWatchedType) type;
+            if (event.mType instanceof SeasonWatchedType) {
+                // If we can narrow it down to just one season...
+                SeasonWatchedType seasonWatchedType = (SeasonWatchedType) event.mType;
                 Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()),
                         String.valueOf(seasonWatchedType.getSeasonTvdbId()));
                 t.start();

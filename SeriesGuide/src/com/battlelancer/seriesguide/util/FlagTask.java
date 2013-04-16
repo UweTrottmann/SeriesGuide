@@ -33,6 +33,8 @@ import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
+import de.greenrobot.event.EventBus;
+
 import java.util.List;
 
 /**
@@ -47,6 +49,18 @@ public class FlagTask extends AsyncTask<Void, Integer, Void> {
          * be in progress or queued due to no available connection.
          */
         public void onFlagCompleted(FlagTaskType type);
+    }
+
+    /**
+     * Sent once the database ops are finished, sending to trakt may still be in
+     * progress or queued due to no available connection.
+     */
+    public class FlagTaskCompletedEvent {
+        public FlagTaskType mType;
+
+        public FlagTaskCompletedEvent(FlagTaskType type) {
+            mType = type;
+        }
     }
 
     public enum FlagAction {
@@ -86,7 +100,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Void> {
             mContext = context;
             mShowTvdbId = showTvdbId;
         }
-        
+
         public int getShowTvdbId() {
             return mShowTvdbId;
         }
@@ -324,7 +338,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Void> {
             mSeason = season;
             mIsFlag = isFlag;
         }
-        
+
         public int getSeasonTvdbId() {
             return mSeasonTvdbId;
         }
@@ -583,7 +597,8 @@ public class FlagTask extends AsyncTask<Void, Integer, Void> {
 
     public FlagTask episodeWatched(int episodeTvdbId, int season, int episode,
             boolean isFlag) {
-        mType = new EpisodeWatchedType(mContext, mShowTvdbId, episodeTvdbId, season, episode, isFlag);
+        mType = new EpisodeWatchedType(mContext, mShowTvdbId, episodeTvdbId, season, episode,
+                isFlag);
         return this;
     }
 
@@ -675,6 +690,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Void> {
             }
         }
 
+        EventBus.getDefault().post(new FlagTaskCompletedEvent(mType));
         if (mListener != null) {
             mListener.onFlagCompleted(mType);
         }

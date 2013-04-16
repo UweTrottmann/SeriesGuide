@@ -62,8 +62,6 @@ import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.FlagTask.FlagTaskType;
-import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
@@ -83,7 +81,7 @@ import de.greenrobot.event.EventBus;
  * Displays general information about a show and its next episode.
  */
 public class OverviewFragment extends SherlockFragment implements
-        OnFlagListener, LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String TAG = "Overview";
 
@@ -303,7 +301,7 @@ public class OverviewFragment extends SherlockFragment implements
         if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
             final int season = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
             final int episode = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-            new FlagTask(getActivity(), getShowId(), this)
+            new FlagTask(getActivity(), getShowId(), null)
                     .episodeWatched(mEpisodeCursor.getInt(EpisodeQuery._ID), season,
                             episode, true)
                     .execute();
@@ -392,14 +390,6 @@ public class OverviewFragment extends SherlockFragment implements
                 Shows.buildShowUri(String.valueOf(getShowId())), values, null, null);
 
         Utils.runNotificationService(getActivity());
-    }
-
-    private void onUpdateSeasons() {
-        SeasonsFragment seasons = (SeasonsFragment) getFragmentManager().findFragmentById(
-                R.id.fragment_seasons);
-        if (seasons != null) {
-            seasons.updateUnwatchedCounts();
-        }
     }
 
     private String buildEpisodeString(int seasonNumber, int episodeNumber, String episodeTitle) {
@@ -530,14 +520,6 @@ public class OverviewFragment extends SherlockFragment implements
             case SHOW_LOADER_ID:
                 mShowCursor = null;
                 break;
-        }
-    }
-
-    @Override
-    public void onFlagCompleted(FlagTaskType type) {
-        if (isAdded()) {
-            // update seasons (if shown)
-            onUpdateSeasons();
         }
     }
 
