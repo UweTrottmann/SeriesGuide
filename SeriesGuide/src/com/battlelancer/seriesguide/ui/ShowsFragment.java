@@ -59,8 +59,7 @@ import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.FlagTask.FlagTaskType;
-import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
+import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -68,13 +67,15 @@ import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Displays the list of shows in a users local library.
  * 
  * @author Uwe Trottmann
  */
 public class ShowsFragment extends SherlockFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, OnFlagListener {
+        LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
 
     private static final String TAG = "Shows";
 
@@ -183,6 +184,18 @@ public class ShowsFragment extends SherlockFragment implements
         if (oldEmptyView != null) {
             oldEmptyView.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -304,7 +317,7 @@ public class ShowsFragment extends SherlockFragment implements
                 fireTrackerEvent("Mark next episode");
 
                 Cursor show = (Cursor) mAdapter.getItem(info.position);
-                DBUtils.markNextEpisode(getActivity(), this, (int) info.id,
+                DBUtils.markNextEpisode(getActivity(), (int) info.id,
                         show.getInt(ShowsQuery.NEXTEPISODE));
 
                 return true;
@@ -623,10 +636,9 @@ public class ShowsFragment extends SherlockFragment implements
         }
     };
 
-    @Override
-    public void onFlagCompleted(FlagTaskType type) {
+    public void onEvent(FlagTaskCompletedEvent event) {
         if (isAdded()) {
-            Utils.updateLatestEpisode(getActivity(), String.valueOf(type.getShowTvdbId()));
+            Utils.updateLatestEpisode(getActivity(), String.valueOf(event.mType.getShowTvdbId()));
         }
     }
 

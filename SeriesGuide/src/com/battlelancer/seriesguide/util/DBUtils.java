@@ -40,7 +40,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
-import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 
 import java.util.ArrayList;
@@ -282,8 +281,7 @@ public class DBUtils {
      * 
      * @param showId
      */
-    public static void markNextEpisode(Context context, OnFlagListener listener, int showId,
-            int episodeId) {
+    public static void markNextEpisode(Context context, int showId, int episodeId) {
         if (episodeId > 0) {
             Cursor episode = context.getContentResolver().query(
                     Episodes.buildEpisodeUri(String.valueOf(episodeId)), new String[] {
@@ -291,7 +289,7 @@ public class DBUtils {
                     }, null, null, null);
             if (episode != null) {
                 if (episode.moveToFirst()) {
-                    new FlagTask(context, showId, listener)
+                    new FlagTask(context, showId)
                             .episodeWatched(episodeId, episode.getInt(0), episode.getInt(1), true)
                             .execute();
                 }

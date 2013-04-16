@@ -61,8 +61,6 @@ import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.util.FetchArtTask;
 import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.FlagTask.FlagTaskType;
-import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
@@ -85,7 +83,7 @@ import java.util.Locale;
  * image if available.
  */
 public class EpisodeDetailsFragment extends SherlockListFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, OnFlagListener {
+        LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int EPISODE_LOADER = 3;
 
@@ -275,14 +273,14 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
     private void onToggleWatched() {
         mWatched = !mWatched;
-        new FlagTask(getActivity(), mShowId, this)
+        new FlagTask(getActivity(), mShowId)
                 .episodeWatched(getEpisodeId(), mSeasonNumber, mEpisodeNumber, mWatched)
                 .execute();
     }
 
     private void onToggleCollected() {
         mCollected = !mCollected;
-        new FlagTask(getActivity(), mShowId, this)
+        new FlagTask(getActivity(), mShowId)
                 .episodeCollected(getEpisodeId(), mSeasonNumber, mEpisodeNumber, mCollected)
                 .execute();
     }
@@ -617,13 +615,6 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
     public void onEvent(TraktActionCompleteEvent event) {
         if (event.mTraktTaskArgs.getInt(TraktTask.InitBundle.TRAKTACTION) == TraktAction.RATE_EPISODE.index) {
             onLoadTraktRatings(getView().findViewById(R.id.ratingbar), false);
-        }
-    }
-
-    @Override
-    public void onFlagCompleted(FlagTaskType type) {
-        if (isAdded()) {
-            getLoaderManager().restartLoader(EPISODE_LOADER, null, this);
         }
     }
 

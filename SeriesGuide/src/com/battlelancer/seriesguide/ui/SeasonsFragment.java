@@ -325,7 +325,7 @@ public class SeasonsFragment extends SherlockListFragment implements
      * the season.
      */
     private void onFlagSeasonWatched(long seasonId, int seasonNumber, boolean isWatched) {
-        new FlagTask(getActivity(), getShowId(), null)
+        new FlagTask(getActivity(), getShowId())
                 .seasonWatched((int) seasonId, seasonNumber, isWatched)
                 .execute();
     }
@@ -334,7 +334,7 @@ public class SeasonsFragment extends SherlockListFragment implements
      * Changes the seasons episodes collected flags.
      */
     private void onFlagSeasonCollected(long seasonId, int seasonNumber, boolean isCollected) {
-        new FlagTask(getActivity(), getShowId(), null)
+        new FlagTask(getActivity(), getShowId())
                 .seasonCollected((int) seasonId, seasonNumber, isCollected)
                 .execute();
     }
@@ -344,7 +344,7 @@ public class SeasonsFragment extends SherlockListFragment implements
      * status labels of all seasons.
      */
     private void onFlagShowWatched(boolean isWatched) {
-        new FlagTask(getActivity(), getShowId(), null)
+        new FlagTask(getActivity(), getShowId())
                 .showWatched(isWatched)
                 .execute();
     }
@@ -354,7 +354,7 @@ public class SeasonsFragment extends SherlockListFragment implements
      * the status labels of all seasons.
      */
     private void onFlagShowCollected(boolean isCollected) {
-        new FlagTask(getActivity(), getShowId(), null)
+        new FlagTask(getActivity(), getShowId())
                 .showCollected(isCollected)
                 .execute();
     }

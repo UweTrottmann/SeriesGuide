@@ -301,7 +301,7 @@ public class OverviewFragment extends SherlockFragment implements
         if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
             final int season = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
             final int episode = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
-            new FlagTask(getActivity(), getShowId(), null)
+            new FlagTask(getActivity(), getShowId())
                     .episodeWatched(mEpisodeCursor.getInt(EpisodeQuery._ID), season,
                             episode, true)
                     .execute();
@@ -369,7 +369,7 @@ public class OverviewFragment extends SherlockFragment implements
             final int episode = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
             final boolean isCollected = mEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1 ? true
                     : false;
-            new FlagTask(getActivity(), getShowId(), null)
+            new FlagTask(getActivity(), getShowId())
                     .episodeCollected(mEpisodeCursor.getInt(EpisodeQuery._ID), season, episode,
                             !isCollected)
                     .execute();

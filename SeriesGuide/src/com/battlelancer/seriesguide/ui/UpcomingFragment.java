@@ -187,7 +187,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     private void onFlagEpisodeWatched(AdapterContextMenuInfo info, boolean isWatched) {
         Cursor item = (Cursor) mAdapter.getItem(info.position);
 
-        new FlagTask(getActivity(), item.getInt(UpcomingQuery.REF_SHOW_ID), null)
+        new FlagTask(getActivity(), item.getInt(UpcomingQuery.REF_SHOW_ID))
                 .episodeWatched((int) info.id, item.getInt(UpcomingQuery.SEASON),
                         item.getInt(UpcomingQuery.NUMBER), isWatched)
                 .execute();
@@ -418,7 +418,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                     WatchedBox checkBox = (WatchedBox) v;
                     checkBox.toggle();
 
-                    new FlagTask(mContext, showTvdbId, null)
+                    new FlagTask(mContext, showTvdbId)
                             .episodeWatched(episodeTvdbId, season, episode, checkBox.isChecked())
                             .execute();
                 }

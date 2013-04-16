@@ -320,31 +320,31 @@ public class EpisodesFragment extends SherlockListFragment implements
 
     @Override
     public void onFlagEpisodeWatched(int episodeTvdbId, int episode, boolean isWatched) {
-        new FlagTask(getActivity(), getShowId(), null)
+        new FlagTask(getActivity(), getShowId())
                 .episodeWatched(episodeTvdbId, getSeasonNumber(), episode, isWatched)
                 .execute();
     }
 
     public void onFlagEpisodeCollected(int episodeTvdbId, int episode, boolean isCollected) {
-        new FlagTask(getActivity(), getShowId(), null)
+        new FlagTask(getActivity(), getShowId())
                 .episodeCollected(episodeTvdbId, getSeasonNumber(), episode, isCollected)
                 .execute();
     }
 
     private void onFlagSeasonWatched(boolean isWatched) {
-        new FlagTask(getActivity(), getShowId(), null)
+        new FlagTask(getActivity(), getShowId())
                 .seasonWatched(getSeasonId(), getSeasonNumber(), isWatched)
                 .execute();
     }
 
     private void onFlagSeasonCollected(boolean isCollected) {
-        new FlagTask(getActivity(), getShowId(), null)
+        new FlagTask(getActivity(), getShowId())
                 .seasonCollected(getSeasonId(), getSeasonNumber(), isCollected)
                 .execute();
     }
 
     private void onMarkUntilHere(int episodeId, long firstaired) {
-        new FlagTask(getActivity(), getShowId(), null)
+        new FlagTask(getActivity(), getShowId())
                 .episodeWatchedPrevious(firstaired)
                 .execute();
     }

@@ -43,14 +43,6 @@ import java.util.List;
  */
 public class FlagTask extends AsyncTask<Void, Integer, Void> {
 
-    public interface OnFlagListener {
-        /**
-         * Called once the database ops are finished, sending to trakt may still
-         * be in progress or queued due to no available connection.
-         */
-        public void onFlagCompleted(FlagTaskType type);
-    }
-
     /**
      * Sent once the database ops are finished, sending to trakt may still be in
      * progress or queued due to no available connection.
@@ -583,15 +575,12 @@ public class FlagTask extends AsyncTask<Void, Integer, Void> {
 
     private Context mContext;
 
-    private OnFlagListener mListener;
-
     private boolean mIsTraktInvolved;
 
     private int mShowTvdbId;
 
-    public FlagTask(Context context, int showTvdbId, OnFlagListener listener) {
+    public FlagTask(Context context, int showTvdbId) {
         mContext = context.getApplicationContext();
-        mListener = listener;
         mShowTvdbId = showTvdbId;
     }
 
@@ -691,9 +680,6 @@ public class FlagTask extends AsyncTask<Void, Integer, Void> {
         }
 
         EventBus.getDefault().post(new FlagTaskCompletedEvent(mType));
-        if (mListener != null) {
-            mListener.onFlagCompleted(mType);
-        }
     }
 
     /** Lower season or if season is equal has to have a lower episode number. */
