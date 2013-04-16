@@ -1,7 +1,7 @@
 Contributing
 ============
 
-If you would like to contribute code to SeriesGuide you can do so through GitHub by forking the repository and sending a pull request.
+If you would like to contribute code to SeriesGuide you can do so through GitHub by forking the repository and sending a **pull request against the beta branch**.
 
 Branch structure
 ----------------
