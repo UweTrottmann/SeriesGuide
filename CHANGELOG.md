@@ -8,6 +8,25 @@ All dates are in the European Central timezone.
 Version 5 *(TBD)*
 --------------------------
 
+#### 5beta4 *(2013-04-16)*
+
+* FEATURE Integrate the trakt movie watchlist, support removing and adding movies by touching and holding.
+* TWEAK Finally display a seasons tab right next to the overview on phones. Bonus: display a show tab to the left, too.
+* TWEAK Correct air times for British (e.g. Doctor Who 2005) and German (e.g. heute-show) television using information from trakt.tv.
+* TWEAK Display a check-in button on episodes in Upcoming/Recent on larger screens.
+* TWEAK Check-in from Upcoming/Recent by touching and holding episodes.
+* TWEAK Don't display ticker text for auto-update notification in overview.
+* TWEAK Reduce font-sizes on 7 inch devices.
+* TWEAK Use Roboto Light in more places (like descriptions, action bar titles).
+* TWEAK Activity only shows episodes at most one month into the future/past.
+* TWEAK More prominently display own trakt ratings, updates immediately upon rating.
+* TWEAK IMDb button for movies.
+* TWEAK Accumulate episode notifications only for episodes of the last 12 hours.
+* FIX Crashed when going up from new backup tool.
+* FIX Restore UI state on rotating the device while backup/import is running in new backup tool.
+* FIX Broken search layout on legacy Android versions.
+* NOTICE Latest translations from crowdin.
+
 #### 5beta3 *(2013-04-05)*
 
 * FIX Collecting whole seasons and shows was broken, as well as flagging seen all previously aired episodes.
