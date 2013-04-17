@@ -124,6 +124,8 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
     public void onLoadFinished(Loader<Series> loader, Series data) {
         if (data != null) {
             mShow = data;
+        }
+        if (isAdded()) {
             onPopulateShowData();
         }
     }
