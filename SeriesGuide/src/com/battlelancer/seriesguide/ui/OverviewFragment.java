@@ -280,18 +280,11 @@ public class OverviewFragment extends SherlockFragment implements
     private void onCheckIn() {
         fireTrackerEvent("Check-In");
 
-        if (mShowCursor != null && mShowCursor.moveToFirst() && mEpisodeCursor != null
-                && mEpisodeCursor.moveToFirst()) {
-            final int seasonNumber = mEpisodeCursor.getInt(EpisodeQuery.SEASON);
-            final int episodeNumber = mEpisodeCursor.getInt(EpisodeQuery.NUMBER);
+        if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
+            int episodeTvdbId = mEpisodeCursor.getInt(EpisodeQuery._ID);
             // check in
-            CheckInDialogFragment f = CheckInDialogFragment.newInstance(
-                    mShowCursor.getString(ShowQuery.SHOW_IMDBID),
-                    getShowId(),
-                    seasonNumber,
-                    episodeNumber,
-                    buildEpisodeString(seasonNumber, episodeNumber,
-                            mEpisodeCursor.getString(EpisodeQuery.TITLE)));
+            CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(),
+                    episodeTvdbId);
             f.show(getFragmentManager(), "checkin-dialog");
         }
     }

@@ -32,7 +32,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
 import android.view.ContextMenu;
@@ -51,7 +50,6 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
@@ -61,7 +59,6 @@ import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
 import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -244,30 +241,15 @@ public class ShowsFragment extends SherlockFragment implements
                 fireTrackerEvent("Check in");
 
                 Cursor show = (Cursor) mAdapter.getItem(info.position);
-                final String episodeId = show.getString(ShowsQuery.NEXTEPISODE);
-                if (TextUtils.isEmpty(episodeId)) {
+                int episodeTvdbId = show.getInt(ShowsQuery.NEXTEPISODE);
+                if (episodeTvdbId <= 0) {
                     return true;
                 }
 
-                // look up episode
-                final Cursor episode = getActivity().getContentResolver().query(
-                        Episodes.buildEpisodeUri(episodeId), new String[] {
-                                Episodes.SEASON, Episodes.NUMBER, Episodes.TITLE
-                        }, null, null, null);
-                if (episode != null && episode.moveToFirst()) {
-                    final String episodeString = ShareUtils.onCreateShareString(
-                            getActivity(), episode);
-
-                    // display a check-in dialog
-                    CheckInDialogFragment f = CheckInDialogFragment.newInstance(
-                            show.getString(ShowsQuery.IMDB_ID), (int) info.id, episode.getInt(0),
-                            episode.getInt(1), episodeString);
-                    f.show(getFragmentManager(), "checkin-dialog");
-
-                }
-                if (episode != null) {
-                    episode.close();
-                }
+                // display a check-in dialog
+                CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(),
+                        episodeTvdbId);
+                f.show(getFragmentManager(), "checkin-dialog");
 
                 return true;
             }
@@ -540,7 +522,7 @@ public class ShowsFragment extends SherlockFragment implements
         String[] PROJECTION = {
                 BaseColumns._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
                 Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE, Shows.NEXTEPISODE, Shows.IMDBID
+                Shows.FAVORITE, Shows.NEXTEPISODE
         };
 
         int _ID = 0;
@@ -564,8 +546,6 @@ public class ShowsFragment extends SherlockFragment implements
         int FAVORITE = 9;
 
         int NEXTEPISODE = 10;
-
-        int IMDB_ID = 11;
     }
 
     private void onFavoriteShow(String showId, boolean isFavorite) {

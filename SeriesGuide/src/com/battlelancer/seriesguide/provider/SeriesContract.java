@@ -337,6 +337,10 @@ public class SeriesContract {
         public static Uri buildEpisodeWithShowUri(String episodeId) {
             return CONTENT_URI_WITHSHOW.buildUpon().appendPath(episodeId).build();
         }
+
+        public static Uri buildEpisodeWithShowUri(int episodeTvdbId) {
+            return buildEpisodeWithShowUri(String.valueOf(episodeTvdbId));
+        }
     }
 
     public static class Seasons implements SeasonsColumns, BaseColumns {
