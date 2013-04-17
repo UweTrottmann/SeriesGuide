@@ -8,6 +8,12 @@ All dates are in the European Central timezone.
 Version 5 *(TBD)*
 --------------------------
 
+#### 5beta5 *(2013-04-17)*
+
+* TWEAK Episodes in Activity are now grouped by day. This is highly untested and might eat you alive. Just so you know.
+* FIX Upcoming widgets and the DashClock extension were broken. Now they are not. Or are they?
+* FIX Crash when rotating your device in Overview. Fixed courtesy of best bug report evar: #242.
+
 #### 5beta4 *(2013-04-16)*
 
 * FEATURE Integrate the trakt movie watchlist, support removing and adding movies by touching and holding.
