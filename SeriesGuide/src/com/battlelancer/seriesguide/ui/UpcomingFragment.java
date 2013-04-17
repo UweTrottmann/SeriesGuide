@@ -55,7 +55,6 @@ import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
@@ -124,7 +123,7 @@ public class UpcomingFragment extends SherlockFragment implements
         mDualPane = detailsFragment != null && detailsFragment.getVisibility() == View.VISIBLE;
 
         // setup adapter
-        mAdapter = new SlowAdapter(getActivity(), null, 0, mCheckinButtonListener);
+        mAdapter = new SlowAdapter(getActivity(), null, 0);
         mGridView.setAdapter(mAdapter);
         mGridView.setOnItemClickListener(this);
 
@@ -193,20 +192,15 @@ public class UpcomingFragment extends SherlockFragment implements
                 return true;
             }
             case CONTEXT_CHECKIN_ID: {
-                // FIXME: position also counts header views
-                onCheckinEpisode((Cursor) mAdapter.getItem(info.position));
+                onCheckinEpisode((int) info.id);
                 return true;
             }
         }
         return super.onContextItemSelected(item);
     }
 
-    private void onCheckinEpisode(Cursor episode) {
-        CheckInDialogFragment f = CheckInDialogFragment.newInstance(
-                episode.getString(UpcomingQuery.IMDBID),
-                episode.getInt(UpcomingQuery.REF_SHOW_ID),
-                episode.getInt(UpcomingQuery.SEASON), episode.getInt(UpcomingQuery.NUMBER),
-                ShareUtils.onCreateShareString(getActivity(), episode));
+    private void onCheckinEpisode(int episodeTvdbId) {
+        CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(), episodeTvdbId);
         f.show(getFragmentManager(), "checkin-dialog");
     }
 
@@ -317,13 +311,11 @@ public class UpcomingFragment extends SherlockFragment implements
 
     }
 
-    protected OnClickListener mCheckinButtonListener = new OnClickListener() {
+    protected OnItemClickListener mCheckinButtonListener = new OnItemClickListener() {
         @Override
-        public void onClick(View v) {
-            // FIXME: getPositionForView also counts header views
-            int position = mGridView.getPositionForView(v);
-            Cursor episode = (Cursor) mAdapter.getItem(position);
-            onCheckinEpisode(episode);
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            // TODO Auto-generated method stub
+
         }
     };
 
@@ -333,16 +325,12 @@ public class UpcomingFragment extends SherlockFragment implements
 
         private SharedPreferences mPrefs;
 
-        private OnClickListener mCheckinButtonListener;
-
         private final int LAYOUT = R.layout.upcoming_row;
 
         private final int LAYOUT_HEADER = R.layout.upcoming_header;
 
-        public SlowAdapter(Context context, Cursor c, int flags,
-                OnClickListener checkinButtonListener) {
+        public SlowAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);
-            mCheckinButtonListener = checkinButtonListener;
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -417,7 +405,12 @@ public class UpcomingFragment extends SherlockFragment implements
 
             // checkin button (not avail in all layouts)
             if (viewHolder.buttonCheckin != null) {
-                viewHolder.buttonCheckin.setOnClickListener(mCheckinButtonListener);
+                viewHolder.buttonCheckin.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onCheckinEpisode(episodeTvdbId);
+                    }
+                });
                 CheatSheet.setup(viewHolder.buttonCheckin, R.string.checkin);
             }
 

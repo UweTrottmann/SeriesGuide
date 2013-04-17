@@ -525,13 +525,13 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             });
 
             // Check in button
-            final String showImdbid = cursor.getString(DetailsQuery.SHOW_IMDBID);
+            final int episodeTvdbId = cursor.getInt(DetailsQuery._ID);
             view.findViewById(R.id.checkinButton).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // display a check-in dialog
-                    CheckInDialogFragment f = CheckInDialogFragment.newInstance(showImdbid,
-                            mShowId, mSeasonNumber, mEpisodeNumber, episodeString);
+                    CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(),
+                            episodeTvdbId);
                     f.show(getFragmentManager(), "checkin-dialog");
                 }
             });
