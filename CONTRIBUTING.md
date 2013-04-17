@@ -16,7 +16,7 @@ Setup
 
 **If anyone wants to help me to switch this setup to Maven, feel free to contact me!**
 
-This project is built with ADT using the Android library concept for dependency management. First, clone this repository. You will also need clones of my [AndroidUtils][5], [ActionBarSherlock][6], [ViewPagerIndicator][7] and [android-menudrawer][8] forks. Check out their seriesguide branches. See the project.properties files on how the projects depend on another.
+This project is built with ADT using the Android library concept for dependency management. First, clone this repository. You will also need clones of my [AndroidUtils][5], [ActionBarSherlock][6], [ViewPagerIndicator][7], [android-menudrawer][8] and [StickyGridHeaders][9] forks. Check out their seriesguide branches (if it exists). See the project.properties files on how the projects depend on another.
 To successfully build, you should also create a keys.xml file in the SeriesGuide/res/values folder and add the string values 
 
     <resources>
@@ -30,6 +30,12 @@ to it. These are not shared with the public mainly for security reasons.
 
 To build any of the free, X or beta version use the appropiate flavor project. They all use the SeriesGuide project as an Android library project and just change the package names and icons as well as the Content Provider URI.
 
+Why all the forking?
+--------------------
+
+For one, I add a more up to date copy of the Android Support Library to ABS and ViewPagerIndicator. Second, until I have switched to a Maven powered build, this is the only way I can ensure everybody uses the same version of all those libraries as I do.
+
+If anybody can come up with a better solution or help me switch this build setup to Maven, please feel free to contact me!
 
  [1]: http://seriesgui.de
  [2]: https://play.google.com/store/apps/details?id=com.battlelancer.seriesguide
@@ -38,4 +44,5 @@ To build any of the free, X or beta version use the appropiate flavor project. T
  [5]: https://github.com/UweTrottmann/AndroidUtils
  [6]: https://github.com/UweTrottmann/ActionBarSherlock
  [7]: https://github.com/UweTrottmann/Android-ViewPagerIndicator
- [8]: https://github.com/SimonVT/android-menudrawer
+ [8]: https://github.com/UweTrottmann/android-menudrawer
+ [9]: https://github.com/UweTrottmann/StickyGridHeaders
