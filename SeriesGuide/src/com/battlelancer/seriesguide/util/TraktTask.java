@@ -56,7 +56,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
         String IMDB_ID = "imdbid";
 
-        String TVDBID = "tvdbid";
+        String SHOW_TVDBID = "tvdbid";
 
         String TMDB_ID = "tmdbid";
 
@@ -109,9 +109,9 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     /**
      * Check into an episode. Optionally provide a checkin message.
      */
-    public TraktTask checkInEpisode(int tvdbid, int season, int episode, String message) {
+    public TraktTask checkInEpisode(int showTvdbid, int season, int episode, String message) {
         mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.CHECKIN_EPISODE.index);
-        mArgs.putInt(InitBundle.TVDBID, tvdbid);
+        mArgs.putInt(InitBundle.SHOW_TVDBID, showTvdbid);
         mArgs.putInt(InitBundle.SEASON, season);
         mArgs.putInt(InitBundle.EPISODE, episode);
         mArgs.putString(InitBundle.MESSAGE, message);
@@ -133,7 +133,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
      */
     public TraktTask rateEpisode(int showTvdbid, int season, int episode, Rating rating) {
         mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.RATE_EPISODE.index);
-        mArgs.putInt(InitBundle.TVDBID, showTvdbid);
+        mArgs.putInt(InitBundle.SHOW_TVDBID, showTvdbid);
         mArgs.putInt(InitBundle.SEASON, season);
         mArgs.putInt(InitBundle.EPISODE, episode);
         mArgs.putString(InitBundle.RATING, rating.toString());
@@ -143,9 +143,9 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     /**
      * Rate a show.
      */
-    public TraktTask rateShow(int tvdbid, Rating rating) {
+    public TraktTask rateShow(int showTvdbid, Rating rating) {
         mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.RATE_SHOW.index);
-        mArgs.putInt(InitBundle.TVDBID, tvdbid);
+        mArgs.putInt(InitBundle.SHOW_TVDBID, showTvdbid);
         mArgs.putString(InitBundle.RATING, rating.toString());
         return this;
     }
@@ -153,9 +153,9 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     /**
      * Post a shout for a show.
      */
-    public TraktTask shout(int tvdbid, String shout, boolean isSpoiler) {
+    public TraktTask shout(int showTvdbid, String shout, boolean isSpoiler) {
         mArgs.putInt(InitBundle.TRAKTACTION, TraktAction.SHOUT.index);
-        mArgs.putInt(InitBundle.TVDBID, tvdbid);
+        mArgs.putInt(InitBundle.SHOW_TVDBID, showTvdbid);
         mArgs.putString(InitBundle.MESSAGE, shout);
         mArgs.putBoolean(InitBundle.ISSPOILER, isSpoiler);
         return this;
@@ -164,8 +164,8 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
     /**
      * Post a shout for an episode.
      */
-    public TraktTask shout(int tvdbid, int season, int episode, String shout, boolean isSpoiler) {
-        shout(tvdbid, shout, isSpoiler);
+    public TraktTask shout(int showTvdbid, int season, int episode, String shout, boolean isSpoiler) {
+        shout(showTvdbid, shout, isSpoiler);
         mArgs.putInt(InitBundle.SEASON, season);
         mArgs.putInt(InitBundle.EPISODE, episode);
         return this;
@@ -220,7 +220,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
         }
 
         // get values used by all actions
-        final int tvdbid = mArgs.getInt(InitBundle.TVDBID);
+        final int showTvdbId = mArgs.getInt(InitBundle.SHOW_TVDBID);
         final int season = mArgs.getInt(InitBundle.SEASON);
         final int episode = mArgs.getInt(InitBundle.EPISODE);
 
@@ -236,7 +236,7 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 case CHECKIN_EPISODE: {
                     final String message = mArgs.getString(InitBundle.MESSAGE);
 
-                    final CheckinBuilder checkinBuilder = manager.showService().checkin(tvdbid)
+                    final CheckinBuilder checkinBuilder = manager.showService().checkin(showTvdbId)
                             .season(season).episode(episode);
                     if (!TextUtils.isEmpty(message)) {
                         checkinBuilder.message(message);
@@ -275,13 +275,13 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
                 }
                 case RATE_EPISODE: {
                     final Rating rating = Rating.fromValue(mArgs.getString(InitBundle.RATING));
-                    r = manager.rateService().episode(tvdbid).season(season).episode(episode)
+                    r = manager.rateService().episode(showTvdbId).season(season).episode(episode)
                             .rating(rating).fire();
                     break;
                 }
                 case RATE_SHOW: {
                     final Rating rating = Rating.fromValue(mArgs.getString(InitBundle.RATING));
-                    r = manager.rateService().show(tvdbid).rating(rating).fire();
+                    r = manager.rateService().show(showTvdbId).rating(rating).fire();
                     break;
                 }
                 case SHOUT: {
@@ -290,13 +290,13 @@ public class TraktTask extends AsyncTask<Void, Void, Response> {
 
                     if (episode == 0) {
                         r = manager.commentService()
-                                .show(tvdbid)
+                                .show(showTvdbId)
                                 .comment(shout)
                                 .spoiler(isSpoiler)
                                 .fire();
                     } else {
                         r = manager.commentService()
-                                .episode(tvdbid)
+                                .episode(showTvdbId)
                                 .season(season)
                                 .episode(episode)
                                 .comment(shout)
