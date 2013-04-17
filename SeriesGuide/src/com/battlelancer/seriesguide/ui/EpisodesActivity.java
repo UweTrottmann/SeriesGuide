@@ -219,7 +219,7 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
                     ? MenuDrawer.TOUCH_MODE_FULLSCREEN
                     : MenuDrawer.TOUCH_MODE_BEZEL);
         } else {
-            // FIXME Dirty: make sure no fragments are left over from a config
+            // Make sure no fragments are left over from a config
             // change
             for (Fragment fragment : getActiveFragments()) {
                 if (fragment.getTag() == null) {
