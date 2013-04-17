@@ -168,14 +168,14 @@ public class UpcomingFragment extends SherlockFragment implements
         super.onCreateContextMenu(menu, v, menuInfo);
 
         // only display the action appropiate for the items current state
+        menu.add(0, CONTEXT_CHECKIN_ID, 0, R.string.checkin);
         AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
         WatchedBox watchedBox = (WatchedBox) info.targetView.findViewById(R.id.watchedBoxUpcoming);
         if (watchedBox.isChecked()) {
-            menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 1, R.string.unmark_episode);
+            menu.add(0, CONTEXT_FLAG_UNWATCHED_ID, 2, R.string.unmark_episode);
         } else {
-            menu.add(0, CONTEXT_FLAG_WATCHED_ID, 0, R.string.mark_episode);
+            menu.add(0, CONTEXT_FLAG_WATCHED_ID, 1, R.string.mark_episode);
         }
-        menu.add(0, CONTEXT_CHECKIN_ID, 2, R.string.checkin);
     }
 
     @Override
