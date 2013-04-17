@@ -17,7 +17,6 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,7 +25,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -41,12 +39,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
@@ -58,11 +58,15 @@ import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.androidutils.AndroidUtils;
+import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
+import com.tonicartos.widget.stickygridheaders.StickyGridHeadersSimpleAdapter;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
 
-public class UpcomingFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+import java.util.Calendar;
+
+public class UpcomingFragment extends SherlockFragment implements
+        LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
 
     private static final int CONTEXT_FLAG_WATCHED_ID = 0;
 
@@ -73,6 +77,10 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     private CursorAdapter mAdapter;
 
     private boolean mDualPane;
+
+    private StickyGridHeadersGridView mGridView;
+
+    private TextView mEmptyView;
 
     /**
      * Data which has to be passed when creating {@link UpcomingFragment}. All
@@ -94,22 +102,39 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.upcoming_fragment, container, false);
+
+        mEmptyView = (TextView) v.findViewById(R.id.emptyViewUpcoming);
+        mEmptyView.setText(getString(getArguments().getInt(InitBundle.EMPTY_STRING_ID)));
+
+        mGridView = (StickyGridHeadersGridView) v.findViewById(R.id.gridViewUpcoming);
+        mGridView.setEmptyView(mEmptyView);
+
+        return v;
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        setEmptyText(getString(getArguments().getInt(InitBundle.EMPTY_STRING_ID)));
 
         // Check to see if we have a frame in which to embed the details
         // fragment directly in the containing UI.
         View detailsFragment = getActivity().findViewById(R.id.fragment_details);
         mDualPane = detailsFragment != null && detailsFragment.getVisibility() == View.VISIBLE;
 
-        setupAdapter();
+        // setup adapter
+        mAdapter = new SlowAdapter(getActivity(), null, 0, mCheckinButtonListener);
+        mGridView.setAdapter(mAdapter);
+        mGridView.setOnItemClickListener(this);
 
+        // start loading data
         getActivity().getSupportLoaderManager().initLoader(getLoaderId(), null, this);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         prefs.registerOnSharedPreferenceChangeListener(mPrefListener);
+
+        registerForContextMenu(mGridView);
     }
 
     private final OnSharedPreferenceChangeListener mPrefListener = new OnSharedPreferenceChangeListener() {
@@ -168,6 +193,7 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                 return true;
             }
             case CONTEXT_CHECKIN_ID: {
+                // FIXME: position also counts header views
                 onCheckinEpisode((Cursor) mAdapter.getItem(info.position));
                 return true;
             }
@@ -193,28 +219,8 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
                 .execute();
     }
 
-    private void setupAdapter() {
-        mAdapter = new SlowAdapter(getActivity(), null, 0, mCheckinButtonListener);
-
-        setListAdapter(mAdapter);
-
-        final ListView list = getListView();
-        list.setFastScrollEnabled(true);
-        list.setDivider(null);
-        if (SeriesGuidePreferences.THEME != R.style.ICSBaseTheme) {
-            list.setSelector(R.drawable.list_selector_sg);
-        }
-        list.setClipToPadding(AndroidUtils.isHoneycombOrHigher() ? false : true);
-        final float scale = getResources().getDisplayMetrics().density;
-        int layoutPadding = (int) (10 * scale + 0.5f);
-        int defaultPadding = (int) (8 * scale + 0.5f);
-        list.setPadding(layoutPadding, layoutPadding, layoutPadding, defaultPadding);
-        registerForContextMenu(list);
-    }
-
-    @TargetApi(16)
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         int episodeId = (int) id;
 
         if (mDualPane) {
@@ -314,13 +320,14 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
     protected OnClickListener mCheckinButtonListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            int position = getListView().getPositionForView(v);
+            // FIXME: getPositionForView also counts header views
+            int position = mGridView.getPositionForView(v);
             Cursor episode = (Cursor) mAdapter.getItem(position);
             onCheckinEpisode(episode);
         }
     };
 
-    private class SlowAdapter extends CursorAdapter {
+    private class SlowAdapter extends CursorAdapter implements StickyGridHeadersSimpleAdapter {
 
         private LayoutInflater mLayoutInflater;
 
@@ -329,6 +336,8 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         private OnClickListener mCheckinButtonListener;
 
         private final int LAYOUT = R.layout.upcoming_row;
+
+        private final int LAYOUT_HEADER = R.layout.upcoming_header;
 
         public SlowAdapter(Context context, Cursor c, int flags,
                 OnClickListener checkinButtonListener) {
@@ -450,6 +459,64 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         public View newView(Context context, Cursor cursor, ViewGroup parent) {
             return mLayoutInflater.inflate(LAYOUT, parent, false);
         }
+
+        @Override
+        public long getHeaderId(int position) {
+            Object obj = getItem(position);
+            if (obj != null) {
+                /*
+                 * Maps all episodes airing the same day to the same id (which
+                 * equals the time midnight of their air day).
+                 */
+                @SuppressWarnings("resource")
+                Cursor item = (Cursor) obj;
+                long airtime = item.getLong(UpcomingQuery.FIRSTAIREDMS);
+                Calendar cal = Utils.getAirtimeCalendar(airtime, mPrefs);
+                cal.set(Calendar.HOUR_OF_DAY, 1);
+                cal.set(Calendar.MINUTE, 0);
+                cal.set(Calendar.SECOND, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+                long airDay = cal.getTimeInMillis();
+                return airDay;
+            }
+            return 0;
+        }
+
+        @Override
+        public View getHeaderView(int position, View convertView, ViewGroup parent) {
+            Object obj = getItem(position);
+            if (obj == null) {
+                return null;
+            }
+
+            HeaderViewHolder holder;
+            if (convertView == null) {
+                convertView = mLayoutInflater.inflate(LAYOUT_HEADER, null);
+
+                holder = new HeaderViewHolder();
+                holder.day = (TextView) convertView.findViewById(R.id.textViewUpcomingHeader);
+
+                convertView.setTag(holder);
+            } else {
+                holder = (HeaderViewHolder) convertView.getTag();
+            }
+
+            @SuppressWarnings("resource")
+            Cursor item = (Cursor) obj;
+            long airtime = item.getLong(UpcomingQuery.FIRSTAIREDMS);
+            Calendar cal = Utils.getAirtimeCalendar(airtime, mPrefs);
+            cal.set(Calendar.HOUR_OF_DAY, 1);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            long airDay = cal.getTimeInMillis();
+
+            String dayAndTime = Utils.formatToDayAndTimeWithoutOffsets(mContext, airDay);
+
+            holder.day.setText(dayAndTime);
+
+            return convertView;
+        }
     }
 
     static class ViewHolder {
@@ -465,5 +532,11 @@ public class UpcomingFragment extends ListFragment implements LoaderManager.Load
         public TextView meta;
 
         public ImageView poster;
+    }
+
+    static class HeaderViewHolder {
+
+        public TextView day;
+
     }
 }

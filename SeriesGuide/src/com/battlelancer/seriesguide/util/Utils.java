@@ -242,25 +242,25 @@ public class Utils {
     }
 
     /**
-     * Return an array with absolute time [0], day [1] and relative time [2] of
+     * Returns an array with absolute time [0], day [1] and relative time [2] of
      * the given millisecond time. Respects user offsets and 'Use my time zone'
      * setting.
-     * 
-     * @param airtime
-     * @param context
-     * @return
      */
     public static String[] formatToTimeAndDay(long airtime, Context context) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         Calendar cal = getAirtimeCalendar(airtime, prefs);
-
-        final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
-        final SimpleDateFormat dayFormat = new SimpleDateFormat("E");
         Date airDate = cal.getTime();
-        String day = dayFormat.format(airDate);
+
+        // absolute time
+        final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
         String absoluteTime = timeFormat.format(airDate);
 
+        // day string
+        final SimpleDateFormat dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+        String day = dayFormat.format(airDate);
+
+        // relative time
         String relativeTime = DateUtils
                 .getRelativeTimeSpanString(cal.getTimeInMillis(), System.currentTimeMillis(),
                         DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
@@ -268,6 +268,33 @@ public class Utils {
         return new String[] {
                 absoluteTime, day, relativeTime
         };
+    }
+
+    /**
+     * Returns a string like 'Mon in 3 days', the day followed by how far it is
+     * away in relative time.<br>
+     * Does <b>not</b> respect user offsets or 'Use my time zone' setting. The
+     * time to be passed is expected to be already corrected for that.
+     */
+    public static String formatToDayAndTimeWithoutOffsets(Context context, long airtime) {
+        StringBuilder timeAndDay = new StringBuilder();
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(airtime);
+
+        final SimpleDateFormat dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+        timeAndDay.append(dayFormat.format(cal.getTime()));
+
+        timeAndDay.append(" ");
+
+        timeAndDay.append(DateUtils
+                .getRelativeTimeSpanString(
+                        cal.getTimeInMillis(),
+                        System.currentTimeMillis(),
+                        DateUtils.DAY_IN_MILLIS,
+                        DateUtils.FORMAT_ABBREV_ALL));
+
+        return timeAndDay.toString();
     }
 
     /**
