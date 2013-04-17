@@ -13,7 +13,7 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">Trakt movie watchlist, tweaks\n\nMovies will now show your trakt movie watchlist. Touch and hold a movie poster to add/remove movies.\n\nOverview on phones now shows seasons in a tab right next to it, as a bonus there is a show tab, too.\n\nA lot more stuff, see the change log.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">Trakt movie watchlist, tweaks\n\nRestored Upcoming widgets and DashClock extension. Bonus: episodes in Activity are now grouped.\n\nMovies will now show your trakt movie watchlist. Touch and hold a movie poster to add/remove movies.\n\nOverview on phones now shows seasons in a tab right next to it, as a bonus there is a show tab, too.\n\nA lot more stuff, see the change log.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
     <string name="help_url">http://seriesgui.de/help</string>
     <string name="backup_legacy_warning">This is the legacy backup system. It will get removed with the next update. If you want to restore an old backup, now would be the time. You can then export again using the new export tool.</string>
 	<string name="not_available">n/a</string>
