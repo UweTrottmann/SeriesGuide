@@ -681,7 +681,6 @@ public class Utils {
         PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
         am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1
                 * DateUtils.MINUTE_IN_MILLIS, pi);
-        Log.d("OnAlarmReceiver", "Postponing service launch");
     }
 
     public static String toSHA1(byte[] convertme) {
