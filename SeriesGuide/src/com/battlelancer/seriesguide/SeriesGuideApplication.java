@@ -41,7 +41,6 @@ public class SeriesGuideApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         // set provider authority
         CONTENT_AUTHORITY = getPackageName() + ".provider";
@@ -50,11 +49,8 @@ public class SeriesGuideApplication extends Application {
         PreferenceManager.setDefaultValues(this, R.xml.settings_basic, false);
         PreferenceManager.setDefaultValues(this, R.xml.settings_advanced, false);
 
-        // ensure the notifications service is started (we also restart it on
-        // boot)
-        Utils.runNotificationServiceDelayed(this);
-
         // load the current theme into a global variable
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         final String theme = prefs.getString(
                 SeriesGuidePreferences.KEY_THEME, "0");
         Utils.updateTheme(theme);
