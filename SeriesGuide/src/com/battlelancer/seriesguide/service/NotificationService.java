@@ -170,7 +170,6 @@ public class NotificationService extends IntentService {
             }
             final long latestTimeToInclude = fakeNow
                     + DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
-            final long latestTimeCleared = NotificationSettings.getLastCleared(this);
             final long nextTimePlanned = NotificationSettings.getNextToNotifyAbout(this);
             final long nextWakeUpPlanned = Utils.convertToFakeTime(nextTimePlanned, prefs, false)
                     - DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
@@ -184,16 +183,17 @@ public class NotificationService extends IntentService {
             // Check if we did wake up earlier than planned
             if (System.currentTimeMillis() < nextWakeUpPlanned) {
                 newEpisodesAvailable = 0;
+                long latestTimeNotified = NotificationSettings.getLastNotified(this);
 
                 // Check if there are any earlier episodes to notify about
                 while (upcomingEpisodes.moveToNext()) {
                     final long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
                     if (airtime < nextTimePlanned) {
-                        if (airtime > latestTimeCleared) {
+                        if (airtime > latestTimeNotified) {
                             /**
                              * This will not get new episodes which would have
-                             * aired the same time as the last one the user
-                             * cleared. Sad, but the best we can do right now.
+                             * aired the same time as the last one we notified
+                             * about. Sad, but the best we can do right now.
                              */
                             newEpisodesAvailable = 1;
                             break;
@@ -212,6 +212,7 @@ public class NotificationService extends IntentService {
                 // (user set) and not yet cleared
                 int count = 0;
                 final List<Integer> notifyPositions = Lists.newArrayList();
+                final long latestTimeCleared = NotificationSettings.getLastCleared(this);
 
                 upcomingEpisodes.moveToPosition(-1);
                 while (upcomingEpisodes.moveToNext()) {
@@ -245,6 +246,8 @@ public class NotificationService extends IntentService {
                         prefs.edit().putLong(NotificationSettings.KEY_LAST_CLEARED,
                                 latestAirtime).commit();
                     }
+                    prefs.edit().putLong(NotificationSettings.KEY_LAST_NOTIFIED, latestAirtime)
+                            .commit();
 
                     onNotify(prefs, upcomingEpisodes, count, latestAirtime);
                 }
@@ -292,6 +295,7 @@ public class NotificationService extends IntentService {
     public static void resetLastEpisodeAirtime(final SharedPreferences prefs) {
         prefs.edit().putLong(NotificationSettings.KEY_LAST_CLEARED, 0)
                 .commit();
+        prefs.edit().putLong(NotificationSettings.KEY_LAST_NOTIFIED, 0).commit();
     }
 
     private void onNotify(final SharedPreferences prefs, final Cursor upcomingEpisodes, int count,

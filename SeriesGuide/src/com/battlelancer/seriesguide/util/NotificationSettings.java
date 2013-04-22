@@ -14,7 +14,9 @@ public class NotificationSettings {
 
     public static final String KEY_THRESHOLD = "com.battlelancer.seriesguide.notifications.threshold";
 
-    public static final String KEY_LAST_CLEARED = "com.battlelancer.seriesguide.notifications.latestnotified";
+    public static final String KEY_LAST_CLEARED = "com.battlelancer.seriesguide.notifications.latestcleared";
+
+    public static final String KEY_LAST_NOTIFIED = "com.battlelancer.seriesguide.notifications.latestnotified";
 
     public static final String KEY_NEXT_TO_NOTIFY = "com.battlelancer.seriesguide.notifications.next";
 
@@ -62,6 +64,14 @@ public class NotificationSettings {
     public static long getLastCleared(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getLong(KEY_LAST_CLEARED, 0);
+    }
+
+    /**
+     * Get the air time of the episode we last notified about.
+     */
+    public static long getLastNotified(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getLong(KEY_LAST_NOTIFIED, 0);
     }
 
     public static String getNotificationsRingtone(Context context) {
