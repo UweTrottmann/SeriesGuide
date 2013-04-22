@@ -498,6 +498,9 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             TaskManager.getInstance(mAppContext).performAddTask(mNewShows);
         }
 
+        // There could have been new episodes added after an update
+        Utils.runNotificationService(mAppContext);
+
         TaskManager.getInstance(mAppContext).onTaskCompleted();
     }
 
