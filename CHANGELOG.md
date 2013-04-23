@@ -8,6 +8,20 @@ All dates are in the European Central timezone.
 Version 5 *(TBD)*
 --------------------------
 
+* FEATURE Integrate the trakt movie watchlist.
+* TWEAK Redesigned Overview, now displays seasons and show info in tabs.
+* TWEAK Episodes in Activity are now grouped by day, check-in by touching and holding.
+* TWEAK Better support for rating on trakt.
+* TWEAK Episode notifications will queue up until 12 hours have passed or they are dismissed (Android 3+ only). Notifications will only be sent out if there are actually new episodes to notify about.
+* NOTICE The old backup system will go away with v6. Restore your old backups and export them with the new backup tool.
+* FEATURE A new JSON backup tool.
+* TWEAK Collect entire seasons or shows. Display collected flags in episode lists.
+* NOTICE Bump minimum supported version to Android 2.2 (from 2.1).
+
+#### 5beta6 *(2013-04-23)*
+
+* TWEAK Episode notifications will queue up until 12 hours have passed or they are dismissed. Notifications will only be sent out if there are actually new episodes to notify about.
+
 #### 5beta5 *(2013-04-17)*
 
 * TWEAK Episodes in Activity are now grouped by day. This is highly untested and might eat you alive. Just so you know.
