@@ -22,7 +22,9 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/poster"
-                android:padding="@dimen/default_padding"
+                android:paddingBottom="@dimen/default_padding"
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingRight="@dimen/default_padding"
                 android:text="@string/add_show"
                 android:textAppearance="@style/TextAppearance.Large.Light" />
 
@@ -39,8 +41,8 @@
 
             <ImageView
                 android:id="@+id/poster"
-                android:layout_width="100dp"
-                android:layout_height="147dp"
+                android:layout_width="116dp"
+                android:layout_height="163dp"
                 android:layout_alignParentRight="true"
                 android:layout_margin="@dimen/default_padding"
                 android:contentDescription="@string/description_poster"
