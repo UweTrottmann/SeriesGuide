@@ -3,5 +3,7 @@
 
     <dimen name="addpager_width">600dp</dimen>
     <dimen name="imagecontainer_height">250dp</dimen>
+    <dimen name="show_poster_width">224dp</dimen>
+    <dimen name="show_poster_height">336dp</dimen>
 
 </resources>

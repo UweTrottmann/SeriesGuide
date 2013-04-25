@@ -29,6 +29,8 @@
     <dimen name="imagecontainer_height">180dp</dimen>
     <dimen name="slidingmenu_width">240dp</dimen>
     <dimen name="movie_item_height">282dp</dimen>
+    <dimen name="show_poster_width">128dp</dimen>
+    <dimen name="show_poster_height">192dp</dimen>
 
     <integer name="animation_duration">400</integer>
 
