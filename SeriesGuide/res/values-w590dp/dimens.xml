@@ -6,5 +6,7 @@
     <dimen name="widget_text_small">12sp</dimen>
     <dimen name="widget_text_middle">14sp</dimen>
     <dimen name="widget_text_large">16sp</dimen>
+    <dimen name="show_poster_width">184dp</dimen>
+    <dimen name="show_poster_height">276dp</dimen>
 
 </resources>
