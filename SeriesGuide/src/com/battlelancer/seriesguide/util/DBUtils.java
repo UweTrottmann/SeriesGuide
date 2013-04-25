@@ -127,7 +127,7 @@ public class DBUtils {
 
     /**
      * Returns how many episodes of a show are left to watch (only aired and not
-     * watched, exclusive episodes with no air date).
+     * watched, exclusive episodes with no air date and without specials).
      */
     public static int getUnwatchedEpisodesOfShow(Context context, String showId,
             SharedPreferences prefs) {
@@ -140,7 +140,7 @@ public class DBUtils {
 
         // unwatched, aired episodes
         final Cursor unwatched = resolver.query(episodesOfShowUri, UnwatchedQuery.PROJECTION,
-                UnwatchedQuery.AIRED_SELECTION, new String[] {
+                UnwatchedQuery.AIRED_SELECTION + Episodes.SELECTION_NOSPECIALS, new String[] {
                         "0", "-1", fakenow
                 }, null);
         if (unwatched == null) {
