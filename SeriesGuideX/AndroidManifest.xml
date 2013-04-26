@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.battlelancer.seriesguide.x"
     android:installLocation="auto"
-    android:versionCode="154"
-    android:versionName="4.1x" >
+    android:versionCode="155"
+    android:versionName="5x" >
 
     <uses-sdk
         android:minSdkVersion="8"
