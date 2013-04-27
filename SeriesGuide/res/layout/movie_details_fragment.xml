@@ -11,6 +11,13 @@
         android:scaleType="centerCrop"
         tools:ignore="ContentDescription" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -63,11 +70,11 @@
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/buttonMovieCheckIn"
                 android:maxWidth="400dp"
-                android:textAppearance="@style/TextAppearance"
+                android:textAppearance="@style/TextAppearance.Light"
                 android:textIsSelectable="true" />
 
             <include
-                android:id="@+id/divider"
+                android:id="@+id/dividerHorizontalMovieDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/textViewMovieDescription"
@@ -81,19 +88,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/divider"
+                android:layout_below="@+id/dividerHorizontalMovieDetails"
                 android:baselineAligned="false"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
                 <Button
-                    android:id="@+id/buttonMovieTrailer"
+                    android:id="@+id/buttonMovieComments"
                     style="@style/Widget.SeriesGuide.Button.Borderless.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/default_padding"
                     android:paddingRight="@dimen/default_padding"
-                    android:text="@string/trailer"
+                    android:text="@string/comments"
                     android:textAllCaps="true"
                     android:visibility="gone" />
             </LinearLayout>

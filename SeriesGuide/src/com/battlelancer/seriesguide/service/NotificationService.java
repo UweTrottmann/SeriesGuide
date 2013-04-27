@@ -39,10 +39,12 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
 import com.battlelancer.seriesguide.ui.EpisodesActivity;
+import com.battlelancer.seriesguide.ui.QuickCheckInActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Lists;
+import com.battlelancer.seriesguide.util.NotificationSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -50,6 +52,16 @@ import com.uwetrottmann.seriesguide.R;
 import java.util.List;
 
 public class NotificationService extends IntentService {
+
+    private static final String KEY_EPISODE_CLEARED_TIME = "com.battlelancer.seriesguide.episode_cleared_time";
+
+    private static final boolean DEBUG = false;
+
+    private static final int REQUEST_CODE_SINGLE_EPISODE = 2;
+
+    private static final int REQUEST_CODE_MULTIPLE_EPISODES = 3;
+
+    private static final int REQUEST_CODE_ACTION_CHECKIN = 4;
 
     private static final long[] VIBRATION_PATTERN = new long[] {
             0, 100, 200, 100, 100, 100
@@ -91,7 +103,7 @@ public class NotificationService extends IntentService {
 
     public NotificationService() {
         super("Episode Notification Service");
-        setIntentRedelivery(false);
+        setIntentRedelivery(true);
     }
 
     @TargetApi(16)
@@ -99,10 +111,21 @@ public class NotificationService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        // unschedule notification service wake-ups for disabled notifications
-        // and non-supporters
-        if (!prefs.getBoolean(SeriesGuidePreferences.KEY_NOTIFICATIONS_ENABLED, true)
-                || !Utils.isSupporterChannel(this)) {
+        /*
+         * Handle a possible delete intent.
+         */
+        long clearedTime = intent.getLongExtra(KEY_EPISODE_CLEARED_TIME, 0);
+        if (clearedTime != 0) {
+            // Never show the cleared episode(s) again
+            prefs.edit().putLong(NotificationSettings.KEY_LAST_CLEARED, clearedTime).commit();
+            return;
+        }
+
+        /*
+         * Unschedule notification service wake-ups for disabled notifications
+         * and non-supporters.
+         */
+        if (!NotificationSettings.isNotificationsEnabled(this) || !Utils.isSupporterChannel(this)) {
             // cancel any pending alarm
             AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             Intent i = new Intent(this, OnAlarmReceiver.class);
@@ -115,84 +138,153 @@ public class NotificationService extends IntentService {
         }
 
         long wakeUpTime = 0;
-        final long fakeNow = Utils.getFakeCurrentTime(prefs);
-        StringBuilder selection = new StringBuilder(SELECTION);
 
-        boolean isFavsOnly = prefs.getBoolean(SeriesGuidePreferences.KEY_NOTIFICATIONS_FAVONLY,
-                true);
+        /*
+         * Get pool of episodes which air from 12 hours ago until eternity which
+         * match the users settings.
+         */
+        StringBuilder selection = new StringBuilder(SELECTION);
+        final long fakeNow = Utils.getFakeCurrentTime(prefs);
+        boolean isFavsOnly = NotificationSettings.isNotifyAboutFavoritesOnly(this);
         if (isFavsOnly) {
             selection.append(Shows.SELECTION_FAVORITES);
         }
-
         boolean isNoSpecials = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES,
                 false);
         if (isNoSpecials) {
             selection.append(Episodes.SELECTION_NOSPECIALS);
         }
-
-        // get episodes which air now beginning from 15 mins ago
         final Cursor upcomingEpisodes = getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 PROJECTION, selection.toString(), new String[] {
-                    String.valueOf(fakeNow - 15 * DateUtils.MINUTE_IN_MILLIS)
+                    String.valueOf(fakeNow - 12 * DateUtils.HOUR_IN_MILLIS)
                 }, SORTING);
 
         if (upcomingEpisodes != null) {
-            // find episodes which are within the notification threshold (user
-            // set)
-            int count = 0;
-            final List<Integer> notifyPositions = Lists.newArrayList();
-            int notificationThreshold = Integer.parseInt(prefs.getString(
-                    SeriesGuidePreferences.KEY_NOTIFICATIONS_THRESHOLD, "60"));
-            final long latestTimeToInclude = fakeNow + DateUtils.MINUTE_IN_MILLIS
-                    * notificationThreshold;
-            long latestTimeNotifiedAbout = prefs.getLong(
-                    SeriesGuidePreferences.KEY_NOTIFICATIONS_LATEST_NOTIFIED, 0);
-            while (upcomingEpisodes.moveToNext()) {
-                final long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
-                if (airtime <= latestTimeToInclude) {
-                    count++;
-                    // only add those we didn't already notify about
-                    if (latestTimeNotifiedAbout < airtime) {
-                        notifyPositions.add(count);
+            int notificationThreshold = NotificationSettings.getLatestToIncludeTreshold(this);
+            if (DEBUG) {
+                // a week, for debugging (use only one show to get single
+                // episode notifications)
+                notificationThreshold = 10080;
+                // notify again for same episodes
+                resetLastEpisodeAirtime(prefs);
+            }
+            final long latestTimeToInclude = fakeNow
+                    + DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
+            final long nextTimePlanned = NotificationSettings.getNextToNotifyAbout(this);
+            final long nextWakeUpPlanned = Utils.convertToFakeTime(nextTimePlanned, prefs, false)
+                    - DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
+
+            /*
+             * Set to -1 as on first run nextTimePlanned will be 0. This assures
+             * we still see notifications of upcoming episodes then.
+             */
+            int newEpisodesAvailable = -1;
+
+            // Check if we did wake up earlier than planned
+            if (System.currentTimeMillis() < nextWakeUpPlanned) {
+                newEpisodesAvailable = 0;
+                long latestTimeNotified = NotificationSettings.getLastNotified(this);
+
+                // Check if there are any earlier episodes to notify about
+                while (upcomingEpisodes.moveToNext()) {
+                    final long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
+                    if (airtime < nextTimePlanned) {
+                        if (airtime > latestTimeNotified) {
+                            /**
+                             * This will not get new episodes which would have
+                             * aired the same time as the last one we notified
+                             * about. Sad, but the best we can do right now.
+                             */
+                            newEpisodesAvailable = 1;
+                            break;
+                        }
+                    } else {
+                        break;
                     }
-                } else {
-                    break;
                 }
             }
 
-            // notify if we found any episodes
-            if (notifyPositions.size() > 0) {
-                // store latest air time of all episodes we notified about
-                upcomingEpisodes.moveToPosition(notifyPositions.get(notifyPositions.size() - 1));
-                long latestAirtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
-                prefs.edit().putLong(SeriesGuidePreferences.KEY_NOTIFICATIONS_LATEST_NOTIFIED,
-                        latestAirtime).commit();
+            if (newEpisodesAvailable == 0) {
+                // Go to sleep, wake up as planned
+                wakeUpTime = nextWakeUpPlanned;
+            } else {
+                // Get episodes which are within the notification threshold
+                // (user set) and not yet cleared
+                int count = 0;
+                final List<Integer> notifyPositions = Lists.newArrayList();
+                final long latestTimeCleared = NotificationSettings.getLastCleared(this);
 
-                onNotify(prefs, upcomingEpisodes, count);
-            }
+                upcomingEpisodes.moveToPosition(-1);
+                while (upcomingEpisodes.moveToNext()) {
+                    final long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
+                    if (airtime <= latestTimeToInclude) {
+                        count++;
+                        /*
+                         * Only add those after the last one the user cleared.
+                         * At most those of the last 24 hours (see query above).
+                         */
+                        if (airtime > latestTimeCleared) {
+                            notifyPositions.add(count);
+                        }
+                    } else {
+                        // Too far into the future, stop!
+                        break;
+                    }
+                }
 
-            // find wake up time x (user-set) minutes before next episode airs
-            upcomingEpisodes.moveToPosition(-1);
-            while (upcomingEpisodes.moveToNext()) {
-                final long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
-                if (airtime > latestTimeToInclude) {
-                    wakeUpTime = Utils.convertToFakeTime(airtime, prefs, false)
-                            - DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
-                    break;
+                // Notify if we found any episodes
+                if (notifyPositions.size() > 0) {
+                    // store latest air time of all episodes we notified about
+                    upcomingEpisodes
+                            .moveToPosition(notifyPositions.get(notifyPositions.size() - 1));
+                    long latestAirtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
+                    if (!AndroidUtils.isHoneycombOrHigher()) {
+                        /*
+                         * Everything below HC does not have delete intents, so
+                         * we just never notify about the same episode twice.
+                         */
+                        prefs.edit().putLong(NotificationSettings.KEY_LAST_CLEARED,
+                                latestAirtime).commit();
+                    }
+                    prefs.edit().putLong(NotificationSettings.KEY_LAST_NOTIFIED, latestAirtime)
+                            .commit();
+
+                    onNotify(prefs, upcomingEpisodes, count, latestAirtime);
+                }
+
+                /*
+                 * Plan next episode to notify about, calc wake-up alarm as
+                 * early as user wants.
+                 */
+                upcomingEpisodes.moveToPosition(-1);
+                while (upcomingEpisodes.moveToNext()) {
+                    final long airtime = upcomingEpisodes.getLong(NotificationQuery.FIRSTAIREDMS);
+                    if (airtime > latestTimeToInclude) {
+                        // store next episode we plan to notify about
+                        prefs.edit().putLong(NotificationSettings.KEY_NEXT_TO_NOTIFY, airtime)
+                                .commit();
+
+                        // convert it to actual device time for setting the
+                        // alarm
+                        wakeUpTime = Utils.convertToFakeTime(airtime, prefs, false)
+                                - DateUtils.MINUTE_IN_MILLIS * notificationThreshold;
+
+                        break;
+                    }
                 }
             }
 
             upcomingEpisodes.close();
         }
 
-        // set a default wake-up time if there are no future episodes for now
-        if (wakeUpTime == 0) {
+        // Set a default wake-up time if there are no future episodes for now
+        if (wakeUpTime <= 0) {
             wakeUpTime = System.currentTimeMillis() + 6 * DateUtils.HOUR_IN_MILLIS;
         }
 
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent i = new Intent(this, OnAlarmReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
+        Intent i = new Intent(this, NotificationService.class);
+        PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
         am.set(AlarmManager.RTC_WAKEUP, wakeUpTime, pi);
     }
 
@@ -201,11 +293,13 @@ public class NotificationService extends IntentService {
      * notifications for episodes may appear, which were already notified about.
      */
     public static void resetLastEpisodeAirtime(final SharedPreferences prefs) {
-        prefs.edit().putLong(SeriesGuidePreferences.KEY_NOTIFICATIONS_LATEST_NOTIFIED, 0)
+        prefs.edit().putLong(NotificationSettings.KEY_LAST_CLEARED, 0)
                 .commit();
+        prefs.edit().putLong(NotificationSettings.KEY_LAST_NOTIFIED, 0).commit();
     }
 
-    private void onNotify(final SharedPreferences prefs, final Cursor upcomingEpisodes, int count) {
+    private void onNotify(final SharedPreferences prefs, final Cursor upcomingEpisodes, int count,
+            long latestAirtime) {
         final Context context = getApplicationContext();
         CharSequence tickerText = "";
         CharSequence contentTitle = "";
@@ -213,11 +307,9 @@ public class NotificationService extends IntentService {
         PendingIntent contentIntent = null;
 
         // notification sound
-        final String ringtoneUri = prefs.getString(SeriesGuidePreferences.KEY_RINGTONE,
-                "content://settings/system/notification_sound");
+        final String ringtoneUri = NotificationSettings.getNotificationsRingtone(context);
         // vibration
-        final boolean isVibrating = prefs.getBoolean(SeriesGuidePreferences.KEY_VIBRATE,
-                false);
+        final boolean isVibrating = NotificationSettings.isNotificationVibrating(context);
 
         if (count == 1) {
             // notify in detail about one episode
@@ -240,7 +332,8 @@ public class NotificationService extends IntentService {
             Intent notificationIntent = new Intent(context, EpisodesActivity.class);
             notificationIntent.putExtra(EpisodesActivity.InitBundle.EPISODE_TVDBID,
                     upcomingEpisodes.getInt(NotificationQuery._ID));
-            contentIntent = PendingIntent.getActivity(context, 2, notificationIntent, 0);
+            contentIntent = PendingIntent.getActivity(context, REQUEST_CODE_SINGLE_EPISODE,
+                    notificationIntent, 0);
         } else if (count > 1) {
             // notify about multiple episodes
             tickerText = getString(R.string.upcoming_episodes);
@@ -249,7 +342,8 @@ public class NotificationService extends IntentService {
             contentText = getString(R.string.upcoming_display);
 
             Intent notificationIntent = new Intent(context, UpcomingRecentActivity.class);
-            contentIntent = PendingIntent.getActivity(context, 3, notificationIntent, 0);
+            contentIntent = PendingIntent.getActivity(context, REQUEST_CODE_MULTIPLE_EPISODES,
+                    notificationIntent, 0);
         }
 
         final NotificationCompat.Builder nb = new NotificationCompat.Builder(context);
@@ -280,9 +374,15 @@ public class NotificationService extends IntentService {
                 nb.setStyle(new NotificationCompat.BigTextStyle().bigText(bigText)
                         .setSummaryText(contentText));
 
-                // TODO allow check ins via intent
-                // anb.addAction(R.drawable.ic_notification,
-                // getString(R.string.checkin), null);
+                // Action button to check in
+                Intent checkInActionIntent = new Intent(context, QuickCheckInActivity.class);
+                checkInActionIntent.putExtra(QuickCheckInActivity.InitBundle.EPISODE_TVDBID,
+                        upcomingEpisodes.getInt(NotificationQuery._ID));
+                PendingIntent checkInIntent = PendingIntent.getActivity(context,
+                        REQUEST_CODE_ACTION_CHECKIN,
+                        checkInActionIntent, 0);
+                nb.addAction(R.drawable.ic_action_checkin, getString(R.string.checkin),
+                        checkInIntent);
             } else {
                 // multiple episodes
                 NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
@@ -346,6 +446,11 @@ public class NotificationService extends IntentService {
         nb.setContentIntent(contentIntent);
         nb.setSmallIcon(R.drawable.ic_notification);
         nb.setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        Intent i = new Intent(this, NotificationService.class);
+        i.putExtra(KEY_EPISODE_CLEARED_TIME, latestAirtime);
+        PendingIntent deleteIntent = PendingIntent.getService(this, 1, i, 0);
+        nb.setDeleteIntent(deleteIntent);
 
         // build the notification
         Notification notification = nb.build();

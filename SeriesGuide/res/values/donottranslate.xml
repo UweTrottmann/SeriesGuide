@@ -13,9 +13,11 @@
     <string name="getglue">GetGlue</string>
     <string name="notraktrating">--%</string>
     <string name="gobreak">Go break things</string>
-    <string name="betamessage">v4 is out\n\nThanks again for all the feedback.\n\nThere is a small tweak to reduce overdraw which might slightly improve performance.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
+    <string name="betamessage">Notification tweaks\n\nEpisode notifications will queue up until 12 hours have passed or they are dismissed. Notifications will only be sent out if there are actually new episodes to notify about.\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
     <string name="help_url">http://seriesgui.de/help</string>
-
+    <string name="backup_legacy_warning">This is the legacy backup system. It will get removed with the next update. If you want to restore an old backup, now would be the time. You can then export again using the new export tool.</string>
+	<string name="not_available">n/a</string>
+    
     <!-- Settings -->
     <string name="pref_translate">Translate SeriesGuide</string>
     <string name="pref_translatesummary">Translate or proofread on crowdin</string>
@@ -205,6 +207,14 @@
     <string-array name="widgetTypeData">
         <item>0</item>
         <item>1</item>
+    </string-array>
+    <string-array name="dashclockUpcomingThresholdsData" translatable="false">
+        <item>1</item>
+        <item>6</item>
+        <item>12</item>
+        <item>24</item>
+        <item>72</item>
+        <item>168</item>
     </string-array>
 
 </resources>

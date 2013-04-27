@@ -35,15 +35,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader;
 import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader.MovieDetails;
 import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.tmdb.entities.Movie;
-import com.uwetrottmann.tmdb.entities.Trailers;
 
 /**
  * Displays details about one movie including plot, ratings, trailers and a
@@ -52,17 +56,34 @@ import com.uwetrottmann.tmdb.entities.Trailers;
 public class MovieDetailsFragment extends SherlockFragment implements
         LoaderManager.LoaderCallbacks<MovieDetails> {
 
+    public static MovieDetailsFragment newInstance(int tmdbId) {
+        MovieDetailsFragment f = new MovieDetailsFragment();
+
+        Bundle args = new Bundle();
+        args.putInt(InitBundle.TMDB_ID, tmdbId);
+        f.setArguments(args);
+
+        return f;
+    }
+
     public interface InitBundle {
         String TMDB_ID = "tmdbid";
     }
 
+    private static final String TAG = "Movie Details";
     private static final int LOADER_ID = R.layout.movie_details_fragment;
     private ImageDownloader mImageDownloader;
     private String mBaseUrl;
+    private View mProgressBar;
+    private MovieDetails mMovieDetails;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.movie_details_fragment, container, false);
+        View v = inflater.inflate(R.layout.movie_details_fragment, container, false);
+
+        mProgressBar = v.findViewById(R.id.progressBar);
+
+        return v;
     }
 
     @Override
@@ -84,6 +105,47 @@ public class MovieDetailsFragment extends SherlockFragment implements
         Bundle args = new Bundle();
         args.putInt(InitBundle.TMDB_ID, tmdbId);
         getLoaderManager().initLoader(LOADER_ID, args, this);
+
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        if (mMovieDetails != null) {
+            inflater.inflate(R.menu.movie_details_menu, menu);
+
+            boolean isEnableImdb = mMovieDetails.movie() != null
+                    && !TextUtils.isEmpty(mMovieDetails.movie().imdb_id);
+            MenuItem imdbItem = menu.findItem(R.id.menu_open_imdb);
+            imdbItem.setEnabled(isEnableImdb);
+            imdbItem.setVisible(isEnableImdb);
+
+            boolean isEnableYoutube = mMovieDetails.trailers() != null &&
+                    mMovieDetails.trailers().youtube.size() > 0;
+            MenuItem youtubeItem = menu.findItem(R.id.menu_open_youtube);
+            youtubeItem.setEnabled(isEnableYoutube);
+            youtubeItem.setVisible(isEnableYoutube);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.menu_open_imdb) {
+            Utils.openImdb(mMovieDetails.movie().imdb_id, TAG, getActivity());
+            return true;
+        }
+        if (itemId == R.id.menu_open_youtube) {
+            Intent intent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://www.youtube.com/watch?v="
+                            + mMovieDetails.trailers().youtube.get(0).source));
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -100,15 +162,32 @@ public class MovieDetailsFragment extends SherlockFragment implements
     @Override
     public void onLoadFinished(Loader<MovieDetails> loader, MovieDetails details) {
         if (details != null) {
+            mMovieDetails = details;
             onPopulateMovieDetails(details);
+            // add menu items only available once the movie is
+            getSherlockActivity().supportInvalidateOptionsMenu();
         }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<MovieDetails> loader) {
     }
 
     @SuppressWarnings("deprecation")
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void onPopulateMovieDetails(MovieDetails details) {
+        mProgressBar.setVisibility(View.GONE);
+
         final Movie movie = details.movie();
+
         if (movie != null) {
+            // display movie title in action bar
+            final ActionBar actionBar = getSherlockActivity().getSupportActionBar();
+            actionBar.setTitle(movie.title);
+
+            // set non-content views visible
+            getView().findViewById(R.id.dividerHorizontalMovieDetails).setVisibility(View.VISIBLE);
+
             ((TextView) getView().findViewById(R.id.textViewMovieTitle)).setText(movie.title);
 
             TextView textViewDate = (TextView) getView().findViewById(R.id.textViewMovieDate);
@@ -152,35 +231,19 @@ public class MovieDetailsFragment extends SherlockFragment implements
             } else {
                 checkinButton.setEnabled(false);
             }
-        }
 
-        // Trailer button
-        // TODO use new YouTube API to display inline
-        final Trailers trailers = details.trailers();
-        View buttonTrailer = getView().findViewById(R.id.buttonMovieTrailer);
-        View divider = getView().findViewById(R.id.divider);
-        if (trailers != null && trailers.youtube.size() > 0) {
-            buttonTrailer.setVisibility(View.VISIBLE);
-            divider.setVisibility(View.VISIBLE);
-            buttonTrailer.setOnClickListener(new OnClickListener() {
+            View commentButton = getView().findViewById(R.id.buttonMovieComments);
+            commentButton.setVisibility(View.VISIBLE);
+            commentButton.setOnClickListener(new OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("http://www.youtube.com/watch?v="
-                                    + trailers.youtube.get(0).source));
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                    startActivity(intent);
+                    Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
+                    i.putExtras(TraktShoutsActivity.createInitBundleMovie(movie.title, movie.id));
+                    startActivity(i);
                 }
             });
-        } else {
-            buttonTrailer.setVisibility(View.GONE);
-            divider.setVisibility(View.GONE);
         }
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<MovieDetails> loader) {
     }
 
 }

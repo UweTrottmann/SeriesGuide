@@ -13,7 +13,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/large_padding" >
+            android:padding="@dimen/default_padding" >
 
             <TextView
                 android:id="@+id/title"
@@ -22,25 +22,29 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_toLeftOf="@+id/poster"
+                android:paddingBottom="@dimen/default_padding"
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingRight="@dimen/default_padding"
                 android:text="@string/add_show"
                 android:textAppearance="@style/TextAppearance.Large.Light" />
 
             <TextView
                 android:id="@+id/description"
-                style="@style/ListTextNormal"
+                style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/title"
                 android:layout_toLeftOf="@+id/poster"
-                android:text="@string/description_overview" />
+                android:text="@string/description_overview"
+                android:textAppearance="@style/TextAppearance.Light" />
 
             <ImageView
                 android:id="@+id/poster"
-                android:layout_width="100dp"
-                android:layout_height="147dp"
+                android:layout_width="116dp"
+                android:layout_height="163dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginLeft="@dimen/default_padding"
+                android:layout_margin="@dimen/default_padding"
                 android:contentDescription="@string/description_poster"
                 android:visibility="gone" />
         </RelativeLayout>

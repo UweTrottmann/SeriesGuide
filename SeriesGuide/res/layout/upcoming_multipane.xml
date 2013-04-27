@@ -6,14 +6,14 @@
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
-        style="@style/EpisodesPane"
         android:layout_width="0px"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
     <FrameLayout
         android:id="@+id/fragment_details"
-        style="@style/DetailsPane"
         android:layout_width="0px"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
 </LinearLayout>

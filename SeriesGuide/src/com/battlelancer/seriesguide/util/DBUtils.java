@@ -31,18 +31,19 @@ import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 
 import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
+import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.ui.UpcomingFragment.ActivityType;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
-import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
-import com.uwetrottmann.seriesguide.R;
+import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -125,17 +126,13 @@ public class DBUtils {
     }
 
     /**
-     * Returns a string of how many episodes of a show are left to watch (only
-     * aired and not watched, exclusive episodes with no air date).
-     * 
-     * @param context
-     * @param showId
-     * @param prefs
+     * Returns how many episodes of a show are left to watch (only aired and not
+     * watched, exclusive episodes with no air date and without specials).
      */
-    public static String getUnwatchedEpisodesOfShow(Context context, String showId,
+    public static int getUnwatchedEpisodesOfShow(Context context, String showId,
             SharedPreferences prefs) {
         if (context == null) {
-            return "";
+            return -1;
         }
         final ContentResolver resolver = context.getContentResolver();
         final String fakenow = String.valueOf(Utils.getFakeCurrentTime(prefs));
@@ -143,13 +140,40 @@ public class DBUtils {
 
         // unwatched, aired episodes
         final Cursor unwatched = resolver.query(episodesOfShowUri, UnwatchedQuery.PROJECTION,
-                UnwatchedQuery.AIRED_SELECTION, new String[] {
+                UnwatchedQuery.AIRED_SELECTION + Episodes.SELECTION_NOSPECIALS, new String[] {
                         "0", "-1", fakenow
                 }, null);
+        if (unwatched == null) {
+            return -1;
+        }
         final int count = unwatched.getCount();
         unwatched.close();
 
-        return context.getString(R.string.remaining, count);
+        return count;
+    }
+
+    /**
+     * Returns how many episodes of a show are left to collect.
+     */
+    public static int getUncollectedEpisodesOfShow(Context context, String showId) {
+        if (context == null) {
+            return -1;
+        }
+        final ContentResolver resolver = context.getContentResolver();
+        final Uri episodesOfShowUri = Episodes.buildEpisodesOfShowUri(showId);
+
+        // unwatched, aired episodes
+        final Cursor uncollected = resolver.query(episodesOfShowUri, new String[] {
+                Episodes._ID, Episodes.COLLECTED
+        },
+                Episodes.COLLECTED + "=0", null, null);
+        if (uncollected == null) {
+            return -1;
+        }
+        final int count = uncollected.getCount();
+        uncollected.close();
+
+        return count;
     }
 
     /**
@@ -166,63 +190,66 @@ public class DBUtils {
      * Returns all episodes that air today or later. Using Pacific Time to
      * determine today. Excludes shows that are hidden.
      * 
-     * @return Cursor including episodes with show title, network, airtime and
-     *         posterpath.
+     * @return Cursor using the projection of {@link UpcomingQuery}.
      */
     public static Cursor getUpcomingEpisodes(boolean isOnlyUnwatched, Context context) {
-        String[][] args = buildActivityQuery(UpcomingQuery.QUERY_UPCOMING, isOnlyUnwatched, context);
+        String[][] args = buildActivityQuery(context, ActivityType.UPCOMING, isOnlyUnwatched);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
-                UpcomingQuery.PROJECTION, args[0][0], args[1], UpcomingQuery.SORTING_UPCOMING);
-    }
-
-    /**
-     * Calls {@code getRecentEpisodes(false, context)}.
-     * 
-     * @param context
-     * @return
-     */
-    public static Cursor getRecentEpisodes(Context context) {
-        return getRecentEpisodes(false, context);
+                UpcomingQuery.PROJECTION, args[0][0], args[1], args[2][0]);
     }
 
     /**
      * Return all episodes that aired the day before and earlier. Using Pacific
      * Time to determine today. Excludes shows that are hidden.
      * 
-     * @param context
-     * @return Cursor including episodes with show title, network, airtime and
-     *         posterpath.
+     * @return Cursor using the projection of {@link UpcomingQuery}.
      */
     public static Cursor getRecentEpisodes(boolean isOnlyUnwatched, Context context) {
-        String[][] args = buildActivityQuery(UpcomingQuery.QUERY_RECENT, isOnlyUnwatched, context);
+        String[][] args = buildActivityQuery(context, ActivityType.RECENT, isOnlyUnwatched);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
-                UpcomingQuery.PROJECTION, args[0][0], args[1], UpcomingQuery.SORTING_RECENT);
+                UpcomingQuery.PROJECTION, args[0][0], args[1], args[2][0]);
     }
 
     /**
-     * Returns an array of size 2. The built query is stored in {@code [0][0]},
-     * the built selection args in {@code [1]}.
-     * 
-     * @param query
-     * @param isOnlyUnwatched
-     * @param context
-     * @return
+     * Returns an array of size 3. The built query is stored in {@code [0][0]},
+     * the built selection args in {@code [1]} and the sort order in
+     * {@code [2][0]}.
      */
-    private static String[][] buildActivityQuery(String query, boolean isOnlyUnwatched,
-            Context context) {
+    public static String[][] buildActivityQuery(Context context, String type) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        // calc time threshold
+        boolean isNoWatched = prefs.getBoolean(SeriesGuidePreferences.KEY_NOWATCHED, false);
+
+        return buildActivityQuery(context, type, isNoWatched);
+    }
+
+    private static String[][] buildActivityQuery(Context context, String type,
+            boolean isOnlyUnwatched) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
         long fakeNow = Utils.getFakeCurrentTime(prefs);
         // go an hour back in time, so episodes move to recent one hour late
-        fakeNow -= DateUtils.HOUR_IN_MILLIS;
-        final String recentThreshold = String.valueOf(fakeNow);
+        long recentThreshold = fakeNow - DateUtils.HOUR_IN_MILLIS;
+
+        String sortOrder;
+        String query;
+        long monthThreshold;
+
+        if (ActivityType.UPCOMING.equals(type)) {
+            query = UpcomingQuery.QUERY_UPCOMING;
+            sortOrder = UpcomingQuery.SORTING_UPCOMING;
+            monthThreshold = System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS * 30;
+        } else {
+            query = UpcomingQuery.QUERY_RECENT;
+            sortOrder = UpcomingQuery.SORTING_RECENT;
+            monthThreshold = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS * 30;
+        }
 
         // build selection args
         String[] selectionArgs = new String[] {
-                recentThreshold, "0"
+                String.valueOf(recentThreshold), String.valueOf(monthThreshold)
         };
 
         // append only favorites selection if necessary
@@ -244,11 +271,14 @@ public class DBUtils {
         }
 
         // build result array
-        String[][] results = new String[2][];
+        String[][] results = new String[3][];
         results[0] = new String[] {
                 query
         };
         results[1] = selectionArgs;
+        results[2] = new String[] {
+                sortOrder
+        };
         return results;
     }
 
@@ -258,8 +288,7 @@ public class DBUtils {
      * 
      * @param showId
      */
-    public static void markNextEpisode(Context context, OnFlagListener listener, int showId,
-            int episodeId) {
+    public static void markNextEpisode(Context context, int showId, int episodeId) {
         if (episodeId > 0) {
             Cursor episode = context.getContentResolver().query(
                     Episodes.buildEpisodeUri(String.valueOf(episodeId)), new String[] {
@@ -267,9 +296,9 @@ public class DBUtils {
                     }, null, null, null);
             if (episode != null) {
                 if (episode.moveToFirst()) {
-                    new FlagTask(context, (int) showId, listener)
-                            .episodeWatched(episode.getInt(0), episode.getInt(1))
-                            .setItemId(episodeId).setFlag(true).execute();
+                    new FlagTask(context, showId)
+                            .episodeWatched(episodeId, episode.getInt(0), episode.getInt(1), true)
+                            .execute();
                 }
                 episode.close();
             }
@@ -284,11 +313,11 @@ public class DBUtils {
     };
 
     /**
-     * Returns a {@link Series} object populated with all needed fields, but not
-     * all of them! Might Return {@code null} if there is no show with that id.
+     * Returns a {@link Series} object. Might return {@code null} if there is no
+     * show with that TVDb id.
      */
-    public static Series getShow(Context context, String showId) {
-        Cursor details = context.getContentResolver().query(Shows.buildShowUri(showId),
+    public static Series getShow(Context context, int showTvdbId) {
+        Cursor details = context.getContentResolver().query(Shows.buildShowUri(showTvdbId),
                 SHOW_PROJECTION, null,
                 null, null);
 
@@ -341,44 +370,49 @@ public class DBUtils {
      * @param isNew
      * @return
      */
-    public static ContentProviderOperation buildShowOp(Series show, Context context, boolean isNew) {
+    public static ContentProviderOperation buildShowOp(Show show, Context context, boolean isNew) {
         ContentValues values = new ContentValues();
         values = putCommonShowValues(show, values);
 
         if (isNew) {
-            values.put(Shows._ID, show.getId());
+            values.put(Shows._ID, show.tvdbId);
             return ContentProviderOperation.newInsert(Shows.CONTENT_URI).withValues(values).build();
         } else {
-            return ContentProviderOperation.newUpdate(Shows.buildShowUri(show.getId()))
+            return ContentProviderOperation
+                    .newUpdate(Shows.buildShowUri(String.valueOf(show.tvdbId)))
                     .withValues(values).build();
         }
     }
 
     /**
-     * Adds default show information from given Series object to given
-     * ContentValues.
-     * 
-     * @param show
-     * @param values
-     * @return
+     * Transforms a {@link Show} objects attributes into {@link ContentValues}
+     * using the correct {@link Shows} columns.
      */
-    private static ContentValues putCommonShowValues(Series show, ContentValues values) {
-        values.put(Shows.TITLE, show.getTitle());
-        values.put(Shows.OVERVIEW, show.getOverview());
-        values.put(Shows.ACTORS, show.getActors());
-        values.put(Shows.AIRSDAYOFWEEK, show.getAirsDayOfWeek());
-        values.put(Shows.AIRSTIME, show.getAirsTime());
-        values.put(Shows.FIRSTAIRED, show.getFirstAired());
-        values.put(Shows.GENRES, show.getGenres());
-        values.put(Shows.NETWORK, show.getNetwork());
-        values.put(Shows.RATING, show.getRating());
-        values.put(Shows.RUNTIME, show.getRuntime());
-        values.put(Shows.STATUS, show.getStatus());
-        values.put(Shows.CONTENTRATING, show.getContentRating());
-        values.put(Shows.POSTER, show.getPoster());
-        values.put(Shows.IMDBID, show.getImdbId());
-        values.put(Shows.LASTUPDATED, new Date().getTime());
-        values.put(Shows.LASTEDIT, show.getLastEdit());
+    private static ContentValues putCommonShowValues(Show show, ContentValues values) {
+        values.put(Shows.TITLE, show.title);
+        values.put(Shows.OVERVIEW, show.overview);
+        values.put(Shows.ACTORS, show.actors);
+        values.put(Shows.AIRSDAYOFWEEK, show.airday);
+        values.put(Shows.AIRSTIME, show.airtime);
+        values.put(Shows.FIRSTAIRED, show.firstAired);
+        values.put(Shows.GENRES, show.genres);
+        values.put(Shows.NETWORK, show.network);
+        values.put(Shows.RATING, show.rating);
+        values.put(Shows.RUNTIME, show.runtime);
+        values.put(Shows.CONTENTRATING, show.contentRating);
+        values.put(Shows.POSTER, show.poster);
+        values.put(Shows.IMDBID, show.imdbId);
+        values.put(Shows.LASTEDIT, show.lastEdited);
+        values.put(Shows.LASTUPDATED, System.currentTimeMillis());
+        int status;
+        if (ShowStatusExport.CONTINUING.equals(show.status)) {
+            status = ShowStatus.CONTINUING;
+        } else if (ShowStatusExport.ENDED.equals(show.status)) {
+            status = ShowStatus.ENDED;
+        } else {
+            status = ShowStatus.UNKNOWN;
+        }
+        values.put(Shows.STATUS, status);
         return values;
     }
 
@@ -477,20 +511,17 @@ public class DBUtils {
      * Returns the episode IDs and their last edit time for a given show as a
      * efficiently searchable HashMap.
      * 
-     * @param showId
      * @return HashMap containing the shows existing episodes
      */
-    public static HashMap<Long, Long> getEpisodeMapForShow(String showId, Context context) {
+    public static HashMap<Long, Long> getEpisodeMapForShow(Context context, int showTvdbId) {
         Cursor eptest = context.getContentResolver().query(
-                Episodes.buildEpisodesOfShowUri(showId), new String[] {
-                        Episodes._ID, Episodes.LASTEDIT
+                Episodes.buildEpisodesOfShowUri(showTvdbId), new String[] {
+                        Episodes._ID, Episodes.LAST_EDITED
                 }, null, null, null);
         HashMap<Long, Long> episodeMap = new HashMap<Long, Long>();
         if (eptest != null) {
-            eptest.moveToFirst();
-            while (!eptest.isAfterLast()) {
+            while (eptest.moveToNext()) {
                 episodeMap.put(eptest.getLong(0), eptest.getLong(1));
-                eptest.moveToNext();
             }
             eptest.close();
         }
@@ -501,40 +532,33 @@ public class DBUtils {
      * Returns the season IDs for a given show as a efficiently searchable
      * HashMap.
      * 
-     * @param seriesid
      * @return HashMap containing the shows existing seasons
      */
-    public static HashSet<Long> getSeasonIDsForShow(String seriesid, Context context) {
-        Cursor setest = context.getContentResolver().query(Seasons.buildSeasonsOfShowUri(seriesid),
+    public static HashSet<Long> getSeasonIDsForShow(Context context, int showTvdbId) {
+        Cursor setest = context.getContentResolver().query(
+                Seasons.buildSeasonsOfShowUri(showTvdbId),
                 new String[] {
                     Seasons._ID
                 }, null, null, null);
         HashSet<Long> seasonIDs = new HashSet<Long>();
-        while (setest.moveToNext()) {
-            seasonIDs.add(setest.getLong(0));
+        if (setest != null) {
+            while (setest.moveToNext()) {
+                seasonIDs.add(setest.getLong(0));
+            }
+            setest.close();
         }
-        setest.close();
         return seasonIDs;
     }
 
     /**
-     * Creates a {@link ContentProviderOperation} for insert if isNew, or update
-     * instead for with the given episode values.
-     * 
-     * @param values
-     * @param isNew
-     * @return
+     * Creates an update {@link ContentProviderOperation} for the given episode
+     * values.
      */
-    public static ContentProviderOperation buildEpisodeOp(ContentValues values, boolean isNew) {
-        ContentProviderOperation op;
-        if (isNew) {
-            op = ContentProviderOperation.newInsert(Episodes.CONTENT_URI).withValues(values)
-                    .build();
-        } else {
-            final String episodeId = values.getAsString(Episodes._ID);
-            op = ContentProviderOperation.newUpdate(Episodes.buildEpisodeUri(episodeId))
-                    .withValues(values).build();
-        }
+    public static ContentProviderOperation buildEpisodeUpdateOp(ContentValues values) {
+        final String episodeId = values.getAsString(Episodes._ID);
+        ContentProviderOperation op = ContentProviderOperation
+                .newUpdate(Episodes.buildEpisodeUri(episodeId))
+                .withValues(values).build();
         return op;
     }
 

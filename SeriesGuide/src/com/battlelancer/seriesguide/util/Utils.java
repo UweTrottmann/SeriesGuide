@@ -18,7 +18,8 @@
 package com.battlelancer.seriesguide.util;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -37,13 +38,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.Constants.EpisodeSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
+import com.battlelancer.seriesguide.service.OnAlarmReceiver;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -241,25 +242,25 @@ public class Utils {
     }
 
     /**
-     * Return an array with absolute time [0], day [1] and relative time [2] of
+     * Returns an array with absolute time [0], day [1] and relative time [2] of
      * the given millisecond time. Respects user offsets and 'Use my time zone'
      * setting.
-     * 
-     * @param airtime
-     * @param context
-     * @return
      */
     public static String[] formatToTimeAndDay(long airtime, Context context) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         Calendar cal = getAirtimeCalendar(airtime, prefs);
-
-        final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
-        final SimpleDateFormat dayFormat = new SimpleDateFormat("E");
         Date airDate = cal.getTime();
-        String day = dayFormat.format(airDate);
+
+        // absolute time
+        final java.text.DateFormat timeFormat = DateFormat.getTimeFormat(context);
         String absoluteTime = timeFormat.format(airDate);
 
+        // day string
+        final SimpleDateFormat dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+        String day = dayFormat.format(airDate);
+
+        // relative time
         String relativeTime = DateUtils
                 .getRelativeTimeSpanString(cal.getTimeInMillis(), System.currentTimeMillis(),
                         DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL).toString();
@@ -267,6 +268,33 @@ public class Utils {
         return new String[] {
                 absoluteTime, day, relativeTime
         };
+    }
+
+    /**
+     * Returns a string like 'Mon in 3 days', the day followed by how far it is
+     * away in relative time.<br>
+     * Does <b>not</b> respect user offsets or 'Use my time zone' setting. The
+     * time to be passed is expected to be already corrected for that.
+     */
+    public static String formatToDayAndTimeWithoutOffsets(Context context, long airtime) {
+        StringBuilder timeAndDay = new StringBuilder();
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(airtime);
+
+        final SimpleDateFormat dayFormat = new SimpleDateFormat("E", Locale.getDefault());
+        timeAndDay.append(dayFormat.format(cal.getTime()));
+
+        timeAndDay.append(" ");
+
+        timeAndDay.append(DateUtils
+                .getRelativeTimeSpanString(
+                        cal.getTimeInMillis(),
+                        System.currentTimeMillis(),
+                        DateUtils.DAY_IN_MILLIS,
+                        DateUtils.FORMAT_ABBREV_ALL));
+
+        return timeAndDay.toString();
     }
 
     /**
@@ -510,6 +538,9 @@ public class Utils {
      * @return
      */
     public static String splitAndKitTVDBStrings(String tvdbstring) {
+        if (tvdbstring == null) {
+            tvdbstring = "";
+        }
         String[] splitted = tvdbstring.split("\\|");
         tvdbstring = "";
         for (String item : splitted) {
@@ -634,12 +665,22 @@ public class Utils {
     /**
      * Run the notification service to display and (re)schedule upcoming episode
      * alarms.
-     * 
-     * @param context
      */
     public static void runNotificationService(Context context) {
         Intent i = new Intent(context, NotificationService.class);
         context.startService(i);
+    }
+
+    /**
+     * Run the notification service delayed by a minute to display and
+     * (re)schedule upcoming episode alarms.
+     */
+    public static void runNotificationServiceDelayed(Context context) {
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent i = new Intent(context, OnAlarmReceiver.class);
+        PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
+        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1
+                * DateUtils.MINUTE_IN_MILLIS, pi);
     }
 
     public static String toSHA1(byte[] convertme) {
@@ -715,6 +756,17 @@ public class Utils {
         }
     }
 
+    public static void setLabelValueOrHide(View label, TextView text, double value) {
+        if (value > 0.0) {
+            label.setVisibility(View.VISIBLE);
+            text.setVisibility(View.VISIBLE);
+            text.setText(String.valueOf(value));
+        } else {
+            label.setVisibility(View.GONE);
+            text.setVisibility(View.GONE);
+        }
+    }
+
     @TargetApi(16)
     @SuppressWarnings("deprecation")
     public static void setPosterBackground(ImageView background, String posterPath, Context context) {
@@ -785,41 +837,51 @@ public class Utils {
 
     /**
      * Displays the IMDb page for the given id (show or episode) in the IMDb app
-     * or on the imdb.com web page.
+     * or on the imdb.com web page. If the IMDb id is empty, disables the
+     * button.
      * 
      * @param imdbId
      * @param imdbButton
      * @param logTag
-     * @param activity
+     * @param context
      */
     public static void setUpImdbButton(final String imdbId, View imdbButton, final String logTag,
-            final Activity activity) {
+            final Context context) {
         if (imdbButton != null) {
-            imdbButton.setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    EasyTracker.getTracker()
-                            .sendEvent(logTag, "Action Item", "IMDb", (long) 0);
-
-                    if (!TextUtils.isEmpty(imdbId)) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("imdb:///title/"
-                                + imdbId + "/"));
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                        try {
-                            activity.startActivity(intent);
-                        } catch (ActivityNotFoundException e) {
-                            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_TITLE_URL
-                                    + imdbId));
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                            activity.startActivity(intent);
-                        }
-                    } else {
-                        Toast.makeText(activity,
-                                activity.getString(R.string.show_noimdbentry), Toast.LENGTH_LONG)
-                                .show();
+            if (!TextUtils.isEmpty(imdbId)) {
+                imdbButton.setEnabled(true);
+                imdbButton.setOnClickListener(new OnClickListener() {
+                    public void onClick(View v) {
+                        openImdb(imdbId, logTag, context);
                     }
-                }
-            });
+                });
+            } else {
+                imdbButton.setEnabled(false);
+            }
         }
+    }
+
+    /**
+     * Open the IMDb app or web page for the given IMDb id.
+     */
+    public static void openImdb(String imdbId, String logTag, Context context) {
+        if (context == null || TextUtils.isEmpty(imdbId)) {
+            return;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri
+                .parse("imdb:///title/" + imdbId + "/"));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_TITLE_URL
+                    + imdbId));
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+            context.startActivity(intent);
+        }
+
+        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "IMDb", (long) 0);
     }
 
     /**

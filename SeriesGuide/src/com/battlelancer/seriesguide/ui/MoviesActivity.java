@@ -18,11 +18,12 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Window;
+import com.battlelancer.seriesguide.adapters.TabPagerAdapter;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
@@ -38,6 +39,7 @@ public class MoviesActivity extends BaseTopActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // MovieSearchFragment needs a progress bar
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        setSupportProgressBarIndeterminateVisibility(false);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movies);
@@ -46,12 +48,23 @@ public class MoviesActivity extends BaseTopActivity {
         actionBar.setTitle(getString(R.string.movies));
         actionBar.setIcon(R.drawable.ic_action_movie);
 
-        if (savedInstanceState == null) {
-            Fragment f = new MovieSearchFragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.movies_container, f);
-            ft.commit();
+        setupViewPager();
+    }
+
+    private void setupViewPager() {
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        ViewPager pager = (ViewPager) findViewById(R.id.pagerMovies);
+
+        TabPagerAdapter tabsAdapter = new TabPagerAdapter(getSupportFragmentManager(), this,
+                actionBar, pager, getMenu());
+        // only show the trakt watchlist with valid credentials
+        if (ServiceUtils.isTraktCredentialsValid(this)) {
+            tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);
         }
+        // movie search
+        tabsAdapter.addTab(R.string.search, MovieSearchFragment.class, null);
     }
 
     @Override

@@ -159,7 +159,10 @@ public class AddFragment extends SherlockFragment {
             viewHolder.title.setText(item.title);
             viewHolder.description.setText(item.overview);
             if (item.poster != null) {
+                viewHolder.poster.setVisibility(View.VISIBLE);
                 mImageDownloader.download(item.poster, viewHolder.poster, false);
+            } else {
+                viewHolder.poster.setVisibility(View.GONE);
             }
 
             return convertView;

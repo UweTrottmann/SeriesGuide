@@ -32,7 +32,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
-import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
 import android.view.ContextMenu;
@@ -51,21 +50,21 @@ import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
-import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
+import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
 import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Displays the list of shows in a users local library.
@@ -73,7 +72,7 @@ import com.uwetrottmann.seriesguide.R;
  * @author Uwe Trottmann
  */
 public class ShowsFragment extends SherlockFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener, OnFlagListener {
+        LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
 
     private static final String TAG = "Shows";
 
@@ -160,7 +159,7 @@ public class ShowsFragment extends SherlockFragment implements
         prefs.registerOnSharedPreferenceChangeListener(mPrefsListener);
     }
 
-    public void setEmptyView(int showfilter) {
+    private void setEmptyView(int showfilter) {
         View oldEmptyView = mGrid.getEmptyView();
 
         View emptyView = null;
@@ -182,6 +181,18 @@ public class ShowsFragment extends SherlockFragment implements
         if (oldEmptyView != null) {
             oldEmptyView.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -230,30 +241,15 @@ public class ShowsFragment extends SherlockFragment implements
                 fireTrackerEvent("Check in");
 
                 Cursor show = (Cursor) mAdapter.getItem(info.position);
-                final String episodeId = show.getString(ShowsQuery.NEXTEPISODE);
-                if (TextUtils.isEmpty(episodeId)) {
+                int episodeTvdbId = show.getInt(ShowsQuery.NEXTEPISODE);
+                if (episodeTvdbId <= 0) {
                     return true;
                 }
 
-                // look up episode
-                final Cursor episode = getActivity().getContentResolver().query(
-                        Episodes.buildEpisodeUri(episodeId), new String[] {
-                                Episodes.SEASON, Episodes.NUMBER, Episodes.TITLE
-                        }, null, null, null);
-                if (episode != null && episode.moveToFirst()) {
-                    final String episodeString = ShareUtils.onCreateShareString(
-                            getActivity(), episode);
-
-                    // display a check-in dialog
-                    CheckInDialogFragment f = CheckInDialogFragment.newInstance(
-                            show.getString(ShowsQuery.IMDB_ID), (int) info.id, episode.getInt(0),
-                            episode.getInt(1), episodeString);
-                    f.show(getFragmentManager(), "checkin-dialog");
-
-                }
-                if (episode != null) {
-                    episode.close();
-                }
+                // display a check-in dialog
+                CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(),
+                        episodeTvdbId);
+                f.show(getFragmentManager(), "checkin-dialog");
 
                 return true;
             }
@@ -303,14 +299,14 @@ public class ShowsFragment extends SherlockFragment implements
                 fireTrackerEvent("Mark next episode");
 
                 Cursor show = (Cursor) mAdapter.getItem(info.position);
-                DBUtils.markNextEpisode(getActivity(), this, (int) info.id,
+                DBUtils.markNextEpisode(getActivity(), (int) info.id,
                         show.getInt(ShowsQuery.NEXTEPISODE));
 
                 return true;
             case CONTEXT_MANAGE_LISTS_ID: {
                 fireTrackerEvent("Manage lists");
 
-                ListsDialogFragment.showListsDialog(String.valueOf(info.id), 1,
+                ListsDialogFragment.showListsDialog(String.valueOf(info.id), ListItemTypes.SHOW,
                         getFragmentManager());
                 return true;
             }
@@ -526,7 +522,7 @@ public class ShowsFragment extends SherlockFragment implements
         String[] PROJECTION = {
                 BaseColumns._ID, Shows.TITLE, Shows.NEXTTEXT, Shows.AIRSTIME, Shows.NETWORK,
                 Shows.POSTER, Shows.AIRSDAYOFWEEK, Shows.STATUS, Shows.NEXTAIRDATETEXT,
-                Shows.FAVORITE, Shows.NEXTEPISODE, Shows.IMDBID
+                Shows.FAVORITE, Shows.NEXTEPISODE
         };
 
         int _ID = 0;
@@ -550,8 +546,6 @@ public class ShowsFragment extends SherlockFragment implements
         int FAVORITE = 9;
 
         int NEXTEPISODE = 10;
-
-        int IMDB_ID = 11;
     }
 
     private void onFavoriteShow(String showId, boolean isFavorite) {
@@ -622,10 +616,9 @@ public class ShowsFragment extends SherlockFragment implements
         }
     };
 
-    @Override
-    public void onFlagCompleted(FlagAction action, int showId, int itemId, boolean isSuccessful) {
-        if (isSuccessful && isAdded()) {
-            Utils.updateLatestEpisode(getActivity(), String.valueOf(showId));
+    public void onEvent(FlagTaskCompletedEvent event) {
+        if (isAdded()) {
+            Utils.updateLatestEpisode(getActivity(), String.valueOf(event.mType.getShowTvdbId()));
         }
     }
 

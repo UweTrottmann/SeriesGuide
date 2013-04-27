@@ -45,6 +45,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.NotificationSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.GoogleAnalytics;
@@ -125,18 +126,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_UPCOMING_LIMIT = "com.battlelancer.seriesguide.upcominglimit";
 
-    public static final String KEY_NOTIFICATIONS_ENABLED = "com.battlelancer.seriesguide.notifications";
-
-    public static final String KEY_NOTIFICATIONS_FAVONLY = "com.battlelancer.seriesguide.notifications.favonly";
-
-    public static final String KEY_NOTIFICATIONS_THRESHOLD = "com.battlelancer.seriesguide.notifications.threshold";
-
-    public static final String KEY_NOTIFICATIONS_LATEST_NOTIFIED = "com.battlelancer.seriesguide.notifications.latestnotified";
-
-    public static final String KEY_VIBRATE = "com.battlelancer.seriesguide.notifications.vibrate";
-
-    public static final String KEY_RINGTONE = "com.battlelancer.seriesguide.notifications.ringtone";
-
     public static final String KEY_LANGUAGE = "language";
 
     public static final String KEY_SHAREWITHTRAKT = "com.battlelancer.seriesguide.sharewithtrakt";
@@ -165,6 +154,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_TMDB_BASE_URL = "com.battlelancer.seriesguide.tmdb.baseurl";
 
+    public static final String KEY_TAPE_INTERVAL = "com.battlelancer.seriesguide.tapeinterval";
+
     public static int THEME = R.style.SeriesGuideTheme;
 
     private static void fireTrackerEvent(String label) {
@@ -182,10 +173,12 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             addPreferencesFromResource(R.xml.settings_basic);
             setupBasicSettings(this, findPreference(KEY_ONLY_FUTURE_EPISODES),
                     findPreference(KEY_ONLY_SEASON_EPISODES),
-                    findPreference(KEY_NOTIFICATIONS_ENABLED),
-                    findPreference(KEY_NOTIFICATIONS_FAVONLY), findPreference(KEY_VIBRATE),
-                    findPreference(KEY_RINGTONE), findPreference(KEY_LANGUAGE),
-                    findPreference(KEY_NOTIFICATIONS_THRESHOLD));
+                    findPreference(NotificationSettings.KEY_ENABLED),
+                    findPreference(NotificationSettings.KEY_FAVONLY),
+                    findPreference(NotificationSettings.KEY_VIBRATE),
+                    findPreference(NotificationSettings.KEY_RINGTONE),
+                    findPreference(KEY_LANGUAGE),
+                    findPreference(NotificationSettings.KEY_THRESHOLD));
         } else if (action != null && action.equals(ACTION_PREFS_SHARING)) {
             addPreferencesFromResource(R.xml.settings_sharing);
             setupSharingSettings(this, findPreference(KEY_GETGLUE_DISCONNECT));
@@ -423,7 +416,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(KEY_UPCOMING_LIMIT) || key.equals(KEY_LANGUAGE)
                 || key.equals(KEY_NUMBERFORMAT) || key.equals(KEY_THEME)
-                || key.equals(KEY_NOTIFICATIONS_THRESHOLD)) {
+                || key.equals(NotificationSettings.KEY_THRESHOLD)) {
             Preference pref = findPreference(key);
             if (pref != null) {
                 setListPreferenceSummary((ListPreference) pref);
@@ -439,7 +432,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             new Thread(new Runnable() {
                 public void run() {
                     ContentValues values = new ContentValues();
-                    values.put(Episodes.LASTEDIT, 0);
+                    values.put(Episodes.LAST_EDITED, 0);
                     getContentResolver().update(Episodes.CONTENT_URI, values, null, null);
                 }
             }).start();
@@ -456,7 +449,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             }
         }
 
-        if (key.equals(KEY_NOTIFICATIONS_THRESHOLD)) {
+        if (key.equals(NotificationSettings.KEY_THRESHOLD)) {
             Preference pref = findPreference(key);
             if (pref != null) {
                 resetAndRunNotificationsService(SeriesGuidePreferences.this);
@@ -492,10 +485,12 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 addPreferencesFromResource(R.xml.settings_basic);
                 setupBasicSettings(getActivity(), findPreference(KEY_ONLY_FUTURE_EPISODES),
                         findPreference(KEY_ONLY_SEASON_EPISODES),
-                        findPreference(KEY_NOTIFICATIONS_ENABLED),
-                        findPreference(KEY_NOTIFICATIONS_FAVONLY), findPreference(KEY_VIBRATE),
-                        findPreference(KEY_RINGTONE), findPreference(KEY_LANGUAGE),
-                        findPreference(KEY_NOTIFICATIONS_THRESHOLD));
+                        findPreference(NotificationSettings.KEY_ENABLED),
+                        findPreference(NotificationSettings.KEY_FAVONLY),
+                        findPreference(NotificationSettings.KEY_VIBRATE),
+                        findPreference(NotificationSettings.KEY_RINGTONE),
+                        findPreference(KEY_LANGUAGE),
+                        findPreference(NotificationSettings.KEY_THRESHOLD));
             } else if ("sharing".equals(settings)) {
                 addPreferencesFromResource(R.xml.settings_sharing);
                 setupSharingSettings(getActivity(), findPreference(KEY_GETGLUE_DISCONNECT));
@@ -531,7 +526,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (key.equals(KEY_UPCOMING_LIMIT) || key.equals(KEY_LANGUAGE)
                     || key.equals(KEY_NUMBERFORMAT) || key.equals(KEY_THEME)
-                    || key.equals(KEY_NOTIFICATIONS_THRESHOLD)) {
+                    || key.equals(NotificationSettings.KEY_THRESHOLD)) {
                 Preference pref = findPreference(key);
                 if (pref != null) {
                     setListPreferenceSummary((ListPreference) pref);
@@ -550,7 +545,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 }
             }
 
-            if (key.equals(KEY_NOTIFICATIONS_THRESHOLD)) {
+            if (key.equals(NotificationSettings.KEY_THRESHOLD)) {
                 Preference pref = findPreference(key);
                 if (pref != null) {
                     resetAndRunNotificationsService(getActivity());

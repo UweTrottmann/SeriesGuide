@@ -27,7 +27,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 
-import com.battlelancer.seriesguide.util.AppSettings;
+import com.battlelancer.seriesguide.util.WidgetSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -53,7 +53,7 @@ public class ListWidgetPreferenceFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
 
         // use the settings file specific to widgets
-        getPreferenceManager().setSharedPreferencesName(AppSettings.SETTINGS_LIST_WIDGETS);
+        getPreferenceManager().setSharedPreferencesName(WidgetSettings.SETTINGS_FILE);
         getPreferenceManager().setSharedPreferencesMode(0);
 
         // create a widget specific settings screen
@@ -64,7 +64,7 @@ public class ListWidgetPreferenceFragment extends PreferenceFragment {
 
         // widget type setting
         ListPreference typePreference = new ListPreference(getActivity());
-        typePreference.setKey(AppSettings.KEY_PREFIX_WIDGET_LISTTYPE + appWidgetId);
+        typePreference.setKey(WidgetSettings.KEY_PREFIX_WIDGET_LISTTYPE + appWidgetId);
         typePreference.setTitle(R.string.pref_widget_type);
         typePreference.setEntries(R.array.widgetType);
         typePreference.setEntryValues(R.array.widgetTypeData);
@@ -75,14 +75,14 @@ public class ListWidgetPreferenceFragment extends PreferenceFragment {
 
         // hide watched setting
         CheckBoxPreference hideWatchedPreference = new CheckBoxPreference(getActivity());
-        hideWatchedPreference.setKey(AppSettings.KEY_PREFIX_WIDGET_HIDE_WATCHED + appWidgetId);
+        hideWatchedPreference.setKey(WidgetSettings.KEY_PREFIX_WIDGET_HIDE_WATCHED + appWidgetId);
         hideWatchedPreference.setTitle(R.string.hide_watched);
         hideWatchedPreference.setDefaultValue(true);
         preferenceScreen.addPreference(hideWatchedPreference);
 
         // background setting
         ListPreference backgroundPreference = new ListPreference(getActivity());
-        backgroundPreference.setKey(AppSettings.KEY_PREFIX_WIDGET_BACKGROUND_COLOR + appWidgetId);
+        backgroundPreference.setKey(WidgetSettings.KEY_PREFIX_WIDGET_BACKGROUND_COLOR + appWidgetId);
         backgroundPreference.setTitle(R.string.pref_widget_opacity);
         backgroundPreference.setEntries(R.array.widgetOpacity);
         backgroundPreference.setEntryValues(R.array.widgetOpacityData);

@@ -27,9 +27,14 @@ import android.view.ViewGroup;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
 import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 
+/**
+ * Allows to check into movies on trakt or GetGlue. Launching activities must
+ * implement {@link OnTraktActionCompleteListener}.
+ */
 public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
 
     public static MovieCheckInDialogFragment newInstance(String imdbid, String movieTitle) {
@@ -53,7 +58,7 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
 
         return layout;
     }
-    
+
     @Override
     public void onStart() {
         super.onStart();
@@ -95,11 +100,11 @@ public class MovieCheckInDialogFragment extends GenericCheckInDialogFragment {
      */
     protected void onTraktCheckIn(String message) {
         final String imdbId = getArguments().getString(InitBundle.IMDB_ID);
-        AndroidUtils.executeAsyncTask(new TraktTask(getActivity(),
-                getFragmentManager(), null).checkInMovie(imdbId,
-                message), new Void[] {
-                null
-        });
+        AndroidUtils.executeAsyncTask(
+                new TraktTask(getActivity(), mListener).checkInMovie(imdbId, message),
+                new Void[] {
+                    null
+                });
     }
 
     protected void handleGetGlueToggle(final SharedPreferences prefs, final String imdbid,

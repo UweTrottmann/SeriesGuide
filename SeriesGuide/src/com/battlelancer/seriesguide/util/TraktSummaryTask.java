@@ -69,6 +69,10 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
 
     private String mTvdbIdString;
 
+    private TextView mTraktUserRating;
+
+    private boolean mIsDoCacheLookup;
+
     /**
      * Sets values for predefined views which have to be children of the given
      * view. Make sure to call either {@code show(tvdbId)} or
@@ -77,13 +81,14 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
      * @param context
      * @param view
      */
-    public TraktSummaryTask(Context context, View view) {
+    public TraktSummaryTask(Context context, View view, boolean isUseCachedValue) {
         mView = view;
         mContext = context;
+        mIsDoCacheLookup = isUseCachedValue;
     }
 
-    public TraktSummaryTask show(String tvdbId) {
-        mTvdbIdString = tvdbId;
+    public TraktSummaryTask show(int tvdbId) {
+        mTvdbIdString = String.valueOf(tvdbId);
         return this;
     }
 
@@ -96,14 +101,9 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
 
     @Override
     protected void onPreExecute() {
-        mTraktLoves = (TextView) mView.findViewById(R.id.traktvalue);
-        mTraktVotes = (TextView) mView.findViewById(R.id.traktvotes);
-
-        // set place-holder values
-        if (mTraktLoves != null && mTraktVotes != null) {
-            mTraktLoves.setText(R.string.notraktrating);
-            mTraktVotes.setText("");
-        }
+        mTraktLoves = (TextView) mView.findViewById(R.id.textViewRatingsTraktValue);
+        mTraktVotes = (TextView) mView.findViewById(R.id.textViewRatingsTraktVotes);
+        mTraktUserRating = (TextView) mView.findViewById(R.id.textViewRatingsTraktUser);
     }
 
     @Override
@@ -130,13 +130,16 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
                     }
                 }
             } else {
-                // look if the episode summary is cached
+                TvEntity entity = null;
                 String key = String.valueOf(mTvdbId) + String.valueOf(mSeason)
                         + String.valueOf(mEpisode);
 
-                TvEntity entity;
-                synchronized (sHardEntityCache) {
-                    entity = sHardEntityCache.remove(key);
+                if (mIsDoCacheLookup) {
+                    // look if the episode summary is cached
+
+                    synchronized (sHardEntityCache) {
+                        entity = sHardEntityCache.remove(key);
+                    }
                 }
 
                 // on cache miss load the summary from trakt
@@ -185,7 +188,8 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
     @Override
     protected void onPostExecute(RatingsWrapper results) {
         // set the final rating values
-        if (results != null && mTraktLoves != null && mTraktVotes != null) {
+        if (results != null && mTraktLoves != null && mTraktVotes != null
+                && mTraktUserRating != null) {
             String rating = results.ratings.percentage + "%";
             if (results.rating != null) {
                 int resId = 0;
@@ -224,7 +228,7 @@ public class TraktSummaryTask extends AsyncTask<Void, Void, RatingsWrapper> {
                         break;
                 }
                 if (resId != 0) {
-                    rating += " (" + mContext.getString(resId) + ")";
+                    mTraktUserRating.setText(mContext.getString(resId));
                 }
             }
             mTraktLoves.setText(rating);

@@ -84,11 +84,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.ShowsActivity" />
         </activity>
-        <activity android:name="com.battlelancer.seriesguide.ui.SeasonsActivity" >
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
-        </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.EpisodesActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
@@ -156,6 +151,8 @@
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.MoviesActivity" >
         </activity>
+        <activity android:name="com.battlelancer.seriesguide.ui.MovieDetailsActivity" >
+        </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.ConnectTraktActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -168,6 +165,15 @@
         </activity>
         <activity android:name="com.battlelancer.seriesguide.ui.StatsActivity" >
         </activity>
+        <activity android:name="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.SeriesGuidePreferences" />
+        </activity>
+		
+        <!-- Services -->
+        <service android:name="com.battlelancer.seriesguide.service.TraktFlagService" >
+        </service>
 
         <!-- Notification service -->
         <service android:name="com.battlelancer.seriesguide.service.NotificationService" >
@@ -179,7 +185,9 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver>
+        </receiver>
+
+
         -->
 
 

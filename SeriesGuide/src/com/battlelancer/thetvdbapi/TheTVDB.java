@@ -37,8 +37,9 @@ import android.util.Log;
 import android.util.Xml;
 
 import com.battlelancer.seriesguide.SeriesGuideApplication;
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.ShowStatusExport;
+import com.battlelancer.seriesguide.dataliberation.model.Show;
 import com.battlelancer.seriesguide.items.SearchResult;
-import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
@@ -47,8 +48,12 @@ import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Lists;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.jakewharton.apibuilder.ApiException;
+import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -70,15 +75,46 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.zip.ZipInputStream;
 
+/**
+ * Provides access to the TheTVDb.com XML API throwing in some additional data
+ * from trakt.tv here and there.
+ */
 public class TheTVDB {
 
-    private static final String TVDB_MIRROR = "http://thetvdb.com";
+    public interface ShowStatus {
+        int CONTINUING = 1;
+        int ENDED = 0;
+        int UNKNOWN = -1;
+    }
 
     private static final String TVDB_MIRROR_BANNERS = "http://thetvdb.com/banners";
 
-    private static final String xmlMirror = TVDB_MIRROR + "/api/";
+    private static final String TVDB_API_URL = "http://thetvdb.com/api/";
 
     private static final String TAG = "TheTVDB";
+
+    /**
+     * Returns true if the given show has not been updated in the last 12 hours.
+     */
+    public static boolean isUpdateShow(String showId, long currentTime, Context context) {
+        final Cursor show = context.getContentResolver().query(Shows.buildShowUri(showId),
+                new String[] {
+                        Shows._ID, Shows.LASTUPDATED
+                }, null, null, null);
+
+        if (show != null) {
+            if (show.moveToFirst()) {
+                long lastUpdateTime = show.getLong(1);
+                if (currentTime - lastUpdateTime > DateUtils.HOUR_IN_MILLIS * 12) {
+                    return true;
+                }
+            }
+
+            show.close();
+        }
+
+        return false;
+    }
 
     /**
      * Adds a show and its episodes. If it already exists updates them. This
@@ -87,35 +123,19 @@ public class TheTVDB {
      * downloads all episode information. This allows for a smaller download, if
      * a show already exists in your database.
      * 
-     * @param showId
-     * @param seenShows
-     * @param collection
      * @return true if show and its episodes were added, false if it already
      *         exists
-     * @throws IOException
-     * @throws SAXException
      */
     public static boolean addShow(String showId, List<TvShow> seenShows,
             List<TvShow> collectedShows, Context context) throws SAXException {
         String language = getTheTVDBLanguage(context);
-        Series show = fetchShow(showId, language, context);
+        Show show = fetchShow(showId, language, context);
 
         boolean isShowExists = DBUtils.isShowExists(showId, context);
 
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
         batch.add(DBUtils.buildShowOp(show, context, !isShowExists));
-        batch.addAll(importShowEpisodes(showId, show.getAirsTime(), language, context));
-
-        try {
-            context.getContentResolver()
-                    .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
-        } catch (RemoteException e) {
-            // Failed binder transactions aren't recoverable
-            throw new RuntimeException("Problem applying batch operation", e);
-        } catch (OperationApplicationException e) {
-            // Failures like constraint violation aren't recoverable
-            throw new RuntimeException("Problem applying batch operation", e);
-        }
+        getEpisodesAndUpdateDatabase(context, show, language, batch);
 
         storeTraktFlags(showId, seenShows, context, true);
         storeTraktFlags(showId, collectedShows, context, false);
@@ -123,6 +143,149 @@ public class TheTVDB {
         DBUtils.updateLatestEpisode(context, showId);
 
         return !isShowExists;
+    }
+
+    /**
+     * Updates all show information. Adds new, updates changed and removes
+     * orphaned episodes.
+     */
+    public static void updateShow(String showId, Context context) throws SAXException {
+        String language = getTheTVDBLanguage(context);
+        Show show = fetchShow(showId, language, context);
+
+        final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
+        batch.add(DBUtils.buildShowOp(show, context, false));
+        getEpisodesAndUpdateDatabase(context, show, language, batch);
+    }
+
+    /**
+     * Search for shows which include a certain keyword in their title.
+     * Dependent on the TheTVDB search algorithms.
+     * 
+     * @return a List with SearchResult objects, max 100
+     */
+    public static List<SearchResult> searchShow(String title, Context context) throws IOException,
+            SAXException {
+        String language = getTheTVDBLanguage(context);
+
+        URL url;
+        try {
+            url = new URL(TVDB_API_URL + "GetSeries.php?seriesname="
+                    + URLEncoder.encode(title, "UTF-8")
+                    + (language != null ? "&language=" + language : ""));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        final List<SearchResult> series = new ArrayList<SearchResult>();
+        final SearchResult currentShow = new SearchResult();
+
+        RootElement root = new RootElement("Data");
+        Element item = root.getChild("Series");
+        // set handlers for elements we want to react to
+        item.setEndElementListener(new EndElementListener() {
+            public void end() {
+                series.add(currentShow.copy());
+            }
+        });
+        item.getChild("id").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                currentShow.tvdbid = body;
+            }
+        });
+        item.getChild("SeriesName").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                currentShow.title = body.trim();
+            }
+        });
+        item.getChild("Overview").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                currentShow.overview = body.trim();
+            }
+        });
+
+        URLConnection connection = url.openConnection();
+        connection.setConnectTimeout(25000);
+        connection.setReadTimeout(90000);
+        InputStream in = connection.getInputStream();
+        try {
+            Xml.parse(in, Xml.Encoding.UTF_8, root.getContentHandler());
+        } catch (Exception e) {
+            throw new IOException();
+        }
+        in.close();
+
+        return series;
+    }
+
+    /**
+     * Return list of show ids hitting a x-day limit.
+     */
+    public static String[] deltaUpdateShows(long currentTime, SharedPreferences prefs,
+            Context context) {
+        final HashSet<Integer> existingShowIds = new HashSet<Integer>();
+        final HashSet<String> updatableShowIds = new HashSet<String>();
+        final int updateAtLeastEvery = prefs.getInt(SeriesGuidePreferences.KEY_UPDATEATLEASTEVERY,
+                7);
+
+        // get existing show ids
+        final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI, new String[] {
+                Shows._ID, Shows.LASTUPDATED
+        }, null, null, null);
+
+        if (shows != null) {
+            while (shows.moveToNext()) {
+                long lastUpdatedTime = shows.getLong(1);
+                if (currentTime - lastUpdatedTime > DateUtils.DAY_IN_MILLIS * updateAtLeastEvery) {
+                    // add shows that are due for updating
+                    updatableShowIds.add(shows.getString(0));
+                } else {
+                    // add remaining ones to check-list for tvdb update function
+                    existingShowIds.add(shows.getInt(0));
+                }
+            }
+
+            Long showCount = (long) shows.getCount();
+            EasyTracker.getTracker().sendEvent("Statistics", "Shows", String.valueOf(showCount),
+                    showCount);
+
+            shows.close();
+        }
+
+        return updatableShowIds.toArray(new String[updatableShowIds.size()]);
+    }
+
+    /**
+     * Fetches episodes for the given show from TVDb, adds database ops for
+     * them. Then adds all information to the database.
+     */
+    private static void getEpisodesAndUpdateDatabase(Context context, Show show,
+            String language, final ArrayList<ContentProviderOperation> batch)
+            throws SAXException {
+        // get ops for episodes of this show
+        ArrayList<ContentValues> importShowEpisodes = fetchEpisodes(batch, show, language,
+                context);
+        ContentValues[] newEpisodesValues = new ContentValues[importShowEpisodes.size()];
+        newEpisodesValues = importShowEpisodes.toArray(newEpisodesValues);
+
+        try {
+            context.getContentResolver()
+                    .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
+            context.getContentResolver()
+                    .bulkInsert(Episodes.CONTENT_URI, newEpisodesValues);
+        } catch (RemoteException e) {
+            // Failed binder transactions aren't recoverable
+            throw new RuntimeException("Problem applying batch operation", e);
+        } catch (OperationApplicationException e) {
+            // Failures like constraint violation aren't recoverable
+            throw new RuntimeException("Problem applying batch operation", e);
+        }
+    }
+
+    private static String getTheTVDBLanguage(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
+                .getApplicationContext());
+        return prefs.getString(SeriesGuidePreferences.KEY_LANGUAGE, "en");
     }
 
     private static void storeTraktFlags(String showId, List<TvShow> shows, Context context,
@@ -183,225 +346,165 @@ public class TheTVDB {
     }
 
     /**
-     * Just fetch all series and episode details and overwrite, add.
+     * Get details for one show, identified by the given series TVDb id. Tries
+     * to fetch additional information from trakt.
      * 
-     * @param showId
-     * @throws SAXException
-     * @throws IOException
+     * @param language A TVDb language code (see <a
+     *            href="http://www.thetvdb.com/wiki/index.php/API:languages.xml"
+     *            >TVDb wiki</a>).
      */
-    public static void updateShow(String showId, Context context) throws SAXException {
-        String language = getTheTVDBLanguage(context);
-        Series show = fetchShow(showId, language, context);
-
-        final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
-        batch.add(DBUtils.buildShowOp(show, context, false));
-        batch.addAll(importShowEpisodes(showId, show.getAirsTime(), language, context));
-
-        try {
-            context.getContentResolver()
-                    .applyBatch(SeriesGuideApplication.CONTENT_AUTHORITY, batch);
-        } catch (RemoteException e) {
-            // Failed binder transactions aren't recoverable
-            throw new RuntimeException("Problem applying batch operation", e);
-        } catch (OperationApplicationException e) {
-            // Failures like constraint violation aren't recoverable
-            throw new RuntimeException("Problem applying batch operation", e);
-        }
-    }
-
-    /**
-     * Get details for one show, identified by the given seriesid.
-     * 
-     * @param seriesid
-     * @param language
-     * @return a Series object, holding the information about the show
-     * @throws SAXException
-     * @throws IOException
-     */
-    public static Series fetchShow(String seriesid, String language, Context context)
+    private static Show fetchShow(String showTvdbId, String language, Context context)
             throws SAXException {
-        String url = xmlMirror + context.getResources().getString(R.string.tvdb_apikey)
-                + "/series/" + seriesid + "/" + (language != null ? language + ".xml" : "");
+        // Try to get some show details from trakt
+        TvShow traktShow = null;
+        ServiceManager manager = ServiceUtils.getTraktServiceManager(context);
+        if (manager != null) {
+            try {
+                traktShow = manager.showService().summary(showTvdbId).fire();
+            } catch (TraktException e) {
+                Utils.trackExceptionAndLog(context, TAG, e);
+            } catch (ApiException e) {
+                Utils.trackExceptionAndLog(context, TAG, e);
+            }
+        }
 
-        return parseShow(url, context);
+        String url = TVDB_API_URL + context.getResources().getString(R.string.tvdb_apikey)
+                + "/series/" + showTvdbId + "/" + (language != null ? language + ".xml" : "");
+
+        Show show = parseShow(url, context);
+
+        // correct air times for non-US shows
+        if (traktShow != null && traktShow.country != null) {
+            if ("United States".equals(traktShow.country)) {
+                // catch US, is already correct then
+            } else if ("United Kingdom".equals(traktShow.country)) {
+                // Correct to BST (no summer time)
+                // Sample: Doctor Who (2005)
+                show.airtime -= 8 * DateUtils.HOUR_IN_MILLIS;
+            } else if ("Germany".equals(traktShow.country)) {
+                // Correct to EST
+                // Sample: heute-show
+                show.airtime -= 9 * DateUtils.HOUR_IN_MILLIS;
+            }
+        }
+
+        return show;
     }
 
     /**
-     * Search for shows which include a certain keyword in their title.
-     * Dependent on the TheTVDB search algorithms.
+     * Get a show from TVDb. Already tries to download the show poster if there
+     * is one.
      * 
-     * @param title
-     * @return a List with SearchResult objects, max 100
-     * @throws SAXException
-     * @throws IOException
+     * @param url API call to get the show.
+     * @return The show wrapped in a {@link Show} object
+     * @throws SAXException If anything goes wrong.
      */
-    public static List<SearchResult> searchShow(String title, Context context) throws IOException,
-            SAXException {
-        String language = getTheTVDBLanguage(context);
-
-        URL url;
-        try {
-            url = new URL(xmlMirror + "GetSeries.php?seriesname="
-                    + URLEncoder.encode(title, "UTF-8")
-                    + (language != null ? "&language=" + language : ""));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        final List<SearchResult> series = new ArrayList<SearchResult>();
-        final SearchResult currentShow = new SearchResult();
-
-        RootElement root = new RootElement("Data");
-        Element item = root.getChild("Series");
-        // set handlers for elements we want to react to
-        item.setEndElementListener(new EndElementListener() {
-            public void end() {
-                series.add(currentShow.copy());
-            }
-        });
-        item.getChild("id").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.tvdbid = body;
-            }
-        });
-        item.getChild("SeriesName").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.title = body.trim();
-            }
-        });
-        item.getChild("Overview").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.overview = body.trim();
-            }
-        });
-
-        URLConnection connection = url.openConnection();
-        connection.setConnectTimeout(25000);
-        connection.setReadTimeout(90000);
-        InputStream in = connection.getInputStream();
-        try {
-            Xml.parse(in, Xml.Encoding.UTF_8, root.getContentHandler());
-        } catch (Exception e) {
-            throw new IOException();
-        }
-        in.close();
-
-        return series;
-    }
-
-    /**
-     * Parses the xml downloaded from the given url into a {@link Series}
-     * object. Downloads the poster if there is one.
-     * 
-     * @param url
-     * @param context
-     * @return the show wrapped in a {@link Series} object
-     * @throws SAXException
-     */
-    public static Series parseShow(String url, final Context context) throws SAXException {
-        final Series currentShow = new Series();
+    private static Show parseShow(String url, final Context context) throws SAXException {
+        final Show currentShow = new Show();
         RootElement root = new RootElement("Data");
         Element show = root.getChild("Series");
 
         // set handlers for elements we want to react to
         show.getChild("id").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setId(body.trim());
-            }
-        });
-        show.getChild("Language").setEndTextElementListener(new EndTextElementListener() {
-            public void end(String body) {
-                currentShow.setLanguage(body.trim());
+                // NumberFormatException may be thrown, will stop parsing
+                currentShow.tvdbId = Integer.parseInt(body);
             }
         });
         show.getChild("SeriesName").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setTitle(body.trim());
+                currentShow.title = body;
             }
         });
         show.getChild("Overview").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setOverview(body.trim());
+                currentShow.overview = body;
             }
         });
         show.getChild("Actors").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setActors(body.trim());
+                currentShow.actors = body.trim();
             }
         });
         show.getChild("Airs_DayOfWeek").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setAirsDayOfWeek(body.trim());
+                currentShow.airday = body.trim();
             }
         });
         show.getChild("Airs_Time").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setAirsTime(Utils.parseTimeToMilliseconds(body.trim()));
+                currentShow.airtime = Utils.parseTimeToMilliseconds(body.trim());
             }
         });
         show.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setFirstAired(body.trim());
+                currentShow.firstAired = body;
             }
         });
         show.getChild("Genre").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setGenres(body.trim());
+                currentShow.genres = body.trim();
             }
         });
         show.getChild("Network").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setNetwork(body.trim());
+                currentShow.network = body;
             }
         });
         show.getChild("Rating").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setRating(body.trim());
+                try {
+                    currentShow.rating = Double.parseDouble(body);
+                } catch (NumberFormatException e) {
+                    currentShow.rating = 0.0;
+                }
             }
         });
         show.getChild("Runtime").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setRuntime(body.trim());
+                try {
+                    currentShow.runtime = Integer.parseInt(body);
+                } catch (NumberFormatException e) {
+                    // an hour is always a good estimate...
+                    currentShow.runtime = 60;
+                }
             }
         });
         show.getChild("Status").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                final String status = body.trim();
-                if (status.length() == 10) {
-                    currentShow.setStatus(1);
-                } else if (status.length() == 5) {
-                    currentShow.setStatus(0);
+                if (body.length() == 10) {
+                    currentShow.status = ShowStatusExport.CONTINUING;
+                } else if (body.length() == 5) {
+                    currentShow.status = ShowStatusExport.ENDED;
                 } else {
-                    currentShow.setStatus(-1);
+                    currentShow.status = ShowStatusExport.UNKNOWN;
                 }
             }
         });
         show.getChild("ContentRating").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setContentRating(body.trim());
+                currentShow.contentRating = body;
             }
         });
         show.getChild("poster").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                String posterurl = body.trim();
-                currentShow.setPoster(posterurl);
-                if (posterurl.length() != 0) {
-                    fetchArt(posterurl, true, context);
+                currentShow.poster = body;
+                if (body.length() != 0) {
+                    fetchArt(body, true, context);
                 }
             }
         });
         show.getChild("IMDB_ID").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                currentShow.setImdbId(body.trim());
+                currentShow.imdbId = body.trim();
             }
         });
         show.getChild("lastupdated").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                // system populated field, trimming not necessary
                 try {
-                    currentShow.setLastEdit(Long.valueOf(body));
+                    currentShow.lastEdited = Long.parseLong(body);
                 } catch (NumberFormatException e) {
-                    currentShow.setLastEdit(0);
+                    currentShow.lastEdited = 0;
                 }
             }
         });
@@ -411,24 +514,35 @@ public class TheTVDB {
         return currentShow;
     }
 
-    public static ArrayList<ContentProviderOperation> importShowEpisodes(String seriesid,
-            long showAirtime, String language, Context context) throws SAXException {
-        String url = xmlMirror + context.getResources().getString(R.string.tvdb_apikey)
-                + "/series/" + seriesid + "/all/"
+    private static ArrayList<ContentValues> fetchEpisodes(
+            ArrayList<ContentProviderOperation> batch, Show show, String language, Context context)
+            throws SAXException {
+        String url = TVDB_API_URL + context.getResources().getString(R.string.tvdb_apikey)
+                + "/series/" + show.tvdbId + "/all/"
                 + (language != null ? language + ".zip" : "en.zip");
 
-        return parseEpisodes(url, seriesid, showAirtime, context);
+        return parseEpisodes(batch, url, show, context);
     }
 
-    public static ArrayList<ContentProviderOperation> parseEpisodes(String url, String showId,
-            final long showAirtime, Context context) throws SAXException {
+    /**
+     * Loads the given zipped XML and parses containing episodes to create an
+     * array of {@link ContentValues} for new episodes.<br>
+     * Adds update ops for updated episodes and delete ops for local orphaned
+     * episodes to the given {@link ContentProviderOperation} batch.
+     */
+    private static ArrayList<ContentValues> parseEpisodes(
+            final ArrayList<ContentProviderOperation> batch, String url, final Show show,
+            Context context) throws SAXException {
+        final ArrayList<ContentValues> newEpisodesValues = Lists.newArrayList();
+        final long dateLastMonthEpoch = (System.currentTimeMillis()
+                - (DateUtils.DAY_IN_MILLIS * 30)) / 1000;
+
         RootElement root = new RootElement("Data");
         Element episode = root.getChild("Episode");
-        final long oneYearAgoEpoch = System.currentTimeMillis() - DateUtils.YEAR_IN_MILLIS;
-        final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
-        final HashMap<Long, Long> episodeIDs = DBUtils.getEpisodeMapForShow(showId, context);
+
+        final HashMap<Long, Long> episodeIDs = DBUtils.getEpisodeMapForShow(context, show.tvdbId);
         final HashMap<Long, Long> existingEpisodeIds = new HashMap<Long, Long>(episodeIDs);
-        final HashSet<Long> existingSeasonIDs = DBUtils.getSeasonIDsForShow(showId, context);
+        final HashSet<Long> existingSeasonIDs = DBUtils.getSeasonIDsForShow(context, show.tvdbId);
         // store updated seasons to avoid duplicate ops
         final HashSet<Long> updatedSeasonIDs = new HashSet<Long>();
         final ContentValues values = new ContentValues();
@@ -441,18 +555,19 @@ public class TheTVDB {
 
                 if (episodeIDs.containsKey(episodeId)) {
                     /*
-                     * check if this is newer information than we have, however
-                     * always update last years episodes
+                     * Update uses provider ops which take a long time. Only
+                     * update if episode was edited on TVDb or is not older than
+                     * a month (ensures show air time changes get stored).
                      */
                     long lastEditEpoch = episodeIDs.get(episodeId);
-                    if (lastEditEpoch < values.getAsLong(Episodes.LASTEDIT)
-                            || oneYearAgoEpoch < lastEditEpoch) {
+                    if (lastEditEpoch < values.getAsLong(Episodes.LAST_EDITED)
+                            || dateLastMonthEpoch < lastEditEpoch) {
                         // complete update op for episode
-                        batch.add(DBUtils.buildEpisodeOp(values, false));
+                        batch.add(DBUtils.buildEpisodeUpdateOp(values));
                     }
                 } else {
                     // episode does not exist, yet
-                    batch.add(DBUtils.buildEpisodeOp(values, true));
+                    newEpisodesValues.add(new ContentValues(values));
                 }
 
                 long seasonid = values.getAsLong(Seasons.REF_SEASON_ID);
@@ -494,7 +609,7 @@ public class TheTVDB {
                 });
         episode.getChild("FirstAired").setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
-                long episodeAirTime = Utils.buildEpisodeAirtime(body, showAirtime);
+                long episodeAirTime = Utils.buildEpisodeAirtime(body, show.airtime);
                 values.put(Episodes.FIRSTAIREDMS, episodeAirTime);
                 values.put(Episodes.FIRSTAIRED, body.trim());
             }
@@ -553,9 +668,9 @@ public class TheTVDB {
             public void end(String body) {
                 // system populated field, trimming not necessary
                 try {
-                    values.put(Episodes.LASTEDIT, Long.valueOf(body));
+                    values.put(Episodes.LAST_EDITED, Long.valueOf(body));
                 } catch (NumberFormatException e) {
-                    values.put(Episodes.LASTEDIT, 0);
+                    values.put(Episodes.LAST_EDITED, 0);
                 }
             }
         });
@@ -568,105 +683,60 @@ public class TheTVDB {
                     .valueOf(id))).build());
         }
 
-        return batch;
+        return newEpisodesValues;
     }
 
     /**
-     * Return list of show ids hitting a x-day limit.
-     * 
-     * @param currentTime
-     * @param updateAtLeastEvery
-     * @param prefs
-     * @param context
-     * @return
+     * Downloads the XML or ZIP file from the given URL, passing a valid
+     * response to
+     * {@link Xml#parse(InputStream, android.util.Xml.Encoding, ContentHandler)}
+     * using the given {@link ContentHandler}.
      */
-    public static String[] deltaUpdateShows(long currentTime, SharedPreferences prefs,
-            Context context) {
-        final HashSet<Integer> existingShowIds = new HashSet<Integer>();
-        final HashSet<String> updatableShowIds = new HashSet<String>();
-        final int updateAtLeastEvery = prefs.getInt(SeriesGuidePreferences.KEY_UPDATEATLEASTEVERY,
-                7);
+    private static void downloadAndParse(String urlString,
+            ContentHandler handler, boolean isZipFile) throws SAXException {
+        try {
+            final InputStream input = AndroidUtils.downloadUrl(urlString);
 
-        // get existing show ids
-        final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI, new String[] {
-                Shows._ID, Shows.LASTUPDATED
-        }, null, null, null);
-
-        if (shows != null) {
-            while (shows.moveToNext()) {
-                long lastUpdatedTime = shows.getLong(1);
-                if (currentTime - lastUpdatedTime > DateUtils.DAY_IN_MILLIS * updateAtLeastEvery) {
-                    // add shows that are due for updating
-                    updatableShowIds.add(shows.getString(0));
-                } else {
-                    // add remaining ones to check-list for tvdb update function
-                    existingShowIds.add(shows.getInt(0));
+            if (isZipFile) {
+                // We downloaded the compressed file from TheTVDB
+                final ZipInputStream zipin = new ZipInputStream(input);
+                zipin.getNextEntry();
+                try {
+                    Xml.parse(zipin, Xml.Encoding.UTF_8, handler);
+                } finally {
+                    if (zipin != null) {
+                        zipin.close();
+                    }
+                }
+            } else {
+                try {
+                    Xml.parse(input, Xml.Encoding.UTF_8, handler);
+                } finally {
+                    if (input != null) {
+                        input.close();
+                    }
                 }
             }
-            
-            Long showCount = (long) shows.getCount();
-            EasyTracker.getTracker().sendEvent("Statistics", "Shows", String.valueOf(showCount), showCount);
-
-            shows.close();
+        } catch (SAXException e) {
+            throw new SAXException("Malformed response for " + urlString, e);
+        } catch (IOException e) {
+            throw new SAXException("Problem reading remote response for "
+                    + urlString, e);
+        } catch (AssertionError ae) {
+            // looks like Xml.parse is throwing AssertionErrors instead of
+            // IOExceptions
+            throw new SAXException("Problem reading remote response for "
+                    + urlString);
+        } catch (Exception e) {
+            throw new SAXException("Problem reading remote response for "
+                    + urlString, e);
         }
-
-        return updatableShowIds.toArray(new String[updatableShowIds.size()]);
     }
 
     /**
-     * Returns true if the given show has not been updated in the last 12 hours.
-     * 
-     * @param showId
-     * @param currentTime
-     * @param context
-     * @return
-     */
-    public static boolean isUpdateShow(String showId, long currentTime, Context context) {
-        final Cursor show = context.getContentResolver().query(Shows.buildShowUri(showId),
-                new String[] {
-                        Shows._ID, Shows.LASTUPDATED
-                }, null, null, null);
-
-        if (show != null) {
-            if (show.moveToFirst()) {
-                long lastUpdateTime = show.getLong(1);
-                if (currentTime - lastUpdateTime > DateUtils.HOUR_IN_MILLIS * 12) {
-                    return true;
-                }
-            }
-
-            show.close();
-        }
-
-        return false;
-    }
-
-    /**
-     * Get current server UNIX time.
-     * 
-     * @param context
-     * @return
-     * @throws SAXException
-     */
-    public static long getServerTime(Context context) throws SAXException {
-        final long[] serverTime = new long[1];
-        final RootElement root = new RootElement("Items");
-        root.getChild("Time").setEndTextElementListener(new EndTextElementListener() {
-            @Override
-            public void end(String body) {
-                serverTime[0] = Long.valueOf(body);
-            }
-        });
-        final String url = xmlMirror + "Updates.php?type=none";
-        downloadAndParse(url, root.getContentHandler(), false);
-
-        return serverTime[0];
-    }
-
-    /**
-     * Tries to download art from the thetvdb banner TVDB_MIRROR. Ignores blank ("")
-     * or null paths and skips existing images. Returns true even if there was
-     * no art downloaded.
+     * Tries to download art from the thetvdb banner TVDB_MIRROR. Ignores blank
+     * ("") or null paths and skips existing images. Returns true even if there
+     * was no art downloaded.
      * 
      * @param fileName of image
      * @param isPoster
@@ -703,7 +773,7 @@ public class TheTVDB {
         return true;
     }
 
-    static Bitmap downloadBitmap(String url, Context context) {
+    private static Bitmap downloadBitmap(String url, Context context) {
         InputStream inputStream = null;
         try {
             HttpURLConnection conn = AndroidUtils.buildHttpUrlConnection(url);
@@ -770,61 +840,8 @@ public class TheTVDB {
         }
     }
 
-    private static String getTheTVDBLanguage(Context context) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context
-                .getApplicationContext());
-        return prefs.getString(SeriesGuidePreferences.KEY_LANGUAGE, "en");
-    }
-
     public static void onRenewFTSTable(Context context) {
         context.getContentResolver().query(EpisodeSearch.CONTENT_URI_RENEWFTSTABLE, null, null,
                 null, null);
-    }
-
-    /**
-     * Downloads the XML or ZIP file from the given URL, passing a valid
-     * response to
-     * {@link Xml#parse(InputStream, android.util.Xml.Encoding, ContentHandler)}
-     * using the given {@link ContentHandler}.
-     */
-    private static void downloadAndParse(String urlString,
-            ContentHandler handler, boolean isZipFile) throws SAXException {
-        try {
-            final InputStream input = AndroidUtils.downloadUrl(urlString);
-
-            if (isZipFile) {
-                // We downloaded the compressed file from TheTVDB
-                final ZipInputStream zipin = new ZipInputStream(input);
-                zipin.getNextEntry();
-                try {
-                    Xml.parse(zipin, Xml.Encoding.UTF_8, handler);
-                } finally {
-                    if (zipin != null) {
-                        zipin.close();
-                    }
-                }
-            } else {
-                try {
-                    Xml.parse(input, Xml.Encoding.UTF_8, handler);
-                } finally {
-                    if (input != null) {
-                        input.close();
-                    }
-                }
-            }
-        } catch (SAXException e) {
-            throw new SAXException("Malformed response for " + urlString, e);
-        } catch (IOException e) {
-            throw new SAXException("Problem reading remote response for "
-                    + urlString, e);
-        } catch (AssertionError ae) {
-            // looks like Xml.parse is throwing AssertionErrors instead of
-            // IOExceptions
-            throw new SAXException("Problem reading remote response for "
-                    + urlString);
-        } catch (Exception e) {
-            throw new SAXException("Problem reading remote response for "
-                    + urlString, e);
-        }
     }
 }

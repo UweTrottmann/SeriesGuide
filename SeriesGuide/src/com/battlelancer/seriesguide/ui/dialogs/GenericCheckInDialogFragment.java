@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.ShareUtils.ProgressDialog;
+import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
@@ -62,9 +64,9 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         String DEFAULT_MESSAGE = "message";
 
         /**
-         * Episode TVDb id. <b>Required for episodes.</b>
+         * Show TVDb id. <b>Required for episodes.</b>
          */
-        String TVDB_ID = "tvdbid";
+        String SHOW_TVDB_ID = "tvdbid";
 
         /**
          * Season number. <b>Required for episodes.</b>
@@ -84,6 +86,8 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
     protected CompoundButton mToggleTraktButton;
 
     protected CompoundButton mToggleGetGlueButton;
+
+    protected OnTraktActionCompleteListener mListener;
 
     private EditText mMessageBox;
 
@@ -226,6 +230,18 @@ public abstract class GenericCheckInDialogFragment extends SherlockDialogFragmen
         });
 
         return layout;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            mListener = (OnTraktActionCompleteListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnTraktActionCompleteListener");
+        }
     }
 
     protected void setupFixGetGlueButton(View layout, boolean isEnabled, final int tvdbId) {

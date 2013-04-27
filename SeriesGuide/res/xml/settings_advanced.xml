@@ -17,9 +17,17 @@
             android:title="@string/pref_autoupdate" />
 
         <Preference
-            android:key="backup"
+            android:key="dataliberation"
             android:summary="@string/backup_summary"
             android:title="@string/backup" >
+            <intent
+                android:targetClass="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity"
+                android:targetPackage="@string/package_name" />
+        </Preference>
+        <Preference
+            android:key="backup"
+            android:summary="Will be removed in the next version."
+            android:title="Legacy Backup/Restore" >
             <intent
                 android:targetClass="com.battlelancer.seriesguide.ui.BackupDeleteActivity"
                 android:targetPackage="@string/package_name" />

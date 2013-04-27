@@ -31,7 +31,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -95,15 +94,6 @@ public class BackupDeleteActivity extends BaseActivity {
                 showDialog(IMPORT_DIALOG);
             }
         });
-
-        String path = Environment.getExternalStorageDirectory() + "/seriesguidebackup";
-
-        TextView backuppath = (TextView) findViewById(R.id.backuppath);
-        backuppath.setText(getString(R.string.backup_path) + ": " + path);
-
-        TextView dbVersion = (TextView) findViewById(R.id.dbversion);
-        dbVersion.setText(getString(R.string.backup_version) + ": "
-                + SeriesGuideDatabase.DATABASE_VERSION);
     }
 
     @Override

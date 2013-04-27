@@ -152,7 +152,7 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
             return;
         }
 
-        final Series show = DBUtils.getShow(this, String.valueOf(mShowId));
+        final Series show = DBUtils.getShow(this, mShowId);
         if (show == null) {
             finish();
             return;
@@ -190,7 +190,7 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
 
             // set adapters for pager and indicator
             int startPosition = updateEpisodeList(episodeId);
-            mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), mEpisodes, prefs, true);
+            mAdapter = new EpisodePagerAdapter(getSupportFragmentManager(), mEpisodes, prefs, false);
             mPager = (ViewPager) pagerFragment;
             mPager.setAdapter(mAdapter);
 
@@ -219,7 +219,7 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
                     ? MenuDrawer.TOUCH_MODE_FULLSCREEN
                     : MenuDrawer.TOUCH_MODE_BEZEL);
         } else {
-            // FIXME Dirty: make sure no fragments are left over from a config
+            // Make sure no fragments are left over from a config
             // change
             for (Fragment fragment : getActiveFragments()) {
                 if (fragment.getTag() == null) {
@@ -279,13 +279,8 @@ public class EpisodesActivity extends BaseActivity implements OnSharedPreference
         int itemId = item.getItemId();
         if (itemId == android.R.id.home) {
             Intent upIntent;
-            if (mDualPane) {
-                upIntent = new Intent(this, OverviewActivity.class);
-                upIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, mShowId);
-            } else {
-                upIntent = new Intent(this, SeasonsActivity.class);
-                upIntent.putExtra(SeasonsFragment.InitBundle.SHOW_TVDBID, mShowId);
-            }
+            upIntent = new Intent(this, OverviewActivity.class);
+            upIntent.putExtra(OverviewFragment.InitBundle.SHOW_TVDBID, mShowId);
             upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(upIntent);
             overridePendingTransition(R.anim.shrink_enter, R.anim.shrink_exit);

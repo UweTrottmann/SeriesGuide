@@ -17,17 +17,21 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -37,7 +41,9 @@ import android.widget.TextView.OnEditorActionListener;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.adapters.MoviesAdapter;
 import com.battlelancer.seriesguide.loaders.TmdbMoviesLoader;
+import com.battlelancer.seriesguide.util.TraktTask;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.tmdb.entities.Movie;
 
@@ -53,26 +59,28 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     private static final String SEARCH_QUERY_KEY = "search_query";
     private static final int LOADER_ID = R.layout.movies_fragment;
     protected static final String TAG = "Movies Search";
+    private static final int CONTEXT_ADD_TO_WATCHLIST_ID = 0;
 
     private EditText mSearchBox;
     private MoviesAdapter mAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.movies_fragment, container, false);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setRetainInstance(true);
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.movies_fragment, container, false);
 
         // setup search box
-        mSearchBox = (EditText) getView().findViewById(R.id.editTextCheckinSearch);
+        mSearchBox = (EditText) v.findViewById(R.id.editTextCheckinSearch);
         mSearchBox.setOnEditorActionListener(this);
 
         // setup clear button
-        getView().findViewById(R.id.imageButtonClearSearch).setOnClickListener(
+        v.findViewById(R.id.imageButtonClearSearch).setOnClickListener(
                 new OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -80,6 +88,14 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
                         mSearchBox.requestFocus();
                     }
                 });
+
+        return v;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
 
         mAdapter = new MoviesAdapter(getActivity());
 
@@ -89,6 +105,8 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
         list.setOnItemClickListener(this);
         list.setEmptyView(getView().findViewById(R.id.empty));
 
+        registerForContextMenu(list);
+
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
@@ -96,6 +114,40 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     public void onStart() {
         super.onStart();
         EasyTracker.getTracker().sendView(TAG);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        menu.add(0, CONTEXT_ADD_TO_WATCHLIST_ID, 0, R.string.watchlist_add);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        /*
+         * This fixes all fragments receiving the context menu dispatch, see
+         * http://stackoverflow.com/questions/5297842/how-to-handle-
+         * oncontextitemselected-in-a-multi-fragment-activity and others.
+         */
+        if (!getUserVisibleHint()) {
+            return super.onContextItemSelected(item);
+        }
+
+        switch (item.getItemId()) {
+            case CONTEXT_ADD_TO_WATCHLIST_ID: {
+                // Add item to watchlist
+                AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+                Movie movie = mAdapter.getItem(info.position);
+                AndroidUtils.executeAsyncTask(
+                        new TraktTask(getActivity(), null)
+                                .watchlistMovie(movie.id),
+                        new Void[] {});
+                return true;
+            }
+        }
+
+        return super.onContextItemSelected(item);
     }
 
     @Override
@@ -140,15 +192,10 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Movie movie = mAdapter.getItem(position);
-        
-        // launch details fragment
-        MovieDetailsFragment f = new MovieDetailsFragment();
-        Bundle args = new Bundle();
-        args.putInt(MovieDetailsFragment.InitBundle.TMDB_ID, movie.id);
-        f.setArguments(args);
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.movies_container, f);
-        ft.addToBackStack(null);
-        ft.commit();
+
+        // launch details activity
+        Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
+        i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, movie.id);
+        startActivity(i);
     }
 }

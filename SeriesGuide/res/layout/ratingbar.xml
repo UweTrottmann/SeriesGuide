@@ -41,47 +41,80 @@
         android:text="@string/tvdb"
         android:textAppearance="@style/TextAppearance.Dim" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/traktrating"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:layout_below="@id/bar"
         android:layout_marginTop="@dimen/default_padding" >
 
         <ImageView
-            android:id="@+id/traktlove"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:id="@+id/imageViewRatingsLove"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="@dimen/inline_padding"
             android:contentDescription="@string/love"
+            android:padding="4dp"
             android:src="@drawable/trakt_love_large" />
 
         <TextView
-            android:id="@+id/traktvalue"
+            android:id="@+id/textViewRatingsTraktValue"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_height="match_parent"
             android:layout_marginRight="@dimen/inline_padding"
+            android:layout_toRightOf="@+id/imageViewRatingsLove"
+            android:gravity="center_vertical"
             android:text="@string/notraktrating"
-            android:textAppearance="@style/TextAppearance" />
+            android:textAppearance="@style/TextAppearance.Large.Light"
+            android:textSize="26sp" />
 
         <TextView
-            android:id="@+id/traktvotes"
+            android:id="@+id/textViewRatingsTraktLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/inline_padding"
-            android:textAppearance="@style/TextAppearance" />
-
-        <TextView
-            android:id="@+id/traktlabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/inline_padding"
+            android:layout_toRightOf="@+id/textViewRatingsTraktValue"
             android:text="@string/trakt"
-            android:textAppearance="@style/TextAppearance.Dim" />
-    </LinearLayout>
+            android:textAppearance="@style/TextAppearance.Small.Dim" />
+
+        <TextView
+            android:id="@+id/textViewRatingsTraktVotes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewRatingsTraktLabel"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/inline_padding"
+            android:layout_toRightOf="@+id/textViewRatingsTraktValue"
+            android:minWidth="30dp"
+            android:text="@string/norating"
+            android:textAppearance="@style/TextAppearance.Small.Dim" />
+
+        <include
+            android:id="@+id/dividerRatingsVertical"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/default_padding"
+            android:layout_marginRight="@dimen/default_padding"
+            android:layout_toRightOf="@+id/textViewRatingsTraktVotes"
+            layout="@layout/divider_vertical" />
+
+        <TextView
+            android:id="@+id/textViewRatingsTraktUserLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/dividerRatingsVertical"
+            android:text="@string/your_rating"
+            android:textAppearance="@style/TextAppearance.Small" />
+
+        <TextView
+            android:id="@+id/textViewRatingsTraktUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewRatingsTraktUserLabel"
+            android:layout_toRightOf="@+id/dividerRatingsVertical"
+            android:text="@string/norating"
+            android:textAppearance="@style/TextAppearance.Small" />
+    </RelativeLayout>
 
 </RelativeLayout>

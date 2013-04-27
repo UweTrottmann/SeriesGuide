@@ -17,12 +17,9 @@
 
 package com.battlelancer.seriesguide.service;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.text.format.DateUtils;
 import android.util.Log;
 
 import com.battlelancer.seriesguide.util.Utils;
@@ -34,12 +31,8 @@ public class OnAlarmReceiver extends BroadcastReceiver {
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
             // postpone notification service launch a minute,
             // we don't want to slow down booting
-            AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            Intent i = new Intent(context, OnAlarmReceiver.class);
-            PendingIntent pi = PendingIntent.getBroadcast(context, 0, i, 0);
-            am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1
-                    * DateUtils.MINUTE_IN_MILLIS, pi);
-            Log.d("OnAlarmReceiver", "Postponing service launch");
+            Log.d("OnAlarmReceiver", "Postponing notifications service launch");
+            Utils.runNotificationServiceDelayed(context);
         } else {
             // run the notification service right away
             Log.d("OnAlarmReceiver", "Run notifications service right away");

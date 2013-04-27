@@ -5,6 +5,78 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 5 *(TBD)*
+--------------------------
+
+* FEATURE Integrate the trakt movie watchlist.
+* TWEAK Redesigned Overview, now displays seasons and show info in tabs.
+* TWEAK Episodes in Activity are now grouped by day, check-in by touching and holding.
+* TWEAK Better support for rating on trakt.
+* TWEAK Episode notifications will queue up until 12 hours have passed or they are dismissed (Android 3+ only). Notifications will only be sent out if there are actually new episodes to notify about.
+* NOTICE The old backup system will go away with v6. Restore your old backups and export them with the new backup tool.
+* FEATURE A new JSON backup tool.
+* TWEAK Collect entire seasons or shows. Display collected flags in episode lists.
+* NOTICE Bump minimum supported version to Android 2.2 (from 2.1).
+
+#### 5beta6 *(2013-04-23)*
+
+* TWEAK Episode notifications will queue up until 12 hours have passed or they are dismissed. Notifications will only be sent out if there are actually new episodes to notify about.
+
+#### 5beta5 *(2013-04-17)*
+
+* TWEAK Episodes in Activity are now grouped by day. This is highly untested and might eat you alive. Just so you know.
+* FIX Upcoming widgets and the DashClock extension were broken. Now they are not. Or are they?
+* FIX Crash when rotating your device in Overview. Fixed courtesy of best bug report evar: #242.
+
+#### 5beta4 *(2013-04-16)*
+
+* FEATURE Integrate the trakt movie watchlist, support removing and adding movies by touching and holding.
+* TWEAK Finally display a seasons tab right next to the overview on phones. Bonus: display a show tab to the left, too.
+* TWEAK Correct air times for British (e.g. Doctor Who 2005) and German (e.g. heute-show) television using information from trakt.tv.
+* TWEAK Display a check-in button on episodes in Upcoming/Recent on larger screens.
+* TWEAK Check-in from Upcoming/Recent by touching and holding episodes.
+* TWEAK Don't display ticker text for auto-update notification in overview.
+* TWEAK Reduce font-sizes on 7 inch devices.
+* TWEAK Use Roboto Light in more places (like descriptions, action bar titles).
+* TWEAK Activity only shows episodes at most one month into the future/past.
+* TWEAK More prominently display own trakt ratings, updates immediately upon rating.
+* TWEAK IMDb button for movies.
+* TWEAK Accumulate episode notifications only for episodes of the last 12 hours.
+* FIX Crashed when going up from new backup tool.
+* FIX Restore UI state on rotating the device while backup/import is running in new backup tool.
+* FIX Broken search layout on legacy Android versions.
+* NOTICE Latest translations from crowdin.
+
+#### 5beta3 *(2013-04-05)*
+
+* FIX Collecting whole seasons and shows was broken, as well as flagging seen all previously aired episodes.
+
+#### 5beta2 *(2013-04-05)*
+
+* NOTICE The old backup system will go away with v6. Restore your old backups and export them with the new backup tool.
+* FEATURE The old backup assistant is now deprecated in favor of a new JSON exporter. Backups will take a little longer, but will be completely compatible between devices and less prone to version issues. Also you can easily edit or reuse the JSON files yourself. New (auto-)backups will for now be stored in your Downloads folder. Auto-Backups will dump a minimal export which does not include descriptions, actors, ratings, etc. These will get filled in on your next update after restoring.
+* FEATURE Flagging watched and collected now works offline when connected to a trakt account. Once you open the app with a working connection your last actions will be sent to trakt. Also if you set SeriesGuide to use Wi-Fi only that will apply to those trakt actions now, too. Once you have an allowed connection you can force sending by manually updating.
+* TWEAK Collect entire seasons or shows. Display collected flags in episode lists.
+* TWEAK Episodes in notifications will now persist until you either clear the notification (Android 3.0+), watch the episode or more than 24 hours have passed since it aired.
+* TWEAK List items have a 'Manage lists' context menu option.
+* FIX Shows in lists now always update their next episode.
+* FIX Auto backup did not work correctly, now, it does. Once a week.
+* FIX List items only display stars for favorited shows.
+* FIX Remove list item from correct list when having more than one list.
+* FIX Really prevent shows from getting removed when they are added to a list.
+
+#### 5beta1 *(2013-03-29)*
+
+* FEATURE Support Quick-Check-In action from single episode notifications.
+* FEATURE Add episodes within setting to DashClock extension.
+* FEATURE Trakt comments for movies.
+* TWEAK Trakt comments now link to their page on trakt.tv.
+* TWEAK Display show link in episode details in activity tablet layout.
+* TWEAK New search results layout, use Search view on Android 3+.
+* FIX Support canceling movie check-ins.
+* NOTICE Bump minimum supported version to Android 2.2 (from 2.1).
+* NOTICE Latest translations from crowdin.
+
 Version 4.1 *(2013-03-22)*
 --------------------------
 

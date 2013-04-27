@@ -87,7 +87,7 @@
         <item name="android:windowAnimationStyle">@style/Animation.CheckinDialog</item>
     </style>
 
-    <!-- An dark Android theme -->
+    <!-- A dark Android theme -->
     <style name="ICSBaseTheme" parent="Theme.Sherlock">
         <item name="vpiTitlePageIndicatorStyle">@style/TitlePageIndicator.Dark</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
@@ -146,6 +146,7 @@
         <item name="android:spinnerItemStyle">@style/Widget.Light.SpinnerItem</item>
 
         <!-- Action bar (ABS) -->
+        <item name="actionBarStyle">@style/ActionBar.Light</item>
         <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
         <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
         <item name="actionDropDownStyle">@style/DropDownNav</item>

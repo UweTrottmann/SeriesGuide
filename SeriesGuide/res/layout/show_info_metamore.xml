@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:maxEms="20"
         android:text="@string/description_overview"
-        android:textAppearance="@style/TextAppearance"
+        android:textAppearance="@style/TextAppearance.Light"
         android:textIsSelectable="true" />
 
     <TextView
@@ -27,7 +27,7 @@
         style="@style/DefaultPadding.Blocks.WithBottomMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance"
+        android:textAppearance="@style/TextAppearance.Light"
         android:textIsSelectable="true" />
 
     <TextView
@@ -43,7 +43,7 @@
         style="@style/DefaultPadding.Blocks.WithBottomMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance"
+        android:textAppearance="@style/TextAppearance.Light"
         android:textIsSelectable="true" />
 
     <TextView
@@ -59,7 +59,7 @@
         style="@style/DefaultPadding.Blocks.WithBottomMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance"
+        android:textAppearance="@style/TextAppearance.Light"
         android:textIsSelectable="true" />
 
     <TextView
@@ -75,7 +75,7 @@
         style="@style/DefaultPadding.Blocks.WithBottomMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance"
+        android:textAppearance="@style/TextAppearance.Light"
         android:textIsSelectable="true" />
 
     <TextView
@@ -91,7 +91,7 @@
         style="@style/DefaultPadding.Blocks.WithBottomMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance"
+        android:textAppearance="@style/TextAppearance.Light"
         android:textIsSelectable="true" />
 
     <TextView
@@ -107,7 +107,7 @@
         style="@style/DefaultPadding.Blocks.WithBottomMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance"
+        android:textAppearance="@style/TextAppearance.Light"
         android:textIsSelectable="true" />
 
 </merge>

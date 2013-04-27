@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_open_imdb"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/imdb"/>
+    <item
+        android:id="@+id/menu_open_youtube"
+        android:icon="@drawable/ic_action_youtube"
+        android:showAsAction="ifRoom"
+        android:title="@string/trailer"/>
+
+</menu>

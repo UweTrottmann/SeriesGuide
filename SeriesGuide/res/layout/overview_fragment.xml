@@ -53,9 +53,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_below="@id/seriesname"
-                        android:layout_marginBottom="@dimen/default_padding"
                         android:layout_marginLeft="@dimen/default_padding"
                         android:layout_marginRight="@dimen/default_padding"
+                        android:textAllCaps="true"
                         android:textAppearance="@style/TextAppearance.Small" />
 
                     <TextView
@@ -80,8 +80,6 @@
             </LinearLayout>
 
             <include layout="@layout/divider_horizontal" />
-
-            <include layout="@layout/gotoseasons" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -199,7 +197,7 @@
                             style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance"
+                            android:textAppearance="@style/TextAppearance.Light"
                             android:textIsSelectable="true" />
 
                         <TextView
@@ -215,7 +213,7 @@
                             style="@style/DefaultPadding.Blocks.WithBottomMargin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance"
+                            android:textAppearance="@style/TextAppearance.Light"
                             android:textIsSelectable="true" />
 
                         <TextView
@@ -231,14 +229,14 @@
                             style="@style/DefaultPadding.Blocks.WithBottomMargin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="@style/TextAppearance" />
+                            android:textAppearance="@style/TextAppearance.Light" />
 
                         <include layout="@layout/divider_horizontal" />
 
                         <include
                             android:id="@+id/buttonbar_ref"
                             android:layout_width="wrap_content"
-                            android:layout_height="48dp"
+                            android:layout_height="wrap_content"
                             layout="@layout/buttonbar_services" />
                     </LinearLayout>
                 </LinearLayout>

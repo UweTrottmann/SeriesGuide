@@ -44,12 +44,10 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
-import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.ShowsFragment.ViewHolder;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
@@ -117,28 +115,15 @@ public class CheckinActivity extends BaseActivity implements LoaderCallbacks<Cur
         list.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Cursor show = (Cursor) mAdapter.getItem(position);
-                final String episodeId = show.getString(CheckinQuery.NEXTEPISODE);
-                if (TextUtils.isEmpty(episodeId)) {
+                int episodeTvdbId = show.getInt(CheckinQuery.NEXTEPISODE);
+                if (episodeTvdbId <= 0) {
                     return;
                 }
 
-                // look up episode
-                final Cursor episode = getContentResolver().query(
-                        Episodes.buildEpisodeUri(episodeId), new String[] {
-                                Episodes.SEASON, Episodes.NUMBER, Episodes.TITLE
-                        }, null, null, null);
-                if (episode != null && episode.moveToFirst()) {
-                    final String episodeString = ShareUtils.onCreateShareString(
-                            CheckinActivity.this, episode);
-
-                    // display a check-in dialog
-                    CheckInDialogFragment f = CheckInDialogFragment.newInstance(
-                            show.getString(CheckinQuery.IMDBID), (int) id, episode.getInt(0),
-                            episode.getInt(1), episodeString);
-                    f.show(getSupportFragmentManager(), "checkin-dialog");
-
-                    episode.close();
-                }
+                // display a check-in dialog
+                CheckInDialogFragment f = CheckInDialogFragment.newInstance(CheckinActivity.this,
+                        episodeTvdbId);
+                f.show(getSupportFragmentManager(), "checkin-dialog");
             }
         });
         list.setEmptyView(findViewById(R.id.empty));

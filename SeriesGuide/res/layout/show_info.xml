@@ -14,7 +14,6 @@
         android:id="@+id/showinfo_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/divider"
         android:layout_alignParentTop="true" >
 
         <LinearLayout
@@ -45,27 +44,23 @@
                 android:layout_marginBottom="@dimen/default_padding"
                 android:layout_marginTop="@dimen/default_padding"
                 android:contentDescription="@string/description_poster"
-                android:scaleType="centerCrop"
-                android:src="@drawable/fringe_test" />
+                android:scaleType="centerCrop" />
 
             <include layout="@layout/show_info_metamore" >
             </include>
+
+            <include
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/divider_horizontal" />
+
+            <include
+                android:id="@+id/buttonbar_ref"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/buttonbar_services" />
         </LinearLayout>
     </ScrollView>
-
-    <include
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonbar_ref"
-        layout="@layout/divider_horizontal" >
-    </include>
-
-    <include
-        android:id="@+id/buttonbar_ref"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentBottom="true"
-        layout="@layout/buttonbar_services" />
 
 </RelativeLayout>

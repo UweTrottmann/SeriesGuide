@@ -250,7 +250,7 @@ public class ConnectTraktCredentialsFragment extends SherlockFragment {
 
                                 // relaunch the trakt task which called us
                                 AndroidUtils.executeAsyncTask(
-                                        new TraktTask(context, fm, args, null), new Void[] {
+                                        new TraktTask(context, args, null), new Void[] {
                                             null
                                         });
 

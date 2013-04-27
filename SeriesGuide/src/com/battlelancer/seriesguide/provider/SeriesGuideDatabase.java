@@ -120,15 +120,30 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
     }
 
     private interface Selections {
-        String LIST_ITEMS_COLUMNS = "listitem_id AS _id,list_item_id,list_id,item_type,item_ref_id";
+        String COMMON_SHOW_COLUMNS =
+                Shows.REF_SHOW_ID + ","
+                        + Shows.TITLE + ","
+                        + Shows.POSTER + ","
+                        + Shows.NETWORK + ","
+                        + Shows.STATUS + ","
+                        + Shows.AIRSDAYOFWEEK + ","
+                        + Shows.FAVORITE;
+        String COMMON_LIST_ITEMS_COLUMNS = "listitem_id AS _id,list_item_id,list_id,item_type,item_ref_id";
+
         String LIST_ITEMS_COLUMNS_INTERNAL = "_id AS listitem_id,list_item_id,list_id,item_type,item_ref_id";
-        String SHOWS_COLUMNS = LIST_ITEMS_COLUMNS
-                + ",series_id,seriestitle,overview,poster,network,airstime,airsdayofweek,status,nexttext,series_nextairdatetext";
-        String SHOWS_COLUMNS_INTERNAL = "_id as series_id,seriestitle,overview,poster,network,airstime,airsdayofweek,status,nexttext,series_nextairdatetext";
-        String SEASONS_COLUMNS = LIST_ITEMS_COLUMNS
-                + ",series_id,seriestitle,combinednr AS overview,poster,network,airstime,airsdayofweek,status,nexttext,series_nextairdatetext";
-        String EPISODES_COLUMNS = LIST_ITEMS_COLUMNS
-                + ",series_id,seriestitle,episodetitle AS overview,poster,network,episode_firstairedms AS airstime,airsdayofweek,status,season AS nexttext,episodenumber AS series_nextairdatetext";
+        String SHOWS_COLUMNS_INTERNAL = Shows._ID + " AS " + COMMON_SHOW_COLUMNS + ","
+                + "overview,airstime,nexttext,series_nextairdatetext";
+
+        String SHOWS_COLUMNS = COMMON_LIST_ITEMS_COLUMNS + "," + COMMON_SHOW_COLUMNS + ","
+                + "overview,airstime,nexttext,series_nextairdatetext";
+        String SEASONS_COLUMNS = COMMON_LIST_ITEMS_COLUMNS + "," + COMMON_SHOW_COLUMNS + ","
+                + "combinednr AS overview,airstime,nexttext,series_nextairdatetext";
+        String EPISODES_COLUMNS = COMMON_LIST_ITEMS_COLUMNS
+                + ","
+                + COMMON_SHOW_COLUMNS
+                + ","
+                + "episodetitle AS overview,episode_firstairedms AS airstime,"
+                + "season AS nexttext,episodenumber AS series_nextairdatetext";
     }
 
     interface References {
@@ -258,7 +273,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
 
             + EpisodesColumns.IMDBID + " TEXT DEFAULT '',"
 
-            + EpisodesColumns.LASTEDIT + " INTEGER DEFAULT 0,"
+            + EpisodesColumns.LAST_EDITED + " INTEGER DEFAULT 0,"
 
             + EpisodesColumns.ABSOLUTE_NUMBER + " INTEGER"
 
@@ -454,7 +469,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                     final Cursor highestWatchedEpisode = db.query(Tables.EPISODES, new String[] {
                             Episodes._ID
                     }, LATEST_SELECTION, new String[] {
-                        showId
+                            showId
                     }, null, null, LATEST_ORDER);
 
                     if (highestWatchedEpisode != null) {
@@ -516,7 +531,7 @@ public class SeriesGuideDatabase extends SQLiteOpenHelper {
                 + " INTEGER DEFAULT 0;");
         db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN " + EpisodesColumns.IMDBID
                 + " TEXT DEFAULT '';");
-        db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN " + EpisodesColumns.LASTEDIT
+        db.execSQL("ALTER TABLE " + Tables.EPISODES + " ADD COLUMN " + EpisodesColumns.LAST_EDITED
                 + " INTEGER DEFAULT 0;");
     }
 

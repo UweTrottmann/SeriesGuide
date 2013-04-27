@@ -23,7 +23,7 @@
         android:layout_marginRight="5dp"
         android:layout_toLeftOf="@+id/widgetAirtime"
         android:layout_toRightOf="@+id/widgetPoster"
-        android:text="Very Long Show Name Of Lovely Show"
+        android:text="@string/app_name"
         android:textColor="@color/text_primary"
         android:textSize="13sp" >
     </TextView>
@@ -35,7 +35,7 @@
         android:layout_below="@+id/textViewWidgetShow"
         android:layout_marginRight="5dp"
         android:layout_toLeftOf="@+id/widgetNetwork"
-        android:text="0x00 Very Long Episode Name Of Lovely Show"
+        android:text="@string/no_nextepisode"
         android:textSize="12sp" >
     </TextView>
 
@@ -44,7 +44,7 @@
         style="@style/WidgetTextView"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="In X days, Mon" >
+        android:text="@string/not_available" >
     </TextView>
 
     <TextView
@@ -52,7 +52,7 @@
         style="@style/WidgetTextView"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/widgetAirtime"
-        android:text="20:00 PM Syfy" >
+        android:text="@string/not_available" >
     </TextView>
 
 </RelativeLayout>

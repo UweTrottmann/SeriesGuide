@@ -80,7 +80,7 @@ public class SlidingMenuFragment extends ListFragment {
 
         // actions
         mAdapter.add(new MenuCategory());
-        mAdapter.add(new MenuItem(getString(R.string.search), R.drawable.ic_action_search,
+        mAdapter.add(new MenuItem(getString(R.string.search_hint), R.drawable.ic_action_search,
                 MENU_ITEM_SEARCH_ID));
 
         setListAdapter(mAdapter);

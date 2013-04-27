@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -38,7 +39,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
@@ -47,27 +50,36 @@ import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants;
 import com.battlelancer.seriesguide.Constants.SeasonSorting;
 import com.battlelancer.seriesguide.adapters.SeasonsAdapter;
+import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask;
-import com.battlelancer.seriesguide.util.FlagTask.FlagAction;
-import com.battlelancer.seriesguide.util.FlagTask.OnFlagListener;
+import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
+import com.battlelancer.seriesguide.util.FlagTask.SeasonWatchedType;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Displays a list of seasons of one show.
  */
 public class SeasonsFragment extends SherlockListFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, OnFlagListener, OnClickListener {
+        LoaderManager.LoaderCallbacks<Cursor>, OnClickListener {
 
     private static final int CONTEXT_FLAG_ALL_WATCHED_ID = 0;
 
     private static final int CONTEXT_FLAG_ALL_UNWATCHED_ID = 1;
 
-    private static final int CONTEXT_MANAGE_LISTS_ID = 2;
+    private static final int CONTEXT_FLAG_ALL_COLLECTED_ID = 2;
+
+    private static final int CONTEXT_FLAG_ALL_UNCOLLECTED_ID = 3;
+
+    private static final int CONTEXT_MANAGE_LISTS_ID = 4;
 
     private static final int LOADER_ID = 1;
 
@@ -76,6 +88,12 @@ public class SeasonsFragment extends SherlockListFragment implements
     private Constants.SeasonSorting mSorting;
 
     private SeasonsAdapter mAdapter;
+
+    private TextView mTextViewRemaining;
+
+    private ImageView mButtonCollectedAll;
+
+    private ImageView mButtonWatchedAll;
 
     /**
      * All values have to be integer.
@@ -97,7 +115,60 @@ public class SeasonsFragment extends SherlockListFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.list_fragment, container, false);
+        View v = inflater.inflate(R.layout.seasons_fragment, container, false);
+
+        mButtonWatchedAll = (ImageView) v.findViewById(R.id.imageViewSeasonsWatchedToggle);
+
+        mButtonCollectedAll = (ImageView) v.findViewById(R.id.imageViewSeasonsCollectedToggle);
+
+        mTextViewRemaining = (TextView) v.findViewById(R.id.textViewSeasonsRemaining);
+
+        return v;
+    }
+
+    OnClickListener mListenerFlagAllWatched = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            onFlagShowWatched(true);
+        }
+    };
+    OnClickListener mListenerFlagAllUnwatched = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            onFlagShowWatched(false);
+        }
+    };
+    OnClickListener mListenerFlagAllCollected = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            onFlagShowCollected(true);
+        }
+    };
+    OnClickListener mListenerFlagAllUncollected = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            onFlagShowCollected(false);
+        }
+    };
+
+    private void setWatchedToggleState(Integer result) {
+        mButtonWatchedAll.setImageResource(result == 0 ? R.drawable.ic_watched
+                : R.drawable.ic_action_watched);
+        mButtonWatchedAll
+                .setOnClickListener(result == 0 ? mListenerFlagAllUnwatched
+                        : mListenerFlagAllWatched);
+        CheatSheet.setup(mButtonWatchedAll, result == 0 ? R.string.unmark_all
+                : R.string.mark_all);
+    }
+
+    private void setCollectedToggleState(Integer result) {
+        mButtonCollectedAll.setImageResource(result == 0 ? R.drawable.ic_collected
+                : R.drawable.ic_action_collect);
+        mButtonCollectedAll
+                .setOnClickListener(result == 0 ? mListenerFlagAllUncollected
+                        : mListenerFlagAllCollected);
+        CheatSheet.setup(mButtonCollectedAll, result == 0 ? R.string.uncollect_all
+                : R.string.collect_all);
     }
 
     @Override
@@ -126,6 +197,14 @@ public class SeasonsFragment extends SherlockListFragment implements
         super.onResume();
         updatePreferences();
         updateUnwatchedCounts();
+        onLoadRemainingCounter();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -143,7 +222,9 @@ public class SeasonsFragment extends SherlockListFragment implements
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.add(0, CONTEXT_FLAG_ALL_WATCHED_ID, 0, R.string.mark_all);
         menu.add(0, CONTEXT_FLAG_ALL_UNWATCHED_ID, 1, R.string.unmark_all);
-        menu.add(0, CONTEXT_MANAGE_LISTS_ID, 2, R.string.list_item_manage);
+        menu.add(0, CONTEXT_FLAG_ALL_COLLECTED_ID, 2, R.string.collect_all);
+        menu.add(0, CONTEXT_FLAG_ALL_UNCOLLECTED_ID, 3, R.string.uncollect_all);
+        menu.add(0, CONTEXT_MANAGE_LISTS_ID, 4, R.string.list_item_manage);
     }
 
     @Override
@@ -153,18 +234,28 @@ public class SeasonsFragment extends SherlockListFragment implements
 
         switch (item.getItemId()) {
             case CONTEXT_FLAG_ALL_WATCHED_ID: {
-                fireTrackerEventContextMenu("Flag all watched");
                 onFlagSeasonWatched(info.id, season.getInt(SeasonsQuery.COMBINED), true);
+                fireTrackerEventContextMenu("Flag all watched");
                 return true;
             }
             case CONTEXT_FLAG_ALL_UNWATCHED_ID: {
-                fireTrackerEventContextMenu("Flag all unwatched");
                 onFlagSeasonWatched(info.id, season.getInt(SeasonsQuery.COMBINED), false);
+                fireTrackerEventContextMenu("Flag all unwatched");
+                return true;
+            }
+            case CONTEXT_FLAG_ALL_COLLECTED_ID: {
+                onFlagSeasonCollected(info.id, season.getInt(SeasonsQuery.COMBINED), true);
+                fireTrackerEventContextMenu("Flag all collected");
+                return true;
+            }
+            case CONTEXT_FLAG_ALL_UNCOLLECTED_ID: {
+                onFlagSeasonCollected(info.id, season.getInt(SeasonsQuery.COMBINED), false);
+                fireTrackerEventContextMenu("Flag all uncollected");
                 return true;
             }
             case CONTEXT_MANAGE_LISTS_ID: {
                 fireTrackerEventContextMenu("Manage lists");
-                ListsDialogFragment.showListsDialog(String.valueOf(info.id), 2,
+                ListsDialogFragment.showListsDialog(String.valueOf(info.id), ListItemTypes.SEASON,
                         getFragmentManager());
                 return true;
             }
@@ -190,13 +281,21 @@ public class SeasonsFragment extends SherlockListFragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_markall) {
+        if (itemId == R.id.menu_watched_all) {
             fireTrackerEvent("Flag all watched");
             onFlagShowWatched(true);
             return true;
-        } else if (itemId == R.id.menu_unmarkall) {
+        } else if (itemId == R.id.menu_unwatched_all) {
             fireTrackerEvent("Flag all unwatched");
             onFlagShowWatched(false);
+            return true;
+        } else if (itemId == R.id.menu_collect_all) {
+            fireTrackerEvent("Flag all collected");
+            onFlagShowCollected(true);
+            return true;
+        } else if (itemId == R.id.menu_uncollect_all) {
+            fireTrackerEvent("Flag all uncollected");
+            onFlagShowCollected(false);
             return true;
         } else if (itemId == R.id.menu_sesortby) {
             fireTrackerEvent("Sort");
@@ -224,24 +323,40 @@ public class SeasonsFragment extends SherlockListFragment implements
     /**
      * Changes the seasons episodes watched flags, updates the status label of
      * the season.
-     * 
-     * @param seasonId
-     * @param isWatched
      */
     private void onFlagSeasonWatched(long seasonId, int seasonNumber, boolean isWatched) {
-        new FlagTask(getActivity(), getShowId(), this).seasonWatched(seasonNumber)
-                .setItemId((int) seasonId).setFlag(isWatched).execute();
+        new FlagTask(getActivity(), getShowId())
+                .seasonWatched((int) seasonId, seasonNumber, isWatched)
+                .execute();
+    }
+
+    /**
+     * Changes the seasons episodes collected flags.
+     */
+    private void onFlagSeasonCollected(long seasonId, int seasonNumber, boolean isCollected) {
+        new FlagTask(getActivity(), getShowId())
+                .seasonCollected((int) seasonId, seasonNumber, isCollected)
+                .execute();
     }
 
     /**
      * Changes the watched flag for all episodes of the given show, updates the
      * status labels of all seasons.
-     * 
-     * @param seasonid
-     * @param isWatched
      */
     private void onFlagShowWatched(boolean isWatched) {
-        new FlagTask(getActivity(), getShowId(), this).showWatched().setFlag(isWatched).execute();
+        new FlagTask(getActivity(), getShowId())
+                .showWatched(isWatched)
+                .execute();
+    }
+
+    /**
+     * Changes the collected flag for all episodes of the given show, updates
+     * the status labels of all seasons.
+     */
+    private void onFlagShowCollected(boolean isCollected) {
+        new FlagTask(getActivity(), getShowId())
+                .showCollected(isCollected)
+                .execute();
     }
 
     /**
@@ -329,6 +444,52 @@ public class SeasonsFragment extends SherlockListFragment implements
         mAdapter.swapCursor(null);
     }
 
+    private void onLoadRemainingCounter() {
+        final SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+
+        AsyncTask<String, Void, int[]> task = new AsyncTask<String, Void, int[]>() {
+
+            @Override
+            protected int[] doInBackground(String... params) {
+                if (isCancelled()) {
+                    return null;
+                }
+
+                int[] counts = new int[2];
+
+                counts[0] = DBUtils.getUnwatchedEpisodesOfShow(getActivity(),
+                        params[0],
+                        prefs);
+                counts[1] = DBUtils.getUncollectedEpisodesOfShow(getActivity(), params[0]);
+
+                return counts;
+            }
+
+            @Override
+            protected void onPostExecute(int[] result) {
+                if (isAdded()) {
+                    if (mTextViewRemaining != null) {
+                        if (result[0] == -1) {
+                            mTextViewRemaining.setText(getString(R.string.remaining,
+                                    getString(R.string.norating)));
+                        } else {
+                            mTextViewRemaining.setText(getString(R.string.remaining, result[0]));
+                        }
+                    }
+                    if (mButtonWatchedAll != null) {
+                        setWatchedToggleState(result[0]);
+                    }
+                    if (mButtonCollectedAll != null) {
+                        setCollectedToggleState(result[1]);
+                    }
+                }
+            }
+
+        };
+        AndroidUtils.executeAsyncTask(task, String.valueOf(getShowId()));
+    }
+
     public interface SeasonsQuery {
 
         String[] PROJECTION = {
@@ -380,18 +541,21 @@ public class SeasonsFragment extends SherlockListFragment implements
         getSherlockActivity().invalidateOptionsMenu();
     }
 
-    @Override
-    public void onFlagCompleted(FlagAction action, int showId, int itemId, boolean isSuccessful) {
-        if (isSuccessful && isAdded()) {
-            switch (action) {
-                case SEASON_WATCHED:
-                    Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()),
-                            String.valueOf(itemId));
-                    t.start();
-                    break;
-                default:
-                    updateUnwatchedCounts();
-                    break;
+    public void onEvent(FlagTaskCompletedEvent event) {
+        /**
+         * Updates the total remaining episodes counter, updates season
+         * counters.
+         */
+        if (isAdded()) {
+            onLoadRemainingCounter();
+            if (event.mType instanceof SeasonWatchedType) {
+                // If we can narrow it down to just one season...
+                SeasonWatchedType seasonWatchedType = (SeasonWatchedType) event.mType;
+                Thread t = new UpdateUnwatchThread(String.valueOf(getShowId()),
+                        String.valueOf(seasonWatchedType.getSeasonTvdbId()));
+                t.start();
+            } else {
+                updateUnwatchedCounts();
             }
         }
     }

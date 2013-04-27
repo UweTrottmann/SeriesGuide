@@ -2,9 +2,9 @@
 <resources>
 
     <!-- Generic -->
+    <string name="show">Show</string>
     <string name="episode">Episode</string>
     <string name="episodes">Episodes</string>
-    <string name="all_episodes">All episodes</string>
     <string name="season">Season</string>
     <string name="seasons">Seasons</string>
     <string name="unknown">unknown</string>
@@ -31,7 +31,11 @@
     <string name="save_selection">Save selection</string>
 
     <plurals name="votes">
+        <item quantity="zero">%d votes</item>
         <item quantity="one">%d vote</item>
+        <item quantity="two">%d votes</item>
+        <item quantity="few">%d votes</item>
+        <item quantity="many">%d votes</item>
         <item quantity="other">%d votes</item>
     </plurals>
 
@@ -51,6 +55,7 @@
 
     <!-- Shouts -->
     <string name="shouts">Shouts</string>
+    <string name="comments">Comments</string>
     <string name="shout_hint">Type a shout (in English)</string>
     <string name="shout">Shout!</string>
     <string name="isspoiler">Spoiler alert!</string>
@@ -59,8 +64,14 @@
     <string name="autorefresh">Refreshing automagically</string>
 
     <!-- Movies -->
+    <string name="movies_watchlist">Watchlist (trakt)</string>
+    <string name="watchlist_add">Add to watchlist</string>
+    <string name="watchlist_remove">Remove from watchlist</string>
+    <string name="watchlist_added">Added to watchlist</string>
+    <string name="watchlist_removed">Removed from watchlist</string>
     <string name="movies_search_hint">Type a movie title</string>
     <string name="movies_empty">Search for a movie above.</string>
+    <string name="movies_watchlist_empty">You have no internet connection or not added movies to your trakt watchlist.</string>
     <string name="trailer">Trailer</string>
 
     <!-- Statistics -->
@@ -71,18 +82,31 @@
 
     <plurals name="days_plural">
         <item quantity="one">%d day</item>
+        <item quantity="zero">%d days</item>
+        <item quantity="two">%d days</item>
+        <item quantity="few">%d days</item>
+        <item quantity="many">%d days</item>
         <item quantity="other">%d days</item>
     </plurals>
     <plurals name="hours_plural">
+        <item quantity="zero">%d hours</item>
         <item quantity="one">%d hour</item>
+        <item quantity="two">%d hours</item>
+        <item quantity="few">%d hours</item>
+        <item quantity="many">%d hours</item>
         <item quantity="other">%d hours</item>
     </plurals>
     <plurals name="minutes_plural">
+        <item quantity="zero">%d minutes</item>
         <item quantity="one">%d minute</item>
+        <item quantity="two">%d minutes</item>
+        <item quantity="few">%d minutes</item>
+        <item quantity="many">%d minutes</item>
         <item quantity="other">%d minutes</item>
     </plurals>
 
     <!-- Trakt ratings -->
+    <string name="your_rating">Your rating</string>
     <string name="love">Totally ninja!</string>
     <string name="hate">Weak Sauce :(</string>
     <string name="rating2">Terrible</string>
@@ -95,6 +119,8 @@
     <string name="rating9">Superb</string>
 
     <!-- Metadata -->
+    <string name="episode_number_absolute">ABSOLUTE</string>
+    <string name="episode_number_disk">DVD</string>
     <string name="episode_firstaired">Airdate</string>
     <string name="episode_dvdnumber">DVD Episode</string>
     <string name="show_actors">Actors</string>
@@ -109,6 +135,8 @@
     <string name="show_isalive">Continuing</string>
     <string name="show_isnotalive">Ended</string>
     <string name="lastEdit">Last Edit // TVDb</string>
+    <string name="services_watch">Watch</string>
+    <string name="services_more">More</string>
 
     <!-- Menu options -->
     <string name="sort">Sort by</string>
@@ -131,8 +159,9 @@
     <string name="mark_untilhere">Watched all previously aired</string>
     <string name="collect">Collected episode</string>
     <string name="uncollect">Not yet collected episode</string>
-    <string name="trakt_submitfailed">Not submitted to trakt. Try again later.</string>
-    <string name="trakt_submitsuccess">Submitted to trakt.</string>
+    <string name="collect_all">Collected all</string>
+    <string name="uncollect_all">Collected none</string>
+    <string name="trakt_submitqueued">Submitting to trakt.</string>
     <string name="trakt_seen">%s seen.</string>
     <string name="trakt_notseen">%s not seen.</string>
     <string name="trakt_collected">%s collected.</string>
@@ -188,7 +217,6 @@
     <!-- Show info -->
     <string name="show_network">on</string>
     <string name="show_noairtime">No air times available</string>
-    <string name="show_noimdbentry">No IMDB page found.</string>
 
     <!-- Season list -->
     <string name="season_watchcount">episodes not watched</string>
@@ -237,7 +265,6 @@
     <string name="upload_shows">Upload your SeriesGuide show list:</string>
     <string name="upload_existing_shows">Upload existing shows</string>
     <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
-    <string name="integration_trakt">If you connect trakt:</string>
     <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
 
     <!-- Manual trakt sync -->
@@ -269,7 +296,6 @@
     <string name="pref_traktsummary">Add or edit your trakt.tv credentials</string>
     <string name="pref_traktsync">Manual sync with trakt.tv</string>
     <string name="feedback">Send feedback</string>
-    <string name="sendusagedata">Send the developer usage statistics</string>
     <string name="pref_autoaddshows">Add new trakt shows</string>
     <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
 
@@ -323,16 +349,17 @@
     <string name="pref_hideimagessummary">Hide images from your photo gallery (reboot required)</string>
 
     <!-- Backup and Restore -->
-    <string name="backup_description"><b>Backup</b> creates a copy of your show database in a file named <b>seriesdatabase</b> in the folder below.\n\nTo <b>Restore</b> make sure this file is in the folder below.\n\nOnly backups with the same or a lower database version as below can be restored.</string>
-    <string name="backup_path"><b>Backup folder</b></string>
-    <string name="backup_version"><b>Database version</b></string>
+    <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
+    <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
+    <string name="backup_path">Backup folder</string>
+    <string name="backup_version">Database version</string>
     <string name="backup_failed_nosd">Can\'t backup. The backup folder is not available.</string>
     <string name="backup_inprogress">Backing up database…</string>
     <string name="backup_success">Backup successful.</string>
     <string name="backup_failed">Backup failed.</string>
     <string name="import_inprogress">Restoring database…</string>
     <string name="import_failed_nosd">Can\'t restore backup. The backup folder is not available.</string>
-    <string name="import_failed_nofile">There is no backup file.</string>
+    <string name="import_failed_nofile">There is no readable backup file.</string>
     <string name="import_failed_noread">The backup file is not readable.</string>
     <string name="dbupgradefailed">Your backup may be too old or empty. Note: Import pre-2.0 backups in a 1.9.x version first.</string>
     <string name="import_success">Backup successfully restored.</string>
@@ -345,9 +372,11 @@
     <string name="import_question">The current show list will be lost! Make sure the backup file is inside the backup folder.</string>
     <string name="import_yes">Restore</string>
     <string name="import_no">Don\'t Restore</string>
+    <string name="import_warning">I understand my current shows and lists will be lost!</string>
 
     <!-- Check Ins -->
     <string name="checkin">Check in</string>
+    <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
     <string name="checkin_searchhint">Type a show name</string>
     <string name="checkin_empty">No matching shows</string>
     <string name="checkin_hint">Type a message (optional)</string>
@@ -425,7 +454,6 @@
     <string name="largewidget">SeriesGuide (large)</string>
 
     <!-- List Widget -->
-    <string name="widget_label">SeriesGuide</string>
     <string name="hide_watched">Hide watched episodes</string>
     <string name="pref_widget_opacity">Widget background</string>
 
@@ -447,6 +475,16 @@
     <!-- DashClock extension -->
     <string name="dashclock_extension_label">Upcoming episode</string>
     <string name="dashclock_extension_description">Displays the next upcoming episode of your SeriesGuide shows.</string>
+    <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
+
+    <string-array name="dashclockUpcomingThresholds">
+        <item>hour</item>
+        <item>6 hours</item>
+        <item>12 hours</item>
+        <item>24 hours</item>
+        <item>3 days</item>
+        <item>week</item>
+    </string-array>
 
     <!-- strings for BETA release -->
     <string name="download_stable">Download SeriesGuide</string>

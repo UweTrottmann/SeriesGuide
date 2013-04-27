@@ -55,15 +55,18 @@ public class EpisodesAdapter extends CursorAdapter {
             convertView = newView(mContext, mCursor, parent);
 
             viewHolder = new ViewHolder();
-            viewHolder.watchedBox = (WatchedBox) convertView.findViewById(R.id.watchedBoxEpisode);
+            viewHolder.watchedBox = (WatchedBox) convertView
+                    .findViewById(R.id.watchedBoxEpisode);
             viewHolder.episodeTitle = (TextView) convertView
                     .findViewById(R.id.textViewEpisodeTitle);
             viewHolder.episodeNumber = (TextView) convertView
                     .findViewById(R.id.textViewEpisodeNumber);
             viewHolder.episodeAirdate = (TextView) convertView
                     .findViewById(R.id.textViewEpisodeAirdate);
-            viewHolder.episodeAbsoluteNumber = (TextView) convertView
-                    .findViewById(R.id.textViewEpisodeAbsoluteNumber);
+            viewHolder.episodeAlternativeNumbers = (TextView) convertView
+                    .findViewById(R.id.textViewEpisodeAlternativeNumbers);
+            viewHolder.collected = (ImageView) convertView
+                    .findViewById(R.id.imageViewCollected);
             viewHolder.contextMenu = (ImageView) convertView
                     .findViewById(R.id.imageViewContextMenu);
 
@@ -91,21 +94,29 @@ public class EpisodesAdapter extends CursorAdapter {
                 viewHolder.watchedBox.isChecked() ? R.string.unmark_episode
                         : R.string.mark_episode);
 
-        // number
-        StringBuilder episodenumberValue = new StringBuilder(String.valueOf(episodeNumber));
-        float dvdNumber = mCursor.getFloat(EpisodesQuery.DVDNUMBER);
-        if (dvdNumber > 0 && dvdNumber != episodeNumber) {
-            episodenumberValue.append(" (").append(dvdNumber).append(")");
-        }
-        viewHolder.episodeNumber.setText(episodenumberValue);
+        viewHolder.collected
+                .setVisibility(mCursor.getInt(EpisodesQuery.COLLECTED) == 1 ? View.VISIBLE
+                        : View.INVISIBLE);
 
-        // absolute number
+        // number
+        viewHolder.episodeNumber.setText(String.valueOf(episodeNumber));
+
+        // alternative numbers
+        StringBuilder altNumbers = new StringBuilder();
         int absoluteNumber = mCursor.getInt(EpisodesQuery.ABSOLUTE_NUMBER);
-        if (absoluteNumber > 0 && absoluteNumber != episodeNumber) {
-            viewHolder.episodeAbsoluteNumber.setText(String.valueOf(absoluteNumber));
-        } else {
-            viewHolder.episodeAbsoluteNumber.setText("");
+        if (absoluteNumber > 0) {
+            altNumbers.append(mContext.getString(R.string.episode_number_absolute)).append(" ")
+                    .append(absoluteNumber);
         }
+        double dvdNumber = mCursor.getDouble(EpisodesQuery.DVDNUMBER);
+        if (dvdNumber > 0) {
+            if (altNumbers.length() != 0) {
+                altNumbers.append(" | ");
+            }
+            altNumbers.append(mContext.getString(R.string.episode_number_disk)).append(" ")
+                    .append(dvdNumber);
+        }
+        viewHolder.episodeAlternativeNumbers.setText(altNumbers);
 
         // air date
         long airtime = mCursor.getLong(EpisodesQuery.FIRSTAIREDMS);
@@ -132,11 +143,12 @@ public class EpisodesAdapter extends CursorAdapter {
     }
 
     static class ViewHolder {
-        TextView episodeAbsoluteNumber;
+        TextView episodeAlternativeNumbers;
         TextView episodeAirdate;
         TextView episodeNumber;
         TextView episodeTitle;
         WatchedBox watchedBox;
+        ImageView collected;
         ImageView contextMenu;
     }
 

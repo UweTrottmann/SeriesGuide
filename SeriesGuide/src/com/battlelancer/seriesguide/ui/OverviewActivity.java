@@ -17,19 +17,20 @@
 
 package com.battlelancer.seriesguide.ui;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
+import com.battlelancer.seriesguide.adapters.TabPagerAdapter;
 import com.battlelancer.seriesguide.items.Series;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -39,16 +40,18 @@ import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Hosts an {@link OverviewFragment}.
  */
 public class OverviewActivity extends BaseActivity {
 
-    private Fragment mFragment;
     private int mShowId;
 
     @Override
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.overview);
@@ -60,18 +63,33 @@ public class OverviewActivity extends BaseActivity {
         }
 
         final ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.description_overview));
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        if (savedInstanceState == null) {
-            mFragment = new OverviewFragment();
-            mFragment.setArguments(getIntent().getExtras());
+        // look if we are on a multi-pane or single-pane layout...
+        View pagerView = findViewById(R.id.pager);
+        if (pagerView != null && pagerView.getVisibility() == View.VISIBLE) {
+            // ...single pane layout with view pager
 
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
-            ft.replace(R.id.fragment_overview, mFragment);
-            ft.commit();
+            // clear up left-over fragments from multi-pane layout
+            findAndRemoveFragment(R.id.fragment_overview);
+            findAndRemoveFragment(R.id.fragment_seasons);
+
+            setupViewPager(pagerView);
+        } else {
+            // ...multi-pane overview and seasons fragment
+
+            // clear up left-over fragments from single-pane layout
+            boolean isSwitchingLayouts = getActiveFragments().size() != 0;
+            for (Fragment fragment : getActiveFragments()) {
+                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+
+            // attach new fragments if there are none or if we just switched
+            // layouts
+            if (savedInstanceState == null || isSwitchingLayouts) {
+                setupPanes();
+            }
         }
 
         // if (AndroidUtils.isICSOrHigher()) {
@@ -84,6 +102,79 @@ public class OverviewActivity extends BaseActivity {
 
         // try to update this show
         onUpdate();
+    }
+
+    private void setupPanes() {
+        Fragment overviewFragment = OverviewFragment.newInstance(mShowId);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        ft.replace(R.id.fragment_overview, overviewFragment);
+        ft.commit();
+
+        Fragment seasonsFragment = SeasonsFragment.newInstance(mShowId);
+        FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
+        ft2.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        ft2.replace(R.id.fragment_seasons, seasonsFragment);
+        ft2.commit();
+    }
+
+    private void setupViewPager(View pagerView) {
+        final ActionBar actionBar = getSupportActionBar();
+
+        ViewPager pager = (ViewPager) pagerView;
+
+        // setup action bar tabs
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        TabPagerAdapter tabsAdapter = new TabPagerAdapter(getSupportFragmentManager(), this,
+                actionBar, pager, getMenu());
+        Bundle argsShow = new Bundle();
+        argsShow.putInt(ShowInfoFragment.InitBundle.SHOW_TVDBID, mShowId);
+        tabsAdapter.addTab(R.string.show, ShowInfoFragment.class, argsShow);
+
+        tabsAdapter.addTab(R.string.description_overview, OverviewFragment.class, getIntent()
+                .getExtras());
+
+        Bundle argsSeason = new Bundle();
+        argsSeason.putInt(SeasonsFragment.InitBundle.SHOW_TVDBID, mShowId);
+        tabsAdapter.addTab(R.string.seasons, SeasonsFragment.class, argsSeason);
+
+        // select overview to be shown initially
+        actionBar.setSelectedNavigationItem(1);
+    }
+
+    private void findAndRemoveFragment(int fragmentId) {
+        Fragment overviewFragment = getSupportFragmentManager().findFragmentById(fragmentId);
+        if (overviewFragment != null) {
+            getSupportFragmentManager().beginTransaction().remove(overviewFragment).commit();
+        }
+    }
+
+    List<WeakReference<Fragment>> mFragments = new ArrayList<WeakReference<Fragment>>();
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        /*
+         * View pager fragments have tags set by the pager, we can use this to
+         * only add refs to those then, making them available to get removed if
+         * we switch to a non-pager layout.
+         */
+        if (fragment.getTag() != null) {
+            mFragments.add(new WeakReference<Fragment>(fragment));
+        }
+    }
+
+    public ArrayList<Fragment> getActiveFragments() {
+        ArrayList<Fragment> ret = new ArrayList<Fragment>();
+        for (WeakReference<Fragment> ref : mFragments) {
+            Fragment f = ref.get();
+            if (f != null) {
+                if (f.isAdded()) {
+                    ret.add(f);
+                }
+            }
+        }
+        return ret;
     }
 
     @Override
@@ -153,7 +244,7 @@ public class OverviewActivity extends BaseActivity {
     @Override
     public boolean onSearchRequested() {
         // refine search with the show's title
-        final Series show = DBUtils.getShow(this, String.valueOf(mShowId));
+        final Series show = DBUtils.getShow(this, mShowId);
         final String showTitle = show.getTitle();
 
         Bundle args = new Bundle();
@@ -193,4 +284,5 @@ public class OverviewActivity extends BaseActivity {
     // NdefRecord.TNF_MIME_MEDIA, mimeBytes, new byte[0], payload);
     // return mimeRecord;
     // }
+
 }

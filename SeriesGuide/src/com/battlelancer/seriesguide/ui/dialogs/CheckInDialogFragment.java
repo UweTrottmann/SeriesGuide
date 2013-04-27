@@ -17,6 +17,7 @@
 
 package com.battlelancer.seriesguide.ui.dialogs;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -30,29 +31,55 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.getglueapi.GetGlue.CheckInTask;
 import com.battlelancer.seriesguide.getglueapi.GetGlueAuthActivity;
+import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.FixGetGlueCheckInActivity;
+import com.battlelancer.seriesguide.util.ShareUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
+import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
+/**
+ * Allows to check into an episode on trakt, into a show on GetGlue. Launching
+ * activities must implement {@link OnTraktActionCompleteListener}.
+ */
 public class CheckInDialogFragment extends GenericCheckInDialogFragment {
 
-    public static CheckInDialogFragment newInstance(String imdbid, int tvdbid, int season,
-            int episode, String defaultMessage) {
+    /**
+     * Builds a new {@link CheckInDialogFragment} setting all values based on
+     * the given episode TVDb id. Might return null.
+     */
+    public static CheckInDialogFragment newInstance(Context context, int episodeTvdbId) {
         CheckInDialogFragment f = new CheckInDialogFragment();
 
+        final Cursor episode = context.getContentResolver().query(
+                Episodes.buildEpisodeWithShowUri(episodeTvdbId),
+                CheckInQuery.PROJECTION, null, null, null);
+        if (episode == null || !episode.moveToFirst()) {
+            return null;
+        }
+
         Bundle args = new Bundle();
-        args.putString(InitBundle.IMDB_ID, imdbid);
-        args.putInt(InitBundle.TVDB_ID, tvdbid);
-        args.putInt(InitBundle.SEASON, season);
-        args.putInt(InitBundle.EPISODE, episode);
-        args.putString(InitBundle.ITEM_TITLE, defaultMessage);
-        args.putString(InitBundle.DEFAULT_MESSAGE, defaultMessage);
+        args.putString(InitBundle.IMDB_ID, episode.getString(5));
+        args.putInt(InitBundle.SHOW_TVDB_ID, episode.getInt(4));
+        args.putInt(InitBundle.SEASON, episode.getInt(1));
+        args.putInt(InitBundle.EPISODE, episode.getInt(2));
+
+        String episodeTitleWithNumbers = ShareUtils.onCreateShareString(context, episode);
+        args.putString(InitBundle.ITEM_TITLE, episodeTitleWithNumbers);
+        args.putString(InitBundle.DEFAULT_MESSAGE, episodeTitleWithNumbers);
         f.setArguments(args);
 
         return f;
+    }
+
+    private interface CheckInQuery {
+        String[] PROJECTION = new String[] {
+                Episodes._ID, Episodes.SEASON, Episodes.NUMBER, Episodes.TITLE, Shows.REF_SHOW_ID,
+                Shows.IMDBID, Shows.GETGLUEID
+        };
     }
 
     private String mGetGlueId;
@@ -61,12 +88,12 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = super.onCreateView(inflater, container, savedInstanceState);
 
-        final int tvdbId = getArguments().getInt(InitBundle.TVDB_ID);
+        final int tvdbId = getArguments().getInt(InitBundle.SHOW_TVDB_ID);
         setupFixGetGlueButton(layout, true, tvdbId);
 
         return layout;
     }
-    
+
     @Override
     public void onStart() {
         super.onStart();
@@ -75,7 +102,7 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
 
     @Override
     protected void onGetGlueCheckin(SharedPreferences prefs, String imdbid, String message) {
-        final int tvdbid = getArguments().getInt(InitBundle.TVDB_ID);
+        final int tvdbid = getArguments().getInt(InitBundle.SHOW_TVDB_ID);
         boolean isAbortingCheckIn = false;
         String objectId = null;
 
@@ -120,15 +147,16 @@ public class CheckInDialogFragment extends GenericCheckInDialogFragment {
 
     @Override
     protected void onTraktCheckIn(String message) {
-        final int tvdbid = getArguments().getInt(InitBundle.TVDB_ID);
+        final int tvdbid = getArguments().getInt(InitBundle.SHOW_TVDB_ID);
         final int season = getArguments().getInt(InitBundle.SEASON);
         final int episode = getArguments().getInt(InitBundle.EPISODE);
 
-        AndroidUtils.executeAsyncTask(new TraktTask(getActivity(),
-                getFragmentManager(), null).checkInEpisode(tvdbid, season, episode,
-                message), new Void[] {
-                null
-        });
+        AndroidUtils.executeAsyncTask(
+                new TraktTask(getActivity(), mListener)
+                        .checkInEpisode(tvdbid, season, episode, message),
+                new Void[] {
+                    null
+                });
     }
 
     @Override

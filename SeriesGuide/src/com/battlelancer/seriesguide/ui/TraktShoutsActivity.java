@@ -23,12 +23,11 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.util.ShareUtils.ShareItems;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.uwetrottmann.seriesguide.R;
 
 public class TraktShoutsActivity extends BaseActivity {
 
-    public static Bundle createInitBundle(int showTvdbid, int seasonNumber, int episodeNumber,
-            String title) {
+    public static Bundle createInitBundleEpisode(int showTvdbid, int seasonNumber,
+            int episodeNumber, String title) {
         Bundle extras = new Bundle();
         extras.putInt(ShareItems.TVDBID, showTvdbid);
         extras.putInt(ShareItems.SEASON, seasonNumber);
@@ -37,10 +36,23 @@ public class TraktShoutsActivity extends BaseActivity {
         return extras;
     }
 
+    public static Bundle createInitBundleShow(String title, int tvdbId) {
+        Bundle extras = new Bundle();
+        extras.putInt(ShareItems.TVDBID, tvdbId);
+        extras.putString(ShareItems.SHARESTRING, title);
+        return extras;
+    }
+
+    public static Bundle createInitBundleMovie(String title, int tmdbId) {
+        Bundle extras = new Bundle();
+        extras.putInt(ShareItems.TMDBID, tmdbId);
+        extras.putString(ShareItems.SHARESTRING, title);
+        return extras;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_singlepane_empty);
 
         Bundle args = getIntent().getExtras();
         String title = args.getString(ShareItems.SHARESTRING);
@@ -50,20 +62,24 @@ public class TraktShoutsActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
             // embed the shouts fragment dialog
-            SherlockFragment newFragment;
+            SherlockFragment f;
             int tvdbId = args.getInt(ShareItems.TVDBID);
             int episode = args.getInt(ShareItems.EPISODE);
-            if (episode == 0) {
-                newFragment = TraktShoutsFragment.newInstance(title, tvdbId);
+            if (tvdbId == 0) {
+                int tmdbId = args.getInt(ShareItems.TMDBID);
+                f = TraktShoutsFragment.newInstanceMovie(title, tmdbId);
+            } else if (episode == 0) {
+                f = TraktShoutsFragment.newInstanceShow(title, tvdbId);
             } else {
                 int season = args.getInt(ShareItems.SEASON);
-                newFragment = TraktShoutsFragment.newInstance(title, tvdbId, season, episode);
+                f = TraktShoutsFragment
+                        .newInstanceEpisode(title, tvdbId, season, episode);
             }
-            getSupportFragmentManager().beginTransaction().add(R.id.root_container, newFragment)
+            getSupportFragmentManager().beginTransaction().add(android.R.id.content, f)
                     .commit();
         }
     }
-    
+
     @Override
     protected void onStart() {
         super.onStart();

@@ -190,7 +190,7 @@ public class SeriesContract {
          * Last time episode was edited on theTVDb.com (lastupdated field).
          * Added in db version 27.
          */
-        String LASTEDIT = "episode_lastedit";
+        String LAST_EDITED = "episode_lastedit";
 
     }
 
@@ -223,6 +223,12 @@ public class SeriesContract {
          * Type of item: show, season or episode.
          */
         String TYPE = "item_type";
+    }
+
+    public interface ListItemTypes {
+        int SHOW = 1;
+        int SEASON = 2;
+        int EPISODE = 3;
     }
 
     private static final Uri BASE_CONTENT_URI = Uri.parse("content://"
@@ -277,6 +283,10 @@ public class SeriesContract {
             return CONTENT_URI.buildUpon().appendPath(showId).build();
         }
 
+        public static Uri buildShowUri(int showTvdbId) {
+            return buildShowUri(String.valueOf(showTvdbId));
+        }
+
         public static String getShowId(Uri uri) {
             return uri.getLastPathSegment();
         }
@@ -316,12 +326,20 @@ public class SeriesContract {
                     .appendPath(seasonId).build();
         }
 
-        public static Uri buildEpisodesOfShowUri(String showId) {
-            return CONTENT_URI.buildUpon().appendPath(PATH_OFSHOW).appendPath(showId).build();
+        public static Uri buildEpisodesOfShowUri(String showTvdbId) {
+            return CONTENT_URI.buildUpon().appendPath(PATH_OFSHOW).appendPath(showTvdbId).build();
+        }
+
+        public static Uri buildEpisodesOfShowUri(int showTvdbId) {
+            return buildEpisodesOfShowUri(String.valueOf(showTvdbId));
         }
 
         public static Uri buildEpisodeWithShowUri(String episodeId) {
             return CONTENT_URI_WITHSHOW.buildUpon().appendPath(episodeId).build();
+        }
+
+        public static Uri buildEpisodeWithShowUri(int episodeTvdbId) {
+            return buildEpisodeWithShowUri(String.valueOf(episodeTvdbId));
         }
     }
 
@@ -343,8 +361,12 @@ public class SeriesContract {
             return uri.getLastPathSegment();
         }
 
-        public static Uri buildSeasonsOfShowUri(String showId) {
-            return CONTENT_URI.buildUpon().appendPath(PATH_OFSHOW).appendPath(showId).build();
+        public static Uri buildSeasonsOfShowUri(String showTvdbId) {
+            return CONTENT_URI.buildUpon().appendPath(PATH_OFSHOW).appendPath(showTvdbId).build();
+        }
+
+        public static Uri buildSeasonsOfShowUri(int showTvdbId) {
+            return buildSeasonsOfShowUri(String.valueOf(showTvdbId));
         }
     }
 
