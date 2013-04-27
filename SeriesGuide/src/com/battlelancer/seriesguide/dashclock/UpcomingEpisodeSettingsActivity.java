@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -48,6 +47,7 @@ public class UpcomingEpisodeSettingsActivity extends PreferenceActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressWarnings("deprecation")
     private void setupSimplePreferencesScreen() {
         // In the simplified UI, fragments are not used at all and we instead
         // use the older PreferenceActivity APIs.
@@ -131,8 +131,7 @@ public class UpcomingEpisodeSettingsActivity extends PreferenceActivity {
         // Trigger the listener immediately with the preference's
         // current value.
         sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences(preference.getContext())
+                preference.getContext().getSharedPreferences(DashClockSettings.SETTINGS_FILE, 0)
                         .getString(preference.getKey(), ""));
     }
 }
