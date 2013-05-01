@@ -15,7 +15,7 @@
   <string name="share_checkout">Echa un vistazo a</string>
   <string name="search_description">Episodios</string>
   <string name="description_overview">Reseña</string>
-  <string name="description_poster">Mostrar el poster</string>
+  <string name="description_poster">Mostrar poster</string>
   <string name="description_image">Imagen Episodio</string>
   <string name="norating">n/a</string>
   <string name="loading">Cargando…</string>
@@ -60,7 +60,7 @@
   <string name="shows_continuing">%s continuando</string>
   <string name="episodes_watched">%s vistas</string>
   <string name="runtime_all_episodes">Duración de todos los episodios vistos</string>
-  <string name="your_rating">Your rating</string>
+  <string name="your_rating">Tu calificación</string>
   <string name="love">¡Una pasada!</string>
   <string name="hate">¡Apesta!</string>
   <string name="rating2">Terrible</string>
@@ -88,7 +88,7 @@
   <string name="show_isnotalive">Terminó</string>
   <string name="lastEdit">Última edición//TVDb</string>
   <string name="services_watch">Watch</string>
-  <string name="services_more">More</string>
+  <string name="services_more">Más</string>
   <string name="sort">Ordenar por</string>
   <string name="updateall_yes">Actualizar (todos)</string>
   <string name="menu_update_delta">Actualizar (solo desactualizados)</string>
@@ -241,8 +241,8 @@
   <string name="pref_hideimagessummary">Ocultar imágenes a la Galería de fotografías (se requiere reiniciar)</string>
   <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
   <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
-  <string name="backup_path">Backup folder</string>
-  <string name="backup_version">Database version</string>
+  <string name="backup_path">Carpeta de copia de seguridad</string>
+  <string name="backup_version">Versión de la base de datos</string>
   <string name="backup_failed_nosd">No se puede respaldar. La carpeta de respaldo no esta disponible.</string>
   <string name="backup_inprogress">Guardando copia de seguridad de la base de datos…</string>
   <string name="backup_success">Copia de seguridad correcta.</string>
@@ -262,7 +262,7 @@
   <string name="import_question">¡La lista actual de series se perderá! Asegúrese de que el archivo de copia de seguridad está dentro de la carpeta de copia de seguridad.</string>
   <string name="import_yes">Restaurar</string>
   <string name="import_no">No Restaurar</string>
-  <string name="import_warning">I understand my current shows and lists will be lost!</string>
+  <string name="import_warning">Entiendo que mis series y listas se perderán!</string>
   <string name="checkin">Check-in</string>
   <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Escriba el nombre de la serie</string>
