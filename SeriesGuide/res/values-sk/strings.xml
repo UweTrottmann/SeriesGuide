@@ -115,7 +115,7 @@
   <string name="add_empty">Nie sú žiadne seriály alebo Vaše zariadenie nemá pripojenie k internetu.</string>
   <string name="shows_empty">Look in the menu above to add some shows.</string>
   <string name="favorites_empty">Long-press on a show to add it to Favorites.</string>
-  <string name="hidden_empty">Long-press on a show to hide it here.</string>
+  <string name="hidden_empty">Dlho stlačte na show pre jej skrytie tu.</string>
   <string name="confirm_delete">Naozaj chcete odstrániť %s?</string>
   <string name="delete_has_list_items">Can\'t comply, remove %s from all lists first.</string>
   <string name="delete_show">Odstrániť</string>
@@ -164,7 +164,7 @@
   <string name="search_hint_add">Zobraziť názov</string>
   <string name="no_results">Žiadne výsledky, skúste celé slová.</string>
   <string name="search_error">Hľadanie zlyhalo, skúste to neskôr.</string>
-  <string name="add_all">Add all</string>
+  <string name="add_all">Pridaj všetky</string>
   <string name="dont_add_show">Nepridať</string>
   <string name="add_multiple">All shows will appear in your show list shortly.</string>
   <string name="add_started">sa čoskoro objaví vo vašom zozname relácií.</string>
@@ -190,18 +190,18 @@
   <string name="connect_trakt_done">Pripojený do trakt.tv!</string>
   <string name="add_trakt_shows">Pridať seriály z knižnice:</string>
   <string name="show_library">Zobraziť knižnicu</string>
-  <string name="upload_shows">Upload your SeriesGuide show list:</string>
+  <string name="upload_shows">Nahrajte si váš SeriesGuide show zoznam</string>
   <string name="upload_existing_shows">Nahrať existujúce seriály</string>
   <string name="about_trakt">trakt helps keep a record of what TV shows and movies you are watching. <a href="http://trakt.tv">Learn more</a></string>
   <string name="integration_trakt_items">- add shows from your library and watchlist\n\n- see your recommendations and friends activity\n\n- watched and collected flags are synced automatically\n\n- new shows you watched are added automatically</string>
   <string name="trakt_sync_intro">No shows will be added or removed in SeriesGuide, do that from the show list.</string>
   <string name="trakt_download_hint">Flag all watched episodes on trakt as watched in SeriesGuide:</string>
   <string name="trakt_upload_hint">Flag episodes watched in SeriesGuide as watched on trakt:</string>
-  <string name="trakt_download">Download to SeriesGuide</string>
+  <string name="trakt_download">Stiahnuť do SeriesGuide</string>
   <string name="trakt_upload">Upload to trakt.tv</string>
   <string name="trakt_syncunwatched">Remove watched flags for unwatched episodes when syncing</string>
   <string name="prefs_category_basic">Základné</string>
-  <string name="prefs_category_sharing">Services</string>
+  <string name="prefs_category_sharing">Služby</string>
   <string name="prefs_category_advanced">Pokročilé</string>
   <string name="prefs_category_about">About</string>
   <string name="pref_showsorting">Zoradiť seriály podľa…</string>
@@ -224,7 +224,7 @@
   <string name="pref_autoaddshowssummary">Automatically add shows from your trakt activity stream</string>
   <string name="pref_appearance">Appearance</string>
   <string name="pref_theme">Téme aplikácie</string>
-  <string name="pref_other">Other</string>
+  <string name="pref_other">Ostatné</string>
   <string name="pref_autoupdate">Aktualizovať automaticky</string>
   <string name="pref_autoupdatesummary">Po spustení SeriesGuide priebežne aktualizuje Vaše seriály</string>
   <string name="backup">Zálohovanie / obnovenie</string>

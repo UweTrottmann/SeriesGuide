@@ -16,7 +16,7 @@
   <string name="search_description">Folgen</string>
   <string name="description_overview">Übersicht</string>
   <string name="description_poster">Serien-Poster</string>
-  <string name="description_image">Folgen-Bild</string>
+  <string name="description_image">Bild der Folge</string>
   <string name="norating">n/a</string>
   <string name="loading">Lädt…</string>
   <string name="done">Erledigt</string>
@@ -34,7 +34,7 @@
   <string name="lists">Listen</string>
   <string name="activity">Aktivität</string>
   <string name="movies">Filme</string>
-  <string name="statistics">Statistik</string>
+  <string name="statistics">Statistiken</string>
   <string name="search">Suche</string>
   <string name="add_show">Serie hinzufügen</string>
   <string name="preferences">Einstellungen</string>
@@ -54,7 +54,7 @@
   <string name="watchlist_removed">Aus Watchliste entfernt</string>
   <string name="movies_search_hint">Filmtitel eingeben</string>
   <string name="movies_empty">Suchen Sie oben nach einem Film.</string>
-  <string name="movies_watchlist_empty">Sie haben keine Internetverbindung oder Ihrer trakt Watchliste keine Filme hinzugefügt.</string>
+  <string name="movies_watchlist_empty">Sie haben keine Internetverbindung oder keine Filme zu Ihrer trakt Watchliste  hinzugefügt.</string>
   <string name="trailer">Trailer</string>
   <string name="shows_with_next">%s mit nächsten Folgen</string>
   <string name="shows_continuing">%s werden fortgesetzt</string>
@@ -135,7 +135,7 @@
   <string name="friends_empty">Keine Aktivität von Freuden auf trakt.</string>
   <string name="noupcoming">Keine kommenden Folgen.</string>
   <string name="norecent">Keine bereits gesendeten Folgen.</string>
-  <string name="only_favorites">Nur Serien-Favoriten</string>
+  <string name="only_favorites">Nur favorisierte Serien</string>
   <string name="togglewatched">"Gesehen" umschalten</string>
   <string name="update_notification">Aktualisierung Ihrer Serien…</string>
   <string name="update_single">Aktualisiere Serie…</string>
@@ -186,8 +186,8 @@
   <string name="list_item_manage">Listen verwalten</string>
   <string name="list_item_remove">Von Liste entfernen</string>
   <string name="list_empty">Sie können Serien, Staffeln oder Folgen zu dieser Liste hinzufügen.</string>
-  <string name="connect_trakt">Trakt verbinden</string>
-  <string name="connect_trakt_done">Trakt verbunden!</string>
+  <string name="connect_trakt">Mit Trakt verbinden</string>
+  <string name="connect_trakt_done">verbunden mit Trakt!</string>
   <string name="add_trakt_shows">Serien aus deiner Bibliothek hinzufügen:</string>
   <string name="show_library">Deine Bibliothek anzeigen</string>
   <string name="upload_shows">Deine SeriesGuide-Serien-Liste hochladen:</string>
@@ -199,7 +199,7 @@
   <string name="trakt_upload_hint">Markiere alle gesehenen Folgen in SeriesGuide als gesehen bei trakt:</string>
   <string name="trakt_download">In SeriesGuide herunterladen</string>
   <string name="trakt_upload">Zu trakt.tv hochladen</string>
-  <string name="trakt_syncunwatched">Entferne beim Syncen Gesehen-Flaggen von ungesehenen Folgen</string>
+  <string name="trakt_syncunwatched">Entferne beim synchronisieren die Gesehen-Markierungen von ungesehenen Folgen</string>
   <string name="prefs_category_basic">Grundlegendes</string>
   <string name="prefs_category_sharing">Dienste</string>
   <string name="prefs_category_advanced">Weiteres</string>
@@ -208,7 +208,7 @@
   <string name="pref_onlyfuture">Keine gesendeten Folgen</string>
   <string name="pref_onlyfuturesummary">Zeige nie bereits ausgestrahlte Folgen an</string>
   <string name="pref_onlyseasoneps">Verstecke Special Episodes</string>
-  <string name="pref_onlyseasonepssummary">Special Episodes verschwinden, außer in der Staffel-Liste</string>
+  <string name="pref_onlyseasonepssummary">Special Episodes überall außer in der Staffel-Liste verschwinden lassen</string>
   <string name="pref_seasonsorting">Sortiere Staffeln nach…</string>
   <string name="pref_episodesorting">Sortiere Folgen nach…</string>
   <string name="pref_language">Sprache des Inhalts</string>
@@ -216,11 +216,11 @@
   <string name="about">Über SeriesGuide</string>
   <string name="pref_credits">Credits</string>
   <string name="clearGetGlueCredentials">Von GetGlue abmelden</string>
-  <string name="clearGetGlueCredentialssummary">Mit GetGlue einchecken um zu verbinden</string>
+  <string name="clearGetGlueCredentialssummary">Mit GetGlue einchecken um erneut zu verbinden</string>
   <string name="pref_traktsummary">Hinzufügen oder Bearbeiten Ihrer trakt.tv Anmeldeinformationen</string>
   <string name="pref_traktsync">Manueller Sync mit trakt.tv</string>
   <string name="feedback">Feedback senden</string>
-  <string name="pref_autoaddshows">Neue trakt Serien hinzufügen</string>
+  <string name="pref_autoaddshows">Neue trakt Serien automatisch hinzufügen</string>
   <string name="pref_autoaddshowssummary">Automatisch neue Serien von deinen trakt-Aktivitäten hinzufügen</string>
   <string name="pref_appearance">Darstellung</string>
   <string name="pref_theme">App Design</string>
@@ -232,7 +232,7 @@
   <string name="pref_upcominglimit">Kommende Serien innerhalb…</string>
   <string name="pref_number">Zahlenformat</string>
   <string name="pref_offset">Manuelle Zeit-Verschiebung</string>
-  <string name="pref_offsetsummary">Zeit um %s Stunden verschieben</string>
+  <string name="pref_offsetsummary">Austrahlungszeit um %s Stunden verschieben</string>
   <string name="clear_cache">Bilder-Zwischenspeicher leeren</string>
   <string name="clear_cache_summary">Alle zwischengespeicherten Bilder von Ihrem Gerät entfernen</string>
   <string name="pref_ganalytics">Google Analytics</string>
@@ -264,17 +264,17 @@
   <string name="import_no">Nicht wiederherstellen</string>
   <string name="import_warning">Mir ist klar, dass alle meine aktuellen Serien und Listen verloren gehen!</string>
   <string name="checkin">Einchecken</string>
-  <string name="checkin_noaction">Keine Dienste aktiviert, checken Sie einmal innerhalb SeriesGuide ein.</string>
+  <string name="checkin_noaction">Keine Dienste aktiviert, checken Sie einmal mit SeriesGuide ein.</string>
   <string name="checkin_searchhint">Serientitel eingeben</string>
   <string name="checkin_empty">Keine passenden Serien</string>
   <string name="checkin_hint">Geben Sie eine Nachricht ein (optional)</string>
-  <string name="checkin_fixgetglue">GetGlue Check-In korrigieren</string>
+  <string name="checkin_fixgetglue">GetGlue Login Daten korrigieren</string>
   <string name="paste_title">Titel einfügen</string>
   <string name="checkinsuccess">Auf GetGlue in %s eingecheckt.</string>
-  <string name="checkinfailed">GetGlue Check-in ist fehlgeschlagen. Versuchen Sie es später erneut.</string>
+  <string name="checkinfailed">GetGlue Login ist fehlgeschlagen. Versuchen Sie es später erneut.</string>
   <string name="getglue_authfailed">GetGlue-Authentifizierung fehlgeschlagen. Versuchen Sie es später erneut.</string>
   <string name="checkin_success_trakt">Auf trakt in %s eingecheckt.</string>
-  <string name="checkin_canceled_success_trakt">Check-in bei trakt widerrufen.</string>
+  <string name="checkin_canceled_success_trakt">Login bei trakt widerrufen.</string>
   <string name="select_show">Serie auswählen</string>
   <string name="check_into">Einchecken in</string>
   <string name="no_selection">unten auswählen</string>
@@ -306,7 +306,7 @@
   <string name="upcoming_show_detailed">%1$s auf %2$s</string>
   <string name="upcoming_display">Auswählen um kommende Serien anzuzeigen</string>
   <string name="pref_notifications">Benachrichtigungen</string>
-  <string name="pref_notificationssummary">Benachrichtige bei neuen Folgen</string>
+  <string name="pref_notificationssummary">Benachrichtig bei neuen Folgen</string>
   <string name="pref_notifyfavonly">Nur Favoriten</string>
   <string name="pref_notifyfavonlysummary">Nur Benachrichtigungen für Favoriten anzeigen</string>
   <string name="pref_ringtone">Klingelton</string>
@@ -321,7 +321,7 @@
   <string name="pref_widget_type">Widget-Typ</string>
   <string name="dashclock_extension_label">Nächste Folge</string>
   <string name="dashclock_extension_description">Zeigt die nächste kommende Folge deiner Serien aus SeriesGuide.</string>
-  <string name="dashclock_pref_upcoming_threshold">Zeige Folgen im Zeitraum</string>
+  <string name="dashclock_pref_upcoming_threshold">Zeige Folgen in den nächsten</string>
   <string name="download_stable">SeriesGuide herunterladen</string>
   <string name="betawarning"><b>Achtung!</b> Diese Version ist für nur Beta-Tester! Laden Sie im Zweifel unten die stabile Version.</string>
   <string-array name="shsorting">
@@ -345,11 +345,11 @@
   </string-array>
   <string-array name="upcominglimit">
     <item>jetzt</item>
-    <item>eines Tages</item>
-    <item>dreier Tage</item>
-    <item>einer Woche</item>
-    <item>zweier Wochen</item>
-    <item>eines Monats</item>
+    <item>einem Tage</item>
+    <item>drei Tagen</item>
+    <item>Woche</item>
+    <item>zwei Wochen</item>
+    <item>Monats</item>
   </string-array>
   <string-array name="showfilter_list">
     <item>Alle</item>

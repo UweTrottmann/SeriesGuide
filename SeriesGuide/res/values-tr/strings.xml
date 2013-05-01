@@ -57,8 +57,8 @@
   <string name="movies_watchlist_empty">You have no internet connection or not added movies to your trakt watchlist.</string>
   <string name="trailer">Fragman</string>
   <string name="shows_with_next">%s with next episodes</string>
-  <string name="shows_continuing">%s continuing</string>
-  <string name="episodes_watched">%s watched</string>
+  <string name="shows_continuing">%s devam ediyor</string>
+  <string name="episodes_watched">%s izlendi</string>
   <string name="runtime_all_episodes">İzlenen tüm bölümlerin toplam süresi</string>
   <string name="your_rating">Your rating</string>
   <string name="love">Harikulade!</string>
@@ -88,7 +88,7 @@
   <string name="show_isnotalive">Sona erdi</string>
   <string name="lastEdit">Son Düzenleme // TVDb</string>
   <string name="services_watch">Watch</string>
-  <string name="services_more">More</string>
+  <string name="services_more">Daha</string>
   <string name="sort">Sırala</string>
   <string name="updateall_yes">Güncelleştir (tümü)</string>
   <string name="menu_update_delta">Güncelleştir (yalnızca eski)</string>
@@ -107,7 +107,7 @@
   <string name="uncollect">Kolleksiyona dahil edilmemiş bölüm</string>
   <string name="collect_all">Collected all</string>
   <string name="uncollect_all">Collected none</string>
-  <string name="trakt_submitqueued">Submitting to trakt.</string>
+  <string name="trakt_submitqueued">trakt\'e gönderiliyor.</string>
   <string name="trakt_seen">%s görüldü.</string>
   <string name="trakt_notseen">%s görülmedi.</string>
   <string name="trakt_collected">Kolleksiyona dahil edilen: %s.</string>
@@ -218,7 +218,7 @@
   <string name="clearGetGlueCredentials">GetGlue Bağlantısını Kes</string>
   <string name="clearGetGlueCredentialssummary">Tekrar bağlanmak için GetGlue girişi yapın</string>
   <string name="pref_traktsummary">trakt.tv kimlik bilgilerinizi ekleyin veya düzenleyin</string>
-  <string name="pref_traktsync">Manual sync with trakt.tv</string>
+  <string name="pref_traktsync">trakt.tv ile manuel senkron</string>
   <string name="feedback">Geribildirim Gönder</string>
   <string name="pref_autoaddshows">yeni trakt dizileri ekleyin</string>
   <string name="pref_autoaddshowssummary">dizileri trakt aktivite akışından otomatik olarak yükleyin</string>
@@ -241,15 +241,15 @@
   <string name="pref_hideimagessummary">Resimleri galerinizden gizleyin (Yeniden başlatma gerekiyor)</string>
   <string name="backup_description"><b>Backup</b> will export your shows, seasons, episodes and lists to a JSON file into the folder below.\nTo <b>Restore</b> make sure the JSON files created by backup are in the folder below.</string>
   <string name="backup_full_dump">Include all meta-data like descriptions, actors and ratings.</string>
-  <string name="backup_path">Backup folder</string>
-  <string name="backup_version">Database version</string>
+  <string name="backup_path">Yedekleme klasörü</string>
+  <string name="backup_version">Veritabanı versiyonu</string>
   <string name="backup_failed_nosd">Yedeklenemedi. Yedekleme klasörüne erişilemiyor.</string>
   <string name="backup_inprogress">Veritabanı yedekleniyor...</string>
   <string name="backup_success">Yedekleme başarılı.</string>
   <string name="backup_failed">Yedekleme başarısız oldu.</string>
   <string name="import_inprogress">Veri tabanı geri yükleniyor...</string>
   <string name="import_failed_nosd">Geri yüklenemiyor. Yedek klasörüne erişilemiyor.</string>
-  <string name="import_failed_nofile">There is no readable backup file.</string>
+  <string name="import_failed_nofile">Okunabilir yedekleme dosyası bulunamadı.</string>
   <string name="import_failed_noread">Yedek dosyası okunamaz.</string>
   <string name="dbupgradefailed">Yedek çok eski veya boş olabilir. Not: 2.0 öncesi yedekleri, önce 1.9.x sürümüyle içeri alın.</string>
   <string name="import_success">Yedek başarıyla geri yüklendi.</string>
@@ -262,7 +262,7 @@
   <string name="import_question">Geçerli dizi listesi silinecektir! Yedek dosyasının yedekleme klasörünün içinde olduğundan emin olun.</string>
   <string name="import_yes">Geri Yükle</string>
   <string name="import_no">Geri Yükleme</string>
-  <string name="import_warning">I understand my current shows and lists will be lost!</string>
+  <string name="import_warning">Mevcut dizilerimi ve listelerimi kaybedeceğimin farkındayım!</string>
   <string name="checkin">Giriş yap</string>
   <string name="checkin_noaction">No services enabled, check in once within SeriesGuide.</string>
   <string name="checkin_searchhint">Bir dizi adı yazın</string>
@@ -371,11 +371,11 @@
     <item>Siyah</item>
   </string-array>
   <string-array name="widgetType">
-    <item>Upcoming</item>
-    <item>Recent</item>
+    <item>Yaklaşan</item>
+    <item>En son</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
-    <item>hour</item>
+    <item>saat</item>
     <item>6 saat</item>
     <item>12 saat</item>
     <item>24 saat</item>
