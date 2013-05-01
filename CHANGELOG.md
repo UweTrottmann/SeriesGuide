@@ -5,7 +5,15 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 5 *(TBD)*
+Version 5.1 *(2013-05-01)*
+--------------------------
+
+* FIX Disable trakt offline support for now, causes crashes on too many devices.
+* FIX 'Manage lists' dialog would hide OK button when too many lists were shown.
+* TWEAK Temporarily increase Activity stream limits to 90 days in each direction until we can make it unlimited again.
+* NOTICE Latest translations from crowdin.
+
+Version 5 *(2013-04-27)*
 --------------------------
 
 * FEATURE Integrate the trakt movie watchlist.
