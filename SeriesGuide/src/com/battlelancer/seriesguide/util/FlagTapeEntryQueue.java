@@ -22,9 +22,9 @@ import android.content.Intent;
 
 import com.battlelancer.seriesguide.service.TraktFlagService;
 import com.google.myjson.Gson;
-import com.google.myjson.GsonBuilder;
 import com.squareup.tape.FileObjectQueue;
 import com.squareup.tape.FileObjectQueue.Converter;
+import com.squareup.tape.InMemoryObjectQueue;
 import com.squareup.tape.ObjectQueue;
 
 import java.io.File;
@@ -43,8 +43,16 @@ public class FlagTapeEntryQueue implements ObjectQueue<FlagTapeEntry> {
     public static synchronized FlagTapeEntryQueue getInstance(Context context) {
         if (_instance == null) {
             // Make sure to use the application context as this is a singleton
-            _instance = FlagTapeEntryQueue.create(context.getApplicationContext(),
-                    new GsonBuilder().create());
+            _instance = new FlagTapeEntryQueue(new InMemoryObjectQueue<FlagTapeEntry>(),
+                    context.getApplicationContext());
+
+            /*
+             * Causes problems (MalformedJsonException, EOFException) on various
+             * devices, including Google devices.
+             */
+            // _instance =
+            // FlagTapeEntryQueue.create(context.getApplicationContext(),
+            // new GsonBuilder().create());
         }
         return _instance;
     }
