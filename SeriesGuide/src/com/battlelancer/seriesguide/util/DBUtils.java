@@ -240,11 +240,11 @@ public class DBUtils {
         if (ActivityType.UPCOMING.equals(type)) {
             query = UpcomingQuery.QUERY_UPCOMING;
             sortOrder = UpcomingQuery.SORTING_UPCOMING;
-            monthThreshold = System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS * 30;
+            monthThreshold = System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS * 90;
         } else {
             query = UpcomingQuery.QUERY_RECENT;
             sortOrder = UpcomingQuery.SORTING_RECENT;
-            monthThreshold = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS * 30;
+            monthThreshold = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS * 90;
         }
 
         // build selection args

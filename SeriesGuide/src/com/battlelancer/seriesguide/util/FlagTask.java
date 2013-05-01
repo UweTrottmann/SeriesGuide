@@ -41,7 +41,7 @@ import java.util.List;
  * Helps flag episodes in the local database and readies them for submission to
  * trakt.tv.
  */
-public class FlagTask extends AsyncTask<Void, Integer, Void> {
+public class FlagTask extends AsyncTask<Void, Integer, Integer> {
 
     /**
      * Sent once the database ops are finished, sending to trakt may still be in
@@ -637,12 +637,16 @@ public class FlagTask extends AsyncTask<Void, Integer, Void> {
     }
 
     @Override
-    protected Void doInBackground(Void... params) {
+    protected Integer doInBackground(Void... params) {
         // check for valid trakt credentials
         mIsTraktInvolved = ServiceUtils.isTraktCredentialsValid(mContext);
 
         // prepare trakt stuff
         if (mIsTraktInvolved) {
+            if (!Utils.isAllowedConnection(mContext)) {
+                return -1;
+            }
+
             List<Flag> episodes = mType.getEpisodes();
 
             // Add a new taped flag task to the tape queue
@@ -654,13 +658,16 @@ public class FlagTask extends AsyncTask<Void, Integer, Void> {
         mType.updateDatabase();
         mType.storeLastEpisode();
 
-        return null;
+        return 0;
     }
 
     @Override
-    protected void onPostExecute(Void result) {
+    protected void onPostExecute(Integer result) {
+        if (result == -1) {
+            Toast.makeText(mContext, R.string.offline, Toast.LENGTH_LONG).show();
+        }
         // display a small toast if submission to trakt was successful
-        if (mIsTraktInvolved) {
+        else if (mIsTraktInvolved) {
             int status = R.string.trakt_submitqueued;
 
             if (mType.mAction == FlagAction.SHOW_WATCHED
