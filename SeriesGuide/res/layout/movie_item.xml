@@ -23,7 +23,7 @@
             android:layout_below="@+id/imageViewMoviePoster"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textAppearance="@style/TextAppearance.Large.Light" >
+            android:textAppearance="@style/TextAppearance.Medium.Light" >
         </TextView>
 
         <TextView
