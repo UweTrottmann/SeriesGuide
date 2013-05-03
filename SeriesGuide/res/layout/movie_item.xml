@@ -5,13 +5,12 @@
 
     <RelativeLayout
         android:layout_width="144dp"
-        android:layout_height="@dimen/movie_item_height"
-        android:padding="@dimen/default_padding" >
+        android:layout_height="@dimen/movie_item_height" >
 
         <ImageView
             android:id="@+id/imageViewMoviePoster"
-            android:layout_width="128dp"
-            android:layout_height="192dp"
+            android:layout_width="144dp"
+            android:layout_height="216dp"
             android:scaleType="centerCrop" />
 
         <TextView
@@ -23,6 +22,8 @@
             android:layout_below="@+id/imageViewMoviePoster"
             android:ellipsize="end"
             android:maxLines="2"
+            android:paddingLeft="@dimen/inline_padding"
+            android:paddingRight="@dimen/inline_padding"
             android:textAppearance="@style/TextAppearance.Medium.Light" >
         </TextView>
 
@@ -35,6 +36,8 @@
             android:layout_below="@+id/textViewMovieTitle"
             android:ellipsize="end"
             android:maxLines="1"
+            android:paddingLeft="@dimen/inline_padding"
+            android:paddingRight="@dimen/inline_padding"
             android:textAppearance="@style/TextAppearance.Small.Dim" >
         </TextView>
     </RelativeLayout>
