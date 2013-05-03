@@ -23,7 +23,6 @@
         android:clipToPadding="@bool/gridClipToPadding"
         android:columnWidth="144dp"
         android:fastScrollEnabled="true"
-        android:horizontalSpacing="@dimen/default_padding"
         android:listSelector="?custom_list_selector"
         android:numColumns="auto_fit"
         android:padding="@dimen/default_padding"
