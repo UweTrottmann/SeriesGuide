@@ -33,7 +33,6 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="?custom_list_selector"
                     android:focusable="true"
                     android:nextFocusDown="@+id/checkinButton"
                     android:paddingBottom="@dimen/default_padding" >

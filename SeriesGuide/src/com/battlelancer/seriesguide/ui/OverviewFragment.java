@@ -126,11 +126,6 @@ public class OverviewFragment extends SherlockFragment implements
         }
 
         View v = inflater.inflate(R.layout.overview_fragment, container, false);
-        v.findViewById(R.id.showinfo).setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                onShowShowInfo(v);
-            }
-        });
         v.findViewById(R.id.imageViewFavorite).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -342,17 +337,6 @@ public class OverviewFragment extends SherlockFragment implements
 
             ShareUtils.onShareEpisode(getActivity(), shareData, shareMethod);
         }
-    }
-
-    /**
-     * Launch show info activity.
-     */
-    @TargetApi(16)
-    private void onShowShowInfo(View sourceView) {
-        Intent i = new Intent(getActivity(), ShowInfoActivity.class);
-        i.putExtra(ShowInfoActivity.InitBundle.SHOW_TVDBID, getShowId());
-        startActivity(i);
-        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
     }
 
     private void onToggleCollected() {
