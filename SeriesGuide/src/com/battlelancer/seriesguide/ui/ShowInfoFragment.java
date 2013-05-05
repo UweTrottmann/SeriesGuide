@@ -274,8 +274,8 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
         // Poster
         final ImageView poster = (ImageView) getView().findViewById(R.id.ImageViewShowInfoPoster);
         ImageProvider.getInstance(getActivity()).loadImage(poster, mShow.getPoster(), false);
-        Utils.setPosterBackground((ImageView) getView().findViewById(R.id.background),
-                mShow.getPoster(), getActivity());
+//        Utils.setPosterBackground((ImageView) getView().findViewById(R.id.background),
+//                mShow.getPoster(), getActivity());
 
         // trakt ratings
         onLoadTraktRatings(true);
