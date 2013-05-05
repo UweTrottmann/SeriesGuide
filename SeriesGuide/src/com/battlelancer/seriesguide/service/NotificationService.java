@@ -415,6 +415,7 @@ public class NotificationService extends IntentService {
                 }
 
                 nb.setStyle(inboxStyle);
+                nb.setNumber(count);
             }
         } else {
             // ICS and below
