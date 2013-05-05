@@ -28,7 +28,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginRight="@dimen/default_padding"
-                android:text="@string/app_name"
                 android:textAppearance="@style/TextAppearance.Large.Light"
                 android:textIsSelectable="true"
                 android:textSize="@dimen/text_size_ultralarge" />
