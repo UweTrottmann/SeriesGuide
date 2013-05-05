@@ -50,6 +50,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormatSymbols;
@@ -683,19 +684,22 @@ public class Utils {
                 * DateUtils.MINUTE_IN_MILLIS, pi);
     }
 
-    public static String toSHA1(byte[] convertme) {
+    public static String toSHA1(Context context, String message) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
-            byte[] b = md.digest(convertme);
+            byte[] messageBytes = message.getBytes("UTF-8");
+            byte[] digest = md.digest(messageBytes);
 
             String result = "";
-            for (int i = 0; i < b.length; i++) {
-                result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
+            for (int i = 0; i < digest.length; i++) {
+                result += Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1);
             }
 
             return result;
         } catch (NoSuchAlgorithmException e) {
-            Log.w(TAG, "Could not get SHA-1 message digest instance", e);
+            Utils.trackExceptionAndLog(context, TAG, e);
+        } catch (UnsupportedEncodingException e) {
+            Utils.trackExceptionAndLog(context, TAG, e);
         }
         return null;
     }
