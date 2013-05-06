@@ -24,12 +24,12 @@
             android:orientation="vertical" >
 
             <LinearLayout
+                android:id="@+id/containerOverviewShow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
                 <RelativeLayout
-                    android:id="@+id/showinfo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -78,7 +78,9 @@
                     android:src="@drawable/ic_action_star_0" />
             </LinearLayout>
 
-            <include layout="@layout/divider_horizontal" />
+            <include
+                android:id="@+id/dividerHorizontalOverviewShow"
+                layout="@layout/divider_horizontal" />
 
             <FrameLayout
                 android:layout_width="match_parent"
