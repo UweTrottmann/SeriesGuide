@@ -32,6 +32,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.enums.TraktAction;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
+import com.battlelancer.seriesguide.util.AdvancedSettings;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
@@ -157,15 +158,12 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
      * Periodically do an automatic backup of the show database.
      */
     private boolean onAutoBackup() {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        long now = System.currentTimeMillis();
-        // use now as default value, so a re-install won't overwrite the old
-        // auto-backup right away
-        long previousBackupTime = prefs.getLong(SeriesGuidePreferences.KEY_LASTBACKUP, 0);
-        if (previousBackupTime == 0) {
-            previousBackupTime = now;
-            prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTBACKUP, now).commit();
+        if (!AdvancedSettings.isAutoBackupEnabled(this)) {
+            return false;
         }
+
+        long now = System.currentTimeMillis();
+        long previousBackupTime = AdvancedSettings.getLastAutoBackupTime(this);
         final boolean isTime = (now - previousBackupTime) > 7 * DateUtils.DAY_IN_MILLIS;
 
         if (isTime) {

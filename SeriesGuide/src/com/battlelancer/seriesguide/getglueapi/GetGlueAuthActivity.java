@@ -52,7 +52,7 @@ import oauth.signpost.exception.OAuthNotAuthorizedException;
  */
 public class GetGlueAuthActivity extends BaseActivity {
 
-    final String TAG = "PrepareRequestTokenActivity";
+    final String TAG = "GetGlueAuthActivity";
 
     private OAuthConsumer mConsumer;
 
@@ -160,13 +160,13 @@ public class GetGlueAuthActivity extends BaseActivity {
                 Log.i(TAG, "OAuth - Access Token Retrieved");
                 return AUTH_SUCCESS;
             } catch (OAuthMessageSignerException e) {
-                Log.e(TAG, "OAuth - Access Token Retrieval Error", e);
+                Utils.trackExceptionAndLog(getApplicationContext(), TAG, e);
             } catch (OAuthNotAuthorizedException e) {
-                Log.e(TAG, "OAuth - Access Token Retrieval Error", e);
+                Utils.trackExceptionAndLog(getApplicationContext(), TAG, e);
             } catch (OAuthExpectationFailedException e) {
-                Log.e(TAG, "OAuth - Access Token Retrieval Error", e);
+                Utils.trackExceptionAndLog(getApplicationContext(), TAG, e);
             } catch (OAuthCommunicationException e) {
-                Log.e(TAG, "OAuth - Access Token Retrieval Error", e);
+                Utils.trackExceptionAndLog(getApplicationContext(), TAG, e);
             }
 
             return AUTH_FAILED;

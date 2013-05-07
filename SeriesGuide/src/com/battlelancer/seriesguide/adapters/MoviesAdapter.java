@@ -101,7 +101,9 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         clear();
         if (data != null) {
             for (Movie item : data) {
-                add(item);
+                if (item != null) {
+                    add(item);
+                }
             }
         }
     }

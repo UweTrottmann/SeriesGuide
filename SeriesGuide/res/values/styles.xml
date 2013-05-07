@@ -6,6 +6,7 @@
         <item name="android:textColor">?attr/textColorSgDefault</item>
         <item name="android:textSize">@dimen/text_size_xmedium</item>
         <item name="android:textStyle">normal</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
     </style>
 
     <style name="TextAppearance.Dim">
@@ -171,7 +172,6 @@
     </style>
 
     <style name="ActionBarTitleText" parent="TextAppearance.Sherlock.Widget.ActionBar.Title">
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
     </style>
 
     <style name="ActionBarTabStyle" parent="Widget.Sherlock.ActionBar.TabBar">
@@ -199,7 +199,7 @@
     </style>
 
     <style name="Widget.SpinnerItem" parent="Widget">
-        <item name="android:textAppearance">@style/TextAppearance.Small</item>
+        <item name="android:textAppearance">@style/TextAppearance.Medium</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
     </style>
