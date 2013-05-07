@@ -137,7 +137,7 @@ public class OverviewFragment extends SherlockFragment implements
             }
         });
         mContainerShow = v.findViewById(R.id.containerOverviewShow);
-        mDividerShow = v.findViewById(R.id.dividerHorizontalOverviewShow);
+        mDividerShow = v.findViewById(R.id.spacerOverviewShow);
 
         return v;
     }
@@ -152,7 +152,7 @@ public class OverviewFragment extends SherlockFragment implements
 
         // do not display show info header in multi pane layout
         mContainerShow.setVisibility(mMultiPane ? View.GONE : View.VISIBLE);
-        mDividerShow.setVisibility(mMultiPane ? View.GONE : View.VISIBLE);
+        mDividerShow.setVisibility(mMultiPane ? View.VISIBLE : View.GONE);
 
         getLoaderManager().initLoader(SHOW_LOADER_ID, null, this);
         getLoaderManager().initLoader(EPISODE_LOADER_ID, null, this);

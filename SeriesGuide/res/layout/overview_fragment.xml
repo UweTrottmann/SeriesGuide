@@ -78,6 +78,12 @@
                     android:src="@drawable/ic_action_star_0" />
             </LinearLayout>
 
+            <View
+                android:id="@+id/spacerOverviewShow"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:visibility="gone" />
+
             <include
                 android:id="@+id/dividerHorizontalOverviewShow"
                 layout="@layout/divider_horizontal" />
