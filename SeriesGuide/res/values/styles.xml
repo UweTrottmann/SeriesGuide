@@ -199,7 +199,7 @@
     </style>
 
     <style name="Widget.SpinnerItem" parent="Widget">
-        <item name="android:textAppearance">@style/TextAppearance.Small</item>
+        <item name="android:textAppearance">@style/TextAppearance.Medium</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
     </style>
