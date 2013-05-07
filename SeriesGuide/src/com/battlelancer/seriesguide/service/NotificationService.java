@@ -337,8 +337,7 @@ public class NotificationService extends IntentService {
         } else if (count > 1) {
             // notify about multiple episodes
             tickerText = getString(R.string.upcoming_episodes);
-            contentTitle = getString(R.string.upcoming_episodes) + " ("
-                    + String.valueOf(count) + ")";
+            contentTitle = getString(R.string.upcoming_episodes_number, count);
             contentText = getString(R.string.upcoming_display);
 
             Intent notificationIntent = new Intent(context, UpcomingRecentActivity.class);
@@ -415,7 +414,7 @@ public class NotificationService extends IntentService {
                 }
 
                 nb.setStyle(inboxStyle);
-                nb.setNumber(count);
+                nb.setContentInfo(String.valueOf(count));
             }
         } else {
             // ICS and below
