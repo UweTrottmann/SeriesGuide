@@ -335,6 +335,8 @@
     <string name="pref_other">Other</string>
     <string name="pref_autoupdate">Turn on Auto Update</string>
     <string name="pref_autoupdatesummary">Periodically update your shows when starting SeriesGuide</string>
+    <string name="pref_autobackup">Turn on Auto Backup</string>
+    <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
     <string name="backup">Backup/Restore</string>
     <string name="backup_summary">Backup or restore your shows</string>
     <string name="pref_upcominglimit">Upcoming shows within…</string>

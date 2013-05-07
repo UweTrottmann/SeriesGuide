@@ -36,7 +36,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
-import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.AdvancedSettings;
 import com.battlelancer.seriesguide.util.Lists;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 import com.google.myjson.Gson;
@@ -178,7 +178,7 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
         if (mIsAutoBackupMode) {
             // store current time = last backup time
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-            prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTBACKUP, System.currentTimeMillis())
+            prefs.edit().putLong(AdvancedSettings.KEY_LASTBACKUP, System.currentTimeMillis())
                     .commit();
         }
 

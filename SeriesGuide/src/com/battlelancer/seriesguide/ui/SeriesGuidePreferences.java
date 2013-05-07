@@ -134,8 +134,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_THEME = "com.battlelancer.seriesguide.theme";
 
-    public static final String KEY_LASTBACKUP = "com.battlelancer.seriesguide.lastbackup";
-
     public static final String KEY_FAILED_COUNTER = "com.battlelancer.seriesguide.failedcounter";
 
     public static final String KEY_ACTIVITYTAB = "com.battlelancer.seriesguide.activitytab";
