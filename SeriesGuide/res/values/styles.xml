@@ -213,7 +213,7 @@
         <item name="selectedBold">true</item>
     </style>
 
-    <style name="TabPageIndicator" parent="Widget.TabPageIndicator">
+    <style name="TabPageIndicator" parent="Widget.Sherlock.ActionBar.TabBar">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:background">@drawable/tab_indicator</item>
         <item name="android:paddingLeft">16dip</item>
@@ -228,7 +228,7 @@
 
     <style name="TextAppearance.TabPageIndicator" parent="Widget">
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/vpi__dark_theme</item>
+        <item name="android:textColor">?attr/textColorSgActionBar</item>
     </style>
 
     <style name="Header">
