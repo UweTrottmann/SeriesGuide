@@ -75,8 +75,9 @@
         <item name="android:textColor">?attr/textColorSgPrimary</item>
     </style>
 
-    <style name="TextAppearance.Large.ActionBar">
+    <style name="TextAppearance.ActionBar" parent="TextAppearance.Sherlock.Widget.ActionBar.Title">
         <item name="android:textColor">?attr/textColorSgActionBar</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
     </style>
 
     <style name="TextAppearance.Large.Light">
@@ -171,11 +172,9 @@
     <style name="ActionBar" parent="Widget.Sherlock.ActionBar">
         <item name="background">@drawable/sg_actionbar_background</item>
         <item name="android:background">@drawable/sg_actionbar_background</item>
-        <item name="titleTextStyle">@style/ActionBarTitleText</item>
-        <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/ActionBarTitleText</item>
+        <item name="titleTextStyle">@style/TextAppearance.ActionBar</item>
+        <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/TextAppearance.ActionBar</item>
     </style>
-
-    <style name="ActionBarTitleText" parent="TextAppearance.Sherlock.Widget.ActionBar.Title"></style>
 
     <style name="ActionBarTabStyle" parent="Widget.Sherlock.ActionBar.TabBar">
         <item name="android:gravity">center_horizontal</item>
@@ -194,8 +193,9 @@
     </style>
 
     <!-- ActionBar Spinner -->
-    <style name="Widget.SpinnerItem.ActionBar" parent="Widget">
-        <item name="android:textAppearance">@style/TextAppearance.Large.ActionBar</item>
+    <style name="ActionBarSpinnerItem">
+        <item name="android:textColor">?attr/textColorSgActionBar</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
@@ -414,12 +414,8 @@
 
     <!-- ActionBar -->
     <style name="ActionBar.Light" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
-        <item name="titleTextStyle">@style/ActionBarTitleText.Light</item>
-        <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/ActionBarTitleText.Light</item>
-    </style>
-
-    <style name="ActionBarTitleText.Light" parent="TextAppearance.Sherlock.Widget.ActionBar.Title.Inverse">
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
+        <item name="titleTextStyle">@style/TextAppearance.ActionBar</item>
+        <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/TextAppearance.ActionBar</item>
     </style>
 
     <!-- ActionBar Spinner -->
