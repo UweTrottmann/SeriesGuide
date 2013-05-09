@@ -75,6 +75,10 @@
         <item name="android:textColor">?attr/textColorSgPrimary</item>
     </style>
 
+    <style name="TextAppearance.Large.ActionBar">
+        <item name="android:textColor">?attr/textColorSgActionBar</item>
+    </style>
+
     <style name="TextAppearance.Large.Light">
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
     </style>
@@ -171,8 +175,7 @@
         <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/ActionBarTitleText</item>
     </style>
 
-    <style name="ActionBarTitleText" parent="TextAppearance.Sherlock.Widget.ActionBar.Title">
-    </style>
+    <style name="ActionBarTitleText" parent="TextAppearance.Sherlock.Widget.ActionBar.Title"></style>
 
     <style name="ActionBarTabStyle" parent="Widget.Sherlock.ActionBar.TabBar">
         <item name="android:gravity">center_horizontal</item>
@@ -186,22 +189,16 @@
     </style>
 
     <style name="DropDownNav" parent="@style/Widget.Sherlock.Spinner.DropDown.ActionBar">
-        <item name="background">@drawable/spinner_background_ab_sg</item>
         <item name="android:background">@drawable/spinner_background_ab_sg</item>
+        <item name="android:dropDownSelector">?custom_list_selector</item>
     </style>
 
     <!-- ActionBar Spinner -->
-    <style name="Widget.DropDownItem" parent="Widget">
-        <item name="android:textAppearance">@style/TextAppearance</item>
+    <style name="Widget.SpinnerItem.ActionBar" parent="Widget">
+        <item name="android:textAppearance">@style/TextAppearance.Large.ActionBar</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
-        <item name="android:gravity">center_vertical</item>
-    </style>
-
-    <style name="Widget.SpinnerItem" parent="Widget">
-        <item name="android:textAppearance">@style/TextAppearance.Medium</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingRight">8dp</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
     </style>
 
     <!-- ViewPagerIndicator -->
@@ -426,12 +423,9 @@
     </style>
 
     <!-- ActionBar Spinner -->
-    <style name="Widget.Light.DropDownItem" parent="Widget.DropDownItem">
-        <item name="android:textColor">@color/text_primary</item>
-    </style>
-
-    <style name="Widget.Light.SpinnerItem" parent="Widget.SpinnerItem">
-        <item name="android:textColor">@color/text_primary</item>
+    <style name="DropDownNav.Light" parent="@style/Widget.Sherlock.Light.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_sg</item>
+        <item name="android:dropDownSelector">?custom_list_selector</item>
     </style>
 
 </resources>
