@@ -21,6 +21,7 @@
         <!-- Action bar (ABS) -->
         <item name="actionBarStyle">@style/ActionBar</item>
         <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
         <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
         <item name="actionDropDownStyle">@style/DropDownNav</item>
 
@@ -138,6 +139,7 @@
         <!-- Action bar (ABS) -->
         <item name="actionBarStyle">@style/ActionBar.Light</item>
         <item name="actionBarTabStyle">@style/ActionBarTabStyle</item>
+        <item name="actionBarTabTextStyle">@style/ActionBarTabTextStyle</item>
         <item name="actionBarItemBackground">@drawable/list_selector_sg</item>
         <item name="actionDropDownStyle">@style/DropDownNav.Light</item>
 

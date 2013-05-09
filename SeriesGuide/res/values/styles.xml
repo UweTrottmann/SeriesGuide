@@ -183,6 +183,10 @@
         <item name="android:paddingRight">16dip</item>
     </style>
 
+    <style name="ActionBarTabTextStyle" parent="Widget.Sherlock.ActionBar.TabText">
+        <item name="android:textColor">?attr/textColorSgActionBar</item>
+    </style>
+
     <style name="DropDownListView" parent="Widget.Sherlock.ListView.DropDown">
         <item name="android:listSelector">?custom_list_selector</item>
     </style>
