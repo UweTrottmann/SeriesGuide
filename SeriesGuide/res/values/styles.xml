@@ -75,6 +75,11 @@
         <item name="android:textColor">?attr/textColorSgPrimary</item>
     </style>
 
+    <style name="TextAppearance.ActionBar" parent="TextAppearance.Sherlock.Widget.ActionBar.Title">
+        <item name="android:textColor">?attr/textColorSgActionBar</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
+    </style>
+
     <style name="TextAppearance.Large.Light">
         <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
     </style>
@@ -167,11 +172,8 @@
     <style name="ActionBar" parent="Widget.Sherlock.ActionBar">
         <item name="background">@drawable/sg_actionbar_background</item>
         <item name="android:background">@drawable/sg_actionbar_background</item>
-        <item name="titleTextStyle">@style/ActionBarTitleText</item>
-        <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/ActionBarTitleText</item>
-    </style>
-
-    <style name="ActionBarTitleText" parent="TextAppearance.Sherlock.Widget.ActionBar.Title">
+        <item name="titleTextStyle">@style/TextAppearance.ActionBar</item>
+        <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/TextAppearance.ActionBar</item>
     </style>
 
     <style name="ActionBarTabStyle" parent="Widget.Sherlock.ActionBar.TabBar">
@@ -181,27 +183,26 @@
         <item name="android:paddingRight">16dip</item>
     </style>
 
+    <style name="ActionBarTabTextStyle" parent="Widget.Sherlock.ActionBar.TabText">
+        <item name="android:textColor">?attr/textColorSgActionBar</item>
+    </style>
+
     <style name="DropDownListView" parent="Widget.Sherlock.ListView.DropDown">
         <item name="android:listSelector">?custom_list_selector</item>
     </style>
 
     <style name="DropDownNav" parent="@style/Widget.Sherlock.Spinner.DropDown.ActionBar">
-        <item name="background">@drawable/spinner_background_ab_sg</item>
         <item name="android:background">@drawable/spinner_background_ab_sg</item>
+        <item name="android:dropDownSelector">?custom_list_selector</item>
     </style>
 
     <!-- ActionBar Spinner -->
-    <style name="Widget.DropDownItem" parent="Widget">
-        <item name="android:textAppearance">@style/TextAppearance</item>
+    <style name="ActionBarSpinnerItem">
+        <item name="android:textColor">?attr/textColorSgActionBar</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>
-        <item name="android:gravity">center_vertical</item>
-    </style>
-
-    <style name="Widget.SpinnerItem" parent="Widget">
-        <item name="android:textAppearance">@style/TextAppearance.Medium</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingRight">8dp</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-condensed</item>
     </style>
 
     <!-- ViewPagerIndicator -->
@@ -216,7 +217,7 @@
         <item name="selectedBold">true</item>
     </style>
 
-    <style name="TabPageIndicator" parent="Widget.TabPageIndicator">
+    <style name="TabPageIndicator" parent="Widget.Sherlock.ActionBar.TabBar">
         <item name="android:gravity">center_horizontal</item>
         <item name="android:background">@drawable/tab_indicator</item>
         <item name="android:paddingLeft">16dip</item>
@@ -231,7 +232,7 @@
 
     <style name="TextAppearance.TabPageIndicator" parent="Widget">
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/vpi__dark_theme</item>
+        <item name="android:textColor">?attr/textColorSgActionBar</item>
     </style>
 
     <style name="Header">
@@ -417,21 +418,14 @@
 
     <!-- ActionBar -->
     <style name="ActionBar.Light" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
-        <item name="titleTextStyle">@style/ActionBarTitleText.Light</item>
-        <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/ActionBarTitleText.Light</item>
-    </style>
-
-    <style name="ActionBarTitleText.Light" parent="TextAppearance.Sherlock.Widget.ActionBar.Title.Inverse">
-        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
+        <item name="titleTextStyle">@style/TextAppearance.ActionBar</item>
+        <item name="android:titleTextStyle" tools:targetApi="honeycomb">@style/TextAppearance.ActionBar</item>
     </style>
 
     <!-- ActionBar Spinner -->
-    <style name="Widget.Light.DropDownItem" parent="Widget.DropDownItem">
-        <item name="android:textColor">@color/text_primary</item>
-    </style>
-
-    <style name="Widget.Light.SpinnerItem" parent="Widget.SpinnerItem">
-        <item name="android:textColor">@color/text_primary</item>
+    <style name="DropDownNav.Light" parent="@style/Widget.Sherlock.Light.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_sg</item>
+        <item name="android:dropDownSelector">?custom_list_selector</item>
     </style>
 
 </resources>

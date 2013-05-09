@@ -133,7 +133,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
             /* use list (spinner) (! use different layouts for ABS) */
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
             ArrayAdapter<CharSequence> mActionBarList = ArrayAdapter.createFromResource(this,
-                    R.array.showfilter_list, R.layout.sherlock_spinner_item);
+                    R.array.showfilter_list, R.layout.actionbar_spinner_item);
             mActionBarList.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
             actionBar.setListNavigationCallbacks(mActionBarList, handler);
         }
