@@ -4,7 +4,6 @@
     <dimen name="text_size_xmedium">18sp</dimen>
     <dimen name="text_size_medium">20sp</dimen>
     <dimen name="text_size_large">24sp</dimen>
-    <dimen name="text_size_ultralarge">48sp</dimen>
     <dimen name="movie_item_height">292dp</dimen>
     <dimen name="showgrid_columnWidth">350dp</dimen>
 
