@@ -89,7 +89,7 @@ public class OverviewFragment extends SherlockFragment implements
 
     private static final int SHOW_LOADER_ID = 101;
 
-    private boolean mDualPane;
+    private boolean mMultiPane;
 
     private FetchArtTask mArtTask;
 
@@ -100,6 +100,10 @@ public class OverviewFragment extends SherlockFragment implements
     private Cursor mShowCursor;
 
     private String mShowTitle;
+
+    private View mContainerShow;
+
+    private View mDividerShow;
 
     /**
      * All values have to be integer.
@@ -126,17 +130,14 @@ public class OverviewFragment extends SherlockFragment implements
         }
 
         View v = inflater.inflate(R.layout.overview_fragment, container, false);
-        v.findViewById(R.id.showinfo).setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                onShowShowInfo(v);
-            }
-        });
         v.findViewById(R.id.imageViewFavorite).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 onToggleShowFavorited(v);
             }
         });
+        mContainerShow = v.findViewById(R.id.containerOverviewShow);
+        mDividerShow = v.findViewById(R.id.spacerOverviewShow);
 
         return v;
     }
@@ -147,7 +148,11 @@ public class OverviewFragment extends SherlockFragment implements
 
         // Are we in a multi-pane layout?
         View seasonsFragment = getActivity().findViewById(R.id.fragment_seasons);
-        mDualPane = seasonsFragment != null && seasonsFragment.getVisibility() == View.VISIBLE;
+        mMultiPane = seasonsFragment != null && seasonsFragment.getVisibility() == View.VISIBLE;
+
+        // do not display show info header in multi pane layout
+        mContainerShow.setVisibility(mMultiPane ? View.GONE : View.VISIBLE);
+        mDividerShow.setVisibility(mMultiPane ? View.VISIBLE : View.GONE);
 
         getLoaderManager().initLoader(SHOW_LOADER_ID, null, this);
         getLoaderManager().initLoader(EPISODE_LOADER_ID, null, this);
@@ -196,27 +201,27 @@ public class OverviewFragment extends SherlockFragment implements
         } else {
             isEpisodeVisible = false;
         }
-        menu.findItem(R.id.menu_checkin).setEnabled(isEpisodeVisible && !mDualPane);
-        menu.findItem(R.id.menu_flag_watched).setEnabled(isEpisodeVisible && !mDualPane);
-        menu.findItem(R.id.menu_flag_collected).setEnabled(isEpisodeVisible && !mDualPane);
-        menu.findItem(R.id.menu_calendarevent).setEnabled(isEpisodeVisible && !mDualPane);
+        menu.findItem(R.id.menu_checkin).setEnabled(isEpisodeVisible && !mMultiPane);
+        menu.findItem(R.id.menu_flag_watched).setEnabled(isEpisodeVisible && !mMultiPane);
+        menu.findItem(R.id.menu_flag_collected).setEnabled(isEpisodeVisible && !mMultiPane);
+        menu.findItem(R.id.menu_calendarevent).setEnabled(isEpisodeVisible && !mMultiPane);
         menu.findItem(R.id.menu_share).setEnabled(isEpisodeVisible);
         menu.findItem(R.id.menu_rate_trakt).setEnabled(isEpisodeVisible);
         menu.findItem(R.id.menu_manage_lists).setEnabled(isEpisodeVisible);
 
         // hide some items on larger screens, we use inline buttons there
-        menu.findItem(R.id.menu_checkin).setVisible(!mDualPane);
-        menu.findItem(R.id.menu_flag_watched).setVisible(!mDualPane);
-        menu.findItem(R.id.menu_flag_collected).setVisible(!mDualPane);
-        menu.findItem(R.id.menu_calendarevent).setVisible(!mDualPane);
+        menu.findItem(R.id.menu_checkin).setVisible(!mMultiPane);
+        menu.findItem(R.id.menu_flag_watched).setVisible(!mMultiPane);
+        menu.findItem(R.id.menu_flag_collected).setVisible(!mMultiPane);
+        menu.findItem(R.id.menu_calendarevent).setVisible(!mMultiPane);
 
         // move some items to the overflow menu on smaller screens
         menu.findItem(R.id.menu_rate_trakt).setShowAsAction(
-                mDualPane ?
+                mMultiPane ?
                         MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT
                         : MenuItem.SHOW_AS_ACTION_NEVER);
         menu.findItem(R.id.menu_manage_lists).setShowAsAction(
-                mDualPane ?
+                mMultiPane ?
                         MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT
                         : MenuItem.SHOW_AS_ACTION_NEVER);
     }
@@ -342,17 +347,6 @@ public class OverviewFragment extends SherlockFragment implements
 
             ShareUtils.onShareEpisode(getActivity(), shareData, shareMethod);
         }
-    }
-
-    /**
-     * Launch show info activity.
-     */
-    @TargetApi(16)
-    private void onShowShowInfo(View sourceView) {
-        Intent i = new Intent(getActivity(), ShowInfoActivity.class);
-        i.putExtra(ShowInfoActivity.InitBundle.SHOW_TVDBID, getShowId());
-        startActivity(i);
-        getActivity().overridePendingTransition(R.anim.blow_up_enter, R.anim.blow_up_exit);
     }
 
     private void onToggleCollected() {
@@ -590,7 +584,7 @@ public class OverviewFragment extends SherlockFragment implements
             });
             episodePrimaryClicker.setFocusable(true);
 
-            if (mDualPane) {
+            if (mMultiPane) {
                 buttons.setVisibility(View.VISIBLE);
 
                 // check-in button

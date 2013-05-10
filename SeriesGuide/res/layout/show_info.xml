@@ -28,23 +28,44 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginRight="@dimen/default_padding"
-                android:text="@string/app_name"
                 android:textAppearance="@style/TextAppearance.Large.Light"
                 android:textIsSelectable="true"
                 android:textSize="@dimen/text_size_ultralarge" />
 
-            <include layout="@layout/show_info_meta" >
-            </include>
-
-            <ImageView
-                android:id="@+id/ImageViewShowInfoPoster"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/default_padding"
-                android:layout_marginTop="@dimen/default_padding"
-                android:contentDescription="@string/description_poster"
-                android:scaleType="centerCrop" />
+                android:layout_margin="@dimen/default_padding" >
+
+                <ImageView
+                    android:id="@+id/ImageViewShowInfoPoster"
+                    android:layout_width="140dp"
+                    android:layout_height="205dp"
+                    android:contentDescription="@string/description_poster"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:id="@+id/showStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginTop="@dimen/inline_padding"
+                    android:layout_toRightOf="@+id/ImageViewShowInfoPoster"
+                    android:textAllCaps="true"
+                    android:textAppearance="@style/TextAppearance.Light"
+                    android:textIsSelectable="true" />
+
+                <TextView
+                    android:id="@+id/showInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/showStatus"
+                    android:layout_marginLeft="@dimen/default_padding"
+                    android:layout_marginTop="@dimen/default_padding"
+                    android:layout_toRightOf="@+id/ImageViewShowInfoPoster"
+                    android:textAppearance="@style/TextAppearance.Light"
+                    android:textIsSelectable="true" />
+            </RelativeLayout>
 
             <include layout="@layout/show_info_metamore" >
             </include>

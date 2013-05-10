@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item name="overview" type="layout">@layout/overview_multipane_wide</item>
     <item name="episodes" type="layout">@layout/episodes_multipane_wide</item>
     <item name="upcoming" type="layout">@layout/upcoming_multipane_wide</item>
     <item name="search" type="layout">@layout/search_wide</item>

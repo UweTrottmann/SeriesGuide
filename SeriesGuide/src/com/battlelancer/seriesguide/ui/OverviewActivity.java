@@ -105,17 +105,23 @@ public class OverviewActivity extends BaseActivity {
     }
 
     private void setupPanes() {
-        Fragment overviewFragment = OverviewFragment.newInstance(mShowId);
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
-        ft.replace(R.id.fragment_overview, overviewFragment);
-        ft.commit();
+        Fragment showsFragment = ShowInfoFragment.newInstance(mShowId);
+        FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
+        ft1.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        ft1.replace(R.id.fragment_show, showsFragment);
+        ft1.commit();
 
-        Fragment seasonsFragment = SeasonsFragment.newInstance(mShowId);
+        Fragment overviewFragment = OverviewFragment.newInstance(mShowId);
         FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
         ft2.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
-        ft2.replace(R.id.fragment_seasons, seasonsFragment);
+        ft2.replace(R.id.fragment_overview, overviewFragment);
         ft2.commit();
+
+        Fragment seasonsFragment = SeasonsFragment.newInstance(mShowId);
+        FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
+        ft3.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        ft3.replace(R.id.fragment_seasons, seasonsFragment);
+        ft3.commit();
     }
 
     private void setupViewPager(View pagerView) {
