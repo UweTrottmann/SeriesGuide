@@ -53,7 +53,7 @@
         android:layout_below="@+id/editTextCheckinSearch"
         android:animateLayoutChanges="true"
         android:clipToPadding="@bool/gridClipToPadding"
-        android:columnWidth="144dp"
+        android:columnWidth="@dimen/movie_item_width"
         android:fastScrollEnabled="true"
         android:listSelector="?custom_list_selector"
         android:numColumns="auto_fit"

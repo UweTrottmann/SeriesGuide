@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" >
 
+    <!-- Added FrameLayout wrapper to avoid grid view layout issues -->
+
     <RelativeLayout
-        android:layout_width="144dp"
-        android:layout_height="@dimen/movie_item_height" >
+        android:layout_width="@dimen/movie_item_width"
+        android:layout_height="@dimen/movie_item_height"
+        tools:ignore="UselessParent" >
 
         <ImageView
             android:id="@+id/imageViewMoviePoster"
-            android:layout_width="144dp"
-            android:layout_height="216dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/movie_item_poster_height"
             android:scaleType="centerCrop" />
 
         <TextView
@@ -24,7 +28,7 @@
             android:maxLines="2"
             android:paddingLeft="@dimen/inline_padding"
             android:paddingRight="@dimen/inline_padding"
-            android:textAppearance="@style/TextAppearance.Medium.Light" >
+            android:textAppearance="@style/TextAppearance.Primary" >
         </TextView>
 
         <TextView
@@ -38,7 +42,7 @@
             android:maxLines="1"
             android:paddingLeft="@dimen/inline_padding"
             android:paddingRight="@dimen/inline_padding"
-            android:textAppearance="@style/TextAppearance.Small.Dim" >
+            android:textAppearance="@style/TextAppearance.XSmall" >
         </TextView>
     </RelativeLayout>
 
