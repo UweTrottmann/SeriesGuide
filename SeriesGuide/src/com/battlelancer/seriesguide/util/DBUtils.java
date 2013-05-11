@@ -242,37 +242,34 @@ public class DBUtils {
         String query;
         String[] selectionArgs;
         String sortOrder;
+        long timeThreshold;
 
         if (ActivityType.RECENT.equals(type)) {
             query = UpcomingQuery.QUERY_RECENT;
             sortOrder = UpcomingQuery.SORTING_RECENT;
+            if (numberOfDaysToInclude < 1) {
+                // at least has an air date
+                timeThreshold = 0;
+            } else {
+                // last x days
+                timeThreshold = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS
+                        * numberOfDaysToInclude;
+            }
         } else {
             query = UpcomingQuery.QUERY_UPCOMING;
             sortOrder = UpcomingQuery.SORTING_UPCOMING;
-        }
-
-        // possibly limit the time range of episodes
-        if (numberOfDaysToInclude < 1) {
-            selectionArgs = new String[] {
-                    String.valueOf(recentThreshold)
-            };
-        } else {
-            long monthThreshold;
-
-            if (ActivityType.RECENT.equals(type)) {
-                query += UpcomingQuery.SELECTION_LIMIT_RECENT;
-                monthThreshold = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS
-                        * numberOfDaysToInclude;
+            if (numberOfDaysToInclude < 1) {
+                // to infinity!
+                timeThreshold = Long.MAX_VALUE;
             } else {
-                query += UpcomingQuery.SELECTION_LIMIT_UPCOMING;
-                monthThreshold = System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS
+                timeThreshold = System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS
                         * numberOfDaysToInclude;
             }
-
-            selectionArgs = new String[] {
-                    String.valueOf(recentThreshold), String.valueOf(monthThreshold)
-            };
         }
+
+        selectionArgs = new String[] {
+                String.valueOf(recentThreshold), String.valueOf(timeThreshold)
+        };
 
         // append only favorites selection if necessary
         boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);

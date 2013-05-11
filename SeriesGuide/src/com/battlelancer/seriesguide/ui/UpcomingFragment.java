@@ -52,6 +52,7 @@ import com.battlelancer.seriesguide.WatchedBox;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase.Tables;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask;
@@ -70,7 +71,8 @@ import java.util.List;
 import java.util.Map;
 
 public class UpcomingFragment extends SherlockFragment implements
-        LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
+        LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener,
+        OnSharedPreferenceChangeListener {
 
     private static final int CONTEXT_FLAG_WATCHED_ID = 0;
 
@@ -78,7 +80,7 @@ public class UpcomingFragment extends SherlockFragment implements
 
     private static final int CONTEXT_CHECKIN_ID = 2;
 
-    private CursorAdapter mAdapter;
+    private SlowAdapter mAdapter;
 
     private boolean mDualPane;
 
@@ -136,23 +138,11 @@ public class UpcomingFragment extends SherlockFragment implements
         // start loading data
         getActivity().getSupportLoaderManager().initLoader(getLoaderId(), null, this);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        prefs.registerOnSharedPreferenceChangeListener(mPrefListener);
+        PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .registerOnSharedPreferenceChangeListener(this);
 
         registerForContextMenu(mGridView);
     }
-
-    private final OnSharedPreferenceChangeListener mPrefListener = new OnSharedPreferenceChangeListener() {
-
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (key.equals(SeriesGuidePreferences.KEY_ONLYFAVORITES)
-                    || key.equals(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES)
-                    || key.equals(SeriesGuidePreferences.KEY_NOWATCHED)) {
-                onRequery();
-            }
-        }
-    };
 
     @Override
     public void onStart() {
@@ -164,7 +154,7 @@ public class UpcomingFragment extends SherlockFragment implements
     @Override
     public void onDestroy() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        prefs.unregisterOnSharedPreferenceChangeListener(mPrefListener);
+        prefs.unregisterOnSharedPreferenceChangeListener(this);
 
         super.onDestroy();
     }
@@ -258,7 +248,14 @@ public class UpcomingFragment extends SherlockFragment implements
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String type = getArguments().getString(InitBundle.TYPE);
-        String[][] queryArgs = DBUtils.buildActivityQuery(getActivity(), type, 30);
+        boolean isInfiniteScrolling = ActivitySettings.isInfiniteScrolling(getActivity());
+
+        // show headers if using a finite list
+        mAdapter.setIsShowingHeaders(!isInfiniteScrolling);
+
+        // infinite or 30 days activity stream
+        String[][] queryArgs = DBUtils.buildActivityQuery(getActivity(), type,
+                isInfiniteScrolling ? -1 : 30);
 
         return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
                 UpcomingQuery.PROJECTION, queryArgs[0][0], queryArgs[1], queryArgs[2][0]);
@@ -272,6 +269,16 @@ public class UpcomingFragment extends SherlockFragment implements
         mAdapter.swapCursor(null);
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(SeriesGuidePreferences.KEY_ONLYFAVORITES)
+                || key.equals(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES)
+                || key.equals(SeriesGuidePreferences.KEY_NOWATCHED)
+                || ActivitySettings.KEY_INFINITE_SCROLLING.equals(key)) {
+            onRequery();
+        }
+    }
+
     public interface UpcomingQuery {
         String[] PROJECTION = new String[] {
                 Tables.EPISODES + "." + Episodes._ID, Episodes.TITLE, Episodes.WATCHED,
@@ -279,13 +286,11 @@ public class UpcomingFragment extends SherlockFragment implements
                 Shows.AIRSTIME, Shows.NETWORK, Shows.POSTER, Shows.REF_SHOW_ID, Shows.IMDBID
         };
 
-        String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND " + Shows.HIDDEN + "=0";
+        String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND " + Episodes.FIRSTAIREDMS
+                + "<? AND " + Shows.HIDDEN + "=0";
 
-        String SELECTION_LIMIT_UPCOMING = " AND " + Episodes.FIRSTAIREDMS + "<?";
-
-        String QUERY_RECENT = Episodes.FIRSTAIREDMS + "<? AND " + Shows.HIDDEN + "=0";
-
-        String SELECTION_LIMIT_RECENT = " AND " + Episodes.FIRSTAIREDMS + ">?";
+        String QUERY_RECENT = Episodes.FIRSTAIREDMS + "<? AND " + Episodes.FIRSTAIREDMS + ">? AND "
+                + Shows.HIDDEN + "=0";
 
         String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC,"
                 + Episodes.NUMBER + " ASC";
@@ -339,14 +344,32 @@ public class UpcomingFragment extends SherlockFragment implements
 
         private List<HeaderData> mHeaders;
 
+        private DataSetObserverExtension mHeaderChangeDataObserver;
+
         public SlowAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-            mHeaders = generateHeaderList();
+        }
 
-            registerDataSetObserver(new DataSetObserverExtension());
+        /**
+         * Whether to show episodes grouped by day with header. Disable headers
+         * for larger data sets as calculating them is expensive.
+         */
+        public void setIsShowingHeaders(boolean isShowingHeaders) {
+            if (isShowingHeaders) {
+                mHeaders = generateHeaderList();
+                if (mHeaderChangeDataObserver != null) {
+                    mHeaderChangeDataObserver = new DataSetObserverExtension();
+                }
+                registerDataSetObserver(mHeaderChangeDataObserver);
+            } else {
+                mHeaders = null;
+                if (mHeaderChangeDataObserver != null) {
+                    unregisterDataSetObserver(mHeaderChangeDataObserver);
+                }
+            }
         }
 
         @Override
@@ -488,6 +511,22 @@ public class UpcomingFragment extends SherlockFragment implements
         }
 
         @Override
+        public int getCountForHeader(int position) {
+            if (mHeaders != null) {
+                return mHeaders.get(position).getCount();
+            }
+            return 0;
+        }
+
+        @Override
+        public int getNumHeaders() {
+            if (mHeaders != null) {
+                return mHeaders.size();
+            }
+            return 0;
+        }
+
+        @Override
         public View getHeaderView(int position, View convertView, ViewGroup parent) {
             // get header position for item position
             position = mHeaders.get(position).getRefPosition();
@@ -524,16 +563,6 @@ public class UpcomingFragment extends SherlockFragment implements
             holder.day.setText(dayAndTime);
 
             return convertView;
-        }
-
-        @Override
-        public int getCountForHeader(int position) {
-            return mHeaders.get(position).getCount();
-        }
-
-        @Override
-        public int getNumHeaders() {
-            return mHeaders.size();
         }
 
         protected List<HeaderData> generateHeaderList() {
