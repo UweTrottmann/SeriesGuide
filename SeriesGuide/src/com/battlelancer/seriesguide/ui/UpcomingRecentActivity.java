@@ -30,6 +30,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.adapters.TabPagerAdapter;
 import com.battlelancer.seriesguide.items.SearchResult;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.ActivityType;
 import com.battlelancer.seriesguide.ui.dialogs.AddDialogFragment.OnAddShowListener;
 import com.battlelancer.seriesguide.util.ServiceUtils;
@@ -128,6 +129,8 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
                 SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES);
         readBooleanPreference(prefs, menu.findItem(R.id.menu_nowatched),
                 SeriesGuidePreferences.KEY_NOWATCHED);
+        readBooleanPreference(prefs, menu.findItem(R.id.menu_infinite_scrolling),
+                ActivitySettings.KEY_INFINITE_SCROLLING);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -136,16 +139,20 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_onlyfavorites) {
-            fireTrackerEvent("Only favorite shows Toggle");
             storeBooleanPreference(item, SeriesGuidePreferences.KEY_ONLYFAVORITES);
+            fireTrackerEvent("Only favorite shows Toggle");
             return true;
         } else if (itemId == R.id.menu_nospecials) {
-            fireTrackerEvent("Hide specials Toggle");
             storeBooleanPreference(item, SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES);
+            fireTrackerEvent("Hide specials Toggle");
             return true;
         } else if (itemId == R.id.menu_nowatched) {
-            fireTrackerEvent("Hide watched Toggle");
             storeBooleanPreference(item, SeriesGuidePreferences.KEY_NOWATCHED);
+            fireTrackerEvent("Hide watched Toggle");
+            return true;
+        } else if (itemId == R.id.menu_infinite_scrolling) {
+            storeBooleanPreference(item, ActivitySettings.KEY_INFINITE_SCROLLING);
+            fireTrackerEvent("Infinite Scrolling Toggle");
             return true;
         } else {
             return super.onOptionsItemSelected(item);
