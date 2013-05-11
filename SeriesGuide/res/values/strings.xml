@@ -195,6 +195,7 @@
     <string name="norecent">There are no recent episodes.</string>
     <string name="only_favorites">Only favorite shows</string>
     <string name="togglewatched">Toggle watched</string>
+    <string name="pref_infinite_scrolling">Infinite activity</string>
 
     <!-- Updating -->
     <string name="update_notification">Updating your shows…</string>
