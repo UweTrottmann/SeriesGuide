@@ -125,8 +125,8 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         // set menu items to current values
         menu.findItem(R.id.menu_onlyfavorites).setChecked(ActivitySettings.isOnlyFavorites(this));
         menu.findItem(R.id.menu_nospecials).setChecked(ActivitySettings.isHidingSpecials(this));
-        readBooleanPreference(prefs, menu.findItem(R.id.menu_nowatched),
-                SeriesGuidePreferences.KEY_NOWATCHED);
+        menu.findItem(R.id.menu_nowatched).setChecked(
+                prefs.getBoolean(SeriesGuidePreferences.KEY_NOWATCHED, false));
         menu.findItem(R.id.menu_infinite_scrolling).setChecked(
                 ActivitySettings.isInfiniteScrolling(this));
 
@@ -198,11 +198,6 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
     @Override
     protected void fireTrackerEvent(String label) {
         EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
-    }
-
-    private void readBooleanPreference(SharedPreferences prefs, MenuItem item, String key) {
-        boolean value = prefs.getBoolean(key, false);
-        item.setChecked(value);
     }
 
     private void storeBooleanPreference(MenuItem item, String key) {
