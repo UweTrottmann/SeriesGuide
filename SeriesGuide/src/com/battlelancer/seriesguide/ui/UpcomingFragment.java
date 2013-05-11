@@ -360,7 +360,7 @@ public class UpcomingFragment extends SherlockFragment implements
         public void setIsShowingHeaders(boolean isShowingHeaders) {
             if (isShowingHeaders) {
                 mHeaders = generateHeaderList();
-                if (mHeaderChangeDataObserver != null) {
+                if (mHeaderChangeDataObserver == null) {
                     mHeaderChangeDataObserver = new DataSetObserverExtension();
                 }
                 registerDataSetObserver(mHeaderChangeDataObserver);
