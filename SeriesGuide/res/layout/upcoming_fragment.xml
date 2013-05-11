@@ -4,7 +4,6 @@
     android:layout_height="match_parent" >
 
     <com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/gridViewUpcoming"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,8 +14,7 @@
         android:paddingBottom="8dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        app:areHeadersSticky="true" />
+        android:paddingTop="10dp" />
 
     <TextView
         android:id="@+id/emptyViewUpcoming"
