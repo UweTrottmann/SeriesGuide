@@ -44,6 +44,7 @@ import com.battlelancer.seriesguide.getglueapi.GetGlue;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.NotificationSettings;
 import com.battlelancer.seriesguide.util.Utils;
@@ -79,8 +80,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
     public static final String KEY_TRAKTUSER = "com.battlelancer.seriesguide.traktuser";
 
     public static final String KEY_ONLY_FUTURE_EPISODES = "onlyFutureEpisodes";
-
-    public static final String KEY_ONLY_SEASON_EPISODES = "onlySeasonEpisodes";
 
     public static final String KEY_NUMBERFORMAT = "numberformat";
 
@@ -170,7 +169,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         if (action != null && action.equals(ACTION_PREFS_BASIC)) {
             addPreferencesFromResource(R.xml.settings_basic);
             setupBasicSettings(this, findPreference(KEY_ONLY_FUTURE_EPISODES),
-                    findPreference(KEY_ONLY_SEASON_EPISODES),
+                    findPreference(ActivitySettings.KEY_HIDE_SPECIALS),
                     findPreference(NotificationSettings.KEY_ENABLED),
                     findPreference(NotificationSettings.KEY_FAVONLY),
                     findPreference(NotificationSettings.KEY_VIBRATE),
@@ -482,7 +481,7 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
             if ("basic".equals(settings)) {
                 addPreferencesFromResource(R.xml.settings_basic);
                 setupBasicSettings(getActivity(), findPreference(KEY_ONLY_FUTURE_EPISODES),
-                        findPreference(KEY_ONLY_SEASON_EPISODES),
+                        findPreference(ActivitySettings.KEY_HIDE_SPECIALS),
                         findPreference(NotificationSettings.KEY_ENABLED),
                         findPreference(NotificationSettings.KEY_FAVONLY),
                         findPreference(NotificationSettings.KEY_VIBRATE),

@@ -38,6 +38,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.EpisodeSearch;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.ActivityType;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
@@ -278,8 +279,7 @@ public class DBUtils {
         }
 
         // append no specials selection if necessary
-        boolean isNoSpecials = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES,
-                false);
+        boolean isNoSpecials = ActivitySettings.isHidingSpecials(context);
         if (isNoSpecials) {
             query += Episodes.SELECTION_NOSPECIALS;
         }
@@ -619,8 +619,7 @@ public class DBUtils {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final boolean isOnlyFutureEpisodes = prefs.getBoolean(
                 SeriesGuidePreferences.KEY_ONLY_FUTURE_EPISODES, false);
-        final boolean isNoSpecials = prefs.getBoolean(
-                SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES, false);
+        final boolean isNoSpecials = ActivitySettings.isHidingSpecials(context);
         return updateLatestEpisode(context, showId, isOnlyFutureEpisodes, isNoSpecials, prefs);
     }
 

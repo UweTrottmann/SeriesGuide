@@ -125,12 +125,11 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         // set menu items to current values
         readBooleanPreference(prefs, menu.findItem(R.id.menu_onlyfavorites),
                 SeriesGuidePreferences.KEY_ONLYFAVORITES);
-        readBooleanPreference(prefs, menu.findItem(R.id.menu_nospecials),
-                SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES);
+        menu.findItem(R.id.menu_nospecials).setChecked(ActivitySettings.isHidingSpecials(this));
         readBooleanPreference(prefs, menu.findItem(R.id.menu_nowatched),
                 SeriesGuidePreferences.KEY_NOWATCHED);
-        readBooleanPreference(prefs, menu.findItem(R.id.menu_infinite_scrolling),
-                ActivitySettings.KEY_INFINITE_SCROLLING);
+        menu.findItem(R.id.menu_infinite_scrolling).setChecked(
+                ActivitySettings.isInfiniteScrolling(this));
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -143,7 +142,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
             fireTrackerEvent("Only favorite shows Toggle");
             return true;
         } else if (itemId == R.id.menu_nospecials) {
-            storeBooleanPreference(item, SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES);
+            storeBooleanPreference(item, ActivitySettings.KEY_HIDE_SPECIALS);
             fireTrackerEvent("Hide specials Toggle");
             return true;
         } else if (itemId == R.id.menu_nowatched) {
