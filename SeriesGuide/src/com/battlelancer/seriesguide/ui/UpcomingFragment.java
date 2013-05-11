@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
@@ -55,14 +56,18 @@ import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.Lists;
+import com.battlelancer.seriesguide.util.Maps;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
-import com.tonicartos.widget.stickygridheaders.StickyGridHeadersSimpleAdapter;
 import com.uwetrottmann.androidutils.CheatSheet;
 import com.uwetrottmann.seriesguide.R;
 
 import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
 public class UpcomingFragment extends SherlockFragment implements
         LoaderManager.LoaderCallbacks<Cursor>, OnItemClickListener {
@@ -322,21 +327,26 @@ public class UpcomingFragment extends SherlockFragment implements
         }
     };
 
-    private class SlowAdapter extends CursorAdapter implements StickyGridHeadersSimpleAdapter {
+    private class SlowAdapter extends CursorAdapter implements StickyGridHeadersBaseAdapter {
+
+        private final int LAYOUT = R.layout.upcoming_row;
+
+        private final int LAYOUT_HEADER = R.layout.upcoming_header;
 
         private LayoutInflater mLayoutInflater;
 
         private SharedPreferences mPrefs;
 
-        private final int LAYOUT = R.layout.upcoming_row;
-
-        private final int LAYOUT_HEADER = R.layout.upcoming_header;
+        private List<HeaderData> mHeaders;
 
         public SlowAdapter(Context context, Cursor c, int flags) {
             super(context, c, flags);
             mLayoutInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+            mHeaders = generateHeaderList();
+
+            registerDataSetObserver(new DataSetObserverExtension());
         }
 
         @Override
@@ -456,8 +466,7 @@ public class UpcomingFragment extends SherlockFragment implements
             return mLayoutInflater.inflate(LAYOUT, parent, false);
         }
 
-        @Override
-        public long getHeaderId(int position) {
+        private long getHeaderId(int position) {
             Object obj = getItem(position);
             if (obj != null) {
                 /*
@@ -480,6 +489,9 @@ public class UpcomingFragment extends SherlockFragment implements
 
         @Override
         public View getHeaderView(int position, View convertView, ViewGroup parent) {
+            // get header position for item position
+            position = mHeaders.get(position).getRefPosition();
+
             Object obj = getItem(position);
             if (obj == null) {
                 return null;
@@ -512,6 +524,68 @@ public class UpcomingFragment extends SherlockFragment implements
             holder.day.setText(dayAndTime);
 
             return convertView;
+        }
+
+        @Override
+        public int getCountForHeader(int position) {
+            return mHeaders.get(position).getCount();
+        }
+
+        @Override
+        public int getNumHeaders() {
+            return mHeaders.size();
+        }
+
+        protected List<HeaderData> generateHeaderList() {
+            Map<Long, HeaderData> mapping = Maps.newHashMap();
+            List<HeaderData> headers = Lists.newArrayList();
+
+            for (int i = 0; i < getCount(); i++) {
+                long headerId = getHeaderId(i);
+                HeaderData headerData = mapping.get(headerId);
+                if (headerData == null) {
+                    headerData = new HeaderData(i);
+                    headers.add(headerData);
+                }
+                headerData.incrementCount();
+                mapping.put(headerId, headerData);
+            }
+
+            return headers;
+        }
+
+        private final class DataSetObserverExtension extends DataSetObserver {
+            @Override
+            public void onChanged() {
+                mHeaders = generateHeaderList();
+            }
+
+            @Override
+            public void onInvalidated() {
+                mHeaders = generateHeaderList();
+            }
+        }
+
+        private class HeaderData {
+            private int mCount;
+            private int mRefPosition;
+
+            public HeaderData(int refPosition) {
+                mRefPosition = refPosition;
+                mCount = 0;
+            }
+
+            public int getCount() {
+                return mCount;
+            }
+
+            public int getRefPosition() {
+                return mRefPosition;
+            }
+
+            public void incrementCount() {
+                mCount++;
+            }
         }
     }
 
