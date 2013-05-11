@@ -45,6 +45,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.service.OnAlarmReceiver;
+import com.battlelancer.seriesguide.settings.ActivitySettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -607,8 +608,7 @@ public class Utils {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
             final boolean isOnlyFutureEpisodes = prefs.getBoolean(
                     SeriesGuidePreferences.KEY_ONLY_FUTURE_EPISODES, false);
-            final boolean isNoSpecials = prefs.getBoolean(
-                    SeriesGuidePreferences.KEY_ONLY_SEASON_EPISODES, false);
+            final boolean isNoSpecials = ActivitySettings.isHidingSpecials(mContext);
 
             if (mShowId != null) {
                 // update single show
