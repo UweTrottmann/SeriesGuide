@@ -253,7 +253,7 @@ public class UpcomingFragment extends SherlockFragment implements
 
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         String type = getArguments().getString(InitBundle.TYPE);
-        String[][] queryArgs = DBUtils.buildActivityQuery(getActivity(), type);
+        String[][] queryArgs = DBUtils.buildActivityQuery(getActivity(), type, 30);
 
         return new CursorLoader(getActivity(), Episodes.CONTENT_URI_WITHSHOW,
                 UpcomingQuery.PROJECTION, queryArgs[0][0], queryArgs[1], queryArgs[2][0]);
@@ -274,11 +274,13 @@ public class UpcomingFragment extends SherlockFragment implements
                 Shows.AIRSTIME, Shows.NETWORK, Shows.POSTER, Shows.REF_SHOW_ID, Shows.IMDBID
         };
 
-        String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND " + Episodes.FIRSTAIREDMS
-                + "<? AND " + Shows.HIDDEN + "=0";
+        String QUERY_UPCOMING = Episodes.FIRSTAIREDMS + ">=? AND " + Shows.HIDDEN + "=0";
 
-        String QUERY_RECENT = Episodes.FIRSTAIREDMS + "<? AND " + Episodes.FIRSTAIREDMS + ">? AND "
-                + Shows.HIDDEN + "=0";
+        String SELECTION_LIMIT_UPCOMING = " AND " + Episodes.FIRSTAIREDMS + "<?";
+
+        String QUERY_RECENT = Episodes.FIRSTAIREDMS + "<? AND " + Shows.HIDDEN + "=0";
+
+        String SELECTION_LIMIT_RECENT = " AND " + Episodes.FIRSTAIREDMS + ">?";
 
         String SORTING_UPCOMING = Episodes.FIRSTAIREDMS + " ASC," + Shows.TITLE + " ASC,"
                 + Episodes.NUMBER + " ASC";

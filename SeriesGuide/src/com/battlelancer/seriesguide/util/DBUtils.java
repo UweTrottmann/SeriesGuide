@@ -193,7 +193,7 @@ public class DBUtils {
      * @return Cursor using the projection of {@link UpcomingQuery}.
      */
     public static Cursor getUpcomingEpisodes(boolean isOnlyUnwatched, Context context) {
-        String[][] args = buildActivityQuery(context, ActivityType.UPCOMING, isOnlyUnwatched);
+        String[][] args = buildActivityQuery(context, ActivityType.UPCOMING, isOnlyUnwatched, -1);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 UpcomingQuery.PROJECTION, args[0][0], args[1], args[2][0]);
@@ -206,7 +206,7 @@ public class DBUtils {
      * @return Cursor using the projection of {@link UpcomingQuery}.
      */
     public static Cursor getRecentEpisodes(boolean isOnlyUnwatched, Context context) {
-        String[][] args = buildActivityQuery(context, ActivityType.RECENT, isOnlyUnwatched);
+        String[][] args = buildActivityQuery(context, ActivityType.RECENT, isOnlyUnwatched, -1);
 
         return context.getContentResolver().query(Episodes.CONTENT_URI_WITHSHOW,
                 UpcomingQuery.PROJECTION, args[0][0], args[1], args[2][0]);
@@ -216,41 +216,63 @@ public class DBUtils {
      * Returns an array of size 3. The built query is stored in {@code [0][0]},
      * the built selection args in {@code [1]} and the sort order in
      * {@code [2][0]}.
+     * 
+     * @param type A {@link ActivityType}, defaults to UPCOMING.
+     * @param numberOfDaysToInclude Limits the time range of returned episodes
+     *            to a number of days from today. If lower then 1 defaults to
+     *            infinity.
      */
-    public static String[][] buildActivityQuery(Context context, String type) {
+    public static String[][] buildActivityQuery(Context context, String type,
+            int numberOfDaysToInclude) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         boolean isNoWatched = prefs.getBoolean(SeriesGuidePreferences.KEY_NOWATCHED, false);
 
-        return buildActivityQuery(context, type, isNoWatched);
+        return buildActivityQuery(context, type, isNoWatched, numberOfDaysToInclude);
     }
 
     private static String[][] buildActivityQuery(Context context, String type,
-            boolean isOnlyUnwatched) {
+            boolean isOnlyUnwatched, int numberOfDaysToInclude) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         long fakeNow = Utils.getFakeCurrentTime(prefs);
         // go an hour back in time, so episodes move to recent one hour late
         long recentThreshold = fakeNow - DateUtils.HOUR_IN_MILLIS;
 
-        String sortOrder;
         String query;
-        long monthThreshold;
+        String[] selectionArgs;
+        String sortOrder;
 
-        if (ActivityType.UPCOMING.equals(type)) {
-            query = UpcomingQuery.QUERY_UPCOMING;
-            sortOrder = UpcomingQuery.SORTING_UPCOMING;
-            monthThreshold = System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS * 90;
-        } else {
+        if (ActivityType.RECENT.equals(type)) {
             query = UpcomingQuery.QUERY_RECENT;
             sortOrder = UpcomingQuery.SORTING_RECENT;
-            monthThreshold = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS * 90;
+        } else {
+            query = UpcomingQuery.QUERY_UPCOMING;
+            sortOrder = UpcomingQuery.SORTING_UPCOMING;
         }
 
-        // build selection args
-        String[] selectionArgs = new String[] {
-                String.valueOf(recentThreshold), String.valueOf(monthThreshold)
-        };
+        // possibly limit the time range of episodes
+        if (numberOfDaysToInclude < 1) {
+            selectionArgs = new String[] {
+                    String.valueOf(recentThreshold)
+            };
+        } else {
+            long monthThreshold;
+
+            if (ActivityType.RECENT.equals(type)) {
+                query += UpcomingQuery.SELECTION_LIMIT_RECENT;
+                monthThreshold = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS
+                        * numberOfDaysToInclude;
+            } else {
+                query += UpcomingQuery.SELECTION_LIMIT_UPCOMING;
+                monthThreshold = System.currentTimeMillis() + DateUtils.DAY_IN_MILLIS
+                        * numberOfDaysToInclude;
+            }
+
+            selectionArgs = new String[] {
+                    String.valueOf(recentThreshold), String.valueOf(monthThreshold)
+            };
+        }
 
         // append only favorites selection if necessary
         boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
