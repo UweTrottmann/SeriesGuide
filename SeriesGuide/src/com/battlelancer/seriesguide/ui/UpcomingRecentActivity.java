@@ -123,8 +123,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
                 .getDefaultSharedPreferences(getApplicationContext());
 
         // set menu items to current values
-        readBooleanPreference(prefs, menu.findItem(R.id.menu_onlyfavorites),
-                SeriesGuidePreferences.KEY_ONLYFAVORITES);
+        menu.findItem(R.id.menu_onlyfavorites).setChecked(ActivitySettings.isOnlyFavorites(this));
         menu.findItem(R.id.menu_nospecials).setChecked(ActivitySettings.isHidingSpecials(this));
         readBooleanPreference(prefs, menu.findItem(R.id.menu_nowatched),
                 SeriesGuidePreferences.KEY_NOWATCHED);
@@ -138,7 +137,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_onlyfavorites) {
-            storeBooleanPreference(item, SeriesGuidePreferences.KEY_ONLYFAVORITES);
+            storeBooleanPreference(item, ActivitySettings.KEY_ONLY_FAVORITES);
             fireTrackerEvent("Only favorite shows Toggle");
             return true;
         } else if (itemId == R.id.menu_nospecials) {

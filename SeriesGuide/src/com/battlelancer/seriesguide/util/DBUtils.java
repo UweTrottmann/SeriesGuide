@@ -273,7 +273,7 @@ public class DBUtils {
         };
 
         // append only favorites selection if necessary
-        boolean isOnlyFavorites = prefs.getBoolean(SeriesGuidePreferences.KEY_ONLYFAVORITES, false);
+        boolean isOnlyFavorites = ActivitySettings.isOnlyFavorites(context);
         if (isOnlyFavorites) {
             query += Shows.SELECTION_FAVORITES;
         }

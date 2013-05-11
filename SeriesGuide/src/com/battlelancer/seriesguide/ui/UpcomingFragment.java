@@ -271,7 +271,7 @@ public class UpcomingFragment extends SherlockFragment implements
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(SeriesGuidePreferences.KEY_ONLYFAVORITES)
+        if (key.equals(ActivitySettings.KEY_ONLY_FAVORITES)
                 || key.equals(ActivitySettings.KEY_HIDE_SPECIALS)
                 || key.equals(SeriesGuidePreferences.KEY_NOWATCHED)
                 || ActivitySettings.KEY_INFINITE_SCROLLING.equals(key)) {

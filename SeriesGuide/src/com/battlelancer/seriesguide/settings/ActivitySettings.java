@@ -10,9 +10,20 @@ import android.preference.PreferenceManager;
  */
 public class ActivitySettings {
 
+    public static final String KEY_HIDE_SPECIALS = "onlySeasonEpisodes";
+
     public static final String KEY_INFINITE_SCROLLING = "com.battlelancer.seriesguide.activity.infinite";
 
-    public static final String KEY_HIDE_SPECIALS = "onlySeasonEpisodes";
+    public static final String KEY_ONLY_FAVORITES = "com.battlelancer.seriesguide.onlyfavorites";
+
+    /**
+     * Whether to exclude special episodes wherever possible (except in the
+     * actual seasons and episode lists of a show).
+     */
+    public static boolean isHidingSpecials(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+                KEY_HIDE_SPECIALS, false);
+    }
 
     /**
      * Whether the activity stream should be infinite or limited to a number of
@@ -25,11 +36,13 @@ public class ActivitySettings {
     }
 
     /**
-     * Whether to exclude special episodes wherever possible (except in the
-     * actual seasons and episode lists of a show).
+     * Whether the activity stream should only include episodes from favorited
+     * shows.
      */
-    public static boolean isHidingSpecials(Context context) {
+    public static boolean isOnlyFavorites(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
-                KEY_HIDE_SPECIALS, false);
+                KEY_ONLY_FAVORITES,
+                false);
     }
+
 }

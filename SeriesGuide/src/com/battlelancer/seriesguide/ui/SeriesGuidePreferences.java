@@ -119,8 +119,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_LASTTRAKTUPDATE = "com.battlelancer.seriesguide.lasttraktupdate";
 
-    public static final String KEY_ONLYFAVORITES = "com.battlelancer.seriesguide.onlyfavorites";
-
     public static final String KEY_NOWATCHED = "com.battlelancer.seriesguide.activity.nowatched";
 
     public static final String KEY_UPCOMING_LIMIT = "com.battlelancer.seriesguide.upcominglimit";
