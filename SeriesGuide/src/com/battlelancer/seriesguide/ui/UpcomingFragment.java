@@ -132,6 +132,9 @@ public class UpcomingFragment extends SherlockFragment implements
 
         // setup adapter
         mAdapter = new SlowAdapter(getActivity(), null, 0);
+        mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteScrolling(getActivity()));
+
+        // setup grid view
         mGridView.setAdapter(mAdapter);
         mGridView.setOnItemClickListener(this);
 
@@ -250,9 +253,6 @@ public class UpcomingFragment extends SherlockFragment implements
         String type = getArguments().getString(InitBundle.TYPE);
         boolean isInfiniteScrolling = ActivitySettings.isInfiniteScrolling(getActivity());
 
-        // show headers if using a finite list
-        mAdapter.setIsShowingHeaders(!isInfiniteScrolling);
-
         // infinite or 30 days activity stream
         String[][] queryArgs = DBUtils.buildActivityQuery(getActivity(), type,
                 isInfiniteScrolling ? -1 : 30);
@@ -271,9 +271,12 @@ public class UpcomingFragment extends SherlockFragment implements
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(ActivitySettings.KEY_ONLY_FAVORITES)
-                || key.equals(ActivitySettings.KEY_HIDE_SPECIALS)
-                || key.equals(SeriesGuidePreferences.KEY_NOWATCHED)
+        if (ActivitySettings.KEY_INFINITE_SCROLLING.equals(key)) {
+            mAdapter.setIsShowingHeaders(!ActivitySettings.isInfiniteScrolling(getActivity()));
+        }
+        if (ActivitySettings.KEY_ONLY_FAVORITES.equals(key)
+                || ActivitySettings.KEY_HIDE_SPECIALS.equals(key)
+                || SeriesGuidePreferences.KEY_NOWATCHED.equals(key)
                 || ActivitySettings.KEY_INFINITE_SCROLLING.equals(key)) {
             onRequery();
         }
@@ -359,16 +362,16 @@ public class UpcomingFragment extends SherlockFragment implements
          */
         public void setIsShowingHeaders(boolean isShowingHeaders) {
             if (isShowingHeaders) {
-                mHeaders = generateHeaderList();
                 if (mHeaderChangeDataObserver == null) {
                     mHeaderChangeDataObserver = new DataSetObserverExtension();
+                    registerDataSetObserver(mHeaderChangeDataObserver);
                 }
-                registerDataSetObserver(mHeaderChangeDataObserver);
             } else {
-                mHeaders = null;
                 if (mHeaderChangeDataObserver != null) {
                     unregisterDataSetObserver(mHeaderChangeDataObserver);
                 }
+                mHeaders = null;
+                mHeaderChangeDataObserver = null;
             }
         }
 
