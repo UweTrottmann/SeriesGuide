@@ -289,12 +289,17 @@ public class Utils {
 
         timeAndDay.append(" ");
 
-        timeAndDay.append(DateUtils
-                .getRelativeTimeSpanString(
-                        cal.getTimeInMillis(),
-                        System.currentTimeMillis(),
-                        DateUtils.DAY_IN_MILLIS,
-                        DateUtils.FORMAT_ABBREV_ALL));
+        // Show 'today' instead of '0 days ago'
+        if (DateUtils.isToday(cal.getTimeInMillis())) {
+            timeAndDay.append(context.getString(R.string.today));
+        } else {
+            timeAndDay.append(DateUtils
+                    .getRelativeTimeSpanString(
+                            cal.getTimeInMillis(),
+                            System.currentTimeMillis(),
+                            DateUtils.DAY_IN_MILLIS,
+                            DateUtils.FORMAT_ABBREV_ALL));
+        }
 
         return timeAndDay.toString();
     }
