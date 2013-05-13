@@ -101,14 +101,14 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_rate_trakt) {
+        if (itemId == R.id.menu_show_rate) {
             onRateOnTrakt();
             return true;
-        } else if (itemId == R.id.menu_manage_lists) {
+        } else if (itemId == R.id.menu_show_manage_lists) {
             ListsDialogFragment.showListsDialog(String.valueOf(getShowTvdbId()),
                     ListItemTypes.SHOW, getFragmentManager());
             return true;
-        } else if (itemId == R.id.menu_share) {
+        } else if (itemId == R.id.menu_show_share) {
             onShareShow();
             return true;
         }
@@ -309,7 +309,7 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
             // Share intent
             IntentBuilder ib = ShareCompat.IntentBuilder
                     .from(getActivity())
-                    .setChooserTitle(R.string.share)
+                    .setChooserTitle(R.string.share_show)
                     .setText(
                             getString(R.string.share_checkout) + " \"" + mShow.getTitle()
                                     + "\" " + Utils.IMDB_TITLE_URL + mShow.getImdbId())

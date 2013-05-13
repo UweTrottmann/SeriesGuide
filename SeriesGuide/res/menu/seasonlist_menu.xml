@@ -4,22 +4,27 @@
     <item
         android:id="@+id/menu_sesortby"
         android:icon="@drawable/ic_action_sort"
+        android:orderInCategory="200"
         android:showAsAction="never"
         android:title="@string/sort"/>
     <item
         android:id="@+id/menu_watched_all"
+        android:orderInCategory="201"
         android:showAsAction="never"
         android:title="@string/mark_all"/>
     <item
         android:id="@+id/menu_unwatched_all"
+        android:orderInCategory="202"
         android:showAsAction="never"
         android:title="@string/unmark_all"/>
     <item
         android:id="@+id/menu_collect_all"
+        android:orderInCategory="203"
         android:showAsAction="never"
         android:title="@string/collect_all"/>
     <item
         android:id="@+id/menu_uncollect_all"
+        android:orderInCategory="204"
         android:showAsAction="never"
         android:title="@string/uncollect_all"/>
 

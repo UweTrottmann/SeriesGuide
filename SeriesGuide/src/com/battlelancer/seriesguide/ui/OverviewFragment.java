@@ -196,31 +196,31 @@ public class OverviewFragment extends SherlockFragment implements
             isEpisodeVisible = true;
             boolean isCollected = mEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1 ? true
                     : false;
-            menu.findItem(R.id.menu_flag_collected).setIcon(
+            menu.findItem(R.id.menu_overview_flag_collected).setIcon(
                     isCollected ? R.drawable.ic_collected : R.drawable.ic_action_collect);
         } else {
             isEpisodeVisible = false;
         }
-        menu.findItem(R.id.menu_checkin).setEnabled(isEpisodeVisible && !mMultiPane);
-        menu.findItem(R.id.menu_flag_watched).setEnabled(isEpisodeVisible && !mMultiPane);
-        menu.findItem(R.id.menu_flag_collected).setEnabled(isEpisodeVisible && !mMultiPane);
-        menu.findItem(R.id.menu_calendarevent).setEnabled(isEpisodeVisible && !mMultiPane);
-        menu.findItem(R.id.menu_share).setEnabled(isEpisodeVisible);
-        menu.findItem(R.id.menu_rate_trakt).setEnabled(isEpisodeVisible);
-        menu.findItem(R.id.menu_manage_lists).setEnabled(isEpisodeVisible);
+        menu.findItem(R.id.menu_overview_checkin).setEnabled(isEpisodeVisible && !mMultiPane);
+        menu.findItem(R.id.menu_overview_flag_watched).setEnabled(isEpisodeVisible && !mMultiPane);
+        menu.findItem(R.id.menu_overview_flag_collected).setEnabled(isEpisodeVisible && !mMultiPane);
+        menu.findItem(R.id.menu_overview_calendarevent).setEnabled(isEpisodeVisible && !mMultiPane);
+        menu.findItem(R.id.menu_overview_share).setEnabled(isEpisodeVisible);
+        menu.findItem(R.id.menu_overview_rate).setEnabled(isEpisodeVisible);
+        menu.findItem(R.id.menu_overview_manage_lists).setEnabled(isEpisodeVisible);
 
         // hide some items on larger screens, we use inline buttons there
-        menu.findItem(R.id.menu_checkin).setVisible(!mMultiPane);
-        menu.findItem(R.id.menu_flag_watched).setVisible(!mMultiPane);
-        menu.findItem(R.id.menu_flag_collected).setVisible(!mMultiPane);
-        menu.findItem(R.id.menu_calendarevent).setVisible(!mMultiPane);
+        menu.findItem(R.id.menu_overview_checkin).setVisible(!mMultiPane);
+        menu.findItem(R.id.menu_overview_flag_watched).setVisible(!mMultiPane);
+        menu.findItem(R.id.menu_overview_flag_collected).setVisible(!mMultiPane);
+        menu.findItem(R.id.menu_overview_calendarevent).setVisible(!mMultiPane);
 
         // move some items to the overflow menu on smaller screens
-        menu.findItem(R.id.menu_rate_trakt).setShowAsAction(
+        menu.findItem(R.id.menu_overview_rate).setShowAsAction(
                 mMultiPane ?
                         MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT
                         : MenuItem.SHOW_AS_ACTION_NEVER);
-        menu.findItem(R.id.menu_manage_lists).setShowAsAction(
+        menu.findItem(R.id.menu_overview_manage_lists).setShowAsAction(
                 mMultiPane ?
                         MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT
                         : MenuItem.SHOW_AS_ACTION_NEVER);
@@ -232,24 +232,24 @@ public class OverviewFragment extends SherlockFragment implements
         if (itemId == R.id.menu_checkin) {
             onCheckIn();
             return true;
-        } else if (itemId == R.id.menu_flag_watched) {
+        } else if (itemId == R.id.menu_overview_flag_watched) {
             onFlagWatched();
             return true;
-        } else if (itemId == R.id.menu_flag_collected) {
+        } else if (itemId == R.id.menu_overview_flag_collected) {
             onToggleCollected();
             return true;
-        } else if (itemId == R.id.menu_calendarevent) {
+        } else if (itemId == R.id.menu_overview_calendarevent) {
             onAddCalendarEvent();
             return true;
-        } else if (itemId == R.id.menu_rate_trakt) {
+        } else if (itemId == R.id.menu_overview_rate) {
             onRateOnTrakt();
             return true;
-        } else if (itemId == R.id.menu_share) {
+        } else if (itemId == R.id.menu_overview_share) {
             // share episode
             fireTrackerEvent("Share");
             onShareEpisode(ShareMethod.OTHER_SERVICES);
             return true;
-        } else if (itemId == R.id.menu_manage_lists) {
+        } else if (itemId == R.id.menu_overview_manage_lists) {
             fireTrackerEvent("Manage lists");
             if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
                 ListsDialogFragment.showListsDialog(mEpisodeCursor.getString(EpisodeQuery._ID),

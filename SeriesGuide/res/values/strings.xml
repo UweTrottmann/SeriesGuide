@@ -13,6 +13,7 @@
     <string name="specialseason">Special Episodes</string>
     <string name="search_hint">Search episodes</string>
     <string name="share_episode">Share episode</string>
+    <string name="share_show">Share show</string>
     <string name="share_checkout">Check out</string>
     <string name="search_description">Episodes</string>
     <string name="description_overview">Overview</string>
@@ -398,7 +399,8 @@
     <string name="looking_for_something_else">Looking for something else?</string>
 
     <!-- Share methods -->
-    <string name="menu_rate_trakt">Rate (trakt)</string>
+    <string name="menu_rate_episode">Rate episode</string>
+    <string name="menu_rate_show">Rate show</string>
     <string name="menu_share_others">Via other apps</string>
     <string name="traktcheckin_cancel">Override</string>
     <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>

@@ -4,20 +4,17 @@
     <item
         android:id="@+id/menu_show_rate"
         android:icon="@drawable/trakt_heart"
-        android:orderInCategory="100"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="never"
         android:title="@string/menu_rate_show"/>
     <item
         android:id="@+id/menu_show_manage_lists"
         android:icon="@drawable/ic_action_list"
-        android:orderInCategory="101"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="never"
         android:title="@string/list_item_manage"/>
     <item
         android:id="@+id/menu_show_share"
         android:icon="@drawable/ic_action_share"
-        android:orderInCategory="102"
-        android:showAsAction="ifRoom"
+        android:showAsAction="never"
         android:title="@string/share_show"/>
 
 </menu>
