@@ -2,7 +2,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item name="overview" type="layout">@layout/overview_multipane_wide</item>
-    <item name="show_info" type="layout">@layout/show_info</item>
+    <item name="show_info" type="layout">@layout/show_info_regular</item>
     <item name="episodes" type="layout">@layout/episodes_multipane_wide</item>
     <item name="upcoming" type="layout">@layout/upcoming_multipane_wide</item>
     <item name="search" type="layout">@layout/search_wide</item>
