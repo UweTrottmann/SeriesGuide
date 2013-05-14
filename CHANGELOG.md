@@ -5,6 +5,21 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 6
+---------
+
+#### 6beta1 *(2013-05-14)*
+
+* Activity stream now by default shows 30 days of activity into the future/into the past. Added option to show 'Infinite activity' to display all activity. List widget displays infinite activity again.
+* Redesigned menu to be more in line with other apps. Looks like there will be a Google Pattern at I/O, so it will probably change again, soon.
+* Android 3.0+ tablets now use a multi-pane overview layout which also displays show information.
+* Support different location of numbers for season and episode strings. Translations pending.
+* Design tweaks for action bar and tabs featuring less prominent text.
+* Design tweaks for movie section to fit more items on screen, less prominent text.
+* Added setting to disable Auto-Backup.
+* Fixed crash in movies section when movies did not have a proper release date set.
+* Latest translations from crowdin.
+
 Version 5.1 *(2013-05-01)*
 --------------------------
 
