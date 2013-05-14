@@ -30,7 +30,7 @@
         android:layout_marginLeft="@dimen/inline_padding"
         android:layout_toRightOf="@id/bar"
         android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance" />
+        android:textAppearance="@style/TextAppearance.Small" />
 
     <TextView
         android:id="@+id/tvdblabel"
@@ -39,7 +39,7 @@
         android:layout_marginLeft="@dimen/inline_padding"
         android:layout_toRightOf="@id/value"
         android:text="@string/tvdb"
-        android:textAppearance="@style/TextAppearance.Dim" />
+        android:textAppearance="@style/TextAppearance.Small.Dim" />
 
     <RelativeLayout
         android:id="@+id/traktrating"
