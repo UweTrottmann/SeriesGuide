@@ -230,7 +230,7 @@ public class OverviewFragment extends SherlockFragment implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_checkin) {
+        if (itemId == R.id.menu_overview_checkin) {
             onCheckIn();
             return true;
         } else if (itemId == R.id.menu_overview_flag_watched) {
