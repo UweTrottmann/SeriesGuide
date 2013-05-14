@@ -664,7 +664,7 @@ public class Utils {
         if (seasonNumber == 0) {
             return context.getString(R.string.specialseason);
         } else {
-            return context.getString(R.string.season) + " " + seasonNumber;
+            return context.getString(R.string.season_number, seasonNumber);
         }
     }
 

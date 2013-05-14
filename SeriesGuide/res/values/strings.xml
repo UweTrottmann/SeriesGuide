@@ -4,8 +4,10 @@
     <!-- Generic -->
     <string name="show">Show</string>
     <string name="episode">Episode</string>
+    <string name="episode_number">Episode %s</string>
     <string name="episodes">Episodes</string>
     <string name="season">Season</string>
+    <string name="season_number">Season %s</string>
     <string name="seasons">Seasons</string>
     <string name="unknown">unknown</string>
     <string name="episode_iswatched">Watched already</string>

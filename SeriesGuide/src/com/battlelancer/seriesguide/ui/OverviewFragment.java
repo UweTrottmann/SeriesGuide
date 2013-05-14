@@ -203,7 +203,8 @@ public class OverviewFragment extends SherlockFragment implements
         }
         menu.findItem(R.id.menu_overview_checkin).setEnabled(isEpisodeVisible && !mMultiPane);
         menu.findItem(R.id.menu_overview_flag_watched).setEnabled(isEpisodeVisible && !mMultiPane);
-        menu.findItem(R.id.menu_overview_flag_collected).setEnabled(isEpisodeVisible && !mMultiPane);
+        menu.findItem(R.id.menu_overview_flag_collected)
+                .setEnabled(isEpisodeVisible && !mMultiPane);
         menu.findItem(R.id.menu_overview_calendarevent).setEnabled(isEpisodeVisible && !mMultiPane);
         menu.findItem(R.id.menu_overview_share).setEnabled(isEpisodeVisible);
         menu.findItem(R.id.menu_overview_rate).setEnabled(isEpisodeVisible);
@@ -549,10 +550,9 @@ public class OverviewFragment extends SherlockFragment implements
 
             // number
             StringBuilder infoText = new StringBuilder();
-            infoText.append(getString(R.string.season)).append(" ").append(seasonNumber);
+            infoText.append(getString(R.string.season_number, seasonNumber));
             infoText.append(" ");
-            infoText.append(getString(R.string.episode)).append(" ")
-                    .append(episodeNumber);
+            infoText.append(getString(R.string.episode_number, episodeNumber));
             if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != episodeNumber) {
                 infoText.append(" (").append(episodeAbsoluteNumber).append(")");
             }

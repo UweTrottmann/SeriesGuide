@@ -367,14 +367,12 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             // number
             int numberStartIndex = airTimeAndNumberText.length();
             airTimeAndNumberText.append("  ")
-                    .append(getString(R.string.season).toUpperCase(Locale.getDefault()))
-                    .append(" ")
-                    .append(String.valueOf(mSeasonNumber));
+                    .append(getString(R.string.season_number, mSeasonNumber).toUpperCase(
+                            Locale.getDefault()));
             airTimeAndNumberText.append(" ");
             airTimeAndNumberText
-                    .append(getString(R.string.episode).toUpperCase(Locale.getDefault()))
-                    .append(" ")
-                    .append(String.valueOf(mEpisodeNumber));
+                    .append(getString(R.string.episode_number, mEpisodeNumber).toUpperCase(
+                            Locale.getDefault()));
             final int episodeAbsoluteNumber = cursor.getInt(DetailsQuery.ABSOLUTE_NUMBER);
             if (episodeAbsoluteNumber > 0 && episodeAbsoluteNumber != mEpisodeNumber) {
                 airTimeAndNumberText.append(" (").append(String.valueOf(episodeAbsoluteNumber))
