@@ -640,7 +640,7 @@ public class OverviewFragment extends SherlockFragment implements
                 }
             });
             ratings.setFocusable(true);
-            CheatSheet.setup(ratings, R.string.menu_rate_trakt);
+            CheatSheet.setup(ratings, R.string.menu_rate_episode);
 
             // load all other info
             onLoadEpisodeDetails(episode);

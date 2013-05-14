@@ -220,7 +220,7 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
             }
         });
         ratings.setFocusable(true);
-        CheatSheet.setup(ratings, R.string.menu_rate_trakt);
+        CheatSheet.setup(ratings, R.string.menu_rate_show);
 
         // Last edit date
         TextView lastEdit = (TextView) getView().findViewById(R.id.lastEdit);

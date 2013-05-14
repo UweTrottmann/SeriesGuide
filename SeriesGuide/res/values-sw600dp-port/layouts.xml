@@ -2,5 +2,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item name="overview" type="layout">@layout/overview_multipane</item>
+    <item name="show_info" type="layout">@layout/show_info_narrow</item>
 
 </resources>

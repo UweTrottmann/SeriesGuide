@@ -20,7 +20,9 @@
             style="@style/DefaultPadding.Page"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding" >
 
             <TextView
                 android:id="@+id/title"
@@ -29,8 +31,7 @@
                 android:layout_marginLeft="@dimen/default_padding"
                 android:layout_marginRight="@dimen/default_padding"
                 android:textAppearance="@style/TextAppearance.Large.Light"
-                android:textIsSelectable="true"
-                android:textSize="@dimen/text_size_ultralarge" />
+                android:textIsSelectable="true" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -39,8 +40,8 @@
 
                 <ImageView
                     android:id="@+id/ImageViewShowInfoPoster"
-                    android:layout_width="140dp"
-                    android:layout_height="205dp"
+                    android:layout_width="84dp"
+                    android:layout_height="123dp"
                     android:contentDescription="@string/description_poster"
                     android:scaleType="centerCrop" />
 
@@ -67,7 +68,7 @@
                     android:textIsSelectable="true" />
             </RelativeLayout>
 
-            <include layout="@layout/ratingbar" >
+            <include layout="@layout/ratingbar_narrow" >
             </include>
 
             <include layout="@layout/show_info_metamore" >
