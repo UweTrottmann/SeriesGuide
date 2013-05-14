@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Show</string>
   <string name="episode">集數</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">Episodes</string>
   <string name="season">季</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">季數</string>
   <string name="unknown">unknown</string>
   <string name="episode_iswatched">已觀賞</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">特集</string>
   <string name="search_hint">搜尋集數</string>
   <string name="share_episode">分享此集</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">登出</string>
   <string name="search_description">集數</string>
   <string name="description_overview">簡介</string>
@@ -137,6 +140,7 @@
   <string name="norecent">沒有最近的影集。</string>
   <string name="only_favorites">Only favorite shows</string>
   <string name="togglewatched">切換已觀看</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
   <string name="update_notification">Updating your shows…</string>
   <string name="update_single">Updating show…</string>
   <string name="update_delta">Updating outdated shows…</string>
@@ -227,6 +231,8 @@
   <string name="pref_other">Other</string>
   <string name="pref_autoupdate">開啟自動更新</string>
   <string name="pref_autoupdatesummary">當執行SeriesGuide時，定期更新您的影集</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">備份/還原</string>
   <string name="backup_summary">備份或還原你的影集</string>
   <string name="pref_upcominglimit">Upcoming shows within…</string>
@@ -279,7 +285,8 @@
   <string name="check_into">Check into</string>
   <string name="no_selection">pick one below</string>
   <string name="looking_for_something_else">Looking for something else?</string>
-  <string name="menu_rate_trakt">等級(trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">透過其他應用程式。</string>
   <string name="traktcheckin_cancel">Override</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
@@ -303,6 +310,7 @@
   <string name="welcome_add_part1">To get started tap</string>
   <string name="upcoming_show">%s is coming up</string>
   <string name="upcoming_episodes">New episodes are coming up</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>
   <string name="upcoming_display">Select to display upcoming shows</string>
   <string name="pref_notifications">Notifications</string>

@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Serie</string>
   <string name="episode">Aflevering</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">Afleveringen</string>
   <string name="season">Seizoen</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">Seizoenen</string>
   <string name="unknown">onbekend</string>
   <string name="episode_iswatched">Al bekeken</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">Speciale afleveringen</string>
   <string name="search_hint">Afleveringen zoeken</string>
   <string name="share_episode">Aflevering delen</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">Uitchecken</string>
   <string name="search_description">Afleveringen</string>
   <string name="description_overview">Overzicht</string>
@@ -137,6 +140,7 @@
   <string name="norecent">Er zijn geen recente afleveringen.</string>
   <string name="only_favorites">Alleen favoriete series</string>
   <string name="togglewatched">Bekeken/niet bekeken wijzigen</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
   <string name="update_notification">Series updaten...</string>
   <string name="update_single">Serie updaten...</string>
   <string name="update_delta">Verouderde series updaten…</string>
@@ -227,6 +231,8 @@
   <string name="pref_other">Andere</string>
   <string name="pref_autoupdate">Automatisch updaten inschakelen</string>
   <string name="pref_autoupdatesummary">Series periodiek bijwerken bij het opstarten van SeriesGuide</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Back-up maken/herstellen</string>
   <string name="backup_summary">Back-up van series maken/herstellen</string>
   <string name="pref_upcominglimit">Toekomstige series over…</string>
@@ -279,7 +285,8 @@
   <string name="check_into">Check-in bij</string>
   <string name="no_selection">kies een onderstaand</string>
   <string name="looking_for_something_else">Op zoek naar iets anders?</string>
-  <string name="menu_rate_trakt">Beoordelen (trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">Via andere apps</string>
   <string name="traktcheckin_cancel">Overschrijven</string>
   <string name="traktcheckin_inprogress">Je bent al aangemeld bij een andere aflevering of film. Overschrijf de vorige aanmelding of wacht %s en probeer het opnieuw.</string>
@@ -303,6 +310,7 @@
   <string name="welcome_add_part1">Om te beginnen druk op</string>
   <string name="upcoming_show">%s verschijnt binnenkort</string>
   <string name="upcoming_episodes">Nieuwe afleveringen verschijnen binnenkort</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s op %2$s</string>
   <string name="upcoming_display">Selecteer om toekomstige series weer te geven</string>
   <string name="pref_notifications">Meldingen</string>

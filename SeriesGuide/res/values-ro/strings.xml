@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Show</string>
   <string name="episode">Episod</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">Episoade</string>
   <string name="season">Sezon</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">Sezoane</string>
   <string name="unknown">necunoscut</string>
   <string name="episode_iswatched">Deja vizionat</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">Episoade speciale</string>
   <string name="search_hint">Căutaţi episoade</string>
   <string name="share_episode">Share episod</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">Consultați</string>
   <string name="search_description">Episoade</string>
   <string name="description_overview">Prezentare generală</string>
@@ -137,6 +140,7 @@
   <string name="norecent">Nu sînt episoade recente.</string>
   <string name="only_favorites">Doar emisiunile preferate</string>
   <string name="togglewatched">Toggle watched</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
   <string name="update_notification">Se actualizează emisiunile dumnevoastră...</string>
   <string name="update_single">Actualizarea emisiunii...</string>
   <string name="update_delta">Actualizarea emisiunilor învechite...</string>
@@ -227,6 +231,8 @@
   <string name="pref_other">Alte</string>
   <string name="pref_autoupdate">Porniţi Actualizarea Automată</string>
   <string name="pref_autoupdatesummary">Periodically update your shows when starting SeriesGuide</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Copiere de rezervă/restaurare</string>
   <string name="backup_summary">Backup or restore your shows</string>
   <string name="pref_upcominglimit">Seriale viitoare în timpul</string>
@@ -279,7 +285,8 @@
   <string name="check_into">Check into</string>
   <string name="no_selection">alegeți una de mai jos</string>
   <string name="looking_for_something_else">Căutați altceva?</string>
-  <string name="menu_rate_trakt">Rate (trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">Via other apps</string>
   <string name="traktcheckin_cancel">Override</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
@@ -303,6 +310,7 @@
   <string name="welcome_add_part1">Pentru a începe apasati</string>
   <string name="upcoming_show">%s urmeaza</string>
   <string name="upcoming_episodes">Vor apărea episoade noi</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$ pe %2$ s</string>
   <string name="upcoming_display">Selectați să se afișeze serialele următoare</string>
   <string name="pref_notifications">Notificări</string>

@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Show</string>
   <string name="episode">Epizoda</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">Episodes</string>
   <string name="season">Sezona</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">Sezone</string>
   <string name="unknown">unknown</string>
   <string name="episode_iswatched">Već pogledano</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">Posebne epizode</string>
   <string name="search_hint">Pretraži epizode</string>
   <string name="share_episode">Podijeli epizodu</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">Check out</string>
   <string name="search_description">Epizode</string>
   <string name="description_overview">Pregled</string>
@@ -137,6 +140,7 @@
   <string name="norecent">There are no recent episodes.</string>
   <string name="only_favorites">Only favorite shows</string>
   <string name="togglewatched">Toggle watched</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
   <string name="update_notification">Updating your shows…</string>
   <string name="update_single">Updating show…</string>
   <string name="update_delta">Updating outdated shows…</string>
@@ -227,6 +231,8 @@
   <string name="pref_other">Other</string>
   <string name="pref_autoupdate">Turn on Auto Update</string>
   <string name="pref_autoupdatesummary">Periodically update your shows when starting SeriesGuide</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Pričuvna kopija/Vraćanje pričuvne kopije</string>
   <string name="backup_summary">Napravi ili vrati pričuvnu kopiju vaših serija</string>
   <string name="pref_upcominglimit">Upcoming shows within…</string>
@@ -279,7 +285,8 @@
   <string name="check_into">Check into</string>
   <string name="no_selection">pick one below</string>
   <string name="looking_for_something_else">Looking for something else?</string>
-  <string name="menu_rate_trakt">Rate (trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">Via other apps</string>
   <string name="traktcheckin_cancel">Override</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
@@ -303,6 +310,7 @@
   <string name="welcome_add_part1">To get started tap</string>
   <string name="upcoming_show">%s is coming up</string>
   <string name="upcoming_episodes">Nove epizode dolaze</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>
   <string name="upcoming_display">Odaberite za prikaz nadolazećih emisija</string>
   <string name="pref_notifications">Obavijesti</string>

@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Show</string>
   <string name="episode">Epizód</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">Epizódok</string>
   <string name="season">Évad</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">Évadok</string>
   <string name="unknown">ismeretlen</string>
   <string name="episode_iswatched">Már láttam</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">Extra epizódok</string>
   <string name="search_hint">Epizódok keresése</string>
   <string name="share_episode">Epizód megosztása</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">Kijelentkezés</string>
   <string name="search_description">Epizódok</string>
   <string name="description_overview">Tartalom</string>
@@ -137,6 +140,7 @@
   <string name="norecent">Nincsenek mostanában vetített epizódok.</string>
   <string name="only_favorites">Csak kedvenc műsorok</string>
   <string name="togglewatched">Láttam igen/nem</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
   <string name="update_notification">Sorozatok frissítése…</string>
   <string name="update_single">Sorozat frissítése…</string>
   <string name="update_delta">Már nem futó sorozatok frissítése…</string>
@@ -227,6 +231,8 @@
   <string name="pref_other">Egyéb</string>
   <string name="pref_autoupdate">Automatikus frissítés bekapcsolása</string>
   <string name="pref_autoupdatesummary">Bizonyos időnként frissíti a sorozatokat a SeriesGuide indításakor</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Biztonsági másolat</string>
   <string name="backup_summary">Biztonsági mentés készítése a sorozatokról, vagy visszaállítás</string>
   <string name="pref_upcominglimit">Közelgő műsorok megjelenítése…</string>
@@ -279,7 +285,8 @@
   <string name="check_into">Bejelentkezés</string>
   <string name="no_selection">válasszon egyet lentről</string>
   <string name="looking_for_something_else">Valami mást keres?</string>
-  <string name="menu_rate_trakt">Értékelem (trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">Más alkalmazásokkal</string>
   <string name="traktcheckin_cancel">Felülbírál</string>
   <string name="traktcheckin_inprogress">Már bejelentkezett egy másik epizódba, vagy filmbe. Bírálja felül a korábbi bejelentkezést, vagy várjon %s és próbálja újra.</string>
@@ -303,6 +310,7 @@
   <string name="welcome_add_part1">To get started tap</string>
   <string name="upcoming_show">%s kezdődik</string>
   <string name="upcoming_episodes">Új epizódok kezdődnek</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s itt: %2$s</string>
   <string name="upcoming_display">Válassza ki a közelgő műsorok megjelenítéséhez</string>
   <string name="pref_notifications">Értesítések</string>
@@ -364,30 +372,30 @@
     <item>egy órával előtte</item>
   </string-array>
   <string-array name="widgetOpacity">
-    <item>Transparent</item>
+    <item>Átlátszó</item>
     <item>25% black</item>
     <item>50% black</item>
     <item>75% black</item>
-    <item>Black</item>
+    <item>Fekete</item>
   </string-array>
   <string-array name="widgetType">
     <item>Upcoming</item>
     <item>Recent</item>
   </string-array>
   <string-array name="dashclockUpcomingThresholds">
-    <item>hour</item>
-    <item>6 hours</item>
-    <item>12 hours</item>
-    <item>24 hours</item>
-    <item>3 days</item>
+    <item>óra</item>
+    <item>6 óra</item>
+    <item>12 óra</item>
+    <item>24 óra</item>
+    <item>3 nap</item>
     <item>week</item>
   </string-array>
   <plurals name="votes">
-    <item quantity="zero">%d votes</item>
+    <item quantity="zero">%d szavazat</item>
     <item quantity="one">%d szavazat</item>
-    <item quantity="two">%d votes</item>
-    <item quantity="few">%d votes</item>
-    <item quantity="many">%d votes</item>
+    <item quantity="two">%d szavazat</item>
+    <item quantity="few">%d szavazat</item>
+    <item quantity="many">%d szavazat</item>
     <item quantity="other">%d szavazat</item>
   </plurals>
   <plurals name="days_plural">

@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Инфо</string>
   <string name="episode">Эпизод</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">Эпизоды</string>
   <string name="season">Сезон</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">Сезоны</string>
   <string name="unknown">Неизвестно</string>
   <string name="episode_iswatched">Посмотрели уже</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">Спец. эпизоды</string>
   <string name="search_hint">Поиск эпизодов</string>
   <string name="share_episode">Поделиться эпизодом</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">Извлечь</string>
   <string name="search_description">Эпизоды</string>
   <string name="description_overview">Обзор</string>
@@ -137,6 +140,7 @@
   <string name="norecent">Недавних эпизодов нет.</string>
   <string name="only_favorites">Только избранные сериалы</string>
   <string name="togglewatched">Просмотрено</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
   <string name="update_notification">Обновление ваших сериалов…</string>
   <string name="update_single">Обновление сериала…</string>
   <string name="update_delta">Обновление устаревших сериалов…</string>
@@ -227,6 +231,8 @@
   <string name="pref_other">Другие</string>
   <string name="pref_autoupdate">Включить автоматическое обновление</string>
   <string name="pref_autoupdatesummary">Периодически обновлять ваши сериалы при запуске SeriesGuide</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Резервное копирование/восстановление</string>
   <string name="backup_summary">Резервное копирование или восстановление ваших сериалов</string>
   <string name="pref_upcominglimit">Показы в ближайшие N дней...</string>
@@ -279,7 +285,8 @@
   <string name="check_into">Чек-ин</string>
   <string name="no_selection">Выберите из предложенных вариантов</string>
   <string name="looking_for_something_else">Ищете что-то еще?</string>
-  <string name="menu_rate_trakt">Рейтинг (trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">C помощью других приложений</string>
   <string name="traktcheckin_cancel">Переопределение</string>
   <string name="traktcheckin_inprogress">Вы уже отметились в другом эпизоде или фильме. Вы можете заменить предыдущий чек-ин или подождать %s и попробовать снова.</string>
@@ -303,6 +310,7 @@
   <string name="welcome_add_part1">Для начала нажмите</string>
   <string name="upcoming_show">%s выпущено</string>
   <string name="upcoming_episodes">Выходят новые эпизоды</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s на %2$s</string>
   <string name="upcoming_display">Выберите, чтобы показать предстоящие передачи</string>
   <string name="pref_notifications">Уведомления</string>

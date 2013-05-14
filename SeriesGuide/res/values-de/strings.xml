@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Serie</string>
   <string name="episode">Folge</string>
+  <string name="episode_number">Folge %s</string>
   <string name="episodes">Folgen</string>
   <string name="season">Staffel</string>
+  <string name="season_number">Staffel %s</string>
   <string name="seasons">Staffeln</string>
   <string name="unknown">unbekannt</string>
   <string name="episode_iswatched">Bereits gesehen</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">Special Episodes</string>
   <string name="search_hint">Suche Folgen</string>
   <string name="share_episode">Folge empfehlen</string>
+  <string name="share_show">Serie teilen</string>
   <string name="share_checkout">Empfehle</string>
   <string name="search_description">Folgen</string>
   <string name="description_overview">Übersicht</string>
@@ -54,7 +57,7 @@
   <string name="watchlist_removed">Aus Watchliste entfernt</string>
   <string name="movies_search_hint">Filmtitel eingeben</string>
   <string name="movies_empty">Suchen Sie oben nach einem Film.</string>
-  <string name="movies_watchlist_empty">Sie haben keine Internetverbindung oder keine Filme zu Ihrer trakt Watchliste  hinzugefügt.</string>
+  <string name="movies_watchlist_empty">Sie haben keine Internetverbindung oder keine Filme zu Ihrer trakt Watchliste hinzugefügt.</string>
   <string name="trailer">Trailer</string>
   <string name="shows_with_next">%s mit nächsten Folgen</string>
   <string name="shows_continuing">%s werden fortgesetzt</string>
@@ -137,6 +140,7 @@
   <string name="norecent">Keine bereits gesendeten Folgen.</string>
   <string name="only_favorites">Nur favorisierte Serien</string>
   <string name="togglewatched">"Gesehen" umschalten</string>
+  <string name="pref_infinite_scrolling">Endlose Aktivität</string>
   <string name="update_notification">Aktualisierung Ihrer Serien…</string>
   <string name="update_single">Aktualisiere Serie…</string>
   <string name="update_delta">Aktualisiere veraltete Serien…</string>
@@ -187,7 +191,7 @@
   <string name="list_item_remove">Von Liste entfernen</string>
   <string name="list_empty">Sie können Serien, Staffeln oder Folgen zu dieser Liste hinzufügen.</string>
   <string name="connect_trakt">Mit Trakt verbinden</string>
-  <string name="connect_trakt_done">verbunden mit Trakt!</string>
+  <string name="connect_trakt_done">Mit Trakt verbunden!</string>
   <string name="add_trakt_shows">Serien aus deiner Bibliothek hinzufügen:</string>
   <string name="show_library">Deine Bibliothek anzeigen</string>
   <string name="upload_shows">Deine SeriesGuide-Serien-Liste hochladen:</string>
@@ -199,7 +203,7 @@
   <string name="trakt_upload_hint">Markiere alle gesehenen Folgen in SeriesGuide als gesehen bei trakt:</string>
   <string name="trakt_download">In SeriesGuide herunterladen</string>
   <string name="trakt_upload">Zu trakt.tv hochladen</string>
-  <string name="trakt_syncunwatched">Entferne beim synchronisieren die Gesehen-Markierungen von ungesehenen Folgen</string>
+  <string name="trakt_syncunwatched">Entferne beim Synchronisieren die Gesehen-Markierungen von ungesehenen Folgen</string>
   <string name="prefs_category_basic">Grundlegendes</string>
   <string name="prefs_category_sharing">Dienste</string>
   <string name="prefs_category_advanced">Weiteres</string>
@@ -227,12 +231,14 @@
   <string name="pref_other">Andere</string>
   <string name="pref_autoupdate">Auto-Aktualisierung aktivieren</string>
   <string name="pref_autoupdatesummary">Aktualisierung meiner Serien in regelmäßigen Abständen beim Start von SeriesGuide</string>
+  <string name="pref_autobackup">Automatische Sicherung aktivieren</string>
+  <string name="pref_autobackupsummary">Wöchentliche Sicherung Ihrer Serien-Datenbank in den Download-Ordner</string>
   <string name="backup">Sichern/Wiederherstellen</string>
   <string name="backup_summary">Sicherung aller Serien erstellen oder Sicherung wiederherstellen</string>
   <string name="pref_upcominglimit">Kommende Serien innerhalb…</string>
   <string name="pref_number">Zahlenformat</string>
   <string name="pref_offset">Manuelle Zeit-Verschiebung</string>
-  <string name="pref_offsetsummary">Austrahlungszeit um %s Stunden verschieben</string>
+  <string name="pref_offsetsummary">Ausstrahlungszeit um %s Stunden verschieben</string>
   <string name="clear_cache">Bilder-Zwischenspeicher leeren</string>
   <string name="clear_cache_summary">Alle zwischengespeicherten Bilder von Ihrem Gerät entfernen</string>
   <string name="pref_ganalytics">Google Analytics</string>
@@ -279,7 +285,8 @@
   <string name="check_into">Einchecken in</string>
   <string name="no_selection">unten auswählen</string>
   <string name="looking_for_something_else">Sie suchen etwas anderes?</string>
-  <string name="menu_rate_trakt">Bewerten (trakt)</string>
+  <string name="menu_rate_episode">Folge bewerten</string>
+  <string name="menu_rate_show">Serie bewerten</string>
   <string name="menu_share_others">Über andere Apps</string>
   <string name="traktcheckin_cancel">Überschreiben</string>
   <string name="traktcheckin_inprogress">Sie sind bereits in eine anderen Folge oder einen Film eingecheckt. Überschreiben Sie den vorherigen Check-in oder warten Sie %s und versuchen es erneut.</string>
@@ -303,10 +310,11 @@
   <string name="welcome_add_part1">Um loszulegen tippen Sie</string>
   <string name="upcoming_show">In Kürze läuft %s</string>
   <string name="upcoming_episodes">Neue Folgen laufen in Kürze</string>
+  <string name="upcoming_episodes_number">%s neue Folgen</string>
   <string name="upcoming_show_detailed">%1$s auf %2$s</string>
   <string name="upcoming_display">Auswählen um kommende Serien anzuzeigen</string>
   <string name="pref_notifications">Benachrichtigungen</string>
-  <string name="pref_notificationssummary">Benachrichtig bei neuen Folgen</string>
+  <string name="pref_notificationssummary">Benachrichtigung bei neuen Folgen</string>
   <string name="pref_notifyfavonly">Nur Favoriten</string>
   <string name="pref_notifyfavonlysummary">Nur Benachrichtigungen für Favoriten anzeigen</string>
   <string name="pref_ringtone">Klingelton</string>

@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Show</string>
   <string name="episode">Επεισόδιο</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">Episodes</string>
   <string name="season">Σεζόν</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">Σεζόν</string>
   <string name="unknown">άγνωστο</string>
   <string name="episode_iswatched">Έχει παρακολουθηθεί</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">Ειδικά Επεισόδια</string>
   <string name="search_hint">Αναζήτηση επεισοδίων</string>
   <string name="share_episode">Κοινή χρήση επεισοδίου</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">Check out</string>
   <string name="search_description">Επεισόδια</string>
   <string name="description_overview">Επισκόπηση</string>
@@ -137,6 +140,7 @@
   <string name="norecent">Δεν υπάρχουν πρόσφατα επεισόδια.</string>
   <string name="only_favorites">Μόνο αγαπημένες σειρές</string>
   <string name="togglewatched">Εναλλαγή παρακολουθημένων</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
   <string name="update_notification">Ενημέρωση των σειρών σας…</string>
   <string name="update_single">Ενημέρωση σειράς…</string>
   <string name="update_delta">Ενημέρωση παλιών σειρών…</string>
@@ -227,6 +231,8 @@
   <string name="pref_other">Other</string>
   <string name="pref_autoupdate">Aυτόματη ενημέρωση</string>
   <string name="pref_autoupdatesummary">Περιοδική ενημέρωση των σειρών σας κατά την έναρξη του SeriesGuide</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>
   <string name="backup_summary">Δημιουργία αντιγράφου ασφαλείας ή επαναφορά των σειρών</string>
   <string name="pref_upcominglimit">Επερχόμενες σειρές εντός…</string>
@@ -279,7 +285,8 @@
   <string name="check_into">Check into</string>
   <string name="no_selection">επιλογή ενός από τα παρακάτω</string>
   <string name="looking_for_something_else">Ψάχνετε για κάτι άλλο;</string>
-  <string name="menu_rate_trakt">Αξιολόγηση (trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">Μέσω άλλων εφαρμογών</string>
   <string name="traktcheckin_cancel">Παράκαμψη</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
@@ -303,6 +310,7 @@
   <string name="welcome_add_part1">Για να ξεκινήσετε πατήστε</string>
   <string name="upcoming_show">%s επερχόμενα</string>
   <string name="upcoming_episodes">Νέα επεισόδια έρχονται</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s προς %2$s</string>
   <string name="upcoming_display">Επιλέξτε, για να εμφανίσετε τις επερχόμενες σειρές</string>
   <string name="pref_notifications">Ειδοποιήσεις</string>

@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Show</string>
   <string name="episode">Bölüm</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">Bölümler</string>
   <string name="season">Sezon</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">Sezonlar</string>
   <string name="unknown">bilinmiyor</string>
   <string name="episode_iswatched">İzlendi</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">Özel Bölümler</string>
   <string name="search_hint">Bölüm ara</string>
   <string name="share_episode">Bölümü paylaş</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">Kontrol et</string>
   <string name="search_description">Bölümler</string>
   <string name="description_overview">Genel Bakış</string>
@@ -137,6 +140,7 @@
   <string name="norecent">Yeni tarihli bölüm yok.</string>
   <string name="only_favorites">Sadece favori diziler</string>
   <string name="togglewatched">Seyredilme durumunu değiştir</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
   <string name="update_notification">Dizileriniz güncelleniyor...</string>
   <string name="update_single">Dizi güncelleniyor…</string>
   <string name="update_delta">Eski diziler güncelleniyor…</string>
@@ -227,6 +231,8 @@
   <string name="pref_other">Diğer</string>
   <string name="pref_autoupdate">Oto. Güncelleme Aç</string>
   <string name="pref_autoupdatesummary">SeriesGuide başlatılırken dizilerinizi düzenli aralıklarla güncelleştirin</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Yedekle/Geri Yükle</string>
   <string name="backup_summary">Dizilerinizi yedekleyin veya geri yükleyin</string>
   <string name="pref_upcominglimit">Gelecek bölümleri gösterme süresi</string>
@@ -279,7 +285,8 @@
   <string name="check_into">Giriş yap</string>
   <string name="no_selection">birini seç</string>
   <string name="looking_for_something_else">Başka bir şey mi arıyorsun?</string>
-  <string name="menu_rate_trakt">Derece (trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">Diğer uygulamalar aracılığıyla</string>
   <string name="traktcheckin_cancel">Geçersiz Kıl</string>
   <string name="traktcheckin_inprogress">Başka bir bölüm veya filme giriş yapmış durumdasınız. Ya önceki girişinizi geçersiz kılın, ya da %s bekleyin ve tekrar deneyin.</string>
@@ -303,6 +310,7 @@
   <string name="welcome_add_part1">Başlamak için ekrana dokun</string>
   <string name="upcoming_show">%s geliyor</string>
   <string name="upcoming_episodes">Yeni bölümler geliyor</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">Yakında yayınlanacak Favori diziler için uyar</string>
   <string name="upcoming_display">Gelecek bölümleri görüntülemek için seçin</string>
   <string name="pref_notifications">Bildirimler</string>

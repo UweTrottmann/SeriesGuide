@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Show</string>
   <string name="episode">에피소드</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">에피소드</string>
   <string name="season">시즌</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">시즌</string>
   <string name="unknown">알 수 없음</string>
   <string name="episode_iswatched">이미 시청하였습니다</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">스페셜 에피소드</string>
   <string name="search_hint">에피소드 검색</string>
   <string name="share_episode">에피소드 공유</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">체크 아웃</string>
   <string name="search_description">에피소드</string>
   <string name="description_overview">개요</string>
@@ -137,6 +140,7 @@
   <string name="norecent">최근 방영된 에피소드가 없습니다.</string>
   <string name="only_favorites">즐겨찾기한 쇼만 보이기</string>
   <string name="togglewatched">시청/미시청 토글</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
   <string name="update_notification">쇼 업데이트 중...</string>
   <string name="update_single">쇼 업데이트 중...</string>
   <string name="update_delta">오래된 쇼 목록 업데이트 중...</string>
@@ -227,6 +231,8 @@
   <string name="pref_other">기타</string>
   <string name="pref_autoupdate">자동 업데이트 켜기</string>
   <string name="pref_autoupdatesummary">시리즈가이드를 시작할 때 주기적으로 쇼 목록을 업데이트합니다</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">백업/복원</string>
   <string name="backup_summary">쇼 목록을 백업학거나 복원합니다</string>
   <string name="pref_upcominglimit">방영 예정 쇼 표기</string>
@@ -279,7 +285,8 @@
   <string name="check_into">체크인</string>
   <string name="no_selection">아래에서 선택하세요</string>
   <string name="looking_for_something_else">다른것을 찾고 있습니까?</string>
-  <string name="menu_rate_trakt">평가 (trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">다른 앱을 통해</string>
   <string name="traktcheckin_cancel">오버라이드</string>
   <string name="traktcheckin_inprogress">이미 다른 에피소드 또는 영화에 체크인하였습니다. 이전 체크인을 해제하거나 %s 기다렸다가 다시 시도하세요.</string>
@@ -303,6 +310,7 @@
   <string name="welcome_add_part1">시작하려면 액션바에 있는</string>
   <string name="upcoming_show">%s가 방영 예정입니다</string>
   <string name="upcoming_episodes">새 에피소드 방영예정</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>
   <string name="upcoming_display">방영예정인 쇼를 표시하려면 선택</string>
   <string name="pref_notifications">알림</string>

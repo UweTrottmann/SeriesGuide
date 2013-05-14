@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Show</string>
   <string name="episode">Episodio</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">Episodios</string>
   <string name="season">Temporada</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">Temporadas</string>
   <string name="unknown">desconocido</string>
   <string name="episode_iswatched">Vistos</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">Episodios especiales</string>
   <string name="search_hint">Buscar episodios</string>
   <string name="share_episode">Compartir episodio</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">Echa un vistazo a</string>
   <string name="search_description">Episodios</string>
   <string name="description_overview">Reseña</string>
@@ -137,6 +140,7 @@
   <string name="norecent">No hay capítulos recientes.</string>
   <string name="only_favorites">Solo series favoritas</string>
   <string name="togglewatched">Alternar observado</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
   <string name="update_notification">Actualizando tus series…</string>
   <string name="update_single">Actualización esta serie…</string>
   <string name="update_delta">Actualizando series desactualizadas…</string>
@@ -227,6 +231,8 @@
   <string name="pref_other">Otros</string>
   <string name="pref_autoupdate">Activar la actualización automática</string>
   <string name="pref_autoupdatesummary">Actualizar periódicamente las series al iniciar SeriesGuide</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Respaldo/Restauración</string>
   <string name="backup_summary">Respaldar o restaurar sus programas</string>
   <string name="pref_upcominglimit">Próximas exposiciones dentro de…</string>
@@ -279,7 +285,8 @@
   <string name="check_into">Acceder a</string>
   <string name="no_selection">elige uno debajo</string>
   <string name="looking_for_something_else">¿Buscando algo más?</string>
-  <string name="menu_rate_trakt">Califícalo (trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">Vía otras apps</string>
   <string name="traktcheckin_cancel">Reemplace</string>
   <string name="traktcheckin_inprogress">Ya te has registrado en otro episodio o película. Sobrescribe el registro anterior o espere %s e inténtelo de nuevo.</string>
@@ -303,6 +310,7 @@
   <string name="welcome_add_part1">Pulsa para empezar</string>
   <string name="upcoming_show">%s está llegando</string>
   <string name="upcoming_episodes">Vienen nuevos episodios</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s en %2$s</string>
   <string name="upcoming_display">Seleccione esta opción para mostrar las series que vienen</string>
   <string name="pref_notifications">Notificaciones</string>

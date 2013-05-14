@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Show</string>
   <string name="episode">الحلقة</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">الحلقات</string>
   <string name="season">الموسم</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">المواسم</string>
   <string name="unknown">غير معروف</string>
   <string name="episode_iswatched">.تمت مشاهدتها</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">حلقات خاصة</string>
   <string name="search_hint">البحث في الحلقات</string>
   <string name="share_episode">مشاركة الحلقة</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">فحص</string>
   <string name="search_description">الحلقات</string>
   <string name="description_overview">نظرة عامة</string>
@@ -137,6 +140,7 @@
   <string name="norecent">.لا توجد حلقات حالية</string>
   <string name="only_favorites">برامجك المفضلة فقط</string>
   <string name="togglewatched">تبديل المُشاهدة</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
   <string name="update_notification">تحديث برامجك...</string>
   <string name="update_single">تحديث العرض...</string>
   <string name="update_delta">تحديث البرامج القديمة ...</string>
@@ -227,6 +231,8 @@
   <string name="pref_other">أخرى</string>
   <string name="pref_autoupdate">تشغيل التحديث التلقائي</string>
   <string name="pref_autoupdatesummary">حدّث المسلسلات دورياً عند بدء البرنامج</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">النسخ الاحتياطي / الاستعادة</string>
   <string name="backup_summary">النسخ الاحتياطي أو استعادة مسلسلاتك</string>
   <string name="pref_upcominglimit">العروض القادمة خلال ...</string>
@@ -279,7 +285,8 @@
   <string name="check_into">Check into</string>
   <string name="no_selection">اختر واحد أدناه</string>
   <string name="looking_for_something_else">هل تبحث عن شئ آخر؟</string>
-  <string name="menu_rate_trakt">(قيّم (موقع تراكت</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">عبر تطبيقات أخرى</string>
   <string name="traktcheckin_cancel">تجاهل</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
@@ -303,6 +310,7 @@
   <string name="welcome_add_part1">لبدء الاستخدام اضغط</string>
   <string name="upcoming_show">%s قادم</string>
   <string name="upcoming_episodes">الحلقات الجديدة القادمة</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>
   <string name="upcoming_display">حدد هذا الخيار لعرض المسلسلات القادمة</string>
   <string name="pref_notifications">التنبيهات</string>

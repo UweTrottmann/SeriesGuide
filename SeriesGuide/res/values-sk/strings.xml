@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Seriál</string>
   <string name="episode">Epizóda</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">Epizódy</string>
   <string name="season">Séria</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">Série</string>
   <string name="unknown">neznámy</string>
   <string name="episode_iswatched">Už pozreté</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">Špeciálne Epizódy</string>
   <string name="search_hint">Hľadať epizódy</string>
   <string name="share_episode">Zdieľať epizódu</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">Pozrite si</string>
   <string name="search_description">Epizódy</string>
   <string name="description_overview">Prehľad</string>
@@ -137,6 +140,7 @@
   <string name="norecent">Žiadne nedávne epizódy.</string>
   <string name="only_favorites">Iba obľúbené seriály</string>
   <string name="togglewatched">Prepnúť zhliadnutie</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
   <string name="update_notification">Aktualizujem Vaše seriály…</string>
   <string name="update_single">Aktualizujem seriály…</string>
   <string name="update_delta">Aktualizujem zastarané seriály…</string>
@@ -227,6 +231,8 @@
   <string name="pref_other">Ostatné</string>
   <string name="pref_autoupdate">Aktualizovať automaticky</string>
   <string name="pref_autoupdatesummary">Po spustení SeriesGuide priebežne aktualizuje Vaše seriály</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Zálohovanie / obnovenie</string>
   <string name="backup_summary">Zálohovanie alebo obnovenie vašich relácií</string>
   <string name="pref_upcominglimit">Nadchádzajúce seriály počas…</string>
@@ -279,7 +285,8 @@
   <string name="check_into">Check into</string>
   <string name="no_selection">pick one below</string>
   <string name="looking_for_something_else">Looking for something else?</string>
-  <string name="menu_rate_trakt">Hodnotiť (trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">Cez iné aplikácie</string>
   <string name="traktcheckin_cancel">Prepísať</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
@@ -303,6 +310,7 @@
   <string name="welcome_add_part1">Začnite stlačením na</string>
   <string name="upcoming_show">%s práve vychádzajú</string>
   <string name="upcoming_episodes">Práve vychádzajú nové epizódy</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s na %2$s</string>
   <string name="upcoming_display">Vyberte pre zobrazenie nadchádzajúcich seriálov</string>
   <string name="pref_notifications">Notifikácie</string>

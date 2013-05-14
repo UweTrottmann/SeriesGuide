@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Show</string>
   <string name="episode">Episode</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">Episoder</string>
   <string name="season">Sæson</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">Sæsoner</string>
   <string name="unknown">Ukendt</string>
   <string name="episode_iswatched">Er set</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">Særlige episoder</string>
   <string name="search_hint">Søg episoder</string>
   <string name="share_episode">Del episode</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">Tjek ud</string>
   <string name="search_description">Episoder</string>
   <string name="description_overview">Oversigt</string>
@@ -137,6 +140,7 @@
   <string name="norecent">Der er ingen nylige episoder.</string>
   <string name="only_favorites">Kun favorit serier</string>
   <string name="togglewatched">Toggle watched</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
   <string name="update_notification">Opdaterer dine serier...</string>
   <string name="update_single">Opdaterer serier...</string>
   <string name="update_delta">Opdaterer forældede serier</string>
@@ -227,6 +231,8 @@
   <string name="pref_other">Other</string>
   <string name="pref_autoupdate">Slå automatisk opdatering til</string>
   <string name="pref_autoupdatesummary">Opdatér periodisk dine tv-serier når SeriesGuide starter</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Sikkerhedskopier/Gendan</string>
   <string name="backup_summary">Sikkerhedskopier eller gendan dine tv-serier</string>
   <string name="pref_upcominglimit">Upcoming shows within…</string>
@@ -279,7 +285,8 @@
   <string name="check_into">Tjek ind</string>
   <string name="no_selection">Vælg en nedenfor</string>
   <string name="looking_for_something_else">Søger du noget andet?</string>
-  <string name="menu_rate_trakt">Vurder (trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">Via andre apps</string>
   <string name="traktcheckin_cancel">Overskriv</string>
   <string name="traktcheckin_inprogress">You are already checked into another episode or movie. Either override the previous check-in or wait %s and try again.</string>
@@ -303,6 +310,7 @@
   <string name="welcome_add_part1">For at starte tryk</string>
   <string name="upcoming_show">%s is coming up</string>
   <string name="upcoming_episodes">Nye episoder kommer snart</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s on %2$s</string>
   <string name="upcoming_display">Vælg for at vise kommende serier</string>
   <string name="pref_notifications">Meddelelser</string>

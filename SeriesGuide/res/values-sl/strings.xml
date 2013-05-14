@@ -3,8 +3,10 @@
 <resources>
   <string name="show">Show</string>
   <string name="episode">Epizoda</string>
+  <string name="episode_number">Episode %s</string>
   <string name="episodes">Episodes</string>
   <string name="season">Sezona</string>
+  <string name="season_number">Season %s</string>
   <string name="seasons">Sezone</string>
   <string name="unknown">neznano</string>
   <string name="episode_iswatched">Že gledano</string>
@@ -12,6 +14,7 @@
   <string name="specialseason">Posebne epizode</string>
   <string name="search_hint">Iskanje epizode</string>
   <string name="share_episode">Deli epizodo</string>
+  <string name="share_show">Share show</string>
   <string name="share_checkout">Odjavi</string>
   <string name="search_description">Epizode</string>
   <string name="description_overview">Pregled</string>
@@ -137,6 +140,7 @@
   <string name="norecent">Ni nedavnih epizod.</string>
   <string name="only_favorites">Samo priljubljene oddaje</string>
   <string name="togglewatched">Preklopi med gledanimi</string>
+  <string name="pref_infinite_scrolling">Infinite activity</string>
   <string name="update_notification">Posodabljanje vaših oddaj...</string>
   <string name="update_single">Oddaja se posodablja...</string>
   <string name="update_delta">Stare oddaje se posodabljajo...</string>
@@ -227,6 +231,8 @@
   <string name="pref_other">Other</string>
   <string name="pref_autoupdate">Vklopite samodejne posodobitve</string>
   <string name="pref_autoupdatesummary">Občasno posodobi svoje oddaje ob zagonu SeriesGuide</string>
+  <string name="pref_autobackup">Turn on Auto Backup</string>
+  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Varnostno kopiranje/Obnovitev</string>
   <string name="backup_summary">Naredite varnostno kopijo ali obnovite vaše oddaje</string>
   <string name="pref_upcominglimit">Prihajajoče oddaje v...</string>
@@ -279,7 +285,8 @@
   <string name="check_into">Prijavi se v</string>
   <string name="no_selection">Izberi možnost spodaj</string>
   <string name="looking_for_something_else">Iščeš nekaj drugega?</string>
-  <string name="menu_rate_trakt">Oceni (trakt)</string>
+  <string name="menu_rate_episode">Rate episode</string>
+  <string name="menu_rate_show">Rate show</string>
   <string name="menu_share_others">Preko drugih appsov</string>
   <string name="traktcheckin_cancel">Razveljavi</string>
   <string name="traktcheckin_inprogress">Prijavljen si že v drugo epizodo ali film. Ali razveljavi prejšnji vnos ali pa počakaj %s in poizkusi ponovno.</string>
@@ -303,6 +310,7 @@
   <string name="welcome_add_part1">Za začetek tapni</string>
   <string name="upcoming_show">%s prihaja na spored</string>
   <string name="upcoming_episodes">Nove epizode prihajajo na spored</string>
+  <string name="upcoming_episodes_number">%s new episodes</string>
   <string name="upcoming_show_detailed">%1$s na %2$s</string>
   <string name="upcoming_display">Izberi za prikaz prihajajočih oddaj</string>
   <string name="pref_notifications">Obvestila</string>
