@@ -29,6 +29,7 @@ To successfully build with ADT, you should also create a keys.xml file in the Se
 
     <resources>
         <string name="tvdb_apikey"></string>
+        <string name="tmdb_apikey"></string>
         <string name="getglue_consumer_key"></string>
         <string name="getglue_consumer_secret"></string>
         <string name="trakt_apikey"></string>
