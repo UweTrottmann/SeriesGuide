@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ratingbar"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/default_padding"
+    android:layout_marginLeft="@dimen/default_padding"
+    android:layout_marginRight="@dimen/default_padding"
+    android:background="?attr/custom_list_selector" >
+
+    <RatingBar
+        android:id="@+id/bar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:isIndicator="true"
+        android:numStars="10"
+        android:rating="0"
+        android:stepSize="0.1"
+        android:textAppearance="@style/TextAppearance" >
+    </RatingBar>
+
+    <TextView
+        android:id="@+id/value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bar"
+        android:ellipsize="marquee"
+        android:lines="1"
+        android:text="@string/norating"
+        android:textAppearance="@style/TextAppearance.Small" />
+
+    <TextView
+        android:id="@+id/tvdblabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bar"
+        android:layout_marginLeft="@dimen/inline_padding"
+        android:layout_toRightOf="@+id/value"
+        android:text="@string/tvdb"
+        android:textAppearance="@style/TextAppearance.Small.Dim" />
+
+    <RelativeLayout
+        android:id="@+id/containerRatingsTrakt"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:layout_below="@id/value"
+        android:layout_marginTop="@dimen/default_padding" >
+
+        <ImageView
+            android:id="@+id/imageViewRatingsLove"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/inline_padding"
+            android:contentDescription="@string/love"
+            android:gravity="center_vertical"
+            android:padding="4dp"
+            android:src="@drawable/trakt_love_large" />
+
+        <TextView
+            android:id="@+id/textViewRatingsTraktValue"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/inline_padding"
+            android:layout_toRightOf="@+id/imageViewRatingsLove"
+            android:gravity="center_vertical"
+            android:text="@string/notraktrating"
+            android:textAppearance="@style/TextAppearance.Large.Light"
+            android:textSize="26sp" />
+
+        <include
+            android:id="@+id/dividerRatingsVertical"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/default_padding"
+            android:layout_marginRight="@dimen/default_padding"
+            android:layout_toRightOf="@+id/textViewRatingsTraktValue"
+            layout="@layout/divider_vertical" />
+
+        <TextView
+            android:id="@+id/textViewRatingsTraktUserLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/dividerRatingsVertical"
+            android:ellipsize="marquee"
+            android:lines="1"
+            android:text="@string/your_rating"
+            android:textAppearance="@style/TextAppearance.Small" />
+
+        <TextView
+            android:id="@+id/textViewRatingsTraktUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewRatingsTraktUserLabel"
+            android:layout_toRightOf="@+id/dividerRatingsVertical"
+            android:ellipsize="marquee"
+            android:lines="1"
+            android:text="@string/norating"
+            android:textAppearance="@style/TextAppearance.Small" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textViewRatingsTraktVotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/containerRatingsTrakt"
+        android:text="@string/norating"
+        android:textAppearance="@style/TextAppearance.Small" />
+
+    <TextView
+        android:id="@+id/textViewRatingsTraktLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/containerRatingsTrakt"
+        android:layout_marginLeft="@dimen/inline_padding"
+        android:layout_toRightOf="@+id/textViewRatingsTraktVotes"
+        android:text="@string/trakt"
+        android:textAppearance="@style/TextAppearance.Small.Dim" />
+
+</RelativeLayout>

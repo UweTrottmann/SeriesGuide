@@ -20,7 +20,9 @@
             style="@style/DefaultPadding.Page"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding" >
 
             <TextView
                 android:id="@+id/title"
@@ -65,6 +67,9 @@
                     android:textAppearance="@style/TextAppearance.Light"
                     android:textIsSelectable="true" />
             </RelativeLayout>
+
+            <include layout="@layout/ratingbar_narrow" >
+            </include>
 
             <include layout="@layout/show_info_metamore" >
             </include>

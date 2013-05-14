@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <include layout="@layout/ratingbar" >
-    </include>
-
     <TextView
         android:id="@+id/TextViewShowInfoOverview"
         style="@style/DefaultPadding.Blocks.WithBottomMargin.FlowText"
