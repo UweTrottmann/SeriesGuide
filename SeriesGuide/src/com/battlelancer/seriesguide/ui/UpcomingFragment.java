@@ -109,6 +109,7 @@ public class UpcomingFragment extends SherlockFragment implements
 
         mGridView = (StickyGridHeadersGridView) v.findViewById(R.id.gridViewUpcoming);
         mGridView.setEmptyView(mEmptyView);
+        mGridView.setAreHeadersSticky(true);
 
         return v;
     }
