@@ -5,6 +5,11 @@ Changelog
 
 All dates are in the European Central timezone.
 
+Version 5.2 *(2013-05-16)*
+--------------------------
+
+* FIX Crash in movie section if movie did not have a release date.
+
 Version 5.1 *(2013-05-01)*
 --------------------------
 
