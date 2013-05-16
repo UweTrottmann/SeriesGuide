@@ -58,7 +58,7 @@ public class MoviesActivity extends BaseTopActivity {
         ViewPager pager = (ViewPager) findViewById(R.id.pagerMovies);
 
         TabPagerAdapter tabsAdapter = new TabPagerAdapter(getSupportFragmentManager(), this,
-                actionBar, pager, getMenu());
+                actionBar, pager);
         // only show the trakt watchlist with valid credentials
         if (ServiceUtils.isTraktCredentialsValid(this)) {
             tabsAdapter.addTab(R.string.movies_watchlist, MoviesWatchListFragment.class, null);

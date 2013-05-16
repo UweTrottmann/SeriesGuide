@@ -59,7 +59,7 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
 
         mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.MENU_DRAG_WINDOW);
         mMenuDrawer.setMenuView(R.layout.menu_frame);
-        mMenuDrawer.setTouchMode(MenuDrawer.TOUCH_MODE_FULLSCREEN);
+        mMenuDrawer.setTouchMode(MenuDrawer.TOUCH_MODE_BEZEL);
         // setting size in pixels, oh come on...
         int menuSize = (int) getResources().getDimension(R.dimen.slidingmenu_width);
         mMenuDrawer.setMenuSize(menuSize);

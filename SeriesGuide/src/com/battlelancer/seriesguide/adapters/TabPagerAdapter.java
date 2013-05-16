@@ -12,8 +12,6 @@ import android.support.v4.view.ViewPager;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 
-import net.simonvt.menudrawer.MenuDrawer;
-
 import java.util.ArrayList;
 
 public class TabPagerAdapter extends FragmentPagerAdapter implements
@@ -22,7 +20,6 @@ public class TabPagerAdapter extends FragmentPagerAdapter implements
     private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
     private Context mContext;
     private ActionBar mActionBar;
-    private MenuDrawer mMenu;
     private ViewPager mViewPager;
 
     static final class TabInfo {
@@ -36,11 +33,10 @@ public class TabPagerAdapter extends FragmentPagerAdapter implements
     }
 
     public TabPagerAdapter(FragmentManager fm, Context context, ActionBar actionBar,
-            ViewPager pager, MenuDrawer menu) {
+            ViewPager pager) {
         super(fm);
         mContext = context;
         mActionBar = actionBar;
-        mMenu = menu;
         mViewPager = pager;
         mViewPager.setAdapter(this);
         mViewPager.setOnPageChangeListener(this);
@@ -90,10 +86,6 @@ public class TabPagerAdapter extends FragmentPagerAdapter implements
     @Override
     public void onPageSelected(int position) {
         mActionBar.setSelectedNavigationItem(position);
-
-        mMenu.setTouchMode(position == 0
-                ? MenuDrawer.TOUCH_MODE_FULLSCREEN
-                : MenuDrawer.TOUCH_MODE_BEZEL);
     }
 
 }

@@ -133,7 +133,7 @@ public class OverviewActivity extends BaseActivity {
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         TabPagerAdapter tabsAdapter = new TabPagerAdapter(getSupportFragmentManager(), this,
-                actionBar, pager, getMenu());
+                actionBar, pager);
         Bundle argsShow = new Bundle();
         argsShow.putInt(ShowInfoFragment.InitBundle.SHOW_TVDBID, mShowId);
         tabsAdapter.addTab(R.string.show, ShowInfoFragment.class, argsShow);

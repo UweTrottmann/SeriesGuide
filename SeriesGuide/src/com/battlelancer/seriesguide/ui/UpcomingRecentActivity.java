@@ -38,8 +38,6 @@ import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
-import net.simonvt.menudrawer.MenuDrawer;
-
 public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAddShowListener {
     private static final String TAG = "Activity";
 
@@ -60,7 +58,7 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
 
         TabsAdapter tabsAdapter = new TabsAdapter(getSupportFragmentManager(), this, actionBar,
-                viewPager, getMenu());
+                viewPager);
         // upcoming tab
         final Bundle argsUpcoming = new Bundle();
         argsUpcoming.putString(UpcomingFragment.InitBundle.TYPE, ActivityType.UPCOMING);
@@ -103,10 +101,6 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
             selection = 0;
         }
         actionBar.setSelectedNavigationItem(selection);
-
-        getMenu().setTouchMode(selection == 0
-                ? MenuDrawer.TOUCH_MODE_FULLSCREEN
-                : MenuDrawer.TOUCH_MODE_BEZEL);
     }
 
     @Override
@@ -173,8 +167,8 @@ public class UpcomingRecentActivity extends BaseTopShowsActivity implements OnAd
         private SharedPreferences mPrefs;
 
         public TabsAdapter(FragmentManager fm, Context context, ActionBar actionBar,
-                ViewPager pager, MenuDrawer menu) {
-            super(fm, context, actionBar, pager, menu);
+                ViewPager pager) {
+            super(fm, context, actionBar, pager);
             mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         }
 
