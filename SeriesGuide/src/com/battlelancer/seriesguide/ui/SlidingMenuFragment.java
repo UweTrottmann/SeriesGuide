@@ -127,13 +127,12 @@ public class SlidingMenuFragment extends ListFragment {
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 break;
             case MENU_ITEM_SEARCH_ID:
-                getActivity().onSearchRequested();
+                startActivity(new Intent(getActivity(), SearchActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 break;
         }
 
-        if (itemId != MENU_ITEM_SEARCH_ID) {
-            getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-        }
+        getActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     private void storeSelectedPage(int page) {
