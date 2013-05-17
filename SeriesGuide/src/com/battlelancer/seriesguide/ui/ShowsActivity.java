@@ -17,6 +17,8 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.accounts.Account;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -41,7 +43,9 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
+import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.sync.SgAccountAuthenticator;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
 import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
@@ -254,8 +258,12 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
             return true;
         }
         else if (itemId == R.id.menu_update) {
-            fireTrackerEvent("Update (outdated)");
-            performUpdateTask(false, null);
+            // fireTrackerEvent("Update (outdated)");
+            // performUpdateTask(false, null);
+
+            final Account account = new Account(SgAccountAuthenticator.ACCOUNT_NAME, getPackageName());
+            ContentResolver.requestSync(account, SeriesGuideApplication.CONTENT_AUTHORITY, new Bundle());
+
             return true;
         } else if (itemId == R.id.menu_updateart) {
             fireTrackerEvent("Fetch posters");
