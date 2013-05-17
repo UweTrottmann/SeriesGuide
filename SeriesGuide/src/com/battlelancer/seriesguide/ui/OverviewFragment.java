@@ -584,54 +584,49 @@ public class OverviewFragment extends SherlockFragment implements
             });
             episodePrimaryClicker.setFocusable(true);
 
-            if (mMultiPane) {
-                buttons.setVisibility(View.VISIBLE);
+            // Button bar
+            // check-in button
+            buttons.findViewById(R.id.checkinButton).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onCheckIn();
+                }
+            });
 
-                // check-in button
-                buttons.findViewById(R.id.checkinButton).setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onCheckIn();
-                    }
-                });
+            // watched button
+            View watchedButton = buttons.findViewById(R.id.watchedButton);
+            watchedButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onFlagWatched();
+                }
+            });
+            CheatSheet.setup(watchedButton, R.string.mark_episode);
 
-                // watched button
-                View watchedButton = buttons.findViewById(R.id.watchedButton);
-                watchedButton.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onFlagWatched();
-                    }
-                });
-                CheatSheet.setup(watchedButton, R.string.mark_episode);
+            // collected button
+            boolean isCollected = episode.getInt(EpisodeQuery.COLLECTED) == 1;
+            ImageButton collectedButton = (ImageButton) buttons
+                    .findViewById(R.id.collectedButton);
+            collectedButton.setImageResource(isCollected ? R.drawable.ic_collected
+                    : R.drawable.ic_action_collect);
+            collectedButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onToggleCollected();
+                }
+            });
+            CheatSheet.setup(collectedButton, isCollected ? R.string.uncollect
+                    : R.string.collect);
 
-                // collected button
-                boolean isCollected = episode.getInt(EpisodeQuery.COLLECTED) == 1;
-                ImageButton collectedButton = (ImageButton) buttons
-                        .findViewById(R.id.collectedButton);
-                collectedButton.setImageResource(isCollected ? R.drawable.ic_collected
-                        : R.drawable.ic_action_collect);
-                collectedButton.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onToggleCollected();
-                    }
-                });
-                CheatSheet.setup(collectedButton, isCollected ? R.string.uncollect
-                        : R.string.collect);
-
-                // calendar button
-                View calendarButton = buttons.findViewById(R.id.calendarButton);
-                calendarButton.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        onAddCalendarEvent();
-                    }
-                });
-                CheatSheet.setup(calendarButton);
-            } else {
-                buttons.setVisibility(View.GONE);
-            }
+            // calendar button
+            View calendarButton = buttons.findViewById(R.id.calendarButton);
+            calendarButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onAddCalendarEvent();
+                }
+            });
+            CheatSheet.setup(calendarButton);
 
             ratings.setOnClickListener(new OnClickListener() {
                 @Override
