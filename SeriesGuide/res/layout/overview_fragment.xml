@@ -111,7 +111,8 @@
                     <FrameLayout
                         android:id="@+id/episode_primary_container"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/imagecontainer_height" >
+                        android:layout_height="@dimen/imagecontainer_height"
+                        android:foreground="?attr/custom_list_selector" >
 
                         <FrameLayout
                             android:id="@+id/imageContainer"
@@ -176,12 +177,6 @@
                                 android:textAllCaps="true"
                                 android:textAppearance="@style/TextAppearance.Small.Dim" />
                         </RelativeLayout>
-
-                        <View
-                            android:id="@+id/episode_primary_click_dummy"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="?attr/custom_list_selector" />
                     </FrameLayout>
 
                     <View
