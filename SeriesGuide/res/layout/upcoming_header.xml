@@ -8,15 +8,15 @@
         android:id="@+id/textViewUpcomingHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_padding"
+        android:gravity="center_vertical"
         android:paddingLeft="@dimen/default_padding"
-        android:paddingRight="@dimen/inline_padding"
-        android:paddingTop="@dimen/inline_padding"
         android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.Light" />
+        android:textAppearance="@style/TextAppearance.Small.Label" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:layout_marginTop="@dimen/inline_padding"
         android:background="?attr/colorAccent" />
 
