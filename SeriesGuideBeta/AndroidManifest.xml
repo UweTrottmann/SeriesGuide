@@ -97,8 +97,7 @@
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
         </activity>
         <activity
-            android:name="com.battlelancer.seriesguide.ui.OverviewActivity"
-            android:uiOptions="splitActionBarWhenNarrow" >
+            android:name="com.battlelancer.seriesguide.ui.OverviewActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
