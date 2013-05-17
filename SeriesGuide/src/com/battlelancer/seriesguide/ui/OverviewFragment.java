@@ -194,55 +194,18 @@ public class OverviewFragment extends SherlockFragment implements
         boolean isEpisodeVisible;
         if (mEpisodeCursor != null && mEpisodeCursor.moveToFirst()) {
             isEpisodeVisible = true;
-            boolean isCollected = mEpisodeCursor.getInt(EpisodeQuery.COLLECTED) == 1 ? true
-                    : false;
-            menu.findItem(R.id.menu_overview_flag_collected).setIcon(
-                    isCollected ? R.drawable.ic_collected : R.drawable.ic_action_collect);
         } else {
             isEpisodeVisible = false;
         }
-        menu.findItem(R.id.menu_overview_checkin).setEnabled(isEpisodeVisible && !mMultiPane);
-        menu.findItem(R.id.menu_overview_flag_watched).setEnabled(isEpisodeVisible && !mMultiPane);
-        menu.findItem(R.id.menu_overview_flag_collected)
-                .setEnabled(isEpisodeVisible && !mMultiPane);
-        menu.findItem(R.id.menu_overview_calendarevent).setEnabled(isEpisodeVisible && !mMultiPane);
+        menu.findItem(R.id.menu_overview_manage_lists).setEnabled(isEpisodeVisible);
         menu.findItem(R.id.menu_overview_share).setEnabled(isEpisodeVisible);
         menu.findItem(R.id.menu_overview_rate).setEnabled(isEpisodeVisible);
-        menu.findItem(R.id.menu_overview_manage_lists).setEnabled(isEpisodeVisible);
-
-        // hide some items on larger screens, we use inline buttons there
-        menu.findItem(R.id.menu_overview_checkin).setVisible(!mMultiPane);
-        menu.findItem(R.id.menu_overview_flag_watched).setVisible(!mMultiPane);
-        menu.findItem(R.id.menu_overview_flag_collected).setVisible(!mMultiPane);
-        menu.findItem(R.id.menu_overview_calendarevent).setVisible(!mMultiPane);
-
-        // move some items to the overflow menu on smaller screens
-        menu.findItem(R.id.menu_overview_rate).setShowAsAction(
-                mMultiPane ?
-                        MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT
-                        : MenuItem.SHOW_AS_ACTION_NEVER);
-        menu.findItem(R.id.menu_overview_manage_lists).setShowAsAction(
-                mMultiPane ?
-                        MenuItem.SHOW_AS_ACTION_IF_ROOM | MenuItem.SHOW_AS_ACTION_WITH_TEXT
-                        : MenuItem.SHOW_AS_ACTION_NEVER);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.menu_overview_checkin) {
-            onCheckIn();
-            return true;
-        } else if (itemId == R.id.menu_overview_flag_watched) {
-            onFlagWatched();
-            return true;
-        } else if (itemId == R.id.menu_overview_flag_collected) {
-            onToggleCollected();
-            return true;
-        } else if (itemId == R.id.menu_overview_calendarevent) {
-            onAddCalendarEvent();
-            return true;
-        } else if (itemId == R.id.menu_overview_rate) {
+        if (itemId == R.id.menu_overview_rate) {
             onRateOnTrakt();
             return true;
         } else if (itemId == R.id.menu_overview_share) {

@@ -2,45 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/menu_overview_checkin"
-        android:orderInCategory="0"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/checkin"/>
-    <item
-        android:id="@+id/menu_overview_flag_watched"
-        android:icon="@drawable/ic_action_watched"
-        android:orderInCategory="1"
-        android:showAsAction="ifRoom"
-        android:title="@string/mark_episode"/>
-    <item
-        android:id="@+id/menu_overview_flag_collected"
-        android:icon="@drawable/ic_action_collect"
-        android:orderInCategory="2"
-        android:showAsAction="ifRoom"
-        android:title="@string/collect"/>
-    <item
-        android:id="@+id/menu_overview_rate"
-        android:icon="@drawable/trakt_heart"
-        android:orderInCategory="3"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/menu_rate_episode"/>
-    <item
         android:id="@+id/menu_overview_manage_lists"
         android:icon="@drawable/ic_action_list"
-        android:orderInCategory="4"
+        android:orderInCategory="0"
         android:showAsAction="ifRoom|withText"
         android:title="@string/list_item_manage"/>
     <item
         android:id="@+id/menu_overview_share"
         android:icon="@drawable/ic_action_share"
-        android:orderInCategory="5"
+        android:orderInCategory="1"
         android:showAsAction="ifRoom"
         android:title="@string/share_episode"/>
     <item
-        android:id="@+id/menu_overview_calendarevent"
-        android:icon="@drawable/ic_action_calendar"
-        android:orderInCategory="6"
+        android:id="@+id/menu_overview_rate"
+        android:icon="@drawable/trakt_heart"
+        android:orderInCategory="2"
         android:showAsAction="never"
-        android:title="@string/addtocalendar"/>
+        android:title="@string/menu_rate_episode"/>
 
 </menu>
