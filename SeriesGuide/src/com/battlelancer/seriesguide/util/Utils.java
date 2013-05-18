@@ -780,9 +780,9 @@ public class Utils {
     @SuppressWarnings("deprecation")
     public static void setPosterBackground(ImageView background, String posterPath, Context context) {
         if (AndroidUtils.isJellyBeanOrHigher()) {
-            background.setImageAlpha(50);
+            background.setImageAlpha(20);
         } else {
-            background.setAlpha(50);
+            background.setAlpha(20);
         }
         ImageProvider.getInstance(context).loadImage(background, posterPath, false);
     }
