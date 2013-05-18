@@ -13,8 +13,12 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- Notification service -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- Android Beam -->
     <uses-permission android:name="android.permission.NFC" />
+    <!-- In-app billing -->
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <uses-feature
         android:name="android.hardware.touchscreen"
@@ -199,16 +203,11 @@
         <service android:name="com.battlelancer.seriesguide.service.NotificationService" >
         </service>
 
-        <!-- Not available in free version -->
-        <!--
         <receiver android:name="com.battlelancer.seriesguide.service.OnAlarmReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver>
-        -->
-
-
+        </receiver>
         <!-- Widgets -->
         <receiver
             android:name="com.battlelancer.seriesguide.appwidget.ListWidgetProvider"
