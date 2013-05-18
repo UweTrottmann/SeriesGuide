@@ -97,8 +97,7 @@
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
         </activity>
-        <activity
-            android:name="com.battlelancer.seriesguide.ui.OverviewActivity" >
+        <activity android:name="com.battlelancer.seriesguide.ui.OverviewActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
@@ -191,7 +190,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.SeriesGuidePreferences" />
         </activity>
-		
+
         <!-- Services -->
         <service android:name="com.battlelancer.seriesguide.service.TraktFlagService" >
         </service>
@@ -206,8 +205,9 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver>
+        </receiver>
         -->
+
 
         <!-- Widgets -->
         <receiver
@@ -301,7 +301,7 @@
                 android:name="settingsActivity"
                 android:value="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity" />
         </service>
-        
+
         <activity
             android:name="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity"
             android:exported="true" >
