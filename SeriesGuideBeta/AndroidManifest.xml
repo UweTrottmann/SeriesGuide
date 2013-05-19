@@ -49,6 +49,7 @@
             android:name="com.battlelancer.seriesguide.provider.SeriesGuideProvider"
             android:authorities="com.battlelancer.seriesguide.beta.provider"
             android:exported="true"
+            android:label="@string/app_name"
             android:syncable="true" >
         </provider>
 
