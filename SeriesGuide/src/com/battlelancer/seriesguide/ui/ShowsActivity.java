@@ -30,6 +30,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewStub;
@@ -258,11 +259,18 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
             return true;
         }
         else if (itemId == R.id.menu_update) {
-            // fireTrackerEvent("Update (outdated)");
+            fireTrackerEvent("Update (outdated)");
+            Log.d(TAG, "Performing sync");
             // performUpdateTask(false, null);
 
-            final Account account = new Account(SgAccountAuthenticator.ACCOUNT_NAME, getPackageName());
-            ContentResolver.requestSync(account, SeriesGuideApplication.CONTENT_AUTHORITY, new Bundle());
+            final Account account = new Account(SgAccountAuthenticator.ACCOUNT_NAME,
+                    getPackageName());
+            // ContentResolver.addPeriodicSync(account,
+            // SgAccountAuthenticator.PROVIDER_AUTHORITY,
+            // new Bundle(), 24 * 60 * 60);
+            ContentResolver.requestSync(account,
+                    SeriesGuideApplication.CONTENT_AUTHORITY,
+                    new Bundle());
 
             return true;
         } else if (itemId == R.id.menu_updateart) {
