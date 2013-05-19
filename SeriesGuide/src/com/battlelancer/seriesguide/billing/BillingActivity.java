@@ -1,11 +1,12 @@
 
 package com.battlelancer.seriesguide.billing;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.uwetrottmann.seriesguide.R;
@@ -16,6 +17,9 @@ public class BillingActivity extends BaseActivity {
 
     // The SKU product id as set in the Developer Console
     private static final String SKU_X = "x_upgrade";
+
+    // (arbitrary) request code for the purchase flow
+    private static final int RC_REQUEST = 749758;
 
     private IabHelper mHelper;
 
@@ -31,8 +35,7 @@ public class BillingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.billing);
 
-        mUpgradeButton = (Button) findViewById(R.id.buttonBillingGetUpgrade);
-        mTextHasUpgrade = findViewById(R.id.textViewBillingExisting);
+        setupViews();
 
         updateUi();
 
@@ -46,10 +49,7 @@ public class BillingActivity extends BaseActivity {
 
                 if (!result.isSuccess()) {
                     // Oh noes, there was a problem.
-                    Log.d(TAG, "Problem setting up In-app Billing: " + result);
-                    Toast.makeText(getApplicationContext(),
-                            "Problem setting up In-app Billing: " + result,
-                            Toast.LENGTH_LONG).show();
+                    complain("Problem setting up In-app Billing: " + result);
                     return;
                 }
 
@@ -61,10 +61,14 @@ public class BillingActivity extends BaseActivity {
         });
     }
 
-    private void updateUi() {
-        // Only enable purchase button if the user does not have the upgrade yet
-        mUpgradeButton.setEnabled(!mHasXUpgrade);
-        mTextHasUpgrade.setVisibility(mHasXUpgrade ? View.VISIBLE : View.GONE);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (mHelper != null) {
+            mHelper.dispose();
+        }
+        mHelper = null;
     }
 
     // Listener that's called when we finish querying the items and
@@ -73,9 +77,7 @@ public class BillingActivity extends BaseActivity {
         public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
             Log.d(TAG, "Query inventory finished.");
             if (result.isFailure()) {
-                // TODO handle error
-                Toast.makeText(getApplicationContext(), "Could not query inventory: " + result,
-                        Toast.LENGTH_LONG).show();
+                complain("Could not query inventory: " + result);
                 return;
             }
 
@@ -122,14 +124,74 @@ public class BillingActivity extends BaseActivity {
         return true;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    // User clicked the "Upgrade to Premium" button.
+    private void onUpgradeAppButtonClicked(View button) {
+        Log.d(TAG, "Upgrade button clicked; launching purchase flow for upgrade.");
 
-        if (mHelper != null) {
-            mHelper.dispose();
+        /*
+         * TODO: for security, generate your payload here for verification. See
+         * the comments on verifyDeveloperPayload() for more info. Since this is
+         * a SAMPLE, we just use an empty string, but on a production app you
+         * should carefully generate this.
+         */
+        String payload = "";
+
+        mHelper.launchPurchaseFlow(this, SKU_X, RC_REQUEST, mPurchaseFinishedListener, payload);
+    }
+
+    // Callback for when a purchase is finished
+    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+        public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
+            Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
+            if (result.isFailure()) {
+                complain("Error purchasing: " + result);
+                return;
+            }
+            if (!verifyDeveloperPayload(purchase)) {
+                complain("Error purchasing. Authenticity verification failed.");
+                return;
+            }
+
+            Log.d(TAG, "Purchase successful.");
+
+            if (purchase.getSku().equals(SKU_X)) {
+                // bought the upgrade!
+                Log.d(TAG, "Purchased X upgrade. Congratulating user.");
+                mHasXUpgrade = true;
+                updateUi();
+            }
         }
-        mHelper = null;
+    };
+
+    private void setupViews() {
+        mUpgradeButton = (Button) findViewById(R.id.buttonBillingGetUpgrade);
+        mUpgradeButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onUpgradeAppButtonClicked(v);
+            }
+        });
+
+        mTextHasUpgrade = findViewById(R.id.textViewBillingExisting);
+    }
+
+    private void updateUi() {
+        // Only enable purchase button if the user does not have the upgrade yet
+        mUpgradeButton.setEnabled(!mHasXUpgrade);
+        mTextHasUpgrade.setVisibility(mHasXUpgrade ? View.VISIBLE : View.GONE);
+    }
+
+    private void complain(String message) {
+        Log.e(TAG, message);
+        alert("Error: " + message);
+    }
+
+    private void alert(String message) {
+        AlertDialog.Builder bld = new AlertDialog.Builder(this);
+        bld.setMessage(message);
+        bld.setNeutralButton(android.R.string.ok, null);
+        Log.d(TAG, "Showing alert dialog: " + message);
+        bld.create().show();
     }
 
 }
