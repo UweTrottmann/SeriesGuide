@@ -9,12 +9,14 @@ import android.accounts.NetworkErrorException;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 
 public class SgAccountAuthenticator extends AbstractAccountAuthenticator {
 
     public static final String ACCOUNT_NAME = "SeriesGuide Sync Account";
+    private static final String TAG = "SgAccountAuthenticator";
     private Context mContext;
 
     public SgAccountAuthenticator(Context context) {
@@ -31,6 +33,7 @@ public class SgAccountAuthenticator extends AbstractAccountAuthenticator {
     public Bundle addAccount(AccountAuthenticatorResponse response, String accountType,
             String authTokenType, String[] requiredFeatures, Bundle options)
             throws NetworkErrorException {
+        Log.d(TAG, "Setting up sync account");
 
         // set up a dummy account for syncing
         AccountManager manager = AccountManager.get(mContext);
@@ -39,6 +42,8 @@ public class SgAccountAuthenticator extends AbstractAccountAuthenticator {
         ContentResolver.setIsSyncable(account, SeriesGuideApplication.CONTENT_AUTHORITY, 1);
         ContentResolver.setSyncAutomatically(account, SeriesGuideApplication.CONTENT_AUTHORITY,
                 true);
+
+        Log.d(TAG, "Finished setting up sync account");
 
         return null;
     }

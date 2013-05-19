@@ -18,6 +18,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
     public SgSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
+        Log.d(TAG, "Creating SyncAdapter");
     }
 
     @Override
