@@ -2,4 +2,5 @@
 <sync-adapter xmlns:android="http://schemas.android.com/apk/res/android"
     android:accountType="com.battlelancer.seriesguide.beta"
     android:contentAuthority="com.battlelancer.seriesguide.beta.provider"
+    android:supportsUploading="false"
     android:userVisible="true" />
