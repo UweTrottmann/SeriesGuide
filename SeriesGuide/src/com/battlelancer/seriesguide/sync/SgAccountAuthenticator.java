@@ -15,7 +15,7 @@ import com.battlelancer.seriesguide.SeriesGuideApplication;
 
 public class SgAccountAuthenticator extends AbstractAccountAuthenticator {
 
-    public static final String ACCOUNT_NAME = "SeriesGuide Sync Account";
+    public static final String ACCOUNT_NAME = "SeriesGuide Sync";
     private static final String TAG = "SgAccountAuthenticator";
     private Context mContext;
 
@@ -75,6 +75,14 @@ public class SgAccountAuthenticator extends AbstractAccountAuthenticator {
     public Bundle hasFeatures(AccountAuthenticatorResponse response, Account account,
             String[] features) throws NetworkErrorException {
         return null;
+    }
+
+    @Override
+    public Bundle getAccountRemovalAllowed(AccountAuthenticatorResponse response, Account account)
+            throws NetworkErrorException {
+        final Bundle result = new Bundle();
+        result.putBoolean(AccountManager.KEY_BOOLEAN_RESULT, false);
+        return result;
     }
 
 }
