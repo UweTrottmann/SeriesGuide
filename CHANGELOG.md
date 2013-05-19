@@ -20,6 +20,11 @@ Version 6
 * Fixed crash in movies section when movies did not have a proper release date set.
 * Latest translations from crowdin.
 
+Version 5.2 *(2013-05-16)*
+--------------------------
+
+* FIX Crash in movie section if movie did not have a release date.
+
 Version 5.1 *(2013-05-01)*
 --------------------------
 

@@ -493,7 +493,6 @@ public class OverviewFragment extends SherlockFragment implements
         final TextView episodeInfo = (TextView) getView().findViewById(R.id.episodeInfo);
         final View episodemeta = getView().findViewById(R.id.episode_meta_container);
         final View episodePrimaryContainer = getView().findViewById(R.id.episode_primary_container);
-        final View episodePrimaryClicker = getView().findViewById(R.id.episode_primary_click_dummy);
         final View buttons = getView().findViewById(R.id.buttonbar);
         final View ratings = getView().findViewById(R.id.ratingbar);
 
@@ -533,7 +532,7 @@ public class OverviewFragment extends SherlockFragment implements
             }
 
             // make title and image clickable
-            episodePrimaryClicker.setOnClickListener(new OnClickListener() {
+            episodePrimaryContainer.setOnClickListener(new OnClickListener() {
                 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onClick(View view) {
@@ -545,7 +544,7 @@ public class OverviewFragment extends SherlockFragment implements
                             R.anim.blow_up_exit);
                 }
             });
-            episodePrimaryClicker.setFocusable(true);
+            episodePrimaryContainer.setFocusable(true);
 
             // Button bar
             // check-in button
@@ -616,9 +615,9 @@ public class OverviewFragment extends SherlockFragment implements
             episodeInfo.setVisibility(View.GONE);
             episodemeta.setVisibility(View.GONE);
             episodePrimaryContainer.setBackgroundResource(R.color.background_dim);
-            episodePrimaryClicker.setOnClickListener(null);
-            episodePrimaryClicker.setClickable(false);
-            episodePrimaryClicker.setFocusable(false);
+            episodePrimaryContainer.setOnClickListener(null);
+            episodePrimaryContainer.setClickable(false);
+            episodePrimaryContainer.setFocusable(false);
             buttons.setVisibility(View.GONE);
             ratings.setOnClickListener(null);
             ratings.setClickable(false);
