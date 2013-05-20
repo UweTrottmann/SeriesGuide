@@ -66,14 +66,6 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * {@code .requestSync()}, but only if at least UPDATE_INTERVAL has passed.
      */
     public static void requestSync(Context context) {
-        SgSyncAdapter.requestSync(context, UpdateType.DELTA);
-    }
-
-    /**
-     * Helper which eventually calls {@link ContentResolver}
-     * {@code .requestSync()}, but only if at least UPDATE_INTERVAL has passed.
-     */
-    public static void requestSync(Context context, UpdateType type) {
         if (AndroidUtils.isNetworkConnected(context)) {
             // only request sync if at least UPDATE_INTERVAL has passed
             long now = System.currentTimeMillis();
@@ -83,19 +75,28 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     UPDATE_INTERVAL_MINUTES * DateUtils.MINUTE_IN_MILLIS;
 
             if (isTime) {
-                Bundle args = new Bundle();
-                if (type == UpdateType.FULL) {
-                    args.putInt(UPDATE_TYPE, 1);
-                } else {
-                    args.putInt(UPDATE_TYPE, 0);
-                }
-
-                final Account account = new Account(SgAccountAuthenticator.ACCOUNT_NAME,
-                        context.getPackageName());
-                ContentResolver.requestSync(account,
-                        SeriesGuideApplication.CONTENT_AUTHORITY, args);
+                SgSyncAdapter.requestSync(context, UpdateType.DELTA);
             }
         }
+    }
+
+    /**
+     * Helper which eventually calls {@link ContentResolver}
+     * {@code .requestSync()}.
+     */
+    public static void requestSync(Context context, UpdateType type) {
+        Bundle args = new Bundle();
+        if (type == UpdateType.FULL) {
+            args.putInt(UPDATE_TYPE, 1);
+        } else {
+            args.putInt(UPDATE_TYPE, 0);
+        }
+
+        final Account account = new Account(SgAccountAuthenticator.ACCOUNT_NAME,
+                context.getPackageName());
+        ContentResolver.requestSync(account,
+                SeriesGuideApplication.CONTENT_AUTHORITY, args);
+
     }
 
     public SgSyncAdapter(Context context, boolean autoInitialize) {
@@ -247,6 +248,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         // There could have been new episodes added after an update
         Utils.runNotificationService(getContext());
 
+        Log.d(TAG, "Finished syncing shows: " + resultCode.toString());
     }
 
     /**
