@@ -57,6 +57,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
     public static final int UPDATE_INTERVAL_MINUTES = 30;
 
+    public static final String UPDATE_TYPE = "com.battlelancer.seriesguide.update_type";
+
     private ArrayList<SearchResult> mNewShows;
 
     /**
@@ -64,6 +66,14 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * {@code .requestSync()}, but only if at least UPDATE_INTERVAL has passed.
      */
     public static void requestSync(Context context) {
+        SgSyncAdapter.requestSync(context, UpdateType.DELTA);
+    }
+
+    /**
+     * Helper which eventually calls {@link ContentResolver}
+     * {@code .requestSync()}, but only if at least UPDATE_INTERVAL has passed.
+     */
+    public static void requestSync(Context context, UpdateType type) {
         if (AndroidUtils.isNetworkConnected(context)) {
             // only request sync if at least UPDATE_INTERVAL has passed
             long now = System.currentTimeMillis();
@@ -73,10 +83,17 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     UPDATE_INTERVAL_MINUTES * DateUtils.MINUTE_IN_MILLIS;
 
             if (isTime) {
+                Bundle args = new Bundle();
+                if (type == UpdateType.FULL) {
+                    args.putInt(UPDATE_TYPE, 1);
+                } else {
+                    args.putInt(UPDATE_TYPE, 0);
+                }
+
                 final Account account = new Account(SgAccountAuthenticator.ACCOUNT_NAME,
                         context.getPackageName());
                 ContentResolver.requestSync(account,
-                        SeriesGuideApplication.CONTENT_AUTHORITY, new Bundle());
+                        SeriesGuideApplication.CONTENT_AUTHORITY, args);
             }
         }
     }
@@ -90,7 +107,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         SUCCESS, INCOMPLETE;
     }
 
-    enum UpdateType {
+    public enum UpdateType {
         AUTO_SINGLE, DELTA, FULL
     }
 
@@ -99,17 +116,26 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             ContentProviderClient provider, SyncResult syncResult) {
         Log.d(TAG, "Starting to sync shows");
 
+        // determine type of sync
+        int typeIndex = extras.getInt(SgSyncAdapter.UPDATE_TYPE);
+
+        UpdateType type;
+        if (typeIndex == 1) {
+            type = UpdateType.FULL;
+        } else {
+            type = UpdateType.DELTA;
+        }
+
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         final ContentResolver resolver = getContext().getContentResolver();
         final long currentTime = System.currentTimeMillis();
-        UpdateType mUpdateType = UpdateType.DELTA;
         UpdateResult resultCode = UpdateResult.SUCCESS;
         String[] mShows = null;
         final AtomicInteger updateCount = new AtomicInteger();
 
         // build a list of shows to update
         if (mShows == null) {
-            mShows = getShowsToUpdate(mUpdateType, currentTime);
+            mShows = getShowsToUpdate(type, currentTime);
         }
 
         // actually update the shows
@@ -152,7 +178,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
          * Renew search table, get trakt activity and the latest tmdb config if
          * we did update multiple shows.
          */
-        if (mUpdateType != UpdateType.AUTO_SINGLE) {
+        if (type != UpdateType.AUTO_SINGLE) {
 
             if (updateCount.get() > 0 && mShows.length > 0) {
                 // renew search table
