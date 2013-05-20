@@ -176,7 +176,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
                 default:
                     // get only shows which have not been updated for a certain
                     // time
-                    mShows = TheTVDB.deltaUpdateShows(currentTime, prefs, mAppContext);
+                    mShows = TheTVDB.deltaUpdateShows(currentTime, mAppContext);
                     break;
             }
         }

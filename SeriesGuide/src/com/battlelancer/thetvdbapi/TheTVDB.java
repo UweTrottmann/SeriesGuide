@@ -221,12 +221,13 @@ public class TheTVDB {
     /**
      * Return list of show ids hitting a x-day limit.
      */
-    public static String[] deltaUpdateShows(long currentTime, SharedPreferences prefs,
-            Context context) {
-        final HashSet<Integer> existingShowIds = new HashSet<Integer>();
-        final HashSet<String> updatableShowIds = new HashSet<String>();
+    public static String[] deltaUpdateShows(long currentTime, Context context) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final int updateAtLeastEvery = prefs.getInt(SeriesGuidePreferences.KEY_UPDATEATLEASTEVERY,
                 7);
+
+        final HashSet<Integer> existingShowIds = new HashSet<Integer>();
+        final HashSet<String> updatableShowIds = new HashSet<String>();
 
         // get existing show ids
         final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI, new String[] {
