@@ -23,6 +23,7 @@ import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.battlelancer.seriesguide.util.AdvancedSettings;
 import com.battlelancer.seriesguide.util.Lists;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TaskManager;
@@ -60,13 +61,24 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
     /**
      * Helper which eventually calls {@link ContentResolver}
-     * {@code .requestSync()}.
+     * {@code .requestSync()}, but only if at least UPDATE_INTERVAL has passed.
      */
     public static void requestSync(Context context) {
-        final Account account = new Account(SgAccountAuthenticator.ACCOUNT_NAME,
-                context.getPackageName());
-        ContentResolver.requestSync(account,
-                SeriesGuideApplication.CONTENT_AUTHORITY, new Bundle());
+        if (AndroidUtils.isNetworkConnected(context)) {
+            // only request sync if at least UPDATE_INTERVAL has passed
+            long now = System.currentTimeMillis();
+            long previousUpdateTime = AdvancedSettings.getLastAutoUpdateTime(context);
+
+            final boolean isTime = (now - previousUpdateTime) >
+                    UPDATE_INTERVAL_MINUTES * DateUtils.MINUTE_IN_MILLIS;
+
+            if (isTime) {
+                final Account account = new Account(SgAccountAuthenticator.ACCOUNT_NAME,
+                        context.getPackageName());
+                ContentResolver.requestSync(account,
+                        SeriesGuideApplication.CONTENT_AUTHORITY, new Bundle());
+            }
+        }
     }
 
     public SgSyncAdapter(Context context, boolean autoInitialize) {
