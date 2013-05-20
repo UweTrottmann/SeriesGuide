@@ -54,9 +54,20 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
     private static final String TAG = "SgSyncAdapter";
 
-    public static final int UPDATE_INTERVAL = 30;
+    public static final int UPDATE_INTERVAL_MINUTES = 30;
 
     private ArrayList<SearchResult> mNewShows;
+
+    /**
+     * Helper which eventually calls {@link ContentResolver}
+     * {@code .requestSync()}.
+     */
+    public static void requestSync(Context context) {
+        final Account account = new Account(SgAccountAuthenticator.ACCOUNT_NAME,
+                context.getPackageName());
+        ContentResolver.requestSync(account,
+                SeriesGuideApplication.CONTENT_AUTHORITY, new Bundle());
+    }
 
     public SgSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
@@ -64,7 +75,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     enum UpdateResult {
-        SILENT_SUCCESS, ERROR, OFFLINE, CANCELLED, INCOMPLETE;
+        SUCCESS, INCOMPLETE;
     }
 
     enum UpdateType {
@@ -80,7 +91,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         final ContentResolver resolver = getContext().getContentResolver();
         final long currentTime = System.currentTimeMillis();
         UpdateType mUpdateType = UpdateType.DELTA;
-        UpdateResult resultCode = UpdateResult.SILENT_SUCCESS;
+        UpdateResult resultCode = UpdateResult.SUCCESS;
         String[] mShows = null;
         final AtomicInteger updateCount = new AtomicInteger();
 
@@ -157,12 +168,12 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             final UpdateResult traktResult = getTraktActivity(currentTime);
 
             // do not overwrite earlier failure codes
-            if (resultCode == UpdateResult.SILENT_SUCCESS) {
+            if (resultCode == UpdateResult.SUCCESS) {
                 resultCode = traktResult;
             }
 
             // store time of update, set retry counter on failure
-            if (resultCode == UpdateResult.SILENT_SUCCESS) {
+            if (resultCode == UpdateResult.SUCCESS) {
                 // we were successful, reset failed counter
                 prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTUPDATE, currentTime)
                         .putInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, 0).commit();
@@ -178,7 +189,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 long fakeLastUpdateTime;
                 if (failed < 4) {
                     fakeLastUpdateTime = currentTime
-                            - ((UPDATE_INTERVAL - (int) Math.pow(2, failed + 2)) * DateUtils.MINUTE_IN_MILLIS);
+                            - ((UPDATE_INTERVAL_MINUTES - (int) Math.pow(2, failed + 2)) * DateUtils.MINUTE_IN_MILLIS);
                 } else {
                     fakeLastUpdateTime = currentTime;
                 }
@@ -232,7 +243,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     private UpdateResult getTraktActivity(long currentTime) {
         if (!ServiceUtils.isTraktCredentialsValid(getContext())) {
             // trakt is not connected, we are done here
-            return UpdateResult.SILENT_SUCCESS;
+            return UpdateResult.SUCCESS;
         }
 
         // return if connectivity is lost
@@ -373,7 +384,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 .putLong(SeriesGuidePreferences.KEY_LASTTRAKTUPDATE,
                         activity.timestamps.current.getTime()).commit();
 
-        return UpdateResult.SILENT_SUCCESS;
+        return UpdateResult.SUCCESS;
     }
 
     /**
