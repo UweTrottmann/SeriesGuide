@@ -18,10 +18,8 @@
 package com.battlelancer.seriesguide.ui;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
@@ -31,13 +29,12 @@ import android.view.KeyEvent;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.enums.TraktAction;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.TraktCancelCheckinDialogFragment;
 import com.battlelancer.seriesguide.util.AdvancedSettings;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.TraktTask.InitBundle;
 import com.battlelancer.seriesguide.util.TraktTask.OnTraktActionCompleteListener;
-import com.battlelancer.seriesguide.util.UpdateTask;
-import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
 import net.simonvt.menudrawer.MenuDrawer;
@@ -76,9 +73,9 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
     @Override
     protected void onStart() {
         super.onStart();
-        // make auto update task interfering with backup task less likely
+        // make sync interfering with backup task less likely
         if (!onAutoBackup()) {
-            onAutoUpdate();
+            SgSyncAdapter.requestSync(this);
         }
     }
 
@@ -171,44 +168,6 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
             return true;
         } else {
             return false;
-        }
-    }
-
-    /**
-     * Try to launch a delta-update task if certain conditions are met.
-     */
-    private void onAutoUpdate() {
-        // try to run auto-update
-        if (Utils.isAllowedConnection(this)) {
-            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-            // check if auto-update is actually enabled
-            final boolean isAutoUpdateEnabled = prefs.getBoolean(
-                    SeriesGuidePreferences.KEY_AUTOUPDATE, true);
-
-            if (isAutoUpdateEnabled) {
-                // only update if at least 15mins have passed since last one
-                long now = System.currentTimeMillis();
-                long previousUpdateTime = prefs.getLong(
-                        SeriesGuidePreferences.KEY_LASTUPDATE, 0);
-                // set the last update time to now if we don't have one yet,
-                // avoids auto-update at first launch
-                if (previousUpdateTime == 0) {
-                    previousUpdateTime = now;
-                    prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTUPDATE, now)
-                            .commit();
-                }
-
-                final boolean isTime = (now - previousUpdateTime) > 15 * DateUtils.MINUTE_IN_MILLIS;
-
-                if (isTime) {
-                    // start UpdateTask to get latest episode info
-                    TaskManager.getInstance(this).tryUpdateTask(
-                            new UpdateTask(false, this),
-                            false,
-                            -1);
-                }
-            }
         }
     }
 
