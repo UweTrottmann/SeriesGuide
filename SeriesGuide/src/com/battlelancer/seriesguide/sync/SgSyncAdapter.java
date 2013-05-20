@@ -214,7 +214,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             // store time of update, set retry counter on failure
             if (resultCode == UpdateResult.SUCCESS) {
                 // we were successful, reset failed counter
-                prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTUPDATE, currentTime)
+                prefs.edit().putLong(AdvancedSettings.KEY_LASTUPDATE, currentTime)
                         .putInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, 0).commit();
             } else {
                 int failed = prefs.getInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, 0);
@@ -235,7 +235,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
                 failed += 1;
                 prefs.edit()
-                        .putLong(SeriesGuidePreferences.KEY_LASTUPDATE, fakeLastUpdateTime)
+                        .putLong(AdvancedSettings.KEY_LASTUPDATE, fakeLastUpdateTime)
                         .putInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, failed).commit();
             }
         }

@@ -278,7 +278,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
             // store time for triggering next update 15min after
             if (resultCode == UpdateResult.SILENT_SUCCESS) {
                 // now, if we were successful, reset failed counter
-                prefs.edit().putLong(SeriesGuidePreferences.KEY_LASTUPDATE, currentTime)
+                prefs.edit().putLong(AdvancedSettings.KEY_LASTUPDATE, currentTime)
                         .putInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, 0).commit();
             } else {
                 int failed = prefs.getInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, 0);
@@ -294,7 +294,7 @@ public class UpdateTask extends AsyncTask<Void, Integer, UpdateResult> {
 
                 failed += 1;
                 prefs.edit()
-                        .putLong(SeriesGuidePreferences.KEY_LASTUPDATE, time)
+                        .putLong(AdvancedSettings.KEY_LASTUPDATE, time)
                         .putInt(SeriesGuidePreferences.KEY_FAILED_COUNTER, failed).commit();
             }
         } else {
