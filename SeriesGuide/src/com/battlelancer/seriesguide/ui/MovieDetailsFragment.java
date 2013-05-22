@@ -206,9 +206,9 @@ public class MovieDetailsFragment extends SherlockFragment implements
                 ImageView background = (ImageView) getView()
                         .findViewById(R.id.imageViewMoviePoster);
                 if (AndroidUtils.isJellyBeanOrHigher()) {
-                    background.setImageAlpha(20);
+                    background.setImageAlpha(30);
                 } else {
-                    background.setAlpha(20);
+                    background.setAlpha(30);
                 }
 
                 String posterPath = mBaseUrl + movie.poster_path;
