@@ -45,6 +45,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.NotificationSettings;
 import com.battlelancer.seriesguide.util.Utils;
@@ -448,6 +449,14 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 resetAndRunNotificationsService(SeriesGuidePreferences.this);
             }
         }
+
+        // Toggle auto-update on SyncAdapter
+        if (KEY_AUTOUPDATE.equals(key)) {
+            CheckBoxPreference pref = (CheckBoxPreference) findPreference(key);
+            if (pref != null) {
+                SgSyncAdapter.setSyncAutomatically(SeriesGuidePreferences.this, pref.isChecked());
+            }
+        }
     }
 
     /**
@@ -542,6 +551,14 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 Preference pref = findPreference(key);
                 if (pref != null) {
                     resetAndRunNotificationsService(getActivity());
+                }
+            }
+
+            // Toggle auto-update on SyncAdapter
+            if (KEY_AUTOUPDATE.equals(key)) {
+                CheckBoxPreference pref = (CheckBoxPreference) findPreference(key);
+                if (pref != null) {
+                    SgSyncAdapter.setSyncAutomatically(getActivity(), pref.isChecked());
                 }
             }
         }
