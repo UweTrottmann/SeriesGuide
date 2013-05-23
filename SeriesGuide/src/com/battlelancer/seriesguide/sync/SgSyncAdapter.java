@@ -92,11 +92,16 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             args.putInt(UPDATE_TYPE, 0);
         }
 
-        final Account account = new Account(SgAccountAuthenticator.ACCOUNT_NAME,
-                context.getPackageName());
+        final Account account = SgAccountAuthenticator.getSyncAccount(context);
         ContentResolver.requestSync(account,
                 SeriesGuideApplication.CONTENT_AUTHORITY, args);
 
+    }
+
+    public static void setSyncAutomatically(Context context, boolean sync) {
+        final Account account = SgAccountAuthenticator.getSyncAccount(context);
+        ContentResolver.setSyncAutomatically(account, SeriesGuideApplication.CONTENT_AUTHORITY,
+                sync);
     }
 
     public SgSyncAdapter(Context context, boolean autoInitialize) {
