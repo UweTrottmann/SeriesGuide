@@ -27,6 +27,7 @@ import com.jakewharton.apibuilder.ApiException;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.Comment;
+import com.uwetrottmann.androidutils.GenericSimpleLoader;
 
 import java.util.ArrayList;
 import java.util.List;
