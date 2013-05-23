@@ -17,9 +17,11 @@
 
 package com.battlelancer.seriesguide.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
@@ -75,7 +77,16 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
         super.onStart();
         // make sync interfering with backup task less likely
         if (!onAutoBackup()) {
-            SgSyncAdapter.requestSync(this);
+            // start sync delayed to speed up resuming
+            final Context context = getApplicationContext();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    SgSyncAdapter.requestSync(context);
+                }
+            }, 500);
+
         }
     }
 
