@@ -65,7 +65,7 @@ public class SeriesGuideApplication extends Application {
 
         // set up a dummy account for syncing
         AccountManager manager = AccountManager.get(this);
-        final Account account = new Account(SgAccountAuthenticator.ACCOUNT_NAME, getPackageName());
+        final Account account = SgAccountAuthenticator.getSyncAccount(this);
         if (manager.addAccountExplicitly(account, null, null)) {
             ContentResolver.setIsSyncable(account, SeriesGuideApplication.CONTENT_AUTHORITY, 1);
             ContentResolver.setSyncAutomatically(account, SeriesGuideApplication.CONTENT_AUTHORITY,
