@@ -47,7 +47,6 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.Lists;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -57,6 +56,7 @@ import com.jakewharton.trakt.TraktException;
 import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.R;
 
 import org.xml.sax.ContentHandler;

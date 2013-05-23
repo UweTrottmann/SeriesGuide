@@ -43,10 +43,10 @@ import com.battlelancer.seriesguide.ui.EpisodesActivity;
 import com.battlelancer.seriesguide.ui.QuickCheckInActivity;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.Lists;
 import com.battlelancer.seriesguide.util.NotificationSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.R;
 
 import java.util.List;

@@ -37,11 +37,11 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Seasons;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.AdvancedSettings;
-import com.battlelancer.seriesguide.util.Lists;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 import com.google.myjson.Gson;
 import com.google.myjson.stream.JsonWriter;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.R;
 
 import java.io.File;

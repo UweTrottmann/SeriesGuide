@@ -31,6 +31,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListItems;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.util.FlagTapeEntry.Flag;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.R;
 
 import de.greenrobot.event.EventBus;

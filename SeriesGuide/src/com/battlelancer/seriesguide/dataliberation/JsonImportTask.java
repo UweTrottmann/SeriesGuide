@@ -313,7 +313,7 @@ public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
         }
 
         // Insert the lists items
-        ArrayList<ContentValues> items = com.battlelancer.seriesguide.util.Lists.newArrayList();
+        ArrayList<ContentValues> items = com.uwetrottmann.androidutils.Lists.newArrayList();
         for (ListItem item : list.items) {
             int type;
             if (ListItemTypesExport.SHOW.equals(item.type)) {

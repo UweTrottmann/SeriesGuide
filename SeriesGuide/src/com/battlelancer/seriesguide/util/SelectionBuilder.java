@@ -28,6 +28,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.uwetrottmann.androidutils.Lists;
+import com.uwetrottmann.androidutils.Maps;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;

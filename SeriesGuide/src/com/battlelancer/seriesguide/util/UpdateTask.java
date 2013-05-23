@@ -51,6 +51,7 @@ import com.jakewharton.trakt.entities.ActivityItem;
 import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
+import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.tmdb.TmdbException;
 import com.uwetrottmann.tmdb.entities.Configuration;

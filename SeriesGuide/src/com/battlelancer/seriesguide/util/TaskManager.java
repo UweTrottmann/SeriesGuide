@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.battlelancer.seriesguide.dataliberation.JsonExportTask;
 import com.battlelancer.seriesguide.items.SearchResult;
 import com.battlelancer.seriesguide.service.TraktFlagService;
+import com.uwetrottmann.androidutils.Lists;
 import com.uwetrottmann.seriesguide.R;
 
 import java.util.List;
