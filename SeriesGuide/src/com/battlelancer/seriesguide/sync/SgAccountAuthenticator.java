@@ -19,6 +19,11 @@ public class SgAccountAuthenticator extends AbstractAccountAuthenticator {
     private static final String TAG = "SgAccountAuthenticator";
     private Context mContext;
 
+    public static Account getSyncAccount(Context context) {
+        Account account = new Account(SgAccountAuthenticator.ACCOUNT_NAME, context.getPackageName());
+        return account;
+    }
+
     public SgAccountAuthenticator(Context context) {
         super(context);
         mContext = context;
