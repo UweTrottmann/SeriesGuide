@@ -21,6 +21,10 @@ public abstract class BaseTopActivity extends BaseActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        // setup nav drawer to show special indicator
+        getMenu().setSlideDrawable(R.drawable.ic_drawer);
+        getMenu().setDrawerIndicatorEnabled(true);
     }
 
     @Override
