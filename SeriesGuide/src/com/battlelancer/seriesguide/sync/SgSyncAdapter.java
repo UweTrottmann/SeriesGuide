@@ -159,7 +159,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         } else {
             type = UpdateType.SINGLE;
             mShows = new String[] {
-                    String.valueOf(type)
+                    String.valueOf(showTvdbId)
             };
         }
 
