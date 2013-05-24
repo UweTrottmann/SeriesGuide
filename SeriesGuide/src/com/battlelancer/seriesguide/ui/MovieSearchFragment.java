@@ -54,7 +54,7 @@ import java.util.List;
  * grid.
  */
 public class MovieSearchFragment extends SherlockFragment implements OnEditorActionListener,
-        LoaderCallbacks<List<Movie>>, OnItemClickListener {
+        LoaderCallbacks<List<Movie>>, OnItemClickListener, OnClickListener {
 
     private static final String SEARCH_QUERY_KEY = "search_query";
     private static final int LOADER_ID = R.layout.movies_fragment;
@@ -97,7 +97,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
         super.onActivityCreated(savedInstanceState);
         getSherlockActivity().setSupportProgressBarIndeterminateVisibility(false);
 
-        mAdapter = new MoviesAdapter(getActivity());
+        mAdapter = new MoviesAdapter(getActivity(), this);
 
         // setup grid view
         GridView list = (GridView) getView().findViewById(R.id.gridViewMovies);
@@ -148,6 +148,11 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
         }
 
         return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        getActivity().openContextMenu(v);
     }
 
     @Override

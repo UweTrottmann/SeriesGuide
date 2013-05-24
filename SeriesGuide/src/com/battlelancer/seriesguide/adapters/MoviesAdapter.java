@@ -24,6 +24,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -47,12 +48,15 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
 
     private ImageDownloader mImageDownloader;
 
+    private OnClickListener mOnClickListener;
+
     private String mBaseUrl;
 
-    public MoviesAdapter(Context context) {
+    public MoviesAdapter(Context context, OnClickListener listener) {
         super(context, LAYOUT);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mImageDownloader = ImageDownloader.getInstance(context);
+        mOnClickListener = listener;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         mBaseUrl = prefs.getString(SeriesGuidePreferences.KEY_TMDB_BASE_URL,
@@ -72,6 +76,8 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
             holder.title = (TextView) convertView.findViewById(R.id.textViewMovieTitle);
             holder.date = (TextView) convertView.findViewById(R.id.textViewMovieDate);
             holder.poster = (ImageView) convertView.findViewById(R.id.imageViewMoviePoster);
+            holder.contextMenu = (ImageView) convertView
+                    .findViewById(R.id.imageViewMovieItemContextMenu);
 
             convertView.setTag(holder);
         } else {
@@ -94,6 +100,9 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
             mImageDownloader.download(posterPath, holder.poster, false);
         }
 
+        // context menu
+        holder.contextMenu.setOnClickListener(mOnClickListener);
+
         return convertView;
     }
 
@@ -112,6 +121,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         TextView title;
         TextView date;
         ImageView poster;
+        ImageView contextMenu;
     }
 
 }

@@ -26,6 +26,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
@@ -51,7 +52,7 @@ import java.util.List;
  * Loads and displays the users trakt movie watchlist.
  */
 public class MoviesWatchListFragment extends SherlockFragment implements
-        LoaderCallbacks<List<Movie>>, OnItemClickListener {
+        LoaderCallbacks<List<Movie>>, OnItemClickListener, OnClickListener {
 
     private static final int LOADER_ID = R.layout.movies_watchlist_fragment;
     private static final int CONTEXT_REMOVE_ID = 0;
@@ -73,7 +74,7 @@ public class MoviesWatchListFragment extends SherlockFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mAdapter = new MoviesWatchListAdapter(getActivity());
+        mAdapter = new MoviesWatchListAdapter(getActivity(), this);
 
         mGridView.setAdapter(mAdapter);
 
@@ -132,6 +133,11 @@ public class MoviesWatchListFragment extends SherlockFragment implements
         }
 
         return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        getActivity().openContextMenu(v);
     }
 
     @Override

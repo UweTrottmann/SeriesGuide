@@ -24,6 +24,7 @@ import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -45,13 +46,16 @@ public class MoviesWatchListAdapter extends ArrayAdapter<Movie> {
     private LayoutInflater mInflater;
 
     private ImageDownloader mImageDownloader;
+    
+    private OnClickListener mOnClickListener;
 
     private String mSizeSpec;
 
-    public MoviesWatchListAdapter(Context context) {
+    public MoviesWatchListAdapter(Context context, OnClickListener listener) {
         super(context, LAYOUT);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mImageDownloader = ImageDownloader.getInstance(context);
+        mOnClickListener = listener;
 
         // figure out which size of posters to load based on screen density and
         // size
@@ -77,6 +81,7 @@ public class MoviesWatchListAdapter extends ArrayAdapter<Movie> {
             holder.title = (TextView) convertView.findViewById(R.id.textViewMovieTitle);
             holder.date = (TextView) convertView.findViewById(R.id.textViewMovieDate);
             holder.poster = (ImageView) convertView.findViewById(R.id.imageViewMoviePoster);
+            holder.contextMenu = (ImageView) convertView.findViewById(R.id.imageViewMovieItemContextMenu);
 
             convertView.setTag(holder);
         } else {
@@ -99,6 +104,9 @@ public class MoviesWatchListAdapter extends ArrayAdapter<Movie> {
                     + mSizeSpec;
             mImageDownloader.download(posterPath, holder.poster, true);
         }
+        
+        // context menu
+        holder.contextMenu.setOnClickListener(mOnClickListener);
 
         return convertView;
     }
@@ -116,6 +124,7 @@ public class MoviesWatchListAdapter extends ArrayAdapter<Movie> {
         TextView title;
         TextView date;
         ImageView poster;
+        ImageView contextMenu;
     }
 
 }
