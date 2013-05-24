@@ -10,6 +10,7 @@ Version 6
 
 #### 6beta2 *(2013-05-24)*
 
+* New! Beam your shows to a friends device from the shows overview page (Android 4+).
 * Updates are now handled in the background by Android (see the SeriesGuide Sync accounts in Android settings). As a side-effect update progress notifications are gone, but those did only distract anyway.
 * The action bar shows the new navigation drawer icon. The drawer does now only open if swiping from the edge.
 * Increased transparency of background posters to increase readability.
