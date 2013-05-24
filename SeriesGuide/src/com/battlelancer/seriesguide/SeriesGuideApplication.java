@@ -17,10 +17,15 @@
 
 package com.battlelancer.seriesguide;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Application;
+import android.content.ContentResolver;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+import com.battlelancer.seriesguide.sync.SgAccountAuthenticator;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.battlelancer.seriesguide.util.ImageProvider;
 import com.battlelancer.seriesguide.util.Utils;
@@ -57,6 +62,18 @@ public class SeriesGuideApplication extends Application {
 
         // set a context for Google Analytics
         EasyTracker.getInstance().setContext(getApplicationContext());
+
+        // set up a dummy account for syncing
+        AccountManager manager = AccountManager.get(this);
+        final Account account = SgAccountAuthenticator.getSyncAccount(this);
+        if (manager.addAccountExplicitly(account, null, null)) {
+            ContentResolver.setIsSyncable(account, SeriesGuideApplication.CONTENT_AUTHORITY, 1);
+            ContentResolver.setSyncAutomatically(account, SeriesGuideApplication.CONTENT_AUTHORITY,
+                    true);
+            // Sync daily by default
+            ContentResolver.addPeriodicSync(account, CONTENT_AUTHORITY,
+                    new Bundle(), 24 * 60 * 60);
+        }
     }
 
     @Override

@@ -20,7 +20,6 @@ package com.battlelancer.seriesguide.ui;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -29,7 +28,6 @@ import android.nfc.NfcEvent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -39,11 +37,8 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.adapters.TabPagerAdapter;
 import com.battlelancer.seriesguide.items.Series;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.UpdateTask;
-import com.battlelancer.seriesguide.util.Utils;
-import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -139,7 +134,7 @@ public class OverviewActivity extends BaseActivity {
         }
 
         // try to update this show
-        onUpdate();
+        onUpdateShow();
     }
 
     private void setupPanes() {
@@ -252,37 +247,18 @@ public class OverviewActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void onUpdate() {
-        // only update this show if no global update is running and we have a
-        // connection
-        if (!TaskManager.getInstance(this).isUpdateTaskRunning(false)
-                && Utils.isAllowedConnection(this)) {
-            final SharedPreferences prefs = PreferenceManager
-                    .getDefaultSharedPreferences(getApplicationContext());
-
-            // check if auto-update is enabled
-            final boolean isAutoUpdateEnabled = prefs.getBoolean(
-                    SeriesGuidePreferences.KEY_AUTOUPDATE, true);
-            if (isAutoUpdateEnabled) {
-                final String showId = String.valueOf(mShowId);
-                boolean isTime = TheTVDB.isUpdateShow(showId, System.currentTimeMillis(), this);
-
-                // look if we need to update
-                if (isTime) {
-                    final Context context = getApplicationContext();
-                    Handler handler = new Handler();
-                    Runnable r = new Runnable() {
-                        @Override
-                        public void run() {
-                            UpdateTask updateTask = new UpdateTask(showId, context);
-                            TaskManager.getInstance(context).tryUpdateTask(updateTask, false, -1);
-                        }
-                    };
-                    handler.postDelayed(r, 1000);
-                }
+    /**
+     * Delayed request to sync the displayed show.
+     */
+    private void onUpdateShow() {
+        final Context context = getApplicationContext();
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                SgSyncAdapter.requestSync(context, mShowId);
             }
-
-        }
+        }, 1000);
     }
 
     @Override
