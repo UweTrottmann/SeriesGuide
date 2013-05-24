@@ -150,7 +150,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         // determine type of sync
         int showTvdbId = extras.getInt(SgSyncAdapter.SHOW_TVDB_ID);
 
-        String[] mShows = null;
+        int[] mShows = null;
         UpdateType type;
         if (showTvdbId == 0) {
             type = UpdateType.DELTA;
@@ -158,8 +158,8 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
             type = UpdateType.FULL;
         } else {
             type = UpdateType.SINGLE;
-            mShows = new String[] {
-                    String.valueOf(showTvdbId)
+            mShows = new int[] {
+                    showTvdbId
             };
         }
 
@@ -176,7 +176,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // actually update the shows
         for (int i = updateCount.get(); i < mShows.length; i++) {
-            String id = mShows[i];
+            int id = mShows[i];
 
             // try to contact TVDb two times
             for (int itry = 0; itry < 2; itry++) {
@@ -289,7 +289,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     /**
      * Returns an array of show ids to update.
      */
-    private String[] getShowsToUpdate(UpdateType type, long currentTime) {
+    private int[] getShowsToUpdate(UpdateType type, long currentTime) {
         switch (type) {
             case FULL:
                 // get all show IDs for a full update
@@ -298,10 +298,10 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                             Shows._ID
                         }, null, null, null);
 
-                String[] showIds = new String[shows.getCount()];
+                int[] showIds = new int[shows.getCount()];
                 int i = 0;
                 while (shows.moveToNext()) {
-                    showIds[i] = shows.getString(0);
+                    showIds[i] = shows.getInt(0);
                     i++;
                 }
 

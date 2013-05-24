@@ -149,9 +149,9 @@ public class TheTVDB {
      * Updates all show information. Adds new, updates changed and removes
      * orphaned episodes.
      */
-    public static void updateShow(String showId, Context context) throws SAXException {
+    public static void updateShow(int showId, Context context) throws SAXException {
         String language = getTheTVDBLanguage(context);
-        Show show = fetchShow(showId, language, context);
+        Show show = fetchShow(String.valueOf(showId), language, context);
 
         final ArrayList<ContentProviderOperation> batch = Lists.newArrayList();
         batch.add(DBUtils.buildShowOp(show, context, false));
@@ -219,15 +219,14 @@ public class TheTVDB {
     }
 
     /**
-     * Return list of show ids hitting a x-day limit.
+     * Return list of show TVDb ids hitting a x-day limit.
      */
-    public static String[] deltaUpdateShows(long currentTime, Context context) {
+    public static int[] deltaUpdateShows(long currentTime, Context context) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         final int updateAtLeastEvery = prefs.getInt(SeriesGuidePreferences.KEY_UPDATEATLEASTEVERY,
                 7);
 
-        final HashSet<Integer> existingShowIds = new HashSet<Integer>();
-        final HashSet<String> updatableShowIds = new HashSet<String>();
+        final List<Integer> updatableShowIds = Lists.newArrayList();
 
         // get existing show ids
         final Cursor shows = context.getContentResolver().query(Shows.CONTENT_URI, new String[] {
@@ -239,10 +238,7 @@ public class TheTVDB {
                 long lastUpdatedTime = shows.getLong(1);
                 if (currentTime - lastUpdatedTime > DateUtils.DAY_IN_MILLIS * updateAtLeastEvery) {
                     // add shows that are due for updating
-                    updatableShowIds.add(shows.getString(0));
-                } else {
-                    // add remaining ones to check-list for tvdb update function
-                    existingShowIds.add(shows.getInt(0));
+                    updatableShowIds.add(shows.getInt(0));
                 }
             }
 
@@ -253,7 +249,12 @@ public class TheTVDB {
             shows.close();
         }
 
-        return updatableShowIds.toArray(new String[updatableShowIds.size()]);
+        // copy to int array
+        int[] showTvdbIds = new int[updatableShowIds.size()];
+        for (int i = 0; i < updatableShowIds.size(); i++) {
+            showTvdbIds[i] = updatableShowIds.get(i);
+        }
+        return showTvdbIds;
     }
 
     /**
