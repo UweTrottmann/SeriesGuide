@@ -52,6 +52,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ConfirmDeleteDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
@@ -59,7 +60,6 @@ import com.battlelancer.seriesguide.ui.dialogs.SortDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask.FlagTaskCompletedEvent;
 import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.TaskManager;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
@@ -284,16 +284,16 @@ public class ShowsFragment extends SherlockFragment implements
                 return true;
             }
             case CONTEXT_DELETE_ID:
-                fireTrackerEvent("Delete show");
-
-                if (!TaskManager.getInstance(getActivity()).isUpdateTaskRunning(true)) {
+                if (!SgSyncAdapter.isSyncActive(getActivity(), true)) {
                     showDeleteDialog(info.id);
                 }
+                
+                fireTrackerEvent("Delete show");
                 return true;
             case CONTEXT_UPDATE_ID:
-                fireTrackerEvent("Update show");
+                SgSyncAdapter.requestSync(getActivity(), (int) info.id);
 
-                ((ShowsActivity) getActivity()).performUpdateTask(false, String.valueOf(info.id));
+                fireTrackerEvent("Update show");
                 return true;
             case CONTEXT_FLAG_NEXT_ID:
                 fireTrackerEvent("Mark next episode");

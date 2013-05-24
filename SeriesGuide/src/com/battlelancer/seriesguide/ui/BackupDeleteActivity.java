@@ -36,6 +36,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.ActionBar;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.TaskManager;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -137,7 +138,8 @@ public class BackupDeleteActivity extends BaseActivity {
         @Override
         protected String doInBackground(final Void... args) {
             TaskManager tm = TaskManager.getInstance(BackupDeleteActivity.this);
-            if (tm.isUpdateTaskRunning(false) || tm.isAddTaskRunning()) {
+            if (SgSyncAdapter.isSyncActive(BackupDeleteActivity.this, false)
+                    || tm.isAddTaskRunning()) {
                 return getString(R.string.update_inprogress);
             }
 
@@ -198,7 +200,8 @@ public class BackupDeleteActivity extends BaseActivity {
         @Override
         protected String doInBackground(final Void... args) {
             TaskManager tm = TaskManager.getInstance(BackupDeleteActivity.this);
-            if (tm.isUpdateTaskRunning(false) || tm.isAddTaskRunning()) {
+            if (SgSyncAdapter.isSyncActive(BackupDeleteActivity.this, false)
+                    || tm.isAddTaskRunning()) {
                 return getString(R.string.update_inprogress);
             }
 

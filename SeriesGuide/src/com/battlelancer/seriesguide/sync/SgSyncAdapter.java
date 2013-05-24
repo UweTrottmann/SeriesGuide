@@ -17,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.battlelancer.seriesguide.SeriesGuideApplication;
 import com.battlelancer.seriesguide.items.SearchResult;
@@ -38,6 +39,7 @@ import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.enumerations.ActivityAction;
 import com.jakewharton.trakt.enumerations.ActivityType;
 import com.uwetrottmann.androidutils.AndroidUtils;
+import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.tmdb.TmdbException;
 import com.uwetrottmann.tmdb.entities.Configuration;
 
@@ -57,7 +59,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
     public static final int UPDATE_INTERVAL_MINUTES = 30;
 
-    public static final String UPDATE_TYPE = "com.battlelancer.seriesguide.update_type";
+    public static final String SHOW_TVDB_ID = "com.battlelancer.seriesguide.update_type";
 
     private ArrayList<SearchResult> mNewShows;
 
@@ -75,38 +77,56 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                     UPDATE_INTERVAL_MINUTES * DateUtils.MINUTE_IN_MILLIS;
 
             if (isTime) {
-                SgSyncAdapter.requestSync(context, UpdateType.DELTA);
+                SgSyncAdapter.requestSync(context, 0);
             }
         }
     }
 
     /**
-     * Helper which eventually calls {@link ContentResolver}
-     * {@code .requestSync()}.
+     * Update just a single shows data, or do a delta update or a full update.
+     * 
+     * @param showTvdbId Update the show with the given TVDbid, if 0 does a
+     *            delta update, if less than 0 does a full update.
      */
-    public static void requestSync(Context context, UpdateType type) {
+    public static void requestSync(Context context, int showTvdbId) {
         Bundle args = new Bundle();
-        if (type == UpdateType.FULL) {
-            args.putInt(UPDATE_TYPE, 1);
-        } else {
-            args.putInt(UPDATE_TYPE, 0);
-        }
+        args.putInt(SHOW_TVDB_ID, showTvdbId);
 
         final Account account = SgAccountAuthenticator.getSyncAccount(context);
         ContentResolver.requestSync(account,
                 SeriesGuideApplication.CONTENT_AUTHORITY, args);
-
     }
 
+    /**
+     * Set whether or not the provider is synced when it receives a network
+     * tickle.
+     */
     public static void setSyncAutomatically(Context context, boolean sync) {
         final Account account = SgAccountAuthenticator.getSyncAccount(context);
         ContentResolver.setSyncAutomatically(account, SeriesGuideApplication.CONTENT_AUTHORITY,
                 sync);
     }
 
+    /**
+     * Check if the provider should be synced when a network tickle is received.
+     */
     public static boolean isSyncAutomatically(Context context) {
         return ContentResolver.getSyncAutomatically(SgAccountAuthenticator.getSyncAccount(context),
                 SeriesGuideApplication.CONTENT_AUTHORITY);
+    }
+
+    /**
+     * Returns true if there is currently a sync operation for the given account
+     * or authority in the pending list, or actively being processed.
+     */
+    public static boolean isSyncActive(Context context, boolean displayWarning) {
+        boolean isSyncActive = ContentResolver.isSyncActive(
+                SgAccountAuthenticator.getSyncAccount(context),
+                SeriesGuideApplication.CONTENT_AUTHORITY);
+        if (isSyncActive) {
+            Toast.makeText(context, R.string.update_inprogress, Toast.LENGTH_LONG).show();
+        }
+        return isSyncActive;
     }
 
     public SgSyncAdapter(Context context, boolean autoInitialize) {
@@ -119,7 +139,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     public enum UpdateType {
-        AUTO_SINGLE, DELTA, FULL
+        SINGLE, DELTA, FULL
     }
 
     @Override
@@ -128,20 +148,25 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         Log.d(TAG, "Starting to sync shows");
 
         // determine type of sync
-        int typeIndex = extras.getInt(SgSyncAdapter.UPDATE_TYPE);
+        int showTvdbId = extras.getInt(SgSyncAdapter.SHOW_TVDB_ID);
 
+        String[] mShows = null;
         UpdateType type;
-        if (typeIndex == 1) {
+        if (showTvdbId == 0) {
+            type = UpdateType.DELTA;
+        } else if (showTvdbId < 0) {
             type = UpdateType.FULL;
         } else {
-            type = UpdateType.DELTA;
+            type = UpdateType.SINGLE;
+            mShows = new String[] {
+                    String.valueOf(type)
+            };
         }
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
         final ContentResolver resolver = getContext().getContentResolver();
         final long currentTime = System.currentTimeMillis();
         UpdateResult resultCode = UpdateResult.SUCCESS;
-        String[] mShows = null;
         final AtomicInteger updateCount = new AtomicInteger();
 
         // build a list of shows to update
@@ -189,7 +214,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
          * Renew search table, get trakt activity and the latest tmdb config if
          * we did update multiple shows.
          */
-        if (type != UpdateType.AUTO_SINGLE) {
+        if (type != UpdateType.SINGLE) {
 
             if (updateCount.get() > 0 && mShows.length > 0) {
                 // renew search table
