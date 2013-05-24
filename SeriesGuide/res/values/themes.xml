@@ -51,7 +51,7 @@
         <item name="drawableStar0">@drawable/ic_action_star_0</item>
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top</item>
-        <item name="drawableDropdown">@drawable/dropdown_default_sg</item>
+        <item name="drawableDropdown">@drawable/ic_action_contextmenu</item>
     </style>
 
     <style name="SeriesGuideBaseTheme" parent="Theme.Sherlock">
@@ -116,7 +116,7 @@
         <item name="drawableStar0">@drawable/ic_action_star_0</item>
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top</item>
-        <item name="drawableDropdown">@drawable/dropdown_default_sg</item>
+        <item name="drawableDropdown">@drawable/ic_action_contextmenu</item>
     </style>
 
     <!-- SeriesGuide Light theme -->
@@ -165,7 +165,7 @@
         <item name="drawableStar0">@drawable/ic_action_star_0_inverse</item>
         <item name="drawableCancel">@drawable/ic_action_cancel_inverse</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top_inverse</item>
-        <item name="drawableDropdown">@drawable/dropdown_default_sg_light</item>
+        <item name="drawableDropdown">@drawable/ic_action_contextmenu_light</item>
     </style>
 
     <style name="SeriesGuideBaseThemeLight" parent="Theme.Sherlock.Light.DarkActionBar">
