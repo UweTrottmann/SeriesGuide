@@ -283,7 +283,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
         // There could have been new episodes added after an update
         Utils.runNotificationService(getContext());
 
-        Log.d(TAG, "Finished syncing shows: " + resultCode.toString());
+        Log.d(TAG, "Finished syncing shows (" + showTvdbId + "): " + resultCode.toString());
     }
 
     /**
