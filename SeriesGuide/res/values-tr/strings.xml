@@ -230,7 +230,7 @@
   <string name="pref_theme">Uygulama teması</string>
   <string name="pref_other">Diğer</string>
   <string name="pref_autoupdate">Oto. Güncelleme Aç</string>
-  <string name="pref_autoupdatesummary">SeriesGuide başlatılırken dizilerinizi düzenli aralıklarla güncelleştirin</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
   <string name="pref_autobackup">Turn on Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Yedekle/Geri Yükle</string>

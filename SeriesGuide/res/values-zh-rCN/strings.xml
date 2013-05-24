@@ -155,6 +155,7 @@
   <string name="arttask_incomplete">一些海报没有加载成功，请稍后重试。</string>
   <string name="arttask_start">正在加载海报……</string>
   <string name="arttask_nosdcard">下载海报需要外部存储介质（SD 卡）。</string>
+  <string name="show_network">@</string>
   <string name="show_noairtime">播出时间待定</string>
   <string name="season_watchcount">剧集尚未观看</string>
   <string name="season_allwatched">已观看全部剧集</string>
@@ -229,7 +230,7 @@
   <string name="pref_theme">应用主题</string>
   <string name="pref_other">其它</string>
   <string name="pref_autoupdate">自动更新剧集</string>
-  <string name="pref_autoupdatesummary">打开应用时定期更新剧集</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
   <string name="pref_autobackup">Turn on Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">备份与还原</string>

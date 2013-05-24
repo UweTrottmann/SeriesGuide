@@ -230,7 +230,7 @@
   <string name="pref_theme">Tema aplicației</string>
   <string name="pref_other">Alte</string>
   <string name="pref_autoupdate">Porniţi Actualizarea Automată</string>
-  <string name="pref_autoupdatesummary">Periodically update your shows when starting SeriesGuide</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
   <string name="pref_autobackup">Turn on Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Copiere de rezervă/restaurare</string>

@@ -230,7 +230,7 @@
   <string name="pref_theme">Alkalmazás téma</string>
   <string name="pref_other">Egyéb</string>
   <string name="pref_autoupdate">Automatikus frissítés bekapcsolása</string>
-  <string name="pref_autoupdatesummary">Bizonyos időnként frissíti a sorozatokat a SeriesGuide indításakor</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
   <string name="pref_autobackup">Turn on Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Biztonsági másolat</string>

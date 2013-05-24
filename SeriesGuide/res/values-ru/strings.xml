@@ -230,7 +230,7 @@
   <string name="pref_theme">Тема</string>
   <string name="pref_other">Другие</string>
   <string name="pref_autoupdate">Включить автоматическое обновление</string>
-  <string name="pref_autoupdatesummary">Периодически обновлять ваши сериалы при запуске SeriesGuide</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
   <string name="pref_autobackup">Turn on Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Резервное копирование/восстановление</string>

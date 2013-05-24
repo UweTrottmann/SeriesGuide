@@ -3,10 +3,10 @@
 <resources>
   <string name="show">Про фільм</string>
   <string name="episode">Серія</string>
-  <string name="episode_number">Episode %s</string>
+  <string name="episode_number">Серія %s</string>
   <string name="episodes">Серії</string>
   <string name="season">Сезон</string>
-  <string name="season_number">Season %s</string>
+  <string name="season_number">Сезон %s</string>
   <string name="seasons">Сезони</string>
   <string name="unknown">Невідомо</string>
   <string name="episode_iswatched">Переглянуто</string>
@@ -14,7 +14,7 @@
   <string name="specialseason">Спец. епізоди</string>
   <string name="search_hint">Пошук серій</string>
   <string name="share_episode">Поділитись серією</string>
-  <string name="share_show">Share show</string>
+  <string name="share_show">Поділитись фільмом</string>
   <string name="share_checkout">Зняти позначку</string>
   <string name="search_description">Серії</string>
   <string name="description_overview">Огляд</string>
@@ -140,7 +140,7 @@
   <string name="norecent">Немає недавніх серій.</string>
   <string name="only_favorites">Лише улюблені серіали</string>
   <string name="togglewatched">Перемикати переглянуті</string>
-  <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="pref_infinite_scrolling">Безкінечна активність</string>
   <string name="update_notification">Оновлення ваших серіалів...</string>
   <string name="update_single">Оновлення серіалів...</string>
   <string name="update_delta">Оновлення  протермінованих серіалів...</string>
@@ -230,9 +230,9 @@
   <string name="pref_theme">Тема</string>
   <string name="pref_other">Інші</string>
   <string name="pref_autoupdate">Увімкнути Автооновлення</string>
-  <string name="pref_autoupdatesummary">Періодично оновлювати ваші серіали під час запуску SeriesGuide</string>
-  <string name="pref_autobackup">Turn on Auto Backup</string>
-  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
+  <string name="pref_autobackup">Увімкнути автоматичне резервне копіювання</string>
+  <string name="pref_autobackupsummary">Щотижневий бекап баз даних фільмів в теку для завантажень</string>
   <string name="backup">Бекап/Відновлення</string>
   <string name="backup_summary">Резервна копія або відновлення ваших серіалів</string>
   <string name="pref_upcominglimit">Найближчі серіали в межах...</string>
@@ -285,8 +285,8 @@
   <string name="check_into">Відзначити</string>
   <string name="no_selection">Виберіть один внизу</string>
   <string name="looking_for_something_else">Шукаєте щось інше?</string>
-  <string name="menu_rate_episode">Rate episode</string>
-  <string name="menu_rate_show">Rate show</string>
+  <string name="menu_rate_episode">Голосувати за серію</string>
+  <string name="menu_rate_show">Голосувати за фільм</string>
   <string name="menu_share_others">За допомогою інших додатків</string>
   <string name="traktcheckin_cancel">Перевизначити</string>
   <string name="traktcheckin_inprogress">Ви вже відзначили іншу серію або фільм. Перевизначіть попередній вибір або зачекайте %s та спробуйте ще раз.</string>
@@ -310,7 +310,7 @@
   <string name="welcome_add_part1">Для початку натисніть</string>
   <string name="upcoming_show">%s наближається</string>
   <string name="upcoming_episodes">Виходять нові серії</string>
-  <string name="upcoming_episodes_number">%s new episodes</string>
+  <string name="upcoming_episodes_number">%s нових серій</string>
   <string name="upcoming_show_detailed">%1$s на %2$s</string>
   <string name="upcoming_display">Виберіть для відображення найближчих серіалів</string>
   <string name="pref_notifications">Сповіщення</string>

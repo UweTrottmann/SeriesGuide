@@ -6,7 +6,7 @@
   <string name="episode_number">Episode %s</string>
   <string name="episodes">Épisodes</string>
   <string name="season">Saison</string>
-  <string name="season_number">Season %s</string>
+  <string name="season_number">Saison %s</string>
   <string name="seasons">Saisons</string>
   <string name="unknown">inconnu</string>
   <string name="episode_iswatched">Déjà vu</string>
@@ -14,7 +14,7 @@
   <string name="specialseason">Épisodes Spéciaux</string>
   <string name="search_hint">Recherche d\'épisodes</string>
   <string name="share_episode">Partager l\'épisode</string>
-  <string name="share_show">Share show</string>
+  <string name="share_show">Partager la série</string>
   <string name="share_checkout">Jette un oeil sur</string>
   <string name="search_description">Episodes</string>
   <string name="description_overview">Aperçu</string>
@@ -140,7 +140,7 @@
   <string name="norecent">Il n\'y a pas d\'épisodes récents.</string>
   <string name="only_favorites">Juste les séries préférées</string>
   <string name="togglewatched">Vu/Non vu</string>
-  <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="pref_infinite_scrolling">Activité infinie</string>
   <string name="update_notification">Mise à jour de vos séries…</string>
   <string name="update_single">Mise à jour de la série...</string>
   <string name="update_delta">Mise à jour des séries dépassées...</string>
@@ -230,9 +230,9 @@
   <string name="pref_theme">Thème</string>
   <string name="pref_other">Autres</string>
   <string name="pref_autoupdate">Activer la mise à jour automatique</string>
-  <string name="pref_autoupdatesummary">Mettre à jour régulièrement vos séries au démarrage de SeriesGuide</string>
-  <string name="pref_autobackup">Turn on Auto Backup</string>
-  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
+  <string name="pref_autobackup">Activer la sauvegarde automatique</string>
+  <string name="pref_autobackupsummary">Sauvegarde hebdomadaire de vos séries dans le dossier Download</string>
   <string name="backup">Sauvegarde/Restauration</string>
   <string name="backup_summary">Sauvegarder ou restaurer vos séries</string>
   <string name="pref_upcominglimit">Prochains épisodes dans…</string>
@@ -285,8 +285,8 @@
   <string name="check_into">Faire un check-in de</string>
   <string name="no_selection">choisissez ci-dessous</string>
   <string name="looking_for_something_else">Ce n\'est pas dans la liste ?</string>
-  <string name="menu_rate_episode">Rate episode</string>
-  <string name="menu_rate_show">Rate show</string>
+  <string name="menu_rate_episode">Noter l\'épisode</string>
+  <string name="menu_rate_show">Noter la série</string>
   <string name="menu_share_others">Via d\'autres applis</string>
   <string name="traktcheckin_cancel">Annuler</string>
   <string name="traktcheckin_inprogress">Vous regardez déjà autre chose. Vous pouvez soit annuler le précédent check-in, soit attendre %s puis réessayer.</string>
@@ -310,7 +310,7 @@
   <string name="welcome_add_part1">Pour commencer, appuyez sur</string>
   <string name="upcoming_show">%s arrive bientôt</string>
   <string name="upcoming_episodes">De nouveaux épisodes arrivent</string>
-  <string name="upcoming_episodes_number">%s new episodes</string>
+  <string name="upcoming_episodes_number">%s nouveaux épisodes</string>
   <string name="upcoming_show_detailed">%1$s sur %2$s</string>
   <string name="upcoming_display">Afficher les épisodes à venir</string>
   <string name="pref_notifications">Notifications</string>

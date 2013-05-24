@@ -230,7 +230,7 @@
   <string name="pref_theme">앱 테마</string>
   <string name="pref_other">기타</string>
   <string name="pref_autoupdate">자동 업데이트 켜기</string>
-  <string name="pref_autoupdatesummary">시리즈가이드를 시작할 때 주기적으로 쇼 목록을 업데이트합니다</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
   <string name="pref_autobackup">Turn on Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">백업/복원</string>

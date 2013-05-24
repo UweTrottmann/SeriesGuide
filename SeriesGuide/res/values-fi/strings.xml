@@ -3,10 +3,10 @@
 <resources>
   <string name="show">Ohjelma</string>
   <string name="episode">Jakso</string>
-  <string name="episode_number">Episode %s</string>
+  <string name="episode_number">Jakso %s</string>
   <string name="episodes">Jaksoa</string>
   <string name="season">Kausi</string>
-  <string name="season_number">Season %s</string>
+  <string name="season_number">Kausi %s</string>
   <string name="seasons">Kaudet</string>
   <string name="unknown">tuntematon</string>
   <string name="episode_iswatched">Katsottu</string>
@@ -14,7 +14,7 @@
   <string name="specialseason">Erikoisjaksot</string>
   <string name="search_hint">Hae jaksoja</string>
   <string name="share_episode">Jaa jakso</string>
-  <string name="share_show">Share show</string>
+  <string name="share_show">Jaa ohjelma</string>
   <string name="share_checkout">Kuittaa ulos</string>
   <string name="search_description">Jaksot</string>
   <string name="description_overview">Yleiskatsaus</string>
@@ -140,7 +140,7 @@
   <string name="norecent">Ei viimeaikaisia jaksoja.</string>
   <string name="only_favorites">Vain suosikkiohjelmat</string>
   <string name="togglewatched">Vaihda katsottu</string>
-  <string name="pref_infinite_scrolling">Infinite activity</string>
+  <string name="pref_infinite_scrolling">Päättymätön toiminta</string>
   <string name="update_notification">Päivitetään ohjelmiasi…</string>
   <string name="update_single">Päivitetään ohjelmaa…</string>
   <string name="update_delta">Päivitetään vanhentuneita ohjelmia…</string>
@@ -230,9 +230,9 @@
   <string name="pref_theme">Sovelluksen teema</string>
   <string name="pref_other">Muu</string>
   <string name="pref_autoupdate">Ota automaattiset päivitykset käyttöön</string>
-  <string name="pref_autoupdatesummary">Päivitä ohjelmasi ajoittain SeriesGuiden käynnistyessä</string>
-  <string name="pref_autobackup">Turn on Auto Backup</string>
-  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
+  <string name="pref_autobackup">Automaattinen varmuuskopiointi</string>
+  <string name="pref_autobackupsummary">Varmuuskopioi viikoittain ohjelmatietokantasi Download-kansioon</string>
   <string name="backup">Varmuuskopioi/Palauta</string>
   <string name="backup_summary">Varmuuskopioi tai palauta ohjelmasi</string>
   <string name="pref_upcominglimit">Tulevat ohjelmat ajalta…</string>
@@ -285,8 +285,8 @@
   <string name="check_into">Kuittaa</string>
   <string name="no_selection">valitse yksi alta</string>
   <string name="looking_for_something_else">Etsitkö jotain muuta?</string>
-  <string name="menu_rate_episode">Rate episode</string>
-  <string name="menu_rate_show">Rate show</string>
+  <string name="menu_rate_episode">Arvostele jakso</string>
+  <string name="menu_rate_show">Arvostele ohjelma</string>
   <string name="menu_share_others">Muulla sovelluksella</string>
   <string name="traktcheckin_cancel">Korvaa</string>
   <string name="traktcheckin_inprogress">Olet jo kuitannut toiseen jaksoon tai elokuvaan. Joko korvaa edellinen kuittaus tai odota %s ja yritä uudelleen.</string>
@@ -310,7 +310,7 @@
   <string name="welcome_add_part1">Napauta aloittaaksesi</string>
   <string name="upcoming_show">%s on tulossa</string>
   <string name="upcoming_episodes">Uusia jaksoja tulossa</string>
-  <string name="upcoming_episodes_number">%s new episodes</string>
+  <string name="upcoming_episodes_number">%s uutta jaksoa</string>
   <string name="upcoming_show_detailed">%1$s kanavalla %2$s</string>
   <string name="upcoming_display">Valitse näyttääksesi tulevat ohjelmat</string>
   <string name="pref_notifications">Ilmoitukset</string>
