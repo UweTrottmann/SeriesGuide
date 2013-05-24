@@ -104,6 +104,11 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 sync);
     }
 
+    public static boolean isSyncAutomatically(Context context) {
+        return ContentResolver.getSyncAutomatically(SgAccountAuthenticator.getSyncAccount(context),
+                SeriesGuideApplication.CONTENT_AUTHORITY);
+    }
+
     public SgSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
         Log.d(TAG, "Creating SyncAdapter");
