@@ -68,33 +68,34 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * {@code .requestSync()}, but only if at least UPDATE_INTERVAL has passed.
      */
     public static void requestSync(Context context) {
-        if (AndroidUtils.isNetworkConnected(context)) {
-            // only request sync if at least UPDATE_INTERVAL has passed
-            long now = System.currentTimeMillis();
-            long previousUpdateTime = AdvancedSettings.getLastAutoUpdateTime(context);
+        // only request sync if at least UPDATE_INTERVAL has passed
+        long now = System.currentTimeMillis();
+        long previousUpdateTime = AdvancedSettings.getLastAutoUpdateTime(context);
 
-            final boolean isTime = (now - previousUpdateTime) >
-                    UPDATE_INTERVAL_MINUTES * DateUtils.MINUTE_IN_MILLIS;
+        final boolean isTime = (now - previousUpdateTime) >
+                UPDATE_INTERVAL_MINUTES * DateUtils.MINUTE_IN_MILLIS;
 
-            if (isTime) {
-                SgSyncAdapter.requestSync(context, 0);
-            }
+        if (isTime) {
+            SgSyncAdapter.requestSync(context, 0);
         }
     }
 
     /**
      * Update just a single shows data, or do a delta update or a full update.
+     * Will only queue a sync request if there is a network connection.
      * 
      * @param showTvdbId Update the show with the given TVDbid, if 0 does a
      *            delta update, if less than 0 does a full update.
      */
     public static void requestSync(Context context, int showTvdbId) {
-        Bundle args = new Bundle();
-        args.putInt(SHOW_TVDB_ID, showTvdbId);
+        if (AndroidUtils.isNetworkConnected(context)) {
+            Bundle args = new Bundle();
+            args.putInt(SHOW_TVDB_ID, showTvdbId);
 
-        final Account account = SgAccountAuthenticator.getSyncAccount(context);
-        ContentResolver.requestSync(account,
-                SeriesGuideApplication.CONTENT_AUTHORITY, args);
+            final Account account = SgAccountAuthenticator.getSyncAccount(context);
+            ContentResolver.requestSync(account,
+                    SeriesGuideApplication.CONTENT_AUTHORITY, args);
+        }
     }
 
     /**
