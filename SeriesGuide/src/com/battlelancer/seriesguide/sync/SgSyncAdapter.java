@@ -88,7 +88,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      *            delta update, if less than 0 does a full update.
      */
     public static void requestSync(Context context, int showTvdbId) {
-        if (AndroidUtils.isNetworkConnected(context)) {
+        if (Utils.isAllowedConnection(context)) {
             Bundle args = new Bundle();
             args.putInt(SHOW_TVDB_ID, showTvdbId);
 
