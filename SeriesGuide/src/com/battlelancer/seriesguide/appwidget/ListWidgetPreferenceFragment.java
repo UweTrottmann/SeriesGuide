@@ -27,7 +27,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 
-import com.battlelancer.seriesguide.util.WidgetSettings;
+import com.battlelancer.seriesguide.settings.WidgetSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 

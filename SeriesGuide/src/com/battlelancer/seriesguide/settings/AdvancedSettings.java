@@ -1,5 +1,5 @@
 
-package com.battlelancer.seriesguide.util;
+package com.battlelancer.seriesguide.settings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
