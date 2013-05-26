@@ -9,6 +9,7 @@ buildscript {
 apply plugin: 'android'
 
 dependencies {
+    compile project(':SeriesGuide:SeriesGuide')
 }
 
 android {
