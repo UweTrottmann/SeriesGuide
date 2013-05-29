@@ -9,32 +9,17 @@ buildscript {
 apply plugin: 'android-library'
 
 dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
     compile project(':AndroidUtils:library')
     compile project(':ActionBarSherlock:actionbarsherlock')
     compile project(':Android-ViewPagerIndicator:library')
     compile project(':android-menudrawer:library')
-    compile files('libs/android-support-v4.jar')
-    compile files('libs/apibuilder-1.1.1.jar')
-    compile files('libs/commons-codec-1.5.jar')
-    compile files('libs/dashclock-api-r1.jar')
-    compile files('libs/eventbus-2.0.2.jar')
-    compile files('libs/libGoogleAnalyticsV2.jar')
-    compile files('libs/myjson-2.2.4.jar')
-    compile files('libs/signpost-core-1.2.1.2.jar')
-    compile files('libs/stickygridheaders-1.0.jar')
-    compile files('libs/tape-1.1.0.jar')
-    compile files('libs/tmdb-java-0.1.jar')
-    compile files('libs/trakt-java-1.4.0-SNAPSHOT.jar')
 }
 
 android {
     compileSdkVersion 17
-    buildToolsVersion "17"
+    buildToolsVersion "17.0.0"
 
-    defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 17
-    }
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
