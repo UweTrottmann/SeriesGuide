@@ -123,8 +123,8 @@ public class EpisodesAdapter extends CursorAdapter {
         if (airtime != -1) {
             viewHolder.episodeAirdate.setText(Utils.formatToTimeAndDay(airtime, mContext)[2]);
         } else {
-            viewHolder.episodeAirdate.setText(mContext.getString(R.string.episode_firstaired) + " "
-                    + mContext.getString(R.string.unknown));
+            viewHolder.episodeAirdate.setText(mContext
+                    .getString(R.string.episode_firstaired_unknown));
         }
 
         // context menu
