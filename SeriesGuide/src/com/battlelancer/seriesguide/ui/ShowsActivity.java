@@ -42,6 +42,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.settings.AppSettings;
 import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
@@ -457,8 +458,8 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
      */
     private void updatePreferences(SharedPreferences prefs) {
         // between-version upgrade code
-        final int lastVersion = prefs.getInt(SeriesGuidePreferences.KEY_VERSION, -1);
         try {
+            final int lastVersion = AppSettings.getLastVersionCode(this);
             final int currentVersion = getPackageManager().getPackageInfo(getPackageName(),
                     PackageManager.GET_META_DATA).versionCode;
             if (currentVersion > lastVersion) {
@@ -505,7 +506,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
                 }
 
                 // set this as lastVersion
-                editor.putInt(SeriesGuidePreferences.KEY_VERSION, currentVersion);
+                editor.putInt(AppSettings.KEY_VERSION, currentVersion);
 
                 editor.commit();
             }
