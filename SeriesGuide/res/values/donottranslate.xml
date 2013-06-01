@@ -15,7 +15,7 @@
     <string name="gobreak">Go break things</string>
     <string name="betamessage">Three tiny dots\n\nAdded context menu buttons to shows and movies.\n\nBeam a show to a friends device from its overview page!\n\nUpdates now run completely in the background, even if you do not open the app!\n\n<a href="http://git.io/sgbetachanges#changelog">Detailed change log</a></string>
     <string name="help_url">http://seriesgui.de/help</string>
-    <string name="backup_legacy_warning">This is the legacy backup system. It will get removed with the next update. If you want to restore an old backup, now would be the time. You can then export again using the new export tool.</string>
+    <string name="backup_legacy_warning">This is the legacy backup system. It will get removed with a future update. If you want to restore an old backup, now would be the time. You can then export again using the new export tool.</string>
 	<string name="not_available">n/a</string>
     
     <!-- Settings -->
