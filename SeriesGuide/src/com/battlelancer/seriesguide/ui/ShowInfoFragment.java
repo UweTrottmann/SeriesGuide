@@ -172,9 +172,7 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
         }
         // network
         if (mShow.getNetwork().length() != 0) {
-            infoText.append(getString(R.string.show_network))
-                    .append(" ")
-                    .append(mShow.getNetwork());
+            infoText.append(getString(R.string.show_on_network, mShow.getNetwork()));
         }
         info.setText(infoText);
 

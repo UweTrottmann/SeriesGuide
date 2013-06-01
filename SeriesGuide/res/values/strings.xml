@@ -220,7 +220,7 @@
     <string name="arttask_nosdcard">Loading posters requires external storage (SD card).</string>
 
     <!-- Show info -->
-    <string name="show_network">on</string>
+    <string name="show_on_network">on %s</string>
 
     <!-- Season list -->
     <string name="season_watchcount">episodes not watched</string>

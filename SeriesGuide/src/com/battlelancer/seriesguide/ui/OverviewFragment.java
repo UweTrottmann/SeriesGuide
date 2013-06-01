@@ -801,9 +801,7 @@ public class OverviewFragment extends SherlockFragment implements
         }
         final String network = show.getString(ShowQuery.SHOW_NETWORK);
         if (!TextUtils.isEmpty(network)) {
-            timeAndNetwork.append(getString(R.string.show_network))
-                    .append(" ")
-                    .append(network);
+            timeAndNetwork.append(getString(R.string.show_on_network, network));
         }
         ((TextView) getActivity().findViewById(R.id.showmeta)).setText(timeAndNetwork.toString());
     }
