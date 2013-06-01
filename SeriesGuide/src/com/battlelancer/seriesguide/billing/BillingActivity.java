@@ -15,6 +15,9 @@ public class BillingActivity extends BaseActivity {
 
     public static final String TAG = "BillingActivity";
 
+    // enable debug logging, disable for production!
+    private static final boolean DEBUG = true;
+
     // The SKU product id as set in the Developer Console
     private static final String SKU_X = "x_upgrade";
 
@@ -25,6 +28,10 @@ public class BillingActivity extends BaseActivity {
 
     // If the user already has the X upgrade
     private boolean mHasXUpgrade = false;
+
+    private View mProgressScreen;
+
+    private View mContentContainer;
 
     private Button mUpgradeButton;
 
@@ -42,6 +49,10 @@ public class BillingActivity extends BaseActivity {
         String key = getString(R.string.key_a) + getString(R.string.key_b)
                 + getString(R.string.key_c) + getString(R.string.key_d);
         mHelper = new IabHelper(this, key);
+
+        // enable debug logging (for a production application, you should set
+        // this to false).
+        mHelper.enableDebugLogging(DEBUG);
 
         Log.d(TAG, "Starting setup.");
         mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
@@ -96,6 +107,7 @@ public class BillingActivity extends BaseActivity {
             Log.d(TAG, "User has " + (mHasXUpgrade ? "X UPGRADE" : "NOT X UPGRADE"));
 
             updateUi();
+            setWaitMode(false);
             Log.d(TAG, "Initial inventory query finished; enabling main UI.");
         }
     };
@@ -137,6 +149,8 @@ public class BillingActivity extends BaseActivity {
          */
         String payload = "";
 
+        setWaitMode(true);
+
         mHelper.launchPurchaseFlow(this, SKU_X, RC_REQUEST, mPurchaseFinishedListener, payload);
     }
 
@@ -146,10 +160,12 @@ public class BillingActivity extends BaseActivity {
             Log.d(TAG, "Purchase finished: " + result + ", purchase: " + purchase);
             if (result.isFailure()) {
                 complain("Error purchasing: " + result);
+                setWaitMode(false);
                 return;
             }
             if (!verifyDeveloperPayload(purchase)) {
                 complain("Error purchasing. Authenticity verification failed.");
+                setWaitMode(false);
                 return;
             }
 
@@ -160,6 +176,7 @@ public class BillingActivity extends BaseActivity {
                 Log.d(TAG, "Purchased X upgrade. Congratulating user.");
                 mHasXUpgrade = true;
                 updateUi();
+                setWaitMode(false);
             }
         }
     };
@@ -174,12 +191,20 @@ public class BillingActivity extends BaseActivity {
         });
 
         mTextHasUpgrade = findViewById(R.id.textViewBillingExisting);
+
+        mProgressScreen = findViewById(R.id.progressBarBilling);
+        mContentContainer = findViewById(R.id.containerBilling);
     }
 
     private void updateUi() {
         // Only enable purchase button if the user does not have the upgrade yet
         mUpgradeButton.setEnabled(!mHasXUpgrade);
         mTextHasUpgrade.setVisibility(mHasXUpgrade ? View.VISIBLE : View.GONE);
+    }
+
+    private void setWaitMode(boolean isActive) {
+        mProgressScreen.setVisibility(isActive ? View.VISIBLE : View.GONE);
+        mContentContainer.setVisibility(isActive ? View.GONE : View.VISIBLE);
     }
 
     private void complain(String message) {
