@@ -110,7 +110,7 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
                 mTask.execute();
             }
         });
-        
+
         // restore UI state
         if (mTask != null && mTask.getStatus() != AsyncTask.Status.FINISHED) {
             setProgressLock(true);
@@ -132,14 +132,16 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
         setProgressLock(false);
     }
 
-    private void setProgressLock(boolean isEnable) {
-        if (isEnable) {
+    private void setProgressLock(boolean isLocked) {
+        if (isLocked) {
             mButtonImport.setEnabled(false);
         } else {
             mButtonImport.setEnabled(mCheckBoxImportWarning.isChecked());
         }
-        mButtonExport.setEnabled(!isEnable);
-        mProgressBar.setVisibility(isEnable ? View.VISIBLE : View.GONE);
+        mButtonExport.setEnabled(!isLocked);
+        mProgressBar.setVisibility(isLocked ? View.VISIBLE : View.GONE);
+        mCheckBoxFullDump.setEnabled(!isLocked);
+        mCheckBoxImportWarning.setEnabled(!isLocked);
     }
 
 }
