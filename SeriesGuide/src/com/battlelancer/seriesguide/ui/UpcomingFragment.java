@@ -57,13 +57,13 @@ import com.battlelancer.seriesguide.ui.dialogs.CheckInDialogFragment;
 import com.battlelancer.seriesguide.util.DBUtils;
 import com.battlelancer.seriesguide.util.FlagTask;
 import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.Lists;
-import com.battlelancer.seriesguide.util.Maps;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersBaseAdapter;
 import com.tonicartos.widget.stickygridheaders.StickyGridHeadersGridView;
 import com.uwetrottmann.androidutils.CheatSheet;
+import com.uwetrottmann.androidutils.Lists;
+import com.uwetrottmann.androidutils.Maps;
 import com.uwetrottmann.seriesguide.R;
 
 import java.util.Calendar;

@@ -42,13 +42,12 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.battlelancer.seriesguide.Constants.ShowSorting;
 import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.ui.FirstRunFragment.OnFirstRunDismissedListener;
 import com.battlelancer.seriesguide.ui.dialogs.ChangesDialogFragment;
 import com.battlelancer.seriesguide.util.CompatActionBarNavHandler;
 import com.battlelancer.seriesguide.util.CompatActionBarNavListener;
 import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.TaskManager;
-import com.battlelancer.seriesguide.util.UpdateTask;
 import com.battlelancer.seriesguide.util.Utils;
 import com.battlelancer.thetvdbapi.TheTVDB;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -118,7 +117,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
 
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setIcon(R.drawable.ic_action_menu);
 
         /* setup navigation */
         CompatActionBarNavHandler handler = new CompatActionBarNavHandler(this);
@@ -255,7 +253,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
         }
         else if (itemId == R.id.menu_update) {
             fireTrackerEvent("Update (outdated)");
-            performUpdateTask(false, null);
+
+            SgSyncAdapter.requestSync(this, 0);
+
             return true;
         } else if (itemId == R.id.menu_updateart) {
             fireTrackerEvent("Fetch posters");
@@ -273,7 +273,9 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
             return true;
         } else if (itemId == R.id.menu_fullupdate) {
             fireTrackerEvent("Update (all)");
-            performUpdateTask(true, null);
+
+            SgSyncAdapter.requestSync(this, -1);
+
             return true;
         } else if (itemId == R.id.menu_showsortby) {
             fireTrackerEvent("Sort shows");
@@ -303,28 +305,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
             return true;
         }
         return false;
-    }
-
-    protected void performUpdateTask(boolean isFullUpdate, String showId) {
-        int messageId;
-        UpdateTask task;
-        if (isFullUpdate) {
-            messageId = R.string.update_full;
-            task = (UpdateTask) new UpdateTask(true, this);
-        } else {
-            if (showId == null) {
-                // (delta) update all shows
-                messageId = R.string.update_delta;
-                task = (UpdateTask) new UpdateTask(false, this);
-            } else {
-                // update a single show
-                messageId = R.string.update_single;
-                task = (UpdateTask) new UpdateTask(new String[] {
-                        showId
-                }, 0, "", this);
-            }
-        }
-        TaskManager.getInstance(this).tryUpdateTask(task, true, messageId);
     }
 
     private class FetchPosterTask extends AsyncTask<Void, Void, Integer> {

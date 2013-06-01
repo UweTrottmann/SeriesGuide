@@ -2,11 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/menu_rate_trakt"
-        android:icon="@drawable/trakt_heart"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/menu_rate_episode"/>
-    <item
         android:id="@+id/menu_manage_lists"
         android:icon="@drawable/ic_action_list"
         android:showAsAction="ifRoom|withText"
@@ -16,5 +11,10 @@
         android:icon="@drawable/ic_action_share"
         android:showAsAction="ifRoom"
         android:title="@string/share_episode"/>
+    <item
+        android:id="@+id/menu_rate_trakt"
+        android:icon="@drawable/trakt_heart"
+        android:showAsAction="never"
+        android:title="@string/menu_rate_episode"/>
 
 </menu>

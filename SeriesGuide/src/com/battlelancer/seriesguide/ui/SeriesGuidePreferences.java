@@ -45,8 +45,9 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Episodes;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
+import com.battlelancer.seriesguide.settings.NotificationSettings;
+import com.battlelancer.seriesguide.sync.SgSyncAdapter;
 import com.battlelancer.seriesguide.util.ImageProvider;
-import com.battlelancer.seriesguide.util.NotificationSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.analytics.tracking.android.GoogleAnalytics;
@@ -115,8 +116,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_ONLYWIFI = "com.battlelancer.seriesguide.autoupdatewlanonly";
 
-    public static final String KEY_LASTUPDATE = "com.battlelancer.seriesguide.lastupdate";
-
     public static final String KEY_LASTTRAKTUPDATE = "com.battlelancer.seriesguide.lasttraktupdate";
 
     public static final String KEY_NOWATCHED = "com.battlelancer.seriesguide.activity.nowatched";
@@ -166,7 +165,8 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         String action = getIntent().getAction();
         if (action != null && action.equals(ACTION_PREFS_BASIC)) {
             addPreferencesFromResource(R.xml.settings_basic);
-            setupBasicSettings(this, findPreference(KEY_ONLY_FUTURE_EPISODES),
+            setupBasicSettings(this,
+                    findPreference(KEY_ONLY_FUTURE_EPISODES),
                     findPreference(ActivitySettings.KEY_HIDE_SPECIALS),
                     findPreference(NotificationSettings.KEY_ENABLED),
                     findPreference(NotificationSettings.KEY_FAVONLY),
@@ -176,16 +176,23 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                     findPreference(NotificationSettings.KEY_THRESHOLD));
         } else if (action != null && action.equals(ACTION_PREFS_SHARING)) {
             addPreferencesFromResource(R.xml.settings_sharing);
-            setupSharingSettings(this, findPreference(KEY_GETGLUE_DISCONNECT));
+            setupSharingSettings(this,
+                    findPreference(KEY_GETGLUE_DISCONNECT));
         } else if (action != null && action.equals(ACTION_PREFS_ADVANCED)) {
             addPreferencesFromResource(R.xml.settings_advanced);
-            setupAdvancedSettings(this, findPreference(KEY_THEME), getIntent(),
-                    findPreference(KEY_UPCOMING_LIMIT), findPreference(KEY_NUMBERFORMAT),
-                    findPreference(KEY_OFFSET), findPreference(KEY_GOOGLEANALYTICS),
-                    findPreference(KEY_CLEAR_CACHE));
+            setupAdvancedSettings(this,
+                    getIntent(),
+                    findPreference(KEY_THEME),
+                    findPreference(KEY_UPCOMING_LIMIT),
+                    findPreference(KEY_NUMBERFORMAT),
+                    findPreference(KEY_OFFSET),
+                    findPreference(KEY_GOOGLEANALYTICS),
+                    findPreference(KEY_CLEAR_CACHE),
+                    findPreference(KEY_AUTOUPDATE));
         } else if (action != null && action.equals(ACTION_PREFS_ABOUT)) {
             addPreferencesFromResource(R.xml.settings_about);
-            setupAboutSettings(this, findPreference(KEY_ABOUT));
+            setupAboutSettings(this,
+                    findPreference(KEY_ABOUT));
         } else if (!AndroidUtils.isHoneycombOrHigher()) {
             // Load the legacy preferences headers
             addPreferencesFromResource(R.xml.settings_legacy);
@@ -290,9 +297,10 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
         setListPreferenceSummary((ListPreference) notificationsThresholdPref);
     }
 
-    protected static void setupAdvancedSettings(final Activity activity, Preference themePref,
-            final Intent startIntent, Preference upcomingPref, Preference numberFormatPref,
-            Preference offsetPref, Preference analyticsPref, Preference clearCachePref) {
+    protected static void setupAdvancedSettings(final Activity activity, final Intent startIntent,
+            Preference themePref, Preference upcomingPref, Preference numberFormatPref,
+            Preference offsetPref, Preference analyticsPref, Preference clearCachePref,
+            Preference updatePref) {
         // Theme switcher
         themePref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             @Override
@@ -335,6 +343,9 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 return false;
             }
         });
+
+        // set current value of auto-update pref
+        ((CheckBoxPreference) updatePref).setChecked(SgSyncAdapter.isSyncAutomatically(activity));
 
         // show currently set values for list prefs
         setListPreferenceSummary((ListPreference) themePref);
@@ -450,6 +461,14 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 resetAndRunNotificationsService(SeriesGuidePreferences.this);
             }
         }
+
+        // Toggle auto-update on SyncAdapter
+        if (KEY_AUTOUPDATE.equals(key)) {
+            CheckBoxPreference pref = (CheckBoxPreference) findPreference(key);
+            if (pref != null) {
+                SgSyncAdapter.setSyncAutomatically(SeriesGuidePreferences.this, pref.isChecked());
+            }
+        }
     }
 
     /**
@@ -488,13 +507,19 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                         findPreference(NotificationSettings.KEY_THRESHOLD));
             } else if ("sharing".equals(settings)) {
                 addPreferencesFromResource(R.xml.settings_sharing);
-                setupSharingSettings(getActivity(), findPreference(KEY_GETGLUE_DISCONNECT));
+                setupSharingSettings(getActivity(),
+                        findPreference(KEY_GETGLUE_DISCONNECT));
             } else if ("advanced".equals(settings)) {
                 addPreferencesFromResource(R.xml.settings_advanced);
-                setupAdvancedSettings(getActivity(), findPreference(KEY_THEME), getActivity()
-                        .getIntent(), findPreference(KEY_UPCOMING_LIMIT),
-                        findPreference(KEY_NUMBERFORMAT), findPreference(KEY_OFFSET),
-                        findPreference(KEY_GOOGLEANALYTICS), findPreference(KEY_CLEAR_CACHE));
+                setupAdvancedSettings(getActivity(),
+                        getActivity().getIntent(),
+                        findPreference(KEY_THEME),
+                        findPreference(KEY_UPCOMING_LIMIT),
+                        findPreference(KEY_NUMBERFORMAT),
+                        findPreference(KEY_OFFSET),
+                        findPreference(KEY_GOOGLEANALYTICS),
+                        findPreference(KEY_CLEAR_CACHE),
+                        findPreference(KEY_AUTOUPDATE));
             } else if ("about".equals(settings)) {
                 addPreferencesFromResource(R.xml.settings_about);
                 setupAboutSettings(getActivity(), findPreference(KEY_ABOUT));
@@ -544,6 +569,14 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
                 Preference pref = findPreference(key);
                 if (pref != null) {
                     resetAndRunNotificationsService(getActivity());
+                }
+            }
+
+            // Toggle auto-update on SyncAdapter
+            if (KEY_AUTOUPDATE.equals(key)) {
+                CheckBoxPreference pref = (CheckBoxPreference) findPreference(key);
+                if (pref != null) {
+                    SgSyncAdapter.setSyncAutomatically(getActivity(), pref.isChecked());
                 }
             }
         }

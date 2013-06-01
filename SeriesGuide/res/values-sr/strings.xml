@@ -230,7 +230,7 @@
   <string name="pref_theme">Tema</string>
   <string name="pref_other">Other</string>
   <string name="pref_autoupdate">Uključi automatsko ažuriranje</string>
-  <string name="pref_autoupdatesummary">Povremeno ažururaj serije po pokretanju SeriesGuidea</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
   <string name="pref_autobackup">Turn on Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Pravljenje i povraćaj rezervne kopije</string>

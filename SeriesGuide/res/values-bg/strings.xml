@@ -230,7 +230,7 @@
   <string name="pref_theme">Тема</string>
   <string name="pref_other">Други</string>
   <string name="pref_autoupdate">Включване на автоматичното актуализиране</string>
-  <string name="pref_autoupdatesummary">Периодично актуализиране на вашите предавания при стартиране на SeriesGuide</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
   <string name="pref_autobackup">Turn on Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Архивиране/Възстановяване</string>

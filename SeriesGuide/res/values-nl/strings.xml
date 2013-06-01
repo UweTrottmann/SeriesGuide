@@ -230,7 +230,7 @@
   <string name="pref_theme">Applicatie thema</string>
   <string name="pref_other">Andere</string>
   <string name="pref_autoupdate">Automatisch updaten inschakelen</string>
-  <string name="pref_autoupdatesummary">Series periodiek bijwerken bij het opstarten van SeriesGuide</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
   <string name="pref_autobackup">Turn on Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Back-up maken/herstellen</string>

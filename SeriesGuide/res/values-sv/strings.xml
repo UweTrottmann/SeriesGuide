@@ -230,7 +230,7 @@
   <string name="pref_theme">Tema</string>
   <string name="pref_other">Övrigt</string>
   <string name="pref_autoupdate">Automatisk uppdatering</string>
-  <string name="pref_autoupdatesummary">Uppdatera dina serier regelbundet när SeriesGuide startas</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
   <string name="pref_autobackup">Turn on Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Säkerhetskopiering/återställning</string>

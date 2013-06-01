@@ -24,6 +24,7 @@ import android.util.Log;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.Utils;
 import com.jakewharton.apibuilder.ApiException;
+import com.uwetrottmann.androidutils.GenericSimpleLoader;
 import com.uwetrottmann.tmdb.ServiceManager;
 import com.uwetrottmann.tmdb.TmdbException;
 import com.uwetrottmann.tmdb.entities.Movie;

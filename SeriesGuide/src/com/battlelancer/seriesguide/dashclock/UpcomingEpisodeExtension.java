@@ -6,10 +6,10 @@ import android.database.Cursor;
 import android.preference.PreferenceManager;
 import android.text.format.DateUtils;
 
+import com.battlelancer.seriesguide.settings.DashClockSettings;
 import com.battlelancer.seriesguide.ui.UpcomingFragment.UpcomingQuery;
 import com.battlelancer.seriesguide.ui.UpcomingRecentActivity;
 import com.battlelancer.seriesguide.util.DBUtils;
-import com.battlelancer.seriesguide.util.DashClockSettings;
 import com.battlelancer.seriesguide.util.Utils;
 import com.google.android.apps.dashclock.api.DashClockExtension;
 import com.google.android.apps.dashclock.api.ExtensionData;

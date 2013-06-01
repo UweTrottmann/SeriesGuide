@@ -8,6 +8,17 @@ All dates are in the European Central timezone.
 Version 6
 ---------
 
+#### 6beta2 *(2013-05-24)*
+
+* New! Beam your shows to a friends device from the shows overview page (Android 4+).
+* Updates are now handled in the background by Android (see the SeriesGuide Sync accounts in Android settings). As a side-effect update progress notifications are gone, but those did only distract anyway.
+* The action bar shows the new navigation drawer icon. The drawer does now only open if swiping from the edge.
+* Increased transparency of background posters to increase readability.
+* Remove split action bar in Overview, use inline buttons. All this new space!
+* Move rate actions to overflow menu, inline rating is much easier.
+* Add context menu buttons to movie and show items.
+* Latest translations from crowdin.
+
 #### 6beta1 *(2013-05-14)*
 
 * Activity stream now by default shows 30 days of activity into the future/into the past. Added option to show 'Infinite activity' to display all activity. List widget displays infinite activity again.

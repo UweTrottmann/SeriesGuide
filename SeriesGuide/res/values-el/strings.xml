@@ -230,7 +230,7 @@
   <string name="pref_theme">Θέμα εφαρμογής</string>
   <string name="pref_other">Other</string>
   <string name="pref_autoupdate">Aυτόματη ενημέρωση</string>
-  <string name="pref_autoupdatesummary">Περιοδική ενημέρωση των σειρών σας κατά την έναρξη του SeriesGuide</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
   <string name="pref_autobackup">Turn on Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">Δημιουργία αντιγράφου ασφαλείας/Επαναφορά</string>

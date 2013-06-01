@@ -230,7 +230,7 @@
   <string name="pref_theme">شكل التطبيق</string>
   <string name="pref_other">أخرى</string>
   <string name="pref_autoupdate">تشغيل التحديث التلقائي</string>
-  <string name="pref_autoupdatesummary">حدّث المسلسلات دورياً عند بدء البرنامج</string>
+  <string name="pref_autoupdatesummary">Periodically update your shows</string>
   <string name="pref_autobackup">Turn on Auto Backup</string>
   <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
   <string name="backup">النسخ الاحتياطي / الاستعادة</string>

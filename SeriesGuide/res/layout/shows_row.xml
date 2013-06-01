@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/default_padding" >
+    android:paddingBottom="@dimen/default_padding"
+    android:paddingLeft="@dimen/default_padding"
+    android:paddingTop="@dimen/default_padding" >
 
     <ImageView
         android:id="@+id/showposter"
@@ -15,10 +17,23 @@
         android:src="@drawable/show_generic" />
 
     <ImageView
-        android:id="@+id/favoritedLabel"
+        android:id="@+id/imageViewShowsContextMenu"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_alignParentRight="true"
+        android:background="?attr/custom_list_selector"
+        android:paddingLeft="5dp"
+        android:paddingRight="@dimen/default_padding"
+        android:scaleType="center"
+        android:src="?attr/drawableDropdown"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/favoritedLabel"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_toLeftOf="@id/imageViewShowsContextMenu"
         android:background="?attr/custom_list_selector"
         android:contentDescription="@string/favorited"
         android:paddingLeft="5dp"
@@ -35,6 +50,7 @@
         android:gravity="right"
         android:lineSpacingExtra="2sp"
         android:maxWidth="90dp"
+        android:paddingRight="@dimen/default_padding"
         android:paddingTop="@dimen/inline_padding"
         android:text="@string/norating" />
 
