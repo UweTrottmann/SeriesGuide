@@ -24,6 +24,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
@@ -743,6 +744,35 @@ public class Utils {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Returns true if the user has the legacy X version installed, signed with
+     * the same key as we are.
+     */
+    public static boolean isSupportingUser(Context context) {
+        try {
+            // Get our signing key
+            PackageManager manager = context.getPackageManager();
+            PackageInfo appInfoSeriesGuide = manager
+                    .getPackageInfo(
+                            context.getApplicationContext().getPackageName(),
+                            PackageManager.GET_SIGNATURES);
+
+            // Try to find the X signing key
+            PackageInfo appInfoSeriesGuideX = manager
+                    .getPackageInfo(
+                            "com.battlelancer.seriesguide.x",
+                            PackageManager.GET_SIGNATURES);
+
+            final String ourKey = appInfoSeriesGuide.signatures[0].toCharsString();
+            final String xKey = appInfoSeriesGuideX.signatures[0].toCharsString();
+            return ourKey.equals(xKey);
+        } catch (NameNotFoundException e) {
+            // Expected exception that occurs if the package is not present.
+        }
+
+        return false;
     }
 
     public static void setValueOrPlaceholder(View view, final String value) {
