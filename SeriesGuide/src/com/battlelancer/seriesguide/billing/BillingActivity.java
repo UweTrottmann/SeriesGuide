@@ -39,8 +39,9 @@ public class BillingActivity extends BaseActivity {
 
         updateUi();
 
-        String base64EncodedPublicKey = null;
-        mHelper = new IabHelper(this, base64EncodedPublicKey);
+        String key = getString(R.string.key_a) + getString(R.string.key_b)
+                + getString(R.string.key_c) + getString(R.string.key_d);
+        mHelper = new IabHelper(this, key);
 
         Log.d(TAG, "Starting setup.");
         mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
