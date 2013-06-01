@@ -53,6 +53,7 @@ public class BillingActivity extends BaseActivity {
 
         // do not set up in-app billing, already qualified for X upgrade
         if (mHasXUpgrade) {
+            setWaitMode(false);
             return;
         }
 
