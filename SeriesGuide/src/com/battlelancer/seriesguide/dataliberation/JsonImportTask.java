@@ -57,7 +57,7 @@ import java.util.ArrayList;
  * By default meta-data like descriptions, ratings, actors, etc. will not be
  * included.
  */
-public class JsonImportTask extends AsyncTask<Void, Void, Integer> {
+public class JsonImportTask extends AsyncTask<Void, Integer, Integer> {
 
     private static final int SUCCESS = 1;
     private static final int ERROR_STORAGE_ACCESS = 0;

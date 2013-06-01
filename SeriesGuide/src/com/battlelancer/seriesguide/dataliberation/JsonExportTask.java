@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.dataliberation.model.Episode;
@@ -55,7 +56,7 @@ import java.io.OutputStreamWriter;
  * By default meta-data like descriptions, ratings, actors, etc. will not be
  * included.
  */
-public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
+public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
     public static final String EXPORT_FOLDER = "SeriesGuide";
     public static final String EXPORT_FOLDER_AUTO = "SeriesGuide" + File.separator + "AutoBackup";
@@ -79,6 +80,7 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
     }
 
     private Context mContext;
+    private ProgressBar mProgressBar;
     private OnTaskFinishedListener mListener;
     private boolean mIsFullDump;
     private boolean mIsAutoBackupMode;
@@ -90,25 +92,18 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
     }
 
     /**
-     * Exports the show and lists database to a JSON file each into the
-     * Downloads folder on external storage. By default dumps only minimum
-     * required data and shows result toasts.
-     */
-    public JsonExportTask(Context context, OnTaskFinishedListener listener) {
-        mContext = context.getApplicationContext();
-        mListener = listener;
-    }
-
-    /**
      * Same as {@link JsonExportTask} but allows to set parameters.
      * 
      * @param isFullDump Whether to also export meta-data like descriptions,
      *            ratings, actors, etc. Increases file size about 2-4 times.
      * @param isSilentMode Whether to show result toasts.
      */
-    public JsonExportTask(Context context, OnTaskFinishedListener listener, boolean isFullDump,
+    public JsonExportTask(Context context, ProgressBar progressBar,
+            OnTaskFinishedListener listener, boolean isFullDump,
             boolean isSilentMode) {
-        this(context, listener);
+        mContext = context.getApplicationContext();
+        mProgressBar = progressBar;
+        mListener = listener;
         mIsFullDump = isFullDump;
         mIsAutoBackupMode = isSilentMode;
     }
@@ -139,6 +134,8 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
             return SUCCESS;
         }
 
+        publishProgress(-1, shows.getCount());
+
         File backup = new File(path, EXPORT_JSON_FILE_SHOWS);
         try {
             OutputStream out = new FileOutputStream(backup);
@@ -149,6 +146,10 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
             return ERROR;
         } finally {
             shows.close();
+        }
+
+        if (isCancelled()) {
+            return ERROR;
         }
 
         /*
@@ -163,6 +164,8 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
             // There are no lists? Done.
             return SUCCESS;
         }
+
+        publishProgress(-1, lists.getCount());
 
         File backupLists = new File(path, EXPORT_JSON_FILE_LISTS);
         try {
@@ -183,6 +186,21 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
         }
 
         return SUCCESS;
+    }
+
+    @Override
+    protected void onProgressUpdate(Integer... values) {
+        if (mProgressBar == null) {
+            return;
+        }
+        if (values[0] == -1) {
+            // change max value
+            mProgressBar.setMax(values[1]);
+            mProgressBar.setProgress(0);
+            mProgressBar.setIndeterminate(false);
+        } else {
+            mProgressBar.setProgress(values[0]);
+        }
     }
 
     @Override
@@ -209,6 +227,8 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
     }
 
     private void writeJsonStreamShows(OutputStream out, Cursor shows) throws IOException {
+        int numExported = 0;
+
         Gson gson = new Gson();
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
         writer.setIndent("  ");
@@ -253,6 +273,8 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
             addSeasons(show);
 
             gson.toJson(show, Show.class, writer);
+
+            publishProgress(++numExported);
         }
 
         writer.endArray();
@@ -324,6 +346,8 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
     }
 
     private void writeJsonStreamLists(OutputStream out, Cursor lists) throws IOException {
+        int numExported = 0;
+
         Gson gson = new Gson();
         JsonWriter writer = new JsonWriter(new OutputStreamWriter(out, "UTF-8"));
         writer.setIndent("  ");
@@ -337,6 +361,8 @@ public class JsonExportTask extends AsyncTask<Void, Void, Integer> {
             addListItems(list);
 
             gson.toJson(list, List.class, writer);
+
+            publishProgress(++numExported);
         }
 
         writer.endArray();

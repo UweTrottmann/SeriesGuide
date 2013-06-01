@@ -46,7 +46,7 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
     private ProgressBar mProgressBar;
     private CheckBox mCheckBoxFullDump;
     private CheckBox mCheckBoxImportWarning;
-    private AsyncTask<Void, Void, Integer> mTask;
+    private AsyncTask<Void, Integer, Integer> mTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
 
         mButtonExport = (Button) v.findViewById(R.id.buttonExport);
         mButtonImport = (Button) v.findViewById(R.id.buttonImport);
-        mProgressBar = (ProgressBar) v.findViewById(R.id.progressBar);
+        mProgressBar = (ProgressBar) v.findViewById(R.id.progressBarDataLiberation);
         mCheckBoxFullDump = (CheckBox) v.findViewById(R.id.checkBoxFullDump);
         mCheckBoxImportWarning = (CheckBox) v.findViewById(R.id.checkBoxImportWarning);
 
@@ -90,8 +90,8 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
             public void onClick(View v) {
                 setProgressLock(true);
 
-                mTask = new JsonExportTask(context, DataLiberationFragment.this, mCheckBoxFullDump
-                        .isChecked(), false);
+                mTask = new JsonExportTask(context, mProgressBar, DataLiberationFragment.this,
+                        mCheckBoxFullDump.isChecked(), false);
                 mTask.execute();
             }
         });
