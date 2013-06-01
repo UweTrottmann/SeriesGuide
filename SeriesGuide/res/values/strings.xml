@@ -498,4 +498,10 @@
     <string name="download_stable">Download SeriesGuide</string>
     <string name="betawarning"><b>Heads up!</b> This release is for beta testers only! If you are in doubt download the stable version below.</string>
 
+    <!-- In-App Billing -->
+    <string name="upgrade_title">Get the X Upgrade</string>
+    <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.</string>
+    <string name="upgrade_action">Get the X Upgrade</string>
+    <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
+    
 </resources>

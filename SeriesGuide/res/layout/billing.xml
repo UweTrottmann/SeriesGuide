@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="Get the X Upgrade"
+        android:text="@string/upgrade_title"
         android:textAppearance="@style/TextAppearance.Large.Light" />
 
     <TextView
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textViewBillingTitle"
-        android:text="Get access to notifications and more list widget options. Support further development."
+        android:text="@string/upgrade_description"
         android:textAppearance="@style/TextAppearance" />
 
     <Button
@@ -32,7 +32,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/large_padding"
         android:enabled="false"
-        android:text="Get X Upgrade" />
+        android:text="@string/upgrade_action" />
 
     <TextView
         android:id="@+id/textViewBillingExisting"
@@ -41,7 +41,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/buttonBillingGetUpgrade"
         android:layout_marginTop="@dimen/large_padding"
-        android:text="Thanks, you already have the X Upgrade!"
+        android:text="@string/upgrade_success"
         android:textAppearance="@style/TextAppearance.Small.Highlight"
         android:visibility="gone" />
 
