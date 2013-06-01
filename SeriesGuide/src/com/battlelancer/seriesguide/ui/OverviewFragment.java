@@ -794,13 +794,15 @@ public class OverviewFragment extends SherlockFragment implements
         if (!TextUtils.isEmpty(airsDay) && airstime != -1) {
             String[] values = Utils.parseMillisecondsToTime(airstime,
                     airsDay, getActivity());
-            timeAndNetwork.append(values[1]).append(" ").append(values[0]);
-        } else {
-            timeAndNetwork.append(getString(R.string.show_noairtime));
+            timeAndNetwork.append(values[1])
+                    .append(" ")
+                    .append(values[0])
+                    .append(" ");
         }
         final String network = show.getString(ShowQuery.SHOW_NETWORK);
         if (!TextUtils.isEmpty(network)) {
-            timeAndNetwork.append(" ").append(getString(R.string.show_network)).append(" ")
+            timeAndNetwork.append(getString(R.string.show_network))
+                    .append(" ")
                     .append(network);
         }
         ((TextView) getActivity().findViewById(R.id.showmeta)).setText(timeAndNetwork.toString());

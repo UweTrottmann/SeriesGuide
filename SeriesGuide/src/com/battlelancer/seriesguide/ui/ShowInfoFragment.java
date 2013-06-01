@@ -162,16 +162,18 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
 
         // air time
         StringBuilder infoText = new StringBuilder();
-        if (mShow.getAirsDayOfWeek().length() == 0 || mShow.getAirsTime() == -1) {
-            infoText.append(getString(R.string.show_noairtime));
-        } else {
+        if (!TextUtils.isEmpty(mShow.getAirsDayOfWeek()) && mShow.getAirsTime() != -1) {
             String[] values = Utils.parseMillisecondsToTime(mShow.getAirsTime(),
                     mShow.getAirsDayOfWeek(), getActivity());
-            infoText.append(values[1]).append(" ").append(values[0]);
+            infoText.append(values[1])
+                    .append(" ")
+                    .append(values[0])
+                    .append(" ");
         }
         // network
         if (mShow.getNetwork().length() != 0) {
-            infoText.append(" ").append(getString(R.string.show_network)).append(" ")
+            infoText.append(getString(R.string.show_network))
+                    .append(" ")
                     .append(mShow.getNetwork());
         }
         info.setText(infoText);
@@ -274,8 +276,9 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
         // Poster
         final ImageView poster = (ImageView) getView().findViewById(R.id.ImageViewShowInfoPoster);
         ImageProvider.getInstance(getActivity()).loadImage(poster, mShow.getPoster(), false);
-//        Utils.setPosterBackground((ImageView) getView().findViewById(R.id.background),
-//                mShow.getPoster(), getActivity());
+        // Utils.setPosterBackground((ImageView)
+        // getView().findViewById(R.id.background),
+        // mShow.getPoster(), getActivity());
 
         // trakt ratings
         onLoadTraktRatings(true);
