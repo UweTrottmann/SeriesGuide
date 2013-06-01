@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.battlelancer.seriesguide.ui.BaseActivity;
+import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
 
 public class BillingActivity extends BaseActivity {
@@ -45,7 +46,15 @@ public class BillingActivity extends BaseActivity {
 
         setupViews();
 
+        // check if legacy X version is installed
+        mHasXUpgrade = Utils.isSupportingUser(this);
+
         updateUi();
+
+        // do not set up in-app billing, already qualified for X upgrade
+        if (mHasXUpgrade) {
+            return;
+        }
 
         String key = getString(R.string.key_a) + getString(R.string.key_b)
                 + getString(R.string.key_c) + getString(R.string.key_d);
