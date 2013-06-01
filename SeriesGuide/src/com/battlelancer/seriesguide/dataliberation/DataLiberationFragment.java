@@ -32,6 +32,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.battlelancer.seriesguide.dataliberation.JsonExportTask.OnTaskProgressListener;
 import com.battlelancer.seriesguide.provider.SeriesGuideDatabase;
 import com.uwetrottmann.seriesguide.R;
 
@@ -39,7 +40,8 @@ import com.uwetrottmann.seriesguide.R;
  * One button export or import of the show database using a JSON file on
  * external storage.
  */
-public class DataLiberationFragment extends SherlockFragment implements OnTaskFinishedListener {
+public class DataLiberationFragment extends SherlockFragment implements OnTaskFinishedListener,
+        OnTaskProgressListener {
 
     private Button mButtonExport;
     private Button mButtonImport;
@@ -90,7 +92,8 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
             public void onClick(View v) {
                 setProgressLock(true);
 
-                mTask = new JsonExportTask(context, mProgressBar, DataLiberationFragment.this,
+                mTask = new JsonExportTask(context, DataLiberationFragment.this,
+                        DataLiberationFragment.this,
                         mCheckBoxFullDump.isChecked(), false);
                 mTask.execute();
             }
@@ -125,6 +128,16 @@ public class DataLiberationFragment extends SherlockFragment implements OnTaskFi
         mTask = null;
 
         super.onDestroy();
+    }
+
+    @Override
+    public void onProgressUpdate(Integer... values) {
+        if (mProgressBar == null) {
+            return;
+        }
+        mProgressBar.setIndeterminate(values[0] == values[1] ? true : false);
+        mProgressBar.setMax(values[0]);
+        mProgressBar.setProgress(values[1]);
     }
 
     @Override

@@ -23,7 +23,6 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.battlelancer.seriesguide.dataliberation.model.Episode;
@@ -67,6 +66,10 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     private static final int ERROR_STORAGE_ACCESS = 0;
     private static final int ERROR = -1;
 
+    public interface OnTaskProgressListener {
+        public void onProgressUpdate(Integer... values);
+    }
+
     public interface ShowStatusExport {
         String CONTINUING = "continuing";
         String ENDED = "ended";
@@ -80,7 +83,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     private Context mContext;
-    private ProgressBar mProgressBar;
+    private OnTaskProgressListener mProgressListener;
     private OnTaskFinishedListener mListener;
     private boolean mIsFullDump;
     private boolean mIsAutoBackupMode;
@@ -98,11 +101,11 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
      *            ratings, actors, etc. Increases file size about 2-4 times.
      * @param isSilentMode Whether to show result toasts.
      */
-    public JsonExportTask(Context context, ProgressBar progressBar,
+    public JsonExportTask(Context context, OnTaskProgressListener progressListener,
             OnTaskFinishedListener listener, boolean isFullDump,
             boolean isSilentMode) {
         mContext = context.getApplicationContext();
-        mProgressBar = progressBar;
+        mProgressListener = progressListener;
         mListener = listener;
         mIsFullDump = isFullDump;
         mIsAutoBackupMode = isSilentMode;
@@ -134,7 +137,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             return SUCCESS;
         }
 
-        publishProgress(-1, shows.getCount());
+        publishProgress(shows.getCount(), 0);
 
         File backup = new File(path, EXPORT_JSON_FILE_SHOWS);
         try {
@@ -165,7 +168,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
             return SUCCESS;
         }
 
-        publishProgress(-1, lists.getCount());
+        publishProgress(lists.getCount(), 0);
 
         File backupLists = new File(path, EXPORT_JSON_FILE_LISTS);
         try {
@@ -190,16 +193,8 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
     @Override
     protected void onProgressUpdate(Integer... values) {
-        if (mProgressBar == null) {
-            return;
-        }
-        if (values[0] == -1) {
-            // change max value
-            mProgressBar.setMax(values[1]);
-            mProgressBar.setProgress(0);
-            mProgressBar.setIndeterminate(false);
-        } else {
-            mProgressBar.setProgress(values[0]);
+        if (mProgressListener != null) {
+            mProgressListener.onProgressUpdate(values);
         }
     }
 
@@ -227,6 +222,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     private void writeJsonStreamShows(OutputStream out, Cursor shows) throws IOException {
+        int numTotal = shows.getCount();
         int numExported = 0;
 
         Gson gson = new Gson();
@@ -235,6 +231,10 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         writer.beginArray();
 
         while (shows.moveToNext()) {
+            if (isCancelled()) {
+                break;
+            }
+
             Show show = new Show();
             show.tvdbId = shows.getInt(ShowsQuery.ID);
             show.title = shows.getString(ShowsQuery.TITLE);
@@ -274,7 +274,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
             gson.toJson(show, Show.class, writer);
 
-            publishProgress(++numExported);
+            publishProgress(numTotal, ++numExported);
         }
 
         writer.endArray();
@@ -346,6 +346,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
     }
 
     private void writeJsonStreamLists(OutputStream out, Cursor lists) throws IOException {
+        int numTotal = lists.getCount();
         int numExported = 0;
 
         Gson gson = new Gson();
@@ -354,6 +355,10 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
         writer.beginArray();
 
         while (lists.moveToNext()) {
+            if (isCancelled()) {
+                break;
+            }
+
             List list = new List();
             list.listId = lists.getString(ListsQuery.ID);
             list.name = lists.getString(ListsQuery.NAME);
@@ -362,7 +367,7 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
             gson.toJson(list, List.class, writer);
 
-            publishProgress(++numExported);
+            publishProgress(numTotal, ++numExported);
         }
 
         writer.endArray();
