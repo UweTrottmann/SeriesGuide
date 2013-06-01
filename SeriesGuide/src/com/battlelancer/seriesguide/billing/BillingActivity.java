@@ -1,6 +1,7 @@
 
 package com.battlelancer.seriesguide.billing;
 
+import android.R;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,14 +12,13 @@ import android.widget.Button;
 
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.Utils;
-import com.uwetrottmann.seriesguide.R;
 
 public class BillingActivity extends BaseActivity {
 
     public static final String TAG = "BillingActivity";
 
     // enable debug logging, disable for production!
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     // The SKU product id as set in the Developer Console
     private static final String SKU_X = "x_upgrade";
