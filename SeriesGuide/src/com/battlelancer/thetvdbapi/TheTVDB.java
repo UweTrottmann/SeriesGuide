@@ -843,6 +843,7 @@ public class TheTVDB {
     }
 
     public static void onRenewFTSTable(Context context) {
+        Log.d(TAG, "Query to renew FTS table");
         context.getContentResolver().query(EpisodeSearch.CONTENT_URI_RENEWFTSTABLE, null, null,
                 null, null);
     }
