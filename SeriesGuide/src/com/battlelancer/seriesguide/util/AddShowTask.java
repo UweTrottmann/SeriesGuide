@@ -37,6 +37,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Adds shows to the local database, tries to get watched and collected episodes
+ * if a trakt account is connected.
+ */
 public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
     private static final int ADD_ALREADYEXISTS = 0;
