@@ -278,7 +278,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // add newly discovered shows to database
         if (mNewShows != null && mNewShows.size() > 0) {
-            TaskManager.getInstance(getContext()).performAddTask(mNewShows);
+            TaskManager.getInstance(getContext()).performAddTask(mNewShows, true);
         }
 
         // There could have been new episodes added after an update
