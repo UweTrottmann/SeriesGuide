@@ -59,35 +59,37 @@ public class TaskManager {
     public synchronized void performAddTask(SearchResult show) {
         List<SearchResult> wrapper = Lists.newArrayList();
         wrapper.add(show);
-        performAddTask(wrapper);
+        performAddTask(wrapper, false);
     }
 
-    public synchronized void performAddTask(List<SearchResult> shows) {
-        // notify user here already
-        if (shows.size() == 1) {
-            // say title of show
-            SearchResult show = shows.get(0);
-            Toast.makeText(mContext,
-                    "\"" + show.title + "\" " + mContext.getString(R.string.add_started),
-                    Toast.LENGTH_SHORT).show();
-        } else {
-            // generic adding multiple message
-            Toast.makeText(
-                    mContext,
-                    R.string.add_multiple,
-                    Toast.LENGTH_SHORT).show();
+    public synchronized void performAddTask(List<SearchResult> shows, boolean isSilent) {
+        if (!isSilent) {
+            // notify user here already
+            if (shows.size() == 1) {
+                // say title of show
+                SearchResult show = shows.get(0);
+                Toast.makeText(mContext,
+                        "\"" + show.title + "\" " + mContext.getString(R.string.add_started),
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                // generic adding multiple message
+                Toast.makeText(
+                        mContext,
+                        R.string.add_multiple,
+                        Toast.LENGTH_SHORT).show();
+            }
         }
 
         // add the show(s) to a running add task or create a new one
         boolean isRequiringNewTask;
-        if (mAddTask == null || mAddTask.getStatus() == AsyncTask.Status.FINISHED) {
+        if (!isAddTaskRunning()) {
             isRequiringNewTask = true;
         } else {
-            // addTask is still running, try to add another show to its queue
+            // addTask is still running, try to add to its queue
             isRequiringNewTask = !mAddTask.addShows(shows);
         }
         if (isRequiringNewTask) {
-            mAddTask = (AddShowTask) new AddShowTask(mContext, shows).execute();
+            mAddTask = (AddShowTask) new AddShowTask(mContext, shows, isSilent).execute();
         }
     }
 
