@@ -55,37 +55,18 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
     private String mCurrentShowName;
 
-    public AddShowTask(Context context, SearchResult show) {
-        mContext = context.getApplicationContext();
-        mAddQueue.add(show);
-    }
+    private boolean mIsSilentMode;
 
-    public AddShowTask(Context context, List<SearchResult> shows) {
+    public AddShowTask(Context context, List<SearchResult> shows, boolean isSilentMode) {
+        // use an activity independent context
         mContext = context.getApplicationContext();
         mAddQueue.addAll(shows);
-    }
-
-    public LinkedList<SearchResult> getRemainingShows() {
-        return mAddQueue;
+        mIsSilentMode = isSilentMode;
     }
 
     /**
-     * Add a show to the add queue. If this returns false, the show was not
+     * Adds shows to the add queue. If this returns false, the shows were not
      * added because the task is finishing up. Create a new one instead.
-     */
-    public boolean addShow(SearchResult show) {
-        if (mIsFinishedAddingShows) {
-            return false;
-        } else {
-            mAddQueue.add(show);
-            return true;
-        }
-    }
-
-    /**
-     * Add multiple shows to the add queue. If this returns false, the shows
-     * were not added because the task is finishing up. Create a new one
-     * instead.
      */
     public boolean addShows(List<SearchResult> show) {
         if (mIsFinishedAddingShows) {
@@ -180,6 +161,10 @@ public class AddShowTask extends AsyncTask<Void, Integer, Void> {
 
     @Override
     protected void onProgressUpdate(Integer... values) {
+        if (mIsSilentMode) {
+            return;
+        }
+
         switch (values[0]) {
             case ADD_SUCCESS:
                 Toast.makeText(mContext,

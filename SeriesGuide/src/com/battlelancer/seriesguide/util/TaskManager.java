@@ -87,7 +87,7 @@ public class TaskManager {
             isRequiringNewTask = !mAddTask.addShows(shows);
         }
         if (isRequiringNewTask) {
-            mAddTask = (AddShowTask) new AddShowTask(mContext, shows).execute();
+            mAddTask = (AddShowTask) new AddShowTask(mContext, shows, false).execute();
         }
     }
 
