@@ -256,7 +256,7 @@ public class OverviewActivity extends BaseActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                SgSyncAdapter.requestSync(context, mShowId);
+                SgSyncAdapter.requestSync(context, mShowId, false);
             }
         }, 1000);
     }
