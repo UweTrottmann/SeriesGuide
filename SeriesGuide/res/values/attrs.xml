@@ -23,5 +23,6 @@
     <attr name="drawableCancel" format="reference" />
     <attr name="drawableArrowUp" format="reference" />
     <attr name="drawableDropdown" format="reference" />
+    <attr name="drawableCheckin" format="reference" />
 
 </resources>

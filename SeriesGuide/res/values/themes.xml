@@ -52,6 +52,7 @@
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu</item>
+        <item name="drawableCheckin">@drawable/ic_action_checkin</item>
     </style>
 
     <style name="SeriesGuideBaseTheme" parent="Theme.Sherlock">
@@ -117,6 +118,7 @@
         <item name="drawableCancel">@drawable/ic_action_cancel</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu</item>
+        <item name="drawableCheckin">@drawable/ic_action_checkin</item>
     </style>
 
     <!-- SeriesGuide Light theme -->
@@ -166,6 +168,7 @@
         <item name="drawableCancel">@drawable/ic_action_cancel_inverse</item>
         <item name="drawableArrowUp">@drawable/ic_action_arrow_top_inverse</item>
         <item name="drawableDropdown">@drawable/ic_action_contextmenu_light</item>
+        <item name="drawableCheckin">@drawable/ic_action_checkin_inverse</item>
     </style>
 
     <style name="SeriesGuideBaseThemeLight" parent="Theme.Sherlock.Light.DarkActionBar">
