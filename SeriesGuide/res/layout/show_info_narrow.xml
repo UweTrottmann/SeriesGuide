@@ -78,7 +78,7 @@
                 android:id="@+id/buttonbar_ref"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/buttonbar_services" />
+                layout="@layout/buttonbar_services_stacked" />
         </LinearLayout>
     </ScrollView>
 
