@@ -253,10 +253,18 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
             return true;
         }
         else if (itemId == R.id.menu_update) {
-            fireTrackerEvent("Update (outdated)");
-
             SgSyncAdapter.requestSync(this, 0);
 
+            Toast.makeText(this, R.string.update_scheduled, Toast.LENGTH_SHORT).show();
+            fireTrackerEvent("Update (outdated)");
+
+            return true;
+        } else if (itemId == R.id.menu_fullupdate) {
+            SgSyncAdapter.requestSync(this, -1);
+
+            Toast.makeText(this, R.string.update_scheduled, Toast.LENGTH_SHORT).show();
+            fireTrackerEvent("Update (all)");
+            
             return true;
         } else if (itemId == R.id.menu_updateart) {
             fireTrackerEvent("Fetch posters");
@@ -271,12 +279,6 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
                 Toast.makeText(this, getString(R.string.arttask_start), Toast.LENGTH_LONG).show();
                 mArtTask = (FetchPosterTask) new FetchPosterTask().execute();
             }
-            return true;
-        } else if (itemId == R.id.menu_fullupdate) {
-            fireTrackerEvent("Update (all)");
-
-            SgSyncAdapter.requestSync(this, -1);
-
             return true;
         } else if (itemId == R.id.menu_showsortby) {
             fireTrackerEvent("Sort shows");
