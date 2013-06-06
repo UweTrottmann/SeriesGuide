@@ -1,104 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/buttonbar_services_container"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/buttonbar_services"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/default_padding"
+    android:orientation="vertical" >
 
-    <LinearLayout
-        android:id="@+id/buttonbar_services"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_padding"
-        android:orientation="vertical" >
+        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginRight="@dimen/default_padding"
+        android:text="@string/services_watch"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_padding"
-            android:layout_marginRight="@dimen/default_padding"
-            android:text="@string/services_watch"
-            android:textAppearance="@style/TextAppearance.Small.Label" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="@dimen/inline_padding"
+        android:background="?attr/colorAccent" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="?attr/drawableDivider"
+        android:orientation="vertical"
+        android:showDividers="middle" >
+
+        <Button
+            android:id="@+id/buttonGooglePlay"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+            android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:baselineAligned="false"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:gravity="center_vertical|left"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:text="@string/googleplay" />
 
-            <Button
-                android:id="@+id/buttonGooglePlay"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Small.Default"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
-                android:text="@string/googleplay"
-                android:textAllCaps="true" />
-
-            <include layout="@layout/divider_vertical" />
-
-            <Button
-                android:id="@+id/buttonAmazon"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Small.Default"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
-                android:text="@string/amazon"
-                android:textAllCaps="true" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/default_padding"
-            android:layout_marginRight="@dimen/default_padding"
-            android:layout_marginTop="@dimen/inline_padding"
-            android:text="@string/services_more"
-            android:textAppearance="@style/TextAppearance.Small.Label" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/buttonAmazon"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+            android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:baselineAligned="false"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/buttonShowInfoIMDB"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Small.Default"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
-                android:text="@string/imdb"
-                android:textAllCaps="true" />
-
-            <include layout="@layout/divider_vertical" />
-
-            <Button
-                android:id="@+id/buttonTVDB"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Small.Default"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
-                android:text="@string/tvdb"
-                android:textAllCaps="true" />
-
-            <include layout="@layout/divider_vertical" />
-
-            <Button
-                android:id="@+id/buttonShouts"
-                style="@style/Widget.SeriesGuide.Button.Borderless.Small.Default"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/default_padding"
-                android:paddingRight="@dimen/default_padding"
-                android:text="@string/comments"
-                android:textAllCaps="true" />
-        </LinearLayout>
+            android:gravity="center_vertical|left"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:text="@string/amazon" />
     </LinearLayout>
 
-</HorizontalScrollView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_padding"
+        android:layout_marginRight="@dimen/default_padding"
+        android:layout_marginTop="@dimen/inline_padding"
+        android:text="@string/services_more"
+        android:textAppearance="@style/TextAppearance.Small.Label" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="@dimen/inline_padding"
+        android:background="?attr/colorAccent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="?attr/drawableDivider"
+        android:orientation="vertical"
+        android:showDividers="middle" >
+
+        <Button
+            android:id="@+id/buttonShowInfoIMDB"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical|left"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:text="@string/imdb" />
+
+        <Button
+            android:id="@+id/buttonTVDB"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical|left"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:text="@string/tvdb" />
+
+        <Button
+            android:id="@+id/buttonShouts"
+            style="@style/Widget.SeriesGuide.Button.Borderless.Default"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical|left"
+            android:paddingLeft="@dimen/default_padding"
+            android:paddingRight="@dimen/default_padding"
+            android:text="@string/comments" />
+    </LinearLayout>
+
+</LinearLayout>
