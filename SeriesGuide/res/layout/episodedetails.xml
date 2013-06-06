@@ -163,11 +163,9 @@
         android:textAppearance="@style/TextAppearance.Light"
         android:textIsSelectable="true" />
 
-    <include layout="@layout/divider_horizontal" />
-
     <include
         android:id="@+id/buttonbar_ref"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         layout="@layout/buttonbar_services" />
 
