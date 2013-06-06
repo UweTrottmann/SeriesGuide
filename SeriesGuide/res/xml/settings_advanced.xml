@@ -31,7 +31,6 @@
         </Preference>
         <Preference
             android:key="backup"
-            android:summary="Will be removed in the next version."
             android:title="Legacy Backup/Restore" >
             <intent
                 android:targetClass="com.battlelancer.seriesguide.ui.BackupDeleteActivity"

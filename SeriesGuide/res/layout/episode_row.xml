@@ -45,7 +45,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewEpisodeTitle"
             android:layout_toRightOf="@id/watchedBoxEpisode"
-            android:text="@string/show_noairtime"
             android:textAppearance="@style/TextAppearance.Small.Light" />
 
         <include

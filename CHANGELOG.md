@@ -8,6 +8,15 @@ All dates are in the European Central timezone.
 Version 6
 ---------
 
+#### 6beta3 *(TBD)*
+
+* Display confirmation toasts when triggering manual updates, show descriptive error messages. For now Auto Update needs to be turned on to manually update.
+* Syncs triggered through the app (not the regular periodic sync) now only run on WiFi if the user asked so.
+* New export tool shows exact progress. Removed warning from old tool.
+* Fix crash when new show got added from trakt activity screen if the updater did run in the background.
+* Revamp service links below each episode and show.
+* Change 'Air date' to the more general 'Release date', this better includes non-TV shows. Not having an air time or date is now not displayed as something wrong.
+
 #### 6beta2 *(2013-05-24)*
 
 * New! Beam your shows to a friends device from the shows overview page (Android 4+).

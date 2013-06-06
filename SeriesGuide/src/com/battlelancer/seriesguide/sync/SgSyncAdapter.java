@@ -76,8 +76,16 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                 UPDATE_INTERVAL_MINUTES * DateUtils.MINUTE_IN_MILLIS;
 
         if (isTime) {
-            SgSyncAdapter.requestSync(context, 0);
+            SgSyncAdapter.requestSync(context, 0, false);
         }
+    }
+
+    /**
+     * Same as {@link #requestSync(Context, int, boolean)} with
+     * {@code isShowingFeedback} set to true.
+     */
+    public static void requestSync(Context context, int showTvdbId) {
+        requestSync(context, showTvdbId, true);
     }
 
     /**
@@ -87,15 +95,34 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * @param showTvdbId Update the show with the given TVDbid, if 0 does a
      *            delta update, if less than 0 does a full update.
      */
-    public static void requestSync(Context context, int showTvdbId) {
-        if (Utils.isAllowedConnection(context)) {
-            Bundle args = new Bundle();
-            args.putInt(SHOW_TVDB_ID, showTvdbId);
-
-            final Account account = SgAccountAuthenticator.getSyncAccount(context);
-            ContentResolver.requestSync(account,
-                    SeriesGuideApplication.CONTENT_AUTHORITY, args);
+    public static void requestSync(Context context, int showTvdbId, boolean isShowingFeedback) {
+        if (!Utils.isAllowedConnection(context)) {
+            if (isShowingFeedback) {
+                final boolean isWifiOnly = PreferenceManager.getDefaultSharedPreferences(context)
+                        .getBoolean(SeriesGuidePreferences.KEY_ONLYWIFI, false);
+                Toast.makeText(context,
+                        isWifiOnly ? R.string.update_no_wifi : R.string.update_no_connection,
+                        Toast.LENGTH_LONG).show();
+            }
+            return;
+        } else if (!isSyncAutomatically(context)) {
+            if (isShowingFeedback) {
+                Toast.makeText(context, R.string.update_disabled, Toast.LENGTH_LONG).show();
+            }
+            return;
         }
+
+        if (isShowingFeedback) {
+            Toast.makeText(context, R.string.update_scheduled, Toast.LENGTH_SHORT).show();
+        }
+
+        Bundle args = new Bundle();
+        args.putInt(SHOW_TVDB_ID, showTvdbId);
+
+        final Account account = SgAccountAuthenticator.getSyncAccount(context);
+        ContentResolver.requestSync(account,
+                SeriesGuideApplication.CONTENT_AUTHORITY, args);
+
     }
 
     /**
@@ -278,7 +305,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
         // add newly discovered shows to database
         if (mNewShows != null && mNewShows.size() > 0) {
-            TaskManager.getInstance(getContext()).performAddTask(mNewShows);
+            TaskManager.getInstance(getContext()).performAddTask(mNewShows, true);
         }
 
         // There could have been new episodes added after an update

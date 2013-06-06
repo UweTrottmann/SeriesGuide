@@ -359,14 +359,15 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 airdateText.setText(Utils.formatToDate(airTime, getActivity()));
                 String[] dayAndTime = Utils.formatToTimeAndDay(airTime, getActivity());
                 airTimeAndNumberText.append((dayAndTime[2] + " (" + dayAndTime[1] + ")")
-                        .toUpperCase(Locale.getDefault()));
+                        .toUpperCase(Locale.getDefault()))
+                        .append("  ");
             } else {
                 airdateText.setText(R.string.unknown);
             }
 
             // number
             int numberStartIndex = airTimeAndNumberText.length();
-            airTimeAndNumberText.append("  ")
+            airTimeAndNumberText
                     .append(getString(R.string.season_number, mSeasonNumber).toUpperCase(
                             Locale.getDefault()));
             airTimeAndNumberText.append(" ");

@@ -5,5 +5,6 @@
     <item name="search" type="layout">@layout/search_wide</item>
     <item name="episode_pager" type="layout">@layout/episode_pager_wide</item>
     <item name="upcoming_row" type="layout">@layout/upcoming_row_wide</item>
+    <item name="buttonbar_services" type="layout">@layout/buttonbar_services_wide</item>
 
 </resources>

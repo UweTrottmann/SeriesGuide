@@ -141,7 +141,7 @@ public class TraktAddFragment extends AddFragment {
         int itemId = item.getItemId();
         if (itemId == R.id.menu_add_all) {
             if (mSearchResults != null) {
-                TaskManager.getInstance(getActivity()).performAddTask(mSearchResults);
+                TaskManager.getInstance(getActivity()).performAddTask(mSearchResults, false);
             }
             // disable the item so the user has to come back
             item.setEnabled(false);

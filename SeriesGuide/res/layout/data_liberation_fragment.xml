@@ -17,7 +17,7 @@
             android:textAppearance="@style/TextAppearance.Large.Light" />
 
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/progressBarDataLiberation"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
             android:id="@+id/textViewBackupOverview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/progressBar"
+            android:layout_below="@+id/progressBarDataLiberation"
             android:layout_marginTop="@dimen/default_padding"
             android:progressDrawable="@drawable/progress_horizontal_holo_dark"
             android:text="@string/backup_description"

@@ -124,7 +124,8 @@
     <!-- Metadata -->
     <string name="episode_number_absolute">ABSOLUTE</string>
     <string name="episode_number_disk">DVD</string>
-    <string name="episode_firstaired">Airdate</string>
+    <string name="episode_firstaired">Release date</string>
+    <string name="episode_firstaired_unknown">Release date unknown</string>
     <string name="episode_dvdnumber">DVD Episode</string>
     <string name="show_actors">Actors</string>
     <string name="show_firstaired">First Aired</string>
@@ -201,16 +202,11 @@
     <string name="pref_infinite_scrolling">Infinite activity</string>
 
     <!-- Updating -->
-    <string name="update_notification">Updating your shows…</string>
-    <string name="update_single">Updating show…</string>
-    <string name="update_delta">Updating outdated shows…</string>
-    <string name="update_full">Updating all shows…</string>
-    <string name="update_success">Shows updated.</string>
-    <string name="update_offline">Updating failed, check your internet/Wi-Fi connection.</string>
-    <string name="update_saxerror">Updating failed, trying again later.</string>
+    <string name="update_scheduled">Updating…</string>
+    <string name="update_no_connection">To update connect to the internet.</string>
+    <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
+    <string name="update_disabled">To update turn on Auto Update in Settings.</string>
     <string name="update_inprogress">An update is in progress, try again later.</string>
-    <string name="update_rebuildsearch">Refreshing episode search…</string>
-    <string name="update_traktactivity">Loading trakt activity…</string>
 
     <!-- Loading posters -->
     <string name="menu_updateart">Load posters</string>
@@ -219,8 +215,7 @@
     <string name="arttask_nosdcard">Loading posters requires external storage (SD card).</string>
 
     <!-- Show info -->
-    <string name="show_network">on</string>
-    <string name="show_noairtime">No air times available</string>
+    <string name="show_on_network">on %s</string>
 
     <!-- Season list -->
     <string name="season_watchcount">episodes not watched</string>

@@ -73,6 +73,6 @@
         android:background="?custom_list_selector"
         android:padding="@dimen/default_padding"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_action_checkin" />
+        android:src="?attr/drawableCheckin" />
 
 </LinearLayout>

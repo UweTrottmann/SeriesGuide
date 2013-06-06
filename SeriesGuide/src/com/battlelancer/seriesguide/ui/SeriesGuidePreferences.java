@@ -106,8 +106,6 @@ public class SeriesGuidePreferences extends SherlockPreferenceActivity implement
 
     public static final String KEY_UPDATEATLEASTEVERY = "com.battlelancer.seriesguide.updateatleastevery";
 
-    public static final String KEY_VERSION = "oldversioncode";
-
     public static final String KEY_HIDEIMAGES = "hideimages";
 
     public static final String KEY_GOOGLEANALYTICS = "enableGAnalytics";
