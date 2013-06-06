@@ -293,7 +293,6 @@ public class ShowsFragment extends SherlockFragment implements
             case CONTEXT_UPDATE_ID:
                 SgSyncAdapter.requestSync(getActivity(), (int) info.id);
 
-                Toast.makeText(getActivity(), R.string.update_scheduled, Toast.LENGTH_SHORT).show();
                 fireTrackerEvent("Update show");
                 return true;
             case CONTEXT_FLAG_NEXT_ID:

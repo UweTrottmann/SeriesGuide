@@ -254,15 +254,11 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
         }
         else if (itemId == R.id.menu_update) {
             SgSyncAdapter.requestSync(this, 0);
-
-            Toast.makeText(this, R.string.update_scheduled, Toast.LENGTH_SHORT).show();
             fireTrackerEvent("Update (outdated)");
 
             return true;
         } else if (itemId == R.id.menu_fullupdate) {
             SgSyncAdapter.requestSync(this, -1);
-
-            Toast.makeText(this, R.string.update_scheduled, Toast.LENGTH_SHORT).show();
             fireTrackerEvent("Update (all)");
             
             return true;

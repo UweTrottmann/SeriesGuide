@@ -203,6 +203,9 @@
 
     <!-- Updating -->
     <string name="update_scheduled">Updating…</string>
+    <string name="update_no_connection">To update connect to the internet.</string>
+    <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
+    <string name="update_disabled">To update turn on Auto Update in Settings.</string>
     <string name="update_inprogress">An update is in progress, try again later.</string>
 
     <!-- Loading posters -->
