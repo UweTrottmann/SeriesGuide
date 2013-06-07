@@ -76,7 +76,8 @@
   <string name="rating9">מצוין</string>
   <string name="episode_number_absolute">ABSOLUTE</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">זמן שידור</string>
+  <string name="episode_firstaired">Release date</string>
+  <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">פרק DVD</string>
   <string name="show_actors">שחקנים</string>
   <string name="show_firstaired">הקרנה ראשונה</string>
@@ -141,22 +142,16 @@
   <string name="only_favorites">סדרות מעודפות בלבד</string>
   <string name="togglewatched">החלף נצפו</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
-  <string name="update_notification">מעדכן את הסדרות שלך</string>
-  <string name="update_single">מעדכן סדרה</string>
-  <string name="update_delta">מעדכן סדרות לא מעודכנות</string>
-  <string name="update_full">מעדכן את כל הסדרות</string>
-  <string name="update_success">הצג עדכונים</string>
-  <string name="update_offline">העדכון נכשל, בדוק את הקישוריות שלך.</string>
-  <string name="update_saxerror">העדכון נכשל, נסה שנית מאוחר יותר.</string>
+  <string name="update_scheduled">Updating…</string>
+  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
+  <string name="update_disabled">To update turn on Auto Update in Settings.</string>
   <string name="update_inprogress">מבצע תהליך עדכון, נסה מאוחר יותר.</string>
-  <string name="update_rebuildsearch">מרענן חיפוש פרקים</string>
-  <string name="update_traktactivity">טוען פעילויות trakt </string>
   <string name="menu_updateart">טען פוסטרים</string>
   <string name="arttask_incomplete">כמה פוסטרים לא נטענו, נסה שנית מאוחר יותר</string>
   <string name="arttask_start">טוען פוסטרים</string>
   <string name="arttask_nosdcard">טעינת פוסטרים דורשת אחסון חיצוני (כרטיס SD)</string>
-  <string name="show_network">בערוץ</string>
-  <string name="show_noairtime">אין זמני שידור מעודכנים</string>
+  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">הפרקים לא נצפו</string>
   <string name="season_allwatched">כל הפרקים נצפו</string>
   <string name="season_onenotwatched">פרק שטרם נצפה</string>
@@ -332,6 +327,10 @@
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">הורד SeriesGuide</string>
   <string name="betawarning"><b>שימו לב!</b> שחרור זה הוא עבור בודקי בטא בלבד! אם יש לך ספק, הורד את הגרסה היציבה שלהלן.</string>
+  <string name="upgrade_title">Get the X Upgrade</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.</string>
+  <string name="upgrade_action">Get the X Upgrade</string>
+  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>הפרק הבא</item>

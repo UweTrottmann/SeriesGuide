@@ -76,7 +76,8 @@
   <string name="rating9">Уникален</string>
   <string name="episode_number_absolute">ABSOLUTE</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Стартова да</string>
+  <string name="episode_firstaired">Release date</string>
+  <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">DVD епизод</string>
   <string name="show_actors">Актьор</string>
   <string name="show_firstaired">Първо излъчване</string>
@@ -141,22 +142,16 @@
   <string name="only_favorites">Само "Предпочитани"</string>
   <string name="togglewatched">Скрий гледаните</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
-  <string name="update_notification">Обновява сериалите…</string>
-  <string name="update_single">Обновява сериал…</string>
-  <string name="update_delta">Обновява старите сериали…</string>
-  <string name="update_full">Обновява всичко…</string>
-  <string name="update_success">Сериалите са актуализирани.</string>
-  <string name="update_offline">Актуализирането се провали, проверете вашата интернет/Wi-Fi връзка.</string>
-  <string name="update_saxerror">Обновяването се провали, опитайте по-късно.</string>
+  <string name="update_scheduled">Updating…</string>
+  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
+  <string name="update_disabled">To update turn on Auto Update in Settings.</string>
   <string name="update_inprogress">Обновяване в процес, опитайте по-късно.</string>
-  <string name="update_rebuildsearch">Опресняване на търсенето…</string>
-  <string name="update_traktactivity">Зарежда дейности на trakt…</string>
   <string name="menu_updateart">Зареждане на плакати</string>
   <string name="arttask_incomplete">Някои плакати не се заредиха, опитайте отново по-късно.</string>
   <string name="arttask_start">Зарежда обложки…</string>
   <string name="arttask_nosdcard">Зареждането на плакати изисква външна памет (SD карта).</string>
-  <string name="show_network">по</string>
-  <string name="show_noairtime">Неизвестна дата на излизане</string>
+  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">епизоди, които не са гледани</string>
   <string name="season_allwatched">Всички гледани епизоди</string>
   <string name="season_onenotwatched">епизод, който не е гледан</string>
@@ -332,6 +327,10 @@
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">Изтегляне на SeriesGuide</string>
   <string name="betawarning"><b>Внимание!</b> Тази версия е само бета тестери! Ако имате съмнения, изтеглете стабилната версия отдолу.</string>
+  <string name="upgrade_title">Get the X Upgrade</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.</string>
+  <string name="upgrade_action">Get the X Upgrade</string>
+  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">
     <item>А-Ю</item>
     <item>Следващ епизод</item>

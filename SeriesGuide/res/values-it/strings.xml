@@ -76,7 +76,8 @@
   <string name="rating9">Superbo</string>
   <string name="episode_number_absolute">ABSOLUTE</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Ora messa in onda</string>
+  <string name="episode_firstaired">Release date</string>
+  <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">Episodio su DVD</string>
   <string name="show_actors">Attori</string>
   <string name="show_firstaired">Data prima trasmissione</string>
@@ -141,22 +142,16 @@
   <string name="only_favorites">Solo le serie preferite</string>
   <string name="togglewatched">Visto</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
-  <string name="update_notification">Aggiorna le tue serie-tv...</string>
-  <string name="update_single">Aggiornamento serie...</string>
-  <string name="update_delta">Aggiorna le vecchie serie-tv...</string>
-  <string name="update_full">Aggiornamento di tutte le serie...</string>
-  <string name="update_success">Serie aggiornate.</string>
-  <string name="update_offline">Aggiornamento fallito, controlla la tua connessione a internet/Wi-Fi.</string>
-  <string name="update_saxerror">Caricamento fallito, riprova più tardi.</string>
+  <string name="update_scheduled">Updating…</string>
+  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
+  <string name="update_disabled">To update turn on Auto Update in Settings.</string>
   <string name="update_inprogress">Un altro aggiornamento è in corso, riprova più tardi.</string>
-  <string name="update_rebuildsearch">Aggiornamento ricerca episodi...</string>
-  <string name="update_traktactivity">Caricamento attività Trakt...</string>
   <string name="menu_updateart">Carica poster</string>
   <string name="arttask_incomplete">Alcuni poster non sono stati caricati, riprova dopo.</string>
   <string name="arttask_start">Caricamento dei poster...</string>
   <string name="arttask_nosdcard">Per caricare i poster serve la memoria esterna (SD card).</string>
-  <string name="show_network">su</string>
-  <string name="show_noairtime">Nessuna data di trasmissione disponibile</string>
+  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">episodi non visti</string>
   <string name="season_allwatched">Tutti gli episodi visti</string>
   <string name="season_onenotwatched">episodio non visto</string>
@@ -332,6 +327,10 @@
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">Scarica SeriesGuide</string>
   <string name="betawarning"><b>Attenzione!</b> Questa release è solo per i beta tester. Se non sei sicuro, scarica la versione stabile qui sotto.</string>
+  <string name="upgrade_title">Get the X Upgrade</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.</string>
+  <string name="upgrade_action">Get the X Upgrade</string>
+  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Prossimo episodio</item>

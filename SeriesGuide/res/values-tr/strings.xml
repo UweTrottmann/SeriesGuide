@@ -76,7 +76,8 @@
   <string name="rating9">Süper</string>
   <string name="episode_number_absolute">ABSOLUTE</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Yayınlanma Tarihi</string>
+  <string name="episode_firstaired">Release date</string>
+  <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">DVD Bölümü</string>
   <string name="show_actors">Aktörler</string>
   <string name="show_firstaired">İlk Yayınlanma Tarihi</string>
@@ -141,22 +142,16 @@
   <string name="only_favorites">Sadece favori diziler</string>
   <string name="togglewatched">Seyredilme durumunu değiştir</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
-  <string name="update_notification">Dizileriniz güncelleniyor...</string>
-  <string name="update_single">Dizi güncelleniyor…</string>
-  <string name="update_delta">Eski diziler güncelleniyor…</string>
-  <string name="update_full">Tüm diziler güncelleniyor...</string>
-  <string name="update_success">Diziler güncellendi.</string>
-  <string name="update_offline">Güncelleştirme başarısız oldu, İnternet/Wi-Fi bağlantınızı kontrol edin.</string>
-  <string name="update_saxerror">Güncelleme başarısız, daha sonra tekrar deneyin.</string>
+  <string name="update_scheduled">Updating…</string>
+  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
+  <string name="update_disabled">To update turn on Auto Update in Settings.</string>
   <string name="update_inprogress">Devam eden bir güncelleme var, daha sonra tekrar deneyin.</string>
-  <string name="update_rebuildsearch">Bölüm araması yenileniyor…</string>
-  <string name="update_traktactivity">Trakt etinlikleri yükleniyor...</string>
   <string name="menu_updateart">Posterleri yükle</string>
   <string name="arttask_incomplete">Bazı posterler yüklenemedi, daha sonra tekrar deneyin.</string>
   <string name="arttask_start">Posterler yükleniyor...</string>
   <string name="arttask_nosdcard">Posterleri yüklemek için harici depolama (SD kart) gereklidir.</string>
-  <string name="show_network"> </string>
-  <string name="show_noairtime">Yayın tarihi yok</string>
+  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">izlenilmemiş bölüm</string>
   <string name="season_allwatched">Tüm bölümler izlendi</string>
   <string name="season_onenotwatched">bölüm izlenmedi</string>
@@ -332,6 +327,10 @@
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">SeriesGuide indir</string>
   <string name="betawarning"><b>Ön bilgi!</b> Bu yayımlama sadece beta testi yapanlar içindir! Eğer sizin için doğru yayımlama olduğundan şüpheliyseniz, alttaki kararlı sürümü indirin.</string>
+  <string name="upgrade_title">Get the X Upgrade</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.</string>
+  <string name="upgrade_action">Get the X Upgrade</string>
+  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Sonraki bölüm</item>

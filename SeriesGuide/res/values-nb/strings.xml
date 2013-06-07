@@ -76,7 +76,8 @@
   <string name="rating9">Fantastisk</string>
   <string name="episode_number_absolute">ABSOLUTE</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Visningsdato</string>
+  <string name="episode_firstaired">Release date</string>
+  <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">DVD Episode</string>
   <string name="show_actors">Skuespillere</string>
   <string name="show_firstaired">Premiere</string>
@@ -141,22 +142,16 @@
   <string name="only_favorites">Bare favoritter</string>
   <string name="togglewatched">Sett/ikke sett</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
-  <string name="update_notification">Oppdaterer seriene dine...</string>
-  <string name="update_single">Oppdaterer serie...</string>
-  <string name="update_delta">Oppdaterer utdaterte serier...</string>
-  <string name="update_full">Oppdaterer alle seriene...</string>
-  <string name="update_success">Programmer oppdaterte.</string>
-  <string name="update_offline">Oppdatering mislyktes, sjekk internett/Wi-Fi koblingen din.</string>
-  <string name="update_saxerror">Updating failed, trying again later.</string>
+  <string name="update_scheduled">Updating…</string>
+  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
+  <string name="update_disabled">To update turn on Auto Update in Settings.</string>
   <string name="update_inprogress">En oppdatering er i gang, prøv på nytt senere.</string>
-  <string name="update_rebuildsearch">Oppdaterer episode søk...</string>
-  <string name="update_traktactivity">Laster trakt aktiviteter...</string>
   <string name="menu_updateart">Last plakater</string>
   <string name="arttask_incomplete">Noen plakater ble ikke lasted, prøv på nytt senere.</string>
   <string name="arttask_start">Oppdaterer plakater...</string>
   <string name="arttask_nosdcard">Lasting av plakater krever ekstern lagring (SD-kort).</string>
-  <string name="show_network">på</string>
-  <string name="show_noairtime">Ingen sendetid tilgjengelig</string>
+  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">episoder ikke sett</string>
   <string name="season_allwatched">Alle episoder sett</string>
   <string name="season_onenotwatched">episode ikke sett</string>
@@ -332,6 +327,10 @@
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">Last ned SeriesGuide</string>
   <string name="betawarning"><b>Se opp!</b> Denne versjonen er kun for beta-testere. Hvis du er i tvil laster du ned den stabile versjonen nedenfor.</string>
+  <string name="upgrade_title">Get the X Upgrade</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.</string>
+  <string name="upgrade_action">Get the X Upgrade</string>
+  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Neste episode</item>

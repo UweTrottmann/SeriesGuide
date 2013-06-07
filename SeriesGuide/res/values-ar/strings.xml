@@ -76,7 +76,8 @@
   <string name="rating9">رائع</string>
   <string name="episode_number_absolute">ABSOLUTE</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">موعد العرض</string>
+  <string name="episode_firstaired">Release date</string>
+  <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">حلقة دي في دي</string>
   <string name="show_actors">الممثلون</string>
   <string name="show_firstaired">بثت أول مرة</string>
@@ -141,22 +142,16 @@
   <string name="only_favorites">برامجك المفضلة فقط</string>
   <string name="togglewatched">تبديل المُشاهدة</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
-  <string name="update_notification">تحديث برامجك...</string>
-  <string name="update_single">تحديث العرض...</string>
-  <string name="update_delta">تحديث البرامج القديمة ...</string>
-  <string name="update_full">تحديث كافة العروض...</string>
-  <string name="update_success">تم التحديث</string>
-  <string name="update_offline">.فشل التحديث، تحقق من اتصال إنترنت/وأي فأي الخاص بك</string>
-  <string name="update_saxerror">فشل التحديث، حاول مرة أخرى.</string>
+  <string name="update_scheduled">Updating…</string>
+  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
+  <string name="update_disabled">To update turn on Auto Update in Settings.</string>
   <string name="update_inprogress">التحديث قيد التقدم, حاول مرة أخرى.</string>
-  <string name="update_rebuildsearch">تحديث البحث عن الحلقات...</string>
-  <string name="update_traktactivity">تحميل أنشطة التراكت...</string>
   <string name="menu_updateart">تحميل الأغلفة</string>
   <string name="arttask_incomplete">.بعض الأغلفة لم تُحمّل, حاول مرة اخرى لاحقاً</string>
   <string name="arttask_start">تحميل الملصقات...</string>
   <string name="arttask_nosdcard">.(تحميل الأغلفة يتطلب تخزين خارجي (بطاقة إس دي</string>
-  <string name="show_network">على</string>
-  <string name="show_noairtime">لا تتوفر أوقات عرض</string>
+  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">الحلقات لم تُشاهد</string>
   <string name="season_allwatched">تم مشاهدة جميع الحلقات</string>
   <string name="season_onenotwatched">الحلقة لم تُشاهد</string>
@@ -332,6 +327,10 @@
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">حمّل دليل الحلقات</string>
   <string name="betawarning"><b>انتبه!</b> هذا الإصدار لاختبار بيتا فقط! إذا كنت في شك حمل النسخة مستقرة أدناه.</string>
+  <string name="upgrade_title">Get the X Upgrade</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.</string>
+  <string name="upgrade_action">Get the X Upgrade</string>
+  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">
     <item>A-Z</item>
     <item>الحلقة القادمة</item>

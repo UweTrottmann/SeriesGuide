@@ -76,7 +76,8 @@
   <string name="rating9">Odlično</string>
   <string name="episode_number_absolute">ABSOLUTE</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Datum predvajanja</string>
+  <string name="episode_firstaired">Release date</string>
+  <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">DVD epizoda</string>
   <string name="show_actors">Igralci</string>
   <string name="show_firstaired">Prvič predvajano</string>
@@ -141,22 +142,16 @@
   <string name="only_favorites">Samo priljubljene oddaje</string>
   <string name="togglewatched">Preklopi med gledanimi</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
-  <string name="update_notification">Posodabljanje vaših oddaj...</string>
-  <string name="update_single">Oddaja se posodablja...</string>
-  <string name="update_delta">Stare oddaje se posodabljajo...</string>
-  <string name="update_full">Vse oddaje se posodabljajo...</string>
-  <string name="update_success">Oddaje so posodobljene.</string>
-  <string name="update_offline">Posodabljanje ni uspelo. Preverite svojo internetno/Wi-Fi povezavo.</string>
-  <string name="update_saxerror">Updating failed, trying again later.</string>
+  <string name="update_scheduled">Updating…</string>
+  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
+  <string name="update_disabled">To update turn on Auto Update in Settings.</string>
   <string name="update_inprogress">Posodabljanje je v teku. Poizkusite ponovno kasneje.</string>
-  <string name="update_rebuildsearch">Osvežujem iskanje epizod...</string>
-  <string name="update_traktactivity">Nalagam aktivnosti s trakt-a...</string>
   <string name="menu_updateart">Naloži posterje</string>
   <string name="arttask_incomplete">Nekateri posterji se niso naložili. Poizkusi ponovno kasneje.</string>
   <string name="arttask_start">Nalagam posterje...</string>
   <string name="arttask_nosdcard">Nalaganje posterjev zahteva zunanjo podatkovno shrambo (kartico SD).</string>
-  <string name="show_network">ob</string>
-  <string name="show_noairtime">Časa oddajanja ni na voljo</string>
+  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">Nepogledane epizode.</string>
   <string name="season_allwatched">Vse epizode pogledane</string>
   <string name="season_onenotwatched">Nepogledana epizoda.</string>
@@ -332,6 +327,10 @@
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">Prenesi SeriesGuide</string>
   <string name="betawarning"><b>Pozor!</b> Ta verzija je namenjea samo beta preizkuševalcem! Če si v dvomih prenesi spodnjo, stabilno verzijo.</string>
+  <string name="upgrade_title">Get the X Upgrade</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.</string>
+  <string name="upgrade_action">Get the X Upgrade</string>
+  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">
     <item>A - Ž</item>
     <item>Naslednja epizoda</item>

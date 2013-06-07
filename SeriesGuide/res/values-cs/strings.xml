@@ -76,7 +76,8 @@
   <string name="rating9">Vynikající</string>
   <string name="episode_number_absolute">CELKOVĚ</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Datum vysílání</string>
+  <string name="episode_firstaired">Release date</string>
+  <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">Díly na DVD</string>
   <string name="show_actors">Herci</string>
   <string name="show_firstaired">Poprvé vysíláno</string>
@@ -141,22 +142,16 @@
   <string name="only_favorites">Pouze oblíbené pořady</string>
   <string name="togglewatched">Přepnout zhlédnutí</string>
   <string name="pref_infinite_scrolling">Aktivita bez omezení časem</string>
-  <string name="update_notification">Aktualizuji Vaše pořady…</string>
-  <string name="update_single">Aktualizuji pořad…</string>
-  <string name="update_delta">Aktualizuji zastaralé pořady…</string>
-  <string name="update_full">Aktualizuji všechny pořady…</string>
-  <string name="update_success">Pořady aktualizovány.</string>
-  <string name="update_offline">Aktualizace selhala, zkontrolujte Vaše připojení k internetu.</string>
-  <string name="update_saxerror">Aktualizace se nezdařila, zkusím to později znovu.</string>
+  <string name="update_scheduled">Updating…</string>
+  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
+  <string name="update_disabled">To update turn on Auto Update in Settings.</string>
   <string name="update_inprogress">Probíhá aktualizace, zkuste to později.</string>
-  <string name="update_rebuildsearch">Obnovuji hledání dílů…</string>
-  <string name="update_traktactivity">Nahrávám aktivitu z traktu…</string>
   <string name="menu_updateart">Načíst plakáty</string>
   <string name="arttask_incomplete">Některé plakáty se nenačetly, zkuste to později.</string>
   <string name="arttask_start">Načítám plakáty…</string>
   <string name="arttask_nosdcard">Načítání plakátů vyžaduje externí úložiště (kartu SD).</string>
-  <string name="show_network">na</string>
-  <string name="show_noairtime">Žádné časy vysílání</string>
+  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">nové díly</string>
   <string name="season_allwatched">Všechny epizody zhlédnuty</string>
   <string name="season_onenotwatched">nový díl</string>
@@ -332,6 +327,10 @@
   <string name="dashclock_pref_upcoming_threshold">Zobrazovat díly nadcházející během</string>
   <string name="download_stable">Stáhnout SeriesGuide</string>
   <string name="betawarning"><b>Upozornění!</b> Toto je verze pouze pro beta-testery! Nejste-li si jistí, stáhněte si raději stabilní verzi níže.</string>
+  <string name="upgrade_title">Get the X Upgrade</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.</string>
+  <string name="upgrade_action">Get the X Upgrade</string>
+  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Další epizoda</item>

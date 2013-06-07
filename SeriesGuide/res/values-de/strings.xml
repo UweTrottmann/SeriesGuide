@@ -76,7 +76,8 @@
   <string name="rating9">Hervorragend</string>
   <string name="episode_number_absolute">ABSOLUT</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Ausstrahlung</string>
+  <string name="episode_firstaired">Erscheinungsdatum</string>
+  <string name="episode_firstaired_unknown">Erscheinungsdatum unbekannt</string>
   <string name="episode_dvdnumber">DVD Folge</string>
   <string name="show_actors">Schauspieler</string>
   <string name="show_firstaired">Erste Ausstrahlung</string>
@@ -141,22 +142,16 @@
   <string name="only_favorites">Nur Serien-Favoriten</string>
   <string name="togglewatched">"Gesehen" umschalten</string>
   <string name="pref_infinite_scrolling">Endlose Aktivität</string>
-  <string name="update_notification">Aktualisierung Ihrer Serien…</string>
-  <string name="update_single">Aktualisiere Serie…</string>
-  <string name="update_delta">Aktualisiere veraltete Serien…</string>
-  <string name="update_full">Aktualisiere alle Serien…</string>
-  <string name="update_success">Serien aktualisiert.</string>
-  <string name="update_offline">Aktualisierung ist fehlgeschlagen, überprüfen Sie Ihre Internet-/WLAN-Verbindung.</string>
-  <string name="update_saxerror">Aktualisieren fehlgeschlagen, wird später erneut versucht.</string>
+  <string name="update_scheduled">Aktualisiert…</string>
+  <string name="update_no_connection">Zum Aktualisieren mit dem Internet verbinden.</string>
+  <string name="update_no_wifi">Zum Aktualisieren eine WLAN-Verbindung herstellen oder andere Verbindungen in den Einstellungen erlauben.</string>
+  <string name="update_disabled">Zum Aktualisieren Auto-Aktualisierung in den Einstellungen aktivieren.</string>
   <string name="update_inprogress">Eine Aktualisierung ist im Gange, versuchen Sie es später erneut.</string>
-  <string name="update_rebuildsearch">Erneuere Folgen-Suchindex…</string>
-  <string name="update_traktactivity">Lade trakt-Aktivität…</string>
   <string name="menu_updateart">Poster laden</string>
   <string name="arttask_incomplete">Einige Poster wurden nicht geladen, versuchen Sie es später erneut.</string>
   <string name="arttask_start">Lade Poster…</string>
   <string name="arttask_nosdcard">Das Laden von Bildern erfordert externen Speicherplatz (SD-Karte).</string>
-  <string name="show_network">auf</string>
-  <string name="show_noairtime">Keine Sendezeit verfügbar</string>
+  <string name="show_on_network">auf %s</string>
   <string name="season_watchcount">ungesehene Folgen</string>
   <string name="season_allwatched">Alle Folgen gesehen</string>
   <string name="season_onenotwatched">ungesehene Folge</string>
@@ -332,6 +327,10 @@
   <string name="dashclock_pref_upcoming_threshold">Zeige Folgen im Zeitraum</string>
   <string name="download_stable">SeriesGuide herunterladen</string>
   <string name="betawarning"><b>Achtung!</b> Diese Version ist für nur Beta-Tester! Laden Sie im Zweifel unten die stabile Version.</string>
+  <string name="upgrade_title">X-Upgrade holen</string>
+  <string name="upgrade_description">Erhalten Sie Zugriff auf Benachrichtigungen und weitere Optionen für das Listen-Widget. Unterstützen Sie die Weiterentwicklung.</string>
+  <string name="upgrade_action">X-Upgrade kaufen</string>
+  <string name="upgrade_success">Danke, Sie haben das X-Upgrade bereits!</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Nächste Folge</item>

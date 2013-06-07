@@ -76,7 +76,8 @@
   <string name="rating9">Прекрасно</string>
   <string name="episode_number_absolute">Загалом</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Дата виходу</string>
+  <string name="episode_firstaired">Release date</string>
+  <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">Серія на DVD</string>
   <string name="show_actors">Актори</string>
   <string name="show_firstaired">Перший ефір</string>
@@ -141,22 +142,16 @@
   <string name="only_favorites">Лише улюблені серіали</string>
   <string name="togglewatched">Перемикати переглянуті</string>
   <string name="pref_infinite_scrolling">Безкінечна активність</string>
-  <string name="update_notification">Оновлення ваших серіалів...</string>
-  <string name="update_single">Оновлення серіалів...</string>
-  <string name="update_delta">Оновлення  протермінованих серіалів...</string>
-  <string name="update_full">Оновлення всіх серіалів...</string>
-  <string name="update_success">Серіали оновлено.</string>
-  <string name="update_offline">Оновлення не вдалося, перевірте ваше з\'єднання з інтернетом/Wi-Fi.</string>
-  <string name="update_saxerror">Оновлення не вдалося, спробуйте пізніше.</string>
+  <string name="update_scheduled">Updating…</string>
+  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
+  <string name="update_disabled">To update turn on Auto Update in Settings.</string>
   <string name="update_inprogress">Оновлення в процесі, спробуйте ще раз пізніше.</string>
-  <string name="update_rebuildsearch">Оновлюється пошук серій...</string>
-  <string name="update_traktactivity">Завантажується активність trakt...</string>
   <string name="menu_updateart">Завантажити постери</string>
   <string name="arttask_incomplete">Деякі постери не завантажились, спробуйте пізніше.</string>
   <string name="arttask_start">Завантаження постерів...</string>
   <string name="arttask_nosdcard">Завантаження постерів потребує зовнішньої карти пам\'яті (SD карти).</string>
-  <string name="show_network">на</string>
-  <string name="show_noairtime">Дата виходу не відома</string>
+  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">серій не переглянуто</string>
   <string name="season_allwatched">Усі серії переглянуті</string>
   <string name="season_onenotwatched">серія не переглянута</string>
@@ -332,6 +327,10 @@
   <string name="dashclock_pref_upcoming_threshold">Показати серії у наступному</string>
   <string name="download_stable">Завантажити SeriesGuide</string>
   <string name="betawarning"><b>Увага!</b> Цей реліз лише для бета-тестерів! Якщо ви сумніваєтеся, завантажте стабільну версію нижче.</string>
+  <string name="upgrade_title">Get the X Upgrade</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.</string>
+  <string name="upgrade_action">Get the X Upgrade</string>
+  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">
     <item>А - Я</item>
     <item>Наступна серія</item>

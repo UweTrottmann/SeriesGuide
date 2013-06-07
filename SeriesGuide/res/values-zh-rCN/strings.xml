@@ -76,7 +76,8 @@
   <string name="rating9">无与伦比</string>
   <string name="episode_number_absolute">总计剧集</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">播出日期</string>
+  <string name="episode_firstaired">Release date</string>
+  <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">DVD 剧集</string>
   <string name="show_actors">演员</string>
   <string name="show_firstaired">首播</string>
@@ -141,22 +142,16 @@
   <string name="only_favorites">仅显示收藏剧目</string>
   <string name="togglewatched">切换观看状态</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
-  <string name="update_notification">正在更新您的剧集……</string>
-  <string name="update_single">正在更新剧集……</string>
-  <string name="update_delta">正在更新过时剧集……</string>
-  <string name="update_full">正在更新所有剧集……</string>
-  <string name="update_success">剧集已更新。</string>
-  <string name="update_offline">更新失败，请检查网络连接。</string>
-  <string name="update_saxerror">更新失败，请稍后再试。</string>
+  <string name="update_scheduled">Updating…</string>
+  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
+  <string name="update_disabled">To update turn on Auto Update in Settings.</string>
   <string name="update_inprogress">更新正在进行，请稍后重试。</string>
-  <string name="update_rebuildsearch">正在刷新剧集搜索……</string>
-  <string name="update_traktactivity">正在加载 trakt.tv 活动……</string>
   <string name="menu_updateart">下载海报</string>
   <string name="arttask_incomplete">一些海报没有加载成功，请稍后重试。</string>
   <string name="arttask_start">正在加载海报……</string>
   <string name="arttask_nosdcard">下载海报需要外部存储介质（SD 卡）。</string>
-  <string name="show_network">在</string>
-  <string name="show_noairtime">播出时间待定</string>
+  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">剧集尚未观看</string>
   <string name="season_allwatched">已观看全部剧集</string>
   <string name="season_onenotwatched">剧集尚未观看</string>
@@ -332,6 +327,10 @@
   <string name="dashclock_pref_upcoming_threshold">“即将播出”剧目的时间区间</string>
   <string name="download_stable">下载“美剧指南”</string>
   <string name="betawarning"><b>注意</b> 这是一个仅供测试的版本。如果您有任何疑问，请下载稳定版本。</string>
+  <string name="upgrade_title">Get the X Upgrade</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.</string>
+  <string name="upgrade_action">Get the X Upgrade</string>
+  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">
     <item>A 到 Z</item>
     <item>下一集</item>

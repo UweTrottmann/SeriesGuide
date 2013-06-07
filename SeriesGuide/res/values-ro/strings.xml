@@ -76,7 +76,8 @@
   <string name="rating9">Superb</string>
   <string name="episode_number_absolute">ABSOLUTE</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Data emisiei</string>
+  <string name="episode_firstaired">Release date</string>
+  <string name="episode_firstaired_unknown">Release date unknown</string>
   <string name="episode_dvdnumber">Episod DVD</string>
   <string name="show_actors">Actori</string>
   <string name="show_firstaired">Prima difuzare</string>
@@ -141,22 +142,16 @@
   <string name="only_favorites">Doar emisiunile preferate</string>
   <string name="togglewatched">Toggle watched</string>
   <string name="pref_infinite_scrolling">Infinite activity</string>
-  <string name="update_notification">Se actualizează emisiunile dumnevoastră...</string>
-  <string name="update_single">Actualizarea emisiunii...</string>
-  <string name="update_delta">Actualizarea emisiunilor învechite...</string>
-  <string name="update_full">Se actualizează toate emisiunile...</string>
-  <string name="update_success">Emisiunile sînt actualizate.</string>
-  <string name="update_offline">Actualizarea nu a reușit, verificaţi conexiunea la internet/Wi-Fi.</string>
-  <string name="update_saxerror">Actualizarea nu a reuşit, încercaţi din nou mai târziu.</string>
+  <string name="update_scheduled">Updating…</string>
+  <string name="update_no_connection">To update connect to the internet.</string>
+  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
+  <string name="update_disabled">To update turn on Auto Update in Settings.</string>
   <string name="update_inprogress">O actualizare este în progres, încercaţi din nou mai târziu.</string>
-  <string name="update_rebuildsearch">Refreshing episode search…</string>
-  <string name="update_traktactivity">Loading trakt activity…</string>
   <string name="menu_updateart">Incarcă posterele</string>
   <string name="arttask_incomplete">Unele postere nu se încărcă, încercaţi din nou mai târziu.</string>
   <string name="arttask_start">Posterele se încarcă...</string>
   <string name="arttask_nosdcard">Loading posters requires external storage (SD card).</string>
-  <string name="show_network">on</string>
-  <string name="show_noairtime">No air times available</string>
+  <string name="show_on_network">on %s</string>
   <string name="season_watchcount">episoadele nu au fost vizionate</string>
   <string name="season_allwatched">Toate episoadele au fost vizionate</string>
   <string name="season_onenotwatched">episodul nu a fost vizionat</string>
@@ -332,6 +327,10 @@
   <string name="dashclock_pref_upcoming_threshold">Show episodes in the next</string>
   <string name="download_stable">Descărcați SeriesGuide</string>
   <string name="betawarning"><b>Atentie!</b> Această versiune este numai pentru beta testeri! Dacă sunteţi în dubiu descărcati versiunea stabilă de mai jos.</string>
+  <string name="upgrade_title">Get the X Upgrade</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.</string>
+  <string name="upgrade_action">Get the X Upgrade</string>
+  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Urmatorul episod</item>
