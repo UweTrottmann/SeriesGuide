@@ -50,6 +50,7 @@ public abstract class BaseTopActivity extends BaseActivity {
 
                     if (!result.isSuccess()) {
                         // Oh noes, there was a problem. But do not go crazy.
+                        disposeIabHelper();
                         return;
                     }
 
@@ -66,10 +67,7 @@ public abstract class BaseTopActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        if (mHelper != null) {
-            mHelper.dispose();
-        }
-        mHelper = null;
+        disposeIabHelper();
     }
 
     @Override
@@ -109,6 +107,7 @@ public abstract class BaseTopActivity extends BaseActivity {
             Log.d(TAG, "Query inventory finished.");
             if (result.isFailure()) {
                 // ignore failures (maybe not, requires testing)
+                disposeIabHelper();
                 return;
             }
 
@@ -123,11 +122,8 @@ public abstract class BaseTopActivity extends BaseActivity {
             // Save current state until we query again
             AdvancedSettings.setLastUpgradeState(BaseTopActivity.this, hasXUpgrade);
 
-            Log.d(TAG, "Inventory query finished, disposing of helper.");
-            if (mHelper != null) {
-                mHelper.dispose();
-            }
-            mHelper = null;
+            Log.d(TAG, "Inventory query finished.");
+            disposeIabHelper();
         }
     };
 
@@ -135,4 +131,12 @@ public abstract class BaseTopActivity extends BaseActivity {
      * Google Analytics helper method for easy sending of click events.
      */
     protected abstract void fireTrackerEvent(String label);
+
+    private void disposeIabHelper() {
+        if (mHelper != null) {
+            Log.d(TAG, "Disposing of IabHelper.");
+            mHelper.dispose();
+        }
+        mHelper = null;
+    }
 }
