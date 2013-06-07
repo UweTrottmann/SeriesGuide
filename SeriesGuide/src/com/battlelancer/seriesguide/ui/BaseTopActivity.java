@@ -37,8 +37,8 @@ public abstract class BaseTopActivity extends BaseActivity {
         getMenu().setSlideDrawable(R.drawable.ic_drawer);
         getMenu().setDrawerIndicatorEnabled(true);
 
-        // query in-app purchases (only if not already X installed)
-        if (!Utils.hasXinstalled(this)) {
+        // query in-app purchases (only if not already X qualified)
+        if (!Utils.isSupporterChannel(this)) {
             String key = getString(R.string.key_a) + getString(R.string.key_b)
                     + getString(R.string.key_c) + getString(R.string.key_d);
             mHelper = new IabHelper(this, key);
