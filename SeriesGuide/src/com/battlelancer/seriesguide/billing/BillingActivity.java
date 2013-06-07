@@ -26,6 +26,8 @@ public class BillingActivity extends BaseActivity {
     // (arbitrary) request code for the purchase flow
     private static final int RC_REQUEST = 749758;
 
+    private static final String SOME_STRING = "SURPTk9UQ0FSRUlGWU9VUElSQVRFVEhJUw==";
+
     private IabHelper mHelper;
 
     // If the user already has the X upgrade
@@ -161,7 +163,7 @@ public class BillingActivity extends BaseActivity {
          * payloads across app installations is recommended.
          */
 
-        return true;
+        return SOME_STRING.equals(payload);
     }
 
     // User clicked the "Upgrade to Premium" button.
@@ -170,11 +172,9 @@ public class BillingActivity extends BaseActivity {
 
         /*
          * TODO: for security, generate your payload here for verification. See
-         * the comments on verifyDeveloperPayload() for more info. Since this is
-         * a SAMPLE, we just use an empty string, but on a production app you
-         * should carefully generate this.
+         * the comments on verifyDeveloperPayload() for more info.
          */
-        String payload = "";
+        String payload = SOME_STRING;
 
         setWaitMode(true);
 
