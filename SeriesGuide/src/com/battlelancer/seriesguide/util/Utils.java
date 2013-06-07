@@ -47,6 +47,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.service.NotificationService;
 import com.battlelancer.seriesguide.service.OnAlarmReceiver;
 import com.battlelancer.seriesguide.settings.ActivitySettings;
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
@@ -739,7 +740,8 @@ public class Utils {
      * @return
      */
     public static boolean isSupporterChannel(Context context) {
-        if (getChannel(context) != SGChannel.STABLE) {
+        if (getChannel(context) != SGChannel.STABLE || hasXinstalled(context)
+                || AdvancedSettings.hasPurchasedX(context)) {
             return true;
         } else {
             return false;
@@ -750,7 +752,7 @@ public class Utils {
      * Returns true if the user has the legacy X version installed, signed with
      * the same key as we are.
      */
-    public static boolean isSupportingUser(Context context) {
+    public static boolean hasXinstalled(Context context) {
         try {
             // Get our signing key
             PackageManager manager = context.getPackageManager();
