@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.seriesguide.ui.BaseActivity;
 import com.battlelancer.seriesguide.util.Utils;
 import com.uwetrottmann.seriesguide.R;
@@ -18,10 +19,10 @@ public class BillingActivity extends BaseActivity {
     public static final String TAG = "BillingActivity";
 
     // enable debug logging, disable for production!
-    private static final boolean DEBUG = false;
+    public static final boolean DEBUG = false;
 
     // The SKU product id as set in the Developer Console
-    private static final String SKU_X = "x_upgrade";
+    public static final String SKU_X = "x_upgrade";
 
     // (arbitrary) request code for the purchase flow
     private static final int RC_REQUEST = 749758;
@@ -29,9 +30,6 @@ public class BillingActivity extends BaseActivity {
     private static final String SOME_STRING = "SURPTk9UQ0FSRUlGWU9VUElSQVRFVEhJUw==";
 
     private IabHelper mHelper;
-
-    // If the user already has the X upgrade
-    private boolean mHasXUpgrade = false;
 
     private View mProgressScreen;
 
@@ -48,13 +46,8 @@ public class BillingActivity extends BaseActivity {
 
         setupViews();
 
-        // check if legacy X version is installed
-        mHasXUpgrade = Utils.isSupportingUser(this);
-
-        updateUi();
-
-        // do not set up in-app billing, already qualified for X upgrade
-        if (mHasXUpgrade) {
+        // do not set up in-app billing if already qualified for X upgrade
+        if (updateUi()) {
             setWaitMode(false);
             return;
         }
@@ -132,8 +125,11 @@ public class BillingActivity extends BaseActivity {
 
             // Do we have the premium upgrade?
             Purchase premiumPurchase = inventory.getPurchase(SKU_X);
-            mHasXUpgrade = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
-            Log.d(TAG, "User has " + (mHasXUpgrade ? "X UPGRADE" : "NOT X UPGRADE"));
+            boolean hasXUpgrade = (premiumPurchase != null && verifyDeveloperPayload(premiumPurchase));
+            Log.d(TAG, "User has " + (hasXUpgrade ? "X UPGRADE" : "NOT X UPGRADE"));
+
+            // Save current state until we query again
+            AdvancedSettings.setLastUpgradeState(BillingActivity.this, hasXUpgrade);
 
             updateUi();
             setWaitMode(false);
@@ -142,7 +138,7 @@ public class BillingActivity extends BaseActivity {
     };
 
     /** Verifies the developer payload of a purchase. */
-    private boolean verifyDeveloperPayload(Purchase p) {
+    public static boolean verifyDeveloperPayload(Purchase p) {
         String payload = p.getDeveloperPayload();
 
         /*
@@ -201,7 +197,8 @@ public class BillingActivity extends BaseActivity {
             if (purchase.getSku().equals(SKU_X)) {
                 // bought the upgrade!
                 Log.d(TAG, "Purchased X upgrade. Congratulating user.");
-                mHasXUpgrade = true;
+                // Save current state until we query again
+                AdvancedSettings.setLastUpgradeState(BillingActivity.this, true);
                 updateUi();
                 setWaitMode(false);
             }
@@ -223,10 +220,12 @@ public class BillingActivity extends BaseActivity {
         mContentContainer = findViewById(R.id.containerBilling);
     }
 
-    private void updateUi() {
+    private boolean updateUi() {
         // Only enable purchase button if the user does not have the upgrade yet
-        mUpgradeButton.setEnabled(!mHasXUpgrade);
-        mTextHasUpgrade.setVisibility(mHasXUpgrade ? View.VISIBLE : View.GONE);
+        boolean hasXupgrade = Utils.isSupporterChannel(this);
+        mUpgradeButton.setEnabled(!hasXupgrade);
+        mTextHasUpgrade.setVisibility(hasXupgrade ? View.VISIBLE : View.GONE);
+        return hasXupgrade;
     }
 
     private void setWaitMode(boolean isActive) {
