@@ -302,6 +302,14 @@
         <item name="android:lineSpacingMultiplier">1.2</item>
     </style>
 
+    <style name="Page">
+        <item name="android:padding">@dimen/large_padding</item>
+    </style>
+
+    <style name="Page.Centered">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
     <!-- Used for longer passages of text -->
     <style name="DescriptionFont">
         <item name="android:textSize">@dimen/text_size_xmedium</item>

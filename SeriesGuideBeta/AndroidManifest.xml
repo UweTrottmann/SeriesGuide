@@ -11,9 +11,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- Notification service -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- Syncadapter permissions -->
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -24,6 +25,8 @@
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <!-- Android Beam -->
     <uses-permission android:name="android.permission.NFC" />
+    <!-- In-app billing -->
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <uses-feature
         android:name="android.hardware.touchscreen"
@@ -197,6 +200,11 @@
             android:exported="true" >
         </activity>
         <activity android:name="com.battlelancer.seriesguide.dataliberation.DataLiberationActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.SeriesGuidePreferences" />
+        </activity>
+        <activity android:name="com.battlelancer.seriesguide.billing.BillingActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.SeriesGuidePreferences" />

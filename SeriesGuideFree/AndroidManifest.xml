@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.battlelancer.seriesguide"
     android:installLocation="auto"
-    android:versionCode="156"
-    android:versionName="5.2" >
+    android:versionCode="161"
+    android:versionName="6alpha3" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -13,6 +13,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- Notification service -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!-- Syncadapter permissions -->
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -23,6 +25,8 @@
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
     <!-- Android Beam -->
     <uses-permission android:name="android.permission.NFC" />
+    <!-- In-app billing -->
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <uses-feature
         android:name="android.hardware.touchscreen"
@@ -105,8 +109,7 @@
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
         </activity>
-        <activity
-            android:name="com.battlelancer.seriesguide.ui.OverviewActivity" >
+        <activity android:name="com.battlelancer.seriesguide.ui.OverviewActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value="com.battlelancer.seriesguide.ui.SearchActivity" />
@@ -199,7 +202,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.SeriesGuidePreferences" />
         </activity>
-		
+        <activity android:name="com.battlelancer.seriesguide.billing.BillingActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.SeriesGuidePreferences" />
+        </activity>
+
         <!-- Services -->
         <service android:name="com.battlelancer.seriesguide.service.TraktFlagService" >
         </service>
@@ -208,15 +216,11 @@
         <service android:name="com.battlelancer.seriesguide.service.NotificationService" >
         </service>
 
-        <!-- Not available in free version -->
-        <!--
         <receiver android:name="com.battlelancer.seriesguide.service.OnAlarmReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        -->
-        
         <!-- Sync service -->
         <service
             android:name="com.battlelancer.seriesguide.sync.SgAuthenticationService"
@@ -333,7 +337,7 @@
                 android:name="settingsActivity"
                 android:value="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity" />
         </service>
-        
+
         <activity
             android:name="com.battlelancer.seriesguide.dashclock.UpcomingEpisodeSettingsActivity"
             android:exported="true" >

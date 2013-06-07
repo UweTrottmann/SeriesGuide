@@ -16,6 +16,8 @@ public class AdvancedSettings {
 
     public static final String KEY_LASTBACKUP = "com.battlelancer.seriesguide.lastbackup";
 
+    public static final String KEY_LAST_UPGRADE_STATE = "com.battlelancer.seriesguide.lastupgradestate";
+
     public static long getLastAutoUpdateTime(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
@@ -47,5 +49,19 @@ public class AdvancedSettings {
         }
 
         return time;
+    }
+
+    /**
+     * Wether the user is qualified for the X upgrade since the last time we
+     * checked.
+     */
+    public static boolean hasPurchasedX(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+                KEY_LAST_UPGRADE_STATE, false);
+    }
+
+    public static void setLastUpgradeState(Context context, boolean hasXupgrade) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(
+                KEY_LAST_UPGRADE_STATE, hasXupgrade).commit();
     }
 }
