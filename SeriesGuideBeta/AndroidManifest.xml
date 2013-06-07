@@ -204,6 +204,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.battlelancer.seriesguide.ui.SeriesGuidePreferences" />
         </activity>
+        <activity android:name="com.battlelancer.seriesguide.billing.BillingActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.battlelancer.seriesguide.ui.SeriesGuidePreferences" />
+        </activity>
 
         <!-- Services -->
         <service android:name="com.battlelancer.seriesguide.service.TraktFlagService" >
