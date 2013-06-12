@@ -32,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.seriesguide.R;
 
 /**
@@ -53,6 +54,8 @@ public class SlidingMenuFragment extends ListFragment {
     private static final int PAGE_SHOWS = 0;
     private static final int PAGE_LISTS = 1;
     private static final int PAGE_ACTIVITY = 2;
+
+    private static final String TAG = "Navigation Drawer";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -107,28 +110,34 @@ public class SlidingMenuFragment extends ListFragment {
                         .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK
                                 | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 storeSelectedPage(PAGE_SHOWS);
+                fireTrackerEvent("Shows");
                 break;
             case MENU_ITEM_LISTS_ID:
                 startActivity(new Intent(getActivity(), ListsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 storeSelectedPage(PAGE_LISTS);
+                fireTrackerEvent("Lists");
                 break;
             case MENU_ITEM_ACTIVITY_ID:
                 startActivity(new Intent(getActivity(), UpcomingRecentActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                 storeSelectedPage(PAGE_ACTIVITY);
+                fireTrackerEvent("Activity");
                 break;
             case MENU_ITEM_MOVIES_ID:
                 startActivity(new Intent(getActivity(), MoviesActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                fireTrackerEvent("Movies");
                 break;
             case MENU_ITEM_STATS_ID:
                 startActivity(new Intent(getActivity(), StatsActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                fireTrackerEvent("Statistics");
                 break;
             case MENU_ITEM_SEARCH_ID:
                 startActivity(new Intent(getActivity(), SearchActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                fireTrackerEvent("Search");
                 break;
         }
 
@@ -223,6 +232,10 @@ public class SlidingMenuFragment extends ListFragment {
             icon = (ImageView) v.findViewById(R.id.menu_icon);
             title = (TextView) v.findViewById(R.id.menu_title);
         }
+    }
+
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 
 }
