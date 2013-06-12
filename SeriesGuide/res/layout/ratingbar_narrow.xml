@@ -68,6 +68,7 @@
             android:gravity="center_vertical"
             android:text="@string/notraktrating"
             android:textAppearance="@style/TextAppearance.Large.Light"
+            android:textColor="?attr/textColorSgDefault"
             android:textSize="26sp" />
 
         <include
