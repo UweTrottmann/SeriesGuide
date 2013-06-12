@@ -143,6 +143,7 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
                         new TraktTask(getActivity(), null)
                                 .watchlistMovie(movie.id),
                         new Void[] {});
+                fireTrackerEvent("Add to watchlist");
                 return true;
             }
         }
@@ -202,5 +203,9 @@ public class MovieSearchFragment extends SherlockFragment implements OnEditorAct
         Intent i = new Intent(getActivity(), MovieDetailsActivity.class);
         i.putExtra(MovieDetailsFragment.InitBundle.TMDB_ID, movie.id);
         startActivity(i);
+    }
+
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 }

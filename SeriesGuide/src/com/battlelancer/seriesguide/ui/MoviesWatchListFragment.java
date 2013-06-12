@@ -40,6 +40,7 @@ import com.battlelancer.seriesguide.loaders.TraktMoviesWatchlistLoader;
 import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.trakt.entities.Movie;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
@@ -54,6 +55,7 @@ import java.util.List;
 public class MoviesWatchListFragment extends SherlockFragment implements
         LoaderCallbacks<List<Movie>>, OnItemClickListener, OnClickListener {
 
+    private static final String TAG = "Movie Watchlist";
     private static final int LOADER_ID = R.layout.movies_watchlist_fragment;
     private static final int CONTEXT_REMOVE_ID = 0;
     private MoviesWatchListAdapter mAdapter;
@@ -128,6 +130,7 @@ public class MoviesWatchListFragment extends SherlockFragment implements
                         new TraktTask(getActivity(), null)
                                 .unwatchlistMovie(Integer.valueOf(movie.tmdbId)),
                         new Void[] {});
+                fireTrackerEvent("Remove from watchlist");
                 return true;
             }
         }
@@ -172,5 +175,9 @@ public class MoviesWatchListFragment extends SherlockFragment implements
             // reload movie watchlist after user added/removed
             getLoaderManager().restartLoader(LOADER_ID, null, this);
         }
+    }
+
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 }
