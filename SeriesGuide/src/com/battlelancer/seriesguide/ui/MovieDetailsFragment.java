@@ -45,6 +45,7 @@ import com.battlelancer.seriesguide.loaders.TmdbMovieDetailsLoader.MovieDetails;
 import com.battlelancer.seriesguide.ui.dialogs.MovieCheckInDialogFragment;
 import com.battlelancer.seriesguide.util.ImageDownloader;
 import com.battlelancer.seriesguide.util.Utils;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.seriesguide.R;
 import com.uwetrottmann.tmdb.entities.Movie;
@@ -143,6 +144,7 @@ public class MovieDetailsFragment extends SherlockFragment implements
                             + mMovieDetails.trailers().youtube.get(0).source));
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
             startActivity(intent);
+            fireTrackerEvent("Trailer");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -226,6 +228,7 @@ public class MovieDetailsFragment extends SherlockFragment implements
                                 MovieCheckInDialogFragment f = MovieCheckInDialogFragment
                                         .newInstance(movie.imdb_id, movie.title);
                                 f.show(getFragmentManager(), "checkin-dialog");
+                                fireTrackerEvent("Check-In");
                             }
                         });
             } else {
@@ -241,9 +244,14 @@ public class MovieDetailsFragment extends SherlockFragment implements
                     Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
                     i.putExtras(TraktShoutsActivity.createInitBundleMovie(movie.title, movie.id));
                     startActivity(i);
+                    fireTrackerEvent("Comments");
                 }
             });
         }
+    }
+
+    private void fireTrackerEvent(String label) {
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 
 }
