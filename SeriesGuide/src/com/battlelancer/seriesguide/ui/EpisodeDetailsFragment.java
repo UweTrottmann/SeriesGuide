@@ -41,7 +41,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -465,10 +464,9 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             RelativeLayout ratings = (RelativeLayout) view.findViewById(R.id.ratingbar);
             String ratingText = cursor.getString(DetailsQuery.RATING);
             if (ratingText != null && ratingText.length() != 0) {
-                RatingBar ratingBar = (RatingBar) ratings.findViewById(R.id.bar);
-                TextView ratingValue = (TextView) ratings.findViewById(R.id.value);
-                ratingBar.setProgress((int) (Double.valueOf(ratingText) / 0.1));
-                ratingValue.setText(ratingText + "/10");
+                TextView ratingValue = (TextView) ratings
+                        .findViewById(R.id.textViewRatingsTvdbValue);
+                ratingValue.setText(ratingText);
             }
             ratings.setOnClickListener(new OnClickListener() {
                 @Override

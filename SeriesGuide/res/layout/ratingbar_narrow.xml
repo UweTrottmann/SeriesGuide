@@ -8,36 +8,41 @@
     android:layout_marginRight="@dimen/default_padding"
     android:background="?attr/custom_list_selector" >
 
-    <RatingBar
-        android:id="@+id/bar"
-        style="?android:attr/ratingBarStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:isIndicator="true"
-        android:numStars="10"
-        android:rating="0"
-        android:stepSize="0.1"
-        android:textAppearance="@style/TextAppearance" >
-    </RatingBar>
+    <ImageView
+        android:id="@+id/imageViewRatingsStar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="@dimen/inline_padding"
+        android:padding="4dp"
+        android:src="?attr/drawableStar" />
 
     <TextView
-        android:id="@+id/value"
+        android:id="@+id/textViewRatingsTvdbValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bar"
-        android:ellipsize="marquee"
-        android:lines="1"
+        android:layout_marginRight="@dimen/default_padding"
+        android:layout_toRightOf="@+id/imageViewRatingsStar"
         android:text="@string/norating"
-        android:textAppearance="@style/TextAppearance.Small" />
+        android:textAppearance="@style/TextAppearance.Large.Light"
+        android:textColor="?attr/textColorSgDefault"
+        android:textSize="26sp" />
 
     <TextView
-        android:id="@+id/tvdblabel"
+        android:id="@+id/textViewRatingsTvdbRange"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/bar"
+        android:layout_alignBaseline="@+id/textViewRatingsTvdbValue"
+        android:layout_toRightOf="@+id/textViewRatingsTvdbValue"
+        android:text="@string/tvdb_range"
+        android:textAppearance="@style/TextAppearance.Small.Dim" />
+
+    <TextView
+        android:id="@+id/textViewRatingsTvdbLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageViewRatingsStar"
         android:layout_marginLeft="@dimen/inline_padding"
-        android:layout_toRightOf="@+id/value"
         android:text="@string/tvdb"
         android:textAppearance="@style/TextAppearance.Small.Dim" />
 
@@ -45,7 +50,7 @@
         android:id="@+id/containerRatingsTrakt"
         android:layout_width="wrap_content"
         android:layout_height="38dp"
-        android:layout_below="@id/value"
+        android:layout_below="@id/textViewRatingsTvdbLabel"
         android:layout_marginTop="@dimen/default_padding" >
 
         <ImageView

@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -207,10 +206,8 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
         // TVDb rating
         String ratingText = mShow.getRating();
         if (ratingText != null && ratingText.length() != 0) {
-            RatingBar ratingBar = (RatingBar) getView().findViewById(R.id.bar);
-            ratingBar.setProgress((int) (Double.valueOf(ratingText) / 0.1));
-            TextView rating = (TextView) getView().findViewById(R.id.value);
-            rating.setText(ratingText + "/10");
+            TextView rating = (TextView) getView().findViewById(R.id.textViewRatingsTvdbValue);
+            rating.setText(ratingText);
         }
         View ratings = getView().findViewById(R.id.ratingbar);
         ratings.setOnClickListener(new OnClickListener() {

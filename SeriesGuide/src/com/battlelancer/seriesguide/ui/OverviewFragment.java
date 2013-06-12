@@ -42,7 +42,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -660,9 +659,7 @@ public class OverviewFragment extends SherlockFragment implements
         // TVDb rating
         final String ratingText = episode.getString(EpisodeQuery.RATING);
         if (ratingText != null && ratingText.length() != 0) {
-            ((RatingBar) getView().findViewById(R.id.bar)).setProgress((int) (Double
-                    .valueOf(ratingText) / 0.1));
-            ((TextView) getView().findViewById(R.id.value)).setText(ratingText + "/10");
+            ((TextView) getView().findViewById(R.id.textViewRatingsTvdbValue)).setText(ratingText);
         }
 
         // Google Play button

@@ -7,6 +7,7 @@
     <string name="amazon">Amazon</string>
     <string name="imdb">IMDb</string>
     <string name="tvdb">TVDb</string>
+    <string name="tvdb_range">/10</string>
     <string name="trakt">trakt</string>
     <string name="powered_by_tmdb">powered by themoviedb.org</string>
     <string name="ontrakt">on trakt</string>
