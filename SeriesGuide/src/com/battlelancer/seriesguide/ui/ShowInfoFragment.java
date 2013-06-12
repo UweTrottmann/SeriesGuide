@@ -248,10 +248,10 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
         if (tvdbButton != null) {
             tvdbButton.setOnClickListener(new OnClickListener() {
                 public void onClick(View v) {
-                    fireTrackerEvent("TVDb");
                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.TVDB_SHOW_URL
                             + tvdbId));
                     startActivity(i);
+                    fireTrackerEvent("TVDb");
                 }
             });
         }
@@ -260,11 +260,11 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
         getView().findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                fireTrackerEvent("Shouts");
                 Intent i = new Intent(getActivity(), TraktShoutsActivity.class);
                 i.putExtras(TraktShoutsActivity.createInitBundleShow(mShow.getTitle(),
                         getShowTvdbId()));
                 startActivity(i);
+                fireTrackerEvent("Shouts");
             }
         });
 
@@ -280,7 +280,7 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
     }
 
     private void fireTrackerEvent(String label) {
-        EasyTracker.getTracker().sendEvent(TAG, "Context Item", label, (long) 0);
+        EasyTracker.getTracker().sendEvent(TAG, "Action Item", label, (long) 0);
     }
 
     private int getShowTvdbId() {
@@ -291,6 +291,7 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
         TraktRateDialogFragment newFragment = TraktRateDialogFragment
                 .newInstance(getShowTvdbId());
         newFragment.show(getFragmentManager(), "traktratedialog");
+        fireTrackerEvent("Rate (trakt)");
     }
 
     private void onLoadTraktRatings(boolean isUseCachedValues) {
