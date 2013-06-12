@@ -3,8 +3,8 @@
     android:id="@+id/buttonbar_services"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/default_padding"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingTop="@dimen/default_padding" >
 
     <TextView
         android:layout_width="wrap_content"
