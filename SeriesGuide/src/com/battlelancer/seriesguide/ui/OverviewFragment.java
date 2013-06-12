@@ -133,6 +133,7 @@ public class OverviewFragment extends SherlockFragment implements
             @Override
             public void onClick(View v) {
                 onToggleShowFavorited(v);
+                fireTrackerEvent("Toggle favorited");
             }
         });
         mContainerShow = v.findViewById(R.id.containerOverviewShow);
@@ -691,6 +692,7 @@ public class OverviewFragment extends SherlockFragment implements
                                     + Constants.TVDB_EPISODE_URL_3
                                     + mEpisodeCursor.getString(EpisodeQuery._ID)));
                     startActivity(i);
+                    fireTrackerEvent("TVDb");
                 }
             }
         });
@@ -704,6 +706,7 @@ public class OverviewFragment extends SherlockFragment implements
                     i.putExtras(TraktShoutsActivity.createInitBundleEpisode(getShowId(),
                             seasonNumber, episodeNumber, episodeTitle));
                     startActivity(i);
+                    fireTrackerEvent("Comments");
                 }
             }
         });
