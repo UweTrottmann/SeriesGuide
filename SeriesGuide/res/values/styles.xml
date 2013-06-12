@@ -117,6 +117,7 @@
 
     <style name="Widget.SeriesGuide.Button.Borderless.Default">
         <item name="android:textAppearance">@style/TextAppearance</item>
+        <item name="android:textColor">?attr/textColorSgDefault</item>
     </style>
 
     <style name="Widget.SeriesGuide.Button.Borderless.Small">
