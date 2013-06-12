@@ -24,6 +24,7 @@ public abstract class BaseTopShowsActivity extends BaseTopActivity {
         if (itemId == R.id.menu_checkin) {
             startActivity(new Intent(this, CheckinActivity.class));
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            fireTrackerEvent("Check-In");
             return true;
         }
         return super.onOptionsItemSelected(item);
