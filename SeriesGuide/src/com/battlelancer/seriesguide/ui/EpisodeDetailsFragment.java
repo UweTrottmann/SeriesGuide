@@ -498,6 +498,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                                     + Constants.TVDB_EPISODE_URL_2 + seasonId
                                     + Constants.TVDB_EPISODE_URL_3 + getEpisodeId()));
                     startActivity(i);
+                    fireTrackerEvent("TVDb");
                 }
             });
 
@@ -518,6 +519,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     intent.putExtras(TraktShoutsActivity.createInitBundleEpisode(mShowId,
                             mSeasonNumber, mEpisodeNumber, episodeTitle));
                     startActivity(intent);
+                    fireTrackerEvent("Comments");
                 }
             });
 
@@ -530,6 +532,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                     CheckInDialogFragment f = CheckInDialogFragment.newInstance(getActivity(),
                             episodeTvdbId);
                     f.show(getFragmentManager(), "checkin-dialog");
+                    fireTrackerEvent("Check-In");
                 }
             });
 
