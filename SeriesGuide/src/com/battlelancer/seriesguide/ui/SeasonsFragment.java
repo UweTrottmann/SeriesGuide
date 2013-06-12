@@ -130,24 +130,28 @@ public class SeasonsFragment extends SherlockListFragment implements
         @Override
         public void onClick(View v) {
             onFlagShowWatched(true);
+            fireTrackerEvent("Flag all watched (inline)");
         }
     };
     OnClickListener mListenerFlagAllUnwatched = new OnClickListener() {
         @Override
         public void onClick(View v) {
             onFlagShowWatched(false);
+            fireTrackerEvent("Flag all unwatched (inline)");
         }
     };
     OnClickListener mListenerFlagAllCollected = new OnClickListener() {
         @Override
         public void onClick(View v) {
             onFlagShowCollected(true);
+            fireTrackerEvent("Flag all collected (inline)");
         }
     };
     OnClickListener mListenerFlagAllUncollected = new OnClickListener() {
         @Override
         public void onClick(View v) {
             onFlagShowCollected(false);
+            fireTrackerEvent("Flag all uncollected (inline)");
         }
     };
 
