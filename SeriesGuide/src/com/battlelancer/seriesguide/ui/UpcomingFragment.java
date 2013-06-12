@@ -585,6 +585,12 @@ public class UpcomingFragment extends SherlockFragment implements
 
             return headers;
         }
+        
+        @Override
+        public Cursor swapCursor(Cursor newCursor) {
+            mHeaders = null;
+            return super.swapCursor(newCursor);
+        }
 
         private final class DataSetObserverExtension extends DataSetObserver {
             @Override
