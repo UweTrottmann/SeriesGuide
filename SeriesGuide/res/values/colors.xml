@@ -35,6 +35,9 @@
     <color name="disabled">#80333333</color>
     <color name="overlay">#cc111111</color>
     <color name="overlay_inverse">#ccffffff</color>
+    
+    <color name="separator">#ff1c1c1c</color>
+    <color name="separator_inverse">#ffe9e9e9</color>
 
     <color name="green_bright">#ff65f526</color>
     <color name="green_dark">#ff05A30D</color>
