@@ -35,6 +35,7 @@
         <item name="colorAccent">@color/accent_primary</item>
         <item name="colorOverlay">@color/overlay</item>
         <item name="colorBackgroundDim">@color/background_dim</item>
+        <item name="colorSeparator">@color/separator</item>
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>
@@ -108,6 +109,7 @@
         <item name="colorAccent">@color/accent_primary_android</item>
         <item name="colorOverlay">@color/overlay</item>
         <item name="colorBackgroundDim">@color/background_dim</item>
+        <item name="colorSeparator">@color/separator</item>
 
         <!-- Drawables -->
         <item name="drawableAddIcon">@drawable/ic_action_add</item>
@@ -155,6 +157,7 @@
         <item name="colorAccent">@color/accent_primary</item>
         <item name="colorOverlay">@color/overlay_inverse</item>
         <item name="colorBackgroundDim">@color/background_dim_inverse</item>
+        <item name="colorSeparator">@color/separator_inverse</item>
 
         <!-- Text -->
         <item name="android:textAppearance">@style/TextAppearance</item>

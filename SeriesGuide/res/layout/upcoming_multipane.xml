@@ -10,6 +10,11 @@
         android:layout_height="match_parent"
         android:layout_weight="1" />
 
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="?attr/colorSeparator" />
+
     <FrameLayout
         android:id="@+id/fragment_details"
         android:layout_width="0px"

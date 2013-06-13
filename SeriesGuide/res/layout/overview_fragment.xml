@@ -12,6 +12,18 @@
         android:scaleType="centerCrop" >
     </ImageView>
 
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:background="?attr/colorSeparator" />
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:background="?attr/colorSeparator" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent" >

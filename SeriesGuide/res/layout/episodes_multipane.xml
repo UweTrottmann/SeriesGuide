@@ -15,6 +15,11 @@
         android:layout_height="match_parent"
         tools:ignore="Suspicious0dp" />
 
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="?attr/colorSeparator" />
+
     <!-- Weight is added through styles depending on screen -->
 
     <FrameLayout

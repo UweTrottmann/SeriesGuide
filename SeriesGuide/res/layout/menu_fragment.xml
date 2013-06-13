@@ -9,7 +9,6 @@
         android:id="@+id/containerMenuLogo"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/background"
         android:orientation="horizontal" >
 
         <ImageView
@@ -19,11 +18,6 @@
             android:padding="@dimen/default_padding"
             android:src="@drawable/ic_launcher" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="?attr/colorAccent" />
 
     <ListView
         android:id="@+android:id/list"

@@ -17,6 +17,11 @@
         android:layout_width="0px"
         android:layout_height="match_parent" />
 
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="?attr/colorSeparator" />
+
     <FrameLayout
         style="@style/DetailsPane"
         android:layout_width="0px"
@@ -48,6 +53,12 @@
                 android:layout_weight="1" />
         </LinearLayout>
     </FrameLayout>
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:background="?attr/colorSeparator" />
 
     <View
         android:id="@+id/spacer_right"
