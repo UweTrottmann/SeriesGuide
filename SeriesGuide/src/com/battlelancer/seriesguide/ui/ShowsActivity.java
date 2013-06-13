@@ -260,7 +260,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
         } else if (itemId == R.id.menu_fullupdate) {
             SgSyncAdapter.requestSync(this, -1);
             fireTrackerEvent("Update (all)");
-            
+
             return true;
         } else if (itemId == R.id.menu_updateart) {
             fireTrackerEvent("Fetch posters");
@@ -401,7 +401,7 @@ public class ShowsActivity extends BaseTopShowsActivity implements CompatActionB
                     EasyTracker.getTracker().sendEvent(TAG, "Poster Task", "Success",
                             (long) 0);
 
-                    Toast.makeText(getApplicationContext(), getString(R.string.update_success),
+                    Toast.makeText(getApplicationContext(), getString(R.string.done),
                             Toast.LENGTH_SHORT).show();
                     break;
                 case UPDATE_INCOMPLETE:
