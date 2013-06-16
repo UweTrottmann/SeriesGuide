@@ -8,14 +8,21 @@ All dates are in the European Central timezone.
 Version 6
 ---------
 
-#### 6beta3 *(TBD)*
+#### 6beta4 *(2013-06-16)*
 
-* Display confirmation toasts when triggering manual updates, show descriptive error messages. For now Auto Update needs to be turned on to manually update.
-* Syncs triggered through the app (not the regular periodic sync) now only run on WiFi if the user asked so.
-* New export tool shows exact progress. Removed warning from old tool.
-* Fix crash when new show got added from trakt activity screen if the updater did run in the background.
-* Revamp service links below each episode and show.
-* Change 'Air date' to the more general 'Release date', this better includes non-TV shows. Not having an air time or date is now not displayed as something wrong.
+* TWEAK Change up some colors, remove some accent color, added light separators to make the app look more clean.
+* FIX Crash after running the 'Load posters' task due to missing success string resource.
+* FIX Crash when filtering in activity results in no more items shown.
+
+#### 6beta3 *(2013-06-08)*
+
+* FEATURE Support unlocking X features through new 'X Upgrade' in-app purchase (see Settings, Services). If you have already purchased SeriesGuide X, just install it side-by-side to unlock the purchase.
+* TWEAK Display confirmation toasts when triggering manual updates, show descriptive error messages. For now Auto Update needs to be turned on to manually update.
+* TWEAK Syncs triggered through the app (not the regular periodic sync) now only run on WiFi if the user asked so.
+* TWEAK New export tool shows exact progress. Removed warning from old tool.
+* TWEAK Revamp service links below each episode and show.
+* TWEAK Change 'Air date' to the more general 'Release date', this better includes non-TV shows. Not having an air time or date is now not displayed as something wrong.
+* FIX Fix crash when new show got added from trakt activity screen if the updater did run in the background.
 
 #### 6beta2 *(2013-05-24)*
 
