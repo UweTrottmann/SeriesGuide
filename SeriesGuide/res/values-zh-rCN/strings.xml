@@ -3,10 +3,10 @@
 <resources>
   <string name="show">剧目</string>
   <string name="episode">剧集</string>
-  <string name="episode_number">Episode %s</string>
+  <string name="episode_number">第 %s 集</string>
   <string name="episodes">剧集</string>
   <string name="season">季</string>
-  <string name="season_number">Season %s</string>
+  <string name="season_number">第 %s 季</string>
   <string name="seasons">季</string>
   <string name="unknown">未知</string>
   <string name="episode_iswatched">已观看</string>
@@ -14,7 +14,7 @@
   <string name="specialseason">特别篇</string>
   <string name="search_hint">搜索剧集</string>
   <string name="share_episode">剧集分享</string>
-  <string name="share_show">Share show</string>
+  <string name="share_show">分享剧目</string>
   <string name="share_checkout">标记已观看</string>
   <string name="search_description">剧集概述</string>
   <string name="description_overview">总览</string>
@@ -76,8 +76,8 @@
   <string name="rating9">无与伦比</string>
   <string name="episode_number_absolute">总计剧集</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Release date</string>
-  <string name="episode_firstaired_unknown">Release date unknown</string>
+  <string name="episode_firstaired">首映日期</string>
+  <string name="episode_firstaired_unknown">尚无首映计划</string>
   <string name="episode_dvdnumber">DVD 剧集</string>
   <string name="show_actors">演员</string>
   <string name="show_firstaired">首播</string>
@@ -141,17 +141,17 @@
   <string name="norecent">没有最近浏览的剧集。</string>
   <string name="only_favorites">仅显示收藏剧目</string>
   <string name="togglewatched">切换观看状态</string>
-  <string name="pref_infinite_scrolling">Infinite activity</string>
-  <string name="update_scheduled">Updating…</string>
-  <string name="update_no_connection">To update connect to the internet.</string>
-  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
-  <string name="update_disabled">To update turn on Auto Update in Settings.</string>
+  <string name="pref_infinite_scrolling">活动列表无限滚动</string>
+  <string name="update_scheduled">正在更新…</string>
+  <string name="update_no_connection">要执行更新操作，请连接互联网。</string>
+  <string name="update_no_wifi">要执行更新操作，请连接到 Wi-Fi 或在“设置”中允许“通过任何网络更新”。</string>
+  <string name="update_disabled">要执行更新操作，请在“设置”中打开“自动更新”。</string>
   <string name="update_inprogress">更新正在进行，请稍后重试。</string>
   <string name="menu_updateart">下载海报</string>
   <string name="arttask_incomplete">一些海报没有加载成功，请稍后重试。</string>
   <string name="arttask_start">正在加载海报……</string>
   <string name="arttask_nosdcard">下载海报需要外部存储介质（SD 卡）。</string>
-  <string name="show_on_network">on %s</string>
+  <string name="show_on_network">处于 %s 网络</string>
   <string name="season_watchcount">剧集尚未观看</string>
   <string name="season_allwatched">已观看全部剧集</string>
   <string name="season_onenotwatched">剧集尚未观看</string>
@@ -225,9 +225,9 @@
   <string name="pref_theme">应用主题</string>
   <string name="pref_other">其它</string>
   <string name="pref_autoupdate">自动更新剧集</string>
-  <string name="pref_autoupdatesummary">Periodically update your shows</string>
-  <string name="pref_autobackup">Turn on Auto Backup</string>
-  <string name="pref_autobackupsummary">Weekly backup of your show database into the Download folder</string>
+  <string name="pref_autoupdatesummary">定期更新剧目</string>
+  <string name="pref_autobackup">打开自动备份</string>
+  <string name="pref_autobackupsummary">每周在“下载”文件夹中生成一次备份</string>
   <string name="backup">备份与还原</string>
   <string name="backup_summary">备份或还原您的剧目列表</string>
   <string name="pref_upcominglimit">即将播出的时间限制</string>
@@ -280,8 +280,8 @@
   <string name="check_into">使用这个帐户登录</string>
   <string name="no_selection">从下面当中选一个</string>
   <string name="looking_for_something_else">不是你想要找的?</string>
-  <string name="menu_rate_episode">Rate episode</string>
-  <string name="menu_rate_show">Rate show</string>
+  <string name="menu_rate_episode">对剧集评分</string>
+  <string name="menu_rate_show">对剧目评分</string>
   <string name="menu_share_others">通过其它应用</string>
   <string name="traktcheckin_cancel">覆盖</string>
   <string name="traktcheckin_inprogress">你已经对另一个剧集或电影签到了。你可以选择覆盖掉之前的签到或者等待 %s 后重新签到。</string>
@@ -305,7 +305,7 @@
   <string name="welcome_add_part1">第一次使用？轻触……</string>
   <string name="upcoming_show">%s 即将播出</string>
   <string name="upcoming_episodes">即将播出新的剧集</string>
-  <string name="upcoming_episodes_number">%s new episodes</string>
+  <string name="upcoming_episodes_number">%s 个剧集即将播出</string>
   <string name="upcoming_show_detailed">%1$s 在 %2$s</string>
   <string name="upcoming_display">选中来显示即将播出的剧目</string>
   <string name="pref_notifications">通知</string>
@@ -327,10 +327,10 @@
   <string name="dashclock_pref_upcoming_threshold">“即将播出”剧目的时间区间</string>
   <string name="download_stable">下载“美剧指南”</string>
   <string name="betawarning"><b>注意</b> 这是一个仅供测试的版本。如果您有任何疑问，请下载稳定版本。</string>
-  <string name="upgrade_title">Get the X Upgrade</string>
-  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.</string>
-  <string name="upgrade_action">Get the X Upgrade</string>
-  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
+  <string name="upgrade_title">获取 SeriesGuide X 升级</string>
+  <string name="upgrade_description">能够打开通知和使用更多小部件。支持我未来的开发计划！</string>
+  <string name="upgrade_action">获取 SeriesGuide X 升级</string>
+  <string name="upgrade_success">恭喜并致以感谢！您已成功获得 SeriesGuide X 升级！</string>
   <string-array name="shsorting">
     <item>A 到 Z</item>
     <item>下一集</item>

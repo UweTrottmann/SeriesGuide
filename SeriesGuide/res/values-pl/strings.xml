@@ -74,7 +74,7 @@
   <string name="rating7">Dobry</string>
   <string name="rating8">Świetny</string>
   <string name="rating9">Niesamowity</string>
-  <string name="episode_number_absolute">Bezwzględny</string>
+  <string name="episode_number_absolute">Nr w całym serialu</string>
   <string name="episode_number_disk">DVD</string>
   <string name="episode_firstaired">Data premiery</string>
   <string name="episode_firstaired_unknown">Data premiery nieznana</string>
@@ -327,10 +327,10 @@
   <string name="dashclock_pref_upcoming_threshold">Pokaż odcinki emitowane za</string>
   <string name="download_stable">Pobierz SeriesGuide</string>
   <string name="betawarning"><b>Uwaga!</b> To wydanie jest tylko dla beta testerów! Wersję stabilną można pobrać poniżej.</string>
-  <string name="upgrade_title">Get the X Upgrade</string>
-  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.</string>
-  <string name="upgrade_action">Get the X Upgrade</string>
-  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
+  <string name="upgrade_title">Ulepsz do wersji X</string>
+  <string name="upgrade_description">Uzyskaj dostęp do powiadomień oraz więcej opcji widżetu. Wesprzyj dalszy rozwój programu.</string>
+  <string name="upgrade_action">Ulepsz do wersji X</string>
+  <string name="upgrade_success">Dziękujemy, posiadasz już wersję X!</string>
   <string-array name="shsorting">
     <item>Od A do Z</item>
     <item>Następny odcinek</item>

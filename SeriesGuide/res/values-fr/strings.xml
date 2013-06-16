@@ -76,8 +76,8 @@
   <string name="rating9">Excellent</string>
   <string name="episode_number_absolute">ABSOLU</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Release date</string>
-  <string name="episode_firstaired_unknown">Release date unknown</string>
+  <string name="episode_firstaired">Date de parution</string>
+  <string name="episode_firstaired_unknown">Date de parution inconnue</string>
   <string name="episode_dvdnumber">Episode DVD</string>
   <string name="show_actors">Acteurs</string>
   <string name="show_firstaired">Première diffusion</string>
@@ -142,16 +142,16 @@
   <string name="only_favorites">Juste les séries préférées</string>
   <string name="togglewatched">Vu/Non vu</string>
   <string name="pref_infinite_scrolling">Activité infinie</string>
-  <string name="update_scheduled">Updating…</string>
-  <string name="update_no_connection">To update connect to the internet.</string>
-  <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
-  <string name="update_disabled">To update turn on Auto Update in Settings.</string>
+  <string name="update_scheduled">Mise à jour...</string>
+  <string name="update_no_connection">Pour mettre à jour, connectez-vous à Internet.</string>
+  <string name="update_no_wifi">Pour mettre à jour, connectez-vous en WiFi ou autorisez d\'autres connections dans les paramètres.</string>
+  <string name="update_disabled">Pour mettre à jour, activez la mise à jour automatique dans les paramètres.</string>
   <string name="update_inprogress">Une mise à jour est en cours, réessayez plus tard.</string>
   <string name="menu_updateart">Charger les affiches</string>
   <string name="arttask_incomplete">Le chargement de quelques affiches a échoué, réessayez plus tard.</string>
   <string name="arttask_start">Chargement des affiches...</string>
   <string name="arttask_nosdcard">Le chargement des affiches nécessite une carte SD.</string>
-  <string name="show_on_network">on %s</string>
+  <string name="show_on_network">sur %s</string>
   <string name="season_watchcount">épisodes non vus</string>
   <string name="season_allwatched">Tous les épisodes vus</string>
   <string name="season_onenotwatched">épisode non vu</string>
@@ -327,10 +327,10 @@
   <string name="dashclock_pref_upcoming_threshold">Montrer les épisodes à venir dans</string>
   <string name="download_stable">Télécharger SeriesGuide</string>
   <string name="betawarning"><b>Attention !</b> Cette version est pour les bêta-testeurs seulement ! Si vous êtes dans le doute, téléchargez la version stable ci-dessous.</string>
-  <string name="upgrade_title">Get the X Upgrade</string>
-  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.</string>
-  <string name="upgrade_action">Get the X Upgrade</string>
-  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
+  <string name="upgrade_title">Obtenir la mise à niveau X</string>
+  <string name="upgrade_description">Ayez accès aux notifications et à davantage d\'options du widget. Soutenez le développement de l\'application.</string>
+  <string name="upgrade_action">Obtenir la mise à niveau X</string>
+  <string name="upgrade_success">Vous avez déjà la mise à niveau X, merci !</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Episode suivant</item>
