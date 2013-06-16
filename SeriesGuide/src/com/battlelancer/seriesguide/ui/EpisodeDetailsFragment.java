@@ -475,7 +475,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 }
             });
             ratings.setFocusable(true);
-            CheatSheet.setup(ratings, R.string.menu_rate_trakt);
+            CheatSheet.setup(ratings, R.string.menu_rate_episode);
 
             // fetch trakt ratings
             onLoadTraktRatings(ratings, true);
