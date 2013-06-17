@@ -57,7 +57,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
     private static final String TAG = "SgSyncAdapter";
 
-    public static final int UPDATE_INTERVAL_MINUTES = 30;
+    public static final int UPDATE_INTERVAL_MINUTES = 20;
 
     public static final String SHOW_TVDB_ID = "com.battlelancer.seriesguide.update_type";
 
