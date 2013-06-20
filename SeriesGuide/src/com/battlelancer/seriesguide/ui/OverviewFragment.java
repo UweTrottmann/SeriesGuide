@@ -701,6 +701,10 @@ public class OverviewFragment extends SherlockFragment implements
             }
         });
 
+        // trakt button
+        ServiceUtils.setUpTraktButton(getShowId(), seasonNumber, episodeNumber, getView()
+                .findViewById(R.id.buttonTrakt), TAG);
+
         // trakt shouts button
         getView().findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
             @Override

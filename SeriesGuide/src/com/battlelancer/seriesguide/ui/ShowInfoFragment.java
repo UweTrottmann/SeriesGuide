@@ -257,6 +257,10 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
             });
         }
 
+        // trakt button
+        ServiceUtils.setUpTraktButton(getShowTvdbId(), getView().findViewById(R.id.buttonTrakt),
+                TAG);
+
         // Shout button
         getView().findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
             @Override

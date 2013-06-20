@@ -190,7 +190,7 @@ public class ServiceUtils {
         if (context == null || TextUtils.isEmpty(imdbId)) {
             return;
         }
-    
+
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri
                 .parse("imdb:///title/" + imdbId + "/"));
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
@@ -202,7 +202,7 @@ public class ServiceUtils {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
             context.startActivity(intent);
         }
-    
+
         EasyTracker.getTracker().sendEvent(logTag, "Action Item", "IMDb", (long) 0);
     }
 
@@ -214,14 +214,14 @@ public class ServiceUtils {
     public static void setUpGooglePlayButton(final String title, View playButton,
             final String logTag) {
         if (playButton != null) {
-    
+
             if (!TextUtils.isEmpty(title)) {
                 playButton.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         EasyTracker.getTracker()
                                 .sendEvent(logTag, "Action Item", "Google Play", (long) 0);
-    
+
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                         try {
@@ -237,7 +237,7 @@ public class ServiceUtils {
             } else {
                 playButton.setEnabled(false);
             }
-    
+
         }
     }
 
@@ -249,14 +249,14 @@ public class ServiceUtils {
     public static void setUpAmazonButton(final String title, View amazonButton,
             final String logTag) {
         if (amazonButton != null) {
-    
+
             if (!TextUtils.isEmpty(title)) {
                 amazonButton.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         EasyTracker.getTracker()
                                 .sendEvent(logTag, "Action Item", "Amazon", (long) 0);
-    
+
                         Intent intent = new Intent(Intent.ACTION_VIEW);
                         intent.setData(Uri
                                 .parse("http://www.amazon.com/gp/search?ie=UTF8&keywords=" + title));
@@ -267,7 +267,57 @@ public class ServiceUtils {
             } else {
                 amazonButton.setEnabled(false);
             }
-    
+
         }
+    }
+
+    public static final String TRAKT_SEARCH_SHOW_URL = "http://trakt.tv/search/tvdb?q=";
+
+    public static final String TRAKT_SEARCH_SEASON_ARG = "&s=";
+
+    public static final String TRAKT_SEARCH_EPISODE_ARG = "&e=";
+
+    /**
+     * Starts activity with {@link Intent#ACTION_VIEW} to display the given
+     * shows or episodes trakt.tv page.<br>
+     * If any of the season or episode numbers is below 0, displays the show page.
+     */
+    public static void setUpTraktButton(final int showTvdbId, final int seasonNumber,
+            final int episodeNumber,
+            View traktButton, final String logTag) {
+        if (traktButton != null) {
+            traktButton.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    String uri;
+                    if (seasonNumber < 0 || episodeNumber < 0) {
+                        // look just for the show page
+                        uri = TRAKT_SEARCH_SHOW_URL + showTvdbId;
+                    } else {
+                        // look for the episode page
+                        uri = TRAKT_SEARCH_SHOW_URL + showTvdbId
+                                + TRAKT_SEARCH_SEASON_ARG + seasonNumber
+                                + TRAKT_SEARCH_EPISODE_ARG + episodeNumber;
+                    }
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(uri));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+                    v.getContext().startActivity(intent);
+
+                    EasyTracker.getTracker()
+                            .sendEvent(logTag, "Action Item", "trakt", (long) 0);
+                }
+            });
+        }
+    }
+
+    /**
+     * Starts activity with {@link Intent#ACTION_VIEW} to display the given
+     * shows trakt.tv page.
+     */
+    public static void setUpTraktButton(int showTvdbId, View traktButton, String logTag) {
+        setUpTraktButton(showTvdbId, -1, -1, traktButton, logTag);
     }
 }

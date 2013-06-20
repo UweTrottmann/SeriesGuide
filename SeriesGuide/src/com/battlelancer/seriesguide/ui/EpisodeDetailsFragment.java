@@ -488,6 +488,15 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
             View amazonButton = view.findViewById(R.id.buttonAmazon);
             ServiceUtils.setUpAmazonButton(showTitle + " " + episodeTitle, amazonButton, TAG);
 
+            // IMDb button
+            String imdbId = cursor.getString(DetailsQuery.IMDBID);
+            if (TextUtils.isEmpty(imdbId)) {
+                // fall back to show IMDb id
+                imdbId = cursor.getString(DetailsQuery.SHOW_IMDBID);
+            }
+            ServiceUtils.setUpImdbButton(imdbId, view.findViewById(R.id.buttonShowInfoIMDB), TAG,
+                    getActivity());
+
             // TVDb button
             final String seasonId = cursor.getString(DetailsQuery.REF_SEASON_ID);
             view.findViewById(R.id.buttonTVDB).setOnClickListener(new OnClickListener() {
@@ -502,14 +511,9 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 }
             });
 
-            // IMDb button
-            String imdbId = cursor.getString(DetailsQuery.IMDBID);
-            if (TextUtils.isEmpty(imdbId)) {
-                // fall back to show IMDb id
-                imdbId = cursor.getString(DetailsQuery.SHOW_IMDBID);
-            }
-            ServiceUtils.setUpImdbButton(imdbId, view.findViewById(R.id.buttonShowInfoIMDB), TAG,
-                    getActivity());
+            // trakt button
+            ServiceUtils.setUpTraktButton(mShowId, mSeasonNumber, mEpisodeNumber,
+                    view.findViewById(R.id.buttonTrakt), TAG);
 
             // trakt shouts button
             view.findViewById(R.id.buttonShouts).setOnClickListener(new OnClickListener() {
