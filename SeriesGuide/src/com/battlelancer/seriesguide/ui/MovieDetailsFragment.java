@@ -147,6 +147,10 @@ public class MovieDetailsFragment extends SherlockFragment implements
             fireTrackerEvent("Trailer");
             return true;
         }
+        if (itemId == R.id.menu_open_trakt) {
+            ServiceUtils.openTraktMovie(getActivity(), mMovieDetails.movie().id, TAG);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 

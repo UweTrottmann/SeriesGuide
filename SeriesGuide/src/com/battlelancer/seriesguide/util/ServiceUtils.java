@@ -271,7 +271,11 @@ public class ServiceUtils {
         }
     }
 
-    public static final String TRAKT_SEARCH_SHOW_URL = "http://trakt.tv/search/tvdb?q=";
+    private static final String TRAKT_SEARCH_BASE_URL = "http://trakt.tv/search/";
+
+    public static final String TRAKT_SEARCH_MOVIE_URL = TRAKT_SEARCH_BASE_URL + "tmdb?q=";
+
+    public static final String TRAKT_SEARCH_SHOW_URL = TRAKT_SEARCH_BASE_URL + "tvdb?q=";
 
     public static final String TRAKT_SEARCH_SEASON_ARG = "&s=";
 
@@ -280,7 +284,8 @@ public class ServiceUtils {
     /**
      * Starts activity with {@link Intent#ACTION_VIEW} to display the given
      * shows or episodes trakt.tv page.<br>
-     * If any of the season or episode numbers is below 0, displays the show page.
+     * If any of the season or episode numbers is below 0, displays the show
+     * page.
      */
     public static void setUpTraktButton(final int showTvdbId, final int seasonNumber,
             final int episodeNumber,
@@ -319,5 +324,19 @@ public class ServiceUtils {
      */
     public static void setUpTraktButton(int showTvdbId, View traktButton, String logTag) {
         setUpTraktButton(showTvdbId, -1, -1, traktButton, logTag);
+    }
+
+    /**
+     * Starts activity with {@link Intent#ACTION_VIEW} to display the given
+     * movies trakt.tv page.
+     */
+    public static void openTraktMovie(Context context, int tmdbId, String logTag) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(TRAKT_SEARCH_MOVIE_URL + tmdbId));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        context.startActivity(intent);
+
+        EasyTracker.getTracker()
+                .sendEvent(logTag, "Action Item", "trakt", (long) 0);
     }
 }
