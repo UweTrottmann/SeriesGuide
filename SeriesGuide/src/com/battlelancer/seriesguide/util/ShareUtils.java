@@ -124,7 +124,7 @@ public class ShareUtils {
                 String text = args.getString(ShareUtils.ShareItems.SHARESTRING);
                 final String imdbId = args.getString(ShareUtils.ShareItems.IMDBID);
                 if (imdbId.length() != 0) {
-                    text += " " + Utils.IMDB_TITLE_URL + imdbId;
+                    text += " " + ServiceUtils.IMDB_TITLE_URL + imdbId;
                 }
 
                 ib.setText(text);

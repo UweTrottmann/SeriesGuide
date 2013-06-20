@@ -669,11 +669,11 @@ public class OverviewFragment extends SherlockFragment implements
 
         // Google Play button
         View playButton = getView().findViewById(R.id.buttonGooglePlay);
-        Utils.setUpGooglePlayButton(mShowTitle + " " + episodeTitle, playButton, TAG);
+        ServiceUtils.setUpGooglePlayButton(mShowTitle + " " + episodeTitle, playButton, TAG);
 
         // Amazon button
         View amazonButton = getView().findViewById(R.id.buttonAmazon);
-        Utils.setUpAmazonButton(mShowTitle + " " + episodeTitle, amazonButton, TAG);
+        ServiceUtils.setUpAmazonButton(mShowTitle + " " + episodeTitle, amazonButton, TAG);
 
         // IMDb button
         String imdbId = episode.getString(EpisodeQuery.IMDBID);
@@ -681,7 +681,7 @@ public class OverviewFragment extends SherlockFragment implements
             // fall back to show IMDb id
             imdbId = mShowCursor.getString(ShowQuery.SHOW_IMDBID);
         }
-        Utils.setUpImdbButton(imdbId, getView().findViewById(R.id.buttonShowInfoIMDB), TAG,
+        ServiceUtils.setUpImdbButton(imdbId, getView().findViewById(R.id.buttonShowInfoIMDB), TAG,
                 getActivity());
 
         // TVDb button

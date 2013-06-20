@@ -482,11 +482,11 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
 
             // Google Play button
             View playButton = view.findViewById(R.id.buttonGooglePlay);
-            Utils.setUpGooglePlayButton(showTitle + " " + episodeTitle, playButton, TAG);
+            ServiceUtils.setUpGooglePlayButton(showTitle + " " + episodeTitle, playButton, TAG);
 
             // Amazon button
             View amazonButton = view.findViewById(R.id.buttonAmazon);
-            Utils.setUpAmazonButton(showTitle + " " + episodeTitle, amazonButton, TAG);
+            ServiceUtils.setUpAmazonButton(showTitle + " " + episodeTitle, amazonButton, TAG);
 
             // TVDb button
             final String seasonId = cursor.getString(DetailsQuery.REF_SEASON_ID);
@@ -508,7 +508,7 @@ public class EpisodeDetailsFragment extends SherlockListFragment implements
                 // fall back to show IMDb id
                 imdbId = cursor.getString(DetailsQuery.SHOW_IMDBID);
             }
-            Utils.setUpImdbButton(imdbId, view.findViewById(R.id.buttonShowInfoIMDB), TAG,
+            ServiceUtils.setUpImdbButton(imdbId, view.findViewById(R.id.buttonShowInfoIMDB), TAG,
                     getActivity());
 
             // trakt shouts button

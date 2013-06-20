@@ -17,13 +17,19 @@
 
 package com.battlelancer.seriesguide.util;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.View.OnClickListener;
 
 import com.battlelancer.seriesguide.ui.SeriesGuidePreferences;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.jakewharton.trakt.ServiceManager;
 import com.uwetrottmann.seriesguide.R;
 
@@ -147,5 +153,121 @@ public class ServiceUtils {
         editor.putString(SeriesGuidePreferences.KEY_TRAKTUSER, "").putString(
                 SeriesGuidePreferences.KEY_TRAKTPWD, "");
         editor.commit();
+    }
+
+    public static final String IMDB_TITLE_URL = "http://imdb.com/title/";
+
+    /**
+     * Displays the IMDb page for the given id (show or episode) in the IMDb app
+     * or on the imdb.com web page. If the IMDb id is empty, disables the
+     * button.
+     * 
+     * @param imdbId
+     * @param imdbButton
+     * @param logTag
+     * @param context
+     */
+    public static void setUpImdbButton(final String imdbId, View imdbButton, final String logTag,
+            final Context context) {
+        if (imdbButton != null) {
+            if (!TextUtils.isEmpty(imdbId)) {
+                imdbButton.setEnabled(true);
+                imdbButton.setOnClickListener(new OnClickListener() {
+                    public void onClick(View v) {
+                        openImdb(imdbId, logTag, context);
+                    }
+                });
+            } else {
+                imdbButton.setEnabled(false);
+            }
+        }
+    }
+
+    /**
+     * Open the IMDb app or web page for the given IMDb id.
+     */
+    public static void openImdb(String imdbId, String logTag, Context context) {
+        if (context == null || TextUtils.isEmpty(imdbId)) {
+            return;
+        }
+    
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri
+                .parse("imdb:///title/" + imdbId + "/"));
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(IMDB_TITLE_URL
+                    + imdbId));
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+            context.startActivity(intent);
+        }
+    
+        EasyTracker.getTracker().sendEvent(logTag, "Action Item", "IMDb", (long) 0);
+    }
+
+    /**
+     * Sets a {@link OnClickListener} on the given button linking to a Google
+     * Play Store search for the given title or disabling the button if the
+     * title is empty.
+     */
+    public static void setUpGooglePlayButton(final String title, View playButton,
+            final String logTag) {
+        if (playButton != null) {
+    
+            if (!TextUtils.isEmpty(title)) {
+                playButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        EasyTracker.getTracker()
+                                .sendEvent(logTag, "Action Item", "Google Play", (long) 0);
+    
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+                        try {
+                            intent.setData(Uri.parse("market://search?q=" + title));
+                            v.getContext().startActivity(intent);
+                        } catch (ActivityNotFoundException e) {
+                            intent.setData(Uri.parse("http://play.google.com/store/search?q="
+                                    + title));
+                            v.getContext().startActivity(intent);
+                        }
+                    }
+                });
+            } else {
+                playButton.setEnabled(false);
+            }
+    
+        }
+    }
+
+    /**
+     * Sets a {@link OnClickListener} on the given button linking to a Amazon
+     * web search for the given title or disabling the button if the title is
+     * empty.
+     */
+    public static void setUpAmazonButton(final String title, View amazonButton,
+            final String logTag) {
+        if (amazonButton != null) {
+    
+            if (!TextUtils.isEmpty(title)) {
+                amazonButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        EasyTracker.getTracker()
+                                .sendEvent(logTag, "Action Item", "Amazon", (long) 0);
+    
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri
+                                .parse("http://www.amazon.com/gp/search?ie=UTF8&keywords=" + title));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+                        v.getContext().startActivity(intent);
+                    }
+                });
+            } else {
+                amazonButton.setEnabled(false);
+            }
+    
+        }
     }
 }

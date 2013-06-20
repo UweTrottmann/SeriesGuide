@@ -32,6 +32,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.ListItemTypes;
 import com.battlelancer.seriesguide.ui.dialogs.ListsDialogFragment;
 import com.battlelancer.seriesguide.ui.dialogs.TraktRateDialogFragment;
 import com.battlelancer.seriesguide.util.ImageProvider;
+import com.battlelancer.seriesguide.util.ServiceUtils;
 import com.battlelancer.seriesguide.util.TraktSummaryTask;
 import com.battlelancer.seriesguide.util.TraktTask;
 import com.battlelancer.seriesguide.util.TraktTask.TraktActionCompleteEvent;
@@ -231,16 +232,16 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
 
         // Google Play button
         View playButton = getView().findViewById(R.id.buttonGooglePlay);
-        Utils.setUpGooglePlayButton(mShow.getTitle(), playButton, TAG);
+        ServiceUtils.setUpGooglePlayButton(mShow.getTitle(), playButton, TAG);
 
         // Amazon button
         View amazonButton = getView().findViewById(R.id.buttonAmazon);
-        Utils.setUpAmazonButton(mShow.getTitle(), amazonButton, TAG);
+        ServiceUtils.setUpAmazonButton(mShow.getTitle(), amazonButton, TAG);
 
         // IMDb button
         View imdbButton = (View) getView().findViewById(R.id.buttonShowInfoIMDB);
         final String imdbId = mShow.getImdbId();
-        Utils.setUpImdbButton(imdbId, imdbButton, TAG, getActivity());
+        ServiceUtils.setUpImdbButton(imdbId, imdbButton, TAG, getActivity());
 
         // TVDb button
         View tvdbButton = (View) getView().findViewById(R.id.buttonTVDB);
@@ -311,7 +312,7 @@ public class ShowInfoFragment extends SherlockFragment implements LoaderCallback
                     .setChooserTitle(R.string.share_show)
                     .setText(
                             getString(R.string.share_checkout) + " \"" + mShow.getTitle()
-                                    + "\" " + Utils.IMDB_TITLE_URL + mShow.getImdbId())
+                                    + "\" " + ServiceUtils.IMDB_TITLE_URL + mShow.getImdbId())
                     .setType("text/plain");
             ib.startChooser();
         }
