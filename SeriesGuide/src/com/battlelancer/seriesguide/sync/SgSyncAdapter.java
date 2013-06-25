@@ -82,7 +82,7 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
 
     /**
      * Same as {@link #requestSync(Context, int, boolean)} with
-     * {@code isShowingFeedback} set to true.
+     * {@code isUserRequested} set to true.
      */
     public static void requestSync(Context context, int showTvdbId) {
         requestSync(context, showTvdbId, true);
@@ -94,10 +94,13 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
      * 
      * @param showTvdbId Update the show with the given TVDbid, if 0 does a
      *            delta update, if less than 0 does a full update.
+     * @param isUserRequested If true, will show feedback toasts and force
+     *            syncing even if (global) sync is off.
      */
-    public static void requestSync(Context context, int showTvdbId, boolean isShowingFeedback) {
+    public static void requestSync(Context context, int showTvdbId, boolean isUserRequested) {
         if (!Utils.isAllowedConnection(context)) {
-            if (isShowingFeedback) {
+            // abort if no connection available
+            if (isUserRequested) {
                 final boolean isWifiOnly = PreferenceManager.getDefaultSharedPreferences(context)
                         .getBoolean(SeriesGuidePreferences.KEY_ONLYWIFI, false);
                 Toast.makeText(context,
@@ -105,19 +108,20 @@ public class SgSyncAdapter extends AbstractThreadedSyncAdapter {
                         Toast.LENGTH_LONG).show();
             }
             return;
-        } else if (!isSyncAutomatically(context)) {
-            if (isShowingFeedback) {
-                Toast.makeText(context, R.string.update_disabled, Toast.LENGTH_LONG).show();
-            }
+        } else if (!isUserRequested && !isSyncAutomatically(context)) {
+            // abort if sync is disabled
             return;
-        }
-
-        if (isShowingFeedback) {
-            Toast.makeText(context, R.string.update_scheduled, Toast.LENGTH_SHORT).show();
         }
 
         Bundle args = new Bundle();
         args.putInt(SHOW_TVDB_ID, showTvdbId);
+
+        if (isUserRequested) {
+            // notify
+            Toast.makeText(context, R.string.update_scheduled, Toast.LENGTH_SHORT).show();
+            // force the sync
+            args.putBoolean(ContentResolver.SYNC_EXTRAS_IGNORE_SETTINGS, true);
+        }
 
         final Account account = SgAccountAuthenticator.getSyncAccount(context);
         ContentResolver.requestSync(account,
