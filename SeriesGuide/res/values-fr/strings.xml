@@ -145,7 +145,6 @@
   <string name="update_scheduled">Mise à jour...</string>
   <string name="update_no_connection">Pour mettre à jour, connectez-vous à Internet.</string>
   <string name="update_no_wifi">Pour mettre à jour, connectez-vous en WiFi ou autorisez d\'autres connections dans les paramètres.</string>
-  <string name="update_disabled">Pour mettre à jour, activez la mise à jour automatique dans les paramètres.</string>
   <string name="update_inprogress">Une mise à jour est en cours, réessayez plus tard.</string>
   <string name="menu_updateart">Charger les affiches</string>
   <string name="arttask_incomplete">Le chargement de quelques affiches a échoué, réessayez plus tard.</string>
@@ -328,7 +327,7 @@
   <string name="download_stable">Télécharger SeriesGuide</string>
   <string name="betawarning"><b>Attention !</b> Cette version est pour les bêta-testeurs seulement ! Si vous êtes dans le doute, téléchargez la version stable ci-dessous.</string>
   <string name="upgrade_title">Obtenir la mise à niveau X</string>
-  <string name="upgrade_description">Ayez accès aux notifications et à davantage d\'options du widget. Soutenez le développement de l\'application.</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
   <string name="upgrade_action">Obtenir la mise à niveau X</string>
   <string name="upgrade_success">Vous avez déjà la mise à niveau X, merci !</string>
   <string-array name="shsorting">

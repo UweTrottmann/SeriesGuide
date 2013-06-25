@@ -145,7 +145,6 @@
   <string name="update_scheduled">Päivitetään...</string>
   <string name="update_no_connection">Päivittääksesi muodosta yhteys internetiin.</string>
   <string name="update_no_wifi">Päivittääksesi yhdistä Wi-Fiin tai salli muut yhteydet asetuksissa.</string>
-  <string name="update_disabled">Päivittääksesi ota käyttöön automaattiset päivitykset asetuksissa.</string>
   <string name="update_inprogress">Päivitys on käynnissä, yritä myöhemmin uudelleen.</string>
   <string name="menu_updateart">Lataa julisteet</string>
   <string name="arttask_incomplete">Jotkut julisteet eivät lataantuneet, yritä myöhemmin uudelleen.</string>
@@ -328,7 +327,7 @@
   <string name="download_stable">Lataa SeriesGuide</string>
   <string name="betawarning"><b>Varoitus!</b> Tämä julkaisu on vain beeta-testaajille! Jos epäröit, lataa vakaa versio alta.</string>
   <string name="upgrade_title">Hanki X-päivitys</string>
-  <string name="upgrade_description">Hanki pääsy ilmoituksiin ja useampiin vaihtoehtoisiin listawidgetteihin. Tue tulevaa kehitystä.</string>
+  <string name="upgrade_description">Hanki pääsy ilmoituksiin ja useampiin valintoihin listawidgeteistä. Tue tulevaa kehitystä.\n\nJos olet jo ostanut SeriesGuide X:n, asenna se avataksesi tämä päivitys.</string>
   <string name="upgrade_action">Hanki X-päivitys</string>
   <string name="upgrade_success">Kiitos, sinulla on jo X-päivitys!</string>
   <string-array name="shsorting">

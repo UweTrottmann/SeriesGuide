@@ -145,7 +145,6 @@
   <string name="update_scheduled">Aktualisiert…</string>
   <string name="update_no_connection">Zum Aktualisieren mit dem Internet verbinden.</string>
   <string name="update_no_wifi">Zum Aktualisieren eine WLAN-Verbindung herstellen oder andere Verbindungen in den Einstellungen erlauben.</string>
-  <string name="update_disabled">Zum Aktualisieren Auto-Aktualisierung in den Einstellungen aktivieren.</string>
   <string name="update_inprogress">Eine Aktualisierung ist im Gange, versuchen Sie es später erneut.</string>
   <string name="menu_updateart">Poster laden</string>
   <string name="arttask_incomplete">Einige Poster wurden nicht geladen, versuchen Sie es später erneut.</string>
@@ -328,7 +327,7 @@
   <string name="download_stable">SeriesGuide herunterladen</string>
   <string name="betawarning"><b>Achtung!</b> Diese Version ist für nur Beta-Tester! Laden Sie im Zweifel unten die stabile Version.</string>
   <string name="upgrade_title">X-Upgrade holen</string>
-  <string name="upgrade_description">Erhalten Sie Zugriff auf Benachrichtigungen und weitere Optionen für das Listen-Widget. Unterstützen Sie die Weiterentwicklung.</string>
+  <string name="upgrade_description">Erhalten Sie Zugriff auf Benachrichtigungen und weitere Optionen für das Listen-Widget. Unterstützen Sie die Weiterentwicklung.\n\nFalls Sie bereits SeriesGuide X  erworben haben, installieren Sie es um dieses Upgrade zu aktivieren.</string>
   <string name="upgrade_action">X-Upgrade kaufen</string>
   <string name="upgrade_success">Danke, Sie haben das X-Upgrade bereits!</string>
   <string-array name="shsorting">

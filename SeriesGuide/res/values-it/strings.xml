@@ -145,7 +145,6 @@
   <string name="update_scheduled">Aggiornamento...</string>
   <string name="update_no_connection">Per aggiornare connettersi a internet.</string>
   <string name="update_no_wifi">Per aggiornare connettersi al WiFi o consentire altre connessioni nelle impostazioni.</string>
-  <string name="update_disabled">Per aggiornare attivare Auto aggiornamento nelle Impostazioni.</string>
   <string name="update_inprogress">Un altro aggiornamento è in corso, riprova più tardi.</string>
   <string name="menu_updateart">Carica poster</string>
   <string name="arttask_incomplete">Alcuni poster non sono stati caricati, riprova dopo.</string>
@@ -328,7 +327,7 @@
   <string name="download_stable">Scarica SeriesGuide</string>
   <string name="betawarning"><b>Attenzione!</b> Questa release è solo per i beta tester. Se non sei sicuro, scarica la versione stabile qui sotto.</string>
   <string name="upgrade_title">Ricevere l\'aggiornamento di X</string>
-  <string name="upgrade_description">Ottenere l\'accesso alle notifiche ed altre opzioni di widget della lista.. Sostenere ulteriormente lo sviluppo.</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
   <string name="upgrade_action">Ricevere l\'aggiornamento di X</string>
   <string name="upgrade_success">Grazie, hai già l\'aggiornamento X!</string>
   <string-array name="shsorting">

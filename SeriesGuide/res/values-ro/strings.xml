@@ -145,7 +145,6 @@
   <string name="update_scheduled">Actualizare…</string>
   <string name="update_no_connection">Pentru a actualiza conectați-vă la internet.</string>
   <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
-  <string name="update_disabled">To update turn on Auto Update in Settings.</string>
   <string name="update_inprogress">O actualizare este în progres, încercaţi din nou mai târziu.</string>
   <string name="menu_updateart">Incarcă posterele</string>
   <string name="arttask_incomplete">Unele postere nu se încărcă, încercaţi din nou mai târziu.</string>
@@ -328,7 +327,7 @@
   <string name="download_stable">Descărcați SeriesGuide</string>
   <string name="betawarning"><b>Atentie!</b> Această versiune este numai pentru beta testeri! Dacă sunteţi în dubiu descărcati versiunea stabilă de mai jos.</string>
   <string name="upgrade_title">Cumpărați versiunea X</string>
-  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
   <string name="upgrade_action">Get the X Upgrade</string>
   <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">

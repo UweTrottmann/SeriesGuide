@@ -145,7 +145,6 @@
   <string name="update_scheduled">Updating…</string>
   <string name="update_no_connection">To update connect to the internet.</string>
   <string name="update_no_wifi">To update connect to WiFi or allow other connections in Settings.</string>
-  <string name="update_disabled">To update turn on Auto Update in Settings.</string>
   <string name="update_inprogress">업데이트가 진행 중 입니다. 잠시 후 다시 시도해주세요.</string>
   <string name="menu_updateart">포스터 불러오기</string>
   <string name="arttask_incomplete">일부 포스터 읽기에 실패하였습니다, 나중에 다시 시도하세요.</string>
@@ -328,7 +327,7 @@
   <string name="download_stable">시리즈가이드 다운로드</string>
   <string name="betawarning"><b>주목!</b> 이 버전은 베타테스터를 위한 버전입니다! 기분이 찝찝하다면 아래의 안정판을 다운받으세요.</string>
   <string name="upgrade_title">Get the X Upgrade</string>
-  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
   <string name="upgrade_action">Get the X Upgrade</string>
   <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
   <string-array name="shsorting">

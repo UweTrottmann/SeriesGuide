@@ -12,11 +12,11 @@
   <string name="episode_iswatched">Již zhlédnuto</string>
   <string name="episode_notwatched">Zatím nezhlédnuto</string>
   <string name="specialseason">Bonusové epizody</string>
-  <string name="search_hint">Hledat díly</string>
+  <string name="search_hint">Hledat epizody</string>
   <string name="share_episode">Sdílet epizodu</string>
   <string name="share_show">Sdílet pořad</string>
   <string name="share_checkout">Podívejte se na</string>
-  <string name="search_description">Díly</string>
+  <string name="search_description">Epizody</string>
   <string name="description_overview">Přehled</string>
   <string name="description_poster">Zobrazit plakát</string>
   <string name="description_image">Obrázek epizody</string>
@@ -76,8 +76,8 @@
   <string name="rating9">Vynikající</string>
   <string name="episode_number_absolute">CELKOVĚ</string>
   <string name="episode_number_disk">DVD</string>
-  <string name="episode_firstaired">Release date</string>
-  <string name="episode_firstaired_unknown">Release date unknown</string>
+  <string name="episode_firstaired">Poprvé vysíláno</string>
+  <string name="episode_firstaired_unknown">Neznámé datum odvysílání</string>
   <string name="episode_dvdnumber">Díly na DVD</string>
   <string name="show_actors">Herci</string>
   <string name="show_firstaired">Poprvé vysíláno</string>
@@ -145,7 +145,6 @@
   <string name="update_scheduled">Probíhá aktualizace…</string>
   <string name="update_no_connection">Pro aktualizaci se připojte k internetu.</string>
   <string name="update_no_wifi">Pro aktualizaci se připojte k Wi-Fi nebo povolte jiný typ připojení v nastavení.</string>
-  <string name="update_disabled">Pro aktualizaci povolte automatické aktualizace v nastavení.</string>
   <string name="update_inprogress">Probíhá aktualizace, zkuste to později.</string>
   <string name="menu_updateart">Načíst plakáty</string>
   <string name="arttask_incomplete">Některé plakáty se nenačetly, zkuste to později.</string>
@@ -327,10 +326,10 @@
   <string name="dashclock_pref_upcoming_threshold">Zobrazovat díly nadcházející během</string>
   <string name="download_stable">Stáhnout SeriesGuide</string>
   <string name="betawarning"><b>Upozornění!</b> Toto je verze pouze pro beta-testery! Nejste-li si jistí, stáhněte si raději stabilní verzi níže.</string>
-  <string name="upgrade_title">Get the X Upgrade</string>
-  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.</string>
-  <string name="upgrade_action">Get the X Upgrade</string>
-  <string name="upgrade_success">Thanks, you already have the X Upgrade!</string>
+  <string name="upgrade_title">Koupit verzi X</string>
+  <string name="upgrade_description">Získejte přístup k oznámením a mnoha dalším widgetům. Podpořte další vývoj aplikace.\n\nPokud již máte zakoupenou verzi SeriesGuide X, nainstalujte ji k odemčení upgradu.</string>
+  <string name="upgrade_action">Koupit verzi X</string>
+  <string name="upgrade_success">Děkujeme, nyní již máte verzi X!</string>
   <string-array name="shsorting">
     <item>A - Z</item>
     <item>Další epizoda</item>

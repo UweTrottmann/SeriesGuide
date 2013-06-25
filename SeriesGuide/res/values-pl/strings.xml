@@ -145,7 +145,6 @@
   <string name="update_scheduled">Aktualizowanie…</string>
   <string name="update_no_connection">Do aktualizacji należy połączyć się z Internetem.</string>
   <string name="update_no_wifi">Aby zaktualizować należy połączyć się z WiFi lub zezwolić na inne połączenia w ustawieniach.</string>
-  <string name="update_disabled">Aby zaktualizować, włącz automatyczną aktualizację w ustawieniach.</string>
   <string name="update_inprogress">Aktualizacja w toku, spróbuj ponownie później.</string>
   <string name="menu_updateart">Wczytaj plakaty</string>
   <string name="arttask_incomplete">Niektóre plakaty nie zostały wczytane. Spróbuj ponownie później.</string>
@@ -328,7 +327,7 @@
   <string name="download_stable">Pobierz SeriesGuide</string>
   <string name="betawarning"><b>Uwaga!</b> To wydanie jest tylko dla beta testerów! Wersję stabilną można pobrać poniżej.</string>
   <string name="upgrade_title">Ulepsz do wersji X</string>
-  <string name="upgrade_description">Uzyskaj dostęp do powiadomień oraz więcej opcji widżetu. Wesprzyj dalszy rozwój programu.</string>
+  <string name="upgrade_description">Get access to notifications and more list widget options. Support further development.\n\nIf you have already purchased SeriesGuide X, install it to unlock this upgrade.</string>
   <string name="upgrade_action">Ulepsz do wersji X</string>
   <string name="upgrade_success">Dziękujemy, posiadasz już wersję X!</string>
   <string-array name="shsorting">
