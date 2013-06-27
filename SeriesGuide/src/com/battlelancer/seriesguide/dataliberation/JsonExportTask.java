@@ -39,6 +39,7 @@ import com.battlelancer.seriesguide.provider.SeriesContract.Shows;
 import com.battlelancer.seriesguide.settings.AdvancedSettings;
 import com.battlelancer.thetvdbapi.TheTVDB.ShowStatus;
 import com.google.myjson.Gson;
+import com.google.myjson.JsonIOException;
 import com.google.myjson.stream.JsonWriter;
 import com.uwetrottmann.androidutils.AndroidUtils;
 import com.uwetrottmann.androidutils.Lists;
@@ -145,6 +146,9 @@ public class JsonExportTask extends AsyncTask<Void, Integer, Integer> {
 
             writeJsonStreamShows(out, shows);
         } catch (IOException e) {
+            // Backup failed
+            return ERROR;
+        } catch (JsonIOException e) {
             // Backup failed
             return ERROR;
         } finally {
