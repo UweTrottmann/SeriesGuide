@@ -388,7 +388,7 @@ public class FlagTask extends AsyncTask<Void, Integer, Integer> {
                         Episodes.buildEpisodesOfSeasonUri(String.valueOf(mSeasonTvdbId)),
                         PROJECTION_EPISODE, null, null, Episodes.NUMBER + " DESC");
                 if (seasonEpisodes != null) {
-                    if (!seasonEpisodes.moveToFirst()) {
+                    if (seasonEpisodes.moveToFirst()) {
                         lastWatchedId = seasonEpisodes.getInt(0);
                     }
 
