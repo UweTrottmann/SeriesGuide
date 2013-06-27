@@ -142,10 +142,13 @@ public abstract class BaseActivity extends SherlockFragmentActivity implements
     @Override
     public void onCheckinBlocked(Bundle traktTaskArgs, int wait) {
         dismissProgressDialog(traktTaskArgs);
-        TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment
-                .newInstance(traktTaskArgs, wait);
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        newFragment.show(ft, "cancel-checkin-dialog");
+        // Guard against the system reclaiming our resources
+        if (!isFinishing()) {
+            TraktCancelCheckinDialogFragment newFragment = TraktCancelCheckinDialogFragment
+                    .newInstance(traktTaskArgs, wait);
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            newFragment.show(ft, "cancel-checkin-dialog");
+        }
     }
 
     private void dismissProgressDialog(Bundle traktTaskArgs) {
