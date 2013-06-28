@@ -5,8 +5,24 @@ Changelog
 
 All dates are in the European Central timezone.
 
-Version 6
----------
+Version 6 *(2013-06-28)*
+------------------------
+
+* Unlock X features through 'X Upgrade' in-app purchase (see Settings, Services). Purchased SeriesGuide X already? Install it to unlock the purchase.
+* Beam shows to another device from the shows overview page (Android 4+).
+* Activity stream displays 30 days into the future/past. Option for 'Infinite activity'. List widget is always infinite.
+* Updates are handled in the background by Android (see the SeriesGuide Sync account in Android settings).
+* Navigation drawer only opens if swiping from the edge.
+* Added setting to disable Auto-Backup.
+* Toned down default dark design.
+
+#### 6 *(2013-06-28)*
+
+* TWEAK Always sync if manually updating via any update action menu items. Previously this was dependent on global and automatic sync being on.
+* TWEAK Reduce minimum update interval on opening the app from 30min to 20min. Checked in episodes should now show up as watched as expected.
+* TWEAK Add trakt page button to shows, episodes and movies.
+* FIX Play store reported crashes: auto-backup disk full, check-in failure dialog after leaving app, flagging whole season watched.
+* NOTICE Latest translations from crowdin.
 
 #### 6beta4 *(2013-06-16)*
 
