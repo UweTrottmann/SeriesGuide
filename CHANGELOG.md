@@ -21,7 +21,8 @@ Version 6 *(2013-06-28)*
 * TWEAK Always sync if manually updating via any update action menu items. Previously this was dependent on global and automatic sync being on.
 * TWEAK Reduce minimum update interval on opening the app from 30min to 20min. Checked in episodes should now show up as watched as expected.
 * TWEAK Add trakt page button to shows, episodes and movies.
-* FIX Play store reported crashes: auto-backup disk full, check-in failure dialog after leaving app, flagging whole season watched.
+* FIX Play store reported crashes: auto-backup disk full, check-in failure dialog after leaving app and it was destroyed for resources.
+* FIX Flagging whole season watched now correctly sets the last watched episode to the last of that season.
 * NOTICE Latest translations from crowdin.
 
 #### 6beta4 *(2013-06-16)*
